@@ -1,6 +1,5 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  BaseCheck,
   BaseGiven,
   BaseSuite,
   BaseThen,
@@ -9,7 +8,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-RDFX5IH4.mjs";
+} from "../../../chunk-P5JAG7FQ.mjs";
 
 // src/PM/node.ts
 import net from "net";
@@ -254,9 +253,7 @@ var testeranto = async (input, testSpecification, testImplementation, testInterf
 var Node_default = testeranto;
 
 // src/lib/classBuilder.test/classBuilder.test.specification.ts
-var specification = (Suite, Given, When, Then, Check) => {
-  console.log("Then", Then);
-  debugger;
+var specification = (Suite, Given, When, Then) => {
   return [
     Suite.Default(
       "Basic ClassBuilder Functionality",
@@ -302,7 +299,6 @@ var specification = (Suite, Given, When, Then, Check) => {
         //     Then.givensOverridesConfigured(),
         //     Then.whensOverridesConfigured(),
         //     Then.thensOverridesConfigured(),
-        //     Then.checksOverridesConfigured(),
         //   ]
         // ),
       },
@@ -351,12 +347,9 @@ var specification = (Suite, Given, When, Then, Check) => {
   ];
 };
 
-// src/lib/classBuilder.test/classBuilder.test.implementation.ts
-import { PassThrough } from "stream";
-
 // src/lib/classBuilder.test/mock.ts
 var TestClassBuilderMock = class extends ClassBuilder {
-  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement) {
+  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, testResourceRequirement) {
     super(
       testImplementation,
       testSpecification,
@@ -365,7 +358,6 @@ var TestClassBuilderMock = class extends ClassBuilder {
       givenKlasser,
       whenKlasser,
       thenKlasser,
-      checkKlasser,
       testResourceRequirement
     );
     this.testJobs = [];
@@ -430,45 +422,21 @@ var MockThen = class extends BaseThen {
     return { testSelection: true };
   }
 };
-var MockCheck = class extends BaseCheck {
-  async checkThat(subject, testResourceConfiguration, artifactory, initializer, initialValues, pm) {
-    return { testStore: true };
-  }
-};
 var MockSuite = class extends BaseSuite {
   constructor(name, index) {
-    super(
-      name,
-      index,
-      {
-        testGiven: new MockGiven(
-          "testGiven",
-          ["testFeature"],
-          [
-            new MockWhen(
-              "testWhen",
-              () => Promise.resolve({ testStore: true })
-            )
-          ],
-          [
-            new MockThen(
-              "testThen",
-              async () => Promise.resolve({ testSelection: true })
-            )
-          ]
-        )
-      },
-      [
-        new MockCheck(
-          "testCheck",
-          ["testFeature"],
-          () => Promise.resolve({ testStore: true }),
-          null,
-          () => {
-          }
-        )
-      ]
-    );
+    super(name, index, {
+      testGiven: new MockGiven(
+        "testGiven",
+        ["testFeature"],
+        [new MockWhen("testWhen", () => Promise.resolve({ testStore: true }))],
+        [
+          new MockThen(
+            "testThen",
+            async () => Promise.resolve({ testSelection: true })
+          )
+        ]
+      )
+    });
   }
 };
 
@@ -654,12 +622,6 @@ var implementation = {
       }
       return builder;
     },
-    checksOverridesConfigured: () => (builder) => {
-      if (!builder.checkOverides) {
-        throw new Error("Checks overrides not configured");
-      }
-      return builder;
-    },
     specsModified: (expectedCount) => (builder) => {
       if (builder.specs.length <= expectedCount) {
         throw new Error(`Expected at least ${expectedCount} modified specs`);
@@ -689,9 +651,6 @@ var implementation = {
         throw new Error(`Test run failed: ${e.message}`);
       }
     }
-  },
-  checks: {
-    Default: () => new PassThrough()
   }
 };
 

@@ -4,7 +4,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-RDFX5IH4.mjs";
+} from "../../../chunk-P5JAG7FQ.mjs";
 
 // src/PM/pure.ts
 var PM_Pure = class extends PM {
@@ -168,7 +168,7 @@ var Pure_default = async (input, testSpecification, testImplementation, testInte
 };
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
-var specification = (Suite, Given, When, Then, Check) => {
+var specification = (Suite, Given, When, Then) => {
   return [
     Suite.Default(
       "Testing BaseBuilder functionality",
@@ -194,19 +194,15 @@ var specification = (Suite, Given, When, Then, Check) => {
   ];
 };
 
-// src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
-import { PassThrough } from "stream";
-
 // src/lib/baseBuilder.test/baseBuilder.test.mock.ts
 var MockBaseBuilder = class extends BaseBuilder {
-  constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, checkOverrides = {}, testResourceRequirement = { ports: [] }, testSpecification = () => []) {
+  constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, testResourceRequirement = { ports: [] }, testSpecification = () => []) {
     super(
       input,
       suitesOverrides,
       givenOverrides,
       whenOverrides,
       thenOverrides,
-      checkOverrides,
       testResourceRequirement,
       testSpecification
     );
@@ -343,17 +339,7 @@ var implementation = {
         throw new Error("Thens overrides not configured");
       }
       return builder;
-    },
-    checksOverridesConfigured: () => (builder) => {
-      if (!builder.checkOverides) {
-        throw new Error("Checks overrides not configured");
-      }
-      return builder;
     }
-  },
-  checks: {
-    Default: () => new PassThrough()
-    // Not used in these tests
   }
 };
 

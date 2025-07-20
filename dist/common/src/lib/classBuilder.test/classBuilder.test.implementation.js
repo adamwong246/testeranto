@@ -4,9 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.implementation = void 0;
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-const stream_1 = require("stream");
 const mock_1 = __importDefault(require("./mock"));
 const classBuilder_test_specification_1 = require("./classBuilder.test.specification");
 const mock_2 = require("../BaseSuite.test/mock");
@@ -142,12 +139,6 @@ exports.implementation = {
             }
             return builder;
         },
-        checksOverridesConfigured: () => (builder) => {
-            if (!builder.checkOverides) {
-                throw new Error("Checks overrides not configured");
-            }
-            return builder;
-        },
         specsModified: (expectedCount) => (builder) => {
             if (builder.specs.length <= expectedCount) {
                 throw new Error(`Expected at least ${expectedCount} modified specs`);
@@ -179,8 +170,5 @@ exports.implementation = {
                 throw new Error(`Test run failed: ${e.message}`);
             }
         },
-    },
-    checks: {
-        Default: () => new stream_1.PassThrough(),
     },
 };

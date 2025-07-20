@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MockSuite = exports.MockCheck = exports.MockThen = exports.MockWhen = exports.MockGiven = void 0;
+exports.MockSuite = exports.MockThen = exports.MockWhen = exports.MockGiven = void 0;
 const abstractBase_1 = require("../abstractBase");
 const BaseSuite_1 = require("../BaseSuite");
 class MockGiven extends abstractBase_1.BaseGiven {
@@ -29,23 +29,13 @@ class MockThen extends abstractBase_1.BaseThen {
     }
 }
 exports.MockThen = MockThen;
-class MockCheck extends abstractBase_1.BaseCheck {
-    async checkThat(subject, testResourceConfiguration, artifactory, initializer, initialValues, pm) {
-        return { testStore: true };
-    }
-}
-exports.MockCheck = MockCheck;
 class MockSuite extends BaseSuite_1.BaseSuite {
     constructor(name, index) {
         super(name, index, {
-            testGiven: new MockGiven("testGiven", ["testFeature"], [
-                new MockWhen("testWhen", () => Promise.resolve({ testStore: true })),
-            ], [
+            testGiven: new MockGiven("testGiven", ["testFeature"], [new MockWhen("testWhen", () => Promise.resolve({ testStore: true }))], [
                 new MockThen("testThen", async () => Promise.resolve({ testSelection: true })),
             ]),
-        }, [
-            new MockCheck("testCheck", ["testFeature"], () => Promise.resolve({ testStore: true }), null, () => { }),
-        ]);
+        });
     }
 }
 exports.MockSuite = MockSuite;

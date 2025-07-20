@@ -1,7 +1,6 @@
 import { ITestImplementation } from "../../CoreTypes";
 import { MockCore } from "./MockCore";
 import { I, O, M } from "./core.test.types";
-import { PassThrough } from "stream";
 import { ITTestResourceRequest } from "..";
 import { ITestInterface } from "../../CoreTypes";
 
@@ -15,7 +14,7 @@ export const implementation: ITestImplementation<I, O, M> = {
     Default: () => {
       return new MockCore(
         {}, // input
-        specification, // testSpecification 
+        specification, // testSpecification
         implementation, // testImplementation
         { ports: [] }, // testResourceRequirement
         testInterface, // testInterface
@@ -48,10 +47,10 @@ export const implementation: ITestImplementation<I, O, M> = {
         specification,
         implementation,
         { ports: [] },
-        {...testInterface, ...customInterface},
+        { ...testInterface, ...customInterface },
         (cb) => cb()
       );
-    }
+    },
   },
 
   whens: {
@@ -121,9 +120,5 @@ export const implementation: ITestImplementation<I, O, M> = {
         throw new Error(`Test run failed: ${e.message}`);
       }
     },
-  },
-
-  checks: {
-    Default: () => new PassThrough(),
   },
 };

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.specification = void 0;
-const specification = (Suite, Given, When, Then, Check) => {
+const specification = (Suite, Given, When, Then) => {
     return [
         Suite.Default("Testing BaseBuilder functionality", {
             testInitialization: Given.Default(["BaseBuilder should initialize correctly"], [], [Then.initializedProperly()]),

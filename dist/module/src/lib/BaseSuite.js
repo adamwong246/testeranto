@@ -1,10 +1,9 @@
 import { beforeAllProxy, afterAllProxy } from "./pmProxy";
 export class BaseSuite {
-    constructor(name, index, givens = {}, checks = []) {
+    constructor(name, index, givens = {}) {
         this.name = name;
         this.index = index;
         this.givens = givens;
-        this.checks = checks;
         this.fails = 0;
     }
     features() {
@@ -18,11 +17,9 @@ export class BaseSuite {
     }
     toObj() {
         const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
-        const checks = Object.keys(this.checks).map((k) => this.checks[k].toObj());
         return {
             name: this.name,
             givens,
-            checks,
             fails: this.fails,
             failed: this.failed,
             features: this.features(),
@@ -57,9 +54,6 @@ export class BaseSuite {
                 throw e;
             });
         }
-        for (const [ndx, thater] of this.checks.entries()) {
-            await thater.check(subject, thater.name, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, pm);
-        }
         try {
             this.afterAll(this.store, artifactory, afterAllProxy(pm, sNdx.toString()));
         }
@@ -68,18 +62,6 @@ export class BaseSuite {
             // this.fails.push(this);
             // return this;
         }
-        // @TODO fix me
-        // for (const k of Object.keys(this.givens)) {
-        //   const giver = this.givens[k];
-        //   try {
-        //     giver.afterAll(this.store, artifactory, pm);
-        //   } catch (e) {
-        //     console.error(e);
-        //     this.fails.push(giver);
-        //     return this;
-        //   }
-        // }
-        ////////////////
         return this;
     }
 }

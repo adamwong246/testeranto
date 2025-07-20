@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseCheck = exports.BaseThen = exports.BaseWhen = exports.BaseGiven = void 0;
+exports.BaseThen = exports.BaseWhen = exports.BaseGiven = void 0;
 const pmProxy_js_1 = require("./pmProxy.js");
 class BaseGiven {
     constructor(name, features, whens, thens, givenCB, initialValues) {
@@ -133,36 +133,5 @@ class BaseThen {
             throw e;
         });
     }
-    check() { }
 }
 exports.BaseThen = BaseThen;
-class BaseCheck {
-    constructor(name, features, checker, x, checkCB) {
-        this.name = name;
-        this.features = features;
-        this.checkCB = checkCB;
-        this.checker = checker;
-    }
-    toObj() {
-        return {
-            key: this.key,
-            name: this.name,
-            // functionAsString: this.checkCB.toString(),
-            features: this.features,
-        };
-    }
-    async afterEach(store, key, artifactory, pm) {
-        return store;
-    }
-    beforeAll(store) {
-        return store;
-    }
-    async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm) {
-        this.key = key;
-        tLog(`\n Check: ${this.name}`);
-        this.store = await this.checkThat(subject, testResourceConfiguration, artifactory, this.checkCB, this.initialValues, pm);
-        await this.checker(this.store, pm);
-        return;
-    }
-}
-exports.BaseCheck = BaseCheck;

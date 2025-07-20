@@ -1,7 +1,7 @@
 import { Plugin } from "esbuild";
 import { ITTestResourceConfiguration } from "./lib/index.js";
 import { PM } from "./PM/index.js";
-import { BaseWhen, BaseThen, BaseGiven, BaseCheck, IGivens } from "./lib/abstractBase.js";
+import { BaseWhen, BaseThen, BaseGiven, IGivens } from "./lib/abstractBase.js";
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
 import { BaseSuite } from "./lib/BaseSuite.js";
 export type ISummary = Record<string, {
@@ -12,7 +12,7 @@ export type ISummary = Record<string, {
     failingFeatures: object | undefined;
 }>;
 export type SuiteSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
-    [K in keyof O["suites"]]: (name: string, givens: IGivens<I>, checks: BaseCheck<I>[]) => BaseSuite<I, O>;
+    [K in keyof O["suites"]]: (name: string, givens: IGivens<I>) => BaseSuite<I, O>;
 };
 export type TestSummary = {
     testName: string;
@@ -80,15 +80,11 @@ export type TestWhenImplementation<I extends Ibdd_in_any, O extends Ibdd_out_any
 export type TestThenImplementation<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["thens"]]: (...It: O["thens"][K]) => (ssel: I["iselection"], utils: PM) => I["then"];
 };
-export type TestCheckImplementation<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
-    [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
-};
 export type Modify<T, R> = Omit<T, keyof R> & R;
 export type TestSuiteShape = Record<string, any>;
 export type TestGivenShape = Record<string, any>;
 export type TestWhenShape = Record<string, any>;
 export type TestThenShape = Record<string, any>;
-export type TestCheckShape = Record<string, any>;
 export type IPluginFactory = (register?: (entrypoint: string, sources: string[]) => any, entrypoints?: string[]) => Plugin;
 export type IRunTime = `node` | `web` | "pure" | `spawn`;
 export type ITestTypes = [string, IRunTime, {

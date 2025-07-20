@@ -2,7 +2,7 @@ import { PM_Pure } from "../PM/pure.js";
 import { PM_Node } from "../PM/node.js";
 import { PM_Web } from "../PM/web.js";
 import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
-import { IGivens, BaseCheck } from "./abstractBase.js";
+import { IGivens } from "./abstractBase.js";
 import type { ITestInterface, Ibdd_in_any, Ibdd_out_any } from "../CoreTypes.js";
 import { BaseSuite } from "./BaseSuite.js";
 export declare const BaseTestInterface: <T extends Ibdd_in_any>() => ITestInterface<T>;
@@ -36,7 +36,6 @@ type ITest = {
     toObj(): object;
     name: string;
     givens: IGivens<Ibdd_in_any>;
-    checks: BaseCheck<Ibdd_in_any>[];
     testResourceConfiguration: ITTestResourceConfiguration;
 };
 export type ITestJob = {

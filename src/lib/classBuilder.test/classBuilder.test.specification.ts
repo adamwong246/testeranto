@@ -5,11 +5,8 @@ export const specification: ITestSpecification<I, O> = (
   Suite,
   Given,
   When,
-  Then,
-  Check
+  Then
 ) => {
-  console.log("Then", Then);
-  debugger;
   return [
     Suite.Default(
       "Basic ClassBuilder Functionality",
@@ -57,7 +54,6 @@ export const specification: ITestSpecification<I, O> = (
         //     Then.givensOverridesConfigured(),
         //     Then.whensOverridesConfigured(),
         //     Then.thensOverridesConfigured(),
-        //     Then.checksOverridesConfigured(),
         //   ]
         // ),
       },

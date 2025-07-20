@@ -1,4 +1,4 @@
-import { Ibdd_in, Ibdd_out } from "./CoreTypes";
+import { Ibdd_in } from "./CoreTypes";
 import { IPM } from "./lib/types";
 type PureI = Ibdd_in<null, // No initial input needed
 IPM, // Test subject is IPM
@@ -19,18 +19,5 @@ IPM, // Test subject is IPM
 }) => {
     pm: IPM;
 }>;
-type PureO = Ibdd_out<{
-    Default: [string];
-}, {
-    Default: [];
-}, {
-    applyProxy: [string];
-    verifyCall: [string, any];
-}, {
-    verifyProxy: [string];
-    verifyNoProxy: [];
-}, {
-    Default: [];
-}>;
-declare const _default: Promise<number | import("./lib/core").default<PureI, PureO, {}>>;
+declare const _default: Promise<number | import("./lib/core").default<PureI, any, {}>>;
 export default _default;

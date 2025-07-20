@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClassBuilder = void 0;
 const basebuilder_js_1 = require("./basebuilder.js");
 class ClassBuilder extends basebuilder_js_1.BaseBuilder {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement) {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, testResourceRequirement) {
         const classySuites = Object.entries(testImplementation.suites).reduce((a, [key], index) => {
-            a[key] = (somestring, givens, checks) => {
-                return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
+            a[key] = (somestring, givens) => {
+                return new suiteKlasser.prototype.constructor(somestring, index, givens);
             };
             return a;
         }, {});
@@ -28,13 +28,7 @@ class ClassBuilder extends basebuilder_js_1.BaseBuilder {
             };
             return a;
         }, {});
-        const classyChecks = Object.entries(testImplementation.checks).reduce((a, [key, chEck]) => {
-            a[key] = (name, features, checker) => {
-                return new checkKlasser.prototype.constructor(key, features, chEck, checker);
-            };
-            return a;
-        }, {});
-        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, testResourceRequirement, testSpecification);
+        super(input, classySuites, classyGivens, classyWhens, classyThens, testResourceRequirement, testSpecification);
     }
 }
 exports.ClassBuilder = ClassBuilder;

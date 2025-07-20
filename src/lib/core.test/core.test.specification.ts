@@ -5,8 +5,7 @@ export const specification: ITestSpecification<I, O> = (
   Suite,
   Given,
   When,
-  Then,
-  Check
+  Then
 ) => {
   return [
     Suite.Default(
@@ -23,17 +22,17 @@ export const specification: ITestSpecification<I, O> = (
           [],
           [Then.initializedProperly()]
         ),
-        
-        // Configuration tests  
+
+        // Configuration tests
         resourceConfig: Given.WithResourceRequirements(
           { ports: [3000, 3001] },
           [],
           [Then.resourceRequirementsSet()]
         ),
         interfaceConfig: Given.WithCustomInterface(
-          { 
+          {
             assertThis: (x) => !!x,
-            beforeEach: async (s, i) => i()
+            beforeEach: async (s, i) => i(),
           },
           [],
           [Then.interfaceConfigured()]
@@ -54,46 +53,42 @@ export const specification: ITestSpecification<I, O> = (
           ["Should track artifacts"],
           [When.addArtifact(Promise.resolve("test"))],
           [Then.artifactsTracked()]
-        )
+        ),
       },
       []
     ),
 
-    Suite.ExtendedSuite(
-      "Testeranto Advanced Features",
-      {
-        // Error handling
-        errorPropagation: Given.Default(
-          ["Should propagate errors properly"],
-          [When.triggerError("test error")],
-          [Then.errorThrown("test error")]
-        ),
+    Suite.ExtendedSuite("Testeranto Advanced Features", {
+      // Error handling
+      errorPropagation: Given.Default(
+        ["Should propagate errors properly"],
+        [When.triggerError("test error")],
+        [Then.errorThrown("test error")]
+      ),
 
-        // Dynamic behavior
-        specModification: Given.Default(
-          ["Should allow spec modification"],
-          [When.modifySpecs((specs) => [...specs, {name: "extra"}])],
-          [Then.specsModified(1)]
-        ),
+      // Dynamic behavior
+      specModification: Given.Default(
+        ["Should allow spec modification"],
+        [When.modifySpecs((specs) => [...specs, { name: "extra" }])],
+        [Then.specsModified(1)]
+      ),
 
-        // Full lifecycle
-        testExecution: Given.Default(
-          ["Should execute full test lifecycle"],
-          [],
-          [Then.testRunSuccessful()]
-        ),
+      // Full lifecycle
+      testExecution: Given.Default(
+        ["Should execute full test lifecycle"],
+        [],
+        [Then.testRunSuccessful()]
+      ),
 
-        // Custom implementations
-        customImpl: Given.WithCustomImplementation(
-          {
-            ...implementation,
-            suites: {Default: "Custom suite"}
-          },
-          [],
-          [Then.specsGenerated()]
-        )
-      },
-      []
-    )
+      // Custom implementations
+      customImpl: Given.WithCustomImplementation(
+        {
+          ...implementation,
+          suites: { Default: "Custom suite" },
+        },
+        [],
+        [Then.specsGenerated()]
+      ),
+    }),
   ];
 };

@@ -41,20 +41,20 @@ const implementation = {
       proxies: {
         butThenProxy: (pm: IPM, path: string) => ({
           ...pm,
-          writeFileSync: (p: string, c: string) => 
-            pm.writeFileSync(`${path}/butThen/${p}`, c)
+          writeFileSync: (p: string, c: string) =>
+            pm.writeFileSync(`${path}/butThen/${p}`, c),
         }),
         andWhenProxy: (pm: IPM, path: string) => ({
           ...pm,
-          writeFileSync: (p: string, c: string) => 
-            pm.writeFileSync(`${path}/andWhen/${p}`, c)
+          writeFileSync: (p: string, c: string) =>
+            pm.writeFileSync(`${path}/andWhen/${p}`, c),
         }),
         beforeEachProxy: (pm: IPM, suite: string) => ({
           ...pm,
-          writeFileSync: (p: string, c: string) => 
-            pm.writeFileSync(`suite-${suite}/beforeEach/${p}`, c)
-        })
-      }
+          writeFileSync: (p: string, c: string) =>
+            pm.writeFileSync(`suite-${suite}/beforeEach/${p}`, c),
+        }),
+      },
     }),
   },
 
@@ -66,8 +66,8 @@ const implementation = {
         case "missingProxy":
           return { ...store, pm: {} }; // Break proxy chain
         case "largePayload":
-          return { 
-            ...store, 
+          return {
+            ...store,
             largePayload: true,
             pm: {
               ...store.pm,
@@ -76,8 +76,8 @@ const implementation = {
                   return true;
                 }
                 throw new Error("Payload too small");
-              }
-            }
+              },
+            },
           };
         default:
           return store;
@@ -107,7 +107,9 @@ const implementation = {
         throw new Error("Expected error but none was thrown");
       } catch (error) {
         if (!error.message.includes(expectedError)) {
-          throw new Error(`Expected error "${expectedError}", got "${error.message}"`);
+          throw new Error(
+            `Expected error "${expectedError}", got "${error.message}"`
+          );
         }
       }
       return store;
@@ -131,14 +133,10 @@ const implementation = {
       return store;
     },
   },
-
-  checks: {
-    Default: () => ({} as IPM),
-  },
 };
 
 // Specification for PureTesteranto tests
-const specification = (Suite, Given, When, Then, Check) => [
+const specification = (Suite, Given, When, Then) => [
   Suite.Default("Core Functionality", {
     initializationTest: Given.Default(
       ["Should initialize with default configuration"],
@@ -189,12 +187,12 @@ const specification = (Suite, Given, When, Then, Check) => [
       [
         When.applyProxy("butThenProxy"),
         When.applyProxy("andWhenProxy"),
-        When.applyProxy("beforeEachProxy")
+        When.applyProxy("beforeEachProxy"),
       ],
       [
         Then.verifyProxy("test/path/butThen/expected"),
         Then.verifyProxy("test/path/andWhen/expected"),
-        Then.verifyProxy("suite-1/beforeEach/expected")
+        Then.verifyProxy("suite-1/beforeEach/expected"),
       ]
     ),
     largePayloadTest: Given.Default(
@@ -207,13 +205,8 @@ const specification = (Suite, Given, When, Then, Check) => [
   Suite.Default("Cross-Component Verification", {
     proxyChainTest: Given.Default(
       ["Proxies should chain correctly"],
-      [
-        When.applyProxy("butThenProxy"),
-        When.applyProxy("andWhenProxy")
-      ],
-      [
-        Then.verifyProxy("test/path/andWhen/butThen/expected")
-      ]
+      [When.applyProxy("butThenProxy"), When.applyProxy("andWhenProxy")],
+      [Then.verifyProxy("test/path/andWhen/butThen/expected")]
     ),
     errorPropagationTest: Given.Default(
       ["Errors should propagate across components"],
@@ -224,7 +217,7 @@ const specification = (Suite, Given, When, Then, Check) => [
       ["Resources should be shared correctly"],
       [When.applyProxy("resourceConfig")],
       [Then.verifyResourceConfig()]
-    )
+    ),
   }),
 
   Suite.Default("Type Safety", {
@@ -249,11 +242,11 @@ const specification = (Suite, Given, When, Then, Check) => [
         Then.initializedProperly(),
         Then.specsGenerated(),
         Then.jobsCreated(),
-        Then.artifactsTracked()
+        Then.artifactsTracked(),
       ]
     ),
 
-    // Verify PM proxy integration  
+    // Verify PM proxy integration
     pmProxyIntegration: Given.Default(
       ["PM proxies should work with test runners"],
       [When.applyProxy("butThenProxy")],
@@ -266,15 +259,11 @@ const specification = (Suite, Given, When, Then, Check) => [
       [
         When.addArtifact(Promise.resolve("test")),
         When.setTestJobs([]),
-        When.modifySpecs((specs) => [...specs])
+        When.modifySpecs((specs) => [...specs]),
       ],
-      [
-        Then.testRunSuccessful(),
-        Then.artifactsTracked(),
-        Then.specsModified(0)
-      ]
-    )
-  })
+      [Then.testRunSuccessful(), Then.artifactsTracked(), Then.specsModified(0)]
+    ),
+  }),
 ];
 
 // Test interface for PureTesteranto

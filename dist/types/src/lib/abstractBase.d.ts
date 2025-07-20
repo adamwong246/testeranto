@@ -57,24 +57,4 @@ export declare abstract class BaseThen<I extends Ibdd_in_any> {
     };
     abstract butThen(store: I["istore"], thenCB: (s: I["iselection"]) => Promise<I["isubject"]>, testResourceConfiguration: ITTestResourceConfiguration, pm: IPM, ...args: any[]): Promise<I["iselection"]>;
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<I["then"] | undefined>;
-    check(): void;
-}
-export declare abstract class BaseCheck<I extends Ibdd_in_any> {
-    key: string;
-    name: string;
-    features: string[];
-    checkCB: (store: I["istore"], pm: IPM) => any;
-    initialValues: any;
-    store: I["istore"];
-    checker: any;
-    constructor(name: string, features: string[], checker: (store: I["istore"], pm: IPM) => any, x: any, checkCB: any);
-    abstract checkThat(subject: I["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, initializer: any, initialValues: any, pm: IPM): Promise<I["istore"]>;
-    toObj(): {
-        key: string;
-        name: string;
-        features: string[];
-    };
-    afterEach(store: I["istore"], key: string, artifactory: ITestArtifactory, pm: IPM): Promise<unknown>;
-    beforeAll(store: I["istore"]): I["istore"];
-    check(subject: I["isubject"], key: string, testResourceConfiguration: any, tester: any, artifactory: ITestArtifactory, tLog: ITLog, pm: IPM): Promise<void>;
 }

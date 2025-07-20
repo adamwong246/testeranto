@@ -1,29 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ITTestResourceConfiguration, ITestArtifactory } from ".";
 import { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
-import { IGivens, BaseCheck } from "./abstractBase";
+import { IGivens } from "./abstractBase";
 import { beforeAllProxy, afterAllProxy } from "./pmProxy";
 import { IPM } from "./types";
 
 export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   name: string;
   givens: IGivens<I>;
-  checks: BaseCheck<I>[];
   store: I["istore"];
   testResourceConfiguration: ITTestResourceConfiguration;
   index: number;
   failed: boolean;
   fails: number;
 
-  constructor(
-    name: string,
-    index: number,
-    givens: IGivens<I> = {},
-    checks: BaseCheck<I>[] = []
-  ) {
+  constructor(name: string, index: number, givens: IGivens<I> = {}) {
     this.name = name;
     this.index = index;
     this.givens = givens;
-    this.checks = checks;
     this.fails = 0;
   }
 
@@ -39,12 +33,10 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
 
   public toObj() {
     const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
-    const checks = Object.keys(this.checks).map((k) => this.checks[k].toObj());
 
     return {
       name: this.name,
       givens,
-      checks,
       fails: this.fails,
       failed: this.failed,
       features: this.features(),
@@ -114,18 +106,6 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
         });
     }
 
-    for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(
-        subject,
-        thater.name,
-        testResourceConfiguration,
-        this.assertThat,
-        suiteArtifactory,
-        tLog,
-        pm
-      );
-    }
-
     try {
       this.afterAll(
         this.store,
@@ -137,20 +117,6 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
       // this.fails.push(this);
       // return this;
     }
-
-    // @TODO fix me
-    // for (const k of Object.keys(this.givens)) {
-    //   const giver = this.givens[k];
-
-    //   try {
-    //     giver.afterAll(this.store, artifactory, pm);
-    //   } catch (e) {
-    //     console.error(e);
-    //     this.fails.push(giver);
-    //     return this;
-    //   }
-    // }
-    ////////////////
 
     return this;
   }

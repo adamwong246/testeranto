@@ -1,5 +1,4 @@
 import { MockCore } from "./MockCore";
-import { PassThrough } from "stream";
 export const implementation = {
     suites: {
         Default: "Testeranto test suite",
@@ -8,7 +7,7 @@ export const implementation = {
     givens: {
         Default: () => {
             return new MockCore({}, // input
-            specification, // testSpecification 
+            specification, // testSpecification
             implementation, // testImplementation
             { ports: [] }, // testResourceRequirement
             testInterface, // testInterface
@@ -23,7 +22,7 @@ export const implementation = {
         },
         WithCustomInterface: (customInterface) => {
             return new MockCore({}, specification, implementation, { ports: [] }, Object.assign(Object.assign({}, testInterface), customInterface), (cb) => cb());
-        }
+        },
     },
     whens: {
         addArtifact: (artifact) => (builder) => {
@@ -92,8 +91,5 @@ export const implementation = {
                 throw new Error(`Test run failed: ${e.message}`);
             }
         },
-    },
-    checks: {
-        Default: () => new PassThrough(),
     },
 };

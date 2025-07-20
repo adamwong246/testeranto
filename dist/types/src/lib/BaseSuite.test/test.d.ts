@@ -26,8 +26,6 @@ export type O = Ibdd_out<{
     TestThen: [];
     FeaturesIncludes: [feature: string];
     StoreValid: [];
-}, {
-    TestCheck: [];
 }>;
 export declare const specification: ITestSpecification<I, O>;
 export declare const implementation: ITestImplementation<I, O>;

@@ -34,11 +34,11 @@
     {
       "id": "",
       "location": {
-        "column": 57,
+        "column": 46,
         "file": "src/lib/core.ts",
         "length": 19,
-        "line": 11,
-        "lineText": "import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from \"./abstractBase.js\";",
+        "line": 20,
+        "lineText": "import { BaseGiven, BaseWhen, BaseThen } from \"./abstractBase.js\";",
         "namespace": "",
         "suggestion": ""
       },
@@ -49,11 +49,11 @@
     {
       "id": "",
       "location": {
-        "column": 57,
+        "column": 46,
         "file": "src/lib/core.ts",
         "length": 19,
-        "line": 11,
-        "lineText": "import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from \"./abstractBase.js\";",
+        "line": 20,
+        "lineText": "import { BaseGiven, BaseWhen, BaseThen } from \"./abstractBase.js\";",
         "namespace": "",
         "suggestion": ""
       },
@@ -67,7 +67,7 @@
         "column": 26,
         "file": "src/lib/core.ts",
         "length": 16,
-        "line": 22,
+        "line": 23,
         "lineText": "import { BaseSuite } from \"./BaseSuite.js\";",
         "namespace": "",
         "suggestion": ""
@@ -82,7 +82,7 @@
         "column": 26,
         "file": "src/lib/core.ts",
         "length": 16,
-        "line": 22,
+        "line": 23,
         "lineText": "import { BaseSuite } from \"./BaseSuite.js\";",
         "namespace": "",
         "suggestion": ""
@@ -95,7 +95,7 @@
   "metafile": {
     "inputs": {
       "src/lib/index.ts": {
-        "bytes": 3649,
+        "bytes": 3602,
         "imports": [
           {
             "path": "../PM/pure.js",
@@ -147,7 +147,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 7680,
+        "bytes": 6165,
         "imports": [
           {
             "path": ".",
@@ -168,7 +168,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 5308,
+        "bytes": 4846,
         "imports": [
           {
             "path": "stream",
@@ -199,7 +199,7 @@
         "format": "esm"
       },
       "src/lib/classBuilder.ts": {
-        "bytes": 3629,
+        "bytes": 3030,
         "imports": [
           {
             "path": "type-fest",
@@ -220,17 +220,12 @@
             "path": "./index.js",
             "kind": "import-statement",
             "external": true
-          },
-          {
-            "path": "./abstractBase.js",
-            "kind": "import-statement",
-            "external": true
           }
         ],
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 3942,
+        "bytes": 3208,
         "imports": [
           {
             "path": ".",
@@ -261,7 +256,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 4768,
+        "bytes": 3718,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -365,7 +360,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-        "bytes": 811,
+        "bytes": 802,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -381,17 +376,17 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 2054,
+        "bytes": 1917,
         "imports": [
-          {
-            "path": "src/lib/basebuilder.ts",
-            "kind": "import-statement",
-            "original": "../basebuilder"
-          },
           {
             "path": "../../CoreTypes",
             "kind": "import-statement",
             "external": true
+          },
+          {
+            "path": "src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "../basebuilder"
           },
           {
             "path": "../types",
@@ -407,13 +402,8 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 3514,
+        "bytes": 3194,
         "imports": [
-          {
-            "path": "stream",
-            "kind": "import-statement",
-            "external": true
-          },
           {
             "path": "../../CoreTypes",
             "kind": "import-statement",
@@ -497,13 +487,7 @@
     },
     "outputs": {
       "testeranto/bundles/pure/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure.mjs": {
-        "imports": [
-          {
-            "path": "stream",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
+        "imports": [],
         "exports": [
           "default"
         ],
@@ -516,19 +500,19 @@
             "bytesInOutput": 3236
           },
           "src/lib/abstractBase.ts": {
-            "bytesInOutput": 4598
+            "bytesInOutput": 3747
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2740
+            "bytesInOutput": 2618
           },
           "src/lib/classBuilder.ts": {
-            "bytesInOutput": 2266
+            "bytesInOutput": 1850
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2307
+            "bytesInOutput": 1927
           },
           "src/lib/core.ts": {
-            "bytesInOutput": 2690
+            "bytesInOutput": 2007
           },
           "src/PM/index.ts": {
             "bytesInOutput": 20
@@ -540,13 +524,13 @@
             "bytesInOutput": 870
           },
           "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-            "bytesInOutput": 657
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 2903
+            "bytesInOutput": 650
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 970
+            "bytesInOutput": 927
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
+            "bytesInOutput": 2595
           },
           "src/lib/baseBuilder.test/baseBuilder.test.interface.ts": {
             "bytesInOutput": 375
@@ -555,7 +539,7 @@
             "bytesInOutput": 133
           }
         },
-        "bytes": 28297
+        "bytes": 25423
       }
     }
   }

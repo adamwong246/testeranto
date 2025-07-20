@@ -1,6 +1,6 @@
 import net from "net";
+
 import { ITTestResourceConfiguration } from "../../lib";
-import { PM_Pure_Sidecar } from "../pureSidecar";
 import Testeranto from "../../Node";
 import {
   Ibdd_out,
@@ -8,6 +8,8 @@ import {
   ITestImplementation,
   Ibdd_in_any,
 } from "../../CoreTypes";
+
+import { PM_Pure_Sidecar } from "../pureSidecar";
 
 type O = Ibdd_out<
   {
@@ -23,9 +25,6 @@ type O = Ibdd_out<
   {
     MessageReceived: [string];
     ListenersCleaned: [];
-  },
-  {
-    SidecarState: unknown;
   }
 >;
 
@@ -36,22 +35,18 @@ const specification: ITestSpecification<Ibdd_in_any, O> = (
   Then
 ) => {
   return [
-    Suite.SidecarInitialized(
-      "Pure Sidecar message passing works correctly",
-      {
-        basicSend: Given.SidecarReady(
-          ["can send and receive messages"],
-          [When.SendTestMessage("test-message")],
-          [Then.MessageReceived("test-message")]
-        ),
-        cleanup: Given.SidecarReady(
-          ["cleans up listeners after message"],
-          [When.VerifyCleanup()],
-          [Then.ListenersCleaned()]
-        ),
-      },
-      []
-    ),
+    Suite.SidecarInitialized("Pure Sidecar message passing works correctly", {
+      basicSend: Given.SidecarReady(
+        ["can send and receive messages"],
+        [When.SendTestMessage("test-message")],
+        [Then.MessageReceived("test-message")]
+      ),
+      cleanup: Given.SidecarReady(
+        ["cleans up listeners after message"],
+        [When.VerifyCleanup()],
+        [Then.ListenersCleaned()]
+      ),
+    }),
   ];
 };
 
@@ -119,7 +114,6 @@ const implementation: ITestImplementation<I, O> = {
         return result;
       },
   },
-  checks: { SidecarState: () => "unknown" },
 };
 
 const testInterface: IPartialNodeInterface<I> = {

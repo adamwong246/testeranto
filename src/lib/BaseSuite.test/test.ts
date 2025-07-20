@@ -8,7 +8,7 @@ import {
 } from "../../CoreTypes";
 import { WhenSpecification } from "../../Types";
 import { BaseSuite } from "../BaseSuite";
-import { IPM, ITestCheckCallback } from "../types";
+import { IPM } from "../types";
 import { MockSuite } from "./mock";
 
 // 1. Define our test types with full type safety
@@ -48,9 +48,6 @@ export type O = Ibdd_out<
     TestThen: []; // Then assertions
     FeaturesIncludes: [feature: string];
     StoreValid: [];
-  },
-  {
-    TestCheck: []; // Check validations
   }
 >;
 
@@ -59,63 +56,48 @@ export const specification: ITestSpecification<I, O> = (
   Suite: ITestSpecification<I, O>,
   Given: WhenSpecification<I, O>,
   When: WhenSpecification<I, O>,
-  Then: WhenSpecification<I, O>,
-  Check: ITestCheckCallback<I, O>
+  Then: WhenSpecification<I, O>
 ) => [
-  Suite.Default(
-    "BaseSuite Core Functionality Tests",
-    {
-      // Test initialization and basic properties
-      initialization: Given.Default(
-        ["BaseSuite should initialize with correct name and index"],
-        [],
-        [
-          Then.SuiteNameMatches("testSuite"),
-          Then.SuiteIndexMatches(0),
-          Then.FeaturesIncludes("testFeature"),
-        ]
-      ),
+  Suite.Default("BaseSuite Core Functionality Tests", {
+    // Test initialization and basic properties
+    initialization: Given.Default(
+      ["BaseSuite should initialize with correct name and index"],
+      [],
+      [
+        Then.SuiteNameMatches("testSuite"),
+        Then.SuiteIndexMatches(0),
+        Then.FeaturesIncludes("testFeature"),
+      ]
+    ),
 
-      // Test execution flow
-      execution: Given.Default(
-        ["BaseSuite should execute all phases successfully"],
-        [When.RunSuite()],
-        [Then.StoreValid(), Then.NoErrorsOccurred(), Then.AllChecksCompleted()]
-      ),
+    // Test execution flow
+    execution: Given.Default(
+      ["BaseSuite should execute all phases successfully"],
+      [When.RunSuite()],
+      [Then.StoreValid(), Then.NoErrorsOccurred()]
+    ),
 
-      // Test multiple features
-      multipleFeatures: Given.Default(
-        ["BaseSuite should handle multiple features"],
-        [When.AddFeature("additionalFeature")],
-        [
-          Then.FeaturesIncludes("testFeature"),
-          Then.FeaturesIncludes("additionalFeature"),
-          Then.FeatureCountMatches(2),
-        ]
-      ),
+    // Test multiple features
+    multipleFeatures: Given.Default(
+      ["BaseSuite should handle multiple features"],
+      [When.AddFeature("additionalFeature")],
+      [
+        Then.FeaturesIncludes("testFeature"),
+        Then.FeaturesIncludes("additionalFeature"),
+        Then.FeatureCountMatches(2),
+      ]
+    ),
 
-      // Test error handling
-      errorHandling: Given.Default(
-        ["BaseSuite should handle errors gracefully"],
-        [When.RunSuiteWithError()],
-        [
-          Then.ErrorCountMatches(1),
-          // Then.FailedFlagSet(),
-        ]
-      ),
-    },
-    [
-      // Additional validation checks
-      // Check.Default(
-      //   ["Verify suite state after all tests"],
-      //   [],
-      //   [
-      //     Then.AllTestsCompleted(),
-      //     Then.CleanExit()
-      //   ]
-      // )
-    ]
-  ),
+    // Test error handling
+    errorHandling: Given.Default(
+      ["BaseSuite should handle errors gracefully"],
+      [When.RunSuiteWithError()],
+      [
+        Then.ErrorCountMatches(1),
+        // Then.FailedFlagSet(),
+      ]
+    ),
+  }),
 
   Suite.Default("Comprehensive Integration", {
     fullStackTest: Given.Default(
@@ -291,14 +273,6 @@ export const implementation: ITestImplementation<I, O> = {
         return suite;
       },
 
-    AllChecksCompleted:
-      (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
-        if (suite.checks.some((check) => !check.key)) {
-          throw new Error("Expected all checks to be completed");
-        }
-        return suite;
-      },
-
     AllTestsCompleted:
       (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
         if (!suite.store) {
@@ -313,10 +287,6 @@ export const implementation: ITestImplementation<I, O> = {
       }
       return suite;
     },
-  },
-
-  checks: {
-    Default: (): MockSuite => new MockSuite("testCheck", 1),
   },
 };
 

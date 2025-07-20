@@ -1,6 +1,4 @@
-export const specification = (Suite, Given, When, Then, Check) => {
-    console.log("Then", Then);
-    debugger;
+export const specification = (Suite, Given, When, Then) => {
     return [
         Suite.Default("Basic ClassBuilder Functionality", {
             // Basic initialization tests
@@ -40,7 +38,6 @@ export const specification = (Suite, Given, When, Then, Check) => {
             //     Then.givensOverridesConfigured(),
             //     Then.whensOverridesConfigured(),
             //     Then.thensOverridesConfigured(),
-            //     Then.checksOverridesConfigured(),
             //   ]
             // ),
         }, []),

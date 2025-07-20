@@ -1,11 +1,12 @@
-import { BaseBuilder } from "../basebuilder";
 import { Ibdd_in_any, Ibdd_out_any, ITestSpecification } from "../../CoreTypes";
+
+import { BaseBuilder } from "../basebuilder";
+
 import {
   ISuiteKlasser,
   IGivenKlasser,
   IWhenKlasser,
   IThenKlasser,
-  ICheckKlasser,
 } from "../types";
 import { ITTestResourceRequest } from "..";
 
@@ -26,8 +27,7 @@ export class MockBaseBuilder<
   SuiteExtensions,
   GivenExtensions,
   WhenExtensions,
-  ThenExtensions,
-  CheckExtensions
+  ThenExtensions
 > {
   public summary: Record<string, any> = {};
 
@@ -40,7 +40,6 @@ export class MockBaseBuilder<
     givenOverrides: Record<keyof GivenExtensions, IGivenKlasser<I>> = {} as any,
     whenOverrides: Record<keyof WhenExtensions, IWhenKlasser<I>> = {} as any,
     thenOverrides: Record<keyof ThenExtensions, IThenKlasser<I>> = {} as any,
-    checkOverrides: Record<keyof CheckExtensions, ICheckKlasser<I>> = {} as any,
     testResourceRequirement: ITTestResourceRequest = { ports: [] },
     testSpecification: ITestSpecification<I, O> = () => []
   ) {
@@ -50,7 +49,6 @@ export class MockBaseBuilder<
       givenOverrides,
       whenOverrides,
       thenOverrides,
-      checkOverrides,
       testResourceRequirement,
       testSpecification
     );

@@ -1,18 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ClassBuilder } from "../classBuilder";
+
 import {
   Ibdd_in_any,
   Ibdd_out_any,
   ITestImplementation,
   ITestSpecification,
 } from "../../CoreTypes";
+
+import { ClassBuilder } from "../classBuilder";
+
 import {
   ISuiteKlasser,
   IGivenKlasser,
   IWhenKlasser,
   IThenKlasser,
-  ICheckKlasser,
 } from "../types";
+
 import { ITTestResourceRequest } from "..";
 
 /**
@@ -36,7 +39,6 @@ export default class TestClassBuilderMock<
     givenKlasser: IGivenKlasser<I>,
     whenKlasser: IWhenKlasser<I>,
     thenKlasser: IThenKlasser<I>,
-    checkKlasser: ICheckKlasser<I>,
     testResourceRequirement: ITTestResourceRequest
   ) {
     super(
@@ -47,7 +49,6 @@ export default class TestClassBuilderMock<
       givenKlasser,
       whenKlasser,
       thenKlasser,
-      checkKlasser,
       testResourceRequirement
     );
   }

@@ -33,7 +33,6 @@ export type O = Ibdd_out<{
     givensOverridesConfigured: [];
     whensOverridesConfigured: [];
     thensOverridesConfigured: [];
-    checksOverridesConfigured: [];
     specsModified: [expectedCount: number];
     jobsModified: [expectedCount: number];
     errorThrown: [expectedMessage: string];

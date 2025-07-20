@@ -17,8 +17,8 @@ const implementation = {
             proxies: {
                 butThenProxy: (pm, path) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => pm.writeFileSync(`${path}/butThen/${p}`, c) })),
                 andWhenProxy: (pm, path) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => pm.writeFileSync(`${path}/andWhen/${p}`, c) })),
-                beforeEachProxy: (pm, suite) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => pm.writeFileSync(`suite-${suite}/beforeEach/${p}`, c) }))
-            }
+                beforeEachProxy: (pm, suite) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => pm.writeFileSync(`suite-${suite}/beforeEach/${p}`, c) })),
+            },
         }),
     },
     whens: {
@@ -88,12 +88,9 @@ const implementation = {
             return store;
         },
     },
-    checks: {
-        Default: () => ({}),
-    },
 };
 // Specification for PureTesteranto tests
-const specification = (Suite, Given, When, Then, Check) => [
+const specification = (Suite, Given, When, Then) => [
     Suite.Default("Core Functionality", {
         initializationTest: Given.Default(["Should initialize with default configuration"], [], [Then.verifyNoProxy()]),
         resourceConfigTest: Given.Default(["Should handle test resource configuration"], [When.applyProxy("resourceConfig")], [Then.verifyResourceConfig()]),
@@ -111,23 +108,18 @@ const specification = (Suite, Given, When, Then, Check) => [
         multipleProxiesTest: Given.Default(["Should handle multiple proxies efficiently"], [
             When.applyProxy("butThenProxy"),
             When.applyProxy("andWhenProxy"),
-            When.applyProxy("beforeEachProxy")
+            When.applyProxy("beforeEachProxy"),
         ], [
             Then.verifyProxy("test/path/butThen/expected"),
             Then.verifyProxy("test/path/andWhen/expected"),
-            Then.verifyProxy("suite-1/beforeEach/expected")
+            Then.verifyProxy("suite-1/beforeEach/expected"),
         ]),
         largePayloadTest: Given.Default(["Should handle large payloads"], [When.applyProxy("largePayload")], [Then.verifyLargePayload()]),
     }),
     Suite.Default("Cross-Component Verification", {
-        proxyChainTest: Given.Default(["Proxies should chain correctly"], [
-            When.applyProxy("butThenProxy"),
-            When.applyProxy("andWhenProxy")
-        ], [
-            Then.verifyProxy("test/path/andWhen/butThen/expected")
-        ]),
+        proxyChainTest: Given.Default(["Proxies should chain correctly"], [When.applyProxy("butThenProxy"), When.applyProxy("andWhenProxy")], [Then.verifyProxy("test/path/andWhen/butThen/expected")]),
         errorPropagationTest: Given.Default(["Errors should propagate across components"], [When.applyProxy("invalidConfig")], [Then.verifyError("Invalid configuration")]),
-        resourceSharingTest: Given.Default(["Resources should be shared correctly"], [When.applyProxy("resourceConfig")], [Then.verifyResourceConfig()])
+        resourceSharingTest: Given.Default(["Resources should be shared correctly"], [When.applyProxy("resourceConfig")], [Then.verifyResourceConfig()]),
     }),
     Suite.Default("Type Safety", {
         strictTypeTest: Given.Default(["Should enforce type safety"], [When.applyProxy("typeSafe")], [Then.verifyTypeSafety()]),
@@ -139,21 +131,17 @@ const specification = (Suite, Given, When, Then, Check) => [
             Then.initializedProperly(),
             Then.specsGenerated(),
             Then.jobsCreated(),
-            Then.artifactsTracked()
+            Then.artifactsTracked(),
         ]),
-        // Verify PM proxy integration  
+        // Verify PM proxy integration
         pmProxyIntegration: Given.Default(["PM proxies should work with test runners"], [When.applyProxy("butThenProxy")], [Then.verifyProxy("test/path/butThen/expected")]),
         // Verify full test lifecycle
         fullLifecycle: Given.Default(["Should complete full test lifecycle"], [
             When.addArtifact(Promise.resolve("test")),
             When.setTestJobs([]),
-            When.modifySpecs((specs) => [...specs])
-        ], [
-            Then.testRunSuccessful(),
-            Then.artifactsTracked(),
-            Then.specsModified(0)
-        ])
-    })
+            When.modifySpecs((specs) => [...specs]),
+        ], [Then.testRunSuccessful(), Then.artifactsTracked(), Then.specsModified(0)]),
+    }),
 ];
 // Test interface for PureTesteranto
 const testInterface = {

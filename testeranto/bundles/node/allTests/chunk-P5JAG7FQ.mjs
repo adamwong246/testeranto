@@ -2,7 +2,7 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 
 // src/lib/basebuilder.ts
 var BaseBuilder = class {
-  constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, testResourceRequirement, testSpecification) {
+  constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, testResourceRequirement, testSpecification) {
     this.artifacts = [];
     this.artifacts = [];
     this.testResourceRequirement = testResourceRequirement;
@@ -10,14 +10,12 @@ var BaseBuilder = class {
     this.givenOverides = givenOverides;
     this.whenOverides = whenOverides;
     this.thenOverides = thenOverides;
-    this.checkOverides = checkOverides;
     this.testSpecification = testSpecification;
     this.specs = testSpecification(
       this.Suites(),
       this.Given(),
       this.When(),
-      this.Then(),
-      this.Check()
+      this.Then()
     );
     this.testJobs = this.specs.map((suite) => {
       const suiteRunner = (suite2) => async (puppetMaster, tLog) => {
@@ -92,22 +90,18 @@ var BaseBuilder = class {
   Then() {
     return this.thenOverides;
   }
-  Check() {
-    return this.checkOverides;
-  }
 };
 
 // src/lib/classBuilder.ts
 var ClassBuilder = class extends BaseBuilder {
-  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement) {
+  constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, testResourceRequirement) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
       (a, [key], index) => {
-        a[key] = (somestring, givens, checks) => {
+        a[key] = (somestring, givens) => {
           return new suiteKlasser.prototype.constructor(
             somestring,
             index,
-            givens,
-            checks
+            givens
           );
         };
         return a;
@@ -156,27 +150,12 @@ var ClassBuilder = class extends BaseBuilder {
       },
       {}
     );
-    const classyChecks = Object.entries(testImplementation.checks).reduce(
-      (a, [key, chEck]) => {
-        a[key] = (name, features, checker) => {
-          return new checkKlasser.prototype.constructor(
-            key,
-            features,
-            chEck,
-            checker
-          );
-        };
-        return a;
-      },
-      {}
-    );
     super(
       input,
       classySuites,
       classyGivens,
       classyWhens,
       classyThens,
-      classyChecks,
       testResourceRequirement,
       testSpecification
     );
@@ -526,54 +505,14 @@ var BaseThen = class {
       throw e;
     });
   }
-  check() {
-  }
-};
-var BaseCheck = class {
-  constructor(name, features, checker, x, checkCB) {
-    this.name = name;
-    this.features = features;
-    this.checkCB = checkCB;
-    this.checker = checker;
-  }
-  toObj() {
-    return {
-      key: this.key,
-      name: this.name,
-      // functionAsString: this.checkCB.toString(),
-      features: this.features
-    };
-  }
-  async afterEach(store, key, artifactory, pm) {
-    return store;
-  }
-  beforeAll(store) {
-    return store;
-  }
-  async check(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm) {
-    this.key = key;
-    tLog(`
- Check: ${this.name}`);
-    this.store = await this.checkThat(
-      subject,
-      testResourceConfiguration,
-      artifactory,
-      this.checkCB,
-      this.initialValues,
-      pm
-    );
-    await this.checker(this.store, pm);
-    return;
-  }
 };
 
 // src/lib/BaseSuite.ts
 var BaseSuite = class {
-  constructor(name, index, givens = {}, checks = []) {
+  constructor(name, index, givens = {}) {
     this.name = name;
     this.index = index;
     this.givens = givens;
-    this.checks = checks;
     this.fails = 0;
   }
   features() {
@@ -584,11 +523,9 @@ var BaseSuite = class {
   }
   toObj() {
     const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
-    const checks = Object.keys(this.checks).map((k) => this.checks[k].toObj());
     return {
       name: this.name,
       givens,
-      checks,
       fails: this.fails,
       failed: this.failed,
       features: this.features()
@@ -631,17 +568,6 @@ var BaseSuite = class {
         console.error("Given error 1:", e);
         throw e;
       });
-    }
-    for (const [ndx, thater] of this.checks.entries()) {
-      await thater.check(
-        subject,
-        thater.name,
-        testResourceConfiguration,
-        this.assertThat,
-        suiteArtifactory,
-        tLog,
-        pm
-      );
     }
     try {
       this.afterAll(
@@ -720,26 +646,6 @@ var TesterantoCore = class extends ClassBuilder {
           );
         }
       },
-      class Check extends BaseCheck {
-        constructor(name, features, checkCallback, x, i, c) {
-          super(name, features, checkCallback, x, c);
-          this.initialValues = i;
-        }
-        async checkThat(subject, testResourceConfiguration, artifactory, initializer, initialValues, pm) {
-          return fullTestInterface.beforeEach(
-            subject,
-            initializer,
-            testResourceConfiguration,
-            initialValues,
-            pm
-          );
-        }
-        afterEach(store, key, artifactory, pm) {
-          return new Promise(
-            (res) => res(fullTestInterface.afterEach(store, key, pm))
-          );
-        }
-      },
       testResourceRequirement
     );
   }
@@ -754,7 +660,6 @@ export {
   BaseGiven,
   BaseWhen,
   BaseThen,
-  BaseCheck,
   BaseBuilder,
   ClassBuilder,
   BaseSuite,

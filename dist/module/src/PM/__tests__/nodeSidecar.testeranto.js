@@ -5,7 +5,7 @@ const specification = (Suite, Given, When, Then) => {
         Suite.SidecarInitialized("Sidecar message passing works correctly", {
             basicSend: Given.SidecarReady(["can send and receive messages"], [When.SendTestMessage("test-message")], [Then.MessageReceived("test-message")]),
             cleanup: Given.SidecarReady(["cleans up listeners after message"], [When.VerifyCleanup()], [Then.ListenersCleaned()]),
-        }, []),
+        }),
     ];
 };
 const implementation = {
@@ -79,7 +79,6 @@ const implementation = {
             return result;
         },
     },
-    checks: { SidecarState: () => "unknown" },
 };
 const testInterface = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {

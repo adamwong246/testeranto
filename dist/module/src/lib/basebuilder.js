@@ -3,7 +3,7 @@
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class BaseBuilder {
-    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, checkOverides, testResourceRequirement, testSpecification) {
+    constructor(input, suitesOverrides, givenOverides, whenOverides, thenOverides, testResourceRequirement, testSpecification) {
         this.artifacts = [];
         this.artifacts = [];
         this.testResourceRequirement = testResourceRequirement;
@@ -11,9 +11,8 @@ export class BaseBuilder {
         this.givenOverides = givenOverides;
         this.whenOverides = whenOverides;
         this.thenOverides = thenOverides;
-        this.checkOverides = checkOverides;
         this.testSpecification = testSpecification;
-        this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then(), this.Check());
+        this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then());
         this.testJobs = this.specs.map((suite) => {
             const suiteRunner = (suite) => async (puppetMaster, tLog) => {
                 const x = await suite.run(input, puppetMaster.testResourceConfiguration, (fPath, value) => puppetMaster.testArtiFactoryfileWriter(tLog, (p) => {
@@ -74,8 +73,5 @@ export class BaseBuilder {
     }
     Then() {
         return this.thenOverides;
-    }
-    Check() {
-        return this.checkOverides;
     }
 }

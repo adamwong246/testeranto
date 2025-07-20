@@ -15,22 +15,6 @@ src/lib/BaseSuite.test/mock.ts
 54:5 'thenCB' is defined but never used. (@typescript-eslint/no-unused-vars)
 55:5 'testResourceConfiguration' is defined but never used. (@typescript-eslint/no-unused-vars)
 56:5 'pm' is defined but never used. (@typescript-eslint/no-unused-vars)
-64:5 'subject' is defined but never used. (@typescript-eslint/no-unused-vars)
-65:5 'testResourceConfiguration' is defined but never used. (@typescript-eslint/no-unused-vars)
-66:5 'artifactory' is defined but never used. (@typescript-eslint/no-unused-vars)
-67:5 'initializer' is defined but never used. (@typescript-eslint/no-unused-vars)
-67:18 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-68:5 'initialValues' is defined but never used. (@typescript-eslint/no-unused-vars)
-68:20 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-69:5 'pm' is defined but never used. (@typescript-eslint/no-unused-vars)
 
 src/lib/classBuilder.test/classBuilder.test.interface.ts
 18:16 'x' is defined but never used. (@typescript-eslint/no-unused-vars)
-
-src/lib/classBuilder.test/classBuilder.test.specification.ts
-9:3 'Check' is defined but never used. (@typescript-eslint/no-unused-vars)
-12:3 Unexpected 'debugger' statement. (no-debugger)

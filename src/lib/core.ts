@@ -1,16 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  DefaultTestInterface,
-  IFinalResults,
-  ITTestResourceConfiguration,
-  ITTestResourceRequest,
-  ITestArtifactory,
-  defaultTestResourceRequirement,
-} from "./index.js";
-import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase.js";
-import { ClassBuilder } from "./classBuilder.js";
-import { IPM } from "./types";
 
 import type {
   Ibdd_in_any,
@@ -19,6 +8,18 @@ import type {
   ITestInterface,
   ITestSpecification,
 } from "../CoreTypes";
+
+import {
+  DefaultTestInterface,
+  IFinalResults,
+  ITTestResourceConfiguration,
+  ITTestResourceRequest,
+  ITestArtifactory,
+  defaultTestResourceRequirement,
+} from "./index.js";
+import { BaseGiven, BaseWhen, BaseThen } from "./abstractBase.js";
+import { ClassBuilder } from "./classBuilder.js";
+import { IPM } from "./types";
 import { BaseSuite } from "./BaseSuite.js";
 
 export default abstract class TesterantoCore<
@@ -34,7 +35,6 @@ export default abstract class TesterantoCore<
       givens: Record<string, any>;
       whens: Record<string, any>;
       thens: Record<string, any>;
-      checks: Record<string, any>;
     },
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
     testInterface: Partial<ITestInterface<I>>,
@@ -135,50 +135,6 @@ export default abstract class TesterantoCore<
             thenCB,
             testResource,
             pm
-          );
-        }
-      } as any,
-
-      class Check extends BaseCheck<I> {
-        initialValues: any;
-
-        constructor(
-          name: string,
-          features: string[],
-          checkCallback: (s: I["istore"], pm: IPM) => any,
-          x,
-          i,
-          c
-        ) {
-          super(name, features, checkCallback, x, c);
-          this.initialValues = i;
-        }
-
-        async checkThat(
-          subject,
-          testResourceConfiguration,
-          artifactory,
-          initializer,
-          initialValues,
-          pm
-        ) {
-          return fullTestInterface.beforeEach(
-            subject,
-            initializer,
-            testResourceConfiguration,
-            initialValues,
-            pm
-          );
-        }
-
-        afterEach(
-          store: I["istore"],
-          key: string,
-          artifactory,
-          pm
-        ): Promise<unknown> {
-          return new Promise((res) =>
-            res(fullTestInterface.afterEach(store, key, pm))
           );
         }
       } as any,

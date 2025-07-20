@@ -37,7 +37,6 @@ const implementation = {
             throw new Error("Function not implemented.");
         },
     },
-    checks: { AnEmptyState: () => "any" },
 };
 const testInterface = {
     // assertThis: function (x: any) {

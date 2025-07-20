@@ -17,10 +17,9 @@ import {
   IGivenKlasser,
   IWhenKlasser,
   IThenKlasser,
-  ICheckKlasser,
   IPM,
 } from "./types.js";
-import { BaseCheck, BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
+import { BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
 import { BaseSuite } from "./BaseSuite";
 
 export abstract class BaseBuilder<
@@ -29,8 +28,7 @@ export abstract class BaseBuilder<
   SuiteExtensions,
   GivenExtensions,
   WhenExtensions,
-  ThenExtensions,
-  CheckExtensions
+  ThenExtensions
 > {
   specs: any;
 
@@ -44,7 +42,6 @@ export abstract class BaseBuilder<
   givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>;
   whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>;
   thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>;
-  checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I>>;
   puppetMaster: IPM;
 
   constructor(
@@ -53,7 +50,6 @@ export abstract class BaseBuilder<
     givenOverides: Record<keyof GivenExtensions, IGivenKlasser<I>>,
     whenOverides: Record<keyof WhenExtensions, IWhenKlasser<I>>,
     thenOverides: Record<keyof ThenExtensions, IThenKlasser<I>>,
-    checkOverides: Record<keyof CheckExtensions, ICheckKlasser<I>>,
     testResourceRequirement: ITTestResourceRequest,
     testSpecification: any
   ) {
@@ -63,15 +59,13 @@ export abstract class BaseBuilder<
     this.givenOverides = givenOverides;
     this.whenOverides = whenOverides;
     this.thenOverides = thenOverides;
-    this.checkOverides = checkOverides;
     this.testSpecification = testSpecification;
 
     this.specs = testSpecification(
       this.Suites(),
       this.Given(),
       this.When(),
-      this.Then(),
-      this.Check()
+      this.Then()
     );
 
     this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
@@ -186,18 +180,5 @@ export abstract class BaseBuilder<
     (selection: I["iselection"], expectation: any) => BaseThen<I>
   > {
     return this.thenOverides;
-  }
-
-  Check(): Record<
-    keyof CheckExtensions,
-    (
-      feature: string,
-      callback: (whens, thens, pm: IPM) => any,
-      whens,
-      thens,
-      x
-    ) => BaseCheck<I>
-  > {
-    return this.checkOverides;
   }
 }

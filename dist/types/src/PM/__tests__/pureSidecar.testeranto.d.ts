@@ -9,8 +9,6 @@ type O = Ibdd_out<{
 }, {
     MessageReceived: [string];
     ListenersCleaned: [];
-}, {
-    SidecarState: unknown;
 }>;
 declare const _default: Promise<import("../../lib/core").default<I, O, {
     whens: import("../../Types").TestWhenImplementation<I, O>;

@@ -3,8 +3,8 @@ import { BaseBuilder } from "../basebuilder";
  * Concrete implementation of BaseBuilder for testing purposes only
  */
 export class MockBaseBuilder extends BaseBuilder {
-    constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, checkOverrides = {}, testResourceRequirement = { ports: [] }, testSpecification = () => []) {
-        super(input, suitesOverrides, givenOverrides, whenOverrides, thenOverrides, checkOverrides, testResourceRequirement, testSpecification);
+    constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, testResourceRequirement = { ports: [] }, testSpecification = () => []) {
+        super(input, suitesOverrides, givenOverrides, whenOverrides, thenOverrides, testResourceRequirement, testSpecification);
         this.summary = {};
         this.summary = {};
     }

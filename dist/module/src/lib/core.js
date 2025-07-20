@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefaultTestInterface, defaultTestResourceRequirement, } from "./index.js";
-import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "./abstractBase.js";
+import { BaseGiven, BaseWhen, BaseThen } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
 import { BaseSuite } from "./BaseSuite.js";
 export default class TesterantoCore extends ClassBuilder {
@@ -38,17 +38,6 @@ export default class TesterantoCore extends ClassBuilder {
         }, class Then extends BaseThen {
             async butThen(store, thenCB, testResource, pm) {
                 return await fullTestInterface.butThen(store, thenCB, testResource, pm);
-            }
-        }, class Check extends BaseCheck {
-            constructor(name, features, checkCallback, x, i, c) {
-                super(name, features, checkCallback, x, c);
-                this.initialValues = i;
-            }
-            async checkThat(subject, testResourceConfiguration, artifactory, initializer, initialValues, pm) {
-                return fullTestInterface.beforeEach(subject, initializer, testResourceConfiguration, initialValues, pm);
-            }
-            afterEach(store, key, artifactory, pm) {
-                return new Promise((res) => res(fullTestInterface.afterEach(store, key, pm)));
             }
         }, testResourceRequirement);
     }

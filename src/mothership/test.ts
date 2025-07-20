@@ -41,9 +41,6 @@ type O = Ibdd_out<
   {
     TheResourceIsClaimed: [string];
     TheResourceIsUnClaimed: [string];
-  },
-  {
-    AnEmptyState;
   }
 >;
 
@@ -99,7 +96,6 @@ const implementation: ITestImplementation<I, O> = {
       throw new Error("Function not implemented.");
     },
   },
-  checks: { AnEmptyState: () => "any" },
 };
 
 const testInterface: IPartialNodeInterface<I> = {

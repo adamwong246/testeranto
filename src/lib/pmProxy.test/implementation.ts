@@ -1,8 +1,9 @@
-import { I, M, O } from "./types";
 import { ITestImplementation } from "../../CoreTypes";
-// import { ITestProxies } from ".";
+
 import { IPM } from "../types";
 import { IProxiedFunctions, IProxy } from "../pmProxy";
+
+import { I, M, O } from "./types";
 import { MockPMBase } from "./mockPMBase";
 
 export const implementation: ITestImplementation<I, O, M> = {
@@ -27,18 +28,23 @@ export const implementation: ITestImplementation<I, O, M> = {
 
         let actualPath: string;
         let actualContent: any;
-        
+
         try {
           switch (method) {
             case "writeFileSync":
-              const content = expectedPath.includes('content') ? 
-                "test content" : "default content";
+              const content = expectedPath.includes("content")
+                ? "test content"
+                : "default content";
               proxiedPm.writeFileSync(
-                expectedPath.includes('empty') ? "" : 
-                expectedPath.includes('nested') ? "nested/folder/test.txt" :
-                expectedPath.includes('spaces') ? "file with spaces.txt" :
-                expectedPath.includes('invalid') ? "../invalid.txt" :
-                "test.txt", 
+                expectedPath.includes("empty")
+                  ? ""
+                  : expectedPath.includes("nested")
+                  ? "nested/folder/test.txt"
+                  : expectedPath.includes("spaces")
+                  ? "file with spaces.txt"
+                  : expectedPath.includes("invalid")
+                  ? "../invalid.txt"
+                  : "test.txt",
                 content
               );
               actualPath = mockPm.getLastCall("writeFileSync")?.path;
@@ -47,18 +53,18 @@ export const implementation: ITestImplementation<I, O, M> = {
 
             case "createWriteStream":
               proxiedPm.createWriteStream(
-                expectedPath.includes('empty') ? "" : "stream.txt"
+                expectedPath.includes("empty") ? "" : "stream.txt"
               );
               actualPath = mockPm.getLastCall("createWriteStream")?.path;
               break;
 
             case "screencast":
               proxiedPm.screencast(
-                { 
+                {
                   path: "screen.png",
                   quality: 80,
-                  fullPage: true 
-                }, 
+                  fullPage: true,
+                },
                 "test"
               );
               actualPath = mockPm.getLastCall("screencast")?.opts?.path;
@@ -66,10 +72,7 @@ export const implementation: ITestImplementation<I, O, M> = {
               break;
 
             case "customScreenShot":
-              proxiedPm.customScreenShot(
-                { path: "shot.png" }, 
-                "test"
-              );
+              proxiedPm.customScreenShot({ path: "shot.png" }, "test");
               actualPath = mockPm.getLastCall("customScreenShot")?.opts?.path;
               break;
 
@@ -91,14 +94,12 @@ export const implementation: ITestImplementation<I, O, M> = {
       const actualContent = result[2];
       if (JSON.stringify(actualContent) !== JSON.stringify(expectedContent)) {
         throw new Error(
-          `Content mismatch. Expected: ${JSON.stringify(expectedContent)}, Got: ${JSON.stringify(actualContent)}`
+          `Content mismatch. Expected: ${JSON.stringify(
+            expectedContent
+          )}, Got: ${JSON.stringify(actualContent)}`
         );
       }
       return result;
     },
-  },
-
-  checks: {
-    Default: (s: string) => s,
   },
 };

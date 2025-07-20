@@ -165,12 +165,6 @@ export const implementation: ITestImplementation<I, O, M> = {
       }
       return builder;
     },
-    checksOverridesConfigured: () => (builder) => {
-      if (!builder.checkOverides) {
-        throw new Error("Checks overrides not configured");
-      }
-      return builder;
-    },
     specsModified: (expectedCount: number) => (builder) => {
       if (builder.specs.length <= expectedCount) {
         throw new Error(`Expected at least ${expectedCount} modified specs`);
@@ -201,9 +195,5 @@ export const implementation: ITestImplementation<I, O, M> = {
         throw new Error(`Test run failed: ${e.message}`);
       }
     },
-  },
-
-  checks: {
-    Default: () => new PassThrough(),
   },
 };

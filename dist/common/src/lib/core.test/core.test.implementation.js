@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.implementation = void 0;
 const MockCore_1 = require("./MockCore");
-const stream_1 = require("stream");
 exports.implementation = {
     suites: {
         Default: "Testeranto test suite",
@@ -11,7 +10,7 @@ exports.implementation = {
     givens: {
         Default: () => {
             return new MockCore_1.MockCore({}, // input
-            specification, // testSpecification 
+            specification, // testSpecification
             exports.implementation, // testImplementation
             { ports: [] }, // testResourceRequirement
             testInterface, // testInterface
@@ -26,7 +25,7 @@ exports.implementation = {
         },
         WithCustomInterface: (customInterface) => {
             return new MockCore_1.MockCore({}, specification, exports.implementation, { ports: [] }, Object.assign(Object.assign({}, testInterface), customInterface), (cb) => cb());
-        }
+        },
     },
     whens: {
         addArtifact: (artifact) => (builder) => {
@@ -95,8 +94,5 @@ exports.implementation = {
                 throw new Error(`Test run failed: ${e.message}`);
             }
         },
-    },
-    checks: {
-        Default: () => new stream_1.PassThrough(),
     },
 };

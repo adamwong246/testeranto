@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.specification = void 0;
-const specification = (Suite, Given, When, Then, Check) => {
-    console.log("Then", Then);
-    debugger;
+const specification = (Suite, Given, When, Then) => {
     return [
         Suite.Default("Basic ClassBuilder Functionality", {
             // Basic initialization tests
@@ -43,7 +41,6 @@ const specification = (Suite, Given, When, Then, Check) => {
             //     Then.givensOverridesConfigured(),
             //     Then.whensOverridesConfigured(),
             //     Then.thensOverridesConfigured(),
-            //     Then.checksOverridesConfigured(),
             //   ]
             // ),
         }, []),

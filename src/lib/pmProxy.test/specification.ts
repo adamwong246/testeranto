@@ -1,37 +1,57 @@
-import { I, O } from "./types";
 import { ITestSpecification } from "../../CoreTypes";
+
+import { I, O } from "./types";
 
 export const specification: ITestSpecification<I, O> = (
   Suite,
   Given,
   When,
-  Then,
-  Check
+  Then
 ) => [
   Suite.Default("PM Proxy Functionality", {
     // Basic path rewriting tests
     writeFileProxyTest: Given.SomeBaseString(
       ["butThenProxy should rewrite writeFileSync paths"],
       [],
-      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "test/path/butThen/test.txt"
+        ),
+      ],
       "writeFileSync test"
     ),
     createWriteStreamProxyTest: Given.SomeBaseString(
       ["butThenProxy should rewrite createWriteStream paths"],
       [],
-      [Then.theButTheProxyReturns("createWriteStream", "test/path/butThen/stream.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "createWriteStream",
+          "test/path/butThen/stream.txt"
+        ),
+      ],
       "createWriteStream test"
     ),
     screencastProxyTest: Given.SomeBaseString(
       ["butThenProxy should rewrite screencast paths"],
       [],
-      [Then.theButTheProxyReturns("screencast", "test/path/butThen/screen.png")],
+      [
+        Then.theButTheProxyReturns(
+          "screencast",
+          "test/path/butThen/screen.png"
+        ),
+      ],
       "screencast test"
     ),
     customScreenShotProxyTest: Given.SomeBaseString(
       ["butThenProxy should rewrite customScreenShot paths"],
       [],
-      [Then.theButTheProxyReturns("customScreenShot", "test/path/butThen/shot.png")],
+      [
+        Then.theButTheProxyReturns(
+          "customScreenShot",
+          "test/path/butThen/shot.png"
+        ),
+      ],
       "customScreenShot test"
     ),
 
@@ -45,13 +65,23 @@ export const specification: ITestSpecification<I, O> = (
     nestedPathTest: Given.SomeBaseString(
       ["butThenProxy should handle nested paths"],
       [],
-      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/nested/folder/test.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "test/path/butThen/nested/folder/test.txt"
+        ),
+      ],
       "nested path test"
     ),
     specialCharsTest: Given.SomeBaseString(
       ["butThenProxy should handle special characters in paths"],
       [],
-      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/file with spaces.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "test/path/butThen/file with spaces.txt"
+        ),
+      ],
       "special chars test"
     ),
   }),
@@ -61,25 +91,45 @@ export const specification: ITestSpecification<I, O> = (
     butThenProxyTest: Given.SomeBaseString(
       ["butThenProxy should work correctly"],
       [],
-      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "test/path/butThen/test.txt"
+        ),
+      ],
       "butThenProxy test"
     ),
     andWhenProxyTest: Given.SomeBaseString(
       ["andWhenProxy should work correctly"],
       [],
-      [Then.theButTheProxyReturns("writeFileSync", "test/path/andWhen/test.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "test/path/andWhen/test.txt"
+        ),
+      ],
       "andWhenProxy test"
     ),
     beforeEachProxyTest: Given.SomeBaseString(
       ["beforeEachProxy should work correctly"],
       [],
-      [Then.theButTheProxyReturns("writeFileSync", "suite-1/beforeEach/test.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "suite-1/beforeEach/test.txt"
+        ),
+      ],
       "beforeEachProxy test"
     ),
     afterEachProxyTest: Given.SomeBaseString(
       ["afterEachProxy should work correctly"],
       [],
-      [Then.theButTheProxyReturns("writeFileSync", "suite-1/given-1/afterEach/test.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "suite-1/given-1/afterEach/test.txt"
+        ),
+      ],
       "afterEachProxy test"
     ),
   }),
@@ -90,8 +140,11 @@ export const specification: ITestSpecification<I, O> = (
       ["Proxies should preserve file content"],
       [],
       [
-        Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt"),
-        Then.verifyContent("test content")
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "test/path/butThen/test.txt"
+        ),
+        Then.verifyContent("test content"),
       ],
       "content preservation test"
     ),
@@ -99,8 +152,11 @@ export const specification: ITestSpecification<I, O> = (
       ["Proxies should preserve object content"],
       [],
       [
-        Then.theButTheProxyReturns("screencast", "test/path/butThen/screen.png"),
-        Then.verifyContent({quality: 80, fullPage: true})
+        Then.theButTheProxyReturns(
+          "screencast",
+          "test/path/butThen/screen.png"
+        ),
+        Then.verifyContent({ quality: 80, fullPage: true }),
       ],
       "object content test"
     ),
@@ -110,7 +166,12 @@ export const specification: ITestSpecification<I, O> = (
     invalidPathTest: Given.SomeBaseString(
       ["Proxies should handle invalid paths"],
       [],
-      [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/../invalid.txt")],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "test/path/butThen/../invalid.txt"
+        ),
+      ],
       "invalid path test"
     ),
     undefinedInputTest: Given.SomeBaseString(

@@ -1,4 +1,4 @@
-export const specification = (Suite, Given, When, Then, Check) => {
+export const specification = (Suite, Given, When, Then) => {
     return [
         Suite.Default("Testing BaseBuilder functionality", {
             testInitialization: Given.Default(["BaseBuilder should initialize correctly"], [], [Then.initializedProperly()]),

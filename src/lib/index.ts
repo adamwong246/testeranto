@@ -6,7 +6,7 @@ import { PM_Node } from "../PM/node.js";
 import { PM_Web } from "../PM/web.js";
 import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 
-import { IGivens, BaseCheck } from "./abstractBase.js";
+import { IGivens } from "./abstractBase.js";
 import { IPM } from "./types.js";
 import type {
   ITestInterface,
@@ -99,7 +99,6 @@ type ITest = {
   toObj(): object;
   name: string;
   givens: IGivens<Ibdd_in_any>;
-  checks: BaseCheck<Ibdd_in_any>[];
   testResourceConfiguration: ITTestResourceConfiguration;
 };
 

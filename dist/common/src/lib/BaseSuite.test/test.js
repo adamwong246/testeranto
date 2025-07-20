@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.testInterface = exports.implementation = exports.specification = void 0;
 const mock_1 = require("./mock");
 // 3. Enhanced Test Specification with more test cases
-const specification = (Suite, Given, When, Then, Check) => [
+const specification = (Suite, Given, When, Then) => [
     Suite.Default("BaseSuite Core Functionality Tests", {
         // Test initialization and basic properties
         initialization: Given.Default(["BaseSuite should initialize with correct name and index"], [], [
@@ -12,7 +12,7 @@ const specification = (Suite, Given, When, Then, Check) => [
             Then.FeaturesIncludes("testFeature"),
         ]),
         // Test execution flow
-        execution: Given.Default(["BaseSuite should execute all phases successfully"], [When.RunSuite()], [Then.StoreValid(), Then.NoErrorsOccurred(), Then.AllChecksCompleted()]),
+        execution: Given.Default(["BaseSuite should execute all phases successfully"], [When.RunSuite()], [Then.StoreValid(), Then.NoErrorsOccurred()]),
         // Test multiple features
         multipleFeatures: Given.Default(["BaseSuite should handle multiple features"], [When.AddFeature("additionalFeature")], [
             Then.FeaturesIncludes("testFeature"),
@@ -24,17 +24,7 @@ const specification = (Suite, Given, When, Then, Check) => [
             Then.ErrorCountMatches(1),
             // Then.FailedFlagSet(),
         ]),
-    }, [
-    // Additional validation checks
-    // Check.Default(
-    //   ["Verify suite state after all tests"],
-    //   [],
-    //   [
-    //     Then.AllTestsCompleted(),
-    //     Then.CleanExit()
-    //   ]
-    // )
-    ]),
+    }),
     Suite.Default("Comprehensive Integration", {
         fullStackTest: Given.Default(["All components should work together"], [
             When.addArtifact(Promise.resolve("test")),
@@ -153,12 +143,6 @@ exports.implementation = {
             }
             return suite;
         },
-        AllChecksCompleted: () => (suite) => {
-            if (suite.checks.some((check) => !check.key)) {
-                throw new Error("Expected all checks to be completed");
-            }
-            return suite;
-        },
         AllTestsCompleted: () => (suite) => {
             if (!suite.store) {
                 throw new Error("Expected all tests to be completed");
@@ -171,9 +155,6 @@ exports.implementation = {
             }
             return suite;
         },
-    },
-    checks: {
-        Default: () => new mock_1.MockSuite("testCheck", 1),
     },
 };
 // 5. Fully typed Test Interface

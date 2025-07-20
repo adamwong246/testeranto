@@ -1,4 +1,3 @@
-import { PassThrough } from "stream";
 export const implementation = {
     suites: {
         Default: "Abstract Base Test Suite",
@@ -32,8 +31,5 @@ export const implementation = {
             }
             return store;
         },
-    },
-    checks: {
-        Default: () => new PassThrough(),
     },
 };

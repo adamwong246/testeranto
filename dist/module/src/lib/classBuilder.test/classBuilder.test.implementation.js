@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { PassThrough } from "stream";
 import mock from "./mock";
 import { specification } from "./classBuilder.test.specification";
 import { MockSuite } from "../BaseSuite.test/mock";
@@ -136,12 +133,6 @@ export const implementation = {
             }
             return builder;
         },
-        checksOverridesConfigured: () => (builder) => {
-            if (!builder.checkOverides) {
-                throw new Error("Checks overrides not configured");
-            }
-            return builder;
-        },
         specsModified: (expectedCount) => (builder) => {
             if (builder.specs.length <= expectedCount) {
                 throw new Error(`Expected at least ${expectedCount} modified specs`);
@@ -173,8 +164,5 @@ export const implementation = {
                 throw new Error(`Test run failed: ${e.message}`);
             }
         },
-    },
-    checks: {
-        Default: () => new PassThrough(),
     },
 };

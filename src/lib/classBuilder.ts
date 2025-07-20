@@ -15,10 +15,8 @@ import {
   IGivenKlasser,
   IWhenKlasser,
   IThenKlasser,
-  ICheckKlasser,
 } from "./types.js";
 import { ITTestResourceRequest } from "./index.js";
-import { BaseCheck } from "./abstractBase.js";
 
 type IExtenstions = Record<string, unknown>;
 
@@ -32,7 +30,6 @@ export abstract class ClassBuilder<
   IExtenstions,
   IExtenstions,
   IExtenstions,
-  IExtenstions,
   IExtenstions
 > {
   constructor(
@@ -41,7 +38,6 @@ export abstract class ClassBuilder<
       givens: Record<string, any>;
       whens: Record<string, any>;
       thens: Record<string, any>;
-      checks: Record<string, any>;
     },
     testSpecification: ITestSpecification<I, O>,
     input: I["iinput"],
@@ -49,17 +45,15 @@ export abstract class ClassBuilder<
     givenKlasser: IGivenKlasser<I>,
     whenKlasser: IWhenKlasser<I>,
     thenKlasser: IThenKlasser<I>,
-    checkKlasser: ICheckKlasser<I>,
     testResourceRequirement: ITTestResourceRequest
   ) {
     const classySuites = Object.entries(testImplementation.suites).reduce(
       (a, [key], index) => {
-        a[key] = (somestring, givens, checks) => {
+        a[key] = (somestring, givens) => {
           return new suiteKlasser.prototype.constructor(
             somestring,
             index,
-            givens,
-            checks
+            givens
           );
         };
         return a;
@@ -112,28 +106,12 @@ export abstract class ClassBuilder<
       {}
     );
 
-    const classyChecks = Object.entries(testImplementation.checks).reduce(
-      (a, [key, chEck]) => {
-        a[key] = (name, features, checker) => {
-          return new checkKlasser.prototype.constructor(
-            key,
-            features,
-            chEck,
-            checker
-          );
-        };
-        return a;
-      },
-      {} as Record<string, (n, f, c) => BaseCheck<I>>
-    );
-
     super(
       input,
       classySuites,
       classyGivens,
       classyWhens,
       classyThens,
-      classyChecks,
       testResourceRequirement,
       testSpecification
     );

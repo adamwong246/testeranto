@@ -3,14 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const pureSidecar_1 = require("../pureSidecar");
 const Node_1 = __importDefault(require("../../Node"));
+const pureSidecar_1 = require("../pureSidecar");
 const specification = (Suite, Given, When, Then) => {
     return [
         Suite.SidecarInitialized("Pure Sidecar message passing works correctly", {
             basicSend: Given.SidecarReady(["can send and receive messages"], [When.SendTestMessage("test-message")], [Then.MessageReceived("test-message")]),
             cleanup: Given.SidecarReady(["cleans up listeners after message"], [When.VerifyCleanup()], [Then.ListenersCleaned()]),
-        }, []),
+        }),
     ];
 };
 const implementation = {
@@ -69,7 +69,6 @@ const implementation = {
             return result;
         },
     },
-    checks: { SidecarState: () => "unknown" },
 };
 const testInterface = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {

@@ -1,5 +1,5 @@
 import { ITTestResourceConfiguration, ITestArtifactory } from "..";
-import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "../abstractBase";
+import { BaseGiven, BaseWhen, BaseThen } from "../abstractBase";
 import { BaseSuite } from "../BaseSuite";
 import { IPM } from "../types";
 import { I, TestStore, TestSelection, O } from "./test";
@@ -59,49 +59,19 @@ export class MockThen extends BaseThen<I> {
   }
 }
 
-export class MockCheck extends BaseCheck<I> {
-  async checkThat(
-    subject: I["isubject"],
-    testResourceConfiguration: ITTestResourceConfiguration,
-    artifactory: ITestArtifactory,
-    initializer: any,
-    initialValues: any,
-    pm: IPM
-  ): Promise<TestStore> {
-    return { testStore: true };
-  }
-}
-
 export class MockSuite extends BaseSuite<I, O> {
   constructor(name: string, index: number) {
-    super(
-      name,
-      index,
-      {
-        testGiven: new MockGiven(
-          "testGiven",
-          ["testFeature"],
-          [
-            new MockWhen("testWhen", () =>
-              Promise.resolve({ testStore: true })
-            ),
-          ],
-          [
-            new MockThen("testThen", async () =>
-              Promise.resolve({ testSelection: true })
-            ),
-          ]
-        ),
-      },
-      [
-        new MockCheck(
-          "testCheck",
-          ["testFeature"],
-          () => Promise.resolve({ testStore: true }),
-          null,
-          () => {}
-        ),
-      ]
-    );
+    super(name, index, {
+      testGiven: new MockGiven(
+        "testGiven",
+        ["testFeature"],
+        [new MockWhen("testWhen", () => Promise.resolve({ testStore: true }))],
+        [
+          new MockThen("testThen", async () =>
+            Promise.resolve({ testSelection: true })
+          ),
+        ]
+      ),
+    });
   }
 }

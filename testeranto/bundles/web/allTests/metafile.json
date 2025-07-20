@@ -181,7 +181,7 @@
         "format": "esm"
       },
       "src/lib/index.ts": {
-        "bytes": 3649,
+        "bytes": 3602,
         "imports": [
           {
             "path": "../PM/pure.js",
@@ -263,7 +263,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 7680,
+        "bytes": 6165,
         "imports": [
           {
             "path": ".",
@@ -299,7 +299,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 5308,
+        "bytes": 4846,
         "imports": [
           {
             "path": "stream",
@@ -345,7 +345,7 @@
         "format": "esm"
       },
       "src/lib/classBuilder.ts": {
-        "bytes": 3629,
+        "bytes": 3030,
         "imports": [
           {
             "path": "type-fest",
@@ -368,11 +368,6 @@
             "external": true
           },
           {
-            "path": "./abstractBase.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
             "external": true
@@ -391,7 +386,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 3942,
+        "bytes": 3208,
         "imports": [
           {
             "path": ".",
@@ -437,7 +432,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 4768,
+        "bytes": 3718,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -524,7 +519,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-        "bytes": 811,
+        "bytes": 802,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -554,220 +549,18 @@
         ],
         "format": "esm"
       },
-      "node_modules/@jspm/core/nodelibs/browser/events.js": {
-        "bytes": 16645,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@jspm/core/nodelibs/browser/chunk-DEMDiNwt.js": {
-        "bytes": 6232,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@jspm/core/nodelibs/browser/chunk-CcCWfKp1.js": {
-        "bytes": 11115,
-        "imports": [
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js",
-            "kind": "import-statement",
-            "original": "./chunk-DtuTasat.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@jspm/core/nodelibs/browser/chunk-DtcTpLWz.js": {
-        "bytes": 29034,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@jspm/core/nodelibs/browser/chunk-CkFCi-G1.js": {
-        "bytes": 949,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@jspm/core/nodelibs/browser/util.js": {
-        "bytes": 45651,
-        "imports": [
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-DtcTpLWz.js",
-            "kind": "import-statement",
-            "original": "./chunk-DtcTpLWz.js"
-          },
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-CkFCi-G1.js",
-            "kind": "import-statement",
-            "original": "./chunk-CkFCi-G1.js"
-          },
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-DEMDiNwt.js",
-            "kind": "import-statement",
-            "original": "./chunk-DEMDiNwt.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@jspm/core/nodelibs/browser/stream.js": {
-        "bytes": 213241,
-        "imports": [
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js",
-            "kind": "import-statement",
-            "original": "./chunk-DtuTasat.js"
-          },
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/events.js",
-            "kind": "import-statement",
-            "original": "./events.js"
-          },
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-DEMDiNwt.js",
-            "kind": "import-statement",
-            "original": "./chunk-DEMDiNwt.js"
-          },
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-CcCWfKp1.js",
-            "kind": "import-statement",
-            "original": "./chunk-CcCWfKp1.js"
-          },
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/util.js",
-            "kind": "import-statement",
-            "original": "./util.js"
-          },
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-DtcTpLWz.js",
-            "kind": "import-statement",
-            "original": "./chunk-DtcTpLWz.js"
-          },
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/chunk-CkFCi-G1.js",
-            "kind": "import-statement",
-            "original": "./chunk-CkFCi-G1.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 2054,
+        "bytes": 1917,
         "imports": [
-          {
-            "path": "src/lib/basebuilder.ts",
-            "kind": "import-statement",
-            "original": "../basebuilder"
-          },
           {
             "path": "../../CoreTypes",
             "kind": "import-statement",
             "external": true
+          },
+          {
+            "path": "src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "../basebuilder"
           },
           {
             "path": "../types",
@@ -798,13 +591,8 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 3514,
+        "bytes": 3194,
         "imports": [
-          {
-            "path": "node_modules/@jspm/core/nodelibs/browser/stream.js",
-            "kind": "import-statement",
-            "original": "stream"
-          },
           {
             "path": "../../CoreTypes",
             "kind": "import-statement",
@@ -939,9 +727,6 @@
         ],
         "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
         "inputs": {
-          "node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js": {
-            "bytesInOutput": 59814
-          },
           "src/PM/index.ts": {
             "bytesInOutput": 20
           },
@@ -955,52 +740,31 @@
             "bytesInOutput": 3266
           },
           "src/lib/abstractBase.ts": {
-            "bytesInOutput": 4610
+            "bytesInOutput": 3747
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2740
+            "bytesInOutput": 2618
           },
           "src/lib/classBuilder.ts": {
-            "bytesInOutput": 2271
+            "bytesInOutput": 1850
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2311
+            "bytesInOutput": 1927
           },
           "src/lib/core.ts": {
-            "bytesInOutput": 2694
+            "bytesInOutput": 2007
           },
           "src/Web.ts": {
             "bytesInOutput": 1718
           },
           "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-            "bytesInOutput": 657
-          },
-          "node_modules/@jspm/core/nodelibs/browser/events.js": {
-            "bytesInOutput": 14821
-          },
-          "node_modules/@jspm/core/nodelibs/browser/chunk-DEMDiNwt.js": {
-            "bytesInOutput": 5914
-          },
-          "node_modules/@jspm/core/nodelibs/browser/chunk-CcCWfKp1.js": {
-            "bytesInOutput": 8614
-          },
-          "node_modules/@jspm/core/nodelibs/browser/chunk-DtcTpLWz.js": {
-            "bytesInOutput": 26628
-          },
-          "node_modules/@jspm/core/nodelibs/browser/chunk-CkFCi-G1.js": {
-            "bytesInOutput": 854
-          },
-          "node_modules/@jspm/core/nodelibs/browser/util.js": {
-            "bytesInOutput": 39460
-          },
-          "node_modules/@jspm/core/nodelibs/browser/stream.js": {
-            "bytesInOutput": 177183
+            "bytesInOutput": 650
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 970
+            "bytesInOutput": 927
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 2865
+            "bytesInOutput": 2595
           },
           "src/lib/baseBuilder.test/baseBuilder.test.interface.ts": {
             "bytesInOutput": 375
@@ -1009,7 +773,7 @@
             "bytesInOutput": 131
           }
         },
-        "bytes": 363009
+        "bytes": 26135
       }
     }
   }

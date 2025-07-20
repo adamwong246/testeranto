@@ -6,8 +6,7 @@ export const specification: ITestSpecification<I, O> = (
   Suite,
   Given,
   When,
-  Then,
-  Check
+  Then
 ) => {
   return [
     Suite.Default(

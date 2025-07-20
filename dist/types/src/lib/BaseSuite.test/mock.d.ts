@@ -1,5 +1,5 @@
 import { ITTestResourceConfiguration, ITestArtifactory } from "..";
-import { BaseGiven, BaseWhen, BaseThen, BaseCheck } from "../abstractBase";
+import { BaseGiven, BaseWhen, BaseThen } from "../abstractBase";
 import { BaseSuite } from "../BaseSuite";
 import { IPM } from "../types";
 import { I, TestStore, TestSelection, O } from "./test";
@@ -13,9 +13,6 @@ export declare class MockWhen extends BaseWhen<I> {
 }
 export declare class MockThen extends BaseThen<I> {
     butThen(store: TestStore, thenCB: (s: TestSelection) => Promise<TestSelection>, testResourceConfiguration: ITTestResourceConfiguration, pm: IPM): Promise<TestSelection>;
-}
-export declare class MockCheck extends BaseCheck<I> {
-    checkThat(subject: I["isubject"], testResourceConfiguration: ITTestResourceConfiguration, artifactory: ITestArtifactory, initializer: any, initialValues: any, pm: IPM): Promise<TestStore>;
 }
 export declare class MockSuite extends BaseSuite<I, O> {
     constructor(name: string, index: number);

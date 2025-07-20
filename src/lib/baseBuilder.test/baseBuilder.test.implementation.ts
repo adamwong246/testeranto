@@ -1,5 +1,3 @@
-import { PassThrough } from "stream";
-
 import { ITestImplementation } from "../../CoreTypes";
 import { MockBaseBuilder } from "./baseBuilder.test.mock";
 
@@ -120,15 +118,5 @@ export const implementation: ITestImplementation<I, O, {}> = {
       }
       return builder;
     },
-    checksOverridesConfigured: () => (builder: TestSubject) => {
-      if (!builder.checkOverides) {
-        throw new Error("Checks overrides not configured");
-      }
-      return builder;
-    },
-  },
-
-  checks: {
-    Default: () => new PassThrough(), // Not used in these tests
   },
 };

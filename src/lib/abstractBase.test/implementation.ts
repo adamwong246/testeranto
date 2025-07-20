@@ -1,5 +1,3 @@
-import { PassThrough } from "stream";
-
 import { ITestImplementation } from "../../CoreTypes";
 
 import { I, O } from "./types";
@@ -43,9 +41,5 @@ export const implementation: ITestImplementation<I, O> = {
       }
       return store;
     },
-  },
-
-  checks: {
-    Default: () => new PassThrough(),
   },
 };

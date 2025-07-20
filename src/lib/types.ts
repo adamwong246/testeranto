@@ -1,33 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
 import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";
 
-import {
-  IGivens,
-  BaseCheck,
-  BaseGiven,
-  BaseWhen,
-  BaseThen,
-} from "./abstractBase";
+import { IGivens, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
 import { BaseSuite } from "./BaseSuite";
 
 export type IPM = PM_Node | PM_Web | PM_Pure;
 
-export type ThemeType = 
-  | 'system'
-  | 'light' 
-  | 'dark'
-  | 'light-vibrant'
-  | 'dark-vibrant'
-  | 'sepia'
-  | 'light-grayscale'
-  | 'dark-grayscale'
-  | 'daily'
-  | 'protanopia'
-  | 'deuteranopia'
-  | 'tritanopia';
+export type ThemeType =
+  | "system"
+  | "light"
+  | "dark"
+  | "light-vibrant"
+  | "dark-vibrant"
+  | "sepia"
+  | "light-grayscale"
+  | "dark-grayscale"
+  | "daily"
+  | "protanopia"
+  | "deuteranopia"
+  | "tritanopia";
 
 export type TestPhase =
   | "beforeAll"
@@ -46,24 +41,10 @@ export type TestError = {
   isRetryable?: boolean;
 };
 
-export type ITestCheckCallback<
-  I extends Ibdd_in_any,
-  O extends Ibdd_out_any
-> = {
-  [K in keyof O["checks"]]: (
-    name: string,
-    features: string[],
-    checkCallback: (store: I["istore"], pm: IPM) => Promise<O["checks"][K]>,
-
-    ...xtrasA: O["checks"][K]
-  ) => BaseCheck<I>;
-};
-
 export type ISuiteKlasser<I extends Ibdd_in_any, O extends Ibdd_out_any> = (
   name: string,
   index: number,
-  givens: IGivens<I>,
-  checks: BaseCheck<I>[]
+  givens: IGivens<I>
 ) => BaseSuite<I, O>;
 
 export type IGivenKlasser<I extends Ibdd_in_any> = (
@@ -77,11 +58,3 @@ export type IGivenKlasser<I extends Ibdd_in_any> = (
 export type IWhenKlasser<I extends Ibdd_in_any> = (s, o) => BaseWhen<I>;
 
 export type IThenKlasser<I extends Ibdd_in_any> = (s, o) => BaseThen<I>;
-
-export type ICheckKlasser<I extends Ibdd_in_any> = (
-  n,
-  f,
-  cb,
-  w,
-  t
-) => BaseCheck<I>;

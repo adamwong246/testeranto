@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.implementation = void 0;
-const stream_1 = require("stream");
 const baseBuilder_test_mock_1 = require("./baseBuilder.test.mock");
 const basebuilder_1 = require("../basebuilder");
 exports.implementation = {
@@ -84,14 +83,5 @@ exports.implementation = {
             }
             return builder;
         },
-        checksOverridesConfigured: () => (builder) => {
-            if (!builder.checkOverides) {
-                throw new Error("Checks overrides not configured");
-            }
-            return builder;
-        },
-    },
-    checks: {
-        Default: () => new stream_1.PassThrough(), // Not used in these tests
     },
 };

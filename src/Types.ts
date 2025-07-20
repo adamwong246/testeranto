@@ -3,13 +3,7 @@ import { Plugin } from "esbuild";
 import { ITTestResourceConfiguration } from "./lib/index.js";
 import { PM } from "./PM/index.js";
 
-import {
-  BaseWhen,
-  BaseThen,
-  BaseGiven,
-  BaseCheck,
-  IGivens,
-} from "./lib/abstractBase.js";
+import { BaseWhen, BaseThen, BaseGiven, IGivens } from "./lib/abstractBase.js";
 
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
 import { BaseSuite } from "./lib/BaseSuite.js";
@@ -31,8 +25,7 @@ export type SuiteSpecification<
 > = {
   [K in keyof O["suites"]]: (
     name: string,
-    givens: IGivens<I>,
-    checks: BaseCheck<I>[]
+    givens: IGivens<I>
   ) => BaseSuite<I, O>;
 };
 
@@ -125,7 +118,7 @@ export type ThenSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
   [K in keyof O["thens"]]: (...xtrasD: O["thens"][K]) => BaseThen<I>;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 // Base implementation types
 export type TestSuiteImplementation<O extends Ibdd_out_any> = {
@@ -161,14 +154,7 @@ export type TestThenImplementation<
   ) => (ssel: I["iselection"], utils: PM) => I["then"];
 };
 
-export type TestCheckImplementation<
-  I extends Ibdd_in_any,
-  O extends Ibdd_out_any
-> = {
-  [K in keyof O["checks"]]: (...Ic: O["checks"][K]) => I["given"];
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 export type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -177,9 +163,8 @@ export type TestSuiteShape = Record<string, any>;
 export type TestGivenShape = Record<string, any>;
 export type TestWhenShape = Record<string, any>;
 export type TestThenShape = Record<string, any>;
-export type TestCheckShape = Record<string, any>;
 
-///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 export type IPluginFactory = (
   register?: (entrypoint: string, sources: string[]) => any,

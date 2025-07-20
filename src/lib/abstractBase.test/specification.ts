@@ -5,8 +5,7 @@ export const specification: ITestSpecification<I, O> = (
   Suite,
   Given,
   When,
-  Then,
-  Check
+  Then
 ) => [
   Suite.Default("BaseGiven Tests", {
     initialization: Given.Default(
@@ -18,7 +17,7 @@ export const specification: ITestSpecification<I, O> = (
       ["Should handle errors properly"],
       [When.throwError()],
       [Then.verifyError("Test error")]
-    )
+    ),
   }),
 
   Suite.Default("BaseWhen Tests", {
@@ -31,7 +30,7 @@ export const specification: ITestSpecification<I, O> = (
       ["Should propagate errors"],
       [When.throwError()],
       [Then.verifyError("Test error")]
-    )
+    ),
   }),
 
   Suite.Default("BaseThen Tests", {
@@ -44,6 +43,6 @@ export const specification: ITestSpecification<I, O> = (
       ["Should fail invalid assertions"],
       [When.modifyStore("wrong")],
       [Then.verifyStore("right")] // This should fail
-    )
-  })
+    ),
+  }),
 ];

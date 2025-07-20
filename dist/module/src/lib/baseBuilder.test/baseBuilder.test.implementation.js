@@ -1,4 +1,3 @@
-import { PassThrough } from "stream";
 import { MockBaseBuilder } from "./baseBuilder.test.mock";
 import { BaseBuilder } from "../basebuilder";
 export const implementation = {
@@ -81,14 +80,5 @@ export const implementation = {
             }
             return builder;
         },
-        checksOverridesConfigured: () => (builder) => {
-            if (!builder.checkOverides) {
-                throw new Error("Checks overrides not configured");
-            }
-            return builder;
-        },
-    },
-    checks: {
-        Default: () => new PassThrough(), // Not used in these tests
     },
 };

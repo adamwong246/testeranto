@@ -1,17 +1,16 @@
 import { ITTestResourceConfiguration, ITestArtifactory } from ".";
 import { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
-import { IGivens, BaseCheck } from "./abstractBase";
+import { IGivens } from "./abstractBase";
 import { IPM } from "./types";
 export declare abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
     name: string;
     givens: IGivens<I>;
-    checks: BaseCheck<I>[];
     store: I["istore"];
     testResourceConfiguration: ITTestResourceConfiguration;
     index: number;
     failed: boolean;
     fails: number;
-    constructor(name: string, index: number, givens?: IGivens<I>, checks?: BaseCheck<I>[]);
+    constructor(name: string, index: number, givens?: IGivens<I>);
     features(): string[];
     toObj(): {
         name: string;
@@ -27,7 +26,6 @@ export declare abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_ou
             failed: boolean;
             features: string[];
         }[];
-        checks: any[];
         fails: number;
         failed: boolean;
         features: string[];

@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.implementation = void 0;
-const stream_1 = require("stream");
 exports.implementation = {
     suites: {
         Default: "Abstract Base Test Suite",
@@ -35,8 +34,5 @@ exports.implementation = {
             }
             return store;
         },
-    },
-    checks: {
-        Default: () => new stream_1.PassThrough(),
     },
 };

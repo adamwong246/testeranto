@@ -1,9 +1,9 @@
 import { BaseBuilder } from "./basebuilder.js";
 export class ClassBuilder extends BaseBuilder {
-    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, checkKlasser, testResourceRequirement) {
+    constructor(testImplementation, testSpecification, input, suiteKlasser, givenKlasser, whenKlasser, thenKlasser, testResourceRequirement) {
         const classySuites = Object.entries(testImplementation.suites).reduce((a, [key], index) => {
-            a[key] = (somestring, givens, checks) => {
-                return new suiteKlasser.prototype.constructor(somestring, index, givens, checks);
+            a[key] = (somestring, givens) => {
+                return new suiteKlasser.prototype.constructor(somestring, index, givens);
             };
             return a;
         }, {});
@@ -25,12 +25,6 @@ export class ClassBuilder extends BaseBuilder {
             };
             return a;
         }, {});
-        const classyChecks = Object.entries(testImplementation.checks).reduce((a, [key, chEck]) => {
-            a[key] = (name, features, checker) => {
-                return new checkKlasser.prototype.constructor(key, features, chEck, checker);
-            };
-            return a;
-        }, {});
-        super(input, classySuites, classyGivens, classyWhens, classyThens, classyChecks, testResourceRequirement, testSpecification);
+        super(input, classySuites, classyGivens, classyWhens, classyThens, testResourceRequirement, testSpecification);
     }
 }

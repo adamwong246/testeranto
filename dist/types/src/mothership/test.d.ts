@@ -12,8 +12,6 @@ type O = Ibdd_out<{
 }, {
     TheResourceIsClaimed: [string];
     TheResourceIsUnClaimed: [string];
-}, {
-    AnEmptyState: any;
 }>;
 declare const _default: Promise<import("../lib/core").default<Ibdd_in_any, O, {
     whens: import("../Types").TestWhenImplementation<I, O>;
