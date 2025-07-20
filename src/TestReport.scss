@@ -4,30 +4,6 @@
 //   padding: 0;
 // }
 
-:root {
-  --primary: #0a2342; /* Navy */
-  --secondary: #4ecdc4; /* Keep teal */
-  --accent: #ff6b6b; /* Coral as accent only */
-  --light: #f8f9fa; /* Light gray bg */
-  --dark: #333; /* Dark text */
-  --success: #28a745;
-  --danger: #dc3545;
-  --content-bg: rgba(30, 42, 58, 0.7);
-
-  /* Gradient Colors */
-  --bg-start: #0a0f1f;
-  /* Deep Cosmos */
-  --bg-mid: #1a2b50;
-  /* Twilight Navy */
-  --bg-sunrise: rgba(176, 125, 133, 1);
-  /* Muted Rose */
-  --bg-sunrise2: #b07d85;
-  /* Dusty Rose */
-  --bg-end: #7fb3d5;
-  /* Sky Whisper */
-
-  --semi-trans-bg: #292f3649;
-}
 
 pre,
 code {
@@ -36,32 +12,118 @@ code {
   max-width: 80ch;
   overflow-x: auto;
   display: block;
-  // background-color: lightgray;
   padding: 1rem;
   border-radius: 4px;
   font-family: monospace;
   line-height: 1.4;
   color: #333;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  isolation: isolate;
 }
 
 #settings-button {
-  background-color: lightgray;
+  z-index: 1000;
+  background-color: rgba(var(--primary-rgb), 0.15);
   margin: 0.5rem;
   padding: 0.5rem;
   position: fixed;
   bottom: 0;
   left: 0;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 
+    0 2px 10px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   overflow: hidden;
+  backdrop-filter: blur(20px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  isolation: isolate;
 
   &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    
     #gear-icon-settings {
-      display: inline-block;
       animation: spin 1s linear infinite;
       transform-origin: center;
     }
   }
+}
+
+.theme-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(12px);
+    
+    &::before {
+      opacity: 0.1;
+    }
+  }
+  
+  &.border-primary {
+    box-shadow: 0 0 0 2px var(--primary);
+    background-color: rgba(var(--primary-rgb), 0.2);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.3) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card-body {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.accordion-button {
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  &:not(.collapsed) {
+    background-color: rgba(var(--primary-rgb), 0.2);
+    color: var(--dark);
+    backdrop-filter: blur(12px);
+  }
+}
+
+.modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  isolation: isolate;
 }
 
 @keyframes spin {
@@ -78,7 +140,7 @@ code {
 }
 
 .footer {
-  background-color: var(--semi-trans-bg);
+  background-color: rgba(var(--primary-rgb), 0.1);
   margin: 0.5rem;
   padding: 0.5rem;
   position: fixed;
@@ -87,10 +149,13 @@ code {
   transition: all 0.5s ease;
   border-radius: 4px;
   transform: scale(1);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 2px 5px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   overflow: hidden;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(20px) saturate(180%);
   z-index: 1000;
+  isolation: isolate;
 
   a {
     color: inherit;

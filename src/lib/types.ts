@@ -15,6 +15,20 @@ import { BaseSuite } from "./BaseSuite";
 
 export type IPM = PM_Node | PM_Web | PM_Pure;
 
+export type ThemeType = 
+  | 'system'
+  | 'light' 
+  | 'dark'
+  | 'light-vibrant'
+  | 'dark-vibrant'
+  | 'sepia'
+  | 'light-grayscale'
+  | 'dark-grayscale'
+  | 'daily'
+  | 'protanopia'
+  | 'deuteranopia'
+  | 'tritanopia';
+
 export type TestPhase =
   | "beforeAll"
   | "beforeEach"

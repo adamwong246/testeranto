@@ -155,7 +155,31 @@ const BddPage = () => {
   const basePath = window.location.href.split('/').slice(0, -1).join('/');
 
   return (
-    <div className="container-fluid p-4" style={{ backgroundColor: 'transparent' }}>
+    <div className="container-fluid p-4" style={{ backgroundColor: 'transparent', position: 'relative', zIndex: 10 }}>
+      {/* Full sunrise scene elements */}
+      <div id="starsContainer">
+        <div id="stars"></div>
+      </div>
+      <div id="sun"></div>
+      <div id="sunDay"></div>
+      <div id="sunSet"></div>
+      <div id="sky"></div>
+      <div id="horizon"></div>
+      <div id="horizonNight"></div>
+      <div id="moon"></div>
+      <div id="mountainRange">
+        <div id="mountain"></div>
+      </div>
+      <div id="water"></div>
+      <div id="waterReflectionContainer">
+        <div id="waterReflectionMiddle"></div>
+      </div>
+      <div id="waterDistance"></div>
+      <div id="darknessOverlaySky"></div>
+      <div id="darknessOverlay"></div>
+      <div id="oceanRippleContainer">
+        <div id="oceanRipple"></div>
+      </div>
       <Tab.Container defaultActiveKey="tests">
         <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
           <div className="container-fluid">

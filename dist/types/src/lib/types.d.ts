@@ -5,6 +5,7 @@ import { PM_Web } from "../PM/web";
 import { IGivens, BaseCheck, BaseGiven, BaseWhen, BaseThen } from "./abstractBase";
 import { BaseSuite } from "./BaseSuite";
 export type IPM = PM_Node | PM_Web | PM_Pure;
+export type ThemeType = 'system' | 'light' | 'dark' | 'light-vibrant' | 'dark-vibrant' | 'sepia' | 'light-grayscale' | 'dark-grayscale' | 'daily' | 'protanopia' | 'deuteranopia' | 'tritanopia';
 export type TestPhase = "beforeAll" | "beforeEach" | "test" | "afterEach" | "afterAll";
 export type TestError = {
     phase: TestPhase;
