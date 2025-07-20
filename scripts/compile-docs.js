@@ -52,7 +52,7 @@ const template = (title, content) => `
 
 <body>
 
-    <div class="container">        
+    <div class="container" style="padding-bottom: 5rem;">
         <div class="row">
             <div class="col-xs-0 col-sm-0 col-md-1">
             </div>
@@ -65,6 +65,24 @@ const template = (title, content) => `
         
             <div class="col-xs-0 col-sm-0" col-md-1">
         </div>
+    </div>
+
+    <div class="container-fluid">
+        <nav class="navbar fixed-bottom navbar-light bg-light">
+            <div class="container-fluid justify-content-center">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/testeranto/testeranto" target="_blank">GitHub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.npmjs.com/package/testeranto" target="_blank">NPM</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
 
 

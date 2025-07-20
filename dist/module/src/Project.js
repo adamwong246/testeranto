@@ -3,10 +3,8 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab, Table } from "react-bootstrap";
 import { Footer } from "./Footer";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { SettingsButton } from "./SettingsButton";
-import "./themesAndFonts.scss";
 import SunriseAnimation from "./components/SunriseAnimation";
+import "./Project.scss";
 const BigBoard = () => {
     const bigConfigElement = document.getElementById("bigConfig");
     if (!bigConfigElement)
@@ -172,20 +170,8 @@ const BigBoard = () => {
                                                                         React.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors))));
                                                             })));
                                                     }))))))))))))))),
-            React.createElement(SettingsButton, { className: "gear-icon" }),
             React.createElement(Footer, null))));
 };
-// Initialize theme
-const savedTheme = localStorage.getItem('theme') || 'system';
-let themeToApply = savedTheme;
-if (savedTheme === 'system') {
-    themeToApply = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-}
-else if (['light-vibrant', 'dark-vibrant', 'light-grayscale', 'dark-grayscale', 'sepia'].includes(savedTheme)) {
-    themeToApply = savedTheme;
-}
-document.documentElement.setAttribute('data-bs-theme', themeToApply);
-document.body.classList.add(`${themeToApply}-theme`);
 document.addEventListener("DOMContentLoaded", function () {
     const elem = document.getElementById("root");
     if (elem) {

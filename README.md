@@ -4,12 +4,11 @@
 
 #### 🚧 Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧
 
-- README: [https://adamwong246.github.io/testeranto/](https://adamwong246.github.io/testeranto/)
-- demo: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
-- source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
-- npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)
-- example repo: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
-- tests report: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/index.html)
+## quick links
+
+- an example of the reports generated: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/index.html)
+- demo of me using testeranto to fix a bug: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
+- a starter testeranto project: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
 
 ## What is testeranto?
 

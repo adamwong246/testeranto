@@ -1,4 +1,16 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "./fonts.scss";
+
+body {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  color: var(--dark);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
 
 // body {
 //   font-size: 120%;
@@ -12,47 +24,47 @@ tr:last-child td {
   border-bottom: none;
 }
 
-a {
-  color: var(--bg-end);
-  text-decoration: none;
-  /* border-bottom: 1px solid var(--dark); */
-  transition: all 0.3s ease;
-}
+// a {
+//   color: var(--bg-end);
+//   text-decoration: none;
+//   /* border-bottom: 1px solid var(--dark); */
+//   transition: all 0.3s ease;
+// }
 
-a:visited {
-  color: var(--bg-sunrise2);
-}
+// a:visited {
+//   color: var(--bg-sunrise2);
+// }
 
-a:hover {
-  /* color: var(--secondary); */
-  /* border-bottom-style: solid; */
-  color: linear-gradient(90deg, var(--primary), var(--secondary));
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-  transform-origin: center;
-}
+// a:hover {
+//   /* color: var(--secondary); */
+//   /* border-bottom-style: solid; */
+//   color: linear-gradient(90deg, var(--primary), var(--secondary));
+//   transform: scaleX(0);
+//   transition: transform 0.3s ease;
+//   transform-origin: center;
+// }
 
-a {
-  position: relative;
-  text-decoration: none;
-}
+// a {
+//   position: relative;
+//   text-decoration: none;
+// }
 
-a::after {
-  content: "";
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-  transform-origin: center;
-}
+// a::after {
+//   content: "";
+//   position: absolute;
+//   bottom: -3px;
+//   left: 0;
+//   width: 100%;
+//   height: 3px;
+//   background: linear-gradient(90deg, var(--primary), var(--secondary));
+//   transform: scaleX(0);
+//   transition: transform 0.3s ease;
+//   transform-origin: center;
+// }
 
-a:hover::after {
-  transform: scaleX(1);
-}
+// a:hover::after {
+//   transform: scaleX(1);
+// }
 
 p,
 h1,
@@ -147,55 +159,6 @@ body {
   min-height: 100vh;
   position: relative;
 }
-
-// [data-bs-theme="dark"] body::before,
-// :root body::before,
-// [data-bs-theme="lovely"] body::before {
-//   content: "";
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   height: 100%;
-//   z-index: -1;
-//   background: linear-gradient(
-//     to bottom,
-//     var(--bg-start) 0%,
-//     var(--bg-mid) 35%,
-//     var(--bg-sunrise2) 50%,
-//     var(--bg-sunrise) 75%,
-//     var(--bg-end) 85%
-//   );
-//   will-change: transform;
-//   transform: translateZ(0);
-//   backface-visibility: hidden;
-//   perspective: 1000px;
-// }
-
-// body {
-//   position: relative;
-//   z-index: 1;
-//   background: transparent;
-// }
-
-// body {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   padding: 0 1rem;
-//   transition: background-position 0.5s ease-out;
-// }
-
-// #container {
-//   display: flex;
-//   justify-content: center;
-//   align-items: flex-start;
-//   /* CHANGED */
-//   /*align-self: center;*/
-//   flex-direction: column;
-//   flex-wrap: wrap;
-//   /* max-width: 50%; */
-// }
 
 h1:first-child {
   margin-top: 0;
@@ -439,4 +402,85 @@ h6 {
 
 th {
   display: none;
+}
+
+.footer {
+  background-color: rgba(var(--primary-rgb), 0.1);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  transition: all 0.5s ease;
+  border-radius: 4px;
+  transform: scale(1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  // backdrop-filter: blur(20px) saturate(180%);
+  z-index: 1000;
+  isolation: isolate;
+
+  // a {
+  //   color: inherit;
+  //   // text-decoration: none;
+  //   position: relative;
+  //   z-index: 1;
+  //   &:hover {
+  //     text-decoration: underline;
+  //   }
+  // }
+
+  // &:hover {
+  //   background: linear-gradient(
+  //       var(--angle, 45deg),
+  //       var(--bg-sunrise2),
+  //       var(--bg-end)
+  //     ),
+  //     radial-gradient(
+  //       circle at center,
+  //       rgba(255, 255, 255, 0.1) 0%,
+  //       transparent 70%
+  //     );
+  //   background-size: 300% 300%, 200% 200%;
+  //   animation: gradientBG 8s ease infinite, rotateGradient 20s linear infinite,
+  //     ripple 4s ease infinite;
+  //   color: white;
+  //   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  // }
+}
+
+@keyframes gradientBG {
+  0%,
+  100% {
+    background-position: 0% 50%, 0% 0%;
+  }
+  25% {
+    background-position: 100% 50%, 100% 50%;
+  }
+  50% {
+    background-position: 50% 100%, 50% 100%;
+  }
+  75% {
+    background-position: 100% 0%, 0% 100%;
+  }
+}
+
+@keyframes rotateGradient {
+  0% {
+    --angle: 45deg;
+  }
+  100% {
+    --angle: 405deg;
+  }
+}
+
+@keyframes ripple {
+  0%,
+  100% {
+    background-size: 300% 300%, 100% 100%;
+  }
+  50% {
+    background-size: 300% 300%, 200% 200%;
+  }
 }

@@ -2,9 +2,8 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 import { Footer } from "./Footer";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./TestReport.scss";
 import { SettingsButton } from "./SettingsButton";
+import "./TestReport.scss";
 const BddPage = () => {
     const [bddErrors, setBddErrors] = useState();
     useEffect(() => {
@@ -165,16 +164,6 @@ const BddPage = () => {
         React.createElement(SettingsButton, { className: "gear-icon" }),
         React.createElement(Footer, null)));
 };
-// Initialize theme
-const savedTheme = localStorage.getItem('theme') || 'system';
-let themeToApply = savedTheme;
-if (savedTheme === 'system') {
-    themeToApply = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-}
-else if (['light-vibrant', 'dark-vibrant', 'light-grayscale', 'dark-grayscale', 'sepia'].includes(savedTheme)) {
-    themeToApply = savedTheme;
-}
-document.documentElement.setAttribute('data-bs-theme', themeToApply);
 document.addEventListener("DOMContentLoaded", function () {
     const elem = document.getElementById("root");
     if (elem) {
