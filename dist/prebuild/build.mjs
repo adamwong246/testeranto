@@ -351,93 +351,55 @@ var getRunnables = (tests, projectName, payload = {
 };
 
 // src/utils/buildTemplates.ts
-var ProjectPageHtml = (packageName, domain, projects) => {
-  return `
-    <!DOCTYPE html>
-    <html lang="en">
-  
-    <head>
-      <meta name="description" content="Webpage description goes here" />
-      <meta charset="utf-8" />
-      <title>${packageName} - testeranto</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="author" content="" />
-      
-      <script>
-        var base = document.createElement('base');
-        var l = window.location;
-
-        if (l.hostname === "localhost"){
-          base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto/';
-        } else if (l.hostname === "adamwong246.github.io"){
-          base.href = "https://adamwong246.github.io/testeranto/testeranto/";
-        } else {
-          console.error("unsupported hostname");
-        }
-        document.getElementsByTagName('head')[0].appendChild(base);
-      </script>
-
-  
-      <script type="application/json" id="bigConfig">
-        ${JSON.stringify(Object.keys(projects))}
-      </script>
-  
-      <link rel="stylesheet" href="Project.css" />
-      <script type="module" src="Project.js"></script>
-  
-    </head>
-  
-    <body>
-      <div id="root">
-        react is loading
-      </div>
-    </body>
-  
-    </html>
-        `;
-};
-var TestPageHtml = (testName2, domain) => {
-  return `
+var getBaseHtml = (title) => `
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta name="description" content="Webpage description goes here" />
-
   <meta charset="utf-8" />
-  <title>${testName2} - testeranto</title>
+  <title>${title} - testeranto</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  
+  <script>
+    var base = document.createElement('base');
+    var l = window.location;
 
-      <script>
-        var base = document.createElement('base');
-        var l = window.location;
-
-        if (l.hostname === "localhost"){
-          base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto/';
-        } else if (l.hostname === "adamwong246.github.io"){
-          base.href = "https://adamwong246.github.io/testeranto/testeranto/";
-        } else {
-          console.error("unsupported hostname");
-        }
-        document.getElementsByTagName('head')[0].appendChild(base);
-      </script>
-
-
-      <link rel="stylesheet" href="TestReport.css" />
-      <script src="TestReport.js"></script>
-
-
+    if (l.hostname === "localhost") {
+      base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto/';
+    } else if (l.hostname === "adamwong246.github.io") {
+      base.href = "https://adamwong246.github.io/testeranto/testeranto/";
+    } else {
+      console.error("unsupported hostname");
+    }
+    document.getElementsByTagName('head')[0].appendChild(base);
+  </script>
+`;
+var ProjectPageHtml = (packageName, projects) => `
+  ${getBaseHtml(packageName)}
+  <script type="application/json" id="bigConfig">
+    ${JSON.stringify(Object.keys(projects))}
+  </script>
+  <link rel="stylesheet" href="Project.css" />
+  <script type="module" src="Project.js"></script>
 </head>
-
 <body>
-
-  <div id="root"/>
+  <div id="root">
+    react is loading
+  </div>
 </body>
-            `;
-};
+</html>
+`;
+var TestPageHtml = (testName2) => `
+  ${getBaseHtml(testName2)}
+  <link rel="stylesheet" href="TestReport.css" />
+  <script src="TestReport.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+`;
 
 // src/build.ts
 readline.emitKeypressEvents(process.stdin);
@@ -449,7 +411,6 @@ if (mode !== "once" && mode !== "dev") {
   console.error(`The 4th argument should be 'dev' or 'once', not '${mode}'.`);
   process.exit(-1);
 }
-console.log("testeranto is building", testName, mode);
 import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   const pckge = (await import(`${process.cwd()}/package.json`)).default;
   const bigConfig = module.default;
@@ -551,7 +512,7 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
   );
   fs4.writeFileSync(
     `${process.cwd()}/testeranto/index.html`,
-    ProjectPageHtml(pckge.name, bigConfig.reportDomain, bigConfig.projects)
+    ProjectPageHtml(pckge.name, bigConfig.projects)
   );
   Promise.resolve(
     Promise.all(
@@ -579,28 +540,12 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     ["pure", Object.keys(pureEntryPoints)],
     ["node", Object.keys(nodeEntryPoints)],
     ["web", Object.keys(webEntryPoints)]
-    // [
-    //   "pure",
-    //   [...Object.keys(pureEntryPoints), ...Object.keys(pureEntryPointSidecars)],
-    // ],
-    // [
-    //   "node",
-    //   [...Object.keys(nodeEntryPoints), ...Object.keys(nodeEntryPointSidecars)],
-    // ],
-    // [
-    //   "web",
-    //   [...Object.keys(webEntryPoints), ...Object.keys(webEntryPointSidecars)],
-    // ],
   ];
   x.forEach(async ([runtime, keys]) => {
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
       await fs4.mkdirSync(folder, { recursive: true });
-      fs4.writeFileSync(
-        `${folder}/index.html`,
-        TestPageHtml(testName, bigConfig.reportDomain)
-      );
-      fs4.writeFileSync(`${folder}/dev.html`, TestPageHtml(testName, ""));
+      fs4.writeFileSync(`${folder}/index.html`, TestPageHtml(testName));
     });
   });
   [

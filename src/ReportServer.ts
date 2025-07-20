@@ -17,7 +17,6 @@ const main = async () => {
     .listen(8080);
 
   console.log("Server running on port 8080");
-  console.log("http://localhost:8080/testeranto/dev.html");
 };
 
 main();

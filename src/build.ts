@@ -19,11 +19,7 @@ import {
   IRunTime,
   ITestTypes,
 } from "./Types.js";
-import {
-  TestPageHtml,
-  // testReportPage,
-  ProjectPageHtml,
-} from "./utils/buildTemplates.js";
+import { TestPageHtml, ProjectPageHtml } from "./utils/buildTemplates.js";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -35,8 +31,6 @@ if (mode !== "once" && mode !== "dev") {
   console.error(`The 4th argument should be 'dev' or 'once', not '${mode}'.`);
   process.exit(-1);
 }
-
-console.log("testeranto is building", testName, mode);
 
 import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
   const pckge = (await import(`${process.cwd()}/package.json`)).default;
@@ -120,11 +114,6 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     pureEntryPointSidecars,
   } = getRunnables(config.tests, testName);
 
-  // const { nodeEntryPointsSidecars, webEntryPointsSidecars, importEntryPointsSideCars } = getRunnableSidecars(
-  //   config.tests,
-  //   testName
-  // );
-
   const onNodeDone = () => {
     nodeDone = true;
     onDone();
@@ -155,16 +144,6 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     fs.mkdirSync(`testeranto/reports/${testName}`);
   }
 
-  // fs.writeFileSync(
-  //   `${process.cwd()}/testeranto/reports/${testName}/index.html`,
-  //   testReportPage(pckge.name, bigConfig.reportDomain)
-  // );
-
-  // fs.writeFileSync(
-  //   `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
-  //   testReportPage(pckge.name, "/")
-  // );
-
   fs.writeFileSync(
     `testeranto/reports/${testName}/config.json`,
     JSON.stringify(config, null, 2)
@@ -172,13 +151,8 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
 
   fs.writeFileSync(
     `${process.cwd()}/testeranto/index.html`,
-    ProjectPageHtml(pckge.name, bigConfig.reportDomain, bigConfig.projects)
+    ProjectPageHtml(pckge.name, bigConfig.projects)
   );
-
-  // fs.writeFileSync(
-  //   `${process.cwd()}/testeranto/dev.html`,
-  //   ProjectPageHtml(pckge.name, "/", bigConfig.projects)
-  // );
 
   Promise.resolve(
     Promise.all(
@@ -222,18 +196,6 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     ["pure", Object.keys(pureEntryPoints)],
     ["node", Object.keys(nodeEntryPoints)],
     ["web", Object.keys(webEntryPoints)],
-    // [
-    //   "pure",
-    //   [...Object.keys(pureEntryPoints), ...Object.keys(pureEntryPointSidecars)],
-    // ],
-    // [
-    //   "node",
-    //   [...Object.keys(nodeEntryPoints), ...Object.keys(nodeEntryPointSidecars)],
-    // ],
-    // [
-    //   "web",
-    //   [...Object.keys(webEntryPoints), ...Object.keys(webEntryPointSidecars)],
-    // ],
   ];
 
   x.forEach(async ([runtime, keys]) => {
@@ -245,12 +207,7 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
 
       await fs.mkdirSync(folder, { recursive: true });
 
-      fs.writeFileSync(
-        `${folder}/index.html`,
-        TestPageHtml(testName, bigConfig.reportDomain)
-      );
-
-      fs.writeFileSync(`${folder}/dev.html`, TestPageHtml(testName, ""));
+      fs.writeFileSync(`${folder}/index.html`, TestPageHtml(testName));
     });
   });
 

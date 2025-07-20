@@ -58,7 +58,6 @@ if (mode !== "once" && mode !== "dev") {
     console.error(`The 4th argument should be 'dev' or 'once', not '${mode}'.`);
     process.exit(-1);
 }
-console.log("testeranto is building", testName, mode);
 Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __importStar(require(s))).then(async (module) => {
     const pckge = (await Promise.resolve(`${`${process.cwd()}/package.json`}`).then(s => __importStar(require(s)))).default;
     const bigConfig = module.default;
@@ -116,10 +115,6 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
     let importDone = false;
     let status = "build";
     const { nodeEntryPoints, nodeEntryPointSidecars, webEntryPoints, webEntryPointSidecars, pureEntryPoints, pureEntryPointSidecars, } = (0, utils_js_1.getRunnables)(config.tests, testName);
-    // const { nodeEntryPointsSidecars, webEntryPointsSidecars, importEntryPointsSideCars } = getRunnableSidecars(
-    //   config.tests,
-    //   testName
-    // );
     const onNodeDone = () => {
         nodeDone = true;
         onDone();
@@ -145,20 +140,8 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
     if (!fs_1.default.existsSync(`testeranto/reports/${testName}`)) {
         fs_1.default.mkdirSync(`testeranto/reports/${testName}`);
     }
-    // fs.writeFileSync(
-    //   `${process.cwd()}/testeranto/reports/${testName}/index.html`,
-    //   testReportPage(pckge.name, bigConfig.reportDomain)
-    // );
-    // fs.writeFileSync(
-    //   `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
-    //   testReportPage(pckge.name, "/")
-    // );
     fs_1.default.writeFileSync(`testeranto/reports/${testName}/config.json`, JSON.stringify(config, null, 2));
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, (0, buildTemplates_js_1.ProjectPageHtml)(pckge.name, bigConfig.reportDomain, bigConfig.projects));
-    // fs.writeFileSync(
-    //   `${process.cwd()}/testeranto/dev.html`,
-    //   ProjectPageHtml(pckge.name, "/", bigConfig.projects)
-    // );
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, (0, buildTemplates_js_1.ProjectPageHtml)(pckge.name, bigConfig.projects));
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);
@@ -184,18 +167,6 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
         ["pure", Object.keys(pureEntryPoints)],
         ["node", Object.keys(nodeEntryPoints)],
         ["web", Object.keys(webEntryPoints)],
-        // [
-        //   "pure",
-        //   [...Object.keys(pureEntryPoints), ...Object.keys(pureEntryPointSidecars)],
-        // ],
-        // [
-        //   "node",
-        //   [...Object.keys(nodeEntryPoints), ...Object.keys(nodeEntryPointSidecars)],
-        // ],
-        // [
-        //   "web",
-        //   [...Object.keys(webEntryPoints), ...Object.keys(webEntryPointSidecars)],
-        // ],
     ];
     x.forEach(async ([runtime, keys]) => {
         keys.forEach(async (k) => {
@@ -204,8 +175,7 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
                 .slice(0, -1)
                 .join(".")}/${runtime}`;
             await fs_1.default.mkdirSync(folder, { recursive: true });
-            fs_1.default.writeFileSync(`${folder}/index.html`, (0, buildTemplates_js_1.TestPageHtml)(testName, bigConfig.reportDomain));
-            fs_1.default.writeFileSync(`${folder}/dev.html`, (0, buildTemplates_js_1.TestPageHtml)(testName, ""));
+            fs_1.default.writeFileSync(`${folder}/index.html`, (0, buildTemplates_js_1.TestPageHtml)(testName));
         });
     });
     [
