@@ -29149,9 +29149,9 @@
     const fetchLogs = async (project) => {
       try {
         const [nodeRes, webRes, pureRes] = await Promise.all([
-          fetch(`./testeranto/bundles/node/${project}/metafile.json`),
-          fetch(`./testeranto/bundles/web/${project}/metafile.json`),
-          fetch(`./testeranto/bundles/pure/${project}/metafile.json`)
+          fetch(`./bundles/node/${project}/metafile.json`),
+          fetch(`./bundles/web/${project}/metafile.json`),
+          fetch(`./bundles/pure/${project}/metafile.json`)
         ]);
         setNodeLogs({ [project]: await nodeRes.json() });
         setWebLogs({ [project]: await webRes.json() });
@@ -29170,8 +29170,8 @@
             fetchLogs(p);
             return [
               p,
-              await (await fetch(`./testeranto/reports/${p}/config.json`)).json(),
-              await (await fetch(`./testeranto/reports/${p}/summary.json`)).json()
+              await (await fetch(`./reports/${p}/config.json`)).json(),
+              await (await fetch(`./reports/${p}/summary.json`)).json()
             ];
           }
         );
@@ -29183,7 +29183,7 @@
     if (!summary || summary?.length === 0) {
       return /* @__PURE__ */ import_react49.default.createElement("div", null, "loading...");
     }
-    return /* @__PURE__ */ import_react49.default.createElement("div", null, /* @__PURE__ */ import_react49.default.createElement(SunriseAnimation_default, null), /* @__PURE__ */ import_react49.default.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: "transparent", position: "relative", zIndex: 10 } }, /* @__PURE__ */ import_react49.default.createElement(Tab_default.Container, { activeKey: activeTab, defaultActiveKey: "node" }, /* @__PURE__ */ import_react49.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react49.default.createElement("span", { className: "navbar-brand text-muted" }, "Project: testeranto"), /* @__PURE__ */ import_react49.default.createElement(Nav_default2, { variant: "pills", className: "me-auto", activeKey: activeTab, onSelect: (k) => setActiveTab(k || "node") }, /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Link, { eventKey: "projects" }, "Test Results")), /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react49.default.createElement(
+    return /* @__PURE__ */ import_react49.default.createElement("div", null, /* @__PURE__ */ import_react49.default.createElement(SunriseAnimation_default, { active: false }), /* @__PURE__ */ import_react49.default.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: "transparent", position: "relative", zIndex: 10 } }, /* @__PURE__ */ import_react49.default.createElement(Tab_default.Container, { activeKey: activeTab, defaultActiveKey: "node" }, /* @__PURE__ */ import_react49.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react49.default.createElement("span", { className: "navbar-brand text-muted" }, "Project: testeranto"), /* @__PURE__ */ import_react49.default.createElement(Nav_default2, { variant: "pills", className: "me-auto", activeKey: activeTab, onSelect: (k) => setActiveTab(k || "node") }, /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Link, { eventKey: "projects" }, "Test Results")), /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react49.default.createElement(
       Nav_default2.Link,
       {
         eventKey: "node",
@@ -29252,7 +29252,7 @@
         )), /* @__PURE__ */ import_react49.default.createElement("td", null, /* @__PURE__ */ import_react49.default.createElement(
           "a",
           {
-            href: `./testeranto/reports/${x}/index.html`
+            href: `./reports/${x}/index.html`
           },
           y.runTimeErrors < 0 && "\u203C\uFE0F Tests did not complete",
           y.runTimeErrors === 0 && "\u2705 All tests passed",
@@ -29260,13 +29260,13 @@
         )), /* @__PURE__ */ import_react49.default.createElement("td", null, /* @__PURE__ */ import_react49.default.createElement(
           "a",
           {
-            href: `./testeranto/reports/${x}/lint_errors.json`
+            href: `./reports/${x}/lint_errors.json`
           },
           y.staticErrors
         )), /* @__PURE__ */ import_react49.default.createElement("td", null, /* @__PURE__ */ import_react49.default.createElement(
           "a",
           {
-            href: `./testeranto/reports/${x}/type_errors.txt`
+            href: `./reports/${x}/type_errors.txt`
           },
           y.typeErrors
         )));

@@ -71,9 +71,9 @@ const testsReportPage = (packageName, domain, projects) => {
         var l = window.location;
 
         if (l.hostname === "localhost"){
-          base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto';
+          base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto/';
         } else if (l.hostname === "adamwong246.github.io"){
-          base.href = "https://adamwong246.github.io/testeranto/testeranto";
+          base.href = "https://adamwong246.github.io/testeranto/testeranto/";
         } else {
           console.error("unsupported hostname");
         }
@@ -87,9 +87,9 @@ const testsReportPage = (packageName, domain, projects) => {
         ${JSON.stringify(Object.keys(projects))}
       </script>
   
-      <link rel="stylesheet" href="/testeranto/Project.css" />
+      <link rel="stylesheet" href="Project.css" />
       
-      <script type="module" src="/testeranto/Project.js"></script>
+      <script type="module" src="Project.js"></script>
   
     </head>
   
