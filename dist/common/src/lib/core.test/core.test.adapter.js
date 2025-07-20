@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.testInterface = void 0;
-exports.testInterface = {
+exports.testAdapter = void 0;
+exports.testAdapter = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
         return initializer();
     },
@@ -14,5 +14,5 @@ exports.testInterface = {
     afterEach: (store) => store,
     afterAll: (store, pm) => { },
     assertThis: (result) => !!result,
-    beforeAll: async (input, testResource, pm) => input
+    beforeAll: async (input, testResource, pm) => input,
 };

@@ -1,7 +1,7 @@
 {
   "src/lib/classBuilder.test/classBuilder.test.ts": {
     "typeErrors": 76,
-    "staticErrors": 2,
+    "staticErrors": 1,
     "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/classBuilder.test/classBuilder.test/prompt.txt",
     "failingFeatures": {}

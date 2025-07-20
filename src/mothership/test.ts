@@ -98,7 +98,7 @@ const implementation: ITestImplementation<I, O> = {
   },
 };
 
-const testInterface: IPartialNodeInterface<I> = {
+const testAdapter: IPartialNodeAdapter<I> = {
   // assertThis: function (x: any) {
   //   throw new Error("Function not implemented.");
   // },
@@ -132,5 +132,5 @@ export default Testeranto(
   appFactory,
   specification,
   implementation,
-  testInterface
+  testAdapter
 );

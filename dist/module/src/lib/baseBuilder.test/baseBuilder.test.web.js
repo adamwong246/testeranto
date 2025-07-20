@@ -1,6 +1,6 @@
 import Testeranto from "../../Web";
 import { specification } from "./baseBuilder.test.specification";
 import { implementation } from "./baseBuilder.test.implementation";
-import { testInterface } from "./baseBuilder.test.interface";
+import { testAdapter } from "./baseBuilder.test.adapter";
 import { MockBaseBuilder } from "./baseBuilder.test.mock";
-export default Testeranto(MockBaseBuilder.prototype, specification, implementation, testInterface);
+export default Testeranto(MockBaseBuilder.prototype, specification, implementation, testAdapter);

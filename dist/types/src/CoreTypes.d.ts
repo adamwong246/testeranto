@@ -2,7 +2,7 @@ import { ITTestResourceConfiguration } from "./lib";
 import { BaseSuite } from "./lib/BaseSuite";
 import { IPM } from "./lib/types";
 import { GivenSpecification, WhenSpecification, ThenSpecification, TestWhenImplementation, Modify, TestSuiteImplementation, TestGivenImplementation, TestThenImplementation, TestSuiteShape, TestGivenShape, TestWhenShape, TestThenShape, SuiteSpecification } from "./Types";
-export type ITestInterface<I extends Ibdd_in_any> = {
+export type ITestAdapter<I extends Ibdd_in_any> = {
     assertThis: (x: I["then"]) => any;
     andWhen: (store: I["istore"], whenCB: I["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<I["istore"]>;
     butThen: (store: I["istore"], thenCB: I["then"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<I["iselection"]>;

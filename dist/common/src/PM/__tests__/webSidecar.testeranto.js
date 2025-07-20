@@ -70,7 +70,7 @@ const implementation = {
         },
     },
 };
-const testInterface = {
+const testAdapter = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
         const sidecar = initializer();
         sidecar.client = {
@@ -90,4 +90,4 @@ const testInterface = {
         }
     },
 };
-exports.default = (0, Node_1.default)(() => new webSidecar_1.PM_Web_Sidecar({}), specification, implementation, testInterface);
+exports.default = (0, Node_1.default)(() => new webSidecar_1.PM_Web_Sidecar({}), specification, implementation, testAdapter);

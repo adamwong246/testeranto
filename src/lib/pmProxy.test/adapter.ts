@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { assert } from "chai";
 
 import { I } from "./types";
-import { ITestInterface } from "../../CoreTypes";
+import { ITestAdapter } from "../../CoreTypes";
 import { andWhenProxy, butThenProxy } from "../pmProxy";
 import { IPM } from "../types";
 import { MockPMBase } from "./mockPMBase";
 // import { butThenProxy, andWhenProxy, beforeEachProxy } from "../pmProxy";
 
-export const testInterface: ITestInterface<I> = {
+export const testAdapter: ITestAdapter<I> = {
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
     return subject;
     // const mockPM = MockPMBase();

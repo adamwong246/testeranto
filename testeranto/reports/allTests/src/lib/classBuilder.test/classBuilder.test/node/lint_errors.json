@@ -15,6 +15,3 @@ src/lib/BaseSuite.test/mock.ts
 54:5 'thenCB' is defined but never used. (@typescript-eslint/no-unused-vars)
 55:5 'testResourceConfiguration' is defined but never used. (@typescript-eslint/no-unused-vars)
 56:5 'pm' is defined but never used. (@typescript-eslint/no-unused-vars)
-
-src/lib/classBuilder.test/classBuilder.test.interface.ts
-18:16 'x' is defined but never used. (@typescript-eslint/no-unused-vars)

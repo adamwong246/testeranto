@@ -3,8 +3,8 @@ import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { PM_Node } from "./PM/node.js";
 let ipcfile;
 export class NodeTesteranto extends Testeranto {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, () => {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
+        super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, () => {
             // no-op
         });
     }
@@ -19,9 +19,9 @@ export class NodeTesteranto extends Testeranto {
         // return { features, failed };
     }
 }
-const testeranto = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = defaultTestResourceRequirement) => {
+const testeranto = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement) => {
     try {
-        const t = new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+        const t = new NodeTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testAdapter);
         process.on("unhandledRejection", (reason, promise) => {
             console.error("Unhandled Rejection at:", promise, "reason:", reason);
             // Optionally, terminate the process or perform cleanup

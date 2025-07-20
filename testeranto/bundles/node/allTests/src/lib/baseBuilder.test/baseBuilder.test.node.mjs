@@ -4,7 +4,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-P5JAG7FQ.mjs";
+} from "../../../chunk-4NYHHJ7H.mjs";
 
 // src/PM/pure.ts
 var PM_Pure = class extends PM {
@@ -136,13 +136,13 @@ var PM_Pure = class extends PM {
 
 // src/Pure.ts
 var PureTesteranto = class extends TesterantoCore {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
+  constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter2) {
     super(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface2,
+      testAdapter2,
       () => {
       }
     );
@@ -157,13 +157,13 @@ var PureTesteranto = class extends TesterantoCore {
     }
   }
 };
-var Pure_default = async (input, testSpecification, testImplementation, testInterface2, testResourceRequirement = defaultTestResourceRequirement) => {
+var Pure_default = async (input, testSpecification, testImplementation, testAdapter2, testResourceRequirement = defaultTestResourceRequirement) => {
   return new PureTesteranto(
     input,
     testSpecification,
     testImplementation,
     testResourceRequirement,
-    testInterface2
+    testAdapter2
   );
 };
 
@@ -343,8 +343,8 @@ var implementation = {
   }
 };
 
-// src/lib/baseBuilder.test/baseBuilder.test.interface.ts
-var testInterface = {
+// src/lib/baseBuilder.test/baseBuilder.test.adapter.ts
+var testAdapter = {
   beforeEach: async (subject, initializer) => {
     return initializer();
   },
@@ -366,7 +366,7 @@ var baseBuilder_test_node_default = Pure_default(
   MockBaseBuilder.prototype,
   specification,
   implementation,
-  testInterface
+  testAdapter
 );
 export {
   baseBuilder_test_node_default as default

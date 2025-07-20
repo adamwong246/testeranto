@@ -4,7 +4,7 @@ import {
   Ibdd_out,
   ITestSpecification,
   ITestImplementation,
-  ITestInterface,
+  ITestAdapter,
 } from "../../CoreTypes";
 import { WhenSpecification } from "../../Types";
 import { BaseSuite } from "../BaseSuite";
@@ -290,8 +290,8 @@ export const implementation: ITestImplementation<I, O> = {
   },
 };
 
-// 5. Fully typed Test Interface
-export const testInterface: ITestInterface<I> = {
+// 5. Fully typed Test Adapter
+export const testAdapter: ITestAdapter<I> = {
   beforeEach: async (
     subject: I["isubject"],
     initializer: (context?: any) => I["given"]

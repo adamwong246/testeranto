@@ -1,4 +1,4 @@
-import { Ibdd_in, Ibdd_out, ITestInterface } from "../../CoreTypes";
+import { Ibdd_in, Ibdd_out, ITestAdapter } from "../../CoreTypes";
 import { MockCore } from "./MockCore";
 import { ITTestResourceRequest } from "..";
 
@@ -23,7 +23,7 @@ export type O = Ibdd_out<
     Default: [];
     WithCustomInput: [input: any];
     WithResourceRequirements: [requirements: ITTestResourceRequest];
-    WithCustomInterface: [interface: Partial<ITestInterface<any>>];
+    WithCustomAdapter: [adapter: Partial<ITestAdapter<any>>];
   },
   // Whens
   {

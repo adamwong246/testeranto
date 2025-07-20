@@ -8,16 +8,10 @@ import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 
 import { IGivens } from "./abstractBase.js";
 import { IPM } from "./types.js";
-import type {
-  ITestInterface,
-  Ibdd_in_any,
-  Ibdd_out_any,
-} from "../CoreTypes.js";
+import type { ITestAdapter, Ibdd_in_any, Ibdd_out_any } from "../CoreTypes.js";
 import { BaseSuite } from "./BaseSuite.js";
 
-export const BaseTestInterface = <
-  T extends Ibdd_in_any
->(): ITestInterface<T> => ({
+export const BaseAdapter = <T extends Ibdd_in_any>(): ITestAdapter<T> => ({
   beforeAll: async (s: T["istore"]) => s,
   beforeEach: async function (
     subject: T["isubject"],
@@ -52,11 +46,11 @@ export const BaseTestInterface = <
   assertThis: (x: any) => x,
 });
 
-export const DefaultTestInterface = <T extends Ibdd_in_any>(
-  p: Partial<ITestInterface<T>>
-): ITestInterface<T> => {
+export const DefaultAdapter = <T extends Ibdd_in_any>(
+  p: Partial<ITestAdapter<T>>
+): ITestAdapter<T> => {
   return {
-    ...BaseTestInterface,
+    ...BaseAdapter,
     ...p,
   };
 };

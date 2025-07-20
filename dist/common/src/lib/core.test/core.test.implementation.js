@@ -13,18 +13,18 @@ exports.implementation = {
             specification, // testSpecification
             exports.implementation, // testImplementation
             { ports: [] }, // testResourceRequirement
-            testInterface, // testInterface
+            testAdapter, // testAdapter
             (cb) => cb() // uberCatcher
             );
         },
         WithCustomInput: (input) => {
-            return new MockCore_1.MockCore(input, specification, exports.implementation, { ports: [] }, testInterface, (cb) => cb());
+            return new MockCore_1.MockCore(input, specification, exports.implementation, { ports: [] }, testAdapter, (cb) => cb());
         },
         WithResourceRequirements: (requirements) => {
-            return new MockCore_1.MockCore({}, specification, exports.implementation, requirements, testInterface, (cb) => cb());
+            return new MockCore_1.MockCore({}, specification, exports.implementation, requirements, testAdapter, (cb) => cb());
         },
-        WithCustomInterface: (customInterface) => {
-            return new MockCore_1.MockCore({}, specification, exports.implementation, { ports: [] }, Object.assign(Object.assign({}, testInterface), customInterface), (cb) => cb());
+        WithCustomAdapter: (customAdapter) => {
+            return new MockCore_1.MockCore({}, specification, exports.implementation, { ports: [] }, Object.assign(Object.assign({}, testAdapter), customAdapter), (cb) => cb());
         },
     },
     whens: {
@@ -76,8 +76,8 @@ exports.implementation = {
             return builder;
         },
         interfaceConfigured: () => (builder) => {
-            if (!builder.testInterface) {
-                throw new Error("Test interface not configured");
+            if (!builder.testAdapter) {
+                throw new Error("Test adapter not configured");
             }
             return builder;
         },

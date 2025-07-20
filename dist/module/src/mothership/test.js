@@ -33,7 +33,7 @@ const implementation = {
         },
     },
 };
-const testInterface = {
+const testAdapter = {
     // assertThis: function (x: any) {
     //   throw new Error("Function not implemented.");
     // },
@@ -56,4 +56,4 @@ const testInterface = {
         return subject(testResource.ports[0]);
     },
 };
-export default Testeranto(appFactory, specification, implementation, testInterface);
+export default Testeranto(appFactory, specification, implementation, testAdapter);

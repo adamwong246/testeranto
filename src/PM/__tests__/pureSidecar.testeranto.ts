@@ -116,7 +116,7 @@ const implementation: ITestImplementation<I, O> = {
   },
 };
 
-const testInterface: IPartialNodeInterface<I> = {
+const testAdapter: IPartialNodeAdapter<I> = {
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
     const sidecar = initializer();
     sidecar.client = {
@@ -140,5 +140,5 @@ export default Testeranto(
   () => new PM_Pure_Sidecar({} as ITTestResourceConfiguration),
   specification,
   implementation,
-  testInterface
+  testAdapter
 );

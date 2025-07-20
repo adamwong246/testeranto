@@ -95,7 +95,7 @@
   "metafile": {
     "inputs": {
       "src/lib/index.ts": {
-        "bytes": 3602,
+        "bytes": 3565,
         "imports": [
           {
             "path": "../PM/pure.js",
@@ -256,7 +256,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 3718,
+        "bytes": 3530,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -334,7 +334,7 @@
         "format": "esm"
       },
       "src/Pure.ts": {
-        "bytes": 2118,
+        "bytes": 2102,
         "imports": [
           {
             "path": "./CoreTypes.js",
@@ -432,8 +432,8 @@
         ],
         "format": "esm"
       },
-      "src/lib/baseBuilder.test/baseBuilder.test.interface.ts": {
-        "bytes": 501,
+      "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+        "bytes": 495,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -449,7 +449,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
-        "bytes": 464,
+        "bytes": 458,
         "imports": [
           {
             "path": "src/Pure.ts",
@@ -467,9 +467,9 @@
             "original": "./baseBuilder.test.implementation"
           },
           {
-            "path": "src/lib/baseBuilder.test/baseBuilder.test.interface.ts",
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts",
             "kind": "import-statement",
-            "original": "./baseBuilder.test.interface"
+            "original": "./baseBuilder.test.adapter"
           },
           {
             "path": "./baseBuilder.test.types",
@@ -494,7 +494,7 @@
         "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
         "inputs": {
           "src/lib/index.ts": {
-            "bytesInOutput": 674
+            "bytesInOutput": 656
           },
           "src/lib/pmProxy.ts": {
             "bytesInOutput": 3236
@@ -512,7 +512,7 @@
             "bytesInOutput": 1927
           },
           "src/lib/core.ts": {
-            "bytesInOutput": 2007
+            "bytesInOutput": 1829
           },
           "src/PM/index.ts": {
             "bytesInOutput": 20
@@ -521,7 +521,7 @@
             "bytesInOutput": 3131
           },
           "src/Pure.ts": {
-            "bytesInOutput": 870
+            "bytesInOutput": 862
           },
           "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
             "bytesInOutput": 650
@@ -532,14 +532,14 @@
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
             "bytesInOutput": 2595
           },
-          "src/lib/baseBuilder.test/baseBuilder.test.interface.ts": {
-            "bytesInOutput": 375
+          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+            "bytesInOutput": 373
           },
           "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
-            "bytesInOutput": 133
+            "bytesInOutput": 131
           }
         },
-        "bytes": 25423
+        "bytes": 25213
       }
     }
   }

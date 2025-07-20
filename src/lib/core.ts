@@ -5,12 +5,12 @@ import type {
   Ibdd_in_any,
   Ibdd_out_any,
   ITestImplementation,
-  ITestInterface,
+  ITestAdapter,
   ITestSpecification,
 } from "../CoreTypes";
 
 import {
-  DefaultTestInterface,
+  DefaultAdapter,
   IFinalResults,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
@@ -37,10 +37,10 @@ export default abstract class TesterantoCore<
       thens: Record<string, any>;
     },
     testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement,
-    testInterface: Partial<ITestInterface<I>>,
+    testAdapter: Partial<ITestAdapter<I>>,
     uberCatcher: (cb: () => void) => void
   ) {
-    const fullTestInterface = DefaultTestInterface(testInterface);
+    const fullAdapter = DefaultAdapter(testAdapter);
 
     super(
       testImplementation,
@@ -49,11 +49,11 @@ export default abstract class TesterantoCore<
 
       class extends BaseSuite<I, O> {
         afterAll(store: I["istore"], artifactory: ITestArtifactory, pm: IPM) {
-          return fullTestInterface.afterAll(store, pm);
+          return fullAdapter.afterAll(store, pm);
         }
 
         assertThat(t: Awaited<I["then"]>): boolean {
-          return fullTestInterface.assertThis(t);
+          return fullAdapter.assertThis(t);
         }
 
         async setup(
@@ -63,7 +63,7 @@ export default abstract class TesterantoCore<
           pm: IPM
         ): Promise<I["isubject"]> {
           return (
-            fullTestInterface.beforeAll ||
+            fullAdapter.beforeAll ||
             (async (
               input: I["iinput"],
               artifactory: ITestArtifactory,
@@ -90,7 +90,7 @@ export default abstract class TesterantoCore<
           initialValues,
           pm
         ) {
-          return fullTestInterface.beforeEach(
+          return fullAdapter.beforeEach(
             subject,
             initializer,
             testResource,
@@ -106,7 +106,7 @@ export default abstract class TesterantoCore<
           pm
         ): Promise<unknown> {
           return new Promise((res) =>
-            res(fullTestInterface.afterEach(store, key, pm))
+            res(fullAdapter.afterEach(store, key, pm))
           );
         }
         s;
@@ -114,12 +114,7 @@ export default abstract class TesterantoCore<
 
       class When extends BaseWhen<I> {
         async andWhen(store, whenCB, testResource, pm) {
-          return await fullTestInterface.andWhen(
-            store,
-            whenCB,
-            testResource,
-            pm
-          );
+          return await fullAdapter.andWhen(store, whenCB, testResource, pm);
         }
       } as any,
 
@@ -130,12 +125,7 @@ export default abstract class TesterantoCore<
           testResource: any,
           pm: IPM
         ): Promise<I["iselection"]> {
-          return await fullTestInterface.butThen(
-            store,
-            thenCB,
-            testResource,
-            pm
-          );
+          return await fullAdapter.butThen(store, thenCB, testResource, pm);
         }
       } as any,
 

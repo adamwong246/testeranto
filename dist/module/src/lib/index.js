@@ -1,4 +1,4 @@
-export const BaseTestInterface = () => ({
+export const BaseAdapter = () => ({
     beforeAll: async (s) => s,
     beforeEach: async function (subject, initialValues, x, testResource, pm) {
         return subject;
@@ -19,8 +19,8 @@ export const BaseTestInterface = () => ({
     },
     assertThis: (x) => x,
 });
-export const DefaultTestInterface = (p) => {
-    return Object.assign(Object.assign({}, BaseTestInterface), p);
+export const DefaultAdapter = (p) => {
+    return Object.assign(Object.assign({}, BaseAdapter), p);
 };
 export const defaultTestResourceRequirement = {
     ports: 0,

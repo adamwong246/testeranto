@@ -38,7 +38,7 @@ const implementation = {
         },
     },
 };
-const testInterface = {
+const testAdapter = {
     // assertThis: function (x: any) {
     //   throw new Error("Function not implemented.");
     // },
@@ -61,4 +61,4 @@ const testInterface = {
         return subject(testResource.ports[0]);
     },
 };
-exports.default = (0, Node_1.default)(index_1.default, specification, implementation, testInterface);
+exports.default = (0, Node_1.default)(index_1.default, specification, implementation, testAdapter);

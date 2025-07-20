@@ -8,8 +8,8 @@ const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
 const pure_js_1 = require("./PM/pure.js");
 class PureTesteranto extends core_js_1.default {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, () => {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
+        super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, () => {
             // no-op
         });
     }
@@ -29,15 +29,15 @@ class PureTesteranto extends core_js_1.default {
     }
 }
 exports.PureTesteranto = PureTesteranto;
-exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
-    return new PureTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+exports.default = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
+    return new PureTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testAdapter);
     // try {
     //   return new PureTesteranto<I, O, M>(
     //     input,
     //     testSpecification,
     //     testImplementation,
     //     testResourceRequirement,
-    //     testInterface
+    //     testAdapter
     //   );
     // } catch (e) {
     //   return -1;

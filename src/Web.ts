@@ -4,7 +4,7 @@
 import {
   ITestSpecification,
   ITestImplementation,
-  ITestInterface,
+  ITestAdapter,
   Ibdd_in_any,
   Ibdd_out,
 } from "./CoreTypes";
@@ -32,14 +32,14 @@ export class WebTesteranto<
     testSpecification: ITestSpecification<I, O>,
     testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest,
-    testInterface: Partial<ITestInterface<I>>
+    testAdapter: Partial<ITestAdapter<I>>
   ) {
     super(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface,
+      testAdapter,
       (cb) => {
         window.removeEventListener("error", errorCallback);
 
@@ -87,7 +87,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
-  testInterface: Partial<ITestInterface<I>>,
+  testAdapter: Partial<ITestAdapter<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<I, O, M>> => {
   return new WebTesteranto<I, O, M>(
@@ -95,6 +95,6 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
     testSpecification,
     testImplementation,
     testResourceRequirement,
-    testInterface
+    testAdapter
   );
 };

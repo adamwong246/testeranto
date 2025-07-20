@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Node_1 = __importDefault(require("../../Node"));
 const implementation_1 = require("./implementation");
 const specification_1 = require("./specification");
-const interface_1 = require("./interface");
+const adapter_1 = require("./adapter");
 const pmProxy_1 = require("../pmProxy");
 exports.default = (0, Node_1.default)(
 // because of the nature of testeranto, we must add all the testable items here
 {
     butThenProxy: pmProxy_1.butThenProxy,
-}, specification_1.specification, implementation_1.implementation, interface_1.testInterface);
+}, specification_1.specification, implementation_1.implementation, adapter_1.testAdapter);

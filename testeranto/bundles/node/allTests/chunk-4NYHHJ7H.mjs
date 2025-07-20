@@ -163,7 +163,7 @@ var ClassBuilder = class extends BaseBuilder {
 };
 
 // src/lib/index.ts
-var BaseTestInterface = () => ({
+var BaseAdapter = () => ({
   beforeAll: async (s) => s,
   beforeEach: async function(subject, initialValues, x, testResource, pm) {
     return subject;
@@ -183,9 +183,9 @@ var BaseTestInterface = () => ({
   },
   assertThis: (x) => x
 });
-var DefaultTestInterface = (p) => {
+var DefaultAdapter = (p) => {
   return {
-    ...BaseTestInterface,
+    ...BaseAdapter,
     ...p
   };
 };
@@ -584,21 +584,21 @@ var BaseSuite = class {
 
 // src/lib/core.ts
 var TesterantoCore = class extends ClassBuilder {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testInterface, uberCatcher) {
-    const fullTestInterface = DefaultTestInterface(testInterface);
+  constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testAdapter, uberCatcher) {
+    const fullAdapter = DefaultAdapter(testAdapter);
     super(
       testImplementation,
       testSpecification,
       input,
       class extends BaseSuite {
         afterAll(store, artifactory, pm) {
-          return fullTestInterface.afterAll(store, pm);
+          return fullAdapter.afterAll(store, pm);
         }
         assertThat(t) {
-          return fullTestInterface.assertThis(t);
+          return fullAdapter.assertThis(t);
         }
         async setup(s, artifactory, tr, pm) {
-          return (fullTestInterface.beforeAll || (async (input2, artifactory2, tr2, pm2) => input2))(
+          return (fullAdapter.beforeAll || (async (input2, artifactory2, tr2, pm2) => input2))(
             s,
             this.testResourceConfiguration,
             // artifactory,
@@ -612,7 +612,7 @@ var TesterantoCore = class extends ClassBuilder {
           this.uberCatcher = uberCatcher;
         }
         async givenThat(subject, testResource, artifactory, initializer, initialValues, pm) {
-          return fullTestInterface.beforeEach(
+          return fullAdapter.beforeEach(
             subject,
             initializer,
             testResource,
@@ -622,28 +622,18 @@ var TesterantoCore = class extends ClassBuilder {
         }
         afterEach(store, key, artifactory, pm) {
           return new Promise(
-            (res) => res(fullTestInterface.afterEach(store, key, pm))
+            (res) => res(fullAdapter.afterEach(store, key, pm))
           );
         }
       },
       class When extends BaseWhen {
         async andWhen(store, whenCB, testResource, pm) {
-          return await fullTestInterface.andWhen(
-            store,
-            whenCB,
-            testResource,
-            pm
-          );
+          return await fullAdapter.andWhen(store, whenCB, testResource, pm);
         }
       },
       class Then extends BaseThen {
         async butThen(store, thenCB, testResource, pm) {
-          return await fullTestInterface.butThen(
-            store,
-            thenCB,
-            testResource,
-            pm
-          );
+          return await fullAdapter.butThen(store, thenCB, testResource, pm);
         }
       },
       testResourceRequirement

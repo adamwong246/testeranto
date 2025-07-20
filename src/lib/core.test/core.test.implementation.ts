@@ -2,7 +2,7 @@ import { ITestImplementation } from "../../CoreTypes";
 import { MockCore } from "./MockCore";
 import { I, O, M } from "./core.test.types";
 import { ITTestResourceRequest } from "..";
-import { ITestInterface } from "../../CoreTypes";
+import { ITestAdapter } from "../../CoreTypes";
 
 export const implementation: ITestImplementation<I, O, M> = {
   suites: {
@@ -17,7 +17,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         specification, // testSpecification
         implementation, // testImplementation
         { ports: [] }, // testResourceRequirement
-        testInterface, // testInterface
+        testAdapter, // testAdapter
         (cb) => cb() // uberCatcher
       );
     },
@@ -27,7 +27,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         specification,
         implementation,
         { ports: [] },
-        testInterface,
+        testAdapter,
         (cb) => cb()
       );
     },
@@ -37,17 +37,17 @@ export const implementation: ITestImplementation<I, O, M> = {
         specification,
         implementation,
         requirements,
-        testInterface,
+        testAdapter,
         (cb) => cb()
       );
     },
-    WithCustomInterface: (customInterface: Partial<ITestInterface<any>>) => {
+    WithCustomAdapter: (customAdapter: Partial<ITestAdapter<any>>) => {
       return new MockCore(
         {},
         specification,
         implementation,
         { ports: [] },
-        { ...testInterface, ...customInterface },
+        { ...testAdapter, ...customAdapter },
         (cb) => cb()
       );
     },
@@ -103,8 +103,8 @@ export const implementation: ITestImplementation<I, O, M> = {
       return builder;
     },
     interfaceConfigured: () => (builder) => {
-      if (!builder.testInterface) {
-        throw new Error("Test interface not configured");
+      if (!builder.testAdapter) {
+        throw new Error("Test adapter not configured");
       }
       return builder;
     },

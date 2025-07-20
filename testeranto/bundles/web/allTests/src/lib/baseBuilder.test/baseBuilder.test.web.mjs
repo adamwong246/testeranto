@@ -132,7 +132,7 @@ var PM_Web = class extends PM {
 };
 
 // src/lib/index.ts
-var BaseTestInterface = () => ({
+var BaseAdapter = () => ({
   beforeAll: async (s) => s,
   beforeEach: async function(subject, initialValues, x, testResource, pm) {
     return subject;
@@ -152,9 +152,9 @@ var BaseTestInterface = () => ({
   },
   assertThis: (x) => x
 });
-var DefaultTestInterface = (p) => {
+var DefaultAdapter = (p) => {
   return {
-    ...BaseTestInterface,
+    ...BaseAdapter,
     ...p
   };
 };
@@ -715,21 +715,21 @@ var BaseSuite = class {
 
 // src/lib/core.ts
 var TesterantoCore = class extends ClassBuilder {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testInterface2, uberCatcher) {
-    const fullTestInterface = DefaultTestInterface(testInterface2);
+  constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testAdapter2, uberCatcher) {
+    const fullAdapter = DefaultAdapter(testAdapter2);
     super(
       testImplementation,
       testSpecification,
       input,
       class extends BaseSuite {
         afterAll(store, artifactory, pm) {
-          return fullTestInterface.afterAll(store, pm);
+          return fullAdapter.afterAll(store, pm);
         }
         assertThat(t) {
-          return fullTestInterface.assertThis(t);
+          return fullAdapter.assertThis(t);
         }
         async setup(s, artifactory, tr, pm) {
-          return (fullTestInterface.beforeAll || (async (input2, artifactory2, tr2, pm2) => input2))(
+          return (fullAdapter.beforeAll || (async (input2, artifactory2, tr2, pm2) => input2))(
             s,
             this.testResourceConfiguration,
             // artifactory,
@@ -743,7 +743,7 @@ var TesterantoCore = class extends ClassBuilder {
           this.uberCatcher = uberCatcher;
         }
         async givenThat(subject, testResource, artifactory, initializer, initialValues, pm) {
-          return fullTestInterface.beforeEach(
+          return fullAdapter.beforeEach(
             subject,
             initializer,
             testResource,
@@ -753,28 +753,18 @@ var TesterantoCore = class extends ClassBuilder {
         }
         afterEach(store, key, artifactory, pm) {
           return new Promise(
-            (res) => res(fullTestInterface.afterEach(store, key, pm))
+            (res) => res(fullAdapter.afterEach(store, key, pm))
           );
         }
       },
       class When extends BaseWhen {
         async andWhen(store, whenCB, testResource, pm) {
-          return await fullTestInterface.andWhen(
-            store,
-            whenCB,
-            testResource,
-            pm
-          );
+          return await fullAdapter.andWhen(store, whenCB, testResource, pm);
         }
       },
       class Then extends BaseThen {
         async butThen(store, thenCB, testResource, pm) {
-          return await fullTestInterface.butThen(
-            store,
-            thenCB,
-            testResource,
-            pm
-          );
+          return await fullAdapter.butThen(store, thenCB, testResource, pm);
         }
       },
       testResourceRequirement
@@ -789,13 +779,13 @@ var unhandledrejectionCallback = (event) => {
   console.log("window.addEventListener unhandledrejection", event);
 };
 var WebTesteranto = class extends TesterantoCore {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
+  constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter2) {
     super(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface2,
+      testAdapter2,
       (cb) => {
         window.removeEventListener("error", errorCallback);
         errorCallback = (e) => {
@@ -828,13 +818,13 @@ var WebTesteranto = class extends TesterantoCore {
     return await this.testJobs[0].receiveTestResourceConfig(pm);
   }
 };
-var Web_default = async (input, testSpecification, testImplementation, testInterface2, testResourceRequirement = defaultTestResourceRequirement) => {
+var Web_default = async (input, testSpecification, testImplementation, testAdapter2, testResourceRequirement = defaultTestResourceRequirement) => {
   return new WebTesteranto(
     input,
     testSpecification,
     testImplementation,
     testResourceRequirement,
-    testInterface2
+    testAdapter2
   );
 };
 
@@ -1014,8 +1004,8 @@ var implementation = {
   }
 };
 
-// src/lib/baseBuilder.test/baseBuilder.test.interface.ts
-var testInterface = {
+// src/lib/baseBuilder.test/baseBuilder.test.adapter.ts
+var testAdapter = {
   beforeEach: async (subject, initializer) => {
     return initializer();
   },
@@ -1037,7 +1027,7 @@ var baseBuilder_test_web_default = Web_default(
   MockBaseBuilder.prototype,
   specification,
   implementation,
-  testInterface
+  testAdapter
 );
 export {
   baseBuilder_test_web_default as default

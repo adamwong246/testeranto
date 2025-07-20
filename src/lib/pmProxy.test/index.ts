@@ -1,7 +1,7 @@
 import Testeranto from "../../Node";
 import { implementation } from "./implementation";
 import { specification } from "./specification";
-import { testInterface } from "./interface";
+import { testAdapter } from "./adapter";
 import { I, O } from "./types";
 
 import { butThenProxy, IProxy } from "../pmProxy";
@@ -15,5 +15,5 @@ export default Testeranto<I, O, {}>(
   },
   specification,
   implementation,
-  testInterface
+  testAdapter
 );

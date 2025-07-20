@@ -1,7 +1,10 @@
-import { ITestInterface } from "../../CoreTypes";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ITestAdapter } from "../../CoreTypes";
+
 import { I } from "./core.test.types";
 
-export const testInterface: ITestInterface<I> = {
+export const testAdapter: ITestAdapter<I> = {
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
     return initializer();
   },
@@ -14,5 +17,5 @@ export const testInterface: ITestInterface<I> = {
   afterEach: (store) => store,
   afterAll: (store, pm) => {},
   assertThis: (result) => !!result,
-  beforeAll: async (input, testResource, pm) => input as any
+  beforeAll: async (input, testResource, pm) => input as any,
 };

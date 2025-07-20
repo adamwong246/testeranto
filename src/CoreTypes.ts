@@ -20,7 +20,7 @@ import {
   SuiteSpecification,
 } from "./Types";
 
-export type ITestInterface<I extends Ibdd_in_any> = {
+export type ITestAdapter<I extends Ibdd_in_any> = {
   assertThis: (x: I["then"]) => any;
   andWhen: (
     store: I["istore"],

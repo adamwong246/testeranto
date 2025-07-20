@@ -78,6 +78,8 @@
 /Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (312,48): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (314,3): Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
   Type 'TestStore' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (14,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (17,26): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (32,9): Expected 8 arguments, but got 9.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (45,9): Expected 8 arguments, but got 9.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (58,9): Expected 8 arguments, but got 9.
@@ -87,8 +89,6 @@
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (184,30): Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
   Type 'Promise<ClassBuilder<any, any, any>>' is missing the following properties from type 'ClassBuilder<any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 12 more.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (186,23): Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.interface.ts (11,26): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.interface.ts (14,26): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (60,7): Expected 2 arguments, but got 3.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.types.ts (23,17): Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/mock.ts (45,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
@@ -101,20 +101,20 @@
       Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
         'string' index signatures are incompatible.
           Type 'any' is not assignable to type 'never'.
-/Users/adam/Code/testeranto/src/lib/index.ts (22,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+/Users/adam/Code/testeranto/src/lib/index.ts (16,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
   Types of parameters 'initialValues' and 'initializer' are incompatible.
     Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
       'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
-/Users/adam/Code/testeranto/src/lib/index.ts (24,20): Type '"iinitialValues"' cannot be used to index type 'T'.
-/Users/adam/Code/testeranto/src/lib/index.ts (46,13): This expression is not callable.
+/Users/adam/Code/testeranto/src/lib/index.ts (18,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (40,13): This expression is not callable.
   Type 'unknown' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/index.ts (58,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestInterface<T>'.
+/Users/adam/Code/testeranto/src/lib/index.ts (52,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
 /Users/adam/Code/testeranto/src/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-/Users/adam/Code/testeranto/src/Node.ts (59,26): Cannot find name 'INodeTestInterface'. Did you mean 'ITestInterface'?
+/Users/adam/Code/testeranto/src/Node.ts (59,24): Cannot find name 'INodeAdapter'.
 /Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?

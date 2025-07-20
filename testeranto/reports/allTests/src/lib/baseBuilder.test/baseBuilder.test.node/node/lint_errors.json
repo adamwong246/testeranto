@@ -1,6 +1,12 @@
 src/Pure.ts
 47:14 'e' is defined but never used. (@typescript-eslint/no-unused-vars)
 
+src/lib/baseBuilder.test/baseBuilder.test.adapter.ts
+17:16 'x' is defined but never used. (@typescript-eslint/no-unused-vars)
+17:19 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+
 src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
 9:36 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
 - undefined (fix)
@@ -30,12 +36,6 @@ src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
 - undefined (fix)
 - undefined (fix)
 56:37 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-
-src/lib/baseBuilder.test/baseBuilder.test.interface.ts
-17:16 'x' is defined but never used. (@typescript-eslint/no-unused-vars)
-17:19 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
 - undefined (fix)
 - undefined (fix)
 

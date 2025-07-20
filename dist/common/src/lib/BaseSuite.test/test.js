@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.testInterface = exports.implementation = exports.specification = void 0;
+exports.testAdapter = exports.implementation = exports.specification = void 0;
 const mock_1 = require("./mock");
 // 3. Enhanced Test Specification with more test cases
 const specification = (Suite, Given, When, Then) => [
@@ -157,8 +157,8 @@ exports.implementation = {
         },
     },
 };
-// 5. Fully typed Test Interface
-exports.testInterface = {
+// 5. Fully typed Test Adapter
+exports.testAdapter = {
     beforeEach: async (subject, initializer) => initializer(),
     andWhen: async (store, whenCB, testResource, pm) => whenCB(store, pm),
     butThen: async (store, thenCB, testResource, pm) => thenCB(store, pm),

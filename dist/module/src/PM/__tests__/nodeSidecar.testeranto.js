@@ -80,7 +80,7 @@ const implementation = {
         },
     },
 };
-const testInterface = {
+const testAdapter = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
         const sidecar = initializer();
         sidecar.client = {
@@ -100,4 +100,4 @@ const testInterface = {
         }
     },
 };
-export default Testeranto(() => new PM_Node_Sidecar({}), specification, implementation, testInterface);
+export default Testeranto(() => new PM_Node_Sidecar({}), specification, implementation, testAdapter);

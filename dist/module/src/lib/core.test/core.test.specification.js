@@ -6,7 +6,7 @@ export const specification = (Suite, Given, When, Then) => {
             customInputInitialization: Given.WithCustomInput({ test: "input" }, [], [Then.initializedProperly()]),
             // Configuration tests
             resourceConfig: Given.WithResourceRequirements({ ports: [3000, 3001] }, [], [Then.resourceRequirementsSet()]),
-            interfaceConfig: Given.WithCustomInterface({
+            interfaceConfig: Given.WithCustomAdapter({
                 assertThis: (x) => !!x,
                 beforeEach: async (s, i) => i(),
             }, [], [Then.interfaceConfigured()]),

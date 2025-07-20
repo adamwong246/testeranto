@@ -153,8 +153,8 @@ export const implementation = {
         },
     },
 };
-// 5. Fully typed Test Interface
-export const testInterface = {
+// 5. Fully typed Test Adapter
+export const testAdapter = {
     beforeEach: async (subject, initializer) => initializer(),
     andWhen: async (store, whenCB, testResource, pm) => whenCB(store, pm),
     butThen: async (store, thenCB, testResource, pm) => thenCB(store, pm),

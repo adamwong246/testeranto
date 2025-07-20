@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defaultTestResourceRequirement = exports.DefaultTestInterface = exports.BaseTestInterface = void 0;
-const BaseTestInterface = () => ({
+exports.defaultTestResourceRequirement = exports.DefaultAdapter = exports.BaseAdapter = void 0;
+const BaseAdapter = () => ({
     beforeAll: async (s) => s,
     beforeEach: async function (subject, initialValues, x, testResource, pm) {
         return subject;
@@ -22,11 +22,11 @@ const BaseTestInterface = () => ({
     },
     assertThis: (x) => x,
 });
-exports.BaseTestInterface = BaseTestInterface;
-const DefaultTestInterface = (p) => {
-    return Object.assign(Object.assign({}, exports.BaseTestInterface), p);
+exports.BaseAdapter = BaseAdapter;
+const DefaultAdapter = (p) => {
+    return Object.assign(Object.assign({}, exports.BaseAdapter), p);
 };
-exports.DefaultTestInterface = DefaultTestInterface;
+exports.DefaultAdapter = DefaultAdapter;
 exports.defaultTestResourceRequirement = {
     ports: 0,
 };

@@ -6,4 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Node_1 = __importDefault(require("../../Node"));
 const BaseSuite_1 = require("../BaseSuite");
 const test_1 = require("./test");
-exports.default = (0, Node_1.default)(BaseSuite_1.BaseSuite, test_1.specification, test_1.implementation, test_1.testInterface);
+exports.default = (0, Node_1.default)(BaseSuite_1.BaseSuite, test_1.specification, test_1.implementation, test_1.testAdapter);

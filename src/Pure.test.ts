@@ -266,8 +266,8 @@ const specification = (Suite, Given, When, Then) => [
   }),
 ];
 
-// Test interface for PureTesteranto
-const testInterface = {
+// Test adapter for PureTesteranto
+const testAdapter = {
   beforeEach: async (subject, initializer) => {
     return { pm: initializer() };
   },
@@ -284,5 +284,5 @@ export default PureTesteranto<PureI, PureO, {}>(
   null, // No initial input
   specification,
   implementation,
-  testInterface
+  testAdapter
 );

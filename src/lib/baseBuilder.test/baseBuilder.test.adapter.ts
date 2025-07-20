@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ITestInterface } from "../../CoreTypes";
-import { I } from "../baseBuilder.test/baseBuilder.test.types";
+import { ITestAdapter } from "../../CoreTypes";
 
-export const testInterface: ITestInterface<I> = {
-  beforeAll: async () => {},
+import { I } from "./baseBuilder.test.types";
+
+export const testAdapter: ITestAdapter<I> = {
   beforeEach: async (subject, initializer) => {
     return initializer();
   },
@@ -15,5 +14,5 @@ export const testInterface: ITestInterface<I> = {
   },
   afterEach: (store) => store,
   afterAll: () => {},
-  assertThis: (x: any) => {}
+  assertThis: (x: any) => {},
 };

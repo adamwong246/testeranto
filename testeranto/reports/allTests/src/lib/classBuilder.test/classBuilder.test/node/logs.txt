@@ -1,24 +1,24 @@
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
-stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/f9ca1b7f-573d-4f95-9063-0d16829dc9ab"}
+stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/422c5073-3c14-4c94-b88b-508f3d5702fd"}
 stderr > Given error 1: ReferenceError: TestClassBuilder is not defined
     at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:572:32)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:496:29
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:496:29
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:668:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:641:42)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:491:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:423:34)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:636:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:491:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:423:34)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:556:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:22:19
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:50:29)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:556:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:22:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:50:29)
 goodbye node with caught error ReferenceError: TestClassBuilder is not defined
     at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:572:32)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:496:29
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:496:29
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:668:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:641:42)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:491:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:423:34)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:636:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:491:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:423:34)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:556:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:22:19
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-P5JAG7FQ.mjs:50:29)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:556:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:22:19
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:50:29)

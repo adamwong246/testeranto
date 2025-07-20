@@ -2,11 +2,11 @@ import Testeranto from "../../Pure";
 
 import { BaseSuite } from "../BaseSuite";
 
-import { I, implementation, O, specification, testInterface } from "./test";
+import { I, implementation, O, specification, testAdapter } from "./test";
 
 export default Testeranto<I, O, {}>(
   BaseSuite,
   specification,
   implementation,
-  testInterface
+  testAdapter
 );

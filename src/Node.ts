@@ -8,7 +8,7 @@ import { PM_Node } from "./PM/node.js";
 import {
   ITestSpecification,
   ITestImplementation,
-  ITestInterface,
+  ITestAdapter,
   Ibdd_in_any,
   Ibdd_out_any,
   Ibdd_out,
@@ -26,14 +26,14 @@ export class NodeTesteranto<
     testSpecification: ITestSpecification<I, O>,
     testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest,
-    testInterface: Partial<ITestInterface<I>>
+    testAdapter: Partial<ITestAdapter<I>>
   ) {
     super(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface,
+      testAdapter,
       () => {
         // no-op
       }
@@ -56,7 +56,7 @@ const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
-  testInterface: Partial<INodeTestInterface<I>>,
+  testAdapter: Partial<INodeAdapter<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<I, O, M>> => {
   try {
@@ -65,7 +65,7 @@ const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface
+      testAdapter
     );
 
     process.on("unhandledRejection", (reason, promise) => {

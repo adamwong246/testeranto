@@ -29,7 +29,7 @@ export const specification: ITestSpecification<I, O> = (
           [],
           [Then.resourceRequirementsSet()]
         ),
-        interfaceConfig: Given.WithCustomInterface(
+        interfaceConfig: Given.WithCustomAdapter(
           {
             assertThis: (x) => !!x,
             beforeEach: async (s, i) => i(),

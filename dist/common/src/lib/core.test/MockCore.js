@@ -9,8 +9,8 @@ const core_1 = __importDefault(require("../core"));
  * Concrete implementation of Testeranto for testing purposes
  */
 class MockCore extends core_1.default {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = { ports: [] }, testInterface = {}, uberCatcher = (cb) => cb()) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, uberCatcher);
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = { ports: [] }, testAdapter = {}, uberCatcher = (cb) => cb()) {
+        super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, uberCatcher);
     }
     async receiveTestResourceConfig(partialTestResource) {
         return {

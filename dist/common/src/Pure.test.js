@@ -143,8 +143,8 @@ const specification = (Suite, Given, When, Then) => [
         ], [Then.testRunSuccessful(), Then.artifactsTracked(), Then.specsModified(0)]),
     }),
 ];
-// Test interface for PureTesteranto
-const testInterface = {
+// Test adapter for PureTesteranto
+const testAdapter = {
     beforeEach: async (subject, initializer) => {
         return { pm: initializer() };
     },
@@ -157,4 +157,4 @@ const testInterface = {
 };
 // Export the test suite
 exports.default = (0, Pure_1.default)(null, // No initial input
-specification, implementation, testInterface);
+specification, implementation, testAdapter);

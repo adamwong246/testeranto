@@ -1,4 +1,4 @@
-export const testInterface = {
+export const testAdapter = {
     beforeEach: async (subject, initializer) => {
         return initializer();
     },

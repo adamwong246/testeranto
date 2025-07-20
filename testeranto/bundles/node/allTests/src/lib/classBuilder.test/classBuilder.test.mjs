@@ -8,7 +8,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-P5JAG7FQ.mjs";
+} from "../../../chunk-4NYHHJ7H.mjs";
 
 // src/PM/node.ts
 import net from "net";
@@ -211,13 +211,13 @@ var PM_Node = class extends PM {
 // src/Node.ts
 var ipcfile;
 var NodeTesteranto = class extends TesterantoCore {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface2) {
+  constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter2) {
     super(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface2,
+      testAdapter2,
       () => {
       }
     );
@@ -229,14 +229,14 @@ var NodeTesteranto = class extends TesterantoCore {
     return await this.testJobs[0].receiveTestResourceConfig(pm);
   }
 };
-var testeranto = async (input, testSpecification, testImplementation, testInterface2, testResourceRequirement = defaultTestResourceRequirement) => {
+var testeranto = async (input, testSpecification, testImplementation, testAdapter2, testResourceRequirement = defaultTestResourceRequirement) => {
   try {
     const t = new NodeTesteranto(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface2
+      testAdapter2
     );
     process.on("unhandledRejection", (reason, promise) => {
       console.error("Unhandled Rejection at:", promise, "reason:", reason);
@@ -654,8 +654,8 @@ var implementation = {
   }
 };
 
-// src/lib/classBuilder.test/classBuilder.test.interface.ts
-var testInterface = {
+// src/lib/classBuilder.test/classBuilder.test.adapter.ts
+var testAdapter = {
   beforeAll: async () => {
   },
   beforeEach: async (subject, initializer) => {
@@ -679,7 +679,7 @@ var classBuilder_test_default = Node_default(
   ClassBuilder.prototype,
   specification,
   implementation,
-  testInterface
+  testAdapter
 );
 export {
   classBuilder_test_default as default

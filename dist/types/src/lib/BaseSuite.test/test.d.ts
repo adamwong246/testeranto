@@ -1,4 +1,4 @@
-import { Ibdd_in, Ibdd_out, ITestSpecification, ITestImplementation, ITestInterface } from "../../CoreTypes";
+import { Ibdd_in, Ibdd_out, ITestSpecification, ITestImplementation, ITestAdapter } from "../../CoreTypes";
 import { BaseSuite } from "../BaseSuite";
 export type TestStore = {
     testStore: boolean;
@@ -29,4 +29,4 @@ export type O = Ibdd_out<{
 }>;
 export declare const specification: ITestSpecification<I, O>;
 export declare const implementation: ITestImplementation<I, O>;
-export declare const testInterface: ITestInterface<I>;
+export declare const testAdapter: ITestAdapter<I>;

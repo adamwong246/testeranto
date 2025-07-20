@@ -5,7 +5,7 @@
 /add src/lib/classBuilder.test/mock.ts
 /add src/lib/BaseSuite.test/mock.ts
 /add src/lib/classBuilder.test/classBuilder.test.implementation.ts
-/add src/lib/classBuilder.test/classBuilder.test.interface.ts
+/add src/lib/classBuilder.test/classBuilder.test.adapter.ts
 /add src/lib/classBuilder.test/classBuilder.test.ts
 
 /read testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node/tests.json

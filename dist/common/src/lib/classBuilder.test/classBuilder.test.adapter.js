@@ -1,4 +1,9 @@
-export const testInterface = {
+"use strict";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.testAdapter = void 0;
+exports.testAdapter = {
     beforeAll: async () => { },
     beforeEach: async (subject, initializer) => {
         return initializer();
@@ -11,5 +16,5 @@ export const testInterface = {
     },
     afterEach: (store) => store,
     afterAll: () => { },
-    assertThis: (x) => { }
+    assertThis: (x) => { },
 };

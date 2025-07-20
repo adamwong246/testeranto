@@ -1,3 +1,6 @@
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (5,14): Property 'beforeAll' is missing in type '{ beforeEach: (subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>) => Promise<() => BaseBuilder<any, any, any, any, any, any>>; ... 4 more ...; assertThis: (x: any) => void; }' but required in type 'ITestAdapter<I>'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (10,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (13,26): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (17,5): Type '() => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '(...Ig: any) => () => BaseBuilder<any, any, any, any, any, any>'.
   Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '() => BaseBuilder<any, any, any, any, any, any>'.
     Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' provides no match for the signature '(): BaseBuilder<any, any, any, any, any, any>'.
@@ -44,9 +47,6 @@
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (115,37): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.interface.ts (5,14): Property 'beforeAll' is missing in type '{ beforeEach: (subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>) => Promise<() => BaseBuilder<any, any, any, any, any, any>>; ... 4 more ...; assertThis: (x: any) => void; }' but required in type 'ITestInterface<I>'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.interface.ts (10,26): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.interface.ts (13,26): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (43,56): Type 'never[]' is not assignable to type 'number'.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.specification.ts (31,7): Expected 2 arguments, but got 3.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (3,10): Module '"./baseBuilder.test.mock"' has no exported member 'TestBaseBuilder'.
@@ -66,14 +66,14 @@
       Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
         'string' index signatures are incompatible.
           Type 'any' is not assignable to type 'never'.
-/Users/adam/Code/testeranto/src/lib/index.ts (22,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+/Users/adam/Code/testeranto/src/lib/index.ts (16,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
   Types of parameters 'initialValues' and 'initializer' are incompatible.
     Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
       'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
-/Users/adam/Code/testeranto/src/lib/index.ts (24,20): Type '"iinitialValues"' cannot be used to index type 'T'.
-/Users/adam/Code/testeranto/src/lib/index.ts (46,13): This expression is not callable.
+/Users/adam/Code/testeranto/src/lib/index.ts (18,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (40,13): This expression is not callable.
   Type 'unknown' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/index.ts (58,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestInterface<T>'.
+/Users/adam/Code/testeranto/src/lib/index.ts (52,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.

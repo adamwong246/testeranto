@@ -2,7 +2,7 @@ import {
   Ibdd_in_any,
   Ibdd_out,
   ITestImplementation,
-  ITestInterface,
+  ITestAdapter,
   ITestSpecification,
 } from "./CoreTypes.js";
 import Testeranto from "./lib/core.js";
@@ -24,14 +24,14 @@ export class PureTesteranto<
     testSpecification: ITestSpecification<I, O>,
     testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest,
-    testInterface: Partial<ITestInterface<I>>
+    testAdapter: Partial<ITestAdapter<I>>
   ) {
     super(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface,
+      testAdapter,
       () => {
         // no-op
       }
@@ -59,7 +59,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
-  testInterface: Partial<ITestInterface<I>>,
+  testAdapter: Partial<ITestAdapter<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<number | Testeranto<I, O, M>> => {
   return new PureTesteranto<I, O, M>(
@@ -67,7 +67,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
     testSpecification,
     testImplementation,
     testResourceRequirement,
-    testInterface
+    testAdapter
   );
 
   // try {
@@ -76,7 +76,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   //     testSpecification,
   //     testImplementation,
   //     testResourceRequirement,
-  //     testInterface
+  //     testAdapter
   //   );
   // } catch (e) {
   //   return -1;

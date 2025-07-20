@@ -1,4 +1,4 @@
-export const testInterface = {
+export const testAdapter = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
         return initializer();
     },
@@ -11,5 +11,5 @@ export const testInterface = {
     afterEach: (store) => store,
     afterAll: (store, pm) => { },
     assertThis: (result) => !!result,
-    beforeAll: async (input, testResource, pm) => input
+    beforeAll: async (input, testResource, pm) => input,
 };

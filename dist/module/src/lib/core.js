@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DefaultTestInterface, defaultTestResourceRequirement, } from "./index.js";
+import { DefaultAdapter, defaultTestResourceRequirement, } from "./index.js";
 import { BaseGiven, BaseWhen, BaseThen } from "./abstractBase.js";
 import { ClassBuilder } from "./classBuilder.js";
 import { BaseSuite } from "./BaseSuite.js";
 export default class TesterantoCore extends ClassBuilder {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testInterface, uberCatcher) {
-        const fullTestInterface = DefaultTestInterface(testInterface);
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = defaultTestResourceRequirement, testAdapter, uberCatcher) {
+        const fullAdapter = DefaultAdapter(testAdapter);
         super(testImplementation, testSpecification, input, class extends BaseSuite {
             afterAll(store, artifactory, pm) {
-                return fullTestInterface.afterAll(store, pm);
+                return fullAdapter.afterAll(store, pm);
             }
             assertThat(t) {
-                return fullTestInterface.assertThis(t);
+                return fullAdapter.assertThis(t);
             }
             async setup(s, artifactory, tr, pm) {
-                return (fullTestInterface.beforeAll ||
+                return (fullAdapter.beforeAll ||
                     (async (input, artifactory, tr, pm) => input))(s, this.testResourceConfiguration, 
                 // artifactory,
                 pm);
@@ -26,18 +26,18 @@ export default class TesterantoCore extends ClassBuilder {
                 this.uberCatcher = uberCatcher;
             }
             async givenThat(subject, testResource, artifactory, initializer, initialValues, pm) {
-                return fullTestInterface.beforeEach(subject, initializer, testResource, initialValues, pm);
+                return fullAdapter.beforeEach(subject, initializer, testResource, initialValues, pm);
             }
             afterEach(store, key, artifactory, pm) {
-                return new Promise((res) => res(fullTestInterface.afterEach(store, key, pm)));
+                return new Promise((res) => res(fullAdapter.afterEach(store, key, pm)));
             }
         }, class When extends BaseWhen {
             async andWhen(store, whenCB, testResource, pm) {
-                return await fullTestInterface.andWhen(store, whenCB, testResource, pm);
+                return await fullAdapter.andWhen(store, whenCB, testResource, pm);
             }
         }, class Then extends BaseThen {
             async butThen(store, thenCB, testResource, pm) {
-                return await fullTestInterface.butThen(store, thenCB, testResource, pm);
+                return await fullAdapter.butThen(store, thenCB, testResource, pm);
             }
         }, testResourceRequirement);
     }

@@ -5,7 +5,7 @@ import {
   Ibdd_out_any,
   ITestImplementation,
   ITestSpecification,
-  ITestInterface,
+  ITestAdapter,
 } from "../../CoreTypes";
 import { ITTestResourceRequest, IFinalResults } from "..";
 
@@ -22,7 +22,7 @@ export class MockCore<
     testSpecification: ITestSpecification<I, O>,
     testImplementation: ITestImplementation<I, O, M>,
     testResourceRequirement: ITTestResourceRequest = { ports: [] },
-    testInterface: Partial<ITestInterface<I>> = {},
+    testAdapter: Partial<ITestAdapter<I>> = {},
     uberCatcher: (cb: () => void) => void = (cb) => cb()
   ) {
     super(
@@ -30,7 +30,7 @@ export class MockCore<
       testSpecification,
       testImplementation,
       testResourceRequirement,
-      testInterface,
+      testAdapter,
       uberCatcher
     );
   }

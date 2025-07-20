@@ -14,8 +14,8 @@ let unhandledrejectionCallback = (event) => {
     console.log("window.addEventListener unhandledrejection", event);
 };
 class WebTesteranto extends core_js_1.default {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement, testInterface) {
-        super(input, testSpecification, testImplementation, testResourceRequirement, testInterface, (cb) => {
+    constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
+        super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, (cb) => {
             window.removeEventListener("error", errorCallback);
             errorCallback = (e) => {
                 console.log("window.addEventListener error", e);
@@ -41,6 +41,6 @@ class WebTesteranto extends core_js_1.default {
     }
 }
 exports.WebTesteranto = WebTesteranto;
-exports.default = async (input, testSpecification, testImplementation, testInterface, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
-    return new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testInterface);
+exports.default = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = index_js_1.defaultTestResourceRequirement) => {
+    return new WebTesteranto(input, testSpecification, testImplementation, testResourceRequirement, testAdapter);
 };
