@@ -10,7 +10,9 @@ import esbuildWebConfiger from "./esbuildConfigs/web.js";
 import esbuildImportConfiger from "./esbuildConfigs/pure.js";
 import webHtmlFrame from "./web.html.js";
 import { getRunnables } from "./utils.js";
-import { idkPage, testReportPage, testsReportPage, } from "./utils/buildTemplates.js";
+import { TestPageHtml, 
+// testReportPage,
+ProjectPageHtml, } from "./utils/buildTemplates.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -107,11 +109,20 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     if (!fs.existsSync(`testeranto/reports/${testName}`)) {
         fs.mkdirSync(`testeranto/reports/${testName}`);
     }
-    fs.writeFileSync(`${process.cwd()}/testeranto/reports/${testName}/index.html`, testReportPage(pckge.name, bigConfig.reportDomain));
-    fs.writeFileSync(`${process.cwd()}/testeranto/reports/${testName}/dev.html`, testReportPage(pckge.name, "/"));
+    // fs.writeFileSync(
+    //   `${process.cwd()}/testeranto/reports/${testName}/index.html`,
+    //   testReportPage(pckge.name, bigConfig.reportDomain)
+    // );
+    // fs.writeFileSync(
+    //   `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
+    //   testReportPage(pckge.name, "/")
+    // );
     fs.writeFileSync(`testeranto/reports/${testName}/config.json`, JSON.stringify(config, null, 2));
-    fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, testsReportPage(pckge.name, bigConfig.reportDomain, bigConfig.projects));
-    fs.writeFileSync(`${process.cwd()}/testeranto/dev.html`, testsReportPage(pckge.name, "/", bigConfig.projects));
+    fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, ProjectPageHtml(pckge.name, bigConfig.reportDomain, bigConfig.projects));
+    // fs.writeFileSync(
+    //   `${process.cwd()}/testeranto/dev.html`,
+    //   ProjectPageHtml(pckge.name, "/", bigConfig.projects)
+    // );
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);
@@ -157,8 +168,8 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
                 .slice(0, -1)
                 .join(".")}/${runtime}`;
             await fs.mkdirSync(folder, { recursive: true });
-            fs.writeFileSync(`${folder}/index.html`, idkPage(testName, bigConfig.reportDomain));
-            fs.writeFileSync(`${folder}/dev.html`, idkPage(testName, ""));
+            fs.writeFileSync(`${folder}/index.html`, TestPageHtml(testName, bigConfig.reportDomain));
+            fs.writeFileSync(`${folder}/dev.html`, TestPageHtml(testName, ""));
         });
     });
     [

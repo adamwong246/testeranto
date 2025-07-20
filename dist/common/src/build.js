@@ -145,11 +145,20 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
     if (!fs_1.default.existsSync(`testeranto/reports/${testName}`)) {
         fs_1.default.mkdirSync(`testeranto/reports/${testName}`);
     }
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${testName}/index.html`, (0, buildTemplates_js_1.testReportPage)(pckge.name, bigConfig.reportDomain));
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${testName}/dev.html`, (0, buildTemplates_js_1.testReportPage)(pckge.name, "/"));
+    // fs.writeFileSync(
+    //   `${process.cwd()}/testeranto/reports/${testName}/index.html`,
+    //   testReportPage(pckge.name, bigConfig.reportDomain)
+    // );
+    // fs.writeFileSync(
+    //   `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
+    //   testReportPage(pckge.name, "/")
+    // );
     fs_1.default.writeFileSync(`testeranto/reports/${testName}/config.json`, JSON.stringify(config, null, 2));
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, (0, buildTemplates_js_1.testsReportPage)(pckge.name, bigConfig.reportDomain, bigConfig.projects));
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/dev.html`, (0, buildTemplates_js_1.testsReportPage)(pckge.name, "/", bigConfig.projects));
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, (0, buildTemplates_js_1.ProjectPageHtml)(pckge.name, bigConfig.reportDomain, bigConfig.projects));
+    // fs.writeFileSync(
+    //   `${process.cwd()}/testeranto/dev.html`,
+    //   ProjectPageHtml(pckge.name, "/", bigConfig.projects)
+    // );
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);
@@ -195,8 +204,8 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
                 .slice(0, -1)
                 .join(".")}/${runtime}`;
             await fs_1.default.mkdirSync(folder, { recursive: true });
-            fs_1.default.writeFileSync(`${folder}/index.html`, (0, buildTemplates_js_1.idkPage)(testName, bigConfig.reportDomain));
-            fs_1.default.writeFileSync(`${folder}/dev.html`, (0, buildTemplates_js_1.idkPage)(testName, ""));
+            fs_1.default.writeFileSync(`${folder}/index.html`, (0, buildTemplates_js_1.TestPageHtml)(testName, bigConfig.reportDomain));
+            fs_1.default.writeFileSync(`${folder}/dev.html`, (0, buildTemplates_js_1.TestPageHtml)(testName, ""));
         });
     });
     [

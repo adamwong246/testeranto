@@ -20,9 +20,9 @@ import {
   ITestTypes,
 } from "./Types.js";
 import {
-  idkPage,
-  testReportPage,
-  testsReportPage,
+  TestPageHtml,
+  // testReportPage,
+  ProjectPageHtml,
 } from "./utils/buildTemplates.js";
 
 readline.emitKeypressEvents(process.stdin);
@@ -155,15 +155,15 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
     fs.mkdirSync(`testeranto/reports/${testName}`);
   }
 
-  fs.writeFileSync(
-    `${process.cwd()}/testeranto/reports/${testName}/index.html`,
-    testReportPage(pckge.name, bigConfig.reportDomain)
-  );
+  // fs.writeFileSync(
+  //   `${process.cwd()}/testeranto/reports/${testName}/index.html`,
+  //   testReportPage(pckge.name, bigConfig.reportDomain)
+  // );
 
-  fs.writeFileSync(
-    `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
-    testReportPage(pckge.name, "/")
-  );
+  // fs.writeFileSync(
+  //   `${process.cwd()}/testeranto/reports/${testName}/dev.html`,
+  //   testReportPage(pckge.name, "/")
+  // );
 
   fs.writeFileSync(
     `testeranto/reports/${testName}/config.json`,
@@ -172,13 +172,13 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
 
   fs.writeFileSync(
     `${process.cwd()}/testeranto/index.html`,
-    testsReportPage(pckge.name, bigConfig.reportDomain, bigConfig.projects)
+    ProjectPageHtml(pckge.name, bigConfig.reportDomain, bigConfig.projects)
   );
 
-  fs.writeFileSync(
-    `${process.cwd()}/testeranto/dev.html`,
-    testsReportPage(pckge.name, "/", bigConfig.projects)
-  );
+  // fs.writeFileSync(
+  //   `${process.cwd()}/testeranto/dev.html`,
+  //   ProjectPageHtml(pckge.name, "/", bigConfig.projects)
+  // );
 
   Promise.resolve(
     Promise.all(
@@ -247,10 +247,10 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
 
       fs.writeFileSync(
         `${folder}/index.html`,
-        idkPage(testName, bigConfig.reportDomain)
+        TestPageHtml(testName, bigConfig.reportDomain)
       );
 
-      fs.writeFileSync(`${folder}/dev.html`, idkPage(testName, ""));
+      fs.writeFileSync(`${folder}/dev.html`, TestPageHtml(testName, ""));
     });
   });
 

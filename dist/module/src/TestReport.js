@@ -6,17 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./TestReport.scss";
 import { SettingsButton } from "./SettingsButton";
 const BddPage = () => {
-    // const [configs, setConfigs] = useState<IBuiltConfig>();
-    // useEffect(() => {
-    //   (async () => {
-    //     fetch('../config.json')
-    //       .then(response => response.json())
-    //       .then(json => {
-    //         setConfigs(json)
-    //       })
-    //       .catch(error => console.error(error));
-    //   })();
-    // }, []);
     const [bddErrors, setBddErrors] = useState();
     useEffect(() => {
         (async () => {
