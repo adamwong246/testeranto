@@ -12108,10 +12108,6 @@ h6,
   margin-bottom: 1.5rem;
 }
 
-th {
-  display: none;
-}
-
 .footer {
   background-color: rgba(var(--primary-rgb), 0.1);
   margin: 0.5rem;
