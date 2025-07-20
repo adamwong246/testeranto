@@ -77,8 +77,8 @@ const TestPageHtml = (testName, domain) => {
       </script>
 
 
-      <link rel="stylesheet" href="/TestReport.css" />
-      <script src="/TestReport.js"></script>
+      <link rel="stylesheet" href="TestReport.css" />
+      <script src="TestReport.js"></script>
 
 
 </head>
