@@ -291,7 +291,7 @@ const BddPage = () => {
       </Tab.Container>
 
       {/* disabled for now */}
-      <SettingsButton className="gear-icon" />
+      {/* <SettingsButton className="gear-icon" /> */}
 
       <Footer />
 

@@ -2,7 +2,6 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 import { Footer } from "./Footer";
-import { SettingsButton } from "./SettingsButton";
 import "./TestReport.scss";
 const BddPage = () => {
     const [bddErrors, setBddErrors] = useState();
@@ -161,7 +160,6 @@ const BddPage = () => {
                                     typeof prompt === 'string' ? (React.createElement("pre", { className: "bg-secondary text-white  p-3", style: { overflow: 'auto' } }, prompt)) : (React.createElement("div", { className: "alert alert-danger" },
                                         React.createElement("h5", null, "Error loading AI prompt"),
                                         React.createElement("pre", null, JSON.stringify(prompt.error, null, 2))))))))))),
-        React.createElement(SettingsButton, { className: "gear-icon" }),
         React.createElement(Footer, null)));
 };
 document.addEventListener("DOMContentLoaded", function () {
