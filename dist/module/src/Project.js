@@ -20,9 +20,9 @@ const BigBoard = () => {
     const fetchLogs = async (project) => {
         try {
             const [nodeRes, webRes, pureRes] = await Promise.all([
-                fetch(`./testeranto/bundles/node/${project}/metafile.json`),
-                fetch(`./testeranto/bundles/web/${project}/metafile.json`),
-                fetch(`./testeranto/bundles/pure/${project}/metafile.json`),
+                fetch(`./bundles/node/${project}/metafile.json`),
+                fetch(`./bundles/web/${project}/metafile.json`),
+                fetch(`./bundles/pure/${project}/metafile.json`),
             ]);
             setNodeLogs({ [project]: await nodeRes.json() });
             setWebLogs({ [project]: await webRes.json() });
@@ -41,8 +41,8 @@ const BigBoard = () => {
                 fetchLogs(p);
                 return [
                     p,
-                    (await (await fetch(`./testeranto/reports/${p}/config.json`)).json()),
-                    (await (await fetch(`./testeranto/reports/${p}/summary.json`)).json()),
+                    (await (await fetch(`./reports/${p}/config.json`)).json()),
+                    (await (await fetch(`./reports/${p}/summary.json`)).json()),
                 ];
             });
             Promise.all(x).then((v) => {
@@ -162,14 +162,14 @@ const BigBoard = () => {
                                                                                 ? " ✅"
                                                                                 : " ❌")),
                                                                     React.createElement("td", null,
-                                                                        React.createElement("a", { href: `./testeranto/reports/${x}/index.html` },
+                                                                        React.createElement("a", { href: `./reports/${x}/index.html` },
                                                                             (y.runTimeErrors < 0) && "‼️ Tests did not complete",
                                                                             y.runTimeErrors === 0 && "✅ All tests passed",
                                                                             y.runTimeErrors > 0 && `⚠️ ${y.runTimeErrors} failures`)),
                                                                     React.createElement("td", null,
-                                                                        React.createElement("a", { href: `./testeranto/reports/${x}/lint_errors.json` }, y.staticErrors)),
+                                                                        React.createElement("a", { href: `./reports/${x}/lint_errors.json` }, y.staticErrors)),
                                                                     React.createElement("td", null,
-                                                                        React.createElement("a", { href: `./testeranto/reports/${x}/type_errors.txt` }, y.typeErrors))));
+                                                                        React.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors))));
                                                             })));
                                                     }))))))))))))))),
             React.createElement(SettingsButton, { className: "gear-icon" }),

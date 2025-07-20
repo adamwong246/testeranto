@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState14(initialState) {
+          function useState15(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1093,11 +1093,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef16(initialValue) {
+          function useRef17(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect18(create, deps) {
+          function useEffect19(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1879,15 +1879,15 @@
           exports.useContext = useContext8;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect18;
+          exports.useEffect = useEffect19;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect2;
           exports.useMemo = useMemo6;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef16;
-          exports.useState = useState14;
+          exports.useRef = useRef17;
+          exports.useState = useState15;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React44 = require_react();
+          var React45 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React44.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React45.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React44.Children.forEach(props.children, function(child) {
+                  React45.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React44.Component().refs;
+          var emptyRefsObject = new React45.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React44 = require_react();
+          var React45 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React44.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React45.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -25271,7 +25271,7 @@
 
   // src/TestReport.tsx
   var import_client = __toESM(require_client(), 1);
-  var import_react48 = __toESM(require_react(), 1);
+  var import_react49 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -28592,14 +28592,344 @@
   var Footer = () => /* @__PURE__ */ import_react46.default.createElement("div", { className: "footer" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react46.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"));
 
   // src/SettingsButton.tsx
+  var import_react48 = __toESM(require_react(), 1);
+
+  // src/components/SunriseAnimation.tsx
   var import_react47 = __toESM(require_react(), 1);
-  var SettingsButton = ({ className }) => {
+  var SunriseAnimation = ({ active }) => {
+    const [position, setPosition] = (0, import_react47.useState)(0);
+    const [dimensions, setDimensions] = (0, import_react47.useState)({ width: 0, height: 0 });
+    const animationIdRef = (0, import_react47.useRef)(null);
     (0, import_react47.useEffect)(() => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+      const handleResize = () => {
+        setDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+      };
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
+    const ANIMATION_DURATION = 1e4;
+    const UPDATE_INTERVAL = 50;
+    (0, import_react47.useEffect)(() => {
+      if (!active) {
+        if (animationIdRef.current) {
+          cancelAnimationFrame(animationIdRef.current);
+          animationIdRef.current = null;
+        }
+        return;
+      }
+      console.log("Starting animation with duration:", ANIMATION_DURATION, "ms");
+      let startTime = performance.now();
+      let lastUpdateTime = 0;
+      const animate = (timestamp) => {
+        if (!active)
+          return;
+        const elapsed = (timestamp - startTime) % ANIMATION_DURATION;
+        const progress = elapsed / ANIMATION_DURATION;
+        if (timestamp - lastUpdateTime >= UPDATE_INTERVAL) {
+          const newPos = Math.cos(progress * Math.PI * 2);
+          setPosition(newPos);
+          lastUpdateTime = timestamp;
+        }
+        animationIdRef.current = requestAnimationFrame(animate);
+      };
+      animationIdRef.current = requestAnimationFrame(animate);
+      return () => {
+        if (animationIdRef.current) {
+          cancelAnimationFrame(animationIdRef.current);
+          animationIdRef.current = null;
+        }
+      };
+    }, [active]);
+    const yPos = dimensions.height * (1 - position);
+    const normalizedPos = (position + 1) / 2;
+    if (!active)
+      return null;
+    return /* @__PURE__ */ import_react47.default.createElement("div", { id: "sunrise", style: {
+      width: "100vw",
+      height: "100vh",
+      position: "fixed",
+      top: 0,
+      left: 0,
+      backgroundColor: "transparent",
+      overflow: "hidden",
+      pointerEvents: "none"
+    } }, /* @__PURE__ */ import_react47.default.createElement("div", { id: "daily-bg", style: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0,0,0,0.3)",
+      zIndex: -1001
+    } }), "Stars Container", /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "starsContainer",
+        style: {
+          perspective: 350,
+          perspectiveOrigin: "50% 300%",
+          overflow: "hidden",
+          position: "absolute",
+          top: 0,
+          left: "-50%",
+          width: "200%",
+          height: "50%",
+          zIndex: -1e3,
+          opacity: Math.max(0, 0.5 - normalizedPos * 0.5)
+        }
+      },
+      /* @__PURE__ */ import_react47.default.createElement(
+        "div",
+        {
+          id: "stars",
+          style: {
+            backgroundRepeat: "repeat",
+            position: "absolute",
+            width: "200%",
+            height: "200%",
+            left: "-50%",
+            bottom: 0,
+            opacity: 0.5,
+            transform: "rotateX(-90deg)"
+          }
+        }
+      )
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "sun",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: "50%",
+          transform: `translateX(-50%) translateY(${yPos}px)`,
+          width: "100%",
+          height: "50%",
+          background: `radial-gradient(50% ${yPos}px, circle, rgba(242,248,247,1) 0%,rgba(249,249,28,1) 3%,rgba(247,214,46,1) 8%,rgba(248,200,95,1) 12%,rgba(201,165,132,1) 30%,rgba(115,130,133,1) 51%,rgba(46,97,122,1) 85%,rgba(24,75,106,1) 100%)`,
+          zIndex: -900,
+          opacity: 0.5
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "sunDay",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: `radial-gradient(50% ${yPos}px, circle, rgba(252,255,251,0.9) 0%,rgba(253,250,219,0.4) 30%,rgba(226,219,197,0.01) 70%,rgba(226,219,197,0.0) 70%,rgba(201,165,132,0) 100%)`,
+          zIndex: -800,
+          opacity: Math.max(0, 1 - yPos / dimensions.height)
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "sunSet",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: `radial-gradient(50% ${yPos}px, circle, rgba(254,255,255,0.8) 5%,rgba(236,255,0,1) 10%,rgba(253,50,41,1) 25%,rgba(243,0,0,1) 40%,rgba(93,0,0,1) 100%)`,
+          zIndex: -800,
+          opacity: Math.max(0, yPos / dimensions.height - 0.2)
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "sky",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          zIndex: -700,
+          background: "linear-gradient(to top, rgba(249,251,240,1) 10%,rgba(215,253,254,1) 20%,rgba(167,222,253,1) 40%,rgba(110,175,255,1) 100%)",
+          opacity: Math.max(0, 1 - yPos / dimensions.height)
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "horizon",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "linear-gradient(to top, rgba(212,87,43,0.9) 0%,rgba(246,149,52,0.8) 20%,rgba(24,75,106,0) 100%)",
+          zIndex: -700,
+          opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) + 0.2 : yPos / (dimensions.height / 2))
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "horizonNight",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "linear-gradient(to top, rgba(57,167,255,1) 0%,rgba(13,98,245,1) 20%,rgba(0,11,22,0.1) 60%)",
+          zIndex: -600,
+          opacity: Math.max(0, (yPos - dimensions.height * 4 / 5) / (dimensions.height - dimensions.height * 4 / 5))
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "moon",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "radial-gradient(40% 55%, circle, rgba(249,249,250,1) -1%,rgba(189,255,254,1) 1%,rgba(8,49,78,1) 1%,rgba(8,26,56,1) 10%,rgba(4,16,46,1) 40%,rgba(2,8,13,1) 70%)",
+          zIndex: -500,
+          opacity: Math.max(0, (yPos - dimensions.height * 9 / 10) / (dimensions.height - dimensions.height * 9 / 10))
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "water",
+        style: {
+          overflow: "hidden",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "linear-gradient(to top, rgba(0,25,45,1) 0%,rgba(14,71,117,1) 35%,rgba(26,126,174,1) 70%,rgba(62,168,220,1) 100%)",
+          zIndex: -400
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "waterReflectionContainer",
+        style: {
+          perspective: 30,
+          perspectiveOrigin: `50% ${-15 + normalizedPos * 30}%`,
+          overflow: "hidden",
+          position: "absolute",
+          top: "50%",
+          left: "-3%",
+          width: "103%",
+          height: "50%",
+          zIndex: -300,
+          transform: `translateY(${dimensions.height - yPos}px)`
+        }
+      },
+      /* @__PURE__ */ import_react47.default.createElement(
+        "div",
+        {
+          id: "waterReflectionMiddle",
+          style: {
+            position: "absolute",
+            top: 0,
+            left: "-50%",
+            width: "200%",
+            height: "55%",
+            background: "radial-gradient(50% 0px, rgba(247,177,72,1) 3%,rgba(248,175,65,1) 6%,rgba(207,62,30,0.4) 35%,rgba(176,91,48,0.1) 45%,rgba(141,88,47,0.0) 60%,rgba(116,82,63,0.0) 70%,rgba(44,65,68,0.0) 80%,rgba(7,19,31,0.0) 100%)",
+            zIndex: -200,
+            opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) - 0.1 : yPos / (dimensions.height / 2) - 0.1),
+            transform: "rotateX(45deg)"
+          }
+        }
+      )
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "waterDistance",
+        style: {
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "linear-gradient(90deg, rgba(0,0,0,0.0) 10%,rgba(0,0,0,0.20) 44%,rgba(0,0,0,0.65) 95%,rgba(0,0,0,0.62) 100%)",
+          zIndex: -100,
+          opacity: Math.max(0, yPos / dimensions.height + 0.6)
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "darknessOverlaySky",
+        style: {
+          backgroundColor: "#000",
+          opacity: Math.max(0, (yPos - dimensions.height * 7 / 10) / (dimensions.height - dimensions.height * 7 / 10)),
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          zIndex: -50
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "darknessOverlay",
+        style: {
+          backgroundColor: "#000",
+          opacity: Math.max(0, (yPos - dimensions.height / 2) / (dimensions.height / 2)),
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          zIndex: -5
+        }
+      }
+    ), /* @__PURE__ */ import_react47.default.createElement(
+      "div",
+      {
+        id: "oceanRipple",
+        style: {
+          backgroundImage: "repeating-linear-gradient(175deg, rgba(165,165,165,0.08) 43%,rgba(175,175,175,0.08) 45%,rgba(235,235,235,0.08) 49%,rgba(195,195,195,0.08) 50%,rgba(165,165,165,0.08) 54%)",
+          opacity: 0.5,
+          position: "absolute",
+          left: "0%",
+          bottom: 0,
+          width: "100%",
+          height: "50%",
+          zIndex: -10
+        }
+      }
+    ));
+  };
+  var SunriseAnimation_default = SunriseAnimation;
+
+  // src/SettingsButton.tsx
+  var SettingsButton = ({ className }) => {
+    (0, import_react48.useEffect)(() => {
       return () => {
       };
     }, []);
-    const [showModal, setShowModal] = (0, import_react47.useState)(false);
-    const [theme, setTheme] = (0, import_react47.useState)(localStorage.getItem("theme") || "system");
+    const [showModal, setShowModal] = (0, import_react48.useState)(false);
+    const [theme, setTheme] = (0, import_react48.useState)(localStorage.getItem("theme") || "system");
     const handleThemeChange = (e) => {
       const newTheme = e.target.value;
       setTheme(newTheme);
@@ -28610,83 +28940,167 @@
       }
       document.documentElement.setAttribute("data-bs-theme", themeToApply2);
     };
-    return /* @__PURE__ */ import_react47.default.createElement(import_react47.default.Fragment, null, /* @__PURE__ */ import_react47.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react47.default.createElement(
+    return /* @__PURE__ */ import_react48.default.createElement(import_react48.default.Fragment, null, /* @__PURE__ */ import_react48.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react48.default.createElement(
       "button",
       {
         className: `btn btn-sm btn-outline-secondary ${className}`,
         onClick: () => setShowModal(true)
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
-    )), /* @__PURE__ */ import_react47.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react47.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react47.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react47.default.createElement("span", null, "Theme Settings"))), /* @__PURE__ */ import_react47.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
+    )), /* @__PURE__ */ import_react48.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react48.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react48.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react48.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react48.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react48.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react48.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react48.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react48.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "system" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "system" } })
+        onClick: () => handleThemeChange({ target: { value: "system" } }),
+        style: {
+          background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
+          borderColor: "#adb5bd"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-laptop fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "9 to 5"))
-    )), /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-0" }, "9 to 5"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Follows your OS theme"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "light" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "light" } })
+        onClick: () => handleThemeChange({ target: { value: "light" } }),
+        style: {
+          background: "linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%)",
+          borderColor: "#ced4da",
+          color: "#212529",
+          borderWidth: "2px"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-sun fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "Business casual"))
-    )), /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-1" }, "Business casual"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Clean & professional"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "dark" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "dark" } })
+        onClick: () => handleThemeChange({ target: { value: "dark" } }),
+        style: {
+          background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
+          borderColor: "#4ecdc4",
+          color: "#f8f9fa",
+          borderWidth: "2px"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-moon-stars fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "Business formal"))
-    )), /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-1" }, "Business formal"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Premium & focused"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "light-vibrant" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "light-vibrant" } })
+        onClick: () => handleThemeChange({ target: { value: "light-vibrant" } }),
+        style: {
+          background: "linear-gradient(135deg, #ff2d75 0%, #00e5ff 100%)",
+          borderColor: "#ffeb3b",
+          color: "#fff"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-emoji-sunglasses fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "Office Party"))
-    )), /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-1" }, "Office Party"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Colorful & fun"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "dark-vibrant" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "dark-vibrant" } })
+        onClick: () => handleThemeChange({ target: { value: "dark-vibrant" } }),
+        style: {
+          background: "linear-gradient(135deg, #16213e 0%, #e94560 100%)",
+          borderColor: "#00e5ff",
+          color: "#fff"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-emoji-dizzy fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "After Party"))
-    )), /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-1" }, "After Party"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Neon nightlife"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "sepia" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "sepia" } })
+        onClick: () => handleThemeChange({ target: { value: "sepia" } }),
+        style: {
+          background: "linear-gradient(135deg, #f4ecd8 0%, #d0b88f 100%)",
+          borderColor: "#8b6b4a",
+          color: "#3a3226"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-house-heart fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "WFH"))
-    )), /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-1" }, "WFH"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Vintage warmth"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "light-grayscale" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "light-grayscale" } })
+        onClick: () => handleThemeChange({ target: { value: "light-grayscale" } }),
+        style: {
+          background: "linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)",
+          borderColor: "#666",
+          color: "#333",
+          borderWidth: "2px"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-briefcase fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "Serious Business"))
-    )), /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-1" }, "Serious Business"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Simple & distraction-free"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "dark-grayscale" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "dark-grayscale" } })
+        onClick: () => handleThemeChange({ target: { value: "dark-grayscale" } }),
+        style: {
+          background: "linear-gradient(135deg, #111 0%, #333 100%)",
+          borderColor: "#ff6b6b",
+          color: "#e0e0e0",
+          borderWidth: "2px"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-shield-lock fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "Very Serious business"))
-    )), /* @__PURE__ */ import_react47.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react47.default.createElement(
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-1" }, "Very Serious business"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Maximum readability"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "daily" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "daily" } })
+        onClick: () => handleThemeChange({ target: { value: "daily" } }),
+        style: {
+          background: "linear-gradient(135deg, #6eafff 0%, #f9fbf0 100%)",
+          borderColor: "#f7d62e",
+          color: "#00192d"
+        }
       },
-      /* @__PURE__ */ import_react47.default.createElement("div", { className: "card-body text-center" }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-sunrise fs-1 mb-2" }), /* @__PURE__ */ import_react47.default.createElement("h5", { className: "card-title" }, "Dreaming of PTO"))
-    ))))), /* @__PURE__ */ import_react47.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react47.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setShowModal(false) }, /* @__PURE__ */ import_react47.default.createElement("i", { className: "bi bi-x-lg me-2" }), "Close"))));
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-1" }, "Dreaming of PTO"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Sunrise, sunset"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "protanopia" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "protanopia" } }),
+        style: {
+          background: "linear-gradient(135deg, #f8f9fa 0%, #e0e8ff 100%)",
+          borderColor: "#3366cc",
+          color: "#333"
+        }
+      },
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-0" }, "Protanopia"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Red-blind mode"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "deuteranopia" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "deuteranopia" } }),
+        style: {
+          background: "linear-gradient(135deg, #f8f9fa 0%, #ffe0e0 100%)",
+          borderColor: "#cc6633",
+          color: "#333"
+        }
+      },
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-0" }, "Deuteranopia"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Green-blind mode"))
+    )), /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react48.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "tritanopia" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "tritanopia" } }),
+        style: {
+          background: "linear-gradient(135deg, #f8f9fa 0%, #e0ffe0 100%)",
+          borderColor: "#00aa66",
+          color: "#333"
+        }
+      },
+      /* @__PURE__ */ import_react48.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react48.default.createElement("h5", { className: "card-title mb-0" }, "Tritanopia"), /* @__PURE__ */ import_react48.default.createElement("p", { className: "small text-muted mb-0" }, "Blue-blind mode"))
+    ))))), /* @__PURE__ */ import_react48.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react48.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
   };
 
   // src/TestReport.tsx
   var BddPage = () => {
-    const [bddErrors, setBddErrors] = (0, import_react48.useState)();
-    (0, import_react48.useEffect)(() => {
+    const [bddErrors, setBddErrors] = (0, import_react49.useState)();
+    (0, import_react49.useEffect)(() => {
       (async () => {
         try {
           const fetched = await fetch(
@@ -28699,10 +29113,10 @@
         }
       })();
     }, []);
-    const [log, setLog] = (0, import_react48.useState)();
-    const [message, setMessage] = (0, import_react48.useState)();
-    const [prompt, setPrompt] = (0, import_react48.useState)();
-    (0, import_react48.useEffect)(() => {
+    const [log, setLog] = (0, import_react49.useState)();
+    const [message, setMessage] = (0, import_react49.useState)();
+    const [prompt, setPrompt] = (0, import_react49.useState)();
+    (0, import_react49.useEffect)(() => {
       (async () => {
         try {
           setLog(
@@ -28715,7 +29129,7 @@
         }
       })();
     }, []);
-    (0, import_react48.useEffect)(() => {
+    (0, import_react49.useEffect)(() => {
       (async () => {
         try {
           const messageText = await (await fetch(
@@ -28728,7 +29142,7 @@
         }
       })();
     }, []);
-    (0, import_react48.useEffect)(() => {
+    (0, import_react49.useEffect)(() => {
       (async () => {
         try {
           const promptText = await (await fetch(
@@ -28742,7 +29156,7 @@
       })();
     }, []);
     if (bddErrors === void 0 || log === void 0) {
-      return /* @__PURE__ */ import_react48.default.createElement("div", null, "loading...");
+      return /* @__PURE__ */ import_react49.default.createElement("div", null, "loading...");
     }
     function stripDomainFromUrl(url) {
       try {
@@ -28768,7 +29182,7 @@
       }
     };
     const basePath = window.location.href.split("/").slice(0, -1).join("/");
-    return /* @__PURE__ */ import_react48.default.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: "transparent", position: "relative", zIndex: 10 } }, /* @__PURE__ */ import_react48.default.createElement("div", { id: "starsContainer" }, /* @__PURE__ */ import_react48.default.createElement("div", { id: "stars" })), /* @__PURE__ */ import_react48.default.createElement("div", { id: "sun" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "sunDay" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "sunSet" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "sky" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "horizon" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "horizonNight" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "moon" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "mountainRange" }, /* @__PURE__ */ import_react48.default.createElement("div", { id: "mountain" })), /* @__PURE__ */ import_react48.default.createElement("div", { id: "water" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "waterReflectionContainer" }, /* @__PURE__ */ import_react48.default.createElement("div", { id: "waterReflectionMiddle" })), /* @__PURE__ */ import_react48.default.createElement("div", { id: "waterDistance" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "darknessOverlaySky" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "darknessOverlay" }), /* @__PURE__ */ import_react48.default.createElement("div", { id: "oceanRippleContainer" }, /* @__PURE__ */ import_react48.default.createElement("div", { id: "oceanRipple" })), /* @__PURE__ */ import_react48.default.createElement(Tab_default.Container, { defaultActiveKey: "tests" }, /* @__PURE__ */ import_react48.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react48.default.createElement("span", { className: "navbar-brand text-muted" }, basePath.split("testeranto/reports")[1]), /* @__PURE__ */ import_react48.default.createElement(Nav_default2, { variant: "pills", className: "me-auto" }, /* @__PURE__ */ import_react48.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react48.default.createElement(Nav_default2.Link, { eventKey: "tests" }, "Results")), /* @__PURE__ */ import_react48.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react48.default.createElement(Nav_default2.Link, { eventKey: "logs" }, "Logs")), /* @__PURE__ */ import_react48.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react48.default.createElement(Nav_default2.Link, { eventKey: "ai" }, "Aider"))), /* @__PURE__ */ import_react48.default.createElement("div", { className: "ms-auto" }, /* @__PURE__ */ import_react48.default.createElement(
+    return /* @__PURE__ */ import_react49.default.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: "transparent", position: "relative", zIndex: 10 } }, /* @__PURE__ */ import_react49.default.createElement("div", { id: "starsContainer" }, /* @__PURE__ */ import_react49.default.createElement("div", { id: "stars" })), /* @__PURE__ */ import_react49.default.createElement("div", { id: "sun" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "sunDay" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "sunSet" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "sky" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "horizon" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "horizonNight" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "moon" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "mountainRange" }, /* @__PURE__ */ import_react49.default.createElement("div", { id: "mountain" })), /* @__PURE__ */ import_react49.default.createElement("div", { id: "water" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "waterReflectionContainer" }, /* @__PURE__ */ import_react49.default.createElement("div", { id: "waterReflectionMiddle" })), /* @__PURE__ */ import_react49.default.createElement("div", { id: "waterDistance" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "darknessOverlaySky" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "darknessOverlay" }), /* @__PURE__ */ import_react49.default.createElement("div", { id: "oceanRippleContainer" }, /* @__PURE__ */ import_react49.default.createElement("div", { id: "oceanRipple" })), /* @__PURE__ */ import_react49.default.createElement(Tab_default.Container, { defaultActiveKey: "tests" }, /* @__PURE__ */ import_react49.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react49.default.createElement("span", { className: "navbar-brand text-muted" }, basePath.split("testeranto/reports")[1]), /* @__PURE__ */ import_react49.default.createElement(Nav_default2, { variant: "pills", className: "me-auto" }, /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Link, { eventKey: "tests" }, "Results")), /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Link, { eventKey: "logs" }, "Logs")), /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react49.default.createElement(Nav_default2.Link, { eventKey: "ai" }, "Aider"))), /* @__PURE__ */ import_react49.default.createElement("div", { className: "ms-auto" }, /* @__PURE__ */ import_react49.default.createElement(
       "button",
       {
         onClick: copyAiderCommand,
@@ -28776,7 +29190,7 @@
         title: "Copy aider command to clipboard"
       },
       "\u{1F916}\u{1FA84}\u2728"
-    )))), /* @__PURE__ */ import_react48.default.createElement(Row_default, null, /* @__PURE__ */ import_react48.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react48.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react48.default.createElement(Tab_default.Pane, { eventKey: "tests" }, "error" in bddErrors ? /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react48.default.createElement("h4", null, "Error loading test results"), /* @__PURE__ */ import_react48.default.createElement("pre", null, JSON.stringify(bddErrors.error, null, 2))) : /* @__PURE__ */ import_react48.default.createElement("div", null, /* @__PURE__ */ import_react48.default.createElement("h2", null, "Test Results"), bddErrors.name && /* @__PURE__ */ import_react48.default.createElement("h3", null, bddErrors.name), bddErrors.givens.map((given, i) => /* @__PURE__ */ import_react48.default.createElement("div", { key: i, className: "mb-4" }, /* @__PURE__ */ import_react48.default.createElement("h4", null, "Given: ", given.name), /* @__PURE__ */ import_react48.default.createElement("ul", { className: "list-group" }, given.whens.map((when, j) => /* @__PURE__ */ import_react48.default.createElement("li", { key: `w-${j}`, className: `list-group-item ${when.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react48.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react48.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react48.default.createElement("pre", { className: "text-danger" }, when.error))))), /* @__PURE__ */ import_react48.default.createElement("ul", { className: "list-group mt-2" }, given.thens.map((then, k) => /* @__PURE__ */ import_react48.default.createElement("li", { key: `t-${k}`, className: `list-group-item ${then.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react48.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react48.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react48.default.createElement("pre", { className: "text-danger" }, then.error))))))))), /* @__PURE__ */ import_react48.default.createElement(Tab_default.Pane, { eventKey: "logs" }, typeof log === "string" ? /* @__PURE__ */ import_react48.default.createElement("div", null, /* @__PURE__ */ import_react48.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, log)) : /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react48.default.createElement("h4", null, "Error loading logs"), /* @__PURE__ */ import_react48.default.createElement("pre", null, JSON.stringify(log.error, null, 2)))), /* @__PURE__ */ import_react48.default.createElement(Tab_default.Pane, { eventKey: "ai" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react48.default.createElement("div", { className: "col-md-12" }, typeof message === "string" ? /* @__PURE__ */ import_react48.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, message) : /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react48.default.createElement("h5", null, "Error loading AI message"), /* @__PURE__ */ import_react48.default.createElement("pre", null, JSON.stringify(message.error, null, 2))), typeof prompt === "string" ? /* @__PURE__ */ import_react48.default.createElement("pre", { className: "bg-secondary text-white  p-3", style: { overflow: "auto" } }, prompt) : /* @__PURE__ */ import_react48.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react48.default.createElement("h5", null, "Error loading AI prompt"), /* @__PURE__ */ import_react48.default.createElement("pre", null, JSON.stringify(prompt.error, null, 2)))))))))), /* @__PURE__ */ import_react48.default.createElement(SettingsButton, { className: "gear-icon" }), /* @__PURE__ */ import_react48.default.createElement(Footer, null));
+    )))), /* @__PURE__ */ import_react49.default.createElement(Row_default, null, /* @__PURE__ */ import_react49.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react49.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react49.default.createElement(Tab_default.Pane, { eventKey: "tests" }, "error" in bddErrors ? /* @__PURE__ */ import_react49.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react49.default.createElement("h4", null, "Error loading test results"), /* @__PURE__ */ import_react49.default.createElement("pre", null, JSON.stringify(bddErrors.error, null, 2))) : /* @__PURE__ */ import_react49.default.createElement("div", null, /* @__PURE__ */ import_react49.default.createElement("h2", null, "Test Results"), bddErrors.name && /* @__PURE__ */ import_react49.default.createElement("h3", null, bddErrors.name), bddErrors.givens.map((given, i) => /* @__PURE__ */ import_react49.default.createElement("div", { key: i, className: "mb-4" }, /* @__PURE__ */ import_react49.default.createElement("h4", null, "Given: ", given.name), /* @__PURE__ */ import_react49.default.createElement("ul", { className: "list-group" }, given.whens.map((when, j) => /* @__PURE__ */ import_react49.default.createElement("li", { key: `w-${j}`, className: `list-group-item ${when.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react49.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react49.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react49.default.createElement("pre", { className: "text-danger" }, when.error))))), /* @__PURE__ */ import_react49.default.createElement("ul", { className: "list-group mt-2" }, given.thens.map((then, k) => /* @__PURE__ */ import_react49.default.createElement("li", { key: `t-${k}`, className: `list-group-item ${then.error ? "list-group-item-danger" : "list-group-item-success"}` }, /* @__PURE__ */ import_react49.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react49.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react49.default.createElement("pre", { className: "text-danger" }, then.error))))))))), /* @__PURE__ */ import_react49.default.createElement(Tab_default.Pane, { eventKey: "logs" }, typeof log === "string" ? /* @__PURE__ */ import_react49.default.createElement("div", null, /* @__PURE__ */ import_react49.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, log)) : /* @__PURE__ */ import_react49.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react49.default.createElement("h4", null, "Error loading logs"), /* @__PURE__ */ import_react49.default.createElement("pre", null, JSON.stringify(log.error, null, 2)))), /* @__PURE__ */ import_react49.default.createElement(Tab_default.Pane, { eventKey: "ai" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "row" }, /* @__PURE__ */ import_react49.default.createElement("div", { className: "col-md-12" }, typeof message === "string" ? /* @__PURE__ */ import_react49.default.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: "auto" } }, message) : /* @__PURE__ */ import_react49.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react49.default.createElement("h5", null, "Error loading AI message"), /* @__PURE__ */ import_react49.default.createElement("pre", null, JSON.stringify(message.error, null, 2))), typeof prompt === "string" ? /* @__PURE__ */ import_react49.default.createElement("pre", { className: "bg-secondary text-white  p-3", style: { overflow: "auto" } }, prompt) : /* @__PURE__ */ import_react49.default.createElement("div", { className: "alert alert-danger" }, /* @__PURE__ */ import_react49.default.createElement("h5", null, "Error loading AI prompt"), /* @__PURE__ */ import_react49.default.createElement("pre", null, JSON.stringify(prompt.error, null, 2)))))))))), /* @__PURE__ */ import_react49.default.createElement(SettingsButton, { className: "gear-icon" }), /* @__PURE__ */ import_react49.default.createElement(Footer, null));
   };
   var savedTheme = localStorage.getItem("theme") || "system";
   var themeToApply = savedTheme;
@@ -28791,7 +29205,7 @@
     if (elem) {
       if (elem) {
         const root = import_client.default.createRoot(elem);
-        root.render(import_react48.default.createElement(BddPage, {}));
+        root.render(import_react49.default.createElement(BddPage, {}));
         document.body.classList.add(`${themeToApply}-theme`);
       }
     }

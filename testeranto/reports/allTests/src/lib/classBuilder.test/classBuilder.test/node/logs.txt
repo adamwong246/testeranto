@@ -15,7 +15,7 @@ stdout > Then {
   errorThrown: [Function (anonymous)],
   testRunSuccessful: [Function (anonymous)]
 }
-stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/1828e7cc-b492-4017-92a5-6d6569c44a9b"}
+receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/0e0364f5-76d9-49f6-b9ac-b59722d6f847"}
 stdout > Then {
   initializedProperly: [Function (anonymous)],
   specsGenerated: [Function (anonymous)],

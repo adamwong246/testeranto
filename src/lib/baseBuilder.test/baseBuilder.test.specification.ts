@@ -8,7 +8,7 @@ export const specification: ITestSpecification<I, O> = (
   When,
   Then,
   Check
-) => 
+) => {
   return [
     Suite.Default(
       "Testing BaseBuilder functionality",

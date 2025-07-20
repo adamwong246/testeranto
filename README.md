@@ -4,7 +4,7 @@
 
 #### 🚧 Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧
 
-- README: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto)
+- README: [https://adamwong246.github.io/testeranto/](https://adamwong246.github.io/testeranto/)
 - demo: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 - source: [github.com/adamwong246/testeranto](https://github.com/adamwong246/testeranto)
 - npm: [npmjs.com/package/testeranto](https://www.npmjs.com/package/testeranto)

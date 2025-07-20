@@ -1,4 +1,54 @@
-src/lib/baseBuilder.test/TestBaseBuilder.ts
+src/lib/BaseSuite.ts
+56:5 'artifactory' is defined but never used. (@typescript-eslint/no-unused-vars)
+57:5 'tr' is defined but never used. (@typescript-eslint/no-unused-vars)
+58:5 'pm' is defined but never used. (@typescript-eslint/no-unused-vars)
+67:32 'artifactory' is defined but never used. (@typescript-eslint/no-unused-vars)
+67:63 'pm' is defined but never used. (@typescript-eslint/no-unused-vars)
+96:23 'g' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+117:17 'ndx' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+
+src/lib/abstractBase.ts
+168:9 Unsafe usage of ThrowStatement. (no-unsafe-finally)
+
+src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
+11:36 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+11:41 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+11:46 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+11:51 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+11:56 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+11:61 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+13:56 The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead. (@typescript-eslint/no-empty-object-type)
+- undefined (fix)
+- undefined (fix)
+31:30 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+58:37 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+
+src/lib/baseBuilder.test/baseBuilder.test.interface.ts
+17:16 'x' is defined but never used. (@typescript-eslint/no-unused-vars)
+17:19 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+
+src/lib/baseBuilder.test/baseBuilder.test.mock.ts
 18:21 The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
 - If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
 - If you want a type meaning "any object", you probably want `object` instead.
@@ -54,49 +104,11 @@ src/lib/baseBuilder.test/TestBaseBuilder.ts
 - undefined (fix)
 - undefined (fix)
 
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
-11:36 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-11:41 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-11:46 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-11:51 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-11:56 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-11:61 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-13:56 The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
-- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
-- If you want a type meaning "any object", you probably want `object` instead.
-- If you want a type meaning "any value", you probably want `unknown` instead. (@typescript-eslint/no-empty-object-type)
-- undefined (fix)
-- undefined (fix)
-31:30 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-58:37 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-
-src/lib/baseBuilder.test/baseBuilder.test.interface.ts
-17:16 'x' is defined but never used. (@typescript-eslint/no-unused-vars)
-17:19 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-
 src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 10:3 'Check' is defined but never used. (@typescript-eslint/no-unused-vars)
 
 src/lib/baseBuilder.test/baseBuilder.test.web.ts
-9:33 The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+10:33 The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
 - If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
 - If you want a type meaning "any object", you probably want `object` instead.
 - If you want a type meaning "any value", you probably want `unknown` instead. (@typescript-eslint/no-empty-object-type)

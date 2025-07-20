@@ -31,9 +31,9 @@ const BigBoard = () => {
   const fetchLogs = async (project: string) => {
     try {
       const [nodeRes, webRes, pureRes] = await Promise.all([
-        fetch(`./testeranto/bundles/node/${project}/metafile.json`),
-        fetch(`./testeranto/bundles/web/${project}/metafile.json`),
-        fetch(`./testeranto/bundles/pure/${project}/metafile.json`),
+        fetch(`./bundles/node/${project}/metafile.json`),
+        fetch(`./bundles/web/${project}/metafile.json`),
+        fetch(`./bundles/pure/${project}/metafile.json`),
       ]);
 
       setNodeLogs({ [project]: await nodeRes.json() });
@@ -60,11 +60,11 @@ const BigBoard = () => {
             p,
 
             (await (
-              await fetch(`./testeranto/reports/${p}/config.json`)
+              await fetch(`./reports/${p}/config.json`)
             ).json()) as IBuiltConfig,
 
             (await (
-              await fetch(`./testeranto/reports/${p}/summary.json`)
+              await fetch(`./reports/${p}/summary.json`)
             ).json()) as ISummary,
           ] as [string, IBuiltConfig, ISummary];
         }
@@ -300,7 +300,7 @@ const BigBoard = () => {
 
 
                                                 <a
-                                                  href={`./testeranto/reports/${x}/index.html`}
+                                                  href={`./reports/${x}/index.html`}
                                                 >
 
                                                   {
@@ -319,14 +319,14 @@ const BigBoard = () => {
                                               </td>
                                               <td>
                                                 <a
-                                                  href={`./testeranto/reports/${x}/lint_errors.json`}
+                                                  href={`./reports/${x}/lint_errors.json`}
                                                 >
                                                   {y.staticErrors}
                                                 </a>
                                               </td>
                                               <td>
                                                 <a
-                                                  href={`./testeranto/reports/${x}/type_errors.txt`}
+                                                  href={`./reports/${x}/type_errors.txt`}
                                                 >
                                                   {y.typeErrors}
                                                 </a>

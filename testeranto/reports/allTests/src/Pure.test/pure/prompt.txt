@@ -1,8 +1,0 @@
-
-/add src/lib/pmProxy.test/mockPMBase.ts
-/add src/Pure.test.ts
-
-/read testeranto/reports/allTests/src/Pure.test/pure/tests.json
-/read testeranto/reports/allTests/src/Pure.test/pure/logs.txt
-/read testeranto/reports/allTests/src/Pure.test/pure/type_errors.txt
-/read testeranto/reports/allTests/src/Pure.test/pure/lint_errors.json

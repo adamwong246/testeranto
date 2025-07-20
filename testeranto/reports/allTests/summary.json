@@ -1,18 +1,30 @@
 {
   "src/lib/classBuilder.test/classBuilder.test.ts": {
+    "typeErrors": 76,
+    "staticErrors": 3,
     "runTimeErrors": -1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/classBuilder.test/classBuilder.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
+    "typeErrors": 31,
+    "staticErrors": 6,
     "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/baseBuilder.test/baseBuilder.test.node/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
+    "typeErrors": 31,
+    "staticErrors": 8,
     "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/pure/src/lib/baseBuilder.test/baseBuilder.test.pure/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
+    "typeErrors": 31,
+    "staticErrors": 7,
     "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/web/src/lib/baseBuilder.test/baseBuilder.test.web/prompt.txt",
     "failingFeatures": {}
   }
 }

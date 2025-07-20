@@ -363,9 +363,6 @@ var testReportPage = (packageName, domain) => {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="author" content="" />
       
-      <script>
-      
-
       (function () {
     window.__getLocation = function () {
         return window.location;
@@ -373,14 +370,20 @@ var testReportPage = (packageName, domain) => {
     window.dynamicBase = function (suffix) {
         var base = document.createElement('base');
         var l = window.__getLocation();
-        base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + (suffix || '');
+
+        if (l.hostname === "localhost){
+          base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + (suffix || '');
+        } else if (l.hostname === "adamwong246.github.io"){
+          base.href = "https://adamwong246.github.io/testeranto";
+        } else {
+          console.error("unsupported hostname");
+        }
+        
         document.getElementsByTagName('head')[0].appendChild(base);
     };
 })();
 
       </script>
-
-      <script>window.dynamicBase("/testeranto")</script>
 
   
       <link rel="stylesheet" href="../ReportClient.css" />
@@ -420,7 +423,15 @@ var testsReportPage = (packageName, domain, projects) => {
     window.dynamicBase = function (suffix) {
         var base = document.createElement('base');
         var l = window.__getLocation();
-        base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + (suffix || '');
+
+        if (l.hostname === "localhost){
+          base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + (suffix || '');
+        } else if (l.hostname === "adamwong246.github.io"){
+          base.href = "https://adamwong246.github.io/testeranto";
+        } else {
+          console.error("unsupported hostname");
+        }
+        
         document.getElementsByTagName('head')[0].appendChild(base);
     };
 })();

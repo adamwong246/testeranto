@@ -29149,9 +29149,9 @@
     const fetchLogs = async (project) => {
       try {
         const [nodeRes, webRes, pureRes] = await Promise.all([
-          fetch(`./testeranto/bundles/node/${project}/metafile.json`),
-          fetch(`./testeranto/bundles/web/${project}/metafile.json`),
-          fetch(`./testeranto/bundles/pure/${project}/metafile.json`)
+          fetch(`./bundles/node/${project}/metafile.json`),
+          fetch(`./bundles/web/${project}/metafile.json`),
+          fetch(`./bundles/pure/${project}/metafile.json`)
         ]);
         setNodeLogs({ [project]: await nodeRes.json() });
         setWebLogs({ [project]: await webRes.json() });
@@ -29170,8 +29170,8 @@
             fetchLogs(p);
             return [
               p,
-              await (await fetch(`./testeranto/reports/${p}/config.json`)).json(),
-              await (await fetch(`./testeranto/reports/${p}/summary.json`)).json()
+              await (await fetch(`./reports/${p}/config.json`)).json(),
+              await (await fetch(`./reports/${p}/summary.json`)).json()
             ];
           }
         );
@@ -29252,7 +29252,7 @@
         )), /* @__PURE__ */ import_react49.default.createElement("td", null, /* @__PURE__ */ import_react49.default.createElement(
           "a",
           {
-            href: `./testeranto/reports/${x}/index.html`
+            href: `./reports/${x}/index.html`
           },
           y.runTimeErrors < 0 && "\u203C\uFE0F Tests did not complete",
           y.runTimeErrors === 0 && "\u2705 All tests passed",
@@ -29260,13 +29260,13 @@
         )), /* @__PURE__ */ import_react49.default.createElement("td", null, /* @__PURE__ */ import_react49.default.createElement(
           "a",
           {
-            href: `./testeranto/reports/${x}/lint_errors.json`
+            href: `./reports/${x}/lint_errors.json`
           },
           y.staticErrors
         )), /* @__PURE__ */ import_react49.default.createElement("td", null, /* @__PURE__ */ import_react49.default.createElement(
           "a",
           {
-            href: `./testeranto/reports/${x}/type_errors.txt`
+            href: `./reports/${x}/type_errors.txt`
           },
           y.typeErrors
         )));

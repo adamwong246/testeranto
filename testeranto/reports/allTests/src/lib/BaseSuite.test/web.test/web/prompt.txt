@@ -1,8 +1,0 @@
-
-/add src/lib/BaseSuite.test/test.ts
-/add src/lib/BaseSuite.test/web.test.ts
-
-/read testeranto/reports/allTests/src/lib/BaseSuite.test/web.test/web/tests.json
-/read testeranto/reports/allTests/src/lib/BaseSuite.test/web.test/web/logs.txt
-/read testeranto/reports/allTests/src/lib/BaseSuite.test/web.test/web/type_errors.txt
-/read testeranto/reports/allTests/src/lib/BaseSuite.test/web.test/web/lint_errors.json
