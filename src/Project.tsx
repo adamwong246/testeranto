@@ -319,7 +319,7 @@ const BigBoard = () => {
                                               </td>
                                               <td>
                                                 <a
-                                                  href={`./reports/${x}/lint_errors.json`}
+                                                  href={`./reports/${x}/lint_errors.txt`}
                                                 >
                                                   {y.staticErrors}
                                                 </a>

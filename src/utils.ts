@@ -42,7 +42,7 @@ export const lintPather = (
     projectName,
     entryPoint.split(".").slice(0, -1).join("."),
     platform,
-    `lint_errors.json`
+    `lint_errors.txt`
   );
 };
 

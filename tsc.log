@@ -1,9 +1,4 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-src/App.tsx(2,26): error TS2307: Cannot find module './hooks/useTheme' or its corresponding type declarations.
-src/App.tsx(8,6): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
-src/App.tsx(9,30): error TS2741: Property 'active' is missing in type '{}' but required in type 'SunriseAnimationProps'.
-src/App.tsx(9,30): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
-src/App.tsx(11,8): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 src/lib/abstractBase.test/adapter.ts(5,47): error TS2322: Type 'Promise<() => { testStore: { value: string; }; }>' is not assignable to type 'Promise<{ testStore: { value: string; }; error?: Error | undefined; }>'.
   Type '() => { testStore: { value: string; }; }' is not assignable to type '{ testStore: { value: string; }; error?: Error | undefined; }'.
 src/lib/abstractBase.test/adapter.ts(8,25): error TS2739: Type '{ testStore: { value: string; }; error?: Error | undefined; }' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
@@ -383,12 +378,9 @@ src/Pure.ts(65,3): error TS2322: Type 'PureTesteranto<I, O, M>' is not assignabl
       Type 'Promise<IFinalResults | -2>' is not assignable to type 'Promise<IFinalResults>'.
         Type 'IFinalResults | -2' is not assignable to type 'IFinalResults'.
           Type 'number' is not assignable to type 'IFinalResults'.
-src/TestReport.tsx(129,26): error TS2531: Object is possibly 'null'.
-src/TestReport.tsx(268,46): error TS18048: 'message' is possibly 'undefined'.
-src/TestReport.tsx(280,46): error TS18048: 'prompt' is possibly 'undefined'.
-src/TestReport.tsx(307,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
+src/TestReport.tsx(180,26): error TS2531: Object is possibly 'null'.
+src/TestReport.tsx(411,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.
-src/TestReport.tsx(308,38): error TS2304: Cannot find name 'themeToApply'.
 src/utils/buildTemplates.ts(29,34): error TS2769: No overload matches this call.
   Overload 1 of 2, '(o: {}): string[]', gave the following error.
     Argument of type 'unknown' is not assignable to parameter of type '{}'.

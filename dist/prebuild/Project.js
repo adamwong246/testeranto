@@ -27851,7 +27851,7 @@
         )), /* @__PURE__ */ import_react34.default.createElement("td", null, /* @__PURE__ */ import_react34.default.createElement(
           "a",
           {
-            href: `./reports/${x}/lint_errors.json`
+            href: `./reports/${x}/lint_errors.txt`
           },
           y.staticErrors
         )), /* @__PURE__ */ import_react34.default.createElement("td", null, /* @__PURE__ */ import_react34.default.createElement(

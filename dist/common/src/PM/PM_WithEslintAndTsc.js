@@ -93,7 +93,7 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
             const testPaths = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `tests.json`);
             const featuresPath = path_1.default.join("testeranto", "reports", this.name, platform, entryPoint.split(".").slice(0, -1).join("."), `featurePrompt.txt`);
             const logPath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `logs.txt`);
-            const lintPath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `lint_errors.json`);
+            const lintPath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `lint_errors.txt`);
             const typePath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `type_errors.txt`);
             const messagePath = path_1.default.join("testeranto", "reports", this.name, entryPoint.split(".").slice(0, -1).join("."), platform, `message.txt`);
             fs_1.default.writeFileSync(promptPath, `

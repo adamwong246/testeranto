@@ -10,4 +10,4 @@
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/tests.json
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/logs.txt
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/type_errors.txt
-/read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/lint_errors.json
+/read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/lint_errors.txt

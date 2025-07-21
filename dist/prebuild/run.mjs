@@ -32,7 +32,7 @@ var lintPather = (entryPoint, platform, projectName2) => {
     projectName2,
     entryPoint.split(".").slice(0, -1).join("."),
     platform,
-    `lint_errors.json`
+    `lint_errors.txt`
   );
 };
 var promptPather = (entryPoint, platform, projectName2) => {
@@ -506,7 +506,7 @@ var PM_WithEslintAndTsc = class extends PM_Base {
         this.name,
         entryPoint.split(".").slice(0, -1).join("."),
         platform,
-        `lint_errors.json`
+        `lint_errors.txt`
       );
       const typePath = path3.join(
         "testeranto",

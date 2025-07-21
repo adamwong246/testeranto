@@ -43,8 +43,8 @@ const ProjectPageHtml = (packageName, projects) => `
 exports.ProjectPageHtml = ProjectPageHtml;
 const TestPageHtml = (testName) => `
   ${getBaseHtml(testName)}
-  <link rel="stylesheet" href="TestReport.css" />
-  <script src="TestReport.js"></script>
+  <link rel="stylesheet" href="/testeranto/TestReport.css" />
+  <script src="/testeranto/TestReport.js"></script>
 </head>
 <body>
   <div id="root"></div>

@@ -2,6 +2,7 @@ import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 import { Footer } from "./Footer";
+// import { SettingsButton } from "./SettingsButton";
 import "./TestReport.scss";
 const BddPage = () => {
     const [bddErrors, setBddErrors] = useState();
@@ -21,6 +22,9 @@ const BddPage = () => {
         })();
     }, []);
     const [log, setLog] = useState();
+    const [buildLog, setBuildLog] = useState();
+    const [typeErrors, setTypeErrors] = useState();
+    // const [staticAnalysis, setStaticAnalysis] = useState<string | { error: object }>();
     const [message, setMessage] = useState();
     const [prompt, setPrompt] = useState();
     useEffect(() => {
@@ -30,6 +34,39 @@ const BddPage = () => {
             }
             catch (e) {
                 setLog({ error: e });
+            }
+        })();
+    }, []);
+    useEffect(() => {
+        (async () => {
+            try {
+                setBuildLog(await (await fetch(`${window.location.href.split("/").slice(0, -1).join("/")}/build_logs.txt`)).text());
+            }
+            catch (e) {
+                setBuildLog({ error: e });
+            }
+        })();
+    }, []);
+    useEffect(() => {
+        (async () => {
+            try {
+                setTypeErrors(await (await fetch(`${window.location.href.split("/").slice(0, -1).join("/")}/type_errors.txt`)).text());
+            }
+            catch (e) {
+                setTypeErrors({ error: e });
+            }
+        })();
+    }, []);
+    const [staticAnalysis, setStaticAnalysis] = useState();
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await fetch(`${window.location.href.split("/").slice(0, -1).join("/")}/lint_errors.txt`);
+                const data = await response.text();
+                setStaticAnalysis(data);
+            }
+            catch (e) {
+                setStaticAnalysis({ error: e });
             }
         })();
     }, []);
@@ -114,22 +151,27 @@ const BddPage = () => {
             React.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" },
                 React.createElement("div", { className: "container-fluid" },
                     React.createElement("span", { className: "navbar-brand text-muted" }, basePath.split("testeranto/reports")[1]),
-                    React.createElement(Nav, { variant: "pills", className: "me-auto" },
-                        React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: "tests" }, "Results")),
-                        React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: "logs" }, "Logs")),
-                        React.createElement(Nav.Item, null,
-                            React.createElement(Nav.Link, { eventKey: "ai" }, "Aider"))),
                     React.createElement("div", { className: "ms-auto" },
                         React.createElement("button", { onClick: copyAiderCommand, className: "btn btn-primary", title: "Copy aider command to clipboard" }, "\uD83E\uDD16\uD83E\uDE84\u2728")))),
+            React.createElement(Nav, { variant: "tabs", className: "mb-3" },
+                React.createElement(Nav.Item, null,
+                    React.createElement(Nav.Link, { eventKey: "tests" }, "BDD results")),
+                React.createElement(Nav.Item, null,
+                    React.createElement(Nav.Link, { eventKey: "logs" }, "Runtime logs")),
+                React.createElement(Nav.Item, null,
+                    React.createElement(Nav.Link, { eventKey: "build" }, "Build logs")),
+                React.createElement(Nav.Item, null,
+                    React.createElement(Nav.Link, { eventKey: "types" }, "Type errors")),
+                React.createElement(Nav.Item, null,
+                    React.createElement(Nav.Link, { eventKey: "analysis" }, "Static analysis")),
+                React.createElement(Nav.Item, null,
+                    React.createElement(Nav.Link, { eventKey: "ai" }, "Aider"))),
             React.createElement(Row, null,
                 React.createElement(Col, { sm: 12 },
                     React.createElement(Tab.Content, null,
                         React.createElement(Tab.Pane, { eventKey: "tests" }, 'error' in bddErrors ? (React.createElement("div", { className: "alert alert-danger" },
                             React.createElement("h4", null, "Error loading test results"),
                             React.createElement("pre", null, JSON.stringify(bddErrors.error, null, 2)))) : (React.createElement("div", null,
-                            React.createElement("h2", null, "Test Results"),
                             bddErrors.name && React.createElement("h3", null, bddErrors.name),
                             bddErrors.givens.map((given, i) => (React.createElement("div", { key: i, className: "mb-4" },
                                 React.createElement("h4", null,
@@ -149,17 +191,17 @@ const BddPage = () => {
                                         React.createElement("pre", { className: "text-danger" }, then.error))))))))))))),
                         React.createElement(Tab.Pane, { eventKey: "logs" }, typeof log === 'string' ? (React.createElement("div", null,
                             React.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: 'auto' } }, log))) : (React.createElement("div", { className: "alert alert-danger" },
-                            React.createElement("h4", null, "Error loading logs"),
-                            React.createElement("pre", null, JSON.stringify(log.error, null, 2))))),
+                            React.createElement("h4", null, "Error loading logs")))),
+                        React.createElement(Tab.Pane, { eventKey: "build" }),
+                        React.createElement(Tab.Pane, { eventKey: "types" }, typeof typeErrors === 'string' ? (React.createElement("div", null,
+                            React.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: 'auto' } }, typeErrors))) : (React.createElement("div", { className: "alert alert-danger" },
+                            React.createElement("h4", null, "Error loading type errors")))),
+                        React.createElement(Tab.Pane, { eventKey: "analysis" }, typeof staticAnalysis === 'string' ? (React.createElement("div", null,
+                            React.createElement("pre", null, staticAnalysis))) : (React.createElement("div", { className: "alert alert-danger" },
+                            React.createElement("h4", null, "Error loading static analysis")))),
                         React.createElement(Tab.Pane, { eventKey: "ai" },
                             React.createElement("div", { className: "row" },
-                                React.createElement("div", { className: "col-md-12" },
-                                    typeof message === 'string' ? (React.createElement("pre", { className: "bg-secondary text-white p-3", style: { overflow: 'auto' } }, message)) : (React.createElement("div", { className: "alert alert-danger" },
-                                        React.createElement("h5", null, "Error loading AI message"),
-                                        React.createElement("pre", null, JSON.stringify(message.error, null, 2)))),
-                                    typeof prompt === 'string' ? (React.createElement("pre", { className: "bg-secondary text-white  p-3", style: { overflow: 'auto' } }, prompt)) : (React.createElement("div", { className: "alert alert-danger" },
-                                        React.createElement("h5", null, "Error loading AI prompt"),
-                                        React.createElement("pre", null, JSON.stringify(prompt.error, null, 2))))))))))),
+                                React.createElement("div", { className: "col-md-12" }))))))),
         React.createElement(Footer, null)));
 };
 document.addEventListener("DOMContentLoaded", function () {
@@ -168,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (elem) {
             const root = ReactDom.createRoot(elem);
             root.render(React.createElement(BddPage, {}));
-            document.body.classList.add(`${themeToApply}-theme`);
+            // document.body.classList.add(`${themeToApply}-theme`);
         }
     }
 });

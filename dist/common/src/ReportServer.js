@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_static_1 = __importDefault(require("node-static"));
 const http_1 = __importDefault(require("http"));
 const main = async () => {
-    const fileServer = new node_static_1.default.Server("./", {});
+    const fileServer = new node_static_1.default.Server("./", { cache: false });
     http_1.default
         .createServer(function (request, response) {
         request
@@ -17,6 +17,6 @@ const main = async () => {
             .resume();
     })
         .listen(8080);
-    console.log("Server running on port 8080");
+    console.log("Server running on port 8081");
 };
 main();

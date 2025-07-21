@@ -18,4 +18,4 @@
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/tests.json
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/logs.txt
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/type_errors.txt
-/read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/lint_errors.json
+/read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/lint_errors.txt

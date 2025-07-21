@@ -19,7 +19,7 @@ const tscPather = (entryPoint, platform, projectName) => {
 };
 exports.tscPather = tscPather;
 const lintPather = (entryPoint, platform, projectName) => {
-    return path_1.default.join("testeranto", "reports", projectName, entryPoint.split(".").slice(0, -1).join("."), platform, `lint_errors.json`);
+    return path_1.default.join("testeranto", "reports", projectName, entryPoint.split(".").slice(0, -1).join("."), platform, `lint_errors.txt`);
 };
 exports.lintPather = lintPather;
 const bddPather = (entryPoint, platform, projectName) => {

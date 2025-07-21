@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 
 import { Footer } from "./Footer";
-import { SettingsButton } from "./SettingsButton";
+// import { SettingsButton } from "./SettingsButton";
 
 import "./TestReport.scss"
 
@@ -46,6 +46,9 @@ const BddPage = () => {
   }, []);
 
   const [log, setLog] = useState<string | { error: object }>();
+  const [buildLog, setBuildLog] = useState<string | { error: object }>();
+  const [typeErrors, setTypeErrors] = useState<string | { error: object }>();
+  // const [staticAnalysis, setStaticAnalysis] = useState<string | { error: object }>();
   const [message, setMessage] = useState<string | { error: object }>();
   const [prompt, setPrompt] = useState<string | { error: object }>();
 
@@ -61,6 +64,54 @@ const BddPage = () => {
         );
       } catch (e) {
         setLog({ error: e })
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setBuildLog(
+          await (
+            await fetch(
+              `${window.location.href.split("/").slice(0, -1).join("/")}/build_logs.txt`
+            )
+          ).text()
+        );
+      } catch (e) {
+        setBuildLog({ error: e })
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setTypeErrors(
+          await (
+            await fetch(
+              `${window.location.href.split("/").slice(0, -1).join("/")}/type_errors.txt`
+            )
+          ).text()
+        );
+      } catch (e) {
+        setTypeErrors({ error: e })
+      }
+    })();
+  }, []);
+
+  const [staticAnalysis, setStaticAnalysis] = useState<string | { error: object }>();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetch(
+          `${window.location.href.split("/").slice(0, -1).join("/")}/lint_errors.txt`
+        );
+        const data = await response.text();
+        setStaticAnalysis(data);
+      } catch (e) {
+        setStaticAnalysis({ error: e })
       }
     })();
   }, []);
@@ -171,17 +222,6 @@ const BddPage = () => {
         <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
           <div className="container-fluid">
             <span className="navbar-brand text-muted">{basePath.split("testeranto/reports")[1]}</span>
-            <Nav variant="pills" className="me-auto">
-              <Nav.Item>
-                <Nav.Link eventKey="tests">Results</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="logs">Logs</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="ai">Aider</Nav.Link>
-              </Nav.Item>
-            </Nav>
             <div className="ms-auto">
               <button
                 onClick={copyAiderCommand}
@@ -193,6 +233,27 @@ const BddPage = () => {
             </div>
           </div>
         </nav>
+
+        <Nav variant="tabs" className="mb-3">
+          <Nav.Item>
+            <Nav.Link eventKey="tests">BDD results</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="logs">Runtime logs</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="build">Build logs</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="types">Type errors</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="analysis">Static analysis</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="ai">Aider</Nav.Link>
+          </Nav.Item>
+        </Nav>
         <Row>
           <Col sm={12}>
             <Tab.Content>
@@ -204,7 +265,7 @@ const BddPage = () => {
                   </div>
                 ) : (
                   <div>
-                    <h2>Test Results</h2>
+                    {/* <h2>BDD Results</h2> */}
                     {bddErrors.name && <h3>{bddErrors.name}</h3>}
                     {bddErrors.givens.map((given, i) => (
                       <div key={i} className="mb-4">
@@ -248,7 +309,50 @@ const BddPage = () => {
                 ) : (
                   <div className="alert alert-danger">
                     <h4>Error loading logs</h4>
-                    <pre>{JSON.stringify(log.error, null, 2)}</pre>
+                    {/* <pre>{JSON.stringify(log.error, null, 2)}</pre> */}
+                  </div>
+                )}
+              </Tab.Pane>
+
+              <Tab.Pane eventKey="build">
+                {/* {typeof buildLog === 'string' ? (
+                  <div>
+                    <pre className="bg-secondary text-white p-3" style={{ overflow: 'auto' }}>
+                      {buildLog}
+                    </pre>
+                  </div>
+                ) : (
+                  <div className="alert alert-danger">
+                    <h4>Error loading build logs</h4>
+                    <pre>{JSON.stringify(buildLog.error, null, 2)}</pre>
+                  </div>
+                )} */}
+              </Tab.Pane>
+
+              <Tab.Pane eventKey="types">
+                {typeof typeErrors === 'string' ? (
+                  <div>
+                    <pre className="bg-secondary text-white p-3" style={{ overflow: 'auto' }}>
+                      {typeErrors}
+                    </pre>
+                  </div>
+                ) : (
+                  <div className="alert alert-danger">
+                    <h4>Error loading type errors</h4>
+                    {/* <pre>{JSON.stringify(typeErrors.error, null, 2)}</pre> */}
+                  </div>
+                )}
+              </Tab.Pane>
+
+              <Tab.Pane eventKey="analysis">
+                {typeof staticAnalysis === 'string' ? (
+                  <div>
+                    <pre>{staticAnalysis}</pre>
+                  </div>
+                ) : (
+                  <div className="alert alert-danger">
+                    <h4>Error loading static analysis</h4>
+                    {/* <pre>{JSON.stringify(staticAnalysis.error, null, 2)}</pre> */}
                   </div>
                 )}
               </Tab.Pane>
@@ -258,7 +362,7 @@ const BddPage = () => {
                   <div className="col-md-12">
 
 
-                    {typeof message === 'string' ? (
+                    {/* {(!message.error) ? (
                       <pre className="bg-secondary text-white p-3" style={{ overflow: 'auto' }}>
                         {message}
                       </pre>
@@ -267,10 +371,10 @@ const BddPage = () => {
                         <h5>Error loading AI message</h5>
                         <pre>{JSON.stringify(message.error, null, 2)}</pre>
                       </div>
-                    )}
+                    )} */}
 
 
-                    {typeof prompt === 'string' ? (
+                    {/* {typeof prompt === 'string' ? (
                       <pre className="bg-secondary text-white  p-3" style={{ overflow: 'auto' }}>
                         {prompt}
                       </pre>
@@ -279,7 +383,7 @@ const BddPage = () => {
                         <h5>Error loading AI prompt</h5>
                         <pre>{JSON.stringify(prompt.error, null, 2)}</pre>
                       </div>
-                    )}
+                    )} */}
 
 
                   </div>
@@ -305,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (elem) {
       const root = ReactDom.createRoot(elem);
       root.render(React.createElement(BddPage, {}));
-      document.body.classList.add(`${themeToApply}-theme`);
+      // document.body.classList.add(`${themeToApply}-theme`);
     }
   }
 });

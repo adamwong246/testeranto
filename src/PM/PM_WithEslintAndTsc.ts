@@ -180,7 +180,7 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
       this.name,
       entryPoint.split(".").slice(0, -1).join("."),
       platform,
-      `lint_errors.json`
+      `lint_errors.txt`
     );
 
     const typePath = path.join(

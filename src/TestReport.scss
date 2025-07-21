@@ -1,1 +1,24 @@
 @use "./app.scss";
+
+.nav-tabs {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  
+  .nav-link {
+    color: var(--dark);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: transparent;
+    }
+    
+    &.active {
+      color: var(--primary);
+      background-color: rgba(var(--primary-rgb), 0.1);
+      border-bottom: 2px solid var(--primary);
+    }
+  }
+}

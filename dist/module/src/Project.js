@@ -165,7 +165,7 @@ const BigBoard = () => {
                                                                             y.runTimeErrors === 0 && "✅ All tests passed",
                                                                             y.runTimeErrors > 0 && `⚠️ ${y.runTimeErrors} failures`)),
                                                                     React.createElement("td", null,
-                                                                        React.createElement("a", { href: `./reports/${x}/lint_errors.json` }, y.staticErrors)),
+                                                                        React.createElement("a", { href: `./reports/${x}/lint_errors.txt` }, y.staticErrors)),
                                                                     React.createElement("td", null,
                                                                         React.createElement("a", { href: `./reports/${x}/type_errors.txt` }, y.typeErrors))));
                                                             })));
