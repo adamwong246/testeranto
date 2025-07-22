@@ -41,8 +41,8 @@ export const ProjectsPageHtml = () => `
 export const ProjectPageHtml = (projectName: string) => `
   ${getBaseHtml(`${projectName} - Testeranto`)}
   
-  <link rel="stylesheet" href="testeranto/ReportApp.css" />
-  <script src="testeranto/ProjectPage.js"></script>
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ProjectPage.js"></script>
 </head>
 <body>
   <div id="root"></div>

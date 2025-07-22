@@ -392,8 +392,8 @@ var ProjectsPageHtml = () => `
 var ProjectPageHtml = (projectName) => `
   ${getBaseHtml(`${projectName} - Testeranto`)}
   
-  <link rel="stylesheet" href="testeranto/ReportApp.css" />
-  <script src="testeranto/ProjectPage.js"></script>
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ProjectPage.js"></script>
 </head>
 <body>
   <div id="root"></div>
