@@ -44,8 +44,8 @@ export const AppHtml = (title = "Testeranto") => `
 export const ProjectsPageHtml = () => `
   ${getBaseHtml("Projects - Testeranto")}
   
-  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
-  <script src="/testeranto/ProjectsPage.js"></script>
+  <link rel="stylesheet" href="testeranto/ReportApp.css" />
+  <script src="testeranto/ProjectsPage.js"></script>
 </head>
 <body>
   <div id="root"></div>
