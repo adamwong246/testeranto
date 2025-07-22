@@ -115,7 +115,7 @@ export const ProjectsPage = () => {
 
                       return (
                         <div key={testName}>
-                          <a href={`/testeranto/reports/${project.name}/${testName.split('.').slice(0, -1).join('.')}/${runTime}/index.html`}>
+                          <a href={`testeranto/reports/${project.name}/${testName.split('.').slice(0, -1).join('.')}/${runTime}/index.html`}>
                             {testName.split('/').pop()}
                           </a>
                         </div>
@@ -127,7 +127,7 @@ export const ProjectsPage = () => {
                 </div>
               </td>
               <td>
-                <a href={`/testeranto/reports/${project.name}.html#node`}>
+                <a href={`testeranto/reports/${project.name}.html#node`}>
                   {getStatusIcon(project.nodeStatus)} Node
                   {project.nodeStatus === 'failed' && (
                     <Badge bg="danger" className="ms-2">Failed</Badge>
@@ -135,7 +135,7 @@ export const ProjectsPage = () => {
                 </a>
               </td>
               <td>
-                <a href={`/testeranto/reports/${project.name}.html#web`}>
+                <a href={`testeranto/reports/${project.name}.html#web`}>
                   {getStatusIcon(project.webStatus)} Web
                   {project.webStatus === 'failed' && (
                     <Badge bg="danger" className="ms-2">Failed</Badge>
@@ -143,7 +143,7 @@ export const ProjectsPage = () => {
                 </a>
               </td>
               <td>
-                <a href={`/testeranto/reports/${project.name}.html#pure`}>
+                <a href={`testeranto/reports/${project.name}.html#pure`}>
                   {getStatusIcon(project.pureStatus)} Pure
                   {project.pureStatus === 'failed' && (
                     <Badge bg="danger" className="ms-2">Failed</Badge>

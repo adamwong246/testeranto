@@ -85,20 +85,20 @@ export const ProjectsPage = () => {
                     React.createElement("div", { style: { maxHeight: '200px', overflowY: 'auto' } }, summaries[project.name] ? (Object.keys(summaries[project.name]).map(testName => {
                         const runTime = configs[project.name].tests.find((t) => t[0] === testName)[1];
                         return (React.createElement("div", { key: testName },
-                            React.createElement("a", { href: `/testeranto/reports/${project.name}/${testName.split('.').slice(0, -1).join('.')}/${runTime}/index.html` }, testName.split('/').pop())));
+                            React.createElement("a", { href: `testeranto/reports/${project.name}/${testName.split('.').slice(0, -1).join('.')}/${runTime}/index.html` }, testName.split('/').pop())));
                     })) : (React.createElement("div", null, "Loading tests...")))),
                 React.createElement("td", null,
-                    React.createElement("a", { href: `/testeranto/reports/${project.name}.html#node` },
+                    React.createElement("a", { href: `testeranto/reports/${project.name}.html#node` },
                         getStatusIcon(project.nodeStatus),
                         " Node",
                         project.nodeStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))),
                 React.createElement("td", null,
-                    React.createElement("a", { href: `/testeranto/reports/${project.name}.html#web` },
+                    React.createElement("a", { href: `testeranto/reports/${project.name}.html#web` },
                         getStatusIcon(project.webStatus),
                         " Web",
                         project.webStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))),
                 React.createElement("td", null,
-                    React.createElement("a", { href: `/testeranto/reports/${project.name}.html#pure` },
+                    React.createElement("a", { href: `testeranto/reports/${project.name}.html#pure` },
                         getStatusIcon(project.pureStatus),
                         " Pure",
                         project.pureStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))))))))));
