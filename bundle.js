@@ -27,13 +27,11 @@ await esbuild.build({
 
 await esbuild.build({
   entryPoints: [
-    'src/ReportApp.tsx',
     'src/ProjectsPage.tsx',
     'src/ProjectPage.tsx',
     'src/TestPage.tsx',
     'src/BuildLogsPage.tsx',
     'src/TestReport.tsx',
-    'src/Project.tsx'
   ],
   bundle: true,
   format: "iife",
