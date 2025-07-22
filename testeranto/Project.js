@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context);
           }
-          function useState9(initialState) {
+          function useState8(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1093,11 +1093,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef10(initialValue) {
+          function useRef9(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect13(create, deps) {
+          function useEffect12(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1879,15 +1879,15 @@
           exports.useContext = useContext6;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect13;
+          exports.useEffect = useEffect12;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect2;
           exports.useMemo = useMemo5;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef10;
-          exports.useState = useState9;
+          exports.useRef = useRef9;
+          exports.useState = useState8;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React31 = require_react();
+          var React30 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React31.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React30.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React31.Children.forEach(props.children, function(child) {
+                  React30.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React31.Component().refs;
+          var emptyRefsObject = new React30.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React31 = require_react();
+          var React30 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React31.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React30.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -25271,7 +25271,7 @@
 
   // src/Project.tsx
   var import_client = __toESM(require_client(), 1);
-  var import_react34 = __toESM(require_react(), 1);
+  var import_react33 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -27396,373 +27396,57 @@
 
   // src/Footer.tsx
   var import_react32 = __toESM(require_react(), 1);
-  var Footer = () => /* @__PURE__ */ import_react32.default.createElement("div", { className: "footer" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"));
-
-  // src/components/SunriseAnimation.tsx
-  var import_react33 = __toESM(require_react(), 1);
-  var SunriseAnimation = ({ active }) => {
-    const [position, setPosition] = (0, import_react33.useState)(0);
-    const [dimensions, setDimensions] = (0, import_react33.useState)({ width: 0, height: 0 });
-    const animationIdRef = (0, import_react33.useRef)(null);
-    (0, import_react33.useEffect)(() => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-      const handleResize = () => {
-        setDimensions({
-          width: window.innerWidth,
-          height: window.innerHeight
-        });
-      };
-      window.addEventListener("resize", handleResize);
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, []);
-    const ANIMATION_DURATION = 1e4;
-    const UPDATE_INTERVAL = 50;
-    (0, import_react33.useEffect)(() => {
-      if (!active) {
-        if (animationIdRef.current) {
-          cancelAnimationFrame(animationIdRef.current);
-          animationIdRef.current = null;
-        }
-        return;
-      }
-      console.log("Starting animation with duration:", ANIMATION_DURATION, "ms");
-      let startTime = performance.now();
-      let lastUpdateTime = 0;
-      const animate = (timestamp) => {
-        if (!active)
-          return;
-        const elapsed = (timestamp - startTime) % ANIMATION_DURATION;
-        const progress = elapsed / ANIMATION_DURATION;
-        if (timestamp - lastUpdateTime >= UPDATE_INTERVAL) {
-          const newPos = Math.cos(progress * Math.PI * 2);
-          setPosition(newPos);
-          lastUpdateTime = timestamp;
-        }
-        animationIdRef.current = requestAnimationFrame(animate);
-      };
-      animationIdRef.current = requestAnimationFrame(animate);
-      return () => {
-        if (animationIdRef.current) {
-          cancelAnimationFrame(animationIdRef.current);
-          animationIdRef.current = null;
-        }
-      };
-    }, [active]);
-    const yPos = dimensions.height * (1 - position);
-    const normalizedPos = (position + 1) / 2;
-    if (!active)
-      return null;
-    return /* @__PURE__ */ import_react33.default.createElement("div", { id: "sunrise", style: {
-      width: "100vw",
-      height: "100vh",
-      position: "fixed",
-      top: 0,
-      left: 0,
-      backgroundColor: "transparent",
-      overflow: "hidden",
-      pointerEvents: "none"
-    } }, /* @__PURE__ */ import_react33.default.createElement("div", { id: "daily-bg", style: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      backgroundColor: "rgba(0,0,0,0.3)",
-      zIndex: -1001
-    } }), "Stars Container", /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "starsContainer",
-        style: {
-          perspective: 350,
-          perspectiveOrigin: "50% 300%",
-          overflow: "hidden",
-          position: "absolute",
-          top: 0,
-          left: "-50%",
-          width: "200%",
-          height: "50%",
-          zIndex: -1e3,
-          opacity: Math.max(0, 0.5 - normalizedPos * 0.5)
-        }
-      },
-      /* @__PURE__ */ import_react33.default.createElement(
-        "div",
-        {
-          id: "stars",
-          style: {
-            backgroundRepeat: "repeat",
-            position: "absolute",
-            width: "200%",
-            height: "200%",
-            left: "-50%",
-            bottom: 0,
-            opacity: 0.5,
-            transform: "rotateX(-90deg)"
-          }
-        }
-      )
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "sun",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: "50%",
-          transform: `translateX(-50%) translateY(${yPos}px)`,
-          width: "100%",
-          height: "50%",
-          background: `radial-gradient(50% ${yPos}px, circle, rgba(242,248,247,1) 0%,rgba(249,249,28,1) 3%,rgba(247,214,46,1) 8%,rgba(248,200,95,1) 12%,rgba(201,165,132,1) 30%,rgba(115,130,133,1) 51%,rgba(46,97,122,1) 85%,rgba(24,75,106,1) 100%)`,
-          zIndex: -900,
-          opacity: 0.5
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "sunDay",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: `radial-gradient(50% ${yPos}px, circle, rgba(252,255,251,0.9) 0%,rgba(253,250,219,0.4) 30%,rgba(226,219,197,0.01) 70%,rgba(226,219,197,0.0) 70%,rgba(201,165,132,0) 100%)`,
-          zIndex: -800,
-          opacity: Math.max(0, 1 - yPos / dimensions.height)
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "sunSet",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: `radial-gradient(50% ${yPos}px, circle, rgba(254,255,255,0.8) 5%,rgba(236,255,0,1) 10%,rgba(253,50,41,1) 25%,rgba(243,0,0,1) 40%,rgba(93,0,0,1) 100%)`,
-          zIndex: -800,
-          opacity: Math.max(0, yPos / dimensions.height - 0.2)
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "sky",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          zIndex: -700,
-          background: "linear-gradient(to top, rgba(249,251,240,1) 10%,rgba(215,253,254,1) 20%,rgba(167,222,253,1) 40%,rgba(110,175,255,1) 100%)",
-          opacity: Math.max(0, 1 - yPos / dimensions.height)
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "horizon",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "linear-gradient(to top, rgba(212,87,43,0.9) 0%,rgba(246,149,52,0.8) 20%,rgba(24,75,106,0) 100%)",
-          zIndex: -700,
-          opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) + 0.2 : yPos / (dimensions.height / 2))
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "horizonNight",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "linear-gradient(to top, rgba(57,167,255,1) 0%,rgba(13,98,245,1) 20%,rgba(0,11,22,0.1) 60%)",
-          zIndex: -600,
-          opacity: Math.max(0, (yPos - dimensions.height * 4 / 5) / (dimensions.height - dimensions.height * 4 / 5))
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "moon",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "radial-gradient(40% 55%, circle, rgba(249,249,250,1) -1%,rgba(189,255,254,1) 1%,rgba(8,49,78,1) 1%,rgba(8,26,56,1) 10%,rgba(4,16,46,1) 40%,rgba(2,8,13,1) 70%)",
-          zIndex: -500,
-          opacity: Math.max(0, (yPos - dimensions.height * 9 / 10) / (dimensions.height - dimensions.height * 9 / 10))
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "water",
-        style: {
-          overflow: "hidden",
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "linear-gradient(to top, rgba(0,25,45,1) 0%,rgba(14,71,117,1) 35%,rgba(26,126,174,1) 70%,rgba(62,168,220,1) 100%)",
-          zIndex: -400
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "waterReflectionContainer",
-        style: {
-          perspective: 30,
-          perspectiveOrigin: `50% ${-15 + normalizedPos * 30}%`,
-          overflow: "hidden",
-          position: "absolute",
-          top: "50%",
-          left: "-3%",
-          width: "103%",
-          height: "50%",
-          zIndex: -300,
-          transform: `translateY(${dimensions.height - yPos}px)`
-        }
-      },
-      /* @__PURE__ */ import_react33.default.createElement(
-        "div",
-        {
-          id: "waterReflectionMiddle",
-          style: {
-            position: "absolute",
-            top: 0,
-            left: "-50%",
-            width: "200%",
-            height: "55%",
-            background: "radial-gradient(50% 0px, rgba(247,177,72,1) 3%,rgba(248,175,65,1) 6%,rgba(207,62,30,0.4) 35%,rgba(176,91,48,0.1) 45%,rgba(141,88,47,0.0) 60%,rgba(116,82,63,0.0) 70%,rgba(44,65,68,0.0) 80%,rgba(7,19,31,0.0) 100%)",
-            zIndex: -200,
-            opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) - 0.1 : yPos / (dimensions.height / 2) - 0.1),
-            transform: "rotateX(45deg)"
-          }
-        }
-      )
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "waterDistance",
-        style: {
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "linear-gradient(90deg, rgba(0,0,0,0.0) 10%,rgba(0,0,0,0.20) 44%,rgba(0,0,0,0.65) 95%,rgba(0,0,0,0.62) 100%)",
-          zIndex: -100,
-          opacity: Math.max(0, yPos / dimensions.height + 0.6)
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "darknessOverlaySky",
-        style: {
-          backgroundColor: "#000",
-          opacity: Math.max(0, (yPos - dimensions.height * 7 / 10) / (dimensions.height - dimensions.height * 7 / 10)),
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          zIndex: -50
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "darknessOverlay",
-        style: {
-          backgroundColor: "#000",
-          opacity: Math.max(0, (yPos - dimensions.height / 2) / (dimensions.height / 2)),
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          zIndex: -5
-        }
-      }
-    ), /* @__PURE__ */ import_react33.default.createElement(
-      "div",
-      {
-        id: "oceanRipple",
-        style: {
-          backgroundImage: "repeating-linear-gradient(175deg, rgba(165,165,165,0.08) 43%,rgba(175,175,175,0.08) 45%,rgba(235,235,235,0.08) 49%,rgba(195,195,195,0.08) 50%,rgba(165,165,165,0.08) 54%)",
-          opacity: 0.5,
-          position: "absolute",
-          left: "0%",
-          bottom: 0,
-          width: "100%",
-          height: "50%",
-          zIndex: -10
-        }
-      }
-    ));
-  };
-  var SunriseAnimation_default = SunriseAnimation;
+  var Footer = () => /* @__PURE__ */ import_react32.default.createElement("footer", null, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react32.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto "));
 
   // src/Project.tsx
+  var ExternalFeatures = ({ summary }) => {
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "external-features-tab-container" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 1 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "log" }, "log"), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: "steps" }, "steps")))), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 11 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "log" }), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: "steps" }, /* @__PURE__ */ import_react33.default.createElement(
+      Tab_default.Container,
+      {
+        id: "secondary-tab-container",
+        defaultActiveKey: "first"
+      },
+      /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" })), /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null)))
+    ))))))));
+  };
+  var Features = ({ summary }) => {
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react33.default.createElement("thead", null, /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("th", null, "project"), /* @__PURE__ */ import_react33.default.createElement("th", null, "platform"), /* @__PURE__ */ import_react33.default.createElement("th", null, "BDD errors"), /* @__PURE__ */ import_react33.default.createElement("th", null, "Lint errors"), /* @__PURE__ */ import_react33.default.createElement("th", null, "Type errors"), /* @__PURE__ */ import_react33.default.createElement("th", null, "prompt"))), /* @__PURE__ */ import_react33.default.createElement("tbody", null, ...summary.map((s) => {
+      return /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("th", null, s[0])), ...s[1].tests.map((t) => {
+        const x = `${s[0]}/${t[0].split(".").slice(0, -1).join(".")}/${t[1]}`;
+        const y = s[2][t[0]];
+        return /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react33.default.createElement("td", null, t[1]), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("a", { href: `./asdasasdasdd/reports/${x}/index.html` }, y.runTimeError)), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement(
+          "a",
+          {
+            href: `./testeasdqqweqweranto/reports/${x}/lint_errors.json`
+          },
+          y.staticErrors
+        )), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement(
+          "a",
+          {
+            href: `./testezxcdcdfranto/reports/${x}/type_errors.txt`
+          },
+          y.typeErrors
+        )), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, s[2][t[0]].prompt)));
+      }));
+    }))));
+  };
+  var Docs = ({ summary }) => {
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "DocsPane-tabs", defaultActiveKey: "external" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `external` }, "external"), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `markdown` }, "markdown"), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `string` }, "string")))), /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `external` }, /* @__PURE__ */ import_react33.default.createElement(ExternalFeatures, { summary })), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `markdown` }, /* @__PURE__ */ import_react33.default.createElement(ExternalFeatures, { summary })), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `string` }, /* @__PURE__ */ import_react33.default.createElement(ExternalFeatures, { summary })))))));
+  };
   var BigBoard = () => {
     const bigConfigElement = document.getElementById("bigConfig");
     if (!bigConfigElement)
       throw new Error("bigConfig element not found");
     const projects = JSON.parse(bigConfigElement.innerHTML);
-    const [summary, setSummary] = (0, import_react34.useState)();
-    const [nodeLogs, setNodeLogs] = (0, import_react34.useState)({});
-    const [webLogs, setWebLogs] = (0, import_react34.useState)({});
-    const [pureLogs, setPureLogs] = (0, import_react34.useState)({});
-    const [activeTab, setActiveTab] = (0, import_react34.useState)("node");
-    const fetchLogs = async (project) => {
-      try {
-        const [nodeRes, webRes, pureRes] = await Promise.all([
-          fetch(`./bundles/node/${project}/metafile.json`),
-          fetch(`./bundles/web/${project}/metafile.json`),
-          fetch(`./bundles/pure/${project}/metafile.json`)
-        ]);
-        setNodeLogs({ [project]: await nodeRes.json() });
-        setWebLogs({ [project]: await webRes.json() });
-        setPureLogs({ [project]: await pureRes.json() });
-      } catch (error) {
-        console.error("Error fetching logs:", error);
-        setNodeLogs({ [project]: "ERROR" });
-        setNodeLogs({ [project]: "ERROR" });
-        setNodeLogs({ [project]: "ERROR" });
-      }
-    };
-    (0, import_react34.useEffect)(() => {
+    const [summary, setSummary] = (0, import_react33.useState)();
+    (0, import_react33.useEffect)(() => {
       (async () => {
         const x = projects.map(
           async (p) => {
-            fetchLogs(p);
             return [
               p,
-              await (await fetch(`./reports/${p}/config.json`)).json(),
-              await (await fetch(`./reports/${p}/summary.json`)).json()
+              await (await fetch(`./testeranto/reports/${p}/config.json`)).json(),
+              await (await fetch(`./testeranto/reports/${p}/summary.json`)).json()
             ];
           }
         );
@@ -27772,102 +27456,57 @@
       })();
     }, []);
     if (!summary || summary?.length === 0) {
-      return /* @__PURE__ */ import_react34.default.createElement("div", null, "loading...");
+      return /* @__PURE__ */ import_react33.default.createElement("div", null, "loading...");
     }
-    return /* @__PURE__ */ import_react34.default.createElement("div", null, /* @__PURE__ */ import_react34.default.createElement(SunriseAnimation_default, { active: false }), /* @__PURE__ */ import_react34.default.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: "transparent", position: "relative", zIndex: 10 } }, /* @__PURE__ */ import_react34.default.createElement(Tab_default.Container, { activeKey: activeTab, defaultActiveKey: "node" }, /* @__PURE__ */ import_react34.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react34.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react34.default.createElement("span", { className: "navbar-brand text-muted" }, "Project: testeranto"), /* @__PURE__ */ import_react34.default.createElement(Nav_default2, { variant: "pills", className: "me-auto", activeKey: activeTab, onSelect: (k) => setActiveTab(k || "node") }, /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Link, { eventKey: "projects" }, "Test Results")), /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react34.default.createElement(
-      Nav_default2.Link,
-      {
-        eventKey: "node",
-        className: Object.values(nodeLogs).every((log) => !log.errors || log.errors.length === 0) ? "text-success" : "text-danger"
-      },
-      "Node Build ",
-      Object.values(nodeLogs).every((log) => !log.errors || log.errors.length === 0) ? "\u2705" : "\u274C"
-    )), /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react34.default.createElement(
-      Nav_default2.Link,
-      {
-        eventKey: "web",
-        className: Object.values(webLogs).every((log) => !log.errors || log.errors.length === 0) ? "text-success" : "text-danger"
-      },
-      "Web Build ",
-      Object.values(webLogs).every((log) => !log.errors || log.errors.length === 0) ? "\u2705" : "\u274C"
-    )), /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react34.default.createElement(
-      Nav_default2.Link,
-      {
-        eventKey: "pure",
-        className: Object.values(pureLogs).every((log) => !log.errors || log.errors.length === 0) ? "text-success" : "text-danger"
-      },
-      "Pure Build ",
-      Object.values(pureLogs).every((log) => !log.errors || log.errors.length === 0) ? "\u2705" : "\u274C"
-    ))))), /* @__PURE__ */ import_react34.default.createElement(Row_default, null, /* @__PURE__ */ import_react34.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react34.default.createElement(Tab_default.Pane, { eventKey: "node" }, Object.keys(nodeLogs).length > 0 && /* @__PURE__ */ import_react34.default.createElement("div", { className: `alert ${Object.values(nodeLogs).every((log) => !log.errors || log.errors.length === 0) ? "alert-success" : "alert-danger"} d-flex justify-content-between align-items-center` }, /* @__PURE__ */ import_react34.default.createElement("span", null, Object.values(nodeLogs).every((log) => !log.errors || log.errors.length === 0) ? "\u2705 All Node builds passed successfully" : "\u274C Some Node builds failed"), !Object.values(nodeLogs).every((log) => !log.errors || log.errors.length === 0) && /* @__PURE__ */ import_react34.default.createElement(
-      "button",
-      {
-        onClick: () => alert("AI debugger coming soon!"),
-        className: "btn btn-sm btn-primary",
-        title: "Get AI help debugging these build failures"
-      },
-      "\u{1F916}\u{1FA84}\u2728"
-    )), /* @__PURE__ */ import_react34.default.createElement("pre", null, JSON.stringify(nodeLogs, null, 2))), /* @__PURE__ */ import_react34.default.createElement(Tab_default.Pane, { eventKey: "web" }, Object.keys(webLogs).length > 0 && /* @__PURE__ */ import_react34.default.createElement("div", { className: `alert ${Object.values(webLogs).every((log) => !log.errors || log.errors.length === 0) ? "alert-success" : "alert-danger"} d-flex justify-content-between align-items-center` }, /* @__PURE__ */ import_react34.default.createElement("span", null, Object.values(webLogs).every((log) => !log.errors || log.errors.length === 0) ? "\u2705 All Web builds passed successfully" : "\u274C Some Web builds failed"), !Object.values(webLogs).every((log) => !log.errors || log.errors.length === 0) && /* @__PURE__ */ import_react34.default.createElement(
-      "button",
-      {
-        onClick: () => alert("AI debugger coming soon!"),
-        className: "btn btn-sm btn-primary",
-        title: "Get AI help debugging these build failures"
-      },
-      "\u{1F916}\u{1FA84}\u2728"
-    )), /* @__PURE__ */ import_react34.default.createElement("pre", null, JSON.stringify(webLogs, null, 2))), /* @__PURE__ */ import_react34.default.createElement(Tab_default.Pane, { eventKey: "pure" }, Object.keys(pureLogs).length > 0 && /* @__PURE__ */ import_react34.default.createElement("div", { className: `alert ${Object.values(pureLogs).every((log) => !log.errors || log.errors.length === 0) ? "alert-success" : "alert-danger"} d-flex justify-content-between align-items-center` }, /* @__PURE__ */ import_react34.default.createElement("span", null, Object.values(pureLogs).every((log) => !log.errors || log.errors.length === 0) ? "\u2705 All Pure builds passed successfully" : "\u274C Some Pure builds failed"), !Object.values(pureLogs).every((log) => !log.errors || log.errors.length === 0) && /* @__PURE__ */ import_react34.default.createElement(
-      "button",
-      {
-        onClick: () => alert("AI debugger coming soon!"),
-        className: "btn btn-sm btn-primary",
-        title: "Get AI help debugging these build failures"
-      },
-      "\u{1F916}\u{1FA84}\u2728"
-    )), /* @__PURE__ */ import_react34.default.createElement("pre", null, JSON.stringify(pureLogs, null, 2))), /* @__PURE__ */ import_react34.default.createElement(Tab_default.Pane, { eventKey: "projects" }, /* @__PURE__ */ import_react34.default.createElement(Tab_default.Container, { defaultActiveKey: projects[0] }, /* @__PURE__ */ import_react34.default.createElement(Row_default, null, /* @__PURE__ */ import_react34.default.createElement(Col_default, { sm: 3 }, /* @__PURE__ */ import_react34.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, projects.map((project) => /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, { key: project }, /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Link, { eventKey: project }, project))))), /* @__PURE__ */ import_react34.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react34.default.createElement(Tab_default.Content, null, projects.map((project) => /* @__PURE__ */ import_react34.default.createElement(Tab_default.Pane, { key: project, eventKey: project }, /* @__PURE__ */ import_react34.default.createElement(Table_default, null, /* @__PURE__ */ import_react34.default.createElement(Table_default, null, /* @__PURE__ */ import_react34.default.createElement("thead", null, /* @__PURE__ */ import_react34.default.createElement("tr", null, /* @__PURE__ */ import_react34.default.createElement("th", null, "project"), /* @__PURE__ */ import_react34.default.createElement("th", null, "platform"), /* @__PURE__ */ import_react34.default.createElement("th", null, "BDD errors"), /* @__PURE__ */ import_react34.default.createElement("th", null, "Lint errors"), /* @__PURE__ */ import_react34.default.createElement("th", null, "Type errors"))), /* @__PURE__ */ import_react34.default.createElement("tbody", null, ...summary.map((s) => {
-      return /* @__PURE__ */ import_react34.default.createElement(import_react34.default.Fragment, null, /* @__PURE__ */ import_react34.default.createElement("tr", null, /* @__PURE__ */ import_react34.default.createElement("th", null, s[0])), ...s[1].tests.map((t) => {
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        console.log("Text copied to clipboard");
+      }).catch((err) => {
+        console.error("Error copying text: ", err);
+      });
+    }
+    return /* @__PURE__ */ import_react33.default.createElement("div", null, " ", /* @__PURE__ */ import_react33.default.createElement(Tab_default.Container, { id: "TestPane-tabs", defaultActiveKey: "tests" }, /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement(Nav_default2, null, /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `tests` }, "tests"), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `features` }, "features"), /* @__PURE__ */ import_react33.default.createElement(Nav_default2.Link, { eventKey: `docs` }, "docs")))), /* @__PURE__ */ import_react33.default.createElement(Row_default, null, /* @__PURE__ */ import_react33.default.createElement(Col_default, { sm: 12 }, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `tests` }, /* @__PURE__ */ import_react33.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react33.default.createElement("thead", null, /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("th", null, "project"), /* @__PURE__ */ import_react33.default.createElement("th", null, "platform"), /* @__PURE__ */ import_react33.default.createElement("th", null, "BDD errors"), /* @__PURE__ */ import_react33.default.createElement("th", null, "Lint errors"), /* @__PURE__ */ import_react33.default.createElement("th", null, "Type errors"), /* @__PURE__ */ import_react33.default.createElement("th", null, "prompt"), /* @__PURE__ */ import_react33.default.createElement("th", null, "failing features"))), /* @__PURE__ */ import_react33.default.createElement("tbody", null, ...summary.map((s) => {
+      return /* @__PURE__ */ import_react33.default.createElement(import_react33.default.Fragment, null, /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("th", null, s[0])), ...s[1].tests.map((t) => {
         const x = `${s[0]}/${t[0].split(".").slice(0, -1).join(".")}/${t[1]}`;
         const y = s[2][t[0]];
-        if (!y)
-          return /* @__PURE__ */ import_react34.default.createElement("pre", null, "ERROR");
-        return /* @__PURE__ */ import_react34.default.createElement("tr", null, /* @__PURE__ */ import_react34.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react34.default.createElement("td", null, /* @__PURE__ */ import_react34.default.createElement(
-          "button",
-          {
-            className: `btn btn-sm ${t[1] === "node" && nodeLogs[s[0]]?.errors?.length === 0 || t[1] === "web" && webLogs[s[0]]?.errors?.length === 0 || t[1] === "pure" && pureLogs[s[0]]?.errors?.length === 0 ? "btn-outline-success" : "btn-outline-danger"}`,
-            onClick: () => {
-              const tabKey = t[1] === "node" ? "node" : t[1] === "web" ? "web" : "pure";
-              setActiveTab(tabKey);
-            },
-            title: t[1] === "node" && nodeLogs[s[0]]?.errors?.length === 0 || t[1] === "web" && webLogs[s[0]]?.errors?.length === 0 || t[1] === "pure" && pureLogs[s[0]]?.errors?.length === 0 ? "Build succeeded" : "Build failed"
-          },
-          t[1],
-          t[1] === "node" && nodeLogs[s[0]]?.errors?.length === 0 || t[1] === "web" && webLogs[s[0]]?.errors?.length === 0 || t[1] === "pure" && pureLogs[s[0]]?.errors?.length === 0 ? " \u2705" : " \u274C"
-        )), /* @__PURE__ */ import_react34.default.createElement("td", null, /* @__PURE__ */ import_react34.default.createElement(
+        return /* @__PURE__ */ import_react33.default.createElement("tr", null, /* @__PURE__ */ import_react33.default.createElement("td", null, t[0]), /* @__PURE__ */ import_react33.default.createElement("td", null, t[1]), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement(
           "a",
           {
-            href: `./reports/${x}/index.html`
+            href: `./testeranto/reports/${x}/index.html`
           },
-          y.runTimeErrors < 0 && "\u203C\uFE0F Tests did not complete",
-          y.runTimeErrors === 0 && "\u2705 All tests passed",
-          y.runTimeErrors > 0 && `\u26A0\uFE0F ${y.runTimeErrors} failures`
-        )), /* @__PURE__ */ import_react34.default.createElement("td", null, /* @__PURE__ */ import_react34.default.createElement(
+          y.runTimeError
+        )), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement(
           "a",
           {
-            href: `./reports/${x}/lint_errors.txt`
+            href: `./testeranto/reports/${x}/lint_errors.json`
           },
           y.staticErrors
-        )), /* @__PURE__ */ import_react34.default.createElement("td", null, /* @__PURE__ */ import_react34.default.createElement(
+        )), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement(
           "a",
           {
-            href: `./reports/${x}/type_errors.txt`
+            href: `./testeranto/reports/${x}/type_errors.txt`
           },
           y.typeErrors
-        )));
+        )), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement(
+          "button",
+          {
+            onClick: () => {
+              copyToClipboard(s[2][t[0]].prompt);
+            }
+          },
+          "copy"
+        ))), /* @__PURE__ */ import_react33.default.createElement("td", null, /* @__PURE__ */ import_react33.default.createElement("pre", null, /* @__PURE__ */ import_react33.default.createElement("code", null, JSON.stringify(
+          y.failingFeatures,
+          null,
+          2
+        )))));
       }));
-    })))))))))))))), /* @__PURE__ */ import_react34.default.createElement(Footer, null)));
+    })))), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `features` }, /* @__PURE__ */ import_react33.default.createElement(Features, { summary })), /* @__PURE__ */ import_react33.default.createElement(Tab_default.Pane, { eventKey: `docs` }, /* @__PURE__ */ import_react33.default.createElement(Docs, { summary })))))), /* @__PURE__ */ import_react33.default.createElement(Footer, null));
   };
   document.addEventListener("DOMContentLoaded", function() {
     const elem = document.getElementById("root");
     if (elem) {
-      import_client.default.createRoot(elem).render(import_react34.default.createElement(BigBoard, {}));
+      import_client.default.createRoot(elem).render(import_react33.default.createElement(BigBoard, {}));
     }
   });
 })();

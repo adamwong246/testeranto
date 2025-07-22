@@ -1,1 +1,9 @@
 failure 4  JSHandle@error
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/allTests/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1753207266532","lineNumber":376,"columnNumber":14}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/allTests/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1753207266532","lineNumber":376,"columnNumber":14}]
+Given error 1: JSHandle@error
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/allTests/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1753207266532","lineNumber":698,"columnNumber":16}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/allTests/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1753207266532","lineNumber":698,"columnNumber":16}]
+fail JSHandle@error
+{"url":"pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A18%3A1394","lineNumber":7,"columnNumber":16}
+[{"url":"pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A18%3A1394","lineNumber":7,"columnNumber":16}]

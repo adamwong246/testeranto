@@ -1,4 +1,4 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/b7b6af1b-ce63-41cf-bf99-ae8ed9333604"}
+stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/b4f92dec-07be-4347-a2bd-ae641bea39b9"}
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
 stderr > Given error 1: ReferenceError: TestClassBuilder is not defined
     at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:572:32)

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestPageHtml = exports.ProjectPageHtml = void 0;
+exports.TestPageHtml = exports.ProjectPageHtml = exports.ProjectsPageHtml = exports.AppHtml = void 0;
 const getBaseHtml = (title) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -25,26 +25,52 @@ const getBaseHtml = (title) => `
     document.getElementsByTagName('head')[0].appendChild(base);
   </script>
 `;
-const ProjectPageHtml = (packageName, projects) => `
-  ${getBaseHtml(packageName)}
-  <script type="application/json" id="bigConfig">
-    ${JSON.stringify(Object.keys(projects))}
-  </script>
-  <link rel="stylesheet" href="Project.css" />
-  <script type="module" src="Project.js"></script>
+// <link rel="stylesheet" href="/testeranto/static/css/bootstrap.min.css" />
+//   <script src="/testeranto/static/js/react.production.min.js"></script>
+//   <script src="/testeranto/static/js/react-dom.production.min.js"></script>
+//   <script src="/testeranto/static/js/react-router-dom.min.js"></script>
+//   < script src = "/testeranto/static/js/bootstrap.bundle.min.js" > </script>
+const AppHtml = (title = "Testeranto") => `
+  ${getBaseHtml(title)}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ReportApp.js"></script>
 </head>
 <body>
-  <div id="root">
-    react is loading
-  </div>
+  <div id="root"></div>
+</body>
+</html>
+`;
+exports.AppHtml = AppHtml;
+const ProjectsPageHtml = () => `
+  ${getBaseHtml("Projects - Testeranto")}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ProjectsPage.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+`;
+exports.ProjectsPageHtml = ProjectsPageHtml;
+const ProjectPageHtml = (projectName) => `
+  ${getBaseHtml(`${projectName} - Testeranto`)}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ProjectPage.js"></script>
+</head>
+<body>
+  <div id="root"></div>
 </body>
 </html>
 `;
 exports.ProjectPageHtml = ProjectPageHtml;
 const TestPageHtml = (testName) => `
-  ${getBaseHtml(testName)}
-  <link rel="stylesheet" href="/testeranto/TestReport.css" />
-  <script src="/testeranto/TestReport.js"></script>
+  ${getBaseHtml(`${testName} - Testeranto`)}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/TestPage.js"></script>
 </head>
 <body>
   <div id="root"></div>

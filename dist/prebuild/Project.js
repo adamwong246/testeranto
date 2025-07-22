@@ -27736,7 +27736,10 @@
     const [nodeLogs, setNodeLogs] = (0, import_react34.useState)({});
     const [webLogs, setWebLogs] = (0, import_react34.useState)({});
     const [pureLogs, setPureLogs] = (0, import_react34.useState)({});
-    const [activeTab, setActiveTab] = (0, import_react34.useState)("node");
+    const [activeTab, setActiveTab] = (0, import_react34.useState)(() => {
+      const hash = window.location.hash.replace("#", "");
+      return hash || "node";
+    });
     const fetchLogs = async (project) => {
       try {
         const [nodeRes, webRes, pureRes] = await Promise.all([
@@ -27761,7 +27764,7 @@
             fetchLogs(p);
             return [
               p,
-              await (await fetch(`./reports/${p}/config.json`)).json(),
+              await (await fetch(`./reports/config.json`)).json(),
               await (await fetch(`./reports/${p}/summary.json`)).json()
             ];
           }
@@ -27774,7 +27777,10 @@
     if (!summary || summary?.length === 0) {
       return /* @__PURE__ */ import_react34.default.createElement("div", null, "loading...");
     }
-    return /* @__PURE__ */ import_react34.default.createElement("div", null, /* @__PURE__ */ import_react34.default.createElement(SunriseAnimation_default, { active: false }), /* @__PURE__ */ import_react34.default.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: "transparent", position: "relative", zIndex: 10 } }, /* @__PURE__ */ import_react34.default.createElement(Tab_default.Container, { activeKey: activeTab, defaultActiveKey: "node" }, /* @__PURE__ */ import_react34.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react34.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react34.default.createElement("span", { className: "navbar-brand text-muted" }, "Project: testeranto"), /* @__PURE__ */ import_react34.default.createElement(Nav_default2, { variant: "pills", className: "me-auto", activeKey: activeTab, onSelect: (k) => setActiveTab(k || "node") }, /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Link, { eventKey: "projects" }, "Test Results")), /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react34.default.createElement(
+    return /* @__PURE__ */ import_react34.default.createElement("div", null, /* @__PURE__ */ import_react34.default.createElement(SunriseAnimation_default, { active: false }), /* @__PURE__ */ import_react34.default.createElement("div", { className: "container-fluid p-4", style: { backgroundColor: "transparent", position: "relative", zIndex: 10 } }, /* @__PURE__ */ import_react34.default.createElement(Tab_default.Container, { activeKey: activeTab, defaultActiveKey: "node" }, /* @__PURE__ */ import_react34.default.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" }, /* @__PURE__ */ import_react34.default.createElement("div", { className: "container-fluid" }, /* @__PURE__ */ import_react34.default.createElement("span", { className: "navbar-brand text-muted" }, "Project: testeranto"), /* @__PURE__ */ import_react34.default.createElement(Nav_default2, { variant: "pills", className: "me-auto", activeKey: activeTab, onSelect: (k) => {
+      setActiveTab(k || "node");
+      window.location.hash = k || "node";
+    } }, /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Link, { eventKey: "projects" }, "Test Results")), /* @__PURE__ */ import_react34.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react34.default.createElement(
       Nav_default2.Link,
       {
         eventKey: "node",

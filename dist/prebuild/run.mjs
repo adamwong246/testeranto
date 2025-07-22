@@ -1741,6 +1741,8 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     ...rawConfig,
     buildDir: process.cwd() + `/testeranto/${projectName}.json`
   };
+  if (!config.tests)
+    throw "config has no tests?";
   const pm = new PM_Main(config, projectName, mode);
   pm.start();
   process.stdin.on("keypress", (str, key) => {

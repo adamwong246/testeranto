@@ -23,26 +23,53 @@ const getBaseHtml = (title: string) => `
   </script>
 `;
 
-export const ProjectPageHtml = (packageName: string, projects: unknown) => `
-  ${getBaseHtml(packageName)}
-  <script type="application/json" id="bigConfig">
-    ${JSON.stringify(Object.keys(projects))}
-  </script>
-  <link rel="stylesheet" href="Project.css" />
-  <script type="module" src="Project.js"></script>
+// <link rel="stylesheet" href="/testeranto/static/css/bootstrap.min.css" />
+//   <script src="/testeranto/static/js/react.production.min.js"></script>
+//   <script src="/testeranto/static/js/react-dom.production.min.js"></script>
+//   <script src="/testeranto/static/js/react-router-dom.min.js"></script>
+//   < script src = "/testeranto/static/js/bootstrap.bundle.min.js" > </script>
+
+export const AppHtml = (title = "Testeranto") => `
+  ${getBaseHtml(title)}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ReportApp.js"></script>
 </head>
 <body>
-  <div id="root">
-    react is loading
-  </div>
+  <div id="root"></div>
+</body>
+</html>
+`;
+
+export const ProjectsPageHtml = () => `
+  ${getBaseHtml("Projects - Testeranto")}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ProjectsPage.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+`;
+
+export const ProjectPageHtml = (projectName: string) => `
+  ${getBaseHtml(`${projectName} - Testeranto`)}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ProjectPage.js"></script>
+</head>
+<body>
+  <div id="root"></div>
 </body>
 </html>
 `;
 
 export const TestPageHtml = (testName: string) => `
-  ${getBaseHtml(testName)}
-  <link rel="stylesheet" href="/testeranto/TestReport.css" />
-  <script src="/testeranto/TestReport.js"></script>
+  ${getBaseHtml(`${testName} - Testeranto`)}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/TestPage.js"></script>
 </head>
 <body>
   <div id="root"></div>

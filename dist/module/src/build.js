@@ -10,7 +10,7 @@ import esbuildWebConfiger from "./esbuildConfigs/web.js";
 import esbuildImportConfiger from "./esbuildConfigs/pure.js";
 import webHtmlFrame from "./web.html.js";
 import { getRunnables } from "./utils.js";
-import { TestPageHtml, ProjectPageHtml } from "./utils/buildTemplates.js";
+import { TestPageHtml, ProjectPageHtml, ProjectsPageHtml, } from "./utils/buildTemplates.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -28,6 +28,7 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
         console.error("no project found for", testName, "in testeranto.config.ts");
         process.exit(-1);
     }
+    fs.writeFileSync(`${process.cwd()}/testeranto/projects.json`, JSON.stringify(Object.keys(bigConfig.projects), null, 2));
     const rawConfig = bigConfig.projects[testName];
     const getSecondaryEndpointsPoints = (runtime) => {
         const meta = (ts, st) => {
@@ -98,12 +99,21 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
             process.exit();
         }
     };
-    console.log(`testeranto/reports/${testName}`);
-    if (!fs.existsSync(`testeranto/reports/${testName}`)) {
-        fs.mkdirSync(`testeranto/reports/${testName}`);
-    }
-    fs.writeFileSync(`testeranto/reports/${testName}/config.json`, JSON.stringify(config, null, 2));
-    fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, ProjectPageHtml(pckge.name, bigConfig.projects));
+    // Write HTML files
+    fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, ProjectsPageHtml());
+    // Create project-specific HTML files
+    Object.keys(bigConfig.projects).forEach((projectName) => {
+        console.log(`testeranto/reports/${projectName}`);
+        if (!fs.existsSync(`testeranto/reports/${projectName}`)) {
+            fs.mkdirSync(`testeranto/reports/${projectName}`);
+        }
+        fs.writeFileSync(`testeranto/reports/${projectName}/config.json`, JSON.stringify(config, null, 2));
+        fs.writeFileSync(`${process.cwd()}/testeranto/reports/${projectName}/index.html`, ProjectPageHtml(projectName));
+        // Create runtime-specific HTML files
+        ["node", "web", "pure"].forEach((runtime) => {
+            fs.writeFileSync(`${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`, TestPageHtml(`${projectName} - ${runtime}`));
+        });
+    });
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);

@@ -378,6 +378,14 @@ src/Pure.ts(65,3): error TS2322: Type 'PureTesteranto<I, O, M>' is not assignabl
       Type 'Promise<IFinalResults | -2>' is not assignable to type 'Promise<IFinalResults>'.
         Type 'IFinalResults | -2' is not assignable to type 'IFinalResults'.
           Type 'number' is not assignable to type 'IFinalResults'.
+src/ReportApp.tsx(30,11): error TS2304: Cannot find name 'fetchSummaries'.
+src/ReportApp.tsx(31,11): error TS2304: Cannot find name 'fetchConfigs'.
+src/ReportApp.tsx(32,11): error TS2304: Cannot find name 'fetchRuntimeLogs'.
+src/ReportApp.tsx(33,11): error TS2304: Cannot find name 'fetchRuntimeLogs'.
+src/ReportApp.tsx(34,11): error TS2304: Cannot find name 'fetchRuntimeLogs'.
+src/ReportApp.tsx(80,37): error TS2304: Cannot find name 'ProjectOverview'.
+src/ReportApp.tsx(81,53): error TS2304: Cannot find name 'ProjectDetail'.
+src/ReportApp.tsx(82,68): error TS2304: Cannot find name 'TestReport'.
 src/TestReport.tsx(180,26): error TS2531: Object is possibly 'null'.
 src/TestReport.tsx(411,19): error TS2345: Argument of type 'FunctionComponentElement<{}>' is not assignable to parameter of type 'ReactNode'.
   Property 'children' is missing in type 'FunctionComponentElement<{}>' but required in type 'ReactPortal'.

@@ -17,7 +17,11 @@ export type ISummary = Record<
     prompt: string | "?" | undefined;
     failingFeatures: object | undefined;
   }
->;
+> & {
+  nodeLogs?: string;
+  webLogs?: string;
+  pureLogs?: string;
+};
 
 export type SuiteSpecification<
   I extends Ibdd_in_any,

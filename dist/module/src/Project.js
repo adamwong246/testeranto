@@ -14,7 +14,10 @@ const BigBoard = () => {
     const [nodeLogs, setNodeLogs] = useState({});
     const [webLogs, setWebLogs] = useState({});
     const [pureLogs, setPureLogs] = useState({});
-    const [activeTab, setActiveTab] = useState("node");
+    const [activeTab, setActiveTab] = useState(() => {
+        const hash = window.location.hash.replace('#', '');
+        return hash || "node";
+    });
     const fetchLogs = async (project) => {
         try {
             const [nodeRes, webRes, pureRes] = await Promise.all([
@@ -39,7 +42,7 @@ const BigBoard = () => {
                 fetchLogs(p);
                 return [
                     p,
-                    (await (await fetch(`./reports/${p}/config.json`)).json()),
+                    (await (await fetch(`./reports/config.json`)).json()),
                     (await (await fetch(`./reports/${p}/summary.json`)).json()),
                 ];
             });
@@ -58,7 +61,10 @@ const BigBoard = () => {
                 React.createElement("nav", { className: "navbar navbar-expand-lg navbar-light bg-light mb-3 rounded" },
                     React.createElement("div", { className: "container-fluid" },
                         React.createElement("span", { className: "navbar-brand text-muted" }, "Project: testeranto"),
-                        React.createElement(Nav, { variant: "pills", className: "me-auto", activeKey: activeTab, onSelect: (k) => setActiveTab(k || "node") },
+                        React.createElement(Nav, { variant: "pills", className: "me-auto", activeKey: activeTab, onSelect: (k) => {
+                                setActiveTab(k || "node");
+                                window.location.hash = k || "node";
+                            } },
                             React.createElement(Nav.Item, null,
                                 React.createElement(Nav.Link, { eventKey: "projects" }, "Test Results")),
                             React.createElement(Nav.Item, null,

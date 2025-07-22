@@ -118,7 +118,7 @@
     "ATDD"
   ],
   "scripts": {
-    "build-hard": "rm -rf testeranto/**; rm -rf dist/**; yarn build && yarn t-init && yarn t-build allTests once; cp dist/prebuild/Project.* testeranto && cp dist/prebuild/TestReport.* testeranto && node scripts/compile-docs.js; yarn type-check",
+    "build-hard": "rm -rf testeranto/**; rm -rf dist/**; yarn build; yarn t-init; yarn t-build allTests once; cp dist/prebuild/Project.* testeranto; cp dist/prebuild/TestReport.* testeranto; node scripts/compile-docs.js; yarn type-check",
     "doit": "rm -rf node_modules && yarn install && yarn build",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
     "dev": "sh prebuild.sh;  cp ./src/cjs-shim.js ./dist/cjs-shim.js; sh postBuild.sh; tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch  ",
@@ -172,6 +172,7 @@
     "@jest/globals": "^30.0.4",
     "@types/eslint": "^9.6.1",
     "@types/node-static": "^0.7.11",
+    "@types/react-router-dom": "^5.3.3",
     "@ungap/structured-clone": "^1.3.0",
     "ansi-colors": "^4.1.3",
     "babel-loader": "^8.2.5",
@@ -201,6 +202,7 @@
     "react": "18.2.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "18.2.0",
+    "react-router-dom": "^7.7.0",
     "sass": "^1.89.2",
     "testeranto": "",
     "tsc-prog": "^2.3.0",

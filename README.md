@@ -2,11 +2,11 @@
 
 ## The AI-powered BDD test framework for TypeScript projects
 
-#### 🚧 Testeranto is still under development but is not ready for production yet. I am rapidly working to release a beta ASAP. If you are interested in joining this beta program, please contact me. 🚧
+#### 🚧 Testeranto is still under development but a beta version will be released soon. If you are interested in joining the beta program, send an email to testeranto.dev@gmail.com. 🚧
 
 ## quick links
 
-- an example of the reports generated: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/index.html)
+- an example of the reports generated: [adamwong246.github.io/testeranto/testeranto](/testeranto/projects.html)
 - demo of me using testeranto to fix a bug: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 - a starter testeranto project: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
 

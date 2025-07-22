@@ -60,6 +60,8 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
     const bigConfig = module.default;
     const rawConfig = bigConfig.projects[projectName];
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + `testeranto/${projectName}.json` });
+    if (!config.tests)
+        throw "config has no tests?";
     const pm = new main_1.PM_Main(config, projectName, mode);
     pm.start();
     process.stdin.on("keypress", (str, key) => {

@@ -66,6 +66,7 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
         console.error("no project found for", testName, "in testeranto.config.ts");
         process.exit(-1);
     }
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/projects.json`, JSON.stringify(Object.keys(bigConfig.projects), null, 2));
     const rawConfig = bigConfig.projects[testName];
     const getSecondaryEndpointsPoints = (runtime) => {
         const meta = (ts, st) => {
@@ -136,12 +137,21 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
             process.exit();
         }
     };
-    console.log(`testeranto/reports/${testName}`);
-    if (!fs_1.default.existsSync(`testeranto/reports/${testName}`)) {
-        fs_1.default.mkdirSync(`testeranto/reports/${testName}`);
-    }
-    fs_1.default.writeFileSync(`testeranto/reports/${testName}/config.json`, JSON.stringify(config, null, 2));
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, (0, buildTemplates_js_1.ProjectPageHtml)(pckge.name, bigConfig.projects));
+    // Write HTML files
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/projects.html`, (0, buildTemplates_js_1.ProjectsPageHtml)());
+    // Create project-specific HTML files
+    Object.keys(bigConfig.projects).forEach((projectName) => {
+        console.log(`testeranto/reports/${projectName}`);
+        if (!fs_1.default.existsSync(`testeranto/reports/${projectName}`)) {
+            fs_1.default.mkdirSync(`testeranto/reports/${projectName}`);
+        }
+        fs_1.default.writeFileSync(`testeranto/reports/${projectName}/config.json`, JSON.stringify(config, null, 2));
+        fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${projectName}/index.html`, (0, buildTemplates_js_1.ProjectPageHtml)(projectName));
+        // Create runtime-specific HTML files
+        ["node", "web", "pure"].forEach((runtime) => {
+            fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`, (0, buildTemplates_js_1.TestPageHtml)(`${projectName} - ${runtime}`));
+        });
+    });
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);

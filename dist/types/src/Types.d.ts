@@ -10,7 +10,11 @@ export type ISummary = Record<string, {
     staticErrors: number | "?" | undefined;
     prompt: string | "?" | undefined;
     failingFeatures: object | undefined;
-}>;
+}> & {
+    nodeLogs?: string;
+    webLogs?: string;
+    pureLogs?: string;
+};
 export type SuiteSpecification<I extends Ibdd_in_any, O extends Ibdd_out_any> = {
     [K in keyof O["suites"]]: (name: string, givens: IGivens<I>) => BaseSuite<I, O>;
 };

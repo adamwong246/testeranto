@@ -26,7 +26,10 @@ const BigBoard = () => {
   const [nodeLogs, setNodeLogs] = useState<Record<string, string>>({});
   const [webLogs, setWebLogs] = useState<Record<string, string>>({});
   const [pureLogs, setPureLogs] = useState<Record<string, string>>({});
-  const [activeTab, setActiveTab] = useState<string>("node");
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    const hash = window.location.hash.replace('#', '');
+    return hash || "node";
+  });
 
   const fetchLogs = async (project: string) => {
     try {
@@ -60,7 +63,7 @@ const BigBoard = () => {
             p,
 
             (await (
-              await fetch(`./reports/${p}/config.json`)
+              await fetch(`./reports/config.json`)
             ).json()) as IBuiltConfig,
 
             (await (
@@ -103,7 +106,10 @@ const BigBoard = () => {
           <nav className="navbar navbar-expand-lg navbar-light bg-light mb-3 rounded">
             <div className="container-fluid">
               <span className="navbar-brand text-muted">Project: testeranto</span>
-              <Nav variant="pills" className="me-auto" activeKey={activeTab} onSelect={(k) => setActiveTab(k || "node")}>
+              <Nav variant="pills" className="me-auto" activeKey={activeTab} onSelect={(k) => {
+                setActiveTab(k || "node");
+                window.location.hash = k || "node";
+              }}>
                 <Nav.Item>
                   <Nav.Link eventKey="projects">Test Results</Nav.Link>
                 </Nav.Item>

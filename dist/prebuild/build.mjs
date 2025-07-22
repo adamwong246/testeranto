@@ -375,25 +375,33 @@ var getBaseHtml = (title) => `
     document.getElementsByTagName('head')[0].appendChild(base);
   </script>
 `;
-var ProjectPageHtml = (packageName, projects) => `
-  ${getBaseHtml(packageName)}
-  <script type="application/json" id="bigConfig">
-    ${JSON.stringify(Object.keys(projects))}
-  </script>
-  <link rel="stylesheet" href="Project.css" />
-  <script type="module" src="Project.js"></script>
+var ProjectsPageHtml = () => `
+  ${getBaseHtml("Projects - Testeranto")}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ProjectsPage.js"></script>
 </head>
 <body>
-  <div id="root">
-    react is loading
-  </div>
+  <div id="root"></div>
+</body>
+</html>
+`;
+var ProjectPageHtml = (projectName) => `
+  ${getBaseHtml(`${projectName} - Testeranto`)}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/ProjectPage.js"></script>
+</head>
+<body>
+  <div id="root"></div>
 </body>
 </html>
 `;
 var TestPageHtml = (testName2) => `
-  ${getBaseHtml(testName2)}
-  <link rel="stylesheet" href="/testeranto/TestReport.css" />
-  <script src="/testeranto/TestReport.js"></script>
+  ${getBaseHtml(`${testName2} - Testeranto`)}
+  
+  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
+  <script src="/testeranto/TestPage.js"></script>
 </head>
 <body>
   <div id="root"></div>
@@ -419,6 +427,10 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     console.error("no project found for", testName, "in testeranto.config.ts");
     process.exit(-1);
   }
+  fs4.writeFileSync(
+    `${process.cwd()}/testeranto/projects.json`,
+    JSON.stringify(Object.keys(bigConfig.projects), null, 2)
+  );
   const rawConfig = bigConfig.projects[testName];
   const getSecondaryEndpointsPoints = (runtime) => {
     const meta = (ts, st) => {
@@ -502,18 +514,30 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
       process.exit();
     }
   };
-  console.log(`testeranto/reports/${testName}`);
-  if (!fs4.existsSync(`testeranto/reports/${testName}`)) {
-    fs4.mkdirSync(`testeranto/reports/${testName}`);
-  }
   fs4.writeFileSync(
-    `testeranto/reports/${testName}/config.json`,
-    JSON.stringify(config, null, 2)
+    `${process.cwd()}/testeranto/projects.html`,
+    ProjectsPageHtml()
   );
-  fs4.writeFileSync(
-    `${process.cwd()}/testeranto/index.html`,
-    ProjectPageHtml(pckge.name, bigConfig.projects)
-  );
+  Object.keys(bigConfig.projects).forEach((projectName) => {
+    console.log(`testeranto/reports/${projectName}`);
+    if (!fs4.existsSync(`testeranto/reports/${projectName}`)) {
+      fs4.mkdirSync(`testeranto/reports/${projectName}`);
+    }
+    fs4.writeFileSync(
+      `testeranto/reports/${projectName}/config.json`,
+      JSON.stringify(config, null, 2)
+    );
+    fs4.writeFileSync(
+      `${process.cwd()}/testeranto/reports/${projectName}/index.html`,
+      ProjectPageHtml(projectName)
+    );
+    ["node", "web", "pure"].forEach((runtime) => {
+      fs4.writeFileSync(
+        `${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`,
+        TestPageHtml(`${projectName} - ${runtime}`)
+      );
+    });
+  });
   Promise.resolve(
     Promise.all(
       [...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
