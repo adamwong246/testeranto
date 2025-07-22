@@ -15,7 +15,7 @@ const getBaseHtml = (title: string) => `
     if (l.hostname === "localhost") {
       base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto/';
     } else if (l.hostname === "adamwong246.github.io") {
-      base.href = "https://adamwong246.github.io/testeranto/testeranto/";
+      base.href = "https://adamwong246.github.io/testeranto/";
     } else {
       console.error("unsupported hostname");
     }
