@@ -28905,16 +28905,16 @@
     }, [navigate]);
     (0, import_react51.useEffect)(() => {
       const pathParts = window.location.pathname.split("/");
-      const name = pathParts[pathParts.length - 1].replace(".html", "");
+      const name = pathParts[3];
       setProjectName(name);
       const fetchData = async () => {
         try {
           const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-            fetch(`/testeranto/reports/${name}/summary.json`),
-            fetch(`/testeranto/bundles/node/${name}/metafile.json`),
-            fetch(`/testeranto/bundles/web/${name}/metafile.json`),
-            fetch(`/testeranto/bundles/pure/${name}/metafile.json`),
-            fetch(`/testeranto/reports/${name}/config.json`)
+            fetch(`testeranto/reports/${name}/summary.json`),
+            fetch(`testeranto/bundles/node/${name}/metafile.json`),
+            fetch(`testeranto/bundles/web/${name}/metafile.json`),
+            fetch(`testeranto/bundles/pure/${name}/metafile.json`),
+            fetch(`testeranto/reports/${name}/config.json`)
           ]);
           if (!summaryRes.ok)
             throw new Error("Failed to fetch summary");

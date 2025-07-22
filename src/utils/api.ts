@@ -2,8 +2,8 @@ import { ISummary, IBuiltConfig } from "../Types";
 
 export const fetchProjectData = async (projectName: string) => {
   const [summaryRes, configRes] = await Promise.all([
-    fetch(`/testeranto/reports/${projectName}/summary.json`),
-    fetch("/testeranto/reports/config.json"),
+    fetch(`testeranto/reports/${projectName}/summary.json`),
+    fetch("testeranto/reports/config.json"),
   ]);
 
   return {

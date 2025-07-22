@@ -32,6 +32,7 @@ await esbuild.build({
     'src/TestPage.tsx',
     'src/BuildLogsPage.tsx',
     'src/TestReport.tsx',
+    'src/ReportApp.scss',
   ],
   bundle: true,
   format: "iife",

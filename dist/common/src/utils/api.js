@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchBuildLogs = exports.fetchTestData = exports.fetchProjectData = void 0;
 const fetchProjectData = async (projectName) => {
     const [summaryRes, configRes] = await Promise.all([
-        fetch(`/testeranto/reports/${projectName}/summary.json`),
-        fetch("/testeranto/reports/config.json"),
+        fetch(`testeranto/reports/${projectName}/summary.json`),
+        fetch("testeranto/reports/config.json"),
     ]);
     return {
         summary: (await summaryRes.json()),
