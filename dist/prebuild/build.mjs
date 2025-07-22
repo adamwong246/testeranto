@@ -366,7 +366,7 @@ var getBaseHtml = (title) => `
     var l = window.location;
 
     if (l.hostname === "localhost") {
-      base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto/';
+      base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/';
     } else if (l.hostname === "adamwong246.github.io") {
       base.href = "https://adamwong246.github.io/testeranto/";
     } else {
@@ -383,28 +383,37 @@ var ProjectsPageHtml = () => `
 </head>
 <body>
   <div id="root"></div>
+  <div style="position: fixed; bottom: 10px; right: 10px;">
+    made with \u2764\uFE0F and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
+  </div>
 </body>
 </html>
 `;
 var ProjectPageHtml = (projectName) => `
   ${getBaseHtml(`${projectName} - Testeranto`)}
   
-  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
-  <script src="/testeranto/ProjectPage.js"></script>
+  <link rel="stylesheet" href="testeranto/ReportApp.css" />
+  <script src="testeranto/ProjectPage.js"></script>
 </head>
 <body>
   <div id="root"></div>
+  <div style="position: fixed; bottom: 10px; right: 10px;">
+    made with \u2764\uFE0F and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
+  </div>
 </body>
 </html>
 `;
 var TestPageHtml = (testName2) => `
   ${getBaseHtml(`${testName2} - Testeranto`)}
   
-  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
-  <script src="/testeranto/TestPage.js"></script>
+  <link rel="stylesheet" href="testeranto/ReportApp.css" />
+  <script src="testeranto/TestPage.js"></script>
 </head>
 <body>
   <div id="root"></div>
+  <div style="position: fixed; bottom: 10px; right: 10px;">
+    made with \u2764\uFE0F and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
+  </div>
 </body>
 </html>
 `;

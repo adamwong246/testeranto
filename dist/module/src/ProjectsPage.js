@@ -80,7 +80,7 @@ export const ProjectsPage = () => {
                     React.createElement("th", null, "Pure"))),
             React.createElement("tbody", null, projects.map((project) => (React.createElement("tr", { key: project.name },
                 React.createElement("td", null,
-                    React.createElement("a", { href: `/testeranto/reports/${project.name}.html` }, project.name)),
+                    React.createElement("a", { href: `testeranto/reports/${project.name}.html` }, project.name)),
                 React.createElement("td", null,
                     React.createElement("div", { style: { maxHeight: '200px', overflowY: 'auto' } }, summaries[project.name] ? (Object.keys(summaries[project.name]).map(testName => {
                         const runTime = configs[project.name].tests.find((t) => t[0] === testName)[1];

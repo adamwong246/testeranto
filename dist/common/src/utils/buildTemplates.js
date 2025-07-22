@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestPageHtml = exports.ProjectPageHtml = exports.ProjectsPageHtml = exports.AppHtml = void 0;
+exports.TestPageHtml = exports.ProjectPageHtml = exports.ProjectsPageHtml = void 0;
 const getBaseHtml = (title) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,7 @@ const getBaseHtml = (title) => `
     var l = window.location;
 
     if (l.hostname === "localhost") {
-      base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/testeranto/';
+      base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/';
     } else if (l.hostname === "adamwong246.github.io") {
       base.href = "https://adamwong246.github.io/testeranto/";
     } else {
@@ -25,23 +25,6 @@ const getBaseHtml = (title) => `
     document.getElementsByTagName('head')[0].appendChild(base);
   </script>
 `;
-// <link rel="stylesheet" href="/testeranto/static/css/bootstrap.min.css" />
-//   <script src="/testeranto/static/js/react.production.min.js"></script>
-//   <script src="/testeranto/static/js/react-dom.production.min.js"></script>
-//   <script src="/testeranto/static/js/react-router-dom.min.js"></script>
-//   < script src = "/testeranto/static/js/bootstrap.bundle.min.js" > </script>
-const AppHtml = (title = "Testeranto") => `
-  ${getBaseHtml(title)}
-  
-  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
-  <script src="/testeranto/ReportApp.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-</body>
-</html>
-`;
-exports.AppHtml = AppHtml;
 const ProjectsPageHtml = () => `
   ${getBaseHtml("Projects - Testeranto")}
   
@@ -50,6 +33,9 @@ const ProjectsPageHtml = () => `
 </head>
 <body>
   <div id="root"></div>
+  <div style="position: fixed; bottom: 10px; right: 10px;">
+    made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
+  </div>
 </body>
 </html>
 `;
@@ -57,11 +43,14 @@ exports.ProjectsPageHtml = ProjectsPageHtml;
 const ProjectPageHtml = (projectName) => `
   ${getBaseHtml(`${projectName} - Testeranto`)}
   
-  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
-  <script src="/testeranto/ProjectPage.js"></script>
+  <link rel="stylesheet" href="testeranto/ReportApp.css" />
+  <script src="testeranto/ProjectPage.js"></script>
 </head>
 <body>
   <div id="root"></div>
+  <div style="position: fixed; bottom: 10px; right: 10px;">
+    made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
+  </div>
 </body>
 </html>
 `;
@@ -69,11 +58,14 @@ exports.ProjectPageHtml = ProjectPageHtml;
 const TestPageHtml = (testName) => `
   ${getBaseHtml(`${testName} - Testeranto`)}
   
-  <link rel="stylesheet" href="/testeranto/ReportApp.css" />
-  <script src="/testeranto/TestPage.js"></script>
+  <link rel="stylesheet" href="testeranto/ReportApp.css" />
+  <script src="testeranto/TestPage.js"></script>
 </head>
 <body>
   <div id="root"></div>
+  <div style="position: fixed; bottom: 10px; right: 10px;">
+    made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
+  </div>
 </body>
 </html>
 `;

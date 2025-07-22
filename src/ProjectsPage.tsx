@@ -105,7 +105,7 @@ export const ProjectsPage = () => {
           {projects.map((project) => (
             <tr key={project.name}>
               <td>
-                <a href={`/testeranto/reports/${project.name}.html`}>{project.name}</a>
+                <a href={`testeranto/reports/${project.name}.html`}>{project.name}</a>
               </td>
               <td>
                 <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
