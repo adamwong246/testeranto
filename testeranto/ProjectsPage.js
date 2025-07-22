@@ -28168,16 +28168,16 @@
     (0, import_react43.useEffect)(() => {
       const fetchProjects = async () => {
         try {
-          const projectsRes = await fetch(`/testeranto/projects.json`);
+          const projectsRes = await fetch(`testeranto/projects.json`);
           const projectNames = await projectsRes.json();
           const projectsData = await Promise.all(
             projectNames.map(async (name) => {
               const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                fetch(`/testeranto/reports/${name}/summary.json`),
-                fetch(`/testeranto/bundles/node/${name}/metafile.json`),
-                fetch(`/testeranto/bundles/web/${name}/metafile.json`),
-                fetch(`/testeranto/bundles/pure/${name}/metafile.json`),
-                fetch(`/testeranto/reports/${name}/config.json`)
+                fetch(`testeranto/reports/${name}/summary.json`),
+                fetch(`testeranto/bundles/node/${name}/metafile.json`),
+                fetch(`testeranto/bundles/web/${name}/metafile.json`),
+                fetch(`testeranto/bundles/pure/${name}/metafile.json`),
+                fetch(`testeranto/reports/${name}/config.json`)
               ]);
               const [summary, nodeData, webData, pureData, configData] = await Promise.all([
                 summaryRes.json(),
