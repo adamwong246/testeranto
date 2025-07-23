@@ -138,7 +138,7 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
         }
     };
     // Write HTML files
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/projects.html`, (0, buildTemplates_js_1.ProjectsPageHtml)());
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/projects.html`, (0, buildTemplates_js_1.AppHtml)());
     // Create project-specific HTML files
     Object.keys(bigConfig.projects).forEach((projectName) => {
         console.log(`testeranto/reports/${projectName}`);
@@ -146,11 +146,17 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
             fs_1.default.mkdirSync(`testeranto/reports/${projectName}`);
         }
         fs_1.default.writeFileSync(`testeranto/reports/${projectName}/config.json`, JSON.stringify(config, null, 2));
-        fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${projectName}/index.html`, (0, buildTemplates_js_1.ProjectPageHtml)(projectName));
+        // fs.writeFileSync(
+        //   `${process.cwd()}/testeranto/reports/${projectName}/index.html`,
+        //   ProjectPageHtml(projectName)
+        // );
         // Create runtime-specific HTML files
-        ["node", "web", "pure"].forEach((runtime) => {
-            fs_1.default.writeFileSync(`${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`, (0, buildTemplates_js_1.TestPageHtml)(`${projectName} - ${runtime}`));
-        });
+        // ["node", "web", "pure"].forEach((runtime) => {
+        //   // fs.writeFileSync(
+        //   //   `${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`,
+        //   //   TestPageHtml(`${projectName} - ${runtime}`)
+        //   // );
+        // });
     });
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
@@ -185,7 +191,7 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
                 .slice(0, -1)
                 .join(".")}/${runtime}`;
             await fs_1.default.mkdirSync(folder, { recursive: true });
-            fs_1.default.writeFileSync(`${folder}/index.html`, (0, buildTemplates_js_1.TestPageHtml)(testName));
+            // fs.writeFileSync(`${folder}/index.html`, TestPageHtml(testName));
         });
     });
     [

@@ -361,59 +361,28 @@ var getBaseHtml = (title) => `
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script>
-    var base = document.createElement('base');
-    var l = window.location;
-
-    if (l.hostname === "localhost") {
-      base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/';
-    } else if (l.hostname === "adamwong246.github.io") {
-      base.href = "https://adamwong246.github.io/testeranto/";
-    } else {
-      console.error("unsupported hostname");
+    function initApp() {
+      if (window.React && window.ReactDOM && window.App) {
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(App));
+      } else {
+        setTimeout(initApp, 100);
+      }
     }
-    document.getElementsByTagName('head')[0].appendChild(base);
+    window.addEventListener('DOMContentLoaded', initApp);
   </script>
 `;
-var ProjectsPageHtml = () => `
-  ${getBaseHtml("Projects - Testeranto")}
+var AppHtml = () => `
+  ${getBaseHtml("Testeranto")}
   
-  <link rel="stylesheet" href="testeranto/ReportApp.css" />
-  <script src="testeranto/ProjectsPage.js"></script>
+  <link rel="stylesheet" href="ReportApp.css" />
+  <script src="App.js"></script>
 </head>
 <body>
   <div id="root"></div>
-  <div style="position: fixed; bottom: 10px; right: 10px;">
-    made with \u2764\uFE0F and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
-  </div>
-</body>
-</html>
-`;
-var ProjectPageHtml = (projectName) => `
-  ${getBaseHtml(`${projectName} - Testeranto`)}
-  
-  <link rel="stylesheet" href="testeranto/ReportApp.css" />
-  <script src="testeranto/ProjectPage.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-  <div style="position: fixed; bottom: 10px; right: 10px;">
-    made with \u2764\uFE0F and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
-  </div>
-</body>
-</html>
-`;
-var TestPageHtml = (testName2) => `
-  ${getBaseHtml(`${testName2} - Testeranto`)}
-  
-  <link rel="stylesheet" href="testeranto/ReportApp.css" />
-  <script src="testeranto/TestPage.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-  <div style="position: fixed; bottom: 10px; right: 10px;">
-    made with \u2764\uFE0F and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
-  </div>
 </body>
 </html>
 `;
@@ -523,10 +492,7 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
       process.exit();
     }
   };
-  fs4.writeFileSync(
-    `${process.cwd()}/testeranto/projects.html`,
-    ProjectsPageHtml()
-  );
+  fs4.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
   Object.keys(bigConfig.projects).forEach((projectName) => {
     console.log(`testeranto/reports/${projectName}`);
     if (!fs4.existsSync(`testeranto/reports/${projectName}`)) {
@@ -536,16 +502,6 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
       `testeranto/reports/${projectName}/config.json`,
       JSON.stringify(config, null, 2)
     );
-    fs4.writeFileSync(
-      `${process.cwd()}/testeranto/reports/${projectName}/index.html`,
-      ProjectPageHtml(projectName)
-    );
-    ["node", "web", "pure"].forEach((runtime) => {
-      fs4.writeFileSync(
-        `${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`,
-        TestPageHtml(`${projectName} - ${runtime}`)
-      );
-    });
   });
   Promise.resolve(
     Promise.all(
@@ -578,7 +534,6 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
       await fs4.mkdirSync(folder, { recursive: true });
-      fs4.writeFileSync(`${folder}/index.html`, TestPageHtml(testName));
     });
   });
   [

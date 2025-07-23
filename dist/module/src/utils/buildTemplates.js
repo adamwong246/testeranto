@@ -8,59 +8,28 @@ const getBaseHtml = (title) => `
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script>
-    var base = document.createElement('base');
-    var l = window.location;
-
-    if (l.hostname === "localhost") {
-      base.href = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/';
-    } else if (l.hostname === "adamwong246.github.io") {
-      base.href = "https://adamwong246.github.io/testeranto/";
-    } else {
-      console.error("unsupported hostname");
+    function initApp() {
+      if (window.React && window.ReactDOM && window.App) {
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(App));
+      } else {
+        setTimeout(initApp, 100);
+      }
     }
-    document.getElementsByTagName('head')[0].appendChild(base);
+    window.addEventListener('DOMContentLoaded', initApp);
   </script>
 `;
-export const ProjectsPageHtml = () => `
-  ${getBaseHtml("Projects - Testeranto")}
+export const AppHtml = () => `
+  ${getBaseHtml("Testeranto")}
   
-  <link rel="stylesheet" href="testeranto/ReportApp.css" />
-  <script src="testeranto/ProjectsPage.js"></script>
+  <link rel="stylesheet" href="ReportApp.css" />
+  <script src="App.js"></script>
 </head>
 <body>
   <div id="root"></div>
-  <div style="position: fixed; bottom: 10px; right: 10px;">
-    made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
-  </div>
-</body>
-</html>
-`;
-export const ProjectPageHtml = (projectName) => `
-  ${getBaseHtml(`${projectName} - Testeranto`)}
-  
-  <link rel="stylesheet" href="testeranto/ReportApp.css" />
-  <script src="testeranto/ProjectPage.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-  <div style="position: fixed; bottom: 10px; right: 10px;">
-    made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
-  </div>
-</body>
-</html>
-`;
-export const TestPageHtml = (testName) => `
-  ${getBaseHtml(`${testName} - Testeranto`)}
-  
-  <link rel="stylesheet" href="testeranto/ReportApp.css" />
-  <script src="testeranto/TestPage.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-  <div style="position: fixed; bottom: 10px; right: 10px;">
-    made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
-  </div>
 </body>
 </html>
 `;

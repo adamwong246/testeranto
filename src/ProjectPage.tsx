@@ -1,34 +1,12 @@
-import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Tab, Container, Alert, Badge, Table } from 'react-bootstrap';
+import { Navbar, Nav, Tab, Container, Alert, Badge, Table, Button } from 'react-bootstrap';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 
 import { ISummary } from './Types';
 
-import style from "./ReportApp.scss";
+import "./TestReport.scss";
+import { NavBar } from './NavBar';
 
-const useRouter = () => {
-  const [route, setRoute] = useState(() => {
-    const hash = window.location.hash.replace('#', '');
-    return hash || 'tests';
-  });
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      setRoute(hash || 'tests');
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  const navigate = (newRoute: string) => {
-    window.location.hash = newRoute;
-    setRoute(newRoute);
-  };
-
-  return { route, navigate };
-};
 
 export const ProjectPage = () => {
   const [summary, setSummary] = useState<ISummary | null>(null);
@@ -39,30 +17,40 @@ export const ProjectPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [projectName, setProjectName] = useState('');
-  const { route, navigate } = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [route, setRoute] = useState('tests');
 
-  // Set initial tab based on hash
+  // Sync route with hash changes
   useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    if (hash && ['tests', 'node', 'web', 'pure'].includes(hash)) {
+      setRoute(hash);
+    } else {
+      setRoute('tests');
+    }
+  }, [location.hash]);
+
+  const { projectName: name } = useParams();
+
+  useEffect(() => {
+    if (!name) return;
+    setProjectName(name);
+
+    // Set initial tab from hash
     const hash = window.location.hash.replace('#', '');
     if (hash && ['tests', 'node', 'web', 'pure'].includes(hash)) {
-      navigate(hash);
+      setRoute(hash);
     }
-  }, [navigate]);
-
-  useEffect(() => {
-    const pathParts = window.location.pathname.split('/');
-    const name = pathParts[3]; //[pathParts.length - 1].replace('.html', '');
-
-    setProjectName(name);
 
     const fetchData = async () => {
       try {
         const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-          fetch(`testeranto/reports/${name}/summary.json`),
-          fetch(`testeranto/bundles/node/${name}/metafile.json`),
-          fetch(`testeranto/bundles/web/${name}/metafile.json`),
-          fetch(`testeranto/bundles/pure/${name}/metafile.json`),
-          fetch(`testeranto/reports/${name}/config.json`)
+          fetch(`reports/${name}/summary.json`),
+          fetch(`bundles/node/${name}/metafile.json`),
+          fetch(`bundles/web/${name}/metafile.json`),
+          fetch(`bundles/pure/${name}/metafile.json`),
+          fetch(`reports/${name}/config.json`)
         ]);
 
         if (!summaryRes.ok) throw new Error('Failed to fetch summary');
@@ -103,37 +91,46 @@ export const ProjectPage = () => {
 
   return (
     <Container fluid>
-      <Navbar bg="light" expand="lg" className="mb-4">
-        <Container fluid>
-          <Navbar.Brand>Project: {projectName}</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav variant="tabs" activeKey={route} onSelect={(k) => navigate(k || 'tests')} className="me-auto">
-              <Nav.Item>
-                <Nav.Link eventKey="tests">Tests</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="node">Node Build</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="web">Web Build</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="pure">Pure Build</Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <NavBar
+        title={projectName}
+        backLink="/"
+        navItems={[
+          { to: `#tests`, label: 'Tests', active: route === 'tests' },
+          {
+            to: `#node`,
+            label: nodeLogs?.errors?.length ? '❌ Node Build' : '✅ Node Build',
+            active: route === 'node',
+            className: nodeLogs?.errors?.length ? 'text-danger fw-bold' : 'text-success fw-bold'
+          },
+          {
+            to: `#web`,
+            label: webLogs?.errors?.length ? '❌ Web Build' : '✅ Web Build',
+            active: route === 'web',
+            className: webLogs?.errors?.length ? 'text-danger fw-bold' : 'text-success fw-bold'
+          },
+          {
+            to: `#pure`,
+            label: pureLogs?.errors?.length ? '❌ Pure Build' : '✅ Pure Build',
+            active: route === 'pure',
+            className: pureLogs?.errors?.length ? 'text-danger fw-bold' : 'text-success fw-bold'
+          },
+        ]}
+      />
 
-      <Tab.Container activeKey={route} onSelect={(k) => navigate(k || 'tests')}>
+      <Tab.Container activeKey={route} onSelect={(k) => {
+        if (k) {
+          setRoute(k);
+          navigate(`#${k}`, { replace: true });
+        }
+      }}>
         <Tab.Content>
           <Tab.Pane eventKey="tests">
             <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Test</th>
-                  <th>Status</th>
+                  <th>Build logs</th>
+                  <th>BDD Errors</th>
                   <th>Type Errors</th>
                   <th>Lint Errors</th>
                 </tr>
@@ -146,17 +143,32 @@ export const ProjectPage = () => {
                   return (
                     <tr key={testName}>
                       <td>
-                        <a href={`/testeranto/reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runTime}/index.html`}>
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}`}>
                           {testName}
                         </a>
                       </td>
                       <td>
-                        {testData.runTimeErrors === 0 ? '✅ Passed' :
-                          testData.runTimeErrors > 0 ? `⚠️ ${testData.runTimeErrors} errors` :
-                            '❌ Failed'}
+                        <a href={`#/projects/${projectName}#${runTime}`}>
+                          {runTime} {testData.runTimeErrors === 0 ? '✅' : '❌'}
+                        </a>
                       </td>
-                      <td>{testData.typeErrors}</td>
-                      <td>{testData.staticErrors}</td>
+                      <td>
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#results`}>
+                          {testData.runTimeErrors === 0 ? '✅ Passed' :
+                            testData.runTimeErrors > 0 ? `⚠️ ${testData.runTimeErrors} errors` :
+                              '❌ Failed'}
+                        </a>
+                      </td>
+                      <td>
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#types`}>
+                          {testData.typeErrors}
+                        </a>
+                      </td>
+                      <td>
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#lint`}>
+                          {testData.staticErrors}
+                        </a>
+                      </td>
                     </tr>
                   )
                 })}
@@ -164,50 +176,31 @@ export const ProjectPage = () => {
             </Table>
           </Tab.Pane>
           <Tab.Pane eventKey="node">
-            {nodeLogs && (
-              <div className={`alert ${nodeLogs.errors?.length ? 'alert-danger' : 'alert-success'} mb-3`}>
-                {nodeLogs.errors?.length ? (
-                  <>
-                    <h5>❌ Node Build Failed</h5>
-                    <ul>
-                      {nodeLogs.errors.map((err, i) => (
-                        <li key={i}>{err.text || err.message || JSON.stringify(err)}</li>
-                      ))}
-                    </ul>
-                  </>
-                ) : (
-                  <h5>✅ Node Build Succeeded</h5>
-                )}
-              </div>
-            )}
+            <ul>
+              {nodeLogs.errors.map((err, i) => (
+                <li key={i}>{err.text || err.message || JSON.stringify(err)}</li>
+              ))}
+            </ul>
             <pre className="bg-dark text-white p-3">
               {nodeLogs ? JSON.stringify(nodeLogs, null, 2) : 'Loading node build logs...'}
             </pre>
           </Tab.Pane>
           <Tab.Pane eventKey="web">
-            {webLogs && (
-              <div className={`alert ${!webLogs.errors || webLogs.errors.length === 0
-                ? 'alert-success'
-                : 'alert-danger'} mb-3`}>
-                {!webLogs.errors || webLogs.errors.length === 0
-                  ? '✅ Web build succeeded'
-                  : `❌ Web build failed with ${webLogs.errors.length} errors`}
-              </div>
-            )}
+            <ul>
+              {webLogs.errors.map((err, i) => (
+                <li key={i}>{err.text || err.message || JSON.stringify(err)}</li>
+              ))}
+            </ul>
             <pre className="bg-dark text-white p-3">
               {webLogs ? JSON.stringify(webLogs, null, 2) : 'Loading web build logs...'}
             </pre>
           </Tab.Pane>
           <Tab.Pane eventKey="pure">
-            {pureLogs && (
-              <div className={`alert ${!pureLogs.errors || pureLogs.errors.length === 0
-                ? 'alert-success'
-                : 'alert-danger'} mb-3`}>
-                {!pureLogs.errors || pureLogs.errors.length === 0
-                  ? '✅ Pure build succeeded'
-                  : `❌ Pure build failed with ${pureLogs.errors.length} errors`}
-              </div>
-            )}
+            <ul>
+              {pureLogs.errors.map((err, i) => (
+                <li key={i}>{err.text || err.message || JSON.stringify(err)}</li>
+              ))}
+            </ul>
             <pre className="bg-dark text-white p-3">
               {pureLogs ? JSON.stringify(pureLogs, null, 2) : 'Loading pure build logs...'}
             </pre>
@@ -218,9 +211,3 @@ export const ProjectPage = () => {
   );
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-  const elem = document.getElementById("root");
-  if (elem) {
-    ReactDom.createRoot(elem).render(React.createElement(ProjectPage, {}));
-  }
-});

@@ -1,27 +1,28 @@
-import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from 'react';
-import { Navbar, Table, Alert, Badge } from 'react-bootstrap';
-import { Container } from 'react-bootstrap';
+import { Table, Alert, Badge } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { NavBar } from "./NavBar";
 export const ProjectsPage = () => {
     const [projects, setProjects] = useState([]);
     const [summaries, setSummaries] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
     const [configs, setConfigs] = useState({});
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const projectsRes = await fetch(`testeranto/projects.json`);
+                const projectsRes = await fetch(`projects.json`);
                 const projectNames = await projectsRes.json();
                 // const projectNames = Object.keys(config.projects);
                 const projectsData = await Promise.all(projectNames.map(async (name) => {
                     var _a, _b, _c;
                     const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                        fetch(`testeranto/reports/${name}/summary.json`),
-                        fetch(`testeranto/bundles/node/${name}/metafile.json`),
-                        fetch(`testeranto/bundles/web/${name}/metafile.json`),
-                        fetch(`testeranto/bundles/pure/${name}/metafile.json`),
-                        fetch(`testeranto/reports/${name}/config.json`),
+                        fetch(`reports/${name}/summary.json`),
+                        fetch(`bundles/node/${name}/metafile.json`),
+                        fetch(`bundles/web/${name}/metafile.json`),
+                        fetch(`bundles/pure/${name}/metafile.json`),
+                        fetch(`reports/${name}/config.json`),
                     ]);
                     const [summary, nodeData, webData, pureData, configData] = await Promise.all([
                         summaryRes.json(),
@@ -66,10 +67,8 @@ export const ProjectsPage = () => {
             "Error: ",
             error);
     console.log(configs);
-    return (React.createElement("div", null,
-        React.createElement(Navbar, { bg: "light", expand: "lg", className: "mb-4" },
-            React.createElement(Container, { fluid: true },
-                React.createElement(Navbar.Brand, null, "Testeranto Projects"))),
+    return (React.createElement("div", { className: "p-3" },
+        React.createElement(NavBar, { title: "Testeranto", backLink: null }),
         React.createElement(Table, { striped: true, bordered: true, hover: true, responsive: true },
             React.createElement("thead", null,
                 React.createElement("tr", null,
@@ -80,32 +79,26 @@ export const ProjectsPage = () => {
                     React.createElement("th", null, "Pure"))),
             React.createElement("tbody", null, projects.map((project) => (React.createElement("tr", { key: project.name },
                 React.createElement("td", null,
-                    React.createElement("a", { href: `testeranto/reports/${project.name}/index.html` }, project.name)),
+                    React.createElement("a", { href: "#", onClick: (e) => {
+                            e.preventDefault();
+                            navigate(`/projects/${project.name}`);
+                        } }, project.name)),
                 React.createElement("td", null,
                     React.createElement("div", { style: { maxHeight: '200px', overflowY: 'auto' } }, summaries[project.name] ? (Object.keys(summaries[project.name]).map(testName => {
                         const runTime = configs[project.name].tests.find((t) => t[0] === testName)[1];
                         return (React.createElement("div", { key: testName },
-                            React.createElement("a", { href: `testeranto/reports/${project.name}/${testName.split('.').slice(0, -1).join('.')}/${runTime}/index.html` }, testName.split('/').pop())));
+                            React.createElement("a", { href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}` }, testName.split('/').pop())));
                     })) : (React.createElement("div", null, "Loading tests...")))),
                 React.createElement("td", null,
-                    React.createElement("a", { href: `testeranto/reports/${project.name}/index.html#node` },
+                    React.createElement("a", { href: `#/projects/${project.name}#node` },
                         getStatusIcon(project.nodeStatus),
-                        " Node",
                         project.nodeStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))),
                 React.createElement("td", null,
-                    React.createElement("a", { href: `testeranto/reports/${project.name}/index.html#web` },
+                    React.createElement("a", { href: `#/projects/${project.name}#web` },
                         getStatusIcon(project.webStatus),
-                        " Web",
                         project.webStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))),
                 React.createElement("td", null,
-                    React.createElement("a", { href: `testeranto/reports/${project.name}/index.html#pure` },
+                    React.createElement("a", { href: `#/projects/${project.name}#pure` },
                         getStatusIcon(project.pureStatus),
-                        " Pure",
                         project.pureStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))))))))));
 };
-document.addEventListener("DOMContentLoaded", function () {
-    const elem = document.getElementById("root");
-    if (elem) {
-        ReactDom.createRoot(elem).render(React.createElement(ProjectsPage, {}));
-    }
-});

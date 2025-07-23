@@ -1,60 +1,58 @@
-// import ReactDom from "react-dom/client";
-// import React from 'react';
-// import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-// import { ProjectsPage } from './ProjectsPage';
-// import { ProjectPage } from './ProjectPage';
-// import { TestPage } from './TestPage';
-// import { BuildLogsPage } from './BuildLogsPage';
-// import { Footer } from './Footer';
-// import { ISummary, IBuiltConfig } from './Types';
 
-// export const App = () => {
-//   const location = useLocation();
+import React from 'react';
+import ReactDom from "react-dom/client";
+import { HashRouter as Router, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
+import { ProjectsPage } from './ProjectsPage';
+import { ProjectPage } from './ProjectPage';
+import { TestPage } from './TestPage';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { NavBar } from './NavBar';
 
-//   return (
-//     <Router>
-//       <div className="d-flex flex-column min-vh-100">
-//         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-//           <div className="container-fluid">
-//             <Link className="navbar-brand" to="/">
-//               Testeranto
-//             </Link>
-//             <div className="collapse navbar-collapse">
-//               <ul className="navbar-nav me-auto">
-//                 <li className="nav-item">
-//                   <Link className="nav-link" to="/">
-//                     Projects
-//                   </Link>
-//                 </li>
-//               </ul>
-//             </div>
-//           </div>
-//         </nav>
+export const App = () => {
+  return (
+    <Router>
+      <div className="d-flex flex-column min-vh-100" key={window.location.pathname}>
 
-//         <main className="flex-grow-1 p-3">
-//           <Routes>
-//             <Route path="/" element={<ProjectsPage />} />
-//             <Route path="/projects/:projectName" element={<ProjectPage />} />
-//             <Route
-//               path="/projects/:projectName/tests/:testName"
-//               element={<TestPage />}
-//             />
-//             <Route
-//               path="/projects/:projectName/builds/:runtime"
-//               element={<BuildLogsPage />}
-//             />
-//           </Routes>
-//         </main>
+        <main className="flex-grow-1 p-3">
+          <Container fluid>
+            <Routes>
+              <Route path="/" element={<ProjectsPage />} />
+              <Route path="/projects/:projectName" element={<ProjectPage />} />
+              <Route
+                path="/projects/:projectName/tests/*"
+                element={<TestPage />}
+              />
+              <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
+            </Routes>
+          </Container>
+        </main>
 
-//         <Footer />
-//       </div>
-//     </Router>
-//   );
-// };
+        <footer className="bg-light py-3">
+          <Container className="text-end" fluid={true}>
+            made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
+          </Container>
+        </footer>
+      </div>
+    </Router>
+  );
+};
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   const elem = document.getElementById("root");
-//   if (elem) {
-//     ReactDom.createRoot(elem).render(React.createElement(App, {}));
-//   }
-// });
+
+// Export App to global scope
+function initApp() {
+  const rootElement = document.getElementById('root');
+  if (rootElement && window.React && window.ReactDOM) {
+    const root = window.ReactDOM.createRoot(rootElement);
+    root.render(window.React.createElement(App));
+  } else {
+    // Retry if React isn't loaded yet
+    setTimeout(initApp, 100);
+  }
+}
+
+// Export App to global scope
+if (typeof window !== 'undefined') {
+  window.App = App;
+  window.React = React;
+  window.ReactDOM = ReactDom;
+}

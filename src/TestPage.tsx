@@ -1,31 +1,10 @@
 import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Tab, Container, Alert, Badge, Table, Button } from 'react-bootstrap';
+import { Tab, Container, Alert, Badge, Table, Button, Nav } from 'react-bootstrap';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { fetchTestData } from './utils/api';
+import { NavBar } from "./NavBar";
 
-const useRouter = () => {
-  const [route, setRoute] = useState(() => {
-    const hash = window.location.hash.replace('#', '');
-    return hash || 'results';
-  });
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      setRoute(hash || 'results');
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  const navigate = (newRoute: string) => {
-    window.location.hash = newRoute;
-    setRoute(newRoute);
-  };
-
-  return { route, navigate };
-};
 
 type TestData = {
   name: string;
@@ -43,9 +22,21 @@ type TestData = {
 };
 
 export const TestPage = () => {
-  const { route, navigate } = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [route, setRoute] = useState('results');
+
+  // Sync route with hash changes
+  useEffect(() => {
+    const hash = location.hash.replace('#', '');
+    if (hash && ['results', 'logs', 'types', 'lint', 'coverage'].includes(hash)) {
+      setRoute(hash);
+    } else {
+      setRoute('results');
+    }
+  }, [location.hash]);
   const [testName, setTestName] = useState('');
-  const [projectName, setProjectName] = useState('');
+  // const [projectName, setProjectName] = useState('');
   const [testData, setTestData] = useState<TestData | null>(null);
   const [logs, setLogs] = useState<string>('');
   const [typeErrors, setTypeErrors] = useState<string>('');
@@ -53,21 +44,20 @@ export const TestPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const { projectName, '*': splat } = useParams();
+  const pathParts = splat ? splat.split('/') : [];
+  const runtime = pathParts.pop() || '';
+  const testPath = pathParts.join('/');
+  const decodedTestPath = testPath ? decodeURIComponent(testPath) : '';
+
   useEffect(() => {
-    const pathParts = window.location.pathname.split('/');//.slice(0, -1)
-
-    const projectName = pathParts[3];
-    const testPath = pathParts.slice(4, -2).join("/");
-    const runTime = pathParts.slice(-2, -1)[0]
-
-    // const name = pathParts[pathParts.length - 1].replace('.html', '');
-    // const project = pathParts[pathParts.length - 2];
+    if (!projectName || !testPath || !runtime) return;
     setTestName(testPath);
-    setProjectName(projectName);
+    // setProjectName(projectName);
 
     const fetchData = async () => {
       try {
-        const { testData, logs, typeErrors, lintErrors } = await fetchTestData(projectName, testPath, runTime);
+        const { testData, logs, typeErrors, lintErrors } = await fetchTestData(projectName, testPath, runtime);
         setTestData(testData);
         setLogs(logs);
         setTypeErrors(typeErrors);
@@ -87,58 +77,85 @@ export const TestPage = () => {
 
   return (
     <Container fluid={true}>
-      <Navbar bg="light" expand="lg" className="mb-4">
-        <Container fluid={true}>
-          <Navbar.Brand>
-            {projectName} / {testName.split('/').pop()}
-            <Badge bg="secondary" className="ms-2">{projectName}</Badge>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav variant="tabs" activeKey={route} onSelect={(k) => navigate(k || 'results')} className="me-auto">
-              <Nav.Item>
-                <Nav.Link eventKey="results">BDD Results</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="logs">Runtime Logs</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="types">Type Errors</Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="lint">Lint Errors</Nav.Link>
-              </Nav.Item>
-            </Nav>
-            <Nav>
+      <NavBar
+        title={decodedTestPath}
+        backLink={`/projects/${projectName}`}
+        navItems={[
+          {
+            to: `#results`,
+            label: testData?.givens.some(g => g.whens.some(w => w.error) || g.thens.some(t => t.error))
+              ? '❌ BDD'
+              : '✅ BDD',
+            active: route === 'results'
+          },
+          {
+            to: `#logs`,
+            label: logs?.includes('error') || logs?.includes('fail')
+              ? '❌ Logs'
+              : '✅ Logs',
+            active: route === 'logs'
+          },
+          {
+            to: `#types`,
+            label: typeErrors
+              ? `❌ ${typeErrors.split('\n').filter(l => l.includes('error')).length} Type Errors`
+              : '✅ Type check',
+            active: route === 'types'
+          },
+          {
+            to: `#lint`,
+            label: lintErrors
+              ? `❌ ${lintErrors.split('\n').filter(l => l.includes('error')).length} Lint Errors`
+              : '✅ Lint',
+            active: route === 'lint'
+          },
 
-              <Button variant="info" onClick={() => alert("Magic robot activated!")} >🤖</Button>
+        ]}
+        rightContent={
+          <Button
+            variant="info"
+            onClick={() => alert("Magic robot activated!")}
+            className="ms-2"
+          >
+            🤖
+          </Button>
+        }
+      />
 
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
 
-      <Tab.Container activeKey={route} onSelect={(k) => navigate(k || 'results')}>
+      <Tab.Container activeKey={route} onSelect={(k) => {
+        if (k) {
+          setRoute(k);
+          navigate(`#${k}`, { replace: true });
+        }
+      }}>
 
         <Tab.Content className="mt-3">
           <Tab.Pane eventKey="results">
             {testData ? (
-              <div>
+              <div className="test-results">
+                <div className="mb-3">
+
+                </div>
                 {testData.givens.map((given, i) => (
-                  <div key={i} className="mb-4">
-                    <h4>Given: {given.name}</h4>
-                    {given.whens.map((when, j) => (
-                      <div key={`w-${j}`} className={`p-3 mb-2 ${when.error ? 'bg-danger text-white' : 'bg-success text-white'}`}>
-                        <strong>When:</strong> {when.name}
-                        {when.error && <pre className="mt-2">{when.error}</pre>}
-                      </div>
-                    ))}
-                    {given.thens.map((then, k) => (
-                      <div key={`t-${k}`} className={`p-3 mb-2 ${then.error ? 'bg-danger text-white' : 'bg-success text-white'}`}>
-                        <strong>Then:</strong> {then.name}
-                        {then.error && <pre className="mt-2">{then.error}</pre>}
-                      </div>
-                    ))}
+                  <div key={i} className="mb-4 card">
+                    <div className="card-header bg-primary text-white">
+                      <h4>Given: {given.name}</h4>
+                    </div>
+                    <div className="card-body">
+                      {given.whens.map((when, j) => (
+                        <div key={`w-${j}`} className={`p-3 mb-2 ${when.error ? 'bg-danger text-white' : 'bg-success text-white'}`}>
+                          <strong>When:</strong> {when.name}
+                          {when.error && <pre className="mt-2">{when.error}</pre>}
+                        </div>
+                      ))}
+                      {given.thens.map((then, k) => (
+                        <div key={`t-${k}`} className={`p-3 mb-2 ${then.error ? 'bg-danger text-white' : 'bg-success text-white'}`}>
+                          <strong>Then:</strong> {then.name}
+                          {then.error && <pre className="mt-2">{then.error}</pre>}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -167,6 +184,27 @@ export const TestPage = () => {
               <Alert variant="warning">No lint errors found</Alert>
             )}
           </Tab.Pane>
+          <Tab.Pane eventKey="coverage">
+            <div className="coverage-report">
+              <Alert variant="info">
+                Coverage reports coming soon!
+              </Alert>
+              <div className="coverage-stats">
+                <div className="stat-card bg-success text-white">
+                  <h4>85%</h4>
+                  <p>Lines Covered</p>
+                </div>
+                <div className="stat-card bg-warning text-dark">
+                  <h4>72%</h4>
+                  <p>Branches Covered</p>
+                </div>
+                <div className="stat-card bg-info text-white">
+                  <h4>91%</h4>
+                  <p>Functions Covered</p>
+                </div>
+              </div>
+            </div>
+          </Tab.Pane>
         </Tab.Content>
       </Tab.Container>
     </Container>
@@ -175,9 +213,9 @@ export const TestPage = () => {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  const elem = document.getElementById("root");
-  if (elem) {
-    ReactDom.createRoot(elem).render(React.createElement(TestPage, {}));
-  }
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//   const elem = document.getElementById("root");
+//   if (elem) {
+//     ReactDom.createRoot(elem).render(React.createElement(TestPage, {}));
+//   }
+// });

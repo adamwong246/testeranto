@@ -1,8 +1,9 @@
 import ReactDom from "react-dom/client";
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Table, Alert, Badge } from 'react-bootstrap';
+import { Table, Alert, Badge, Container, Navbar } from 'react-bootstrap';
 import { ISummary } from './Types';
-import { Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { NavBar } from "./NavBar";
 
 type ProjectSummary = {
   name: string;
@@ -18,23 +19,24 @@ export const ProjectsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const navigate = useNavigate();
   const [configs, setConfigs] = useState<Record<string, object>>({});
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const projectsRes = await fetch(`testeranto/projects.json`);
+        const projectsRes = await fetch(`projects.json`);
         const projectNames = await projectsRes.json();
 
         // const projectNames = Object.keys(config.projects);
         const projectsData = await Promise.all(
           projectNames.map(async (name) => {
             const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-              fetch(`testeranto/reports/${name}/summary.json`),
-              fetch(`testeranto/bundles/node/${name}/metafile.json`),
-              fetch(`testeranto/bundles/web/${name}/metafile.json`),
-              fetch(`testeranto/bundles/pure/${name}/metafile.json`),
-              fetch(`testeranto/reports/${name}/config.json`),
+              fetch(`reports/${name}/summary.json`),
+              fetch(`bundles/node/${name}/metafile.json`),
+              fetch(`bundles/web/${name}/metafile.json`),
+              fetch(`bundles/pure/${name}/metafile.json`),
+              fetch(`reports/${name}/config.json`),
 
             ]);
 
@@ -85,12 +87,8 @@ export const ProjectsPage = () => {
   console.log(configs);
 
   return (
-    <div>
-      <Navbar bg="light" expand="lg" className="mb-4">
-        <Container fluid={true} >
-          <Navbar.Brand>Testeranto Projects</Navbar.Brand>
-        </Container>
-      </Navbar>
+    <div className="p-3">
+      <NavBar title="Testeranto" backLink={null} />
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -105,7 +103,10 @@ export const ProjectsPage = () => {
           {projects.map((project) => (
             <tr key={project.name}>
               <td>
-                <a href={`testeranto/reports/${project.name}/index.html`}>{project.name}</a>
+                <a href="#" onClick={(e) => {
+                  e.preventDefault();
+                  navigate(`/projects/${project.name}`);
+                }}>{project.name}</a>
               </td>
               <td>
                 <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
@@ -115,7 +116,7 @@ export const ProjectsPage = () => {
 
                       return (
                         <div key={testName}>
-                          <a href={`testeranto/reports/${project.name}/${testName.split('.').slice(0, -1).join('.')}/${runTime}/index.html`}>
+                          <a href={`#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`}>
                             {testName.split('/').pop()}
                           </a>
                         </div>
@@ -127,24 +128,24 @@ export const ProjectsPage = () => {
                 </div>
               </td>
               <td>
-                <a href={`testeranto/reports/${project.name}/index.html#node`}>
-                  {getStatusIcon(project.nodeStatus)} Node
+                <a href={`#/projects/${project.name}#node`}>
+                  {getStatusIcon(project.nodeStatus)}
                   {project.nodeStatus === 'failed' && (
                     <Badge bg="danger" className="ms-2">Failed</Badge>
                   )}
                 </a>
               </td>
               <td>
-                <a href={`testeranto/reports/${project.name}/index.html#web`}>
-                  {getStatusIcon(project.webStatus)} Web
+                <a href={`#/projects/${project.name}#web`}>
+                  {getStatusIcon(project.webStatus)}
                   {project.webStatus === 'failed' && (
                     <Badge bg="danger" className="ms-2">Failed</Badge>
                   )}
                 </a>
               </td>
               <td>
-                <a href={`testeranto/reports/${project.name}/index.html#pure`}>
-                  {getStatusIcon(project.pureStatus)} Pure
+                <a href={`#/projects/${project.name}#pure`}>
+                  {getStatusIcon(project.pureStatus)}
                   {project.pureStatus === 'failed' && (
                     <Badge bg="danger" className="ms-2">Failed</Badge>
                   )}
@@ -157,11 +158,3 @@ export const ProjectsPage = () => {
     </div>
   );
 };
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  const elem = document.getElementById("root");
-  if (elem) {
-    ReactDom.createRoot(elem).render(React.createElement(ProjectsPage, {}));
-  }
-});

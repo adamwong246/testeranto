@@ -2,8 +2,8 @@ import { ISummary, IBuiltConfig } from "../Types";
 
 export const fetchProjectData = async (projectName: string) => {
   const [summaryRes, configRes] = await Promise.all([
-    fetch(`testeranto/reports/${projectName}/summary.json`),
-    fetch("testeranto/reports/config.json"),
+    fetch(`reports/${projectName}/summary.json`),
+    fetch("reports/config.json"),
   ]);
 
   return {
@@ -17,7 +17,10 @@ export const fetchTestData = async (
   filepath: string,
   runTime: string
 ) => {
-  const basePath = `/testeranto/reports/${projectName}/${filepath}/${runTime}`;
+  const basePath = `reports/${projectName}/${filepath
+    .split(".")
+    .slice(0, -1)
+    .join(".")}/${runTime}`;
 
   const [testRes, logsRes, typeRes, lintRes] = await Promise.all([
     fetch(`${basePath}/tests.json`),
@@ -37,7 +40,7 @@ export const fetchTestData = async (
 
 export const fetchBuildLogs = async (projectName: string, runtime: string) => {
   const res = await fetch(
-    `/testeranto/reports/${projectName}/src/lib/${projectName}.${testName}/${runtime}/metafile.json`
+    `reports/${projectName}/src/lib/${projectName}.${testName}/${runtime}/metafile.json`
   );
   return await res.json();
 };

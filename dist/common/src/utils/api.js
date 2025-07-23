@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fetchBuildLogs = exports.fetchTestData = exports.fetchProjectData = void 0;
 const fetchProjectData = async (projectName) => {
     const [summaryRes, configRes] = await Promise.all([
-        fetch(`testeranto/reports/${projectName}/summary.json`),
-        fetch("testeranto/reports/config.json"),
+        fetch(`reports/${projectName}/summary.json`),
+        fetch("reports/config.json"),
     ]);
     return {
         summary: (await summaryRes.json()),
@@ -13,7 +13,10 @@ const fetchProjectData = async (projectName) => {
 };
 exports.fetchProjectData = fetchProjectData;
 const fetchTestData = async (projectName, filepath, runTime) => {
-    const basePath = `/testeranto/reports/${projectName}/${filepath}/${runTime}`;
+    const basePath = `reports/${projectName}/${filepath
+        .split(".")
+        .slice(0, -1)
+        .join(".")}/${runTime}`;
     const [testRes, logsRes, typeRes, lintRes] = await Promise.all([
         fetch(`${basePath}/tests.json`),
         fetch(`${basePath}/logs.txt`),
@@ -30,7 +33,7 @@ const fetchTestData = async (projectName, filepath, runTime) => {
 };
 exports.fetchTestData = fetchTestData;
 const fetchBuildLogs = async (projectName, runtime) => {
-    const res = await fetch(`/testeranto/reports/${projectName}/src/lib/${projectName}.${testName}/${runtime}/metafile.json`);
+    const res = await fetch(`reports/${projectName}/src/lib/${projectName}.${testName}/${runtime}/metafile.json`);
     return await res.json();
 };
 exports.fetchBuildLogs = fetchBuildLogs;

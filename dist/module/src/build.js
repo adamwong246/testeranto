@@ -10,7 +10,10 @@ import esbuildWebConfiger from "./esbuildConfigs/web.js";
 import esbuildImportConfiger from "./esbuildConfigs/pure.js";
 import webHtmlFrame from "./web.html.js";
 import { getRunnables } from "./utils.js";
-import { TestPageHtml, ProjectPageHtml, ProjectsPageHtml, } from "./utils/buildTemplates.js";
+import { 
+// TestPageHtml,
+// ProjectPageHtml,
+AppHtml, } from "./utils/buildTemplates.js";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -100,7 +103,7 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
         }
     };
     // Write HTML files
-    fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, ProjectsPageHtml());
+    fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
     // Create project-specific HTML files
     Object.keys(bigConfig.projects).forEach((projectName) => {
         console.log(`testeranto/reports/${projectName}`);
@@ -108,11 +111,17 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
             fs.mkdirSync(`testeranto/reports/${projectName}`);
         }
         fs.writeFileSync(`testeranto/reports/${projectName}/config.json`, JSON.stringify(config, null, 2));
-        fs.writeFileSync(`${process.cwd()}/testeranto/reports/${projectName}/index.html`, ProjectPageHtml(projectName));
+        // fs.writeFileSync(
+        //   `${process.cwd()}/testeranto/reports/${projectName}/index.html`,
+        //   ProjectPageHtml(projectName)
+        // );
         // Create runtime-specific HTML files
-        ["node", "web", "pure"].forEach((runtime) => {
-            fs.writeFileSync(`${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`, TestPageHtml(`${projectName} - ${runtime}`));
-        });
+        // ["node", "web", "pure"].forEach((runtime) => {
+        //   // fs.writeFileSync(
+        //   //   `${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`,
+        //   //   TestPageHtml(`${projectName} - ${runtime}`)
+        //   // );
+        // });
     });
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
@@ -147,7 +156,7 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
                 .slice(0, -1)
                 .join(".")}/${runtime}`;
             await fs.mkdirSync(folder, { recursive: true });
-            fs.writeFileSync(`${folder}/index.html`, TestPageHtml(testName));
+            // fs.writeFileSync(`${folder}/index.html`, TestPageHtml(testName));
         });
     });
     [
