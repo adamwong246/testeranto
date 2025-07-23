@@ -12,7 +12,6 @@ exports.default = async () => {
         `testeranto/bundles/node`,
         `testeranto/bundles/web`,
         `testeranto/bundles/pure`,
-        `testeranto/reports`,
         `testeranto/reports/`,
         `testeranto/features/`,
         `testeranto/externalTests/`,

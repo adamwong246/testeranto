@@ -1,5 +1,5 @@
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
-stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/236f462e-9c19-482b-ba15-8755adc9ff18"}
+stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/ea71a8df-ab43-425d-b7af-5e8d7a8928d1"}
 stderr > Given error 1: ReferenceError: TestClassBuilder is not defined
     at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:572:32)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:496:29

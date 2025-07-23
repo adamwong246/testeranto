@@ -43,6 +43,13 @@ export const TestPage = () => {
   const [lintErrors, setLintErrors] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [testsExist, setTestsExist] = useState<boolean>(true);
+  const [errorCounts, setErrorCounts] = useState({
+    typeErrors: 0,
+    staticErrors: 0,
+    runTimeErrors: 0
+  });
+  const [summary, setSummary] = useState<any>(null);
 
   const { projectName, '*': splat } = useParams();
   const pathParts = splat ? splat.split('/') : [];
@@ -57,13 +64,36 @@ export const TestPage = () => {
 
     const fetchData = async () => {
       try {
-        const { testData, logs, typeErrors, lintErrors } = await fetchTestData(projectName, testPath, runtime);
-        setTestData(testData);
-        setLogs(logs);
-        setTypeErrors(typeErrors);
-        setLintErrors(lintErrors);
+        // First fetch test data
+        const testResponse = await fetchTestData(projectName, testPath, runtime);
+        setTestData(testResponse.testData);
+        setTestsExist(!!testResponse.testData);
+        setLogs(testResponse.logs);
+        setTypeErrors(testResponse.typeErrors);
+        setLintErrors(testResponse.lintErrors);
+
+        // Then fetch summary.json
+        try {
+          const summaryResponse = await fetch(`reports/${projectName}/summary.json`);
+          if (!summaryResponse.ok) throw new Error('Failed to fetch summary');
+          const allSummaries = await summaryResponse.json();
+          const testSummary = allSummaries[testPath];
+
+          console.log("testSummary", testSummary)
+          if (testSummary) {
+            setSummary(testSummary);
+            setErrorCounts({
+              typeErrors: testSummary.typeErrors || 0,
+              staticErrors: testSummary.staticErrors || 0,
+              runTimeErrors: testSummary.runTimeErrors || 0
+            });
+          }
+        } catch (err) {
+          console.error('Failed to load summary:', err);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
+        setTestsExist(false);
       } finally {
         setLoading(false);
       }
@@ -83,30 +113,30 @@ export const TestPage = () => {
         navItems={[
           {
             to: `#results`,
-            label: testData?.givens.some(g => g.whens.some(w => w.error) || g.thens.some(t => t.error))
+            label: !testsExist
               ? '❌ BDD'
-              : '✅ BDD',
+              : testData?.givens.some(g => g.whens.some(w => w.error) || g.thens.some(t => t.error))
+                ? '❌ BDD'
+                : '✅ BDD',
             active: route === 'results'
           },
           {
             to: `#logs`,
-            label: logs?.includes('error') || logs?.includes('fail')
-              ? '❌ Logs'
-              : '✅ Logs',
+            label: `Runtime logs`,
             active: route === 'logs'
           },
           {
             to: `#types`,
-            label: typeErrors
-              ? `❌ ${typeErrors.split('\n').filter(l => l.includes('error')).length} Type Errors`
-              : '✅ Type check',
+            label: errorCounts.typeErrors > 0
+              ? `tsc (❌ * ${errorCounts.typeErrors})`
+              : 'tsc ✅ ',
             active: route === 'types'
           },
           {
             to: `#lint`,
-            label: lintErrors
-              ? `❌ ${lintErrors.split('\n').filter(l => l.includes('error')).length} Lint Errors`
-              : '✅ Lint',
+            label: errorCounts.staticErrors > 0
+              ? `eslint (❌ *${errorCounts.staticErrors}) `
+              : 'eslint ✅',
             active: route === 'lint'
           },
 
@@ -114,7 +144,18 @@ export const TestPage = () => {
         rightContent={
           <Button
             variant="info"
-            onClick={() => alert("Magic robot activated!")}
+            onClick={async () => {
+              try {
+                const promptPath = `testeranto/reports/${projectName}/${testPath.split('.').slice(0, -1).join('.')}/${runtime}/prompt.txt`;
+                const messagePath = `testeranto/reports/${projectName}/${testPath.split('.').slice(0, -1).join('.')}/${runtime}/message.txt`;
+                const command = `aider --load ${promptPath} --message-file ${messagePath}`;
+                await navigator.clipboard.writeText(command);
+                alert("Copied aider command to clipboard!");
+              } catch (err) {
+                alert("Failed to copy command to clipboard");
+                console.error("Copy failed:", err);
+              }
+            }}
             className="ms-2"
           >
             🤖
@@ -132,7 +173,27 @@ export const TestPage = () => {
 
         <Tab.Content className="mt-3">
           <Tab.Pane eventKey="results">
-            {testData ? (
+            {!testsExist ? (
+              <Alert variant="danger" className="mt-3">
+                <h4>Tests did not run to completion</h4>
+                <p>The test results file (tests.json) was not found or could not be loaded.</p>
+                <div className="mt-3">
+                  <Button
+                    variant="outline-light"
+                    onClick={() => setRoute('logs')}
+                    className="me-2"
+                  >
+                    View Runtime Logs
+                  </Button>
+                  <Button
+                    variant="outline-light"
+                    onClick={() => navigate(`/projects/${projectName}#${runtime}`)}
+                  >
+                    View Build Logs
+                  </Button>
+                </div>
+              </Alert>
+            ) : testData ? (
               <div className="test-results">
                 <div className="mb-3">
 

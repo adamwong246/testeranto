@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Alert, Badge } from 'react-bootstrap';
+import { Table, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { NavBar } from "./NavBar";
 export const ProjectsPage = () => {
@@ -16,7 +16,7 @@ export const ProjectsPage = () => {
                 const projectNames = await projectsRes.json();
                 // const projectNames = Object.keys(config.projects);
                 const projectsData = await Promise.all(projectNames.map(async (name) => {
-                    var _a, _b, _c;
+                    var _a, _b, _c, _d, _e, _f;
                     const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
                         fetch(`reports/${name}/summary.json`),
                         fetch(`bundles/node/${name}/metafile.json`),
@@ -36,9 +36,9 @@ export const ProjectsPage = () => {
                     return {
                         name,
                         testCount: Object.keys(summary).length,
-                        nodeStatus: ((_a = nodeData.errors) === null || _a === void 0 ? void 0 : _a.length) ? 'failed' : 'success',
-                        webStatus: ((_b = webData.errors) === null || _b === void 0 ? void 0 : _b.length) ? 'failed' : 'success',
-                        pureStatus: ((_c = pureData.errors) === null || _c === void 0 ? void 0 : _c.length) ? 'failed' : 'success',
+                        nodeStatus: ((_a = nodeData.errors) === null || _a === void 0 ? void 0 : _a.length) ? 'failed' : ((_b = nodeData.warnings) === null || _b === void 0 ? void 0 : _b.length) ? 'warning' : 'success',
+                        webStatus: ((_c = webData.errors) === null || _c === void 0 ? void 0 : _c.length) ? 'failed' : ((_d = webData.warnings) === null || _d === void 0 ? void 0 : _d.length) ? 'warning' : 'success',
+                        pureStatus: ((_e = pureData.errors) === null || _e === void 0 ? void 0 : _e.length) ? 'failed' : ((_f = pureData.warnings) === null || _f === void 0 ? void 0 : _f.length) ? 'warning' : 'success',
                         config: Object.keys(configData).length,
                     };
                 }));
@@ -57,6 +57,7 @@ export const ProjectsPage = () => {
         switch (status) {
             case 'success': return '✅';
             case 'failed': return '❌';
+            case 'warning': return '⚠️';
             default: return '❓';
         }
     };
@@ -85,20 +86,25 @@ export const ProjectsPage = () => {
                         } }, project.name)),
                 React.createElement("td", null,
                     React.createElement("div", { style: { maxHeight: '200px', overflowY: 'auto' } }, summaries[project.name] ? (Object.keys(summaries[project.name]).map(testName => {
+                        const testData = summaries[project.name][testName];
                         const runTime = configs[project.name].tests.find((t) => t[0] === testName)[1];
+                        const hasRuntimeErrors = testData.runTimeErrors > 0;
+                        const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
                         return (React.createElement("div", { key: testName },
-                            React.createElement("a", { href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}` }, testName.split('/').pop())));
+                            React.createElement("a", { href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}` },
+                                hasRuntimeErrors ? '❌ ' : hasStaticErrors ? '⚠️ ' : '',
+                                testName.split('/').pop())));
                     })) : (React.createElement("div", null, "Loading tests...")))),
                 React.createElement("td", null,
                     React.createElement("a", { href: `#/projects/${project.name}#node` },
                         getStatusIcon(project.nodeStatus),
-                        project.nodeStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))),
+                        " Node build logs")),
                 React.createElement("td", null,
                     React.createElement("a", { href: `#/projects/${project.name}#web` },
                         getStatusIcon(project.webStatus),
-                        project.webStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))),
+                        " Web build logs")),
                 React.createElement("td", null,
                     React.createElement("a", { href: `#/projects/${project.name}#pure` },
                         getStatusIcon(project.pureStatus),
-                        project.pureStatus === 'failed' && (React.createElement(Badge, { bg: "danger", className: "ms-2" }, "Failed")))))))))));
+                        " Pure build logs")))))))));
 };

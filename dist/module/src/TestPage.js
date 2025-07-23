@@ -25,6 +25,13 @@ export const TestPage = () => {
     const [lintErrors, setLintErrors] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [testsExist, setTestsExist] = useState(true);
+    const [errorCounts, setErrorCounts] = useState({
+        typeErrors: 0,
+        staticErrors: 0,
+        runTimeErrors: 0
+    });
+    const [summary, setSummary] = useState(null);
     const { projectName, '*': splat } = useParams();
     const pathParts = splat ? splat.split('/') : [];
     const runtime = pathParts.pop() || '';
@@ -37,14 +44,37 @@ export const TestPage = () => {
         // setProjectName(projectName);
         const fetchData = async () => {
             try {
-                const { testData, logs, typeErrors, lintErrors } = await fetchTestData(projectName, testPath, runtime);
-                setTestData(testData);
-                setLogs(logs);
-                setTypeErrors(typeErrors);
-                setLintErrors(lintErrors);
+                // First fetch test data
+                const testResponse = await fetchTestData(projectName, testPath, runtime);
+                setTestData(testResponse.testData);
+                setTestsExist(!!testResponse.testData);
+                setLogs(testResponse.logs);
+                setTypeErrors(testResponse.typeErrors);
+                setLintErrors(testResponse.lintErrors);
+                // Then fetch summary.json
+                try {
+                    const summaryResponse = await fetch(`reports/${projectName}/summary.json`);
+                    if (!summaryResponse.ok)
+                        throw new Error('Failed to fetch summary');
+                    const allSummaries = await summaryResponse.json();
+                    const testSummary = allSummaries[testPath];
+                    console.log("testSummary", testSummary);
+                    if (testSummary) {
+                        setSummary(testSummary);
+                        setErrorCounts({
+                            typeErrors: testSummary.typeErrors || 0,
+                            staticErrors: testSummary.staticErrors || 0,
+                            runTimeErrors: testSummary.runTimeErrors || 0
+                        });
+                    }
+                }
+                catch (err) {
+                    console.error('Failed to load summary:', err);
+                }
             }
             catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
+                setTestsExist(false);
             }
             finally {
                 setLoading(false);
@@ -62,33 +92,45 @@ export const TestPage = () => {
         React.createElement(NavBar, { title: decodedTestPath, backLink: `/projects/${projectName}`, navItems: [
                 {
                     to: `#results`,
-                    label: (testData === null || testData === void 0 ? void 0 : testData.givens.some(g => g.whens.some(w => w.error) || g.thens.some(t => t.error)))
+                    label: !testsExist
                         ? '❌ BDD'
-                        : '✅ BDD',
+                        : (testData === null || testData === void 0 ? void 0 : testData.givens.some(g => g.whens.some(w => w.error) || g.thens.some(t => t.error)))
+                            ? '❌ BDD'
+                            : '✅ BDD',
                     active: route === 'results'
                 },
                 {
                     to: `#logs`,
-                    label: (logs === null || logs === void 0 ? void 0 : logs.includes('error')) || (logs === null || logs === void 0 ? void 0 : logs.includes('fail'))
-                        ? '❌ Logs'
-                        : '✅ Logs',
+                    label: `Runtime logs`,
                     active: route === 'logs'
                 },
                 {
                     to: `#types`,
-                    label: typeErrors
-                        ? `❌ ${typeErrors.split('\n').filter(l => l.includes('error')).length} Type Errors`
-                        : '✅ Type check',
+                    label: errorCounts.typeErrors > 0
+                        ? `tsc (❌ * ${errorCounts.typeErrors})`
+                        : 'tsc ✅ ',
                     active: route === 'types'
                 },
                 {
                     to: `#lint`,
-                    label: lintErrors
-                        ? `❌ ${lintErrors.split('\n').filter(l => l.includes('error')).length} Lint Errors`
-                        : '✅ Lint',
+                    label: errorCounts.staticErrors > 0
+                        ? `eslint (❌ *${errorCounts.staticErrors}) `
+                        : 'eslint ✅',
                     active: route === 'lint'
                 },
-            ], rightContent: React.createElement(Button, { variant: "info", onClick: () => alert("Magic robot activated!"), className: "ms-2" }, "\uD83E\uDD16") }),
+            ], rightContent: React.createElement(Button, { variant: "info", onClick: async () => {
+                    try {
+                        const promptPath = `testeranto/reports/${projectName}/${testPath.split('.').slice(0, -1).join('.')}/${runtime}/prompt.txt`;
+                        const messagePath = `testeranto/reports/${projectName}/${testPath.split('.').slice(0, -1).join('.')}/${runtime}/message.txt`;
+                        const command = `aider --load ${promptPath} --message-file ${messagePath}`;
+                        await navigator.clipboard.writeText(command);
+                        alert("Copied aider command to clipboard!");
+                    }
+                    catch (err) {
+                        alert("Failed to copy command to clipboard");
+                        console.error("Copy failed:", err);
+                    }
+                }, className: "ms-2" }, "\uD83E\uDD16") }),
         React.createElement(Tab.Container, { activeKey: route, onSelect: (k) => {
                 if (k) {
                     setRoute(k);
@@ -96,7 +138,12 @@ export const TestPage = () => {
                 }
             } },
             React.createElement(Tab.Content, { className: "mt-3" },
-                React.createElement(Tab.Pane, { eventKey: "results" }, testData ? (React.createElement("div", { className: "test-results" },
+                React.createElement(Tab.Pane, { eventKey: "results" }, !testsExist ? (React.createElement(Alert, { variant: "danger", className: "mt-3" },
+                    React.createElement("h4", null, "Tests did not run to completion"),
+                    React.createElement("p", null, "The test results file (tests.json) was not found or could not be loaded."),
+                    React.createElement("div", { className: "mt-3" },
+                        React.createElement(Button, { variant: "outline-light", onClick: () => setRoute('logs'), className: "me-2" }, "View Runtime Logs"),
+                        React.createElement(Button, { variant: "outline-light", onClick: () => navigate(`/projects/${projectName}#${runtime}`) }, "View Build Logs")))) : testData ? (React.createElement("div", { className: "test-results" },
                     React.createElement("div", { className: "mb-3" }),
                     testData.givens.map((given, i) => (React.createElement("div", { key: i, className: "mb-4 card" },
                         React.createElement("div", { className: "card-header bg-primary text-white" },

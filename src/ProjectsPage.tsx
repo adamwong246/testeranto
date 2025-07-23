@@ -54,9 +54,9 @@ export const ProjectsPage = () => {
             return {
               name,
               testCount: Object.keys(summary).length,
-              nodeStatus: nodeData.errors?.length ? 'failed' : 'success',
-              webStatus: webData.errors?.length ? 'failed' : 'success',
-              pureStatus: pureData.errors?.length ? 'failed' : 'success',
+              nodeStatus: nodeData.errors?.length ? 'failed' : nodeData.warnings?.length ? 'warning' : 'success',
+              webStatus: webData.errors?.length ? 'failed' : webData.warnings?.length ? 'warning' : 'success',
+              pureStatus: pureData.errors?.length ? 'failed' : pureData.warnings?.length ? 'warning' : 'success',
               config: Object.keys(configData).length,
             };
           })
@@ -77,6 +77,7 @@ export const ProjectsPage = () => {
     switch (status) {
       case 'success': return '✅';
       case 'failed': return '❌';
+      case 'warning': return '⚠️';
       default: return '❓';
     }
   };
@@ -112,11 +113,17 @@ export const ProjectsPage = () => {
                 <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                   {summaries[project.name] ? (
                     Object.keys(summaries[project.name]).map(testName => {
+                      const testData = summaries[project.name][testName];
                       const runTime = configs[project.name].tests.find((t) => t[0] === testName)[1];
+                      const hasRuntimeErrors = testData.runTimeErrors > 0;
+                      const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
 
                       return (
                         <div key={testName}>
-                          <a href={`#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`}>
+                          <a
+                            href={`#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`}
+                          >
+                            {hasRuntimeErrors ? '❌ ' : hasStaticErrors ? '⚠️ ' : ''}
                             {testName.split('/').pop()}
                           </a>
                         </div>
@@ -128,27 +135,24 @@ export const ProjectsPage = () => {
                 </div>
               </td>
               <td>
-                <a href={`#/projects/${project.name}#node`}>
-                  {getStatusIcon(project.nodeStatus)}
-                  {project.nodeStatus === 'failed' && (
-                    <Badge bg="danger" className="ms-2">Failed</Badge>
-                  )}
+                <a
+                  href={`#/projects/${project.name}#node`}
+                >
+                  {getStatusIcon(project.nodeStatus)} Node build logs
                 </a>
               </td>
               <td>
-                <a href={`#/projects/${project.name}#web`}>
-                  {getStatusIcon(project.webStatus)}
-                  {project.webStatus === 'failed' && (
-                    <Badge bg="danger" className="ms-2">Failed</Badge>
-                  )}
+                <a
+                  href={`#/projects/${project.name}#web`}
+                >
+                  {getStatusIcon(project.webStatus)} Web build logs
                 </a>
               </td>
               <td>
-                <a href={`#/projects/${project.name}#pure`}>
-                  {getStatusIcon(project.pureStatus)}
-                  {project.pureStatus === 'failed' && (
-                    <Badge bg="danger" className="ms-2">Failed</Badge>
-                  )}
+                <a
+                  href={`#/projects/${project.name}#pure`}
+                >
+                  {getStatusIcon(project.pureStatus)} Pure build logs
                 </a>
               </td>
             </tr>
