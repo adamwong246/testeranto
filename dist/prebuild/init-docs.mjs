@@ -17,23 +17,16 @@ var Init_default = async () => {
     try {
       fs.mkdirSync(`${process.cwd()}/${f}`);
     } catch (e) {
+      console.error(e);
     }
   });
   fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/Project.js`,
-    `testeranto/Project.js`
+    `node_modules/testeranto/dist/prebuild/App.js`,
+    `testeranto/App.js`
   );
   fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/Project.css`,
-    `testeranto/Project.css`
-  );
-  fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/TestReport.js`,
-    `testeranto/TestReport.js`
-  );
-  fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/TestReport.css`,
-    `testeranto/TestReport.css`
+    `node_modules/testeranto/dist/prebuild/App.css`,
+    `testeranto/App.css`
   );
 };
 

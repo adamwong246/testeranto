@@ -16,7 +16,7 @@ export default async () => {
     try {
       fs.mkdirSync(`${process.cwd()}/${f}`);
     } catch (e) {
-      // console.error(e);
+      console.error(e);
     }
   });
 
@@ -26,8 +26,8 @@ export default async () => {
   );
 
   fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/App.js`,
-    `testeranto/App.js`
+    `node_modules/testeranto/dist/prebuild/App.css`,
+    `testeranto/App.css`
   );
 
   // fs.copyFileSync(

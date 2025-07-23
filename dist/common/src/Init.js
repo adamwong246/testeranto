@@ -21,19 +21,29 @@ exports.default = async () => {
             fs_1.default.mkdirSync(`${process.cwd()}/${f}`);
         }
         catch (e) {
-            // console.error(e);
+            console.error(e);
         }
     });
-    fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/Project.js`, `testeranto/Project.js`);
+    fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/App.js`, `testeranto/App.js`);
+    fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/App.css`, `testeranto/App.css`);
     // fs.copyFileSync(
     //   `node_modules/testeranto/dist/prebuild/ReportClient.js`,
     //   `testeranto/ReportClient.js`
     // );
-    fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/Project.css`, `testeranto/Project.css`);
+    // fs.copyFileSync(
+    //   `node_modules/testeranto/dist/prebuild/Project.css`,
+    //   `testeranto/Project.css`
+    // );
     // fs.copyFileSync(
     //   `node_modules/testeranto/dist/prebuild/ReportClient.css`,
     //   `testeranto/ReportClient.css`
     // );
-    fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/TestReport.js`, `testeranto/TestReport.js`);
-    fs_1.default.copyFileSync(`node_modules/testeranto/dist/prebuild/TestReport.css`, `testeranto/TestReport.css`);
+    // fs.copyFileSync(
+    //   `node_modules/testeranto/dist/prebuild/TestReport.js`,
+    //   `testeranto/TestReport.js`
+    // );
+    // fs.copyFileSync(
+    //   `node_modules/testeranto/dist/prebuild/TestReport.css`,
+    //   `testeranto/TestReport.css`
+    // );
 };
