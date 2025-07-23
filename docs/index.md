@@ -35,7 +35,7 @@ async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
-  testInterface: Partial<ITestInterface<I>>,
+  testAdapter: Partial<ITestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<I, O, M>>
 ```
@@ -241,7 +241,7 @@ import {
 } from "testeranto/src/CoreTypes";
 
 //  Note the type parameter. This is important!
-export const testInterface: ITestInterface<
+export const testAdapter: ITestInterface<
   I extends Ibdd_in,
 > = {
   beforeEach: async (subject, i) => {
@@ -440,7 +440,7 @@ type M = {
   };
 };
 
-const testInterface: ITestInterface<
+const testAdapter: ITestInterface<
   I extends Ibdd_in,
 > = {
   beforeEach: async (subject, i) => {
