@@ -62,6 +62,6 @@ const config = {
             webPlugins: [],
         },
     },
-    reportDomain: "https://adamwong246.github.io/testeranto/testeranto",
+    reportDomain: "https://adamwong246.github.io/testeranto",
 };
 export default config;

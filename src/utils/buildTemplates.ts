@@ -8,8 +8,6 @@ const getBaseHtml = (title: string) => `
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script>
     function initApp() {
       if (window.React && window.ReactDOM && window.App) {
@@ -34,4 +32,3 @@ export const AppHtml = () => `
 </body>
 </html>
 `;
-
