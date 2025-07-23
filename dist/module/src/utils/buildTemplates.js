@@ -23,7 +23,7 @@ const getBaseHtml = (title) => `
 export const AppHtml = () => `
   ${getBaseHtml("Testeranto")}
   
-  <link rel="stylesheet" href="ReportApp.css" />
+  <link rel="stylesheet" href="App.css" />
   <script src="App.js"></script>
 </head>
 <body>
