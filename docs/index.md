@@ -175,7 +175,6 @@ The Implementation provides the concrete operations that bring specifications to
 - `givens`: Initial test states/setup
 - `whens`: Actions that change state
 - `thens`: Assertions and validations
-- `checks`: Additional verification points
 
 ```ts
 import {
@@ -227,11 +226,7 @@ export const implementation: ITestImplementation<
       assert.equal(rectangle.circumference(), circumference);
       return rectangle;
     },
-  },
-
-  checks: {
-    Default: () => new Rectangle(2, 2),
-  },
+  }
 };
 ```
 
@@ -506,11 +501,7 @@ const testImplementation: ITestImplementation<
       assert.equal(rectangle.circumference(), circumference);
       return rectangle;
     },
-  },
-
-  checks: {
-    Default: () => new Rectangle(2, 2),
-  },
+  }
 };
 
 const testSpecification: ITestSpecification<
