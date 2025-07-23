@@ -1,4 +1,7 @@
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (43,56): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (34,3): A 'super' call must be the first statement in the constructor to refer to 'super' or 'this' when a derived class contains initialized properties, parameter properties, or private identifiers.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (43,56): Type 'number[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (47,5): 'super' must be called before accessing 'this' in the constructor of a derived class.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (48,5): 'super' must be called before accessing 'this' in the constructor of a derived class.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (3,10): Module '"./baseBuilder.test.mock"' has no exported member 'TestBaseBuilder'.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (7,3): Cannot find name 'BaseBuilder'.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (8,3): Cannot find name 'BaseBuilder'.
@@ -80,15 +83,16 @@
   Type 'TestStore' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (14,26): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (17,26): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (32,9): Expected 8 arguments, but got 9.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (45,9): Expected 8 arguments, but got 9.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (58,9): Expected 8 arguments, but got 9.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (71,9): Expected 8 arguments, but got 9.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (84,9): Expected 8 arguments, but got 9.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (113,32): Cannot find name 'TestClassBuilder'.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (184,30): Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (7,10): '"../classBuilder"' has no exported member named 'TestClassBuilder'. Did you mean 'ClassBuilder'?
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (28,9): Argument of type 'typeof MockSuite' is not assignable to parameter of type 'ISuiteKlasser<I, any>'.
+  Type 'typeof MockSuite' provides no match for the signature '(name: string, index: number, givens: IGivens<I>): BaseSuite<I, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (47,9): Expected 8 arguments, but got 9.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (60,9): Expected 8 arguments, but got 9.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (73,9): Expected 8 arguments, but got 9.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (86,9): Expected 8 arguments, but got 9.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (187,30): Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
   Type 'Promise<ClassBuilder<any, any, any>>' is missing the following properties from type 'ClassBuilder<any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 12 more.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (186,23): Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (189,23): Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (60,7): Expected 2 arguments, but got 3.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.types.ts (23,17): Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/mock.ts (45,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.

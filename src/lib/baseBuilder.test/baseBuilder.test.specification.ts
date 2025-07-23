@@ -15,7 +15,12 @@ export const specification: ITestSpecification<I, O> = (
         testInitialization: Given.Default(
           ["BaseBuilder should initialize correctly"],
           [],
-          [Then.initializedProperly()]
+          [
+            Then.initializedProperly(),
+            Then.artifactsTracked(),
+            Then.jobsCreated(),
+            Then.specsGenerated()
+          ]
         ),
         testSpecsGeneration: Given.Default(
           ["BaseBuilder should generate specs from test specification"],

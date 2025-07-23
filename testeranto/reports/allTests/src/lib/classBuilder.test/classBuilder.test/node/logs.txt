@@ -1,24 +1,86 @@
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
-stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/ea71a8df-ab43-425d-b7af-5e8d7a8928d1"}
-stderr > Given error 1: ReferenceError: TestClassBuilder is not defined
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:572:32)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:496:29
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:668:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:636:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:491:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:423:34)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:556:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:22:19
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:50:29)
-goodbye node with caught error ReferenceError: TestClassBuilder is not defined
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:572:32)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:496:29
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs:668:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:636:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:491:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:423:34)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:556:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:22:19
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-4NYHHJ7H.mjs:50:29)
+stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/a0b649ec-108e-41f0-b1b8-c0ec4f61137a"}
+stdout > Creating default test builder instance
+stdout > Builder created: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+stdout > Checking builder initialization: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+stderr > goodbye node with failures 0

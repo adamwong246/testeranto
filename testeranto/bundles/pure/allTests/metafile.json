@@ -360,7 +360,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-        "bytes": 802,
+        "bytes": 930,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -376,7 +376,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 1917,
+        "bytes": 2001,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -402,7 +402,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 3194,
+        "bytes": 3478,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -524,13 +524,13 @@
             "bytesInOutput": 862
           },
           "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-            "bytesInOutput": 650
+            "bytesInOutput": 778
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 927
+            "bytesInOutput": 977
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 2595
+            "bytesInOutput": 2885
           },
           "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
             "bytesInOutput": 373
@@ -539,7 +539,7 @@
             "bytesInOutput": 131
           }
         },
-        "bytes": 25213
+        "bytes": 25681
       }
     }
   }

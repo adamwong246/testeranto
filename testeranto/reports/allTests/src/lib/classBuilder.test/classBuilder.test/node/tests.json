@@ -1,0 +1,24 @@
+{
+  "name": "Basic ClassBuilder Functionality",
+  "givens": [
+    {
+      "key": "initialization",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "initializedProperly: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "ClassBuilder should initialize with default values"
+      ]
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "ClassBuilder should initialize with default values"
+  ]
+}

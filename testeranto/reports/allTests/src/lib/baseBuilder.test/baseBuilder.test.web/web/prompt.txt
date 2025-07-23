@@ -15,6 +15,11 @@
 /add src/lib/baseBuilder.test/baseBuilder.test.adapter.ts
 /add src/lib/baseBuilder.test/baseBuilder.test.web.ts
 
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.web/web/tests.json
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.web/web/logs.txt
 /read testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.web/web/type_errors.txt

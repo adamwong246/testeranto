@@ -176,7 +176,12 @@ var specification = (Suite, Given, When, Then) => {
         testInitialization: Given.Default(
           ["BaseBuilder should initialize correctly"],
           [],
-          [Then.initializedProperly()]
+          [
+            Then.initializedProperly(),
+            Then.artifactsTracked(),
+            Then.jobsCreated(),
+            Then.specsGenerated()
+          ]
         ),
         testSpecsGeneration: Given.Default(
           ["BaseBuilder should generate specs from test specification"],
@@ -196,7 +201,9 @@ var specification = (Suite, Given, When, Then) => {
 
 // src/lib/baseBuilder.test/baseBuilder.test.mock.ts
 var MockBaseBuilder = class extends BaseBuilder {
-  constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, testResourceRequirement = { ports: [] }, testSpecification = () => []) {
+  constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, testResourceRequirement = { ports: [0] }, testSpecification = () => []) {
+    this.artifacts = [];
+    this.testJobs = [];
     super(
       input,
       suitesOverrides,
@@ -239,16 +246,26 @@ var implementation = {
   },
   givens: {
     Default: () => {
-      return new MockBaseBuilder(
+      const builder = new MockBaseBuilder(
         {},
+        // input
         {},
+        // suitesOverrides
         {},
+        // givenOverrides 
         {},
+        // whenOverrides
         {},
-        {},
-        { ports: [] },
+        // thenOverrides
+        { ports: [0] },
+        // testResourceRequirement
         () => []
+        // testSpecification
       );
+      builder.artifacts = [];
+      builder.testJobs = [];
+      builder.specs = [];
+      return builder;
     },
     WithCustomInput: (input) => {
       return new MockBaseBuilder(

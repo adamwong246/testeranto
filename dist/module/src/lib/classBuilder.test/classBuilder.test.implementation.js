@@ -8,21 +8,20 @@ export const implementation = {
     },
     givens: {
         Default: () => {
-            return new mock(implementation, // Use the current implementation
+            console.log('Creating default test builder instance');
+            const builder = new mock(implementation, // Use the current implementation
             specification, // Use the current specification
             {}, // Default input
-            MockSuite, 
-            // class {}, // suiteKlasser
-            class {
+            MockSuite, class {
             }, // givenKlasser
             class {
             }, // whenKlasser
             class {
             }, // thenKlasser
-            class {
-            }, // checkKlasser
             { ports: [] } // Default resource requirements
             );
+            console.log('Builder created:', builder);
+            return builder;
         },
         WithCustomInput: (input) => {
             return new mock(implementation, specification, input, class {
@@ -80,8 +79,10 @@ export const implementation = {
     },
     thens: {
         initializedProperly: () => (builder) => {
-            if (!(builder instanceof TestClassBuilder)) {
-                throw new Error("Builder was not properly initialized");
+            var _a;
+            console.log('Checking builder initialization:', builder);
+            if (!(builder instanceof mock)) {
+                throw new Error(`Builder was not properly initialized. Expected mock instance but got ${(_a = builder === null || builder === void 0 ? void 0 : builder.constructor) === null || _a === void 0 ? void 0 : _a.name}`);
             }
             return builder;
         },

@@ -4,51 +4,54 @@
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (17,5): Type '() => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '(...Ig: any) => () => BaseBuilder<any, any, any, any, any, any>'.
   Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '() => BaseBuilder<any, any, any, any, any, any>'.
     Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' provides no match for the signature '(): BaseBuilder<any, any, any, any, any, any>'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (26,9): Expected 1-7 arguments, but got 8.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (29,5): Type '(input: any) => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '(...Ig: any) => () => BaseBuilder<any, any, any, any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (24,11): Type 'number[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (35,5): Type '(input: any) => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '(...Ig: any) => () => BaseBuilder<any, any, any, any, any, any>'.
   Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '() => BaseBuilder<any, any, any, any, any, any>'.
     Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' provides no match for the signature '(): BaseBuilder<any, any, any, any, any, any>'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (38,9): Expected 1-7 arguments, but got 8.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (41,5): Type '(requirements: ITTestResourceRequest) => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '(...Ig: any) => () => BaseBuilder<any, any, any, any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (44,9): Expected 1-7 arguments, but got 8.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (47,5): Type '(requirements: ITTestResourceRequest) => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '(...Ig: any) => () => BaseBuilder<any, any, any, any, any, any>'.
   Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' is not assignable to type '() => BaseBuilder<any, any, any, any, any, any>'.
     Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}, {}>' provides no match for the signature '(): BaseBuilder<any, any, any, any, any, any>'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (50,9): Expected 1-7 arguments, but got 8.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (56,5): Type '(artifact: Promise<any>) => (builder: TestSubject) => TestSubject' is not assignable to type '(...Iw: any) => (zel: BaseBuilder<any, any, any, any, any, any>, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: any) => any>'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (56,9): Expected 1-7 arguments, but got 8.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (62,5): Type '(artifact: Promise<any>) => (builder: TestSubject) => TestSubject' is not assignable to type '(...Iw: any) => (zel: BaseBuilder<any, any, any, any, any, any>, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: any) => any>'.
   Call signature return types '(builder: TestSubject) => TestSubject' and '(zel: BaseBuilder<any, any, any, any, any, any>, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: any) => any>' are incompatible.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' is missing the following properties from type 'Promise<(store: any) => any>': then, catch, finally, [Symbol.toStringTag]
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (60,5): Type '(jobs: ITestJob[]) => (builder: TestSubject) => TestSubject' is not assignable to type '(...Iw: any) => (zel: BaseBuilder<any, any, any, any, any, any>, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: any) => any>'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (66,5): Type '(jobs: ITestJob[]) => (builder: TestSubject) => TestSubject' is not assignable to type '(...Iw: any) => (zel: BaseBuilder<any, any, any, any, any, any>, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: any) => any>'.
   Call signature return types '(builder: TestSubject) => TestSubject' and '(zel: BaseBuilder<any, any, any, any, any, any>, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: any) => any>' are incompatible.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' is missing the following properties from type 'Promise<(store: any) => any>': then, catch, finally, [Symbol.toStringTag]
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (60,25): Cannot find name 'ITestJob'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (67,32): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (66,25): Cannot find name 'ITestJob'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (73,32): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (73,27): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (79,27): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (79,24): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (85,24): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (85,29): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (91,29): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (91,36): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
-  Type 'TestSubject' is not assignable to type '(store: any) => any'.
-    Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (97,38): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (97,36): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (103,38): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (109,37): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (109,38): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (115,37): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (43,56): Type 'never[]' is not assignable to type 'number'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.specification.ts (31,7): Expected 2 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (121,37): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+  Type 'TestSubject' is not assignable to type '(store: any) => any'.
+    Type 'MockBaseBuilder<any, any, any, any, any, any, {}>' provides no match for the signature '(store: any): any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (34,3): A 'super' call must be the first statement in the constructor to refer to 'super' or 'this' when a derived class contains initialized properties, parameter properties, or private identifiers.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (43,56): Type 'number[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (47,5): 'super' must be called before accessing 'this' in the constructor of a derived class.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (48,5): 'super' must be called before accessing 'this' in the constructor of a derived class.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.specification.ts (36,7): Expected 2 arguments, but got 3.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (3,10): Module '"./baseBuilder.test.mock"' has no exported member 'TestBaseBuilder'.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (7,3): Cannot find name 'BaseBuilder'.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (8,3): Cannot find name 'BaseBuilder'.

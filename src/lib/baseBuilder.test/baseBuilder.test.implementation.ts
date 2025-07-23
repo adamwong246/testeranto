@@ -15,16 +15,22 @@ export const implementation: ITestImplementation<I, O, {}> = {
 
   givens: {
     Default: () => {
-      return new MockBaseBuilder(
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        { ports: [] },
-        () => []
+      const builder = new MockBaseBuilder(
+        {}, // input
+        {}, // suitesOverrides
+        {}, // givenOverrides 
+        {}, // whenOverrides
+        {}, // thenOverrides
+        { ports: [0] }, // testResourceRequirement
+        () => [] // testSpecification
       );
+      
+      // Initialize required arrays
+      builder.artifacts = [];
+      builder.testJobs = [];
+      builder.specs = [];
+      
+      return builder;
     },
     WithCustomInput: (input: any) => {
       return new MockBaseBuilder(

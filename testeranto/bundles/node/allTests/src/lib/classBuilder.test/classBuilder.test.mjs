@@ -448,7 +448,8 @@ var implementation = {
   },
   givens: {
     Default: () => {
-      return new TestClassBuilderMock(
+      console.log("Creating default test builder instance");
+      const builder = new TestClassBuilderMock(
         implementation,
         // Use the current implementation
         specification,
@@ -456,7 +457,6 @@ var implementation = {
         {},
         // Default input
         MockSuite,
-        // class {}, // suiteKlasser
         class {
         },
         // givenKlasser
@@ -466,12 +466,11 @@ var implementation = {
         class {
         },
         // thenKlasser
-        class {
-        },
-        // checkKlasser
         { ports: [] }
         // Default resource requirements
       );
+      console.log("Builder created:", builder);
+      return builder;
     },
     WithCustomInput: (input) => {
       return new TestClassBuilderMock(
@@ -569,8 +568,9 @@ var implementation = {
   },
   thens: {
     initializedProperly: () => (builder) => {
-      if (!(builder instanceof TestClassBuilder)) {
-        throw new Error("Builder was not properly initialized");
+      console.log("Checking builder initialization:", builder);
+      if (!(builder instanceof TestClassBuilderMock)) {
+        throw new Error(`Builder was not properly initialized. Expected mock instance but got ${builder?.constructor?.name}`);
       }
       return builder;
     },

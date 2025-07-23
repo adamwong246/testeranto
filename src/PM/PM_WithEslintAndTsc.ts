@@ -210,6 +210,11 @@ ${addableFiles
   })
   .join("\n")}
 
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
 /read ${testPaths}
 /read ${logPath}
 /read ${typePath}
@@ -219,7 +224,9 @@ ${addableFiles
 
     fs.writeFileSync(
       messagePath,
-      `Fix the failing tests described in ${testPaths} and ${logPath}. DO NOT refactor beyond what is necessary. Always prefer minimal changes, focusing mostly on keeping the BDD tests passing`
+      `
+Fix the failing tests described in ${testPaths} and ${logPath}. Focus on the bdd tests before all other concerns. You may add any debugging you think is necessary.
+`
     );
 
     this.summary[

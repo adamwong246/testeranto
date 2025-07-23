@@ -4,6 +4,7 @@ import { PassThrough } from "stream";
 
 import { ITestImplementation, ITestSpecification } from "../../CoreTypes";
 import mock from "./mock";
+import { TestClassBuilder } from "../classBuilder";
 
 import { I, O, M } from "./classBuilder.test.types";
 
@@ -19,18 +20,19 @@ export const implementation: ITestImplementation<I, O, M> = {
 
   givens: {
     Default: () => {
-      return new mock(
+      console.log('Creating default test builder instance');
+      const builder = new mock(
         implementation, // Use the current implementation
         specification, // Use the current specification
         {}, // Default input
         MockSuite,
-        // class {}, // suiteKlasser
         class {}, // givenKlasser
         class {}, // whenKlasser
         class {}, // thenKlasser
-        class {}, // checkKlasser
         { ports: [] } // Default resource requirements
       );
+      console.log('Builder created:', builder);
+      return builder;
     },
     WithCustomInput: (input: any) => {
       return new mock(
@@ -110,8 +112,9 @@ export const implementation: ITestImplementation<I, O, M> = {
 
   thens: {
     initializedProperly: () => (builder: any) => {
-      if (!(builder instanceof TestClassBuilder)) {
-        throw new Error("Builder was not properly initialized");
+      console.log('Checking builder initialization:', builder);
+      if (!(builder instanceof mock)) {
+        throw new Error(`Builder was not properly initialized. Expected mock instance but got ${builder?.constructor?.name}`);
       }
       return builder;
     },

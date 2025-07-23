@@ -531,6 +531,11 @@ ${addableFiles.map((x) => {
           return `/add ${x}`;
         }).join("\n")}
 
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
 /read ${testPaths}
 /read ${logPath}
 /read ${typePath}
@@ -539,7 +544,9 @@ ${addableFiles.map((x) => {
       );
       fs2.writeFileSync(
         messagePath,
-        `Fix the failing tests described in ${testPaths} and ${logPath}. DO NOT refactor beyond what is necessary. Always prefer minimal changes, focusing mostly on keeping the BDD tests passing`
+        `
+Fix the failing tests described in ${testPaths} and ${logPath}. Focus on the bdd tests before all other concerns. You may add any debugging you think is necessary.
+`
       );
       this.summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${this.name}/reports/${platform}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
       this.checkForShutdown();

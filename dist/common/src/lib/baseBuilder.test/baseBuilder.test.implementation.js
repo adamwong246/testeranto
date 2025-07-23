@@ -9,7 +9,19 @@ exports.implementation = {
     },
     givens: {
         Default: () => {
-            return new baseBuilder_test_mock_1.MockBaseBuilder({}, {}, {}, {}, {}, {}, { ports: [] }, () => []);
+            const builder = new baseBuilder_test_mock_1.MockBaseBuilder({}, // input
+            {}, // suitesOverrides
+            {}, // givenOverrides 
+            {}, // whenOverrides
+            {}, // thenOverrides
+            { ports: [0] }, // testResourceRequirement
+            () => [] // testSpecification
+            );
+            // Initialize required arrays
+            builder.artifacts = [];
+            builder.testJobs = [];
+            builder.specs = [];
+            return builder;
         },
         WithCustomInput: (input) => {
             return new baseBuilder_test_mock_1.MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] }, () => []);

@@ -1,26 +1,26 @@
 {
   "src/lib/classBuilder.test/classBuilder.test.ts": {
-    "typeErrors": 76,
+    "typeErrors": 79,
     "staticErrors": 1,
-    "runTimeErrors": -1,
+    "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/classBuilder.test/classBuilder.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
-    "typeErrors": 43,
+    "typeErrors": 46,
     "staticErrors": 5,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/baseBuilder.test/baseBuilder.test.node/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
-    "typeErrors": 43,
+    "typeErrors": 46,
     "staticErrors": 6,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/pure/src/lib/baseBuilder.test/baseBuilder.test.pure/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
-    "typeErrors": 43,
+    "typeErrors": 46,
     "staticErrors": 5,
     "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/web/src/lib/baseBuilder.test/baseBuilder.test.web/prompt.txt",

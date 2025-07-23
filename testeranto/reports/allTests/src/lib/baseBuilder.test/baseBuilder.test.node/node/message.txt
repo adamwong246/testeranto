@@ -1,1 +1,2 @@
-Fix the failing tests described in testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/tests.json and testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/logs.txt. DO NOT refactor beyond what is necessary. Always prefer minimal changes, focusing mostly on keeping the BDD tests passing
+
+Fix the failing tests described in testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/tests.json and testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node/logs.txt. Focus on the bdd tests before all other concerns. You may add any debugging you think is necessary.
