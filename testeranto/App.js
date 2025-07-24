@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React88 = require_react();
+          var React87 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React88.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React87.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React88.Children.forEach(props.children, function(child) {
+                  React87.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React88.Component().refs;
+          var emptyRefsObject = new React87.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React88 = require_react();
+          var React87 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React88.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React87.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -28616,6 +28616,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       })
     });
   });
+  TransitionWrapper.displayName = "TransitionWrapper";
   var TransitionWrapper_default = TransitionWrapper;
 
   // node_modules/react-bootstrap/esm/Collapse.js
@@ -28628,8 +28629,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const offset = `offset${dimension[0].toUpperCase()}${dimension.slice(1)}`;
     const value = elem[offset];
     const margins = MARGINS[dimension];
-    return value + // @ts-ignore
-    parseInt(css_default(elem, margins[0]), 10) + // @ts-ignore
+    return value + // @ts-expect-error TODO
+    parseInt(css_default(elem, margins[0]), 10) + // @ts-expect-error TODO
     parseInt(css_default(elem, margins[1]), 10);
   }
   var collapseStyles = {
@@ -28695,6 +28696,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       })
     });
   });
+  Collapse.displayName = "Collapse";
   var Collapse_default = Collapse;
 
   // node_modules/react-bootstrap/esm/Alert.js
@@ -28731,11 +28733,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React19 = __toESM(require_react());
   var import_classnames2 = __toESM(require_classnames());
   var import_jsx_runtime4 = __toESM(require_jsx_runtime());
-  var divWithClassName_default = (className) => /* @__PURE__ */ React19.forwardRef((p, ref) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", {
-    ...p,
-    ref,
-    className: (0, import_classnames2.default)(p.className, className)
-  }));
+  var divWithClassName_default = (className) => (
+    // eslint-disable-next-line react/display-name
+    /* @__PURE__ */ React19.forwardRef((p, ref) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", {
+      ...p,
+      ref,
+      className: (0, import_classnames2.default)(p.className, className)
+    }))
+  );
 
   // node_modules/react-bootstrap/esm/AlertHeading.js
   var import_jsx_runtime5 = __toESM(require_jsx_runtime());
@@ -29561,7 +29566,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   function $b5e257d569688ac6$var$useLegacySSRSafeId(defaultId) {
     let ctx = (0, import_react30.useContext)($b5e257d569688ac6$var$SSRContext);
-    if (ctx === $b5e257d569688ac6$var$defaultContext && !$b5e257d569688ac6$var$canUseDOM)
+    if (ctx === $b5e257d569688ac6$var$defaultContext && !$b5e257d569688ac6$var$canUseDOM && true)
       console.warn("When server rendering, you must wrap your application in an <SSRProvider> to ensure consistent ids are generated between the client and server.");
     let counter = $b5e257d569688ac6$var$useCounter(!!defaultId);
     let prefix = ctx === $b5e257d569688ac6$var$defaultContext && false ? "react-aria" : `react-aria${ctx.prefix}`;
@@ -30710,7 +30715,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React53 = __toESM(require_react());
   "use client";
   var ModalContext = /* @__PURE__ */ React53.createContext({
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     onHide() {
     }
   });
@@ -30802,6 +30806,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       })]
     });
   });
+  AbstractModalHeader.displayName = "AbstractModalHeader";
   var AbstractModalHeader_default = AbstractModalHeader;
 
   // node_modules/react-bootstrap/esm/ModalHeader.js
@@ -31735,9 +31740,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-bootstrap/esm/Tab.js
   var import_prop_types4 = __toESM(require_prop_types());
 
-  // node_modules/react-bootstrap/esm/TabContainer.js
-  var React76 = __toESM(require_react());
-
   // node_modules/@restart/ui/esm/Tabs.js
   var React75 = __toESM(require_react());
   var import_react55 = __toESM(require_react());
@@ -31920,11 +31922,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabContainer_default = TabContainer;
 
   // node_modules/react-bootstrap/esm/TabContent.js
-  var React77 = __toESM(require_react());
+  var React76 = __toESM(require_react());
   var import_classnames41 = __toESM(require_classnames());
   var import_jsx_runtime60 = __toESM(require_jsx_runtime());
   "use client";
-  var TabContent = /* @__PURE__ */ React77.forwardRef(({
+  var TabContent = /* @__PURE__ */ React76.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
@@ -31942,10 +31944,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/TabPane.js
   var import_classnames42 = __toESM(require_classnames());
-  var React78 = __toESM(require_react());
+  var React77 = __toESM(require_react());
   var import_jsx_runtime61 = __toESM(require_jsx_runtime());
   "use client";
-  var TabPane = /* @__PURE__ */ React78.forwardRef(({
+  var TabPane = /* @__PURE__ */ React77.forwardRef(({
     bsPrefix,
     transition,
     ...props
@@ -32029,10 +32031,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Table.js
   var import_classnames43 = __toESM(require_classnames());
-  var React79 = __toESM(require_react());
+  var React78 = __toESM(require_react());
   var import_jsx_runtime62 = __toESM(require_jsx_runtime());
   "use client";
-  var Table = /* @__PURE__ */ React79.forwardRef(({
+  var Table = /* @__PURE__ */ React78.forwardRef(({
     bsPrefix,
     className,
     striped,
@@ -32063,6 +32065,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     return table;
   });
+  Table.displayName = "Table";
   var Table_default = Table;
 
   // src/NavBar.tsx
