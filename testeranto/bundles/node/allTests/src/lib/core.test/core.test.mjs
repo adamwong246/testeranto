@@ -3,7 +3,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-FFBRDUBH.mjs";
+} from "../../../chunk-IDCUSTSM.mjs";
 
 // src/PM/pure.ts
 var PM_Pure = class extends PM {
@@ -164,7 +164,7 @@ var PureTesteranto = class extends TesterantoCore {
         failed: true,
         fails: 1,
         artifacts: [],
-        logPromise: Promise.resolve(),
+        // logPromise: Promise.resolve(),
         features: []
       };
     }
@@ -179,7 +179,7 @@ var PureTesteranto = class extends TesterantoCore {
         failed: true,
         fails: 1,
         artifacts: [],
-        logPromise: Promise.resolve(),
+        // logPromise: Promise.resolve(),
         features: []
       };
     }
@@ -303,13 +303,18 @@ var MockCore = class extends TesterantoCore {
       throw new Error("testImplementation is required");
     }
     if (!testSpecification) {
-      console.warn("[WARN] testSpecification is null/undefined - tests may fail");
+      console.warn(
+        "[WARN] testSpecification is null/undefined - tests may fail"
+      );
     }
     console.log("[DEBUG] MockCore constructor called with:");
     console.log("- input:", JSON.stringify(input, null, 2));
     console.log("- testSpecification keys:", Object.keys(testSpecification));
     console.log("- testImplementation keys:", Object.keys(testImplementation));
-    console.log("- testResourceRequirement:", JSON.stringify(testResourceRequirement));
+    console.log(
+      "- testResourceRequirement:",
+      JSON.stringify(testResourceRequirement)
+    );
     console.log("- testAdapter keys:", Object.keys(testAdapter3));
     const requiredMethods = ["suites", "givens", "whens", "thens"];
     requiredMethods.forEach((method) => {
@@ -318,8 +323,6 @@ var MockCore = class extends TesterantoCore {
       }
     });
     console.log("[DEBUG] Validation passed, calling super...");
-    this.testResourceRequirement = testResourceRequirement;
-    this.testAdapter = testAdapter3;
     super(
       input,
       testSpecification,
@@ -337,7 +340,7 @@ var MockCore = class extends TesterantoCore {
       failed: false,
       fails: 0,
       artifacts: [],
-      logPromise: Promise.resolve(),
+      // logPromise: Promise.resolve(),
       features: []
     };
   }

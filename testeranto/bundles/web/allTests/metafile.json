@@ -181,7 +181,7 @@
         "format": "esm"
       },
       "src/lib/index.ts": {
-        "bytes": 3565,
+        "bytes": 3568,
         "imports": [
           {
             "path": "../PM/pure.js",
@@ -299,7 +299,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 4847,
+        "bytes": 4874,
         "imports": [
           {
             "path": "stream",
@@ -673,7 +673,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 1985,
+        "bytes": 1988,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -846,7 +846,7 @@
       "testeranto/bundles/web/allTests/src/lib/BaseSuite.test/web.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/allTests/chunk-TU3MJSSI.mjs",
+            "path": "testeranto/bundles/web/allTests/chunk-46E6YGGN.mjs",
             "kind": "import-statement"
           }
         ],
@@ -870,7 +870,7 @@
       "testeranto/bundles/web/allTests/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/allTests/chunk-TU3MJSSI.mjs",
+            "path": "testeranto/bundles/web/allTests/chunk-46E6YGGN.mjs",
             "kind": "import-statement"
           }
         ],
@@ -883,7 +883,7 @@
             "bytesInOutput": 708
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 903
+            "bytesInOutput": 906
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
             "bytesInOutput": 3065
@@ -895,9 +895,9 @@
             "bytesInOutput": 129
           }
         },
-        "bytes": 5868
+        "bytes": 5871
       },
-      "testeranto/bundles/web/allTests/chunk-TU3MJSSI.mjs": {
+      "testeranto/bundles/web/allTests/chunk-46E6YGGN.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -927,7 +927,7 @@
             "bytesInOutput": 3952
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2619
+            "bytesInOutput": 2341
           },
           "src/lib/classBuilder.ts": {
             "bytesInOutput": 1850
@@ -939,7 +939,7 @@
             "bytesInOutput": 1706
           }
         },
-        "bytes": 21747
+        "bytes": 21469
       }
     }
   }

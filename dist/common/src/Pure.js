@@ -26,7 +26,7 @@ class PureTesteranto extends core_js_1.default {
                 failed: true,
                 fails: 1,
                 artifacts: [],
-                logPromise: Promise.resolve(),
+                // logPromise: Promise.resolve(),
                 features: [],
             };
         }
@@ -42,7 +42,7 @@ class PureTesteranto extends core_js_1.default {
                 failed: true,
                 fails: 1,
                 artifacts: [],
-                logPromise: Promise.resolve(),
+                // logPromise: Promise.resolve(),
                 features: [],
             };
         }

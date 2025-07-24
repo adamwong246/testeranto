@@ -1,13 +1,13 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   MockSuite
-} from "../../../chunk-4ONUZRZ4.mjs";
+} from "../../../chunk-H2IBV7SY.mjs";
 import {
   Node_default
-} from "../../../chunk-NQEP7SN4.mjs";
+} from "../../../chunk-ZHOULXPN.mjs";
 import {
   BaseSuite
-} from "../../../chunk-FFBRDUBH.mjs";
+} from "../../../chunk-IDCUSTSM.mjs";
 
 // src/lib/BaseSuite.test/test.ts
 var specification = (Suite, Given, When, Then) => [

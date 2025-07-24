@@ -31,17 +31,19 @@ class BaseBuilder {
                 },
                 runner,
                 receiveTestResourceConfig: async function (puppetMaster) {
-                    const logFilePath = "logs.txt";
-                    const access = await puppetMaster.createWriteStream(logFilePath);
+                    // const logFilePath = "logs.txt";
+                    // const access: number = await puppetMaster.createWriteStream(
+                    //   logFilePath
+                    // );
                     // deprecated?
                     const tLog = async (...l) => {
                         //
                     };
                     const suiteDone = await runner(puppetMaster, tLog);
-                    const logPromise = new Promise(async (res) => {
-                        await puppetMaster.end(access);
-                        res(true);
-                    });
+                    // const logPromise = new Promise(async (res) => {
+                    //   await puppetMaster.end(access);
+                    //   res(true);
+                    // });
                     const fails = suiteDone.fails;
                     await puppetMaster.writeFileSync(`bdd_errors.txt`, fails.toString());
                     await puppetMaster.writeFileSync(`tests.json`, JSON.stringify(this.toObj(), null, 2));
@@ -49,7 +51,7 @@ class BaseBuilder {
                         failed: fails > 0,
                         fails,
                         artifacts: this.artifacts || [],
-                        logPromise,
+                        // logPromise,
                         features: suiteDone.features(),
                     };
                 },

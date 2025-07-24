@@ -1,7 +1,7 @@
 import {
   BaseBuilder,
   Web_default
-} from "../../../chunk-TU3MJSSI.mjs";
+} from "../../../chunk-46E6YGGN.mjs";
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then) => {
@@ -62,7 +62,7 @@ var MockBaseBuilder = class extends BaseBuilder {
       failed: false,
       fails: 0,
       artifacts: [],
-      logPromise: Promise.resolve(),
+      // logPromise: Promise.resolve(),
       features: []
     });
   }

@@ -26,6 +26,21 @@
     {
       "id": "",
       "location": {
+        "column": 7,
+        "file": "src/Pure.ts",
+        "length": 16,
+        "line": 13,
+        "lineText": "} from \"./lib/index.js\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
         "column": 24,
         "file": "src/Pure.ts",
         "length": 14,
@@ -52,21 +67,6 @@
       "notes": [],
       "pluginName": "console-detector",
       "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 7,
-        "file": "src/Web.ts",
-        "length": 16,
-        "line": 18,
-        "lineText": "} from \"./lib/index.js\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
     },
     {
       "id": "",
@@ -297,7 +297,7 @@
   "metafile": {
     "inputs": {
       "src/lib/index.ts": {
-        "bytes": 3565,
+        "bytes": 3568,
         "imports": [
           {
             "path": "../PM/pure.js",
@@ -370,7 +370,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 4847,
+        "bytes": 4874,
         "imports": [
           {
             "path": "stream",
@@ -536,7 +536,7 @@
         "format": "esm"
       },
       "src/Pure.ts": {
-        "bytes": 2591,
+        "bytes": 2597,
         "imports": [
           {
             "path": "./CoreTypes.js",
@@ -760,7 +760,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 1985,
+        "bytes": 1988,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -873,11 +873,11 @@
       "testeranto/bundles/pure/allTests/src/lib/BaseSuite.test/pure.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/allTests/chunk-CSMXYJ65.mjs",
+            "path": "testeranto/bundles/pure/allTests/chunk-5SBJWHSZ.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/pure/allTests/chunk-QK4IXLF6.mjs",
+            "path": "testeranto/bundles/pure/allTests/chunk-4ULDTZFU.mjs",
             "kind": "import-statement"
           }
         ],
@@ -901,11 +901,11 @@
       "testeranto/bundles/pure/allTests/src/Pure.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/allTests/chunk-CSMXYJ65.mjs",
+            "path": "testeranto/bundles/pure/allTests/chunk-5SBJWHSZ.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/pure/allTests/chunk-QK4IXLF6.mjs",
+            "path": "testeranto/bundles/pure/allTests/chunk-4ULDTZFU.mjs",
             "kind": "import-statement"
           }
         ],
@@ -923,10 +923,10 @@
         },
         "bytes": 12189
       },
-      "testeranto/bundles/pure/allTests/chunk-CSMXYJ65.mjs": {
+      "testeranto/bundles/pure/allTests/chunk-5SBJWHSZ.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/allTests/chunk-QK4IXLF6.mjs",
+            "path": "testeranto/bundles/pure/allTests/chunk-4ULDTZFU.mjs",
             "kind": "import-statement"
           }
         ],
@@ -938,15 +938,15 @@
             "bytesInOutput": 3131
           },
           "src/Pure.ts": {
-            "bytesInOutput": 1781
+            "bytesInOutput": 1787
           }
         },
-        "bytes": 5159
+        "bytes": 5165
       },
       "testeranto/bundles/pure/allTests/src/lib/baseBuilder.test/baseBuilder.test.pure.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/allTests/chunk-QK4IXLF6.mjs",
+            "path": "testeranto/bundles/pure/allTests/chunk-4ULDTZFU.mjs",
             "kind": "import-statement"
           }
         ],
@@ -965,7 +965,7 @@
             "bytesInOutput": 708
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 903
+            "bytesInOutput": 906
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
             "bytesInOutput": 3065
@@ -977,9 +977,9 @@
             "bytesInOutput": 130
           }
         },
-        "bytes": 10803
+        "bytes": 10806
       },
-      "testeranto/bundles/pure/allTests/chunk-QK4IXLF6.mjs": {
+      "testeranto/bundles/pure/allTests/chunk-4ULDTZFU.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -1002,7 +1002,7 @@
             "bytesInOutput": 656
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2619
+            "bytesInOutput": 2341
           },
           "src/lib/abstractBase.ts": {
             "bytesInOutput": 3952
@@ -1017,7 +1017,7 @@
             "bytesInOutput": 20
           }
         },
-        "bytes": 17050
+        "bytes": 16772
       }
     }
   }

@@ -4,7 +4,7 @@
   "metafile": {
     "inputs": {
       "src/lib/index.ts": {
-        "bytes": 3565,
+        "bytes": 3568,
         "imports": [
           {
             "path": "../PM/pure.js",
@@ -77,7 +77,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 4847,
+        "bytes": 4874,
         "imports": [
           {
             "path": "stream",
@@ -533,7 +533,7 @@
         "format": "esm"
       },
       "src/Pure.ts": {
-        "bytes": 2591,
+        "bytes": 2597,
         "imports": [
           {
             "path": "./CoreTypes.js",
@@ -575,7 +575,7 @@
         "format": "esm"
       },
       "src/lib/core.test/MockCore.ts": {
-        "bytes": 2507,
+        "bytes": 2647,
         "imports": [
           {
             "path": "src/lib/core.ts",
@@ -845,7 +845,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 1985,
+        "bytes": 1988,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -958,15 +958,15 @@
       "testeranto/bundles/node/allTests/src/lib/BaseSuite.test/node.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-4ONUZRZ4.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-H2IBV7SY.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-NQEP7SN4.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-ZHOULXPN.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-FFBRDUBH.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs",
             "kind": "import-statement"
           }
         ],
@@ -987,11 +987,11 @@
       "testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-NQEP7SN4.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-ZHOULXPN.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-FFBRDUBH.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs",
             "kind": "import-statement"
           }
         ],
@@ -1024,7 +1024,7 @@
       "testeranto/bundles/node/allTests/src/lib/core.test/core.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-FFBRDUBH.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs",
             "kind": "import-statement"
           }
         ],
@@ -1037,13 +1037,13 @@
             "bytesInOutput": 3131
           },
           "src/Pure.ts": {
-            "bytesInOutput": 1785
+            "bytesInOutput": 1791
           },
           "src/lib/core.test/core.test.specification.ts": {
             "bytesInOutput": 2824
           },
           "src/lib/core.test/MockCore.ts": {
-            "bytesInOutput": 1730
+            "bytesInOutput": 1670
           },
           "src/lib/core.test/core.test.implementation.ts": {
             "bytesInOutput": 4145
@@ -1055,20 +1055,20 @@
             "bytesInOutput": 114
           }
         },
-        "bytes": 15494
+        "bytes": 15440
       },
       "testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-4ONUZRZ4.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-H2IBV7SY.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-NQEP7SN4.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-ZHOULXPN.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-FFBRDUBH.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs",
             "kind": "import-statement"
           }
         ],
@@ -1095,10 +1095,10 @@
         },
         "bytes": 10930
       },
-      "testeranto/bundles/node/allTests/chunk-4ONUZRZ4.mjs": {
+      "testeranto/bundles/node/allTests/chunk-H2IBV7SY.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-FFBRDUBH.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs",
             "kind": "import-statement"
           }
         ],
@@ -1115,11 +1115,11 @@
       "testeranto/bundles/node/allTests/src/lib/baseBuilder.test/baseBuilder.test.node.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-NQEP7SN4.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-ZHOULXPN.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/chunk-FFBRDUBH.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs",
             "kind": "import-statement"
           }
         ],
@@ -1132,7 +1132,7 @@
             "bytesInOutput": 708
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 903
+            "bytesInOutput": 906
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
             "bytesInOutput": 3065
@@ -1144,12 +1144,12 @@
             "bytesInOutput": 131
           }
         },
-        "bytes": 6006
+        "bytes": 6009
       },
-      "testeranto/bundles/node/allTests/chunk-NQEP7SN4.mjs": {
+      "testeranto/bundles/node/allTests/chunk-ZHOULXPN.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/allTests/chunk-FFBRDUBH.mjs",
+            "path": "testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs",
             "kind": "import-statement"
           },
           {
@@ -1181,7 +1181,7 @@
         },
         "bytes": 6848
       },
-      "testeranto/bundles/node/allTests/chunk-FFBRDUBH.mjs": {
+      "testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -1201,7 +1201,7 @@
             "bytesInOutput": 3236
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2619
+            "bytesInOutput": 2341
           },
           "src/lib/classBuilder.ts": {
             "bytesInOutput": 1850
@@ -1222,7 +1222,7 @@
             "bytesInOutput": 20
           }
         },
-        "bytes": 17098
+        "bytes": 16820
       }
     }
   }

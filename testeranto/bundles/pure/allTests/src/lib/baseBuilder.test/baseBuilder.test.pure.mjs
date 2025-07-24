@@ -4,7 +4,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-QK4IXLF6.mjs";
+} from "../../../chunk-4ULDTZFU.mjs";
 
 // src/PM/web.ts
 var PM_Web = class extends PM {
@@ -250,7 +250,7 @@ var MockBaseBuilder = class extends BaseBuilder {
       failed: false,
       fails: 0,
       artifacts: [],
-      logPromise: Promise.resolve(),
+      // logPromise: Promise.resolve(),
       features: []
     });
   }

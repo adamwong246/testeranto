@@ -1,10 +1,10 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   Node_default
-} from "../../../chunk-NQEP7SN4.mjs";
+} from "../../../chunk-ZHOULXPN.mjs";
 import {
   BaseBuilder
-} from "../../../chunk-FFBRDUBH.mjs";
+} from "../../../chunk-IDCUSTSM.mjs";
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then) => {
@@ -65,7 +65,7 @@ var MockBaseBuilder = class extends BaseBuilder {
       failed: false,
       fails: 0,
       artifacts: [],
-      logPromise: Promise.resolve(),
+      // logPromise: Promise.resolve(),
       features: []
     });
   }

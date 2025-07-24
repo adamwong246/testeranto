@@ -64,5 +64,4 @@ export type IFinalResults = {
     failed: boolean;
     fails: number;
     artifacts: Promise<unknown>[];
-    logPromise: Promise<unknown>;
 };

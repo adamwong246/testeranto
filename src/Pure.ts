@@ -58,7 +58,7 @@ export class PureTesteranto<
         failed: true,
         fails: 1,
         artifacts: [],
-        logPromise: Promise.resolve(),
+        // logPromise: Promise.resolve(),
         features: [],
       };
     }
@@ -74,7 +74,7 @@ export class PureTesteranto<
         failed: true,
         fails: 1,
         artifacts: [],
-        logPromise: Promise.resolve(),
+        // logPromise: Promise.resolve(),
         features: [],
       };
     }

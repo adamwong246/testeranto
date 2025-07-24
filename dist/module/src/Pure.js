@@ -20,7 +20,7 @@ export class PureTesteranto extends Testeranto {
                 failed: true,
                 fails: 1,
                 artifacts: [],
-                logPromise: Promise.resolve(),
+                // logPromise: Promise.resolve(),
                 features: [],
             };
         }
@@ -36,7 +36,7 @@ export class PureTesteranto extends Testeranto {
                 failed: true,
                 fails: 1,
                 artifacts: [],
-                logPromise: Promise.resolve(),
+                // logPromise: Promise.resolve(),
                 features: [],
             };
         }

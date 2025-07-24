@@ -73,7 +73,7 @@ export class MockBaseBuilder<
       failed: false,
       fails: 0,
       artifacts: [],
-      logPromise: Promise.resolve(),
+      // logPromise: Promise.resolve(),
       features: [],
     });
   }

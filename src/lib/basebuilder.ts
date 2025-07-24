@@ -103,10 +103,10 @@ export abstract class BaseBuilder<
         receiveTestResourceConfig: async function (
           puppetMaster: IPM
         ): Promise<IFinalResults> {
-          const logFilePath = "logs.txt";
-          const access: number = await puppetMaster.createWriteStream(
-            logFilePath
-          );
+          // const logFilePath = "logs.txt";
+          // const access: number = await puppetMaster.createWriteStream(
+          //   logFilePath
+          // );
 
           // deprecated?
           const tLog = async (...l: string[]) => {
@@ -115,10 +115,10 @@ export abstract class BaseBuilder<
 
           const suiteDone: BaseSuite<I, O> = await runner(puppetMaster, tLog);
 
-          const logPromise = new Promise(async (res) => {
-            await puppetMaster.end(access);
-            res(true);
-          });
+          // const logPromise = new Promise(async (res) => {
+          //   await puppetMaster.end(access);
+          //   res(true);
+          // });
 
           const fails = suiteDone.fails;
 
@@ -133,7 +133,7 @@ export abstract class BaseBuilder<
             failed: fails > 0,
             fails,
             artifacts: this.artifacts || [],
-            logPromise,
+            // logPromise,
             features: suiteDone.features(),
           };
         },
