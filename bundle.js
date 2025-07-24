@@ -32,7 +32,7 @@ await esbuild.build({
     // 'src/TestPage.tsx',
     // 'src/BuildLogsPage.tsx',
     // 'src/TestReport.tsx',
-    // 'src/ReportApp.scss',
+    'src/App.scss',
     'src/App.tsx',
   ],
   bundle: true,
