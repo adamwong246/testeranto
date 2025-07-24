@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SunriseAnimation from "./components/SunriseAnimation";
 import { Modal, Button } from "react-bootstrap";
-import "./TestReport.scss";
+// import "./TestReport.scss";
 
 export const SettingsButton = ({ className }: { className?: string }) => {
   useEffect(() => {

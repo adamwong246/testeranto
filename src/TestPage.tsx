@@ -1,10 +1,11 @@
-import ReactDom from "react-dom/client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, { useEffect, useState } from 'react';
-import { Tab, Container, Alert, Badge, Table, Button, Nav } from 'react-bootstrap';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Tab, Container, Alert, Button } from 'react-bootstrap';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { fetchTestData } from './utils/api';
 import { NavBar } from "./NavBar";
-
+import { TestStatusBadge } from "./components/TestStatusBadge";
 
 type TestData = {
   name: string;
@@ -68,7 +69,7 @@ export const TestPage = () => {
         const testResponse = await fetchTestData(projectName, testPath, runtime);
         setTestData(testResponse.testData);
         setTestsExist(!!testResponse.testData);
-        setLogs(testResponse.logs);
+        setLogs(testResponse.logs === null ? undefined : testResponse.logs);
         setTypeErrors(testResponse.typeErrors);
         setLintErrors(testResponse.lintErrors);
 
@@ -81,12 +82,30 @@ export const TestPage = () => {
 
           console.log("testSummary", testSummary)
           if (testSummary) {
+            console.groupCollapsed(`[TestPage] Processing test summary for ${testPath}`);
+            console.log('Raw test summary:', testSummary);
+
+            const counts = {
+              typeErrors: Number(testSummary.typeErrors) || 0,
+              staticErrors: Number(testSummary.staticErrors) || 0,
+              runTimeErrors: Number(testSummary.runTimeErrors) || 0
+            };
+
+            console.log('Normalized counts:', counts);
+
+            // Validate counts
+            if (counts.runTimeErrors === -1 && testSummary.testsExist) {
+              console.warn('Inconsistent state: runTimeErrors=-1 but testsExist=true');
+            }
+            if (!testSummary.testsExist && counts.runTimeErrors > 0) {
+              console.warn('Inconsistent state: testsExist=false but runTimeErrors>0');
+            }
+
             setSummary(testSummary);
-            setErrorCounts({
-              typeErrors: testSummary.typeErrors || 0,
-              staticErrors: testSummary.staticErrors || 0,
-              runTimeErrors: testSummary.runTimeErrors || 0
-            });
+            setErrorCounts(counts);
+            setTestsExist(testSummary.testsExist !== false);
+
+            console.groupEnd();
           }
         } catch (err) {
           console.error('Failed to load summary:', err);
@@ -105,6 +124,23 @@ export const TestPage = () => {
   if (loading) return <div>Loading test data...</div>;
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
 
+  console.log('Test status debug:', {
+    testName,
+    testsExist,
+    testData,
+    fails: testData?.fails,
+    runTimeErrors: errorCounts.runTimeErrors,
+    typeErrors: errorCounts.typeErrors,
+    staticErrors: errorCounts.staticErrors
+  });
+
+  console.log('Test data:', {
+    testData,
+    testsExist,
+    errorCounts,
+    summary
+  });
+
   return (
     <Container fluid={true}>
       <NavBar
@@ -112,12 +148,28 @@ export const TestPage = () => {
         backLink={`/projects/${projectName}`}
         navItems={[
           {
+            label: '',
+            badge: {
+              variant: runtime === 'node' ? 'primary' :
+                runtime === 'web' ? 'success' :
+                  'info',
+              text: runtime
+            },
+            className: 'pe-none d-flex align-items-center gap-2'
+          },
+          {
             to: `#results`,
-            label: !testsExist
-              ? '❌ BDD'
-              : testData?.givens.some(g => g.whens.some(w => w.error) || g.thens.some(t => t.error))
-                ? '❌ BDD'
-                : '✅ BDD',
+            label: (
+              <TestStatusBadge
+                testName={decodedTestPath}
+                testsExist={testsExist}
+                runTimeErrors={errorCounts.runTimeErrors}
+                variant="compact"
+              />
+            ),
+            className: !testsExist || errorCounts.runTimeErrors > 0
+              ? 'text-danger fw-bold'
+              : '',
             active: route === 'results'
           },
           {
@@ -225,10 +277,19 @@ export const TestPage = () => {
             )}
           </Tab.Pane>
           <Tab.Pane eventKey="logs">
-            {logs ? (
-              <pre className="bg-dark text-white p-3">{logs}</pre>
+            {logs === undefined ? (
+              <Alert variant="danger">
+                <h4>Logs file missing</h4>
+                <p>The runtime logs file (logs.txt) was not found.</p>
+                <p>This suggests the test may not have executed properly.</p>
+              </Alert>
+            ) : logs === '' ? (
+              <Alert variant="success">
+                <h4>No runtime logs</h4>
+                <p>The test executed successfully with no log output.</p>
+              </Alert>
             ) : (
-              <Alert variant="warning">No runtime logs found</Alert>
+              <pre className="bg-dark text-white p-3">{logs}</pre>
             )}
           </Tab.Pane>
           <Tab.Pane eventKey="types">

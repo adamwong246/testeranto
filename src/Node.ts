@@ -45,10 +45,6 @@ export class NodeTesteranto<
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Node(t, ipcfile);
     return await this.testJobs[0].receiveTestResourceConfig(pm);
-    // const { failed, artifacts, logPromise, features } =
-    //   await this.testJobs[0].receiveTestResourceConfig(pm);
-    // // pm.customclose();
-    // return { features, failed };
   }
 }
 
@@ -56,7 +52,7 @@ const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
-  testAdapter: Partial<INodeAdapter<I>>,
+  testAdapter: Partial<ITestAdapter<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<I, O, M>> => {
   try {
@@ -82,20 +78,7 @@ const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   } catch (e) {
     console.error("goodbye node with caught error", e);
     process.exit(-1);
-
-    // fs.writeFileSync(`tests.json`, JSON.stringify(t.,
-    //  null, 2));
-    // process.send({ message: "Hello from child!" });
-    // process.on("message", (message) => {
-    //   const client = net.createConnection(message.path, () => {
-
-    //     console.error("goodbye node error", e);
-    //     process.exit(-1);
-    //   });
-    // });
   }
-
-  // return t;
 };
 
 export default testeranto;

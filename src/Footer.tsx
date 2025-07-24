@@ -1,5 +1,5 @@
 import React from "react";
-import "./TestReport.scss";
+// import "./TestReport.scss";
 
 export const Footer = () => (
   <div className="footer">

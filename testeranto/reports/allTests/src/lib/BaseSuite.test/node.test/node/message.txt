@@ -1,0 +1,2 @@
+
+Fix the failing tests described in testeranto/reports/allTests/src/lib/BaseSuite.test/node.test/node/tests.json and testeranto/reports/allTests/src/lib/BaseSuite.test/node.test/node/logs.txt. Focus on the bdd tests before all other concerns. You may add any debugging you think is necessary.

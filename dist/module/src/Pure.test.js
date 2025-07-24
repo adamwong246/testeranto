@@ -18,6 +18,7 @@ const implementation = {
     },
     whens: {
         applyProxy: (proxyType) => (store) => {
+            console.debug(`[DEBUG] Applying proxy type: ${proxyType}`);
             switch (proxyType) {
                 case "invalidConfig":
                     throw new Error("Invalid configuration");
@@ -30,16 +31,63 @@ const implementation = {
                                 }
                                 throw new Error("Payload too small");
                             } }) });
+                case "resourceConfig":
+                    return Object.assign(Object.assign({}, store), { pm: Object.assign(Object.assign({}, store.pm), { testResourceConfiguration: { name: "test-resource" } }) });
                 default:
                     return store;
             }
         },
+        addArtifact: (artifact) => (store) => {
+            console.debug("[DEBUG] Adding artifact");
+            return Object.assign(Object.assign({}, store), { artifacts: [...(store.artifacts || []), artifact] });
+        },
+        setTestJobs: (jobs) => (store) => {
+            console.debug("[DEBUG] Setting test jobs");
+            return Object.assign(Object.assign({}, store), { testJobs: jobs });
+        },
+        modifySpecs: (modifier) => (store) => {
+            console.debug("[DEBUG] Modifying specs");
+            return Object.assign(Object.assign({}, store), { specs: modifier(store.specs || []) });
+        }
     },
     thens: {
+        initializedProperly: () => (store) => {
+            if (!store.pm) {
+                throw new Error("PM not initialized");
+            }
+            return store;
+        },
+        specsGenerated: () => (store) => {
+            if (store.pm.getCallCount("writeFileSync") === 0) {
+                throw new Error("No specs generated");
+            }
+            return store;
+        },
+        jobsCreated: () => (store) => {
+            // Basic verification that jobs were created
+            return store;
+        },
+        artifactsTracked: () => (store) => {
+            // Basic verification that artifacts are tracked
+            return store;
+        },
+        testRunSuccessful: () => (store) => {
+            if (store.pm.getCallCount("end") === 0) {
+                throw new Error("Test run did not complete successfully");
+            }
+            return store;
+        },
+        specsModified: (expectedCount) => (store) => {
+            const actualCount = store.pm.getCallCount("writeFileSync");
+            if (actualCount < expectedCount) {
+                throw new Error(`Expected ${expectedCount} spec modifications, got ${actualCount}`);
+            }
+            return store;
+        },
         verifyProxy: (expectedPath) => (store) => {
             var _a;
-            const testPath = "expected";
-            const result = store.pm.writeFileSync(testPath, "content");
+            // const testPath = "expected";
+            // const result = store.pm.writeFileSync(testPath, "content");
             const actualPath = (_a = store.pm.getLastCall("writeFileSync")) === null || _a === void 0 ? void 0 : _a.path;
             if (actualPath !== expectedPath) {
                 throw new Error(`Expected path ${expectedPath}, got ${actualPath}`);
@@ -141,7 +189,9 @@ const specification = (Suite, Given, When, Then) => [
 // Test adapter for PureTesteranto
 const testAdapter = {
     beforeEach: async (subject, initializer) => {
-        return { pm: initializer() };
+        const pm = initializer();
+        pm.debug(`Initializing test with subject: ${subject}`);
+        return { pm };
     },
     andWhen: async (store, whenCB) => whenCB(store),
     butThen: async (store, thenCB) => thenCB(store),

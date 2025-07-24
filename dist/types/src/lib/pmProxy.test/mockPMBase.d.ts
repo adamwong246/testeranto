@@ -12,6 +12,7 @@ export declare class MockPMBase implements PM_Base {
     getLastCall(method: string): any;
     launchSideCar(n: number, testName: string, projectName: string): Promise<void>;
     end(uid: number): Promise<boolean>;
+    debug(message: string): void;
     writeFileSync(path: string, content: string, testName?: string): Promise<boolean>;
     createWriteStream(path: string, testName?: string): Promise<number>;
     screencast(opts: any, testName: string, page?: any): Promise<any>;

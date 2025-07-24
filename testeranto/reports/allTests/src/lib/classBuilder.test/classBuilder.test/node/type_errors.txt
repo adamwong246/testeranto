@@ -1,100 +1,108 @@
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (34,3): A 'super' call must be the first statement in the constructor to refer to 'super' or 'this' when a derived class contains initialized properties, parameter properties, or private identifiers.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (43,56): Type 'number[]' is not assignable to type 'number'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (47,5): 'super' must be called before accessing 'this' in the constructor of a derived class.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.mock.ts (48,5): 'super' must be called before accessing 'this' in the constructor of a derived class.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (3,10): Module '"./baseBuilder.test.mock"' has no exported member 'TestBaseBuilder'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (7,3): Cannot find name 'BaseBuilder'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (8,3): Cannot find name 'BaseBuilder'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (9,3): Cannot find name 'BaseBuilder'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (10,9): Cannot find name 'BaseBuilder'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.types.ts (15,17): Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
+/Users/adam/Code/testeranto/src/lib/abstractBase.ts (222,17): Catch clause variable type annotation must be 'any' or 'unknown' if specified.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (79,15): This expression is not callable.
-  Not all constituents of type 'void | ((fPath: any, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (41,9): Property 'andWhen' in type 'MockWhen' is not assignable to the same property in base type 'BaseWhen<I>'.
-  Types of parameters 'whenCB' and 'whenCB' are incompatible.
-    Type '(store: TestStore) => Promise<TestSelection>' is not assignable to type 'Promise<TestStore>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (52,9): Property 'butThen' in type 'MockThen' is not assignable to the same property in base type 'BaseThen<I>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (36,9): Property 'andWhen' in type 'MockWhen' is not assignable to the same property in base type 'BaseWhen<I>'.
+  Type '(store: TestStore, whenCB: (store: TestStore) => Promise<TestStore>, testResource: any, pm: IPM) => Promise<TestStore>' is not assignable to type '(store: TestStore, whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>, testResource: any, pm: IPM) => Promise<...>'.
+    Types of parameters 'whenCB' and 'whenCB' are incompatible.
+      Types of parameters 'x' and 'store' are incompatible.
+        Type 'TestStore' is not assignable to type 'TestSelection'.
+          Types of property 'testSelection' are incompatible.
+            Type 'boolean | undefined' is not assignable to type 'boolean'.
+              Type 'undefined' is not assignable to type 'boolean'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (66,9): Property 'butThen' in type 'MockThen' is not assignable to the same property in base type 'BaseThen<I>'.
   Types of parameters 'thenCB' and 'thenCB' are incompatible.
     Type 'Promise<BaseSuite<any, any>>' is not assignable to type 'Promise<TestSelection>'.
       Property 'testSelection' is missing in type 'BaseSuite<any, any>' but required in type 'TestSelection'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (68,10): Type 'MockWhen' is not assignable to type 'BaseWhen<I>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (83,7): Object literal may only specify known properties, and 'name' does not exist in type 'TestSelection'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (126,10): Type 'MockWhen' is not assignable to type 'BaseWhen<I>'.
   Types of property 'andWhen' are incompatible.
-    Types of parameters 'whenCB' and 'whenCB' are incompatible.
-      Type '(store: TestStore) => Promise<TestSelection>' is not assignable to type 'Promise<TestStore>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (68,41): Type 'Promise<{ testStore: boolean; }>' is not assignable to type '(store: TestStore) => Promise<TestSelection>'.
+    Type '(store: TestStore, whenCB: (store: TestStore) => Promise<TestStore>, testResource: any, pm: IPM) => Promise<TestStore>' is not assignable to type '(store: TestStore, whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>, testResource: any, pm: IPM) => Promise<...>'.
+      Types of parameters 'whenCB' and 'whenCB' are incompatible.
+        Types of parameters 'x' and 'store' are incompatible.
+          Type 'TestStore' is not assignable to type 'TestSelection'.
+            Types of property 'testSelection' are incompatible.
+              Type 'boolean | undefined' is not assignable to type 'boolean'.
+                Type 'undefined' is not assignable to type 'boolean'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (126,41): Type 'Promise<{ testStore: boolean; }>' is not assignable to type '(store: TestStore) => Promise<TestSelection>'.
   Type 'Promise<{ testStore: boolean; }>' provides no match for the signature '(store: TestStore): Promise<TestSelection>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (71,13): Type 'Promise<{ testSelection: boolean; }>' is not assignable to type 'Promise<(store: TestStore) => Promise<TestSelection>>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/mock.ts (129,13): Type 'Promise<{ testSelection: boolean; }>' is not assignable to type 'Promise<(store: TestStore) => Promise<TestSelection>>'.
   Type '{ testSelection: boolean; }' is not assignable to type '(store: TestStore) => Promise<TestSelection>'.
     Type '{ testSelection: boolean; }' provides no match for the signature '(store: TestStore): Promise<TestSelection>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (55,14): Type '(Suite: ITestSpecification<I, O>, Given: WhenSpecification<I, O>, When: WhenSpecification<I, O>, Then: WhenSpecification<I, O>) => any[]' is not assignable to type 'ITestSpecification<I, O>'.
-  Types of parameters 'Suite' and 'Suite' are incompatible.
-    Type 'SuiteSpecification<I, O>' is not assignable to type 'ITestSpecification<I, O>'.
-      Type 'SuiteSpecification<I, O>' provides no match for the signature '(Suite: SuiteSpecification<I, O>, Given: GivenSpecification<I, O>, When: WhenSpecification<I, O>, Then: ThenSpecification<...>): BaseSuite<...>[]'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (61,9): Property 'Default' does not exist on type 'ITestSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (63,27): Property 'Default' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (67,14): Property 'SuiteNameMatches' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (68,14): Property 'SuiteIndexMatches' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (69,14): Property 'FeaturesIncludes' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (74,22): Property 'Default' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (77,13): Property 'StoreValid' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (77,32): Property 'NoErrorsOccurred' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (81,29): Property 'Default' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (83,13): Property 'AddFeature' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (85,14): Property 'FeaturesIncludes' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (86,14): Property 'FeaturesIncludes' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (87,14): Property 'FeatureCountMatches' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (92,26): Property 'Default' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (94,13): Property 'RunSuiteWithError' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (96,14): Property 'ErrorCountMatches' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (102,9): Property 'Default' does not exist on type 'ITestSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (103,26): Property 'Default' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (106,14): Property 'addArtifact' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (107,14): Property 'modifySpecs' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (108,14): Property 'modifyJobs' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (111,14): Property 'specsModified' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (112,14): Property 'jobsModified' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (113,14): Property 'artifactsTracked' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (114,14): Property 'testRunSuccessful' does not exist on type 'WhenSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (127,31): Type 'MockSuite' is not assignable to type '() => Promise<TestStore>'.
-  Type 'MockSuite' provides no match for the signature '(): Promise<TestStore>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (133,7): Type '(suite: MockSuite) => Promise<MockSuite>' is not assignable to type '(zel: TestSelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: TestStore) => Promise<TestStore>>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (126,5): Type '() => MockSuite' is not assignable to type '() => () => Promise<TestStore>'.
+  Type 'MockSuite' is not assignable to type '() => Promise<TestStore>'.
+    Type 'MockSuite' provides no match for the signature '(): Promise<TestStore>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (137,15): Property 'artifacts' does not exist on type 'MockSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (144,15): Property 'specs' does not exist on type 'MockSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (144,38): Property 'specs' does not exist on type 'MockSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (151,15): Property 'testJobs' does not exist on type 'MockSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (151,41): Property 'testJobs' does not exist on type 'MockSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (157,7): Type '(suite: MockSuite) => Promise<MockSuite>' is not assignable to type '(zel: TestSelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: TestStore) => Promise<TestStore>>'.
   Types of parameters 'suite' and 'zel' are incompatible.
     Type 'TestSelection' is missing the following properties from type 'MockSuite': name, givens, store, testResourceConfiguration, and 9 more.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (153,11): Type '() => void' is not assignable to type '((selector: string) => boolean) | ((selector: string) => boolean) | ((selector: string, page: string) => Promise<unknown>)'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (178,11): Type '() => void' is not assignable to type '((selector: string) => boolean) | ((selector: string) => boolean) | ((selector: string, page: string) => Promise<unknown>)'.
   Type '() => void' is not assignable to type '(selector: string) => boolean'.
     Type 'void' is not assignable to type 'boolean'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (155,11): Type '() => void' is not assignable to type '((p: any) => string) | ((p: any) => string) | ((p: any) => Promise<unknown>)'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (180,11): Type '() => void' is not assignable to type '((p: any) => string) | ((p: any) => string) | ((p: any) => Promise<unknown>)'.
   Type '() => void' is not assignable to type '(p: any) => string'.
     Type 'void' is not assignable to type 'string'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (160,11): Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (174,13): Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (221,5): Type '(feature: string) => ((suite: MockSuite) => MockSuite)' is not assignable to type '(feature: string) => (ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (185,11): Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (199,13): Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (224,5): Type '(expectedName: string) => ((suite: MockSuite) => MockSuite)' is not assignable to type '(It_0: string) => (ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
   Type '(suite: MockSuite) => MockSuite' is not assignable to type '(ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
     Types of parameters 'suite' and 'ssel' are incompatible.
       Type 'TestSelection' is missing the following properties from type 'MockSuite': name, givens, store, testResourceConfiguration, and 9 more.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (242,58): Type '(suite: MockSuite) => MockSuite' is not assignable to type '(ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (244,5): Type '(expectedIndex: number) => ((suite: MockSuite) => MockSuite)' is not assignable to type '(It_0: number) => (ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
+  Type '(suite: MockSuite) => MockSuite' is not assignable to type '(ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
+    Types of parameters 'suite' and 'ssel' are incompatible.
+      Type 'TestSelection' is missing the following properties from type 'MockSuite': name, givens, store, testResourceConfiguration, and 9 more.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (255,5): Type '(feature: string) => ((suite: MockSuite) => MockSuite)' is not assignable to type '(feature: string) => (ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
+  Type '(suite: MockSuite) => MockSuite' is not assignable to type '(ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
+    Types of parameters 'suite' and 'ssel' are incompatible.
+      Type 'TestSelection' is missing the following properties from type 'MockSuite': name, givens, store, testResourceConfiguration, and 9 more.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (276,58): Type '(suite: MockSuite) => MockSuite' is not assignable to type '(ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
   Types of parameters 'suite' and 'ssel' are incompatible.
     Type 'TestSelection' is missing the following properties from type 'MockSuite': name, givens, store, testResourceConfiguration, and 9 more.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (298,30): Type '() => Promise<TestStore>' is not assignable to type 'TestStore'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (305,44): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (312,48): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (314,3): Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (328,19): Property 'specs' does not exist on type 'MockSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (337,19): Property 'testJobs' does not exist on type 'MockSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (345,19): Property 'artifacts' does not exist on type 'MockSuite'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (378,22): Property 'index' does not exist on type '() => Promise<TestStore>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (379,22): Property 'store' does not exist on type '() => Promise<TestStore>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (383,22): Property 'index' does not exist on type '() => Promise<TestStore>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (386,19): Property 'store' does not exist on type '() => Promise<TestStore>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (399,44): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (401,3): Type '(store: TestStore, thenCB: (selection: TestSelection) => Promise<TestSelection>, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<TestSelection>' is not assignable to type '(store: TestStore, thenCB: (store: TestStore) => Promise<TestSelection>, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<...>'.
+  Types of parameters 'thenCB' and 'thenCB' are incompatible.
+    Type '(store: TestStore) => Promise<TestSelection>' is not assignable to type '(selection: TestSelection) => Promise<TestSelection>'.
+      Types of parameters 'store' and 'selection' are incompatible.
+        Property 'testStore' is missing in type 'TestSelection' but required in type 'TestStore'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (441,3): Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
   Type 'TestStore' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (14,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (9,3): Type '() => Promise<void>' is not assignable to type '(input: {}, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<BaseBuilder<any, any, any, any, any, any>>'.
+  Type 'Promise<void>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
+    Type 'void' is not assignable to type 'BaseBuilder<any, any, any, any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (10,3): Type '(subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>) => Promise<() => BaseBuilder<any, any, any, any, any, any>>' is not assignable to type '(subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>, testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+  Type 'Promise<() => BaseBuilder<any, any, any, any, any, any>>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
+    Type '() => BaseBuilder<any, any, any, any, any, any>' is not assignable to type 'BaseBuilder<any, any, any, any, any, any>'.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (17,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (20,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.adapter.ts (22,25): Type 'BaseBuilder<any, any, any, any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (7,10): '"../classBuilder"' has no exported member named 'TestClassBuilder'. Did you mean 'ClassBuilder'?
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (28,9): Argument of type 'typeof MockSuite' is not assignable to parameter of type 'ISuiteKlasser<I, any>'.
-  Type 'typeof MockSuite' provides no match for the signature '(name: string, index: number, givens: IGivens<I>): BaseSuite<I, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (28,9): Argument of type 'typeof MockSuite' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
+  Type 'typeof MockSuite' provides no match for the signature '(name: string, index: number, givens: IGivens<I>): BaseSuite<I, O>'.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (47,9): Expected 8 arguments, but got 9.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (60,9): Expected 8 arguments, but got 9.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (73,9): Expected 8 arguments, but got 9.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (86,9): Expected 8 arguments, but got 9.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (187,30): Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (207,30): Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
   Type 'Promise<ClassBuilder<any, any, any>>' is missing the following properties from type 'ClassBuilder<any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 12 more.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (189,23): Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (60,7): Expected 2 arguments, but got 3.
-/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.types.ts (23,17): Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.implementation.ts (209,23): Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (19,26): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (24,35): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (64,37): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (69,36): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (83,54): Cannot find name 'ITestJob'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.test/classBuilder.test.specification.ts (101,7): Expected 2 arguments, but got 3.
 /Users/adam/Code/testeranto/src/lib/classBuilder.test/mock.ts (45,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 /Users/adam/Code/testeranto/src/lib/classBuilder.ts (86,18): A spread argument must either have a tuple type or be passed to a rest parameter.
@@ -118,7 +126,6 @@
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
 /Users/adam/Code/testeranto/src/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-/Users/adam/Code/testeranto/src/Node.ts (59,24): Cannot find name 'INodeAdapter'.
 /Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?

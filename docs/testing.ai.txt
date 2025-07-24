@@ -78,6 +78,14 @@
 - Expected error messages
 - Async error propagation
 
+4. Features
+- Tests can have one or more "features"
+- "Features" can be strings, uids, or links to features defined elsewhere.
+- "Features" are not unique across tests. 
+
+5. Rationale
+- In a comment block above each test, put a short rationale for the test. 
+
 ## Best Practices
 
 1. For each test:

@@ -6,10 +6,67 @@ import { I, O, M } from "./core.test.types";
 import { MockCore } from "./MockCore";
 
 export default Testeranto<I, O, M>(
-  MockCore.prototype, // test subject
-  specification, // test scenarios
-  implementation, // test operations
-  testAdapter, // test lifecycle hooks
-  { ports: [] }, // resource requirements
-  (cb) => cb() // error handler
+  MockCore.prototype,
+  specification,
+  implementation,
+  testAdapter
 );
+
+// console.log("[DEBUG] Starting core.test.ts");
+// console.log("[DEBUG] MockCore:", MockCore?.name);
+// console.log("[DEBUG] specification:", specification?.name);
+// console.log("[DEBUG] implementation keys:", Object.keys(implementation));
+// console.log("[DEBUG] testAdapter keys:", Object.keys(testAdapter));
+
+// console.log("[DEBUG] Starting test runner with:");
+// console.log("- Specification:", specification?.name);
+// console.log("- Implementation keys:", Object.keys(implementation));
+// console.log("- Test adapter keys:", Object.keys(testAdapter));
+
+// console.log("[DEBUG] Creating test runner instance...");
+// try {
+//   const testRunner = new Testeranto<I, O, M>(
+//     MockCore.prototype,
+//     specification,
+//     implementation,
+//     { ports: [3000, 3001] },
+//     testAdapter
+//   );
+
+//   console.log("[DEBUG] Starting test execution...");
+//   const runTests = async () => {
+//     try {
+//       const result = await testRunner.receiveTestResourceConfig(
+//         JSON.stringify({
+//           name: "core.test",
+//           fs: "/tmp/core.test",
+//           ports: [3000, 3001],
+//         })
+//       );
+
+//       console.log("[DEBUG] Test run completed with:");
+//       console.log("- Status:", result.failed ? "FAILED" : "PASSED");
+//       console.log("- Failures:", result.fails);
+//       console.log("- Features tested:", result.features?.length);
+//       console.log("- Artifacts:", result.artifacts?.length);
+
+//       if (result.failed) {
+//         throw new Error(`Tests failed with ${result.fails} failures`);
+//       }
+//       return result;
+//     } catch (e) {
+//       console.error("[ERROR] Test runner failed:", e.message);
+//       console.error("- Full error:", e);
+//       process.exit(1);
+//     }
+//   };
+
+//   // Run tests immediately when imported
+//   runTests().catch(e => {
+//     console.error("[ERROR] Test runner failed:", e);
+//     process.exit(1);
+//   });
+// } catch (e) {
+//   console.error("[ERROR] Failed to initialize test runner:", e);
+//   process.exit(1);
+// }

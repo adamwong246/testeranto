@@ -14,7 +14,7 @@ exports.implementation = {
     },
     givens: {
         Default: () => {
-            console.log('Creating default test builder instance');
+            console.log("Creating default test builder instance");
             const builder = new mock_1.default(exports.implementation, // Use the current implementation
             classBuilder_test_specification_1.specification, // Use the current specification
             {}, // Default input
@@ -26,7 +26,7 @@ exports.implementation = {
             }, // thenKlasser
             { ports: [] } // Default resource requirements
             );
-            console.log('Builder created:', builder);
+            console.log("Builder created:", builder);
             return builder;
         },
         WithCustomInput: (input) => {
@@ -85,10 +85,25 @@ exports.implementation = {
     },
     thens: {
         initializedProperly: () => (builder) => {
-            var _a;
-            console.log('Checking builder initialization:', builder);
+            var _a, _b;
+            console.log("Checking builder initialization:", {
+                builder,
+                isMock: builder instanceof mock_1.default,
+                constructor: (_a = builder === null || builder === void 0 ? void 0 : builder.constructor) === null || _a === void 0 ? void 0 : _a.name,
+                props: Object.keys(builder)
+            });
+            if (!builder) {
+                throw new Error("Builder is undefined");
+            }
             if (!(builder instanceof mock_1.default)) {
-                throw new Error(`Builder was not properly initialized. Expected mock instance but got ${(_a = builder === null || builder === void 0 ? void 0 : builder.constructor) === null || _a === void 0 ? void 0 : _a.name}`);
+                throw new Error(`Builder was not properly initialized. Expected mock instance but got ${(_b = builder === null || builder === void 0 ? void 0 : builder.constructor) === null || _b === void 0 ? void 0 : _b.name}`);
+            }
+            // Verify required properties exist
+            const requiredProps = ['specs', 'testJobs', 'artifacts'];
+            for (const prop of requiredProps) {
+                if (!(prop in builder)) {
+                    throw new Error(`Missing required property: ${prop}`);
+                }
             }
             return builder;
         },

@@ -972,7 +972,7 @@
             }
             return lazyType;
           }
-          function forwardRef49(render) {
+          function forwardRef55(render) {
             {
               if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState19(initialState) {
+          function useState23(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1093,11 +1093,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init);
           }
-          function useRef19(initialValue) {
+          function useRef22(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect25(create, deps) {
+          function useEffect28(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1109,11 +1109,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create, deps);
           }
-          function useCallback16(callback, deps) {
+          function useCallback17(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo14(create, deps) {
+          function useMemo15(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create, deps);
           }
@@ -1869,25 +1869,25 @@
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
-          exports.forwardRef = forwardRef49;
+          exports.forwardRef = forwardRef55;
           exports.isValidElement = isValidElement2;
           exports.lazy = lazy;
           exports.memo = memo2;
           exports.startTransition = startTransition3;
           exports.unstable_act = act;
-          exports.useCallback = useCallback16;
+          exports.useCallback = useCallback17;
           exports.useContext = useContext16;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect25;
+          exports.useEffect = useEffect28;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect6;
-          exports.useMemo = useMemo14;
+          exports.useMemo = useMemo15;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef19;
-          exports.useState = useState19;
+          exports.useRef = useRef22;
+          exports.useState = useState23;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React79 = require_react();
+          var React88 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React79.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React88.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React79.Children.forEach(props.children, function(child) {
+                  React88.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React79.Component().refs;
+          var emptyRefsObject = new React88.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23514,7 +23514,7 @@
       (function() {
         "use strict";
         var hasOwn = {}.hasOwnProperty;
-        function classNames38() {
+        function classNames44() {
           var classes = "";
           for (var i = 0; i < arguments.length; i++) {
             var arg = arguments[i];
@@ -23532,7 +23532,7 @@
             return "";
           }
           if (Array.isArray(arg)) {
-            return classNames38.apply(null, arg);
+            return classNames44.apply(null, arg);
           }
           if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes("[native code]")) {
             return arg.toString();
@@ -23555,14 +23555,14 @@
           return value + newClass;
         }
         if (typeof module !== "undefined" && module.exports) {
-          classNames38.default = classNames38;
-          module.exports = classNames38;
+          classNames44.default = classNames44;
+          module.exports = classNames44;
         } else if (typeof define === "function" && typeof define.amd === "object" && define.amd) {
           define("classnames", [], function() {
-            return classNames38;
+            return classNames44;
           });
         } else {
-          window.classNames = classNames38;
+          window.classNames = classNames44;
         }
       })();
     }
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React79 = require_react();
+          var React88 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React79.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React88.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -25317,7 +25317,7 @@
   });
 
   // src/App.tsx
-  var import_react56 = __toESM(require_react(), 1);
+  var import_react63 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-EF7DTUVF.mjs
@@ -27682,7 +27682,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   "use client";
 
   // src/ProjectsPage.tsx
-  var import_react53 = __toESM(require_react(), 1);
+  var import_react57 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -27837,6 +27837,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       prefixes
     } = (0, import_react3.useContext)(ThemeContext);
     return prefix || prefixes[defaultPrefix] || defaultPrefix;
+  }
+  function useIsRTL() {
+    const {
+      dir
+    } = (0, import_react3.useContext)(ThemeContext);
+    return dir === "rtl";
   }
 
   // node_modules/react-bootstrap/esm/Collapse.js
@@ -29162,7 +29168,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     as,
     bsPrefix,
     variant = "primary",
-    size,
+    size: size2,
     active = false,
     disabled = false,
     className,
@@ -29182,7 +29188,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ...props,
       ref,
       disabled,
-      className: (0, import_classnames9.default)(className, prefix, active && "active", variant && `${prefix}-${variant}`, size && `${prefix}-${size}`, props.href && disabled && "disabled")
+      className: (0, import_classnames9.default)(className, prefix, active && "active", variant && `${prefix}-${variant}`, size2 && `${prefix}-${size2}`, props.href && disabled && "disabled")
     });
   });
   Button2.displayName = "Button";
@@ -29442,6 +29448,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ImgOverlay: CardImgOverlay_default
   });
 
+  // node_modules/@restart/hooks/esm/useUpdatedRef.js
+  var import_react26 = __toESM(require_react());
+  function useUpdatedRef(value) {
+    const valueRef = (0, import_react26.useRef)(value);
+    valueRef.current = value;
+    return valueRef;
+  }
+
+  // node_modules/@restart/hooks/esm/useWillUnmount.js
+  var import_react27 = __toESM(require_react());
+  function useWillUnmount(fn) {
+    const onUnmount = useUpdatedRef(fn);
+    (0, import_react27.useEffect)(() => () => onUnmount.current(), []);
+  }
+
   // node_modules/react-bootstrap/esm/Container.js
   var import_classnames20 = __toESM(require_classnames());
   var React40 = __toESM(require_react());
@@ -29473,17 +29494,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js
-  var import_react26 = __toESM(require_react());
+  var import_react28 = __toESM(require_react());
   function useUncontrolledProp2(propValue, defaultValue, handler) {
-    const wasPropRef = (0, import_react26.useRef)(propValue !== void 0);
-    const [stateValue, setState] = (0, import_react26.useState)(defaultValue);
+    const wasPropRef = (0, import_react28.useRef)(propValue !== void 0);
+    const [stateValue, setState] = (0, import_react28.useState)(defaultValue);
     const isProp2 = propValue !== void 0;
     const wasProp = wasPropRef.current;
     wasPropRef.current = isProp2;
     if (!isProp2 && wasProp && stateValue !== defaultValue) {
       setState(defaultValue);
     }
-    return [isProp2 ? propValue : stateValue, (0, import_react26.useCallback)((...args) => {
+    return [isProp2 ? propValue : stateValue, (0, import_react28.useCallback)((...args) => {
       const [value, ...rest] = args;
       let returnValue = handler == null ? void 0 : handler(value, ...rest);
       setState(value);
@@ -29492,9 +29513,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js
-  var import_react27 = __toESM(require_react());
+  var import_react29 = __toESM(require_react());
   function useForceUpdate() {
-    const [, dispatch] = (0, import_react27.useReducer)((revision) => revision + 1, 0);
+    const [, dispatch] = (0, import_react29.useReducer)((revision) => revision + 1, 0);
     return dispatch;
   }
 
@@ -29507,21 +29528,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@react-aria/ssr/dist/SSRProvider.mjs
-  var import_react28 = __toESM(require_react(), 1);
+  var import_react30 = __toESM(require_react(), 1);
   var $b5e257d569688ac6$var$defaultContext = {
     prefix: String(Math.round(Math.random() * 1e10)),
     current: 0
   };
-  var $b5e257d569688ac6$var$SSRContext = /* @__PURE__ */ (0, import_react28.default).createContext($b5e257d569688ac6$var$defaultContext);
-  var $b5e257d569688ac6$var$IsSSRContext = /* @__PURE__ */ (0, import_react28.default).createContext(false);
+  var $b5e257d569688ac6$var$SSRContext = /* @__PURE__ */ (0, import_react30.default).createContext($b5e257d569688ac6$var$defaultContext);
+  var $b5e257d569688ac6$var$IsSSRContext = /* @__PURE__ */ (0, import_react30.default).createContext(false);
   var $b5e257d569688ac6$var$canUseDOM = Boolean(typeof window !== "undefined" && window.document && window.document.createElement);
   var $b5e257d569688ac6$var$componentIds = /* @__PURE__ */ new WeakMap();
   function $b5e257d569688ac6$var$useCounter(isDisabled = false) {
-    let ctx = (0, import_react28.useContext)($b5e257d569688ac6$var$SSRContext);
-    let ref = (0, import_react28.useRef)(null);
+    let ctx = (0, import_react30.useContext)($b5e257d569688ac6$var$SSRContext);
+    let ref = (0, import_react30.useRef)(null);
     if (ref.current === null && !isDisabled) {
       var _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner, _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      let currentOwner = (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = (0, import_react28.default).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === void 0 ? void 0 : (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner = _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner === void 0 ? void 0 : _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner.current;
+      let currentOwner = (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = (0, import_react30.default).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === void 0 ? void 0 : (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner = _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner === void 0 ? void 0 : _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner.current;
       if (currentOwner) {
         let prevComponentValue = $b5e257d569688ac6$var$componentIds.get(currentOwner);
         if (prevComponentValue == null)
@@ -29539,7 +29560,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return ref.current;
   }
   function $b5e257d569688ac6$var$useLegacySSRSafeId(defaultId) {
-    let ctx = (0, import_react28.useContext)($b5e257d569688ac6$var$SSRContext);
+    let ctx = (0, import_react30.useContext)($b5e257d569688ac6$var$SSRContext);
     if (ctx === $b5e257d569688ac6$var$defaultContext && !$b5e257d569688ac6$var$canUseDOM)
       console.warn("When server rendering, you must wrap your application in an <SSRProvider> to ensure consistent ids are generated between the client and server.");
     let counter = $b5e257d569688ac6$var$useCounter(!!defaultId);
@@ -29547,12 +29568,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return defaultId || `${prefix}-${counter}`;
   }
   function $b5e257d569688ac6$var$useModernSSRSafeId(defaultId) {
-    let id = (0, import_react28.default).useId();
-    let [didSSR] = (0, import_react28.useState)($b5e257d569688ac6$export$535bd6ca7f90a273());
+    let id = (0, import_react30.default).useId();
+    let [didSSR] = (0, import_react30.useState)($b5e257d569688ac6$export$535bd6ca7f90a273());
     let prefix = didSSR || false ? "react-aria" : `react-aria${$b5e257d569688ac6$var$defaultContext.prefix}`;
     return defaultId || `${prefix}-${id}`;
   }
-  var $b5e257d569688ac6$export$619500959fc48b26 = typeof (0, import_react28.default)["useId"] === "function" ? $b5e257d569688ac6$var$useModernSSRSafeId : $b5e257d569688ac6$var$useLegacySSRSafeId;
+  var $b5e257d569688ac6$export$619500959fc48b26 = typeof (0, import_react30.default)["useId"] === "function" ? $b5e257d569688ac6$var$useModernSSRSafeId : $b5e257d569688ac6$var$useLegacySSRSafeId;
   function $b5e257d569688ac6$var$getSnapshot() {
     return false;
   }
@@ -29564,9 +29585,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
   }
   function $b5e257d569688ac6$export$535bd6ca7f90a273() {
-    if (typeof (0, import_react28.default)["useSyncExternalStore"] === "function")
-      return (0, import_react28.default)["useSyncExternalStore"]($b5e257d569688ac6$var$subscribe, $b5e257d569688ac6$var$getSnapshot, $b5e257d569688ac6$var$getServerSnapshot);
-    return (0, import_react28.useContext)($b5e257d569688ac6$var$IsSSRContext);
+    if (typeof (0, import_react30.default)["useSyncExternalStore"] === "function")
+      return (0, import_react30.default)["useSyncExternalStore"]($b5e257d569688ac6$var$subscribe, $b5e257d569688ac6$var$getSnapshot, $b5e257d569688ac6$var$getServerSnapshot);
+    return (0, import_react30.useContext)($b5e257d569688ac6$var$IsSSRContext);
   }
 
   // node_modules/@restart/ui/esm/SelectableContext.js
@@ -29596,20 +29617,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/useWindow.js
-  var import_react29 = __toESM(require_react());
-  var Context = /* @__PURE__ */ (0, import_react29.createContext)(canUseDOM_default ? window : void 0);
+  var import_react31 = __toESM(require_react());
+  var Context = /* @__PURE__ */ (0, import_react31.createContext)(canUseDOM_default ? window : void 0);
   var WindowProvider = Context.Provider;
   function useWindow() {
-    return (0, import_react29.useContext)(Context);
+    return (0, import_react31.useContext)(Context);
   }
 
   // node_modules/@restart/hooks/esm/useIsomorphicEffect.js
-  var import_react30 = __toESM(require_react());
+  var import_react32 = __toESM(require_react());
   var isReactNative2 = typeof global !== "undefined" && // @ts-ignore
   global.navigator && // @ts-ignore
   global.navigator.product === "ReactNative";
   var isDOM2 = typeof document !== "undefined";
-  var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react30.useLayoutEffect : import_react30.useEffect;
+  var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react32.useLayoutEffect : import_react32.useEffect;
 
   // node_modules/react-bootstrap/esm/NavbarContext.js
   var React43 = __toESM(require_react());
@@ -29625,10 +29646,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/@restart/ui/esm/Nav.js
   var React46 = __toESM(require_react());
-  var import_react33 = __toESM(require_react());
+  var import_react35 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js
-  var import_react31 = __toESM(require_react());
+  var import_react33 = __toESM(require_react());
   var toFnRef2 = (ref) => !ref || typeof ref === "function" ? ref : (value) => {
     ref.current = value;
   };
@@ -29643,7 +29664,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
   }
   function useMergedRefs2(refA, refB) {
-    return (0, import_react31.useMemo)(() => mergeRefs3(refA, refB), [refA, refB]);
+    return (0, import_react33.useMemo)(() => mergeRefs3(refA, refB), [refA, refB]);
   }
   var useMergedRefs_default2 = useMergedRefs2;
 
@@ -29654,7 +29675,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/@restart/ui/esm/NavItem.js
   var React45 = __toESM(require_react());
-  var import_react32 = __toESM(require_react());
+  var import_react34 = __toESM(require_react());
   var import_jsx_runtime26 = __toESM(require_jsx_runtime());
   var _excluded3 = ["as", "active", "eventKey"];
   function _objectWithoutPropertiesLoose4(r, e) {
@@ -29677,9 +29698,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     role,
     disabled
   }) {
-    const parentOnSelect = (0, import_react32.useContext)(SelectableContext_default);
-    const navContext = (0, import_react32.useContext)(NavContext_default);
-    const tabContext = (0, import_react32.useContext)(TabContext_default);
+    const parentOnSelect = (0, import_react34.useContext)(SelectableContext_default);
+    const navContext = (0, import_react34.useContext)(NavContext_default);
+    const tabContext = (0, import_react34.useContext)(TabContext_default);
     let isActive = active;
     const props = {
       role
@@ -29766,9 +29787,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onKeyDown
     } = _ref, props = _objectWithoutPropertiesLoose5(_ref, _excluded4);
     const forceUpdate = useForceUpdate();
-    const needsRefocusRef = (0, import_react33.useRef)(false);
-    const parentOnSelect = (0, import_react33.useContext)(SelectableContext_default);
-    const tabContext = (0, import_react33.useContext)(TabContext_default);
+    const needsRefocusRef = (0, import_react35.useRef)(false);
+    const parentOnSelect = (0, import_react35.useContext)(SelectableContext_default);
+    const tabContext = (0, import_react35.useContext)(TabContext_default);
     let getControlledId, getControllerId;
     if (tabContext) {
       role = role || "tablist";
@@ -29776,7 +29797,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       getControlledId = tabContext.getControlledId;
       getControllerId = tabContext.getControllerId;
     }
-    const listNode = (0, import_react33.useRef)(null);
+    const listNode = (0, import_react35.useRef)(null);
     const getNextActiveTab = (offset) => {
       const currentListNode = listNode.current;
       if (!currentListNode)
@@ -29826,7 +29847,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       needsRefocusRef.current = true;
       forceUpdate();
     };
-    (0, import_react33.useEffect)(() => {
+    (0, import_react35.useEffect)(() => {
       if (listNode.current && needsRefocusRef.current) {
         const activeChild = listNode.current.querySelector(`[${EVENT_KEY_ATTR}][aria-selected=true]`);
         activeChild == null ? void 0 : activeChild.focus();
@@ -29939,6 +29960,38 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     Item: ListGroupItem_default
   });
 
+  // node_modules/react-bootstrap/esm/Modal.js
+  var import_classnames28 = __toESM(require_classnames());
+
+  // node_modules/dom-helpers/esm/scrollbarSize.js
+  var size;
+  function scrollbarSize(recalc) {
+    if (!size && size !== 0 || recalc) {
+      if (canUseDOM_default) {
+        var scrollDiv = document.createElement("div");
+        scrollDiv.style.position = "absolute";
+        scrollDiv.style.top = "-9999px";
+        scrollDiv.style.width = "50px";
+        scrollDiv.style.height = "50px";
+        scrollDiv.style.overflow = "scroll";
+        document.body.appendChild(scrollDiv);
+        size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+        document.body.removeChild(scrollDiv);
+      }
+    }
+    return size;
+  }
+
+  // node_modules/@restart/hooks/esm/useCallbackRef.js
+  var import_react36 = __toESM(require_react());
+  function useCallbackRef2() {
+    return (0, import_react36.useState)(null);
+  }
+
+  // node_modules/react-bootstrap/esm/Modal.js
+  var React59 = __toESM(require_react());
+  var import_react45 = __toESM(require_react());
+
   // node_modules/dom-helpers/esm/activeElement.js
   function activeElement(doc) {
     if (doc === void 0) {
@@ -29955,23 +30008,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/Modal.js
-  var import_react40 = __toESM(require_react());
+  var import_react43 = __toESM(require_react());
   var React51 = __toESM(require_react());
   var import_react_dom3 = __toESM(require_react_dom());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js
-  var import_react34 = __toESM(require_react());
-  function useUpdatedRef(value) {
-    const valueRef = (0, import_react34.useRef)(value);
+  var import_react37 = __toESM(require_react());
+  function useUpdatedRef2(value) {
+    const valueRef = (0, import_react37.useRef)(value);
     valueRef.current = value;
     return valueRef;
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js
-  var import_react35 = __toESM(require_react());
-  function useWillUnmount(fn) {
-    const onUnmount = useUpdatedRef(fn);
-    (0, import_react35.useEffect)(() => () => onUnmount.current(), []);
+  var import_react38 = __toESM(require_react());
+  function useWillUnmount2(fn) {
+    const onUnmount = useUpdatedRef2(fn);
+    (0, import_react38.useEffect)(() => () => onUnmount.current(), []);
   }
 
   // node_modules/@restart/ui/esm/getScrollbarWidth.js
@@ -30065,7 +30118,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalManager_default = ModalManager;
 
   // node_modules/@restart/ui/esm/useWaitForDOMRef.js
-  var import_react36 = __toESM(require_react());
+  var import_react39 = __toESM(require_react());
   var resolveContainerRef = (ref, document2) => {
     if (!canUseDOM_default)
       return null;
@@ -30081,18 +30134,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   function useWaitForDOMRef(ref, onResolved) {
     const window2 = useWindow();
-    const [resolvedRef, setRef] = (0, import_react36.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
+    const [resolvedRef, setRef] = (0, import_react39.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
     if (!resolvedRef) {
       const earlyRef = resolveContainerRef(ref);
       if (earlyRef)
         setRef(earlyRef);
     }
-    (0, import_react36.useEffect)(() => {
+    (0, import_react39.useEffect)(() => {
       if (onResolved && resolvedRef) {
         onResolved(resolvedRef);
       }
     }, [onResolved, resolvedRef]);
-    (0, import_react36.useEffect)(() => {
+    (0, import_react39.useEffect)(() => {
       const nextRef = resolveContainerRef(ref);
       if (nextRef !== resolvedRef) {
         setRef(nextRef);
@@ -30102,10 +30155,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/ImperativeTransition.js
-  var import_react39 = __toESM(require_react());
+  var import_react42 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/NoopTransition.js
-  var import_react37 = __toESM(require_react());
+  var import_react40 = __toESM(require_react());
   function NoopTransition({
     children,
     in: inProp,
@@ -30113,10 +30166,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     mountOnEnter,
     unmountOnExit
   }) {
-    const ref = (0, import_react37.useRef)(null);
-    const hasEnteredRef = (0, import_react37.useRef)(inProp);
+    const ref = (0, import_react40.useRef)(null);
+    const hasEnteredRef = (0, import_react40.useRef)(inProp);
     const handleExited = useEventCallback2(onExited);
-    (0, import_react37.useEffect)(() => {
+    (0, import_react40.useEffect)(() => {
       if (inProp)
         hasEnteredRef.current = true;
       else {
@@ -30124,7 +30177,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }, [inProp, handleExited]);
     const combinedRef = useMergedRefs_default2(ref, getChildRef(children));
-    const child = /* @__PURE__ */ (0, import_react37.cloneElement)(children, {
+    const child = /* @__PURE__ */ (0, import_react40.cloneElement)(children, {
       ref: combinedRef
     });
     if (inProp)
@@ -30143,7 +30196,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React49 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/useRTGTransitionProps.js
-  var import_react38 = __toESM(require_react());
+  var import_react41 = __toESM(require_react());
   var _excluded5 = ["onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "addEndListener", "children"];
   function _objectWithoutPropertiesLoose6(r, e) {
     if (null == r)
@@ -30168,20 +30221,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       addEndListener,
       children
     } = _ref, props = _objectWithoutPropertiesLoose6(_ref, _excluded5);
-    const nodeRef = (0, import_react38.useRef)(null);
+    const nodeRef = (0, import_react41.useRef)(null);
     const mergedRef = useMergedRefs_default2(nodeRef, getChildRef(children));
     const normalize = (callback) => (param) => {
       if (callback && nodeRef.current) {
         callback(nodeRef.current, param);
       }
     };
-    const handleEnter = (0, import_react38.useCallback)(normalize(onEnter), [onEnter]);
-    const handleEntering = (0, import_react38.useCallback)(normalize(onEntering), [onEntering]);
-    const handleEntered = (0, import_react38.useCallback)(normalize(onEntered), [onEntered]);
-    const handleExit = (0, import_react38.useCallback)(normalize(onExit), [onExit]);
-    const handleExiting = (0, import_react38.useCallback)(normalize(onExiting), [onExiting]);
-    const handleExited = (0, import_react38.useCallback)(normalize(onExited), [onExited]);
-    const handleAddEndListener = (0, import_react38.useCallback)(normalize(addEndListener), [addEndListener]);
+    const handleEnter = (0, import_react41.useCallback)(normalize(onEnter), [onEnter]);
+    const handleEntering = (0, import_react41.useCallback)(normalize(onEntering), [onEntering]);
+    const handleEntered = (0, import_react41.useCallback)(normalize(onEntered), [onEntered]);
+    const handleExit = (0, import_react41.useCallback)(normalize(onExit), [onExit]);
+    const handleExiting = (0, import_react41.useCallback)(normalize(onExiting), [onExiting]);
+    const handleExited = (0, import_react41.useCallback)(normalize(onExited), [onExited]);
+    const handleAddEndListener = (0, import_react41.useCallback)(normalize(addEndListener), [addEndListener]);
     return Object.assign({}, props, {
       nodeRef
     }, onEnter && {
@@ -30204,7 +30257,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         children(status, Object.assign({}, innerProps, {
           ref: mergedRef
         }))
-      ) : /* @__PURE__ */ (0, import_react38.cloneElement)(children, {
+      ) : /* @__PURE__ */ (0, import_react41.cloneElement)(children, {
         ref: mergedRef
       })
     });
@@ -30242,8 +30295,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     in: inProp,
     onTransition
   }) {
-    const ref = (0, import_react39.useRef)(null);
-    const isInitialRef = (0, import_react39.useRef)(true);
+    const ref = (0, import_react42.useRef)(null);
+    const isInitialRef = (0, import_react42.useRef)(true);
     const handleTransition = useEventCallback2(onTransition);
     useIsomorphicEffect_default(() => {
       if (!ref.current) {
@@ -30275,7 +30328,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     onEntered,
     transition
   }) {
-    const [exited, setExited] = (0, import_react39.useState)(!inProp);
+    const [exited, setExited] = (0, import_react42.useState)(!inProp);
     if (inProp && exited) {
       setExited(false);
     }
@@ -30300,7 +30353,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     });
     const combinedRef = useMergedRefs_default2(ref, getChildRef(children));
-    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react39.cloneElement)(children, {
+    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react42.cloneElement)(children, {
       ref: combinedRef
     });
   }
@@ -30344,7 +30397,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function useModalManager(provided) {
     const window2 = useWindow();
     const modalManager = provided || getManager(window2);
-    const modal = (0, import_react40.useRef)({
+    const modal = (0, import_react43.useRef)({
       dialog: null,
       backdrop: null
     });
@@ -30352,15 +30405,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       add: () => modalManager.add(modal.current),
       remove: () => modalManager.remove(modal.current),
       isTopModal: () => modalManager.isTopModal(modal.current),
-      setDialogRef: (0, import_react40.useCallback)((ref) => {
+      setDialogRef: (0, import_react43.useCallback)((ref) => {
         modal.current.dialog = ref;
       }, []),
-      setBackdropRef: (0, import_react40.useCallback)((ref) => {
+      setBackdropRef: (0, import_react43.useCallback)((ref) => {
         modal.current.backdrop = ref;
       }, [])
     });
   }
-  var Modal = /* @__PURE__ */ (0, import_react40.forwardRef)((_ref, ref) => {
+  var Modal = /* @__PURE__ */ (0, import_react43.forwardRef)((_ref, ref) => {
     let {
       show = false,
       role = "dialog",
@@ -30398,9 +30451,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const modal = useModalManager(providedManager);
     const isMounted = useMounted();
     const prevShow = usePrevious(show);
-    const [exited, setExited] = (0, import_react40.useState)(!show);
-    const lastFocusRef = (0, import_react40.useRef)(null);
-    (0, import_react40.useImperativeHandle)(ref, () => modal, [modal]);
+    const [exited, setExited] = (0, import_react43.useState)(!show);
+    const lastFocusRef = (0, import_react43.useRef)(null);
+    (0, import_react43.useImperativeHandle)(ref, () => modal, [modal]);
     if (canUseDOM_default && !prevShow && show) {
       lastFocusRef.current = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
     }
@@ -30440,7 +30493,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         lastFocusRef.current = null;
       }
     });
-    (0, import_react40.useEffect)(() => {
+    (0, import_react43.useEffect)(() => {
       if (!show || !container)
         return;
       handleShow();
@@ -30450,12 +30503,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       /* should never change: */
       handleShow
     ]);
-    (0, import_react40.useEffect)(() => {
+    (0, import_react43.useEffect)(() => {
       if (!exited)
         return;
       handleHide();
     }, [exited, handleHide]);
-    useWillUnmount(() => {
+    useWillUnmount2(() => {
       handleHide();
     });
     const handleEnforceFocus = useEventCallback2(() => {
@@ -30484,8 +30537,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       }
     });
-    const removeFocusListenerRef = (0, import_react40.useRef)();
-    const removeKeydownListenerRef = (0, import_react40.useRef)();
+    const removeFocusListenerRef = (0, import_react43.useRef)();
+    const removeKeydownListenerRef = (0, import_react43.useRef)();
     const handleHidden = (...args) => {
       setExited(true);
       onExited == null ? void 0 : onExited(...args);
@@ -30632,23 +30685,101 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   var BootstrapModalManager_default = BootstrapModalManager;
 
-  // node_modules/react-bootstrap/esm/ModalContext.js
+  // node_modules/react-bootstrap/esm/ModalBody.js
   var React52 = __toESM(require_react());
+  var import_classnames23 = __toESM(require_classnames());
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalContext = /* @__PURE__ */ React52.createContext({
+  var ModalBody = /* @__PURE__ */ React52.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component4 = "div",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal-body");
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Component4, {
+      ref,
+      className: (0, import_classnames23.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  ModalBody.displayName = "ModalBody";
+  var ModalBody_default = ModalBody;
+
+  // node_modules/react-bootstrap/esm/ModalContext.js
+  var React53 = __toESM(require_react());
+  "use client";
+  var ModalContext = /* @__PURE__ */ React53.createContext({
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onHide() {
     }
   });
   var ModalContext_default = ModalContext;
 
-  // node_modules/react-bootstrap/esm/AbstractModalHeader.js
-  var React53 = __toESM(require_react());
-  var import_react41 = __toESM(require_react());
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+  // node_modules/react-bootstrap/esm/ModalDialog.js
+  var import_classnames24 = __toESM(require_classnames());
+  var React54 = __toESM(require_react());
   var import_jsx_runtime34 = __toESM(require_jsx_runtime());
   "use client";
-  var AbstractModalHeader = /* @__PURE__ */ React53.forwardRef(({
+  var ModalDialog = /* @__PURE__ */ React54.forwardRef(({
+    bsPrefix,
+    className,
+    contentClassName,
+    centered,
+    size: size2,
+    fullscreen,
+    children,
+    scrollable,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal");
+    const dialogClass = `${bsPrefix}-dialog`;
+    const fullScreenClass = typeof fullscreen === "string" ? `${bsPrefix}-fullscreen-${fullscreen}` : `${bsPrefix}-fullscreen`;
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", {
+      ...props,
+      ref,
+      className: (0, import_classnames24.default)(dialogClass, className, size2 && `${bsPrefix}-${size2}`, centered && `${dialogClass}-centered`, scrollable && `${dialogClass}-scrollable`, fullscreen && fullScreenClass),
+      children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", {
+        className: (0, import_classnames24.default)(`${bsPrefix}-content`, contentClassName),
+        children
+      })
+    });
+  });
+  ModalDialog.displayName = "ModalDialog";
+  var ModalDialog_default = ModalDialog;
+
+  // node_modules/react-bootstrap/esm/ModalFooter.js
+  var React55 = __toESM(require_react());
+  var import_classnames25 = __toESM(require_classnames());
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  "use client";
+  var ModalFooter = /* @__PURE__ */ React55.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component4 = "div",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal-footer");
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Component4, {
+      ref,
+      className: (0, import_classnames25.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  ModalFooter.displayName = "ModalFooter";
+  var ModalFooter_default = ModalFooter;
+
+  // node_modules/react-bootstrap/esm/ModalHeader.js
+  var import_classnames26 = __toESM(require_classnames());
+  var React57 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/AbstractModalHeader.js
+  var React56 = __toESM(require_react());
+  var import_react44 = __toESM(require_react());
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  "use client";
+  var AbstractModalHeader = /* @__PURE__ */ React56.forwardRef(({
     closeLabel = "Close",
     closeVariant,
     closeButton = false,
@@ -30656,15 +30787,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     children,
     ...props
   }, ref) => {
-    const context3 = (0, import_react41.useContext)(ModalContext_default);
+    const context3 = (0, import_react44.useContext)(ModalContext_default);
     const handleClick = useEventCallback(() => {
       context3 == null || context3.onHide();
       onHide == null || onHide();
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", {
       ref,
       ...props,
-      children: [children, closeButton && /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(CloseButton_default, {
+      children: [children, closeButton && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(CloseButton_default, {
         "aria-label": closeLabel,
         variant: closeVariant,
         onClick: handleClick
@@ -30673,26 +30804,289 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
   var AbstractModalHeader_default = AbstractModalHeader;
 
+  // node_modules/react-bootstrap/esm/ModalHeader.js
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  "use client";
+  var ModalHeader = /* @__PURE__ */ React57.forwardRef(({
+    bsPrefix,
+    className,
+    closeLabel = "Close",
+    closeButton = false,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal-header");
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(AbstractModalHeader_default, {
+      ref,
+      ...props,
+      className: (0, import_classnames26.default)(className, bsPrefix),
+      closeLabel,
+      closeButton
+    });
+  });
+  ModalHeader.displayName = "ModalHeader";
+  var ModalHeader_default = ModalHeader;
+
+  // node_modules/react-bootstrap/esm/ModalTitle.js
+  var React58 = __toESM(require_react());
+  var import_classnames27 = __toESM(require_classnames());
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  "use client";
+  var DivStyledAsH42 = divWithClassName_default("h4");
+  var ModalTitle = /* @__PURE__ */ React58.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component4 = DivStyledAsH42,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal-title");
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Component4, {
+      ref,
+      className: (0, import_classnames27.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  ModalTitle.displayName = "ModalTitle";
+  var ModalTitle_default = ModalTitle;
+
+  // node_modules/react-bootstrap/esm/Modal.js
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  "use client";
+  function DialogTransition(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Fade_default, {
+      ...props,
+      timeout: null
+    });
+  }
+  function BackdropTransition(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Fade_default, {
+      ...props,
+      timeout: null
+    });
+  }
+  var Modal2 = /* @__PURE__ */ React59.forwardRef(({
+    bsPrefix,
+    className,
+    style: style2,
+    dialogClassName,
+    contentClassName,
+    children,
+    dialogAs: Dialog = ModalDialog_default,
+    "data-bs-theme": dataBsTheme,
+    "aria-labelledby": ariaLabelledby,
+    "aria-describedby": ariaDescribedby,
+    "aria-label": ariaLabel,
+    /* BaseModal props */
+    show = false,
+    animation = true,
+    backdrop = true,
+    keyboard = true,
+    onEscapeKeyDown,
+    onShow,
+    onHide,
+    container,
+    autoFocus = true,
+    enforceFocus = true,
+    restoreFocus = true,
+    restoreFocusOptions,
+    onEntered,
+    onExit,
+    onExiting,
+    onEnter,
+    onEntering,
+    onExited,
+    backdropClassName,
+    manager: propsManager,
+    ...props
+  }, ref) => {
+    const [modalStyle, setStyle] = (0, import_react45.useState)({});
+    const [animateStaticModal, setAnimateStaticModal] = (0, import_react45.useState)(false);
+    const waitingForMouseUpRef = (0, import_react45.useRef)(false);
+    const ignoreBackdropClickRef = (0, import_react45.useRef)(false);
+    const removeStaticModalAnimationRef = (0, import_react45.useRef)(null);
+    const [modal, setModalRef] = useCallbackRef2();
+    const mergedRef = useMergedRefs_default(ref, setModalRef);
+    const handleHide = useEventCallback(onHide);
+    const isRTL = useIsRTL();
+    bsPrefix = useBootstrapPrefix(bsPrefix, "modal");
+    const modalContext = (0, import_react45.useMemo)(() => ({
+      onHide: handleHide
+    }), [handleHide]);
+    function getModalManager() {
+      if (propsManager)
+        return propsManager;
+      return getSharedManager({
+        isRTL
+      });
+    }
+    function updateDialogStyle(node) {
+      if (!canUseDOM_default)
+        return;
+      const containerIsOverflowing = getModalManager().getScrollbarWidth() > 0;
+      const modalIsOverflowing = node.scrollHeight > ownerDocument(node).documentElement.clientHeight;
+      setStyle({
+        paddingRight: containerIsOverflowing && !modalIsOverflowing ? scrollbarSize() : void 0,
+        paddingLeft: !containerIsOverflowing && modalIsOverflowing ? scrollbarSize() : void 0
+      });
+    }
+    const handleWindowResize = useEventCallback(() => {
+      if (modal) {
+        updateDialogStyle(modal.dialog);
+      }
+    });
+    useWillUnmount(() => {
+      removeEventListener_default(window, "resize", handleWindowResize);
+      removeStaticModalAnimationRef.current == null || removeStaticModalAnimationRef.current();
+    });
+    const handleDialogMouseDown = () => {
+      waitingForMouseUpRef.current = true;
+    };
+    const handleMouseUp = (e) => {
+      if (waitingForMouseUpRef.current && modal && e.target === modal.dialog) {
+        ignoreBackdropClickRef.current = true;
+      }
+      waitingForMouseUpRef.current = false;
+    };
+    const handleStaticModalAnimation = () => {
+      setAnimateStaticModal(true);
+      removeStaticModalAnimationRef.current = transitionEnd(modal.dialog, () => {
+        setAnimateStaticModal(false);
+      });
+    };
+    const handleStaticBackdropClick = (e) => {
+      if (e.target !== e.currentTarget) {
+        return;
+      }
+      handleStaticModalAnimation();
+    };
+    const handleClick = (e) => {
+      if (backdrop === "static") {
+        handleStaticBackdropClick(e);
+        return;
+      }
+      if (ignoreBackdropClickRef.current || e.target !== e.currentTarget) {
+        ignoreBackdropClickRef.current = false;
+        return;
+      }
+      onHide == null || onHide();
+    };
+    const handleEscapeKeyDown = (e) => {
+      if (keyboard) {
+        onEscapeKeyDown == null || onEscapeKeyDown(e);
+      } else {
+        e.preventDefault();
+        if (backdrop === "static") {
+          handleStaticModalAnimation();
+        }
+      }
+    };
+    const handleEnter = (node, isAppearing) => {
+      if (node) {
+        updateDialogStyle(node);
+      }
+      onEnter == null || onEnter(node, isAppearing);
+    };
+    const handleExit = (node) => {
+      removeStaticModalAnimationRef.current == null || removeStaticModalAnimationRef.current();
+      onExit == null || onExit(node);
+    };
+    const handleEntering = (node, isAppearing) => {
+      onEntering == null || onEntering(node, isAppearing);
+      addEventListener_default(window, "resize", handleWindowResize);
+    };
+    const handleExited = (node) => {
+      if (node)
+        node.style.display = "";
+      onExited == null || onExited(node);
+      removeEventListener_default(window, "resize", handleWindowResize);
+    };
+    const renderBackdrop = (0, import_react45.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", {
+      ...backdropProps,
+      className: (0, import_classnames28.default)(`${bsPrefix}-backdrop`, backdropClassName, !animation && "show")
+    }), [animation, backdropClassName, bsPrefix]);
+    const baseModalStyle = {
+      ...style2,
+      ...modalStyle
+    };
+    baseModalStyle.display = "block";
+    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", {
+      role: "dialog",
+      ...dialogProps,
+      style: baseModalStyle,
+      className: (0, import_classnames28.default)(className, bsPrefix, animateStaticModal && `${bsPrefix}-static`, !animation && "show"),
+      onClick: backdrop ? handleClick : void 0,
+      onMouseUp: handleMouseUp,
+      "data-bs-theme": dataBsTheme,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledby,
+      "aria-describedby": ariaDescribedby,
+      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Dialog, {
+        ...props,
+        onMouseDown: handleDialogMouseDown,
+        className: dialogClassName,
+        contentClassName,
+        children
+      })
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(ModalContext_default.Provider, {
+      value: modalContext,
+      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Modal_default, {
+        show,
+        ref: mergedRef,
+        backdrop,
+        container,
+        keyboard: true,
+        autoFocus,
+        enforceFocus,
+        restoreFocus,
+        restoreFocusOptions,
+        onEscapeKeyDown: handleEscapeKeyDown,
+        onShow,
+        onHide,
+        onEnter: handleEnter,
+        onEntering: handleEntering,
+        onEntered,
+        onExit: handleExit,
+        onExiting,
+        onExited: handleExited,
+        manager: getModalManager(),
+        transition: animation ? DialogTransition : void 0,
+        backdropTransition: animation ? BackdropTransition : void 0,
+        renderBackdrop,
+        renderDialog
+      })
+    });
+  });
+  Modal2.displayName = "Modal";
+  var Modal_default2 = Object.assign(Modal2, {
+    Body: ModalBody_default,
+    Header: ModalHeader_default,
+    Title: ModalTitle_default,
+    Footer: ModalFooter_default,
+    Dialog: ModalDialog_default,
+    TRANSITION_DURATION: 300,
+    BACKDROP_TRANSITION_DURATION: 150
+  });
+
   // node_modules/react-bootstrap/esm/Nav.js
-  var import_classnames25 = __toESM(require_classnames());
-  var React56 = __toESM(require_react());
-  var import_react42 = __toESM(require_react());
+  var import_classnames31 = __toESM(require_classnames());
+  var React62 = __toESM(require_react());
+  var import_react46 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavItem.js
-  var React54 = __toESM(require_react());
-  var import_classnames23 = __toESM(require_classnames());
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var React60 = __toESM(require_react());
+  var import_classnames29 = __toESM(require_classnames());
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
   "use client";
-  var NavItem2 = /* @__PURE__ */ React54.forwardRef(({
+  var NavItem2 = /* @__PURE__ */ React60.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "nav-item");
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Component4, {
       ref,
-      className: (0, import_classnames23.default)(className, bsPrefix),
+      className: (0, import_classnames29.default)(className, bsPrefix),
       ...props
     });
   });
@@ -30700,11 +31094,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavItem_default2 = NavItem2;
 
   // node_modules/react-bootstrap/esm/NavLink.js
-  var import_classnames24 = __toESM(require_classnames());
-  var React55 = __toESM(require_react());
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  var import_classnames30 = __toESM(require_classnames());
+  var React61 = __toESM(require_react());
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
   "use client";
-  var NavLink2 = /* @__PURE__ */ React55.forwardRef(({
+  var NavLink2 = /* @__PURE__ */ React61.forwardRef(({
     bsPrefix,
     className,
     as: Component4 = Anchor_default,
@@ -30720,21 +31114,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       disabled,
       ...props
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Component4, {
       ...props,
       ...navItemProps,
       ref,
       disabled,
-      className: (0, import_classnames24.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
+      className: (0, import_classnames30.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
     });
   });
   NavLink2.displayName = "NavLink";
   var NavLink_default = NavLink2;
 
   // node_modules/react-bootstrap/esm/Nav.js
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
   "use client";
-  var Nav2 = /* @__PURE__ */ React56.forwardRef((uncontrolledProps, ref) => {
+  var Nav2 = /* @__PURE__ */ React62.forwardRef((uncontrolledProps, ref) => {
     const {
       as = "div",
       bsPrefix: initialBsPrefix,
@@ -30753,8 +31147,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     let navbarBsPrefix;
     let cardHeaderBsPrefix;
     let isNavbar = false;
-    const navbarContext = (0, import_react42.useContext)(NavbarContext_default);
-    const cardHeaderContext = (0, import_react42.useContext)(CardHeaderContext_default);
+    const navbarContext = (0, import_react46.useContext)(NavbarContext_default);
+    const cardHeaderContext = (0, import_react46.useContext)(CardHeaderContext_default);
     if (navbarContext) {
       navbarBsPrefix = navbarContext.bsPrefix;
       isNavbar = navbar == null ? true : navbar;
@@ -30763,11 +31157,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         cardHeaderBsPrefix
       } = cardHeaderContext);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(Nav_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Nav_default, {
       as,
       ref,
       activeKey,
-      className: (0, import_classnames25.default)(className, {
+      className: (0, import_classnames31.default)(className, {
         [bsPrefix]: !isNavbar,
         [`${navbarBsPrefix}-nav`]: isNavbar,
         [`${navbarBsPrefix}-nav-scroll`]: isNavbar && navbarScroll,
@@ -30786,16 +31180,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Navbar.js
-  var import_classnames34 = __toESM(require_classnames());
-  var React67 = __toESM(require_react());
-  var import_react49 = __toESM(require_react());
+  var import_classnames40 = __toESM(require_classnames());
+  var React73 = __toESM(require_react());
+  var import_react53 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavbarBrand.js
-  var import_classnames26 = __toESM(require_classnames());
-  var React57 = __toESM(require_react());
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  var import_classnames32 = __toESM(require_classnames());
+  var React63 = __toESM(require_react());
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarBrand = /* @__PURE__ */ React57.forwardRef(({
+  var NavbarBrand = /* @__PURE__ */ React63.forwardRef(({
     bsPrefix,
     className,
     as,
@@ -30803,31 +31197,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-brand");
     const Component4 = as || (props.href ? "a" : "span");
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Component4, {
       ...props,
       ref,
-      className: (0, import_classnames26.default)(className, bsPrefix)
+      className: (0, import_classnames32.default)(className, bsPrefix)
     });
   });
   NavbarBrand.displayName = "NavbarBrand";
   var NavbarBrand_default = NavbarBrand;
 
   // node_modules/react-bootstrap/esm/NavbarCollapse.js
-  var React58 = __toESM(require_react());
-  var import_react43 = __toESM(require_react());
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  var React64 = __toESM(require_react());
+  var import_react47 = __toESM(require_react());
+  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarCollapse = /* @__PURE__ */ React58.forwardRef(({
+  var NavbarCollapse = /* @__PURE__ */ React64.forwardRef(({
     children,
     bsPrefix,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-collapse");
-    const context3 = (0, import_react43.useContext)(NavbarContext_default);
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Collapse_default, {
+    const context3 = (0, import_react47.useContext)(NavbarContext_default);
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Collapse_default, {
       in: !!(context3 && context3.expanded),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime39.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", {
         ref,
         className: bsPrefix,
         children
@@ -30838,12 +31232,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarCollapse_default = NavbarCollapse;
 
   // node_modules/react-bootstrap/esm/NavbarToggle.js
-  var import_classnames27 = __toESM(require_classnames());
-  var React59 = __toESM(require_react());
-  var import_react44 = __toESM(require_react());
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  var import_classnames33 = __toESM(require_classnames());
+  var React65 = __toESM(require_react());
+  var import_react48 = __toESM(require_react());
+  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarToggle = /* @__PURE__ */ React59.forwardRef(({
+  var NavbarToggle = /* @__PURE__ */ React65.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -30857,7 +31251,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const {
       onToggle,
       expanded
-    } = (0, import_react44.useContext)(NavbarContext_default) || {};
+    } = (0, import_react48.useContext)(NavbarContext_default) || {};
     const handleClick = useEventCallback((e) => {
       if (onClick)
         onClick(e);
@@ -30867,13 +31261,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (Component4 === "button") {
       props.type = "button";
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Component4, {
       ...props,
       ref,
       onClick: handleClick,
       "aria-label": label,
-      className: (0, import_classnames27.default)(className, bsPrefix, !expanded && "collapsed"),
-      children: children || /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("span", {
+      className: (0, import_classnames33.default)(className, bsPrefix, !expanded && "collapsed"),
+      children: children || /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", {
         className: `${bsPrefix}-icon`
       })
     });
@@ -30882,14 +31276,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarToggle_default = NavbarToggle;
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var React65 = __toESM(require_react());
-  var import_react48 = __toESM(require_react());
+  var React71 = __toESM(require_react());
+  var import_react52 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var import_classnames32 = __toESM(require_classnames());
+  var import_classnames38 = __toESM(require_classnames());
 
   // node_modules/@restart/hooks/esm/useMediaQuery.js
-  var import_react45 = __toESM(require_react());
+  var import_react49 = __toESM(require_react());
   var matchersByWindow = /* @__PURE__ */ new WeakMap();
   var getMatcher = (query, targetWindow) => {
     if (!query || !targetWindow)
@@ -30906,7 +31300,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   function useMediaQuery(query, targetWindow = typeof window === "undefined" ? void 0 : window) {
     const mql = getMatcher(query, targetWindow);
-    const [matches, setMatches] = (0, import_react45.useState)(() => mql ? mql.matches : false);
+    const [matches, setMatches] = (0, import_react49.useState)(() => mql ? mql.matches : false);
     useIsomorphicEffect_default2(() => {
       let mql2 = getMatcher(query, targetWindow);
       if (!mql2) {
@@ -30932,7 +31326,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/hooks/esm/useBreakpoint.js
-  var import_react46 = __toESM(require_react());
+  var import_react50 = __toESM(require_react());
   function createBreakpointHook(breakpointValues) {
     const names = Object.keys(breakpointValues);
     function and(query, next) {
@@ -30972,7 +31366,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           [breakpointOrMap]: direction
         };
       }
-      let query = (0, import_react46.useMemo)(() => Object.entries(breakpointMap).reduce((query2, [key, direction2]) => {
+      let query = (0, import_react50.useMemo)(() => Object.entries(breakpointMap).reduce((query2, [key, direction2]) => {
         if (direction2 === "up" || direction2 === true) {
           query2 = and(query2, getMinQuery(key));
         }
@@ -30996,24 +31390,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var useBreakpoint_default = useBreakpoint;
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var React64 = __toESM(require_react());
-  var import_react47 = __toESM(require_react());
+  var React70 = __toESM(require_react());
+  var import_react51 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/OffcanvasBody.js
-  var React60 = __toESM(require_react());
-  var import_classnames28 = __toESM(require_classnames());
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+  var React66 = __toESM(require_react());
+  var import_classnames34 = __toESM(require_classnames());
+  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
   "use client";
-  var OffcanvasBody = /* @__PURE__ */ React60.forwardRef(({
+  var OffcanvasBody = /* @__PURE__ */ React66.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-body");
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Component4, {
       ref,
-      className: (0, import_classnames28.default)(className, bsPrefix),
+      className: (0, import_classnames34.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31021,15 +31415,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasBody_default = OffcanvasBody;
 
   // node_modules/react-bootstrap/esm/OffcanvasToggling.js
-  var import_classnames29 = __toESM(require_classnames());
-  var React61 = __toESM(require_react());
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+  var import_classnames35 = __toESM(require_classnames());
+  var React67 = __toESM(require_react());
+  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
   "use client";
   var transitionStyles = {
     [ENTERING]: "show",
     [ENTERED]: "show"
   };
-  var OffcanvasToggling = /* @__PURE__ */ React61.forwardRef(({
+  var OffcanvasToggling = /* @__PURE__ */ React67.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -31040,7 +31434,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(TransitionWrapper_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(TransitionWrapper_default, {
       ref,
       addEndListener: transitionEndListener,
       in: inProp,
@@ -31049,9 +31443,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       appear,
       ...props,
       childRef: getChildRef(children),
-      children: (status, innerProps) => /* @__PURE__ */ React61.cloneElement(children, {
+      children: (status, innerProps) => /* @__PURE__ */ React67.cloneElement(children, {
         ...innerProps,
-        className: (0, import_classnames29.default)(className, children.props.className, (status === ENTERING || status === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
+        className: (0, import_classnames35.default)(className, children.props.className, (status === ENTERING || status === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
       })
     });
   });
@@ -31059,11 +31453,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasToggling_default = OffcanvasToggling;
 
   // node_modules/react-bootstrap/esm/OffcanvasHeader.js
-  var import_classnames30 = __toESM(require_classnames());
-  var React62 = __toESM(require_react());
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
+  var import_classnames36 = __toESM(require_classnames());
+  var React68 = __toESM(require_react());
+  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
   "use client";
-  var OffcanvasHeader = /* @__PURE__ */ React62.forwardRef(({
+  var OffcanvasHeader = /* @__PURE__ */ React68.forwardRef(({
     bsPrefix,
     className,
     closeLabel = "Close",
@@ -31071,10 +31465,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-header");
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(AbstractModalHeader_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(AbstractModalHeader_default, {
       ref,
       ...props,
-      className: (0, import_classnames30.default)(className, bsPrefix),
+      className: (0, import_classnames36.default)(className, bsPrefix),
       closeLabel,
       closeButton
     });
@@ -31083,21 +31477,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasHeader_default = OffcanvasHeader;
 
   // node_modules/react-bootstrap/esm/OffcanvasTitle.js
-  var React63 = __toESM(require_react());
-  var import_classnames31 = __toESM(require_classnames());
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
+  var React69 = __toESM(require_react());
+  var import_classnames37 = __toESM(require_classnames());
+  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
   "use client";
   var DivStyledAsH52 = divWithClassName_default("h5");
-  var OffcanvasTitle = /* @__PURE__ */ React63.forwardRef(({
+  var OffcanvasTitle = /* @__PURE__ */ React69.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = DivStyledAsH52,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-title");
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Component4, {
       ref,
-      className: (0, import_classnames31.default)(className, bsPrefix),
+      className: (0, import_classnames37.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31105,21 +31499,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasTitle_default = OffcanvasTitle;
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime52 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime53 = __toESM(require_jsx_runtime());
   "use client";
-  function DialogTransition(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(OffcanvasToggling_default, {
+  function DialogTransition2(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(OffcanvasToggling_default, {
       ...props
     });
   }
-  function BackdropTransition(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Fade_default, {
+  function BackdropTransition2(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Fade_default, {
       ...props
     });
   }
-  var Offcanvas = /* @__PURE__ */ React64.forwardRef(({
+  var Offcanvas = /* @__PURE__ */ React70.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -31150,15 +31544,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     renderStaticNode = false,
     ...props
   }, ref) => {
-    const modalManager = (0, import_react47.useRef)();
+    const modalManager = (0, import_react51.useRef)();
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
-    const [showOffcanvas, setShowOffcanvas] = (0, import_react47.useState)(false);
+    const [showOffcanvas, setShowOffcanvas] = (0, import_react51.useState)(false);
     const handleHide = useEventCallback(onHide);
     const hideResponsiveOffcanvas = useBreakpoint_default(responsive || "xs", "up");
-    (0, import_react47.useEffect)(() => {
+    (0, import_react51.useEffect)(() => {
       setShowOffcanvas(responsive ? show && !hideResponsiveOffcanvas : show);
     }, [show, responsive, hideResponsiveOffcanvas]);
-    const modalContext = (0, import_react47.useMemo)(() => ({
+    const modalContext = (0, import_react51.useMemo)(() => ({
       onHide: handleHide
     }), [handleHide]);
     function getModalManager() {
@@ -31183,21 +31577,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         node.style.visibility = "";
       onExited == null || onExited(...args);
     };
-    const renderBackdrop = (0, import_react47.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", {
+    const renderBackdrop = (0, import_react51.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", {
       ...backdropProps,
-      className: (0, import_classnames32.default)(`${bsPrefix}-backdrop`, backdropClassName)
+      className: (0, import_classnames38.default)(`${bsPrefix}-backdrop`, backdropClassName)
     }), [backdropClassName, bsPrefix]);
-    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", {
+    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", {
       ...dialogProps,
       ...props,
-      className: (0, import_classnames32.default)(className, responsive ? `${bsPrefix}-${responsive}` : bsPrefix, `${bsPrefix}-${placement}`),
+      className: (0, import_classnames38.default)(className, responsive ? `${bsPrefix}-${responsive}` : bsPrefix, `${bsPrefix}-${placement}`),
       "aria-labelledby": ariaLabelledby,
       children
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsxs)(import_jsx_runtime46.Fragment, {
-      children: [!showOffcanvas && (responsive || renderStaticNode) && renderDialog({}), /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(ModalContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(import_jsx_runtime52.Fragment, {
+      children: [!showOffcanvas && (responsive || renderStaticNode) && renderDialog({}), /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(ModalContext_default.Provider, {
         value: modalContext,
-        children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Modal_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Modal_default, {
           show: showOffcanvas,
           ref,
           backdrop,
@@ -31217,8 +31611,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           onExiting,
           onExited: handleExited,
           manager: getModalManager(),
-          transition: DialogTransition,
-          backdropTransition: BackdropTransition,
+          transition: DialogTransition2,
+          backdropTransition: BackdropTransition2,
           renderBackdrop,
           renderDialog
         })
@@ -31233,18 +31627,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarOffcanvas = /* @__PURE__ */ React65.forwardRef(({
+  var NavbarOffcanvas = /* @__PURE__ */ React71.forwardRef(({
     onHide,
     ...props
   }, ref) => {
-    const context3 = (0, import_react48.useContext)(NavbarContext_default);
+    const context3 = (0, import_react52.useContext)(NavbarContext_default);
     const handleHide = useEventCallback(() => {
       context3 == null || context3.onToggle == null || context3.onToggle();
       onHide == null || onHide();
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Offcanvas_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Offcanvas_default, {
       ref,
       show: !!(context3 != null && context3.expanded),
       ...props,
@@ -31256,20 +31650,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarOffcanvas_default = NavbarOffcanvas;
 
   // node_modules/react-bootstrap/esm/NavbarText.js
-  var React66 = __toESM(require_react());
-  var import_classnames33 = __toESM(require_classnames());
-  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
+  var React72 = __toESM(require_react());
+  var import_classnames39 = __toESM(require_classnames());
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarText = /* @__PURE__ */ React66.forwardRef(({
+  var NavbarText = /* @__PURE__ */ React72.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "span",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-text");
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Component4, {
       ref,
-      className: (0, import_classnames33.default)(className, bsPrefix),
+      className: (0, import_classnames39.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31277,9 +31671,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarText_default = NavbarText;
 
   // node_modules/react-bootstrap/esm/Navbar.js
-  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
   "use client";
-  var Navbar = /* @__PURE__ */ React67.forwardRef((props, ref) => {
+  var Navbar = /* @__PURE__ */ React73.forwardRef((props, ref) => {
     const {
       bsPrefix: initialBsPrefix,
       expand = true,
@@ -31299,7 +31693,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       expanded: "onToggle"
     });
     const bsPrefix = useBootstrapPrefix(initialBsPrefix, "navbar");
-    const handleCollapse = (0, import_react49.useCallback)((...args) => {
+    const handleCollapse = (0, import_react53.useCallback)((...args) => {
       onSelect == null || onSelect(...args);
       if (collapseOnSelect && expanded) {
         onToggle == null || onToggle(false);
@@ -31311,20 +31705,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     let expandClass = `${bsPrefix}-expand`;
     if (typeof expand === "string")
       expandClass = `${expandClass}-${expand}`;
-    const navbarContext = (0, import_react49.useMemo)(() => ({
+    const navbarContext = (0, import_react53.useMemo)(() => ({
       onToggle: () => onToggle == null ? void 0 : onToggle(!expanded),
       bsPrefix,
       expanded: !!expanded,
       expand
     }), [bsPrefix, expanded, expand, onToggle]);
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(NavbarContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(NavbarContext_default.Provider, {
       value: navbarContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(SelectableContext_default.Provider, {
         value: handleCollapse,
-        children: /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Component4, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Component4, {
           ref,
           ...controlledProps,
-          className: (0, import_classnames34.default)(className, bsPrefix, expand && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
+          className: (0, import_classnames40.default)(className, bsPrefix, expand && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
         })
       })
     });
@@ -31342,16 +31736,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_prop_types4 = __toESM(require_prop_types());
 
   // node_modules/react-bootstrap/esm/TabContainer.js
-  var React70 = __toESM(require_react());
+  var React76 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var React69 = __toESM(require_react());
-  var import_react51 = __toESM(require_react());
+  var React75 = __toESM(require_react());
+  var import_react55 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/TabPanel.js
-  var React68 = __toESM(require_react());
-  var import_react50 = __toESM(require_react());
-  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
+  var React74 = __toESM(require_react());
+  var import_react54 = __toESM(require_react());
+  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
   var _excluded8 = ["active", "eventKey", "mountOnEnter", "transition", "unmountOnExit", "role", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited"];
   var _excluded22 = ["activeKey", "getControlledId", "getControllerId"];
   var _excluded32 = ["as"];
@@ -31382,7 +31776,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExiting,
       onExited
     } = _ref, props = _objectWithoutPropertiesLoose9(_ref, _excluded8);
-    const context3 = (0, import_react50.useContext)(TabContext_default);
+    const context3 = (0, import_react54.useContext)(TabContext_default);
     if (!context3)
       return [Object.assign({}, props, {
         role
@@ -31423,7 +31817,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExited
     }];
   }
-  var TabPanel = /* @__PURE__ */ React68.forwardRef(
+  var TabPanel = /* @__PURE__ */ React74.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (_ref2, ref) => {
       let {
@@ -31441,11 +31835,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         unmountOnExit,
         transition: Transition2 = NoopTransition_default
       }] = useTabPanel(props);
-      return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(TabContext_default.Provider, {
+      return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(TabContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(SelectableContext_default.Provider, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(SelectableContext_default.Provider, {
           value: null,
-          children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Transition2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Transition2, {
             in: isActive,
             onEnter,
             onEntering,
@@ -31455,7 +31849,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             onExited,
             mountOnEnter,
             unmountOnExit,
-            children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Component4, Object.assign({}, tabPanelProps, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Component4, Object.assign({}, tabPanelProps, {
               ref,
               hidden: !isActive,
               "aria-hidden": !isActive
@@ -31469,7 +31863,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabPanel_default = TabPanel;
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var import_jsx_runtime52 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
   var Tabs = (props) => {
     const {
       id: userId,
@@ -31484,8 +31878,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     } = props;
     const [activeKey, onSelect] = useUncontrolledProp2(propsActiveKey, defaultActiveKey, propsOnSelect);
     const id = $b5e257d569688ac6$export$619500959fc48b26(userId);
-    const generateChildId = (0, import_react51.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
-    const tabContext = (0, import_react51.useMemo)(() => ({
+    const generateChildId = (0, import_react55.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
+    const tabContext = (0, import_react55.useMemo)(() => ({
       onSelect,
       activeKey,
       transition,
@@ -31494,9 +31888,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       getControlledId: (key) => generateChildId(key, "tabpane"),
       getControllerId: (key) => generateChildId(key, "tab")
     }), [onSelect, activeKey, transition, mountOnEnter, unmountOnExit, generateChildId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(TabContext_default.Provider, {
       value: tabContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(SelectableContext_default.Provider, {
         value: onSelect || null,
         children
       })
@@ -31514,11 +31908,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/react-bootstrap/esm/TabContainer.js
-  var import_jsx_runtime53 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
   var TabContainer = ({
     transition,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Tabs_default, {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Tabs_default, {
     ...props,
     transition: getTabTransitionComponent(transition)
   });
@@ -31526,20 +31920,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabContainer_default = TabContainer;
 
   // node_modules/react-bootstrap/esm/TabContent.js
-  var React71 = __toESM(require_react());
-  var import_classnames35 = __toESM(require_classnames());
-  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
+  var React77 = __toESM(require_react());
+  var import_classnames41 = __toESM(require_classnames());
+  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
   "use client";
-  var TabContent = /* @__PURE__ */ React71.forwardRef(({
+  var TabContent = /* @__PURE__ */ React77.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "tab-content");
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Component4, {
       ref,
-      className: (0, import_classnames35.default)(className, bsPrefix),
+      className: (0, import_classnames41.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31547,11 +31941,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabContent_default = TabContent;
 
   // node_modules/react-bootstrap/esm/TabPane.js
-  var import_classnames36 = __toESM(require_classnames());
-  var React72 = __toESM(require_react());
-  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
+  var import_classnames42 = __toESM(require_classnames());
+  var React78 = __toESM(require_react());
+  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
   "use client";
-  var TabPane = /* @__PURE__ */ React72.forwardRef(({
+  var TabPane = /* @__PURE__ */ React78.forwardRef(({
     bsPrefix,
     transition,
     ...props
@@ -31577,11 +31971,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       transition: getTabTransitionComponent(transition)
     });
     const prefix = useBootstrapPrefix(bsPrefix, "tab-pane");
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(TabContext_default.Provider, {
       value: null,
-      children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(SelectableContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Transition2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Transition2, {
           in: isActive,
           onEnter,
           onEntering,
@@ -31591,10 +31985,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           onExited,
           mountOnEnter,
           unmountOnExit,
-          children: /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Component4, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Component4, {
             ...rest,
             ref,
-            className: (0, import_classnames36.default)(className, prefix, isActive && "active")
+            className: (0, import_classnames42.default)(className, prefix, isActive && "active")
           })
         })
       })
@@ -31634,25 +32028,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Table.js
-  var import_classnames37 = __toESM(require_classnames());
-  var React73 = __toESM(require_react());
-  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
+  var import_classnames43 = __toESM(require_classnames());
+  var React79 = __toESM(require_react());
+  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
   "use client";
-  var Table = /* @__PURE__ */ React73.forwardRef(({
+  var Table = /* @__PURE__ */ React79.forwardRef(({
     bsPrefix,
     className,
     striped,
     bordered,
     borderless,
     hover,
-    size,
+    size: size2,
     variant,
     responsive,
     ...props
   }, ref) => {
     const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "table");
-    const classes = (0, import_classnames37.default)(className, decoratedBsPrefix, variant && `${decoratedBsPrefix}-${variant}`, size && `${decoratedBsPrefix}-${size}`, striped && `${decoratedBsPrefix}-${typeof striped === "string" ? `striped-${striped}` : "striped"}`, bordered && `${decoratedBsPrefix}-bordered`, borderless && `${decoratedBsPrefix}-borderless`, hover && `${decoratedBsPrefix}-hover`);
-    const table = /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("table", {
+    const classes = (0, import_classnames43.default)(className, decoratedBsPrefix, variant && `${decoratedBsPrefix}-${variant}`, size2 && `${decoratedBsPrefix}-${size2}`, striped && `${decoratedBsPrefix}-${typeof striped === "string" ? `striped-${striped}` : "striped"}`, bordered && `${decoratedBsPrefix}-bordered`, borderless && `${decoratedBsPrefix}-borderless`, hover && `${decoratedBsPrefix}-hover`);
+    const table = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)("table", {
       ...props,
       className: classes,
       ref
@@ -31662,7 +32056,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (typeof responsive === "string") {
         responsiveClass = `${responsiveClass}-${responsive}`;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)("div", {
+      return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)("div", {
         className: responsiveClass,
         children: table
       });
@@ -31672,14 +32066,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var Table_default = Table;
 
   // src/NavBar.tsx
-  var import_react52 = __toESM(require_react(), 1);
+  var import_react56 = __toESM(require_react(), 1);
   var NavBar = ({
     title,
     backLink,
     navItems = [],
     rightContent
   }) => {
-    return /* @__PURE__ */ import_react52.default.createElement(Navbar_default, { bg: "light", expand: "lg", className: "mb-4", sticky: "top" }, /* @__PURE__ */ import_react52.default.createElement(Container_default, { fluid: true }, backLink && /* @__PURE__ */ import_react52.default.createElement(
+    return /* @__PURE__ */ import_react56.default.createElement(Navbar_default, { bg: "light", expand: "lg", className: "mb-4", sticky: "top" }, /* @__PURE__ */ import_react56.default.createElement(Container_default, { fluid: true }, backLink && /* @__PURE__ */ import_react56.default.createElement(
       Nav_default2.Link,
       {
         as: Link,
@@ -31698,34 +32092,44 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         title: "Go up one level"
       },
       "\u2191"
-    ), /* @__PURE__ */ import_react52.default.createElement(Navbar_default.Brand, { className: backLink ? "ms-2" : "" }, title), /* @__PURE__ */ import_react52.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react52.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, navItems.length > 0 && /* @__PURE__ */ import_react52.default.createElement(Nav_default2, { className: "me-auto" }, navItems.map((item, i) => /* @__PURE__ */ import_react52.default.createElement(
-      Nav_default2.Link,
-      {
-        key: i,
-        as: Link,
-        to: item.to,
-        active: item.active,
-        className: item.active ? "text-primary fw-bold border-bottom border-2 border-primary" : item.label.includes("\u274C") ? "text-danger fw-bold" : item.label.includes("\u2705") ? "text-success fw-bold" : "text-secondary",
-        style: {
-          ":hover": {
-            color: "var(--bs-primary)",
-            textDecoration: "none"
+    ), /* @__PURE__ */ import_react56.default.createElement(Navbar_default.Brand, { className: backLink ? "ms-2" : "" }, title), /* @__PURE__ */ import_react56.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react56.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, navItems.length > 0 && /* @__PURE__ */ import_react56.default.createElement(Nav_default2, { className: "me-auto" }, navItems.map((item, i) => {
+      const className = [
+        item.className,
+        item.active ? "text-primary fw-bold border-bottom border-2 border-primary" : "",
+        typeof item.label === "string" && item.label.includes("\u274C") ? "text-danger fw-bold" : "",
+        typeof item.label === "string" && item.label.includes("\u2705") ? "text-success fw-bold" : "",
+        !item.active && typeof item.label !== "string" ? "text-secondary" : ""
+      ].filter(Boolean).join(" ");
+      return /* @__PURE__ */ import_react56.default.createElement(
+        Nav_default2.Link,
+        {
+          key: i,
+          as: item.to ? Link : "div",
+          to: item.to,
+          active: item.active,
+          className,
+          style: {
+            ":hover": {
+              color: "var(--bs-primary)",
+              textDecoration: "none"
+            }
           }
-        }
-      },
-      item.label
-    ))), rightContent && /* @__PURE__ */ import_react52.default.createElement(Nav_default2, null, rightContent))));
+        },
+        item.label,
+        item.badge && /* @__PURE__ */ import_react56.default.createElement(Badge_default, { bg: item.badge.variant, className: "ms-2" }, item.badge.text)
+      );
+    })), rightContent && /* @__PURE__ */ import_react56.default.createElement(Nav_default2, null, rightContent))));
   };
 
   // src/ProjectsPage.tsx
   var ProjectsPage = () => {
-    const [projects, setProjects] = (0, import_react53.useState)([]);
-    const [summaries, setSummaries] = (0, import_react53.useState)({});
-    const [loading, setLoading] = (0, import_react53.useState)(true);
-    const [error, setError] = (0, import_react53.useState)(null);
+    const [projects, setProjects] = (0, import_react57.useState)([]);
+    const [summaries, setSummaries] = (0, import_react57.useState)({});
+    const [loading, setLoading] = (0, import_react57.useState)(true);
+    const [error, setError] = (0, import_react57.useState)(null);
     const navigate = useNavigate();
-    const [configs, setConfigs] = (0, import_react53.useState)({});
-    (0, import_react53.useEffect)(() => {
+    const [configs, setConfigs] = (0, import_react57.useState)({});
+    (0, import_react57.useEffect)(() => {
       const fetchProjects = async () => {
         try {
           const projectsRes = await fetch(`projects.json`);
@@ -31780,19 +32184,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     };
     if (loading)
-      return /* @__PURE__ */ import_react53.default.createElement("div", null, "Loading projects...");
+      return /* @__PURE__ */ import_react57.default.createElement("div", null, "Loading projects...");
     if (error)
-      return /* @__PURE__ */ import_react53.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+      return /* @__PURE__ */ import_react57.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
     console.log(configs);
-    return /* @__PURE__ */ import_react53.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react53.default.createElement(NavBar, { title: "Testeranto", backLink: null }), /* @__PURE__ */ import_react53.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react53.default.createElement("thead", null, /* @__PURE__ */ import_react53.default.createElement("tr", null, /* @__PURE__ */ import_react53.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react53.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react53.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react53.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react53.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react53.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react53.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react53.default.createElement("td", null, /* @__PURE__ */ import_react53.default.createElement("a", { href: "#", onClick: (e) => {
+    return /* @__PURE__ */ import_react57.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react57.default.createElement(NavBar, { title: "Testeranto", backLink: null }), /* @__PURE__ */ import_react57.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react57.default.createElement("thead", null, /* @__PURE__ */ import_react57.default.createElement("tr", null, /* @__PURE__ */ import_react57.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react57.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react57.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react57.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react57.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react57.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react57.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement("a", { href: "#", onClick: (e) => {
       e.preventDefault();
       navigate(`/projects/${project.name}`);
-    } }, project.name)), /* @__PURE__ */ import_react53.default.createElement("td", null, /* @__PURE__ */ import_react53.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName2) => {
+    } }, project.name)), /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName2) => {
       const testData = summaries[project.name][testName2];
       const runTime = configs[project.name].tests.find((t) => t[0] === testName2)[1];
       const hasRuntimeErrors = testData.runTimeErrors > 0;
       const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
-      return /* @__PURE__ */ import_react53.default.createElement("div", { key: testName2 }, /* @__PURE__ */ import_react53.default.createElement(
+      return /* @__PURE__ */ import_react57.default.createElement("div", { key: testName2 }, /* @__PURE__ */ import_react57.default.createElement(
         "a",
         {
           href: `#/projects/${project.name}/tests/${encodeURIComponent(testName2)}/${runTime}`
@@ -31800,21 +32204,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         hasRuntimeErrors ? "\u274C " : hasStaticErrors ? "\u26A0\uFE0F " : "",
         testName2.split("/").pop()
       ));
-    }) : /* @__PURE__ */ import_react53.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react53.default.createElement("td", null, /* @__PURE__ */ import_react53.default.createElement(
+    }) : /* @__PURE__ */ import_react57.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement(
       "a",
       {
         href: `#/projects/${project.name}#node`
       },
       getStatusIcon(project.nodeStatus),
       " Node build logs"
-    )), /* @__PURE__ */ import_react53.default.createElement("td", null, /* @__PURE__ */ import_react53.default.createElement(
+    )), /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement(
       "a",
       {
         href: `#/projects/${project.name}#web`
       },
       getStatusIcon(project.webStatus),
       " Web build logs"
-    )), /* @__PURE__ */ import_react53.default.createElement("td", null, /* @__PURE__ */ import_react53.default.createElement(
+    )), /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement(
       "a",
       {
         href: `#/projects/${project.name}#pure`
@@ -31825,28 +32229,73 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/ProjectPage.tsx
-  var import_react54 = __toESM(require_react(), 1);
+  var import_react59 = __toESM(require_react(), 1);
+
+  // src/components/TestStatusBadge.tsx
+  var import_react58 = __toESM(require_react(), 1);
+  var TestStatusBadge = (props) => {
+    console.groupCollapsed(`[TestStatusBadge] Rendering for ${props.testName}`);
+    console.log("Raw props:", JSON.parse(JSON.stringify(props)));
+    const hasTests = props.testsExist !== false;
+    const testCompleted = props.runTimeErrors !== -1;
+    const hasRuntimeErrors = props.runTimeErrors > 0;
+    console.log("Status flags:", {
+      hasTests,
+      testCompleted,
+      hasRuntimeErrors,
+      typeErrors: props.typeErrors,
+      staticErrors: props.staticErrors
+    });
+    let bddStatus;
+    if (!hasTests) {
+      console.warn("No tests.json found - marking as failed");
+      bddStatus = { text: "\u274C No Tests", variant: "danger" };
+    } else if (!testCompleted) {
+      console.warn("Test did not complete (runTimeErrors=-1) - marking as failed");
+      bddStatus = { text: "\u274C No Tests", variant: "danger" };
+    } else if (hasRuntimeErrors) {
+      console.warn(`Test failed with ${props.runTimeErrors} runtime errors`);
+      bddStatus = { text: `\u274C BDD (${props.runTimeErrors})`, variant: "danger" };
+    } else {
+      console.log("Test passed all runtime checks");
+      bddStatus = { text: "\u2705 BDD", variant: "success" };
+    }
+    if (props.variant === "compact") {
+      console.log("Rendering compact badge:", bddStatus);
+      console.groupEnd();
+      return /* @__PURE__ */ import_react58.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
+    }
+    console.log("Rendering full badge set with:", {
+      bddStatus,
+      typeErrors: props.typeErrors,
+      staticErrors: props.staticErrors
+    });
+    console.groupEnd();
+    return /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react58.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
+  };
+
+  // src/ProjectPage.tsx
   var BuildLogViewer = ({ logs, runtime }) => {
     if (!logs)
-      return /* @__PURE__ */ import_react54.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
+      return /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
     const hasErrors = logs.errors?.length > 0;
     const hasWarnings = logs.warnings?.length > 0;
-    const [activeTab, setActiveTab] = (0, import_react54.useState)("summary");
-    return /* @__PURE__ */ import_react54.default.createElement("div", null, /* @__PURE__ */ import_react54.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k) => setActiveTab(k || "summary") }, /* @__PURE__ */ import_react54.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react54.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react54.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react54.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react54.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react54.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react54.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react54.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react54.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react54.default.createElement(Card_default, null, /* @__PURE__ */ import_react54.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react54.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react54.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react54.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react54.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react54.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react54.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react54.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react54.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react54.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react54.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react54.default.createElement("code", null, file), /* @__PURE__ */ import_react54.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react54.default.createElement("div", null, /* @__PURE__ */ import_react54.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react54.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react54.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react54.default.createElement("code", null, file), /* @__PURE__ */ import_react54.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react54.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react54.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react54.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react54.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react54.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react54.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react54.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react54.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i) => /* @__PURE__ */ import_react54.default.createElement(ListGroup_default.Item, { key: i, className: "text-warning" }, /* @__PURE__ */ import_react54.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react54.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react54.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react54.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react54.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.text || warn.message || JSON.stringify(warn))), warn.detail && /* @__PURE__ */ import_react54.default.createElement("div", { className: "mt-1 small text-muted" }, /* @__PURE__ */ import_react54.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.detail))))))) : /* @__PURE__ */ import_react54.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react54.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react54.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react54.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react54.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react54.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react54.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react54.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i) => /* @__PURE__ */ import_react54.default.createElement(ListGroup_default.Item, { key: i, className: "text-danger" }, /* @__PURE__ */ import_react54.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react54.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react54.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react54.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react54.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.text || err.message || JSON.stringify(err))), err.detail && /* @__PURE__ */ import_react54.default.createElement("div", { className: "mt-1 small text-muted" }, /* @__PURE__ */ import_react54.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.detail))))))) : /* @__PURE__ */ import_react54.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react54.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react54.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
+    const [activeTab, setActiveTab] = (0, import_react59.useState)("summary");
+    return /* @__PURE__ */ import_react59.default.createElement("div", null, /* @__PURE__ */ import_react59.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k) => setActiveTab(k || "summary") }, /* @__PURE__ */ import_react59.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react59.default.createElement(Card_default, null, /* @__PURE__ */ import_react59.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react59.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react59.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react59.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "success" }, "Build Successful"), logs.testsExist && /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "info" }, "tests.json \u2713")))), /* @__PURE__ */ import_react59.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react59.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react59.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react59.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react59.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react59.default.createElement("code", null, file), /* @__PURE__ */ import_react59.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react59.default.createElement("div", null, /* @__PURE__ */ import_react59.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react59.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react59.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react59.default.createElement("code", null, file), /* @__PURE__ */ import_react59.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react59.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react59.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react59.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react59.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react59.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react59.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i) => /* @__PURE__ */ import_react59.default.createElement(ListGroup_default.Item, { key: i, className: "text-warning" }, /* @__PURE__ */ import_react59.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react59.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react59.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react59.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react59.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.text || warn.message || JSON.stringify(warn))), warn.detail && /* @__PURE__ */ import_react59.default.createElement("div", { className: "mt-1 small text-muted" }, /* @__PURE__ */ import_react59.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.detail))))))) : /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react59.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react59.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react59.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react59.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react59.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i) => /* @__PURE__ */ import_react59.default.createElement(ListGroup_default.Item, { key: i, className: "text-danger" }, /* @__PURE__ */ import_react59.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react59.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react59.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react59.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react59.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.text || err.message || JSON.stringify(err))), err.detail && /* @__PURE__ */ import_react59.default.createElement("div", { className: "mt-1 small text-muted" }, /* @__PURE__ */ import_react59.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.detail))))))) : /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react59.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react59.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
   };
   var ProjectPage = () => {
-    const [summary, setSummary] = (0, import_react54.useState)(null);
-    const [nodeLogs, setNodeLogs] = (0, import_react54.useState)(null);
-    const [webLogs, setWebLogs] = (0, import_react54.useState)(null);
-    const [pureLogs, setPureLogs] = (0, import_react54.useState)(null);
-    const [config, setConfig] = (0, import_react54.useState)({});
-    const [loading, setLoading] = (0, import_react54.useState)(true);
-    const [error, setError] = (0, import_react54.useState)(null);
-    const [projectName, setProjectName] = (0, import_react54.useState)("");
+    const [summary, setSummary] = (0, import_react59.useState)(null);
+    const [nodeLogs, setNodeLogs] = (0, import_react59.useState)(null);
+    const [webLogs, setWebLogs] = (0, import_react59.useState)(null);
+    const [pureLogs, setPureLogs] = (0, import_react59.useState)(null);
+    const [config, setConfig] = (0, import_react59.useState)({});
+    const [loading, setLoading] = (0, import_react59.useState)(true);
+    const [error, setError] = (0, import_react59.useState)(null);
+    const [projectName, setProjectName] = (0, import_react59.useState)("");
     const navigate = useNavigate();
     const location = useLocation();
-    const [route, setRoute] = (0, import_react54.useState)("tests");
-    (0, import_react54.useEffect)(() => {
+    const [route, setRoute] = (0, import_react59.useState)("tests");
+    (0, import_react59.useEffect)(() => {
       const hash = location.hash.replace("#", "");
       if (hash && ["tests", "node", "web", "pure"].includes(hash)) {
         setRoute(hash);
@@ -31855,7 +32304,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }, [location.hash]);
     const { projectName: name } = useParams();
-    (0, import_react54.useEffect)(() => {
+    (0, import_react59.useEffect)(() => {
       if (!name)
         return;
       setProjectName(name);
@@ -31895,12 +32344,56 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       fetchData();
     }, []);
     if (loading)
-      return /* @__PURE__ */ import_react54.default.createElement("div", null, "Loading project data...");
+      return /* @__PURE__ */ import_react59.default.createElement("div", null, "Loading project data...");
     if (error)
-      return /* @__PURE__ */ import_react54.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+      return /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
     if (!summary)
-      return /* @__PURE__ */ import_react54.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
-    return /* @__PURE__ */ import_react54.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react54.default.createElement(
+      return /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
+    const testStatuses = Object.entries(summary).map(([testName2, testData]) => {
+      console.groupCollapsed(`[ProjectPage] Processing test: ${testName2}`);
+      console.log("Raw test data from summary.json:", testData);
+      const checkTestsJson = async () => {
+        try {
+          let runtimeType = "node";
+          const testConfig = config.tests?.find((t) => t[0] === testName2);
+          if (testConfig) {
+            runtimeType = testConfig[1] || runtimeType;
+          } else if (testName2.includes(".web.")) {
+            runtimeType = "web";
+          } else if (testName2.includes(".pure.")) {
+            runtimeType = "pure";
+          }
+          const jsonPath = `reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtimeType}/tests.json`;
+          const res = await fetch(jsonPath, {
+            method: "HEAD"
+          });
+          return res.ok;
+        } catch {
+          return false;
+        }
+      };
+      const testsJsonExists = checkTestsJson();
+      const status = {
+        testName: testName2,
+        testsExist: testsJsonExists && testData.testsExist !== false,
+        // Ensure boolean
+        runTimeErrors: Number(testData.runTimeErrors) || 0,
+        // Ensure number
+        typeErrors: Number(testData.typeErrors) || 0,
+        staticErrors: Number(testData.staticErrors) || 0
+      };
+      console.log("Normalized status:", status);
+      console.log("tests.json exists:", testsJsonExists);
+      if (status.runTimeErrors === -1 && status.testsExist) {
+        console.warn("Inconsistent state: runTimeErrors=-1 but testsExist=true");
+      }
+      if (!status.testsExist && status.runTimeErrors > 0) {
+        console.warn("Inconsistent state: testsExist=false but runTimeErrors>0");
+      }
+      console.groupEnd();
+      return status;
+    });
+    return /* @__PURE__ */ import_react59.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react59.default.createElement(
       NavBar,
       {
         title: projectName,
@@ -31908,9 +32401,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         navItems: [
           {
             to: `#tests`,
-            label: Object.values(summary).some((t) => t.runTimeErrors > 0) ? "\u274C Tests" : Object.values(summary).some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "\u26A0\uFE0F Tests" : "\u2705 Tests",
+            label: testStatuses.some((t) => t.runTimeErrors > 0) ? "\u274C Tests" : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "\u26A0\uFE0F Tests" : "\u2705 Tests",
             active: route === "tests",
-            className: Object.values(summary).some((t) => t.runTimeErrors > 0) ? "text-danger fw-bold" : Object.values(summary).some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "text-warning fw-bold" : ""
+            className: testStatuses.some((t) => t.runTimeErrors > 0) ? "text-danger fw-bold" : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "text-warning fw-bold" : ""
           },
           {
             to: `#node`,
@@ -31932,19 +32425,32 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         ]
       }
-    ), /* @__PURE__ */ import_react54.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
+    ), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
       if (k) {
         setRoute(k);
         navigate(`#${k}`, { replace: true });
       }
-    } }, /* @__PURE__ */ import_react54.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react54.default.createElement(Tab_default.Pane, { eventKey: "tests" }, /* @__PURE__ */ import_react54.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react54.default.createElement("thead", null, /* @__PURE__ */ import_react54.default.createElement("tr", null, /* @__PURE__ */ import_react54.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react54.default.createElement("th", null, "BDD Errors"), /* @__PURE__ */ import_react54.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react54.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react54.default.createElement("tbody", null, Object.entries(summary).map(([testName2, testData]) => {
-      const runTime = config.tests.find((t) => t[0] === testName2)[1];
-      return /* @__PURE__ */ import_react54.default.createElement("tr", { key: testName2 }, /* @__PURE__ */ import_react54.default.createElement("td", null, /* @__PURE__ */ import_react54.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(testName2)}/${runTime}` }, testName2)), /* @__PURE__ */ import_react54.default.createElement("td", null, /* @__PURE__ */ import_react54.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(testName2)}/${runTime}#results` }, testData.runTimeErrors === 0 ? "\u2705 Passed" : testData.runTimeErrors > 0 ? `\u26A0\uFE0F ${testData.runTimeErrors} errors` : "\u274C Failed")), /* @__PURE__ */ import_react54.default.createElement("td", null, /* @__PURE__ */ import_react54.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(testName2)}/${runTime}#types` }, testData.typeErrors)), /* @__PURE__ */ import_react54.default.createElement("td", null, /* @__PURE__ */ import_react54.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(testName2)}/${runTime}#lint` }, testData.staticErrors)));
-    })))), /* @__PURE__ */ import_react54.default.createElement(Tab_default.Pane, { eventKey: "node" }, /* @__PURE__ */ import_react54.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" })), /* @__PURE__ */ import_react54.default.createElement(Tab_default.Pane, { eventKey: "web" }, /* @__PURE__ */ import_react54.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" })), /* @__PURE__ */ import_react54.default.createElement(Tab_default.Pane, { eventKey: "pure" }, /* @__PURE__ */ import_react54.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" })))));
+    } }, /* @__PURE__ */ import_react59.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "tests" }, /* @__PURE__ */ import_react59.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react59.default.createElement("thead", null, /* @__PURE__ */ import_react59.default.createElement("tr", null, /* @__PURE__ */ import_react59.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react59.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react59.default.createElement("th", null, "BDD Errors"), /* @__PURE__ */ import_react59.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react59.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react59.default.createElement("tbody", null, testStatuses.map((test) => {
+      const testConfig = config.tests?.find((t) => t[0] === test.testName);
+      const runTime = testConfig?.[1] || "node";
+      const hasRuntimeErrors = test.runTimeErrors > 0;
+      const hasTypeErrors = test.typeErrors > 0;
+      const hasLintErrors = test.staticErrors > 0;
+      return /* @__PURE__ */ import_react59.default.createElement("tr", { key: test.testName }, /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}` }, test.testName)), /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, runTime)), /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement(
+        TestStatusBadge,
+        {
+          testName: test.testName,
+          testsExist: test.testsExist,
+          runTimeErrors: test.runTimeErrors,
+          typeErrors: test.typeErrors,
+          staticErrors: test.staticErrors
+        }
+      )), /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}#types` }, test.typeErrors > 0 ? `tsc (\u274C * ${test.typeErrors})` : "tsc \u2705")), /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}#lint` }, test.staticErrors > 0 ? `eslint (\u274C *${test.staticErrors})` : "eslint \u2705")));
+    })))), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "node" }, /* @__PURE__ */ import_react59.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" })), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "web" }, /* @__PURE__ */ import_react59.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" })), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "pure" }, /* @__PURE__ */ import_react59.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" })))));
   };
 
   // src/TestPage.tsx
-  var import_react55 = __toESM(require_react(), 1);
+  var import_react60 = __toESM(require_react(), 1);
 
   // src/utils/api.ts
   var fetchTestData = async (projectName, filepath, runTime) => {
@@ -31987,8 +32493,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TestPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [route, setRoute] = (0, import_react55.useState)("results");
-    (0, import_react55.useEffect)(() => {
+    const [route, setRoute] = (0, import_react60.useState)("results");
+    (0, import_react60.useEffect)(() => {
       const hash = location.hash.replace("#", "");
       if (hash && ["results", "logs", "types", "lint", "coverage"].includes(hash)) {
         setRoute(hash);
@@ -31996,26 +32502,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         setRoute("results");
       }
     }, [location.hash]);
-    const [testName2, setTestName] = (0, import_react55.useState)("");
-    const [testData, setTestData] = (0, import_react55.useState)(null);
-    const [logs, setLogs] = (0, import_react55.useState)("");
-    const [typeErrors, setTypeErrors] = (0, import_react55.useState)("");
-    const [lintErrors, setLintErrors] = (0, import_react55.useState)("");
-    const [loading, setLoading] = (0, import_react55.useState)(true);
-    const [error, setError] = (0, import_react55.useState)(null);
-    const [testsExist, setTestsExist] = (0, import_react55.useState)(true);
-    const [errorCounts, setErrorCounts] = (0, import_react55.useState)({
+    const [testName2, setTestName] = (0, import_react60.useState)("");
+    const [testData, setTestData] = (0, import_react60.useState)(null);
+    const [logs, setLogs] = (0, import_react60.useState)("");
+    const [typeErrors, setTypeErrors] = (0, import_react60.useState)("");
+    const [lintErrors, setLintErrors] = (0, import_react60.useState)("");
+    const [loading, setLoading] = (0, import_react60.useState)(true);
+    const [error, setError] = (0, import_react60.useState)(null);
+    const [testsExist, setTestsExist] = (0, import_react60.useState)(true);
+    const [errorCounts, setErrorCounts] = (0, import_react60.useState)({
       typeErrors: 0,
       staticErrors: 0,
       runTimeErrors: 0
     });
-    const [summary, setSummary] = (0, import_react55.useState)(null);
+    const [summary, setSummary] = (0, import_react60.useState)(null);
     const { projectName, "*": splat } = useParams();
     const pathParts = splat ? splat.split("/") : [];
     const runtime = pathParts.pop() || "";
     const testPath = pathParts.join("/");
     const decodedTestPath = testPath ? decodeURIComponent(testPath) : "";
-    (0, import_react55.useEffect)(() => {
+    (0, import_react60.useEffect)(() => {
       if (!projectName || !testPath || !runtime)
         return;
       setTestName(testPath);
@@ -32024,7 +32530,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           const testResponse = await fetchTestData(projectName, testPath, runtime);
           setTestData(testResponse.testData);
           setTestsExist(!!testResponse.testData);
-          setLogs(testResponse.logs);
+          setLogs(testResponse.logs === null ? void 0 : testResponse.logs);
           setTypeErrors(testResponse.typeErrors);
           setLintErrors(testResponse.lintErrors);
           try {
@@ -32035,12 +32541,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             const testSummary = allSummaries[testPath];
             console.log("testSummary", testSummary);
             if (testSummary) {
+              console.groupCollapsed(`[TestPage] Processing test summary for ${testPath}`);
+              console.log("Raw test summary:", testSummary);
+              const counts = {
+                typeErrors: Number(testSummary.typeErrors) || 0,
+                staticErrors: Number(testSummary.staticErrors) || 0,
+                runTimeErrors: Number(testSummary.runTimeErrors) || 0
+              };
+              console.log("Normalized counts:", counts);
+              if (counts.runTimeErrors === -1 && testSummary.testsExist) {
+                console.warn("Inconsistent state: runTimeErrors=-1 but testsExist=true");
+              }
+              if (!testSummary.testsExist && counts.runTimeErrors > 0) {
+                console.warn("Inconsistent state: testsExist=false but runTimeErrors>0");
+              }
               setSummary(testSummary);
-              setErrorCounts({
-                typeErrors: testSummary.typeErrors || 0,
-                staticErrors: testSummary.staticErrors || 0,
-                runTimeErrors: testSummary.runTimeErrors || 0
-              });
+              setErrorCounts(counts);
+              setTestsExist(testSummary.testsExist !== false);
+              console.groupEnd();
             }
           } catch (err) {
             console.error("Failed to load summary:", err);
@@ -32055,18 +32573,50 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       fetchData();
     }, []);
     if (loading)
-      return /* @__PURE__ */ import_react55.default.createElement("div", null, "Loading test data...");
+      return /* @__PURE__ */ import_react60.default.createElement("div", null, "Loading test data...");
     if (error)
-      return /* @__PURE__ */ import_react55.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    return /* @__PURE__ */ import_react55.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react55.default.createElement(
+      return /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+    console.log("Test status debug:", {
+      testName: testName2,
+      testsExist,
+      testData,
+      fails: testData?.fails,
+      runTimeErrors: errorCounts.runTimeErrors,
+      typeErrors: errorCounts.typeErrors,
+      staticErrors: errorCounts.staticErrors
+    });
+    console.log("Test data:", {
+      testData,
+      testsExist,
+      errorCounts,
+      summary
+    });
+    return /* @__PURE__ */ import_react60.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react60.default.createElement(
       NavBar,
       {
         title: decodedTestPath,
         backLink: `/projects/${projectName}`,
         navItems: [
           {
+            label: "",
+            badge: {
+              variant: runtime === "node" ? "primary" : runtime === "web" ? "success" : "info",
+              text: runtime
+            },
+            className: "pe-none d-flex align-items-center gap-2"
+          },
+          {
             to: `#results`,
-            label: !testsExist ? "\u274C BDD" : testData?.givens.some((g) => g.whens.some((w) => w.error) || g.thens.some((t) => t.error)) ? "\u274C BDD" : "\u2705 BDD",
+            label: /* @__PURE__ */ import_react60.default.createElement(
+              TestStatusBadge,
+              {
+                testName: decodedTestPath,
+                testsExist,
+                runTimeErrors: errorCounts.runTimeErrors,
+                variant: "compact"
+              }
+            ),
+            className: !testsExist || errorCounts.runTimeErrors > 0 ? "text-danger fw-bold" : "",
             active: route === "results"
           },
           {
@@ -32085,7 +32635,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             active: route === "lint"
           }
         ],
-        rightContent: /* @__PURE__ */ import_react55.default.createElement(
+        rightContent: /* @__PURE__ */ import_react60.default.createElement(
           Button_default2,
           {
             variant: "info",
@@ -32106,12 +32656,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           "\u{1F916}"
         )
       }
-    ), /* @__PURE__ */ import_react55.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
+    ), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
       if (k) {
         setRoute(k);
         navigate(`#${k}`, { replace: true });
       }
-    } }, /* @__PURE__ */ import_react55.default.createElement(Tab_default.Content, { className: "mt-3" }, /* @__PURE__ */ import_react55.default.createElement(Tab_default.Pane, { eventKey: "results" }, !testsExist ? /* @__PURE__ */ import_react55.default.createElement(Alert_default, { variant: "danger", className: "mt-3" }, /* @__PURE__ */ import_react55.default.createElement("h4", null, "Tests did not run to completion"), /* @__PURE__ */ import_react55.default.createElement("p", null, "The test results file (tests.json) was not found or could not be loaded."), /* @__PURE__ */ import_react55.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react55.default.createElement(
+    } }, /* @__PURE__ */ import_react60.default.createElement(Tab_default.Content, { className: "mt-3" }, /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "results" }, !testsExist ? /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "danger", className: "mt-3" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "Tests did not run to completion"), /* @__PURE__ */ import_react60.default.createElement("p", null, "The test results file (tests.json) was not found or could not be loaded."), /* @__PURE__ */ import_react60.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react60.default.createElement(
       Button_default2,
       {
         variant: "outline-light",
@@ -32119,29 +32669,535 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         className: "me-2"
       },
       "View Runtime Logs"
-    ), /* @__PURE__ */ import_react55.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       Button_default2,
       {
         variant: "outline-light",
         onClick: () => navigate(`/projects/${projectName}#${runtime}`)
       },
       "View Build Logs"
-    ))) : testData ? /* @__PURE__ */ import_react55.default.createElement("div", { className: "test-results" }, /* @__PURE__ */ import_react55.default.createElement("div", { className: "mb-3" }), testData.givens.map((given, i) => /* @__PURE__ */ import_react55.default.createElement("div", { key: i, className: "mb-4 card" }, /* @__PURE__ */ import_react55.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react55.default.createElement("h4", null, "Given: ", given.name)), /* @__PURE__ */ import_react55.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react55.default.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react55.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react55.default.createElement("pre", { className: "mt-2" }, when.error))), given.thens.map((then, k) => /* @__PURE__ */ import_react55.default.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react55.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react55.default.createElement("pre", { className: "mt-2" }, then.error))))))) : /* @__PURE__ */ import_react55.default.createElement(Alert_default, { variant: "warning" }, "No test results found")), /* @__PURE__ */ import_react55.default.createElement(Tab_default.Pane, { eventKey: "logs" }, logs ? /* @__PURE__ */ import_react55.default.createElement("pre", { className: "bg-dark text-white p-3" }, logs) : /* @__PURE__ */ import_react55.default.createElement(Alert_default, { variant: "warning" }, "No runtime logs found")), /* @__PURE__ */ import_react55.default.createElement(Tab_default.Pane, { eventKey: "types" }, typeErrors ? /* @__PURE__ */ import_react55.default.createElement("pre", { className: "bg-dark text-white p-3" }, typeErrors) : /* @__PURE__ */ import_react55.default.createElement(Alert_default, { variant: "warning" }, "No type errors found")), /* @__PURE__ */ import_react55.default.createElement(Tab_default.Pane, { eventKey: "lint" }, lintErrors ? /* @__PURE__ */ import_react55.default.createElement("pre", { className: "bg-dark text-white p-3" }, lintErrors) : /* @__PURE__ */ import_react55.default.createElement(Alert_default, { variant: "warning" }, "No lint errors found")), /* @__PURE__ */ import_react55.default.createElement(Tab_default.Pane, { eventKey: "coverage" }, /* @__PURE__ */ import_react55.default.createElement("div", { className: "coverage-report" }, /* @__PURE__ */ import_react55.default.createElement(Alert_default, { variant: "info" }, "Coverage reports coming soon!"), /* @__PURE__ */ import_react55.default.createElement("div", { className: "coverage-stats" }, /* @__PURE__ */ import_react55.default.createElement("div", { className: "stat-card bg-success text-white" }, /* @__PURE__ */ import_react55.default.createElement("h4", null, "85%"), /* @__PURE__ */ import_react55.default.createElement("p", null, "Lines Covered")), /* @__PURE__ */ import_react55.default.createElement("div", { className: "stat-card bg-warning text-dark" }, /* @__PURE__ */ import_react55.default.createElement("h4", null, "72%"), /* @__PURE__ */ import_react55.default.createElement("p", null, "Branches Covered")), /* @__PURE__ */ import_react55.default.createElement("div", { className: "stat-card bg-info text-white" }, /* @__PURE__ */ import_react55.default.createElement("h4", null, "91%"), /* @__PURE__ */ import_react55.default.createElement("p", null, "Functions Covered"))))))));
+    ))) : testData ? /* @__PURE__ */ import_react60.default.createElement("div", { className: "test-results" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "mb-3" }), testData.givens.map((given, i) => /* @__PURE__ */ import_react60.default.createElement("div", { key: i, className: "mb-4 card" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "Given: ", given.name)), /* @__PURE__ */ import_react60.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react60.default.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react60.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react60.default.createElement("pre", { className: "mt-2" }, when.error))), given.thens.map((then, k) => /* @__PURE__ */ import_react60.default.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react60.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react60.default.createElement("pre", { className: "mt-2" }, then.error))))))) : /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "warning" }, "No test results found")), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "logs" }, logs === void 0 ? /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "danger" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "Logs file missing"), /* @__PURE__ */ import_react60.default.createElement("p", null, "The runtime logs file (logs.txt) was not found."), /* @__PURE__ */ import_react60.default.createElement("p", null, "This suggests the test may not have executed properly.")) : logs === "" ? /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "No runtime logs"), /* @__PURE__ */ import_react60.default.createElement("p", null, "The test executed successfully with no log output.")) : /* @__PURE__ */ import_react60.default.createElement("pre", { className: "bg-dark text-white p-3" }, logs)), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "types" }, typeErrors ? /* @__PURE__ */ import_react60.default.createElement("pre", { className: "bg-dark text-white p-3" }, typeErrors) : /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "warning" }, "No type errors found")), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "lint" }, lintErrors ? /* @__PURE__ */ import_react60.default.createElement("pre", { className: "bg-dark text-white p-3" }, lintErrors) : /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "warning" }, "No lint errors found")), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "coverage" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "coverage-report" }, /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "info" }, "Coverage reports coming soon!"), /* @__PURE__ */ import_react60.default.createElement("div", { className: "coverage-stats" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "stat-card bg-success text-white" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "85%"), /* @__PURE__ */ import_react60.default.createElement("p", null, "Lines Covered")), /* @__PURE__ */ import_react60.default.createElement("div", { className: "stat-card bg-warning text-dark" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "72%"), /* @__PURE__ */ import_react60.default.createElement("p", null, "Branches Covered")), /* @__PURE__ */ import_react60.default.createElement("div", { className: "stat-card bg-info text-white" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "91%"), /* @__PURE__ */ import_react60.default.createElement("p", null, "Functions Covered"))))))));
+  };
+
+  // src/SettingsButton.tsx
+  var import_react62 = __toESM(require_react(), 1);
+
+  // src/components/SunriseAnimation.tsx
+  var import_react61 = __toESM(require_react(), 1);
+  var SunriseAnimation = ({ active }) => {
+    const [position, setPosition] = (0, import_react61.useState)(0);
+    const [dimensions, setDimensions] = (0, import_react61.useState)({ width: 0, height: 0 });
+    const animationIdRef = (0, import_react61.useRef)(null);
+    (0, import_react61.useEffect)(() => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+      const handleResize = () => {
+        setDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight
+        });
+      };
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
+    const ANIMATION_DURATION = 1e4;
+    const UPDATE_INTERVAL = 50;
+    (0, import_react61.useEffect)(() => {
+      if (!active) {
+        if (animationIdRef.current) {
+          cancelAnimationFrame(animationIdRef.current);
+          animationIdRef.current = null;
+        }
+        return;
+      }
+      console.log("Starting animation with duration:", ANIMATION_DURATION, "ms");
+      let startTime = performance.now();
+      let lastUpdateTime = 0;
+      const animate = (timestamp) => {
+        if (!active)
+          return;
+        const elapsed = (timestamp - startTime) % ANIMATION_DURATION;
+        const progress = elapsed / ANIMATION_DURATION;
+        if (timestamp - lastUpdateTime >= UPDATE_INTERVAL) {
+          const newPos = Math.cos(progress * Math.PI * 2);
+          setPosition(newPos);
+          lastUpdateTime = timestamp;
+        }
+        animationIdRef.current = requestAnimationFrame(animate);
+      };
+      animationIdRef.current = requestAnimationFrame(animate);
+      return () => {
+        if (animationIdRef.current) {
+          cancelAnimationFrame(animationIdRef.current);
+          animationIdRef.current = null;
+        }
+      };
+    }, [active]);
+    const yPos = dimensions.height * (1 - position);
+    const normalizedPos = (position + 1) / 2;
+    if (!active)
+      return null;
+    return /* @__PURE__ */ import_react61.default.createElement("div", { id: "sunrise", style: {
+      width: "100vw",
+      height: "100vh",
+      position: "fixed",
+      top: 0,
+      left: 0,
+      backgroundColor: "transparent",
+      overflow: "hidden",
+      pointerEvents: "none"
+    } }, /* @__PURE__ */ import_react61.default.createElement("div", { id: "daily-bg", style: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0,0,0,0.3)",
+      zIndex: -1001
+    } }), "Stars Container", /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "starsContainer",
+        style: {
+          perspective: 350,
+          perspectiveOrigin: "50% 300%",
+          overflow: "hidden",
+          position: "absolute",
+          top: 0,
+          left: "-50%",
+          width: "200%",
+          height: "50%",
+          zIndex: -1e3,
+          opacity: Math.max(0, 0.5 - normalizedPos * 0.5)
+        }
+      },
+      /* @__PURE__ */ import_react61.default.createElement(
+        "div",
+        {
+          id: "stars",
+          style: {
+            backgroundRepeat: "repeat",
+            position: "absolute",
+            width: "200%",
+            height: "200%",
+            left: "-50%",
+            bottom: 0,
+            opacity: 0.5,
+            transform: "rotateX(-90deg)"
+          }
+        }
+      )
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "sun",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: "50%",
+          transform: `translateX(-50%) translateY(${yPos}px)`,
+          width: "100%",
+          height: "50%",
+          background: `radial-gradient(50% ${yPos}px, circle, rgba(242,248,247,1) 0%,rgba(249,249,28,1) 3%,rgba(247,214,46,1) 8%,rgba(248,200,95,1) 12%,rgba(201,165,132,1) 30%,rgba(115,130,133,1) 51%,rgba(46,97,122,1) 85%,rgba(24,75,106,1) 100%)`,
+          zIndex: -900,
+          opacity: 0.5
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "sunDay",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: `radial-gradient(50% ${yPos}px, circle, rgba(252,255,251,0.9) 0%,rgba(253,250,219,0.4) 30%,rgba(226,219,197,0.01) 70%,rgba(226,219,197,0.0) 70%,rgba(201,165,132,0) 100%)`,
+          zIndex: -800,
+          opacity: Math.max(0, 1 - yPos / dimensions.height)
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "sunSet",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: `radial-gradient(50% ${yPos}px, circle, rgba(254,255,255,0.8) 5%,rgba(236,255,0,1) 10%,rgba(253,50,41,1) 25%,rgba(243,0,0,1) 40%,rgba(93,0,0,1) 100%)`,
+          zIndex: -800,
+          opacity: Math.max(0, yPos / dimensions.height - 0.2)
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "sky",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          zIndex: -700,
+          background: "linear-gradient(to top, rgba(249,251,240,1) 10%,rgba(215,253,254,1) 20%,rgba(167,222,253,1) 40%,rgba(110,175,255,1) 100%)",
+          opacity: Math.max(0, 1 - yPos / dimensions.height)
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "horizon",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "linear-gradient(to top, rgba(212,87,43,0.9) 0%,rgba(246,149,52,0.8) 20%,rgba(24,75,106,0) 100%)",
+          zIndex: -700,
+          opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) + 0.2 : yPos / (dimensions.height / 2))
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "horizonNight",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "linear-gradient(to top, rgba(57,167,255,1) 0%,rgba(13,98,245,1) 20%,rgba(0,11,22,0.1) 60%)",
+          zIndex: -600,
+          opacity: Math.max(0, (yPos - dimensions.height * 4 / 5) / (dimensions.height - dimensions.height * 4 / 5))
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "moon",
+        style: {
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "radial-gradient(40% 55%, circle, rgba(249,249,250,1) -1%,rgba(189,255,254,1) 1%,rgba(8,49,78,1) 1%,rgba(8,26,56,1) 10%,rgba(4,16,46,1) 40%,rgba(2,8,13,1) 70%)",
+          zIndex: -500,
+          opacity: Math.max(0, (yPos - dimensions.height * 9 / 10) / (dimensions.height - dimensions.height * 9 / 10))
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "water",
+        style: {
+          overflow: "hidden",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "linear-gradient(to top, rgba(0,25,45,1) 0%,rgba(14,71,117,1) 35%,rgba(26,126,174,1) 70%,rgba(62,168,220,1) 100%)",
+          zIndex: -400
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "waterReflectionContainer",
+        style: {
+          perspective: 30,
+          perspectiveOrigin: `50% ${-15 + normalizedPos * 30}%`,
+          overflow: "hidden",
+          position: "absolute",
+          top: "50%",
+          left: "-3%",
+          width: "103%",
+          height: "50%",
+          zIndex: -300,
+          transform: `translateY(${dimensions.height - yPos}px)`
+        }
+      },
+      /* @__PURE__ */ import_react61.default.createElement(
+        "div",
+        {
+          id: "waterReflectionMiddle",
+          style: {
+            position: "absolute",
+            top: 0,
+            left: "-50%",
+            width: "200%",
+            height: "55%",
+            background: "radial-gradient(50% 0px, rgba(247,177,72,1) 3%,rgba(248,175,65,1) 6%,rgba(207,62,30,0.4) 35%,rgba(176,91,48,0.1) 45%,rgba(141,88,47,0.0) 60%,rgba(116,82,63,0.0) 70%,rgba(44,65,68,0.0) 80%,rgba(7,19,31,0.0) 100%)",
+            zIndex: -200,
+            opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) - 0.1 : yPos / (dimensions.height / 2) - 0.1),
+            transform: "rotateX(45deg)"
+          }
+        }
+      )
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "waterDistance",
+        style: {
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          background: "linear-gradient(90deg, rgba(0,0,0,0.0) 10%,rgba(0,0,0,0.20) 44%,rgba(0,0,0,0.65) 95%,rgba(0,0,0,0.62) 100%)",
+          zIndex: -100,
+          opacity: Math.max(0, yPos / dimensions.height + 0.6)
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "darknessOverlaySky",
+        style: {
+          backgroundColor: "#000",
+          opacity: Math.max(0, (yPos - dimensions.height * 7 / 10) / (dimensions.height - dimensions.height * 7 / 10)),
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          zIndex: -50
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "darknessOverlay",
+        style: {
+          backgroundColor: "#000",
+          opacity: Math.max(0, (yPos - dimensions.height / 2) / (dimensions.height / 2)),
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "100%",
+          height: "50%",
+          zIndex: -5
+        }
+      }
+    ), /* @__PURE__ */ import_react61.default.createElement(
+      "div",
+      {
+        id: "oceanRipple",
+        style: {
+          backgroundImage: "repeating-linear-gradient(175deg, rgba(165,165,165,0.08) 43%,rgba(175,175,175,0.08) 45%,rgba(235,235,235,0.08) 49%,rgba(195,195,195,0.08) 50%,rgba(165,165,165,0.08) 54%)",
+          opacity: 0.5,
+          position: "absolute",
+          left: "0%",
+          bottom: 0,
+          width: "100%",
+          height: "50%",
+          zIndex: -10
+        }
+      }
+    ));
+  };
+  var SunriseAnimation_default = SunriseAnimation;
+
+  // src/SettingsButton.tsx
+  var SettingsButton = ({ className }) => {
+    (0, import_react62.useEffect)(() => {
+      return () => {
+      };
+    }, []);
+    const [showModal, setShowModal] = (0, import_react62.useState)(false);
+    const [theme, setTheme] = (0, import_react62.useState)(localStorage.getItem("theme") || "system");
+    const handleThemeChange = (e) => {
+      const newTheme = e.target.value;
+      setTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
+      let themeToApply = newTheme;
+      if (newTheme === "system") {
+        themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-bs-theme", themeToApply);
+    };
+    return /* @__PURE__ */ import_react62.default.createElement(import_react62.default.Fragment, null, /* @__PURE__ */ import_react62.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react62.default.createElement(
+      "button",
+      {
+        className: `btn btn-sm btn-outline-secondary ${className}`,
+        onClick: () => setShowModal(true)
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
+    )), /* @__PURE__ */ import_react62.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react62.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react62.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react62.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react62.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react62.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react62.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react62.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react62.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react62.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react62.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react62.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "system" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "system" } }),
+        style: {
+          background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
+          borderColor: "#adb5bd"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-0" }, "9 to 5"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Follows your OS theme"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "light" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "light" } }),
+        style: {
+          background: "linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%)",
+          borderColor: "#ced4da",
+          color: "#212529",
+          borderWidth: "2px"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Business casual"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Clean & professional"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "dark" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "dark" } }),
+        style: {
+          background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
+          borderColor: "#4ecdc4",
+          color: "#f8f9fa",
+          borderWidth: "2px"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Business formal"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Premium & focused"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "light-vibrant" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "light-vibrant" } }),
+        style: {
+          background: "linear-gradient(135deg, #ff2d75 0%, #00e5ff 100%)",
+          borderColor: "#ffeb3b",
+          color: "#fff"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Office Party"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Colorful & fun"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "dark-vibrant" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "dark-vibrant" } }),
+        style: {
+          background: "linear-gradient(135deg, #16213e 0%, #e94560 100%)",
+          borderColor: "#00e5ff",
+          color: "#fff"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "After Party"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Neon nightlife"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "sepia" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "sepia" } }),
+        style: {
+          background: "linear-gradient(135deg, #f4ecd8 0%, #d0b88f 100%)",
+          borderColor: "#8b6b4a",
+          color: "#3a3226"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "WFH"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Vintage warmth"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "light-grayscale" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "light-grayscale" } }),
+        style: {
+          background: "linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)",
+          borderColor: "#666",
+          color: "#333",
+          borderWidth: "2px"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Serious Business"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Simple & distraction-free"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "dark-grayscale" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "dark-grayscale" } }),
+        style: {
+          background: "linear-gradient(135deg, #111 0%, #333 100%)",
+          borderColor: "#ff6b6b",
+          color: "#e0e0e0",
+          borderWidth: "2px"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Very Serious business"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Maximum readability"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "daily" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "daily" } }),
+        style: {
+          background: "linear-gradient(135deg, #6eafff 0%, #f9fbf0 100%)",
+          borderColor: "#f7d62e",
+          color: "#00192d"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Dreaming of PTO"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Sunrise, sunset"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "protanopia" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "protanopia" } }),
+        style: {
+          background: "linear-gradient(135deg, #f8f9fa 0%, #e0e8ff 100%)",
+          borderColor: "#3366cc",
+          color: "#333"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-0" }, "Protanopia"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Red-blind mode"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "deuteranopia" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "deuteranopia" } }),
+        style: {
+          background: "linear-gradient(135deg, #f8f9fa 0%, #ffe0e0 100%)",
+          borderColor: "#cc6633",
+          color: "#333"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-0" }, "Deuteranopia"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Green-blind mode"))
+    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      "div",
+      {
+        className: `card theme-card ${theme === "tritanopia" ? "border-primary" : ""}`,
+        onClick: () => handleThemeChange({ target: { value: "tritanopia" } }),
+        style: {
+          background: "linear-gradient(135deg, #f8f9fa 0%, #e0ffe0 100%)",
+          borderColor: "#00aa66",
+          color: "#333"
+        }
+      },
+      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-0" }, "Tritanopia"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Blue-blind mode"))
+    ))))), /* @__PURE__ */ import_react62.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react62.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
   };
 
   // src/App.tsx
   var App = () => {
-    return /* @__PURE__ */ import_react56.default.createElement(HashRouter, null, /* @__PURE__ */ import_react56.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react56.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react56.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react56.default.createElement(Routes, null, /* @__PURE__ */ import_react56.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react56.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react56.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react56.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react56.default.createElement(
+    return /* @__PURE__ */ import_react63.default.createElement(HashRouter, null, /* @__PURE__ */ import_react63.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react63.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react63.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react63.default.createElement(Routes, null, /* @__PURE__ */ import_react63.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react63.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react63.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react63.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react63.default.createElement(
       Route,
       {
         path: "/projects/:projectName/tests/*",
-        element: /* @__PURE__ */ import_react56.default.createElement(TestPage, null)
+        element: /* @__PURE__ */ import_react63.default.createElement(TestPage, null)
       }
-    ), /* @__PURE__ */ import_react56.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react56.default.createElement(ProjectPage, null) })))), /* @__PURE__ */ import_react56.default.createElement("footer", { className: "bg-light py-3" }, /* @__PURE__ */ import_react56.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react56.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")))));
+    ), /* @__PURE__ */ import_react63.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react63.default.createElement(ProjectPage, null) })))), /* @__PURE__ */ import_react63.default.createElement("footer", { className: "bg-light py-3 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react63.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react63.default.createElement(SettingsButton, null)), /* @__PURE__ */ import_react63.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react63.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")))));
   };
   if (typeof window !== "undefined") {
     window.App = App;
-    window.React = import_react56.default;
+    window.React = import_react63.default;
     window.ReactDOM = import_client.default;
   }
 })();

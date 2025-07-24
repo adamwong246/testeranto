@@ -1,4 +1,5 @@
 import { Ibdd_in, Ibdd_out } from "../../CoreTypes";
+import { BaseBuilder } from "../basebuilder";
 export type I = Ibdd_in<{}, // iinput
 BaseBuilder<any, any, any, any, any, any>, // isubject
 BaseBuilder<any, any, any, any, any, any>, // istore
@@ -15,6 +16,4 @@ export type O = Ibdd_out<{
     initializedProperly: [];
     specsGenerated: [];
     jobsCreated: [];
-}, {
-    Default: [];
 }>;

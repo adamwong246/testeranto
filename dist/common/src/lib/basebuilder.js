@@ -31,7 +31,7 @@ class BaseBuilder {
                 },
                 runner,
                 receiveTestResourceConfig: async function (puppetMaster) {
-                    const logFilePath = "log.txt";
+                    const logFilePath = "logs.txt";
                     const access = await puppetMaster.createWriteStream(logFilePath);
                     // deprecated?
                     const tLog = async (...l) => {

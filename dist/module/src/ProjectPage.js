@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Tab } from 'react-bootstrap';
-import { Card, ListGroup, Badge } from 'react-bootstrap';
+import { Card, ListGroup, Nav, Tab, Container, Alert, Badge, Table } from 'react-bootstrap';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+// import "./TestReport.scss";
+import { NavBar } from './NavBar';
+import { TestStatusBadge } from './components/TestStatusBadge';
 const BuildLogViewer = ({ logs, runtime }) => {
     var _a, _b, _c, _d, _e, _f;
     if (!logs)
@@ -34,7 +39,9 @@ const BuildLogViewer = ({ logs, runtime }) => {
                                     logs.warnings.length,
                                     " Warning",
                                     logs.warnings.length !== 1 ? 's' : '')),
-                                !hasErrors && !hasWarnings && (React.createElement(Badge, { bg: "success" }, "Build Successful")))),
+                                !hasErrors && !hasWarnings && (React.createElement("div", { className: "d-flex align-items-center gap-2" },
+                                    React.createElement(Badge, { bg: "success" }, "Build Successful"),
+                                    logs.testsExist && (React.createElement(Badge, { bg: "info" }, "tests.json \u2713")))))),
                         React.createElement(Card.Body, null,
                             React.createElement("div", { className: "mb-3" },
                                 React.createElement("h6", null,
@@ -102,10 +109,6 @@ const BuildLogViewer = ({ logs, runtime }) => {
                     React.createElement("h5", null, "No Errors Found"),
                     React.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))))));
 };
-import { Nav, Container, Alert, Table } from 'react-bootstrap';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import "./TestReport.scss";
-import { NavBar } from './NavBar';
 export const ProjectPage = () => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
     const [summary, setSummary] = useState(null);
@@ -184,15 +187,64 @@ export const ProjectPage = () => {
             error);
     if (!summary)
         return React.createElement(Alert, { variant: "warning" }, "No data found for project");
+    const testStatuses = Object.entries(summary).map(([testName, testData]) => {
+        console.groupCollapsed(`[ProjectPage] Processing test: ${testName}`);
+        console.log('Raw test data from summary.json:', testData);
+        // Check if tests.json exists by making a HEAD request
+        const checkTestsJson = async () => {
+            var _a;
+            try {
+                // Get runtime from config or fall back to test name pattern
+                let runtimeType = 'node'; // default fallback
+                const testConfig = (_a = config.tests) === null || _a === void 0 ? void 0 : _a.find((t) => t[0] === testName);
+                if (testConfig) {
+                    runtimeType = testConfig[1] || runtimeType;
+                }
+                else if (testName.includes('.web.')) {
+                    runtimeType = 'web';
+                }
+                else if (testName.includes('.pure.')) {
+                    runtimeType = 'pure';
+                }
+                const jsonPath = `reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtimeType}/tests.json`;
+                const res = await fetch(jsonPath, {
+                    method: 'HEAD'
+                });
+                return res.ok;
+            }
+            catch (_b) {
+                return false;
+            }
+        };
+        const testsJsonExists = checkTestsJson();
+        const status = {
+            testName,
+            testsExist: testsJsonExists && testData.testsExist !== false, // Ensure boolean
+            runTimeErrors: Number(testData.runTimeErrors) || 0, // Ensure number
+            typeErrors: Number(testData.typeErrors) || 0,
+            staticErrors: Number(testData.staticErrors) || 0
+        };
+        console.log('Normalized status:', status);
+        console.log('tests.json exists:', testsJsonExists);
+        // Validate status consistency
+        if (status.runTimeErrors === -1 && status.testsExist) {
+            console.warn('Inconsistent state: runTimeErrors=-1 but testsExist=true');
+        }
+        if (!status.testsExist && status.runTimeErrors > 0) {
+            console.warn('Inconsistent state: testsExist=false but runTimeErrors>0');
+        }
+        console.groupEnd();
+        return status;
+    });
     return (React.createElement(Container, { fluid: true },
         React.createElement(NavBar, { title: projectName, backLink: "/", navItems: [
                 {
                     to: `#tests`,
-                    label: Object.values(summary).some(t => t.runTimeErrors > 0) ? '❌ Tests' :
-                        Object.values(summary).some(t => t.typeErrors > 0 || t.staticErrors > 0) ? '⚠️ Tests' : '✅ Tests',
+                    label: testStatuses.some(t => t.runTimeErrors > 0) ? '❌ Tests' :
+                        testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? '⚠️ Tests' : '✅ Tests',
                     active: route === 'tests',
-                    className: Object.values(summary).some(t => t.runTimeErrors > 0) ? 'text-danger fw-bold' :
-                        Object.values(summary).some(t => t.typeErrors > 0 || t.staticErrors > 0) ? 'text-warning fw-bold' : ''
+                    className: testStatuses.some(t => t.runTimeErrors > 0) ? 'text-danger fw-bold' :
+                        testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? 'text-warning fw-bold' : ''
                 },
                 {
                     to: `#node`,
@@ -231,22 +283,32 @@ export const ProjectPage = () => {
                         React.createElement("thead", null,
                             React.createElement("tr", null,
                                 React.createElement("th", null, "Test"),
+                                React.createElement("th", null, "Runtime"),
                                 React.createElement("th", null, "BDD Errors"),
                                 React.createElement("th", null, "Type Errors"),
                                 React.createElement("th", null, "Lint Errors"))),
-                        React.createElement("tbody", null, Object.entries(summary).map(([testName, testData]) => {
-                            const runTime = config.tests.find((t) => t[0] === testName)[1];
-                            return (React.createElement("tr", { key: testName },
+                        React.createElement("tbody", null, testStatuses.map((test) => {
+                            var _a;
+                            const testConfig = (_a = config.tests) === null || _a === void 0 ? void 0 : _a.find((t) => t[0] === test.testName);
+                            const runTime = (testConfig === null || testConfig === void 0 ? void 0 : testConfig[1]) || 'node'; // Default to 'node' if not found
+                            const hasRuntimeErrors = test.runTimeErrors > 0;
+                            const hasTypeErrors = test.typeErrors > 0;
+                            const hasLintErrors = test.staticErrors > 0;
+                            return (React.createElement("tr", { key: test.testName },
                                 React.createElement("td", null,
-                                    React.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}` }, testName)),
+                                    React.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}` }, test.testName)),
                                 React.createElement("td", null,
-                                    React.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#results` }, testData.runTimeErrors === 0 ? '✅ Passed' :
-                                        testData.runTimeErrors > 0 ? `⚠️ ${testData.runTimeErrors} errors` :
-                                            '❌ Failed')),
+                                    React.createElement(Badge, { bg: "secondary", className: "ms-2" }, runTime)),
                                 React.createElement("td", null,
-                                    React.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#types` }, testData.typeErrors)),
+                                    React.createElement(TestStatusBadge, { testName: test.testName, testsExist: test.testsExist, runTimeErrors: test.runTimeErrors, typeErrors: test.typeErrors, staticErrors: test.staticErrors })),
                                 React.createElement("td", null,
-                                    React.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#lint` }, testData.staticErrors))));
+                                    React.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}#types` }, test.typeErrors > 0
+                                        ? `tsc (❌ * ${test.typeErrors})`
+                                        : 'tsc ✅')),
+                                React.createElement("td", null,
+                                    React.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}#lint` }, test.staticErrors > 0
+                                        ? `eslint (❌ *${test.staticErrors})`
+                                        : 'eslint ✅'))));
                         })))),
                 React.createElement(Tab.Pane, { eventKey: "node" },
                     React.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" })),

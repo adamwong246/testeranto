@@ -1,0 +1,14 @@
+
+/add src/lib/BaseSuite.test/mock.ts
+/add src/lib/BaseSuite.test/test.ts
+/add src/lib/BaseSuite.test/web.test.ts
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/allTests/src/lib/BaseSuite.test/web.test/web/tests.json
+/read testeranto/reports/allTests/src/lib/BaseSuite.test/web.test/web/logs.txt
+/read testeranto/reports/allTests/src/lib/BaseSuite.test/web.test/web/type_errors.txt
+/read testeranto/reports/allTests/src/lib/BaseSuite.test/web.test/web/lint_errors.txt

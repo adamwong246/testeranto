@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { Tab, Container, Alert, Button } from 'react-bootstrap';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { fetchTestData } from './utils/api';
 import { NavBar } from "./NavBar";
+import { TestStatusBadge } from "./components/TestStatusBadge";
 export const TestPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -48,7 +50,7 @@ export const TestPage = () => {
                 const testResponse = await fetchTestData(projectName, testPath, runtime);
                 setTestData(testResponse.testData);
                 setTestsExist(!!testResponse.testData);
-                setLogs(testResponse.logs);
+                setLogs(testResponse.logs === null ? undefined : testResponse.logs);
                 setTypeErrors(testResponse.typeErrors);
                 setLintErrors(testResponse.lintErrors);
                 // Then fetch summary.json
@@ -60,12 +62,25 @@ export const TestPage = () => {
                     const testSummary = allSummaries[testPath];
                     console.log("testSummary", testSummary);
                     if (testSummary) {
+                        console.groupCollapsed(`[TestPage] Processing test summary for ${testPath}`);
+                        console.log('Raw test summary:', testSummary);
+                        const counts = {
+                            typeErrors: Number(testSummary.typeErrors) || 0,
+                            staticErrors: Number(testSummary.staticErrors) || 0,
+                            runTimeErrors: Number(testSummary.runTimeErrors) || 0
+                        };
+                        console.log('Normalized counts:', counts);
+                        // Validate counts
+                        if (counts.runTimeErrors === -1 && testSummary.testsExist) {
+                            console.warn('Inconsistent state: runTimeErrors=-1 but testsExist=true');
+                        }
+                        if (!testSummary.testsExist && counts.runTimeErrors > 0) {
+                            console.warn('Inconsistent state: testsExist=false but runTimeErrors>0');
+                        }
                         setSummary(testSummary);
-                        setErrorCounts({
-                            typeErrors: testSummary.typeErrors || 0,
-                            staticErrors: testSummary.staticErrors || 0,
-                            runTimeErrors: testSummary.runTimeErrors || 0
-                        });
+                        setErrorCounts(counts);
+                        setTestsExist(testSummary.testsExist !== false);
+                        console.groupEnd();
                     }
                 }
                 catch (err) {
@@ -88,15 +103,39 @@ export const TestPage = () => {
         return React.createElement(Alert, { variant: "danger" },
             "Error: ",
             error);
+    console.log('Test status debug:', {
+        testName,
+        testsExist,
+        testData,
+        fails: testData === null || testData === void 0 ? void 0 : testData.fails,
+        runTimeErrors: errorCounts.runTimeErrors,
+        typeErrors: errorCounts.typeErrors,
+        staticErrors: errorCounts.staticErrors
+    });
+    console.log('Test data:', {
+        testData,
+        testsExist,
+        errorCounts,
+        summary
+    });
     return (React.createElement(Container, { fluid: true },
         React.createElement(NavBar, { title: decodedTestPath, backLink: `/projects/${projectName}`, navItems: [
                 {
+                    label: '',
+                    badge: {
+                        variant: runtime === 'node' ? 'primary' :
+                            runtime === 'web' ? 'success' :
+                                'info',
+                        text: runtime
+                    },
+                    className: 'pe-none d-flex align-items-center gap-2'
+                },
+                {
                     to: `#results`,
-                    label: !testsExist
-                        ? '❌ BDD'
-                        : (testData === null || testData === void 0 ? void 0 : testData.givens.some(g => g.whens.some(w => w.error) || g.thens.some(t => t.error)))
-                            ? '❌ BDD'
-                            : '✅ BDD',
+                    label: (React.createElement(TestStatusBadge, { testName: decodedTestPath, testsExist: testsExist, runTimeErrors: errorCounts.runTimeErrors, variant: "compact" })),
+                    className: !testsExist || errorCounts.runTimeErrors > 0
+                        ? 'text-danger fw-bold'
+                        : '',
                     active: route === 'results'
                 },
                 {
@@ -161,7 +200,12 @@ export const TestPage = () => {
                                 " ",
                                 then.name,
                                 then.error && React.createElement("pre", { className: "mt-2" }, then.error)))))))))) : (React.createElement(Alert, { variant: "warning" }, "No test results found"))),
-                React.createElement(Tab.Pane, { eventKey: "logs" }, logs ? (React.createElement("pre", { className: "bg-dark text-white p-3" }, logs)) : (React.createElement(Alert, { variant: "warning" }, "No runtime logs found"))),
+                React.createElement(Tab.Pane, { eventKey: "logs" }, logs === undefined ? (React.createElement(Alert, { variant: "danger" },
+                    React.createElement("h4", null, "Logs file missing"),
+                    React.createElement("p", null, "The runtime logs file (logs.txt) was not found."),
+                    React.createElement("p", null, "This suggests the test may not have executed properly."))) : logs === '' ? (React.createElement(Alert, { variant: "success" },
+                    React.createElement("h4", null, "No runtime logs"),
+                    React.createElement("p", null, "The test executed successfully with no log output."))) : (React.createElement("pre", { className: "bg-dark text-white p-3" }, logs))),
                 React.createElement(Tab.Pane, { eventKey: "types" }, typeErrors ? (React.createElement("pre", { className: "bg-dark text-white p-3" }, typeErrors)) : (React.createElement(Alert, { variant: "warning" }, "No type errors found"))),
                 React.createElement(Tab.Pane, { eventKey: "lint" }, lintErrors ? (React.createElement("pre", { className: "bg-dark text-white p-3" }, lintErrors)) : (React.createElement(Alert, { variant: "warning" }, "No lint errors found"))),
                 React.createElement(Tab.Pane, { eventKey: "coverage" },

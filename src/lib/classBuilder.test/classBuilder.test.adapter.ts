@@ -8,7 +8,10 @@ import { I } from "../baseBuilder.test/baseBuilder.test.types";
 export const testAdapter: ITestAdapter<I> = {
   beforeAll: async () => {},
   beforeEach: async (subject, initializer) => {
-    return initializer();
+    console.log("Running beforeEach with initializer:", initializer);
+    const result = await initializer();
+    console.log("Initializer returned:", result);
+    return result;
   },
   andWhen: async (store, whenCB, testResource, utils) => {
     return whenCB(store, utils);

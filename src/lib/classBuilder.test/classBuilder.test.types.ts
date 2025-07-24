@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Ibdd_in,
@@ -57,12 +58,6 @@ export type O = Ibdd_out<
     jobsModified: [expectedCount: number];
     errorThrown: [expectedMessage: string];
     testRunSuccessful: [];
-  },
-  // Checks
-  {
-    Default: [];
-    ImplementationCheck: [validator: (impl: any) => boolean];
-    SpecificationCheck: [validator: (spec: any) => boolean];
   }
 >;
 

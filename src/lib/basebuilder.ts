@@ -103,7 +103,7 @@ export abstract class BaseBuilder<
         receiveTestResourceConfig: async function (
           puppetMaster: IPM
         ): Promise<IFinalResults> {
-          const logFilePath = "log.txt";
+          const logFilePath = "logs.txt";
           const access: number = await puppetMaster.createWriteStream(
             logFilePath
           );

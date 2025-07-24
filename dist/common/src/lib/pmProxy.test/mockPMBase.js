@@ -29,7 +29,14 @@ class MockPMBase {
     }
     end(uid) {
         this.trackCall("end", { uid });
+        // Add debug logging
+        console.debug(`Ending test with uid ${uid}`);
         return Promise.resolve(true);
+    }
+    // Add debug method
+    debug(message) {
+        console.debug(`[MockPMBase] ${message}`);
+        this.trackCall("debug", { message });
     }
     writeFileSync(path, content, testName) {
         this.trackCall("writeFileSync", { path, content, testName });

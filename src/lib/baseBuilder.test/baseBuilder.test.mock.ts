@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Ibdd_in_any, Ibdd_out_any, ITestSpecification } from "../../CoreTypes";
 
 import { BaseBuilder } from "../basebuilder";
@@ -19,8 +21,7 @@ export class MockBaseBuilder<
   SuiteExtensions = {},
   GivenExtensions = {},
   WhenExtensions = {},
-  ThenExtensions = {},
-  CheckExtensions = {}
+  ThenExtensions = {}
 > extends BaseBuilder<
   I,
   O,
@@ -40,12 +41,9 @@ export class MockBaseBuilder<
     givenOverrides: Record<keyof GivenExtensions, IGivenKlasser<I>> = {} as any,
     whenOverrides: Record<keyof WhenExtensions, IWhenKlasser<I>> = {} as any,
     thenOverrides: Record<keyof ThenExtensions, IThenKlasser<I>> = {} as any,
-    testResourceRequirement: ITTestResourceRequest = { ports: [0] },
+    testResourceRequirement: ITTestResourceRequest = { ports: 0 },
     testSpecification: ITestSpecification<I, O> = () => []
   ) {
-    // Initialize required arrays
-    this.artifacts = [];
-    this.testJobs = [];
     super(
       input,
       suitesOverrides,
@@ -55,8 +53,6 @@ export class MockBaseBuilder<
       testResourceRequirement,
       testSpecification
     );
-
-    this.summary = {};
   }
 
   /**

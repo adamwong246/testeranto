@@ -15,10 +15,132 @@
       "features": [
         "ClassBuilder should initialize with default values"
       ]
+    },
+    {
+      "key": "customInput",
+      "name": "WithCustomInput",
+      "whens": [],
+      "thens": [
+        {
+          "name": "initializedProperly: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": {
+        "custom": "input"
+      }
+    },
+    {
+      "key": "resourceRequirements",
+      "name": "WithResourceRequirements",
+      "whens": [],
+      "thens": [
+        {
+          "name": "resourceRequirementsSet: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": {
+        "ports": [
+          3000,
+          3001
+        ]
+      }
+    },
+    {
+      "key": "specGeneration",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "specsGenerated: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should generate specs from test specification"
+      ]
+    },
+    {
+      "key": "jobCreation",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "jobsCreated: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should create test jobs from specs"
+      ]
+    },
+    {
+      "key": "artifactTracking",
+      "name": "Default",
+      "whens": [
+        {
+          "name": "addArtifact: [object Promise]"
+        }
+      ],
+      "thens": [
+        {
+          "name": "artifactsTracked: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should track artifacts"
+      ]
+    },
+    {
+      "key": "overridesConfiguration",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "suitesOverridesConfigured: undefined",
+          "error": false
+        },
+        {
+          "name": "givensOverridesConfigured: undefined",
+          "error": false
+        },
+        {
+          "name": "whensOverridesConfigured: undefined",
+          "error": false
+        },
+        {
+          "name": "thensOverridesConfigured: undefined",
+          "error": false
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should properly configure all overrides"
+      ]
     }
   ],
   "fails": 0,
   "features": [
-    "ClassBuilder should initialize with default values"
+    "ClassBuilder should initialize with default values",
+    {
+      "custom": "input"
+    },
+    {
+      "ports": [
+        3000,
+        3001
+      ]
+    },
+    "Should generate specs from test specification",
+    "Should create test jobs from specs",
+    "Should track artifacts",
+    "Should properly configure all overrides"
   ]
 }

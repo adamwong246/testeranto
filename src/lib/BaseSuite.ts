@@ -15,20 +15,33 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   fails: number;
 
   constructor(name: string, index: number, givens: IGivens<I> = {}) {
-    this.name = name;
+    const suiteName = name || "testSuite"; // Ensure name is never undefined
+    if (!suiteName) {
+      throw new Error("BaseSuite requires a non-empty name");
+    }
+    console.log("[DEBUG] BaseSuite constructor - name:", suiteName, "index:", index);
+    this.name = suiteName;
     this.index = index;
     this.givens = givens;
     this.fails = 0;
+    console.log("[DEBUG] BaseSuite initialized:", this.name, this.index);
+    console.log("[DEBUG] BaseSuite givens:", Object.keys(givens));
   }
 
   public features() {
-    const features = Object.keys(this.givens)
-      .map((k) => this.givens[k].features)
-      .flat()
-      .filter((value, index, array) => {
-        return array.indexOf(value) === index;
-      });
-    return features || [];
+    try {
+      const features = Object.keys(this.givens)
+        .map((k) => this.givens[k].features)
+        .flat()
+        .filter((value, index, array) => {
+          return array.indexOf(value) === index;
+        });
+      console.debug("[DEBUG] Features extracted:", features);
+      return features || [];
+    } catch (e) {
+      console.error("[ERROR] Failed to extract features:", e);
+      return [];
+    }
   }
 
   public toObj() {

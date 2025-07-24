@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React from 'react';
 import ReactDom from "react-dom/client";
-import { HashRouter as Router, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { ProjectsPage } from './ProjectsPage';
 import { ProjectPage } from './ProjectPage';
 import { TestPage } from './TestPage';
-import { Navbar, Container, Nav } from 'react-bootstrap';
-import { NavBar } from './NavBar';
+import { Container } from 'react-bootstrap';
+import { SettingsButton } from './SettingsButton';
 
 export const App = () => {
   return (
@@ -27,7 +28,10 @@ export const App = () => {
           </Container>
         </main>
 
-        <footer className="bg-light py-3">
+        <footer className="bg-light py-3 d-flex justify-content-between align-items-center">
+          <div className="ms-3">
+            <SettingsButton />
+          </div>
           <Container className="text-end" fluid={true}>
             made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
           </Container>

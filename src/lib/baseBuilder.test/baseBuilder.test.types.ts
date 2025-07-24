@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Ibdd_in, Ibdd_out } from "../../CoreTypes";
-
-import { TestBaseBuilder } from "./baseBuilder.test.mock";
+import { BaseBuilder } from "../basebuilder";
 
 export type I = Ibdd_in<
   {}, // iinput
@@ -28,9 +29,5 @@ export type O = Ibdd_out<
     initializedProperly: [];
     specsGenerated: [];
     jobsCreated: [];
-  },
-  // Checks
-  {
-    Default: [];
   }
 >;

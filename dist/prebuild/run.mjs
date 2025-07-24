@@ -461,16 +461,16 @@ var PM_WithEslintAndTsc = class extends PM_Base {
         console.error(JSON.stringify(this.summary, null, 2));
         process.exit(-1);
       }
+      const filepath = lintPather(entrypoint, platform, this.name);
+      if (fs2.existsSync(filepath))
+        fs2.rmSync(filepath);
       const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
         return r.messages[0].ruleId !== null;
       }).map((r) => {
         delete r.source;
         return r;
       });
-      fs2.writeFileSync(
-        lintPather(entrypoint, platform, this.name),
-        await formatter.format(results)
-      );
+      fs2.writeFileSync(filepath, await formatter.format(results));
       this.lintIsNowDone(entrypoint, results.length);
     };
     this.makePrompt = async (entryPoint, addableFiles, platform) => {
@@ -796,9 +796,10 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "pure");
           }).finally((x) => {
+            const fileSet = files2[src] || /* @__PURE__ */ new Set();
             fs3.writeFileSync(
               reportDest + "/manifest.json",
-              JSON.stringify(Array.from(files2[src]))
+              JSON.stringify(Array.from(fileSet))
             );
           });
         });

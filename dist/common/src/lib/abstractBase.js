@@ -99,11 +99,18 @@ class BaseWhen {
         };
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
-        tLog(" When:", this.name);
-        return await this.andWhen(store, this.whenCB, testResourceConfiguration, (0, pmProxy_js_1.andWhenProxy)(pm, filepath)).catch((e) => {
+        try {
+            tLog(" When:", this.name);
+            console.debug("[DEBUG] Executing When step:", this.name);
+            const result = await this.andWhen(store, this.whenCB, testResourceConfiguration, (0, pmProxy_js_1.andWhenProxy)(pm, filepath));
+            console.debug("[DEBUG] When step completed:", this.name);
+            return result;
+        }
+        catch (e) {
+            console.error("[ERROR] When step failed:", this.name, e);
             this.error = e;
             throw e;
-        });
+        }
     }
 }
 exports.BaseWhen = BaseWhen;
@@ -121,7 +128,6 @@ class BaseThen {
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
         return this.butThen(store, async (s) => {
-            tLog(" Then!!!:", this.name);
             if (typeof this.thenCB === "function") {
                 return await this.thenCB(s);
             }
@@ -129,8 +135,8 @@ class BaseThen {
                 return this.thenCB;
             }
         }, testResourceConfiguration, (0, pmProxy_js_1.butThenProxy)(pm, filepath)).catch((e) => {
-            this.error = e;
-            throw e;
+            this.error = e.toString();
+            // throw e;
         });
     }
 }

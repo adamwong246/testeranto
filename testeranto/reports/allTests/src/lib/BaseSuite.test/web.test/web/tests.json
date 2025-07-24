@@ -1,0 +1,28 @@
+{
+  "name": "BaseSuite Core Functionality Tests",
+  "givens": [
+    {
+      "key": "initialization",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "SuiteNameMatches: testSuite",
+          "error": "Error: Suite name is undefined. Expected: testSuite"
+        },
+        {
+          "name": "SuiteIndexMatches: 0",
+          "error": "Error: Expected suite index 0, got undefined"
+        }
+      ],
+      "error": null,
+      "features": [
+        "BaseSuite should initialize with correct name and index"
+      ]
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "BaseSuite should initialize with correct name and index"
+  ]
+}

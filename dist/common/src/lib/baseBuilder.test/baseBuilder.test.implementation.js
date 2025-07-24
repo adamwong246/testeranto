@@ -9,25 +9,20 @@ exports.implementation = {
     },
     givens: {
         Default: () => {
-            const builder = new baseBuilder_test_mock_1.MockBaseBuilder({}, // input
+            return new baseBuilder_test_mock_1.MockBaseBuilder({}, // input
             {}, // suitesOverrides
-            {}, // givenOverrides 
+            {}, // givenOverrides
             {}, // whenOverrides
             {}, // thenOverrides
-            { ports: [0] }, // testResourceRequirement
+            { ports: 0 }, // testResourceRequirement
             () => [] // testSpecification
             );
-            // Initialize required arrays
-            builder.artifacts = [];
-            builder.testJobs = [];
-            builder.specs = [];
-            return builder;
         },
         WithCustomInput: (input) => {
-            return new baseBuilder_test_mock_1.MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] }, () => []);
+            return new baseBuilder_test_mock_1.MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] });
         },
         WithResourceRequirements: (requirements) => {
-            return new baseBuilder_test_mock_1.MockBaseBuilder({}, {}, {}, {}, {}, {}, requirements, () => []);
+            return new baseBuilder_test_mock_1.MockBaseBuilder({}, {}, {}, {}, {}, {}, requirements);
         },
     },
     whens: {
@@ -42,9 +37,25 @@ exports.implementation = {
     },
     thens: {
         initializedProperly: () => (builder) => {
+            var _a;
             if (!(builder instanceof basebuilder_1.BaseBuilder)) {
-                throw new Error("Builder was not properly initialized");
+                console.error("Builder instance:", builder);
+                throw new Error(`Builder was not properly initialized - expected BaseBuilder instance but got ${(_a = builder === null || builder === void 0 ? void 0 : builder.constructor) === null || _a === void 0 ? void 0 : _a.name}`);
             }
+            // Verify required properties exist
+            [
+                "artifacts",
+                "testJobs",
+                "specs",
+                "suitesOverrides",
+                "givenOverides",
+                "whenOverides",
+                "thenOverides",
+            ].forEach((prop) => {
+                if (!(prop in builder)) {
+                    throw new Error(`Builder missing required property: ${prop}`);
+                }
+            });
             return builder;
         },
         specsGenerated: () => (builder) => {

@@ -1,4 +1,5 @@
-import Testeranto from "../../Pure";
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import Testeranto from "../../Web";
 
 import { specification } from "./baseBuilder.test.specification";
 import { implementation } from "./baseBuilder.test.implementation";

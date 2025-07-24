@@ -39,19 +39,45 @@ export class PureTesteranto<
   }
 
   async receiveTestResourceConfig(partialTestResource: string) {
+    console.log(
+      "[DEBUG] receiveTestResourceConfig called with:",
+      partialTestResource
+    );
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Pure(t);
 
-    try {
-      return await this.testJobs[0].receiveTestResourceConfig(pm);
-    } catch (e) {
-      return -2;
+    console.log("[DEBUG] Current test jobs:", this.testJobs?.length);
+
+    if (!this.testJobs || this.testJobs.length === 0) {
+      console.error(
+        "[ERROR] No test jobs available - checking specs:",
+        this.specs?.length
+      );
+      console.error("[ERROR] Test implementation:", this.testImplementation);
+      return {
+        failed: true,
+        fails: 1,
+        artifacts: [],
+        logPromise: Promise.resolve(),
+        features: [],
+      };
     }
 
-    // const { failed, artifacts, logPromise, features, fails } =
-    //   await this.testJobs[0].receiveTestResourceConfig(pm);
-    // // pm.customclose();
-    // return { features, failed, fails };
+    try {
+      console.log("[DEBUG] Executing test job with PM:", pm);
+      const result = await this.testJobs[0].receiveTestResourceConfig(pm);
+      console.log("[DEBUG] Test job completed with result:", result);
+      return result;
+    } catch (e) {
+      console.error("[ERROR] Test job failed:", e);
+      return {
+        failed: true,
+        fails: 1,
+        artifacts: [],
+        logPromise: Promise.resolve(),
+        features: [],
+      };
+    }
   }
 }
 
@@ -69,16 +95,4 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
     testResourceRequirement,
     testAdapter
   );
-
-  // try {
-  //   return new PureTesteranto<I, O, M>(
-  //     input,
-  //     testSpecification,
-  //     testImplementation,
-  //     testResourceRequirement,
-  //     testAdapter
-  //   );
-  // } catch (e) {
-  //   return -1;
-  // }
 };

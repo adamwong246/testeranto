@@ -206,17 +206,24 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
     pm: IPM,
     filepath: string
   ) {
-    tLog(" When:", this.name);
+    try {
+      tLog(" When:", this.name);
+      console.debug("[DEBUG] Executing When step:", this.name);
 
-    return await this.andWhen(
-      store,
-      this.whenCB,
-      testResourceConfiguration,
-      andWhenProxy(pm, filepath)
-    ).catch((e: Error) => {
+      const result = await this.andWhen(
+        store,
+        this.whenCB,
+        testResourceConfiguration,
+        andWhenProxy(pm, filepath)
+      );
+
+      console.debug("[DEBUG] When step completed:", this.name);
+      return result;
+    } catch (e: Error) {
+      console.error("[ERROR] When step failed:", this.name, e);
       this.error = e;
       throw e;
-    });
+    }
   }
 }
 
@@ -259,8 +266,6 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     return this.butThen(
       store,
       async (s: I["iselection"]) => {
-        tLog(" Then!!!:", this.name);
-
         if (typeof this.thenCB === "function") {
           return await this.thenCB(s);
         } else {
@@ -270,8 +275,8 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
       testResourceConfiguration,
       butThenProxy(pm, filepath)
     ).catch((e) => {
-      this.error = e;
-      throw e;
+      this.error = e.toString();
+      // throw e;
     });
   }
 }

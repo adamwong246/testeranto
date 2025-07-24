@@ -12,14 +12,28 @@ export const implementation: ITestImplementation<I, O, M> = {
 
   givens: {
     Default: () => {
-      return new MockCore(
-        {}, // input
-        specification, // testSpecification
-        implementation, // testImplementation
-        { ports: [] }, // testResourceRequirement
-        testAdapter, // testAdapter
-        (cb) => cb() // uberCatcher
-      );
+      console.log('[DEBUG] Creating Default MockCore instance');
+      const input = { debug: true };
+      const resourceReq = { ports: [3000] };
+      
+      console.log('[DEBUG] Default Given - input:', input);
+      console.log('[DEBUG] Default Given - resourceReq:', resourceReq);
+      
+      try {
+        const instance = new MockCore(
+          input,
+          specification,
+          implementation,
+          resourceReq,
+          testAdapter,
+          (cb) => cb()
+        );
+        console.log('[DEBUG] MockCore instance created successfully:', instance);
+        return instance;
+      } catch (e) {
+        console.error('[ERROR] Failed to create MockCore:', e);
+        throw e;
+      }
     },
     WithCustomInput: (input: any) => {
       return new MockCore(
@@ -63,7 +77,10 @@ export const implementation: ITestImplementation<I, O, M> = {
       return builder;
     },
     modifySpecs: (modifier: (specs: any[]) => any[]) => (builder) => {
-      builder.specs = modifier(builder.specs || []);
+      console.log('Modifying specs - current count:', builder.specs?.length);
+      const newSpecs = modifier(builder.specs || []);
+      console.log('Modifying specs - new count:', newSpecs.length);
+      builder.specs = newSpecs;
       return builder;
     },
     triggerError: (message: string) => (builder) => {
@@ -73,8 +90,17 @@ export const implementation: ITestImplementation<I, O, M> = {
 
   thens: {
     initializedProperly: () => (builder) => {
+      if (!builder) {
+        throw new Error("Builder is undefined");
+      }
       if (!(builder instanceof MockCore)) {
-        throw new Error("Builder was not properly initialized");
+        throw new Error(`Builder is not MockCore (got ${builder.constructor.name})`);
+      }
+      if (!builder.testResourceRequirement) {
+        throw new Error("testResourceRequirement not set");
+      }
+      if (!builder.testAdapter) {
+        throw new Error("testAdapter not set");
       }
       return builder;
     },
@@ -119,6 +145,14 @@ export const implementation: ITestImplementation<I, O, M> = {
       } catch (e) {
         throw new Error(`Test run failed: ${e.message}`);
       }
+    },
+    specsModified: (expectedCount: number) => (builder) => {
+      if (!builder.specs || builder.specs.length !== expectedCount) {
+        throw new Error(
+          `Expected ${expectedCount} specs, got ${builder.specs?.length}`
+        );
+      }
+      return builder;
     },
   },
 };

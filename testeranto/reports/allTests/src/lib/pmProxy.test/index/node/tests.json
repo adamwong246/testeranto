@@ -1,0 +1,120 @@
+{
+  "name": "PM Proxy Functionality",
+  "givens": [
+    {
+      "key": "writeFileProxyTest",
+      "name": "SomeBaseString",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: writeFileSync",
+          "error": "TypeError: store.butThenProxy is not a function"
+        }
+      ],
+      "error": null,
+      "features": [
+        "butThenProxy should rewrite writeFileSync paths"
+      ]
+    },
+    {
+      "key": "createWriteStreamProxyTest",
+      "name": "SomeBaseString",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: createWriteStream",
+          "error": "TypeError: store.butThenProxy is not a function"
+        }
+      ],
+      "error": null,
+      "features": [
+        "butThenProxy should rewrite createWriteStream paths"
+      ]
+    },
+    {
+      "key": "screencastProxyTest",
+      "name": "SomeBaseString",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: screencast",
+          "error": "TypeError: store.butThenProxy is not a function"
+        }
+      ],
+      "error": null,
+      "features": [
+        "butThenProxy should rewrite screencast paths"
+      ]
+    },
+    {
+      "key": "customScreenShotProxyTest",
+      "name": "SomeBaseString",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: customScreenShot",
+          "error": "TypeError: store.butThenProxy is not a function"
+        }
+      ],
+      "error": null,
+      "features": [
+        "butThenProxy should rewrite customScreenShot paths"
+      ]
+    },
+    {
+      "key": "emptyPathTest",
+      "name": "SomeBaseString",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: writeFileSync",
+          "error": "TypeError: store.butThenProxy is not a function"
+        }
+      ],
+      "error": null,
+      "features": [
+        "butThenProxy should handle empty paths"
+      ]
+    },
+    {
+      "key": "nestedPathTest",
+      "name": "SomeBaseString",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: writeFileSync",
+          "error": "TypeError: store.butThenProxy is not a function"
+        }
+      ],
+      "error": null,
+      "features": [
+        "butThenProxy should handle nested paths"
+      ]
+    },
+    {
+      "key": "specialCharsTest",
+      "name": "SomeBaseString",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: writeFileSync",
+          "error": "TypeError: store.butThenProxy is not a function"
+        }
+      ],
+      "error": null,
+      "features": [
+        "butThenProxy should handle special characters in paths"
+      ]
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "butThenProxy should rewrite writeFileSync paths",
+    "butThenProxy should rewrite createWriteStream paths",
+    "butThenProxy should rewrite screencast paths",
+    "butThenProxy should rewrite customScreenShot paths",
+    "butThenProxy should handle empty paths",
+    "butThenProxy should handle nested paths",
+    "butThenProxy should handle special characters in paths"
+  ]
+}

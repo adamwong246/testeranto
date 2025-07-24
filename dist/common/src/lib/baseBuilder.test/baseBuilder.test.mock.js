@@ -6,12 +6,8 @@ const basebuilder_1 = require("../basebuilder");
  * Concrete implementation of BaseBuilder for testing purposes only
  */
 class MockBaseBuilder extends basebuilder_1.BaseBuilder {
-    constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, testResourceRequirement = { ports: [0] }, testSpecification = () => []) {
-        // Initialize required arrays
-        this.artifacts = [];
-        this.testJobs = [];
+    constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, testResourceRequirement = { ports: 0 }, testSpecification = () => []) {
         super(input, suitesOverrides, givenOverrides, whenOverrides, thenOverrides, testResourceRequirement, testSpecification);
-        this.summary = {};
         this.summary = {};
     }
     /**

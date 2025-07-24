@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import Testeranto from "../../Web";
 
 import { BaseSuite } from "../BaseSuite";

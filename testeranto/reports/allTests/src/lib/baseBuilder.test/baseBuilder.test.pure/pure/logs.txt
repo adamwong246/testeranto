@@ -1,5 +1,0 @@
-TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
-    at Function.from (<anonymous>)
-    at <anonymous> (/Users/adam/Code/testeranto/src/PM/main.ts:614:36)
-    at <anonymous>
-    at launchPure (/Users/adam/Code/testeranto/src/PM/main.ts:577:7)

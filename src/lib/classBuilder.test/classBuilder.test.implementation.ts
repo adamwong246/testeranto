@@ -20,7 +20,7 @@ export const implementation: ITestImplementation<I, O, M> = {
 
   givens: {
     Default: () => {
-      console.log('Creating default test builder instance');
+      console.log("Creating default test builder instance");
       const builder = new mock(
         implementation, // Use the current implementation
         specification, // Use the current specification
@@ -31,7 +31,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         class {}, // thenKlasser
         { ports: [] } // Default resource requirements
       );
-      console.log('Builder created:', builder);
+      console.log("Builder created:", builder);
       return builder;
     },
     WithCustomInput: (input: any) => {
@@ -112,10 +112,30 @@ export const implementation: ITestImplementation<I, O, M> = {
 
   thens: {
     initializedProperly: () => (builder: any) => {
-      console.log('Checking builder initialization:', builder);
-      if (!(builder instanceof mock)) {
-        throw new Error(`Builder was not properly initialized. Expected mock instance but got ${builder?.constructor?.name}`);
+      console.log("Checking builder initialization:", {
+        builder,
+        isMock: builder instanceof mock,
+        constructor: builder?.constructor?.name,
+        props: Object.keys(builder)
+      });
+      
+      if (!builder) {
+        throw new Error("Builder is undefined");
       }
+      if (!(builder instanceof mock)) {
+        throw new Error(
+          `Builder was not properly initialized. Expected mock instance but got ${builder?.constructor?.name}`
+        );
+      }
+      
+      // Verify required properties exist
+      const requiredProps = ['specs', 'testJobs', 'artifacts'];
+      for (const prop of requiredProps) {
+        if (!(prop in builder)) {
+          throw new Error(`Missing required property: ${prop}`);
+        }
+      }
+      
       return builder;
     },
 

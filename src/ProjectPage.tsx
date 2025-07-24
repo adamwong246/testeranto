@@ -1,6 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React, { useEffect, useState } from 'react';
-import { Tab } from 'react-bootstrap';
-import { Card, ListGroup, Badge } from 'react-bootstrap';
+
+import { Card, ListGroup, Nav, Tab, Container, Alert, Badge, Table, Button } from 'react-bootstrap';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+
+import { ISummary } from './Types';
+
+// import "./TestReport.scss";
+import { NavBar } from './NavBar';
+import { TestStatusBadge } from './components/TestStatusBadge';
 
 const BuildLogViewer = ({ logs, runtime }: { logs: any, runtime: string }) => {
   if (!logs) return <Alert variant="info">Loading {runtime.toLowerCase()} build logs...</Alert>;
@@ -47,7 +57,12 @@ const BuildLogViewer = ({ logs, runtime }: { logs: any, runtime: string }) => {
                     </Badge>
                   )}
                   {!hasErrors && !hasWarnings && (
-                    <Badge bg="success">Build Successful</Badge>
+                    <div className="d-flex align-items-center gap-2">
+                      <Badge bg="success">Build Successful</Badge>
+                      {logs.testsExist && (
+                        <Badge bg="info">tests.json ✓</Badge>
+                      )}
+                    </div>
                   )}
                 </div>
               </Card.Header>
@@ -179,13 +194,7 @@ const BuildLogViewer = ({ logs, runtime }: { logs: any, runtime: string }) => {
     </div>
   );
 };
-import { Navbar, Nav, Tab, Container, Alert, Badge, Table, Button, Card } from 'react-bootstrap';
-import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 
-import { ISummary } from './Types';
-
-import "./TestReport.scss";
-import { NavBar } from './NavBar';
 
 
 export const ProjectPage = () => {
@@ -269,43 +278,98 @@ export const ProjectPage = () => {
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
   if (!summary) return <Alert variant="warning">No data found for project</Alert>;
 
+  const testStatuses = Object.entries(summary).map(([testName, testData]) => {
+    console.groupCollapsed(`[ProjectPage] Processing test: ${testName}`);
+    console.log('Raw test data from summary.json:', testData);
+
+    // Check if tests.json exists by making a HEAD request
+    const checkTestsJson = async () => {
+      try {
+        // Get runtime from config or fall back to test name pattern
+        let runtimeType = 'node'; // default fallback
+        const testConfig = config.tests?.find((t) => t[0] === testName);
+        if (testConfig) {
+          runtimeType = testConfig[1] || runtimeType;
+        } else if (testName.includes('.web.')) {
+          runtimeType = 'web';
+        } else if (testName.includes('.pure.')) {
+          runtimeType = 'pure';
+        }
+
+        const jsonPath = `reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtimeType}/tests.json`;
+
+        const res = await fetch(jsonPath, {
+          method: 'HEAD'
+        });
+        return res.ok;
+      } catch {
+        return false;
+      }
+    };
+
+    const testsJsonExists = checkTestsJson();
+
+    const status = {
+      testName,
+      testsExist: testsJsonExists && testData.testsExist !== false, // Ensure boolean
+      runTimeErrors: Number(testData.runTimeErrors) || 0, // Ensure number
+      typeErrors: Number(testData.typeErrors) || 0,
+      staticErrors: Number(testData.staticErrors) || 0
+    };
+
+    console.log('Normalized status:', status);
+    console.log('tests.json exists:', testsJsonExists);
+
+    // Validate status consistency
+    if (status.runTimeErrors === -1 && status.testsExist) {
+      console.warn('Inconsistent state: runTimeErrors=-1 but testsExist=true');
+    }
+    if (!status.testsExist && status.runTimeErrors > 0) {
+      console.warn('Inconsistent state: testsExist=false but runTimeErrors>0');
+    }
+
+    console.groupEnd();
+    return status;
+  });
+
+
   return (
     <Container fluid>
       <NavBar
         title={projectName}
         backLink="/"
         navItems={[
-          { 
-            to: `#tests`, 
-            label: Object.values(summary).some(t => t.runTimeErrors > 0) ? '❌ Tests' : 
-                  Object.values(summary).some(t => t.typeErrors > 0 || t.staticErrors > 0) ? '⚠️ Tests' : '✅ Tests',
+          {
+            to: `#tests`,
+            label: testStatuses.some(t => t.runTimeErrors > 0) ? '❌ Tests' :
+              testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? '⚠️ Tests' : '✅ Tests',
             active: route === 'tests',
-            className: Object.values(summary).some(t => t.runTimeErrors > 0) ? 'text-danger fw-bold' : 
-                     Object.values(summary).some(t => t.typeErrors > 0 || t.staticErrors > 0) ? 'text-warning fw-bold' : ''
+            className: testStatuses.some(t => t.runTimeErrors > 0) ? 'text-danger fw-bold' :
+              testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? 'text-warning fw-bold' : ''
           },
           {
             to: `#node`,
-            label: nodeLogs?.errors?.length ? '❌ Node Build' : 
-                  nodeLogs?.warnings?.length ? '⚠️ Node Build' : 'Node Build',
+            label: nodeLogs?.errors?.length ? '❌ Node Build' :
+              nodeLogs?.warnings?.length ? '⚠️ Node Build' : 'Node Build',
             active: route === 'node',
-            className: nodeLogs?.errors?.length ? 'text-danger fw-bold' : 
-                     nodeLogs?.warnings?.length ? 'text-warning fw-bold' : ''
+            className: nodeLogs?.errors?.length ? 'text-danger fw-bold' :
+              nodeLogs?.warnings?.length ? 'text-warning fw-bold' : ''
           },
           {
             to: `#web`,
-            label: webLogs?.errors?.length ? '❌ Web Build' : 
-                  webLogs?.warnings?.length ? '⚠️ Web Build' : 'Web Build',
+            label: webLogs?.errors?.length ? '❌ Web Build' :
+              webLogs?.warnings?.length ? '⚠️ Web Build' : 'Web Build',
             active: route === 'web',
-            className: webLogs?.errors?.length ? 'text-danger fw-bold' : 
-                     webLogs?.warnings?.length ? 'text-warning fw-bold' : ''
+            className: webLogs?.errors?.length ? 'text-danger fw-bold' :
+              webLogs?.warnings?.length ? 'text-warning fw-bold' : ''
           },
           {
             to: `#pure`,
-            label: pureLogs?.errors?.length ? '❌ Pure Build' : 
-                  pureLogs?.warnings?.length ? '⚠️ Pure Build' : 'Pure Build',
+            label: pureLogs?.errors?.length ? '❌ Pure Build' :
+              pureLogs?.warnings?.length ? '⚠️ Pure Build' : 'Pure Build',
             active: route === 'pure',
-            className: pureLogs?.errors?.length ? 'text-danger fw-bold' : 
-                     pureLogs?.warnings?.length ? 'text-warning fw-bold' : ''
+            className: pureLogs?.errors?.length ? 'text-danger fw-bold' :
+              pureLogs?.warnings?.length ? 'text-warning fw-bold' : ''
           },
         ]}
       />
@@ -322,42 +386,58 @@ export const ProjectPage = () => {
               <thead>
                 <tr>
                   <th>Test</th>
+                  <th>Runtime</th>
                   <th>BDD Errors</th>
                   <th>Type Errors</th>
                   <th>Lint Errors</th>
                 </tr>
               </thead>
               <tbody>
-                {Object.entries(summary).map(([testName, testData]) => {
-
-                  const runTime = config.tests.find((t) => t[0] === testName)[1];
+                {testStatuses.map((test) => {
+                  const testConfig = config.tests?.find((t) => t[0] === test.testName);
+                  const runTime = testConfig?.[1] || 'node'; // Default to 'node' if not found
+                  const hasRuntimeErrors = test.runTimeErrors > 0;
+                  const hasTypeErrors = test.typeErrors > 0;
+                  const hasLintErrors = test.staticErrors > 0;
 
                   return (
-                    <tr key={testName}>
+                    <tr key={test.testName}>
                       <td>
-                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}`}>
-                          {testName}
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}`}>
+                          {test.testName}
+
                         </a>
                       </td>
                       <td>
-                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#results`}>
-                          {testData.runTimeErrors === 0 ? '✅ Passed' :
-                            testData.runTimeErrors > 0 ? `⚠️ ${testData.runTimeErrors} errors` :
-                              '❌ Failed'}
+                        <Badge bg="secondary" className="ms-2">
+                          {runTime}
+                        </Badge>
+                      </td>
+                      <td>
+                        <TestStatusBadge
+                          testName={test.testName}
+                          testsExist={test.testsExist}
+                          runTimeErrors={test.runTimeErrors}
+                          typeErrors={test.typeErrors}
+                          staticErrors={test.staticErrors}
+                        />
+                      </td>
+                      <td>
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}#types`}>
+                          {test.typeErrors > 0
+                            ? `tsc (❌ * ${test.typeErrors})`
+                            : 'tsc ✅'}
                         </a>
                       </td>
                       <td>
-                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#types`}>
-                          {testData.typeErrors}
-                        </a>
-                      </td>
-                      <td>
-                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(testName)}/${runTime}#lint`}>
-                          {testData.staticErrors}
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}#lint`}>
+                          {test.staticErrors > 0
+                            ? `eslint (❌ *${test.staticErrors})`
+                            : 'eslint ✅'}
                         </a>
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </Table>

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITestImplementation } from "../../CoreTypes";
 import { MockBaseBuilder } from "./baseBuilder.test.mock";
 
@@ -15,46 +17,21 @@ export const implementation: ITestImplementation<I, O, {}> = {
 
   givens: {
     Default: () => {
-      const builder = new MockBaseBuilder(
+      return new MockBaseBuilder(
         {}, // input
         {}, // suitesOverrides
-        {}, // givenOverrides 
+        {}, // givenOverrides
         {}, // whenOverrides
         {}, // thenOverrides
-        { ports: [0] }, // testResourceRequirement
+        { ports: 0 }, // testResourceRequirement
         () => [] // testSpecification
       );
-      
-      // Initialize required arrays
-      builder.artifacts = [];
-      builder.testJobs = [];
-      builder.specs = [];
-      
-      return builder;
     },
     WithCustomInput: (input: any) => {
-      return new MockBaseBuilder(
-        input,
-        {},
-        {},
-        {},
-        {},
-        {},
-        { ports: [] },
-        () => []
-      );
+      return new MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] });
     },
     WithResourceRequirements: (requirements: ITTestResourceRequest) => {
-      return new MockBaseBuilder(
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        requirements,
-        () => []
-      );
+      return new MockBaseBuilder({}, {}, {}, {}, {}, {}, requirements);
     },
   },
 
@@ -72,8 +49,27 @@ export const implementation: ITestImplementation<I, O, {}> = {
   thens: {
     initializedProperly: () => (builder: TestSubject) => {
       if (!(builder instanceof BaseBuilder)) {
-        throw new Error("Builder was not properly initialized");
+        console.error("Builder instance:", builder);
+        throw new Error(
+          `Builder was not properly initialized - expected BaseBuilder instance but got ${builder?.constructor?.name}`
+        );
       }
+
+      // Verify required properties exist
+      [
+        "artifacts",
+        "testJobs",
+        "specs",
+        "suitesOverrides",
+        "givenOverides",
+        "whenOverides",
+        "thenOverides",
+      ].forEach((prop) => {
+        if (!(prop in builder)) {
+          throw new Error(`Builder missing required property: ${prop}`);
+        }
+      });
+
       return builder;
     },
     specsGenerated: () => (builder: TestSubject) => {

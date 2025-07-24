@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Browser } from "puppeteer-core";
 
 import { IBuiltConfig, ITLog } from "../index";
@@ -38,7 +40,15 @@ export class MockPMBase implements PM_Base {
 
   end(uid: number): Promise<boolean> {
     this.trackCall("end", { uid });
+    // Add debug logging
+    console.debug(`Ending test with uid ${uid}`);
     return Promise.resolve(true);
+  }
+
+  // Add debug method
+  debug(message: string) {
+    console.debug(`[MockPMBase] ${message}`);
+    this.trackCall("debug", { message });
   }
 
   writeFileSync(

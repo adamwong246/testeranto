@@ -237,7 +237,8 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         // console.error(e);
                     })
                         .finally((x) => {
-                        fs_1.default.writeFileSync(reportDest + "/manifest.json", JSON.stringify(Array.from(files[src])));
+                        const fileSet = files[src] || new Set();
+                        fs_1.default.writeFileSync(reportDest + "/manifest.json", JSON.stringify(Array.from(fileSet)));
                     });
                 });
             }

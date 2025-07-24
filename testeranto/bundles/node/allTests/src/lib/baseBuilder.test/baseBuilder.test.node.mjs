@@ -1,209 +1,42 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  BaseBuilder,
-  PM,
-  TesterantoCore,
-  defaultTestResourceRequirement
-} from "../../../chunk-4NYHHJ7H.mjs";
-
-// src/PM/pure.ts
-var PM_Pure = class extends PM {
-  constructor(t) {
-    super();
-    this.server = {};
-    this.testResourceConfiguration = t;
-  }
-  getInnerHtml(selector, page) {
-    throw new Error("pure.ts getInnHtml not implemented");
-    return Promise.resolve("");
-  }
-  stopSideCar(uid) {
-    throw new Error("pure.ts getInnHtml not implemented");
-    return Promise.resolve(true);
-  }
-  start() {
-    return new Promise((r) => r());
-  }
-  stop() {
-    return new Promise((r) => r());
-  }
-  launchSideCar(n) {
-    return globalThis["launchSideCar"](n, this.testResourceConfiguration.name);
-  }
-  pages() {
-    return globalThis["pages"]();
-  }
-  waitForSelector(p, s) {
-    return globalThis["waitForSelector"](p, s);
-  }
-  closePage(p) {
-    return globalThis["closePage"](p);
-  }
-  goto(cdpPage, url) {
-    return globalThis["goto"](cdpPage.mainFrame()._id, url);
-  }
-  newPage() {
-    return globalThis["newPage"]();
-  }
-  $(selector) {
-    return globalThis["$"](selector);
-  }
-  isDisabled(selector) {
-    return globalThis["isDisabled"](selector);
-  }
-  getAttribute(selector, attribute) {
-    return globalThis["getAttribute"](selector, attribute);
-  }
-  getValue(selector) {
-    return globalThis["getValue"](selector);
-  }
-  focusOn(selector) {
-    return globalThis["focusOn"](selector);
-  }
-  typeInto(selector, value) {
-    return globalThis["typeInto"](selector, value);
-  }
-  page() {
-    return globalThis["page"]();
-  }
-  click(selector) {
-    return globalThis["click"](selector);
-  }
-  screencast(opts, page) {
-    return globalThis["screencast"](
-      {
-        ...opts,
-        path: this.testResourceConfiguration.fs + "/" + opts.path
-      },
-      page,
-      this.testResourceConfiguration.name
-    );
-  }
-  screencastStop(p) {
-    return globalThis["screencastStop"](p);
-  }
-  customScreenShot(opts, page) {
-    return globalThis["customScreenShot"](
-      {
-        ...opts,
-        path: this.testResourceConfiguration.fs + "/" + opts.path
-      },
-      page,
-      this.testResourceConfiguration.name
-    );
-  }
-  existsSync(destFolder) {
-    return globalThis["existsSync"](
-      this.testResourceConfiguration.fs + "/" + destFolder
-    );
-  }
-  mkdirSync() {
-    return globalThis["mkdirSync"](this.testResourceConfiguration.fs + "/");
-  }
-  write(uid, contents) {
-    return globalThis["write"](uid, contents);
-  }
-  writeFileSync(filepath, contents) {
-    return globalThis["writeFileSync"](
-      this.testResourceConfiguration.fs + "/" + filepath,
-      contents,
-      this.testResourceConfiguration.name
-    );
-  }
-  createWriteStream(filepath) {
-    return globalThis["createWriteStream"](
-      this.testResourceConfiguration.fs + "/" + filepath,
-      this.testResourceConfiguration.name
-    );
-  }
-  end(uid) {
-    return globalThis["end"](uid);
-  }
-  customclose() {
-    globalThis["customclose"](
-      this.testResourceConfiguration.fs,
-      this.testResourceConfiguration.name
-    );
-  }
-  testArtiFactoryfileWriter(tLog, callback) {
-  }
-  // startPuppeteer(options?: any): any {
-  //   // return puppeteer.connect(options).then((b) => {
-  //   //   this.browser = b;
-  //   // });
-  // }
-};
-
-// src/Pure.ts
-var PureTesteranto = class extends TesterantoCore {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter2) {
-    super(
-      input,
-      testSpecification,
-      testImplementation,
-      testResourceRequirement,
-      testAdapter2,
-      () => {
-      }
-    );
-  }
-  async receiveTestResourceConfig(partialTestResource) {
-    const t = JSON.parse(partialTestResource);
-    const pm = new PM_Pure(t);
-    try {
-      return await this.testJobs[0].receiveTestResourceConfig(pm);
-    } catch (e) {
-      return -2;
-    }
-  }
-};
-var Pure_default = async (input, testSpecification, testImplementation, testAdapter2, testResourceRequirement = defaultTestResourceRequirement) => {
-  return new PureTesteranto(
-    input,
-    testSpecification,
-    testImplementation,
-    testResourceRequirement,
-    testAdapter2
-  );
-};
+  Node_default
+} from "../../../chunk-NQEP7SN4.mjs";
+import {
+  BaseBuilder
+} from "../../../chunk-FFBRDUBH.mjs";
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then) => {
   return [
-    Suite.Default(
-      "Testing BaseBuilder functionality",
-      {
-        testInitialization: Given.Default(
-          ["BaseBuilder should initialize correctly"],
-          [],
-          [
-            Then.initializedProperly(),
-            Then.artifactsTracked(),
-            Then.jobsCreated(),
-            Then.specsGenerated()
-          ]
-        ),
-        testSpecsGeneration: Given.Default(
-          ["BaseBuilder should generate specs from test specification"],
-          [],
-          [Then.specsGenerated()]
-        ),
-        testJobsCreation: Given.Default(
-          ["BaseBuilder should create test jobs"],
-          [],
-          [Then.jobsCreated()]
-        )
-      },
-      []
-    )
+    Suite.Default("Testing BaseBuilder functionality", {
+      testInitialization: Given.Default(
+        ["BaseBuilder should initialize correctly"],
+        [],
+        [
+          Then.initializedProperly(),
+          Then.artifactsTracked(),
+          Then.jobsCreated(),
+          Then.specsGenerated()
+        ]
+      ),
+      testSpecsGeneration: Given.Default(
+        ["BaseBuilder should generate specs from test specification"],
+        [],
+        [Then.specsGenerated()]
+      ),
+      testJobsCreation: Given.Default(
+        ["BaseBuilder should create test jobs"],
+        [],
+        [Then.jobsCreated()]
+      )
+    })
   ];
 };
 
 // src/lib/baseBuilder.test/baseBuilder.test.mock.ts
 var MockBaseBuilder = class extends BaseBuilder {
-  constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, testResourceRequirement = { ports: [0] }, testSpecification = () => []) {
-    this.artifacts = [];
-    this.testJobs = [];
+  constructor(input, suitesOverrides = {}, givenOverrides = {}, whenOverrides = {}, thenOverrides = {}, testResourceRequirement = { ports: 0 }, testSpecification = () => []) {
     super(
       input,
       suitesOverrides,
@@ -213,7 +46,6 @@ var MockBaseBuilder = class extends BaseBuilder {
       testResourceRequirement,
       testSpecification
     );
-    this.summary = {};
     this.summary = {};
   }
   /**
@@ -246,50 +78,28 @@ var implementation = {
   },
   givens: {
     Default: () => {
-      const builder = new MockBaseBuilder(
+      return new MockBaseBuilder(
         {},
         // input
         {},
         // suitesOverrides
         {},
-        // givenOverrides 
+        // givenOverrides
         {},
         // whenOverrides
         {},
         // thenOverrides
-        { ports: [0] },
+        { ports: 0 },
         // testResourceRequirement
         () => []
         // testSpecification
       );
-      builder.artifacts = [];
-      builder.testJobs = [];
-      builder.specs = [];
-      return builder;
     },
     WithCustomInput: (input) => {
-      return new MockBaseBuilder(
-        input,
-        {},
-        {},
-        {},
-        {},
-        {},
-        { ports: [] },
-        () => []
-      );
+      return new MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] });
     },
     WithResourceRequirements: (requirements) => {
-      return new MockBaseBuilder(
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        requirements,
-        () => []
-      );
+      return new MockBaseBuilder({}, {}, {}, {}, {}, {}, requirements);
     }
   },
   whens: {
@@ -305,8 +115,24 @@ var implementation = {
   thens: {
     initializedProperly: () => (builder) => {
       if (!(builder instanceof BaseBuilder)) {
-        throw new Error("Builder was not properly initialized");
+        console.error("Builder instance:", builder);
+        throw new Error(
+          `Builder was not properly initialized - expected BaseBuilder instance but got ${builder?.constructor?.name}`
+        );
       }
+      [
+        "artifacts",
+        "testJobs",
+        "specs",
+        "suitesOverrides",
+        "givenOverides",
+        "whenOverides",
+        "thenOverides"
+      ].forEach((prop) => {
+        if (!(prop in builder)) {
+          throw new Error(`Builder missing required property: ${prop}`);
+        }
+      });
       return builder;
     },
     specsGenerated: () => (builder) => {
@@ -362,8 +188,16 @@ var implementation = {
 
 // src/lib/baseBuilder.test/baseBuilder.test.adapter.ts
 var testAdapter = {
-  beforeEach: async (subject, initializer) => {
-    return initializer();
+  beforeAll: async (input, testResource, pm) => input,
+  beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
+    console.log("Initializing test with:", {
+      subject,
+      initializer,
+      initialValues
+    });
+    const result = initializer();
+    console.log("Initialization result:", result);
+    return result;
   },
   andWhen: async (store, whenCB, testResource, utils) => {
     return whenCB(store, utils);
@@ -374,12 +208,11 @@ var testAdapter = {
   afterEach: (store) => store,
   afterAll: () => {
   },
-  assertThis: (x) => {
-  }
+  assertThis: (x) => x
 };
 
 // src/lib/baseBuilder.test/baseBuilder.test.node.ts
-var baseBuilder_test_node_default = Pure_default(
+var baseBuilder_test_node_default = Node_default(
   MockBaseBuilder.prototype,
   specification,
   implementation,

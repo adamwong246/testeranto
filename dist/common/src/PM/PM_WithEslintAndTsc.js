@@ -75,6 +75,9 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
                 console.error(JSON.stringify(this.summary, null, 2));
                 process.exit(-1);
             }
+            const filepath = (0, utils_1.lintPather)(entrypoint, platform, this.name);
+            if (fs_1.default.existsSync(filepath))
+                fs_1.default.rmSync(filepath);
             const results = (await eslint.lintFiles(addableFiles))
                 .filter((r) => r.messages.length)
                 .filter((r) => {
@@ -84,7 +87,7 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
                 delete r.source;
                 return r;
             });
-            fs_1.default.writeFileSync((0, utils_1.lintPather)(entrypoint, platform, this.name), await formatter.format(results));
+            fs_1.default.writeFileSync(filepath, await formatter.format(results));
             this.lintIsNowDone(entrypoint, results.length);
         };
         this.makePrompt = async (entryPoint, addableFiles, platform) => {

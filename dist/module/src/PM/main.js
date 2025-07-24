@@ -198,7 +198,8 @@ export class PM_Main extends PM_WithEslintAndTsc {
                         // console.error(e);
                     })
                         .finally((x) => {
-                        fs.writeFileSync(reportDest + "/manifest.json", JSON.stringify(Array.from(files[src])));
+                        const fileSet = files[src] || new Set();
+                        fs.writeFileSync(reportDest + "/manifest.json", JSON.stringify(Array.from(fileSet)));
                     });
                 });
             }

@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 const Web_1 = __importDefault(require("../../Web"));
 const baseBuilder_test_specification_1 = require("./baseBuilder.test.specification");
 const baseBuilder_test_implementation_1 = require("./baseBuilder.test.implementation");

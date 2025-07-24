@@ -1,58 +1,53 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>index.md</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index.md</title>
+    
+    <!-- Prism.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
 
-  <!-- Prism.js CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
-    rel="stylesheet" />
+    <!-- load style AFTER prism -->
+    <link rel="stylesheet" href="style.css">
 
-  <!-- load style AFTER prism -->
-  <link rel="stylesheet" href="style.css">
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      Prism.highlightAll();
-
-      // Parallax effect
-      const parallaxBg = document.querySelector('.parallax-background');
-      window.addEventListener('scroll', function () {
-        const scrollPosition = window.pageYOffset;
-        parallaxBg.style.transform = 'translateY(scrollPosition)';
-      });
-    });
-  </script>
-
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Prism.highlightAll();
+            
+            // Parallax effect
+            const parallaxBg = document.querySelector('.parallax-background');
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.pageYOffset;
+                parallaxBg.style.transform = 'translateY(scrollPosition)';
+            });
+        });
+    </script>
+    
 </head>
 
 <body>
 
-  <div class="container" style="padding-bottom: 5rem;">
-    <div class="row">
-      <div class="col-xs-0 col-sm-0 col-md-1">
-      </div>
+    <div class="container" style="padding-bottom: 5rem;">
+        <div class="row">
+            <div class="col-xs-0 col-sm-0 col-md-1">
+            </div>
 
-      <div class="col-xs-12 col-sm-12 col-md-10">
-        <div id="container">
-          <h1>Testeranto docs and core concepts</h1>
-          <p>Testeranto&#39;s type system provides a rigorous framework for Behavior-Driven Development (BDD) testing.
-            The API may seem complex but everything you need to know can be summed up in <strong>1 function, 3 runtimes
-              and 5 essential types, and 1 optional type</strong>. Follow these patterns, and TypeScript&#39;s type
-            checker will guide you through the rest.</p>
-          <h3>⚠️ this doc is a work in progress. It is 99% accurate but needs some attention to be complete. ⚠️</h3>
-          <p>Let&#39;s break down the key components using a Rectangle class example.</p>
-          <h3>The Test Subject</h3>
-          <p>This is the thing-to-be-tested, for this example, a very simple implementation of a Rectangle</p>
-          <pre class="language-typescript line-numbers"><code class="language-typescript">class Rectangle {
+            <div class="col-xs-12 col-sm-12 col-md-10">
+                <div id="container">
+                    <h1>Testeranto docs and core concepts</h1>
+<p>Testeranto&#39;s type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. The API may seem complex but everything you need to know can be summed up in <strong>1 function, 3 runtimes and 5 essential types, and 1 optional type</strong>. Follow these patterns, and TypeScript&#39;s type checker will guide you through the rest.</p>
+<h3>⚠️ this doc is a work in progress. It is 99% accurate but needs some attention to be complete. ⚠️</h3>
+<p>Let&#39;s break down the key components using a Rectangle class example.</p>
+<h3>The Test Subject</h3>
+<p>This is the thing-to-be-tested, for this example, a very simple implementation of a Rectangle</p>
+<pre class="language-typescript line-numbers"><code class="language-typescript">class Rectangle {
   constructor(public width: number, public height: number) {}
 
   setWidth(w: number) {
@@ -64,22 +59,18 @@
   getArea() {
     return this.width * this.height;
   }
-}</code></pre>
-          <h3>Testeranto&#39;s 1 function</h3>
-          <p>Testeranto has 1 function. This function launches and runs the tests. It is here that all 5 types converge
-            and if you can type this function call correctly, the TS type system should guide you through the rest.</p>
-          <pre>async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
+}</code></pre><h3>Testeranto&#39;s 1 function</h3>
+<p>Testeranto has 1 function. This function launches and runs the tests. It is here that all 5 types converge and if you can type this function call correctly, the TS type system should guide you through the rest.</p>
+<pre>async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
   testAdapter: Partial<ITestInterface<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<I, O, M>></pre>
-          <h3>Testeranto&#39;s 3 runtimes</h3>
-          <p>For each of testeranto&#39;s runtime, there is a specific Testeranto main function. Each is it&#39;s own
-            import but all 3 are called in the same way.</p>
-          <h4>Node</h4>
-          <pre>import Testeranto from "testeranto/src/Node"; // <- import the Node main function
+): Promise<Testeranto<I, O, M>></pre><h3>Testeranto&#39;s 3 runtimes</h3>
+<p>For each of testeranto&#39;s runtime, there is a specific Testeranto main function. Each is it&#39;s own import but all 3 are called in the same way.</p>
+<h4>Node</h4>
+<pre>import Testeranto from "testeranto/src/Node"; // <- import the Node main function
 // below this point, all runtimes are identical!
 
 import { implementation } from "./Rectangle.test.implementation";
@@ -96,9 +87,8 @@ export default Testeranto<
     specification,
     implementation,
     interface
-);</pre>
-          <h4>Web</h4>
-          <pre>import Testeranto from "testeranto/src/Web"; // <- import the Web main function
+);</pre><h4>Web</h4>
+<pre>import Testeranto from "testeranto/src/Web"; // <- import the Web main function
 // below this point, all runtimes are identical!
 
 import { implementation } from "./Rectangle.test.implementation";
@@ -115,9 +105,8 @@ export default Testeranto<
     specification,
     implementation,
     interface
-);</pre>
-          <h4>Pure</h4>
-          <pre>import Testeranto from "testeranto/src/Pure"; // <- import the Pure main function
+);</pre><h4>Pure</h4>
+<pre>import Testeranto from "testeranto/src/Pure"; // <- import the Pure main function
 // below this point, all runtimes are identical!
 
 import { implementation } from "./Rectangle.test.implementation";
@@ -134,20 +123,17 @@ export default Testeranto<
     specification,
     implementation,
     interface
-);</pre>
-          <h3>Testeranto&#39;s 5 essential types</h3>
-          <p>Every testeranto test is built around these 5 types that form a complete testing pipeline.</p>
-          <h4>The Specification (ITestSpecification)</h4>
-          <p>The Specification defines the business requirements in plain language, completely separate from
-            implementation details. This is where you describe <strong>what</strong> should be tested without worrying
-            about <strong>how</strong>.</p>
-          <ul>
-            <li>Pure business logic</li>
-            <li>Human-readable test descriptions</li>
-            <li>Defines test suites, scenarios (Given/When/Then)</li>
-            <li>Maps directly to BDD concepts</li>
-          </ul>
-          <pre class="language-typescript line-numbers"><code class="language-typescript">import {
+);</pre><h3>Testeranto&#39;s 5 essential types</h3>
+<p>Every testeranto test is built around these 5 types that form a complete testing pipeline.</p>
+<h4>The Specification (ITestSpecification)</h4>
+<p>The Specification defines the business requirements in plain language, completely separate from implementation details. This is where you describe <strong>what</strong> should be tested without worrying about <strong>how</strong>.</p>
+<ul>
+<li>Pure business logic</li>
+<li>Human-readable test descriptions</li>
+<li>Defines test suites, scenarios (Given/When/Then)</li>
+<li>Maps directly to BDD concepts</li>
+</ul>
+<pre class="language-typescript line-numbers"><code class="language-typescript">import {
   Ibdd_in,
   Ibdd_out,
   ITestSpecification,
@@ -184,17 +170,15 @@ export const specification: ITestSpecification<
       []
     ),
   ];
-};</code></pre>
-          <h4>The Implementation (ITestImplementation)</h4>
-          <p>The Implementation provides the concrete operations that bring specifications to life. This is where you
-            define <strong>how</strong> each test step actually works.</p>
-          <ul>
-            <li><code>suites</code>: Test grouping and organization</li>
-            <li><code>givens</code>: Initial test states/setup</li>
-            <li><code>whens</code>: Actions that change state</li>
-            <li><code>thens</code>: Assertions and validations</li>
-          </ul>
-          <pre>import {
+};</code></pre><h4>The Implementation (ITestImplementation)</h4>
+<p>The Implementation provides the concrete operations that bring specifications to life. This is where you define <strong>how</strong> each test step actually works.</p>
+<ul>
+<li><code>suites</code>: Test grouping and organization</li>
+<li><code>givens</code>: Initial test states/setup</li>
+<li><code>whens</code>: Actions that change state</li>
+<li><code>thens</code>: Assertions and validations</li>
+</ul>
+<pre>import {
   Ibdd_in,
   Ibdd_out,
   ITestImplementation,
@@ -244,12 +228,9 @@ export const implementation: ITestImplementation<
       return rectangle;
     },
   }
-};</pre>
-          <h4>The Interface aka ITestInterface</h4>
-          <p>The test interface is code which is NOT business logic. The interface adapts your test subject so that the
-            BDD hooks can be applied. The interface implements the traditional BDD steps &quot;before all&quot;,
-            &quot;after all&quot;, &quot;before each&quot;, &quot;after each&quot;, etc</p>
-          <pre>import {
+};</pre><h4>The Interface aka ITestInterface</h4>
+<p>The test interface is code which is NOT business logic. The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps &quot;before all&quot;, &quot;after all&quot;, &quot;before each&quot;, &quot;after each&quot;, etc</p>
+<pre>import {
   Ibdd_in,
   ITestInterface,
 } from "testeranto/src/CoreTypes";
@@ -272,11 +253,9 @@ export const testAdapter: ITestInterface<
   },
   afterAll: () => {},
   assertThis: (x: any, y) => {},
-};</pre>
-          <h4>type I aka Ibdd_in</h4>
-          <p>This type describes the &quot;inner&quot; shape of your BDD tests. Over the course of the execution of the
-            test, the subject will change shapes- this test describe those changes.</p>
-          <pre>import { Ibdd_in } from "testeranto/src/CoreTypes";
+};</pre><h4>type I aka Ibdd_in</h4>
+<p>This type describes the &quot;inner&quot; shape of your BDD tests. Over the course of the execution of the test, the subject will change shapes- this test describe those changes.</p>
+<pre>import { Ibdd_in } from "testeranto/src/CoreTypes";
 
 // TODO this is inaccurate
 export type I = Ibdd_in<
@@ -287,11 +266,9 @@ export type I = Ibdd_in<
   Rectangle,
   (...x) => (rectangle: Rectangle, utils: IPM) => Rectangle,
   (rectangle: Rectangle, utils: IPM) => Rectangle
->;</pre>
-          <h4>type O aka Ibdd_out</h4>
-          <p>This type describes the &quot;outer&quot; shape of your BDD tests. This type describes the set of legal BDD
-            clauses.</p>
-          <pre>import { Ibdd_out } from "testeranto/src/CoreTypes";
+>;</pre><h4>type O aka Ibdd_out</h4>
+<p>This type describes the &quot;outer&quot; shape of your BDD tests. This type describes the set of legal BDD clauses.</p>
+<pre>import { Ibdd_out } from "testeranto/src/CoreTypes";
 
 export type O = Ibdd_out<
   // Suite
@@ -326,12 +303,10 @@ export type O = Ibdd_out<
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   }
->;</pre>
-          <h3>Testeranto&#39;s 1 optional type</h3>
-          <h4>type M (optional)</h4>
-          <p>this type describes the modifications to the shape of the &quot;specification&quot;. It can be used to make
-            your BDD tests DRYer but is not necessary</p>
-          <pre>export type M = {
+>;</pre><h3>Testeranto&#39;s 1 optional type</h3>
+<h4>type M (optional)</h4>
+<p>this type describes the modifications to the shape of the &quot;specification&quot;. It can be used to make your BDD tests DRYer but is not necessary</p>
+<pre>export type M = {
   givens: {
     [K in keyof O["givens"]]: (...Iw: O["givens"][K]) => Rectangle;
   };
@@ -345,9 +320,8 @@ export type O = Ibdd_out<
       ...Iw: O["thens"][K]
     ) => (rectangle: Rectangle, utils: PM) => Rectangle;
   };
-};</pre>
-          <h2>Putting it all together</h2>
-          <pre>//  Make sure you import the right runtime
+};</pre><h2>Putting it all together</h2>
+<pre>//  Make sure you import the right runtime
 import Testeranto from "testeranto/src/Pure";
 
 import {
@@ -546,56 +520,53 @@ export default Testeranto<
 );
 
 
-</pre>
-          <h2>Trouble shooting</h2>
-          <h3>Double check your runtimes.</h3>
-          <p>Every test has a runtime, which must defined in 2 places. Both must match.</p>
-          <ol>
-            <li>The import of the runtime</li>
-            <li>The runtime defined alongside the test in testeranto.config.ts</li>
-          </ol>
-          <p>By convention, test filenames reveal their runtime. Ex: <code>__tests__/yourClass.node.test</code>. This is
-            ONLY a convention. It has no real bearing on the runtime.</p>
-          <h2>Dos and Don&#39;ts</h2>
-          <h3>Do pass your test subject to the main testeranto function.</h3>
-          <h3>Don&#39;t import your test subject elsewhere in your tests.</h3>
+</pre><h2>Trouble shooting</h2>
+<h3>Double check your runtimes.</h3>
+<p>Every test has a runtime, which must defined in 2 places. Both must match.</p>
+<ol>
+<li>The import of the runtime</li>
+<li>The runtime defined alongside the test in testeranto.config.ts</li>
+</ol>
+<p>By convention, test filenames reveal their runtime. Ex: <code>__tests__/yourClass.node.test</code>. This is ONLY a convention. It has no real bearing on the runtime.</p>
+<h2>Dos and Don&#39;ts</h2>
+<h3>Do pass your test subject to the main testeranto function.</h3>
+<h3>Don&#39;t import your test subject elsewhere in your tests.</h3>
 
+                </div>
+            </div>
+        
+            <div class="col-xs-0 col-sm-0" col-md-1">
         </div>
-      </div>
-
-      <div class="col-xs-0 col-sm-0" col-md-1">
-      </div>
     </div>
 
     <div class="container-fluid">
-      <nav class="navbar fixed-bottom navbar-light bg-light">
-        <div class="container-fluid justify-content-center">
-          <ul class="nav">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://github.com/testeranto/testeranto" target="_blank">GitHub</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.npmjs.com/package/testeranto" target="_blank">NPM</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        <nav class="navbar fixed-bottom navbar-light bg-light">
+            <div class="container-fluid justify-content-center">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/testeranto/testeranto" target="_blank">GitHub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.npmjs.com/package/testeranto" target="_blank">NPM</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
 
 
 
 
+    
 
+    
 
-
-
-  </div>
+</div>
 
 
 
 </body>
-
 </html>

@@ -5,10 +5,10 @@ export const specification = (Suite, Given, When, Then) => {
                 Then.initializedProperly(),
                 Then.artifactsTracked(),
                 Then.jobsCreated(),
-                Then.specsGenerated()
+                Then.specsGenerated(),
             ]),
             testSpecsGeneration: Given.Default(["BaseBuilder should generate specs from test specification"], [], [Then.specsGenerated()]),
             testJobsCreation: Given.Default(["BaseBuilder should create test jobs"], [], [Then.jobsCreated()]),
-        }, []),
+        }),
     ];
 };

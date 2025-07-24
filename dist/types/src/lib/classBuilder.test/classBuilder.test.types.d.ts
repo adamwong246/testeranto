@@ -37,10 +37,6 @@ export type O = Ibdd_out<{
     jobsModified: [expectedCount: number];
     errorThrown: [expectedMessage: string];
     testRunSuccessful: [];
-}, {
-    Default: [];
-    ImplementationCheck: [validator: (impl: any) => boolean];
-    SpecificationCheck: [validator: (spec: any) => boolean];
 }>;
 export type M = {
     givens: {
