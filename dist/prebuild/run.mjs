@@ -1546,9 +1546,9 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         slowMo: 1,
         waitForInitialPage: false,
         executablePath,
-        headless: false,
+        headless: true,
         dumpio: false,
-        devtools: true,
+        devtools: false,
         args: [
           "--disable-features=site-per-process",
           "--allow-file-access-from-files",

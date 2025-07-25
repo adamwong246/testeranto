@@ -16,7 +16,7 @@ Full store state: {
 stdout > [DEBUG] BaseSuite constructor - name: BaseSuite Core Functionality Tests index: 0
 [DEBUG] BaseSuite initialized: BaseSuite Core Functionality Tests 0
 [DEBUG] BaseSuite givens: initialization
-receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://[::1]:3234/devtools/browser/6ccdd307-d538-42d4-b686-d7b2345aeb28"}
+receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/18c8881b-f29f-4e52-975d-909783e487dc"}
 [Given] Setting currentStep for beforeEach: Default
 [DEBUG] Running beforeEach with subject: [class BaseSuite]
 [DEBUG] Creating MockSuite with name: testSuite index: 0

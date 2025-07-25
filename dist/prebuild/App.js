@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React87 = require_react();
+          var React90 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React87.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React90.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React87.Children.forEach(props.children, function(child) {
+                  React90.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React87.Component().refs;
+          var emptyRefsObject = new React90.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React87 = require_react();
+          var React90 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React87.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React90.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -25317,7 +25317,7 @@
   });
 
   // src/App.tsx
-  var import_react63 = __toESM(require_react(), 1);
+  var import_react66 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-EF7DTUVF.mjs
@@ -27681,8 +27681,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-router/dist/development/index.mjs
   "use client";
 
-  // src/ProjectsPage.tsx
-  var import_react57 = __toESM(require_react(), 1);
+  // src/components/stateful/TestPage.tsx
+  var import_react59 = __toESM(require_react(), 1);
+
+  // src/components/pure/TestPageView.tsx
+  var import_react58 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -32124,118 +32127,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     })), rightContent && /* @__PURE__ */ import_react56.default.createElement(Nav_default2, null, rightContent))));
   };
 
-  // src/ProjectsPage.tsx
-  var ProjectsPage = () => {
-    const [projects, setProjects] = (0, import_react57.useState)([]);
-    const [summaries, setSummaries] = (0, import_react57.useState)({});
-    const [loading, setLoading] = (0, import_react57.useState)(true);
-    const [error, setError] = (0, import_react57.useState)(null);
-    const navigate = useNavigate();
-    const [configs, setConfigs] = (0, import_react57.useState)({});
-    (0, import_react57.useEffect)(() => {
-      const fetchProjects = async () => {
-        try {
-          const projectsRes = await fetch(`projects.json`);
-          const projectNames = await projectsRes.json();
-          const projectsData = await Promise.all(
-            projectNames.map(async (name) => {
-              const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                fetch(`reports/${name}/summary.json`),
-                fetch(`bundles/node/${name}/metafile.json`),
-                fetch(`bundles/web/${name}/metafile.json`),
-                fetch(`bundles/pure/${name}/metafile.json`),
-                fetch(`reports/${name}/config.json`)
-              ]);
-              const [summary, nodeData, webData, pureData, configData] = await Promise.all([
-                summaryRes.json(),
-                nodeRes.ok ? nodeRes.json() : { errors: ["Failed to load node build logs"] },
-                webRes.ok ? webRes.json() : { errors: ["Failed to load web build logs"] },
-                pureRes.ok ? pureRes.json() : { errors: ["Failed to load pure build logs"] },
-                configRes.json()
-              ]);
-              setSummaries((prev) => ({ ...prev, [name]: summary }));
-              setConfigs((prev) => ({ ...prev, [name]: configData }));
-              return {
-                name,
-                testCount: Object.keys(summary).length,
-                nodeStatus: nodeData.errors?.length ? "failed" : nodeData.warnings?.length ? "warning" : "success",
-                webStatus: webData.errors?.length ? "failed" : webData.warnings?.length ? "warning" : "success",
-                pureStatus: pureData.errors?.length ? "failed" : pureData.warnings?.length ? "warning" : "success",
-                config: Object.keys(configData).length
-              };
-            })
-          );
-          setProjects(projectsData);
-        } catch (err) {
-          setError(err instanceof Error ? err.message : "Unknown error");
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchProjects();
-    }, []);
-    const getStatusIcon = (status) => {
-      switch (status) {
-        case "success":
-          return "\u2705";
-        case "failed":
-          return "\u274C";
-        case "warning":
-          return "\u26A0\uFE0F";
-        default:
-          return "\u2753";
-      }
-    };
-    if (loading)
-      return /* @__PURE__ */ import_react57.default.createElement("div", null, "Loading projects...");
-    if (error)
-      return /* @__PURE__ */ import_react57.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    console.log(configs);
-    return /* @__PURE__ */ import_react57.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react57.default.createElement(NavBar, { title: "Testeranto", backLink: null }), /* @__PURE__ */ import_react57.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react57.default.createElement("thead", null, /* @__PURE__ */ import_react57.default.createElement("tr", null, /* @__PURE__ */ import_react57.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react57.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react57.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react57.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react57.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react57.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react57.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement("a", { href: "#", onClick: (e) => {
-      e.preventDefault();
-      navigate(`/projects/${project.name}`);
-    } }, project.name)), /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName2) => {
-      const testData = summaries[project.name][testName2];
-      const runTime = configs[project.name].tests.find((t) => t[0] === testName2)[1];
-      const hasRuntimeErrors = testData.runTimeErrors > 0;
-      const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
-      return /* @__PURE__ */ import_react57.default.createElement("div", { key: testName2 }, /* @__PURE__ */ import_react57.default.createElement(
-        "a",
-        {
-          href: `#/projects/${project.name}/tests/${encodeURIComponent(testName2)}/${runTime}`
-        },
-        hasRuntimeErrors ? "\u274C " : hasStaticErrors ? "\u26A0\uFE0F " : "",
-        testName2.split("/").pop()
-      ));
-    }) : /* @__PURE__ */ import_react57.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement(
-      "a",
-      {
-        href: `#/projects/${project.name}#node`
-      },
-      getStatusIcon(project.nodeStatus),
-      " Node build logs"
-    )), /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement(
-      "a",
-      {
-        href: `#/projects/${project.name}#web`
-      },
-      getStatusIcon(project.webStatus),
-      " Web build logs"
-    )), /* @__PURE__ */ import_react57.default.createElement("td", null, /* @__PURE__ */ import_react57.default.createElement(
-      "a",
-      {
-        href: `#/projects/${project.name}#pure`
-      },
-      getStatusIcon(project.pureStatus),
-      " Pure build logs"
-    )))))));
-  };
-
-  // src/ProjectPage.tsx
-  var import_react59 = __toESM(require_react(), 1);
-
   // src/components/TestStatusBadge.tsx
-  var import_react58 = __toESM(require_react(), 1);
+  var import_react57 = __toESM(require_react(), 1);
   var TestStatusBadge = (props) => {
     console.groupCollapsed(`[TestStatusBadge] Rendering for ${props.testName}`);
     console.log("Raw props:", JSON.parse(JSON.stringify(props)));
@@ -32266,7 +32159,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (props.variant === "compact") {
       console.log("Rendering compact badge:", bddStatus);
       console.groupEnd();
-      return /* @__PURE__ */ import_react58.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
+      return /* @__PURE__ */ import_react57.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
     }
     console.log("Rendering full badge set with:", {
       bddStatus,
@@ -32274,186 +32167,149 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       staticErrors: props.staticErrors
     });
     console.groupEnd();
-    return /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react58.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
+    return /* @__PURE__ */ import_react57.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react57.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
   };
 
-  // src/ProjectPage.tsx
-  var BuildLogViewer = ({ logs, runtime }) => {
-    if (!logs)
-      return /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
-    const hasErrors = logs.errors?.length > 0;
-    const hasWarnings = logs.warnings?.length > 0;
-    const [activeTab, setActiveTab] = (0, import_react59.useState)("summary");
-    return /* @__PURE__ */ import_react59.default.createElement("div", null, /* @__PURE__ */ import_react59.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k) => setActiveTab(k || "summary") }, /* @__PURE__ */ import_react59.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react59.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react59.default.createElement(Card_default, null, /* @__PURE__ */ import_react59.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react59.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react59.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react59.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "success" }, "Build Successful"), logs.testsExist && /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "info" }, "tests.json \u2713")))), /* @__PURE__ */ import_react59.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react59.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react59.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react59.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react59.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react59.default.createElement("code", null, file), /* @__PURE__ */ import_react59.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react59.default.createElement("div", null, /* @__PURE__ */ import_react59.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react59.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react59.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react59.default.createElement("code", null, file), /* @__PURE__ */ import_react59.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react59.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react59.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react59.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react59.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react59.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react59.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i) => /* @__PURE__ */ import_react59.default.createElement(ListGroup_default.Item, { key: i, className: "text-warning" }, /* @__PURE__ */ import_react59.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react59.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react59.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react59.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react59.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.text || warn.message || JSON.stringify(warn))), warn.detail && /* @__PURE__ */ import_react59.default.createElement("div", { className: "mt-1 small text-muted" }, /* @__PURE__ */ import_react59.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.detail))))))) : /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react59.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react59.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react59.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react59.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react59.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i) => /* @__PURE__ */ import_react59.default.createElement(ListGroup_default.Item, { key: i, className: "text-danger" }, /* @__PURE__ */ import_react59.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react59.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react59.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react59.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react59.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.text || err.message || JSON.stringify(err))), err.detail && /* @__PURE__ */ import_react59.default.createElement("div", { className: "mt-1 small text-muted" }, /* @__PURE__ */ import_react59.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.detail))))))) : /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react59.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react59.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
-  };
-  var ProjectPage = () => {
-    const [summary, setSummary] = (0, import_react59.useState)(null);
-    const [nodeLogs, setNodeLogs] = (0, import_react59.useState)(null);
-    const [webLogs, setWebLogs] = (0, import_react59.useState)(null);
-    const [pureLogs, setPureLogs] = (0, import_react59.useState)(null);
-    const [config, setConfig] = (0, import_react59.useState)({});
-    const [loading, setLoading] = (0, import_react59.useState)(true);
-    const [error, setError] = (0, import_react59.useState)(null);
-    const [projectName, setProjectName] = (0, import_react59.useState)("");
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [route, setRoute] = (0, import_react59.useState)("tests");
-    (0, import_react59.useEffect)(() => {
-      const hash = location.hash.replace("#", "");
-      if (hash && ["tests", "node", "web", "pure"].includes(hash)) {
-        setRoute(hash);
-      } else {
-        setRoute("tests");
-      }
-    }, [location.hash]);
-    const { projectName: name } = useParams();
-    (0, import_react59.useEffect)(() => {
-      if (!name)
-        return;
-      setProjectName(name);
-      const hash = window.location.hash.replace("#", "");
-      if (hash && ["tests", "node", "web", "pure"].includes(hash)) {
-        setRoute(hash);
-      }
-      const fetchData = async () => {
-        try {
-          const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-            fetch(`reports/${name}/summary.json`),
-            fetch(`bundles/node/${name}/metafile.json`),
-            fetch(`bundles/web/${name}/metafile.json`),
-            fetch(`bundles/pure/${name}/metafile.json`),
-            fetch(`reports/${name}/config.json`)
-          ]);
-          if (!summaryRes.ok)
-            throw new Error("Failed to fetch summary");
-          const [summaryData, nodeData, webData, pureData, configData] = await Promise.all([
-            summaryRes.json(),
-            nodeRes.ok ? nodeRes.json() : { errors: ["Failed to load node build logs"] },
-            webRes.ok ? webRes.json() : { errors: ["Failed to load web build logs"] },
-            pureRes.ok ? pureRes.json() : { errors: ["Failed to load pure build logs"] },
-            configRes.ok ? configRes.json() : { tests: [] }
-          ]);
-          setSummary(summaryData);
-          setNodeLogs(nodeData);
-          setWebLogs(webData);
-          setPureLogs(pureData);
-          setConfig(configData);
-        } catch (err) {
-          setError(err instanceof Error ? err.message : "Unknown error");
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchData();
-    }, []);
-    if (loading)
-      return /* @__PURE__ */ import_react59.default.createElement("div", null, "Loading project data...");
-    if (error)
-      return /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    if (!summary)
-      return /* @__PURE__ */ import_react59.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
-    const testStatuses = Object.entries(summary).map(([testName2, testData]) => {
-      console.groupCollapsed(`[ProjectPage] Processing test: ${testName2}`);
-      console.log("Raw test data from summary.json:", testData);
-      const checkTestsJson = async () => {
-        try {
-          let runtimeType = "node";
-          const testConfig = config.tests?.find((t) => t[0] === testName2);
-          if (testConfig) {
-            runtimeType = testConfig[1] || runtimeType;
-          } else if (testName2.includes(".web.")) {
-            runtimeType = "web";
-          } else if (testName2.includes(".pure.")) {
-            runtimeType = "pure";
-          }
-          const jsonPath = `reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtimeType}/tests.json`;
-          const res = await fetch(jsonPath, {
-            method: "HEAD"
-          });
-          return res.ok;
-        } catch {
-          return false;
-        }
-      };
-      const testsJsonExists = checkTestsJson();
-      const status = {
-        testName: testName2,
-        testsExist: testsJsonExists && testData.testsExist !== false,
-        // Ensure boolean
-        runTimeErrors: Number(testData.runTimeErrors) || 0,
-        // Ensure number
-        typeErrors: Number(testData.typeErrors) || 0,
-        staticErrors: Number(testData.staticErrors) || 0
-      };
-      console.log("Normalized status:", status);
-      console.log("tests.json exists:", testsJsonExists);
-      if (status.runTimeErrors === -1 && status.testsExist) {
-        console.warn("Inconsistent state: runTimeErrors=-1 but testsExist=true");
-      }
-      if (!status.testsExist && status.runTimeErrors > 0) {
-        console.warn("Inconsistent state: testsExist=false but runTimeErrors>0");
-      }
-      console.groupEnd();
-      return status;
-    });
-    return /* @__PURE__ */ import_react59.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react59.default.createElement(
+  // src/components/pure/TestPageView.tsx
+  var TestPageView = ({
+    route,
+    setRoute,
+    navigate,
+    projectName,
+    testName: testName2,
+    decodedTestPath,
+    runtime,
+    testData,
+    logs,
+    typeErrors,
+    lintErrors,
+    testsExist,
+    errorCounts
+  }) => {
+    return /* @__PURE__ */ import_react58.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react58.default.createElement(
       NavBar,
       {
-        title: projectName,
-        backLink: "/",
+        title: decodedTestPath,
+        backLink: `/projects/${projectName}`,
         navItems: [
           {
-            to: `#tests`,
-            label: testStatuses.some((t) => t.runTimeErrors > 0) ? "\u274C Tests" : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "\u26A0\uFE0F Tests" : "\u2705 Tests",
-            active: route === "tests",
-            className: testStatuses.some((t) => t.runTimeErrors > 0) ? "text-danger fw-bold" : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "text-warning fw-bold" : ""
+            label: "",
+            badge: {
+              variant: runtime === "node" ? "primary" : runtime === "web" ? "success" : "info",
+              text: runtime
+            },
+            className: "pe-none d-flex align-items-center gap-2"
           },
           {
-            to: `#node`,
-            label: nodeLogs?.errors?.length ? "\u274C Node Build" : nodeLogs?.warnings?.length ? "\u26A0\uFE0F Node Build" : "Node Build",
-            active: route === "node",
-            className: nodeLogs?.errors?.length ? "text-danger fw-bold" : nodeLogs?.warnings?.length ? "text-warning fw-bold" : ""
+            to: `#results`,
+            label: /* @__PURE__ */ import_react58.default.createElement(
+              TestStatusBadge,
+              {
+                testName: decodedTestPath,
+                testsExist,
+                runTimeErrors: errorCounts.runTimeErrors,
+                variant: "compact"
+              }
+            ),
+            className: !testsExist || errorCounts.runTimeErrors > 0 ? "text-danger fw-bold" : "",
+            active: route === "results"
           },
           {
-            to: `#web`,
-            label: webLogs?.errors?.length ? "\u274C Web Build" : webLogs?.warnings?.length ? "\u26A0\uFE0F Web Build" : "Web Build",
-            active: route === "web",
-            className: webLogs?.errors?.length ? "text-danger fw-bold" : webLogs?.warnings?.length ? "text-warning fw-bold" : ""
+            to: `#logs`,
+            label: `Runtime logs`,
+            active: route === "logs"
           },
           {
-            to: `#pure`,
-            label: pureLogs?.errors?.length ? "\u274C Pure Build" : pureLogs?.warnings?.length ? "\u26A0\uFE0F Pure Build" : "Pure Build",
-            active: route === "pure",
-            className: pureLogs?.errors?.length ? "text-danger fw-bold" : pureLogs?.warnings?.length ? "text-warning fw-bold" : ""
+            to: `#types`,
+            label: errorCounts.typeErrors > 0 ? `tsc (\u274C * ${errorCounts.typeErrors})` : "tsc \u2705 ",
+            active: route === "types"
+          },
+          {
+            to: `#lint`,
+            label: errorCounts.staticErrors > 0 ? `eslint (\u274C *${errorCounts.staticErrors}) ` : "eslint \u2705",
+            active: route === "lint"
           }
-        ]
+        ],
+        rightContent: /* @__PURE__ */ import_react58.default.createElement(
+          Button_default2,
+          {
+            variant: "info",
+            onClick: async () => {
+              try {
+                const promptPath = `testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/prompt.txt`;
+                const messagePath = `testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/message.txt`;
+                const command = `aider --load ${promptPath} --message-file ${messagePath}`;
+                await navigator.clipboard.writeText(command);
+                alert("Copied aider command to clipboard!");
+              } catch (err) {
+                alert("Failed to copy command to clipboard");
+                console.error("Copy failed:", err);
+              }
+            },
+            className: "ms-2"
+          },
+          "\u{1F916}"
+        )
       }
-    ), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
+    ), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
       if (k) {
         setRoute(k);
         navigate(`#${k}`, { replace: true });
       }
-    } }, /* @__PURE__ */ import_react59.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "tests" }, /* @__PURE__ */ import_react59.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react59.default.createElement("thead", null, /* @__PURE__ */ import_react59.default.createElement("tr", null, /* @__PURE__ */ import_react59.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react59.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react59.default.createElement("th", null, "BDD Errors"), /* @__PURE__ */ import_react59.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react59.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react59.default.createElement("tbody", null, testStatuses.map((test) => {
-      const testConfig = config.tests?.find((t) => t[0] === test.testName);
-      const runTime = testConfig?.[1] || "node";
-      const hasRuntimeErrors = test.runTimeErrors > 0;
-      const hasTypeErrors = test.typeErrors > 0;
-      const hasLintErrors = test.staticErrors > 0;
-      return /* @__PURE__ */ import_react59.default.createElement("tr", { key: test.testName }, /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}` }, test.testName)), /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, runTime)), /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement(
-        TestStatusBadge,
-        {
-          testName: test.testName,
-          testsExist: test.testsExist,
-          runTimeErrors: test.runTimeErrors,
-          typeErrors: test.typeErrors,
-          staticErrors: test.staticErrors
-        }
-      )), /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}#types` }, test.typeErrors > 0 ? `tsc (\u274C * ${test.typeErrors})` : "tsc \u2705")), /* @__PURE__ */ import_react59.default.createElement("td", null, /* @__PURE__ */ import_react59.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${runTime}#lint` }, test.staticErrors > 0 ? `eslint (\u274C *${test.staticErrors})` : "eslint \u2705")));
-    })))), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "node" }, /* @__PURE__ */ import_react59.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" })), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "web" }, /* @__PURE__ */ import_react59.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" })), /* @__PURE__ */ import_react59.default.createElement(Tab_default.Pane, { eventKey: "pure" }, /* @__PURE__ */ import_react59.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" })))));
+    } }, /* @__PURE__ */ import_react58.default.createElement(Tab_default.Content, { className: "mt-3" }, /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "results" }, !testsExist ? /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "danger", className: "mt-3" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Tests did not run to completion"), /* @__PURE__ */ import_react58.default.createElement("p", null, "The test results file (tests.json) was not found or could not be loaded."), /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react58.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-light",
+        onClick: () => setRoute("logs"),
+        className: "me-2"
+      },
+      "View Runtime Logs"
+    ), /* @__PURE__ */ import_react58.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-light",
+        onClick: () => navigate(`/projects/${projectName}#${runtime}`)
+      },
+      "View Build Logs"
+    ))) : testData ? /* @__PURE__ */ import_react58.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i) => /* @__PURE__ */ import_react58.default.createElement("div", { key: i, className: "mb-4 card" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Given: ", given.name), given.artifacts?.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react58.default.createElement(
+      "button",
+      {
+        className: "btn btn-sm btn-light dropdown-toggle",
+        type: "button",
+        "data-bs-toggle": "dropdown"
+      },
+      "Artifacts (",
+      given.artifacts.length,
+      ")"
+    ), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
+      "a",
+      {
+        className: "dropdown-item",
+        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+        target: "_blank",
+        rel: "noopener noreferrer"
+      },
+      artifact.split("/").pop()
+    ))))))), /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, when.error)), when.artifacts?.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
+      "a",
+      {
+        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+        target: "_blank",
+        className: "text-white",
+        rel: "noopener noreferrer"
+      },
+      artifact.split("/").pop()
+    )))))))), given.thens.map((then, k) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, then.error)), then.artifacts?.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
+      "a",
+      {
+        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+        target: "_blank",
+        className: "text-white",
+        rel: "noopener noreferrer"
+      },
+      artifact.split("/").pop()
+    )))))))))))) : /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "warning" }, "No test results found")), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "logs" }, logs === void 0 ? /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "danger" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Logs file missing"), /* @__PURE__ */ import_react58.default.createElement("p", null, "The runtime logs file (logs.txt) was not found."), /* @__PURE__ */ import_react58.default.createElement("p", null, "This suggests the test may not have executed properly.")) : logs === "" ? /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "No runtime logs"), /* @__PURE__ */ import_react58.default.createElement("p", null, "The test executed successfully with no log output.")) : /* @__PURE__ */ import_react58.default.createElement("pre", { className: "bg-dark text-white p-3" }, logs)), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "types" }, typeErrors ? /* @__PURE__ */ import_react58.default.createElement("pre", { className: "bg-dark text-white p-3" }, typeErrors) : /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "warning" }, "No type errors found")), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "lint" }, lintErrors ? /* @__PURE__ */ import_react58.default.createElement("pre", { className: "bg-dark text-white p-3" }, lintErrors) : /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "warning" }, "No lint errors found")), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "coverage" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "coverage-report" }, /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "info" }, "Coverage reports coming soon!"), /* @__PURE__ */ import_react58.default.createElement("div", { className: "coverage-stats" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "stat-card bg-success text-white" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "85%"), /* @__PURE__ */ import_react58.default.createElement("p", null, "Lines Covered")), /* @__PURE__ */ import_react58.default.createElement("div", { className: "stat-card bg-warning text-dark" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "72%"), /* @__PURE__ */ import_react58.default.createElement("p", null, "Branches Covered")), /* @__PURE__ */ import_react58.default.createElement("div", { className: "stat-card bg-info text-white" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "91%"), /* @__PURE__ */ import_react58.default.createElement("p", null, "Functions Covered"))))))));
   };
-
-  // src/TestPage.tsx
-  var import_react60 = __toESM(require_react(), 1);
 
   // src/utils/api.ts
   var fetchTestData = async (projectName, filepath, runTime) => {
@@ -32492,12 +32348,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   };
 
-  // src/TestPage.tsx
+  // src/components/stateful/TestPage.tsx
   var TestPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [route, setRoute] = (0, import_react60.useState)("results");
-    (0, import_react60.useEffect)(() => {
+    const [route, setRoute] = (0, import_react59.useState)("results");
+    (0, import_react59.useEffect)(() => {
       const hash = location.hash.replace("#", "");
       if (hash && ["results", "logs", "types", "lint", "coverage"].includes(hash)) {
         setRoute(hash);
@@ -32505,26 +32361,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         setRoute("results");
       }
     }, [location.hash]);
-    const [testName2, setTestName] = (0, import_react60.useState)("");
-    const [testData, setTestData] = (0, import_react60.useState)(null);
-    const [logs, setLogs] = (0, import_react60.useState)("");
-    const [typeErrors, setTypeErrors] = (0, import_react60.useState)("");
-    const [lintErrors, setLintErrors] = (0, import_react60.useState)("");
-    const [loading, setLoading] = (0, import_react60.useState)(true);
-    const [error, setError] = (0, import_react60.useState)(null);
-    const [testsExist, setTestsExist] = (0, import_react60.useState)(true);
-    const [errorCounts, setErrorCounts] = (0, import_react60.useState)({
+    const [testName2, setTestName] = (0, import_react59.useState)("");
+    const [testData, setTestData] = (0, import_react59.useState)(null);
+    const [logs, setLogs] = (0, import_react59.useState)("");
+    const [typeErrors, setTypeErrors] = (0, import_react59.useState)("");
+    const [lintErrors, setLintErrors] = (0, import_react59.useState)("");
+    const [loading, setLoading] = (0, import_react59.useState)(true);
+    const [error, setError] = (0, import_react59.useState)(null);
+    const [testsExist, setTestsExist] = (0, import_react59.useState)(true);
+    const [errorCounts, setErrorCounts] = (0, import_react59.useState)({
       typeErrors: 0,
       staticErrors: 0,
       runTimeErrors: 0
     });
-    const [summary, setSummary] = (0, import_react60.useState)(null);
+    const [summary, setSummary] = (0, import_react59.useState)(null);
     const { projectName, "*": splat } = useParams();
     const pathParts = splat ? splat.split("/") : [];
     const runtime = pathParts.pop() || "";
     const testPath = pathParts.join("/");
     const decodedTestPath = testPath ? decodeURIComponent(testPath) : "";
-    (0, import_react60.useEffect)(() => {
+    (0, import_react59.useEffect)(() => {
       if (!projectName || !testPath || !runtime)
         return;
       setTestName(testPath);
@@ -32542,26 +32398,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               throw new Error("Failed to fetch summary");
             const allSummaries = await summaryResponse.json();
             const testSummary = allSummaries[testPath];
-            console.log("testSummary", testSummary);
             if (testSummary) {
-              console.groupCollapsed(`[TestPage] Processing test summary for ${testPath}`);
-              console.log("Raw test summary:", testSummary);
               const counts = {
                 typeErrors: Number(testSummary.typeErrors) || 0,
                 staticErrors: Number(testSummary.staticErrors) || 0,
                 runTimeErrors: Number(testSummary.runTimeErrors) || 0
               };
-              console.log("Normalized counts:", counts);
-              if (counts.runTimeErrors === -1 && testSummary.testsExist) {
-                console.warn("Inconsistent state: runTimeErrors=-1 but testsExist=true");
-              }
-              if (!testSummary.testsExist && counts.runTimeErrors > 0) {
-                console.warn("Inconsistent state: testsExist=false but runTimeErrors>0");
-              }
               setSummary(testSummary);
               setErrorCounts(counts);
               setTestsExist(testSummary.testsExist !== false);
-              console.groupEnd();
             }
           } catch (err) {
             console.error("Failed to load summary:", err);
@@ -32575,160 +32420,39 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       fetchData();
     }, []);
-    if (loading)
-      return /* @__PURE__ */ import_react60.default.createElement("div", null, "Loading test data...");
-    if (error)
-      return /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    console.log("Test status debug:", {
-      testName: testName2,
-      testsExist,
-      testData,
-      fails: testData?.fails,
-      runTimeErrors: errorCounts.runTimeErrors,
-      typeErrors: errorCounts.typeErrors,
-      staticErrors: errorCounts.staticErrors
-    });
-    console.log("Test data:", {
-      testData,
-      testsExist,
-      errorCounts,
-      summary
-    });
-    return /* @__PURE__ */ import_react60.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react60.default.createElement(
-      NavBar,
+    return /* @__PURE__ */ import_react59.default.createElement(
+      TestPageView,
       {
-        title: decodedTestPath,
-        backLink: `/projects/${projectName}`,
-        navItems: [
-          {
-            label: "",
-            badge: {
-              variant: runtime === "node" ? "primary" : runtime === "web" ? "success" : "info",
-              text: runtime
-            },
-            className: "pe-none d-flex align-items-center gap-2"
-          },
-          {
-            to: `#results`,
-            label: /* @__PURE__ */ import_react60.default.createElement(
-              TestStatusBadge,
-              {
-                testName: decodedTestPath,
-                testsExist,
-                runTimeErrors: errorCounts.runTimeErrors,
-                variant: "compact"
-              }
-            ),
-            className: !testsExist || errorCounts.runTimeErrors > 0 ? "text-danger fw-bold" : "",
-            active: route === "results"
-          },
-          {
-            to: `#logs`,
-            label: `Runtime logs`,
-            active: route === "logs"
-          },
-          {
-            to: `#types`,
-            label: errorCounts.typeErrors > 0 ? `tsc (\u274C * ${errorCounts.typeErrors})` : "tsc \u2705 ",
-            active: route === "types"
-          },
-          {
-            to: `#lint`,
-            label: errorCounts.staticErrors > 0 ? `eslint (\u274C *${errorCounts.staticErrors}) ` : "eslint \u2705",
-            active: route === "lint"
-          }
-        ],
-        rightContent: /* @__PURE__ */ import_react60.default.createElement(
-          Button_default2,
-          {
-            variant: "info",
-            onClick: async () => {
-              try {
-                const promptPath = `testeranto/reports/${projectName}/${testPath.split(".").slice(0, -1).join(".")}/${runtime}/prompt.txt`;
-                const messagePath = `testeranto/reports/${projectName}/${testPath.split(".").slice(0, -1).join(".")}/${runtime}/message.txt`;
-                const command = `aider --load ${promptPath} --message-file ${messagePath}`;
-                await navigator.clipboard.writeText(command);
-                alert("Copied aider command to clipboard!");
-              } catch (err) {
-                alert("Failed to copy command to clipboard");
-                console.error("Copy failed:", err);
-              }
-            },
-            className: "ms-2"
-          },
-          "\u{1F916}"
-        )
+        route,
+        setRoute,
+        navigate,
+        projectName,
+        testName: testName2,
+        decodedTestPath,
+        runtime,
+        testData,
+        logs,
+        typeErrors,
+        lintErrors,
+        loading,
+        error,
+        testsExist,
+        errorCounts,
+        summary
       }
-    ), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
-      if (k) {
-        setRoute(k);
-        navigate(`#${k}`, { replace: true });
-      }
-    } }, /* @__PURE__ */ import_react60.default.createElement(Tab_default.Content, { className: "mt-3" }, /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "results" }, !testsExist ? /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "danger", className: "mt-3" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "Tests did not run to completion"), /* @__PURE__ */ import_react60.default.createElement("p", null, "The test results file (tests.json) was not found or could not be loaded."), /* @__PURE__ */ import_react60.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react60.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-light",
-        onClick: () => setRoute("logs"),
-        className: "me-2"
-      },
-      "View Runtime Logs"
-    ), /* @__PURE__ */ import_react60.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-light",
-        onClick: () => navigate(`/projects/${projectName}#${runtime}`)
-      },
-      "View Build Logs"
-    ))) : testData ? /* @__PURE__ */ import_react60.default.createElement("div", { className: "test-results" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "mb-3" }), testData.givens.map((given, i) => /* @__PURE__ */ import_react60.default.createElement("div", { key: i, className: "mb-4 card" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "Given: ", given.name), given.artifacts?.length > 0 && /* @__PURE__ */ import_react60.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react60.default.createElement(
-      "button",
-      {
-        className: "btn btn-sm btn-light dropdown-toggle",
-        type: "button",
-        "data-bs-toggle": "dropdown"
-      },
-      "Artifacts (",
-      given.artifacts.length,
-      ")"
-    ), /* @__PURE__ */ import_react60.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react60.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react60.default.createElement(
-      "a",
-      {
-        className: "dropdown-item",
-        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-        target: "_blank",
-        rel: "noopener noreferrer"
-      },
-      artifact.split("/").pop()
-    ))))))), /* @__PURE__ */ import_react60.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react60.default.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react60.default.createElement("div", null, /* @__PURE__ */ import_react60.default.createElement("strong", null, "When:"), " ", when.name, when.error && /* @__PURE__ */ import_react60.default.createElement("pre", { className: "mt-2" }, when.error)), when.artifacts?.length > 0 && /* @__PURE__ */ import_react60.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react60.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react60.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react60.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react60.default.createElement(
-      "a",
-      {
-        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-        target: "_blank",
-        className: "text-white",
-        rel: "noopener noreferrer"
-      },
-      artifact.split("/").pop()
-    )))))))), given.thens.map((then, k) => /* @__PURE__ */ import_react60.default.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react60.default.createElement("div", null, /* @__PURE__ */ import_react60.default.createElement("strong", null, "Then:"), " ", then.name, then.error && /* @__PURE__ */ import_react60.default.createElement("pre", { className: "mt-2" }, then.error)), then.artifacts?.length > 0 && /* @__PURE__ */ import_react60.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react60.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react60.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react60.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react60.default.createElement(
-      "a",
-      {
-        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-        target: "_blank",
-        className: "text-white",
-        rel: "noopener noreferrer"
-      },
-      artifact.split("/").pop()
-    )))))))))))) : /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "warning" }, "No test results found")), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "logs" }, logs === void 0 ? /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "danger" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "Logs file missing"), /* @__PURE__ */ import_react60.default.createElement("p", null, "The runtime logs file (logs.txt) was not found."), /* @__PURE__ */ import_react60.default.createElement("p", null, "This suggests the test may not have executed properly.")) : logs === "" ? /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "No runtime logs"), /* @__PURE__ */ import_react60.default.createElement("p", null, "The test executed successfully with no log output.")) : /* @__PURE__ */ import_react60.default.createElement("pre", { className: "bg-dark text-white p-3" }, logs)), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "types" }, typeErrors ? /* @__PURE__ */ import_react60.default.createElement("pre", { className: "bg-dark text-white p-3" }, typeErrors) : /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "warning" }, "No type errors found")), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "lint" }, lintErrors ? /* @__PURE__ */ import_react60.default.createElement("pre", { className: "bg-dark text-white p-3" }, lintErrors) : /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "warning" }, "No lint errors found")), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "coverage" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "coverage-report" }, /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "info" }, "Coverage reports coming soon!"), /* @__PURE__ */ import_react60.default.createElement("div", { className: "coverage-stats" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "stat-card bg-success text-white" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "85%"), /* @__PURE__ */ import_react60.default.createElement("p", null, "Lines Covered")), /* @__PURE__ */ import_react60.default.createElement("div", { className: "stat-card bg-warning text-dark" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "72%"), /* @__PURE__ */ import_react60.default.createElement("p", null, "Branches Covered")), /* @__PURE__ */ import_react60.default.createElement("div", { className: "stat-card bg-info text-white" }, /* @__PURE__ */ import_react60.default.createElement("h4", null, "91%"), /* @__PURE__ */ import_react60.default.createElement("p", null, "Functions Covered"))))))));
+    );
   };
 
   // src/SettingsButton.tsx
-  var import_react62 = __toESM(require_react(), 1);
+  var import_react61 = __toESM(require_react(), 1);
 
   // src/components/SunriseAnimation.tsx
-  var import_react61 = __toESM(require_react(), 1);
+  var import_react60 = __toESM(require_react(), 1);
   var SunriseAnimation = ({ active }) => {
-    const [position, setPosition] = (0, import_react61.useState)(0);
-    const [dimensions, setDimensions] = (0, import_react61.useState)({ width: 0, height: 0 });
-    const animationIdRef = (0, import_react61.useRef)(null);
-    (0, import_react61.useEffect)(() => {
+    const [position, setPosition] = (0, import_react60.useState)(0);
+    const [dimensions, setDimensions] = (0, import_react60.useState)({ width: 0, height: 0 });
+    const animationIdRef = (0, import_react60.useRef)(null);
+    (0, import_react60.useEffect)(() => {
       setDimensions({
         width: window.innerWidth,
         height: window.innerHeight
@@ -32746,7 +32470,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }, []);
     const ANIMATION_DURATION = 1e4;
     const UPDATE_INTERVAL = 50;
-    (0, import_react61.useEffect)(() => {
+    (0, import_react60.useEffect)(() => {
       if (!active) {
         if (animationIdRef.current) {
           cancelAnimationFrame(animationIdRef.current);
@@ -32781,7 +32505,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const normalizedPos = (position + 1) / 2;
     if (!active)
       return null;
-    return /* @__PURE__ */ import_react61.default.createElement("div", { id: "sunrise", style: {
+    return /* @__PURE__ */ import_react60.default.createElement("div", { id: "sunrise", style: {
       width: "100vw",
       height: "100vh",
       position: "fixed",
@@ -32790,7 +32514,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       backgroundColor: "transparent",
       overflow: "hidden",
       pointerEvents: "none"
-    } }, /* @__PURE__ */ import_react61.default.createElement("div", { id: "daily-bg", style: {
+    } }, /* @__PURE__ */ import_react60.default.createElement("div", { id: "daily-bg", style: {
       position: "absolute",
       top: 0,
       left: 0,
@@ -32798,7 +32522,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       height: "100%",
       backgroundColor: "rgba(0,0,0,0.3)",
       zIndex: -1001
-    } }), "Stars Container", /* @__PURE__ */ import_react61.default.createElement(
+    } }), "Stars Container", /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "starsContainer",
@@ -32815,7 +32539,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 0.5 - normalizedPos * 0.5)
         }
       },
-      /* @__PURE__ */ import_react61.default.createElement(
+      /* @__PURE__ */ import_react60.default.createElement(
         "div",
         {
           id: "stars",
@@ -32831,7 +32555,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       )
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "sun",
@@ -32847,7 +32571,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: 0.5
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "sunDay",
@@ -32862,7 +32586,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 1 - yPos / dimensions.height)
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "sunSet",
@@ -32877,7 +32601,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos / dimensions.height - 0.2)
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "sky",
@@ -32892,7 +32616,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 1 - yPos / dimensions.height)
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "horizon",
@@ -32907,7 +32631,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) + 0.2 : yPos / (dimensions.height / 2))
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "horizonNight",
@@ -32922,7 +32646,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, (yPos - dimensions.height * 4 / 5) / (dimensions.height - dimensions.height * 4 / 5))
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "moon",
@@ -32937,7 +32661,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, (yPos - dimensions.height * 9 / 10) / (dimensions.height - dimensions.height * 9 / 10))
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "water",
@@ -32952,7 +32676,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -400
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "waterReflectionContainer",
@@ -32969,7 +32693,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           transform: `translateY(${dimensions.height - yPos}px)`
         }
       },
-      /* @__PURE__ */ import_react61.default.createElement(
+      /* @__PURE__ */ import_react60.default.createElement(
         "div",
         {
           id: "waterReflectionMiddle",
@@ -32986,7 +32710,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       )
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "waterDistance",
@@ -33001,7 +32725,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos / dimensions.height + 0.6)
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "darknessOverlaySky",
@@ -33016,7 +32740,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -50
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "darknessOverlay",
@@ -33031,7 +32755,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -5
         }
       }
-    ), /* @__PURE__ */ import_react61.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(
       "div",
       {
         id: "oceanRipple",
@@ -33052,12 +32776,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/SettingsButton.tsx
   var SettingsButton = ({ className }) => {
-    (0, import_react62.useEffect)(() => {
+    (0, import_react61.useEffect)(() => {
       return () => {
       };
     }, []);
-    const [showModal, setShowModal] = (0, import_react62.useState)(false);
-    const [theme, setTheme] = (0, import_react62.useState)(localStorage.getItem("theme") || "system");
+    const [showModal, setShowModal] = (0, import_react61.useState)(false);
+    const [theme, setTheme] = (0, import_react61.useState)(localStorage.getItem("theme") || "system");
     const handleThemeChange = (e) => {
       const newTheme = e.target.value;
       setTheme(newTheme);
@@ -33068,14 +32792,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       document.documentElement.setAttribute("data-bs-theme", themeToApply);
     };
-    return /* @__PURE__ */ import_react62.default.createElement(import_react62.default.Fragment, null, /* @__PURE__ */ import_react62.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react62.default.createElement(
+    return /* @__PURE__ */ import_react61.default.createElement(import_react61.default.Fragment, null, /* @__PURE__ */ import_react61.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react61.default.createElement(
       "button",
       {
         className: `btn btn-sm btn-outline-secondary ${className}`,
         onClick: () => setShowModal(true)
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
-    )), /* @__PURE__ */ import_react62.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react62.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react62.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react62.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react62.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react62.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react62.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react62.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react62.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react62.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react62.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react62.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
+    )), /* @__PURE__ */ import_react61.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react61.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react61.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react61.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react61.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react61.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react61.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react61.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react61.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react61.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react61.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react61.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "system" ? "border-primary" : ""}`,
@@ -33085,8 +32809,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           borderColor: "#adb5bd"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-0" }, "9 to 5"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Follows your OS theme"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-0" }, "9 to 5"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Follows your OS theme"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "light" ? "border-primary" : ""}`,
@@ -33098,8 +32822,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           borderWidth: "2px"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Business casual"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Clean & professional"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-1" }, "Business casual"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Clean & professional"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "dark" ? "border-primary" : ""}`,
@@ -33111,8 +32835,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           borderWidth: "2px"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Business formal"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Premium & focused"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-1" }, "Business formal"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Premium & focused"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "light-vibrant" ? "border-primary" : ""}`,
@@ -33123,8 +32847,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           color: "#fff"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Office Party"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Colorful & fun"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-1" }, "Office Party"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Colorful & fun"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "dark-vibrant" ? "border-primary" : ""}`,
@@ -33135,8 +32859,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           color: "#fff"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "After Party"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Neon nightlife"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-1" }, "After Party"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Neon nightlife"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "sepia" ? "border-primary" : ""}`,
@@ -33147,8 +32871,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           color: "#3a3226"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "WFH"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Vintage warmth"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-1" }, "WFH"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Vintage warmth"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "light-grayscale" ? "border-primary" : ""}`,
@@ -33160,8 +32884,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           borderWidth: "2px"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Serious Business"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Simple & distraction-free"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-1" }, "Serious Business"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Simple & distraction-free"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "dark-grayscale" ? "border-primary" : ""}`,
@@ -33173,8 +32897,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           borderWidth: "2px"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Very Serious business"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Maximum readability"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-1" }, "Very Serious business"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Maximum readability"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "daily" ? "border-primary" : ""}`,
@@ -33185,8 +32909,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           color: "#00192d"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-1" }, "Dreaming of PTO"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Sunrise, sunset"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-1" }, "Dreaming of PTO"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Sunrise, sunset"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "protanopia" ? "border-primary" : ""}`,
@@ -33197,8 +32921,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           color: "#333"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-0" }, "Protanopia"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Red-blind mode"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-0" }, "Protanopia"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Red-blind mode"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "deuteranopia" ? "border-primary" : ""}`,
@@ -33209,8 +32933,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           color: "#333"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-0" }, "Deuteranopia"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Green-blind mode"))
-    )), /* @__PURE__ */ import_react62.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react62.default.createElement(
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-0" }, "Deuteranopia"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Green-blind mode"))
+    )), /* @__PURE__ */ import_react61.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react61.default.createElement(
       "div",
       {
         className: `card theme-card ${theme === "tritanopia" ? "border-primary" : ""}`,
@@ -33221,23 +32945,311 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           color: "#333"
         }
       },
-      /* @__PURE__ */ import_react62.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react62.default.createElement("h5", { className: "card-title mb-0" }, "Tritanopia"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "small text-muted mb-0" }, "Blue-blind mode"))
-    ))))), /* @__PURE__ */ import_react62.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react62.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
+      /* @__PURE__ */ import_react61.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react61.default.createElement("h5", { className: "card-title mb-0" }, "Tritanopia"), /* @__PURE__ */ import_react61.default.createElement("p", { className: "small text-muted mb-0" }, "Blue-blind mode"))
+    ))))), /* @__PURE__ */ import_react61.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react61.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
+  };
+
+  // src/components/stateful/ProjectPage.tsx
+  var import_react63 = __toESM(require_react(), 1);
+
+  // src/components/pure/ProjectPageView.tsx
+  var import_react62 = __toESM(require_react(), 1);
+  var BuildLogViewer = ({ logs, runtime }) => {
+    if (!logs)
+      return /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
+    const hasErrors = logs.errors?.length > 0;
+    const hasWarnings = logs.warnings?.length > 0;
+    const [activeTab, setActiveTab] = import_react62.default.useState("summary");
+    return /* @__PURE__ */ import_react62.default.createElement("div", null, /* @__PURE__ */ import_react62.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k) => setActiveTab(k || "summary") }, /* @__PURE__ */ import_react62.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react62.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react62.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react62.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react62.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react62.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react62.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react62.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react62.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react62.default.createElement(Card_default, null, /* @__PURE__ */ import_react62.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react62.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react62.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react62.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react62.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react62.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react62.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react62.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react62.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react62.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react62.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react62.default.createElement("code", null, file), /* @__PURE__ */ import_react62.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react62.default.createElement("div", null, /* @__PURE__ */ import_react62.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react62.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react62.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react62.default.createElement("code", null, file), /* @__PURE__ */ import_react62.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react62.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react62.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react62.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react62.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react62.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react62.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react62.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react62.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i) => /* @__PURE__ */ import_react62.default.createElement(ListGroup_default.Item, { key: i, className: "text-warning" }, /* @__PURE__ */ import_react62.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react62.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react62.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react62.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react62.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.text || warn.message || JSON.stringify(warn))), warn.detail && /* @__PURE__ */ import_react62.default.createElement("div", { className: "mt-1 small text-muted" }, /* @__PURE__ */ import_react62.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.detail))))))) : /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react62.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react62.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react62.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react62.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react62.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react62.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react62.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i) => /* @__PURE__ */ import_react62.default.createElement(ListGroup_default.Item, { key: i, className: "text-danger" }, /* @__PURE__ */ import_react62.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react62.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react62.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react62.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react62.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.text || err.message || JSON.stringify(err))), err.detail && /* @__PURE__ */ import_react62.default.createElement("div", { className: "mt-1 small text-muted" }, /* @__PURE__ */ import_react62.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.detail))))))) : /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react62.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react62.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
+  };
+  var ProjectPageView = ({
+    summary,
+    nodeLogs,
+    webLogs,
+    pureLogs,
+    config,
+    loading,
+    error,
+    projectName,
+    route,
+    setRoute,
+    navigate
+  }) => {
+    if (loading)
+      return /* @__PURE__ */ import_react62.default.createElement("div", null, "Loading project data...");
+    if (error)
+      return /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+    if (!summary)
+      return /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
+    const testStatuses = Object.entries(summary).map(([testName2, testData]) => {
+      const runTime = config.tests?.find((t) => t[0] === testName2)?.[1] || "node";
+      return {
+        testName: testName2,
+        testsExist: testData.testsExist !== false,
+        runTimeErrors: Number(testData.runTimeErrors) || 0,
+        typeErrors: Number(testData.typeErrors) || 0,
+        staticErrors: Number(testData.staticErrors) || 0,
+        runTime
+      };
+    });
+    return /* @__PURE__ */ import_react62.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react62.default.createElement(
+      NavBar,
+      {
+        title: projectName,
+        backLink: "/",
+        navItems: [
+          {
+            to: `#tests`,
+            label: testStatuses.some((t) => t.runTimeErrors > 0) ? "\u274C Tests" : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "\u26A0\uFE0F Tests" : "\u2705 Tests",
+            active: route === "tests",
+            className: testStatuses.some((t) => t.runTimeErrors > 0) ? "text-danger fw-bold" : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "text-warning fw-bold" : ""
+          },
+          {
+            to: `#node`,
+            label: nodeLogs?.errors?.length ? "\u274C Node Build" : nodeLogs?.warnings?.length ? "\u26A0\uFE0F Node Build" : "Node Build",
+            active: route === "node",
+            className: nodeLogs?.errors?.length ? "text-danger fw-bold" : nodeLogs?.warnings?.length ? "text-warning fw-bold" : ""
+          },
+          {
+            to: `#web`,
+            label: webLogs?.errors?.length ? "\u274C Web Build" : webLogs?.warnings?.length ? "\u26A0\uFE0F Web Build" : "Web Build",
+            active: route === "web",
+            className: webLogs?.errors?.length ? "text-danger fw-bold" : webLogs?.warnings?.length ? "text-warning fw-bold" : ""
+          },
+          {
+            to: `#pure`,
+            label: pureLogs?.errors?.length ? "\u274C Pure Build" : pureLogs?.warnings?.length ? "\u26A0\uFE0F Pure Build" : "Pure Build",
+            active: route === "pure",
+            className: pureLogs?.errors?.length ? "text-danger fw-bold" : pureLogs?.warnings?.length ? "text-warning fw-bold" : ""
+          }
+        ]
+      }
+    ), /* @__PURE__ */ import_react62.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
+      if (k) {
+        setRoute(k);
+        navigate(`#${k}`, { replace: true });
+      }
+    } }, /* @__PURE__ */ import_react62.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react62.default.createElement(Tab_default.Pane, { eventKey: "tests" }, /* @__PURE__ */ import_react62.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react62.default.createElement("thead", null, /* @__PURE__ */ import_react62.default.createElement("tr", null, /* @__PURE__ */ import_react62.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react62.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react62.default.createElement("tr", { key: test.testName }, /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement(
+      TestStatusBadge,
+      {
+        testName: test.testName,
+        testsExist: test.testsExist,
+        runTimeErrors: test.runTimeErrors
+      }
+    )), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705")), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `\u274C ${test.staticErrors}` : "\u2705"))))))), /* @__PURE__ */ import_react62.default.createElement(Tab_default.Pane, { eventKey: "node" }, /* @__PURE__ */ import_react62.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" })), /* @__PURE__ */ import_react62.default.createElement(Tab_default.Pane, { eventKey: "web" }, /* @__PURE__ */ import_react62.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" })), /* @__PURE__ */ import_react62.default.createElement(Tab_default.Pane, { eventKey: "pure" }, /* @__PURE__ */ import_react62.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" })))));
+  };
+
+  // src/components/stateful/ProjectPage.tsx
+  var ProjectPage = () => {
+    const [summary, setSummary] = (0, import_react63.useState)(null);
+    const [nodeLogs, setNodeLogs] = (0, import_react63.useState)(null);
+    const [webLogs, setWebLogs] = (0, import_react63.useState)(null);
+    const [pureLogs, setPureLogs] = (0, import_react63.useState)(null);
+    const [config, setConfig] = (0, import_react63.useState)({});
+    const [loading, setLoading] = (0, import_react63.useState)(true);
+    const [error, setError] = (0, import_react63.useState)(null);
+    const [projectName, setProjectName] = (0, import_react63.useState)("");
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [route, setRoute] = (0, import_react63.useState)("tests");
+    (0, import_react63.useEffect)(() => {
+      const hash = location.hash.replace("#", "");
+      if (hash && ["tests", "node", "web", "pure"].includes(hash)) {
+        setRoute(hash);
+      } else {
+        setRoute("tests");
+      }
+    }, [location.hash]);
+    const { projectName: name } = useParams();
+    (0, import_react63.useEffect)(() => {
+      if (!name)
+        return;
+      setProjectName(name);
+      const fetchData = async () => {
+        try {
+          const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
+            fetch(`reports/${name}/summary.json`),
+            fetch(`bundles/node/${name}/metafile.json`),
+            fetch(`bundles/web/${name}/metafile.json`),
+            fetch(`bundles/pure/${name}/metafile.json`),
+            fetch(`reports/${name}/config.json`)
+          ]);
+          const [summaryData, nodeData, webData, pureData, configData] = await Promise.all([
+            summaryRes.ok ? summaryRes.json() : {},
+            nodeRes.ok ? nodeRes.json() : { errors: ["Failed to load node build logs"] },
+            webRes.ok ? webRes.json() : { errors: ["Failed to load web build logs"] },
+            pureRes.ok ? pureRes.json() : { errors: ["Failed to load pure build logs"] },
+            configRes.ok ? configRes.json() : { tests: [] }
+          ]);
+          setSummary(summaryData);
+          setNodeLogs(nodeData);
+          setWebLogs(webData);
+          setPureLogs(pureData);
+          setConfig(configData);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "Unknown error");
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
+    }, [name]);
+    return /* @__PURE__ */ import_react63.default.createElement(
+      ProjectPageView,
+      {
+        summary,
+        nodeLogs,
+        webLogs,
+        pureLogs,
+        config,
+        loading,
+        error,
+        projectName,
+        route,
+        setRoute,
+        navigate
+      }
+    );
+  };
+
+  // src/components/stateful/ProjectsPage.tsx
+  var import_react65 = __toESM(require_react(), 1);
+
+  // src/components/pure/ProjectsPageView.tsx
+  var import_react64 = __toESM(require_react(), 1);
+  var ProjectsPageView = ({
+    projects,
+    summaries,
+    configs,
+    loading,
+    error,
+    navigate
+  }) => {
+    const getStatusIcon = (status) => {
+      switch (status) {
+        case "success":
+          return "\u2705";
+        case "failed":
+          return "\u274C";
+        case "warning":
+          return "\u26A0\uFE0F";
+        default:
+          return "\u2753";
+      }
+    };
+    if (loading)
+      return /* @__PURE__ */ import_react64.default.createElement("div", null, "Loading projects...");
+    if (error)
+      return /* @__PURE__ */ import_react64.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+    return /* @__PURE__ */ import_react64.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react64.default.createElement(NavBar, { title: "Testeranto", backLink: null }), /* @__PURE__ */ import_react64.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react64.default.createElement("thead", null, /* @__PURE__ */ import_react64.default.createElement("tr", null, /* @__PURE__ */ import_react64.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react64.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react64.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react64.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react64.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react64.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react64.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement("a", { href: "#", onClick: (e) => {
+      e.preventDefault();
+      navigate(`/projects/${project.name}`);
+    } }, project.name)), /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName2) => {
+      const testData = summaries[project.name][testName2];
+      const runTime = configs[project.name].tests.find((t) => t[0] === testName2)[1];
+      const hasRuntimeErrors = testData.runTimeErrors > 0;
+      const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
+      return /* @__PURE__ */ import_react64.default.createElement("div", { key: testName2 }, /* @__PURE__ */ import_react64.default.createElement(
+        "a",
+        {
+          href: `#/projects/${project.name}/tests/${encodeURIComponent(testName2)}/${runTime}`
+        },
+        hasRuntimeErrors ? "\u274C " : hasStaticErrors ? "\u26A0\uFE0F " : "",
+        testName2.split("/").pop()
+      ));
+    }) : /* @__PURE__ */ import_react64.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement(
+      "a",
+      {
+        href: `#/projects/${project.name}#node`
+      },
+      getStatusIcon(project.nodeStatus),
+      " Node build logs"
+    )), /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement(
+      "a",
+      {
+        href: `#/projects/${project.name}#web`
+      },
+      getStatusIcon(project.webStatus),
+      " Web build logs"
+    )), /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement(
+      "a",
+      {
+        href: `#/projects/${project.name}#pure`
+      },
+      getStatusIcon(project.pureStatus),
+      " Pure build logs"
+    )))))));
+  };
+
+  // src/components/stateful/ProjectsPage.tsx
+  var ProjectsPage = () => {
+    const [projects, setProjects] = (0, import_react65.useState)([]);
+    const [summaries, setSummaries] = (0, import_react65.useState)({});
+    const [loading, setLoading] = (0, import_react65.useState)(true);
+    const [error, setError] = (0, import_react65.useState)(null);
+    const [configs, setConfigs] = (0, import_react65.useState)({});
+    const navigate = useNavigate();
+    (0, import_react65.useEffect)(() => {
+      const fetchProjects = async () => {
+        try {
+          const projectsRes = await fetch(`projects.json`);
+          const projectNames = await projectsRes.json();
+          const projectsData = await Promise.all(
+            projectNames.map(async (name) => {
+              const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
+                fetch(`reports/${name}/summary.json`),
+                fetch(`bundles/node/${name}/metafile.json`),
+                fetch(`bundles/web/${name}/metafile.json`),
+                fetch(`bundles/pure/${name}/metafile.json`),
+                fetch(`reports/${name}/config.json`)
+              ]);
+              const [summary, nodeData, webData, pureData, configData] = await Promise.all([
+                summaryRes.json(),
+                nodeRes.ok ? nodeRes.json() : { errors: ["Failed to load node build logs"] },
+                webRes.ok ? webRes.json() : { errors: ["Failed to load web build logs"] },
+                pureRes.ok ? pureRes.json() : { errors: ["Failed to load pure build logs"] },
+                configRes.json()
+              ]);
+              setSummaries((prev) => ({ ...prev, [name]: summary }));
+              setConfigs((prev) => ({ ...prev, [name]: configData }));
+              return {
+                name,
+                testCount: Object.keys(summary).length,
+                nodeStatus: nodeData.errors?.length ? "failed" : nodeData.warnings?.length ? "warning" : "success",
+                webStatus: webData.errors?.length ? "failed" : webData.warnings?.length ? "warning" : "success",
+                pureStatus: pureData.errors?.length ? "failed" : pureData.warnings?.length ? "warning" : "success"
+              };
+            })
+          );
+          setProjects(projectsData);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "Unknown error");
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchProjects();
+    }, []);
+    return /* @__PURE__ */ import_react65.default.createElement(
+      ProjectsPageView,
+      {
+        projects,
+        summaries,
+        configs,
+        loading,
+        error,
+        navigate
+      }
+    );
   };
 
   // src/App.tsx
   var App = () => {
-    return /* @__PURE__ */ import_react63.default.createElement(HashRouter, null, /* @__PURE__ */ import_react63.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react63.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react63.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react63.default.createElement(Routes, null, /* @__PURE__ */ import_react63.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react63.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react63.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react63.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react63.default.createElement(
-      Route,
-      {
-        path: "/projects/:projectName/tests/*",
-        element: /* @__PURE__ */ import_react63.default.createElement(TestPage, null)
-      }
-    ), /* @__PURE__ */ import_react63.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react63.default.createElement(ProjectPage, null) })))), /* @__PURE__ */ import_react63.default.createElement("footer", { className: "bg-light py-3 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react63.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react63.default.createElement(SettingsButton, null)), /* @__PURE__ */ import_react63.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react63.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")))));
+    return /* @__PURE__ */ import_react66.default.createElement(HashRouter, null, /* @__PURE__ */ import_react66.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react66.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react66.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react66.default.createElement(Routes, null, /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react66.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react66.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react66.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react66.default.createElement(ProjectPage, null) })))), /* @__PURE__ */ import_react66.default.createElement("footer", { className: "bg-light py-3 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react66.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react66.default.createElement(SettingsButton, null)), /* @__PURE__ */ import_react66.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react66.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")))));
   };
   if (typeof window !== "undefined") {
     window.App = App;
-    window.React = import_react63.default;
+    window.React = import_react66.default;
     window.ReactDOM = import_client.default;
   }
 })();

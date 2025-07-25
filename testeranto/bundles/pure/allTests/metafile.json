@@ -13,36 +13,6 @@
       "location": {
         "column": 27,
         "file": "src/Pure.test.ts",
-        "length": 8,
-        "line": 10,
-        "lineText": "import PureTesteranto from \"./Pure\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 27,
-        "file": "src/Pure.test.ts",
-        "length": 8,
-        "line": 10,
-        "lineText": "import PureTesteranto from \"./Pure\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 27,
-        "file": "src/Pure.test.ts",
         "length": 31,
         "line": 11,
         "lineText": "import { MockPMBase } from \"./lib/pmProxy.test/mockPMBase\";",
@@ -91,6 +61,36 @@
         "length": 10,
         "line": 11,
         "lineText": "import { PM_Web } from \"./PM/web\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 23,
+        "file": "src/lib/BaseSuite.test/pure.test.ts",
+        "length": 12,
+        "line": 2,
+        "lineText": "import Testeranto from \"../../Pure\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 23,
+        "file": "src/lib/BaseSuite.test/pure.test.ts",
+        "length": 12,
+        "line": 2,
+        "lineText": "import Testeranto from \"../../Pure\";",
         "namespace": "",
         "suggestion": ""
       },

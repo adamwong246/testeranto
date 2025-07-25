@@ -1,7 +1,51 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
-src/App.tsx(49,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
-src/App.tsx(59,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
-src/App.tsx(61,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
+src/App.tsx(45,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
+src/App.tsx(55,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
+src/App.tsx(57,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
+src/components/pure/ProjectPageView.tsx(35,14): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(36,16): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(53,17): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(54,16): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(57,20): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(59,24): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(64,25): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(66,21): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(70,20): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(72,24): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(80,25): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(82,21): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(84,17): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(85,15): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(89,16): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(90,18): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(95,19): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(96,18): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(97,20): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(99,24): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(121,25): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(123,21): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(124,19): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(125,17): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(132,16): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(133,18): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(138,19): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(139,18): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(140,20): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(142,24): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(164,25): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(166,21): error TS2304: Cannot find name 'ListGroup'.
+src/components/pure/ProjectPageView.tsx(167,19): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(168,17): error TS2304: Cannot find name 'Card'.
+src/components/pure/ProjectPageView.tsx(203,19): error TS18046: 'testData' is of type 'unknown'.
+src/components/pure/ProjectPageView.tsx(204,29): error TS18046: 'testData' is of type 'unknown'.
+src/components/pure/ProjectPageView.tsx(205,26): error TS18046: 'testData' is of type 'unknown'.
+src/components/pure/ProjectPageView.tsx(206,28): error TS18046: 'testData' is of type 'unknown'.
+src/components/pure/ProjectPageView.tsx(284,24): error TS2739: Type '{ testName: string; testsExist: boolean; runTimeErrors: number; }' is missing the following properties from type 'TestStatusBadgeProps': typeErrors, staticErrors
+src/components/pure/ProjectsPageView.tsx(27,34): error TS2322: Type 'null' is not assignable to type 'string | undefined'.
+src/components/pure/TestPageView.tsx(43,16): error TS2739: Type '{ testName: any; testsExist: any; runTimeErrors: any; variant: "compact"; }' is missing the following properties from type 'TestStatusBadgeProps': typeErrors, staticErrors
+src/components/stateful/TestPage.tsx(52,17): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string>'.
+  Type 'undefined' is not assignable to type 'SetStateAction<string>'.
+src/components/stateful/TestPage.tsx(77,18): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
 src/lib/abstractBase.test/adapter.ts(5,47): error TS2322: Type 'Promise<() => { testStore: { value: string; }; }>' is not assignable to type 'Promise<{ testStore: { value: string; }; error?: Error | undefined; }>'.
   Type '() => { testStore: { value: string; }; }' is not assignable to type '{ testStore: { value: string; }; error?: Error | undefined; }'.
 src/lib/abstractBase.test/adapter.ts(8,25): error TS2739: Type '{ testStore: { value: string; }; error?: Error | undefined; }' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
@@ -289,16 +333,16 @@ src/PM/__tests__/webSidecar.testeranto.ts(94,38): error TS2322: Type 'boolean' i
 src/PM/__tests__/webSidecar.testeranto.ts(109,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
 src/PM/__tests__/webSidecar.testeranto.ts(118,20): error TS2304: Cannot find name 'IPartialNodeAdapter'.
 src/PM/__tests__/webSidecar.testeranto.ts(118,40): error TS2304: Cannot find name 'I'.
-src/PM/main.ts(819,38): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
+src/PM/main.ts(817,38): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
   Type 'null' is not assignable to type 'number'.
-src/PM/main.ts(820,31): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
+src/PM/main.ts(818,31): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
   Type 'null' is not assignable to type 'number'.
-src/PM/main.ts(986,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1024,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1152,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
-src/PM/main.ts(1190,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1205,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
-src/PM/main.ts(1475,9): error TS2532: Object is possibly 'undefined'.
+src/PM/main.ts(984,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1022,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1150,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
+src/PM/main.ts(1188,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1203,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(1473,9): error TS2532: Object is possibly 'undefined'.
 src/PM/pure.ts(114,3): error TS2416: Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
     Types of parameters 'opts' and 'opts' are incompatible.
@@ -319,14 +363,6 @@ src/ProjectPage.tsx(316,35): error TS2339: Property 'typeErrors' does not exist 
 src/ProjectPage.tsx(317,37): error TS2339: Property 'staticErrors' does not exist on type 'string | { runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'.
   Property 'staticErrors' does not exist on type 'string'.
 src/ProjectPage.tsx(397,45): error TS2339: Property 'tests' does not exist on type 'object'.
-src/ProjectsPage.tsx(92,34): error TS2322: Type 'null' is not assignable to type 'string | undefined'.
-src/ProjectsPage.tsx(117,61): error TS2339: Property 'tests' does not exist on type 'object'.
-src/ProjectsPage.tsx(118,48): error TS18048: 'testData.runTimeErrors' is possibly 'undefined'.
-src/ProjectsPage.tsx(118,48): error TS2365: Operator '>' cannot be applied to types 'string | number' and 'number'.
-src/ProjectsPage.tsx(119,47): error TS18048: 'testData.typeErrors' is possibly 'undefined'.
-src/ProjectsPage.tsx(119,47): error TS2365: Operator '>' cannot be applied to types 'string | number' and 'number'.
-src/ProjectsPage.tsx(119,74): error TS18048: 'testData.staticErrors' is possibly 'undefined'.
-src/ProjectsPage.tsx(119,74): error TS2365: Operator '>' cannot be applied to types 'string | number' and 'number'.
 src/Pure.test.ts(58,20): error TS2322: Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; before...' is not assignable to type '() => IPM'.
   Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; before...' provides no match for the signature '(): IPM'.
 src/Pure.test.ts(82,5): error TS2322: Type '(proxyType: string) => (store: { pm: IPM; }) => { pm: IPM; } | { pm: {}; } | { largePayload: boolean; pm: { writeFileSync: (p: string, c: string) => boolean; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; } | { ...; }' is not assignable to type '(Iw_0: string) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.

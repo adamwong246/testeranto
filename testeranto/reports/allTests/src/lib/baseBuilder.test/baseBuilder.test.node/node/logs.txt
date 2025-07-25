@@ -2,7 +2,7 @@ stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
 stdout > [DEBUG] BaseSuite constructor - name: Testing BaseBuilder functionality index: 0
 [DEBUG] BaseSuite initialized: Testing BaseBuilder functionality 0
 [DEBUG] BaseSuite givens: testInitialization,testSpecsGeneration,testJobsCreation
-receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://[::1]:3234/devtools/browser/6ccdd307-d538-42d4-b686-d7b2345aeb28"}
+receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/18c8881b-f29f-4e52-975d-909783e487dc"}
 [Given] Setting currentStep for beforeEach: Default
 Initializing test with: {
   subject: BaseBuilder {},
@@ -31,5 +31,5 @@ Initializing test with: {
 Initialization result: [object Object]
 [Then] Setting currentStep for butThen: jobsCreated: undefined
 stdout > [DEBUG] Features extracted: BaseBuilder should initialize correctly,BaseBuilder should generate specs from test specification,BaseBuilder should create test jobs
-[DEBUG] Features extracted: BaseBuilder should initialize correctly,BaseBuilder should generate specs from test specification,BaseBuilder should create test jobs
+stdout > [DEBUG] Features extracted: BaseBuilder should initialize correctly,BaseBuilder should generate specs from test specification,BaseBuilder should create test jobs
 stderr > goodbye node with failures 0

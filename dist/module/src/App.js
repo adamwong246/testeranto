@@ -2,11 +2,11 @@
 import React from 'react';
 import ReactDom from "react-dom/client";
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { ProjectsPage } from './ProjectsPage';
-import { ProjectPage } from './ProjectPage';
-import { TestPage } from './TestPage';
+import { TestPage } from './components/stateful/TestPage';
 import { Container } from 'react-bootstrap';
 import { SettingsButton } from './SettingsButton';
+import { ProjectPage } from './components/stateful/ProjectPage';
+import { ProjectsPage } from './components/stateful/ProjectsPage';
 export const App = () => {
     return (React.createElement(Router, null,
         React.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname },

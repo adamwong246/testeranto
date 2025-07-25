@@ -5,7 +5,7 @@ stdout > [DEBUG] BaseSuite constructor - name: Basic ClassBuilder Functionality 
 [DEBUG] BaseSuite constructor - name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite initialized: Advanced ClassBuilder Functionality 1
 [DEBUG] BaseSuite givens: customImplementation,customSpecification,modifySpecs,modifyJobs,errorHandling,testRun
-receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://[::1]:3234/devtools/browser/6ccdd307-d538-42d4-b686-d7b2345aeb28"}
+receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/18c8881b-f29f-4e52-975d-909783e487dc"}
 [Given] Setting currentStep for beforeEach: Default
 Running beforeEach with initializer: [Function: Default]
 Creating default test builder instance
