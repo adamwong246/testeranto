@@ -777,11 +777,9 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
           return module.default.then((defaultModule) => {
             defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
-              console.log("PURE IS EXITING AOK WITH RESULTS", results);
               statusMessagePretty(results.fails, src, "pure");
               this.bddTestIsNowDone(src, results.fails);
             }).catch((e1) => {
-              console.log("I) PURE IS EXITING BADLY WITH error", e1);
               console.log(
                 ansiC2.red(`launchPure - ${src} errored with: ${e1}`)
               );
@@ -794,16 +792,10 @@ var PM_Main = class extends PM_WithEslintAndTsc {
                 `pure ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
               )
             );
-            console.log("II) PURE IS EXITING BADLY WITH error", e2);
             this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "pure");
           }).finally((x) => {
-            const fileSet = files2[src] || /* @__PURE__ */ new Set();
-            fs3.writeFileSync(
-              reportDest + "/manifest.json",
-              JSON.stringify(Array.from(fileSet))
-            );
           });
         });
       } catch (e3) {
@@ -949,10 +941,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           if (!files2[src]) {
             files2[src] = /* @__PURE__ */ new Set();
           }
-          fs3.writeFileSync(
-            reportDest + "/manifest.json",
-            JSON.stringify(Array.from(files2[src]))
-          );
           if (code === 255) {
             console.log(
               ansiColors.red(
@@ -1013,10 +1001,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             if (!files2[src]) {
               files2[src] = /* @__PURE__ */ new Set();
             }
-            fs3.writeFileSync(
-              destFolder + "/manifest.json",
-              JSON.stringify(Array.from(files2[src]))
-            );
             delete files2[src];
             Promise.all(screenshots2[src] || []).then(() => {
               delete screenshots2[src];
@@ -1311,10 +1295,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           if (!files2[src]) {
             files2[src] = /* @__PURE__ */ new Set();
           }
-          fs3.writeFileSync(
-            destFolder + "/manifest.json",
-            JSON.stringify(Array.from(files2[src]))
-          );
           delete files2[src];
           Promise.all(screenshots2[src] || []).then(() => {
             delete screenshots2[src];

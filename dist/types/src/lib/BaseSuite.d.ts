@@ -21,10 +21,12 @@ export declare abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_ou
             thens: {
                 name: string;
                 error: boolean;
+                artifacts: string[];
             }[];
             error: (string | Error | undefined)[] | null;
             failed: boolean;
             features: string[];
+            artifacts: string[];
         }[];
         fails: number;
         failed: boolean;

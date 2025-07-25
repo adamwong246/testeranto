@@ -1,36 +1,5 @@
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
-stdout > [DEBUG] BaseSuite constructor - name: BaseSuite Core Functionality Tests index: 0
-[DEBUG] BaseSuite initialized: BaseSuite Core Functionality Tests 0
-[DEBUG] BaseSuite givens: initialization
-receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/76115b19-c336-482b-ba27-5b8cb9c5f964"}
-[DEBUG] Running beforeEach with subject: [class BaseSuite]
-[DEBUG] Creating MockSuite with name: testSuite index: 0
-[DEBUG] BaseSuite constructor - name: testSuite index: 0
-[DEBUG] BaseSuite initialized: testSuite 0
-[DEBUG] BaseSuite givens: testGiven
-[DEBUG] MockSuite created: testSuite 0
-[DEBUG] Created test suite: testSuite 0
-[DEBUG] beforeEach result: { name: 'testSuite', index: 0, store: undefined }
-[DEBUG] butThen - input store: {
-  "name": "testSuite",
-  "index": 0,
-  "testStore": true,
-  "testSelection": false
-}
-[DEBUG] butThen - created testSelection: {
-  "testSelection": false
-}
-[DEBUG] SuiteNameMatches - expected: testSuite actual: undefined
-[DEBUG] butThen - input store: {
-  "name": "testSuite",
-  "index": 0,
-  "testStore": true,
-  "testSelection": false
-}
-[DEBUG] butThen - created testSelection: {
-  "testSelection": false
-}
-stderr > Then error: Error: Suite name is undefined. Expected: testSuite
+Then error: Error: Suite name is undefined. Expected: testSuite
 Full store state: {
   "name": "testSuite",
   "index": 0,
@@ -42,6 +11,40 @@ Full store state: {
   "name": "testSuite",
   "index": 0,
   "testStore": true,
+  "testSelection": false
+}
+stdout > [DEBUG] BaseSuite constructor - name: BaseSuite Core Functionality Tests index: 0
+[DEBUG] BaseSuite initialized: BaseSuite Core Functionality Tests 0
+[DEBUG] BaseSuite givens: initialization
+receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://[::1]:3234/devtools/browser/6ccdd307-d538-42d4-b686-d7b2345aeb28"}
+[Given] Setting currentStep for beforeEach: Default
+[DEBUG] Running beforeEach with subject: [class BaseSuite]
+[DEBUG] Creating MockSuite with name: testSuite index: 0
+[DEBUG] BaseSuite constructor - name: testSuite index: 0
+[DEBUG] BaseSuite initialized: testSuite 0
+[DEBUG] BaseSuite givens: testGiven
+[DEBUG] MockSuite created: testSuite 0
+[DEBUG] Created test suite: testSuite 0
+[DEBUG] beforeEach result: { name: 'testSuite', index: 0, store: undefined }
+[Then] Setting currentStep for butThen: SuiteNameMatches: testSuite
+[DEBUG] butThen - input store: {
+  "name": "testSuite",
+  "index": 0,
+  "testStore": true,
+  "testSelection": false
+}
+[DEBUG] butThen - created testSelection: {
+  "testSelection": false
+}
+[DEBUG] SuiteNameMatches - expected: testSuite actual: undefined
+[Then] Setting currentStep for butThen: SuiteIndexMatches: 0
+[DEBUG] butThen - input store: {
+  "name": "testSuite",
+  "index": 0,
+  "testStore": true,
+  "testSelection": false
+}
+[DEBUG] butThen - created testSelection: {
   "testSelection": false
 }
 stdout > [DEBUG] Features extracted: BaseSuite should initialize with correct name and index

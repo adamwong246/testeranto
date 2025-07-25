@@ -4,7 +4,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-NZTCDFDL.mjs";
+} from "../../../chunk-VMUSFSZM.mjs";
 
 // src/PM/web.ts
 var PM_Web = class extends PM {

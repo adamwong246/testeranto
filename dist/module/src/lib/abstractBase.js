@@ -2,7 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { afterEachProxy, andWhenProxy, beforeEachProxy, butThenProxy, } from "./pmProxy.js";
 export class BaseGiven {
+    addArtifact(path) {
+        console.log(`[Artifact] Adding to ${this.constructor.name}:`, path);
+        this.artifacts.push(path);
+    }
     constructor(name, features, whens, thens, givenCB, initialValues) {
+        this.artifacts = [];
         this.name = name;
         this.features = features;
         this.whens = whens;
@@ -27,6 +32,7 @@ export class BaseGiven {
             error: this.error ? [this.error, this.error.stack] : null,
             failed: this.failed,
             features: this.features,
+            artifacts: this.artifacts,
         };
     }
     async afterEach(store, key, artifactory, pm) {
@@ -43,7 +49,10 @@ export class BaseGiven {
             tLog(e.stack);
         });
         try {
-            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, beforeEachProxy(pm, suiteNdx.toString()));
+            const proxiedPm = beforeEachProxy(pm, suiteNdx.toString());
+            console.log(`[Given] Setting currentStep for beforeEach:`, this.name);
+            proxiedPm.currentStep = this;
+            this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, proxiedPm);
         }
         catch (e) {
             console.error("Given failure: ", e.toString());
@@ -84,6 +93,7 @@ export class BaseGiven {
 }
 export class BaseWhen {
     constructor(name, whenCB) {
+        this.artifacts = [];
         this.name = name;
         this.whenCB = whenCB;
     }
@@ -93,11 +103,13 @@ export class BaseWhen {
             return {
                 name: this.name,
                 error: this.error && this.error.name + this.error.stack,
+                artifacts: this.artifacts,
             };
         }
         else {
             return {
                 name: this.name,
+                artifacts: this.artifacts,
             };
         }
     }
@@ -105,7 +117,10 @@ export class BaseWhen {
         try {
             tLog(" When:", this.name);
             console.debug("[DEBUG] Executing When step:", this.name.toString());
-            const result = await this.andWhen(store, this.whenCB, testResourceConfiguration, andWhenProxy(pm, filepath));
+            const proxiedPm = andWhenProxy(pm, filepath);
+            console.log(`[When] Setting currentStep for andWhen:`, this.name);
+            proxiedPm.currentStep = this;
+            const result = await this.andWhen(store, this.whenCB, testResourceConfiguration, proxiedPm);
             console.debug("[DEBUG] When step completed:", this.name.toString());
             return result;
         }
@@ -118,6 +133,7 @@ export class BaseWhen {
 }
 export class BaseThen {
     constructor(name, thenCB) {
+        this.artifacts = [];
         this.name = name;
         this.thenCB = thenCB;
         this.error = false;
@@ -126,12 +142,16 @@ export class BaseThen {
         return {
             name: this.name,
             error: this.error,
+            artifacts: this.artifacts,
         };
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
+        const proxiedPm = butThenProxy(pm, filepath);
+        console.log(`[Then] Setting currentStep for butThen:`, this.name);
+        proxiedPm.currentStep = this;
         return this.butThen(store, async (s) => {
             if (typeof this.thenCB === "function") {
-                return await this.thenCB(s);
+                return await this.thenCB(s, proxiedPm);
             }
             else {
                 return this.thenCB;

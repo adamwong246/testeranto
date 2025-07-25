@@ -216,14 +216,12 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         defaultModule
                             .receiveTestResourceConfig(argz)
                             .then(async (results) => {
-                            console.log("PURE IS EXITING AOK WITH RESULTS", results);
                             // this.receiveFeatures(results.features, destFolder, src, "pure");
                             // this.receiveFeaturesV2(reportDest, src, "pure");
                             statusMessagePretty(results.fails, src, "pure");
                             this.bddTestIsNowDone(src, results.fails);
                         })
                             .catch((e1) => {
-                            console.log("I) PURE IS EXITING BADLY WITH error", e1);
                             console.log(ansi_colors_1.default.red(`launchPure - ${src} errored with: ${e1}`));
                             this.bddTestIsNowDone(src, -1);
                             statusMessagePretty(-1, src, "pure");
@@ -234,15 +232,17 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     })
                         .catch((e2) => {
                         console.log(ansi_colors_2.default.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
-                        console.log("II) PURE IS EXITING BADLY WITH error", e2);
                         this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
                         this.bddTestIsNowDone(src, -1);
                         statusMessagePretty(-1, src, "pure");
                         // console.error(e);
                     })
                         .finally((x) => {
-                        const fileSet = files[src] || new Set();
-                        fs_1.default.writeFileSync(reportDest + "/manifest.json", JSON.stringify(Array.from(fileSet)));
+                        // const fileSet = files[src] || new Set();
+                        // fs.writeFileSync(
+                        //   reportDest + "/manifest.json",
+                        //   JSON.stringify(Array.from(fileSet))
+                        // );
                     });
                 });
             }
@@ -382,7 +382,10 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         files[src] = new Set();
                     }
                     // files[src].add(filepath);
-                    fs_1.default.writeFileSync(reportDest + "/manifest.json", JSON.stringify(Array.from(files[src])));
+                    // fs.writeFileSync(
+                    //   reportDest + "/manifest.json",
+                    //   JSON.stringify(Array.from(files[src]))
+                    // );
                     if (code === 255) {
                         console.log(ansi_colors_2.default.red(`node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                         this.bddTestIsNowDone(src, -1);
@@ -439,7 +442,10 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                             files[src] = new Set();
                         }
                         // files[src].add(filepath);
-                        fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[src])));
+                        // fs.writeFileSync(
+                        //   destFolder + "/manifest.json",
+                        //   JSON.stringify(Array.from(files[src]))
+                        // );
                         delete files[src];
                         Promise.all(screenshots[src] || []).then(() => {
                             delete screenshots[src];
@@ -758,7 +764,10 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         files[src] = new Set();
                     }
                     // files[t].add(filepath);
-                    fs_1.default.writeFileSync(destFolder + "/manifest.json", JSON.stringify(Array.from(files[src])));
+                    // fs.writeFileSync(
+                    //   destFolder + "/manifest.json",
+                    //   JSON.stringify(Array.from(files[src]))
+                    // );
                     delete files[src];
                     Promise.all(screenshots[src] || []).then(() => {
                         delete screenshots[src];

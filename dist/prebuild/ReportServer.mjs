@@ -43,10 +43,50 @@ var server = http.createServer((req, res) => {
       const filePath = path.join(process.cwd(), req.url || "");
       fs.stat(filePath, (err, stats) => {
         if (err || !stats.isFile()) {
-          if (!res.headersSent) {
-            res.writeHead(404, { "Content-Type": "text/plain" });
-            res.end("File not found");
-          }
+          fs.stat(filePath, (dirErr, dirStats) => {
+            if (!dirErr && dirStats.isDirectory()) {
+              fs.readdir(filePath, (readErr, files) => {
+                if (readErr) {
+                  res.writeHead(500);
+                  return res.end("Error reading directory");
+                }
+                res.writeHead(200, { "Content-Type": "text/html" });
+                res.write(`
+                  <html>
+                    <head>
+                      <title>Directory Listing: ${req.url}</title>
+                      <style>
+                        body { font-family: sans-serif; margin: 2rem; }
+                        h1 { color: #333; }
+                        ul { list-style: none; padding: 0; }
+                        li { padding: 0.5rem; }
+                        li a { color: #0366d6; text-decoration: none; }
+                        li a:hover { text-decoration: underline; }
+                      </style>
+                    </head>
+                    <body>
+                      <h1>Directory: ${req.url}</h1>
+                      <ul>
+                        ${files.map((file) => `
+                          <li>
+                            <a href="${path.join(req.url || "", file)}">
+                              ${file}${file.endsWith("/") ? "/" : ""}
+                            </a>
+                          </li>
+                        `).join("")}
+                      </ul>
+                    </body>
+                  </html>
+                `);
+                res.end();
+              });
+            } else {
+              if (!res.headersSent) {
+                res.writeHead(404, { "Content-Type": "text/plain" });
+                res.end("File not found");
+              }
+            }
+          });
           return;
         }
         const serve = () => {

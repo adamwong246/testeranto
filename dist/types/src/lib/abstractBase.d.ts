@@ -15,6 +15,8 @@ export declare abstract class BaseGiven<I extends Ibdd_in_any> {
     initialValues: any;
     key: string;
     failed: boolean;
+    artifacts: string[];
+    protected addArtifact(path: string): void;
     constructor(name: string, features: string[], whens: BaseWhen<I>[], thens: BaseThen<I>[], givenCB: I["given"], initialValues: any);
     beforeAll(store: I["istore"]): I["istore"];
     toObj(): {
@@ -24,10 +26,12 @@ export declare abstract class BaseGiven<I extends Ibdd_in_any> {
         thens: {
             name: string;
             error: boolean;
+            artifacts: string[];
         }[];
         error: (string | Error | undefined)[] | null;
         failed: boolean;
         features: string[];
+        artifacts: string[];
     };
     abstract givenThat(subject: I["isubject"], testResourceConfiguration: any, artifactory: ITestArtifactory, givenCB: I["given"], initialValues: any, pm: IPM): Promise<I["istore"]>;
     afterEach(store: I["istore"], key: string, artifactory: ITestArtifactory, pm: IPM): Promise<unknown>;
@@ -38,13 +42,16 @@ export declare abstract class BaseWhen<I extends Ibdd_in_any> {
     name: string;
     whenCB: (x: I["iselection"]) => I["then"];
     error: Error;
+    artifacts: string[];
     constructor(name: string, whenCB: (xyz: I["iselection"]) => I["then"]);
     abstract andWhen(store: I["istore"], whenCB: (x: I["iselection"]) => I["then"], testResource: any, pm: IPM): Promise<any>;
     toObj(): {
         name: string;
         error: string;
+        artifacts: string[];
     } | {
         name: string;
+        artifacts: string[];
         error?: undefined;
     };
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<any>;
@@ -53,10 +60,12 @@ export declare abstract class BaseThen<I extends Ibdd_in_any> {
     name: string;
     thenCB: (storeState: I["iselection"]) => Promise<I["then"]>;
     error: boolean;
+    artifacts: string[];
     constructor(name: string, thenCB: (val: I["iselection"]) => Promise<I["then"]>);
     toObj(): {
         name: string;
         error: boolean;
+        artifacts: string[];
     };
     abstract butThen(store: I["istore"], thenCB: (s: I["iselection"]) => Promise<I["isubject"]>, testResourceConfiguration: ITTestResourceConfiguration, pm: IPM, ...args: any[]): Promise<I["iselection"]>;
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<I["then"] | undefined>;

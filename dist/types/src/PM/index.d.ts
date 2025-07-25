@@ -12,7 +12,9 @@ export declare abstract class PM {
     abstract closePage(p: any): any;
     abstract createWriteStream(filepath: string, testName: string): Promise<string>;
     abstract customclose(): any;
-    abstract customScreenShot(opts: object, page?: string): any;
+    abstract customScreenShot(opts: {
+        path: string;
+    }, page?: string): any;
     abstract end(uid: number): Promise<boolean>;
     abstract existsSync(fp: string): Promise<boolean>;
     abstract focusOn(selector: string): any;

@@ -1,7 +1,7 @@
 import {
   BaseBuilder,
   Web_default
-} from "../../../chunk-C74YHORZ.mjs";
+} from "../../../chunk-AYO6U7BG.mjs";
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then) => {

@@ -38,64 +38,107 @@ const baseProxy: IProxyBase = function (
   });
 };
 
-export const butThenProxy: IProxy = (pm: IPM, filepath: string) =>
-  baseProxy(pm, [
+export const butThenProxy: IProxy = (pm: IPM, filepath: string) => {
+  return baseProxy(pm, [
     [
       "screencast",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `${filepath}/butThen/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `${filepath}/butThen/${opts.path}`;
+        console.log(`[Proxy] Captured artifact path for butThen:`, path);
+        if ((pm as any).currentStep?.addArtifact) {
+          (pm as any).currentStep.addArtifact(path);
+        } else {
+          console.warn('No currentStep or addArtifact method found');
+        }
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
 
-    ["createWriteStream", (fp) => [`${filepath}/butThen/${fp}`]],
+    ["createWriteStream", (fp) => {
+      const path = `${filepath}/butThen/${fp}`;
+      console.log(`[Proxy] Captured artifact path for butThen:`, path);
+      if ((pm as any).currentStep?.addArtifact) {
+        (pm as any).currentStep.addArtifact(path);
+      } else {
+        console.warn('No currentStep or addArtifact method found');
+      }
+      return [path];
+    }],
 
     [
       "writeFileSync",
-      (fp, contents) => [`${filepath}/butThen/${fp}`, contents],
+      (fp, contents) => {
+        const path = `${filepath}/butThen/${fp}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [path, contents];
+      },
     ],
 
     [
       "customScreenShot",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `${filepath}/butThen/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `${filepath}/butThen/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
   ]);
+};
 
 export const andWhenProxy: IProxy = (pm: IPM, filepath: string) =>
   baseProxy(pm, [
     [
       "screencast",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `${filepath}/andWhen/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `${filepath}/andWhen/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
 
-    ["createWriteStream", (fp) => [`${filepath}/andWhen/${fp}`]],
+    ["createWriteStream", (fp) => {
+      const path = `${filepath}/andWhen/${fp}`;
+      (pm as any).currentStep?.artifacts?.push(path);
+      return [path];
+    }],
 
-    ["writeFileSync", (fp, contents) => [`${filepath}/andWhen${fp}`, contents]],
+    ["writeFileSync", (fp, contents) => {
+      const path = `${filepath}/andWhen/${fp}`;
+      (pm as any).currentStep?.artifacts?.push(path);
+      return [path, contents];
+    }],
 
     [
       "customScreenShot",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `${filepath}/andWhen${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `${filepath}/andWhen/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
   ]);
 
@@ -107,33 +150,47 @@ export const afterEachProxy: IProxyAfterEach = (
   baseProxy(pm, [
     [
       "screencast",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `suite-${suite}/given-${given}/afterEach/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
 
-    ["createWriteStream", (fp) => [`suite-${suite}/afterEach/${fp}`]],
+    ["createWriteStream", (fp) => {
+      const path = `suite-${suite}/afterEach/${fp}`;
+      (pm as any).currentStep?.artifacts?.push(path);
+      return [path];
+    }],
+    
     [
       "writeFileSync",
-      (fp, contents) => [
-        `suite-${suite}/given-${given}/afterEach/${fp}`,
-        contents,
-      ],
+      (fp, contents) => {
+        const path = `suite-${suite}/given-${given}/afterEach/${fp}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [path, contents];
+      },
     ],
 
     [
       "customScreenShot",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `suite-${suite}/given-${given}/afterEach/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
   ]);
 
@@ -144,72 +201,112 @@ export const beforeEachProxy: IProxyBeforeEach = (
   baseProxy(pm, [
     [
       "screencast",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `suite-${suite}/beforeEach/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `suite-${suite}/beforeEach/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
 
     [
       "writeFileSync",
-      (fp, contents) => [`suite-${suite}/beforeEach/${fp}`, contents],
+      (fp, contents) => {
+        const path = `suite-${suite}/beforeEach/${fp}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [path, contents];
+      },
     ],
 
     [
       "customScreenShot",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `suite-${suite}/beforeEach/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `suite-${suite}/beforeEach/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
 
-    ["createWriteStream", (fp) => [`suite-${suite}/beforeEach/${fp}`]],
+    ["createWriteStream", (fp) => {
+      const path = `suite-${suite}/beforeEach/${fp}`;
+      (pm as any).currentStep?.artifacts?.push(path);
+      return [path];
+    }],
   ]);
 
 export const beforeAllProxy: IProxy = (pm: IPM, suite: string): IPM =>
   baseProxy(pm, [
     [
       "writeFileSync",
-      (fp, contents) => [`suite-${suite}/beforeAll/${fp}`, contents],
+      (fp, contents) => {
+        const path = `suite-${suite}/beforeAll/${fp}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [path, contents];
+      },
     ],
 
     [
       "customScreenShot",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `suite-${suite}/beforeAll/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `suite-${suite}/beforeAll/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
 
-    ["createWriteStream", (fp) => [`suite-${suite}/beforeAll/${fp}`]],
+    ["createWriteStream", (fp) => {
+      const path = `suite-${suite}/beforeAll/${fp}`;
+      (pm as any).currentStep?.artifacts?.push(path);
+      return [path];
+    }],
   ]);
 
 export const afterAllProxy: IProxy = (pm: IPM, suite: string): IPM =>
   baseProxy(pm, [
-    ["createWriteStream", (fp) => [`suite-${suite}/afterAll/${fp}`]],
+    ["createWriteStream", (fp) => {
+      const path = `suite-${suite}/afterAll/${fp}`;
+      (pm as any).currentStep?.artifacts?.push(path);
+      return [path];
+    }],
 
     [
       "writeFileSync",
-      (fp, contents) => [`suite-${suite}/afterAll/${fp}`, contents],
+      (fp, contents) => {
+        const path = `suite-${suite}/afterAll/${fp}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [path, contents];
+      },
     ],
 
     [
       "customScreenShot",
-      (opts, p) => [
-        {
-          ...opts,
-          path: `suite-${suite}/afterAll/${opts.path}`,
-        },
-        p,
-      ],
+      (opts, p) => {
+        const path = `suite-${suite}/afterAll/${opts.path}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [
+          {
+            ...opts,
+            path,
+          },
+          p,
+        ];
+      },
     ],
   ]);

@@ -1,4 +1,5 @@
-/Users/adam/Code/testeranto/src/lib/abstractBase.ts (229,17): Catch clause variable type annotation must be 'any' or 'unknown' if specified.
+/Users/adam/Code/testeranto/src/lib/abstractBase.ts (244,17): Catch clause variable type annotation must be 'any' or 'unknown' if specified.
+/Users/adam/Code/testeranto/src/lib/abstractBase.ts (301,39): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (8,49): Type 'Promise<{}>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
   Type '{}' is missing the following properties from type 'BaseBuilder<any, any, any, any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 12 more.
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (9,3): Type '(subject: import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestR...' is not assignable to type '(subject: import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestR...'. Two different types with this name exist, but they are unrelated.
@@ -50,6 +51,12 @@
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
 /Users/adam/Code/testeranto/src/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/PM/pure.ts (114,3): Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
+    Types of parameters 'opts' and 'opts' are incompatible.
+      Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
+        Types of property 'path' are incompatible.
+          Type 'string' is not assignable to type '`${string}.webm`'.
 /Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?

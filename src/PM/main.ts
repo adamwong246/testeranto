@@ -580,8 +580,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
             defaultModule
               .receiveTestResourceConfig(argz)
               .then(async (results: IFinalResults) => {
-                console.log("PURE IS EXITING AOK WITH RESULTS", results);
-
                 // this.receiveFeatures(results.features, destFolder, src, "pure");
                 // this.receiveFeaturesV2(reportDest, src, "pure");
 
@@ -589,8 +587,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 this.bddTestIsNowDone(src, results.fails);
               })
               .catch((e1) => {
-                console.log("I) PURE IS EXITING BADLY WITH error", e1);
-
                 console.log(
                   ansiC.red(`launchPure - ${src} errored with: ${e1}`)
                 );
@@ -608,19 +604,17 @@ export class PM_Main extends PM_WithEslintAndTsc {
               )
             );
 
-            console.log("II) PURE IS EXITING BADLY WITH error", e2);
-
             this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "pure");
             // console.error(e);
           })
           .finally((x) => {
-            const fileSet = files[src] || new Set();
-            fs.writeFileSync(
-              reportDest + "/manifest.json",
-              JSON.stringify(Array.from(fileSet))
-            );
+            // const fileSet = files[src] || new Set();
+            // fs.writeFileSync(
+            //   reportDest + "/manifest.json",
+            //   JSON.stringify(Array.from(fileSet))
+            // );
           });
       });
     } catch (e3) {
@@ -803,10 +797,10 @@ export class PM_Main extends PM_WithEslintAndTsc {
         }
         // files[src].add(filepath);
 
-        fs.writeFileSync(
-          reportDest + "/manifest.json",
-          JSON.stringify(Array.from(files[src]))
-        );
+        // fs.writeFileSync(
+        //   reportDest + "/manifest.json",
+        //   JSON.stringify(Array.from(files[src]))
+        // );
 
         if (code === 255) {
           console.log(
@@ -886,10 +880,10 @@ export class PM_Main extends PM_WithEslintAndTsc {
             }
             // files[src].add(filepath);
 
-            fs.writeFileSync(
-              destFolder + "/manifest.json",
-              JSON.stringify(Array.from(files[src]))
-            );
+            // fs.writeFileSync(
+            //   destFolder + "/manifest.json",
+            //   JSON.stringify(Array.from(files[src]))
+            // );
 
             delete files[src];
 
@@ -1293,10 +1287,10 @@ export class PM_Main extends PM_WithEslintAndTsc {
           }
           // files[t].add(filepath);
 
-          fs.writeFileSync(
-            destFolder + "/manifest.json",
-            JSON.stringify(Array.from(files[src]))
-          );
+          // fs.writeFileSync(
+          //   destFolder + "/manifest.json",
+          //   JSON.stringify(Array.from(files[src]))
+          // );
           delete files[src];
 
           Promise.all(screenshots[src] || []).then(() => {

@@ -8,17 +8,20 @@
       "thens": [
         {
           "name": "SuiteNameMatches: testSuite",
-          "error": "Error: Suite name is undefined. Expected: testSuite"
+          "error": "Error: Suite name is undefined. Expected: testSuite",
+          "artifacts": []
         },
         {
           "name": "SuiteIndexMatches: 0",
-          "error": "Error: Expected suite index 0, got undefined"
+          "error": "Error: Expected suite index 0, got undefined",
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "BaseSuite should initialize with correct name and index"
-      ]
+      ],
+      "artifacts": []
     }
   ],
   "fails": 0,

@@ -8,13 +8,15 @@
       "thens": [
         {
           "name": "initializedProperly: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "ClassBuilder should initialize with default values"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "customInput",
@@ -23,13 +25,15 @@
       "thens": [
         {
           "name": "initializedProperly: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": {
         "custom": "input"
-      }
+      },
+      "artifacts": []
     },
     {
       "key": "resourceRequirements",
@@ -38,7 +42,8 @@
       "thens": [
         {
           "name": "resourceRequirementsSet: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
@@ -47,7 +52,8 @@
           3000,
           3001
         ]
-      }
+      },
+      "artifacts": []
     },
     {
       "key": "specGeneration",
@@ -56,13 +62,15 @@
       "thens": [
         {
           "name": "specsGenerated: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "Should generate specs from test specification"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "jobCreation",
@@ -71,32 +79,37 @@
       "thens": [
         {
           "name": "jobsCreated: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "Should create test jobs from specs"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "artifactTracking",
       "name": "Default",
       "whens": [
         {
-          "name": "addArtifact: [object Promise]"
+          "name": "addArtifact: [object Promise]",
+          "artifacts": []
         }
       ],
       "thens": [
         {
           "name": "artifactsTracked: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "Should track artifacts"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "overridesConfiguration",
@@ -105,25 +118,30 @@
       "thens": [
         {
           "name": "suitesOverridesConfigured: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         },
         {
           "name": "givensOverridesConfigured: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         },
         {
           "name": "whensOverridesConfigured: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         },
         {
           "name": "thensOverridesConfigured: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "Should properly configure all overrides"
-      ]
+      ],
+      "artifacts": []
     }
   ],
   "fails": 0,

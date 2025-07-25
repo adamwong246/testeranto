@@ -99,7 +99,7 @@
         "format": "esm"
       },
       "src/PM/index.ts": {
-        "bytes": 1827,
+        "bytes": 1837,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -237,7 +237,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 4454,
+        "bytes": 7280,
         "imports": [
           {
             "path": "./types",
@@ -263,7 +263,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 6612,
+        "bytes": 7465,
         "imports": [
           {
             "path": ".",
@@ -846,7 +846,7 @@
       "testeranto/bundles/web/allTests/src/lib/BaseSuite.test/web.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/allTests/chunk-C74YHORZ.mjs",
+            "path": "testeranto/bundles/web/allTests/chunk-AYO6U7BG.mjs",
             "kind": "import-statement"
           }
         ],
@@ -870,7 +870,7 @@
       "testeranto/bundles/web/allTests/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/allTests/chunk-C74YHORZ.mjs",
+            "path": "testeranto/bundles/web/allTests/chunk-AYO6U7BG.mjs",
             "kind": "import-statement"
           }
         ],
@@ -897,7 +897,7 @@
         },
         "bytes": 5882
       },
-      "testeranto/bundles/web/allTests/chunk-C74YHORZ.mjs": {
+      "testeranto/bundles/web/allTests/chunk-AYO6U7BG.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -909,7 +909,7 @@
         ],
         "inputs": {
           "src/lib/pmProxy.ts": {
-            "bytesInOutput": 3266
+            "bytesInOutput": 5788
           },
           "src/lib/BaseSuite.ts": {
             "bytesInOutput": 2484
@@ -924,7 +924,7 @@
             "bytesInOutput": 656
           },
           "src/lib/abstractBase.ts": {
-            "bytesInOutput": 4174
+            "bytesInOutput": 4973
           },
           "src/lib/basebuilder.ts": {
             "bytesInOutput": 2341
@@ -939,7 +939,7 @@
             "bytesInOutput": 1808
           }
         },
-        "bytes": 21801
+        "bytes": 25122
       }
     }
   }

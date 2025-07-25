@@ -1,69 +1,69 @@
 {
   "src/lib/BaseSuite.test/node.test.ts": {
-    "typeErrors": 44,
+    "typeErrors": 46,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/BaseSuite.test/node.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/pure.test.ts": {
-    "typeErrors": 44,
+    "typeErrors": 46,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/pure/src/lib/BaseSuite.test/pure.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/web.test.ts": {
-    "typeErrors": 46,
+    "typeErrors": 48,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/web/src/lib/BaseSuite.test/web.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/Pure.test.ts": {
-    "typeErrors": 37,
+    "typeErrors": 39,
     "staticErrors": 0,
     "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/pure/src/Pure.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/pmProxy.test/index.ts": {
-    "typeErrors": 30,
+    "typeErrors": 32,
     "staticErrors": 2,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/pmProxy.test/index/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/core.test/core.test.ts": {
-    "typeErrors": 37,
+    "typeErrors": 39,
     "staticErrors": 1,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/core.test/core.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/classBuilder.test/classBuilder.test.ts": {
-    "typeErrors": 64,
+    "typeErrors": 66,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/classBuilder.test/classBuilder.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
-    "typeErrors": 27,
+    "typeErrors": 29,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/baseBuilder.test/baseBuilder.test.node/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
-    "typeErrors": 29,
+    "typeErrors": 31,
     "staticErrors": 0,
     "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/pure/src/lib/baseBuilder.test/baseBuilder.test.pure/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
-    "typeErrors": 29,
+    "typeErrors": 31,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/web/src/lib/baseBuilder.test/baseBuilder.test.web/prompt.txt",

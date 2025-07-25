@@ -8,25 +8,30 @@
       "thens": [
         {
           "name": "initializedProperly: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         },
         {
           "name": "artifactsTracked: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         },
         {
           "name": "jobsCreated: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         },
         {
           "name": "specsGenerated: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "BaseBuilder should initialize correctly"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "testSpecsGeneration",
@@ -35,13 +40,15 @@
       "thens": [
         {
           "name": "specsGenerated: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "BaseBuilder should generate specs from test specification"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "testJobsCreation",
@@ -50,13 +57,15 @@
       "thens": [
         {
           "name": "jobsCreated: undefined",
-          "error": false
+          "error": false,
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "BaseBuilder should create test jobs"
-      ]
+      ],
+      "artifacts": []
     }
   ],
   "fails": 0,

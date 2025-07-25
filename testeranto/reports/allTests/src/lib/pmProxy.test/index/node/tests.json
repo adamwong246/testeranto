@@ -8,13 +8,15 @@
       "thens": [
         {
           "name": "theButTheProxyReturns: writeFileSync",
-          "error": "TypeError: store.butThenProxy is not a function"
+          "error": "TypeError: store.butThenProxy is not a function",
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "butThenProxy should rewrite writeFileSync paths"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "createWriteStreamProxyTest",
@@ -23,13 +25,15 @@
       "thens": [
         {
           "name": "theButTheProxyReturns: createWriteStream",
-          "error": "TypeError: store.butThenProxy is not a function"
+          "error": "TypeError: store.butThenProxy is not a function",
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "butThenProxy should rewrite createWriteStream paths"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "screencastProxyTest",
@@ -38,13 +42,15 @@
       "thens": [
         {
           "name": "theButTheProxyReturns: screencast",
-          "error": "TypeError: store.butThenProxy is not a function"
+          "error": "TypeError: store.butThenProxy is not a function",
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "butThenProxy should rewrite screencast paths"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "customScreenShotProxyTest",
@@ -53,13 +59,15 @@
       "thens": [
         {
           "name": "theButTheProxyReturns: customScreenShot",
-          "error": "TypeError: store.butThenProxy is not a function"
+          "error": "TypeError: store.butThenProxy is not a function",
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "butThenProxy should rewrite customScreenShot paths"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "emptyPathTest",
@@ -68,13 +76,15 @@
       "thens": [
         {
           "name": "theButTheProxyReturns: writeFileSync",
-          "error": "TypeError: store.butThenProxy is not a function"
+          "error": "TypeError: store.butThenProxy is not a function",
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "butThenProxy should handle empty paths"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "nestedPathTest",
@@ -83,13 +93,15 @@
       "thens": [
         {
           "name": "theButTheProxyReturns: writeFileSync",
-          "error": "TypeError: store.butThenProxy is not a function"
+          "error": "TypeError: store.butThenProxy is not a function",
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "butThenProxy should handle nested paths"
-      ]
+      ],
+      "artifacts": []
     },
     {
       "key": "specialCharsTest",
@@ -98,13 +110,15 @@
       "thens": [
         {
           "name": "theButTheProxyReturns: writeFileSync",
-          "error": "TypeError: store.butThenProxy is not a function"
+          "error": "TypeError: store.butThenProxy is not a function",
+          "artifacts": []
         }
       ],
       "error": null,
       "features": [
         "butThenProxy should handle special characters in paths"
-      ]
+      ],
+      "artifacts": []
     }
   ],
   "fails": 0,

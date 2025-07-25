@@ -26,6 +26,11 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
   initialValues: any;
   key: string;
   failed: boolean;
+  artifacts: string[] = [];
+  protected addArtifact(path: string) {
+    console.log(`[Artifact] Adding to ${this.constructor.name}:`, path);
+    this.artifacts.push(path);
+  }
 
   constructor(
     name: string,
@@ -61,6 +66,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
       error: this.error ? [this.error, this.error.stack] : null,
       failed: this.failed,
       features: this.features,
+      artifacts: this.artifacts,
     };
   }
 
@@ -109,13 +115,16 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     });
 
     try {
+      const proxiedPm = beforeEachProxy(pm, suiteNdx.toString());
+      console.log(`[Given] Setting currentStep for beforeEach:`, this.name);
+      (proxiedPm as any).currentStep = this;
       this.store = await this.givenThat(
         subject,
         testResourceConfiguration,
         givenArtifactory,
         this.givenCB,
         this.initialValues,
-        beforeEachProxy(pm, suiteNdx.toString())
+        proxiedPm
       );
     } catch (e) {
       console.error("Given failure: ", e.toString());
@@ -178,6 +187,7 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   public name: string;
   whenCB: (x: I["iselection"]) => I["then"];
   error: Error;
+  artifacts: string[] = [];
 
   constructor(name: string, whenCB: (xyz: I["iselection"]) => I["then"]) {
     this.name = name;
@@ -198,10 +208,12 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
       return {
         name: this.name,
         error: this.error && this.error.name + this.error.stack,
+        artifacts: this.artifacts,
       };
     } else {
       return {
         name: this.name,
+        artifacts: this.artifacts,
       };
     }
   }
@@ -217,11 +229,14 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
       tLog(" When:", this.name);
       console.debug("[DEBUG] Executing When step:", this.name.toString());
 
+      const proxiedPm = andWhenProxy(pm, filepath);
+      console.log(`[When] Setting currentStep for andWhen:`, this.name);
+      (proxiedPm as any).currentStep = this;
       const result = await this.andWhen(
         store,
         this.whenCB,
         testResourceConfiguration,
-        andWhenProxy(pm, filepath)
+        proxiedPm
       );
 
       console.debug("[DEBUG] When step completed:", this.name.toString());
@@ -242,6 +257,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
   public name: string;
   thenCB: (storeState: I["iselection"]) => Promise<I["then"]>;
   error: boolean;
+  artifacts: string[] = [];
 
   constructor(
     name: string,
@@ -256,6 +272,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     return {
       name: this.name,
       error: this.error,
+      artifacts: this.artifacts,
     };
   }
 
@@ -274,11 +291,14 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     pm: IPM,
     filepath: string
   ): Promise<I["then"] | undefined> {
+    const proxiedPm = butThenProxy(pm, filepath);
+    console.log(`[Then] Setting currentStep for butThen:`, this.name);
+    (proxiedPm as any).currentStep = this;
     return this.butThen(
       store,
       async (s: I["iselection"]) => {
         if (typeof this.thenCB === "function") {
-          return await this.thenCB(s, butThenProxy(pm, filepath));
+          return await this.thenCB(s, proxiedPm);
         } else {
           return this.thenCB;
         }

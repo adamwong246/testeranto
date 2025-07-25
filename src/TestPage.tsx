@@ -253,19 +253,92 @@ export const TestPage = () => {
                 {testData.givens.map((given, i) => (
                   <div key={i} className="mb-4 card">
                     <div className="card-header bg-primary text-white">
-                      <h4>Given: {given.name}</h4>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <h4>Given: {given.name}</h4>
+                        {given.artifacts?.length > 0 && (
+                          <div className="dropdown">
+                            <button
+                              className="btn btn-sm btn-light dropdown-toggle"
+                              type="button"
+                              data-bs-toggle="dropdown"
+                            >
+                              Artifacts ({given.artifacts.length})
+                            </button>
+                            <ul className="dropdown-menu dropdown-menu-end">
+                              {given.artifacts.map((artifact, ai) => (
+                                <li key={ai}>
+                                  <a
+                                    className="dropdown-item"
+                                    href={`/testeranto/reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtime}/${artifact}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    {artifact.split('/').pop()}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div className="card-body">
                       {given.whens.map((when, j) => (
                         <div key={`w-${j}`} className={`p-3 mb-2 ${when.error ? 'bg-danger text-white' : 'bg-success text-white'}`}>
-                          <strong>When:</strong> {when.name}
-                          {when.error && <pre className="mt-2">{when.error}</pre>}
+                          <div className="d-flex justify-content-between align-items-start">
+                            <div>
+                              <strong>When:</strong> {when.name}
+                              {when.error && <pre className="mt-2">{when.error}</pre>}
+                            </div>
+                            {when.artifacts?.length > 0 && (
+                              <div className="ms-3">
+                                <strong>Artifacts:</strong>
+                                <ul className="list-unstyled">
+                                  {when.artifacts.map((artifact, ai) => (
+                                    <li key={ai}>
+                                      <a
+                                        href={`/testeranto/reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtime}/${artifact}`}
+                                        target="_blank"
+                                        className="text-white"
+                                        rel="noopener noreferrer"
+                                      >
+                                        {artifact.split('/').pop()}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       ))}
                       {given.thens.map((then, k) => (
                         <div key={`t-${k}`} className={`p-3 mb-2 ${then.error ? 'bg-danger text-white' : 'bg-success text-white'}`}>
-                          <strong>Then:</strong> {then.name}
-                          {then.error && <pre className="mt-2">{then.error}</pre>}
+                          <div className="d-flex justify-content-between align-items-start">
+                            <div>
+                              <strong>Then:</strong> {then.name}
+                              {then.error && <pre className="mt-2">{then.error}</pre>}
+                            </div>
+                            {then.artifacts?.length > 0 && (
+                              <div className="ms-3">
+                                <strong>Artifacts:</strong>
+                                <ul className="list-unstyled">
+                                  {then.artifacts.map((artifact, ai) => (
+                                    <li key={ai}>
+                                      <a
+                                        href={`/testeranto/reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtime}/${artifact}`}
+                                        target="_blank"
+                                        className="text-white"
+                                        rel="noopener noreferrer"
+                                      >
+                                        {artifact.split('/').pop()}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>

@@ -1,5 +1,5 @@
 import net from "net";
-import { ScreencastOptions } from "puppeteer-core";
+import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
 import { ITLog, ITTestResourceConfiguration } from "../lib";
 import { PM } from ".";
@@ -27,7 +27,7 @@ export declare class PM_Node extends PM {
     click(selector: string): Promise<unknown>;
     screencast(opts: ScreencastOptions, page: string): Promise<unknown>;
     screencastStop(p: string): Promise<unknown>;
-    customScreenShot(x: ScreencastOptions, y?: string): Promise<unknown>;
+    customScreenShot(x: ScreenshotOptions, y?: string): Promise<unknown>;
     existsSync(destFolder: string): Promise<boolean>;
     mkdirSync(): Promise<unknown>;
     write(uid: number, contents: string): Promise<boolean>;
