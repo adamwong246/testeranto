@@ -19,13 +19,18 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
     if (!suiteName) {
       throw new Error("BaseSuite requires a non-empty name");
     }
-    console.log("[DEBUG] BaseSuite constructor - name:", suiteName, "index:", index);
+    console.log(
+      "[DEBUG] BaseSuite constructor - name:",
+      suiteName,
+      "index:",
+      index
+    );
     this.name = suiteName;
     this.index = index;
     this.givens = givens;
     this.fails = 0;
     console.log("[DEBUG] BaseSuite initialized:", this.name, this.index);
-    console.log("[DEBUG] BaseSuite givens:", Object.keys(givens));
+    console.log("[DEBUG] BaseSuite givens:", Object.keys(givens).toString());
   }
 
   public features() {
@@ -36,7 +41,7 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
         .filter((value, index, array) => {
           return array.indexOf(value) === index;
         });
-      console.debug("[DEBUG] Features extracted:", features);
+      console.debug("[DEBUG] Features extracted:", features.toString());
       return features || [];
     } catch (e) {
       console.error("[ERROR] Failed to extract features:", e);
@@ -114,7 +119,7 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
         .catch((e) => {
           this.failed = true;
           this.fails = this.fails + 1;
-          console.error("Given error 1:", e);
+          // console.error("Given error 1:", e.toString());
           throw e;
         });
     }

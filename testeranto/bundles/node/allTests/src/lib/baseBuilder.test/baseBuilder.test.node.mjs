@@ -1,10 +1,10 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   Node_default
-} from "../../../chunk-ZHOULXPN.mjs";
+} from "../../../chunk-7OYZHEBK.mjs";
 import {
   BaseBuilder
-} from "../../../chunk-IDCUSTSM.mjs";
+} from "../../../chunk-HPA2FZF3.mjs";
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then) => {
@@ -196,7 +196,7 @@ var testAdapter = {
       initialValues
     });
     const result = initializer();
-    console.log("Initialization result:", result);
+    console.log("Initialization result:", result.toString());
     return result;
   },
   andWhen: async (store, whenCB, testResource, utils) => {

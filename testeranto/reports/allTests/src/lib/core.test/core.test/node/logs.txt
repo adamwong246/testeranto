@@ -1,7 +1,7 @@
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
 stdout > [DEBUG] BaseSuite constructor - name: Testeranto Core Functionality index: 0
 [DEBUG] BaseSuite initialized: Testeranto Core Functionality 0
-[DEBUG] BaseSuite givens: [ 'features', 'artifacts' ]
+[DEBUG] BaseSuite givens: features,artifacts
 [DEBUG] BaseSuite constructor - name: Testeranto Advanced Features index: 1
 [DEBUG] BaseSuite initialized: Testeranto Advanced Features 1
-[DEBUG] BaseSuite givens: [ 'features', 'artifacts' ]
+[DEBUG] BaseSuite givens: features,artifacts

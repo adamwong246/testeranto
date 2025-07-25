@@ -1,47 +1,13 @@
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
-Then error: Error: Suite name is undefined. Expected: testSuite
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/BaseSuite.test/node.test.mjs:157:15)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:581:29
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/BaseSuite.test/node.test.mjs:293:28)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:645:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:577:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:503:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:374:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:180:19
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:204:29)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-ZHOULXPN.mjs:224:12)
-Full store state: {
-  "name": "testSuite",
-  "index": 0,
-  "testStore": true,
-  "testSelection": false
-}
-Then error: Error: Expected suite index 0, got undefined
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/BaseSuite.test/node.test.mjs:168:15)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:581:29
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/src/lib/BaseSuite.test/node.test.mjs:293:28)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:645:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:577:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:503:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:374:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:180:19
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-IDCUSTSM.mjs:204:29)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-ZHOULXPN.mjs:224:12)
-Full store state: {
-  "name": "testSuite",
-  "index": 0,
-  "testStore": true,
-  "testSelection": false
-}
 stdout > [DEBUG] BaseSuite constructor - name: BaseSuite Core Functionality Tests index: 0
 [DEBUG] BaseSuite initialized: BaseSuite Core Functionality Tests 0
-[DEBUG] BaseSuite givens: [ 'initialization' ]
-receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/944a4827-2bdb-429e-8302-6e91eb8d37b6"}
+[DEBUG] BaseSuite givens: initialization
+receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/76115b19-c336-482b-ba27-5b8cb9c5f964"}
 [DEBUG] Running beforeEach with subject: [class BaseSuite]
 [DEBUG] Creating MockSuite with name: testSuite index: 0
 [DEBUG] BaseSuite constructor - name: testSuite index: 0
 [DEBUG] BaseSuite initialized: testSuite 0
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: testSuite 0
 [DEBUG] Created test suite: testSuite 0
 [DEBUG] beforeEach result: { name: 'testSuite', index: 0, store: undefined }
@@ -64,6 +30,20 @@ receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":
 [DEBUG] butThen - created testSelection: {
   "testSelection": false
 }
-stdout > [DEBUG] Features extracted: [ 'BaseSuite should initialize with correct name and index' ]
-[DEBUG] Features extracted: [ 'BaseSuite should initialize with correct name and index' ]
+stderr > Then error: Error: Suite name is undefined. Expected: testSuite
+Full store state: {
+  "name": "testSuite",
+  "index": 0,
+  "testStore": true,
+  "testSelection": false
+}
+Then error: Error: Expected suite index 0, got undefined
+Full store state: {
+  "name": "testSuite",
+  "index": 0,
+  "testStore": true,
+  "testSelection": false
+}
+stdout > [DEBUG] Features extracted: BaseSuite should initialize with correct name and index
+[DEBUG] Features extracted: BaseSuite should initialize with correct name and index
 stderr > goodbye node with failures 0

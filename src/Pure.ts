@@ -46,22 +46,22 @@ export class PureTesteranto<
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Pure(t);
 
-    console.log("[DEBUG] Current test jobs:", this.testJobs?.length);
+    // console.log("[DEBUG] Current test jobs:", this.testJobs?.length);
 
-    if (!this.testJobs || this.testJobs.length === 0) {
-      console.error(
-        "[ERROR] No test jobs available - checking specs:",
-        this.specs?.length
-      );
-      console.error("[ERROR] Test implementation:", this.testImplementation);
-      return {
-        failed: true,
-        fails: 1,
-        artifacts: [],
-        // logPromise: Promise.resolve(),
-        features: [],
-      };
-    }
+    // if (!this.testJobs || this.testJobs.length === 0) {
+    //   console.error(
+    //     "[ERROR] No test jobs available - checking specs:",
+    //     this.specs?.length
+    //   );
+    //   console.error("[ERROR] Test implementation:", this.testImplementation);
+    //   return {
+    //     failed: true,
+    //     fails: 1,
+    //     artifacts: [],
+    //     // logPromise: Promise.resolve(),
+    //     features: [],
+    //   };
+    // }
 
     try {
       console.log("[DEBUG] Executing test job with PM:", pm);
@@ -72,7 +72,7 @@ export class PureTesteranto<
       console.error("[ERROR] Test job failed:", e);
       return {
         failed: true,
-        fails: 1,
+        fails: -1,
         artifacts: [],
         // logPromise: Promise.resolve(),
         features: [],

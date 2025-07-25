@@ -1,13 +1,13 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   Pure_default
-} from "../../../chunk-5SBJWHSZ.mjs";
+} from "../../../chunk-AYFYVUHL.mjs";
 import {
   BaseGiven,
   BaseSuite,
   BaseThen,
   BaseWhen
-} from "../../../chunk-4ULDTZFU.mjs";
+} from "../../../chunk-NZTCDFDL.mjs";
 
 // src/lib/BaseSuite.test/mock.ts
 var MockGiven = class extends BaseGiven {
@@ -401,7 +401,7 @@ var testAdapter = {
       }
       return result;
     } catch (e) {
-      console.error("Then error:", e);
+      console.error("Then error:", e.toString());
       console.error("Full store state:", JSON.stringify(store, null, 2));
       throw e;
     }

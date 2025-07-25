@@ -4,7 +4,7 @@
 import net from "net";
 import fs from "fs";
 import path from "path";
-import { ScreencastOptions } from "puppeteer-core";
+import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
 import { PassThrough } from "stream";
 
 import { ITLog, ITTestResourceConfiguration } from "../lib";
@@ -151,7 +151,7 @@ export class PM_Node extends PM {
     return this.send("screencastStop", ...arguments);
   }
 
-  customScreenShot(x: ScreencastOptions, y?: string) {
+  customScreenShot(x: ScreenshotOptions, y?: string) {
     const opts = x[0];
     const page = x[1];
 

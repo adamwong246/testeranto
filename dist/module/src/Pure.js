@@ -8,22 +8,24 @@ export class PureTesteranto extends Testeranto {
         });
     }
     async receiveTestResourceConfig(partialTestResource) {
-        var _a, _b;
         console.log("[DEBUG] receiveTestResourceConfig called with:", partialTestResource);
         const t = JSON.parse(partialTestResource);
         const pm = new PM_Pure(t);
-        console.log("[DEBUG] Current test jobs:", (_a = this.testJobs) === null || _a === void 0 ? void 0 : _a.length);
-        if (!this.testJobs || this.testJobs.length === 0) {
-            console.error("[ERROR] No test jobs available - checking specs:", (_b = this.specs) === null || _b === void 0 ? void 0 : _b.length);
-            console.error("[ERROR] Test implementation:", this.testImplementation);
-            return {
-                failed: true,
-                fails: 1,
-                artifacts: [],
-                // logPromise: Promise.resolve(),
-                features: [],
-            };
-        }
+        // console.log("[DEBUG] Current test jobs:", this.testJobs?.length);
+        // if (!this.testJobs || this.testJobs.length === 0) {
+        //   console.error(
+        //     "[ERROR] No test jobs available - checking specs:",
+        //     this.specs?.length
+        //   );
+        //   console.error("[ERROR] Test implementation:", this.testImplementation);
+        //   return {
+        //     failed: true,
+        //     fails: 1,
+        //     artifacts: [],
+        //     // logPromise: Promise.resolve(),
+        //     features: [],
+        //   };
+        // }
         try {
             console.log("[DEBUG] Executing test job with PM:", pm);
             const result = await this.testJobs[0].receiveTestResourceConfig(pm);
@@ -34,7 +36,7 @@ export class PureTesteranto extends Testeranto {
             console.error("[ERROR] Test job failed:", e);
             return {
                 failed: true,
-                fails: 1,
+                fails: -1,
                 artifacts: [],
                 // logPromise: Promise.resolve(),
                 features: [],

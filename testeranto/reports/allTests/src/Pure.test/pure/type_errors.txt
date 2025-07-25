@@ -1,4 +1,4 @@
-/Users/adam/Code/testeranto/src/lib/abstractBase.ts (222,17): Catch clause variable type annotation must be 'any' or 'unknown' if specified.
+/Users/adam/Code/testeranto/src/lib/abstractBase.ts (229,17): Catch clause variable type annotation must be 'any' or 'unknown' if specified.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (79,15): This expression is not callable.
   Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
@@ -92,4 +92,3 @@
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
 /Users/adam/Code/testeranto/src/Pure.ts (32,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-/Users/adam/Code/testeranto/src/Pure.ts (56,58): Property 'testImplementation' does not exist on type 'PureTesteranto<I, O, M>'.

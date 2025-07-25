@@ -4,7 +4,7 @@ import {
   BaseThen,
   BaseWhen,
   Web_default
-} from "../../../chunk-46E6YGGN.mjs";
+} from "../../../chunk-C74YHORZ.mjs";
 
 // src/lib/BaseSuite.test/mock.ts
 var MockGiven = class extends BaseGiven {
@@ -398,7 +398,7 @@ var testAdapter = {
       }
       return result;
     } catch (e) {
-      console.error("Then error:", e);
+      console.error("Then error:", e.toString());
       console.error("Full store state:", JSON.stringify(store, null, 2));
       throw e;
     }

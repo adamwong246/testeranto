@@ -1,67 +1,26 @@
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
 stdout > [DEBUG] BaseSuite constructor - name: Testing BaseBuilder functionality index: 0
 [DEBUG] BaseSuite initialized: Testing BaseBuilder functionality 0
-[DEBUG] BaseSuite givens: [ 'testInitialization', 'testSpecsGeneration', 'testJobsCreation' ]
-receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/944a4827-2bdb-429e-8302-6e91eb8d37b6"}
+[DEBUG] BaseSuite givens: testInitialization,testSpecsGeneration,testJobsCreation
+receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/76115b19-c336-482b-ba27-5b8cb9c5f964"}
 Initializing test with: {
   subject: BaseBuilder {},
   initializer: [Function: Default],
   initialValues: []
 }
-Initialization result: MockBaseBuilder {
-  artifacts: [],
-  testResourceRequirement: { ports: 0 },
-  suitesOverrides: {},
-  givenOverides: {},
-  whenOverides: {},
-  thenOverides: {},
-  testSpecification: [Function (anonymous)],
-  specs: [],
-  testJobs: [],
-  summary: {}
-}
+Initialization result: [object Object]
 Initializing test with: {
   subject: BaseBuilder {},
   initializer: [Function: Default],
   initialValues: []
 }
-Initialization result: MockBaseBuilder {
-  artifacts: [],
-  testResourceRequirement: { ports: 0 },
-  suitesOverrides: {},
-  givenOverides: {},
-  whenOverides: {},
-  thenOverides: {},
-  testSpecification: [Function (anonymous)],
-  specs: [],
-  testJobs: [],
-  summary: {}
-}
+Initialization result: [object Object]
 Initializing test with: {
   subject: BaseBuilder {},
   initializer: [Function: Default],
   initialValues: []
 }
-Initialization result: MockBaseBuilder {
-  artifacts: [],
-  testResourceRequirement: { ports: 0 },
-  suitesOverrides: {},
-  givenOverides: {},
-  whenOverides: {},
-  thenOverides: {},
-  testSpecification: [Function (anonymous)],
-  specs: [],
-  testJobs: [],
-  summary: {}
-}
-stdout > [DEBUG] Features extracted: [
-  'BaseBuilder should initialize correctly',
-  'BaseBuilder should generate specs from test specification',
-  'BaseBuilder should create test jobs'
-]
-stdout > [DEBUG] Features extracted: [
-  'BaseBuilder should initialize correctly',
-  'BaseBuilder should generate specs from test specification',
-  'BaseBuilder should create test jobs'
-]
+Initialization result: [object Object]
+stdout > [DEBUG] Features extracted: BaseBuilder should initialize correctly,BaseBuilder should generate specs from test specification,BaseBuilder should create test jobs
+stdout > [DEBUG] Features extracted: BaseBuilder should initialize correctly,BaseBuilder should generate specs from test specification,BaseBuilder should create test jobs
 stderr > goodbye node with failures 0

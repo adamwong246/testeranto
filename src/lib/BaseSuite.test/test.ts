@@ -432,7 +432,7 @@ export const testAdapter: ITestAdapter<I> = {
 
       return result;
     } catch (e) {
-      console.error("Then error:", e);
+      console.error("Then error:", e.toString());
       console.error("Full store state:", JSON.stringify(store, null, 2));
       throw e;
     }

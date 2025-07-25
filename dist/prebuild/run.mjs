@@ -773,26 +773,29 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         process.exit(-1);
       }
       const builtfile = dest;
-      const webSideCares = [];
       try {
         await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
           return module.default.then((defaultModule) => {
             defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
+              console.log("PURE IS EXITING AOK WITH RESULTS", results);
               statusMessagePretty(results.fails, src, "pure");
               this.bddTestIsNowDone(src, results.fails);
-            }).catch((e) => {
+            }).catch((e1) => {
+              console.log("I) PURE IS EXITING BADLY WITH error", e1);
               console.log(
-                ansiC2.red(`launchPure - ${src} errored with: ${e}`)
+                ansiC2.red(`launchPure - ${src} errored with: ${e1}`)
               );
               this.bddTestIsNowDone(src, -1);
+              statusMessagePretty(-1, src, "pure");
             });
-          }).catch((e) => {
+          }).catch((e2) => {
             console.log(
               ansiColors.red(
                 `pure ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
               )
             );
-            this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
+            console.log("II) PURE IS EXITING BADLY WITH error", e2);
+            this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "pure");
           }).finally((x) => {
@@ -803,17 +806,18 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             );
           });
         });
-      } catch (e) {
+      } catch (e3) {
         console.log(
           ansiC2.red(
             ansiC2.inverse(
-              `${src} 1 errored with: ${e}. Check ${reportDest}/logs.txt for more info`
+              `${src} 1 errored with: ${e3}. Check ${reportDest}/logs.txt for more info`
             )
           )
         );
-        this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
+        this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
         this.bddTestIsNowDone(src, -1);
         statusMessagePretty(-1, src, "pure");
+        console.log("III) PURE IS EXITING BADLY WITH error", e3);
       }
       for (let i = 0; i <= portsToUse.length; i++) {
         if (portsToUse[i]) {
@@ -941,7 +945,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         child.on("error", (err) => {
         });
         child.on("close", (code) => {
-          oStream.close();
           server.close();
           if (!files2[src]) {
             files2[src] = /* @__PURE__ */ new Set();
@@ -958,6 +961,8 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             );
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "node");
+            oStream.close();
+            return;
           } else if (code === 0) {
             this.bddTestIsNowDone(src, 0);
             statusMessagePretty(0, src, "node");
@@ -1281,7 +1286,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
-        console.log("fail", e)
+        console.log("web run failure", e.toString())
       }
     })`;
       const ofile = `${reportDest}/logs.txt`;
@@ -1316,6 +1321,8 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             page.close();
             oStream.close();
           });
+          console.log("ostream is closed");
+          return;
         };
         page.on("pageerror", (err) => {
           console.log(
@@ -1341,15 +1348,20 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           close();
         });
         page.on("console", (log) => {
-          oStream.write(log.text());
-          oStream.write("\n");
-          oStream.write(JSON.stringify(log.location()));
-          oStream.write("\n");
-          oStream.write(JSON.stringify(log.stackTrace()));
-          oStream.write("\n");
+          console.log("console message: ", log.text());
+          if (oStream.closed) {
+            console.log("missed console message: ", log.text());
+            return;
+          } else {
+            oStream.write(log.text());
+            oStream.write("\n");
+            oStream.write(JSON.stringify(log.location()));
+            oStream.write("\n");
+            oStream.write(JSON.stringify(log.stackTrace()));
+            oStream.write("\n");
+          }
         });
         await page.goto(`file://${`${destFolder}.html`}`, {});
-        this.webSidecars[Math.random()] = page.mainFrame()._id;
         await page.evaluate(evaluation).then(async ({ fails, failed, features }) => {
           statusMessagePretty(fails, src, "web");
           this.bddTestIsNowDone(src, fails);
@@ -1554,9 +1566,9 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         slowMo: 1,
         waitForInitialPage: false,
         executablePath,
-        headless: true,
+        headless: false,
         dumpio: false,
-        devtools: false,
+        devtools: true,
         args: [
           "--disable-features=site-per-process",
           "--allow-file-access-from-files",
@@ -1657,8 +1669,36 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       }
     );
   }
-  async launchExternalTest(externalTestName, externalTest) {
-  }
+  // async launchExternalTest(
+  //   externalTestName: string,
+  //   externalTest: {
+  //     watch: string[];
+  //     exec: string;
+  //   }
+  // ) {
+  //   // fs.mkdirSync(`testeranto/externalTests/${externalTestName}`);
+  //   // exec(externalTest.exec, (error, stdout, stderr) => {
+  //   //   if (error) {
+  //   //     fs.writeFileSync(
+  //   //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
+  //   //       `${error.name}\n${error.message}\n${error.code}\n`
+  //   //     );
+  //   //   } else {
+  //   //     fs.writeFileSync(
+  //   //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
+  //   //       `0`
+  //   //     );
+  //   //   }
+  //   //   fs.writeFileSync(
+  //   //     `testeranto/externalTests/${externalTestName}/stdout.txt`,
+  //   //     stdout
+  //   //   );
+  //   //   fs.writeFileSync(
+  //   //     `testeranto/externalTests/${externalTestName}/stderr.txt`,
+  //   //     stderr
+  //   //   );
+  //   // });
+  // }
   async stop() {
     console.log(ansiC2.inverse("Testeranto-Run is shutting down gracefully..."));
     this.mode = "once";

@@ -5,14 +5,14 @@ import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 let errorCallback = (e) => { };
 let unhandledrejectionCallback = (event) => {
-    console.log("window.addEventListener unhandledrejection", event);
+    console.log("window.addEventListener unhandledrejection 1", JSON.stringify(event));
 };
 export class WebTesteranto extends Testeranto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, (cb) => {
             window.removeEventListener("error", errorCallback);
             errorCallback = (e) => {
-                console.log("window.addEventListener error", e);
+                console.log("window.addEventListener error 2", JSON.stringify(e));
                 cb(e);
                 // throw e;
             };
@@ -21,7 +21,7 @@ export class WebTesteranto extends Testeranto {
             /////////////////////
             window.removeEventListener("unhandledrejection", unhandledrejectionCallback);
             unhandledrejectionCallback = (event) => {
-                console.log("window.addEventListener unhandledrejection", event);
+                console.log("window.addEventListener unhandledrejection 3", JSON.stringify(event));
                 cb({ error: event.reason.message });
                 // throw event;
             };

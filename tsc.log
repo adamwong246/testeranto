@@ -29,7 +29,7 @@ src/lib/abstractBase.test/MockGiven.ts(9,12): error TS2304: Cannot find name 'Ba
 src/lib/abstractBase.test/MockGiven.ts(24,12): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
 src/lib/abstractBase.test/types.ts(13,17): error TS2707: Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
-src/lib/abstractBase.ts(222,17): error TS1196: Catch clause variable type annotation must be 'any' or 'unknown' if specified.
+src/lib/abstractBase.ts(229,17): error TS1196: Catch clause variable type annotation must be 'any' or 'unknown' if specified.
 src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(8,49): error TS2322: Type 'Promise<{}>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
   Type '{}' is missing the following properties from type 'BaseBuilder<any, any, any, any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 12 more.
 src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(9,3): error TS2719: Type '(subject: import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestR...' is not assignable to type '(subject: import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestR...'. Two different types with this name exist, but they are unrelated.
@@ -288,17 +288,16 @@ src/PM/__tests__/webSidecar.testeranto.ts(94,38): error TS2322: Type 'boolean' i
 src/PM/__tests__/webSidecar.testeranto.ts(109,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
 src/PM/__tests__/webSidecar.testeranto.ts(118,20): error TS2304: Cannot find name 'IPartialNodeAdapter'.
 src/PM/__tests__/webSidecar.testeranto.ts(118,40): error TS2304: Cannot find name 'I'.
-src/PM/main.ts(815,38): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
+src/PM/main.ts(825,38): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
   Type 'null' is not assignable to type 'number'.
-src/PM/main.ts(816,31): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
+src/PM/main.ts(826,31): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
   Type 'null' is not assignable to type 'number'.
-src/PM/main.ts(982,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1020,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1148,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
-src/PM/main.ts(1186,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1201,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
-src/PM/main.ts(1339,9): error TS2322: Type 'string' is not assignable to type 'Page'.
-src/PM/main.ts(1463,9): error TS2532: Object is possibly 'undefined'.
+src/PM/main.ts(992,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1030,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1158,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
+src/PM/main.ts(1196,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1211,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(1481,9): error TS2532: Object is possibly 'undefined'.
 src/PM/web.ts(56,12): error TS2304: Cannot find name 'opts'.
 src/PM/web.ts(57,57): error TS2304: Cannot find name 'opts'.
 src/PM/web.ts(59,7): error TS2663: Cannot find name 'page'. Did you mean the instance member 'this.page'?
@@ -389,15 +388,14 @@ src/Pure.test.ts(216,29): error TS2322: Type '(store: { pm: IPM; }) => { pm: IPM
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
 src/Pure.ts(32,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-src/Pure.ts(56,58): error TS2339: Property 'testImplementation' does not exist on type 'PureTesteranto<I, O, M>'.
 src/ReportServer.ts(64,33): error TS2339: Property 'status' does not exist on type 'Error'.
 src/TestPage.tsx(72,17): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string>'.
   Type 'undefined' is not assignable to type 'SetStateAction<string>'.
 src/TestPage.tsx(131,22): error TS2339: Property 'fails' does not exist on type 'TestData'.
 src/TestPage.tsx(163,16): error TS2739: Type '{ testName: string; testsExist: boolean; runTimeErrors: number; variant: "compact"; }' is missing the following properties from type 'TestStatusBadgeProps': typeErrors, staticErrors
 src/utils/api.ts(69,54): error TS2304: Cannot find name 'testName'.
-src/Web.ts(40,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+src/Web.ts(43,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-src/Web.ts(48,14): error TS2554: Expected 0 arguments, but got 1.
-src/Web.ts(67,14): error TS2554: Expected 0 arguments, but got 1.
+src/Web.ts(51,14): error TS2554: Expected 0 arguments, but got 1.
+src/Web.ts(73,14): error TS2554: Expected 0 arguments, but got 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

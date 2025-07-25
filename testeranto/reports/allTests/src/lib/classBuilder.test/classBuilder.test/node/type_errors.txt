@@ -1,4 +1,4 @@
-/Users/adam/Code/testeranto/src/lib/abstractBase.ts (222,17): Catch clause variable type annotation must be 'any' or 'unknown' if specified.
+/Users/adam/Code/testeranto/src/lib/abstractBase.ts (229,17): Catch clause variable type annotation must be 'any' or 'unknown' if specified.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (79,15): This expression is not callable.
   Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.

@@ -11,7 +11,7 @@ export class BaseSuite {
         this.givens = givens;
         this.fails = 0;
         console.log("[DEBUG] BaseSuite initialized:", this.name, this.index);
-        console.log("[DEBUG] BaseSuite givens:", Object.keys(givens));
+        console.log("[DEBUG] BaseSuite givens:", Object.keys(givens).toString());
     }
     features() {
         try {
@@ -21,7 +21,7 @@ export class BaseSuite {
                 .filter((value, index, array) => {
                 return array.indexOf(value) === index;
             });
-            console.debug("[DEBUG] Features extracted:", features);
+            console.debug("[DEBUG] Features extracted:", features.toString());
             return features || [];
         }
         catch (e) {
@@ -64,7 +64,7 @@ export class BaseSuite {
                 .catch((e) => {
                 this.failed = true;
                 this.fails = this.fails + 1;
-                console.error("Given error 1:", e);
+                // console.error("Given error 1:", e.toString());
                 throw e;
             });
         }

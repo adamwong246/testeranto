@@ -145,7 +145,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 process.exit(-1);
             }
             const builtfile = dest;
-            const webSideCares = [];
+            // const webSideCares: Page[] = [];
             // fs.writeFileSync(
             //   `${reportDest}/stdlog.txt`,
             //   "THIS FILE IS AUTO GENERATED. IT IS PURPOSEFULLY LEFT BLANK."
@@ -177,22 +177,26 @@ export class PM_Main extends PM_WithEslintAndTsc {
                         defaultModule
                             .receiveTestResourceConfig(argz)
                             .then(async (results) => {
+                            console.log("PURE IS EXITING AOK WITH RESULTS", results);
                             // this.receiveFeatures(results.features, destFolder, src, "pure");
                             // this.receiveFeaturesV2(reportDest, src, "pure");
                             statusMessagePretty(results.fails, src, "pure");
                             this.bddTestIsNowDone(src, results.fails);
                         })
-                            .catch((e) => {
-                            console.log(ansiC.red(`launchPure - ${src} errored with: ${e}`));
+                            .catch((e1) => {
+                            console.log("I) PURE IS EXITING BADLY WITH error", e1);
+                            console.log(ansiC.red(`launchPure - ${src} errored with: ${e1}`));
                             this.bddTestIsNowDone(src, -1);
+                            statusMessagePretty(-1, src, "pure");
                         });
                         // .finally(() => {
                         //   // webSideCares.forEach((webSideCar) => webSideCar.close());
                         // });
                     })
-                        .catch((e) => {
+                        .catch((e2) => {
                         console.log(ansiColors.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
-                        this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
+                        console.log("II) PURE IS EXITING BADLY WITH error", e2);
+                        this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
                         this.bddTestIsNowDone(src, -1);
                         statusMessagePretty(-1, src, "pure");
                         // console.error(e);
@@ -203,11 +207,12 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     });
                 });
             }
-            catch (e) {
-                console.log(ansiC.red(ansiC.inverse(`${src} 1 errored with: ${e}. Check ${reportDest}/logs.txt for more info`)));
-                this.writeFileSync(`${reportDest}/logs.txt`, e.stack, src);
+            catch (e3) {
+                console.log(ansiC.red(ansiC.inverse(`${src} 1 errored with: ${e3}. Check ${reportDest}/logs.txt for more info`)));
+                this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
                 this.bddTestIsNowDone(src, -1);
                 statusMessagePretty(-1, src, "pure");
+                console.log("III) PURE IS EXITING BADLY WITH error", e3);
             }
             for (let i = 0; i <= portsToUse.length; i++) {
                 if (portsToUse[i]) {
@@ -332,7 +337,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 });
                 child.on("error", (err) => { });
                 child.on("close", (code) => {
-                    oStream.close();
+                    // oStream.close();
                     server.close();
                     if (!files[src]) {
                         files[src] = new Set();
@@ -343,6 +348,8 @@ export class PM_Main extends PM_WithEslintAndTsc {
                         console.log(ansiColors.red(`node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                         this.bddTestIsNowDone(src, -1);
                         statusMessagePretty(-1, src, "node");
+                        oStream.close();
+                        return;
                     }
                     else if (code === 0) {
                         this.bddTestIsNowDone(src, 0);
@@ -681,7 +688,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
       try {
         return await (await x.default).receiveTestResourceConfig(${webArgz})
       } catch (e) {
-        console.log("fail", e)
+        console.log("web run failure", e.toString())
       }
     })`;
             const ofile = `${reportDest}/logs.txt`;
@@ -719,6 +726,8 @@ export class PM_Main extends PM_WithEslintAndTsc {
                         page.close();
                         oStream.close();
                     });
+                    console.log("ostream is closed");
+                    return;
                 };
                 page.on("pageerror", (err) => {
                     console.log(ansiColors.red(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
@@ -740,15 +749,22 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     close();
                 });
                 page.on("console", (log) => {
-                    oStream.write(log.text());
-                    oStream.write("\n");
-                    oStream.write(JSON.stringify(log.location()));
-                    oStream.write("\n");
-                    oStream.write(JSON.stringify(log.stackTrace()));
-                    oStream.write("\n");
+                    console.log("console message: ", log.text());
+                    if (oStream.closed) {
+                        console.log("missed console message: ", log.text());
+                        return;
+                    }
+                    else {
+                        oStream.write(log.text());
+                        oStream.write("\n");
+                        oStream.write(JSON.stringify(log.location()));
+                        oStream.write("\n");
+                        oStream.write(JSON.stringify(log.stackTrace()));
+                        oStream.write("\n");
+                    }
                 });
                 await page.goto(`file://${`${destFolder}.html`}`, {});
-                this.webSidecars[Math.random()] = page.mainFrame()._id;
+                // this.webSidecars[Math.random()] = page.mainFrame()._id;
                 await page
                     .evaluate(evaluation)
                     .then(async ({ fails, failed, features }) => {
@@ -979,9 +995,9 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 slowMo: 1,
                 waitForInitialPage: false,
                 executablePath,
-                headless: true,
+                headless: false,
                 dumpio: false,
-                devtools: false,
+                devtools: true,
                 args: [
                     "--disable-features=site-per-process",
                     "--allow-file-access-from-files",
@@ -1076,30 +1092,36 @@ export class PM_Main extends PM_WithEslintAndTsc {
         //   this.launchExternalTest(et, this.configs.externalTests[et]);
         // });
     }
-    async launchExternalTest(externalTestName, externalTest) {
-        // fs.mkdirSync(`testeranto/externalTests/${externalTestName}`);
-        // exec(externalTest.exec, (error, stdout, stderr) => {
-        //   if (error) {
-        //     fs.writeFileSync(
-        //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
-        //       `${error.name}\n${error.message}\n${error.code}\n`
-        //     );
-        //   } else {
-        //     fs.writeFileSync(
-        //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
-        //       `0`
-        //     );
-        //   }
-        //   fs.writeFileSync(
-        //     `testeranto/externalTests/${externalTestName}/stdout.txt`,
-        //     stdout
-        //   );
-        //   fs.writeFileSync(
-        //     `testeranto/externalTests/${externalTestName}/stderr.txt`,
-        //     stderr
-        //   );
-        // });
-    }
+    // async launchExternalTest(
+    //   externalTestName: string,
+    //   externalTest: {
+    //     watch: string[];
+    //     exec: string;
+    //   }
+    // ) {
+    //   // fs.mkdirSync(`testeranto/externalTests/${externalTestName}`);
+    //   // exec(externalTest.exec, (error, stdout, stderr) => {
+    //   //   if (error) {
+    //   //     fs.writeFileSync(
+    //   //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
+    //   //       `${error.name}\n${error.message}\n${error.code}\n`
+    //   //     );
+    //   //   } else {
+    //   //     fs.writeFileSync(
+    //   //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
+    //   //       `0`
+    //   //     );
+    //   //   }
+    //   //   fs.writeFileSync(
+    //   //     `testeranto/externalTests/${externalTestName}/stdout.txt`,
+    //   //     stdout
+    //   //   );
+    //   //   fs.writeFileSync(
+    //   //     `testeranto/externalTests/${externalTestName}/stderr.txt`,
+    //   //     stderr
+    //   //   );
+    //   // });
+    // }
     async stop() {
         console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
         this.mode = "once";

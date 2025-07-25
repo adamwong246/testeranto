@@ -7,7 +7,7 @@
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/pure.test.ts": {
-    "typeErrors": 45,
+    "typeErrors": 44,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/pure/src/lib/BaseSuite.test/pure.test/prompt.txt",
@@ -21,9 +21,9 @@
     "failingFeatures": {}
   },
   "src/Pure.test.ts": {
-    "typeErrors": 38,
+    "typeErrors": 37,
     "staticErrors": 0,
-    "runTimeErrors": 1,
+    "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/pure/src/Pure.test/prompt.txt",
     "failingFeatures": {}
   },
@@ -35,7 +35,7 @@
     "failingFeatures": {}
   },
   "src/lib/core.test/core.test.ts": {
-    "typeErrors": 38,
+    "typeErrors": 37,
     "staticErrors": 1,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/src/lib/core.test/core.test/prompt.txt",

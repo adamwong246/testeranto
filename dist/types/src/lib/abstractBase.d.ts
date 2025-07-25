@@ -43,6 +43,9 @@ export declare abstract class BaseWhen<I extends Ibdd_in_any> {
     toObj(): {
         name: string;
         error: string;
+    } | {
+        name: string;
+        error?: undefined;
     };
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<any>;
 }

@@ -20,7 +20,7 @@ export abstract class PM {
     testName: string
   ): Promise<string>;
   abstract customclose();
-  abstract customScreenShot(opts: object, page?: string): any;
+  abstract customScreenShot(opts: { path: string }, page?: string): any;
   abstract end(uid: number): Promise<boolean>;
   abstract existsSync(fp: string): Promise<boolean>;
   abstract focusOn(selector: string): any;

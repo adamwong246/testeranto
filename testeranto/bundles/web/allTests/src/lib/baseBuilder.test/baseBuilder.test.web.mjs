@@ -1,7 +1,7 @@
 import {
   BaseBuilder,
   Web_default
-} from "../../../chunk-46E6YGGN.mjs";
+} from "../../../chunk-C74YHORZ.mjs";
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then) => {
@@ -193,7 +193,7 @@ var testAdapter = {
       initialValues
     });
     const result = initializer();
-    console.log("Initialization result:", result);
+    console.log("Initialization result:", result.toString());
     return result;
   },
   andWhen: async (store, whenCB, testResource, utils) => {

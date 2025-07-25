@@ -20,10 +20,6 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     launchSideCar(n: number, name: string): Promise<[number, ITTestResourceConfiguration]>;
     mapping(): [string, (...a: any[]) => any][];
     start(): Promise<void>;
-    launchExternalTest(externalTestName: string, externalTest: {
-        watch: string[];
-        exec: string;
-    }): Promise<void>;
     stop(): Promise<void>;
     getRunnables: (tests: ITestTypes[], testName: string, payload?: {
         nodeEntryPoints: {};

@@ -263,7 +263,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 6388,
+        "bytes": 6612,
         "imports": [
           {
             "path": ".",
@@ -386,7 +386,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 3797,
+        "bytes": 3863,
         "imports": [
           {
             "path": ".",
@@ -478,7 +478,7 @@
         "format": "esm"
       },
       "src/Web.ts": {
-        "bytes": 2757,
+        "bytes": 2859,
         "imports": [
           {
             "path": "./CoreTypes",
@@ -560,7 +560,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12569,
+        "bytes": 12580,
         "imports": [
           {
             "path": "..",
@@ -760,7 +760,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-        "bytes": 879,
+        "bytes": 890,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -846,7 +846,7 @@
       "testeranto/bundles/web/allTests/src/lib/BaseSuite.test/web.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/allTests/chunk-46E6YGGN.mjs",
+            "path": "testeranto/bundles/web/allTests/chunk-C74YHORZ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -859,18 +859,18 @@
             "bytesInOutput": 2763
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 8582
+            "bytesInOutput": 8593
           },
           "src/lib/BaseSuite.test/web.test.ts": {
             "bytesInOutput": 101
           }
         },
-        "bytes": 11708
+        "bytes": 11719
       },
       "testeranto/bundles/web/allTests/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/allTests/chunk-46E6YGGN.mjs",
+            "path": "testeranto/bundles/web/allTests/chunk-C74YHORZ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -889,15 +889,15 @@
             "bytesInOutput": 3065
           },
           "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 642
+            "bytesInOutput": 653
           },
           "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
             "bytesInOutput": 129
           }
         },
-        "bytes": 5871
+        "bytes": 5882
       },
-      "testeranto/bundles/web/allTests/chunk-46E6YGGN.mjs": {
+      "testeranto/bundles/web/allTests/chunk-C74YHORZ.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -912,7 +912,7 @@
             "bytesInOutput": 3266
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2476
+            "bytesInOutput": 2484
           },
           "src/PM/index.ts": {
             "bytesInOutput": 20
@@ -924,7 +924,7 @@
             "bytesInOutput": 656
           },
           "src/lib/abstractBase.ts": {
-            "bytesInOutput": 3952
+            "bytesInOutput": 4174
           },
           "src/lib/basebuilder.ts": {
             "bytesInOutput": 2341
@@ -936,10 +936,10 @@
             "bytesInOutput": 1827
           },
           "src/Web.ts": {
-            "bytesInOutput": 1706
+            "bytesInOutput": 1808
           }
         },
-        "bytes": 21469
+        "bytes": 21801
       }
     }
   }

@@ -11,14 +11,14 @@ const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
 let errorCallback = (e) => { };
 let unhandledrejectionCallback = (event) => {
-    console.log("window.addEventListener unhandledrejection", event);
+    console.log("window.addEventListener unhandledrejection 1", JSON.stringify(event));
 };
 class WebTesteranto extends core_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, (cb) => {
             window.removeEventListener("error", errorCallback);
             errorCallback = (e) => {
-                console.log("window.addEventListener error", e);
+                console.log("window.addEventListener error 2", JSON.stringify(e));
                 cb(e);
                 // throw e;
             };
@@ -27,7 +27,7 @@ class WebTesteranto extends core_js_1.default {
             /////////////////////
             window.removeEventListener("unhandledrejection", unhandledrejectionCallback);
             unhandledrejectionCallback = (event) => {
-                console.log("window.addEventListener unhandledrejection", event);
+                console.log("window.addEventListener unhandledrejection 3", JSON.stringify(event));
                 cb({ error: event.reason.message });
                 // throw event;
             };

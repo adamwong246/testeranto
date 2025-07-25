@@ -19,7 +19,10 @@ import {
 
 let errorCallback = (e: any) => {};
 let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
-  console.log("window.addEventListener unhandledrejection", event);
+  console.log(
+    "window.addEventListener unhandledrejection 1",
+    JSON.stringify(event)
+  );
 };
 
 export class WebTesteranto<
@@ -44,7 +47,7 @@ export class WebTesteranto<
         window.removeEventListener("error", errorCallback);
 
         errorCallback = (e) => {
-          console.log("window.addEventListener error", e);
+          console.log("window.addEventListener error 2", JSON.stringify(e));
           cb(e);
           // throw e;
         };
@@ -63,7 +66,10 @@ export class WebTesteranto<
         );
 
         unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
-          console.log("window.addEventListener unhandledrejection", event);
+          console.log(
+            "window.addEventListener unhandledrejection 3",
+            JSON.stringify(event)
+          );
           cb({ error: event.reason.message });
           // throw event;
         };

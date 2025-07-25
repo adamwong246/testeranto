@@ -3,7 +3,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-IDCUSTSM.mjs";
+} from "../../../chunk-HPA2FZF3.mjs";
 
 // src/PM/pure.ts
 var PM_Pure = class extends PM {
@@ -153,21 +153,6 @@ var PureTesteranto = class extends TesterantoCore {
     );
     const t = JSON.parse(partialTestResource);
     const pm = new PM_Pure(t);
-    console.log("[DEBUG] Current test jobs:", this.testJobs?.length);
-    if (!this.testJobs || this.testJobs.length === 0) {
-      console.error(
-        "[ERROR] No test jobs available - checking specs:",
-        this.specs?.length
-      );
-      console.error("[ERROR] Test implementation:", this.testImplementation);
-      return {
-        failed: true,
-        fails: 1,
-        artifacts: [],
-        // logPromise: Promise.resolve(),
-        features: []
-      };
-    }
     try {
       console.log("[DEBUG] Executing test job with PM:", pm);
       const result = await this.testJobs[0].receiveTestResourceConfig(pm);
@@ -177,7 +162,7 @@ var PureTesteranto = class extends TesterantoCore {
       console.error("[ERROR] Test job failed:", e);
       return {
         failed: true,
-        fails: 1,
+        fails: -1,
         artifacts: [],
         // logPromise: Promise.resolve(),
         features: []

@@ -4,7 +4,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-4ULDTZFU.mjs";
+} from "../../../chunk-NZTCDFDL.mjs";
 
 // src/PM/web.ts
 var PM_Web = class extends PM {
@@ -139,7 +139,10 @@ var PM_Web = class extends PM {
 var errorCallback = (e) => {
 };
 var unhandledrejectionCallback = (event) => {
-  console.log("window.addEventListener unhandledrejection", event);
+  console.log(
+    "window.addEventListener unhandledrejection 1",
+    JSON.stringify(event)
+  );
 };
 var WebTesteranto = class extends TesterantoCore {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter2) {
@@ -152,7 +155,7 @@ var WebTesteranto = class extends TesterantoCore {
       (cb) => {
         window.removeEventListener("error", errorCallback);
         errorCallback = (e) => {
-          console.log("window.addEventListener error", e);
+          console.log("window.addEventListener error 2", JSON.stringify(e));
           cb(e);
         };
         window.addEventListener("error", errorCallback);
@@ -165,7 +168,10 @@ var WebTesteranto = class extends TesterantoCore {
           unhandledrejectionCallback
         );
         unhandledrejectionCallback = (event) => {
-          console.log("window.addEventListener unhandledrejection", event);
+          console.log(
+            "window.addEventListener unhandledrejection 3",
+            JSON.stringify(event)
+          );
           cb({ error: event.reason.message });
         };
         window.addEventListener(
@@ -381,7 +387,7 @@ var testAdapter = {
       initialValues
     });
     const result = initializer();
-    console.log("Initialization result:", result);
+    console.log("Initialization result:", result.toString());
     return result;
   },
   andWhen: async (store, whenCB, testResource, utils) => {

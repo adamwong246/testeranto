@@ -54,7 +54,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
       whens: this.whens.map((w) => {
         if (w && w.toObj) return w.toObj();
 
-        console.error("w is not as expected!", w);
+        console.error("w is not as expected!", w.toString());
         return {};
       }),
       thens: this.thens.map((t) => t.toObj()),
@@ -103,7 +103,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
       artifactory(`given-${key}/${fPath}`, value);
 
     this.uberCatcher((e) => {
-      console.error(e);
+      console.error(e.toString());
       this.error = e.error;
       tLog(e.stack);
     });
@@ -118,7 +118,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
         beforeEachProxy(pm, suiteNdx.toString())
       );
     } catch (e) {
-      console.error("failure 4 ", e);
+      console.error("Given failure: ", e.toString());
       this.error = e;
       throw e;
     }
@@ -163,7 +163,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
           afterEachProxy(pm, suiteNdx.toString(), key)
         );
       } catch (e) {
-        console.error("afterEach failed!", e);
+        console.error("afterEach failed!", e.toString());
         this.failed = e;
         throw e;
 
@@ -193,10 +193,17 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
 
   toObj() {
     console.log("toObj error", this.error);
-    return {
-      name: this.name,
-      error: this.error && this.error.name + this.error.stack,
-    };
+
+    if (this.error) {
+      return {
+        name: this.name,
+        error: this.error && this.error.name + this.error.stack,
+      };
+    } else {
+      return {
+        name: this.name,
+      };
+    }
   }
 
   async test(
@@ -208,7 +215,7 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   ) {
     try {
       tLog(" When:", this.name);
-      console.debug("[DEBUG] Executing When step:", this.name);
+      console.debug("[DEBUG] Executing When step:", this.name.toString());
 
       const result = await this.andWhen(
         store,
@@ -217,10 +224,14 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
         andWhenProxy(pm, filepath)
       );
 
-      console.debug("[DEBUG] When step completed:", this.name);
+      console.debug("[DEBUG] When step completed:", this.name.toString());
       return result;
     } catch (e: Error) {
-      console.error("[ERROR] When step failed:", this.name, e);
+      console.error(
+        "[ERROR] When step failed:",
+        this.name.toString(),
+        e.toString()
+      );
       this.error = e;
       throw e;
     }
@@ -267,7 +278,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
       store,
       async (s: I["iselection"]) => {
         if (typeof this.thenCB === "function") {
-          return await this.thenCB(s);
+          return await this.thenCB(s, butThenProxy(pm, filepath));
         } else {
           return this.thenCB;
         }

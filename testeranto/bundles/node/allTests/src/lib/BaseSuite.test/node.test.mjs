@@ -1,13 +1,13 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   MockSuite
-} from "../../../chunk-H2IBV7SY.mjs";
+} from "../../../chunk-WROL3IZX.mjs";
 import {
   Node_default
-} from "../../../chunk-ZHOULXPN.mjs";
+} from "../../../chunk-7OYZHEBK.mjs";
 import {
   BaseSuite
-} from "../../../chunk-IDCUSTSM.mjs";
+} from "../../../chunk-HPA2FZF3.mjs";
 
 // src/lib/BaseSuite.test/test.ts
 var specification = (Suite, Given, When, Then) => [
@@ -299,7 +299,7 @@ var testAdapter = {
       }
       return result;
     } catch (e) {
-      console.error("Then error:", e);
+      console.error("Then error:", e.toString());
       console.error("Full store state:", JSON.stringify(store, null, 2));
       throw e;
     }

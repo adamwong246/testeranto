@@ -10,7 +10,7 @@ exports.testAdapter = {
             initialValues,
         });
         const result = initializer();
-        console.log("Initialization result:", result);
+        console.log("Initialization result:", result.toString());
         return result;
     },
     andWhen: async (store, whenCB, testResource, utils) => {

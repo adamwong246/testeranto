@@ -1,37 +1,22 @@
 stderr > Starting inspector on 127.0.0.1:9229 failed: address already in use
 stdout > [DEBUG] BaseSuite constructor - name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite initialized: Basic ClassBuilder Functionality 0
-[DEBUG] BaseSuite givens: [
-  'initialization',
-  'customInput',
-  'resourceRequirements',
-  'specGeneration',
-  'jobCreation',
-  'artifactTracking',
-  'overridesConfiguration'
-]
+[DEBUG] BaseSuite givens: initialization,customInput,resourceRequirements,specGeneration,jobCreation,artifactTracking,overridesConfiguration
 [DEBUG] BaseSuite constructor - name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite initialized: Advanced ClassBuilder Functionality 1
-[DEBUG] BaseSuite givens: [
-  'customImplementation',
-  'customSpecification',
-  'modifySpecs',
-  'modifyJobs',
-  'errorHandling',
-  'testRun'
-]
-receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/944a4827-2bdb-429e-8302-6e91eb8d37b6"}
+[DEBUG] BaseSuite givens: customImplementation,customSpecification,modifySpecs,modifyJobs,errorHandling,testRun
+receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/allTests/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/76115b19-c336-482b-ba27-5b8cb9c5f964"}
 Running beforeEach with initializer: [Function: Default]
 Creating default test builder instance
 [DEBUG] Creating MockSuite with name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite constructor - name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite initialized: Basic ClassBuilder Functionality 0
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Basic ClassBuilder Functionality 0
 [DEBUG] Creating MockSuite with name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite constructor - name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite initialized: Advanced ClassBuilder Functionality 1
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Advanced ClassBuilder Functionality 1
 Builder created: TestClassBuilderMock {
   artifacts: [],
@@ -318,12 +303,12 @@ Creating default test builder instance
 [DEBUG] Creating MockSuite with name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite constructor - name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite initialized: Basic ClassBuilder Functionality 0
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Basic ClassBuilder Functionality 0
 [DEBUG] Creating MockSuite with name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite constructor - name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite initialized: Advanced ClassBuilder Functionality 1
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Advanced ClassBuilder Functionality 1
 Builder created: TestClassBuilderMock {
   artifacts: [],
@@ -412,12 +397,12 @@ Creating default test builder instance
 [DEBUG] Creating MockSuite with name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite constructor - name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite initialized: Basic ClassBuilder Functionality 0
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Basic ClassBuilder Functionality 0
 [DEBUG] Creating MockSuite with name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite constructor - name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite initialized: Advanced ClassBuilder Functionality 1
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Advanced ClassBuilder Functionality 1
 Builder created: TestClassBuilderMock {
   artifacts: [],
@@ -431,7 +416,7 @@ Builder created: TestClassBuilderMock {
     WithCustomInput: [Function (anonymous)],
     WithResourceRequirements: [Function (anonymous)],
     WithCustomImplementation: [Function (anonymous)],
-    WithCustomSpecifistdout > cation: [Function (anonymous)]
+    WithCustomSpecification: [Function (anonystdout > mous)]
   },
   whenOverides: {
     addArtifact: [Function (anonymous)],
@@ -506,12 +491,12 @@ Creating default test builder instance
 [DEBUG] Creating MockSuite with name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite constructor - name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite initialized: Basic ClassBuilder Functionality 0
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Basic ClassBuilder Functionality 0
 [DEBUG] Creating MockSuite with name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite constructor - name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite initialized: Advanced ClassBuilder Functionality 1
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Advanced ClassBuilder Functionality 1
 Builder created: TestClassBuilderMock {
   artifacts: [],
@@ -602,12 +587,12 @@ Creating default test builder instance
 [DEBUG] Creating MockSuite with name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite constructor - name: Basic ClassBuilder Functionality index: 0
 [DEBUG] BaseSuite initialized: Basic ClassBuilder Functionality 0
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Basic ClassBuilder Functionality 0
 [DEBUG] Creating MockSuite with name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite constructor - name: Advanced ClassBuilder Functionality index: 1
 [DEBUG] BaseSuite initialized: Advanced ClassBuilder Functionality 1
-[DEBUG] BaseSuite givens: [ 'testGiven' ]
+[DEBUG] BaseSuite givens: testGiven
 [DEBUG] MockSuite created: Advanced ClassBuilder Functionality 1
 Builder created: TestClassBuilderMock {
   artifacts: [],
@@ -641,8 +626,8 @@ Builder created: TestClassBuilderMock {
     whensOverridesConfigured: [Function (anonymous)],
     thensOverridesConfigured: [Function (anonymous)],
     specsModified: [Function (anonymous)],
-    jobsMstdout > odified: [Function (anonymous)],
-    errorThrown: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrownstdout > : [Function (anonymous)],
     testRunSuccessful: [Function (anonymous)]
   },
   testSpecification: [Function: specification],
@@ -692,22 +677,6 @@ Initializer returned: TestClassBuilderMock {
   summary: {}
 }
 toObj error undefined
-[DEBUG] Features extracted: [
-  'ClassBuilder should initialize with default values',
-  { custom: 'input' },
-  { ports: [ 3000, 3001 ] },
-  'Should generate specs from test specification',
-  'Should create test jobs from specs',
-  'Should track artifacts',
-  'Should properly configure all overrides'
-]
-[DEBUG] Features extracted: [
-  'ClassBuilder should initialize with default values',
-  { custom: 'input' },
-  { ports: [ 3000, 3001 ] },
-  'Should generate specs from test specification',
-  'Should create test jobs from specs',
-  'Should track artifacts',
-  'Should properly configure all overrides'
-]
+[DEBUG] Features extracted: ClassBuilder should initialize with default values,[object Object],[object Object],Should generate specs from test specification,Should create test jobs from specs,Should track artifacts,Should properly configure all overrides
+[DEBUG] Features extracted: ClassBuilder should initialize with default values,[object Object],[object Object],Should generate specs from test specification,Should create test jobs from specs,Should track artifacts,Should properly configure all overrides
 stderr > goodbye node with failures 0
