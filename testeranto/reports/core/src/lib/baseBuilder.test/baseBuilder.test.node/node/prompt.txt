@@ -1,0 +1,26 @@
+
+/add src/lib/index.ts
+/add src/lib/pmProxy.ts
+/add src/lib/abstractBase.ts
+/add src/lib/basebuilder.ts
+/add src/lib/classBuilder.ts
+/add src/lib/BaseSuite.ts
+/add src/lib/core.ts
+/add src/PM/node.ts
+/add src/PM/index.ts
+/add src/Node.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.specification.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.mock.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.adapter.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.node.ts
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node/tests.json
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node/logs.txt
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node/type_errors.txt
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node/lint_errors.txt

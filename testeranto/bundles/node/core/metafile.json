@@ -1,0 +1,486 @@
+{
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "src/lib/index.ts": {
+        "bytes": 3568,
+        "imports": [
+          {
+            "path": "../PM/pure.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/node.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/web.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../Types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseSuite.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/pmProxy.ts": {
+        "bytes": 4933,
+        "imports": [
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/abstractBase.ts": {
+        "bytes": 7520,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/basebuilder.ts": {
+        "bytes": 4916,
+        "imports": [
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/classBuilder.ts": {
+        "bytes": 3030,
+        "imports": [
+          {
+            "path": "type-fest",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "./basebuilder.js"
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./index.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.ts": {
+        "bytes": 3863,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./abstractBase",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy"
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/core.ts": {
+        "bytes": 3530,
+        "imports": [
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
+            "path": "src/lib/abstractBase.ts",
+            "kind": "import-statement",
+            "original": "./abstractBase.js"
+          },
+          {
+            "path": "src/lib/classBuilder.ts",
+            "kind": "import-statement",
+            "original": "./classBuilder.js"
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "./BaseSuite.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/PM/index.ts": {
+        "bytes": 1837,
+        "imports": [
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core/lib/esm/puppeteer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/PM/node.ts": {
+        "bytes": 6959,
+        "imports": [
+          {
+            "path": "net",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/PM/index.ts",
+            "kind": "import-statement",
+            "original": "."
+          }
+        ],
+        "format": "esm"
+      },
+      "src/Node.ts": {
+        "bytes": 2309,
+        "imports": [
+          {
+            "path": "src/lib/core.ts",
+            "kind": "import-statement",
+            "original": "./lib/core.js"
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./lib/index.js"
+          },
+          {
+            "path": "src/PM/node.ts",
+            "kind": "import-statement",
+            "original": "./PM/node.js"
+          },
+          {
+            "path": "./CoreTypes.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
+        "bytes": 985,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
+        "bytes": 1988,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "../basebuilder"
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
+        "bytes": 3998,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.mock.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.mock"
+          },
+          {
+            "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "../basebuilder"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+        "bytes": 890,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
+        "bytes": 519,
+        "imports": [
+          {
+            "path": "src/Node.ts",
+            "kind": "import-statement",
+            "original": "../../Node"
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.specification.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.specification"
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.implementation"
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.adapter"
+          },
+          {
+            "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.mock.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.mock"
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/node/core/src/lib/baseBuilder.test/baseBuilder.test.node.mjs": {
+        "imports": [
+          {
+            "path": "net",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
+        "inputs": {
+          "src/lib/index.ts": {
+            "bytesInOutput": 656
+          },
+          "src/lib/pmProxy.ts": {
+            "bytesInOutput": 3756
+          },
+          "src/lib/abstractBase.ts": {
+            "bytesInOutput": 4976
+          },
+          "src/lib/basebuilder.ts": {
+            "bytesInOutput": 2381
+          },
+          "src/lib/classBuilder.ts": {
+            "bytesInOutput": 1850
+          },
+          "src/lib/BaseSuite.ts": {
+            "bytesInOutput": 2484
+          },
+          "src/lib/core.ts": {
+            "bytesInOutput": 1829
+          },
+          "src/PM/node.ts": {
+            "bytesInOutput": 5231
+          },
+          "src/PM/index.ts": {
+            "bytesInOutput": 20
+          },
+          "src/Node.ts": {
+            "bytesInOutput": 1376
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
+            "bytesInOutput": 832
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
+            "bytesInOutput": 906
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
+            "bytesInOutput": 3283
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+            "bytesInOutput": 653
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
+            "bytesInOutput": 131
+          }
+        },
+        "bytes": 31044
+      }
+    }
+  }
+}

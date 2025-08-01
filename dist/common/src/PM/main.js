@@ -108,10 +108,12 @@ function isValidUrl(string) {
 }
 // Wait for file to exist, checks every 2 seconds by default
 async function pollForFile(path, timeout = 2000) {
+    console.log(`pollForFile: ${path}...`);
     const intervalObj = setInterval(function () {
         const file = path;
         const fileExists = fs_1.default.existsSync(file);
         if (fileExists) {
+            console.log(`metafile found: ${path}!`);
             clearInterval(intervalObj);
         }
     }, timeout);
@@ -320,7 +322,12 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             const ipcfile = "/tmp/tpipe_" + Math.random();
             const child = (0, node_child_process_1.spawn)("node", 
             // "node",
-            ["--inspect-brk", builtfile, testResources, ipcfile], {
+            [
+                // "--inspect-brk",
+                builtfile,
+                testResources,
+                ipcfile,
+            ], {
                 stdio: ["pipe", "pipe", "pipe", "ipc"],
             });
             let buffer = new Buffer("");
@@ -778,7 +785,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     return;
                 };
                 page.on("pageerror", (err) => {
-                    console.log(ansi_colors_2.default.red(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
+                    console.log(ansi_colors_2.default.red(`web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                     oStream.write(err.name);
                     oStream.write("\n");
                     if (err.cause) {
@@ -797,7 +804,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     close();
                 });
                 page.on("console", (log) => {
-                    console.log("console message: ", log.text());
+                    // console.log("console message: ", log.text());
                     if (oStream.closed) {
                         console.log("missed console message: ", log.text());
                         return;
@@ -812,25 +819,16 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     }
                 });
                 await page.goto(`file://${`${destFolder}.html`}`, {});
-                // this.webSidecars[Math.random()] = page.mainFrame()._id;
                 await page
                     .evaluate(evaluation)
                     .then(async ({ fails, failed, features }) => {
-                    // this.receiveFeatures(features, destFolder, src, "web");
-                    // this.receiveFeaturesV2(reportDest, src, "web");
                     statusMessagePretty(fails, src, "web");
                     this.bddTestIsNowDone(src, fails);
                     close();
                 })
                     .catch((e) => {
-                    // console.log(ansiC.red(ansiC.inverse(e)));
-                    // console.log(
-                    //   ansiC.red(
-                    //     ansiC.inverse(
-                    //       `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
-                    //     )
-                    //   )
-                    // );
+                    console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(e)));
+                    console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`)));
                     this.bddTestIsNowDone(src, -1);
                 })
                     .finally(() => {

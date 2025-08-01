@@ -1,6 +1,6 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 
-// src/ReportServer.ts
+// src/ReportServerLib.ts
 import staticServer from "node-static";
 import http from "http";
 import path from "path";
@@ -9,8 +9,8 @@ var fileServer = new staticServer.Server("./", {
   cache: false,
   headers: {
     "Cache-Control": "no-cache, no-store, must-revalidate",
-    "Pragma": "no-cache",
-    "Expires": "0"
+    Pragma: "no-cache",
+    Expires: "0"
   }
 });
 var server = http.createServer((req, res) => {
@@ -67,13 +67,15 @@ var server = http.createServer((req, res) => {
                     <body>
                       <h1>Directory: ${req.url}</h1>
                       <ul>
-                        ${files.map((file) => `
+                        ${files.map(
+                  (file) => `
                           <li>
                             <a href="${path.join(req.url || "", file)}">
                               ${file}${file.endsWith("/") ? "/" : ""}
                             </a>
                           </li>
-                        `).join("")}
+                        `
+                ).join("")}
                       </ul>
                     </body>
                   </html>
@@ -105,13 +107,17 @@ var server = http.createServer((req, res) => {
   });
   req.resume();
 });
-server.listen(8080, () => {
-  console.log("Server running on http://localhost:8080");
-  console.log("Serving files from:", process.cwd());
-});
 server.on("error", (err) => {
   console.error("Server error:", err);
 });
 process.on("uncaughtException", (err) => {
   console.error("Uncaught exception:", err);
 });
+var start = (port) => server.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+  console.log("Serving files from:", process.cwd());
+});
+var ReportServerOfPort = (port) => start(port);
+
+// src/ReportServer.ts
+ReportServerOfPort(process.argv[2]);

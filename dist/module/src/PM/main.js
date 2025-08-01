@@ -69,10 +69,12 @@ function isValidUrl(string) {
 }
 // Wait for file to exist, checks every 2 seconds by default
 async function pollForFile(path, timeout = 2000) {
+    console.log(`pollForFile: ${path}...`);
     const intervalObj = setInterval(function () {
         const file = path;
         const fileExists = fs.existsSync(file);
         if (fileExists) {
+            console.log(`metafile found: ${path}!`);
             clearInterval(intervalObj);
         }
     }, timeout);
@@ -281,7 +283,12 @@ export class PM_Main extends PM_WithEslintAndTsc {
             const ipcfile = "/tmp/tpipe_" + Math.random();
             const child = spawn("node", 
             // "node",
-            ["--inspect-brk", builtfile, testResources, ipcfile], {
+            [
+                // "--inspect-brk",
+                builtfile,
+                testResources,
+                ipcfile,
+            ], {
                 stdio: ["pipe", "pipe", "pipe", "ipc"],
             });
             let buffer = new Buffer("");
@@ -739,7 +746,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     return;
                 };
                 page.on("pageerror", (err) => {
-                    console.log(ansiColors.red(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
+                    console.log(ansiColors.red(`web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                     oStream.write(err.name);
                     oStream.write("\n");
                     if (err.cause) {
@@ -758,7 +765,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     close();
                 });
                 page.on("console", (log) => {
-                    console.log("console message: ", log.text());
+                    // console.log("console message: ", log.text());
                     if (oStream.closed) {
                         console.log("missed console message: ", log.text());
                         return;
@@ -773,25 +780,16 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     }
                 });
                 await page.goto(`file://${`${destFolder}.html`}`, {});
-                // this.webSidecars[Math.random()] = page.mainFrame()._id;
                 await page
                     .evaluate(evaluation)
                     .then(async ({ fails, failed, features }) => {
-                    // this.receiveFeatures(features, destFolder, src, "web");
-                    // this.receiveFeaturesV2(reportDest, src, "web");
                     statusMessagePretty(fails, src, "web");
                     this.bddTestIsNowDone(src, fails);
                     close();
                 })
                     .catch((e) => {
-                    // console.log(ansiC.red(ansiC.inverse(e)));
-                    // console.log(
-                    //   ansiC.red(
-                    //     ansiC.inverse(
-                    //       `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
-                    //     )
-                    //   )
-                    // );
+                    console.log(ansiC.red(ansiC.inverse(e)));
+                    console.log(ansiC.red(ansiC.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`)));
                     this.bddTestIsNowDone(src, -1);
                 })
                     .finally(() => {

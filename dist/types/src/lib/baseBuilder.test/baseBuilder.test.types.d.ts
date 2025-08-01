@@ -10,10 +10,13 @@ BaseBuilder<any, any, any, any, any, any>, // iselection
 export type O = Ibdd_out<{
     Default: [string];
 }, {
-    Default: [];
+    "the default BaseBuilder": [];
+    "a BaseBuilder with TestInput": [];
+    "a BaseBuilder with Test Resource Requirements": [];
 }, {}, // No whens in these tests
 {
-    initializedProperly: [];
-    specsGenerated: [];
-    jobsCreated: [];
+    "it is initialized": [];
+    "it generates TestSpecifications": [];
+    "it creates jobs": [];
+    "it tracks artifacts": [];
 }>;

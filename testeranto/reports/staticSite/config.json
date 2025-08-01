@@ -1,0 +1,24 @@
+{
+  "tests": [
+    [
+      "src/ReportServer.test.ts/index.ts",
+      "node",
+      {
+        "ports": 1
+      },
+      []
+    ]
+  ],
+  "clearScreen": false,
+  "debugger": false,
+  "externals": [],
+  "importPlugins": [],
+  "minify": false,
+  "nodePlugins": [],
+  "ports": [
+    "3334"
+  ],
+  "src": "",
+  "webPlugins": [],
+  "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/staticSite"
+}

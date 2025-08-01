@@ -167,6 +167,11 @@ export abstract class PM_Base {
     contents: string,
     testName: string
   ): Promise<boolean> {
+    console.log("writeFileSync");
+    console.log("filepath", filepath);
+    console.log("contents", contents);
+    console.log("testName", testName);
+
     return new Promise<boolean>(async (res) => {
       fs.mkdirSync(path.dirname(filepath), {
         recursive: true,

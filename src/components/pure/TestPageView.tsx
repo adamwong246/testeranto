@@ -125,7 +125,27 @@ export const TestPageView = ({
                   <div key={i} className="mb-4 card">
                     <div className="card-header bg-primary text-white">
                       <div className="d-flex justify-content-between align-items-center">
-                        <h4>Given: {given.name}</h4>
+                        <div>
+                          <h4>Given: {given.name}</h4>
+                          {given.features?.length > 0 && (
+                            <div className="mt-1">
+                              <small>Features:</small>
+                              <ul className="list-unstyled">
+                                {given.features.map((feature, fi) => (
+                                  <li key={fi}>
+                                    {feature.startsWith('http') ? (
+                                      <a href={feature} target="_blank" rel="noopener noreferrer" className="text-white">
+                                        {new URL(feature).hostname}
+                                      </a>
+                                    ) : (
+                                      <span className="text-white">{feature}</span>
+                                    )}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
                         {given.artifacts?.length > 0 && (
                           <div className="dropdown">
                             <button
@@ -158,8 +178,28 @@ export const TestPageView = ({
                         <div key={`w-${j}`} className={`p-3 mb-2 ${when.error ? 'bg-danger text-white' : 'bg-success text-white'}`}>
                           <div className="d-flex justify-content-between align-items-start">
                             <div>
-                              <strong>When:</strong> {when.name}
-                              {when.error && <pre className="mt-2">{when.error}</pre>}
+                              <div>
+                                <strong>When:</strong> {when.name}
+                                {when.features?.length > 0 && (
+                                  <div className="mt-2">
+                                    <small>Features:</small>
+                                    <ul className="list-unstyled">
+                                      {when.features.map((feature, fi) => (
+                                        <li key={fi}>
+                                          {feature.startsWith('http') ? (
+                                            <a href={feature} target="_blank" rel="noopener noreferrer">
+                                              {new URL(feature).hostname}
+                                            </a>
+                                          ) : (
+                                            feature
+                                          )}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                                {when.error && <pre className="mt-2">{when.error}</pre>}
+                              </div>
                             </div>
                             {when.artifacts?.length > 0 && (
                               <div className="ms-3">
@@ -187,8 +227,28 @@ export const TestPageView = ({
                         <div key={`t-${k}`} className={`p-3 mb-2 ${then.error ? 'bg-danger text-white' : 'bg-success text-white'}`}>
                           <div className="d-flex justify-content-between align-items-start">
                             <div>
-                              <strong>Then:</strong> {then.name}
-                              {then.error && <pre className="mt-2">{then.error}</pre>}
+                              <div>
+                                <strong>Then:</strong> {then.name}
+                                {then.features?.length > 0 && (
+                                  <div className="mt-2">
+                                    <small>Features:</small>
+                                    <ul className="list-unstyled">
+                                      {then.features.map((feature, fi) => (
+                                        <li key={fi}>
+                                          {feature.startsWith('http') ? (
+                                            <a href={feature} target="_blank" rel="noopener noreferrer">
+                                              {new URL(feature).hostname}
+                                            </a>
+                                          ) : (
+                                            feature
+                                          )}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                                {then.error && <pre className="mt-2">{then.error}</pre>}
+                              </div>
                             </div>
                             {then.artifacts?.length > 0 && (
                               <div className="ms-3">

@@ -44,12 +44,7 @@ export const butThenProxy: IProxy = (pm: IPM, filepath: string) => {
       "screencast",
       (opts, p) => {
         const path = `${filepath}/butThen/${opts.path}`;
-        console.log(`[Proxy] Captured artifact path for butThen:`, path);
-        if ((pm as any).currentStep?.addArtifact) {
-          (pm as any).currentStep.addArtifact(path);
-        } else {
-          console.warn('No currentStep or addArtifact method found');
-        }
+        (pm as any).currentStep?.artifacts?.push(path);
         return [
           {
             ...opts,
@@ -60,16 +55,14 @@ export const butThenProxy: IProxy = (pm: IPM, filepath: string) => {
       },
     ],
 
-    ["createWriteStream", (fp) => {
-      const path = `${filepath}/butThen/${fp}`;
-      console.log(`[Proxy] Captured artifact path for butThen:`, path);
-      if ((pm as any).currentStep?.addArtifact) {
-        (pm as any).currentStep.addArtifact(path);
-      } else {
-        console.warn('No currentStep or addArtifact method found');
-      }
-      return [path];
-    }],
+    [
+      "createWriteStream",
+      (fp) => {
+        const path = `${filepath}/butThen/${fp}`;
+        (pm as any).currentStep?.artifacts?.push(path);
+        return [path];
+      },
+    ],
 
     [
       "writeFileSync",
@@ -101,44 +94,28 @@ export const andWhenProxy: IProxy = (pm: IPM, filepath: string) =>
   baseProxy(pm, [
     [
       "screencast",
-      (opts, p) => {
-        const path = `${filepath}/andWhen/${opts.path}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [
-          {
-            ...opts,
-            path,
-          },
-          p,
-        ];
-      },
+      (opts, p) => [
+        {
+          ...opts,
+          path: `${filepath}/andWhen/${opts.path}`,
+        },
+        p,
+      ],
     ],
 
-    ["createWriteStream", (fp) => {
-      const path = `${filepath}/andWhen/${fp}`;
-      (pm as any).currentStep?.artifacts?.push(path);
-      return [path];
-    }],
+    ["createWriteStream", (fp) => [`${filepath}/andWhen/${fp}`]],
 
-    ["writeFileSync", (fp, contents) => {
-      const path = `${filepath}/andWhen/${fp}`;
-      (pm as any).currentStep?.artifacts?.push(path);
-      return [path, contents];
-    }],
+    ["writeFileSync", (fp, contents) => [`${filepath}/andWhen${fp}`, contents]],
 
     [
       "customScreenShot",
-      (opts, p) => {
-        const path = `${filepath}/andWhen/${opts.path}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [
-          {
-            ...opts,
-            path,
-          },
-          p,
-        ];
-      },
+      (opts, p) => [
+        {
+          ...opts,
+          path: `${filepath}/andWhen${opts.path}`,
+        },
+        p,
+      ],
     ],
   ]);
 
@@ -150,47 +127,33 @@ export const afterEachProxy: IProxyAfterEach = (
   baseProxy(pm, [
     [
       "screencast",
-      (opts, p) => {
-        const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [
-          {
-            ...opts,
-            path,
-          },
-          p,
-        ];
-      },
+      (opts, p) => [
+        {
+          ...opts,
+          path: `suite-${suite}/given-${given}/afterEach/${opts.path}`,
+        },
+        p,
+      ],
     ],
 
-    ["createWriteStream", (fp) => {
-      const path = `suite-${suite}/afterEach/${fp}`;
-      (pm as any).currentStep?.artifacts?.push(path);
-      return [path];
-    }],
-    
+    ["createWriteStream", (fp) => [`suite-${suite}/afterEach/${fp}`]],
     [
       "writeFileSync",
-      (fp, contents) => {
-        const path = `suite-${suite}/given-${given}/afterEach/${fp}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [path, contents];
-      },
+      (fp, contents) => [
+        `suite-${suite}/given-${given}/afterEach/${fp}`,
+        contents,
+      ],
     ],
 
     [
       "customScreenShot",
-      (opts, p) => {
-        const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [
-          {
-            ...opts,
-            path,
-          },
-          p,
-        ];
-      },
+      (opts, p) => [
+        {
+          ...opts,
+          path: `suite-${suite}/given-${given}/afterEach/${opts.path}`,
+        },
+        p,
+      ],
     ],
   ]);
 
@@ -201,112 +164,72 @@ export const beforeEachProxy: IProxyBeforeEach = (
   baseProxy(pm, [
     [
       "screencast",
-      (opts, p) => {
-        const path = `suite-${suite}/beforeEach/${opts.path}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [
-          {
-            ...opts,
-            path,
-          },
-          p,
-        ];
-      },
+      (opts, p) => [
+        {
+          ...opts,
+          path: `suite-${suite}/beforeEach/${opts.path}`,
+        },
+        p,
+      ],
     ],
 
     [
       "writeFileSync",
-      (fp, contents) => {
-        const path = `suite-${suite}/beforeEach/${fp}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [path, contents];
-      },
+      (fp, contents) => [`suite-${suite}/beforeEach/${fp}`, contents],
     ],
 
     [
       "customScreenShot",
-      (opts, p) => {
-        const path = `suite-${suite}/beforeEach/${opts.path}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [
-          {
-            ...opts,
-            path,
-          },
-          p,
-        ];
-      },
+      (opts, p) => [
+        {
+          ...opts,
+          path: `suite-${suite}/beforeEach/${opts.path}`,
+        },
+        p,
+      ],
     ],
 
-    ["createWriteStream", (fp) => {
-      const path = `suite-${suite}/beforeEach/${fp}`;
-      (pm as any).currentStep?.artifacts?.push(path);
-      return [path];
-    }],
+    ["createWriteStream", (fp) => [`suite-${suite}/beforeEach/${fp}`]],
   ]);
 
 export const beforeAllProxy: IProxy = (pm: IPM, suite: string): IPM =>
   baseProxy(pm, [
     [
       "writeFileSync",
-      (fp, contents) => {
-        const path = `suite-${suite}/beforeAll/${fp}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [path, contents];
-      },
+      (fp, contents) => [`suite-${suite}/beforeAll/${fp}`, contents],
     ],
 
     [
       "customScreenShot",
-      (opts, p) => {
-        const path = `suite-${suite}/beforeAll/${opts.path}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [
-          {
-            ...opts,
-            path,
-          },
-          p,
-        ];
-      },
+      (opts, p) => [
+        {
+          ...opts,
+          path: `suite-${suite}/beforeAll/${opts.path}`,
+        },
+        p,
+      ],
     ],
 
-    ["createWriteStream", (fp) => {
-      const path = `suite-${suite}/beforeAll/${fp}`;
-      (pm as any).currentStep?.artifacts?.push(path);
-      return [path];
-    }],
+    ["createWriteStream", (fp) => [`suite-${suite}/beforeAll/${fp}`]],
   ]);
 
 export const afterAllProxy: IProxy = (pm: IPM, suite: string): IPM =>
   baseProxy(pm, [
-    ["createWriteStream", (fp) => {
-      const path = `suite-${suite}/afterAll/${fp}`;
-      (pm as any).currentStep?.artifacts?.push(path);
-      return [path];
-    }],
+    ["createWriteStream", (fp) => [`suite-${suite}/afterAll/${fp}`]],
 
     [
       "writeFileSync",
-      (fp, contents) => {
-        const path = `suite-${suite}/afterAll/${fp}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [path, contents];
-      },
+      (fp, contents) => [`suite-${suite}/afterAll/${fp}`, contents],
     ],
 
     [
       "customScreenShot",
-      (opts, p) => {
-        const path = `suite-${suite}/afterAll/${opts.path}`;
-        (pm as any).currentStep?.artifacts?.push(path);
-        return [
-          {
-            ...opts,
-            path,
-          },
-          p,
-        ];
-      },
+      (opts, p) => [
+        {
+          ...opts,
+          path: `suite-${suite}/afterAll/${opts.path}`,
+        },
+        p,
+      ],
     ],
   ]);

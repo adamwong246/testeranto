@@ -17,13 +17,13 @@ import {
   defaultTestResourceRequirement,
 } from "./lib/index.js";
 
-let errorCallback = (e: any) => {};
-let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
-  console.log(
-    "window.addEventListener unhandledrejection 1",
-    JSON.stringify(event)
-  );
-};
+// let errorCallback = (e: any) => {};
+// let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
+//   console.log(
+//     "window.addEventListener unhandledrejection 1",
+//     JSON.stringify(event)
+//   );
+// };
 
 export class WebTesteranto<
   I extends Ibdd_in_any,
@@ -44,40 +44,34 @@ export class WebTesteranto<
       testResourceRequirement,
       testAdapter,
       (cb) => {
-        window.removeEventListener("error", errorCallback);
-
-        errorCallback = (e) => {
-          console.log("window.addEventListener error 2", JSON.stringify(e));
-          cb(e);
-          // throw e;
-        };
-
-        window.addEventListener("error", errorCallback);
-
-        window.removeEventListener(
-          "unhandledrejection",
-          unhandledrejectionCallback
-        );
-        /////////////////////
-
-        window.removeEventListener(
-          "unhandledrejection",
-          unhandledrejectionCallback
-        );
-
-        unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
-          console.log(
-            "window.addEventListener unhandledrejection 3",
-            JSON.stringify(event)
-          );
-          cb({ error: event.reason.message });
-          // throw event;
-        };
-
-        window.addEventListener(
-          "unhandledrejection",
-          unhandledrejectionCallback
-        );
+        // window.removeEventListener("error", errorCallback);
+        // errorCallback = (e) => {
+        //   console.log("window.addEventListener error 2", JSON.stringify(e));
+        //   cb(e);
+        //   // throw e;
+        // };
+        // window.addEventListener("error", errorCallback);
+        // window.removeEventListener(
+        //   "unhandledrejection",
+        //   unhandledrejectionCallback
+        // );
+        // /////////////////////
+        // window.removeEventListener(
+        //   "unhandledrejection",
+        //   unhandledrejectionCallback
+        // );
+        // unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
+        //   console.log(
+        //     "window.addEventListener unhandledrejection 3",
+        //     JSON.stringify(event)
+        //   );
+        //   cb({ error: event.reason.message });
+        //   // throw event;
+        // };
+        // window.addEventListener(
+        //   "unhandledrejection",
+        //   unhandledrejectionCallback
+        // );
       }
     );
   }

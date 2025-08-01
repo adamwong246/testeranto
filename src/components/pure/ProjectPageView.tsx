@@ -179,6 +179,20 @@ const BuildLogViewer = ({ logs, runtime }: { logs: any, runtime: string }) => {
   );
 };
 
+export type IProjectPageViewProps = {
+  summary,
+  nodeLogs,
+  webLogs,
+  pureLogs,
+  config,
+  loading,
+  error,
+  projectName,
+  route,
+  setRoute,
+  navigate
+};
+
 export const ProjectPageView = ({
   summary,
   nodeLogs,
@@ -191,7 +205,7 @@ export const ProjectPageView = ({
   route,
   setRoute,
   navigate
-}) => {
+}: IProjectPageViewProps) => {
   if (loading) return <div>Loading project data...</div>;
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
   if (!summary) return <Alert variant="warning">No data found for project</Alert>;

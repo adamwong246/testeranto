@@ -45,8 +45,14 @@ class BaseBuilder {
                     //   res(true);
                     // });
                     const fails = suiteDone.fails;
-                    await puppetMaster.writeFileSync(`bdd_errors.txt`, fails.toString());
-                    await puppetMaster.writeFileSync(`tests.json`, JSON.stringify(this.toObj(), null, 2));
+                    await puppetMaster.writeFileSync([
+                        `bdd_errors.txt`,
+                        fails.toString(),
+                    ]);
+                    await puppetMaster.writeFileSync([
+                        `tests.json`,
+                        JSON.stringify(this.toObj(), null, 2),
+                    ]);
                     return {
                         failed: fails > 0,
                         fails,

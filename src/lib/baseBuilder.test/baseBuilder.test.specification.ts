@@ -10,25 +10,25 @@ export const specification: ITestSpecification<I, O> = (
 ) => {
   return [
     Suite.Default("Testing BaseBuilder functionality", {
-      testInitialization: Given.Default(
+      testInitialization: Given["the default BaseBuilder"](
         ["BaseBuilder should initialize correctly"],
         [],
         [
-          Then.initializedProperly(),
-          Then.artifactsTracked(),
-          Then.jobsCreated(),
-          Then.specsGenerated(),
+          Then["it is initialized"](),
+          Then["it tracks artifacts"](),
+          // Then["it creates jobs"](),
+          // Then["it generates TestSpecifications"](),
         ]
       ),
-      testSpecsGeneration: Given.Default(
+      testSpecsGeneration: Given["the default BaseBuilder"](
         ["BaseBuilder should generate specs from test specification"],
         [],
-        [Then.specsGenerated()]
+        [Then["it generates TestSpecifications"]()]
       ),
-      testJobsCreation: Given.Default(
+      testJobsCreation: Given["the default BaseBuilder"](
         ["BaseBuilder should create test jobs"],
         [],
-        [Then.jobsCreated()]
+        [Then["it creates jobs"]()]
       ),
     }),
   ];

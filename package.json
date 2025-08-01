@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.170.0",
+  "version": "0.172.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -133,7 +133,8 @@
     "t-init": "tsx dist/prebuild/init-docs.mjs",
     "t-report": "tsx dist/prebuild/ReportServer.mjs",
     "build-docs": "node scripts/compile-docs.js",
-    "do_it": "clear && rm -rf testeranto/** && yarn build && yarn t-init && yarn t-build allTests once && yarn t-run allTests once && yarn build-docs && yarn type-check"
+    "do_it": "clear && rm -rf testeranto/** && yarn build && yarn t-init && yarn t-build allTests once && yarn t-run allTests once && yarn build-docs && yarn type-check",
+    "prepublish": "self-import"
   },
   "peerDependencies": {
     "@types/react": "18.2.0",
@@ -154,7 +155,7 @@
     "@swc/core": "^1.3.26",
     "@types/express": "^5.0.0",
     "@types/express-session": "^1.18.1",
-    "@types/node": "^22.7.5",
+    "@types/node": "^24.1.0",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
     "@types/react-test-renderer": "19.0.0",
@@ -163,6 +164,8 @@
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
     "marked": "^12.0.2",
+    "self-import": "*",
+    "testeranto-react": "0.0.5",
     "ts-node": "^10.9.1",
     "typescript": "^5.8.2"
   },
@@ -204,7 +207,6 @@
     "react-dom": "18.2.0",
     "react-router-dom": "^7.7.0",
     "sass": "^1.89.2",
-    "testeranto": "",
     "tsc-prog": "^2.3.0",
     "tsx": "^4.19.3",
     "type-fest": "^4.41.0",

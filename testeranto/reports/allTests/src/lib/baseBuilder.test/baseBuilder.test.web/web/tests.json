@@ -3,26 +3,18 @@
   "givens": [
     {
       "key": "testInitialization",
-      "name": "Default",
+      "name": "the default BaseBuilder",
       "whens": [],
       "thens": [
         {
-          "name": "initializedProperly: undefined",
+          "name": "it is initialized: undefined",
           "error": false,
-          "artifacts": []
+          "artifacts": [
+            "suite-0/given-testInitialization/then-0/butThen/hello.txt"
+          ]
         },
         {
-          "name": "artifactsTracked: undefined",
-          "error": false,
-          "artifacts": []
-        },
-        {
-          "name": "jobsCreated: undefined",
-          "error": false,
-          "artifacts": []
-        },
-        {
-          "name": "specsGenerated: undefined",
+          "name": "it tracks artifacts: undefined",
           "error": false,
           "artifacts": []
         }
@@ -35,11 +27,11 @@
     },
     {
       "key": "testSpecsGeneration",
-      "name": "Default",
+      "name": "the default BaseBuilder",
       "whens": [],
       "thens": [
         {
-          "name": "specsGenerated: undefined",
+          "name": "it generates TestSpecifications: undefined",
           "error": false,
           "artifacts": []
         }
@@ -52,11 +44,11 @@
     },
     {
       "key": "testJobsCreation",
-      "name": "Default",
+      "name": "the default BaseBuilder",
       "whens": [],
       "thens": [
         {
-          "name": "jobsCreated: undefined",
+          "name": "it creates jobs: undefined",
           "error": false,
           "artifacts": []
         }

@@ -1,5 +1,13 @@
 
+/add src/PM/index.ts
 /add src/PM/web.ts
+/add src/lib/index.ts
+/add src/lib/pmProxy.ts
+/add src/lib/abstractBase.ts
+/add src/lib/basebuilder.ts
+/add src/lib/classBuilder.ts
+/add src/lib/BaseSuite.ts
+/add src/lib/core.ts
 /add src/Web.ts
 /add src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 /add src/lib/baseBuilder.test/baseBuilder.test.mock.ts

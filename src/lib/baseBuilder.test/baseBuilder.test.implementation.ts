@@ -4,7 +4,7 @@ import { ITestImplementation } from "../../CoreTypes";
 import { MockBaseBuilder } from "./baseBuilder.test.mock";
 
 import { I, O } from "./baseBuilder.test.types";
-import { ITTestResourceRequest } from "..";
+import { ITestJob, ITTestResourceRequest } from "..";
 import { BaseBuilder } from "../basebuilder";
 
 // Define our test subject type
@@ -16,7 +16,7 @@ export const implementation: ITestImplementation<I, O, {}> = {
   },
 
   givens: {
-    Default: () => {
+    "the default BaseBuilder": () => {
       return new MockBaseBuilder(
         {}, // input
         {}, // suitesOverrides
@@ -27,11 +27,21 @@ export const implementation: ITestImplementation<I, O, {}> = {
         () => [] // testSpecification
       );
     },
-    WithCustomInput: (input: any) => {
-      return new MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] });
+    "a BaseBuilder with TestInput": (input: any) => {
+      return new MockBaseBuilder(
+        input,
+        {},
+        {},
+        {},
+        {},
+        { ports: [] },
+        () => []
+      );
     },
-    WithResourceRequirements: (requirements: ITTestResourceRequest) => {
-      return new MockBaseBuilder({}, {}, {}, {}, {}, {}, requirements);
+    "a BaseBuilder with Test Resource Requirements": (
+      requirements: ITTestResourceRequest
+    ) => {
+      return new MockBaseBuilder({}, {}, {}, {}, {}, requirements, () => []);
     },
   },
 
@@ -47,7 +57,9 @@ export const implementation: ITestImplementation<I, O, {}> = {
   },
 
   thens: {
-    initializedProperly: () => (builder: TestSubject) => {
+    "it is initialized": () => (builder, utils) => {
+      utils.writeFileSync("hello.txt", "world");
+
       if (!(builder instanceof BaseBuilder)) {
         console.error("Builder instance:", builder);
         throw new Error(
@@ -72,19 +84,19 @@ export const implementation: ITestImplementation<I, O, {}> = {
 
       return builder;
     },
-    specsGenerated: () => (builder: TestSubject) => {
+    "it generates TestSpecifications": () => (builder: TestSubject) => {
       if (!Array.isArray(builder.specs)) {
         throw new Error("Specs were not generated");
       }
       return builder;
     },
-    jobsCreated: () => (builder: TestSubject) => {
+    "it creates jobs": () => (builder: TestSubject) => {
       if (!Array.isArray(builder.testJobs)) {
         throw new Error("Test jobs were not created");
       }
       return builder;
     },
-    artifactsTracked: () => (builder: TestSubject) => {
+    "it tracks artifacts": () => (builder: TestSubject) => {
       if (!Array.isArray(builder.artifacts)) {
         throw new Error("Artifacts array not initialized");
       }

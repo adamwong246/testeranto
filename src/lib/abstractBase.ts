@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import type { Ibdd_in_any } from "../CoreTypes";
+
 import { ITestArtifactory, ITLog, ITTestResourceConfiguration } from ".";
 import { IPM } from "./types.js";
 import {
@@ -9,7 +11,6 @@ import {
   beforeEachProxy,
   butThenProxy,
 } from "./pmProxy.js";
-import type { Ibdd_in_any } from "../CoreTypes";
 
 export type IGivens<I extends Ibdd_in_any> = Record<string, BaseGiven<I>>;
 
@@ -29,6 +30,8 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
   artifacts: string[] = [];
   protected addArtifact(path: string) {
     console.log(`[Artifact] Adding to ${this.constructor.name}:`, path);
+    // console.log("mark111");
+    // process.exit();
     this.artifacts.push(path);
   }
 

@@ -119,6 +119,10 @@ class PM_Base {
         return false;
     }
     async writeFileSync(filepath, contents, testName) {
+        console.log("writeFileSync");
+        console.log("filepath", filepath);
+        console.log("contents", contents);
+        console.log("testName", testName);
         return new Promise(async (res) => {
             fs_1.default.mkdirSync(path_1.default.dirname(filepath), {
                 recursive: true,

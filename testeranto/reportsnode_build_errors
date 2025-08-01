@@ -1,0 +1,17 @@
+{
+  "errors": [
+    {
+      "id": "",
+      "location": null,
+      "notes": [
+        {
+          "location": null,
+          "text": "Use the relative path \"./src/ReportServer.test.ts\" to reference the file \"src/ReportServer.test.ts/index.ts\". Without the leading \"./\", the path \"src/ReportServer.test.ts\" is being interpreted as a package path instead."
+        }
+      ],
+      "pluginName": "",
+      "text": "Could not resolve \"src/ReportServer.test.ts\""
+    }
+  ],
+  "warnings": []
+}

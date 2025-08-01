@@ -1,0 +1,2 @@
+src/lib/abstractBase.ts
+180:9 Unsafe usage of ThrowStatement. (no-unsafe-finally)

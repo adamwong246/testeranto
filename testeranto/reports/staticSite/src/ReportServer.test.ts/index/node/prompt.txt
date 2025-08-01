@@ -1,0 +1,23 @@
+
+/add src/lib/index.ts
+/add src/lib/pmProxy.ts
+/add src/lib/abstractBase.ts
+/add src/lib/basebuilder.ts
+/add src/lib/classBuilder.ts
+/add src/lib/BaseSuite.ts
+/add src/lib/core.ts
+/add src/PM/node.ts
+/add src/PM/index.ts
+/add src/Node.ts
+/add src/ReportServerLib.ts
+/add src/ReportServer.test.ts/index.ts
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/staticSite/src/ReportServer.test.ts/index/node/tests.json
+/read testeranto/reports/staticSite/src/ReportServer.test.ts/index/node/logs.txt
+/read testeranto/reports/staticSite/src/ReportServer.test.ts/index/node/type_errors.txt
+/read testeranto/reports/staticSite/src/ReportServer.test.ts/index/node/lint_errors.txt

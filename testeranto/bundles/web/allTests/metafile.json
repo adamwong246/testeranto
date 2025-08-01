@@ -135,7 +135,7 @@
         "format": "esm"
       },
       "src/PM/web.ts": {
-        "bytes": 4168,
+        "bytes": 4178,
         "imports": [
           {
             "path": "stream",
@@ -237,7 +237,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 7280,
+        "bytes": 4933,
         "imports": [
           {
             "path": "./types",
@@ -263,7 +263,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 7465,
+        "bytes": 7520,
         "imports": [
           {
             "path": ".",
@@ -299,7 +299,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 4874,
+        "bytes": 4916,
         "imports": [
           {
             "path": "stream",
@@ -478,7 +478,7 @@
         "format": "esm"
       },
       "src/Web.ts": {
-        "bytes": 2859,
+        "bytes": 2958,
         "imports": [
           {
             "path": "./CoreTypes",
@@ -518,131 +518,8 @@
         ],
         "format": "esm"
       },
-      "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 3599,
-        "imports": [
-          {
-            "path": "src/lib/abstractBase.ts",
-            "kind": "import-statement",
-            "original": "../abstractBase"
-          },
-          {
-            "path": "src/lib/BaseSuite.ts",
-            "kind": "import-statement",
-            "original": "../BaseSuite"
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./test",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12580,
-        "imports": [
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../BaseSuite",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/BaseSuite.test/mock.ts",
-            "kind": "import-statement",
-            "original": "./mock"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/BaseSuite.test/web.test.ts": {
-        "bytes": 319,
-        "imports": [
-          {
-            "path": "src/Web.ts",
-            "kind": "import-statement",
-            "original": "../../Web"
-          },
-          {
-            "path": "src/lib/BaseSuite.ts",
-            "kind": "import-statement",
-            "original": "../BaseSuite"
-          },
-          {
-            "path": "src/lib/BaseSuite.test/test.ts",
-            "kind": "import-statement",
-            "original": "./test"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-        "bytes": 861,
+        "bytes": 985,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -714,7 +591,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 3770,
+        "bytes": 3998,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -843,50 +720,51 @@
       }
     },
     "outputs": {
-      "testeranto/bundles/web/allTests/src/lib/BaseSuite.test/web.test.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/allTests/chunk-AYO6U7BG.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/BaseSuite.test/web.test.ts",
-        "inputs": {
-          "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 2763
-          },
-          "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 8593
-          },
-          "src/lib/BaseSuite.test/web.test.ts": {
-            "bytesInOutput": 101
-          }
-        },
-        "bytes": 11719
-      },
       "testeranto/bundles/web/allTests/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/allTests/chunk-AYO6U7BG.mjs",
-            "kind": "import-statement"
-          }
-        ],
+        "imports": [],
         "exports": [
           "default"
         ],
         "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
         "inputs": {
+          "src/PM/index.ts": {
+            "bytesInOutput": 20
+          },
+          "src/PM/web.ts": {
+            "bytesInOutput": 2959
+          },
+          "src/lib/index.ts": {
+            "bytesInOutput": 656
+          },
+          "src/lib/pmProxy.ts": {
+            "bytesInOutput": 3762
+          },
+          "src/lib/abstractBase.ts": {
+            "bytesInOutput": 4973
+          },
+          "src/lib/basebuilder.ts": {
+            "bytesInOutput": 2381
+          },
+          "src/lib/classBuilder.ts": {
+            "bytesInOutput": 1850
+          },
+          "src/lib/BaseSuite.ts": {
+            "bytesInOutput": 2484
+          },
+          "src/lib/core.ts": {
+            "bytesInOutput": 1829
+          },
+          "src/Web.ts": {
+            "bytesInOutput": 795
+          },
           "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-            "bytesInOutput": 708
+            "bytesInOutput": 832
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
             "bytesInOutput": 906
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3065
+            "bytesInOutput": 3283
           },
           "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
             "bytesInOutput": 653
@@ -895,51 +773,7 @@
             "bytesInOutput": 129
           }
         },
-        "bytes": 5882
-      },
-      "testeranto/bundles/web/allTests/chunk-AYO6U7BG.mjs": {
-        "imports": [],
-        "exports": [
-          "BaseBuilder",
-          "BaseGiven",
-          "BaseSuite",
-          "BaseThen",
-          "BaseWhen",
-          "Web_default"
-        ],
-        "inputs": {
-          "src/lib/pmProxy.ts": {
-            "bytesInOutput": 5788
-          },
-          "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2484
-          },
-          "src/PM/index.ts": {
-            "bytesInOutput": 20
-          },
-          "src/PM/web.ts": {
-            "bytesInOutput": 3059
-          },
-          "src/lib/index.ts": {
-            "bytesInOutput": 656
-          },
-          "src/lib/abstractBase.ts": {
-            "bytesInOutput": 4973
-          },
-          "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2341
-          },
-          "src/lib/classBuilder.ts": {
-            "bytesInOutput": 1850
-          },
-          "src/lib/core.ts": {
-            "bytesInOutput": 1827
-          },
-          "src/Web.ts": {
-            "bytesInOutput": 1808
-          }
-        },
-        "bytes": 25122
+        "bytes": 28081
       }
     }
   }

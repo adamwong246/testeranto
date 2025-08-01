@@ -1,0 +1,23 @@
+{
+  "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
+    "typeErrors": 33,
+    "staticErrors": 1,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/baseBuilder.test/baseBuilder.test.node/prompt.txt",
+    "failingFeatures": {}
+  },
+  "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
+    "typeErrors": 33,
+    "staticErrors": 1,
+    "runTimeErrors": -1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/lib/baseBuilder.test/baseBuilder.test.pure/prompt.txt",
+    "failingFeatures": {}
+  },
+  "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
+    "typeErrors": 33,
+    "staticErrors": 1,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/baseBuilder.test/baseBuilder.test.web/prompt.txt",
+    "failingFeatures": {}
+  }
+}

@@ -34,6 +34,8 @@
 
 ## Quick Start
 
+0. Install Aider and signup for a LLM service.
+
 1. Install testeranto:
 
 ```bash
@@ -92,7 +94,6 @@ yarn t-build rectangle.test.ts yourProject once && yarn t-run rectangle.test.ts 
 | `yarn t-build <YOUR_TESTS> dev\|once` | Build test bundles (watch or single-run mode) |
 | `yarn t-run <YOUR_TESTS> dev\|once`   | Run tests (watch or single-run mode)          |
 | `yarn t-report`                       | Launch test report server                     |
-| `yarn t-aider`                        | Fix failing tests with AI                     |
 
 ## Example workflow:
 
@@ -111,9 +112,6 @@ yarn t-run test/rectangle.test.ts dev
 # Or for single-run mode:
 yarn t-build test/rectangle.test.ts once
 yarn t-run test/rectangle.test.ts once
-
-# Get AI help with failures
-yarn t-aider
 ```
 
 ## Aider

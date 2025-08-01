@@ -1,51 +1,77 @@
 $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
+node_modules/testeranto-react/src/mocks/mockReactComponent.tsx(58,9): error TS2554: Expected 3 arguments, but got 2.
+node_modules/testeranto-react/src/react-dom/component/dynamic.ts(6,19): error TS2305: Module '"testeranto/src/CoreTypes"' has no exported member 'ITestAdapter'.
+node_modules/testeranto-react/src/react-dom/component/dynamic.ts(50,45): error TS2339: Property 'subject' does not exist on type 'Readonly<{}>'.
+node_modules/testeranto-react/src/react-dom/component/web.ts(5,3): error TS2305: Module '"testeranto/src/CoreTypes"' has no exported member 'ITestAdapter'.
+node_modules/testeranto-react/src/react/component/index.ts(3,44): error TS2307: Cannot find module '../../../Types' or its corresponding type declarations.
+node_modules/testeranto/src/lib/basebuilder.ts(85,15): error TS2349: This expression is not callable.
+  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+    Type 'void' has no call signatures.
+node_modules/testeranto/src/lib/classBuilder.ts(90,18): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+node_modules/testeranto/src/lib/classBuilder.ts(105,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+node_modules/testeranto/src/lib/index.ts(22,3): error TS2322: Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+  Types of parameters 'initialValues' and 'initializer' are incompatible.
+    Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
+      'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
+node_modules/testeranto/src/lib/index.ts(24,20): error TS2536: Type '"iinitialValues"' cannot be used to index type 'T'.
+node_modules/testeranto/src/lib/index.ts(46,13): error TS2349: This expression is not callable.
+  Type 'unknown' has no call signatures.
+node_modules/testeranto/src/lib/index.ts(58,3): error TS2322: Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestInterface<T>'.
+  Types of property 'assertThis' are incompatible.
+    Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
+      Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+node_modules/testeranto/src/PM/web.ts(56,12): error TS2304: Cannot find name 'opts'.
+node_modules/testeranto/src/PM/web.ts(57,57): error TS2304: Cannot find name 'opts'.
+node_modules/testeranto/src/PM/web.ts(59,7): error TS2663: Cannot find name 'page'. Did you mean the instance member 'this.page'?
+node_modules/testeranto/src/Web.ts(40,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; checks: TestCheckImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; checks: Record<string, any>; }': suites, givens, whens, thens, checks
+node_modules/testeranto/src/Web.ts(48,14): error TS2554: Expected 0 arguments, but got 1.
+node_modules/testeranto/src/Web.ts(67,14): error TS2554: Expected 0 arguments, but got 1.
 src/App.tsx(45,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
 src/App.tsx(55,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
 src/App.tsx(57,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
-src/components/pure/ProjectPageView.tsx(35,14): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(36,16): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(53,17): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(54,16): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(57,20): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(59,24): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(64,25): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(66,21): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(70,20): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(72,24): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(80,25): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(82,21): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(84,17): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(85,15): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(89,16): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(90,18): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(95,19): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(96,18): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(97,20): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(99,24): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(121,25): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(123,21): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(124,19): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(125,17): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(132,16): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(133,18): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(138,19): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(139,18): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(140,20): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(142,24): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(164,25): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(166,21): error TS2304: Cannot find name 'ListGroup'.
-src/components/pure/ProjectPageView.tsx(167,19): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(168,17): error TS2304: Cannot find name 'Card'.
-src/components/pure/ProjectPageView.tsx(203,19): error TS18046: 'testData' is of type 'unknown'.
-src/components/pure/ProjectPageView.tsx(204,29): error TS18046: 'testData' is of type 'unknown'.
-src/components/pure/ProjectPageView.tsx(205,26): error TS18046: 'testData' is of type 'unknown'.
-src/components/pure/ProjectPageView.tsx(206,28): error TS18046: 'testData' is of type 'unknown'.
-src/components/pure/ProjectPageView.tsx(284,24): error TS2739: Type '{ testName: string; testsExist: boolean; runTimeErrors: number; }' is missing the following properties from type 'TestStatusBadgeProps': typeErrors, staticErrors
+src/components/pure/ProjectPageView.test/adapter.ts(6,3): error TS2719: Type '(subject: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps, initializer: (c?: any) => (...args: any[]) => import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps, testResource: import("/Users/adam/Code/testeranto/src/lib/index").I...' is not assignable to type '(subject: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps, initializer: (c?: any) => (...args: any[]) => import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps, testResource: import("/Users/adam/Code/testeranto/src/lib/index").I...'. Two different types with this name exist, but they are unrelated.
+  Type 'Promise<(...args: any[]) => IProjectPageViewProps>' is not assignable to type 'Promise<IProjectPageViewProps & { container?: HTMLElement | undefined; }>'.
+    Type '(...args: any[]) => IProjectPageViewProps' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+      Type '(...args: any[]) => IProjectPageViewProps' is not assignable to type 'IProjectPageViewProps'.
+src/components/pure/ProjectPageView.test/adapter.ts(9,3): error TS2719: Type '(store: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps & { container?: HTMLElement | undefined; }, whenCB: () => (props: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps, utils: any) => import("/Users/adam/Code/testeranto...' is not assignable to type '(store: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps & { container?: HTMLElement | undefined; }, whenCB: () => (props: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps, utils: any) => import("/Users/adam/Code/testeranto...'. Two different types with this name exist, but they are unrelated.
+  Type 'Promise<(props: IProjectPageViewProps, utils: any) => IProjectPageViewProps & { container?: HTMLElement | undefined; }>' is not assignable to type 'Promise<IProjectPageViewProps & { container?: HTMLElement | undefined; }>'.
+    Type '(props: IProjectPageViewProps, utils: any) => IProjectPageViewProps & { container?: HTMLElement | undefined; }' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+      Type '(props: IProjectPageViewProps, utils: any) => IProjectPageViewProps & { container?: HTMLElement | undefined; }' is not assignable to type 'IProjectPageViewProps'.
+src/components/pure/ProjectPageView.test/adapter.ts(10,19): error TS2554: Expected 0 arguments, but got 2.
+src/components/pure/ProjectPageView.test/adapter.ts(12,3): error TS2719: Type '(store: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps & { container?: HTMLElement | undefined; }, thenCB: () => (state: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps & { ...; }) => import("/Users/adam/Code/testeranto/...' is not assignable to type '(store: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps & { container?: HTMLElement | undefined; }, thenCB: () => (state: import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView").IProjectPageViewProps & { ...; }) => import("/Users/adam/Code/testeranto/...'. Two different types with this name exist, but they are unrelated.
+  Type 'Promise<(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }>' is not assignable to type 'Promise<IProjectPageViewProps & { container?: HTMLElement | undefined; }>'.
+    Type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+      Type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }' is not assignable to type 'IProjectPageViewProps'.
+src/components/pure/ProjectPageView.test/adapter.ts(13,19): error TS2554: Expected 0 arguments, but got 2.
+src/components/pure/ProjectPageView.test/implementation.tsx(49,11): error TS2769: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'Element' is not assignable to parameter of type 'ReactElement<unknown, string | JSXElementConstructor<any>>[]'.
+      Type 'ReactElement<any, any>' is missing the following properties from type 'ReactElement<unknown, string | JSXElementConstructor<any>>[]': length, pop, push, concat, and 35 more.
+src/components/pure/ProjectPageView.test/implementation.tsx(49,12): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
+src/components/pure/ProjectPageView.test/implementation.tsx(69,9): error TS2322: Type '({ container }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => { container: HTMLElement | undefined; }' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type '{ container: HTMLElement | undefined; }' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type '{ container: HTMLElement | undefined; }' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+src/components/pure/ProjectPageView.test/implementation.tsx(71,34): error TS18048: 'container' is possibly 'undefined'.
+src/components/pure/ProjectPageView.test/implementation.tsx(73,73): error TS18048: 'container' is possibly 'undefined'.
+src/components/pure/ProjectPageView.test/implementation.tsx(80,9): error TS2322: Type '({ container }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => { container: HTMLElement | undefined; }' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type '{ container: HTMLElement | undefined; }' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type '{ container: HTMLElement | undefined; }' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+src/components/pure/ProjectPageView.test/implementation.tsx(81,18): error TS18048: 'container' is possibly 'undefined'.
+src/components/pure/ProjectPageView.test/index.ts(8,27): error TS2344: Type 'I' does not satisfy the constraint 'Ibdd_out'.
+  Type 'I' is missing the following properties from type 'Ibdd_out': suites, givens, whens, thens, checks
+src/components/pure/ProjectPageView.tsx(217,19): error TS18046: 'testData' is of type 'unknown'.
+src/components/pure/ProjectPageView.tsx(218,29): error TS18046: 'testData' is of type 'unknown'.
+src/components/pure/ProjectPageView.tsx(219,26): error TS18046: 'testData' is of type 'unknown'.
+src/components/pure/ProjectPageView.tsx(220,28): error TS18046: 'testData' is of type 'unknown'.
+src/components/pure/ProjectPageView.tsx(298,24): error TS2739: Type '{ testName: string; testsExist: boolean; runTimeErrors: number; }' is missing the following properties from type 'TestStatusBadgeProps': typeErrors, staticErrors
 src/components/pure/ProjectsPageView.tsx(27,34): error TS2322: Type 'null' is not assignable to type 'string | undefined'.
-src/components/pure/TestPageView.tsx(43,16): error TS2739: Type '{ testName: any; testsExist: any; runTimeErrors: any; variant: "compact"; }' is missing the following properties from type 'TestStatusBadgeProps': typeErrors, staticErrors
+src/components/pure/TestPageView.tsx(40,16): error TS2739: Type '{ testName: any; testsExist: any; runTimeErrors: any; variant: "compact"; }' is missing the following properties from type 'TestStatusBadgeProps': typeErrors, staticErrors
 src/components/stateful/TestPage.tsx(52,17): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string>'.
   Type 'undefined' is not assignable to type 'SetStateAction<string>'.
 src/components/stateful/TestPage.tsx(77,18): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
+src/components/stateful/TestPage.tsx(100,7): error TS2322: Type '{ route: string; setRoute: Dispatch<SetStateAction<string>>; navigate: NavigateFunction; projectName: string | undefined; testName: string; ... 10 more ...; summary: null; }' is not assignable to type 'IntrinsicAttributes & { route: any; setRoute: any; navigate: any; projectName: any; testName: any; decodedTestPath: any; runtime: any; testData: any; logs: any; typeErrors: any; lintErrors: any; testsExist: any; errorCounts: any; }'.
+  Property 'loading' does not exist on type 'IntrinsicAttributes & { route: any; setRoute: any; navigate: any; projectName: any; testName: any; decodedTestPath: any; runtime: any; testData: any; logs: any; typeErrors: any; lintErrors: any; testsExist: any; errorCounts: any; }'.
 src/lib/abstractBase.test/adapter.ts(5,47): error TS2322: Type 'Promise<() => { testStore: { value: string; }; }>' is not assignable to type 'Promise<{ testStore: { value: string; }; error?: Error | undefined; }>'.
   Type '() => { testStore: { value: string; }; }' is not assignable to type '{ testStore: { value: string; }; error?: Error | undefined; }'.
 src/lib/abstractBase.test/adapter.ts(8,25): error TS2739: Type '{ testStore: { value: string; }; error?: Error | undefined; }' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]

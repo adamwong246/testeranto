@@ -5,7 +5,7 @@ export const implementation = {
         Default: "BaseBuilder test suite",
     },
     givens: {
-        Default: () => {
+        "the default BaseBuilder": () => {
             return new MockBaseBuilder({}, // input
             {}, // suitesOverrides
             {}, // givenOverrides
@@ -15,11 +15,11 @@ export const implementation = {
             () => [] // testSpecification
             );
         },
-        WithCustomInput: (input) => {
-            return new MockBaseBuilder(input, {}, {}, {}, {}, {}, { ports: [] });
+        "a BaseBuilder with TestInput": (input) => {
+            return new MockBaseBuilder(input, {}, {}, {}, {}, { ports: [] }, () => []);
         },
-        WithResourceRequirements: (requirements) => {
-            return new MockBaseBuilder({}, {}, {}, {}, {}, {}, requirements);
+        "a BaseBuilder with Test Resource Requirements": (requirements) => {
+            return new MockBaseBuilder({}, {}, {}, {}, {}, requirements, () => []);
         },
     },
     whens: {
@@ -33,8 +33,9 @@ export const implementation = {
         },
     },
     thens: {
-        initializedProperly: () => (builder) => {
+        "it is initialized": () => (builder, utils) => {
             var _a;
+            utils.writeFileSync("hello.txt", "world");
             if (!(builder instanceof BaseBuilder)) {
                 console.error("Builder instance:", builder);
                 throw new Error(`Builder was not properly initialized - expected BaseBuilder instance but got ${(_a = builder === null || builder === void 0 ? void 0 : builder.constructor) === null || _a === void 0 ? void 0 : _a.name}`);
@@ -55,19 +56,19 @@ export const implementation = {
             });
             return builder;
         },
-        specsGenerated: () => (builder) => {
+        "it generates TestSpecifications": () => (builder) => {
             if (!Array.isArray(builder.specs)) {
                 throw new Error("Specs were not generated");
             }
             return builder;
         },
-        jobsCreated: () => (builder) => {
+        "it creates jobs": () => (builder) => {
             if (!Array.isArray(builder.testJobs)) {
                 throw new Error("Test jobs were not created");
             }
             return builder;
         },
-        artifactsTracked: () => (builder) => {
+        "it tracks artifacts": () => (builder) => {
             if (!Array.isArray(builder.artifacts)) {
                 throw new Error("Artifacts array not initialized");
             }

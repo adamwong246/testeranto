@@ -246,6 +246,10 @@ var PM_Base = class {
     return false;
   }
   async writeFileSync(filepath, contents, testName) {
+    console.log("writeFileSync");
+    console.log("filepath", filepath);
+    console.log("contents", contents);
+    console.log("testName", testName);
     return new Promise(async (res) => {
       fs.mkdirSync(path2.dirname(filepath), {
         recursive: true
@@ -701,10 +705,12 @@ function isValidUrl(string) {
   }
 }
 async function pollForFile(path5, timeout = 2e3) {
+  console.log(`pollForFile: ${path5}...`);
   const intervalObj = setInterval(function() {
     const file = path5;
     const fileExists = fs3.existsSync(file);
     if (fileExists) {
+      console.log(`metafile found: ${path5}!`);
       clearInterval(intervalObj);
     }
   }, timeout);
@@ -880,7 +886,12 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       const child = spawn(
         "node",
         // "node",
-        ["--inspect-brk", builtfile, testResources, ipcfile],
+        [
+          // "--inspect-brk",
+          builtfile,
+          testResources,
+          ipcfile
+        ],
         {
           stdio: ["pipe", "pipe", "pipe", "ipc"]
         }
@@ -1307,7 +1318,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         page.on("pageerror", (err) => {
           console.log(
             ansiColors.red(
-              `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
+              `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
             )
           );
           oStream.write(err.name);
@@ -1328,7 +1339,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           close();
         });
         page.on("console", (log) => {
-          console.log("console message: ", log.text());
           if (oStream.closed) {
             console.log("missed console message: ", log.text());
             return;
@@ -1347,6 +1357,14 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           this.bddTestIsNowDone(src, fails);
           close();
         }).catch((e) => {
+          console.log(ansiC2.red(ansiC2.inverse(e)));
+          console.log(
+            ansiC2.red(
+              ansiC2.inverse(
+                `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
+              )
+            )
+          );
           this.bddTestIsNowDone(src, -1);
         }).finally(() => {
         });

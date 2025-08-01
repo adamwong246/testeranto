@@ -4,6 +4,8 @@ import { afterEachProxy, andWhenProxy, beforeEachProxy, butThenProxy, } from "./
 export class BaseGiven {
     addArtifact(path) {
         console.log(`[Artifact] Adding to ${this.constructor.name}:`, path);
+        // console.log("mark111");
+        // process.exit();
         this.artifacts.push(path);
     }
     constructor(name, features, whens, thens, givenCB, initialValues) {

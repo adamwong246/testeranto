@@ -111,8 +111,8 @@ export class PM_Web extends PM {
   customScreenShot(x: ScreenshotOptions, y: any) {
     const opts = x[0];
     const page = x[1];
-    console.log("customScreenShot 2 opts", opts);
-    console.log("customScreenShot 2 page", page);
+    // console.log("customScreenShot 2 opts", opts);
+    // console.log("customScreenShot 2 page", page);
     return window["customScreenShot"](
       {
         ...opts,
@@ -135,7 +135,7 @@ export class PM_Web extends PM {
     return window["write"](uid, contents);
   }
 
-  writeFileSync(filepath: string, contents: string) {
+  writeFileSync([filepath, contents]: [string, string]) {
     return window["writeFileSync"](
       this.testResourceConfiguration.fs + "/" + filepath,
       contents,

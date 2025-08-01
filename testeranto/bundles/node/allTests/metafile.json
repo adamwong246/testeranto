@@ -45,7 +45,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 7280,
+        "bytes": 4933,
         "imports": [
           {
             "path": "./types",
@@ -56,7 +56,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 7465,
+        "bytes": 7520,
         "imports": [
           {
             "path": ".",
@@ -77,7 +77,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 4874,
+        "bytes": 4916,
         "imports": [
           {
             "path": "stream",
@@ -217,7 +217,7 @@
         "format": "esm"
       },
       "src/PM/node.ts": {
-        "bytes": 6955,
+        "bytes": 6959,
         "imports": [
           {
             "path": "net",
@@ -283,553 +283,8 @@
         ],
         "format": "esm"
       },
-      "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 3599,
-        "imports": [
-          {
-            "path": "src/lib/abstractBase.ts",
-            "kind": "import-statement",
-            "original": "../abstractBase"
-          },
-          {
-            "path": "src/lib/BaseSuite.ts",
-            "kind": "import-statement",
-            "original": "../BaseSuite"
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./test",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12580,
-        "imports": [
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../BaseSuite",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/BaseSuite.test/mock.ts",
-            "kind": "import-statement",
-            "original": "./mock"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/BaseSuite.test/node.test.ts": {
-        "bytes": 320,
-        "imports": [
-          {
-            "path": "src/Node.ts",
-            "kind": "import-statement",
-            "original": "../../Node"
-          },
-          {
-            "path": "src/lib/BaseSuite.ts",
-            "kind": "import-statement",
-            "original": "../BaseSuite"
-          },
-          {
-            "path": "src/lib/BaseSuite.test/test.ts",
-            "kind": "import-statement",
-            "original": "./test"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/pmProxy.test/mockPMBase.ts": {
-        "bytes": 4024,
-        "imports": [
-          {
-            "path": "puppeteer-core",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../index",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../PM/base",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/pmProxy.test/implementation.ts": {
-        "bytes": 3285,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../pmProxy",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/pmProxy.test/mockPMBase.ts",
-            "kind": "import-statement",
-            "original": "./mockPMBase"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/pmProxy.test/specification.ts": {
-        "bytes": 4626,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/chai.js": {
-        "bytes": 139547,
-        "imports": [],
-        "format": "esm"
-      },
-      "src/lib/pmProxy.test/adapter.ts": {
-        "bytes": 1426,
-        "imports": [
-          {
-            "path": "node_modules/chai/chai.js",
-            "kind": "import-statement",
-            "original": "chai"
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/pmProxy.ts",
-            "kind": "import-statement",
-            "original": "../pmProxy"
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/pmProxy.test/mockPMBase.ts",
-            "kind": "import-statement",
-            "original": "./mockPMBase"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/pmProxy.test/index.ts": {
-        "bytes": 515,
-        "imports": [
-          {
-            "path": "src/Node.ts",
-            "kind": "import-statement",
-            "original": "../../Node"
-          },
-          {
-            "path": "src/lib/pmProxy.test/implementation.ts",
-            "kind": "import-statement",
-            "original": "./implementation"
-          },
-          {
-            "path": "src/lib/pmProxy.test/specification.ts",
-            "kind": "import-statement",
-            "original": "./specification"
-          },
-          {
-            "path": "src/lib/pmProxy.test/adapter.ts",
-            "kind": "import-statement",
-            "original": "./adapter"
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/pmProxy.ts",
-            "kind": "import-statement",
-            "original": "../pmProxy"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/PM/pure.ts": {
-        "bytes": 5767,
-        "imports": [
-          {
-            "path": "puppeteer-core",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "puppeteer-core/lib/esm/puppeteer",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../lib",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/PM/index.ts",
-            "kind": "import-statement",
-            "original": "."
-          }
-        ],
-        "format": "esm"
-      },
-      "src/Pure.ts": {
-        "bytes": 2643,
-        "imports": [
-          {
-            "path": "./CoreTypes.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/core.ts",
-            "kind": "import-statement",
-            "original": "./lib/core.js"
-          },
-          {
-            "path": "src/lib/index.ts",
-            "kind": "import-statement",
-            "original": "./lib/index.js"
-          },
-          {
-            "path": "src/PM/pure.ts",
-            "kind": "import-statement",
-            "original": "./PM/pure.js"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/core.test/core.test.specification.ts": {
-        "bytes": 2977,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./core.test.types",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/core.test/MockCore.ts": {
-        "bytes": 2647,
-        "imports": [
-          {
-            "path": "src/lib/core.ts",
-            "kind": "import-statement",
-            "original": "../core"
-          },
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/core.test/core.test.implementation.ts": {
-        "bytes": 4597,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/core.test/MockCore.ts",
-            "kind": "import-statement",
-            "original": "./MockCore"
-          },
-          {
-            "path": "./core.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/core.test/core.test.adapter.ts": {
-        "bytes": 1565,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./core.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/core.test/MockCore.ts",
-            "kind": "import-statement",
-            "original": "./MockCore"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/core.test/core.test.ts": {
-        "bytes": 2449,
-        "imports": [
-          {
-            "path": "src/Pure.ts",
-            "kind": "import-statement",
-            "original": "../../Pure"
-          },
-          {
-            "path": "src/lib/core.test/core.test.specification.ts",
-            "kind": "import-statement",
-            "original": "./core.test.specification"
-          },
-          {
-            "path": "src/lib/core.test/core.test.implementation.ts",
-            "kind": "import-statement",
-            "original": "./core.test.implementation"
-          },
-          {
-            "path": "src/lib/core.test/core.test.adapter.ts",
-            "kind": "import-statement",
-            "original": "./core.test.adapter"
-          },
-          {
-            "path": "./core.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/core.test/MockCore.ts",
-            "kind": "import-statement",
-            "original": "./MockCore"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/classBuilder.test/mock.ts": {
-        "bytes": 1932,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/classBuilder.ts",
-            "kind": "import-statement",
-            "original": "../classBuilder"
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/classBuilder.test/classBuilder.test.implementation.ts": {
-        "bytes": 6241,
-        "imports": [
-          {
-            "path": "stream",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/classBuilder.test/mock.ts",
-            "kind": "import-statement",
-            "original": "./mock"
-          },
-          {
-            "path": "../classBuilder",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./classBuilder.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/classBuilder.test/classBuilder.test.specification.ts",
-            "kind": "import-statement",
-            "original": "./classBuilder.test.specification"
-          },
-          {
-            "path": "src/lib/BaseSuite.test/mock.ts",
-            "kind": "import-statement",
-            "original": "../BaseSuite.test/mock"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/classBuilder.test/classBuilder.test.specification.ts": {
-        "bytes": 2935,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./classBuilder.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/classBuilder.test/classBuilder.test.implementation.ts",
-            "kind": "import-statement",
-            "original": "./classBuilder.test.implementation"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/classBuilder.test/classBuilder.test.adapter.ts": {
-        "bytes": 807,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../baseBuilder.test/baseBuilder.test.types",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/classBuilder.test/classBuilder.test.ts": {
-        "bytes": 494,
-        "imports": [
-          {
-            "path": "src/Node.ts",
-            "kind": "import-statement",
-            "original": "../../Node"
-          },
-          {
-            "path": "src/lib/classBuilder.ts",
-            "kind": "import-statement",
-            "original": "../classBuilder"
-          },
-          {
-            "path": "src/lib/classBuilder.test/classBuilder.test.specification.ts",
-            "kind": "import-statement",
-            "original": "./classBuilder.test.specification"
-          },
-          {
-            "path": "src/lib/classBuilder.test/classBuilder.test.implementation.ts",
-            "kind": "import-statement",
-            "original": "./classBuilder.test.implementation"
-          },
-          {
-            "path": "src/lib/classBuilder.test/classBuilder.test.adapter.ts",
-            "kind": "import-statement",
-            "original": "./classBuilder.test.adapter"
-          },
-          {
-            "path": "./classBuilder.test.types",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-        "bytes": 861,
+        "bytes": 985,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -871,7 +326,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 3770,
+        "bytes": 3998,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -955,203 +410,8 @@
       }
     },
     "outputs": {
-      "testeranto/bundles/node/allTests/src/lib/BaseSuite.test/node.test.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-3EUGBAOM.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-M6DO7VMB.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-E75CSRER.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/BaseSuite.test/node.test.ts",
-        "inputs": {
-          "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 8593
-          },
-          "src/lib/BaseSuite.test/node.test.ts": {
-            "bytesInOutput": 103
-          }
-        },
-        "bytes": 9081
-      },
-      "testeranto/bundles/node/allTests/src/lib/pmProxy.test/index.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-M6DO7VMB.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-E75CSRER.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/pmProxy.test/index.ts",
-        "inputs": {
-          "src/lib/pmProxy.test/mockPMBase.ts": {
-            "bytesInOutput": 2884
-          },
-          "src/lib/pmProxy.test/implementation.ts": {
-            "bytesInOutput": 2607
-          },
-          "src/lib/pmProxy.test/specification.ts": {
-            "bytesInOutput": 4468
-          },
-          "node_modules/chai/chai.js": {
-            "bytesInOutput": 130527
-          },
-          "src/lib/pmProxy.test/adapter.ts": {
-            "bytesInOutput": 812
-          },
-          "src/lib/pmProxy.test/index.ts": {
-            "bytesInOutput": 196
-          }
-        },
-        "bytes": 149430
-      },
-      "testeranto/bundles/node/allTests/src/lib/core.test/core.test.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-E75CSRER.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/core.test/core.test.ts",
-        "inputs": {
-          "src/PM/pure.ts": {
-            "bytesInOutput": 3131
-          },
-          "src/Pure.ts": {
-            "bytesInOutput": 1315
-          },
-          "src/lib/core.test/core.test.specification.ts": {
-            "bytesInOutput": 2824
-          },
-          "src/lib/core.test/MockCore.ts": {
-            "bytesInOutput": 1670
-          },
-          "src/lib/core.test/core.test.implementation.ts": {
-            "bytesInOutput": 4145
-          },
-          "src/lib/core.test/core.test.adapter.ts": {
-            "bytesInOutput": 1285
-          },
-          "src/lib/core.test/core.test.ts": {
-            "bytesInOutput": 114
-          }
-        },
-        "bytes": 14964
-      },
-      "testeranto/bundles/node/allTests/src/lib/classBuilder.test/classBuilder.test.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-3EUGBAOM.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-M6DO7VMB.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-E75CSRER.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/classBuilder.test/classBuilder.test.ts",
-        "inputs": {
-          "src/lib/classBuilder.test/mock.ts": {
-            "bytesInOutput": 1169
-          },
-          "src/lib/classBuilder.test/classBuilder.test.implementation.ts": {
-            "bytesInOutput": 5739
-          },
-          "src/lib/classBuilder.test/classBuilder.test.specification.ts": {
-            "bytesInOutput": 2693
-          },
-          "src/lib/classBuilder.test/classBuilder.test.adapter.ts": {
-            "bytesInOutput": 558
-          },
-          "src/lib/classBuilder.test/classBuilder.test.ts": {
-            "bytesInOutput": 171
-          }
-        },
-        "bytes": 10930
-      },
-      "testeranto/bundles/node/allTests/chunk-3EUGBAOM.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-E75CSRER.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "MockSuite"
-        ],
-        "inputs": {
-          "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 2763
-          }
-        },
-        "bytes": 2999
-      },
       "testeranto/bundles/node/allTests/src/lib/baseBuilder.test/baseBuilder.test.node.mjs": {
         "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-M6DO7VMB.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-E75CSRER.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
-        "inputs": {
-          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-            "bytesInOutput": 708
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 906
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3065
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 653
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
-            "bytesInOutput": 131
-          }
-        },
-        "bytes": 6020
-      },
-      "testeranto/bundles/node/allTests/chunk-M6DO7VMB.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/node/allTests/chunk-E75CSRER.mjs",
-            "kind": "import-statement"
-          },
           {
             "path": "net",
             "kind": "import-statement",
@@ -1169,39 +429,21 @@
           }
         ],
         "exports": [
-          "Node_default"
+          "default"
         ],
+        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
         "inputs": {
-          "src/PM/node.ts": {
-            "bytesInOutput": 5229
+          "src/lib/index.ts": {
+            "bytesInOutput": 656
           },
-          "src/Node.ts": {
-            "bytesInOutput": 1372
-          }
-        },
-        "bytes": 6848
-      },
-      "testeranto/bundles/node/allTests/chunk-E75CSRER.mjs": {
-        "imports": [],
-        "exports": [
-          "BaseBuilder",
-          "BaseGiven",
-          "BaseSuite",
-          "BaseThen",
-          "BaseWhen",
-          "ClassBuilder",
-          "PM",
-          "TesterantoCore",
-          "andWhenProxy",
-          "butThenProxy",
-          "defaultTestResourceRequirement"
-        ],
-        "inputs": {
           "src/lib/pmProxy.ts": {
-            "bytesInOutput": 5758
+            "bytesInOutput": 3756
+          },
+          "src/lib/abstractBase.ts": {
+            "bytesInOutput": 4976
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2341
+            "bytesInOutput": 2381
           },
           "src/lib/classBuilder.ts": {
             "bytesInOutput": 1850
@@ -1209,20 +451,35 @@
           "src/lib/BaseSuite.ts": {
             "bytesInOutput": 2484
           },
-          "src/lib/index.ts": {
-            "bytesInOutput": 656
-          },
-          "src/lib/abstractBase.ts": {
-            "bytesInOutput": 4973
-          },
           "src/lib/core.ts": {
-            "bytesInOutput": 1827
+            "bytesInOutput": 1829
+          },
+          "src/PM/node.ts": {
+            "bytesInOutput": 5231
           },
           "src/PM/index.ts": {
             "bytesInOutput": 20
+          },
+          "src/Node.ts": {
+            "bytesInOutput": 1376
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
+            "bytesInOutput": 832
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
+            "bytesInOutput": 906
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
+            "bytesInOutput": 3283
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+            "bytesInOutput": 653
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
+            "bytesInOutput": 131
           }
         },
-        "bytes": 20371
+        "bytes": 31044
       }
     }
   }

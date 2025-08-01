@@ -70,8 +70,8 @@ class PM_Web extends _1.PM {
     customScreenShot(x, y) {
         const opts = x[0];
         const page = x[1];
-        console.log("customScreenShot 2 opts", opts);
-        console.log("customScreenShot 2 page", page);
+        // console.log("customScreenShot 2 opts", opts);
+        // console.log("customScreenShot 2 page", page);
         return window["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), this.testResourceConfiguration.name, page);
     }
     existsSync(destFolder) {
@@ -83,7 +83,7 @@ class PM_Web extends _1.PM {
     write(uid, contents) {
         return window["write"](uid, contents);
     }
-    writeFileSync(filepath, contents) {
+    writeFileSync([filepath, contents]) {
         return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {

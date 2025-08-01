@@ -122,12 +122,15 @@ export abstract class BaseBuilder<
 
           const fails = suiteDone.fails;
 
-          await puppetMaster.writeFileSync(`bdd_errors.txt`, fails.toString());
+          await puppetMaster.writeFileSync([
+            `bdd_errors.txt`,
+            fails.toString(),
+          ]);
 
-          await puppetMaster.writeFileSync(
+          await puppetMaster.writeFileSync([
             `tests.json`,
-            JSON.stringify(this.toObj(), null, 2)
-          );
+            JSON.stringify(this.toObj(), null, 2),
+          ]);
 
           return {
             failed: fails > 0,

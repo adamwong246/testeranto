@@ -1,6 +1,6 @@
+import type { Ibdd_in_any } from "../CoreTypes";
 import { ITestArtifactory, ITLog, ITTestResourceConfiguration } from ".";
 import { IPM } from "./types.js";
-import type { Ibdd_in_any } from "../CoreTypes";
 export type IGivens<I extends Ibdd_in_any> = Record<string, BaseGiven<I>>;
 export declare abstract class BaseGiven<I extends Ibdd_in_any> {
     name: string;

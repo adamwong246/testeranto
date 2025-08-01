@@ -1,19 +1,41 @@
+// TODO- this config file is horrible. I need to redo how config files are handled.
 const config = {
     projects: {
-        allTests: {
+        staticSite: {
+            tests: [["src/ReportServer.test.ts/index.ts", "node", { ports: 1 }, []]],
+            clearScreen: false,
+            debugger: false,
+            externals: [],
+            featureIngestor: function (s) {
+                throw new Error("Function not implemented.");
+            },
+            importPlugins: [],
+            minify: false,
+            nodePlugins: [],
+            ports: ["3334"],
+            src: "",
+            webPlugins: [],
+        },
+        core: {
             tests: [
-                ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
-                ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
-                ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
-                ["src/Pure.test.ts", "pure", { ports: 0 }, []],
-                ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
-                ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
-                [
-                    "src/lib/classBuilder.test/classBuilder.test.ts",
-                    "node",
-                    { ports: 0 },
-                    [],
-                ],
+                // [
+                //   "src/components/pure/ProjectPageView.test/index.ts",
+                //   "web",
+                //   { ports: 0 },
+                //   [],
+                // ],
+                // ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
+                // ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
+                // ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
+                // ["src/Pure.test.ts", "pure", { ports: 0 }, []],
+                // ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
+                // ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
+                // [
+                //   "src/lib/classBuilder.test/classBuilder.test.ts",
+                //   "node",
+                //   { ports: 0 },
+                //   [],
+                // ],
                 [
                     "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
                     "node",
@@ -62,6 +84,5 @@ const config = {
             webPlugins: [],
         },
     },
-    reportDomain: "https://adamwong246.github.io/testeranto",
 };
 export default config;

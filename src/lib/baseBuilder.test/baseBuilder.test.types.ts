@@ -20,14 +20,17 @@ export type O = Ibdd_out<
   },
   // Givens
   {
-    Default: [];
+    "the default BaseBuilder": [];
+    "a BaseBuilder with TestInput": [];
+    "a BaseBuilder with Test Resource Requirements": [];
   },
   // Whens
   {}, // No whens in these tests
   // Thens
   {
-    initializedProperly: [];
-    specsGenerated: [];
-    jobsCreated: [];
+    "it is initialized": [];
+    "it generates TestSpecifications": [];
+    "it creates jobs": [];
+    "it tracks artifacts": [];
   }
 >;

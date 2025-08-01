@@ -19,33 +19,24 @@ export const butThenProxy = (pm, filepath) => {
         [
             "screencast",
             (opts, p) => {
-                var _a;
+                var _a, _b;
                 const path = `${filepath}/butThen/${opts.path}`;
-                console.log(`[Proxy] Captured artifact path for butThen:`, path);
-                if ((_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.addArtifact) {
-                    pm.currentStep.addArtifact(path);
-                }
-                else {
-                    console.warn('No currentStep or addArtifact method found');
-                }
+                (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
                 return [
                     Object.assign(Object.assign({}, opts), { path }),
                     p,
                 ];
             },
         ],
-        ["createWriteStream", (fp) => {
-                var _a;
+        [
+            "createWriteStream",
+            (fp) => {
+                var _a, _b;
                 const path = `${filepath}/butThen/${fp}`;
-                console.log(`[Proxy] Captured artifact path for butThen:`, path);
-                if ((_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.addArtifact) {
-                    pm.currentStep.addArtifact(path);
-                }
-                else {
-                    console.warn('No currentStep or addArtifact method found');
-                }
+                (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
                 return [path];
-            }],
+            },
+        ],
         [
             "writeFileSync",
             (fp, contents) => {
@@ -72,178 +63,91 @@ export const butThenProxy = (pm, filepath) => {
 export const andWhenProxy = (pm, filepath) => baseProxy(pm, [
     [
         "screencast",
-        (opts, p) => {
-            var _a, _b;
-            const path = `${filepath}/andWhen/${opts.path}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [
-                Object.assign(Object.assign({}, opts), { path }),
-                p,
-            ];
-        },
+        (opts, p) => [
+            Object.assign(Object.assign({}, opts), { path: `${filepath}/andWhen/${opts.path}` }),
+            p,
+        ],
     ],
-    ["createWriteStream", (fp) => {
-            var _a, _b;
-            const path = `${filepath}/andWhen/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path];
-        }],
-    ["writeFileSync", (fp, contents) => {
-            var _a, _b;
-            const path = `${filepath}/andWhen/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path, contents];
-        }],
+    ["createWriteStream", (fp) => [`${filepath}/andWhen/${fp}`]],
+    ["writeFileSync", (fp, contents) => [`${filepath}/andWhen${fp}`, contents]],
     [
         "customScreenShot",
-        (opts, p) => {
-            var _a, _b;
-            const path = `${filepath}/andWhen/${opts.path}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [
-                Object.assign(Object.assign({}, opts), { path }),
-                p,
-            ];
-        },
+        (opts, p) => [
+            Object.assign(Object.assign({}, opts), { path: `${filepath}/andWhen${opts.path}` }),
+            p,
+        ],
     ],
 ]);
 export const afterEachProxy = (pm, suite, given) => baseProxy(pm, [
     [
         "screencast",
-        (opts, p) => {
-            var _a, _b;
-            const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [
-                Object.assign(Object.assign({}, opts), { path }),
-                p,
-            ];
-        },
+        (opts, p) => [
+            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/given-${given}/afterEach/${opts.path}` }),
+            p,
+        ],
     ],
-    ["createWriteStream", (fp) => {
-            var _a, _b;
-            const path = `suite-${suite}/afterEach/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path];
-        }],
+    ["createWriteStream", (fp) => [`suite-${suite}/afterEach/${fp}`]],
     [
         "writeFileSync",
-        (fp, contents) => {
-            var _a, _b;
-            const path = `suite-${suite}/given-${given}/afterEach/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path, contents];
-        },
+        (fp, contents) => [
+            `suite-${suite}/given-${given}/afterEach/${fp}`,
+            contents,
+        ],
     ],
     [
         "customScreenShot",
-        (opts, p) => {
-            var _a, _b;
-            const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [
-                Object.assign(Object.assign({}, opts), { path }),
-                p,
-            ];
-        },
+        (opts, p) => [
+            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/given-${given}/afterEach/${opts.path}` }),
+            p,
+        ],
     ],
 ]);
 export const beforeEachProxy = (pm, suite) => baseProxy(pm, [
     [
         "screencast",
-        (opts, p) => {
-            var _a, _b;
-            const path = `suite-${suite}/beforeEach/${opts.path}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [
-                Object.assign(Object.assign({}, opts), { path }),
-                p,
-            ];
-        },
+        (opts, p) => [
+            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/beforeEach/${opts.path}` }),
+            p,
+        ],
     ],
     [
         "writeFileSync",
-        (fp, contents) => {
-            var _a, _b;
-            const path = `suite-${suite}/beforeEach/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path, contents];
-        },
+        (fp, contents) => [`suite-${suite}/beforeEach/${fp}`, contents],
     ],
     [
         "customScreenShot",
-        (opts, p) => {
-            var _a, _b;
-            const path = `suite-${suite}/beforeEach/${opts.path}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [
-                Object.assign(Object.assign({}, opts), { path }),
-                p,
-            ];
-        },
+        (opts, p) => [
+            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/beforeEach/${opts.path}` }),
+            p,
+        ],
     ],
-    ["createWriteStream", (fp) => {
-            var _a, _b;
-            const path = `suite-${suite}/beforeEach/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path];
-        }],
+    ["createWriteStream", (fp) => [`suite-${suite}/beforeEach/${fp}`]],
 ]);
 export const beforeAllProxy = (pm, suite) => baseProxy(pm, [
     [
         "writeFileSync",
-        (fp, contents) => {
-            var _a, _b;
-            const path = `suite-${suite}/beforeAll/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path, contents];
-        },
+        (fp, contents) => [`suite-${suite}/beforeAll/${fp}`, contents],
     ],
     [
         "customScreenShot",
-        (opts, p) => {
-            var _a, _b;
-            const path = `suite-${suite}/beforeAll/${opts.path}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [
-                Object.assign(Object.assign({}, opts), { path }),
-                p,
-            ];
-        },
+        (opts, p) => [
+            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/beforeAll/${opts.path}` }),
+            p,
+        ],
     ],
-    ["createWriteStream", (fp) => {
-            var _a, _b;
-            const path = `suite-${suite}/beforeAll/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path];
-        }],
+    ["createWriteStream", (fp) => [`suite-${suite}/beforeAll/${fp}`]],
 ]);
 export const afterAllProxy = (pm, suite) => baseProxy(pm, [
-    ["createWriteStream", (fp) => {
-            var _a, _b;
-            const path = `suite-${suite}/afterAll/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path];
-        }],
+    ["createWriteStream", (fp) => [`suite-${suite}/afterAll/${fp}`]],
     [
         "writeFileSync",
-        (fp, contents) => {
-            var _a, _b;
-            const path = `suite-${suite}/afterAll/${fp}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [path, contents];
-        },
+        (fp, contents) => [`suite-${suite}/afterAll/${fp}`, contents],
     ],
     [
         "customScreenShot",
-        (opts, p) => {
-            var _a, _b;
-            const path = `suite-${suite}/afterAll/${opts.path}`;
-            (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
-            return [
-                Object.assign(Object.assign({}, opts), { path }),
-                p,
-            ];
-        },
+        (opts, p) => [
+            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/afterAll/${opts.path}` }),
+            p,
+        ],
     ],
 ]);
