@@ -108,7 +108,10 @@ export class PM_Node extends PM {
     async write(uid, contents) {
         return await this.send("write", ...arguments);
     }
-    async writeFileSync([filepath, contents]) {
+    async writeFileSync(x) {
+        const z = arguments["0"];
+        const filepath = z[0];
+        const contents = z[1];
         return await this.send("writeFileSync", this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     async createWriteStream(filepath) {

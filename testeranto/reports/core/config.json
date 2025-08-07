@@ -1,10 +1,10 @@
 {
   "tests": [
     [
-      "src/ReportServer.test.ts/index.ts",
-      "node",
+      "src/components/pure/ProjectPageView.test/index.ts",
+      "web",
       {
-        "ports": 1
+        "ports": 0
       },
       []
     ]
@@ -16,9 +16,9 @@
   "minify": false,
   "nodePlugins": [],
   "ports": [
-    "3334"
+    "3333"
   ],
   "src": "",
   "webPlugins": [],
-  "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/staticSite"
+  "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/core"
 }

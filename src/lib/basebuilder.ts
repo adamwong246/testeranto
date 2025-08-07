@@ -72,6 +72,7 @@ export abstract class BaseBuilder<
       const suiteRunner =
         (suite: BaseSuite<I, O>) =>
         async (puppetMaster: IPM, tLog: ITLog): Promise<BaseSuite<I, O>> => {
+          console.log("mark17");
           const x = await suite.run(
             input,
             puppetMaster.testResourceConfiguration,
@@ -85,6 +86,7 @@ export abstract class BaseBuilder<
             tLog,
             puppetMaster
           );
+          console.log("mark18");
 
           return x;
         };
@@ -113,7 +115,9 @@ export abstract class BaseBuilder<
             //
           };
 
+          console.log("mark14");
           const suiteDone: BaseSuite<I, O> = await runner(puppetMaster, tLog);
+          console.log("mark15");
 
           // const logPromise = new Promise(async (res) => {
           //   await puppetMaster.end(access);
@@ -131,6 +135,8 @@ export abstract class BaseBuilder<
             `tests.json`,
             JSON.stringify(this.toObj(), null, 2),
           ]);
+
+          console.log("mark13");
 
           return {
             failed: fails > 0,

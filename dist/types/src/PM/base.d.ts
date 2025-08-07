@@ -19,7 +19,7 @@ export declare abstract class PM_Base {
     end(uid: number): Promise<boolean>;
     existsSync(destFolder: string): boolean;
     mkdirSync(fp: string): Promise<string | false | undefined>;
-    writeFileSync(filepath: string, contents: string, testName: string): Promise<boolean>;
+    writeFileSync(...x: any[]): Promise<boolean>;
     createWriteStream(filepath: string, testName: string): Promise<number>;
     testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): (fPath: any, value: string | Buffer | PassThrough) => void;
     write(uid: number, contents: string): Promise<boolean>;

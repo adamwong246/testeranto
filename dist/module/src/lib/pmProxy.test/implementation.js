@@ -14,7 +14,7 @@ export const implementation = {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const mockPm = new MockPMBase();
             const filepath = "test/path";
-            const proxiedPm = store.butThenProxy(mockPm, filepath);
+            const rewritePath = createPathRewriter(`${filepath}/butThen`);
             let actualPath;
             let actualContent;
             try {

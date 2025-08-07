@@ -1,2 +1,0 @@
-
-Fix the failing tests described in testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.web/web/tests.json and testeranto/reports/allTests/src/lib/baseBuilder.test/baseBuilder.test.web/web/logs.txt. Focus on the bdd tests before all other concerns. You may add any debugging you think is necessary.

@@ -105,8 +105,8 @@ const implementation: ITestImplementation<I, O> = {
             ...store,
             pm: {
               ...store.pm,
-              testResourceConfiguration: { name: "test-resource" }
-            }
+              testResourceConfiguration: { name: "test-resource" },
+            },
           };
         default:
           return store;
@@ -116,23 +116,23 @@ const implementation: ITestImplementation<I, O> = {
       console.debug("[DEBUG] Adding artifact");
       return {
         ...store,
-        artifacts: [...(store.artifacts || []), artifact]
+        artifacts: [...(store.artifacts || []), artifact],
       };
     },
     setTestJobs: (jobs: any[]) => (store) => {
       console.debug("[DEBUG] Setting test jobs");
       return {
         ...store,
-        testJobs: jobs
+        testJobs: jobs,
       };
     },
     modifySpecs: (modifier: (specs: any) => any[]) => (store) => {
       console.debug("[DEBUG] Modifying specs");
       return {
         ...store,
-        specs: modifier(store.specs || [])
+        specs: modifier(store.specs || []),
       };
-    }
+    },
   },
 
   thens: {

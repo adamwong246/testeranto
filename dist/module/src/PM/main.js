@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { spawn } from "node:child_process";
+import ansiColors from "ansi-colors";
 import net from "net";
 import fs, { watch } from "fs";
 import path from "path";
@@ -12,7 +13,6 @@ import crypto from "node:crypto";
 import { getRunnables } from "../utils";
 import { Queue } from "../utils/queue.js";
 import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
-import ansiColors from "ansi-colors";
 const changes = {};
 const fileHashes = {};
 const files = {};
@@ -69,12 +69,10 @@ function isValidUrl(string) {
 }
 // Wait for file to exist, checks every 2 seconds by default
 async function pollForFile(path, timeout = 2000) {
-    console.log(`pollForFile: ${path}...`);
     const intervalObj = setInterval(function () {
         const file = path;
         const fileExists = fs.existsSync(file);
         if (fileExists) {
-            console.log(`metafile found: ${path}!`);
             clearInterval(intervalObj);
         }
     }, timeout);
@@ -694,16 +692,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
             const d = `${dest}?cacheBust=${Date.now()}`;
-            const evaluation = `
-
-    import('${d}').then(async (x) => {
-
-      try {
-        return await (await x.default).receiveTestResourceConfig(${webArgz})
-      } catch (e) {
-        console.log("web run failure", e.toString())
-      }
-    })`;
             const ofile = `${reportDest}/logs.txt`;
             const oStream = fs.createWriteStream(ofile);
             this.browser
@@ -742,7 +730,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
                         page.close();
                         oStream.close();
                     });
-                    console.log("ostream is closed");
                     return;
                 };
                 page.on("pageerror", (err) => {
@@ -781,19 +768,28 @@ export class PM_Main extends PM_WithEslintAndTsc {
                 });
                 await page.goto(`file://${`${destFolder}.html`}`, {});
                 await page
-                    .evaluate(evaluation)
+                    .evaluate(`
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`)
                     .then(async ({ fails, failed, features }) => {
                     statusMessagePretty(fails, src, "web");
                     this.bddTestIsNowDone(src, fails);
-                    close();
+                    // close();
                 })
                     .catch((e) => {
-                    console.log(ansiC.red(ansiC.inverse(e)));
+                    console.log(ansiC.red(ansiC.inverse(e.stack)));
                     console.log(ansiC.red(ansiC.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`)));
                     this.bddTestIsNowDone(src, -1);
                 })
                     .finally(() => {
                     // process.exit(-1);
+                    close();
                 });
                 return page;
             });

@@ -17,14 +17,26 @@ const baseProxy = function (pm, mappings) {
         },
     });
 };
-const butThenProxy = (pm, filepath) => {
+const butThenProxy = (pm, filepath, addArtifact) => {
     return baseProxy(pm, [
         [
             "screencast",
             (opts, p) => {
-                var _a, _b;
                 const path = `${filepath}/butThen/${opts.path}`;
-                (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
+                addArtifact(path);
+                // console.log(
+                //   `[ARTIFACT] Preparing to add to ${step.constructor.name}:`,
+                //   path
+                // );
+                // try {
+                //   console.log(
+                //     `[ARTIFACT] Successfully added to ${step.constructor.name}`
+                //   );
+                //   console.log(`[ARTIFACT] Current artifacts:`, JSON.stringify(step.artifacts));
+                // } catch (e) {
+                //   console.error(`[ARTIFACT] Failed to add ${path}:`, e);
+                //   throw e;
+                // }
                 return [
                     Object.assign(Object.assign({}, opts), { path }),
                     p,
@@ -34,27 +46,24 @@ const butThenProxy = (pm, filepath) => {
         [
             "createWriteStream",
             (fp) => {
-                var _a, _b;
                 const path = `${filepath}/butThen/${fp}`;
-                (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
+                addArtifact(path);
                 return [path];
             },
         ],
         [
             "writeFileSync",
             (fp, contents) => {
-                var _a, _b;
                 const path = `${filepath}/butThen/${fp}`;
-                (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
+                addArtifact(path);
                 return [path, contents];
             },
         ],
         [
             "customScreenShot",
             (opts, p) => {
-                var _a, _b;
                 const path = `${filepath}/butThen/${opts.path}`;
-                (_b = (_a = pm.currentStep) === null || _a === void 0 ? void 0 : _a.artifacts) === null || _b === void 0 ? void 0 : _b.push(path);
+                addArtifact(path);
                 return [
                     Object.assign(Object.assign({}, opts), { path }),
                     p,
@@ -64,99 +73,202 @@ const butThenProxy = (pm, filepath) => {
     ]);
 };
 exports.butThenProxy = butThenProxy;
-const andWhenProxy = (pm, filepath) => baseProxy(pm, [
-    [
-        "screencast",
-        (opts, p) => [
-            Object.assign(Object.assign({}, opts), { path: `${filepath}/andWhen/${opts.path}` }),
-            p,
+const andWhenProxy = (pm, filepath, addArtifact) => {
+    return baseProxy(pm, [
+        [
+            "screencast",
+            (opts, p) => {
+                const path = `${filepath}/andWhen/${opts.path}`;
+                addArtifact(path);
+                return [
+                    Object.assign(Object.assign({}, opts), { path }),
+                    p,
+                ];
+            },
         ],
-    ],
-    ["createWriteStream", (fp) => [`${filepath}/andWhen/${fp}`]],
-    ["writeFileSync", (fp, contents) => [`${filepath}/andWhen${fp}`, contents]],
-    [
-        "customScreenShot",
-        (opts, p) => [
-            Object.assign(Object.assign({}, opts), { path: `${filepath}/andWhen${opts.path}` }),
-            p,
+        [
+            "createWriteStream",
+            (fp) => {
+                const path = `${filepath}/andWhen/${fp}`;
+                addArtifact(path);
+                return [path];
+            },
         ],
-    ],
-]);
+        [
+            "writeFileSync",
+            (fp, contents) => {
+                const path = `${filepath}/andWhen/${fp}`;
+                addArtifact(path);
+                return [path, contents];
+            },
+        ],
+        [
+            "customScreenShot",
+            (opts, p) => {
+                const path = `${filepath}/andWhen/${opts.path}`;
+                // console.log("STEP2", JSON.stringify(step));
+                addArtifact(path);
+                return [
+                    Object.assign(Object.assign({}, opts), { path }),
+                    p,
+                ];
+            },
+        ],
+    ]);
+};
 exports.andWhenProxy = andWhenProxy;
-const afterEachProxy = (pm, suite, given) => baseProxy(pm, [
-    [
-        "screencast",
-        (opts, p) => [
-            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/given-${given}/afterEach/${opts.path}` }),
-            p,
+const afterEachProxy = (pm, suite, given, addArtifact) => {
+    return baseProxy(pm, [
+        [
+            "screencast",
+            (opts, p) => {
+                const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
+                addArtifact(path);
+                return [
+                    Object.assign(Object.assign({}, opts), { path }),
+                    p,
+                ];
+            },
         ],
-    ],
-    ["createWriteStream", (fp) => [`suite-${suite}/afterEach/${fp}`]],
-    [
-        "writeFileSync",
-        (fp, contents) => [
-            `suite-${suite}/given-${given}/afterEach/${fp}`,
-            contents,
+        [
+            "createWriteStream",
+            (fp) => {
+                const path = `suite-${suite}/afterEach/${fp}`;
+                addArtifact(path);
+                return [path];
+            },
         ],
-    ],
-    [
-        "customScreenShot",
-        (opts, p) => [
-            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/given-${given}/afterEach/${opts.path}` }),
-            p,
+        [
+            "writeFileSync",
+            (fp, contents) => {
+                const path = `suite-${suite}/given-${given}/afterEach/${fp}`;
+                addArtifact(path);
+                return [path, contents];
+            },
         ],
-    ],
-]);
+        [
+            "customScreenShot",
+            (opts, p) => {
+                const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
+                addArtifact(path);
+                // console.log("STEP3", JSON.stringify(step));
+                return [
+                    Object.assign(Object.assign({}, opts), { path }),
+                    p,
+                ];
+            },
+        ],
+    ]);
+};
 exports.afterEachProxy = afterEachProxy;
-const beforeEachProxy = (pm, suite) => baseProxy(pm, [
-    [
-        "screencast",
-        (opts, p) => [
-            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/beforeEach/${opts.path}` }),
-            p,
+const beforeEachProxy = (pm, suite, addArtifact) => {
+    return baseProxy(pm, [
+        [
+            "screencast",
+            (opts, p) => {
+                const path = `suite-${suite}/beforeEach/${opts.path}`;
+                addArtifact(path);
+                return [
+                    Object.assign(Object.assign({}, opts), { path }),
+                    p,
+                ];
+            },
         ],
-    ],
-    [
-        "writeFileSync",
-        (fp, contents) => [`suite-${suite}/beforeEach/${fp}`, contents],
-    ],
-    [
-        "customScreenShot",
-        (opts, p) => [
-            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/beforeEach/${opts.path}` }),
-            p,
+        [
+            "writeFileSync",
+            (fp, contents) => {
+                const path = `suite-${suite}/beforeEach/${fp}`;
+                addArtifact(path);
+                return [path, contents];
+            },
         ],
-    ],
-    ["createWriteStream", (fp) => [`suite-${suite}/beforeEach/${fp}`]],
-]);
+        [
+            "customScreenShot",
+            (opts, p) => {
+                const path = `suite-${suite}/beforeEach/${opts.path}`;
+                addArtifact(path);
+                // console.log("STEP4", JSON.stringify(step));
+                return [
+                    Object.assign(Object.assign({}, opts), { path }),
+                    p,
+                ];
+            },
+        ],
+        [
+            "createWriteStream",
+            (fp) => {
+                const path = `suite-${suite}/beforeEach/${fp}`;
+                addArtifact(path);
+                return [path];
+            },
+        ],
+    ]);
+};
 exports.beforeEachProxy = beforeEachProxy;
-const beforeAllProxy = (pm, suite) => baseProxy(pm, [
-    [
-        "writeFileSync",
-        (fp, contents) => [`suite-${suite}/beforeAll/${fp}`, contents],
-    ],
-    [
-        "customScreenShot",
-        (opts, p) => [
-            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/beforeAll/${opts.path}` }),
-            p,
+const beforeAllProxy = (pm, suite, addArtifact) => {
+    return baseProxy(pm, [
+        [
+            "writeFileSync",
+            (fp, contents) => {
+                const path = `suite-${suite}/beforeAll/${fp}`;
+                addArtifact(path);
+                return [path, contents];
+            },
         ],
-    ],
-    ["createWriteStream", (fp) => [`suite-${suite}/beforeAll/${fp}`]],
-]);
+        [
+            "customScreenShot",
+            (opts, p) => {
+                const path = `suite-${suite}/beforeAll/${opts.path}`;
+                addArtifact(path);
+                // console.log("STEP7", JSON.stringify(step));
+                return [
+                    Object.assign(Object.assign({}, opts), { path }),
+                    p,
+                ];
+            },
+        ],
+        [
+            "createWriteStream",
+            (fp) => {
+                const path = `suite-${suite}/beforeAll/${fp}`;
+                addArtifact(path);
+                return [path];
+            },
+        ],
+    ]);
+};
 exports.beforeAllProxy = beforeAllProxy;
-const afterAllProxy = (pm, suite) => baseProxy(pm, [
-    ["createWriteStream", (fp) => [`suite-${suite}/afterAll/${fp}`]],
-    [
-        "writeFileSync",
-        (fp, contents) => [`suite-${suite}/afterAll/${fp}`, contents],
-    ],
-    [
-        "customScreenShot",
-        (opts, p) => [
-            Object.assign(Object.assign({}, opts), { path: `suite-${suite}/afterAll/${opts.path}` }),
-            p,
+const afterAllProxy = (pm, suite, addArtifact) => {
+    return baseProxy(pm, [
+        [
+            "createWriteStream",
+            (fp) => {
+                const path = `suite-${suite}/afterAll/${fp}`;
+                addArtifact(path);
+                return [path];
+            },
         ],
-    ],
-]);
+        [
+            "writeFileSync",
+            (fp, contents) => {
+                const path = `suite-${suite}/afterAll/${fp}`;
+                console.log("MARK10");
+                addArtifact(path);
+                return [path, contents];
+            },
+        ],
+        [
+            "customScreenShot",
+            (opts, p) => {
+                const path = `suite-${suite}/afterAll/${opts.path}`;
+                addArtifact(path);
+                console.log("MARK9");
+                return [
+                    Object.assign(Object.assign({}, opts), { path }),
+                    p,
+                ];
+            },
+        ],
+    ]);
+};
 exports.afterAllProxy = afterAllProxy;

@@ -6,6 +6,7 @@ import readline from "readline";
 
 // src/PM/main.ts
 import { spawn } from "node:child_process";
+import ansiColors from "ansi-colors";
 import net from "net";
 import fs3, { watch } from "fs";
 import path4 from "path";
@@ -207,6 +208,7 @@ var PM_Base = class {
     return sPromise;
   }
   async customScreenShot(ssOpts, testName, pageUid) {
+    console.log("SCREENSHOT 123", testName, ssOpts);
     const p = ssOpts.path;
     const dir = path2.dirname(p);
     fs.mkdirSync(dir, {
@@ -245,11 +247,11 @@ var PM_Base = class {
     }
     return false;
   }
-  async writeFileSync(filepath, contents, testName) {
-    console.log("writeFileSync");
-    console.log("filepath", filepath);
-    console.log("contents", contents);
-    console.log("testName", testName);
+  async writeFileSync(...x) {
+    const filepath = x[0];
+    const contents = x[1];
+    const testName = x[2];
+    console.log("writing file", filepath);
     return new Promise(async (res) => {
       fs.mkdirSync(path2.dirname(filepath), {
         recursive: true
@@ -646,7 +648,6 @@ Fix the failing tests described in ${testPaths} and ${logPath}. Focus on the bdd
 };
 
 // src/PM/main.ts
-import ansiColors from "ansi-colors";
 var changes = {};
 var fileHashes = {};
 var files2 = {};
@@ -705,12 +706,10 @@ function isValidUrl(string) {
   }
 }
 async function pollForFile(path5, timeout = 2e3) {
-  console.log(`pollForFile: ${path5}...`);
   const intervalObj = setInterval(function() {
     const file = path5;
     const fileExists = fs3.existsSync(file);
     if (fileExists) {
-      console.log(`metafile found: ${path5}!`);
       clearInterval(intervalObj);
     }
   }, timeout);
@@ -1274,16 +1273,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         browserWSEndpoint: this.browser.wsEndpoint()
       });
       const d = `${dest}?cacheBust=${Date.now()}`;
-      const evaluation = `
-
-    import('${d}').then(async (x) => {
-
-      try {
-        return await (await x.default).receiveTestResourceConfig(${webArgz})
-      } catch (e) {
-        console.log("web run failure", e.toString())
-      }
-    })`;
       const ofile = `${reportDest}/logs.txt`;
       const oStream = fs3.createWriteStream(ofile);
       this.browser.newPage().then((page) => {
@@ -1312,7 +1301,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             page.close();
             oStream.close();
           });
-          console.log("ostream is closed");
           return;
         };
         page.on("pageerror", (err) => {
@@ -1352,12 +1340,21 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           }
         });
         await page.goto(`file://${`${destFolder}.html`}`, {});
-        await page.evaluate(evaluation).then(async ({ fails, failed, features }) => {
+        await page.evaluate(
+          `
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`
+        ).then(async ({ fails, failed, features }) => {
           statusMessagePretty(fails, src, "web");
           this.bddTestIsNowDone(src, fails);
-          close();
         }).catch((e) => {
-          console.log(ansiC2.red(ansiC2.inverse(e)));
+          console.log(ansiC2.red(ansiC2.inverse(e.stack)));
           console.log(
             ansiC2.red(
               ansiC2.inverse(
@@ -1367,6 +1364,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           );
           this.bddTestIsNowDone(src, -1);
         }).finally(() => {
+          close();
         });
         return page;
       });

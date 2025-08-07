@@ -20,11 +20,11 @@ export const implementation: ITestImplementation<I, O, M> = {
   },
   thens: {
     theButTheProxyReturns:
-      (method: IProxiedFunctions, expectedPath: string) =>
-      (store: { butThenProxy: IProxy }) => {
+      (method: string, expectedPath: string) =>
+      (store: { pathRewriter: PathRewriter }) => {
         const mockPm = new MockPMBase() as unknown as IPM;
         const filepath = "test/path";
-        const proxiedPm = store.butThenProxy(mockPm, filepath);
+        const rewritePath = createPathRewriter(`${filepath}/butThen`);
 
         let actualPath: string;
         let actualContent: any;

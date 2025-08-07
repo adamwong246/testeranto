@@ -118,6 +118,8 @@ export abstract class PM_Base {
     testName: string,
     pageUid: any
   ) {
+    console.log("SCREENSHOT 123", testName, ssOpts);
+
     const p = ssOpts.path as string;
     const dir = path.dirname(p);
     fs.mkdirSync(dir, {
@@ -162,15 +164,12 @@ export abstract class PM_Base {
     return false;
   }
 
-  async writeFileSync(
-    filepath: string,
-    contents: string,
-    testName: string
-  ): Promise<boolean> {
-    console.log("writeFileSync");
-    console.log("filepath", filepath);
-    console.log("contents", contents);
-    console.log("testName", testName);
+  async writeFileSync(...x): Promise<boolean> {
+    const filepath = x[0];
+    const contents = x[1];
+    const testName = x[2];
+
+    console.log("writing file", filepath);
 
     return new Promise<boolean>(async (res) => {
       fs.mkdirSync(path.dirname(filepath), {

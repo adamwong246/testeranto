@@ -118,7 +118,7 @@ var node_default = (config, entryPoints, testName2) => {
     ...esbuildConfigs_default(config),
     splitting: true,
     outdir: `testeranto/bundles/node/${testName2}/`,
-    // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
+    inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
     metafile: true,
     supported: {
       "dynamic-import": true

@@ -1,9 +1,0 @@
-{
-  "src/ReportServer.test.ts/index.ts": {
-    "typeErrors": 24,
-    "staticErrors": 2,
-    "runTimeErrors": "?",
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/staticSite/reports/node/src/ReportServer.test.ts/index/prompt.txt",
-    "failingFeatures": {}
-  }
-}

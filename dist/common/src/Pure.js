@@ -14,10 +14,8 @@ class PureTesteranto extends core_js_1.default {
         });
     }
     async receiveTestResourceConfig(partialTestResource) {
-        console.log("[DEBUG] receiveTestResourceConfig called with:", partialTestResource);
         const t = JSON.parse(partialTestResource);
         const pm = new pure_js_1.PM_Pure(t);
-        // console.log("[DEBUG] Current test jobs:", this.testJobs?.length);
         // if (!this.testJobs || this.testJobs.length === 0) {
         //   console.error(
         //     "[ERROR] No test jobs available - checking specs:",
@@ -33,9 +31,7 @@ class PureTesteranto extends core_js_1.default {
         //   };
         // }
         try {
-            console.log("[DEBUG] Executing test job with PM:", pm);
             const result = await this.testJobs[0].receiveTestResourceConfig(pm);
-            console.log("[DEBUG] Test job completed with result:", result);
             return result;
         }
         catch (e) {

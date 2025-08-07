@@ -31,7 +31,7 @@ export declare class PM_Pure extends PM {
     existsSync(destFolder: string): Promise<boolean>;
     mkdirSync(): any;
     write(uid: number, contents: string): any;
-    writeFileSync(filepath: string, contents: string): any;
+    writeFileSync(x: any): any;
     createWriteStream(filepath: string): any;
     end(uid: number): any;
     customclose(): void;

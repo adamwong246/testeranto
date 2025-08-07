@@ -1,0 +1,60 @@
+/Users/adam/Code/testeranto/node_modules/testeranto-react/src/react-dom/component/dynamic.ts (50,45): Property 'subject' does not exist on type 'Readonly<{}>'.
+/Users/adam/Code/testeranto/node_modules/testeranto-react/src/react-dom/component/dynamic.ts (104,26): Argument of type 'CElement<any, TesterantoComponent>' is not assignable to parameter of type 'ReactNode'.
+  Property 'children' is missing in type 'ComponentElement<any, TesterantoComponent>' but required in type 'ReactPortal'.
+/Users/adam/Code/testeranto/node_modules/testeranto-react/src/react/component/index.ts (3,44): Cannot find module '../../../Types' or its corresponding type declarations.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (45,9): Type '({ container, html }: { container: any; html: any; }, pm: any) => Promise<void>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Target signature provides too few arguments. Expected 2 or more, but got 1.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (74,9): Type '({ container }: { container: any; }, pm: any) => Promise<{ container: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Target signature provides too few arguments. Expected 2 or more, but got 1.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/index.ts (8,27): Type 'I' does not satisfy the constraint 'Ibdd_out'.
+  Type 'I' is missing the following properties from type 'Ibdd_out': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.tsx (217,19): 'testData' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.tsx (218,29): 'testData' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.tsx (219,26): 'testData' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.tsx (220,28): 'testData' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.tsx (298,24): Type '{ testName: string; testsExist: boolean; runTimeErrors: number; }' is missing the following properties from type 'TestStatusBadgeProps': typeErrors, staticErrors
+/Users/adam/Code/testeranto/src/lib/abstractBase.ts (297,39): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (79,15): This expression is not callable.
+  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+    Type 'void' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (125,30): Expected 2 arguments, but got 1.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (130,30): Expected 2 arguments, but got 1.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (86,18): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (101,28): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/core.ts (46,7): Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }' is not assignable to type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }'.
+    Types of property 'suites' are incompatible.
+      Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
+        'string' index signatures are incompatible.
+          Type 'any' is not assignable to type 'never'.
+/Users/adam/Code/testeranto/src/lib/index.ts (16,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+  Types of parameters 'initialValues' and 'initializer' are incompatible.
+    Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
+      'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
+/Users/adam/Code/testeranto/src/lib/index.ts (18,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (40,13): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (52,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
+  Types of property 'assertThis' are incompatible.
+    Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
+      Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+/Users/adam/Code/testeranto/src/NavBar.tsx (76,23): Object literal may only specify known properties, and '':hover'' does not exist in type 'Properties<string | number, string & {}>'.
+/Users/adam/Code/testeranto/src/PM/node.ts (185,9): Property 'writeFileSync' in type 'PM_Node' is not assignable to the same property in base type 'PM'.
+  Type '([filepath, contents]: [string, string]) => Promise<boolean>' is not assignable to type '(f: string, c: string) => Promise<boolean>'.
+    Types of parameters '__0' and 'f' are incompatible.
+      Type 'string' is not assignable to type '[string, string]'.
+/Users/adam/Code/testeranto/src/PM/pure.ts (114,3): Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
+    Types of parameters 'opts' and 'opts' are incompatible.
+      Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
+        Types of property 'path' are incompatible.
+          Type 'string' is not assignable to type '`${string}.webm`'.
+/Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
+/Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
+/Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?
+/Users/adam/Code/testeranto/src/PM/web.ts (138,3): Property 'writeFileSync' in type 'PM_Web' is not assignable to the same property in base type 'PM'.
+  Type '([filepath, contents]: [string, string]) => any' is not assignable to type '(f: string, c: string) => Promise<boolean>'.
+    Types of parameters '__0' and 'f' are incompatible.
+      Type 'string' is not assignable to type '[string, string]'.
+/Users/adam/Code/testeranto/src/Web.ts (43,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens

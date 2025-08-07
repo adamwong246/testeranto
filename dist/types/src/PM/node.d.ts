@@ -31,7 +31,7 @@ export declare class PM_Node extends PM {
     existsSync(destFolder: string): Promise<boolean>;
     mkdirSync(): Promise<unknown>;
     write(uid: number, contents: string): Promise<boolean>;
-    writeFileSync([filepath, contents]: [string, string]): Promise<boolean>;
+    writeFileSync(x: any): Promise<boolean>;
     createWriteStream(filepath: string): Promise<string>;
     end(uid: any): Promise<boolean>;
     customclose(): Promise<unknown>;

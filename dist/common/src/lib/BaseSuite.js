@@ -3,18 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseSuite = void 0;
 const pmProxy_1 = require("./pmProxy");
 class BaseSuite {
+    addArtifact(path) {
+        console.log("Suite addArtifact", path);
+        const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
+        this.artifacts.push(normalizedPath);
+    }
     constructor(name, index, givens = {}) {
+        this.artifacts = [];
         const suiteName = name || "testSuite"; // Ensure name is never undefined
         if (!suiteName) {
             throw new Error("BaseSuite requires a non-empty name");
         }
-        console.log("[DEBUG] BaseSuite constructor - name:", suiteName, "index:", index);
         this.name = suiteName;
         this.index = index;
         this.givens = givens;
         this.fails = 0;
-        console.log("[DEBUG] BaseSuite initialized:", this.name, this.index);
-        console.log("[DEBUG] BaseSuite givens:", Object.keys(givens).toString());
     }
     features() {
         try {
@@ -24,11 +27,10 @@ class BaseSuite {
                 .filter((value, index, array) => {
                 return array.indexOf(value) === index;
             });
-            console.debug("[DEBUG] Features extracted:", features.toString());
             return features || [];
         }
         catch (e) {
-            console.error("[ERROR] Failed to extract features:", e);
+            console.error("[ERROR] Failed to extract features:", JSON.stringify(e));
             return [];
         }
     }
@@ -52,6 +54,7 @@ class BaseSuite {
         return store;
     }
     async run(input, testResourceConfiguration, artifactory, tLog, pm) {
+        console.log("mark19");
         this.testResourceConfiguration = testResourceConfiguration;
         // tLog("test resources: ", JSON.stringify(testResourceConfiguration));
         const suiteArtifactory = (fPath, value) => artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
@@ -59,23 +62,32 @@ class BaseSuite {
         tLog("\nSuite:", this.index, this.name);
         const sNdx = this.index;
         // const sName = this.name;
-        const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, (0, pmProxy_1.beforeAllProxy)(pm, sNdx.toString()));
+        const proxiedPm = (0, pmProxy_1.beforeAllProxy)(pm, sNdx.toString(), this);
+        // (proxiedPm as any).currentStep = this;
+        const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, proxiedPm);
+        console.log("mark40");
         for (const [gKey, g] of Object.entries(this.givens)) {
+            // console.log("mark22", gKey);
             const giver = this.givens[gKey];
+            console.log("mark44");
             this.store = await giver
                 .give(subject, gKey, testResourceConfiguration, this.assertThat, suiteArtifactory, tLog, pm, sNdx)
                 .catch((e) => {
+                console.log("mark42");
                 this.failed = true;
                 this.fails = this.fails + 1;
-                // console.error("Given error 1:", e.toString());
                 throw e;
             });
+            console.log("mark43");
         }
+        console.log("mark41");
         try {
-            this.afterAll(this.store, artifactory, (0, pmProxy_1.afterAllProxy)(pm, sNdx.toString()));
+            const afterAllPm = (0, pmProxy_1.afterAllProxy)(pm, sNdx.toString(), this);
+            // (afterAllPm as any).currentStep = this;
+            this.afterAll(this.store, artifactory, afterAllPm);
         }
         catch (e) {
-            console.error(e);
+            console.error(JSON.stringify(e));
             // this.fails.push(this);
             // return this;
         }

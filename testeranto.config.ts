@@ -4,30 +4,30 @@ import { IProject } from "./src/Types";
 
 const config: IProject = {
   projects: {
-    staticSite: {
-      tests: [["src/ReportServer.test.ts/index.ts", "node", { ports: 1 }, []]],
-      clearScreen: false,
-      debugger: false,
-      externals: [],
-      featureIngestor: function (s: string): Promise<string> {
-        throw new Error("Function not implemented.");
-      },
-      importPlugins: [],
-      minify: false,
-      nodePlugins: [],
-      ports: ["3334"],
-      src: "",
-      webPlugins: [],
-    },
+    // staticSite: {
+    //   tests: [["src/ReportServer.test.ts/index.ts", "node", { ports: 1 }, []]],
+    //   clearScreen: false,
+    //   debugger: false,
+    //   externals: [],
+    //   featureIngestor: function (s: string): Promise<string> {
+    //     throw new Error("Function not implemented.");
+    //   },
+    //   importPlugins: [],
+    //   minify: false,
+    //   nodePlugins: [],
+    //   ports: ["3334"],
+    //   src: "",
+    //   webPlugins: [],
+    // },
 
     core: {
       tests: [
-        // [
-        //   "src/components/pure/ProjectPageView.test/index.ts",
-        //   "web",
-        //   { ports: 0 },
-        //   [],
-        // ],
+        [
+          "src/components/pure/ProjectPageView.test/index.ts",
+          "web",
+          { ports: 0 },
+          [],
+        ],
 
         // ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
         // ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
@@ -43,24 +43,24 @@ const config: IProject = {
         //   [],
         // ],
 
-        [
-          "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
-          "node",
-          { ports: 0 },
-          [],
-        ],
-        [
-          "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
-          "pure",
-          { ports: 0 },
-          [],
-        ],
-        [
-          "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
-          "web",
-          { ports: 0 },
-          [],
-        ],
+        // [
+        //   "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
+        //   "node",
+        //   { ports: 0 },
+        //   [],
+        // ],
+        // [
+        //   "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
+        //   "pure",
+        //   { ports: 0 },
+        //   [],
+        // ],
+        // [
+        //   "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
+        //   "web",
+        //   { ports: 0 },
+        //   [],
+        // ],
 
         // ["src/mothership/test.ts", "node", { ports: 0 }, []],
         // ["./src/lib/abstractBase/index.ts", "node", { ports: 0 }, []],

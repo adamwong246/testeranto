@@ -16,7 +16,7 @@ export declare abstract class BaseGiven<I extends Ibdd_in_any> {
     key: string;
     failed: boolean;
     artifacts: string[];
-    protected addArtifact(path: string): void;
+    addArtifact(path: string): void;
     constructor(name: string, features: string[], whens: BaseWhen<I>[], thens: BaseThen<I>[], givenCB: I["given"], initialValues: any);
     beforeAll(store: I["istore"]): I["istore"];
     toObj(): {
@@ -43,16 +43,13 @@ export declare abstract class BaseWhen<I extends Ibdd_in_any> {
     whenCB: (x: I["iselection"]) => I["then"];
     error: Error;
     artifacts: string[];
+    addArtifact(path: string): void;
     constructor(name: string, whenCB: (xyz: I["iselection"]) => I["then"]);
     abstract andWhen(store: I["istore"], whenCB: (x: I["iselection"]) => I["then"], testResource: any, pm: IPM): Promise<any>;
     toObj(): {
         name: string;
-        error: string;
+        error: string | null;
         artifacts: string[];
-    } | {
-        name: string;
-        artifacts: string[];
-        error?: undefined;
     };
     test(store: I["istore"], testResourceConfiguration: any, tLog: ITLog, pm: IPM, filepath: string): Promise<any>;
 }
@@ -62,6 +59,7 @@ export declare abstract class BaseThen<I extends Ibdd_in_any> {
     error: boolean;
     artifacts: string[];
     constructor(name: string, thenCB: (val: I["iselection"]) => Promise<I["then"]>);
+    addArtifact(path: string): void;
     toObj(): {
         name: string;
         error: boolean;

@@ -1,0 +1,2 @@
+
+Fix the failing tests described in testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/tests.json and testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/logs.txt. Focus on the bdd tests before all other concerns. You may add any debugging you think is necessary.

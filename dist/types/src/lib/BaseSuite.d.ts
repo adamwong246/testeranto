@@ -10,6 +10,8 @@ export declare abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_ou
     index: number;
     failed: boolean;
     fails: number;
+    artifacts: string[];
+    addArtifact(path: string): void;
     constructor(name: string, index: number, givens?: IGivens<I>);
     features(): string[];
     toObj(): {

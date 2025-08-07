@@ -42,16 +42,16 @@ exports.PM_Main = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const node_child_process_1 = require("node:child_process");
+const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const net_1 = __importDefault(require("net"));
 const fs_1 = __importStar(require("fs"));
 const path_1 = __importDefault(require("path"));
 const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
-const ansi_colors_1 = __importDefault(require("ansi-colors"));
+const ansi_colors_2 = __importDefault(require("ansi-colors"));
 const node_crypto_1 = __importDefault(require("node:crypto"));
 const utils_1 = require("../utils");
 const queue_js_1 = require("../utils/queue.js");
 const PM_WithEslintAndTsc_js_1 = require("./PM_WithEslintAndTsc.js");
-const ansi_colors_2 = __importDefault(require("ansi-colors"));
 const changes = {};
 const fileHashes = {};
 const files = {};
@@ -74,10 +74,10 @@ async function fileHash(filePath, algorithm = "md5") {
 }
 const statusMessagePretty = (failures, test, runtime) => {
     if (failures === 0) {
-        console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`${runtime} > ${test} completed successfully`)));
+        console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`${runtime} > ${test} completed successfully`)));
     }
     else {
-        console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`${runtime} > ${test} failed ${failures} times`)));
+        console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${runtime} > ${test} failed ${failures} times`)));
     }
 };
 async function writeFileAndCreateDir(filePath, data) {
@@ -108,12 +108,10 @@ function isValidUrl(string) {
 }
 // Wait for file to exist, checks every 2 seconds by default
 async function pollForFile(path, timeout = 2000) {
-    console.log(`pollForFile: ${path}...`);
     const intervalObj = setInterval(function () {
         const file = path;
         const fileExists = fs_1.default.existsSync(file);
         if (fileExists) {
-            console.log(`metafile found: ${path}!`);
             clearInterval(intervalObj);
         }
     }, timeout);
@@ -132,7 +130,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             return (0, utils_1.getRunnables)(tests, testName, payload);
         };
         this.launchPure = async (src, dest) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`pure < ${src}`)));
+            console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`pure < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
@@ -147,7 +145,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 return t[0] === src;
             });
             if (!testConfig) {
-                console.log(ansi_colors_1.default.inverse("missing test config! Exiting ungracefully!"));
+                console.log(ansi_colors_2.default.inverse("missing test config! Exiting ungracefully!"));
                 process.exit(-1);
             }
             const testConfigResource = testConfig[2];
@@ -224,7 +222,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                             this.bddTestIsNowDone(src, results.fails);
                         })
                             .catch((e1) => {
-                            console.log(ansi_colors_1.default.red(`launchPure - ${src} errored with: ${e1}`));
+                            console.log(ansi_colors_2.default.red(`launchPure - ${src} errored with: ${e1}`));
                             this.bddTestIsNowDone(src, -1);
                             statusMessagePretty(-1, src, "pure");
                         });
@@ -233,7 +231,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         // });
                     })
                         .catch((e2) => {
-                        console.log(ansi_colors_2.default.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
+                        console.log(ansi_colors_1.default.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                         this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
                         this.bddTestIsNowDone(src, -1);
                         statusMessagePretty(-1, src, "pure");
@@ -249,7 +247,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 });
             }
             catch (e3) {
-                console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`${src} 1 errored with: ${e3}. Check ${reportDest}/logs.txt for more info`)));
+                console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} 1 errored with: ${e3}. Check ${reportDest}/logs.txt for more info`)));
                 this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
                 this.bddTestIsNowDone(src, -1);
                 statusMessagePretty(-1, src, "pure");
@@ -262,7 +260,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             }
         };
         this.launchNode = async (src, dest) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`node < ${src}`)));
+            console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`node < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
@@ -277,7 +275,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 return t[0] === src;
             });
             if (!testConfig) {
-                console.log(ansi_colors_1.default.inverse(`missing test config! Exiting ungracefully for '${src}'`));
+                console.log(ansi_colors_2.default.inverse(`missing test config! Exiting ungracefully for '${src}'`));
                 process.exit(-1);
             }
             const testConfigResource = testConfig[2];
@@ -308,7 +306,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     });
                 }
                 else {
-                    console.log(ansi_colors_1.default.red(`node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`));
+                    console.log(ansi_colors_2.default.red(`node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`));
                     this.queue.push(src);
                     return;
                 }
@@ -394,7 +392,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     //   JSON.stringify(Array.from(files[src]))
                     // );
                     if (code === 255) {
-                        console.log(ansi_colors_2.default.red(`node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
+                        console.log(ansi_colors_1.default.red(`node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                         this.bddTestIsNowDone(src, -1);
                         statusMessagePretty(-1, src, "node");
                         oStream.close();
@@ -421,7 +419,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 child.on("error", (e) => {
                     console.log("error");
                     haltReturns = true;
-                    console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`${src} errored with: ${e.name}. Check ${errFile} for more info`)));
+                    console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} errored with: ${e.name}. Check ${errFile} for more info`)));
                     this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
                     this.bddTestIsNowDone(src, -1);
                     statusMessagePretty(-1, src, "node");
@@ -433,7 +431,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             const dest = src.split(".").slice(0, -1).join(".");
             // const d = dest + ".mjs";
             const destFolder = dest.replace(".mjs", "");
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`launchWebSideCar ${src}`)));
+            console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`launchWebSideCar ${src}`)));
             const fileStreams2 = [];
             const doneFileStream2 = [];
             const oStream = fs_1.default.createWriteStream(`${destFolder}/logs.txt`);
@@ -512,7 +510,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         this.bddTestIsNowDone(src, fails);
                     })
                         .catch((e) => {
-                        console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`launchWebSidecar - ${src} errored with: ${e}`)));
+                        console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`launchWebSidecar - ${src} errored with: ${e}`)));
                     })
                         .finally(() => {
                         this.bddTestIsNowDone(src, -1);
@@ -532,7 +530,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             const src = sidecar[0];
             const dest = process.cwd() + `/testeranto/bundles/node/${this.name}/${sidecar[0]}`;
             const d = dest + ".mjs";
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`launchNodeSideCar ${sidecar[0]}`)));
+            console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`launchNodeSideCar ${sidecar[0]}`)));
             const destFolder = dest.replace(".ts", "");
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
@@ -631,7 +629,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                                 fs_1.default.rmSync(p);
                             }
                             haltReturns = true;
-                            console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`)));
+                            console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`)));
                             this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
                             // this.bddTestIsNowDone(src, -1);
                             // statusMessagePretty(-1, src);
@@ -643,7 +641,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     return [r, argz];
                 }
                 else {
-                    console.log(ansi_colors_1.default.red(`cannot ${src} because there are no open ports. the job will be unqueued`));
+                    console.log(ansi_colors_2.default.red(`cannot ${src} because there are no open ports. the job will be unqueued`));
                     this.queue.push(sidecar[0]);
                     return [Math.random(), argz];
                 }
@@ -654,12 +652,12 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             }
         };
         this.stopPureSideCar = async (uid) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`stopPureSideCar ${uid}`)));
+            console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`stopPureSideCar ${uid}`)));
             await this.sidecars[uid].shutdown();
             return;
         };
         this.launchPureSideCar = async (sidecar) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`launchPureSideCar ${sidecar[0]}`)));
+            console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`launchPureSideCar ${sidecar[0]}`)));
             const r = Math.random();
             const dest = process.cwd() + `/testeranto/bundles/pure/${this.name}/${sidecar[0]}`;
             const builtfile = dest.split(".").slice(0, -1).concat("mjs").join(".");
@@ -716,7 +714,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             // }
         };
         this.launchWeb = async (src, dest) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`web < ${src}`)));
+            console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`web < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src
                 .split(".")
@@ -733,16 +731,6 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 browserWSEndpoint: this.browser.wsEndpoint(),
             });
             const d = `${dest}?cacheBust=${Date.now()}`;
-            const evaluation = `
-
-    import('${d}').then(async (x) => {
-
-      try {
-        return await (await x.default).receiveTestResourceConfig(${webArgz})
-      } catch (e) {
-        console.log("web run failure", e.toString())
-      }
-    })`;
             const ofile = `${reportDest}/logs.txt`;
             const oStream = fs_1.default.createWriteStream(ofile);
             this.browser
@@ -781,11 +769,10 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         page.close();
                         oStream.close();
                     });
-                    console.log("ostream is closed");
                     return;
                 };
                 page.on("pageerror", (err) => {
-                    console.log(ansi_colors_2.default.red(`web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
+                    console.log(ansi_colors_1.default.red(`web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`));
                     oStream.write(err.name);
                     oStream.write("\n");
                     if (err.cause) {
@@ -820,19 +807,28 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 });
                 await page.goto(`file://${`${destFolder}.html`}`, {});
                 await page
-                    .evaluate(evaluation)
+                    .evaluate(`
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`)
                     .then(async ({ fails, failed, features }) => {
                     statusMessagePretty(fails, src, "web");
                     this.bddTestIsNowDone(src, fails);
-                    close();
+                    // close();
                 })
                     .catch((e) => {
-                    console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(e)));
-                    console.log(ansi_colors_1.default.red(ansi_colors_1.default.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`)));
+                    console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(e.stack)));
+                    console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`)));
                     this.bddTestIsNowDone(src, -1);
                 })
                     .finally(() => {
                     // process.exit(-1);
+                    close();
                 });
                 return page;
             });
@@ -904,40 +900,40 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
         this.checkForShutdown = () => {
             // console.log(ansiC.inverse(JSON.stringify(this.summary, null, 2)));
             this.checkQueue();
-            console.log(ansi_colors_1.default.inverse(`The following jobs are awaiting resources: ${JSON.stringify(this.queue)}`));
-            console.log(ansi_colors_1.default.inverse(`The status of ports: ${JSON.stringify(this.ports)}`));
+            console.log(ansi_colors_2.default.inverse(`The following jobs are awaiting resources: ${JSON.stringify(this.queue)}`));
+            console.log(ansi_colors_2.default.inverse(`The status of ports: ${JSON.stringify(this.ports)}`));
             this.writeBigBoard();
             if (this.mode === "dev")
                 return;
             let inflight = false;
             Object.keys(this.summary).forEach((k) => {
                 if (this.summary[k].prompt === "?") {
-                    console.log(ansi_colors_1.default.blue(ansi_colors_1.default.inverse(`🕕 prompt ${k}`)));
+                    console.log(ansi_colors_2.default.blue(ansi_colors_2.default.inverse(`🕕 prompt ${k}`)));
                     inflight = true;
                 }
             });
             Object.keys(this.summary).forEach((k) => {
                 if (this.summary[k].runTimeErrors === "?") {
-                    console.log(ansi_colors_1.default.blue(ansi_colors_1.default.inverse(`🕕 runTimeError ${k}`)));
+                    console.log(ansi_colors_2.default.blue(ansi_colors_2.default.inverse(`🕕 runTimeError ${k}`)));
                     inflight = true;
                 }
             });
             Object.keys(this.summary).forEach((k) => {
                 if (this.summary[k].staticErrors === "?") {
-                    console.log(ansi_colors_1.default.blue(ansi_colors_1.default.inverse(`🕕 staticErrors ${k}`)));
+                    console.log(ansi_colors_2.default.blue(ansi_colors_2.default.inverse(`🕕 staticErrors ${k}`)));
                     inflight = true;
                 }
             });
             Object.keys(this.summary).forEach((k) => {
                 if (this.summary[k].typeErrors === "?") {
-                    console.log(ansi_colors_1.default.blue(ansi_colors_1.default.inverse(`🕕 typeErrors ${k}`)));
+                    console.log(ansi_colors_2.default.blue(ansi_colors_2.default.inverse(`🕕 typeErrors ${k}`)));
                     inflight = true;
                 }
             });
             this.writeBigBoard();
             if (!inflight) {
                 this.browser.disconnect().then(() => {
-                    console.log(ansi_colors_1.default.inverse(`${this.name} has been tested. Goodbye.`));
+                    console.log(ansi_colors_2.default.inverse(`${this.name} has been tested. Goodbye.`));
                     process.exit();
                 });
             }
@@ -953,7 +949,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
         });
     }
     async stopSideCar(uid) {
-        console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`stopSideCar ${uid}`)));
+        console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`stopSideCar ${uid}`)));
         Object.entries(this.pureSidecars).forEach(async ([k, v]) => {
             if (Number(k) === uid) {
                 await this.pureSidecars[Number(k)].stop();
@@ -1118,7 +1114,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         const hash = await fileHash(outputFile);
                         if (fileHashes[inputFile] !== hash) {
                             fileHashes[inputFile] = hash;
-                            console.log(ansi_colors_1.default.yellow(ansi_colors_1.default.inverse(`< ${e} ${filename}`)));
+                            console.log(ansi_colors_2.default.yellow(ansi_colors_2.default.inverse(`< ${e} ${filename}`)));
                             // launcher(inputFile, outputFile);
                             this.launchers[inputFile]();
                         }
@@ -1130,7 +1126,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             });
             this.metafileOutputs(runtime);
             watcher((0, fs_1.watch)(metafile, async (e, filename) => {
-                console.log(ansi_colors_1.default.yellow(ansi_colors_1.default.inverse(`< ${e} ${filename} (${runtime})`)));
+                console.log(ansi_colors_2.default.yellow(ansi_colors_2.default.inverse(`< ${e} ${filename} (${runtime})`)));
                 this.metafileOutputs(runtime);
             }));
         });
@@ -1169,7 +1165,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     //   // });
     // }
     async stop() {
-        console.log(ansi_colors_1.default.inverse("Testeranto-Run is shutting down gracefully..."));
+        console.log(ansi_colors_2.default.inverse("Testeranto-Run is shutting down gracefully..."));
         this.mode = "once";
         this.nodeMetafileWatcher.close();
         this.webMetafileWatcher.close();
@@ -1223,7 +1219,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     checkQueue() {
         const x = this.queue.pop();
         if (!x) {
-            ansi_colors_1.default.inverse(`The following queue is empty`);
+            ansi_colors_2.default.inverse(`The following queue is empty`);
             return;
         }
         const test = this.configs.tests.find((t) => t[0] === x);

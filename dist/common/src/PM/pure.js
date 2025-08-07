@@ -85,7 +85,10 @@ class PM_Pure extends _1.PM {
     write(uid, contents) {
         return globalThis["write"](uid, contents);
     }
-    writeFileSync(filepath, contents) {
+    writeFileSync(x) {
+        const z = arguments["0"];
+        const filepath = z[0];
+        const contents = z[1];
         return globalThis["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {

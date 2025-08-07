@@ -15,11 +15,11 @@ export const testAdapter = {
         // };
     },
     andWhen: async (store, whenCB, testResource, pm) => {
-        const proxiedPM = andWhenProxy(pm, "some/path");
+        const proxiedPM = andWhenProxy(pm, "some/path", store);
         return whenCB(store, proxiedPM);
     },
     butThen: async (store, thenCB, testResource, pm) => {
-        const proxiedPM = butThenProxy(pm, "some/path");
+        const proxiedPM = butThenProxy(pm, "some/path", store);
         return thenCB(store, proxiedPM);
     },
     afterEach: async (store, key, pm) => store,

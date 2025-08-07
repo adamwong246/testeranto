@@ -28,11 +28,11 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
   key: string;
   failed: boolean;
   artifacts: string[] = [];
-  protected addArtifact(path: string) {
-    console.log(`[Artifact] Adding to ${this.constructor.name}:`, path);
-    // console.log("mark111");
-    // process.exit();
-    this.artifacts.push(path);
+
+  addArtifact(path: string) {
+    console.log("Given addArtifact", path);
+    const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
+    this.artifacts.push(normalizedPath);
   }
 
   constructor(
@@ -62,7 +62,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
       whens: this.whens.map((w) => {
         if (w && w.toObj) return w.toObj();
 
-        console.error("w is not as expected!", w.toString());
+        console.error("w is not as expected!", JSON.stringify(w));
         return {};
       }),
       thens: this.thens.map((t) => t.toObj()),
@@ -118,9 +118,11 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     });
 
     try {
-      const proxiedPm = beforeEachProxy(pm, suiteNdx.toString());
-      console.log(`[Given] Setting currentStep for beforeEach:`, this.name);
-      (proxiedPm as any).currentStep = this;
+      const proxiedPm = beforeEachProxy(
+        pm,
+        suiteNdx.toString(),
+        this.addArtifact.bind(this)
+      );
       this.store = await this.givenThat(
         subject,
         testResourceConfiguration,
@@ -130,9 +132,9 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
         proxiedPm
       );
     } catch (e) {
-      console.error("Given failure: ", e.toString());
-      this.error = e;
-      throw e;
+      // console.error("Given failure: ", e.stack);
+      this.error = e.stack;
+      // throw e;
     }
 
     try {
@@ -157,9 +159,6 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
           `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
         );
         tester(t);
-        // ((t) => {
-        //   return tester(t);
-        // })();
       }
     } catch (e) {
       this.failed = true;
@@ -167,21 +166,22 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
       throw e;
     } finally {
       try {
-        await this.afterEach(
-          this.store,
-          this.key,
-          givenArtifactory,
-
-          afterEachProxy(pm, suiteNdx.toString(), key)
+        const proxiedPm = afterEachProxy(
+          pm,
+          suiteNdx.toString(),
+          key,
+          this.addArtifact.bind(this)
         );
+        // (proxiedPm as any).currentStep = this;
+        await this.afterEach(this.store, this.key, givenArtifactory, proxiedPm);
       } catch (e) {
-        console.error("afterEach failed!", e.toString());
         this.failed = e;
         throw e;
 
         // this.error = e.message;
       }
     }
+
     return this.store;
   }
 }
@@ -190,7 +190,14 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   public name: string;
   whenCB: (x: I["iselection"]) => I["then"];
   error: Error;
+
   artifacts: string[] = [];
+
+  addArtifact(path: string) {
+    console.log("When addArtifact", path);
+    const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
+    this.artifacts.push(normalizedPath);
+  }
 
   constructor(name: string, whenCB: (xyz: I["iselection"]) => I["then"]) {
     this.name = name;
@@ -205,20 +212,18 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   ): Promise<any>;
 
   toObj() {
-    console.log("toObj error", this.error);
-
-    if (this.error) {
-      return {
-        name: this.name,
-        error: this.error && this.error.name + this.error.stack,
-        artifacts: this.artifacts,
-      };
-    } else {
-      return {
-        name: this.name,
-        artifacts: this.artifacts,
-      };
-    }
+    const obj = {
+      name: this.name,
+      error: this.error
+        ? `${this.error.name}: ${this.error.message}\n${this.error.stack}`
+        : null,
+      artifacts: this.artifacts || [],
+    };
+    console.log(
+      `[TOOBJ] Serializing ${this.constructor.name} with artifacts:`,
+      obj.artifacts
+    );
+    return obj;
   }
 
   async test(
@@ -229,12 +234,10 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
     filepath: string
   ) {
     try {
-      tLog(" When:", this.name);
-      console.debug("[DEBUG] Executing When step:", this.name.toString());
+      // tLog(" When:", this.name);
+      const proxiedPm = andWhenProxy(pm, filepath, this.addArtifact.bind(this));
 
-      const proxiedPm = andWhenProxy(pm, filepath);
-      console.log(`[When] Setting currentStep for andWhen:`, this.name);
-      (proxiedPm as any).currentStep = this;
+      // (proxiedPm as any).currentStep = this;
       const result = await this.andWhen(
         store,
         this.whenCB,
@@ -242,9 +245,8 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
         proxiedPm
       );
 
-      console.debug("[DEBUG] When step completed:", this.name.toString());
       return result;
-    } catch (e: Error) {
+    } catch (e: any) {
       console.error(
         "[ERROR] When step failed:",
         this.name.toString(),
@@ -269,14 +271,22 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     this.name = name;
     this.thenCB = thenCB;
     this.error = false;
+    this.artifacts = [];
+  }
+
+  addArtifact(path: string) {
+    console.log("Then addArtifact", path);
+    const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
+    this.artifacts.push(normalizedPath);
   }
 
   toObj() {
-    return {
+    const obj = {
       name: this.name,
       error: this.error,
       artifacts: this.artifacts,
     };
+    return obj;
   }
 
   abstract butThen(
@@ -294,9 +304,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     pm: IPM,
     filepath: string
   ): Promise<I["then"] | undefined> {
-    const proxiedPm = butThenProxy(pm, filepath);
-    console.log(`[Then] Setting currentStep for butThen:`, this.name);
-    (proxiedPm as any).currentStep = this;
+    const proxiedPm = butThenProxy(pm, filepath, this.addArtifact.bind(this));
     return this.butThen(
       store,
       async (s: I["iselection"]) => {
@@ -307,9 +315,9 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
         }
       },
       testResourceConfiguration,
-      butThenProxy(pm, filepath)
+      proxiedPm
     ).catch((e) => {
-      this.error = e.toString();
+      this.error = e.stack;
       // throw e;
     });
   }

@@ -39,14 +39,8 @@ export class PureTesteranto<
   }
 
   async receiveTestResourceConfig(partialTestResource: string) {
-    console.log(
-      "[DEBUG] receiveTestResourceConfig called with:",
-      partialTestResource
-    );
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Pure(t);
-
-    // console.log("[DEBUG] Current test jobs:", this.testJobs?.length);
 
     // if (!this.testJobs || this.testJobs.length === 0) {
     //   console.error(
@@ -64,9 +58,7 @@ export class PureTesteranto<
     // }
 
     try {
-      console.log("[DEBUG] Executing test job with PM:", pm);
       const result = await this.testJobs[0].receiveTestResourceConfig(pm);
-      console.log("[DEBUG] Test job completed with result:", result);
       return result;
     } catch (e) {
       console.error("[ERROR] Test job failed:", e);

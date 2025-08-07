@@ -3,10 +3,9 @@
 import { afterEachProxy, andWhenProxy, beforeEachProxy, butThenProxy, } from "./pmProxy.js";
 export class BaseGiven {
     addArtifact(path) {
-        console.log(`[Artifact] Adding to ${this.constructor.name}:`, path);
-        // console.log("mark111");
-        // process.exit();
-        this.artifacts.push(path);
+        console.log("Given addArtifact", path);
+        const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
+        this.artifacts.push(normalizedPath);
     }
     constructor(name, features, whens, thens, givenCB, initialValues) {
         this.artifacts = [];
@@ -27,7 +26,7 @@ export class BaseGiven {
             whens: this.whens.map((w) => {
                 if (w && w.toObj)
                     return w.toObj();
-                console.error("w is not as expected!", w.toString());
+                console.error("w is not as expected!", JSON.stringify(w));
                 return {};
             }),
             thens: this.thens.map((t) => t.toObj()),
@@ -41,6 +40,7 @@ export class BaseGiven {
         return store;
     }
     async give(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm, suiteNdx) {
+        console.log("mark70");
         this.key = key;
         tLog(`\n ${this.key}`);
         tLog(`\n Given: ${this.name}`);
@@ -51,16 +51,20 @@ export class BaseGiven {
             tLog(e.stack);
         });
         try {
-            const proxiedPm = beforeEachProxy(pm, suiteNdx.toString());
-            console.log(`[Given] Setting currentStep for beforeEach:`, this.name);
-            proxiedPm.currentStep = this;
+            console.log("mark787");
+            const proxiedPm = beforeEachProxy(pm, suiteNdx.toString(), this.addArtifact.bind(this));
+            console.log("mark786");
+            // (proxiedPm as any).currentStep = this;
             this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, proxiedPm);
+            console.log("mark788");
         }
         catch (e) {
-            console.error("Given failure: ", e.toString());
+            console.log("mark78");
+            console.error("Given failure: ", e.stack);
             this.error = e;
-            throw e;
+            // throw e;
         }
+        console.log("mark71");
         try {
             // tLog(`\n Given this.store`, this.store);
             for (const [whenNdx, whenStep] of this.whens.entries()) {
@@ -69,22 +73,23 @@ export class BaseGiven {
             for (const [thenNdx, thenStep] of this.thens.entries()) {
                 const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`);
                 tester(t);
-                // ((t) => {
-                //   return tester(t);
-                // })();
             }
         }
         catch (e) {
             this.failed = true;
             tLog(e.stack);
+            console.log("mark72");
             throw e;
         }
         finally {
             try {
-                await this.afterEach(this.store, this.key, givenArtifactory, afterEachProxy(pm, suiteNdx.toString(), key));
+                const proxiedPm = afterEachProxy(pm, suiteNdx.toString(), key, this.addArtifact.bind(this));
+                // (proxiedPm as any).currentStep = this;
+                await this.afterEach(this.store, this.key, givenArtifactory, proxiedPm);
             }
             catch (e) {
                 console.error("afterEach failed!", e.toString());
+                console.log("mark77");
                 this.failed = e;
                 throw e;
                 // this.error = e.message;
@@ -94,36 +99,33 @@ export class BaseGiven {
     }
 }
 export class BaseWhen {
+    addArtifact(path) {
+        console.log("When addArtifact", path);
+        const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
+        this.artifacts.push(normalizedPath);
+    }
     constructor(name, whenCB) {
         this.artifacts = [];
         this.name = name;
         this.whenCB = whenCB;
     }
     toObj() {
-        console.log("toObj error", this.error);
-        if (this.error) {
-            return {
-                name: this.name,
-                error: this.error && this.error.name + this.error.stack,
-                artifacts: this.artifacts,
-            };
-        }
-        else {
-            return {
-                name: this.name,
-                artifacts: this.artifacts,
-            };
-        }
+        const obj = {
+            name: this.name,
+            error: this.error
+                ? `${this.error.name}: ${this.error.message}\n${this.error.stack}`
+                : null,
+            artifacts: this.artifacts || [],
+        };
+        console.log(`[TOOBJ] Serializing ${this.constructor.name} with artifacts:`, obj.artifacts);
+        return obj;
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
         try {
-            tLog(" When:", this.name);
-            console.debug("[DEBUG] Executing When step:", this.name.toString());
-            const proxiedPm = andWhenProxy(pm, filepath);
-            console.log(`[When] Setting currentStep for andWhen:`, this.name);
-            proxiedPm.currentStep = this;
+            // tLog(" When:", this.name);
+            const proxiedPm = andWhenProxy(pm, filepath, this.addArtifact.bind(this));
+            // (proxiedPm as any).currentStep = this;
             const result = await this.andWhen(store, this.whenCB, testResourceConfiguration, proxiedPm);
-            console.debug("[DEBUG] When step completed:", this.name.toString());
             return result;
         }
         catch (e) {
@@ -139,18 +141,23 @@ export class BaseThen {
         this.name = name;
         this.thenCB = thenCB;
         this.error = false;
+        this.artifacts = [];
+    }
+    addArtifact(path) {
+        console.log("Then addArtifact", path);
+        const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
+        this.artifacts.push(normalizedPath);
     }
     toObj() {
-        return {
+        const obj = {
             name: this.name,
             error: this.error,
             artifacts: this.artifacts,
         };
+        return obj;
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
-        const proxiedPm = butThenProxy(pm, filepath);
-        console.log(`[Then] Setting currentStep for butThen:`, this.name);
-        proxiedPm.currentStep = this;
+        const proxiedPm = butThenProxy(pm, filepath, this.addArtifact.bind(this));
         return this.butThen(store, async (s) => {
             if (typeof this.thenCB === "function") {
                 return await this.thenCB(s, proxiedPm);
@@ -158,8 +165,8 @@ export class BaseThen {
             else {
                 return this.thenCB;
             }
-        }, testResourceConfiguration, butThenProxy(pm, filepath)).catch((e) => {
-            this.error = e.toString();
+        }, testResourceConfiguration, proxiedPm).catch((e) => {
+            this.error = e.stack;
             // throw e;
         });
     }

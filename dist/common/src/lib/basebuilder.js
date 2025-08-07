@@ -18,9 +18,11 @@ class BaseBuilder {
         this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then());
         this.testJobs = this.specs.map((suite) => {
             const suiteRunner = (suite) => async (puppetMaster, tLog) => {
+                console.log("mark17");
                 const x = await suite.run(input, puppetMaster.testResourceConfiguration, (fPath, value) => puppetMaster.testArtiFactoryfileWriter(tLog, (p) => {
                     this.artifacts.push(p);
                 })(puppetMaster.testResourceConfiguration.fs + "/" + fPath, value), tLog, puppetMaster);
+                console.log("mark18");
                 return x;
             };
             const runner = suiteRunner(suite);
@@ -39,7 +41,9 @@ class BaseBuilder {
                     const tLog = async (...l) => {
                         //
                     };
+                    console.log("mark14");
                     const suiteDone = await runner(puppetMaster, tLog);
+                    console.log("mark15");
                     // const logPromise = new Promise(async (res) => {
                     //   await puppetMaster.end(access);
                     //   res(true);
@@ -53,6 +57,7 @@ class BaseBuilder {
                         `tests.json`,
                         JSON.stringify(this.toObj(), null, 2),
                     ]);
+                    console.log("mark13");
                     return {
                         failed: fails > 0,
                         fails,

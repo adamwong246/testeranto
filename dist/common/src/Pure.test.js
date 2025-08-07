@@ -53,7 +53,7 @@ const implementation = {
         modifySpecs: (modifier) => (store) => {
             console.debug("[DEBUG] Modifying specs");
             return Object.assign(Object.assign({}, store), { specs: modifier(store.specs || []) });
-        }
+        },
     },
     thens: {
         initializedProperly: () => (store) => {

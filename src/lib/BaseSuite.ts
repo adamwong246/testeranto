@@ -14,23 +14,24 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   failed: boolean;
   fails: number;
 
+  artifacts: string[] = [];
+
+  addArtifact(path: string) {
+    console.log("Suite addArtifact", path);
+    const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
+    this.artifacts.push(normalizedPath);
+  }
+
   constructor(name: string, index: number, givens: IGivens<I> = {}) {
     const suiteName = name || "testSuite"; // Ensure name is never undefined
     if (!suiteName) {
       throw new Error("BaseSuite requires a non-empty name");
     }
-    console.log(
-      "[DEBUG] BaseSuite constructor - name:",
-      suiteName,
-      "index:",
-      index
-    );
+
     this.name = suiteName;
     this.index = index;
     this.givens = givens;
     this.fails = 0;
-    console.log("[DEBUG] BaseSuite initialized:", this.name, this.index);
-    console.log("[DEBUG] BaseSuite givens:", Object.keys(givens).toString());
   }
 
   public features() {
@@ -41,10 +42,9 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
         .filter((value, index, array) => {
           return array.indexOf(value) === index;
         });
-      console.debug("[DEBUG] Features extracted:", features.toString());
       return features || [];
     } catch (e) {
-      console.error("[ERROR] Failed to extract features:", e);
+      console.error("[ERROR] Failed to extract features:", JSON.stringify(e));
       return [];
     }
   }
@@ -92,15 +92,14 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
       artifactory(`suite-${this.index}-${this.name}/${fPath}`, value);
 
     // console.log("\nSuite:", this.index, this.name);
-    tLog("\nSuite:", this.index, this.name);
+    // tLog("\nSuite:", this.index, this.name);
     const sNdx = this.index;
-    // const sName = this.name;
-
+    const proxiedPm = beforeAllProxy(pm, sNdx.toString(), this);
     const subject = await this.setup(
       input,
       suiteArtifactory,
       testResourceConfiguration,
-      beforeAllProxy(pm, sNdx.toString())
+      proxiedPm
     );
 
     for (const [gKey, g] of Object.entries(this.givens)) {
@@ -119,19 +118,15 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
         .catch((e) => {
           this.failed = true;
           this.fails = this.fails + 1;
-          // console.error("Given error 1:", e.toString());
           throw e;
         });
     }
 
     try {
-      this.afterAll(
-        this.store,
-        artifactory,
-        afterAllProxy(pm, sNdx.toString())
-      );
+      const afterAllPm = afterAllProxy(pm, sNdx.toString(), this);
+      this.afterAll(this.store, artifactory, afterAllPm);
     } catch (e) {
-      console.error(e);
+      console.error(JSON.stringify(e));
       // this.fails.push(this);
       // return this;
     }

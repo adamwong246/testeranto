@@ -120,9 +120,15 @@ server.on("error", (err) => {
 process.on("uncaughtException", (err) => {
     console.error("Uncaught exception:", err);
 });
-const start = (port) => server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-    console.log("Serving files from:", process.cwd());
-});
+const start = (port) => {
+    if (port) {
+        server.listen(port, () => {
+            console.log(`Server running on http://localhost:${port}`);
+            console.log("Serving files from:", process.cwd());
+        });
+    }
+    else {
+        console.log("you need to specify a port");
+    }
+};
 export const ReportServerOfPort = (port) => start(port);
-// export default () => start(process.argv[2]);

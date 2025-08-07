@@ -80,7 +80,10 @@ export class PM_Web extends PM {
     write(uid, contents) {
         return window["write"](uid, contents);
     }
-    writeFileSync([filepath, contents]) {
+    writeFileSync(x) {
+        const z = arguments["0"];
+        const filepath = z[0];
+        const contents = z[1];
         return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {

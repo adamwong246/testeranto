@@ -1,0 +1,15 @@
+src/components/TestStatusBadge.tsx
+13:16 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+14:17 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+
+src/components/pure/ProjectPageView.test/implementation.tsx
+1:18 'expect' is defined but never used. (@typescript-eslint/no-unused-vars)
+45:18 'container' is defined but never used. (@typescript-eslint/no-unused-vars)
+45:29 'html' is defined but never used. (@typescript-eslint/no-unused-vars)
+
+src/lib/abstractBase.ts
+176:9 Unsafe usage of ThrowStatement. (no-unsafe-finally)
