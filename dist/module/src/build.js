@@ -133,9 +133,10 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
             .join(".");
         const htmlFilePath = path.normalize(`${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+        const cssFilePath = `./${sourceFileNameMinusJs}.css`;
         return fs.promises
             .mkdir(path.dirname(htmlFilePath), { recursive: true })
-            .then((x) => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath)));
+            .then((x) => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)));
     })));
     // glob(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
     //   ignore: "node_modules/**",

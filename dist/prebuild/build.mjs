@@ -179,6 +179,7 @@ var web_default = (config, entryPoints, testName2) => {
     ],
     platform: "browser",
     entryPoints: [...entryPoints],
+    loader: config.webLoaders,
     plugins: [
       featuresPlugin_default,
       inputFilesPluginFactory,
@@ -286,23 +287,19 @@ var pure_default = (config, entryPoints, testName2) => {
 };
 
 // src/web.html.ts
-var web_html_default = (jsfilePath, htmlFilePath) => `
+var web_html_default = (jsfilePath, htmlFilePath, cssfilePath) => `
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <script type="module" src="${jsfilePath}"></script>
-
+  <link rel="stylesheet" href="${cssfilePath}">
 </head>
 
 <body>
-  <h1>${htmlFilePath}</h1>
   <div id="root">
-
   </div>
 </body>
-
-<footer></footer>
 
 </html>
 `;
@@ -514,10 +511,11 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
           )}/${sourceFileNameMinusJs}.html`
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+        const cssFilePath = `./${sourceFileNameMinusJs}.css`;
         return fs4.promises.mkdir(path4.dirname(htmlFilePath), { recursive: true }).then(
           (x2) => fs4.writeFileSync(
             htmlFilePath,
-            web_html_default(jsfilePath, htmlFilePath)
+            web_html_default(jsfilePath, htmlFilePath, cssFilePath)
           )
         );
       })

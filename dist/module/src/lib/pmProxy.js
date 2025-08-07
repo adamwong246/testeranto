@@ -181,7 +181,6 @@ export const beforeEachProxy = (pm, suite, addArtifact) => {
             (opts, p) => {
                 const path = `suite-${suite}/beforeEach/${opts.path}`;
                 addArtifact(path);
-                // console.log("STEP4", JSON.stringify(step));
                 return [
                     Object.assign(Object.assign({}, opts), { path }),
                     p,
@@ -213,7 +212,6 @@ export const beforeAllProxy = (pm, suite, addArtifact) => {
             (opts, p) => {
                 const path = `suite-${suite}/beforeAll/${opts.path}`;
                 addArtifact(path);
-                // console.log("STEP7", JSON.stringify(step));
                 return [
                     Object.assign(Object.assign({}, opts), { path }),
                     p,

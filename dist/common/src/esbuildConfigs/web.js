@@ -31,7 +31,7 @@ exports.default = (config, entryPoints, testName) => {
             "util",
             "process",
             "dns",
-        ], platform: "browser", entryPoints: [...entryPoints], plugins: [
+        ], platform: "browser", entryPoints: [...entryPoints], loader: config.webLoaders, plugins: [
             featuresPlugin_js_1.default,
             inputFilesPluginFactory,
             (0, esbuild_plugin_polyfill_node_1.polyfillNode)({

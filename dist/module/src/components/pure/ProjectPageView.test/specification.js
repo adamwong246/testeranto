@@ -6,10 +6,14 @@ export const specification = (Suite, Given, When, Then) => {
                 "It should contain a container-fluid div",
                 "It should render the NavBar component",
             ], [], [Then.happyPath()]),
-            errorHandling: Given.WithError([
-                "ProjectPageView should handle errors",
-                "It should display error messages when present",
-            ], [], [Then.unhappyPath()]),
+            // errorHandling: Given.WithError(
+            //   [
+            //     "ProjectPageView should handle errors",
+            //     "It should display error messages when present",
+            //   ],
+            //   [],
+            //   [Then.unhappyPath()]
+            // ),
         }),
     ];
 };

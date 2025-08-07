@@ -208,7 +208,6 @@ var PM_Base = class {
     return sPromise;
   }
   async customScreenShot(ssOpts, testName, pageUid) {
-    console.log("SCREENSHOT 123", testName, ssOpts);
     const p = ssOpts.path;
     const dir = path2.dirname(p);
     fs.mkdirSync(dir, {
@@ -1563,16 +1562,18 @@ import('${d}').then(async (x) => {
         waitForInitialPage: false,
         executablePath,
         headless: true,
+        defaultViewport: null,
+        // Disable default 800x600 viewport
         dumpio: false,
         devtools: false,
         args: [
-          "--disable-features=site-per-process",
           "--allow-file-access-from-files",
           "--allow-insecure-localhost",
           "--allow-running-insecure-content",
           "--auto-open-devtools-for-tabs",
           "--disable-dev-shm-usage",
           "--disable-extensions",
+          "--disable-features=site-per-process",
           "--disable-gpu",
           "--disable-setuid-sandbox",
           "--disable-site-isolation-trials",
@@ -1582,6 +1583,7 @@ import('${d}').then(async (x) => {
           "--no-startup-window",
           "--reduce-security-for-testing",
           "--remote-allow-origins=*",
+          "--start-maximized",
           "--unsafely-treat-insecure-origin-as-secure=*",
           `--remote-debugging-port=3234`
           // "--disable-features=IsolateOrigins,site-per-process",

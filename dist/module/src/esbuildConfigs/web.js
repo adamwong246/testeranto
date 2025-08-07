@@ -26,7 +26,7 @@ export default (config, entryPoints, testName) => {
             "util",
             "process",
             "dns",
-        ], platform: "browser", entryPoints: [...entryPoints], plugins: [
+        ], platform: "browser", entryPoints: [...entryPoints], loader: config.webLoaders, plugins: [
             featuresPlugin,
             inputFilesPluginFactory,
             polyfillNode({

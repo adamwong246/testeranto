@@ -118,8 +118,6 @@ export abstract class PM_Base {
     testName: string,
     pageUid: any
   ) {
-    console.log("SCREENSHOT 123", testName, ssOpts);
-
     const p = ssOpts.path as string;
     const dir = path.dirname(p);
     fs.mkdirSync(dir, {

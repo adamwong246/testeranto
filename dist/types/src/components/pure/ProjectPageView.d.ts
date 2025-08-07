@@ -1,3 +1,4 @@
+import "./../../App.scss";
 export type IProjectPageViewProps = {
     summary: any;
     nodeLogs: any;

@@ -168,9 +168,10 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
             .join(".");
         const htmlFilePath = path_1.default.normalize(`${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join("/")}/${sourceFileNameMinusJs}.html`);
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+        const cssFilePath = `./${sourceFileNameMinusJs}.css`;
         return fs_1.default.promises
             .mkdir(path_1.default.dirname(htmlFilePath), { recursive: true })
-            .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath)));
+            .then((x) => fs_1.default.writeFileSync(htmlFilePath, (0, web_html_js_1.default)(jsfilePath, htmlFilePath, cssFilePath)));
     })));
     // glob(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
     //   ignore: "node_modules/**",

@@ -1,0 +1,32 @@
+{
+  "name": "ProjectPageView Component Tests",
+  "givens": [
+    {
+      "key": "basicRender",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "happyPath: undefined",
+          "error": "TypeError: Cannot read properties of undefined (reading 'querySelector')\n    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1754603667535:31866:42)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3012:18\n    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3247:18)\n    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:2910:19)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:2617:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3053:19\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3079:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3271:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A9%3A6374:4:12",
+          "artifacts": [
+            "suite-0/given-basicRender/then-0/butThen/happyPath.png"
+          ]
+        }
+      ],
+      "error": null,
+      "features": [
+        "ProjectPageView should render",
+        "It should contain a container-fluid div",
+        "It should render the NavBar component"
+      ],
+      "artifacts": []
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "ProjectPageView should render",
+    "It should contain a container-fluid div",
+    "It should render the NavBar component"
+  ]
+}

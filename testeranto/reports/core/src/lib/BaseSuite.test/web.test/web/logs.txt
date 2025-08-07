@@ -1,0 +1,87 @@
+Failed to load resource: net::ERR_FILE_NOT_FOUND
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.css"}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.css"}]
+mark14
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3077,"columnNumber":18}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3077,"columnNumber":18},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3270,"columnNumber":34},{"url":"pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A9%3A6374","lineNumber":3,"columnNumber":35}]
+mark17
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3051,"columnNumber":16}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3051,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3078,"columnNumber":34},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3270,"columnNumber":34},{"url":"pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A9%3A6374","lineNumber":3,"columnNumber":35}]
+mark800
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3224,"columnNumber":18}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3224,"columnNumber":18},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2887,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2616,"columnNumber":31}]
+[DEBUG] Running beforeEach with subject: JSHandle@function
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":369,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":369,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3225,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2887,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2616,"columnNumber":31}]
+[DEBUG] Creating MockSuite with name: testSuite index: 0
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":107,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":107,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":181,"columnNumber":20},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":371,"columnNumber":26},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3225,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2887,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2616,"columnNumber":31}]
+[DEBUG] MockSuite created: testSuite 0
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":122,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":122,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":181,"columnNumber":20},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":371,"columnNumber":26},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3225,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2887,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2616,"columnNumber":31}]
+[DEBUG] Created test suite: testSuite 0
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":182,"columnNumber":14}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":182,"columnNumber":14},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":371,"columnNumber":26},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3225,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2887,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2616,"columnNumber":31}]
+[DEBUG] beforeEach result: JSHandle@object
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":375,"columnNumber":14}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":375,"columnNumber":14}]
+[DEBUG] butThen - input store: {
+  "name": "testSuite",
+  "index": 0,
+  "testStore": true,
+  "testSelection": false
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":394,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":394,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3246,"columnNumber":35},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3007,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2909,"columnNumber":33}]
+[DEBUG] butThen - created testSelection: {
+  "testSelection": false
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":402,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":402,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3246,"columnNumber":35},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3007,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2909,"columnNumber":33}]
+[DEBUG] SuiteNameMatches - expected: testSuite actual: 
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":264,"columnNumber":14}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":264,"columnNumber":14},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3011,"columnNumber":28},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":407,"columnNumber":27},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3246,"columnNumber":35},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3007,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2909,"columnNumber":33}]
+Then error: Error: Suite name is undefined. Expected: testSuite
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":416,"columnNumber":14}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":416,"columnNumber":14}]
+Full store state: {
+  "name": "testSuite",
+  "index": 0,
+  "testStore": true,
+  "testSelection": false
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":417,"columnNumber":14}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":417,"columnNumber":14}]
+[DEBUG] butThen - input store: {
+  "name": "testSuite",
+  "index": 0,
+  "testStore": true,
+  "testSelection": false
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":394,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":394,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3246,"columnNumber":35},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3007,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2909,"columnNumber":33}]
+[DEBUG] butThen - created testSelection: {
+  "testSelection": false
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":402,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":402,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3246,"columnNumber":35},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3007,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":2909,"columnNumber":33}]
+Then error: Error: Expected suite index 0, got undefined
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":416,"columnNumber":14}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":416,"columnNumber":14}]
+Full store state: {
+  "name": "testSuite",
+  "index": 0,
+  "testStore": true,
+  "testSelection": false
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":417,"columnNumber":14}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535","lineNumber":417,"columnNumber":14}]
+mark18
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3064,"columnNumber":16}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3064,"columnNumber":16}]
+mark15
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3079,"columnNumber":18}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3079,"columnNumber":18}]
+mark13
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3089,"columnNumber":18}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs","lineNumber":3089,"columnNumber":18}]

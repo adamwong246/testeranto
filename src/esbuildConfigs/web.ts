@@ -9,7 +9,6 @@ import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import featuresPlugin from "./featuresPlugin.js";
 import rebuildPlugin from "./rebuildPlugin.js";
-
 export default (
   config: ITestconfig,
   entryPoints: string[],
@@ -55,6 +54,8 @@ export default (
     platform: "browser",
 
     entryPoints: [...entryPoints],
+
+    loader: config.webLoaders as any,
 
     plugins: [
       featuresPlugin,

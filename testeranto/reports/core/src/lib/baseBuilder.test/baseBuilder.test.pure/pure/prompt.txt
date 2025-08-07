@@ -1,0 +1,18 @@
+
+/add src/PM/web.ts
+/add src/Web.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.specification.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.mock.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.adapter.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.pure.ts
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/tests.json
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/logs.txt
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/type_errors.txt
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/lint_errors.txt

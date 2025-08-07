@@ -7,7 +7,7 @@ import {
   init_buffer,
   init_dirname,
   init_process
-} from "../../../chunk-3AARHRHG.mjs";
+} from "../../../chunk-VOZFDOTD.mjs";
 
 // src/lib/BaseSuite.test/web.test.ts
 init_dirname();

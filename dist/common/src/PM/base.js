@@ -85,7 +85,6 @@ class PM_Base {
         return sPromise;
     }
     async customScreenShot(ssOpts, testName, pageUid) {
-        console.log("SCREENSHOT 123", testName, ssOpts);
         const p = ssOpts.path;
         const dir = path_1.default.dirname(p);
         fs_1.default.mkdirSync(dir, {

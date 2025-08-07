@@ -43,7 +43,6 @@ class BaseGiven {
         return store;
     }
     async give(subject, key, testResourceConfiguration, tester, artifactory, tLog, pm, suiteNdx) {
-        console.log("mark70");
         this.key = key;
         tLog(`\n ${this.key}`);
         tLog(`\n Given: ${this.name}`);
@@ -54,20 +53,14 @@ class BaseGiven {
             tLog(e.stack);
         });
         try {
-            console.log("mark787");
             const proxiedPm = (0, pmProxy_js_1.beforeEachProxy)(pm, suiteNdx.toString(), this.addArtifact.bind(this));
-            console.log("mark786");
-            // (proxiedPm as any).currentStep = this;
             this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, proxiedPm);
-            console.log("mark788");
         }
         catch (e) {
-            console.log("mark78");
-            console.error("Given failure: ", e.stack);
-            this.error = e;
+            // console.error("Given failure: ", e.stack);
+            this.error = e.stack;
             // throw e;
         }
-        console.log("mark71");
         try {
             // tLog(`\n Given this.store`, this.store);
             for (const [whenNdx, whenStep] of this.whens.entries()) {
@@ -81,7 +74,6 @@ class BaseGiven {
         catch (e) {
             this.failed = true;
             tLog(e.stack);
-            console.log("mark72");
             throw e;
         }
         finally {
@@ -91,8 +83,6 @@ class BaseGiven {
                 await this.afterEach(this.store, this.key, givenArtifactory, proxiedPm);
             }
             catch (e) {
-                console.error("afterEach failed!", e.toString());
-                console.log("mark77");
                 this.failed = e;
                 throw e;
                 // this.error = e.message;

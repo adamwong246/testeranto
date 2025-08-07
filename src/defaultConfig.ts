@@ -12,6 +12,7 @@ const config: ITestconfig = {
   nodePlugins: [],
   webPlugins: [],
   importPlugins: [],
+  webLoaders: {},
 
   featureIngestor: function (s: string): Promise<string> {
     throw new Error("Function not implemented.");

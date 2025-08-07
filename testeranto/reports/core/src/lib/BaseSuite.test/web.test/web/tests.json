@@ -1,0 +1,31 @@
+{
+  "name": "BaseSuite Core Functionality Tests",
+  "givens": [
+    {
+      "key": "initialization",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "SuiteNameMatches: testSuite",
+          "error": "Error: Suite name is undefined. Expected: testSuite\n    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535:272:15)\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3012:29\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535:408:28)\n    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3247:36)\n    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3008:17)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:2910:34)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:2617:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3053:19\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3079:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3271:12)",
+          "artifacts": []
+        },
+        {
+          "name": "SuiteIndexMatches: 0",
+          "error": "Error: Expected suite index 0, got undefined\n    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535:283:15)\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3012:29\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs?cacheBust=1754603667535:408:28)\n    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3247:36)\n    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3008:17)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:2910:34)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:2617:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3053:19\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3079:29)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VOZFDOTD.mjs:3271:12)",
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "BaseSuite should initialize with correct name and index"
+      ],
+      "artifacts": []
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "BaseSuite should initialize with correct name and index"
+  ]
+}

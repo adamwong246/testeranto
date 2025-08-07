@@ -3,6 +3,7 @@ import React from 'react';
 import { Tab, Container, Alert, Table, Badge, Nav, Card, ListGroup } from 'react-bootstrap';
 import { NavBar } from '../../NavBar';
 import { TestStatusBadge } from '../TestStatusBadge';
+import "./../../App.scss";
 const BuildLogViewer = ({ logs, runtime }) => {
     var _a, _b, _c, _d, _e, _f;
     if (!logs)
@@ -76,9 +77,7 @@ const BuildLogViewer = ({ logs, runtime }) => {
                                         ((_b = warn.location) === null || _b === void 0 ? void 0 : _b.line) && `:${warn.location.line}`),
                                     React.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : '')),
                                 React.createElement("div", { className: "mt-1" },
-                                    React.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.text || warn.message || JSON.stringify(warn))),
-                                warn.detail && (React.createElement("div", { className: "mt-1 small text-muted" },
-                                    React.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, warn.detail)))));
+                                    React.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(warn)))));
                         }))))) : (React.createElement(Alert, { variant: "info" }, "No warnings found"))),
                 React.createElement(Tab.Pane, { eventKey: "errors" }, hasErrors ? (React.createElement(Card, { className: "border-danger" },
                     React.createElement(Card.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" },
@@ -97,9 +96,7 @@ const BuildLogViewer = ({ logs, runtime }) => {
                                         ((_b = err.location) === null || _b === void 0 ? void 0 : _b.line) && `:${err.location.line}`),
                                     React.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : '')),
                                 React.createElement("div", { className: "mt-1" },
-                                    React.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.text || err.message || JSON.stringify(err))),
-                                err.detail && (React.createElement("div", { className: "mt-1 small text-muted" },
-                                    React.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, err.detail)))));
+                                    React.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(err)))));
                         }))))) : (React.createElement(Alert, { variant: "success" },
                     React.createElement("h5", null, "No Errors Found"),
                     React.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))))));

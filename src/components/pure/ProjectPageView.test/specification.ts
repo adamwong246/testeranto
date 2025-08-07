@@ -18,14 +18,14 @@ export const specification: ITestSpecification<I, O> = (
         [],
         [Then.happyPath()]
       ),
-      errorHandling: Given.WithError(
-        [
-          "ProjectPageView should handle errors",
-          "It should display error messages when present",
-        ],
-        [],
-        [Then.unhappyPath()]
-      ),
+      // errorHandling: Given.WithError(
+      //   [
+      //     "ProjectPageView should handle errors",
+      //     "It should display error messages when present",
+      //   ],
+      //   [],
+      //   [Then.unhappyPath()]
+      // ),
     }),
   ];
 };

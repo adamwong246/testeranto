@@ -195,13 +195,14 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
           )}/${sourceFileNameMinusJs}.html`
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+        const cssFilePath = `./${sourceFileNameMinusJs}.css`;
 
         return fs.promises
           .mkdir(path.dirname(htmlFilePath), { recursive: true })
           .then((x) =>
             fs.writeFileSync(
               htmlFilePath,
-              webHtmlFrame(jsfilePath, htmlFilePath)
+              webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
             )
           );
       })

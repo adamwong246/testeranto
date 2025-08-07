@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { assert, expect } from "chai";
 export const implementation = {
     suites: {
         Default: "Project Page View Tests",
@@ -34,30 +34,29 @@ export const implementation = {
     whens: {},
     thens: {
         happyPath: () => async ({ container, html }, pm) => {
-            console.group('[Test] Verifying render output');
-            // debugger
             const p = await pm.page();
             await pm.customScreenShot({ path: "happyPath.png" }, p);
-            assert.equal(1, 1);
-            // try {
-            //   console.log('Checking for container-fluid');
-            //   const containerFluid = container.querySelector(".container-fluid");
-            //   expect(containerFluid).to.exist;
-            //   expect(containerFluid?.children.length).to.be.greaterThan(0);
-            //   console.log('Checking for NavBar');
-            //   const navBar = container.querySelector("nav.navbar");
-            //   expect(navBar).to.exist;
-            //   console.log('Render verification passed');
-            //   console.groupEnd();
-            //   return { container, html };
-            // } catch (err) {
-            //   console.error('Verification failed:', err);
-            //   console.error('Full HTML:', html);
-            //   console.groupEnd();
-            //   throw err;
-            // }
+            console.group('[Test] Verifying render output');
+            try {
+                console.log('Checking for container-fluid');
+                const containerFluid = container.querySelector(".container-fluid");
+                expect(containerFluid).to.exist;
+                expect(containerFluid === null || containerFluid === void 0 ? void 0 : containerFluid.children.length).to.be.greaterThan(0);
+                console.log('Checking for NavBar');
+                const navBar = container.querySelector("nav.navbar");
+                expect(navBar).to.exist;
+                console.log('Render verification passed');
+                console.groupEnd();
+                return { container, html };
+            }
+            catch (err) {
+                console.error('Verification failed:', err);
+                console.error('Full HTML:', html);
+                console.groupEnd();
+                throw err;
+            }
         },
-        unhappyPath: () => async ({ container }, pm) => {
+        unhappyPath: () => async ({ container }, tr, pm) => {
             // expect(container.textContent).contain("Test error message");
             assert.equal(1, 1);
             const p = await pm.page();

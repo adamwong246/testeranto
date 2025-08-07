@@ -191,6 +191,7 @@ export type ITestconfig = {
   src: string;
   tests: ITestTypes[];
   webPlugins: IPluginFactory[];
+  webLoaders: Record<string, string>;
 };
 
 export type IBuiltConfig = { buildDir: string } & ITestconfig;

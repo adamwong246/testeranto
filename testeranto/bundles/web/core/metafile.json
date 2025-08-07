@@ -1,6 +1,502 @@
 {
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 11:30  -assert-ascending()\nnode_modules/bootstrap/scss/_variables.scss 494:1  @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9     @import\nsrc/style.scss 1:9                                 @use\n- 1:1                                              root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 29,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 10,
+        "lineText": "unit($num)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.\nUse math.unit instead.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 11:51  -assert-ascending()\nnode_modules/bootstrap/scss/_variables.scss 494:1  @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9     @import\nsrc/style.scss 1:9                                 @use\n- 1:1                                              root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 50,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 10,
+        "lineText": "unit($prev-num)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.\nUse math.unit instead.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 37:11   to-rgb()\nnode_modules/bootstrap/scss/_variables.scss 846:31  @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9      @import\nsrc/style.scss 1:9                                  @use\n- 1:1                                               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 10,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 36,
+        "lineText": "red($value)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "red() is deprecated. Suggestion:\n\ncolor.channel($color, \"red\", $space: rgb)\n\nMore info: https://sass-lang.com/d/color-functions"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 37:24   to-rgb()\nnode_modules/bootstrap/scss/_variables.scss 846:31  @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9      @import\nsrc/style.scss 1:9                                  @use\n- 1:1                                               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 23,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 36,
+        "lineText": "green($value)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "green() is deprecated. Suggestion:\n\ncolor.channel($color, \"green\", $space: rgb)\n\nMore info: https://sass-lang.com/d/color-functions"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 185:10  luminance()\nnode_modules/bootstrap/scss/_functions.scss 174:8   contrast-ratio()\nnode_modules/bootstrap/scss/_functions.scss 159:22  color-contrast()\nnode_modules/bootstrap/scss/_variables.scss 846:42  @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9      @import\nsrc/style.scss 1:9                                  @use\n- 1:1                                               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 9,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 184,
+        "lineText": "red($color)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "red() is deprecated. Suggestion:\n\ncolor.channel($color, \"red\", $space: rgb)\n\nMore info: https://sass-lang.com/d/color-functions"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 186:10  luminance()\nnode_modules/bootstrap/scss/_functions.scss 174:8   contrast-ratio()\nnode_modules/bootstrap/scss/_functions.scss 159:22  color-contrast()\nnode_modules/bootstrap/scss/_variables.scss 846:42  @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9      @import\nsrc/style.scss 1:9                                  @use\n- 1:1                                               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 9,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 185,
+        "lineText": "green($color)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "green() is deprecated. Suggestion:\n\ncolor.channel($color, \"green\", $space: rgb)\n\nMore info: https://sass-lang.com/d/color-functions"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 187:10  luminance()\nnode_modules/bootstrap/scss/_functions.scss 174:8   contrast-ratio()\nnode_modules/bootstrap/scss/_functions.scss 159:22  color-contrast()\nnode_modules/bootstrap/scss/_variables.scss 846:42  @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9      @import\nsrc/style.scss 1:9                                  @use\n- 1:1                                               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 9,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 186,
+        "lineText": "blue($color)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "blue() is deprecated. Suggestion:\n\ncolor.channel($color, \"blue\", $space: rgb)\n\nMore info: https://sass-lang.com/d/color-functions"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 207:11  tint-color()\nnode_modules/bootstrap/scss/_variables.scss 79:12   @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9      @import\nsrc/style.scss 1:9                                  @use\n- 1:1                                               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 10,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 206,
+        "lineText": "mix(white, $color, $weight)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.\nUse color.mix instead.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_functions.scss 212:11  shade-color()\nnode_modules/bootstrap/scss/_variables.scss 84:12   @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9      @import\nsrc/style.scss 1:9                                  @use\n- 1:1                                               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 10,
+        "file": "node_modules/bootstrap/scss/_functions.scss",
+        "length": 0,
+        "line": 211,
+        "lineText": "mix(black, $color, $weight)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.\nUse color.mix instead.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/_variables.scss 342:27  @import\nnode_modules/bootstrap/scss/bootstrap.scss 8:9      @import\nsrc/style.scss 1:9                                  @use\n- 1:1                                               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 26,
+        "file": "node_modules/bootstrap/scss/_variables.scss",
+        "length": 0,
+        "line": 341,
+        "lineText": "mix($gray-100, $white)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0.\nUse color.mix instead.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/bootstrap.scss 1:9  @import\nsrc/style.scss 1:9                              @use\n- 1:1                                           root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 8,
+        "file": "node_modules/bootstrap/scss/bootstrap.scss",
+        "length": 0,
+        "line": 0,
+        "lineText": "\"mixins/banner\"",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/bootstrap.scss 7:9  @import\nsrc/style.scss 1:9                              @use\n- 1:1                                           root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 8,
+        "file": "node_modules/bootstrap/scss/bootstrap.scss",
+        "length": 0,
+        "line": 6,
+        "lineText": "\"functions\"",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "node_modules/bootstrap/scss/bootstrap.scss 8:9  @import\nsrc/style.scss 1:9                              @use\n- 1:1                                           root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 8,
+        "file": "node_modules/bootstrap/scss/bootstrap.scss",
+        "length": 0,
+        "line": 7,
+        "lineText": "\"variables\"",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 7,
+        "file": "src/components/pure/ProjectPageView.tsx",
+        "length": 18,
+        "line": 7,
+        "lineText": "import \"./../../App.scss\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "sass-plugin",
+      "text": "sass warning: 234 repetitive deprecation warnings omitted.\nRun in verbose mode to see all warnings."
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "src/style.scss 1:9  @use\n- 1:1               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 8,
+        "file": "src/style.scss",
+        "length": 0,
+        "line": 0,
+        "lineText": "\"../node_modules/bootstrap/scss/bootstrap.scss\"",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "detail": {
+        "deprecation": true,
+        "stack": "src/style.scss 2:9  @use\n- 1:1               root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 8,
+        "file": "src/style.scss",
+        "length": 0,
+        "line": 1,
+        "lineText": "\"./fonts.scss\"",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 7,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    }
+  ],
   "metafile": {
     "inputs": {
       "node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js": {
@@ -135,7 +631,7 @@
         "format": "esm"
       },
       "src/PM/web.ts": {
-        "bytes": 4178,
+        "bytes": 4226,
         "imports": [
           {
             "path": "stream",
@@ -237,7 +733,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 4933,
+        "bytes": 7266,
         "imports": [
           {
             "path": "./types",
@@ -263,7 +759,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 7021,
+        "bytes": 7625,
         "imports": [
           {
             "path": ".",
@@ -299,7 +795,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 4916,
+        "bytes": 5082,
         "imports": [
           {
             "path": "stream",
@@ -386,7 +882,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 3863,
+        "bytes": 3746,
         "imports": [
           {
             "path": ".",
@@ -432,7 +928,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 3530,
+        "bytes": 3564,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -696,7 +1192,7 @@
         "format": "cjs"
       },
       "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
-        "bytes": 3810,
+        "bytes": 3755,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -782,6 +1278,298 @@
         ],
         "format": "esm"
       },
+      "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs": {
+        "bytes": 330085,
+        "imports": [
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/react-router/node_modules/cookie/dist/index.js": {
+        "bytes": 8340,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/set-cookie-parser/lib/set-cookie.js": {
+        "bytes": 6630,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-router/dist/development/chunk-HZX6U7MI.mjs": {
+        "bytes": 86838,
+        "imports": [
+          {
+            "path": "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs",
+            "kind": "import-statement",
+            "original": "./chunk-ZYFC6VSF.mjs"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react-router/node_modules/cookie/dist/index.js",
+            "kind": "import-statement",
+            "original": "cookie"
+          },
+          {
+            "path": "node_modules/set-cookie-parser/lib/set-cookie.js",
+            "kind": "import-statement",
+            "original": "set-cookie-parser"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react-dom/index.js",
+            "kind": "import-statement",
+            "original": "react-dom"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/react-router/dist/development/dom-export.mjs": {
+        "bytes": 7322,
+        "imports": [
+          {
+            "path": "node_modules/react-router/dist/development/chunk-HZX6U7MI.mjs",
+            "kind": "import-statement",
+            "original": "./chunk-HZX6U7MI.mjs"
+          },
+          {
+            "path": "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs",
+            "kind": "import-statement",
+            "original": "./chunk-ZYFC6VSF.mjs"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react-dom/index.js",
+            "kind": "import-statement",
+            "original": "react-dom"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/react-router/dist/development/index.mjs": {
+        "bytes": 6515,
+        "imports": [
+          {
+            "path": "node_modules/react-router/dist/development/chunk-HZX6U7MI.mjs",
+            "kind": "import-statement",
+            "original": "./chunk-HZX6U7MI.mjs"
+          },
+          {
+            "path": "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs",
+            "kind": "import-statement",
+            "original": "./chunk-ZYFC6VSF.mjs"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/react-router-dom/dist/index.mjs": {
+        "bytes": 383,
+        "imports": [
+          {
+            "path": "node_modules/react-router/dist/development/dom-export.mjs",
+            "kind": "import-statement",
+            "original": "react-router/dom"
+          },
+          {
+            "path": "node_modules/react-router/dist/development/index.mjs",
+            "kind": "import-statement",
+            "original": "react-router"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
       "node_modules/chai/chai.js": {
         "bytes": 143246,
         "imports": [
@@ -804,7 +1592,7 @@
         "format": "esm"
       },
       "src/components/pure/ProjectPageView.test/implementation.tsx": {
-        "bytes": 2338,
+        "bytes": 2289,
         "imports": [
           {
             "path": "node_modules/chai/chai.js",
@@ -818,6 +1606,11 @@
           },
           {
             "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "react-router-dom",
             "kind": "import-statement",
             "external": true
           },
@@ -840,7 +1633,7 @@
         "format": "esm"
       },
       "src/components/pure/ProjectPageView.test/specification.ts": {
-        "bytes": 737,
+        "bytes": 761,
         "imports": [
           {
             "path": "../../../CoreTypes",
@@ -14077,298 +14870,6 @@
         ],
         "format": "esm"
       },
-      "node_modules/react-router/dist/development/chunk-C37GKA54.mjs": {
-        "bytes": 326250,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/react-router/node_modules/cookie/dist/index.js": {
-        "bytes": 8340,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/set-cookie-parser/lib/set-cookie.js": {
-        "bytes": 6630,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/react-router/dist/development/chunk-KIUJAIYX.mjs": {
-        "bytes": 84726,
-        "imports": [
-          {
-            "path": "node_modules/react-router/dist/development/chunk-C37GKA54.mjs",
-            "kind": "import-statement",
-            "original": "./chunk-C37GKA54.mjs"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-router/node_modules/cookie/dist/index.js",
-            "kind": "import-statement",
-            "original": "cookie"
-          },
-          {
-            "path": "node_modules/set-cookie-parser/lib/set-cookie.js",
-            "kind": "import-statement",
-            "original": "set-cookie-parser"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-dom/index.js",
-            "kind": "import-statement",
-            "original": "react-dom"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/react-router/dist/development/dom-export.mjs": {
-        "bytes": 7322,
-        "imports": [
-          {
-            "path": "node_modules/react-router/dist/development/chunk-KIUJAIYX.mjs",
-            "kind": "import-statement",
-            "original": "./chunk-KIUJAIYX.mjs"
-          },
-          {
-            "path": "node_modules/react-router/dist/development/chunk-C37GKA54.mjs",
-            "kind": "import-statement",
-            "original": "./chunk-C37GKA54.mjs"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-dom/index.js",
-            "kind": "import-statement",
-            "original": "react-dom"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/react-router/dist/development/index.mjs": {
-        "bytes": 6515,
-        "imports": [
-          {
-            "path": "node_modules/react-router/dist/development/chunk-KIUJAIYX.mjs",
-            "kind": "import-statement",
-            "original": "./chunk-KIUJAIYX.mjs"
-          },
-          {
-            "path": "node_modules/react-router/dist/development/chunk-C37GKA54.mjs",
-            "kind": "import-statement",
-            "original": "./chunk-C37GKA54.mjs"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/react-router-dom/dist/index.mjs": {
-        "bytes": 383,
-        "imports": [
-          {
-            "path": "node_modules/react-router/dist/development/dom-export.mjs",
-            "kind": "import-statement",
-            "original": "react-router/dom"
-          },
-          {
-            "path": "node_modules/react-router/dist/development/index.mjs",
-            "kind": "import-statement",
-            "original": "react-router"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "src/NavBar.tsx": {
         "bytes": 3051,
         "imports": [
@@ -14436,8 +14937,191 @@
         ],
         "format": "esm"
       },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf": {
+        "bytes": 2819076,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf": {
+        "bytes": 3193048,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf": {
+        "bytes": 3284152,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf": {
+        "bytes": 3325496,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf": {
+        "bytes": 3432832,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf": {
+        "bytes": 3515332,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf": {
+        "bytes": 3521968,
+        "imports": []
+      },
+      "src/App.scss": {
+        "bytes": 281527,
+        "imports": [
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf"
+          }
+        ]
+      },
       "src/components/pure/ProjectPageView.tsx": {
-        "bytes": 13131,
+        "bytes": 13204,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -14460,6 +15144,11 @@
             "original": "../TestStatusBadge"
           },
           {
+            "path": "src/App.scss",
+            "kind": "import-statement",
+            "original": "./../../App.scss"
+          },
+          {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
             "external": true
@@ -14477,13 +15166,18 @@
         ],
         "format": "esm"
       },
-      "src/components/pure/ProjectPageView.test/index.ts": {
-        "bytes": 340,
+      "src/components/pure/ProjectPageView.test/index.tsx": {
+        "bytes": 570,
         "imports": [
           {
             "path": "node_modules/testeranto-react/src/react-dom/component/web.ts",
             "kind": "import-statement",
             "original": "testeranto-react/src/react-dom/component/web"
+          },
+          {
+            "path": "node_modules/react-router-dom/dist/index.mjs",
+            "kind": "import-statement",
+            "original": "react-router-dom"
           },
           {
             "path": "src/components/pure/ProjectPageView.test/implementation.tsx",
@@ -14496,14 +15190,342 @@
             "original": "./specification"
           },
           {
-            "path": "./types",
+            "path": "src/components/pure/ProjectPageView.tsx",
+            "kind": "import-statement",
+            "original": "../ProjectPageView"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "./../../../App.scss",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "src/components/pure/ProjectPageView.tsx",
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
-            "original": "../ProjectPageView"
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.test/mock.ts": {
+        "bytes": 3599,
+        "imports": [
+          {
+            "path": "src/lib/abstractBase.ts",
+            "kind": "import-statement",
+            "original": "../abstractBase"
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "../BaseSuite"
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./test",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.test/test.ts": {
+        "bytes": 12580,
+        "imports": [
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/BaseSuite.test/mock.ts",
+            "kind": "import-statement",
+            "original": "./mock"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.test/web.test.ts": {
+        "bytes": 319,
+        "imports": [
+          {
+            "path": "src/Web.ts",
+            "kind": "import-statement",
+            "original": "../../Web"
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "../BaseSuite"
+          },
+          {
+            "path": "src/lib/BaseSuite.test/test.ts",
+            "kind": "import-statement",
+            "original": "./test"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
+        "bytes": 985,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
+        "bytes": 1988,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "../basebuilder"
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
+        "bytes": 3998,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.mock.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.mock"
+          },
+          {
+            "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/basebuilder.ts",
+            "kind": "import-statement",
+            "original": "../basebuilder"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+        "bytes": 890,
+        "imports": [
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
+        "bytes": 518,
+        "imports": [
+          {
+            "path": "src/Web.ts",
+            "kind": "import-statement",
+            "original": "../../Web"
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.specification.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.specification"
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.implementation"
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.adapter"
+          },
+          {
+            "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/baseBuilder.test/baseBuilder.test.mock.ts",
+            "kind": "import-statement",
+            "original": "./baseBuilder.test.mock"
           },
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -14526,23 +15548,599 @@
     },
     "outputs": {
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
-        "imports": [],
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-VOZFDOTD.mjs",
+            "kind": "import-statement"
+          }
+        ],
         "exports": [
           "default"
         ],
-        "entryPoint": "src/components/pure/ProjectPageView.test/index.ts",
+        "entryPoint": "src/components/pure/ProjectPageView.test/index.tsx",
+        "cssBundle": "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css",
+        "inputs": {
+          "node_modules/react/cjs/react.development.js": {
+            "bytesInOutput": 77369
+          },
+          "node_modules/react/index.js": {
+            "bytesInOutput": 286
+          },
+          "node_modules/scheduler/cjs/scheduler.development.js": {
+            "bytesInOutput": 16956
+          },
+          "node_modules/scheduler/index.js": {
+            "bytesInOutput": 298
+          },
+          "node_modules/react-dom/cjs/react-dom.development.js": {
+            "bytesInOutput": 907110
+          },
+          "node_modules/react-dom/index.js": {
+            "bytesInOutput": 316
+          },
+          "node_modules/react-dom/client.js": {
+            "bytesInOutput": 837
+          },
+          "node_modules/classnames/index.js": {
+            "bytesInOutput": 1801
+          },
+          "node_modules/invariant/browser.js": {
+            "bytesInOutput": 1033
+          },
+          "node_modules/react/cjs/react-jsx-runtime.development.js": {
+            "bytesInOutput": 35597
+          },
+          "node_modules/react/jsx-runtime.js": {
+            "bytesInOutput": 310
+          },
+          "node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js": {
+            "bytesInOutput": 7629
+          },
+          "node_modules/prop-types/node_modules/react-is/index.js": {
+            "bytesInOutput": 319
+          },
+          "node_modules/object-assign/index.js": {
+            "bytesInOutput": 2185
+          },
+          "node_modules/prop-types/lib/ReactPropTypesSecret.js": {
+            "bytesInOutput": 330
+          },
+          "node_modules/prop-types/lib/has.js": {
+            "bytesInOutput": 230
+          },
+          "node_modules/prop-types/checkPropTypes.js": {
+            "bytesInOutput": 2703
+          },
+          "node_modules/prop-types/factoryWithTypeCheckers.js": {
+            "bytesInOutput": 19616
+          },
+          "node_modules/prop-types/index.js": {
+            "bytesInOutput": 441
+          },
+          "node_modules/warning/warning.js": {
+            "bytesInOutput": 1395
+          },
+          "src/components/pure/ProjectPageView.test/index.tsx": {
+            "bytesInOutput": 407
+          },
+          "node_modules/testeranto-react/src/react-dom/component/web.ts": {
+            "bytesInOutput": 270
+          },
+          "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
+            "bytesInOutput": 2596
+          },
+          "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs": {
+            "bytesInOutput": 74226
+          },
+          "node_modules/react-router/dist/development/index.mjs": {
+            "bytesInOutput": 61
+          },
+          "src/components/pure/ProjectPageView.test/implementation.tsx": {
+            "bytesInOutput": 1915
+          },
+          "node_modules/chai/chai.js": {
+            "bytesInOutput": 134562
+          },
+          "src/components/pure/ProjectPageView.test/specification.ts": {
+            "bytesInOutput": 670
+          },
+          "src/components/pure/ProjectPageView.tsx": {
+            "bytesInOutput": 13658
+          },
+          "node_modules/react-bootstrap/esm/index.js": {
+            "bytesInOutput": 47
+          },
+          "node_modules/uncontrollable/lib/esm/index.js": {
+            "bytesInOutput": 47
+          },
+          "node_modules/uncontrollable/lib/esm/hook.js": {
+            "bytesInOutput": 2103
+          },
+          "node_modules/@babel/runtime/helpers/esm/extends.js": {
+            "bytesInOutput": 359
+          },
+          "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js": {
+            "bytesInOutput": 287
+          },
+          "node_modules/uncontrollable/lib/esm/utils.js": {
+            "bytesInOutput": 193
+          },
+          "node_modules/uncontrollable/lib/esm/uncontrollable.js": {
+            "bytesInOutput": 145
+          },
+          "node_modules/@babel/runtime/helpers/esm/inheritsLoose.js": {
+            "bytesInOutput": 177
+          },
+          "node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js": {
+            "bytesInOutput": 245
+          },
+          "node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js": {
+            "bytesInOutput": 1085
+          },
+          "node_modules/react-bootstrap/esm/ThemeProvider.js": {
+            "bytesInOutput": 696
+          },
+          "node_modules/react-bootstrap/esm/Collapse.js": {
+            "bytesInOutput": 3236
+          },
+          "node_modules/dom-helpers/esm/css.js": {
+            "bytesInOutput": 770
+          },
+          "node_modules/dom-helpers/esm/getComputedStyle.js": {
+            "bytesInOutput": 164
+          },
+          "node_modules/dom-helpers/esm/ownerWindow.js": {
+            "bytesInOutput": 154
+          },
+          "node_modules/dom-helpers/esm/ownerDocument.js": {
+            "bytesInOutput": 129
+          },
+          "node_modules/dom-helpers/esm/hyphenateStyle.js": {
+            "bytesInOutput": 166
+          },
+          "node_modules/dom-helpers/esm/hyphenate.js": {
+            "bytesInOutput": 157
+          },
+          "node_modules/dom-helpers/esm/isTransform.js": {
+            "bytesInOutput": 239
+          },
+          "node_modules/react-transition-group/esm/Transition.js": {
+            "bytesInOutput": 15011
+          },
+          "node_modules/react-transition-group/esm/config.js": {
+            "bytesInOutput": 91
+          },
+          "node_modules/react-transition-group/esm/utils/PropTypes.js": {
+            "bytesInOutput": 973
+          },
+          "node_modules/react-transition-group/esm/TransitionGroupContext.js": {
+            "bytesInOutput": 173
+          },
+          "node_modules/react-transition-group/esm/utils/reflow.js": {
+            "bytesInOutput": 123
+          },
+          "node_modules/@restart/ui/esm/utils.js": {
+            "bytesInOutput": 554
+          },
+          "node_modules/react-bootstrap/esm/transitionEndListener.js": {
+            "bytesInOutput": 548
+          },
+          "node_modules/dom-helpers/esm/transitionEnd.js": {
+            "bytesInOutput": 1003
+          },
+          "node_modules/dom-helpers/esm/listen.js": {
+            "bytesInOutput": 289
+          },
+          "node_modules/dom-helpers/esm/addEventListener.js": {
+            "bytesInOutput": 1123
+          },
+          "node_modules/dom-helpers/esm/canUseDOM.js": {
+            "bytesInOutput": 158
+          },
+          "node_modules/dom-helpers/esm/removeEventListener.js": {
+            "bytesInOutput": 406
+          },
+          "node_modules/dom-helpers/esm/triggerEvent.js": {
+            "bytesInOutput": 376
+          },
+          "node_modules/react-bootstrap/esm/createChainedFunction.js": {
+            "bytesInOutput": 511
+          },
+          "node_modules/react-bootstrap/esm/triggerBrowserReflow.js": {
+            "bytesInOutput": 108
+          },
+          "node_modules/react-bootstrap/esm/TransitionWrapper.js": {
+            "bytesInOutput": 2094
+          },
+          "node_modules/@restart/hooks/esm/useMergedRefs.js": {
+            "bytesInOutput": 531
+          },
+          "node_modules/react-bootstrap/esm/safeFindDOMNode.js": {
+            "bytesInOutput": 353
+          },
+          "node_modules/react-bootstrap/esm/Alert.js": {
+            "bytesInOutput": 1719
+          },
+          "node_modules/@restart/hooks/esm/useEventCallback.js": {
+            "bytesInOutput": 293
+          },
+          "node_modules/@restart/hooks/esm/useCommittedRef.js": {
+            "bytesInOutput": 317
+          },
+          "node_modules/react-bootstrap/esm/AlertHeading.js": {
+            "bytesInOutput": 765
+          },
+          "node_modules/react-bootstrap/esm/divWithClassName.js": {
+            "bytesInOutput": 500
+          },
+          "node_modules/react-bootstrap/esm/AlertLink.js": {
+            "bytesInOutput": 651
+          },
+          "node_modules/@restart/ui/esm/Anchor.js": {
+            "bytesInOutput": 1271
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/index.js": {
+            "bytesInOutput": 47
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCallbackRef.js": {
+            "bytesInOutput": 94
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCommittedRef.js": {
+            "bytesInOutput": 323
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js": {
+            "bytesInOutput": 295
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventListener.js": {
+            "bytesInOutput": 94
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useGlobalListener.js": {
+            "bytesInOutput": 94
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useInterval.js": {
+            "bytesInOutput": 94
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useRafInterval.js": {
+            "bytesInOutput": 94
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergeState.js": {
+            "bytesInOutput": 94
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergeStateFromProps.js": {
+            "bytesInOutput": 47
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMounted.js": {
+            "bytesInOutput": 406
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/usePrevious.js": {
+            "bytesInOutput": 267
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useImage.js": {
+            "bytesInOutput": 94
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useResizeObserver.js": {
+            "bytesInOutput": 94
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useIsomorphicEffect.js": {
+            "bytesInOutput": 402
+          },
+          "node_modules/@restart/ui/esm/Button.js": {
+            "bytesInOutput": 2353
+          },
+          "node_modules/react-bootstrap/esm/Fade.js": {
+            "bytesInOutput": 1293
+          },
+          "node_modules/react-bootstrap/esm/CloseButton.js": {
+            "bytesInOutput": 1188
+          },
+          "node_modules/react-bootstrap/esm/Badge.js": {
+            "bytesInOutput": 730
+          },
+          "node_modules/react-bootstrap/esm/Card.js": {
+            "bytesInOutput": 1301
+          },
+          "node_modules/react-bootstrap/esm/CardBody.js": {
+            "bytesInOutput": 638
+          },
+          "node_modules/react-bootstrap/esm/CardFooter.js": {
+            "bytesInOutput": 652
+          },
+          "node_modules/react-bootstrap/esm/CardHeader.js": {
+            "bytesInOutput": 1103
+          },
+          "node_modules/react-bootstrap/esm/CardHeaderContext.js": {
+            "bytesInOutput": 244
+          },
+          "node_modules/react-bootstrap/esm/CardImg.js": {
+            "bytesInOutput": 870
+          },
+          "node_modules/react-bootstrap/esm/CardImgOverlay.js": {
+            "bytesInOutput": 677
+          },
+          "node_modules/react-bootstrap/esm/CardLink.js": {
+            "bytesInOutput": 638
+          },
+          "node_modules/react-bootstrap/esm/CardSubtitle.js": {
+            "bytesInOutput": 724
+          },
+          "node_modules/react-bootstrap/esm/CardText.js": {
+            "bytesInOutput": 638
+          },
+          "node_modules/react-bootstrap/esm/CardTitle.js": {
+            "bytesInOutput": 706
+          },
+          "node_modules/react-bootstrap/esm/Container.js": {
+            "bytesInOutput": 922
+          },
+          "node_modules/dom-helpers/esm/querySelectorAll.js": {
+            "bytesInOutput": 216
+          },
+          "node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js": {
+            "bytesInOutput": 775
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js": {
+            "bytesInOutput": 229
+          },
+          "node_modules/dom-helpers/esm/contains.js": {
+            "bytesInOutput": 267
+          },
+          "node_modules/@restart/ui/esm/ssr.js": {
+            "bytesInOutput": 47
+          },
+          "node_modules/@react-aria/ssr/dist/import.mjs": {
+            "bytesInOutput": 47
+          },
+          "node_modules/@react-aria/ssr/dist/SSRProvider.mjs": {
+            "bytesInOutput": 3970
+          },
+          "node_modules/@restart/ui/esm/SelectableContext.js": {
+            "bytesInOutput": 334
+          },
+          "node_modules/@restart/ui/esm/NavContext.js": {
+            "bytesInOutput": 225
+          },
+          "node_modules/@restart/ui/esm/DataKey.js": {
+            "bytesInOutput": 264
+          },
+          "node_modules/@restart/ui/esm/useWindow.js": {
+            "bytesInOutput": 310
+          },
+          "node_modules/@restart/hooks/esm/useIsomorphicEffect.js": {
+            "bytesInOutput": 407
+          },
+          "node_modules/react-bootstrap/esm/NavbarContext.js": {
+            "bytesInOutput": 239
+          },
+          "node_modules/react-bootstrap/esm/ListGroup.js": {
+            "bytesInOutput": 1500
+          },
+          "node_modules/@restart/ui/esm/Nav.js": {
+            "bytesInOutput": 4091
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js": {
+            "bytesInOutput": 539
+          },
+          "node_modules/@restart/ui/esm/TabContext.js": {
+            "bytesInOutput": 186
+          },
+          "node_modules/@restart/ui/esm/NavItem.js": {
+            "bytesInOutput": 2540
+          },
+          "node_modules/react-bootstrap/esm/ListGroupItem.js": {
+            "bytesInOutput": 1557
+          },
+          "node_modules/@restart/ui/esm/Modal.js": {
+            "bytesInOutput": 7734
+          },
+          "node_modules/dom-helpers/esm/activeElement.js": {
+            "bytesInOutput": 294
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js": {
+            "bytesInOutput": 235
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js": {
+            "bytesInOutput": 229
+          },
+          "node_modules/@restart/ui/esm/ModalManager.js": {
+            "bytesInOutput": 2413
+          },
+          "node_modules/@restart/ui/esm/getScrollbarWidth.js": {
+            "bytesInOutput": 239
+          },
+          "node_modules/@restart/ui/esm/useWaitForDOMRef.js": {
+            "bytesInOutput": 1130
+          },
+          "node_modules/@restart/ui/esm/ImperativeTransition.js": {
+            "bytesInOutput": 2354
+          },
+          "node_modules/@restart/ui/esm/NoopTransition.js": {
+            "bytesInOutput": 913
+          },
+          "node_modules/@restart/ui/esm/RTGTransition.js": {
+            "bytesInOutput": 811
+          },
+          "node_modules/@restart/ui/esm/useRTGTransitionProps.js": {
+            "bytesInOutput": 2333
+          },
+          "node_modules/react-bootstrap/esm/BootstrapModalManager.js": {
+            "bytesInOutput": 2250
+          },
+          "node_modules/dom-helpers/esm/addClass.js": {
+            "bytesInOutput": 424
+          },
+          "node_modules/dom-helpers/esm/hasClass.js": {
+            "bytesInOutput": 290
+          },
+          "node_modules/dom-helpers/esm/removeClass.js": {
+            "bytesInOutput": 614
+          },
+          "node_modules/react-bootstrap/esm/ModalContext.js": {
+            "bytesInOutput": 222
+          },
+          "node_modules/react-bootstrap/esm/AbstractModalHeader.js": {
+            "bytesInOutput": 1055
+          },
+          "node_modules/react-bootstrap/esm/Nav.js": {
+            "bytesInOutput": 1750
+          },
+          "node_modules/react-bootstrap/esm/NavItem.js": {
+            "bytesInOutput": 638
+          },
+          "node_modules/react-bootstrap/esm/NavLink.js": {
+            "bytesInOutput": 908
+          },
+          "node_modules/react-bootstrap/esm/Navbar.js": {
+            "bytesInOutput": 2426
+          },
+          "node_modules/react-bootstrap/esm/NavbarBrand.js": {
+            "bytesInOutput": 694
+          },
+          "node_modules/react-bootstrap/esm/NavbarCollapse.js": {
+            "bytesInOutput": 813
+          },
+          "node_modules/react-bootstrap/esm/NavbarToggle.js": {
+            "bytesInOutput": 1423
+          },
+          "node_modules/react-bootstrap/esm/NavbarOffcanvas.js": {
+            "bytesInOutput": 842
+          },
+          "node_modules/react-bootstrap/esm/Offcanvas.js": {
+            "bytesInOutput": 4206
+          },
+          "node_modules/@restart/hooks/esm/useBreakpoint.js": {
+            "bytesInOutput": 1900
+          },
+          "node_modules/@restart/hooks/esm/useMediaQuery.js": {
+            "bytesInOutput": 1375
+          },
+          "node_modules/react-bootstrap/esm/OffcanvasBody.js": {
+            "bytesInOutput": 670
+          },
+          "node_modules/react-bootstrap/esm/OffcanvasToggling.js": {
+            "bytesInOutput": 1220
+          },
+          "node_modules/react-bootstrap/esm/OffcanvasHeader.js": {
+            "bytesInOutput": 753
+          },
+          "node_modules/react-bootstrap/esm/OffcanvasTitle.js": {
+            "bytesInOutput": 738
+          },
+          "node_modules/react-bootstrap/esm/NavbarText.js": {
+            "bytesInOutput": 653
+          },
+          "node_modules/react-bootstrap/esm/Tab.js": {
+            "bytesInOutput": 1095
+          },
+          "node_modules/react-bootstrap/esm/TabContainer.js": {
+            "bytesInOutput": 373
+          },
+          "node_modules/@restart/ui/esm/Tabs.js": {
+            "bytesInOutput": 1506
+          },
+          "node_modules/@restart/ui/esm/TabPanel.js": {
+            "bytesInOutput": 3483
+          },
+          "node_modules/react-bootstrap/esm/getTabTransitionComponent.js": {
+            "bytesInOutput": 227
+          },
+          "node_modules/react-bootstrap/esm/TabContent.js": {
+            "bytesInOutput": 652
+          },
+          "node_modules/react-bootstrap/esm/TabPane.js": {
+            "bytesInOutput": 1666
+          },
+          "node_modules/react-bootstrap/esm/Table.js": {
+            "bytesInOutput": 1388
+          },
+          "src/NavBar.tsx": {
+            "bytesInOutput": 2510
+          },
+          "src/components/TestStatusBadge.tsx": {
+            "bytesInOutput": 1872
+          },
+          "src/App.scss": {
+            "bytesInOutput": 0
+          }
+        },
+        "bytes": 1461572
+      },
+      "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-VOZFDOTD.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/BaseSuite.test/web.test.ts",
+        "inputs": {
+          "src/lib/BaseSuite.test/web.test.ts": {
+            "bytesInOutput": 148
+          },
+          "src/lib/BaseSuite.test/test.ts": {
+            "bytesInOutput": 8640
+          },
+          "src/lib/BaseSuite.test/mock.ts": {
+            "bytesInOutput": 2810
+          }
+        },
+        "bytes": 11981
+      },
+      "testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-VOZFDOTD.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
+        "inputs": {
+          "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
+            "bytesInOutput": 176
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
+            "bytesInOutput": 879
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
+            "bytesInOutput": 3330
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
+            "bytesInOutput": 953
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+            "bytesInOutput": 700
+          }
+        },
+        "bytes": 6623
+      },
+      "testeranto/bundles/web/core/chunk-VOZFDOTD.mjs": {
+        "imports": [],
+        "exports": [
+          "BaseBuilder",
+          "BaseGiven",
+          "BaseSuite",
+          "BaseThen",
+          "BaseWhen",
+          "Buffer",
+          "Web_default",
+          "__commonJS",
+          "__toESM",
+          "init_buffer",
+          "init_dirname",
+          "init_process",
+          "process_exports"
+        ],
         "inputs": {
           "node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js": {
             "bytesInOutput": 108
           },
-          "node_modules/@jspm/core/nodelibs/browser/process.js": {
-            "bytesInOutput": 9704
-          },
-          "node_modules/esbuild-plugin-polyfill-node/polyfills/process.js": {
-            "bytesInOutput": 127
-          },
           "node_modules/@jspm/core/nodelibs/browser/chunk-DtuTasat.js": {
-            "bytesInOutput": 60053
+            "bytesInOutput": 60044
           },
           "node_modules/@jspm/core/nodelibs/browser/buffer.js": {
             "bytesInOutput": 493
@@ -14550,536 +16148,267 @@
           "node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js": {
             "bytesInOutput": 124
           },
-          "node_modules/react/cjs/react.development.js": {
-            "bytesInOutput": 77420
+          "node_modules/@jspm/core/nodelibs/browser/process.js": {
+            "bytesInOutput": 9699
           },
-          "node_modules/react/index.js": {
-            "bytesInOutput": 289
+          "node_modules/esbuild-plugin-polyfill-node/polyfills/process.js": {
+            "bytesInOutput": 127
           },
-          "node_modules/scheduler/cjs/scheduler.development.js": {
-            "bytesInOutput": 16985
+          "src/lib/BaseSuite.ts": {
+            "bytesInOutput": 2420
           },
-          "node_modules/scheduler/index.js": {
-            "bytesInOutput": 301
-          },
-          "node_modules/react-dom/cjs/react-dom.development.js": {
-            "bytesInOutput": 907320
-          },
-          "node_modules/react-dom/index.js": {
-            "bytesInOutput": 319
-          },
-          "node_modules/react-dom/client.js": {
-            "bytesInOutput": 844
-          },
-          "node_modules/classnames/index.js": {
-            "bytesInOutput": 1804
-          },
-          "node_modules/invariant/browser.js": {
-            "bytesInOutput": 1036
-          },
-          "node_modules/react/cjs/react-jsx-runtime.development.js": {
-            "bytesInOutput": 35603
-          },
-          "node_modules/react/jsx-runtime.js": {
-            "bytesInOutput": 313
-          },
-          "node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js": {
-            "bytesInOutput": 7660
-          },
-          "node_modules/prop-types/node_modules/react-is/index.js": {
-            "bytesInOutput": 322
-          },
-          "node_modules/object-assign/index.js": {
-            "bytesInOutput": 2188
-          },
-          "node_modules/prop-types/lib/ReactPropTypesSecret.js": {
-            "bytesInOutput": 333
-          },
-          "node_modules/prop-types/lib/has.js": {
-            "bytesInOutput": 233
-          },
-          "node_modules/prop-types/checkPropTypes.js": {
-            "bytesInOutput": 2706
-          },
-          "node_modules/prop-types/factoryWithTypeCheckers.js": {
-            "bytesInOutput": 19619
-          },
-          "node_modules/prop-types/index.js": {
-            "bytesInOutput": 444
-          },
-          "node_modules/warning/warning.js": {
-            "bytesInOutput": 1398
-          },
-          "src/components/pure/ProjectPageView.test/index.ts": {
-            "bytesInOutput": 140
-          },
-          "node_modules/testeranto-react/src/react-dom/component/web.ts": {
-            "bytesInOutput": 272
+          "src/lib/pmProxy.ts": {
+            "bytesInOutput": 5734
           },
           "src/Web.ts": {
             "bytesInOutput": 840
           },
           "src/PM/web.ts": {
-            "bytesInOutput": 3008
+            "bytesInOutput": 3073
           },
           "src/PM/index.ts": {
             "bytesInOutput": 69
           },
           "src/lib/core.ts": {
-            "bytesInOutput": 1876
+            "bytesInOutput": 1910
           },
           "src/lib/index.ts": {
             "bytesInOutput": 705
           },
           "src/lib/abstractBase.ts": {
-            "bytesInOutput": 4580
-          },
-          "src/lib/pmProxy.ts": {
-            "bytesInOutput": 3811
+            "bytesInOutput": 4965
           },
           "src/lib/classBuilder.ts": {
             "bytesInOutput": 1901
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2430
-          },
-          "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2536
-          },
-          "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
-            "bytesInOutput": 2966
-          },
-          "src/components/pure/ProjectPageView.test/implementation.tsx": {
-            "bytesInOutput": 1263
-          },
-          "node_modules/chai/chai.js": {
-            "bytesInOutput": 134882
-          },
-          "src/components/pure/ProjectPageView.test/specification.ts": {
-            "bytesInOutput": 647
-          },
-          "src/components/pure/ProjectPageView.tsx": {
-            "bytesInOutput": 14182
-          },
-          "node_modules/react-bootstrap/esm/index.js": {
-            "bytesInOutput": 49
-          },
-          "node_modules/uncontrollable/lib/esm/index.js": {
-            "bytesInOutput": 49
-          },
-          "node_modules/uncontrollable/lib/esm/hook.js": {
-            "bytesInOutput": 2105
-          },
-          "node_modules/@babel/runtime/helpers/esm/extends.js": {
-            "bytesInOutput": 361
-          },
-          "node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js": {
-            "bytesInOutput": 289
-          },
-          "node_modules/uncontrollable/lib/esm/utils.js": {
-            "bytesInOutput": 195
-          },
-          "node_modules/uncontrollable/lib/esm/uncontrollable.js": {
-            "bytesInOutput": 147
-          },
-          "node_modules/@babel/runtime/helpers/esm/inheritsLoose.js": {
-            "bytesInOutput": 179
-          },
-          "node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js": {
-            "bytesInOutput": 247
-          },
-          "node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js": {
-            "bytesInOutput": 1087
-          },
-          "node_modules/react-bootstrap/esm/ThemeProvider.js": {
-            "bytesInOutput": 696
-          },
-          "node_modules/react-bootstrap/esm/Collapse.js": {
-            "bytesInOutput": 3238
-          },
-          "node_modules/dom-helpers/esm/css.js": {
-            "bytesInOutput": 772
-          },
-          "node_modules/dom-helpers/esm/getComputedStyle.js": {
-            "bytesInOutput": 166
-          },
-          "node_modules/dom-helpers/esm/ownerWindow.js": {
-            "bytesInOutput": 156
-          },
-          "node_modules/dom-helpers/esm/ownerDocument.js": {
-            "bytesInOutput": 131
-          },
-          "node_modules/dom-helpers/esm/hyphenateStyle.js": {
-            "bytesInOutput": 168
-          },
-          "node_modules/dom-helpers/esm/hyphenate.js": {
-            "bytesInOutput": 159
-          },
-          "node_modules/dom-helpers/esm/isTransform.js": {
-            "bytesInOutput": 241
-          },
-          "node_modules/react-transition-group/esm/Transition.js": {
-            "bytesInOutput": 15032
-          },
-          "node_modules/react-transition-group/esm/config.js": {
-            "bytesInOutput": 93
-          },
-          "node_modules/react-transition-group/esm/utils/PropTypes.js": {
-            "bytesInOutput": 975
-          },
-          "node_modules/react-transition-group/esm/TransitionGroupContext.js": {
-            "bytesInOutput": 175
-          },
-          "node_modules/react-transition-group/esm/utils/reflow.js": {
-            "bytesInOutput": 125
-          },
-          "node_modules/@restart/ui/esm/utils.js": {
-            "bytesInOutput": 554
-          },
-          "node_modules/react-bootstrap/esm/transitionEndListener.js": {
-            "bytesInOutput": 550
-          },
-          "node_modules/dom-helpers/esm/transitionEnd.js": {
-            "bytesInOutput": 1005
-          },
-          "node_modules/dom-helpers/esm/listen.js": {
-            "bytesInOutput": 291
-          },
-          "node_modules/dom-helpers/esm/addEventListener.js": {
-            "bytesInOutput": 1127
-          },
-          "node_modules/dom-helpers/esm/canUseDOM.js": {
-            "bytesInOutput": 160
-          },
-          "node_modules/dom-helpers/esm/removeEventListener.js": {
-            "bytesInOutput": 408
-          },
-          "node_modules/dom-helpers/esm/triggerEvent.js": {
-            "bytesInOutput": 378
-          },
-          "node_modules/react-bootstrap/esm/createChainedFunction.js": {
-            "bytesInOutput": 513
-          },
-          "node_modules/react-bootstrap/esm/triggerBrowserReflow.js": {
-            "bytesInOutput": 110
-          },
-          "node_modules/react-bootstrap/esm/TransitionWrapper.js": {
-            "bytesInOutput": 2096
-          },
-          "node_modules/@restart/hooks/esm/useMergedRefs.js": {
-            "bytesInOutput": 531
-          },
-          "node_modules/react-bootstrap/esm/safeFindDOMNode.js": {
-            "bytesInOutput": 355
-          },
-          "node_modules/react-bootstrap/esm/Alert.js": {
-            "bytesInOutput": 1721
-          },
-          "node_modules/@restart/hooks/esm/useEventCallback.js": {
-            "bytesInOutput": 295
-          },
-          "node_modules/@restart/hooks/esm/useCommittedRef.js": {
-            "bytesInOutput": 319
-          },
-          "node_modules/react-bootstrap/esm/AlertHeading.js": {
-            "bytesInOutput": 767
-          },
-          "node_modules/react-bootstrap/esm/divWithClassName.js": {
-            "bytesInOutput": 500
-          },
-          "node_modules/react-bootstrap/esm/AlertLink.js": {
-            "bytesInOutput": 653
-          },
-          "node_modules/@restart/ui/esm/Anchor.js": {
-            "bytesInOutput": 1273
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/index.js": {
-            "bytesInOutput": 49
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCallbackRef.js": {
-            "bytesInOutput": 96
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCommittedRef.js": {
-            "bytesInOutput": 325
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js": {
-            "bytesInOutput": 297
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventListener.js": {
-            "bytesInOutput": 96
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useGlobalListener.js": {
-            "bytesInOutput": 96
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useInterval.js": {
-            "bytesInOutput": 96
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useRafInterval.js": {
-            "bytesInOutput": 96
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergeState.js": {
-            "bytesInOutput": 96
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergeStateFromProps.js": {
-            "bytesInOutput": 49
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMounted.js": {
-            "bytesInOutput": 408
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/usePrevious.js": {
-            "bytesInOutput": 269
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useImage.js": {
-            "bytesInOutput": 96
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useResizeObserver.js": {
-            "bytesInOutput": 96
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useIsomorphicEffect.js": {
-            "bytesInOutput": 404
-          },
-          "node_modules/@restart/ui/esm/Button.js": {
-            "bytesInOutput": 2355
-          },
-          "node_modules/react-bootstrap/esm/Fade.js": {
-            "bytesInOutput": 1295
-          },
-          "node_modules/react-bootstrap/esm/CloseButton.js": {
-            "bytesInOutput": 1190
-          },
-          "node_modules/react-bootstrap/esm/Badge.js": {
-            "bytesInOutput": 732
-          },
-          "node_modules/react-bootstrap/esm/Card.js": {
-            "bytesInOutput": 1303
-          },
-          "node_modules/react-bootstrap/esm/CardBody.js": {
-            "bytesInOutput": 640
-          },
-          "node_modules/react-bootstrap/esm/CardFooter.js": {
-            "bytesInOutput": 654
-          },
-          "node_modules/react-bootstrap/esm/CardHeader.js": {
-            "bytesInOutput": 1105
-          },
-          "node_modules/react-bootstrap/esm/CardHeaderContext.js": {
-            "bytesInOutput": 246
-          },
-          "node_modules/react-bootstrap/esm/CardImg.js": {
-            "bytesInOutput": 872
-          },
-          "node_modules/react-bootstrap/esm/CardImgOverlay.js": {
-            "bytesInOutput": 679
-          },
-          "node_modules/react-bootstrap/esm/CardLink.js": {
-            "bytesInOutput": 640
-          },
-          "node_modules/react-bootstrap/esm/CardSubtitle.js": {
-            "bytesInOutput": 726
-          },
-          "node_modules/react-bootstrap/esm/CardText.js": {
-            "bytesInOutput": 640
-          },
-          "node_modules/react-bootstrap/esm/CardTitle.js": {
-            "bytesInOutput": 708
-          },
-          "node_modules/react-bootstrap/esm/Container.js": {
-            "bytesInOutput": 924
-          },
-          "node_modules/dom-helpers/esm/querySelectorAll.js": {
-            "bytesInOutput": 218
-          },
-          "node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js": {
-            "bytesInOutput": 777
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js": {
-            "bytesInOutput": 231
-          },
-          "node_modules/dom-helpers/esm/contains.js": {
-            "bytesInOutput": 269
-          },
-          "node_modules/@restart/ui/esm/ssr.js": {
-            "bytesInOutput": 49
-          },
-          "node_modules/@react-aria/ssr/dist/import.mjs": {
-            "bytesInOutput": 49
-          },
-          "node_modules/@react-aria/ssr/dist/SSRProvider.mjs": {
-            "bytesInOutput": 3972
-          },
-          "node_modules/@restart/ui/esm/SelectableContext.js": {
-            "bytesInOutput": 336
-          },
-          "node_modules/@restart/ui/esm/NavContext.js": {
-            "bytesInOutput": 227
-          },
-          "node_modules/@restart/ui/esm/DataKey.js": {
-            "bytesInOutput": 266
-          },
-          "node_modules/@restart/ui/esm/useWindow.js": {
-            "bytesInOutput": 312
-          },
-          "node_modules/@restart/hooks/esm/useIsomorphicEffect.js": {
-            "bytesInOutput": 409
-          },
-          "node_modules/react-bootstrap/esm/NavbarContext.js": {
-            "bytesInOutput": 241
-          },
-          "node_modules/react-bootstrap/esm/ListGroup.js": {
-            "bytesInOutput": 1502
-          },
-          "node_modules/@restart/ui/esm/Nav.js": {
-            "bytesInOutput": 4093
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js": {
-            "bytesInOutput": 541
-          },
-          "node_modules/@restart/ui/esm/TabContext.js": {
-            "bytesInOutput": 188
-          },
-          "node_modules/@restart/ui/esm/NavItem.js": {
-            "bytesInOutput": 2542
-          },
-          "node_modules/react-bootstrap/esm/ListGroupItem.js": {
-            "bytesInOutput": 1559
-          },
-          "node_modules/@restart/ui/esm/Modal.js": {
-            "bytesInOutput": 7736
-          },
-          "node_modules/dom-helpers/esm/activeElement.js": {
-            "bytesInOutput": 296
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js": {
-            "bytesInOutput": 237
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js": {
-            "bytesInOutput": 231
-          },
-          "node_modules/@restart/ui/esm/ModalManager.js": {
-            "bytesInOutput": 2415
-          },
-          "node_modules/@restart/ui/esm/getScrollbarWidth.js": {
-            "bytesInOutput": 241
-          },
-          "node_modules/@restart/ui/esm/useWaitForDOMRef.js": {
-            "bytesInOutput": 1132
-          },
-          "node_modules/@restart/ui/esm/ImperativeTransition.js": {
-            "bytesInOutput": 2356
-          },
-          "node_modules/@restart/ui/esm/NoopTransition.js": {
-            "bytesInOutput": 915
-          },
-          "node_modules/@restart/ui/esm/RTGTransition.js": {
-            "bytesInOutput": 813
-          },
-          "node_modules/@restart/ui/esm/useRTGTransitionProps.js": {
-            "bytesInOutput": 2335
-          },
-          "node_modules/react-bootstrap/esm/BootstrapModalManager.js": {
-            "bytesInOutput": 2252
-          },
-          "node_modules/dom-helpers/esm/addClass.js": {
-            "bytesInOutput": 426
-          },
-          "node_modules/dom-helpers/esm/hasClass.js": {
-            "bytesInOutput": 292
-          },
-          "node_modules/dom-helpers/esm/removeClass.js": {
-            "bytesInOutput": 616
-          },
-          "node_modules/react-bootstrap/esm/ModalContext.js": {
-            "bytesInOutput": 224
-          },
-          "node_modules/react-bootstrap/esm/AbstractModalHeader.js": {
-            "bytesInOutput": 1057
-          },
-          "node_modules/react-bootstrap/esm/Nav.js": {
-            "bytesInOutput": 1752
-          },
-          "node_modules/react-bootstrap/esm/NavItem.js": {
-            "bytesInOutput": 640
-          },
-          "node_modules/react-bootstrap/esm/NavLink.js": {
-            "bytesInOutput": 907
-          },
-          "node_modules/react-bootstrap/esm/Navbar.js": {
-            "bytesInOutput": 2428
-          },
-          "node_modules/react-bootstrap/esm/NavbarBrand.js": {
-            "bytesInOutput": 696
-          },
-          "node_modules/react-bootstrap/esm/NavbarCollapse.js": {
-            "bytesInOutput": 815
-          },
-          "node_modules/react-bootstrap/esm/NavbarToggle.js": {
-            "bytesInOutput": 1425
-          },
-          "node_modules/react-bootstrap/esm/NavbarOffcanvas.js": {
-            "bytesInOutput": 844
-          },
-          "node_modules/react-bootstrap/esm/Offcanvas.js": {
-            "bytesInOutput": 4208
-          },
-          "node_modules/@restart/hooks/esm/useBreakpoint.js": {
-            "bytesInOutput": 1902
-          },
-          "node_modules/@restart/hooks/esm/useMediaQuery.js": {
-            "bytesInOutput": 1377
-          },
-          "node_modules/react-bootstrap/esm/OffcanvasBody.js": {
-            "bytesInOutput": 672
-          },
-          "node_modules/react-bootstrap/esm/OffcanvasToggling.js": {
-            "bytesInOutput": 1222
-          },
-          "node_modules/react-bootstrap/esm/OffcanvasHeader.js": {
-            "bytesInOutput": 755
-          },
-          "node_modules/react-bootstrap/esm/OffcanvasTitle.js": {
-            "bytesInOutput": 740
-          },
-          "node_modules/react-bootstrap/esm/NavbarText.js": {
-            "bytesInOutput": 655
-          },
-          "node_modules/react-bootstrap/esm/Tab.js": {
-            "bytesInOutput": 1097
-          },
-          "node_modules/react-bootstrap/esm/TabContainer.js": {
-            "bytesInOutput": 375
-          },
-          "node_modules/@restart/ui/esm/Tabs.js": {
-            "bytesInOutput": 1508
-          },
-          "node_modules/@restart/ui/esm/TabPanel.js": {
-            "bytesInOutput": 3485
-          },
-          "node_modules/react-bootstrap/esm/getTabTransitionComponent.js": {
-            "bytesInOutput": 229
-          },
-          "node_modules/react-bootstrap/esm/TabContent.js": {
-            "bytesInOutput": 654
-          },
-          "node_modules/react-bootstrap/esm/TabPane.js": {
-            "bytesInOutput": 1668
-          },
-          "node_modules/react-bootstrap/esm/Table.js": {
-            "bytesInOutput": 1390
-          },
-          "src/NavBar.tsx": {
-            "bytesInOutput": 2521
-          },
-          "node_modules/react-router/dist/development/chunk-C37GKA54.mjs": {
-            "bytesInOutput": 70291
-          },
-          "node_modules/react-router/dist/development/index.mjs": {
-            "bytesInOutput": 63
-          },
-          "src/components/TestStatusBadge.tsx": {
-            "bytesInOutput": 1874
+            "bytesInOutput": 2591
           }
         },
-        "bytes": 1553216
+        "bytes": 97490
+      },
+      "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf": {
+        "imports": [],
+        "exports": [],
+        "inputs": {
+          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf": {
+            "bytesInOutput": 2819076
+          }
+        },
+        "bytes": 2819076
+      },
+      "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf": {
+        "imports": [],
+        "exports": [],
+        "inputs": {
+          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf": {
+            "bytesInOutput": 3193048
+          }
+        },
+        "bytes": 3193048
+      },
+      "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf": {
+        "imports": [],
+        "exports": [],
+        "inputs": {
+          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf": {
+            "bytesInOutput": 3284152
+          }
+        },
+        "bytes": 3284152
+      },
+      "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf": {
+        "imports": [],
+        "exports": [],
+        "inputs": {
+          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf": {
+            "bytesInOutput": 3325496
+          }
+        },
+        "bytes": 3325496
+      },
+      "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf": {
+        "imports": [],
+        "exports": [],
+        "inputs": {
+          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf": {
+            "bytesInOutput": 3432832
+          }
+        },
+        "bytes": 3432832
+      },
+      "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf": {
+        "imports": [],
+        "exports": [],
+        "inputs": {
+          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf": {
+            "bytesInOutput": 3515332
+          }
+        },
+        "bytes": 3515332
+      },
+      "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf": {
+        "imports": [],
+        "exports": [],
+        "inputs": {
+          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf": {
+            "bytesInOutput": 3521968
+          }
+        },
+        "bytes": 3521968
+      },
+      "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css": {
+        "imports": [
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
+            "kind": "url-token"
+          }
+        ],
+        "inputs": {
+          "src/App.scss": {
+            "bytesInOutput": 279940
+          }
+        },
+        "bytes": 280156
       }
     }
   }

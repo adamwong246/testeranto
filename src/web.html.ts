@@ -1,20 +1,20 @@
-export default (jsfilePath: string, htmlFilePath: string) => `
+export default (
+  jsfilePath: string,
+  htmlFilePath: string,
+  cssfilePath: string
+) => `
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <script type="module" src="${jsfilePath}"></script>
-
+  <link rel="stylesheet" href="${cssfilePath}">
 </head>
 
 <body>
-  <h1>${htmlFilePath}</h1>
   <div id="root">
-
   </div>
 </body>
-
-<footer></footer>
 
 </html>
 `;

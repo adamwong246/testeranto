@@ -11,6 +11,7 @@ const config = {
     nodePlugins: [],
     webPlugins: [],
     importPlugins: [],
+    webLoaders: {},
     featureIngestor: function (s) {
         throw new Error("Function not implemented.");
     },

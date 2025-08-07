@@ -4,6 +4,8 @@ import { Tab, Container, Alert, Table, Badge, Nav, Card, ListGroup } from 'react
 import { NavBar } from '../../NavBar';
 import { TestStatusBadge } from '../TestStatusBadge';
 
+import "./../../App.scss";
+
 const BuildLogViewer = ({ logs, runtime }: { logs: any, runtime: string }) => {
   if (!logs) return <Alert variant="info">Loading {runtime.toLowerCase()} build logs...</Alert>;
 
@@ -108,16 +110,16 @@ const BuildLogViewer = ({ logs, runtime }: { logs: any, runtime: string }) => {
                         </div>
                         <div className="mt-1">
                           <pre className="mb-0 p-2 bg-light rounded">
-                            {warn.text || warn.message || JSON.stringify(warn)}
+                            {JSON.stringify(warn)}
                           </pre>
                         </div>
-                        {warn.detail && (
+                        {/* {warn.detail && (
                           <div className="mt-1 small text-muted">
                             <pre className="mb-0 p-2 bg-light rounded">
                               {warn.detail}
                             </pre>
                           </div>
-                        )}
+                        )} */}
                       </ListGroup.Item>
                     ))}
                   </ListGroup>
@@ -151,16 +153,17 @@ const BuildLogViewer = ({ logs, runtime }: { logs: any, runtime: string }) => {
                         </div>
                         <div className="mt-1">
                           <pre className="mb-0 p-2 bg-light rounded">
-                            {err.text || err.message || JSON.stringify(err)}
+                            {/* {err.text || err.message || JSON.stringify(err)} */}
+                            {JSON.stringify(err)}
                           </pre>
                         </div>
-                        {err.detail && (
+                        {/* {err.detail && (
                           <div className="mt-1 small text-muted">
                             <pre className="mb-0 p-2 bg-light rounded">
                               {err.detail}
                             </pre>
                           </div>
-                        )}
+                        )} */}
                       </ListGroup.Item>
                     ))}
                   </ListGroup>

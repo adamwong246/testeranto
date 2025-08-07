@@ -1,6 +1,7 @@
 import { assert, expect } from "chai";
 import { ITestImplementation } from "../../../CoreTypes";
 import { I, M, O } from "./types";
+import { MemoryRouter } from "react-router-dom";
 
 export const implementation: ITestImplementation<I, O, M> = {
   suites: {
@@ -43,35 +44,34 @@ export const implementation: ITestImplementation<I, O, M> = {
     happyPath:
       () =>
         async ({ container, html }, pm) => {
-          console.group('[Test] Verifying render output');
-          // debugger
+
           const p = await pm.page();
           await pm.customScreenShot({ path: "happyPath.png" }, p);
 
-          assert.equal(1, 1);
-          // try {
-          //   console.log('Checking for container-fluid');
-          //   const containerFluid = container.querySelector(".container-fluid");
-          //   expect(containerFluid).to.exist;
-          //   expect(containerFluid?.children.length).to.be.greaterThan(0);
+          console.group('[Test] Verifying render output');
+          try {
+            console.log('Checking for container-fluid');
+            const containerFluid = container.querySelector(".container-fluid");
+            expect(containerFluid).to.exist;
+            expect(containerFluid?.children.length).to.be.greaterThan(0);
 
-          //   console.log('Checking for NavBar');
-          //   const navBar = container.querySelector("nav.navbar");
-          //   expect(navBar).to.exist;
+            console.log('Checking for NavBar');
+            const navBar = container.querySelector("nav.navbar");
+            expect(navBar).to.exist;
 
-          //   console.log('Render verification passed');
-          //   console.groupEnd();
-          //   return { container, html };
-          // } catch (err) {
-          //   console.error('Verification failed:', err);
-          //   console.error('Full HTML:', html);
-          //   console.groupEnd();
-          //   throw err;
-          // }
+            console.log('Render verification passed');
+            console.groupEnd();
+            return { container, html };
+          } catch (err) {
+            console.error('Verification failed:', err);
+            console.error('Full HTML:', html);
+            console.groupEnd();
+            throw err;
+          }
         },
     unhappyPath:
       () =>
-        async ({ container }, pm) => {
+        async ({ container }, tr, pm) => {
           // expect(container.textContent).contain("Test error message");
           assert.equal(1, 1);
 

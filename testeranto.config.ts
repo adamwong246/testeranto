@@ -1,5 +1,6 @@
 import { IProject } from "./src/Types";
 
+import { sassPlugin } from "esbuild-sass-plugin";
 // TODO- this config file is horrible. I need to redo how config files are handled.
 
 const config: IProject = {
@@ -23,47 +24,47 @@ const config: IProject = {
     core: {
       tests: [
         [
-          "src/components/pure/ProjectPageView.test/index.ts",
+          "src/components/pure/ProjectPageView.test/index.tsx",
           "web",
           { ports: 0 },
           [],
         ],
 
-        // ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
-        // ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
-        // ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
+        ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
+        ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
+        ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
 
-        // ["src/Pure.test.ts", "pure", { ports: 0 }, []],
-        // ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
-        // ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
-        // [
-        //   "src/lib/classBuilder.test/classBuilder.test.ts",
-        //   "node",
-        //   { ports: 0 },
-        //   [],
-        // ],
+        ["src/Pure.test.ts", "pure", { ports: 0 }, []],
+        ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
+        ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
+        [
+          "src/lib/classBuilder.test/classBuilder.test.ts",
+          "node",
+          { ports: 0 },
+          [],
+        ],
 
-        // [
-        //   "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
-        //   "node",
-        //   { ports: 0 },
-        //   [],
-        // ],
-        // [
-        //   "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
-        //   "pure",
-        //   { ports: 0 },
-        //   [],
-        // ],
-        // [
-        //   "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
-        //   "web",
-        //   { ports: 0 },
-        //   [],
-        // ],
+        [
+          "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
+          "node",
+          { ports: 0 },
+          [],
+        ],
+        [
+          "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
+          "pure",
+          { ports: 0 },
+          [],
+        ],
+        [
+          "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
+          "web",
+          { ports: 0 },
+          [],
+        ],
 
-        // ["src/mothership/test.ts", "node", { ports: 0 }, []],
-        // ["./src/lib/abstractBase/index.ts", "node", { ports: 0 }, []],
+        ["src/mothership/test.ts", "node", { ports: 0 }, []],
+        ["./src/lib/abstractBase/index.ts", "node", { ports: 0 }, []],
         // [
         //   "src/PM/__tests__/nodeSidecar.testeranto.ts",
         //   "node",
@@ -89,7 +90,10 @@ const config: IProject = {
       nodePlugins: [],
       ports: ["3333"],
       src: "",
-      webPlugins: [],
+      webPlugins: [() => sassPlugin()],
+      webLoaders: {
+        ".ttf": "file",
+      },
     },
   },
 };

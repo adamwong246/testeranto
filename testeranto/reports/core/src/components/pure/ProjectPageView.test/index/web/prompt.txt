@@ -1,20 +1,11 @@
 
-/add src/components/pure/ProjectPageView.test/index.ts
-/add src/Web.ts
-/add src/PM/web.ts
-/add src/PM/index.ts
-/add src/lib/core.ts
-/add src/lib/index.ts
-/add src/lib/abstractBase.ts
-/add src/lib/pmProxy.ts
-/add src/lib/classBuilder.ts
-/add src/lib/basebuilder.ts
-/add src/lib/BaseSuite.ts
+/add src/components/pure/ProjectPageView.test/index.tsx
 /add src/components/pure/ProjectPageView.test/implementation.tsx
 /add src/components/pure/ProjectPageView.test/specification.ts
 /add src/components/pure/ProjectPageView.tsx
 /add src/NavBar.tsx
 /add src/components/TestStatusBadge.tsx
+/add src/App.scss
 
 /read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md

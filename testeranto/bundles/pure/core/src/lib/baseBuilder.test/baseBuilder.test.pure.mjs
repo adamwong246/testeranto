@@ -4,7 +4,7 @@ import {
   PM,
   TesterantoCore,
   defaultTestResourceRequirement
-} from "../../../chunk-OURSJSH7.mjs";
+} from "../../../chunk-M5XWNCQG.mjs";
 
 // src/PM/web.ts
 var PM_Web = class extends PM {
@@ -100,7 +100,10 @@ var PM_Web = class extends PM {
   write(uid, contents) {
     return window["write"](uid, contents);
   }
-  writeFileSync([filepath, contents]) {
+  writeFileSync(x) {
+    const z = arguments["0"];
+    const filepath = z[0];
+    const contents = z[1];
     return window["writeFileSync"](
       this.testResourceConfiguration.fs + "/" + filepath,
       contents,
