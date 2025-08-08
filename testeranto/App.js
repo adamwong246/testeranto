@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState23(initialState) {
+          function useState24(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1097,7 +1097,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect28(create, deps) {
+          function useEffect29(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1879,7 +1879,7 @@
           exports.useContext = useContext16;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect28;
+          exports.useEffect = useEffect29;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1887,7 +1887,7 @@
           exports.useMemo = useMemo15;
           exports.useReducer = useReducer2;
           exports.useRef = useRef22;
-          exports.useState = useState23;
+          exports.useState = useState24;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React93 = require_react();
+          var React94 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React93.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React94.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React93.Children.forEach(props.children, function(child) {
+                  React94.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React93.Component().refs;
+          var emptyRefsObject = new React94.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React93 = require_react();
+          var React94 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React93.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React94.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -25317,7 +25317,7 @@
   });
 
   // src/App.tsx
-  var import_react69 = __toESM(require_react(), 1);
+  var import_react70 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs
@@ -33317,13 +33317,96 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return /* @__PURE__ */ import_react68.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react68.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react68.default.createElement(Container_default, { fluid: true }, children)), /* @__PURE__ */ import_react68.default.createElement("footer", { className: "bg-light py-2 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react68.default.createElement(SettingsButton, null), /* @__PURE__ */ import_react68.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react68.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))));
   };
 
+  // src/components/stateful/FeaturesReporter.tsx
+  var import_react69 = __toESM(require_react(), 1);
+  var FeaturesReporter = () => {
+    const [features, setFeatures] = (0, import_react69.useState)([]);
+    (0, import_react69.useEffect)(() => {
+      const fetchAllFeatures = async () => {
+        try {
+          const projectsResponse = await fetch("projects.json");
+          if (!projectsResponse.ok)
+            throw new Error("Failed to fetch projects");
+          const projectNames = await projectsResponse.json();
+          const allFeatures = [];
+          for (const projectName of projectNames) {
+            const configResponse = await fetch(`reports/${projectName}/config.json`);
+            let configData = { tests: [] };
+            if (configResponse.ok) {
+              configData = await configResponse.json();
+            } else {
+              console.warn(`Failed to fetch config for ${projectName}`);
+            }
+            const summaryResponse = await fetch(`reports/${projectName}/summary.json`);
+            if (summaryResponse.ok) {
+              const summaryData = await summaryResponse.json();
+              for (const [testName, testData] of Object.entries(summaryData)) {
+                const testPath = testName.split(".").slice(0, -1).join(".");
+                const testConfig = configData.tests.find((t) => t[0] === testName);
+                const runtime = testConfig ? testConfig[1] : "defaultRuntime";
+                const testsResponse = await fetch(`reports/${projectName}/${testPath}/${runtime}/tests.json`);
+                if (testsResponse.ok) {
+                  const testsData = await testsResponse.json();
+                  testsData.givens.forEach((given) => {
+                    const givenNode = `${given.name}`;
+                    given.thens.forEach((then) => {
+                      const thenNode = `${then.name}`;
+                      const status = then.error ? "warning" : "AOK green";
+                      allFeatures.push({
+                        name: `${projectName} - ${testName} - ${givenNode} - ${thenNode}`,
+                        status
+                      });
+                    });
+                  });
+                } else {
+                  allFeatures.push({
+                    name: `${projectName} - ${testName}`,
+                    status: "dangerous"
+                  });
+                  console.warn(`Failed to fetch tests for ${testName}`);
+                }
+              }
+            } else {
+              console.warn(`Failed to fetch summary for ${projectName}`);
+            }
+          }
+          setFeatures(allFeatures);
+        } catch (error) {
+          console.error("Error fetching features:", error);
+        }
+      };
+      fetchAllFeatures();
+    }, []);
+    const renderTree = (nodes) => /* @__PURE__ */ import_react69.default.createElement("ul", null, Object.entries(nodes).map(([key, value]) => /* @__PURE__ */ import_react69.default.createElement("li", { key }, typeof value === "string" ? /* @__PURE__ */ import_react69.default.createElement("span", null, key, " - ", value) : /* @__PURE__ */ import_react69.default.createElement(import_react69.default.Fragment, null, /* @__PURE__ */ import_react69.default.createElement("span", null, key), renderTree(value)))));
+    const buildTree = (features2) => {
+      const tree = {};
+      features2.forEach(({ name, status }) => {
+        const parts = name.split(" - ");
+        const projectAndTest = parts.slice(0, 2).join(" - ");
+        const givenAndThen = parts.slice(2).join(" - ");
+        const pathParts = projectAndTest.split("/");
+        let current = tree;
+        pathParts.forEach((part) => {
+          if (!current[part]) {
+            current[part] = {};
+          }
+          current = current[part];
+        });
+        current[givenAndThen] = status;
+      });
+      return tree;
+    };
+    const featureTree = buildTree(features);
+    return /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("h1", null, "Features Reporter"), renderTree(featureTree));
+  };
+
   // src/App.tsx
   var App = () => {
-    return /* @__PURE__ */ import_react69.default.createElement(HashRouter, null, /* @__PURE__ */ import_react69.default.createElement(AppFrame, null, /* @__PURE__ */ import_react69.default.createElement(Routes, null, /* @__PURE__ */ import_react69.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react69.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react69.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react69.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react69.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react69.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react69.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react69.default.createElement(ProjectPage, null) }))));
+    return /* @__PURE__ */ import_react70.default.createElement(HashRouter, null, /* @__PURE__ */ import_react70.default.createElement(AppFrame, null, /* @__PURE__ */ import_react70.default.createElement(Routes, null, /* @__PURE__ */ import_react70.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react70.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react70.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react70.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react70.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react70.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react70.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react70.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react70.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react70.default.createElement(FeaturesReporter, null) }))));
   };
   if (typeof window !== "undefined") {
     window.App = App;
-    window.React = import_react69.default;
+    window.React = import_react70.default;
     window.ReactDOM = import_client.default;
   }
 })();

@@ -1,18 +1,2 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/e15b3db3-a4f1-42b9-a81b-4b373b832a4e"}
-stderr > node:events:490
-      throw er; // Unhandled 'error' event
-      ^
-
-Error: connect ECONNREFUSED /tmp/tpipe_0.9726412576794559
-    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1592:16)
-Emitted 'error' event on Socket instance at:
-    at emitErrorNT (node:internal/streams/destroy:151:8)
-    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
-    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
-  errno: -61,
-  code: 'ECONNREFUSED',
-  syscall: 'connect',
-  address: '/tmp/tpipe_0.9726412576794559'
-}
-
-Node.js v20.4.0
+stdout > receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/48b0089e-d17a-496f-96c5-c3812a19dabd"}
+stderr > goodbye node with failures 0
