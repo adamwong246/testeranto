@@ -1,6 +1,3 @@
-src/PM/pure.ts
-140:15 Use the rest parameters instead of 'arguments'. (prefer-rest-params)
-
 src/lib/core.test/core.test.implementation.ts
 33:30 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
 - undefined (fix)

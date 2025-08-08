@@ -83,6 +83,7 @@ export class PM_Pure extends PM {
         return globalThis["write"](uid, contents);
     }
     writeFileSync(x) {
+        // eslint-disable-next-line prefer-rest-params
         const z = arguments["0"];
         const filepath = z[0];
         const contents = z[1];

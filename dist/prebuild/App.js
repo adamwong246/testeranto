@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React91 = require_react();
+          var React93 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React91.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React93.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React91.Children.forEach(props.children, function(child) {
+                  React93.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React91.Component().refs;
+          var emptyRefsObject = new React93.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React91 = require_react();
+          var React93 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React91.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React93.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -25317,7 +25317,7 @@
   });
 
   // src/App.tsx
-  var import_react67 = __toESM(require_react(), 1);
+  var import_react69 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs
@@ -32743,18 +32743,219 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/pure/AppFrame.tsx
-  var import_react66 = __toESM(require_react(), 1);
+  var import_react68 = __toESM(require_react(), 1);
 
   // src/components/pure/SettingsButton.tsx
+  var import_react67 = __toESM(require_react(), 1);
+
+  // src/components/pure/ModalContent.tsx
   var import_react65 = __toESM(require_react(), 1);
 
-  // src/components/SunriseAnimation.tsx
+  // src/components/pure/ThemeCard.tsx
   var import_react64 = __toESM(require_react(), 1);
+  var ThemeCard = ({
+    theme,
+    handleThemeChange,
+    value,
+    title,
+    description,
+    style: style2
+  }) => /* @__PURE__ */ import_react64.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react64.default.createElement(
+    "div",
+    {
+      className: `card theme-card ${theme === value ? "border-primary" : ""}`,
+      onClick: () => handleThemeChange({
+        target: { value }
+      }),
+      style: style2
+    },
+    /* @__PURE__ */ import_react64.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react64.default.createElement("h5", { className: "card-title mb-1" }, title), /* @__PURE__ */ import_react64.default.createElement("p", { className: "small text-muted mb-0" }, description))
+  ));
+
+  // src/components/pure/ModalContent.tsx
+  var ModalContent = ({
+    theme,
+    handleThemeChange
+  }) => /* @__PURE__ */ import_react65.default.createElement(import_react65.default.Fragment, null, /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react65.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react65.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react65.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react65.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react65.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react65.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react65.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "system",
+      title: "9 to 5",
+      description: "Follows your OS theme",
+      style: {
+        background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
+        borderColor: "#adb5bd"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "light",
+      title: "Business casual",
+      description: "Clean & professional",
+      style: {
+        background: "linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%)",
+        borderColor: "#ced4da",
+        color: "#212529",
+        borderWidth: "2px"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "dark",
+      title: "Business formal",
+      description: "Premium & focused",
+      style: {
+        background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
+        borderColor: "#4ecdc4",
+        color: "#f8f9fa",
+        borderWidth: "2px"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "light-vibrant",
+      title: "Office Party",
+      description: "Colorful & fun",
+      style: {
+        background: "linear-gradient(135deg, #ff2d75 0%, #00e5ff 100%)",
+        borderColor: "#ffeb3b",
+        color: "#fff"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "dark-vibrant",
+      title: "After Party",
+      description: "Neon nightlife",
+      style: {
+        background: "linear-gradient(135deg, #16213e 0%, #e94560 100%)",
+        borderColor: "#00e5ff",
+        color: "#fff"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "sepia",
+      title: "WFH",
+      description: "Vintage warmth",
+      style: {
+        background: "linear-gradient(135deg, #f4ecd8 0%, #d0b88f 100%)",
+        borderColor: "#8b6b4a",
+        color: "#3a3226"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "light-grayscale",
+      title: "Serious Business",
+      description: "Simple & distraction-free",
+      style: {
+        background: "linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)",
+        borderColor: "#666",
+        color: "#333",
+        borderWidth: "2px"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "dark-grayscale",
+      title: "Very Serious business",
+      description: "Maximum readability",
+      style: {
+        background: "linear-gradient(135deg, #111 0%, #333 100%)",
+        borderColor: "#ff6b6b",
+        color: "#e0e0e0",
+        borderWidth: "2px"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "daily",
+      title: "Dreaming of PTO",
+      description: "Sunrise, sunset",
+      style: {
+        background: "linear-gradient(135deg, #6eafff 0%, #f9fbf0 100%)",
+        borderColor: "#f7d62e",
+        color: "#00192d"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "protanopia",
+      title: "Protanopia",
+      description: "Red-blind mode",
+      style: {
+        background: "linear-gradient(135deg, #f8f9fa 0%, #e0e8ff 100%)",
+        borderColor: "#3366cc",
+        color: "#333"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "deuteranopia",
+      title: "Deuteranopia",
+      description: "Green-blind mode",
+      style: {
+        background: "linear-gradient(135deg, #f8f9fa 0%, #ffe0e0 100%)",
+        borderColor: "#cc6633",
+        color: "#333"
+      }
+    }
+  ), /* @__PURE__ */ import_react65.default.createElement(
+    ThemeCard,
+    {
+      theme,
+      handleThemeChange,
+      value: "tritanopia",
+      title: "Tritanopia",
+      description: "Blue-blind mode",
+      style: {
+        background: "linear-gradient(135deg, #f8f9fa 0%, #e0ffe0 100%)",
+        borderColor: "#00aa66",
+        color: "#333"
+      }
+    }
+  )))));
+
+  // src/components/SunriseAnimation.tsx
+  var import_react66 = __toESM(require_react(), 1);
   var SunriseAnimation = ({ active }) => {
-    const [position, setPosition] = (0, import_react64.useState)(0);
-    const [dimensions, setDimensions] = (0, import_react64.useState)({ width: 0, height: 0 });
-    const animationIdRef = (0, import_react64.useRef)(null);
-    (0, import_react64.useEffect)(() => {
+    const [position, setPosition] = (0, import_react66.useState)(0);
+    const [dimensions, setDimensions] = (0, import_react66.useState)({ width: 0, height: 0 });
+    const animationIdRef = (0, import_react66.useRef)(null);
+    (0, import_react66.useEffect)(() => {
       setDimensions({
         width: window.innerWidth,
         height: window.innerHeight
@@ -32772,7 +32973,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }, []);
     const ANIMATION_DURATION = 1e4;
     const UPDATE_INTERVAL = 50;
-    (0, import_react64.useEffect)(() => {
+    (0, import_react66.useEffect)(() => {
       if (!active) {
         if (animationIdRef.current) {
           cancelAnimationFrame(animationIdRef.current);
@@ -32807,7 +33008,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const normalizedPos = (position + 1) / 2;
     if (!active)
       return null;
-    return /* @__PURE__ */ import_react64.default.createElement("div", { id: "sunrise", style: {
+    return /* @__PURE__ */ import_react66.default.createElement("div", { id: "sunrise", style: {
       width: "100vw",
       height: "100vh",
       position: "fixed",
@@ -32816,7 +33017,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       backgroundColor: "transparent",
       overflow: "hidden",
       pointerEvents: "none"
-    } }, /* @__PURE__ */ import_react64.default.createElement("div", { id: "daily-bg", style: {
+    } }, /* @__PURE__ */ import_react66.default.createElement("div", { id: "daily-bg", style: {
       position: "absolute",
       top: 0,
       left: 0,
@@ -32824,7 +33025,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       height: "100%",
       backgroundColor: "rgba(0,0,0,0.3)",
       zIndex: -1001
-    } }), "Stars Container", /* @__PURE__ */ import_react64.default.createElement(
+    } }), "Stars Container", /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "starsContainer",
@@ -32841,7 +33042,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 0.5 - normalizedPos * 0.5)
         }
       },
-      /* @__PURE__ */ import_react64.default.createElement(
+      /* @__PURE__ */ import_react66.default.createElement(
         "div",
         {
           id: "stars",
@@ -32857,7 +33058,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       )
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "sun",
@@ -32873,7 +33074,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: 0.5
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "sunDay",
@@ -32888,7 +33089,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 1 - yPos / dimensions.height)
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "sunSet",
@@ -32903,7 +33104,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos / dimensions.height - 0.2)
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "sky",
@@ -32918,7 +33119,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 1 - yPos / dimensions.height)
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "horizon",
@@ -32933,7 +33134,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) + 0.2 : yPos / (dimensions.height / 2))
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "horizonNight",
@@ -32948,7 +33149,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, (yPos - dimensions.height * 4 / 5) / (dimensions.height - dimensions.height * 4 / 5))
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "moon",
@@ -32963,7 +33164,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, (yPos - dimensions.height * 9 / 10) / (dimensions.height - dimensions.height * 9 / 10))
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "water",
@@ -32978,7 +33179,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -400
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "waterReflectionContainer",
@@ -32995,7 +33196,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           transform: `translateY(${dimensions.height - yPos}px)`
         }
       },
-      /* @__PURE__ */ import_react64.default.createElement(
+      /* @__PURE__ */ import_react66.default.createElement(
         "div",
         {
           id: "waterReflectionMiddle",
@@ -33012,7 +33213,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       )
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "waterDistance",
@@ -33027,7 +33228,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos / dimensions.height + 0.6)
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "darknessOverlaySky",
@@ -33042,7 +33243,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -50
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "darknessOverlay",
@@ -33057,7 +33258,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -5
         }
       }
-    ), /* @__PURE__ */ import_react64.default.createElement(
+    ), /* @__PURE__ */ import_react66.default.createElement(
       "div",
       {
         id: "oceanRipple",
@@ -33078,12 +33279,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/components/pure/SettingsButton.tsx
   var SettingsButton = ({ className }) => {
-    (0, import_react65.useEffect)(() => {
+    (0, import_react67.useEffect)(() => {
       return () => {
       };
     }, []);
-    const [showModal, setShowModal] = (0, import_react65.useState)(false);
-    const [theme, setTheme] = (0, import_react65.useState)(localStorage.getItem("theme") || "system");
+    const [showModal, setShowModal] = (0, import_react67.useState)(false);
+    const [theme, setTheme] = (0, import_react67.useState)(localStorage.getItem("theme") || "system");
     const handleThemeChange = (e) => {
       const newTheme = e.target.value;
       setTheme(newTheme);
@@ -33094,175 +33295,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       document.documentElement.setAttribute("data-bs-theme", themeToApply);
     };
-    return /* @__PURE__ */ import_react65.default.createElement(import_react65.default.Fragment, null, /* @__PURE__ */ import_react65.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react65.default.createElement(
+    return /* @__PURE__ */ import_react67.default.createElement(import_react67.default.Fragment, null, /* @__PURE__ */ import_react67.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react67.default.createElement(
       "button",
       {
         className: `btn btn-sm btn-outline-secondary ${className}`,
         onClick: () => setShowModal(true)
       },
-      /* @__PURE__ */ import_react65.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
-    )), /* @__PURE__ */ import_react65.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react65.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react65.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react65.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react65.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react65.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react65.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react65.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react65.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "system" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "system" } }),
-        style: {
-          background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
-          borderColor: "#adb5bd"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-0" }, "9 to 5"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Follows your OS theme"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "light" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "light" } }),
-        style: {
-          background: "linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%)",
-          borderColor: "#ced4da",
-          color: "#212529",
-          borderWidth: "2px"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-1" }, "Business casual"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Clean & professional"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "dark" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "dark" } }),
-        style: {
-          background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
-          borderColor: "#4ecdc4",
-          color: "#f8f9fa",
-          borderWidth: "2px"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-1" }, "Business formal"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Premium & focused"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "light-vibrant" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "light-vibrant" } }),
-        style: {
-          background: "linear-gradient(135deg, #ff2d75 0%, #00e5ff 100%)",
-          borderColor: "#ffeb3b",
-          color: "#fff"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-1" }, "Office Party"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Colorful & fun"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "dark-vibrant" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "dark-vibrant" } }),
-        style: {
-          background: "linear-gradient(135deg, #16213e 0%, #e94560 100%)",
-          borderColor: "#00e5ff",
-          color: "#fff"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-1" }, "After Party"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Neon nightlife"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "sepia" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "sepia" } }),
-        style: {
-          background: "linear-gradient(135deg, #f4ecd8 0%, #d0b88f 100%)",
-          borderColor: "#8b6b4a",
-          color: "#3a3226"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-1" }, "WFH"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Vintage warmth"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "light-grayscale" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "light-grayscale" } }),
-        style: {
-          background: "linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)",
-          borderColor: "#666",
-          color: "#333",
-          borderWidth: "2px"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-1" }, "Serious Business"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Simple & distraction-free"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "dark-grayscale" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "dark-grayscale" } }),
-        style: {
-          background: "linear-gradient(135deg, #111 0%, #333 100%)",
-          borderColor: "#ff6b6b",
-          color: "#e0e0e0",
-          borderWidth: "2px"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-1" }, "Very Serious business"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Maximum readability"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "daily" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "daily" } }),
-        style: {
-          background: "linear-gradient(135deg, #6eafff 0%, #f9fbf0 100%)",
-          borderColor: "#f7d62e",
-          color: "#00192d"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-1" }, "Dreaming of PTO"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Sunrise, sunset"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "protanopia" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "protanopia" } }),
-        style: {
-          background: "linear-gradient(135deg, #f8f9fa 0%, #e0e8ff 100%)",
-          borderColor: "#3366cc",
-          color: "#333"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-0" }, "Protanopia"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Red-blind mode"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "deuteranopia" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "deuteranopia" } }),
-        style: {
-          background: "linear-gradient(135deg, #f8f9fa 0%, #ffe0e0 100%)",
-          borderColor: "#cc6633",
-          color: "#333"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-0" }, "Deuteranopia"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Green-blind mode"))
-    )), /* @__PURE__ */ import_react65.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react65.default.createElement(
-      "div",
-      {
-        className: `card theme-card ${theme === "tritanopia" ? "border-primary" : ""}`,
-        onClick: () => handleThemeChange({ target: { value: "tritanopia" } }),
-        style: {
-          background: "linear-gradient(135deg, #f8f9fa 0%, #e0ffe0 100%)",
-          borderColor: "#00aa66",
-          color: "#333"
-        }
-      },
-      /* @__PURE__ */ import_react65.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react65.default.createElement("h5", { className: "card-title mb-0" }, "Tritanopia"), /* @__PURE__ */ import_react65.default.createElement("p", { className: "small text-muted mb-0" }, "Blue-blind mode"))
-    ))))), /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react65.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
+      /* @__PURE__ */ import_react67.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
+    )), /* @__PURE__ */ import_react67.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react67.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react67.default.createElement(ModalContent, { theme, handleThemeChange }), /* @__PURE__ */ import_react67.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react67.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
   };
 
   // src/components/pure/AppFrame.tsx
   var AppFrame = ({ children }) => {
-    return /* @__PURE__ */ import_react66.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react66.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react66.default.createElement(Container_default, { fluid: true }, children)), /* @__PURE__ */ import_react66.default.createElement("footer", { className: "bg-light py-2 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react66.default.createElement(SettingsButton, null), /* @__PURE__ */ import_react66.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react66.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))));
+    return /* @__PURE__ */ import_react68.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react68.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react68.default.createElement(Container_default, { fluid: true }, children)), /* @__PURE__ */ import_react68.default.createElement("footer", { className: "bg-light py-2 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react68.default.createElement(SettingsButton, null), /* @__PURE__ */ import_react68.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react68.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))));
   };
 
   // src/App.tsx
   var App = () => {
-    return /* @__PURE__ */ import_react67.default.createElement(HashRouter, null, /* @__PURE__ */ import_react67.default.createElement(AppFrame, null, /* @__PURE__ */ import_react67.default.createElement(Routes, null, /* @__PURE__ */ import_react67.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react67.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react67.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react67.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react67.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react67.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react67.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react67.default.createElement(ProjectPage, null) }))));
+    return /* @__PURE__ */ import_react69.default.createElement(HashRouter, null, /* @__PURE__ */ import_react69.default.createElement(AppFrame, null, /* @__PURE__ */ import_react69.default.createElement(Routes, null, /* @__PURE__ */ import_react69.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react69.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react69.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react69.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react69.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react69.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react69.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react69.default.createElement(ProjectPage, null) }))));
   };
   if (typeof window !== "undefined") {
     window.App = App;
-    window.React = import_react67.default;
+    window.React = import_react69.default;
     window.ReactDOM = import_client.default;
   }
 })();

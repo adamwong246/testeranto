@@ -31,6 +31,12 @@ const config = {
                     { ports: 0 },
                     [],
                 ],
+                [
+                    "src/components/pure/ModalContent.test/index.tsx",
+                    "web",
+                    { ports: 0 },
+                    [],
+                ],
                 ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
                 ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
                 ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],

@@ -10,8 +10,8 @@
 /Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (26,31): Cannot find name 'ISelection'. Did you mean 'Selection'?
 /Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (27,17): Cannot find name 'ISelection'. Did you mean 'Selection'?
 /Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (27,32): Cannot find name 'ISelection'. Did you mean 'Selection'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (28,17): Cannot find name 'ISelection'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (28,40): Cannot find name 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (28,17): Cannot find name 'ISelection'. Did you mean 'Selection'?
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (28,40): Cannot find name 'ISelection'. Did you mean 'Selection'?
 /Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (40,20): Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IInput) => ISelection'.
   Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IInput): ISelection'.
 /Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (59,23): Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' is not assignable to type '(props: IInput) => ISelection'.
@@ -97,8 +97,7 @@
       Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
         Types of property 'path' are incompatible.
           Type 'string' is not assignable to type '`${string}.webm`'.
-/Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
-/Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
-/Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?
+/Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
+  Property 'mainFrame' does not exist on type 'string'.
 /Users/adam/Code/testeranto/src/Web.ts (43,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens

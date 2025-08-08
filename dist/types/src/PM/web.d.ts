@@ -18,7 +18,7 @@ export declare class PM_Web extends PM {
     stopSideCar(n: number): Promise<any>;
     launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]>;
     waitForSelector(p: string, s: string): any;
-    screencast(o: ScreencastOptions, p: string | Page): Promise<string>;
+    screencast(opts: ScreencastOptions, page: string | Page): Promise<string>;
     screencastStop(recorder: string): any;
     closePage(p: any): string;
     goto(p: any, url: string): any;

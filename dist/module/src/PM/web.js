@@ -25,7 +25,7 @@ export class PM_Web extends PM {
     waitForSelector(p, s) {
         return window["waitForSelector"](p, s);
     }
-    screencast(o, p) {
+    screencast(opts, page) {
         return window["screencast"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page.mainFrame()._id, this.testResourceConfiguration.name);
     }
     screencastStop(recorder) {
@@ -81,6 +81,7 @@ export class PM_Web extends PM {
         return window["write"](uid, contents);
     }
     writeFileSync(x) {
+        // eslint-disable-next-line prefer-rest-params
         const z = arguments["0"];
         const filepath = z[0];
         const contents = z[1];

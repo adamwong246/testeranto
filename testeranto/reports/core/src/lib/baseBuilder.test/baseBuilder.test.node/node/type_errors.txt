@@ -58,6 +58,5 @@
       Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
         Types of property 'path' are incompatible.
           Type 'string' is not assignable to type '`${string}.webm`'.
-/Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
-/Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
-/Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?
+/Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
+  Property 'mainFrame' does not exist on type 'string'.
