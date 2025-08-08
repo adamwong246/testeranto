@@ -250,7 +250,6 @@ var PM_Base = class {
     const filepath = x[0];
     const contents = x[1];
     const testName = x[2];
-    console.log("writing file", filepath);
     return new Promise(async (res) => {
       fs.mkdirSync(path2.dirname(filepath), {
         recursive: true
@@ -550,7 +549,25 @@ ${addableFiles.map((x) => {
       fs2.writeFileSync(
         messagePath,
         `
-Fix the failing tests described in ${testPaths} and ${logPath}. Focus on the bdd tests before all other concerns. You may add any debugging you think is necessary.
+
+There are 3 types of test reports. 
+1) bdd (highest priority)
+2) type checker
+3) static analysis (lowest priority)
+
+"bdd_errors.txt" is the exit code of the bdd tests. Zero means all tests passed.
+"tests.json" is the detailed result of the bdd tests.
+"logs.txt" is the logging output of the bdd tests.
+if these files do not exist, then something has gone badly wrong and needs to be addressed.
+
+"type_errors.txt" is the result of the type checker.
+if this file does not exist, then type check passed without errors;
+
+"lint_errors.txt" is the result of the static analysis.
+if this file does not exist, then static analysis passed without errors;
+
+BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns. 
+Do not add error checking to the tests themselves. 
 `
       );
       this.summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${this.name}/reports/${platform}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
@@ -785,7 +802,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
               this.bddTestIsNowDone(src, results.fails);
             }).catch((e1) => {
               console.log(
-                ansiC2.red(`launchPure - ${src} errored with: ${e1}`)
+                ansiC2.red(`launchPure - ${src} errored with: ${e1.stack}`)
               );
               this.bddTestIsNowDone(src, -1);
               statusMessagePretty(-1, src, "pure");

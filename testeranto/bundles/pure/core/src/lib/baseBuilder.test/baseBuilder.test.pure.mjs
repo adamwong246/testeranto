@@ -1,169 +1,8 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   BaseBuilder,
-  PM,
-  TesterantoCore,
-  defaultTestResourceRequirement
-} from "../../../chunk-M5XWNCQG.mjs";
-
-// src/PM/web.ts
-var PM_Web = class extends PM {
-  constructor(t) {
-    super();
-    this.testResourceConfiguration = t;
-  }
-  start() {
-    return new Promise((r) => r());
-  }
-  stop() {
-    return new Promise((r) => r());
-  }
-  getInnerHtml(selector, page2) {
-    throw new Error("web.ts getInnHtml not implemented");
-  }
-  pages() {
-    throw new Error("Method not implemented.");
-  }
-  stopSideCar(n) {
-    return window["stopSideCar"](n, this.testResourceConfiguration.name);
-  }
-  launchSideCar(n) {
-    return window["launchSideCar"](n, this.testResourceConfiguration.name);
-  }
-  waitForSelector(p, s) {
-    return window["waitForSelector"](p, s);
-  }
-  screencast(o, p) {
-    return window["screencast"](
-      {
-        ...opts,
-        path: this.testResourceConfiguration.fs + "/" + opts.path
-      },
-      page.mainFrame()._id,
-      this.testResourceConfiguration.name
-    );
-  }
-  screencastStop(recorder) {
-    return window["screencastStop"](recorder);
-  }
-  closePage(p) {
-    return window["closePage"](p);
-  }
-  goto(p, url) {
-    return window["goto"](p, url);
-  }
-  newPage() {
-    return window["newPage"]();
-  }
-  $(selector) {
-    return window["$"](selector);
-  }
-  isDisabled(selector) {
-    return window["isDisabled"](selector);
-  }
-  getAttribute(selector, attribute) {
-    return window["getAttribute"](selector, attribute);
-  }
-  getValue(selector) {
-    return window["getValue"](selector);
-  }
-  focusOn(selector) {
-    return window["focusOn"](selector);
-  }
-  typeInto(value) {
-    return window["typeInto"](value);
-  }
-  async page(x) {
-    return window["page"](x);
-  }
-  click(selector) {
-    return window["click"](selector);
-  }
-  customScreenShot(x, y) {
-    const opts2 = x[0];
-    const page2 = x[1];
-    return window["customScreenShot"](
-      {
-        ...opts2,
-        path: this.testResourceConfiguration.fs + "/" + opts2.path
-      },
-      this.testResourceConfiguration.name,
-      page2
-    );
-  }
-  existsSync(destFolder) {
-    return window["existsSync"](destFolder);
-  }
-  mkdirSync(x) {
-    return window["mkdirSync"](this.testResourceConfiguration.fs + "/");
-  }
-  write(uid, contents) {
-    return window["write"](uid, contents);
-  }
-  writeFileSync(x) {
-    const z = arguments["0"];
-    const filepath = z[0];
-    const contents = z[1];
-    return window["writeFileSync"](
-      this.testResourceConfiguration.fs + "/" + filepath,
-      contents,
-      this.testResourceConfiguration.name
-    );
-  }
-  createWriteStream(filepath) {
-    return window["createWriteStream"](
-      this.testResourceConfiguration.fs + "/" + filepath,
-      this.testResourceConfiguration.name
-    );
-  }
-  end(uid) {
-    return window["end"](uid);
-  }
-  customclose() {
-    window["customclose"](
-      this.testResourceConfiguration.fs,
-      this.testResourceConfiguration.name
-    );
-  }
-  testArtiFactoryfileWriter(tLog, callback) {
-    return (fPath, value) => {
-      callback(
-        new Promise((res, rej) => {
-          tLog("testArtiFactory =>", fPath);
-        })
-      );
-    };
-  }
-};
-
-// src/Web.ts
-var WebTesteranto = class extends TesterantoCore {
-  constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter2) {
-    super(
-      input,
-      testSpecification,
-      testImplementation,
-      testResourceRequirement,
-      testAdapter2,
-      (cb) => {
-      }
-    );
-  }
-  async receiveTestResourceConfig(partialTestResource) {
-    const t = partialTestResource;
-    const pm = new PM_Web(t);
-    return await this.testJobs[0].receiveTestResourceConfig(pm);
-  }
-};
-var Web_default = async (input, testSpecification, testImplementation, testAdapter2, testResourceRequirement = defaultTestResourceRequirement) => {
-  return new WebTesteranto(
-    input,
-    testSpecification,
-    testImplementation,
-    testResourceRequirement,
-    testAdapter2
-  );
-};
+  Pure_default
+} from "../../../chunk-DHS753P2.mjs";
 
 // src/lib/baseBuilder.test/baseBuilder.test.specification.ts
 var specification = (Suite, Given, When, Then) => {
@@ -358,11 +197,6 @@ var implementation = {
 var testAdapter = {
   beforeAll: async (input, testResource, pm) => input,
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
-    console.log("Initializing test with:", {
-      subject,
-      initializer,
-      initialValues
-    });
     const result = initializer();
     console.log("Initialization result:", result.toString());
     return result;
@@ -380,7 +214,7 @@ var testAdapter = {
 };
 
 // src/lib/baseBuilder.test/baseBuilder.test.pure.ts
-var baseBuilder_test_pure_default = Web_default(
+var baseBuilder_test_pure_default = Pure_default(
   MockBaseBuilder.prototype,
   specification,
   implementation,

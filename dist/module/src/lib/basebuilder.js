@@ -15,12 +15,15 @@ export class BaseBuilder {
         this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then());
         this.testJobs = this.specs.map((suite) => {
             const suiteRunner = (suite) => async (puppetMaster, tLog) => {
-                console.log("mark17");
-                const x = await suite.run(input, puppetMaster.testResourceConfiguration, (fPath, value) => puppetMaster.testArtiFactoryfileWriter(tLog, (p) => {
-                    this.artifacts.push(p);
-                })(puppetMaster.testResourceConfiguration.fs + "/" + fPath, value), tLog, puppetMaster);
-                console.log("mark18");
-                return x;
+                try {
+                    const x = await suite.run(input, puppetMaster.testResourceConfiguration, (fPath, value) => puppetMaster.testArtiFactoryfileWriter(tLog, (p) => {
+                        this.artifacts.push(p);
+                    })(puppetMaster.testResourceConfiguration.fs + "/" + fPath, value), tLog, puppetMaster);
+                    return x;
+                }
+                catch (e) {
+                    console.error(e.stack);
+                }
             };
             const runner = suiteRunner(suite);
             return {
@@ -38,30 +41,37 @@ export class BaseBuilder {
                     const tLog = async (...l) => {
                         //
                     };
-                    console.log("mark14");
-                    const suiteDone = await runner(puppetMaster, tLog);
-                    console.log("mark15");
+                    try {
+                        const suiteDone = await runner(puppetMaster, tLog);
+                        const fails = suiteDone.fails;
+                        await puppetMaster.writeFileSync([
+                            `bdd_errors.txt`,
+                            fails.toString(),
+                        ]);
+                        await puppetMaster.writeFileSync([
+                            `tests.json`,
+                            JSON.stringify(this.toObj(), null, 2),
+                        ]);
+                        return {
+                            failed: fails > 0,
+                            fails,
+                            artifacts: this.artifacts || [],
+                            features: suiteDone.features(),
+                        };
+                    }
+                    catch (e) {
+                        console.error(e.stack);
+                        return {
+                            failed: true,
+                            fails: -1,
+                            artifacts: this.artifacts || [],
+                            features: [],
+                        };
+                    }
                     // const logPromise = new Promise(async (res) => {
                     //   await puppetMaster.end(access);
                     //   res(true);
                     // });
-                    const fails = suiteDone.fails;
-                    await puppetMaster.writeFileSync([
-                        `bdd_errors.txt`,
-                        fails.toString(),
-                    ]);
-                    await puppetMaster.writeFileSync([
-                        `tests.json`,
-                        JSON.stringify(this.toObj(), null, 2),
-                    ]);
-                    console.log("mark13");
-                    return {
-                        failed: fails > 0,
-                        fails,
-                        artifacts: this.artifacts || [],
-                        // logPromise,
-                        features: suiteDone.features(),
-                    };
                 },
             };
         });

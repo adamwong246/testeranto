@@ -133,6 +133,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
       );
     } catch (e) {
       // console.error("Given failure: ", e.stack);
+      this.failed = true;
       this.error = e.stack;
       // throw e;
     }
@@ -161,9 +162,10 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
         tester(t);
       }
     } catch (e) {
+      this.error = e.stack;
       this.failed = true;
-      tLog(e.stack);
-      throw e;
+      // tLog(e.stack);
+      // throw e;
     } finally {
       try {
         const proxiedPm = afterEachProxy(
@@ -260,7 +262,7 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
 
 export abstract class BaseThen<I extends Ibdd_in_any> {
   public name: string;
-  thenCB: (storeState: I["iselection"]) => Promise<I["then"]>;
+  thenCB: (storeState: I["iselection"], pm: IPM) => Promise<I["then"]>;
   error: boolean;
   artifacts: string[] = [];
 
@@ -308,10 +310,14 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     return this.butThen(
       store,
       async (s: I["iselection"]) => {
-        if (typeof this.thenCB === "function") {
-          return await this.thenCB(s, proxiedPm);
-        } else {
-          return this.thenCB;
+        try {
+          if (typeof this.thenCB === "function") {
+            return await this.thenCB(s, proxiedPm);
+          } else {
+            return this.thenCB;
+          }
+        } catch (e) {
+          console.error(e.stack);
         }
       },
       testResourceConfiguration,

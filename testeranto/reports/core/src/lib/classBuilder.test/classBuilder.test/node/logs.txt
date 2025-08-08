@@ -1,14 +1,621 @@
-stderr > node:internal/modules/cjs/loader:1051
-  throw err;
-  ^
-
-Error: Cannot find module '/Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/classBuilder.test/classBuilder.test.mjs'
-    at Module._resolveFilename (node:internal/modules/cjs/loader:1048:15)
-    at Module._load (node:internal/modules/cjs/loader:901:27)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)
-    at node:internal/main/run_main_module:23:47 {
-  code: 'MODULE_NOT_FOUND',
-  requireStack: []
+stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/014a9716-4f96-41e6-84fb-8cf8062f49ae"}
+Running beforeEach with initializer: [Function: Default]
+Creating default test builder instance
+Builder created: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
 }
-
-Node.js v20.4.0
+Initializer returned: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Checking builder initialization: {
+  builder: TestClassBuilderMock {
+    artifacts: [],
+    testResourceRequirement: { ports: [] },
+    suitesOverrides: {
+      Default: [Function (anonymous)],
+      ExtendedSuite: [Function (anonymous)]
+    },
+    givenOverides: {
+      Default: [Function (anonymous)],
+      WithCustomInput: [Function (anonymous)],
+      WithResourceRequirements: [Function (anonymous)],
+      WithCustomImplementation: [Function (anonymous)],
+      WithCustomSpecification: [Function (anonymous)]
+    },
+    whenOverides: {
+      addArtifact: [Function (anonymous)],
+      setTestJobs: [Function (anonymous)],
+      modifySpecs: [Function (anonymous)],
+      modifyJobs: [Function (anonymous)],
+      triggerError: [Function (anonymous)]
+    },
+    thenOverides: {
+      initializedProperly: [Function (anonymous)],
+      specsGenerated: [Function (anonymous)],
+      jobsCreated: [Function (anonymous)],
+      artifactsTracked: [Function (anonymous)],
+      resourceRequirementsSet: [Function (anonymous)],
+      suitesOverridesConfigured: [Function (anonymous)],
+      givensOverridesConfigured: [Function (anonymous)],
+      whensOverridesConfigured: [Function (anonymous)],
+      thensOverridesConfigured: [Function (anonymous)],
+      specsModified: [Function (anonymous)],
+      jobsModified: [Function (anonymous)],
+      errorThrown: [Function (anonymous)],
+      testRunSuccessful: [Function (anonymous)]
+    },
+    testSpecification: [Function: specification],
+    specs: [],
+    testJobs: [],
+    summary: {}
+  },
+  isMock: true,
+  constructor: 'TestClassBuilderMock',
+  props: [
+    'artifacts',
+    'testResourceRequirement',
+    'suitesOverrides',
+    'givenOverides',
+    'whenOverides',
+    'thenOverides',
+    'testSpecification',
+    'specs',
+    'testJobs',
+    'summary'
+  ]
+}
+Running beforeEach with initializer: [Function: WithCustomInput]
+Initializer returned: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: [class (anonymous)],
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+stdout > Checking builder initialization: {
+  builder: TestClassBuilderMock {
+    artifacts: [],
+    testResourceRequirement: [class (anonymous)],
+    suitesOverrides: {
+      Default: [Function (anonymous)],
+      ExtendedSuite: [Function (anonymous)]
+    },
+    givenOverides: {
+      Default: [Function (anonymous)],
+      WithCustomInput: [Function (anonymous)],
+      WithResourceRequirements: [Function (anonymous)],
+      WithCustomImplementation: [Function (anonymous)],
+      WithCustomSpecification: [Function (anonymous)]
+    },
+    whenOverides: {
+      addArtifact: [Function (anonymous)],
+      setTestJobs: [Function (anonymous)],
+      modifySpecs: [Function (anonymous)],
+      modifyJobs: [Function (anonymous)],
+      triggerError: [Function (anonymous)]
+    },
+    thenOverides: {
+      initializedProperly: [Function (anonymous)],
+      specsGenerated: [Function (anonymous)],
+      jobsCreated: [Function (anonymous)],
+      artifactsTracked: [Function (anonymous)],
+      resourceRequirementsSet: [Function (anonymous)],
+      suitesOverridesConfigured: [Function (anonymous)],
+      givensOverridesConfigured: [Function (anonymous)],
+      whensOverridesConfigured: [Function (anonymous)],
+      thensOverridesConfigured: [Function (anonymous)],
+      specsModified: [Function (anonymous)],
+      jobsModified: [Function (anonymous)],
+      errorThrown: [Function (anonymous)],
+      testRunSuccessful: [Function (anonymous)]
+    },
+    testSpecification: [Function: specification],
+    specs: [],
+    testJobs: [],
+    summary: {}
+  },
+  isMock: true,
+  constructor: 'TestClassBuilderMock',
+  props: [
+    'artifacts',
+    'testResourceRequirement',
+    'suitesOverrides',
+    'givenOverides',
+    'whenOverides',
+    'thenOverides',
+    'testSpecification',
+    'specs',
+    'testJobs',
+    'summary'
+  ]
+}
+Running beforeEach with initializer: [Function: WithResourceRequirements]
+Initializer returned: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: [class (anonymous)],
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Running beforeEach with initializer: [Function: Default]
+Creating default test builder instance
+Builder created: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Initializer returned: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Running beforeEach with initializer: [Function: Default]
+Creating default test builder instance
+Builder created: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Initializer returned: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Fstdout > unction (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Running beforeEach with initializer: [Function: Default]
+Creating default test builder instance
+Builder created: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Initializer returned: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Running beforeEach with initializer: [Function: Default]
+Creating default test builder instance
+Builder created: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+Initializer returned: TestClassBuilderMock {
+  artifacts: [],
+  testResourceRequirement: { ports: [] },
+  suitesOverrides: {
+    Default: [Function (anonymous)],
+    ExtendedSuite: [Function (anonymous)]
+  },
+  givenOverides: {
+    Default: [Function (anonymous)],
+    WithCustomInput: [Function (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
+    WithCustomImplementation: [Function (anonymous)],
+    WithCustomSpecification: [Function (anonymous)]
+  },
+  whenOverides: {
+    addArtifact: [Function (anonymous)],
+    setTestJobs: [Function (anonymous)],
+    modifySpecs: [Function (anonymous)],
+    modifyJobs: [Function (anonymous)],
+    triggerError: [Function (anonymous)]
+  },
+  thenOverides: {
+    initializedProperly: [Function (anonymous)],
+    specsGenerated: [Function (anonymous)],
+    jobsCreated: [Function (anonymous)],
+    artifactsTracked: [Function (anonymous)],
+    resourceRequirementsSet: [Function (anonymous)],
+    suitesOverridesConfigured: [Function (anonymous)],
+    givensOverridesConfigured: [Function (anonymous)],
+    whensOverridesConfigured: [Function (anonymous)],
+    thensOverridesConfigured: [Function (anonymous)],
+    specsModified: [Function (anonymous)],
+    jobsModified: [Function (anonymous)],
+    errorThrown: [Function (anonymous)],
+    testRunSuccessful: [Function (anonymous)]
+  },
+  testSpecification: [Function: specification],
+  specs: [],
+  testJobs: [],
+  summary: {}
+}
+stdout > [TOOBJ] Serializing When with artifacts: []
+stderr > goodbye node with failures 0

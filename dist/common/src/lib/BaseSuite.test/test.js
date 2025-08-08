@@ -56,7 +56,6 @@ exports.implementation = {
     givens: {
         Default: () => {
             const suite = new mock_1.MockSuite("testSuite", 0);
-            console.log("[DEBUG] Created test suite:", suite.name, suite.index);
             return suite;
         },
     },
@@ -74,7 +73,6 @@ exports.implementation = {
             return suite;
         },
         RunSuite: () => async (suite) => {
-            console.log("[DEBUG] Running RunSuite");
             const mockConfig = {
                 name: "test",
                 fs: "/tmp",
@@ -119,21 +117,20 @@ exports.implementation = {
         },
     },
     thens: {
-        SuiteNameMatches: (expectedName) => (suite) => {
-            console.log("[DEBUG] SuiteNameMatches - expected:", expectedName, "actual:", suite === null || suite === void 0 ? void 0 : suite.name);
-            if (!(suite === null || suite === void 0 ? void 0 : suite.name)) {
+        SuiteNameMatches: (expectedName) => (selection) => {
+            if (!selection.name) {
                 throw new Error(`Suite name is undefined. Expected: ${expectedName}`);
             }
-            if (suite.name !== expectedName) {
-                throw new Error(`Expected suite name '${expectedName}', got '${suite.name}'`);
+            if (selection.name !== expectedName) {
+                throw new Error(`Expected suite name '${expectedName}', got '${selection.name}'`);
             }
-            return suite;
+            return selection;
         },
-        SuiteIndexMatches: (expectedIndex) => (suite) => {
-            if (suite.index !== expectedIndex) {
-                throw new Error(`Expected suite index ${expectedIndex}, got ${suite.index}`);
+        SuiteIndexMatches: (expectedIndex) => (selection) => {
+            if (selection.index !== expectedIndex) {
+                throw new Error(`Expected suite index ${expectedIndex}, got ${selection.index}`);
             }
-            return suite;
+            return selection;
         },
         FeaturesIncludes: (feature) => (suite) => {
             if (!suite.features().includes(feature)) {
@@ -214,17 +211,11 @@ exports.implementation = {
 // 5. Fully typed Test Adapter
 exports.testAdapter = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
-        console.log("[DEBUG] Running beforeEach with subject:", subject);
         try {
             const suite = await initializer();
             if (!suite) {
                 throw new Error("Initializer returned undefined suite");
             }
-            console.log("[DEBUG] beforeEach result:", {
-                name: suite.name,
-                index: suite.index,
-                store: suite.store,
-            });
             return Object.assign({ name: suite.name, index: suite.index, testStore: true, testSelection: false }, (suite.store || {}));
         }
         catch (e) {
@@ -234,16 +225,14 @@ exports.testAdapter = {
     },
     andWhen: async (store, whenCB, testResource, pm) => whenCB(store, pm),
     butThen: async (store, thenCB, testResource, pm) => {
-        console.log("[DEBUG] butThen - input store:", JSON.stringify(store, null, 2));
-        // Create test selection from store
         const testSelection = {
             testSelection: store.testSelection || false,
             error: store.error ? true : undefined,
+            name: store.name,
+            index: store.index,
         };
-        console.log("[DEBUG] butThen - created testSelection:", JSON.stringify(testSelection, null, 2));
         try {
             const result = await thenCB(testSelection);
-            console.log("[DEBUG] butThen - result:", JSON.stringify(result, null, 2));
             if (!result || typeof result.testSelection === "undefined") {
                 throw new Error(`Invalid test selection result: ${JSON.stringify(result)}`);
             }

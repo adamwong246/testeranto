@@ -25,7 +25,7 @@ export class PureTesteranto extends Testeranto {
         //   };
         // }
         try {
-            const result = await this.testJobs[0].receiveTestResourceConfig(pm);
+            const result = this.testJobs[0].receiveTestResourceConfig(pm);
             return result;
         }
         catch (e) {

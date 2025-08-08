@@ -1,4 +1,4 @@
-import { BaseGiven } from "../abstractBase";
+import { BaseGiven, BaseThen, BaseWhen } from "../abstractBase";
 import { Ibdd_in_any } from "../../CoreTypes";
 
 export class MockGiven<I extends Ibdd_in_any> extends BaseGiven<I> {

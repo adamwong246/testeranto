@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import Testeranto from "../../Web";
+import Testeranto from "../../Pure";
 import { specification } from "./baseBuilder.test.specification";
 import { implementation } from "./baseBuilder.test.implementation";
 import { testAdapter } from "./baseBuilder.test.adapter";

@@ -1,4 +1,33 @@
 import { MockPMBase } from "./mockPMBase";
+import { butThenProxy } from "../pmProxy";
+function createPathRewriter(basePath) {
+    return (path) => {
+        if (!path)
+            return path;
+        // Normalize paths and handle edge cases
+        const normalizedPath = path.replace(/\\/g, '/');
+        const normalizedBase = basePath.replace(/\\/g, '/');
+        // Handle absolute paths
+        if (normalizedPath.startsWith('/')) {
+            return `${normalizedBase}${normalizedPath}`;
+        }
+        // Handle parent directory references
+        if (normalizedPath.includes('../')) {
+            const parts = normalizedPath.split('/');
+            const baseParts = normalizedBase.split('/');
+            for (const part of parts) {
+                if (part === '..') {
+                    baseParts.pop();
+                }
+                else if (part !== '.') {
+                    baseParts.push(part);
+                }
+            }
+            return baseParts.join('/');
+        }
+        return `${normalizedBase}/${normalizedPath}`;
+    };
+}
 export const implementation = {
     suites: {
         Default: "PM Proxy Tests",
@@ -23,7 +52,7 @@ export const implementation = {
                         const content = expectedPath.includes("content")
                             ? "test content"
                             : "default content";
-                        proxiedPm.writeFileSync(expectedPath.includes("empty")
+                        butThenProxy(mockPm, filepath, {}).writeFileSync(expectedPath.includes("empty")
                             ? ""
                             : expectedPath.includes("nested")
                                 ? "nested/folder/test.txt"
@@ -36,11 +65,11 @@ export const implementation = {
                         actualContent = (_b = mockPm.getLastCall("writeFileSync")) === null || _b === void 0 ? void 0 : _b.content;
                         break;
                     case "createWriteStream":
-                        proxiedPm.createWriteStream(expectedPath.includes("empty") ? "" : "stream.txt");
+                        butThenProxy(mockPm, filepath, {}).createWriteStream(expectedPath.includes("empty") ? "" : "stream.txt");
                         actualPath = (_c = mockPm.getLastCall("createWriteStream")) === null || _c === void 0 ? void 0 : _c.path;
                         break;
                     case "screencast":
-                        proxiedPm.screencast({
+                        butThenProxy(mockPm, filepath, {}).screencast({
                             path: "screen.png",
                             quality: 80,
                             fullPage: true,
@@ -49,7 +78,7 @@ export const implementation = {
                         actualContent = (_f = mockPm.getLastCall("screencast")) === null || _f === void 0 ? void 0 : _f.opts;
                         break;
                     case "customScreenShot":
-                        proxiedPm.customScreenShot({ path: "shot.png" }, "test");
+                        butThenProxy(mockPm, filepath, {}).customScreenShot({ path: "shot.png" }, "test");
                         actualPath = (_h = (_g = mockPm.getLastCall("customScreenShot")) === null || _g === void 0 ? void 0 : _g.opts) === null || _h === void 0 ? void 0 : _h.path;
                         break;
                     default:

@@ -213,8 +213,13 @@ export const ProjectPageView = ({
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
   if (!summary) return <Alert variant="warning">No data found for project</Alert>;
 
-  const testStatuses = Object.entries(summary).map(([testName, testData]) => {
-    const runTime = config.tests?.find((t) => t[0] === testName)?.[1] || 'node';
+  const testStatuses = Object.entries(summary).map(([testName, testData]: [string, {
+    testsExist?: boolean;
+    runTimeErrors: number;
+    typeErrors: number;
+    staticErrors: number;
+  }]) => {
+    const runTime = config.tests?.find((t: [string, string]) => t[0] === testName)?.[1] || 'node';
     return {
       testName,
       testsExist: testData.testsExist !== false,
@@ -286,7 +291,7 @@ export const ProjectPageView = ({
               </thead>
               <tbody>
                 {testStatuses.map((test) => (
-                  <tr key={test.testName}>
+                  <tr key={test.testName} data-testid={`test-row-${test.testName}`}>
                     <td>
                       <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}`}>
                         {test.testName}
@@ -302,6 +307,8 @@ export const ProjectPageView = ({
                         testName={test.testName}
                         testsExist={test.testsExist}
                         runTimeErrors={test.runTimeErrors}
+                        typeErrors={test.typeErrors}
+                        staticErrors={test.staticErrors}
                       />
                     </td>
                     <td>

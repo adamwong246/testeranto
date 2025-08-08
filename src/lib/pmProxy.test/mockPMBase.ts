@@ -32,6 +32,17 @@ export class MockPMBase implements PM_Base {
     return calls ? calls[calls.length - 1] : null;
   }
 
+  // Add missing methods used in tests
+  // writeFileSync(path: string, content: string): Promise<boolean> {
+  //   this.trackCall('writeFileSync', { path, content });
+  //   return Promise.resolve(true);
+  // }
+
+  // end(uid: number): Promise<boolean> {
+  //   this.trackCall('end', { uid });
+  //   return Promise.resolve(true);
+  // }
+
   // Minimal implementations of required methods
   launchSideCar(n: number, testName: string, projectName: string) {
     this.trackCall("launchSideCar", { n, testName, projectName });

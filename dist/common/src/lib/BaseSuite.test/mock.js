@@ -21,11 +21,8 @@ class MockGiven extends abstractBase_1.BaseGiven {
 exports.MockGiven = MockGiven;
 class MockWhen extends abstractBase_1.BaseWhen {
     async andWhen(store, whenCB, testResource, pm) {
-        console.log("[DEBUG] MockWhen - andWhen - input store:", JSON.stringify(store));
         const newStore = Object.assign(Object.assign({}, store), { testSelection: true });
-        console.log("[DEBUG] MockWhen - andWhen - calling whenCB");
         const result = await whenCB(newStore);
-        console.log("[DEBUG] MockWhen - andWhen - result:", JSON.stringify(result));
         return result;
     }
     addArtifact(name, content) {
@@ -36,10 +33,6 @@ class MockWhen extends abstractBase_1.BaseWhen {
 exports.MockWhen = MockWhen;
 class MockThen extends abstractBase_1.BaseThen {
     async butThen(store, thenCB, testResourceConfiguration, pm) {
-        console.log("[DEBUG] MockThen - butThen - input store:", JSON.stringify(store));
-        if (!store) {
-            throw new Error("Store is undefined in butThen");
-        }
         // Create test selection with explicit type
         const testSelection = {
             name: store.name,
@@ -47,10 +40,8 @@ class MockThen extends abstractBase_1.BaseThen {
             testSelection: store.testSelection || false,
             error: store.error ? true : undefined,
         };
-        console.log("[DEBUG] MockThen - passing testSelection:", JSON.stringify(testSelection));
         try {
             const result = await thenCB(testSelection);
-            console.log("[DEBUG] MockThen - received result:", JSON.stringify(result));
             if (!result || typeof result.testSelection === "undefined") {
                 throw new Error(`Invalid test selection result: ${JSON.stringify(result)}`);
             }
@@ -68,14 +59,12 @@ class MockSuite extends BaseSuite_1.BaseSuite {
         if (!name) {
             throw new Error("MockSuite requires a non-empty name");
         }
-        console.log("[DEBUG] Creating MockSuite with name:", name, "index:", index);
         const suiteName = name || "testSuite"; // Ensure name is never undefined
         super(suiteName, index, {
             testGiven: new MockGiven("testGiven", ["testFeature"], [new MockWhen("testWhen", () => Promise.resolve({ testStore: true }))], [
                 new MockThen("testThen", async () => Promise.resolve({ testSelection: true })),
             ]),
         });
-        console.log("[DEBUG] MockSuite created:", this.name, this.index);
     }
 }
 exports.MockSuite = MockSuite;

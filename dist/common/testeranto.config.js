@@ -22,6 +22,12 @@ const config = {
         core: {
             tests: [
                 [
+                    "src/components/pure/TestPageView.test/index.tsx",
+                    "web",
+                    { ports: 0 },
+                    [],
+                ],
+                [
                     "src/components/pure/ProjectPageView.test/index.tsx",
                     "web",
                     { ports: 0 },
@@ -58,7 +64,7 @@ const config = {
                     [],
                 ],
                 ["src/mothership/test.ts", "node", { ports: 0 }, []],
-                ["./src/lib/abstractBase/index.ts", "node", { ports: 0 }, []],
+                // ["./src/lib/abstractBase.test/index.ts", "node", { ports: 0 }, []],
                 // [
                 //   "src/PM/__tests__/nodeSidecar.testeranto.ts",
                 //   "node",

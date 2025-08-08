@@ -5,15 +5,12 @@ import fs from "fs";
 import path from "path";
 import readline from "readline";
 import esbuild from "esbuild";
-import esbuildNodeConfiger from "./esbuildConfigs/node.js";
-import esbuildWebConfiger from "./esbuildConfigs/web.js";
-import esbuildImportConfiger from "./esbuildConfigs/pure.js";
-import webHtmlFrame from "./web.html.js";
-import { getRunnables } from "./utils.js";
-import { 
-// TestPageHtml,
-// ProjectPageHtml,
-AppHtml, } from "./utils/buildTemplates.js";
+import { getRunnables } from "./utils";
+import { AppHtml } from "./utils/buildTemplates";
+import esbuildNodeConfiger from "./esbuildConfigs/node";
+import esbuildWebConfiger from "./esbuildConfigs/web";
+import esbuildImportConfiger from "./esbuildConfigs/pure";
+import webHtmlFrame from "./web.html";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -47,19 +44,23 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
         };
         return Array.from(meta(config.tests, new Set()));
     };
-    const getSideCars = (runtime) => {
-        return Array.from(new Set(config.tests
-            .reduce((mm, t) => {
-            mm = mm.concat(t[3]);
-            return mm;
-        }, [])
-            .filter((t) => {
-            return t[1] === runtime;
-        })
-            .map((t) => {
-            return t[0];
-        })));
-    };
+    // const getSideCars = (runtime?: IRunTime): string[] => {
+    //   return Array.from(
+    //     new Set(
+    //       config.tests
+    //         .reduce((mm, t) => {
+    //           mm = mm.concat(t[3]);
+    //           return mm;
+    //         }, [] as ITestTypes[])
+    //         .filter((t) => {
+    //           return t[1] === runtime;
+    //         })
+    //         .map((t) => {
+    //           return t[0];
+    //         })
+    //     )
+    //   );
+    // };
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/testeranto/bundles/" + testName });
     console.log(`Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`);
     process.stdin.on("keypress", (str, key) => {
@@ -102,26 +103,13 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
             process.exit();
         }
     };
-    // Write HTML files
     fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
-    // Create project-specific HTML files
     Object.keys(bigConfig.projects).forEach((projectName) => {
         console.log(`testeranto/reports/${projectName}`);
         if (!fs.existsSync(`testeranto/reports/${projectName}`)) {
             fs.mkdirSync(`testeranto/reports/${projectName}`);
         }
         fs.writeFileSync(`testeranto/reports/${projectName}/config.json`, JSON.stringify(config, null, 2));
-        // fs.writeFileSync(
-        //   `${process.cwd()}/testeranto/reports/${projectName}/index.html`,
-        //   ProjectPageHtml(projectName)
-        // );
-        // Create runtime-specific HTML files
-        // ["node", "web", "pure"].forEach((runtime) => {
-        //   // fs.writeFileSync(
-        //   //   `${process.cwd()}/testeranto/reports/${projectName}/${runtime}.html`,
-        //   //   TestPageHtml(`${projectName} - ${runtime}`)
-        //   // );
-        // });
     });
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
@@ -157,7 +145,6 @@ import(process.cwd() + "/" + "testeranto.config.ts").then(async (module) => {
                 .slice(0, -1)
                 .join(".")}/${runtime}`;
             await fs.mkdirSync(folder, { recursive: true });
-            // fs.writeFileSync(`${folder}/index.html`, TestPageHtml(testName));
         });
     });
     [

@@ -8,15 +8,24 @@ const specification = (Suite, Given, When, Then) => {
                 "ProjectPageView should render",
                 "It should contain a container-fluid div",
                 "It should render the NavBar component",
-            ], [], [Then.happyPath()]),
-            // errorHandling: Given.WithError(
-            //   [
-            //     "ProjectPageView should handle errors",
-            //     "It should display error messages when present",
-            //   ],
-            //   [],
-            //   [Then.unhappyPath()]
-            // ),
+                "NavBar should display project title",
+                "It should render test results table",
+                "It should display test-suite-1 results",
+                "It should display test-suite-2 results",
+            ], [], [
+                Then.hasContainerFluid(),
+                Then.hasNavBar(),
+                Then.hasNavBarTitle(),
+                Then.hasTestTable(),
+                Then.rendersTestSuite1(),
+                Then.rendersTestSuite2(),
+                Then.takeScreenshot("happy-state.png"),
+            ]),
+            errorHandling: Given.WithError([
+                "ProjectPageView should handle errors",
+                "It should display error messages when present",
+                "It should capture screenshots of error state",
+            ], [], [Then.unhappyPath(), Then.takeScreenshot("error-state.png")]),
         }),
     ];
 };

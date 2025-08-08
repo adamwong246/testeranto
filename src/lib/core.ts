@@ -90,7 +90,6 @@ export default abstract class TesterantoCore<
           initialValues,
           pm
         ) {
-          console.log("mark800");
           return fullAdapter.beforeEach(
             subject,
             initializer,

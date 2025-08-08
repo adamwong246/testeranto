@@ -58,7 +58,7 @@ export class PureTesteranto<
     // }
 
     try {
-      const result = await this.testJobs[0].receiveTestResourceConfig(pm);
+      const result = this.testJobs[0].receiveTestResourceConfig(pm);
       return result;
     } catch (e) {
       console.error("[ERROR] Test job failed:", e);

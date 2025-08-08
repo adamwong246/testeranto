@@ -1,5 +1,5 @@
-/Users/adam/Code/testeranto/src/lib/abstractBase.ts (312,39): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/basebuilder.ts (80,15): This expression is not callable.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (74,49): Function lacks ending return statement and return type does not include 'undefined'.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (80,17): This expression is not callable.
   Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
 /Users/adam/Code/testeranto/src/lib/classBuilder.ts (86,18): A spread argument must either have a tuple type or be passed to a rest parameter.
@@ -10,14 +10,14 @@
       Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
         'string' index signatures are incompatible.
           Type 'any' is not assignable to type 'never'.
-/Users/adam/Code/testeranto/src/lib/index.ts (16,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+/Users/adam/Code/testeranto/src/lib/index.ts (15,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
   Types of parameters 'initialValues' and 'initializer' are incompatible.
     Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
       'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
-/Users/adam/Code/testeranto/src/lib/index.ts (18,20): Type '"iinitialValues"' cannot be used to index type 'T'.
-/Users/adam/Code/testeranto/src/lib/index.ts (40,13): This expression is not callable.
+/Users/adam/Code/testeranto/src/lib/index.ts (17,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (39,13): This expression is not callable.
   Type 'unknown' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/index.ts (52,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
+/Users/adam/Code/testeranto/src/lib/index.ts (51,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
@@ -30,75 +30,74 @@
 /Users/adam/Code/testeranto/src/PM/web.ts (56,12): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (57,57): Cannot find name 'opts'.
 /Users/adam/Code/testeranto/src/PM/web.ts (59,7): Cannot find name 'page'. Did you mean the instance member 'this.page'?
-/Users/adam/Code/testeranto/src/Pure.test.ts (58,20): Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; before...' is not assignable to type '() => IPM'.
-  Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; before...' provides no match for the signature '(): IPM'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (58,20): Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; befor...' is not assignable to type '() => IPM'.
+  Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; befor...' provides no match for the signature '(): IPM'.
 /Users/adam/Code/testeranto/src/Pure.test.ts (65,54): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/Pure.test.ts (70,54): Expected 1 arguments, but got 2.
 /Users/adam/Code/testeranto/src/Pure.test.ts (75,64): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/Pure.test.ts (82,5): Type '(proxyType: string) => (store: { pm: IPM; }) => { pm: IPM; } | { pm: {}; } | { largePayload: boolean; pm: { writeFileSync: (p: string, c: string) => boolean; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; } | { ...; }' is not assignable to type '(Iw_0: string) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
-  Call signature return types '(store: { pm: IPM; }) => { pm: IPM; } | { pm: {}; } | { largePayload: boolean; pm: { writeFileSync: (p: string, c: string) => boolean; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; } | { ...; }' and '(zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>' are incompatible.
-    Type '{ pm: IPM; } | { pm: {}; } | { largePayload: boolean; pm: { writeFileSync: (p: string, c: string) => boolean; server: PuppetMasterServer; testResourceConfiguration: ITTestResourceConfiguration; } | { ...; } | { ...; }; } | { ...; }' is not assignable to type 'Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (82,5): Type '(proxyType: string) => (store: { pm: IPM; }) => { pm: IPM; } | { pm: {}; } | { largePayload: boolean; pm: { writeFileSync: (p: string, c: string) => boolean; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; } | { ...; }' is not assignable to type '(Iw_0: string) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
+  Call signature return types '(store: { pm: IPM; }) => { pm: IPM; } | { pm: {}; } | { largePayload: boolean; pm: { writeFileSync: (p: string, c: string) => boolean; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; } | { ...; }' and '(zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>' are incompatible.
+    Type '{ pm: IPM; } | { pm: {}; } | { largePayload: boolean; pm: { writeFileSync: (p: string, c: string) => boolean; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; } | { ...; }' is not assignable to type 'Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
       Type '{ pm: IPM; }' is missing the following properties from type 'Promise<(store: { pm: IPM; }) => { pm: IPM; }>': then, catch, finally, [Symbol.toStringTag]
-/Users/adam/Code/testeranto/src/Pure.test.ts (115,5): Type '(artifact: Promise<string>) => (store: { pm: IPM; }) => { artifacts: any[]; pm: IPM; }' is not assignable to type '(Iw_0: Promise<string>) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (114,5): Type '(artifact: Promise<string>) => (store: { pm: IPM; }) => { artifacts: any[]; pm: IPM; }' is not assignable to type '(Iw_0: Promise<string>) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
   Call signature return types '(store: { pm: IPM; }) => { artifacts: any[]; pm: IPM; }' and '(zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>' are incompatible.
     Type '{ artifacts: any[]; pm: IPM; }' is missing the following properties from type 'Promise<(store: { pm: IPM; }) => { pm: IPM; }>': then, catch, finally, [Symbol.toStringTag]
-/Users/adam/Code/testeranto/src/Pure.test.ts (119,31): Property 'artifacts' does not exist on type '{ pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (122,5): Type '(jobs: any[]) => (store: { pm: IPM; }) => { testJobs: any[]; pm: IPM; }' is not assignable to type '(Iw_0: any[]) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (117,31): Property 'artifacts' does not exist on type '{ pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (120,5): Type '(jobs: any[]) => (store: { pm: IPM; }) => { testJobs: any[]; pm: IPM; }' is not assignable to type '(Iw_0: any[]) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
   Call signature return types '(store: { pm: IPM; }) => { testJobs: any[]; pm: IPM; }' and '(zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>' are incompatible.
     Type '{ testJobs: any[]; pm: IPM; }' is missing the following properties from type 'Promise<(store: { pm: IPM; }) => { pm: IPM; }>': then, catch, finally, [Symbol.toStringTag]
-/Users/adam/Code/testeranto/src/Pure.test.ts (129,5): Type '(modifier: (specs: any) => any[]) => (store: { pm: IPM; }) => { specs: any[]; pm: IPM; }' is not assignable to type '(Iw_0: (specs: any) => any[]) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (126,5): Type '(modifier: (specs: any) => any[]) => (store: { pm: IPM; }) => { specs: any[]; pm: IPM; }' is not assignable to type '(Iw_0: (specs: any) => any[]) => (zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>'.
   Call signature return types '(store: { pm: IPM; }) => { specs: any[]; pm: IPM; }' and '(zel: { pm: IPM; }, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: { pm: IPM; }) => { pm: IPM; }>' are incompatible.
     Type '{ specs: any[]; pm: IPM; }' is missing the following properties from type 'Promise<(store: { pm: IPM; }) => { pm: IPM; }>': then, catch, finally, [Symbol.toStringTag]
-/Users/adam/Code/testeranto/src/Pure.test.ts (133,31): Property 'specs' does not exist on type '{ pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (139,32): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (129,31): Property 'specs' does not exist on type '{ pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (135,32): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (145,27): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (141,27): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (146,20): Property 'getCallCount' does not exist on type 'IPM'.
-  Property 'getCallCount' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (151,24): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (142,20): Property 'getCallCount' does not exist on type 'IPM'.
+  Property 'getCallCount' does not exist on type 'PM_Node'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (147,24): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (155,29): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (151,29): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (159,30): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (155,30): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (160,20): Property 'getCallCount' does not exist on type 'IPM'.
-  Property 'getCallCount' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (165,5): Type '(expectedCount: number) => (store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(It_0: number) => (ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (156,20): Property 'getCallCount' does not exist on type 'IPM'.
+  Property 'getCallCount' does not exist on type 'PM_Node'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (161,5): Type '(expectedCount: number) => (store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(It_0: number) => (ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Call signature return types '(store: { pm: IPM; }) => { pm: IPM; }' and '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }' are incompatible.
     Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
       Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (166,36): Property 'getCallCount' does not exist on type 'IPM'.
-  Property 'getCallCount' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (174,5): Type '(expectedPath: string) => (store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(It_0: string) => (ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (162,36): Property 'getCallCount' does not exist on type 'IPM'.
+  Property 'getCallCount' does not exist on type 'PM_Node'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (170,5): Type '(expectedPath: string) => (store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(It_0: string) => (ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Call signature return types '(store: { pm: IPM; }) => { pm: IPM; }' and '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }' are incompatible.
     Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
       Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (177,35): Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (183,26): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (173,35): Property 'getLastCall' does not exist on type 'IPM'.
+  Property 'getLastCall' does not exist on type 'PM_Node'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (179,26): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (184,20): Property 'getCallCount' does not exist on type 'IPM'.
-  Property 'getCallCount' does not exist on type 'PM_Pure'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (189,5): Type '(expectedError: string) => (store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(It_0: string) => (ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (180,20): Property 'getCallCount' does not exist on type 'IPM'.
+  Property 'getCallCount' does not exist on type 'PM_Node'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (185,5): Type '(expectedError: string) => (store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(It_0: string) => (ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Call signature return types '(store: { pm: IPM; }) => { pm: IPM; }' and '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }' are incompatible.
     Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
       Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (191,40): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/Pure.test.ts (202,33): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (198,33): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (208,31): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (204,31): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
-/Users/adam/Code/testeranto/src/Pure.test.ts (210,58): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/Pure.test.ts (216,29): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
+/Users/adam/Code/testeranto/src/Pure.test.ts (206,58): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/Pure.test.ts (212,29): Type '(store: { pm: IPM; }) => { pm: IPM; }' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { pm: IPM; }) => { pm: IPM; }'.
   Type '{ pm: IPM; }' is not assignable to type '(store: { pm: IPM; }) => { pm: IPM; }'.
     Type '{ pm: IPM; }' provides no match for the signature '(store: { pm: IPM; }): { pm: IPM; }'.
 /Users/adam/Code/testeranto/src/Pure.ts (32,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.

@@ -1,13 +1,11 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  Pure_default
-} from "../../../chunk-WP6MFP22.mjs";
-import {
   BaseGiven,
   BaseSuite,
   BaseThen,
-  BaseWhen
-} from "../../../chunk-M5XWNCQG.mjs";
+  BaseWhen,
+  Pure_default
+} from "../../../chunk-DHS753P2.mjs";
 
 // src/lib/BaseSuite.test/mock.ts
 var MockGiven = class extends BaseGiven {
@@ -32,18 +30,12 @@ var MockGiven = class extends BaseGiven {
 };
 var MockWhen = class extends BaseWhen {
   async andWhen(store, whenCB, testResource, pm) {
-    console.log(
-      "[DEBUG] MockWhen - andWhen - input store:",
-      JSON.stringify(store)
-    );
     const newStore = {
       ...store,
       testSelection: true
       // Ensure testSelection is set for assertions
     };
-    console.log("[DEBUG] MockWhen - andWhen - calling whenCB");
     const result = await whenCB(newStore);
-    console.log("[DEBUG] MockWhen - andWhen - result:", JSON.stringify(result));
     return result;
   }
   addArtifact(name, content) {
@@ -52,29 +44,14 @@ var MockWhen = class extends BaseWhen {
 };
 var MockThen = class extends BaseThen {
   async butThen(store, thenCB, testResourceConfiguration, pm) {
-    console.log(
-      "[DEBUG] MockThen - butThen - input store:",
-      JSON.stringify(store)
-    );
-    if (!store) {
-      throw new Error("Store is undefined in butThen");
-    }
     const testSelection = {
       name: store.name,
       index: store.index,
       testSelection: store.testSelection || false,
       error: store.error ? true : void 0
     };
-    console.log(
-      "[DEBUG] MockThen - passing testSelection:",
-      JSON.stringify(testSelection)
-    );
     try {
       const result = await thenCB(testSelection);
-      console.log(
-        "[DEBUG] MockThen - received result:",
-        JSON.stringify(result)
-      );
       if (!result || typeof result.testSelection === "undefined") {
         throw new Error(
           `Invalid test selection result: ${JSON.stringify(result)}`
@@ -92,7 +69,6 @@ var MockSuite = class extends BaseSuite {
     if (!name) {
       throw new Error("MockSuite requires a non-empty name");
     }
-    console.log("[DEBUG] Creating MockSuite with name:", name, "index:", index);
     const suiteName = name || "testSuite";
     super(suiteName, index, {
       testGiven: new MockGiven(
@@ -107,7 +83,6 @@ var MockSuite = class extends BaseSuite {
         ]
       )
     });
-    console.log("[DEBUG] MockSuite created:", this.name, this.index);
   }
 };
 
@@ -167,7 +142,6 @@ var implementation = {
   givens: {
     Default: () => {
       const suite = new MockSuite("testSuite", 0);
-      console.log("[DEBUG] Created test suite:", suite.name, suite.index);
       return suite;
     }
   },
@@ -185,7 +159,6 @@ var implementation = {
       return suite;
     },
     RunSuite: () => async (suite) => {
-      console.log("[DEBUG] Running RunSuite");
       const mockConfig = {
         name: "test",
         fs: "/tmp",
@@ -248,30 +221,24 @@ var implementation = {
     }
   },
   thens: {
-    SuiteNameMatches: (expectedName) => (suite) => {
-      console.log(
-        "[DEBUG] SuiteNameMatches - expected:",
-        expectedName,
-        "actual:",
-        suite?.name
-      );
-      if (!suite?.name) {
+    SuiteNameMatches: (expectedName) => (selection) => {
+      if (!selection.name) {
         throw new Error(`Suite name is undefined. Expected: ${expectedName}`);
       }
-      if (suite.name !== expectedName) {
+      if (selection.name !== expectedName) {
         throw new Error(
-          `Expected suite name '${expectedName}', got '${suite.name}'`
+          `Expected suite name '${expectedName}', got '${selection.name}'`
         );
       }
-      return suite;
+      return selection;
     },
-    SuiteIndexMatches: (expectedIndex) => (suite) => {
-      if (suite.index !== expectedIndex) {
+    SuiteIndexMatches: (expectedIndex) => (selection) => {
+      if (selection.index !== expectedIndex) {
         throw new Error(
-          `Expected suite index ${expectedIndex}, got ${suite.index}`
+          `Expected suite index ${expectedIndex}, got ${selection.index}`
         );
       }
-      return suite;
+      return selection;
     },
     FeaturesIncludes: (feature) => (suite) => {
       if (!suite.features().includes(feature)) {
@@ -354,17 +321,11 @@ var implementation = {
 };
 var testAdapter = {
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
-    console.log("[DEBUG] Running beforeEach with subject:", subject);
     try {
       const suite = await initializer();
       if (!suite) {
         throw new Error("Initializer returned undefined suite");
       }
-      console.log("[DEBUG] beforeEach result:", {
-        name: suite.name,
-        index: suite.index,
-        store: suite.store
-      });
       return {
         name: suite.name,
         index: suite.index,
@@ -379,21 +340,14 @@ var testAdapter = {
   },
   andWhen: async (store, whenCB, testResource, pm) => whenCB(store, pm),
   butThen: async (store, thenCB, testResource, pm) => {
-    console.log(
-      "[DEBUG] butThen - input store:",
-      JSON.stringify(store, null, 2)
-    );
     const testSelection = {
       testSelection: store.testSelection || false,
-      error: store.error ? true : void 0
+      error: store.error ? true : void 0,
+      name: store.name,
+      index: store.index
     };
-    console.log(
-      "[DEBUG] butThen - created testSelection:",
-      JSON.stringify(testSelection, null, 2)
-    );
     try {
       const result = await thenCB(testSelection);
-      console.log("[DEBUG] butThen - result:", JSON.stringify(result, null, 2));
       if (!result || typeof result.testSelection === "undefined") {
         throw new Error(
           `Invalid test selection result: ${JSON.stringify(result)}`

@@ -72,23 +72,27 @@ export abstract class BaseBuilder<
       const suiteRunner =
         (suite: BaseSuite<I, O>) =>
         async (puppetMaster: IPM, tLog: ITLog): Promise<BaseSuite<I, O>> => {
-          console.log("mark17");
-          const x = await suite.run(
-            input,
-            puppetMaster.testResourceConfiguration,
-            (fPath: string, value: string | Buffer | PassThrough) =>
-              puppetMaster.testArtiFactoryfileWriter(
-                tLog,
-                (p: Promise<void>) => {
-                  this.artifacts.push(p);
-                }
-              )(puppetMaster.testResourceConfiguration.fs + "/" + fPath, value),
-            tLog,
-            puppetMaster
-          );
-          console.log("mark18");
-
-          return x;
+          try {
+            const x = await suite.run(
+              input,
+              puppetMaster.testResourceConfiguration,
+              (fPath: string, value: string | Buffer | PassThrough) =>
+                puppetMaster.testArtiFactoryfileWriter(
+                  tLog,
+                  (p: Promise<void>) => {
+                    this.artifacts.push(p);
+                  }
+                )(
+                  puppetMaster.testResourceConfiguration.fs + "/" + fPath,
+                  value
+                ),
+              tLog,
+              puppetMaster
+            );
+            return x;
+          } catch (e) {
+            console.error(e.stack);
+          }
         };
 
       const runner = suiteRunner(suite);
@@ -115,36 +119,39 @@ export abstract class BaseBuilder<
             //
           };
 
-          console.log("mark14");
-          const suiteDone: BaseSuite<I, O> = await runner(puppetMaster, tLog);
-          console.log("mark15");
+          try {
+            const suiteDone: BaseSuite<I, O> = await runner(puppetMaster, tLog);
+            const fails = suiteDone.fails;
+            await puppetMaster.writeFileSync([
+              `bdd_errors.txt`,
+              fails.toString(),
+            ]);
+
+            await puppetMaster.writeFileSync([
+              `tests.json`,
+              JSON.stringify(this.toObj(), null, 2),
+            ]);
+
+            return {
+              failed: fails > 0,
+              fails,
+              artifacts: this.artifacts || [],
+              features: suiteDone.features(),
+            };
+          } catch (e) {
+            console.error(e.stack);
+            return {
+              failed: true,
+              fails: -1,
+              artifacts: this.artifacts || [],
+              features: [],
+            };
+          }
 
           // const logPromise = new Promise(async (res) => {
           //   await puppetMaster.end(access);
           //   res(true);
           // });
-
-          const fails = suiteDone.fails;
-
-          await puppetMaster.writeFileSync([
-            `bdd_errors.txt`,
-            fails.toString(),
-          ]);
-
-          await puppetMaster.writeFileSync([
-            `tests.json`,
-            JSON.stringify(this.toObj(), null, 2),
-          ]);
-
-          console.log("mark13");
-
-          return {
-            failed: fails > 0,
-            fails,
-            artifacts: this.artifacts || [],
-            // logPromise,
-            features: suiteDone.features(),
-          };
         },
       };
     });

@@ -250,7 +250,6 @@ const afterAllProxy = (pm, suite, addArtifact) => {
             "writeFileSync",
             (fp, contents) => {
                 const path = `suite-${suite}/afterAll/${fp}`;
-                console.log("MARK10");
                 addArtifact(path);
                 return [path, contents];
             },
@@ -260,7 +259,6 @@ const afterAllProxy = (pm, suite, addArtifact) => {
             (opts, p) => {
                 const path = `suite-${suite}/afterAll/${opts.path}`;
                 addArtifact(path);
-                console.log("MARK9");
                 return [
                     Object.assign(Object.assign({}, opts), { path }),
                     p,

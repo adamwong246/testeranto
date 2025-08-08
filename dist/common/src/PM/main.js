@@ -222,7 +222,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                             this.bddTestIsNowDone(src, results.fails);
                         })
                             .catch((e1) => {
-                            console.log(ansi_colors_2.default.red(`launchPure - ${src} errored with: ${e1}`));
+                            console.log(ansi_colors_2.default.red(`launchPure - ${src} errored with: ${e1.stack}`));
                             this.bddTestIsNowDone(src, -1);
                             statusMessagePretty(-1, src, "pure");
                         });

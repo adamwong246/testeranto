@@ -9,18 +9,14 @@ exports.implementation = {
     },
     givens: {
         Default: () => {
-            console.log('[DEBUG] Creating Default MockCore instance');
             const input = { debug: true };
             const resourceReq = { ports: [3000] };
-            console.log('[DEBUG] Default Given - input:', input);
-            console.log('[DEBUG] Default Given - resourceReq:', resourceReq);
             try {
                 const instance = new MockCore_1.MockCore(input, specification, exports.implementation, resourceReq, testAdapter, (cb) => cb());
-                console.log('[DEBUG] MockCore instance created successfully:', instance);
                 return instance;
             }
             catch (e) {
-                console.error('[ERROR] Failed to create MockCore:', e);
+                console.error("[ERROR] Failed to create MockCore:", e);
                 throw e;
             }
         },
@@ -45,9 +41,9 @@ exports.implementation = {
         },
         modifySpecs: (modifier) => (builder) => {
             var _a;
-            console.log('Modifying specs - current count:', (_a = builder.specs) === null || _a === void 0 ? void 0 : _a.length);
+            console.log("Modifying specs - current count:", (_a = builder.specs) === null || _a === void 0 ? void 0 : _a.length);
             const newSpecs = modifier(builder.specs || []);
-            console.log('Modifying specs - new count:', newSpecs.length);
+            console.log("Modifying specs - new count:", newSpecs.length);
             builder.specs = newSpecs;
             return builder;
         },

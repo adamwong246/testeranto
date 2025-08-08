@@ -2,6 +2,37 @@ import React from 'react';
 import { Table, Alert } from 'react-bootstrap';
 import { NavBar } from '../../NavBar';
 
+type Project = {
+  name: string;
+  nodeStatus: string;
+  webStatus: string;
+  pureStatus: string;
+};
+
+type TestSummary = {
+  [testName: string]: {
+    testsExist?: boolean;
+    runTimeErrors?: number;
+    typeErrors?: number;
+    staticErrors?: number;
+  };
+};
+
+type ProjectConfig = {
+  [projectName: string]: {
+    tests: [string, string][]; // [testName, runtime]
+  };
+};
+
+type ProjectsPageViewProps = {
+  projects: Project[];
+  summaries: TestSummary;
+  configs: ProjectConfig;
+  loading: boolean;
+  error: string | null;
+  navigate: (path: string) => void;
+};
+
 export const ProjectsPageView = ({
   projects,
   summaries,
@@ -9,7 +40,7 @@ export const ProjectsPageView = ({
   loading,
   error,
   navigate
-}) => {
+}: ProjectsPageViewProps) => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'success': return '✅';
@@ -49,7 +80,7 @@ export const ProjectsPageView = ({
                   {summaries[project.name] ? (
                     Object.keys(summaries[project.name]).map(testName => {
                       const testData = summaries[project.name][testName];
-                      const runTime = configs[project.name].tests.find((t) => t[0] === testName)[1];
+                      const runTime = configs[project.name]?.tests?.find((t) => t[0] === testName)?.[1] || 'node';
                       const hasRuntimeErrors = testData.runTimeErrors > 0;
                       const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
 
@@ -59,7 +90,7 @@ export const ProjectsPageView = ({
                             href={`#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`}
                           >
                             {hasRuntimeErrors ? '❌ ' : hasStaticErrors ? '⚠️ ' : ''}
-                            {testName.split('/').pop()}
+                            {testName.split('/').pop() || testName}
                           </a>
                         </div>
                       )

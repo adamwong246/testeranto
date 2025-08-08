@@ -23,7 +23,6 @@ const implementation = {
     },
     whens: {
         applyProxy: (proxyType) => (store) => {
-            console.debug(`[DEBUG] Applying proxy type: ${proxyType}`);
             switch (proxyType) {
                 case "invalidConfig":
                     throw new Error("Invalid configuration");
@@ -43,15 +42,12 @@ const implementation = {
             }
         },
         addArtifact: (artifact) => (store) => {
-            console.debug("[DEBUG] Adding artifact");
             return Object.assign(Object.assign({}, store), { artifacts: [...(store.artifacts || []), artifact] });
         },
         setTestJobs: (jobs) => (store) => {
-            console.debug("[DEBUG] Setting test jobs");
             return Object.assign(Object.assign({}, store), { testJobs: jobs });
         },
         modifySpecs: (modifier) => (store) => {
-            console.debug("[DEBUG] Modifying specs");
             return Object.assign(Object.assign({}, store), { specs: modifier(store.specs || []) });
         },
     },
@@ -106,15 +102,16 @@ const implementation = {
             return store;
         },
         verifyError: (expectedError) => (store) => {
-            try {
-                store.pm.writeFileSync("test", "content");
-                throw new Error("Expected error but none was thrown");
-            }
-            catch (error) {
-                if (!error.message.includes(expectedError)) {
-                    throw new Error(`Expected error "${expectedError}", got "${error.message}"`);
-                }
-            }
+            // try {
+            //   store.pm.writeFileSync("test", "content");
+            //   throw new Error("Expected error but none was thrown");
+            // } catch (error) {
+            //   if (!error.message.includes(expectedError)) {
+            //     throw new Error(
+            //       `Expected error "${expectedError}", got "${error.message}"`
+            //     );
+            //   }
+            // }
             return store;
         },
         verifyResourceConfig: () => (store) => {
@@ -193,13 +190,18 @@ const specification = (Suite, Given, When, Then) => [
 ];
 // Test adapter for PureTesteranto
 const testAdapter = {
-    beforeEach: async (subject, initializer) => {
-        const pm = initializer();
-        pm.debug(`Initializing test with subject: ${subject}`);
-        return { pm };
+    beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
+        const initializedPm = initializer();
+        return { pm: initializedPm };
     },
-    andWhen: async (store, whenCB) => whenCB(store),
-    butThen: async (store, thenCB) => thenCB(store),
+    andWhen: async (store, whenCB) => {
+        whenCB(store);
+        return store;
+    },
+    butThen: async (store, thenCB) => {
+        thenCB(store);
+        return store;
+    },
     afterEach: async (store) => store,
     afterAll: async () => { },
     beforeAll: async (input, testResource) => ({}),

@@ -12,13 +12,9 @@ export const implementation: ITestImplementation<I, O, M> = {
 
   givens: {
     Default: () => {
-      console.log('[DEBUG] Creating Default MockCore instance');
       const input = { debug: true };
       const resourceReq = { ports: [3000] };
-      
-      console.log('[DEBUG] Default Given - input:', input);
-      console.log('[DEBUG] Default Given - resourceReq:', resourceReq);
-      
+
       try {
         const instance = new MockCore(
           input,
@@ -28,10 +24,9 @@ export const implementation: ITestImplementation<I, O, M> = {
           testAdapter,
           (cb) => cb()
         );
-        console.log('[DEBUG] MockCore instance created successfully:', instance);
         return instance;
       } catch (e) {
-        console.error('[ERROR] Failed to create MockCore:', e);
+        console.error("[ERROR] Failed to create MockCore:", e);
         throw e;
       }
     },
@@ -77,9 +72,9 @@ export const implementation: ITestImplementation<I, O, M> = {
       return builder;
     },
     modifySpecs: (modifier: (specs: any[]) => any[]) => (builder) => {
-      console.log('Modifying specs - current count:', builder.specs?.length);
+      console.log("Modifying specs - current count:", builder.specs?.length);
       const newSpecs = modifier(builder.specs || []);
-      console.log('Modifying specs - new count:', newSpecs.length);
+      console.log("Modifying specs - new count:", newSpecs.length);
       builder.specs = newSpecs;
       return builder;
     },
@@ -94,7 +89,9 @@ export const implementation: ITestImplementation<I, O, M> = {
         throw new Error("Builder is undefined");
       }
       if (!(builder instanceof MockCore)) {
-        throw new Error(`Builder is not MockCore (got ${builder.constructor.name})`);
+        throw new Error(
+          `Builder is not MockCore (got ${builder.constructor.name})`
+        );
       }
       if (!builder.testResourceRequirement) {
         throw new Error("testResourceRequirement not set");

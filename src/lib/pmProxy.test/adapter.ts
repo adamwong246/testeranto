@@ -22,12 +22,18 @@ export const testAdapter: ITestAdapter<I> = {
   },
 
   andWhen: async (store, whenCB, testResource, pm) => {
-    const proxiedPM = andWhenProxy(pm, "some/path", store);
+    const proxiedPM = andWhenProxy(pm, "some/path", (path) => {
+      console.log("Artifact added:", path);
+      return path;
+    });
     return whenCB(store, proxiedPM);
   },
 
   butThen: async (store, thenCB, testResource, pm) => {
-    const proxiedPM = butThenProxy(pm, "some/path", store);
+    const proxiedPM = butThenProxy(pm, "some/path", (path) => {
+      console.log("Artifact added:", path);
+      return path;
+    });
     return thenCB(store, proxiedPM);
   },
 

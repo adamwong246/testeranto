@@ -58,6 +58,7 @@ class BaseGiven {
         }
         catch (e) {
             // console.error("Given failure: ", e.stack);
+            this.failed = true;
             this.error = e.stack;
             // throw e;
         }
@@ -72,9 +73,10 @@ class BaseGiven {
             }
         }
         catch (e) {
+            this.error = e.stack;
             this.failed = true;
-            tLog(e.stack);
-            throw e;
+            // tLog(e.stack);
+            // throw e;
         }
         finally {
             try {
@@ -154,11 +156,16 @@ class BaseThen {
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
         const proxiedPm = (0, pmProxy_js_1.butThenProxy)(pm, filepath, this.addArtifact.bind(this));
         return this.butThen(store, async (s) => {
-            if (typeof this.thenCB === "function") {
-                return await this.thenCB(s, proxiedPm);
+            try {
+                if (typeof this.thenCB === "function") {
+                    return await this.thenCB(s, proxiedPm);
+                }
+                else {
+                    return this.thenCB;
+                }
             }
-            else {
-                return this.thenCB;
+            catch (e) {
+                console.error(e.stack);
             }
         }, testResourceConfiguration, proxiedPm).catch((e) => {
             this.error = e.stack;

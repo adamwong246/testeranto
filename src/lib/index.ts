@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { PM_Pure } from "../PM/pure.js";
 
-import { PM_Node } from "../PM/node.js";
-import { PM_Web } from "../PM/web.js";
-import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
-
-import { IGivens } from "./abstractBase.js";
-import { IPM } from "./types.js";
-import type { ITestAdapter, Ibdd_in_any, Ibdd_out_any } from "../CoreTypes.js";
-import { BaseSuite } from "./BaseSuite.js";
+import { Ibdd_in_any, ITestAdapter, Ibdd_out_any } from "../CoreTypes";
+import { PM_Node } from "../PM/node";
+import { PM_Pure } from "../PM/pure";
+import { PM_Web } from "../PM/web";
+import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types";
+import { IGivens } from "./abstractBase";
+import { BaseSuite } from "./BaseSuite";
+import { IPM } from "./types";
 
 export const BaseAdapter = <T extends Ibdd_in_any>(): ITestAdapter<T> => ({
   beforeAll: async (s: T["istore"]) => s,

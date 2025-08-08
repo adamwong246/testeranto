@@ -1,10 +1,43 @@
 import { ITestImplementation } from "../../CoreTypes";
-
 import { IPM } from "../types";
-import { IProxiedFunctions, IProxy } from "../pmProxy";
-
+import { IProxy } from "../pmProxy";
 import { I, M, O } from "./types";
 import { MockPMBase } from "./mockPMBase";
+import { butThenProxy } from "../pmProxy";
+
+type PathRewriter = (path: string) => string;
+
+function createPathRewriter(basePath: string): PathRewriter {
+  return (path: string) => {
+    if (!path) return path;
+    // Normalize paths and handle edge cases
+    const normalizedPath = path.replace(/\\/g, '/');
+    const normalizedBase = basePath.replace(/\\/g, '/');
+    
+    // Handle absolute paths
+    if (normalizedPath.startsWith('/')) {
+      return `${normalizedBase}${normalizedPath}`;
+    }
+    
+    // Handle parent directory references
+    if (normalizedPath.includes('../')) {
+      const parts = normalizedPath.split('/');
+      const baseParts = normalizedBase.split('/');
+      
+      for (const part of parts) {
+        if (part === '..') {
+          baseParts.pop();
+        } else if (part !== '.') {
+          baseParts.push(part);
+        }
+      }
+      
+      return baseParts.join('/');
+    }
+    
+    return `${normalizedBase}/${normalizedPath}`;
+  };
+}
 
 export const implementation: ITestImplementation<I, O, M> = {
   suites: {
@@ -35,7 +68,7 @@ export const implementation: ITestImplementation<I, O, M> = {
               const content = expectedPath.includes("content")
                 ? "test content"
                 : "default content";
-              proxiedPm.writeFileSync(
+              butThenProxy(mockPm, filepath, {}).writeFileSync(
                 expectedPath.includes("empty")
                   ? ""
                   : expectedPath.includes("nested")
@@ -52,14 +85,14 @@ export const implementation: ITestImplementation<I, O, M> = {
               break;
 
             case "createWriteStream":
-              proxiedPm.createWriteStream(
+              butThenProxy(mockPm, filepath, {}).createWriteStream(
                 expectedPath.includes("empty") ? "" : "stream.txt"
               );
               actualPath = mockPm.getLastCall("createWriteStream")?.path;
               break;
 
             case "screencast":
-              proxiedPm.screencast(
+              butThenProxy(mockPm, filepath, {}).screencast(
                 {
                   path: "screen.png",
                   quality: 80,
@@ -72,7 +105,7 @@ export const implementation: ITestImplementation<I, O, M> = {
               break;
 
             case "customScreenShot":
-              proxiedPm.customScreenShot({ path: "shot.png" }, "test");
+              butThenProxy(mockPm, filepath, {}).customScreenShot({ path: "shot.png" }, "test");
               actualPath = mockPm.getLastCall("customScreenShot")?.opts?.path;
               break;
 

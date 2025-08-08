@@ -1,0 +1,69 @@
+{
+  "name": "Testing BaseBuilder functionality",
+  "givens": [
+    {
+      "key": "testInitialization",
+      "name": "the default BaseBuilder",
+      "whens": [],
+      "thens": [
+        {
+          "name": "it is initialized: undefined",
+          "error": false,
+          "artifacts": [
+            "suite-0/given-testInitialization/then-0/butThen/hello.txt"
+          ]
+        },
+        {
+          "name": "it tracks artifacts: undefined",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "BaseBuilder should initialize correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testSpecsGeneration",
+      "name": "the default BaseBuilder",
+      "whens": [],
+      "thens": [
+        {
+          "name": "it generates TestSpecifications: undefined",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "BaseBuilder should generate specs from test specification"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testJobsCreation",
+      "name": "the default BaseBuilder",
+      "whens": [],
+      "thens": [
+        {
+          "name": "it creates jobs: undefined",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "BaseBuilder should create test jobs"
+      ],
+      "artifacts": []
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "BaseBuilder should initialize correctly",
+    "BaseBuilder should generate specs from test specification",
+    "BaseBuilder should create test jobs"
+  ]
+}

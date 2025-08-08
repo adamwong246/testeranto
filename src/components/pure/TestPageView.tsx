@@ -3,6 +3,47 @@ import { Tab, Container, Alert, Button } from 'react-bootstrap';
 import { NavBar } from '../../NavBar';
 import { TestStatusBadge } from '../TestStatusBadge';
 
+type TestData = {
+  name: string;
+  givens: {
+    name: string;
+    whens: {
+      name: string;
+      error?: string;
+      features?: string[];
+      artifacts?: string[];
+    }[];
+    thens: {
+      name: string;
+      error?: string;
+      features?: string[];
+      artifacts?: string[];
+    }[];
+    features?: string[];
+    artifacts?: string[];
+  }[];
+};
+
+type TestPageViewProps = {
+  route: 'results' | 'logs' | 'types' | 'lint' | 'coverage';
+  setRoute: (route: string) => void;
+  navigate: (path: string) => void;
+  projectName: string;
+  testName: string;
+  decodedTestPath: string;
+  runtime: string;
+  testData: TestData | null;
+  logs: string | undefined;
+  typeErrors: string;
+  lintErrors: string;
+  testsExist: boolean;
+  errorCounts: {
+    runTimeErrors: number;
+    typeErrors: number;
+    staticErrors: number;
+  };
+};
+
 export const TestPageView = ({
   route,
   setRoute,
@@ -17,7 +58,7 @@ export const TestPageView = ({
   lintErrors,
   testsExist,
   errorCounts,
-}) => {
+}: TestPageViewProps) => {
   return (
     <Container fluid={true}>
       <NavBar
@@ -41,6 +82,8 @@ export const TestPageView = ({
                 testName={decodedTestPath}
                 testsExist={testsExist}
                 runTimeErrors={errorCounts.runTimeErrors}
+                typeErrors={errorCounts.typeErrors}
+                staticErrors={errorCounts.staticErrors}
                 variant="compact"
               />
             ),
@@ -127,7 +170,7 @@ export const TestPageView = ({
                       <div className="d-flex justify-content-between align-items-center">
                         <div>
                           <h4>Given: {given.name}</h4>
-                          {given.features?.length > 0 && (
+                          {given.features && given.features.length > 0 && (
                             <div className="mt-1">
                               <small>Features:</small>
                               <ul className="list-unstyled">
@@ -146,7 +189,7 @@ export const TestPageView = ({
                             </div>
                           )}
                         </div>
-                        {given.artifacts?.length > 0 && (
+                        {given.artifacts && given.artifacts.length > 0 && (
                           <div className="dropdown">
                             <button
                               className="btn btn-sm btn-light dropdown-toggle"
@@ -180,7 +223,7 @@ export const TestPageView = ({
                             <div>
                               <div>
                                 <strong>When:</strong> {when.name}
-                                {when.features?.length > 0 && (
+                                {when.features && when.features.length > 0 && (
                                   <div className="mt-2">
                                     <small>Features:</small>
                                     <ul className="list-unstyled">
@@ -201,7 +244,7 @@ export const TestPageView = ({
                                 {when.error && <pre className="mt-2">{when.error}</pre>}
                               </div>
                             </div>
-                            {when.artifacts?.length > 0 && (
+                            {when.artifacts && when.artifacts.length > 0 && (
                               <div className="ms-3">
                                 <strong>Artifacts:</strong>
                                 <ul className="list-unstyled">
@@ -229,7 +272,7 @@ export const TestPageView = ({
                             <div>
                               <div>
                                 <strong>Then:</strong> {then.name}
-                                {then.features?.length > 0 && (
+                                {then.features && then.features.length > 0 && (
                                   <div className="mt-2">
                                     <small>Features:</small>
                                     <ul className="list-unstyled">
@@ -250,7 +293,7 @@ export const TestPageView = ({
                                 {then.error && <pre className="mt-2">{then.error}</pre>}
                               </div>
                             </div>
-                            {then.artifacts?.length > 0 && (
+                            {then.artifacts && then.artifacts.length > 0 && (
                               <div className="ms-3">
                                 <strong>Artifacts:</strong>
                                 <ul className="list-unstyled">

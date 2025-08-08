@@ -1,14 +1,2 @@
-stderr > node:internal/modules/cjs/loader:1051
-  throw err;
-  ^
-
-Error: Cannot find module '/Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/BaseSuite.test/node.test.mjs'
-    at Module._resolveFilename (node:internal/modules/cjs/loader:1048:15)
-    at Module._load (node:internal/modules/cjs/loader:901:27)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)
-    at node:internal/main/run_main_module:23:47 {
-  code: 'MODULE_NOT_FOUND',
-  requireStack: []
-}
-
-Node.js v20.4.0
+stdout > receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/014a9716-4f96-41e6-84fb-8cf8062f49ae"}
+stderr > goodbye node with failures 0

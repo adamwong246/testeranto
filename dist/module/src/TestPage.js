@@ -132,7 +132,7 @@ export const TestPage = () => {
                 },
                 {
                     to: `#results`,
-                    label: (React.createElement(TestStatusBadge, { testName: decodedTestPath, testsExist: testsExist, runTimeErrors: errorCounts.runTimeErrors, variant: "compact" })),
+                    label: (React.createElement(TestStatusBadge, { testName: decodedTestPath, testsExist: testsExist, runTimeErrors: errorCounts.runTimeErrors, typeErrors: errorCounts.typeErrors, staticErrors: errorCounts.staticErrors, variant: "compact" })),
                     className: !testsExist || errorCounts.runTimeErrors > 0
                         ? 'text-danger fw-bold'
                         : '',

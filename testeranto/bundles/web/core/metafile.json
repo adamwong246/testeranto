@@ -677,40 +677,45 @@
         "format": "esm"
       },
       "src/lib/index.ts": {
-        "bytes": 3568,
+        "bytes": 3538,
         "imports": [
           {
-            "path": "../PM/pure.js",
+            "path": "../CoreTypes",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "../PM/node.js",
+            "path": "../PM/node",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "../PM/web.js",
+            "path": "../PM/pure",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "../Types.js",
+            "path": "../PM/web",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "./abstractBase.js",
+            "path": "../Types",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "./types.js",
+            "path": "./abstractBase",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "./BaseSuite.js",
+            "path": "./BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types",
             "kind": "import-statement",
             "external": true
           },
@@ -733,7 +738,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 7266,
+        "bytes": 7205,
         "imports": [
           {
             "path": "./types",
@@ -759,7 +764,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 7625,
+        "bytes": 7784,
         "imports": [
           {
             "path": ".",
@@ -795,7 +800,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 5082,
+        "bytes": 5340,
         "imports": [
           {
             "path": "stream",
@@ -928,7 +933,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 3564,
+        "bytes": 3530,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -1061,151 +1066,21 @@
         ],
         "format": "cjs"
       },
-      "node_modules/scheduler/cjs/scheduler.development.js": {
-        "bytes": 17497,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/scheduler/index.js": {
-        "bytes": 198,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/scheduler/cjs/scheduler.development.js",
-            "kind": "require-call",
-            "original": "./cjs/scheduler.development.js"
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/react-dom/cjs/react-dom.development.js": {
-        "bytes": 1026501,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "require-call",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/scheduler/index.js",
-            "kind": "require-call",
-            "original": "scheduler"
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/react-dom/index.js": {
-        "bytes": 1363,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/react-dom/cjs/react-dom.development.js",
-            "kind": "require-call",
-            "original": "./cjs/react-dom.development.js"
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/react-dom/client.js": {
-        "bytes": 619,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/react-dom/index.js",
-            "kind": "require-call",
-            "original": "react-dom"
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
-        "bytes": 3755,
+      "../testeranto-react/src/react-dom/jsx/dynamic.ts": {
+        "bytes": 959,
         "imports": [
           {
             "path": "node_modules/react/index.js",
             "kind": "import-statement",
             "original": "react"
-          },
-          {
-            "path": "node_modules/react-dom/client.js",
-            "kind": "import-statement",
-            "original": "react-dom/client"
           },
           {
             "path": "testeranto/src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": ".",
             "kind": "import-statement",
             "external": true
           },
@@ -1227,8 +1102,8 @@
         ],
         "format": "esm"
       },
-      "node_modules/testeranto-react/src/react-dom/component/web.ts": {
-        "bytes": 3555,
+      "../testeranto-react/src/react-dom/jsx/web.ts": {
+        "bytes": 708,
         "imports": [
           {
             "path": "src/Web.ts",
@@ -1241,24 +1116,9 @@
             "external": true
           },
           {
-            "path": "node_modules/testeranto-react/src/react-dom/component/dynamic.ts",
+            "path": "../testeranto-react/src/react-dom/jsx/dynamic.ts",
             "kind": "import-statement",
             "original": "./dynamic.js"
-          },
-          {
-            "path": "react-dom/client",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../mocks/mockReactComponent.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "chai",
-            "kind": "import-statement",
-            "external": true
           },
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -1392,6 +1252,110 @@
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
             "kind": "import-statement",
             "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/scheduler/cjs/scheduler.development.js": {
+        "bytes": 17497,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/scheduler/index.js": {
+        "bytes": 198,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/scheduler/cjs/scheduler.development.js",
+            "kind": "require-call",
+            "original": "./cjs/scheduler.development.js"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-dom/cjs/react-dom.development.js": {
+        "bytes": 1026501,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "require-call",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/scheduler/index.js",
+            "kind": "require-call",
+            "original": "scheduler"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-dom/index.js": {
+        "bytes": 1363,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react-dom/cjs/react-dom.development.js",
+            "kind": "require-call",
+            "original": "./cjs/react-dom.development.js"
           }
         ],
         "format": "cjs"
@@ -1591,8 +1555,34 @@
         ],
         "format": "esm"
       },
-      "src/components/pure/ProjectPageView.test/implementation.tsx": {
-        "bytes": 2289,
+      "node_modules/react-dom/client.js": {
+        "bytes": 619,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react-dom/index.js",
+            "kind": "require-call",
+            "original": "react-dom"
+          }
+        ],
+        "format": "cjs"
+      },
+      "src/components/pure/TestPageView.test/implementation.ts": {
+        "bytes": 4963,
         "imports": [
           {
             "path": "node_modules/chai/chai.js",
@@ -1605,12 +1595,17 @@
             "external": true
           },
           {
-            "path": "./types",
+            "path": "node_modules/react/index.js",
             "kind": "import-statement",
-            "external": true
+            "original": "react"
           },
           {
-            "path": "react-router-dom",
+            "path": "node_modules/react-dom/client.js",
+            "kind": "import-statement",
+            "original": "react-dom/client"
+          },
+          {
+            "path": "./types",
             "kind": "import-statement",
             "external": true
           },
@@ -1632,8 +1627,8 @@
         ],
         "format": "esm"
       },
-      "src/components/pure/ProjectPageView.test/specification.ts": {
-        "bytes": 761,
+      "src/components/pure/TestPageView.test/specification.ts": {
+        "bytes": 1590,
         "imports": [
           {
             "path": "../../../CoreTypes",
@@ -14937,6 +14932,387 @@
         ],
         "format": "esm"
       },
+      "src/components/pure/TestPageView.tsx": {
+        "bytes": 15599,
+        "imports": [
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react-bootstrap/esm/index.js",
+            "kind": "import-statement",
+            "original": "react-bootstrap"
+          },
+          {
+            "path": "src/NavBar.tsx",
+            "kind": "import-statement",
+            "original": "../../NavBar"
+          },
+          {
+            "path": "src/components/TestStatusBadge.tsx",
+            "kind": "import-statement",
+            "original": "../TestStatusBadge"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/TestPageView.test/index.tsx": {
+        "bytes": 532,
+        "imports": [
+          {
+            "path": "../testeranto-react/src/react-dom/jsx/web.ts",
+            "kind": "import-statement",
+            "original": "testeranto-react/src/react-dom/jsx/web"
+          },
+          {
+            "path": "node_modules/react-router-dom/dist/index.mjs",
+            "kind": "import-statement",
+            "original": "react-router-dom"
+          },
+          {
+            "path": "src/components/pure/TestPageView.test/implementation.ts",
+            "kind": "import-statement",
+            "original": "./implementation"
+          },
+          {
+            "path": "src/components/pure/TestPageView.test/specification.ts",
+            "kind": "import-statement",
+            "original": "./specification"
+          },
+          {
+            "path": "src/components/pure/TestPageView.tsx",
+            "kind": "import-statement",
+            "original": "../TestPageView"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "./../../../App.scss",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-react/node_modules/scheduler/cjs/scheduler.development.js": {
+        "bytes": 17497,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "../testeranto-react/node_modules/scheduler/index.js": {
+        "bytes": 198,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-react/node_modules/scheduler/cjs/scheduler.development.js",
+            "kind": "require-call",
+            "original": "./cjs/scheduler.development.js"
+          }
+        ],
+        "format": "cjs"
+      },
+      "../testeranto-react/node_modules/react-dom/cjs/react-dom.development.js": {
+        "bytes": 1026501,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "require-call",
+            "original": "react"
+          },
+          {
+            "path": "../testeranto-react/node_modules/scheduler/index.js",
+            "kind": "require-call",
+            "original": "scheduler"
+          }
+        ],
+        "format": "cjs"
+      },
+      "../testeranto-react/node_modules/react-dom/index.js": {
+        "bytes": 1363,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-react/node_modules/react-dom/cjs/react-dom.development.js",
+            "kind": "require-call",
+            "original": "./cjs/react-dom.development.js"
+          }
+        ],
+        "format": "cjs"
+      },
+      "../testeranto-react/node_modules/react-dom/client.js": {
+        "bytes": 619,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-react/node_modules/react-dom/index.js",
+            "kind": "require-call",
+            "original": "react-dom"
+          }
+        ],
+        "format": "cjs"
+      },
+      "../testeranto-react/src/react-dom/component/dynamic.ts": {
+        "bytes": 3623,
+        "imports": [
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "../testeranto-react/node_modules/react-dom/client.js",
+            "kind": "import-statement",
+            "original": "react-dom/client"
+          },
+          {
+            "path": "testeranto/src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "../testeranto-react/src/react-dom/component/web.ts": {
+        "bytes": 3555,
+        "imports": [
+          {
+            "path": "src/Web.ts",
+            "kind": "import-statement",
+            "original": "testeranto/src/Web"
+          },
+          {
+            "path": "testeranto/src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../testeranto-react/src/react-dom/component/dynamic.ts",
+            "kind": "import-statement",
+            "original": "./dynamic.js"
+          },
+          {
+            "path": "react-dom/client",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../mocks/mockReactComponent.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "chai",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/ProjectPageView.test/implementation.tsx": {
+        "bytes": 5089,
+        "imports": [
+          {
+            "path": "node_modules/chai/chai.js",
+            "kind": "import-statement",
+            "original": "chai"
+          },
+          {
+            "path": "../../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/ProjectPageView.test/specification.ts": {
+        "bytes": 1280,
+        "imports": [
+          {
+            "path": "../../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
       "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf": {
         "bytes": 2819076,
         "imports": []
@@ -15121,7 +15497,7 @@
         ]
       },
       "src/components/pure/ProjectPageView.tsx": {
-        "bytes": 13204,
+        "bytes": 13494,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -15170,7 +15546,7 @@
         "bytes": 570,
         "imports": [
           {
-            "path": "node_modules/testeranto-react/src/react-dom/component/web.ts",
+            "path": "../testeranto-react/src/react-dom/component/web.ts",
             "kind": "import-statement",
             "original": "testeranto-react/src/react-dom/component/web"
           },
@@ -15223,7 +15599,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 3599,
+        "bytes": 2797,
         "imports": [
           {
             "path": "src/lib/abstractBase.ts",
@@ -15264,7 +15640,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12580,
+        "bytes": 11841,
         "imports": [
           {
             "path": "..",
@@ -15464,7 +15840,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-        "bytes": 890,
+        "bytes": 782,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -15547,10 +15923,54 @@
       }
     },
     "outputs": {
+      "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/components/pure/TestPageView.test/index.tsx",
+        "inputs": {
+          "node_modules/react-dom/client.js": {
+            "bytesInOutput": 837
+          },
+          "src/components/pure/TestPageView.test/index.tsx": {
+            "bytesInOutput": 387
+          },
+          "../testeranto-react/src/react-dom/jsx/web.ts": {
+            "bytesInOutput": 255
+          },
+          "../testeranto-react/src/react-dom/jsx/dynamic.ts": {
+            "bytesInOutput": 692
+          },
+          "src/components/pure/TestPageView.test/implementation.ts": {
+            "bytesInOutput": 4430
+          },
+          "src/components/pure/TestPageView.test/specification.ts": {
+            "bytesInOutput": 1364
+          },
+          "src/components/pure/TestPageView.tsx": {
+            "bytesInOutput": 13344
+          }
+        },
+        "bytes": 22166
+      },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-VOZFDOTD.mjs",
+            "path": "testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -15559,6 +15979,71 @@
         ],
         "entryPoint": "src/components/pure/ProjectPageView.test/index.tsx",
         "cssBundle": "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css",
+        "inputs": {
+          "../testeranto-react/node_modules/scheduler/cjs/scheduler.development.js": {
+            "bytesInOutput": 16969
+          },
+          "../testeranto-react/node_modules/scheduler/index.js": {
+            "bytesInOutput": 318
+          },
+          "../testeranto-react/node_modules/react-dom/cjs/react-dom.development.js": {
+            "bytesInOutput": 906682
+          },
+          "../testeranto-react/node_modules/react-dom/index.js": {
+            "bytesInOutput": 336
+          },
+          "../testeranto-react/node_modules/react-dom/client.js": {
+            "bytesInOutput": 857
+          },
+          "src/components/pure/ProjectPageView.test/index.tsx": {
+            "bytesInOutput": 404
+          },
+          "../testeranto-react/src/react-dom/component/web.ts": {
+            "bytesInOutput": 270
+          },
+          "../testeranto-react/src/react-dom/component/dynamic.ts": {
+            "bytesInOutput": 2409
+          },
+          "src/components/pure/ProjectPageView.test/implementation.tsx": {
+            "bytesInOutput": 4690
+          },
+          "src/components/pure/ProjectPageView.test/specification.ts": {
+            "bytesInOutput": 1187
+          },
+          "src/components/pure/ProjectPageView.tsx": {
+            "bytesInOutput": 13544
+          },
+          "src/App.scss": {
+            "bytesInOutput": 0
+          }
+        },
+        "bytes": 949955
+      },
+      "testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "Alert_default",
+          "Badge_default",
+          "Button_default",
+          "Card_default",
+          "Container_default",
+          "ListGroup_default",
+          "MemoryRouter",
+          "NavBar",
+          "Nav_default",
+          "Tab_default",
+          "Table_default",
+          "TestStatusBadge",
+          "assert",
+          "expect",
+          "require_react",
+          "require_react_dom"
+        ],
         "inputs": {
           "node_modules/react/cjs/react.development.js": {
             "bytesInOutput": 77369
@@ -15573,13 +16058,10 @@
             "bytesInOutput": 298
           },
           "node_modules/react-dom/cjs/react-dom.development.js": {
-            "bytesInOutput": 907110
+            "bytesInOutput": 907092
           },
           "node_modules/react-dom/index.js": {
             "bytesInOutput": 316
-          },
-          "node_modules/react-dom/client.js": {
-            "bytesInOutput": 837
           },
           "node_modules/classnames/index.js": {
             "bytesInOutput": 1801
@@ -15620,35 +16102,17 @@
           "node_modules/warning/warning.js": {
             "bytesInOutput": 1395
           },
-          "src/components/pure/ProjectPageView.test/index.tsx": {
-            "bytesInOutput": 407
-          },
-          "node_modules/testeranto-react/src/react-dom/component/web.ts": {
-            "bytesInOutput": 270
-          },
-          "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
-            "bytesInOutput": 2596
-          },
           "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs": {
-            "bytesInOutput": 74226
+            "bytesInOutput": 74170
           },
           "node_modules/react-router/dist/development/index.mjs": {
             "bytesInOutput": 61
           },
-          "src/components/pure/ProjectPageView.test/implementation.tsx": {
-            "bytesInOutput": 1915
-          },
           "node_modules/chai/chai.js": {
             "bytesInOutput": 134562
           },
-          "src/components/pure/ProjectPageView.test/specification.ts": {
-            "bytesInOutput": 670
-          },
-          "src/components/pure/ProjectPageView.tsx": {
-            "bytesInOutput": 13658
-          },
-          "node_modules/react-bootstrap/esm/index.js": {
-            "bytesInOutput": 47
+          "node_modules/react-bootstrap/esm/Alert.js": {
+            "bytesInOutput": 1719
           },
           "node_modules/uncontrollable/lib/esm/index.js": {
             "bytesInOutput": 47
@@ -15677,101 +16141,20 @@
           "node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js": {
             "bytesInOutput": 1085
           },
-          "node_modules/react-bootstrap/esm/ThemeProvider.js": {
-            "bytesInOutput": 696
-          },
-          "node_modules/react-bootstrap/esm/Collapse.js": {
-            "bytesInOutput": 3236
-          },
-          "node_modules/dom-helpers/esm/css.js": {
-            "bytesInOutput": 770
-          },
-          "node_modules/dom-helpers/esm/getComputedStyle.js": {
-            "bytesInOutput": 164
-          },
-          "node_modules/dom-helpers/esm/ownerWindow.js": {
-            "bytesInOutput": 154
-          },
-          "node_modules/dom-helpers/esm/ownerDocument.js": {
-            "bytesInOutput": 129
-          },
-          "node_modules/dom-helpers/esm/hyphenateStyle.js": {
-            "bytesInOutput": 166
-          },
-          "node_modules/dom-helpers/esm/hyphenate.js": {
-            "bytesInOutput": 157
-          },
-          "node_modules/dom-helpers/esm/isTransform.js": {
-            "bytesInOutput": 239
-          },
-          "node_modules/react-transition-group/esm/Transition.js": {
-            "bytesInOutput": 15011
-          },
-          "node_modules/react-transition-group/esm/config.js": {
-            "bytesInOutput": 91
-          },
-          "node_modules/react-transition-group/esm/utils/PropTypes.js": {
-            "bytesInOutput": 973
-          },
-          "node_modules/react-transition-group/esm/TransitionGroupContext.js": {
-            "bytesInOutput": 173
-          },
-          "node_modules/react-transition-group/esm/utils/reflow.js": {
-            "bytesInOutput": 123
-          },
-          "node_modules/@restart/ui/esm/utils.js": {
-            "bytesInOutput": 554
-          },
-          "node_modules/react-bootstrap/esm/transitionEndListener.js": {
-            "bytesInOutput": 548
-          },
-          "node_modules/dom-helpers/esm/transitionEnd.js": {
-            "bytesInOutput": 1003
-          },
-          "node_modules/dom-helpers/esm/listen.js": {
-            "bytesInOutput": 289
-          },
-          "node_modules/dom-helpers/esm/addEventListener.js": {
-            "bytesInOutput": 1123
-          },
-          "node_modules/dom-helpers/esm/canUseDOM.js": {
-            "bytesInOutput": 158
-          },
-          "node_modules/dom-helpers/esm/removeEventListener.js": {
-            "bytesInOutput": 406
-          },
-          "node_modules/dom-helpers/esm/triggerEvent.js": {
-            "bytesInOutput": 376
-          },
-          "node_modules/react-bootstrap/esm/createChainedFunction.js": {
-            "bytesInOutput": 511
-          },
-          "node_modules/react-bootstrap/esm/triggerBrowserReflow.js": {
-            "bytesInOutput": 108
-          },
-          "node_modules/react-bootstrap/esm/TransitionWrapper.js": {
-            "bytesInOutput": 2094
-          },
-          "node_modules/@restart/hooks/esm/useMergedRefs.js": {
-            "bytesInOutput": 531
-          },
-          "node_modules/react-bootstrap/esm/safeFindDOMNode.js": {
-            "bytesInOutput": 353
-          },
-          "node_modules/react-bootstrap/esm/Alert.js": {
-            "bytesInOutput": 1719
-          },
           "node_modules/@restart/hooks/esm/useEventCallback.js": {
-            "bytesInOutput": 293
+            "bytesInOutput": 291
           },
           "node_modules/@restart/hooks/esm/useCommittedRef.js": {
             "bytesInOutput": 317
+          },
+          "node_modules/react-bootstrap/esm/ThemeProvider.js": {
+            "bytesInOutput": 696
           },
           "node_modules/react-bootstrap/esm/AlertHeading.js": {
             "bytesInOutput": 765
           },
           "node_modules/react-bootstrap/esm/divWithClassName.js": {
-            "bytesInOutput": 500
+            "bytesInOutput": 498
           },
           "node_modules/react-bootstrap/esm/AlertLink.js": {
             "bytesInOutput": 651
@@ -15783,16 +16166,16 @@
             "bytesInOutput": 47
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCallbackRef.js": {
-            "bytesInOutput": 94
+            "bytesInOutput": 93
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCommittedRef.js": {
-            "bytesInOutput": 323
+            "bytesInOutput": 320
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js": {
-            "bytesInOutput": 295
+            "bytesInOutput": 293
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventListener.js": {
-            "bytesInOutput": 94
+            "bytesInOutput": 93
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useGlobalListener.js": {
             "bytesInOutput": 94
@@ -15830,11 +16213,86 @@
           "node_modules/react-bootstrap/esm/Fade.js": {
             "bytesInOutput": 1293
           },
+          "node_modules/react-transition-group/esm/Transition.js": {
+            "bytesInOutput": 15016
+          },
+          "node_modules/react-transition-group/esm/config.js": {
+            "bytesInOutput": 91
+          },
+          "node_modules/react-transition-group/esm/utils/PropTypes.js": {
+            "bytesInOutput": 973
+          },
+          "node_modules/react-transition-group/esm/TransitionGroupContext.js": {
+            "bytesInOutput": 175
+          },
+          "node_modules/react-transition-group/esm/utils/reflow.js": {
+            "bytesInOutput": 123
+          },
+          "node_modules/@restart/ui/esm/utils.js": {
+            "bytesInOutput": 554
+          },
+          "node_modules/react-bootstrap/esm/transitionEndListener.js": {
+            "bytesInOutput": 548
+          },
+          "node_modules/dom-helpers/esm/css.js": {
+            "bytesInOutput": 770
+          },
+          "node_modules/dom-helpers/esm/getComputedStyle.js": {
+            "bytesInOutput": 164
+          },
+          "node_modules/dom-helpers/esm/ownerWindow.js": {
+            "bytesInOutput": 154
+          },
+          "node_modules/dom-helpers/esm/ownerDocument.js": {
+            "bytesInOutput": 129
+          },
+          "node_modules/dom-helpers/esm/hyphenateStyle.js": {
+            "bytesInOutput": 166
+          },
+          "node_modules/dom-helpers/esm/hyphenate.js": {
+            "bytesInOutput": 157
+          },
+          "node_modules/dom-helpers/esm/isTransform.js": {
+            "bytesInOutput": 239
+          },
+          "node_modules/dom-helpers/esm/transitionEnd.js": {
+            "bytesInOutput": 1003
+          },
+          "node_modules/dom-helpers/esm/listen.js": {
+            "bytesInOutput": 289
+          },
+          "node_modules/dom-helpers/esm/addEventListener.js": {
+            "bytesInOutput": 1123
+          },
+          "node_modules/dom-helpers/esm/canUseDOM.js": {
+            "bytesInOutput": 158
+          },
+          "node_modules/dom-helpers/esm/removeEventListener.js": {
+            "bytesInOutput": 406
+          },
+          "node_modules/dom-helpers/esm/triggerEvent.js": {
+            "bytesInOutput": 376
+          },
+          "node_modules/react-bootstrap/esm/triggerBrowserReflow.js": {
+            "bytesInOutput": 108
+          },
+          "node_modules/react-bootstrap/esm/TransitionWrapper.js": {
+            "bytesInOutput": 2105
+          },
+          "node_modules/@restart/hooks/esm/useMergedRefs.js": {
+            "bytesInOutput": 533
+          },
+          "node_modules/react-bootstrap/esm/safeFindDOMNode.js": {
+            "bytesInOutput": 353
+          },
           "node_modules/react-bootstrap/esm/CloseButton.js": {
-            "bytesInOutput": 1188
+            "bytesInOutput": 1186
           },
           "node_modules/react-bootstrap/esm/Badge.js": {
             "bytesInOutput": 730
+          },
+          "node_modules/react-bootstrap/esm/Button.js": {
+            "bytesInOutput": 973
           },
           "node_modules/react-bootstrap/esm/Card.js": {
             "bytesInOutput": 1301
@@ -15872,17 +16330,62 @@
           "node_modules/react-bootstrap/esm/Container.js": {
             "bytesInOutput": 922
           },
+          "node_modules/react-bootstrap/esm/ListGroup.js": {
+            "bytesInOutput": 1500
+          },
+          "node_modules/@restart/ui/esm/Nav.js": {
+            "bytesInOutput": 4091
+          },
           "node_modules/dom-helpers/esm/querySelectorAll.js": {
             "bytesInOutput": 216
-          },
-          "node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js": {
-            "bytesInOutput": 775
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js": {
             "bytesInOutput": 229
           },
-          "node_modules/dom-helpers/esm/contains.js": {
-            "bytesInOutput": 267
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js": {
+            "bytesInOutput": 539
+          },
+          "node_modules/@restart/ui/esm/NavContext.js": {
+            "bytesInOutput": 225
+          },
+          "node_modules/@restart/ui/esm/SelectableContext.js": {
+            "bytesInOutput": 334
+          },
+          "node_modules/@restart/ui/esm/TabContext.js": {
+            "bytesInOutput": 186
+          },
+          "node_modules/@restart/ui/esm/DataKey.js": {
+            "bytesInOutput": 264
+          },
+          "node_modules/@restart/ui/esm/NavItem.js": {
+            "bytesInOutput": 2540
+          },
+          "node_modules/react-bootstrap/esm/ListGroupItem.js": {
+            "bytesInOutput": 1557
+          },
+          "node_modules/react-bootstrap/esm/Nav.js": {
+            "bytesInOutput": 1750
+          },
+          "node_modules/react-bootstrap/esm/NavbarContext.js": {
+            "bytesInOutput": 239
+          },
+          "node_modules/react-bootstrap/esm/NavItem.js": {
+            "bytesInOutput": 638
+          },
+          "node_modules/react-bootstrap/esm/NavLink.js": {
+            "bytesInOutput": 908
+          },
+          "node_modules/react-bootstrap/esm/Tab.js": {
+            "bytesInOutput": 1095
+          },
+          "node_modules/react-bootstrap/esm/TabContainer.js": {
+            "bytesInOutput": 373
+          },
+          "node_modules/@restart/ui/esm/Tabs.js": {
+            "bytesInOutput": 1506
+          },
+          "node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js": {
+            "bytesInOutput": 775
           },
           "node_modules/@restart/ui/esm/ssr.js": {
             "bytesInOutput": 47
@@ -15893,41 +16396,41 @@
           "node_modules/@react-aria/ssr/dist/SSRProvider.mjs": {
             "bytesInOutput": 3970
           },
-          "node_modules/@restart/ui/esm/SelectableContext.js": {
-            "bytesInOutput": 334
+          "node_modules/@restart/ui/esm/TabPanel.js": {
+            "bytesInOutput": 3483
           },
-          "node_modules/@restart/ui/esm/NavContext.js": {
-            "bytesInOutput": 225
+          "node_modules/@restart/ui/esm/NoopTransition.js": {
+            "bytesInOutput": 913
           },
-          "node_modules/@restart/ui/esm/DataKey.js": {
-            "bytesInOutput": 264
+          "node_modules/react-bootstrap/esm/getTabTransitionComponent.js": {
+            "bytesInOutput": 227
+          },
+          "node_modules/react-bootstrap/esm/TabContent.js": {
+            "bytesInOutput": 652
+          },
+          "node_modules/react-bootstrap/esm/TabPane.js": {
+            "bytesInOutput": 1666
+          },
+          "node_modules/react-bootstrap/esm/Table.js": {
+            "bytesInOutput": 1388
+          },
+          "node_modules/react-bootstrap/esm/index.js": {
+            "bytesInOutput": 47
+          },
+          "node_modules/react-bootstrap/esm/Collapse.js": {
+            "bytesInOutput": 3250
+          },
+          "node_modules/react-bootstrap/esm/createChainedFunction.js": {
+            "bytesInOutput": 511
+          },
+          "node_modules/dom-helpers/esm/contains.js": {
+            "bytesInOutput": 267
           },
           "node_modules/@restart/ui/esm/useWindow.js": {
             "bytesInOutput": 310
           },
           "node_modules/@restart/hooks/esm/useIsomorphicEffect.js": {
             "bytesInOutput": 407
-          },
-          "node_modules/react-bootstrap/esm/NavbarContext.js": {
-            "bytesInOutput": 239
-          },
-          "node_modules/react-bootstrap/esm/ListGroup.js": {
-            "bytesInOutput": 1500
-          },
-          "node_modules/@restart/ui/esm/Nav.js": {
-            "bytesInOutput": 4091
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js": {
-            "bytesInOutput": 539
-          },
-          "node_modules/@restart/ui/esm/TabContext.js": {
-            "bytesInOutput": 186
-          },
-          "node_modules/@restart/ui/esm/NavItem.js": {
-            "bytesInOutput": 2540
-          },
-          "node_modules/react-bootstrap/esm/ListGroupItem.js": {
-            "bytesInOutput": 1557
           },
           "node_modules/@restart/ui/esm/Modal.js": {
             "bytesInOutput": 7734
@@ -15953,9 +16456,6 @@
           "node_modules/@restart/ui/esm/ImperativeTransition.js": {
             "bytesInOutput": 2354
           },
-          "node_modules/@restart/ui/esm/NoopTransition.js": {
-            "bytesInOutput": 913
-          },
           "node_modules/@restart/ui/esm/RTGTransition.js": {
             "bytesInOutput": 811
           },
@@ -15979,15 +16479,6 @@
           },
           "node_modules/react-bootstrap/esm/AbstractModalHeader.js": {
             "bytesInOutput": 1055
-          },
-          "node_modules/react-bootstrap/esm/Nav.js": {
-            "bytesInOutput": 1750
-          },
-          "node_modules/react-bootstrap/esm/NavItem.js": {
-            "bytesInOutput": 638
-          },
-          "node_modules/react-bootstrap/esm/NavLink.js": {
-            "bytesInOutput": 908
           },
           "node_modules/react-bootstrap/esm/Navbar.js": {
             "bytesInOutput": 2426
@@ -16028,46 +16519,19 @@
           "node_modules/react-bootstrap/esm/NavbarText.js": {
             "bytesInOutput": 653
           },
-          "node_modules/react-bootstrap/esm/Tab.js": {
-            "bytesInOutput": 1095
-          },
-          "node_modules/react-bootstrap/esm/TabContainer.js": {
-            "bytesInOutput": 373
-          },
-          "node_modules/@restart/ui/esm/Tabs.js": {
-            "bytesInOutput": 1506
-          },
-          "node_modules/@restart/ui/esm/TabPanel.js": {
-            "bytesInOutput": 3483
-          },
-          "node_modules/react-bootstrap/esm/getTabTransitionComponent.js": {
-            "bytesInOutput": 227
-          },
-          "node_modules/react-bootstrap/esm/TabContent.js": {
-            "bytesInOutput": 652
-          },
-          "node_modules/react-bootstrap/esm/TabPane.js": {
-            "bytesInOutput": 1666
-          },
-          "node_modules/react-bootstrap/esm/Table.js": {
-            "bytesInOutput": 1388
-          },
           "src/NavBar.tsx": {
             "bytesInOutput": 2510
           },
           "src/components/TestStatusBadge.tsx": {
             "bytesInOutput": 1872
-          },
-          "src/App.scss": {
-            "bytesInOutput": 0
           }
         },
-        "bytes": 1461572
+        "bytes": 1441876
       },
       "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-VOZFDOTD.mjs",
+            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16080,18 +16544,18 @@
             "bytesInOutput": 148
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 8640
+            "bytesInOutput": 7954
           },
           "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 2810
+            "bytesInOutput": 2011
           }
         },
-        "bytes": 11981
+        "bytes": 10496
       },
       "testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-VOZFDOTD.mjs",
+            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16113,12 +16577,12 @@
             "bytesInOutput": 953
           },
           "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 700
+            "bytesInOutput": 593
           }
         },
-        "bytes": 6623
+        "bytes": 6516
       },
-      "testeranto/bundles/web/core/chunk-VOZFDOTD.mjs": {
+      "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -16158,7 +16622,7 @@
             "bytesInOutput": 2420
           },
           "src/lib/pmProxy.ts": {
-            "bytesInOutput": 5734
+            "bytesInOutput": 5673
           },
           "src/Web.ts": {
             "bytesInOutput": 840
@@ -16170,22 +16634,22 @@
             "bytesInOutput": 69
           },
           "src/lib/core.ts": {
-            "bytesInOutput": 1910
+            "bytesInOutput": 1876
           },
           "src/lib/index.ts": {
             "bytesInOutput": 705
           },
           "src/lib/abstractBase.ts": {
-            "bytesInOutput": 4965
+            "bytesInOutput": 5073
           },
           "src/lib/classBuilder.ts": {
             "bytesInOutput": 1901
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2591
+            "bytesInOutput": 2834
           }
         },
-        "bytes": 97490
+        "bytes": 97746
       },
       "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf": {
         "imports": [],

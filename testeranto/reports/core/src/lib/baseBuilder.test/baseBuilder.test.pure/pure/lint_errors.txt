@@ -1,2 +1,0 @@
-src/PM/web.ts
-139:15 Use the rest parameters instead of 'arguments'. (prefer-rest-params)

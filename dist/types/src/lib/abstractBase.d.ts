@@ -55,7 +55,7 @@ export declare abstract class BaseWhen<I extends Ibdd_in_any> {
 }
 export declare abstract class BaseThen<I extends Ibdd_in_any> {
     name: string;
-    thenCB: (storeState: I["iselection"]) => Promise<I["then"]>;
+    thenCB: (storeState: I["iselection"], pm: IPM) => Promise<I["then"]>;
     error: boolean;
     artifacts: string[];
     constructor(name: string, thenCB: (val: I["iselection"]) => Promise<I["then"]>);

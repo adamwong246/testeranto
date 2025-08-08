@@ -14,18 +14,25 @@ type TestData = {
     whens: {
       name: string;
       error?: string;
+      features?: string[];
+      artifacts?: string[];
     }[];
     thens: {
       name: string;
       error?: string;
+      features?: string[];
+      artifacts?: string[];
     }[];
+    features?: string[];
+    artifacts?: string[];
   }[];
+  fails?: boolean;
 };
 
 export const TestPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [route, setRoute] = useState('results');
+  const [route, setRoute] = useState<'results' | 'logs' | 'types' | 'lint' | 'coverage'>('results');
 
   // Sync route with hash changes
   useEffect(() => {
@@ -38,19 +45,30 @@ export const TestPage = () => {
   }, [location.hash]);
   const [testName, setTestName] = useState('');
   // const [projectName, setProjectName] = useState('');
-  const [testData, setTestData] = useState<TestData | null>(null);
+  const [testData, setTestData] = useState<TestData | null | undefined>(null);
   const [logs, setLogs] = useState<string>('');
   const [typeErrors, setTypeErrors] = useState<string>('');
   const [lintErrors, setLintErrors] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [testsExist, setTestsExist] = useState<boolean>(true);
-  const [errorCounts, setErrorCounts] = useState({
+  const [errorCounts, setErrorCounts] = useState<{
+    typeErrors: number;
+    staticErrors: number; 
+    runTimeErrors: number;
+  }>({
     typeErrors: 0,
     staticErrors: 0,
     runTimeErrors: 0
   });
-  const [summary, setSummary] = useState<any>(null);
+  const [summary, setSummary] = useState<{
+    testsExist?: boolean;
+    runTimeErrors?: number | string;
+    typeErrors?: number | string;
+    staticErrors?: number | string;
+    prompt?: string;
+    failingFeatures?: object;
+  } | null>(null);
 
   const { projectName, '*': splat } = useParams();
   const pathParts = splat ? splat.split('/') : [];
@@ -164,6 +182,8 @@ export const TestPage = () => {
                 testName={decodedTestPath}
                 testsExist={testsExist}
                 runTimeErrors={errorCounts.runTimeErrors}
+                typeErrors={errorCounts.typeErrors}
+                staticErrors={errorCounts.staticErrors}
                 variant="compact"
               />
             ),

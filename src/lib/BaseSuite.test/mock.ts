@@ -39,19 +39,12 @@ export class MockWhen extends BaseWhen<I> {
     testResource: any,
     pm: IPM
   ): Promise<TestStore> {
-    console.log(
-      "[DEBUG] MockWhen - andWhen - input store:",
-      JSON.stringify(store)
-    );
-
     const newStore = {
       ...store,
       testSelection: true, // Ensure testSelection is set for assertions
     };
 
-    console.log("[DEBUG] MockWhen - andWhen - calling whenCB");
     const result = await whenCB(newStore);
-    console.log("[DEBUG] MockWhen - andWhen - result:", JSON.stringify(result));
 
     return result;
   }
@@ -69,15 +62,6 @@ export class MockThen extends BaseThen<I> {
     testResourceConfiguration: any,
     pm: any
   ): Promise<TestSelection> {
-    console.log(
-      "[DEBUG] MockThen - butThen - input store:",
-      JSON.stringify(store)
-    );
-
-    if (!store) {
-      throw new Error("Store is undefined in butThen");
-    }
-
     // Create test selection with explicit type
     const testSelection: TestSelection = {
       name: store.name,
@@ -86,17 +70,8 @@ export class MockThen extends BaseThen<I> {
       error: store.error ? true : undefined,
     };
 
-    console.log(
-      "[DEBUG] MockThen - passing testSelection:",
-      JSON.stringify(testSelection)
-    );
-
     try {
       const result = await thenCB(testSelection);
-      console.log(
-        "[DEBUG] MockThen - received result:",
-        JSON.stringify(result)
-      );
 
       if (!result || typeof result.testSelection === "undefined") {
         throw new Error(
@@ -117,7 +92,7 @@ export class MockSuite extends BaseSuite<I, O> {
     if (!name) {
       throw new Error("MockSuite requires a non-empty name");
     }
-    console.log("[DEBUG] Creating MockSuite with name:", name, "index:", index);
+
     const suiteName = name || "testSuite"; // Ensure name is never undefined
     super(suiteName, index, {
       testGiven: new MockGiven(
@@ -131,6 +106,5 @@ export class MockSuite extends BaseSuite<I, O> {
         ]
       ),
     });
-    console.log("[DEBUG] MockSuite created:", this.name, this.index);
   }
 }

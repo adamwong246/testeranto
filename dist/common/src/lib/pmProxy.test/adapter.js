@@ -18,11 +18,17 @@ exports.testAdapter = {
         // };
     },
     andWhen: async (store, whenCB, testResource, pm) => {
-        const proxiedPM = (0, pmProxy_1.andWhenProxy)(pm, "some/path", store);
+        const proxiedPM = (0, pmProxy_1.andWhenProxy)(pm, "some/path", (path) => {
+            console.log("Artifact added:", path);
+            return path;
+        });
         return whenCB(store, proxiedPM);
     },
     butThen: async (store, thenCB, testResource, pm) => {
-        const proxiedPM = (0, pmProxy_1.butThenProxy)(pm, "some/path", store);
+        const proxiedPM = (0, pmProxy_1.butThenProxy)(pm, "some/path", (path) => {
+            console.log("Artifact added:", path);
+            return path;
+        });
         return thenCB(store, proxiedPM);
     },
     afterEach: async (store, key, pm) => store,

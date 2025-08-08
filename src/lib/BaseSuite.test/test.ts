@@ -125,7 +125,7 @@ export const implementation: ITestImplementation<I, O> = {
   givens: {
     Default: (): MockSuite => {
       const suite = new MockSuite("testSuite", 0);
-      console.log("[DEBUG] Created test suite:", suite.name, suite.index);
+
       return suite;
     },
   },
@@ -155,7 +155,6 @@ export const implementation: ITestImplementation<I, O> = {
     RunSuite:
       (): ((suite: MockSuite) => Promise<MockSuite>) =>
       async (suite: MockSuite) => {
-        console.log("[DEBUG] Running RunSuite");
         const mockConfig: ITTestResourceConfiguration = {
           name: "test",
           fs: "/tmp",
@@ -222,34 +221,28 @@ export const implementation: ITestImplementation<I, O> = {
 
   thens: {
     SuiteNameMatches:
-      (expectedName: string): ((suite: MockSuite) => MockSuite) =>
-      (suite: MockSuite) => {
-        console.log(
-          "[DEBUG] SuiteNameMatches - expected:",
-          expectedName,
-          "actual:",
-          suite?.name
-        );
-        if (!suite?.name) {
+      (expectedName: string): ((selection: TestSelection) => TestSelection) =>
+      (selection) => {
+        if (!selection.name) {
           throw new Error(`Suite name is undefined. Expected: ${expectedName}`);
         }
-        if (suite.name !== expectedName) {
+        if (selection.name !== expectedName) {
           throw new Error(
-            `Expected suite name '${expectedName}', got '${suite.name}'`
+            `Expected suite name '${expectedName}', got '${selection.name}'`
           );
         }
-        return suite;
+        return selection;
       },
 
     SuiteIndexMatches:
-      (expectedIndex: number): ((suite: MockSuite) => MockSuite) =>
-      (suite: MockSuite) => {
-        if (suite.index !== expectedIndex) {
+      (expectedIndex: number): ((selection: TestSelection) => TestSelection) =>
+      (selection) => {
+        if (selection.index !== expectedIndex) {
           throw new Error(
-            `Expected suite index ${expectedIndex}, got ${suite.index}`
+            `Expected suite index ${expectedIndex}, got ${selection.index}`
           );
         }
-        return suite;
+        return selection;
       },
 
     FeaturesIncludes:
@@ -367,17 +360,12 @@ export const testAdapter: ITestAdapter<I> = {
     initialValues: any,
     pm: IPM
   ): Promise<I["istore"]> => {
-    console.log("[DEBUG] Running beforeEach with subject:", subject);
     try {
       const suite = await initializer();
       if (!suite) {
         throw new Error("Initializer returned undefined suite");
       }
-      console.log("[DEBUG] beforeEach result:", {
-        name: suite.name,
-        index: suite.index,
-        store: suite.store,
-      });
+
       return {
         name: suite.name,
         index: suite.index,
@@ -404,25 +392,15 @@ export const testAdapter: ITestAdapter<I> = {
     testResource: ITTestResourceConfiguration,
     pm: IPM
   ): Promise<TestSelection> => {
-    console.log(
-      "[DEBUG] butThen - input store:",
-      JSON.stringify(store, null, 2)
-    );
-
-    // Create test selection from store
     const testSelection: TestSelection = {
       testSelection: store.testSelection || false,
       error: store.error ? true : undefined,
+      name: store.name,
+      index: store.index,
     };
-
-    console.log(
-      "[DEBUG] butThen - created testSelection:",
-      JSON.stringify(testSelection, null, 2)
-    );
 
     try {
       const result = await thenCB(testSelection);
-      console.log("[DEBUG] butThen - result:", JSON.stringify(result, null, 2));
 
       if (!result || typeof result.testSelection === "undefined") {
         throw new Error(

@@ -1,15 +1,2 @@
-src/components/TestStatusBadge.tsx
-13:16 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-14:17 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
-- undefined (fix)
-- undefined (fix)
-
-src/components/pure/ProjectPageView.test/implementation.tsx
-4:10 'MemoryRouter' is defined but never used. (@typescript-eslint/no-unused-vars)
-55:13 Expected an assignment or function call and instead saw an expression. (@typescript-eslint/no-unused-expressions)
-60:13 Expected an assignment or function call and instead saw an expression. (@typescript-eslint/no-unused-expressions)
-
 src/components/pure/ProjectPageView.test/index.tsx
 8:8 'appcss' is defined but never used. (@typescript-eslint/no-unused-vars)

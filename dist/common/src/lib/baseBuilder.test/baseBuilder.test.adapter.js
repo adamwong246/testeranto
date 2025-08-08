@@ -4,11 +4,6 @@ exports.testAdapter = void 0;
 exports.testAdapter = {
     beforeAll: async (input, testResource, pm) => input,
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
-        console.log("Initializing test with:", {
-            subject,
-            initializer,
-            initialValues,
-        });
         const result = initializer();
         console.log("Initialization result:", result.toString());
         return result;

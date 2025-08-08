@@ -34,14 +34,15 @@ export const ProjectsPageView = ({ projects, summaries, configs, loading, error,
                         } }, project.name)),
                 React.createElement("td", null,
                     React.createElement("div", { style: { maxHeight: '200px', overflowY: 'auto' } }, summaries[project.name] ? (Object.keys(summaries[project.name]).map(testName => {
+                        var _a, _b, _c;
                         const testData = summaries[project.name][testName];
-                        const runTime = configs[project.name].tests.find((t) => t[0] === testName)[1];
+                        const runTime = ((_c = (_b = (_a = configs[project.name]) === null || _a === void 0 ? void 0 : _a.tests) === null || _b === void 0 ? void 0 : _b.find((t) => t[0] === testName)) === null || _c === void 0 ? void 0 : _c[1]) || 'node';
                         const hasRuntimeErrors = testData.runTimeErrors > 0;
                         const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
                         return (React.createElement("div", { key: testName },
                             React.createElement("a", { href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}` },
                                 hasRuntimeErrors ? '❌ ' : hasStaticErrors ? '⚠️ ' : '',
-                                testName.split('/').pop())));
+                                testName.split('/').pop() || testName)));
                     })) : (React.createElement("div", null, "Loading tests...")))),
                 React.createElement("td", null,
                     React.createElement("a", { href: `#/projects/${project.name}#node` },

@@ -183,7 +183,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                             this.bddTestIsNowDone(src, results.fails);
                         })
                             .catch((e1) => {
-                            console.log(ansiC.red(`launchPure - ${src} errored with: ${e1}`));
+                            console.log(ansiC.red(`launchPure - ${src} errored with: ${e1.stack}`));
                             this.bddTestIsNowDone(src, -1);
                             statusMessagePretty(-1, src, "pure");
                         });

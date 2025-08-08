@@ -8,6 +8,11 @@ const app = (0, express_1.default)();
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
+app.get("/claim", (req, res) => {
+    const { resource } = req.query;
+    console.log(`Resource claimed: ${resource}`);
+    res.status(200).json({ status: 'claimed', resource });
+});
 exports.default = (port) => {
     app.listen(port, () => {
         console.log(`Example app listening on port ${port}`);

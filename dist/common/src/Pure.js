@@ -31,7 +31,7 @@ class PureTesteranto extends core_js_1.default {
         //   };
         // }
         try {
-            const result = await this.testJobs[0].receiveTestResourceConfig(pm);
+            const result = this.testJobs[0].receiveTestResourceConfig(pm);
             return result;
         }
         catch (e) {

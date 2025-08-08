@@ -7,6 +7,84 @@ import path4 from "path";
 import readline from "readline";
 import esbuild from "esbuild";
 
+// src/utils.ts
+import path from "path";
+var getRunnables = (tests, projectName, payload = {
+  nodeEntryPoints: {},
+  nodeEntryPointSidecars: {},
+  webEntryPoints: {},
+  webEntryPointSidecars: {},
+  pureEntryPoints: {},
+  pureEntryPointSidecars: {}
+}) => {
+  return tests.reduce((pt, cv, cndx, cry) => {
+    if (cv[1] === "node") {
+      pt.nodeEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    } else if (cv[1] === "web") {
+      pt.webEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    } else if (cv[1] === "pure") {
+      pt.pureEntryPoints[cv[0]] = path.resolve(
+        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    }
+    cv[3].filter((t) => t[1] === "node").forEach((t) => {
+      pt.nodeEntryPointSidecars[`${t[0]}`] = path.resolve(
+        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
+    cv[3].filter((t) => t[1] === "web").forEach((t) => {
+      pt.webEntryPointSidecars[`${t[0]}`] = path.resolve(
+        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
+    cv[3].filter((t) => t[1] === "pure").forEach((t) => {
+      pt.pureEntryPointSidecars[`${t[0]}`] = path.resolve(
+        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+      );
+    });
+    return pt;
+  }, payload);
+};
+
+// src/utils/buildTemplates.ts
+var getBaseHtml = (title) => `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="description" content="Webpage description goes here" />
+  <meta charset="utf-8" />
+  <title>${title} - testeranto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+
+  <script>
+    function initApp() {
+      if (window.React && window.ReactDOM && window.App) {
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(App));
+      } else {
+        setTimeout(initApp, 100);
+      }
+    }
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+`;
+var AppHtml = () => `
+  ${getBaseHtml("Testeranto")}
+  
+  <link rel="stylesheet" href="App.css" />
+  <script src="App.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+`;
+
 // src/esbuildConfigs/index.ts
 var esbuildConfigs_default = (config) => {
   return {
@@ -57,7 +135,7 @@ var inputFilesPlugin_default = (platform, testName2) => {
 };
 
 // src/esbuildConfigs/featuresPlugin.ts
-import path from "path";
+import path2 from "path";
 var featuresPlugin_default = {
   name: "feature-markdown",
   setup(build) {
@@ -65,7 +143,7 @@ var featuresPlugin_default = {
       if (args.resolveDir === "")
         return;
       return {
-        path: path.isAbsolute(args.path) ? args.path : path.join(args.resolveDir, args.path),
+        path: path2.isAbsolute(args.path) ? args.path : path2.join(args.resolveDir, args.path),
         namespace: "feature-markdown"
       };
     });
@@ -144,7 +222,7 @@ var node_default = (config, entryPoints, testName2) => {
 
 // src/esbuildConfigs/web.ts
 import { polyfillNode } from "esbuild-plugin-polyfill-node";
-import path2 from "path";
+import path3 from "path";
 var web_default = (config, entryPoints, testName2) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "web",
@@ -155,7 +233,7 @@ var web_default = (config, entryPoints, testName2) => {
     treeShaking: true,
     outdir: `testeranto/bundles/web/${testName2}`,
     alias: {
-      react: path2.resolve("./node_modules/react")
+      react: path3.resolve("./node_modules/react")
     },
     metafile: true,
     external: [
@@ -304,84 +382,6 @@ var web_html_default = (jsfilePath, htmlFilePath, cssfilePath) => `
 </html>
 `;
 
-// src/utils.ts
-import path3 from "path";
-var getRunnables = (tests, projectName, payload = {
-  nodeEntryPoints: {},
-  nodeEntryPointSidecars: {},
-  webEntryPoints: {},
-  webEntryPointSidecars: {},
-  pureEntryPoints: {},
-  pureEntryPointSidecars: {}
-}) => {
-  return tests.reduce((pt, cv, cndx, cry) => {
-    if (cv[1] === "node") {
-      pt.nodeEntryPoints[cv[0]] = path3.resolve(
-        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    } else if (cv[1] === "web") {
-      pt.webEntryPoints[cv[0]] = path3.resolve(
-        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    } else if (cv[1] === "pure") {
-      pt.pureEntryPoints[cv[0]] = path3.resolve(
-        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    }
-    cv[3].filter((t) => t[1] === "node").forEach((t) => {
-      pt.nodeEntryPointSidecars[`${t[0]}`] = path3.resolve(
-        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    });
-    cv[3].filter((t) => t[1] === "web").forEach((t) => {
-      pt.webEntryPointSidecars[`${t[0]}`] = path3.resolve(
-        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    });
-    cv[3].filter((t) => t[1] === "pure").forEach((t) => {
-      pt.pureEntryPointSidecars[`${t[0]}`] = path3.resolve(
-        `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-      );
-    });
-    return pt;
-  }, payload);
-};
-
-// src/utils/buildTemplates.ts
-var getBaseHtml = (title) => `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta name="description" content="Webpage description goes here" />
-  <meta charset="utf-8" />
-  <title>${title} - testeranto</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="" />
-
-  <script>
-    function initApp() {
-      if (window.React && window.ReactDOM && window.App) {
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(App));
-      } else {
-        setTimeout(initApp, 100);
-      }
-    }
-    window.addEventListener('DOMContentLoaded', initApp);
-  </script>
-`;
-var AppHtml = () => `
-  ${getBaseHtml("Testeranto")}
-  
-  <link rel="stylesheet" href="App.css" />
-  <script src="App.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-</body>
-</html>
-`;
-
 // src/build.ts
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -418,20 +418,6 @@ import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
       return st;
     };
     return Array.from(meta(config.tests, /* @__PURE__ */ new Set()));
-  };
-  const getSideCars = (runtime) => {
-    return Array.from(
-      new Set(
-        config.tests.reduce((mm, t) => {
-          mm = mm.concat(t[3]);
-          return mm;
-        }, []).filter((t) => {
-          return t[1] === runtime;
-        }).map((t) => {
-          return t[0];
-        })
-      )
-    );
   };
   const config = {
     ...rawConfig,

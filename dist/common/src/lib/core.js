@@ -28,7 +28,6 @@ class TesterantoCore extends classBuilder_js_1.ClassBuilder {
                 this.uberCatcher = uberCatcher;
             }
             async givenThat(subject, testResource, artifactory, initializer, initialValues, pm) {
-                console.log("mark800");
                 return fullAdapter.beforeEach(subject, initializer, testResource, initialValues, pm);
             }
             afterEach(store, key, artifactory, pm) {

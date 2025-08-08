@@ -116,7 +116,6 @@ export class PM_Base {
         const filepath = x[0];
         const contents = x[1];
         const testName = x[2];
-        console.log("writing file", filepath);
         return new Promise(async (res) => {
             fs.mkdirSync(path.dirname(filepath), {
                 recursive: true,

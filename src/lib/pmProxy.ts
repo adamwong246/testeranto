@@ -342,7 +342,6 @@ export const afterAllProxy: IProxy = (
       "writeFileSync",
       (fp, contents) => {
         const path = `suite-${suite}/afterAll/${fp}`;
-        console.log("MARK10");
         addArtifact(path);
         return [path, contents];
       },
@@ -353,7 +352,6 @@ export const afterAllProxy: IProxy = (
       (opts, p) => {
         const path = `suite-${suite}/afterAll/${opts.path}`;
         addArtifact(path);
-        console.log("MARK9");
         return [
           {
             ...opts,
