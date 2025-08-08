@@ -1,2 +1,2 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/core/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/0a77cd5d-6575-443f-a2ec-290787cc5a1c"}
+stdout > receiveTestResourceConfig {"name":"src/lib/pmProxy.test/index.ts","ports":[],"fs":"testeranto/reports/core/src/lib/pmProxy.test/index/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/01f256da-c24a-49da-8ac7-fa4224b35dd3"}
 stderr > goodbye node with failures 0

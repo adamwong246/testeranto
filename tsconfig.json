@@ -10,6 +10,11 @@
   },
   "declaration": true,
   "compilerOptions": {
+    "paths": {
+      "react": [
+        "./node_modules/@types/react"
+      ]
+    },
     "useDefineForClassFields": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

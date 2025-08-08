@@ -6,7 +6,7 @@
 
 ## quick links
 
-- an example of the reports generated: [adamwong246.github.io/testeranto/testeranto](/testeranto/projects.html)
+- an example of the reports generated: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/projects.html)
 - demo of me using testeranto to fix a bug: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 - a starter testeranto project: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
 

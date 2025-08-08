@@ -1,4 +1,4 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/0a77cd5d-6575-443f-a2ec-290787cc5a1c"}
+stdout > receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/01f256da-c24a-49da-8ac7-fa4224b35dd3"}
 Initialization result: {
   "artifacts": [],
   "testResourceRequirement": {
