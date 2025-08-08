@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Alert } from 'react-bootstrap';
-import { NavBar } from '../../NavBar';
+import { NavBar } from './NavBar';
 export const ProjectsPageView = ({ projects, summaries, configs, loading, error, navigate }) => {
     const getStatusIcon = (status) => {
         switch (status) {
@@ -17,7 +17,7 @@ export const ProjectsPageView = ({ projects, summaries, configs, loading, error,
             "Error: ",
             error);
     return (React.createElement("div", { className: "p-3" },
-        React.createElement(NavBar, { title: "Testeranto", backLink: null }),
+        React.createElement(NavBar, { title: "Testeranto", backLink: undefined }),
         React.createElement(Table, { striped: true, bordered: true, hover: true, responsive: true },
             React.createElement("thead", null,
                 React.createElement("tr", null,

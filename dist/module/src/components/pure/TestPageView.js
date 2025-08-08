@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tab, Container, Alert, Button } from 'react-bootstrap';
-import { NavBar } from '../../NavBar';
+import { NavBar } from './NavBar';
 import { TestStatusBadge } from '../TestStatusBadge';
 export const TestPageView = ({ route, setRoute, navigate, projectName, testName, decodedTestPath, runtime, testData, logs, typeErrors, lintErrors, testsExist, errorCounts, }) => {
     return (React.createElement(Container, { fluid: true },

@@ -1,4 +1,4 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/01f256da-c24a-49da-8ac7-fa4224b35dd3"}
+stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/9df98e6c-68a5-4bc1-847e-5b9ce1802fde"}
 Running beforeEach with initializer: [Function: Default]
 Creating default test builder instance
 Builder created: TestClassBuilderMock {

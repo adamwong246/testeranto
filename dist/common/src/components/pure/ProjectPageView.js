@@ -7,7 +7,7 @@ exports.ProjectPageView = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const react_1 = __importDefault(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
-const NavBar_1 = require("../../NavBar");
+const NavBar_1 = require("./NavBar");
 const TestStatusBadge_1 = require("../TestStatusBadge");
 require("./../../App.scss");
 const BuildLogViewer = ({ logs, runtime }) => {

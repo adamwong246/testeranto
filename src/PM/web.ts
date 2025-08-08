@@ -50,7 +50,7 @@ export class PM_Web extends PM {
     return window["waitForSelector"](p, s);
   }
 
-  screencast(o: ScreencastOptions, p: string | Page): Promise<string> {
+  screencast(opts: ScreencastOptions, page: string | Page): Promise<string> {
     return window["screencast"](
       {
         ...opts,
@@ -136,6 +136,7 @@ export class PM_Web extends PM {
   }
 
   writeFileSync(x) {
+    // eslint-disable-next-line prefer-rest-params
     const z = arguments["0"];
 
     const filepath = z[0];

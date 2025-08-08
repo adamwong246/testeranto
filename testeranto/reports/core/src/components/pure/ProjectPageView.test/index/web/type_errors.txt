@@ -6,6 +6,7 @@
 /Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (47,45): Property 'subject' does not exist on type 'Readonly<{}>'.
 /Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (114,9): Expected 1 arguments, but got 3.
 /Users/adam/Code/testeranto-react/src/react/component/index.ts (3,44): Cannot find module '../../../Types' or its corresponding type declarations.
+/Users/adam/Code/testeranto/src/components/pure/NavBar.tsx (76,23): Object literal may only specify known properties, and '':hover'' does not exist in type 'Properties<string | number, string & {}>'.
 /Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (10,3): Property 'Navigation' is missing in type '{ Default: () => { summary: { "test-suite-1": { testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; }; "test-suite-2": { testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; }; }; ... 9 more ...; navigate: () => void; }; WithError: () => { ...; }; }' but required in type '{ Default: (...args: any[]) => IProjectPageViewProps; WithError: (...args: any[]) => IProjectPageViewProps; Navigation: (...args: any[]) => IProjectPageViewProps; }'.
 /Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (114,9): Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
   Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
@@ -74,7 +75,6 @@
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
-/Users/adam/Code/testeranto/src/NavBar.tsx (76,23): Object literal may only specify known properties, and '':hover'' does not exist in type 'Properties<string | number, string & {}>'.
 /Users/adam/Code/testeranto/src/PM/pure.ts (114,3): Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
     Types of parameters 'opts' and 'opts' are incompatible.

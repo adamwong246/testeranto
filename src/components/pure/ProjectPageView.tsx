@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { Tab, Container, Alert, Table, Badge, Nav, Card, ListGroup } from 'react-bootstrap';
-import { NavBar } from '../../NavBar';
+import { NavBar } from './NavBar';
 import { TestStatusBadge } from '../TestStatusBadge';
 
 import "./../../App.scss";

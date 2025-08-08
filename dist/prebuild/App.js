@@ -32072,7 +32072,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   Table.displayName = "Table";
   var Table_default = Table;
 
-  // src/NavBar.tsx
+  // src/components/pure/NavBar.tsx
   var import_react56 = __toESM(require_react(), 1);
   var NavBar = ({
     title,
@@ -32640,7 +32640,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return /* @__PURE__ */ import_react62.default.createElement("div", null, "Loading projects...");
     if (error)
       return /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    return /* @__PURE__ */ import_react62.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react62.default.createElement(NavBar, { title: "Testeranto", backLink: null }), /* @__PURE__ */ import_react62.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react62.default.createElement("thead", null, /* @__PURE__ */ import_react62.default.createElement("tr", null, /* @__PURE__ */ import_react62.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react62.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react62.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement("a", { href: "#", onClick: (e) => {
+    return /* @__PURE__ */ import_react62.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react62.default.createElement(NavBar, { title: "Testeranto", backLink: void 0 }), /* @__PURE__ */ import_react62.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react62.default.createElement("thead", null, /* @__PURE__ */ import_react62.default.createElement("tr", null, /* @__PURE__ */ import_react62.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react62.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react62.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement("a", { href: "#", onClick: (e) => {
       e.preventDefault();
       navigate(`/projects/${project.name}`);
     } }, project.name)), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName) => {
@@ -32745,7 +32745,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // src/components/pure/AppFrame.tsx
   var import_react66 = __toESM(require_react(), 1);
 
-  // src/SettingsButton.tsx
+  // src/components/pure/SettingsButton.tsx
   var import_react65 = __toESM(require_react(), 1);
 
   // src/components/SunriseAnimation.tsx
@@ -33076,7 +33076,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   var SunriseAnimation_default = SunriseAnimation;
 
-  // src/SettingsButton.tsx
+  // src/components/pure/SettingsButton.tsx
   var SettingsButton = ({ className }) => {
     (0, import_react65.useEffect)(() => {
       return () => {
@@ -33253,7 +33253,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/components/pure/AppFrame.tsx
   var AppFrame = ({ children }) => {
-    return /* @__PURE__ */ import_react66.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react66.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react66.default.createElement(Container_default, { fluid: true }, children)), /* @__PURE__ */ import_react66.default.createElement("footer", { className: "bg-light py-3 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react66.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react66.default.createElement(SettingsButton, null)), /* @__PURE__ */ import_react66.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react66.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))));
+    return /* @__PURE__ */ import_react66.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react66.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react66.default.createElement(Container_default, { fluid: true }, children)), /* @__PURE__ */ import_react66.default.createElement("footer", { className: "bg-light py-2 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react66.default.createElement(SettingsButton, null), /* @__PURE__ */ import_react66.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react66.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))));
   };
 
   // src/App.tsx

@@ -634,7 +634,7 @@
         "format": "esm"
       },
       "src/PM/pure.ts": {
-        "bytes": 5820,
+        "bytes": 5871,
         "imports": [
           {
             "path": "puppeteer-core",

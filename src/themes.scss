@@ -1,13 +1,13 @@
 // Common theme initialization
-:root {
-  @each $theme, $colors in $themes {
-    &[data-bs-theme="#{$theme}"] {
-      @each $name, $color in $colors {
-        --#{$name}: #{$color};
-      }
-    }
-  }
-}
+// :root {
+//   @each $theme, $colors in $themes {
+//     &[data-bs-theme="#{$theme}"] {
+//       @each $name, $color in $colors {
+//         --#{$name}: #{$color};
+//       }
+//     }
+//   }
+// }
 
 :root[data-bs-theme="light-vibrant"] {
   --primary: #ff2d75;

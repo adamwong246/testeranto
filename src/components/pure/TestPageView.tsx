@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tab, Container, Alert, Button } from 'react-bootstrap';
-import { NavBar } from '../../NavBar';
+import { NavBar } from './NavBar';
 import { TestStatusBadge } from '../TestStatusBadge';
 
 type TestData = {

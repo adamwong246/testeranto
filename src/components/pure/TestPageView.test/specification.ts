@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITestSpecification } from "../../../CoreTypes";
-import { O } from "./types";
+import { ISelection, O } from "./types";
 
 export const specification: ITestSpecification<
   {

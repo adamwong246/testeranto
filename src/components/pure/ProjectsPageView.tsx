@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Alert } from 'react-bootstrap';
-import { NavBar } from '../../NavBar';
+import { NavBar } from './NavBar';
 
 type Project = {
   name: string;
@@ -55,7 +55,7 @@ export const ProjectsPageView = ({
 
   return (
     <div className="p-3">
-      <NavBar title="Testeranto" backLink={null} />
+      <NavBar title="Testeranto" backLink={undefined} />
       <Table striped bordered hover responsive>
         <thead>
           <tr>

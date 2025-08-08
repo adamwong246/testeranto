@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SunriseAnimation from "./components/SunriseAnimation";
+import SunriseAnimation from "../SunriseAnimation";
 import { Modal, Button } from "react-bootstrap";
 // import "./TestReport.scss";
 export const SettingsButton = ({ className }) => {

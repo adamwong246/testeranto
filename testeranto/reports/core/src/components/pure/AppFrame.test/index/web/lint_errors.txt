@@ -1,0 +1,2 @@
+src/components/SunriseAnimation.tsx
+48:9 'startTime' is never reassigned. Use 'const' instead. (prefer-const)

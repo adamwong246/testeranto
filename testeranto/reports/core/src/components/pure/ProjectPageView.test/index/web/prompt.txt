@@ -1,16 +1,8 @@
 
-/add ../testeranto-react/node_modules/scheduler/cjs/scheduler.development.js
-/add ../testeranto-react/node_modules/scheduler/index.js
-/add ../testeranto-react/node_modules/react-dom/cjs/react-dom.development.js
-/add ../testeranto-react/node_modules/react-dom/index.js
-/add ../testeranto-react/node_modules/react-dom/client.js
 /add src/components/pure/ProjectPageView.test/index.tsx
-/add ../testeranto-react/src/react-dom/component/web.ts
-/add ../testeranto-react/src/react-dom/component/dynamic.ts
 /add src/components/pure/ProjectPageView.test/implementation.tsx
 /add src/components/pure/ProjectPageView.test/specification.ts
 /add src/components/pure/ProjectPageView.tsx
-/add src/App.scss
 
 /read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md

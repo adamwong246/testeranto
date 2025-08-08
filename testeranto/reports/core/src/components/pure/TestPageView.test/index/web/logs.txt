@@ -1,7 +1,0 @@
-Failed to load resource: net::ERR_FILE_NOT_FOUND
-{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.css"}
-[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.css"}]
-%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
-You might need to use a local HTTP server (instead of file://): https://reactjs.org/link/react-devtools-faq font-weight:bold
-{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs","lineNumber":23438,"columnNumber":24}
-[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs","lineNumber":23438,"columnNumber":24},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs","lineNumber":23458,"columnNumber":8},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":10,"columnNumber":49},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs","lineNumber":23474,"columnNumber":23},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":10,"columnNumber":49},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs","lineNumber":32251,"columnNumber":31}]

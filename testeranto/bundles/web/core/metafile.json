@@ -20,10 +20,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -52,10 +52,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -84,10 +84,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -116,10 +116,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -148,10 +148,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -180,10 +180,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -212,10 +212,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -244,10 +244,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -276,10 +276,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -308,10 +308,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -340,10 +340,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -372,10 +372,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -404,10 +404,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -421,10 +421,10 @@
       "id": "",
       "location": {
         "column": 7,
-        "file": "src/components/pure/ProjectPageView.tsx",
-        "length": 18,
+        "file": "src/components/pure/AppFrame.test/index.tsx",
+        "length": 19,
         "line": 7,
-        "lineText": "import \"./../../App.scss\";",
+        "lineText": "import \"../../../App.scss\";",
         "namespace": "",
         "suggestion": ""
       },
@@ -451,10 +451,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -483,10 +483,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
+            "file": "src/components/pure/AppFrame.test/index.tsx",
+            "length": 19,
             "line": 7,
-            "lineText": "import \"./../../App.scss\";",
+            "lineText": "import \"../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -631,7 +631,7 @@
         "format": "esm"
       },
       "src/PM/web.ts": {
-        "bytes": 4226,
+        "bytes": 4283,
         "imports": [
           {
             "path": "stream",
@@ -1628,7 +1628,7 @@
         "format": "esm"
       },
       "src/components/pure/TestPageView.test/specification.ts": {
-        "bytes": 1590,
+        "bytes": 1658,
         "imports": [
           {
             "path": "../../../CoreTypes",
@@ -14865,7 +14865,7 @@
         ],
         "format": "esm"
       },
-      "src/NavBar.tsx": {
+      "src/components/pure/NavBar.tsx": {
         "bytes": 3051,
         "imports": [
           {
@@ -14933,7 +14933,7 @@
         "format": "esm"
       },
       "src/components/pure/TestPageView.tsx": {
-        "bytes": 15599,
+        "bytes": 15595,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -14946,9 +14946,9 @@
             "original": "react-bootstrap"
           },
           {
-            "path": "src/NavBar.tsx",
+            "path": "src/components/pure/NavBar.tsx",
             "kind": "import-statement",
-            "original": "../../NavBar"
+            "original": "./NavBar"
           },
           {
             "path": "src/components/TestStatusBadge.tsx",
@@ -14973,8 +14973,196 @@
         ],
         "format": "esm"
       },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf": {
+        "bytes": 2819076,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf": {
+        "bytes": 3193048,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf": {
+        "bytes": 3284152,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf": {
+        "bytes": 3325496,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf": {
+        "bytes": 3432832,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf": {
+        "bytes": 3515332,
+        "imports": []
+      },
+      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf": {
+        "bytes": 3521968,
+        "imports": []
+      },
+      "src/App.scss": {
+        "bytes": 293028,
+        "imports": [
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf"
+          },
+          {
+            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf",
+            "kind": "url-token",
+            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf"
+          },
+          {
+            "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
+            "kind": "url-token",
+            "external": true
+          }
+        ]
+      },
       "src/components/pure/TestPageView.test/index.tsx": {
-        "bytes": 532,
+        "bytes": 520,
         "imports": [
           {
             "path": "../testeranto-react/src/react-dom/jsx/web.ts",
@@ -15007,9 +15195,9 @@
             "original": "react"
           },
           {
-            "path": "./../../../App.scss",
+            "path": "src/App.scss",
             "kind": "import-statement",
-            "external": true
+            "original": "./../../../App.scss"
           },
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -15313,191 +15501,8 @@
         ],
         "format": "esm"
       },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf": {
-        "bytes": 2819076,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf": {
-        "bytes": 3193048,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf": {
-        "bytes": 3284152,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf": {
-        "bytes": 3325496,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf": {
-        "bytes": 3432832,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf": {
-        "bytes": 3515332,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf": {
-        "bytes": 3521968,
-        "imports": []
-      },
-      "src/App.scss": {
-        "bytes": 281527,
-        "imports": [
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf"
-          }
-        ]
-      },
       "src/components/pure/ProjectPageView.tsx": {
-        "bytes": 13494,
+        "bytes": 13490,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -15510,9 +15515,9 @@
             "original": "react-bootstrap"
           },
           {
-            "path": "src/NavBar.tsx",
+            "path": "src/components/pure/NavBar.tsx",
             "kind": "import-statement",
-            "original": "../../NavBar"
+            "original": "./NavBar"
           },
           {
             "path": "src/components/TestStatusBadge.tsx",
@@ -15920,17 +15925,242 @@
           }
         ],
         "format": "esm"
+      },
+      "src/components/pure/AppFrame.test/implementation.tsx": {
+        "bytes": 1850,
+        "imports": [
+          {
+            "path": "node_modules/chai/chai.js",
+            "kind": "import-statement",
+            "original": "chai"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "../../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/AppFrame.test/specification.ts": {
+        "bytes": 912,
+        "imports": [
+          {
+            "path": "../../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/SunriseAnimation.tsx": {
+        "bytes": 10363,
+        "imports": [
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/SettingsButton.tsx": {
+        "bytes": 12256,
+        "imports": [
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "src/components/SunriseAnimation.tsx",
+            "kind": "import-statement",
+            "original": "../SunriseAnimation"
+          },
+          {
+            "path": "node_modules/react-bootstrap/esm/index.js",
+            "kind": "import-statement",
+            "original": "react-bootstrap"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/AppFrame.tsx": {
+        "bytes": 782,
+        "imports": [
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react-bootstrap/esm/index.js",
+            "kind": "import-statement",
+            "original": "react-bootstrap"
+          },
+          {
+            "path": "src/components/pure/SettingsButton.tsx",
+            "kind": "import-statement",
+            "original": "./SettingsButton"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/AppFrame.test/index.tsx": {
+        "bytes": 420,
+        "imports": [
+          {
+            "path": "../testeranto-react/src/react-dom/component/web.ts",
+            "kind": "import-statement",
+            "original": "testeranto-react/src/react-dom/component/web"
+          },
+          {
+            "path": "src/components/pure/AppFrame.test/implementation.tsx",
+            "kind": "import-statement",
+            "original": "./implementation"
+          },
+          {
+            "path": "src/components/pure/AppFrame.test/specification.ts",
+            "kind": "import-statement",
+            "original": "./specification"
+          },
+          {
+            "path": "src/components/pure/AppFrame.tsx",
+            "kind": "import-statement",
+            "original": "../AppFrame"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "src/App.scss",
+            "kind": "import-statement",
+            "original": "../../../App.scss"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
       }
     },
     "outputs": {
       "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs",
+            "path": "testeranto/bundles/web/core/chunk-G7J73HEH.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
+            "path": "testeranto/bundles/web/core/chunk-XIMBEHSR.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -15938,6 +16168,7 @@
           "default"
         ],
         "entryPoint": "src/components/pure/TestPageView.test/index.tsx",
+        "cssBundle": "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.css",
         "inputs": {
           "node_modules/react-dom/client.js": {
             "bytesInOutput": 837
@@ -15961,16 +16192,24 @@
             "bytesInOutput": 13344
           }
         },
-        "bytes": 22166
+        "bytes": 22215
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs",
+            "path": "testeranto/bundles/web/core/chunk-G7J73HEH.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
+            "path": "testeranto/bundles/web/core/chunk-KJERKKGO.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-XIMBEHSR.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -15980,29 +16219,8 @@
         "entryPoint": "src/components/pure/ProjectPageView.test/index.tsx",
         "cssBundle": "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css",
         "inputs": {
-          "../testeranto-react/node_modules/scheduler/cjs/scheduler.development.js": {
-            "bytesInOutput": 16969
-          },
-          "../testeranto-react/node_modules/scheduler/index.js": {
-            "bytesInOutput": 318
-          },
-          "../testeranto-react/node_modules/react-dom/cjs/react-dom.development.js": {
-            "bytesInOutput": 906682
-          },
-          "../testeranto-react/node_modules/react-dom/index.js": {
-            "bytesInOutput": 336
-          },
-          "../testeranto-react/node_modules/react-dom/client.js": {
-            "bytesInOutput": 857
-          },
           "src/components/pure/ProjectPageView.test/index.tsx": {
             "bytesInOutput": 404
-          },
-          "../testeranto-react/src/react-dom/component/web.ts": {
-            "bytesInOutput": 270
-          },
-          "../testeranto-react/src/react-dom/component/dynamic.ts": {
-            "bytesInOutput": 2409
           },
           "src/components/pure/ProjectPageView.test/implementation.tsx": {
             "bytesInOutput": 4690
@@ -16012,17 +16230,181 @@
           },
           "src/components/pure/ProjectPageView.tsx": {
             "bytesInOutput": 13544
-          },
-          "src/App.scss": {
-            "bytesInOutput": 0
           }
         },
-        "bytes": 949955
+        "bytes": 20634
       },
-      "testeranto/bundles/web/core/chunk-D4CJJHQJ.mjs": {
+      "testeranto/bundles/web/core/chunk-G7J73HEH.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
+            "path": "testeranto/bundles/web/core/chunk-XIMBEHSR.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "MemoryRouter",
+          "NavBar",
+          "TestStatusBadge"
+        ],
+        "inputs": {
+          "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs": {
+            "bytesInOutput": 74057
+          },
+          "node_modules/react-router/dist/development/index.mjs": {
+            "bytesInOutput": 61
+          },
+          "src/components/pure/NavBar.tsx": {
+            "bytesInOutput": 2484
+          },
+          "src/components/TestStatusBadge.tsx": {
+            "bytesInOutput": 1868
+          }
+        },
+        "bytes": 79561
+      },
+      "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/BaseSuite.test/web.test.ts",
+        "inputs": {
+          "src/lib/BaseSuite.test/web.test.ts": {
+            "bytesInOutput": 148
+          },
+          "src/lib/BaseSuite.test/test.ts": {
+            "bytesInOutput": 7954
+          },
+          "src/lib/BaseSuite.test/mock.ts": {
+            "bytesInOutput": 2011
+          }
+        },
+        "bytes": 10496
+      },
+      "testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
+        "inputs": {
+          "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
+            "bytesInOutput": 176
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
+            "bytesInOutput": 879
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
+            "bytesInOutput": 3393
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
+            "bytesInOutput": 1180
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+            "bytesInOutput": 607
+          }
+        },
+        "bytes": 6820
+      },
+      "testeranto/bundles/web/core/src/components/pure/AppFrame.test/index.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-KJERKKGO.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-XIMBEHSR.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/components/pure/AppFrame.test/index.tsx",
+        "cssBundle": "testeranto/bundles/web/core/src/components/pure/AppFrame.test/index.css",
+        "inputs": {
+          "src/components/pure/AppFrame.test/index.tsx": {
+            "bytesInOutput": 298
+          },
+          "src/components/pure/AppFrame.test/implementation.tsx": {
+            "bytesInOutput": 1750
+          },
+          "src/components/pure/AppFrame.test/specification.ts": {
+            "bytesInOutput": 821
+          },
+          "src/components/pure/AppFrame.tsx": {
+            "bytesInOutput": 965
+          },
+          "src/components/pure/SettingsButton.tsx": {
+            "bytesInOutput": 12725
+          },
+          "src/components/SunriseAnimation.tsx": {
+            "bytesInOutput": 10363
+          }
+        },
+        "bytes": 27675
+      },
+      "testeranto/bundles/web/core/chunk-KJERKKGO.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-XIMBEHSR.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "web_default"
+        ],
+        "inputs": {
+          "../testeranto-react/node_modules/scheduler/cjs/scheduler.development.js": {
+            "bytesInOutput": 16969
+          },
+          "../testeranto-react/node_modules/scheduler/index.js": {
+            "bytesInOutput": 318
+          },
+          "../testeranto-react/node_modules/react-dom/cjs/react-dom.development.js": {
+            "bytesInOutput": 906664
+          },
+          "../testeranto-react/node_modules/react-dom/index.js": {
+            "bytesInOutput": 336
+          },
+          "../testeranto-react/node_modules/react-dom/client.js": {
+            "bytesInOutput": 857
+          },
+          "../testeranto-react/src/react-dom/component/web.ts": {
+            "bytesInOutput": 270
+          },
+          "../testeranto-react/src/react-dom/component/dynamic.ts": {
+            "bytesInOutput": 2409
+          }
+        },
+        "bytes": 929596
+      },
+      "testeranto/bundles/web/core/chunk-XIMBEHSR.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16033,12 +16415,11 @@
           "Card_default",
           "Container_default",
           "ListGroup_default",
-          "MemoryRouter",
-          "NavBar",
+          "Modal_default",
           "Nav_default",
+          "Navbar_default",
           "Tab_default",
           "Table_default",
-          "TestStatusBadge",
           "assert",
           "expect",
           "require_react",
@@ -16046,22 +16427,10 @@
         ],
         "inputs": {
           "node_modules/react/cjs/react.development.js": {
-            "bytesInOutput": 77369
+            "bytesInOutput": 77340
           },
           "node_modules/react/index.js": {
             "bytesInOutput": 286
-          },
-          "node_modules/scheduler/cjs/scheduler.development.js": {
-            "bytesInOutput": 16956
-          },
-          "node_modules/scheduler/index.js": {
-            "bytesInOutput": 298
-          },
-          "node_modules/react-dom/cjs/react-dom.development.js": {
-            "bytesInOutput": 907092
-          },
-          "node_modules/react-dom/index.js": {
-            "bytesInOutput": 316
           },
           "node_modules/classnames/index.js": {
             "bytesInOutput": 1801
@@ -16070,13 +16439,13 @@
             "bytesInOutput": 1033
           },
           "node_modules/react/cjs/react-jsx-runtime.development.js": {
-            "bytesInOutput": 35597
+            "bytesInOutput": 35591
           },
           "node_modules/react/jsx-runtime.js": {
             "bytesInOutput": 310
           },
           "node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js": {
-            "bytesInOutput": 7629
+            "bytesInOutput": 7625
           },
           "node_modules/prop-types/node_modules/react-is/index.js": {
             "bytesInOutput": 319
@@ -16094,22 +16463,31 @@
             "bytesInOutput": 2703
           },
           "node_modules/prop-types/factoryWithTypeCheckers.js": {
-            "bytesInOutput": 19616
+            "bytesInOutput": 19609
           },
           "node_modules/prop-types/index.js": {
             "bytesInOutput": 441
           },
+          "node_modules/scheduler/cjs/scheduler.development.js": {
+            "bytesInOutput": 16956
+          },
+          "node_modules/scheduler/index.js": {
+            "bytesInOutput": 298
+          },
+          "node_modules/react-dom/cjs/react-dom.development.js": {
+            "bytesInOutput": 906948
+          },
+          "node_modules/react-dom/index.js": {
+            "bytesInOutput": 316
+          },
           "node_modules/warning/warning.js": {
             "bytesInOutput": 1395
           },
-          "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs": {
-            "bytesInOutput": 74170
-          },
-          "node_modules/react-router/dist/development/index.mjs": {
-            "bytesInOutput": 61
+          "src/App.scss": {
+            "bytesInOutput": 0
           },
           "node_modules/chai/chai.js": {
-            "bytesInOutput": 134562
+            "bytesInOutput": 134554
           },
           "node_modules/react-bootstrap/esm/Alert.js": {
             "bytesInOutput": 1719
@@ -16148,19 +16526,19 @@
             "bytesInOutput": 317
           },
           "node_modules/react-bootstrap/esm/ThemeProvider.js": {
-            "bytesInOutput": 696
+            "bytesInOutput": 811
           },
           "node_modules/react-bootstrap/esm/AlertHeading.js": {
-            "bytesInOutput": 765
+            "bytesInOutput": 761
           },
           "node_modules/react-bootstrap/esm/divWithClassName.js": {
-            "bytesInOutput": 498
+            "bytesInOutput": 496
           },
           "node_modules/react-bootstrap/esm/AlertLink.js": {
-            "bytesInOutput": 651
+            "bytesInOutput": 647
           },
           "node_modules/@restart/ui/esm/Anchor.js": {
-            "bytesInOutput": 1271
+            "bytesInOutput": 1269
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/index.js": {
             "bytesInOutput": 47
@@ -16208,7 +16586,7 @@
             "bytesInOutput": 402
           },
           "node_modules/@restart/ui/esm/Button.js": {
-            "bytesInOutput": 2353
+            "bytesInOutput": 2349
           },
           "node_modules/react-bootstrap/esm/Fade.js": {
             "bytesInOutput": 1293
@@ -16280,7 +16658,7 @@
             "bytesInOutput": 2105
           },
           "node_modules/@restart/hooks/esm/useMergedRefs.js": {
-            "bytesInOutput": 533
+            "bytesInOutput": 531
           },
           "node_modules/react-bootstrap/esm/safeFindDOMNode.js": {
             "bytesInOutput": 353
@@ -16289,52 +16667,52 @@
             "bytesInOutput": 1186
           },
           "node_modules/react-bootstrap/esm/Badge.js": {
-            "bytesInOutput": 730
+            "bytesInOutput": 728
           },
           "node_modules/react-bootstrap/esm/Button.js": {
-            "bytesInOutput": 973
+            "bytesInOutput": 980
           },
           "node_modules/react-bootstrap/esm/Card.js": {
-            "bytesInOutput": 1301
+            "bytesInOutput": 1299
           },
           "node_modules/react-bootstrap/esm/CardBody.js": {
-            "bytesInOutput": 638
+            "bytesInOutput": 636
           },
           "node_modules/react-bootstrap/esm/CardFooter.js": {
-            "bytesInOutput": 652
+            "bytesInOutput": 650
           },
           "node_modules/react-bootstrap/esm/CardHeader.js": {
-            "bytesInOutput": 1103
+            "bytesInOutput": 1101
           },
           "node_modules/react-bootstrap/esm/CardHeaderContext.js": {
             "bytesInOutput": 244
           },
           "node_modules/react-bootstrap/esm/CardImg.js": {
-            "bytesInOutput": 870
+            "bytesInOutput": 868
           },
           "node_modules/react-bootstrap/esm/CardImgOverlay.js": {
-            "bytesInOutput": 677
+            "bytesInOutput": 675
           },
           "node_modules/react-bootstrap/esm/CardLink.js": {
-            "bytesInOutput": 638
+            "bytesInOutput": 636
           },
           "node_modules/react-bootstrap/esm/CardSubtitle.js": {
-            "bytesInOutput": 724
+            "bytesInOutput": 722
           },
           "node_modules/react-bootstrap/esm/CardText.js": {
-            "bytesInOutput": 638
+            "bytesInOutput": 636
           },
           "node_modules/react-bootstrap/esm/CardTitle.js": {
-            "bytesInOutput": 706
+            "bytesInOutput": 704
           },
           "node_modules/react-bootstrap/esm/Container.js": {
-            "bytesInOutput": 922
+            "bytesInOutput": 920
           },
           "node_modules/react-bootstrap/esm/ListGroup.js": {
             "bytesInOutput": 1500
           },
           "node_modules/@restart/ui/esm/Nav.js": {
-            "bytesInOutput": 4091
+            "bytesInOutput": 4089
           },
           "node_modules/dom-helpers/esm/querySelectorAll.js": {
             "bytesInOutput": 216
@@ -16358,10 +16736,10 @@
             "bytesInOutput": 264
           },
           "node_modules/@restart/ui/esm/NavItem.js": {
-            "bytesInOutput": 2540
+            "bytesInOutput": 2538
           },
           "node_modules/react-bootstrap/esm/ListGroupItem.js": {
-            "bytesInOutput": 1557
+            "bytesInOutput": 1555
           },
           "node_modules/react-bootstrap/esm/Nav.js": {
             "bytesInOutput": 1750
@@ -16370,10 +16748,10 @@
             "bytesInOutput": 239
           },
           "node_modules/react-bootstrap/esm/NavItem.js": {
-            "bytesInOutput": 638
+            "bytesInOutput": 636
           },
           "node_modules/react-bootstrap/esm/NavLink.js": {
-            "bytesInOutput": 908
+            "bytesInOutput": 903
           },
           "node_modules/react-bootstrap/esm/Tab.js": {
             "bytesInOutput": 1095
@@ -16397,7 +16775,7 @@
             "bytesInOutput": 3970
           },
           "node_modules/@restart/ui/esm/TabPanel.js": {
-            "bytesInOutput": 3483
+            "bytesInOutput": 3481
           },
           "node_modules/@restart/ui/esm/NoopTransition.js": {
             "bytesInOutput": 913
@@ -16406,13 +16784,13 @@
             "bytesInOutput": 227
           },
           "node_modules/react-bootstrap/esm/TabContent.js": {
-            "bytesInOutput": 652
+            "bytesInOutput": 650
           },
           "node_modules/react-bootstrap/esm/TabPane.js": {
-            "bytesInOutput": 1666
+            "bytesInOutput": 1664
           },
           "node_modules/react-bootstrap/esm/Table.js": {
-            "bytesInOutput": 1388
+            "bytesInOutput": 1397
           },
           "node_modules/react-bootstrap/esm/index.js": {
             "bytesInOutput": 47
@@ -16423,6 +16801,12 @@
           "node_modules/react-bootstrap/esm/createChainedFunction.js": {
             "bytesInOutput": 511
           },
+          "node_modules/@restart/hooks/esm/useWillUnmount.js": {
+            "bytesInOutput": 235
+          },
+          "node_modules/@restart/hooks/esm/useUpdatedRef.js": {
+            "bytesInOutput": 229
+          },
           "node_modules/dom-helpers/esm/contains.js": {
             "bytesInOutput": 267
           },
@@ -16432,17 +16816,26 @@
           "node_modules/@restart/hooks/esm/useIsomorphicEffect.js": {
             "bytesInOutput": 407
           },
+          "node_modules/react-bootstrap/esm/Modal.js": {
+            "bytesInOutput": 7020
+          },
+          "node_modules/dom-helpers/esm/scrollbarSize.js": {
+            "bytesInOutput": 590
+          },
+          "node_modules/@restart/hooks/esm/useCallbackRef.js": {
+            "bytesInOutput": 170
+          },
           "node_modules/@restart/ui/esm/Modal.js": {
-            "bytesInOutput": 7734
+            "bytesInOutput": 7735
           },
           "node_modules/dom-helpers/esm/activeElement.js": {
             "bytesInOutput": 294
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js": {
-            "bytesInOutput": 235
+            "bytesInOutput": 237
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js": {
-            "bytesInOutput": 229
+            "bytesInOutput": 230
           },
           "node_modules/@restart/ui/esm/ModalManager.js": {
             "bytesInOutput": 2413
@@ -16457,7 +16850,7 @@
             "bytesInOutput": 2354
           },
           "node_modules/@restart/ui/esm/RTGTransition.js": {
-            "bytesInOutput": 811
+            "bytesInOutput": 809
           },
           "node_modules/@restart/ui/esm/useRTGTransitionProps.js": {
             "bytesInOutput": 2333
@@ -16474,29 +16867,44 @@
           "node_modules/dom-helpers/esm/removeClass.js": {
             "bytesInOutput": 614
           },
+          "node_modules/react-bootstrap/esm/ModalBody.js": {
+            "bytesInOutput": 644
+          },
           "node_modules/react-bootstrap/esm/ModalContext.js": {
             "bytesInOutput": 222
+          },
+          "node_modules/react-bootstrap/esm/ModalDialog.js": {
+            "bytesInOutput": 1210
+          },
+          "node_modules/react-bootstrap/esm/ModalFooter.js": {
+            "bytesInOutput": 656
+          },
+          "node_modules/react-bootstrap/esm/ModalHeader.js": {
+            "bytesInOutput": 729
           },
           "node_modules/react-bootstrap/esm/AbstractModalHeader.js": {
             "bytesInOutput": 1055
           },
+          "node_modules/react-bootstrap/esm/ModalTitle.js": {
+            "bytesInOutput": 712
+          },
           "node_modules/react-bootstrap/esm/Navbar.js": {
-            "bytesInOutput": 2426
+            "bytesInOutput": 2423
           },
           "node_modules/react-bootstrap/esm/NavbarBrand.js": {
-            "bytesInOutput": 694
+            "bytesInOutput": 692
           },
           "node_modules/react-bootstrap/esm/NavbarCollapse.js": {
             "bytesInOutput": 813
           },
           "node_modules/react-bootstrap/esm/NavbarToggle.js": {
-            "bytesInOutput": 1423
+            "bytesInOutput": 1420
           },
           "node_modules/react-bootstrap/esm/NavbarOffcanvas.js": {
             "bytesInOutput": 842
           },
           "node_modules/react-bootstrap/esm/Offcanvas.js": {
-            "bytesInOutput": 4206
+            "bytesInOutput": 4210
           },
           "node_modules/@restart/hooks/esm/useBreakpoint.js": {
             "bytesInOutput": 1900
@@ -16505,7 +16913,7 @@
             "bytesInOutput": 1375
           },
           "node_modules/react-bootstrap/esm/OffcanvasBody.js": {
-            "bytesInOutput": 670
+            "bytesInOutput": 668
           },
           "node_modules/react-bootstrap/esm/OffcanvasToggling.js": {
             "bytesInOutput": 1220
@@ -16514,75 +16922,15 @@
             "bytesInOutput": 753
           },
           "node_modules/react-bootstrap/esm/OffcanvasTitle.js": {
-            "bytesInOutput": 738
+            "bytesInOutput": 736
           },
           "node_modules/react-bootstrap/esm/NavbarText.js": {
-            "bytesInOutput": 653
-          },
-          "src/NavBar.tsx": {
-            "bytesInOutput": 2510
-          },
-          "src/components/TestStatusBadge.tsx": {
-            "bytesInOutput": 1872
+            "bytesInOutput": 651
           }
         },
-        "bytes": 1441876
+        "bytes": 1375284
       },
-      "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/BaseSuite.test/web.test.ts",
-        "inputs": {
-          "src/lib/BaseSuite.test/web.test.ts": {
-            "bytesInOutput": 148
-          },
-          "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 7954
-          },
-          "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 2011
-          }
-        },
-        "bytes": 10496
-      },
-      "testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
-        "inputs": {
-          "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
-            "bytesInOutput": 176
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-            "bytesInOutput": 879
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3393
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 1180
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 607
-          }
-        },
-        "bytes": 6820
-      },
-      "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs": {
+      "testeranto/bundles/web/core/chunk-P35P7DFQ.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -16622,7 +16970,7 @@
             "bytesInOutput": 2420
           },
           "src/lib/pmProxy.ts": {
-            "bytesInOutput": 5673
+            "bytesInOutput": 5643
           },
           "src/Web.ts": {
             "bytesInOutput": 840
@@ -16649,7 +16997,7 @@
             "bytesInOutput": 2834
           }
         },
-        "bytes": 97746
+        "bytes": 97716
       },
       "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf": {
         "imports": [],
@@ -16720,6 +17068,164 @@
           }
         },
         "bytes": 3521968
+      },
+      "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.css": {
+        "imports": [
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
+            "kind": "url-token",
+            "external": true
+          }
+        ],
+        "inputs": {
+          "src/App.scss": {
+            "bytesInOutput": 290598
+          }
+        },
+        "bytes": 290814
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css": {
         "imports": [
@@ -16865,14 +17371,177 @@
           {
             "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
             "kind": "url-token"
+          },
+          {
+            "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
+            "kind": "url-token",
+            "external": true
           }
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 279940
+            "bytesInOutput": 290598
           }
         },
-        "bytes": 280156
+        "bytes": 290814
+      },
+      "testeranto/bundles/web/core/src/components/pure/AppFrame.test/index.css": {
+        "imports": [
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
+            "kind": "url-token",
+            "external": true
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
+            "kind": "url-token"
+          },
+          {
+            "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
+            "kind": "url-token",
+            "external": true
+          }
+        ],
+        "inputs": {
+          "src/App.scss": {
+            "bytesInOutput": 290598
+          }
+        },
+        "bytes": 290814
       }
     }
   }
