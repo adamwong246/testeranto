@@ -24,19 +24,27 @@ export type I = Ibdd_in<IInput, ISubject, ISelection, IStore, (s: IStore) => ISt
 }>;
 export type O = Ibdd_out<{
     Default: [string];
+    Navigation: [string];
+    ErrorStates: [string];
 }, {
     Default: [];
     WithError: [];
     Navigation: [];
-}, {}, {
-    hasContainerFluid: [];
-    hasNavBar: [];
-    hasNavBarTitle: [];
-    hasTestTable: [];
-    rendersTestSuite1: [];
-    rendersTestSuite2: [];
-    unhappyPath: [];
+    WithErrors: [];
+    WithLogs: [];
+}, {
+    SwitchToTab: [string];
+    ClickAiderButton: [];
+}, {
+    RendersNavBar: [];
+    ShowsErrorCounts: [];
+    ShowsTestResults: [];
+    ShowsActiveTab: [string];
+    ShowsLogs: [];
+    AiderButtonCopiesCommand: [];
     takeScreenshot: [string];
+    ShowsTypeErrors: [];
+    ShowsLintErrors: [];
 }>;
 export type M = {
     givens: {

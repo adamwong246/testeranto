@@ -16,7 +16,9 @@
         {
           "name": "it tracks artifacts: undefined",
           "error": false,
-          "artifacts": []
+          "artifacts": [
+            "suite-0/given-testInitialization/then-1/butThen/artifact_test.txt"
+          ]
         }
       ],
       "error": null,

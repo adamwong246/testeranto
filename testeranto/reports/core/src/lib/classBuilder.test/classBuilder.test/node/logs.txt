@@ -1,4 +1,4 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/014a9716-4f96-41e6-84fb-8cf8062f49ae"}
+stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/871cb63b-0aac-4152-a0fc-4b17f3b33aa0"}
 Running beforeEach with initializer: [Function: Default]
 Creating default test builder instance
 Builder created: TestClassBuilderMock {
@@ -617,5 +617,5 @@ Initializer returned: TestClassBuilderMock {
   testJobs: [],
   summary: {}
 }
-stdout > [TOOBJ] Serializing When with artifacts: []
+[TOOBJ] Serializing When with artifacts: []
 stderr > goodbye node with failures 0

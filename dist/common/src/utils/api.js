@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchBuildLogs = exports.fetchTestData = exports.fetchProjectData = void 0;
+exports.fetchTestData = exports.fetchProjectData = void 0;
 const fetchProjectData = async (projectName) => {
     const [summaryRes, configRes] = await Promise.all([
         fetch(`reports/${projectName}/summary.json`),
@@ -30,7 +30,7 @@ const fetchTestData = async (projectName, filepath, runTime) => {
                 logs: await logsRes.text(),
                 typeErrors: await typeRes.text(),
                 lintErrors: await lintRes.text(),
-                error: "Tests did not complete successfully. Please check the build and runtime logs for errors."
+                error: "Tests did not complete successfully. Please check the build and runtime logs for errors.",
             };
         }
         return {
@@ -38,7 +38,7 @@ const fetchTestData = async (projectName, filepath, runTime) => {
             logs: await logsRes.text(),
             typeErrors: await typeRes.text(),
             lintErrors: await lintRes.text(),
-            error: null
+            error: null,
         };
     }
     catch (err) {
@@ -47,13 +47,8 @@ const fetchTestData = async (projectName, filepath, runTime) => {
             logs: "",
             typeErrors: "",
             lintErrors: "",
-            error: `Failed to load test data: ${err instanceof Error ? err.message : String(err)}`
+            error: `Failed to load test data: ${err instanceof Error ? err.message : String(err)}`,
         };
     }
 };
 exports.fetchTestData = fetchTestData;
-const fetchBuildLogs = async (projectName, runtime) => {
-    const res = await fetch(`reports/${projectName}/src/lib/${projectName}.${testName}/${runtime}/metafile.json`);
-    return await res.json();
-};
-exports.fetchBuildLogs = fetchBuildLogs;

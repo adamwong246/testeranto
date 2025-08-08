@@ -58,23 +58,33 @@ export class MockBaseBuilder<
   /**
    * Simplified version for testing that doesn't actually run tests
    */
-  public testRun(puppetMaster: any): Promise<any> {
-    this.summary = {
-      [puppetMaster.testResourceConfiguration.name]: {
-        typeErrors: 0,
-        staticErrors: 0,
-        runTimeError: "",
-        prompt: "",
-        failingFeatures: {},
-      },
-    };
+  public async testRun(puppetMaster: any): Promise<any> {
+    try {
+      this.summary = {
+        [puppetMaster.testResourceConfiguration.name]: {
+          typeErrors: 0,
+          staticErrors: 0,
+          runTimeError: "",
+          prompt: "",
+          failingFeatures: {},
+        },
+      };
 
-    return Promise.resolve({
-      failed: false,
-      fails: 0,
-      artifacts: [],
-      // logPromise: Promise.resolve(),
-      features: [],
-    });
+      return {
+        failed: false,
+        fails: 0,
+        artifacts: this.artifacts,
+        features: [],
+      };
+    } catch (error) {
+      console.error("Test run failed:", error);
+      return {
+        failed: true,
+        fails: 1,
+        artifacts: this.artifacts,
+        features: [],
+        error: error.message
+      };
+    }
   }
 }

@@ -15753,7 +15753,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 1988,
+        "bytes": 2215,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -15794,7 +15794,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 3998,
+        "bytes": 4100,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -15840,7 +15840,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-        "bytes": 782,
+        "bytes": 796,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -16571,16 +16571,16 @@
             "bytesInOutput": 879
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3330
+            "bytesInOutput": 3393
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 953
+            "bytesInOutput": 1180
           },
           "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 593
+            "bytesInOutput": 607
           }
         },
-        "bytes": 6516
+        "bytes": 6820
       },
       "testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs": {
         "imports": [],

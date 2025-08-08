@@ -2,7 +2,7 @@ export const testAdapter = {
     beforeAll: async (input, testResource, pm) => input,
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
         const result = initializer();
-        console.log("Initialization result:", result.toString());
+        console.log("Initialization result:", JSON.stringify(result, null, 2));
         return result;
     },
     andWhen: async (store, whenCB, testResource, utils) => {

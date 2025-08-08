@@ -10,4 +10,3 @@ export declare const fetchTestData: (projectName: string, filepath: string, runT
     lintErrors: string;
     error: string | null;
 }>;
-export declare const fetchBuildLogs: (projectName: string, runtime: string) => Promise<any>;

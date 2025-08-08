@@ -96,10 +96,12 @@ export const implementation: ITestImplementation<I, O, {}> = {
       }
       return builder;
     },
-    "it tracks artifacts": () => (builder: TestSubject) => {
+    "it tracks artifacts": () => (builder: TestSubject, utils) => {
       if (!Array.isArray(builder.artifacts)) {
         throw new Error("Artifacts array not initialized");
       }
+      // Verify we can write artifacts
+      utils.writeFileSync("artifact_test.txt", "test");
       return builder;
     },
     resourceRequirementsSet: () => (builder: TestSubject) => {

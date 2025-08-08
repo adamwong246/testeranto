@@ -1,5 +1,5 @@
-import { ISelection, O } from "./types";
 import { ITestSpecification } from "../../../CoreTypes";
+import { O } from "./types";
 export declare const specification: ITestSpecification<{
     iinput: any;
     isubject: any;

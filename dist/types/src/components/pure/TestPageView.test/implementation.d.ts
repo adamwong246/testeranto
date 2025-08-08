@@ -1,4 +1,5 @@
 import { ITestImplementation } from "../../../CoreTypes";
+import { O } from "./types";
 export declare const implementation: ITestImplementation<{
     iinput: IInput;
     isubject: ISubject;

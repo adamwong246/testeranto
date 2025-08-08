@@ -32177,7 +32177,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     setRoute,
     navigate,
     projectName,
-    testName: testName2,
+    testName,
     decodedTestPath,
     runtime,
     testData,
@@ -32239,8 +32239,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             variant: "info",
             onClick: async () => {
               try {
-                const promptPath = `testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/prompt.txt`;
-                const messagePath = `testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/message.txt`;
+                const promptPath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/prompt.txt`;
+                const messagePath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/message.txt`;
                 const command = `aider --load ${promptPath} --message-file ${messagePath}`;
                 await navigator.clipboard.writeText(command);
                 alert("Copied aider command to clipboard!");
@@ -32288,7 +32288,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       "a",
       {
         className: "dropdown-item",
-        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+        href: `/testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
         target: "_blank",
         rel: "noopener noreferrer"
       },
@@ -32296,7 +32296,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ))))))), /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname) : feature)))), when.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
       "a",
       {
-        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+        href: `/testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
         target: "_blank",
         className: "text-white",
         rel: "noopener noreferrer"
@@ -32305,7 +32305,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     )))))))), given.thens.map((then, k) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname) : feature)))), then.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
       "a",
       {
-        href: `/testeranto/reports/${projectName}/${testName2.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+        href: `/testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
         target: "_blank",
         className: "text-white",
         rel: "noopener noreferrer"
@@ -32364,7 +32364,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         setRoute("results");
       }
     }, [location.hash]);
-    const [testName2, setTestName] = (0, import_react59.useState)("");
+    const [testName, setTestName] = (0, import_react59.useState)("");
     const [testData, setTestData] = (0, import_react59.useState)(null);
     const [logs, setLogs] = (0, import_react59.useState)("");
     const [typeErrors, setTypeErrors] = (0, import_react59.useState)("");
@@ -32430,7 +32430,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         setRoute,
         navigate,
         projectName,
-        testName: testName2,
+        testName,
         decodedTestPath,
         runtime,
         testData,
@@ -32984,10 +32984,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
     if (!summary)
       return /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
-    const testStatuses = Object.entries(summary).map(([testName2, testData]) => {
-      const runTime = config.tests?.find((t) => t[0] === testName2)?.[1] || "node";
+    const testStatuses = Object.entries(summary).map(([testName, testData]) => {
+      const runTime = config.tests?.find((t) => t[0] === testName)?.[1] || "node";
       return {
-        testName: testName2,
+        testName,
         testsExist: testData.testsExist !== false,
         runTimeErrors: Number(testData.runTimeErrors) || 0,
         typeErrors: Number(testData.typeErrors) || 0,
@@ -33149,18 +33149,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return /* @__PURE__ */ import_react64.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react64.default.createElement(NavBar, { title: "Testeranto", backLink: null }), /* @__PURE__ */ import_react64.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react64.default.createElement("thead", null, /* @__PURE__ */ import_react64.default.createElement("tr", null, /* @__PURE__ */ import_react64.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react64.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react64.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react64.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react64.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react64.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react64.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement("a", { href: "#", onClick: (e) => {
       e.preventDefault();
       navigate(`/projects/${project.name}`);
-    } }, project.name)), /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName2) => {
-      const testData = summaries[project.name][testName2];
-      const runTime = configs[project.name]?.tests?.find((t) => t[0] === testName2)?.[1] || "node";
+    } }, project.name)), /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName) => {
+      const testData = summaries[project.name][testName];
+      const runTime = configs[project.name]?.tests?.find((t) => t[0] === testName)?.[1] || "node";
       const hasRuntimeErrors = testData.runTimeErrors > 0;
       const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
-      return /* @__PURE__ */ import_react64.default.createElement("div", { key: testName2 }, /* @__PURE__ */ import_react64.default.createElement(
+      return /* @__PURE__ */ import_react64.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react64.default.createElement(
         "a",
         {
-          href: `#/projects/${project.name}/tests/${encodeURIComponent(testName2)}/${runTime}`
+          href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`
         },
         hasRuntimeErrors ? "\u274C " : hasStaticErrors ? "\u26A0\uFE0F " : "",
-        testName2.split("/").pop() || testName2
+        testName.split("/").pop() || testName
       ));
     }) : /* @__PURE__ */ import_react64.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react64.default.createElement("td", null, /* @__PURE__ */ import_react64.default.createElement(
       "a",
@@ -33250,7 +33250,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/App.tsx
   var App = () => {
-    return /* @__PURE__ */ import_react66.default.createElement(HashRouter, null, /* @__PURE__ */ import_react66.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react66.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react66.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react66.default.createElement(Routes, null, /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react66.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react66.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react66.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react66.default.createElement(ProjectPage, null) })))), /* @__PURE__ */ import_react66.default.createElement("footer", { className: "bg-light py-3 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react66.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react66.default.createElement(SettingsButton, null)), /* @__PURE__ */ import_react66.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react66.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")))));
+    return /* @__PURE__ */ import_react66.default.createElement(HashRouter, null, /* @__PURE__ */ import_react66.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react66.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react66.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react66.default.createElement(Routes, null, /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react66.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react66.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react66.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react66.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react66.default.createElement(ProjectPage, null) })))), /* @__PURE__ */ import_react66.default.createElement("footer", { className: "bg-light py-3 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react66.default.createElement(Container_default, { className: "text-end", fluid: true }, /* @__PURE__ */ import_react66.default.createElement(SettingsButton, null), "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react66.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")))));
   };
   if (typeof window !== "undefined") {
     window.App = App;

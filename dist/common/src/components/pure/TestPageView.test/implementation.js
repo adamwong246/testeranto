@@ -34,6 +34,9 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.implementation = void 0;
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+// import { IInput, ISelection, IStore, ISubject, O } from "./types";
+const chai_1 = require("chai");
 const React = __importStar(require("react"));
 const ReactDom = __importStar(require("react-dom/client"));
 const mockTestData = {
@@ -128,39 +131,44 @@ exports.implementation = {
         },
     },
     thens: {
+        takeScreenshot: (name) => async ({ htmlElement }, pm) => {
+            const p = await pm.page();
+            await pm.customScreenShot({ path: name }, p);
+            return { htmlElement };
+        },
         RendersNavBar: () => async (selection) => {
             const navBar = selection.container.querySelector(".navbar");
-            expect(navBar).toBeTruthy();
+            (0, chai_1.expect)(navBar).toBeTruthy();
             return selection;
         },
         ShowsActiveTab: (tabName) => async (selection) => {
             const activeTab = selection.container.querySelector(".tab-pane.active");
-            expect(activeTab === null || activeTab === void 0 ? void 0 : activeTab.textContent).toContain(tabName);
+            (0, chai_1.expect)(activeTab === null || activeTab === void 0 ? void 0 : activeTab.textContent).toContain(tabName);
             return selection;
         },
         ShowsErrorCounts: () => async (selection) => {
             const badges = selection.container.querySelectorAll(".badge");
-            expect(badges.length).toBeGreaterThan(0);
+            (0, chai_1.expect)(badges.length).toBeGreaterThan(0);
             return selection;
         },
         ShowsTestResults: () => async (selection) => {
             const testResults = selection.container.querySelector(".test-results");
-            expect(testResults).toBeTruthy();
+            (0, chai_1.expect)(testResults).toBeTruthy();
             return selection;
         },
         ShowsLogs: () => async (selection) => {
             const logs = selection.container.querySelector("pre");
-            expect(logs).toBeTruthy();
+            (0, chai_1.expect)(logs).toBeTruthy();
             return selection;
         },
         ShowsTypeErrors: () => async (selection) => {
             const typeErrors = selection.container.querySelector("#types-tab");
-            expect(typeErrors).toBeTruthy();
+            (0, chai_1.expect)(typeErrors).toBeTruthy();
             return selection;
         },
         ShowsLintErrors: () => async (selection) => {
             const lintErrors = selection.container.querySelector("#lint-tab");
-            expect(lintErrors).toBeTruthy();
+            (0, chai_1.assert)(lintErrors).toBeTruthy();
             return selection;
         },
         AiderButtonCopiesCommand: () => async (selection) => {
@@ -170,7 +178,7 @@ exports.implementation = {
                 },
             });
             await exports.implementation.whens.ClickAiderButton()(selection);
-            expect(navigator.clipboard.writeText).toHaveBeenCalled();
+            (0, chai_1.expect)(navigator.clipboard.writeText).toHaveBeenCalled();
             return selection;
         },
     },

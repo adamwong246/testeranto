@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ISummary, IBuiltConfig } from "../Types";
 
 export const fetchProjectData = async (projectName: string) => {
@@ -42,7 +43,8 @@ export const fetchTestData = async (
         logs: await logsRes.text(),
         typeErrors: await typeRes.text(),
         lintErrors: await lintRes.text(),
-        error: "Tests did not complete successfully. Please check the build and runtime logs for errors."
+        error:
+          "Tests did not complete successfully. Please check the build and runtime logs for errors.",
       };
     }
 
@@ -51,7 +53,7 @@ export const fetchTestData = async (
       logs: await logsRes.text(),
       typeErrors: await typeRes.text(),
       lintErrors: await lintRes.text(),
-      error: null
+      error: null,
     };
   } catch (err) {
     return {
@@ -59,15 +61,9 @@ export const fetchTestData = async (
       logs: "",
       typeErrors: "",
       lintErrors: "",
-      error: `Failed to load test data: ${err instanceof Error ? err.message : String(err)}`
+      error: `Failed to load test data: ${
+        err instanceof Error ? err.message : String(err)
+      }`,
     };
   }
 };
-
-export const fetchBuildLogs = async (projectName: string, runtime: string) => {
-  const res = await fetch(
-    `reports/${projectName}/src/lib/${projectName}.${testName}/${runtime}/metafile.json`
-  );
-  return await res.json();
-};
-

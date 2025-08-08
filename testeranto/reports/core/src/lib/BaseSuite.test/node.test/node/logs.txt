@@ -1,2 +1,2 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/014a9716-4f96-41e6-84fb-8cf8062f49ae"}
+stdout > receiveTestResourceConfig {"name":"src/lib/BaseSuite.test/node.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/BaseSuite.test/node.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/871cb63b-0aac-4152-a0fc-4b17f3b33aa0"}
 stderr > goodbye node with failures 0

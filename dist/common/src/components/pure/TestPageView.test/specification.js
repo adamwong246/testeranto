@@ -6,7 +6,7 @@ const specification = (Suite, Given, When, Then) => {
         Suite.Default("TestPageView basic rendering", {
             "renders navigation bar": Given.Default([], [], [Then.RendersNavBar()]),
             "shows error counts": Given.Default([], [], [Then.ShowsErrorCounts()]),
-            "shows test results when data exists": Given.Default([], [], [Then.ShowsTestResults()]),
+            "shows test results when data exists": Given.Default([], [], [Then.takeScreenshot("shot.png"), Then.ShowsTestResults()]),
         }),
         Suite.Navigation("TestPageView navigation behavior", {
             "shows results tab by default": Given.Default([], [], [Then.ShowsActiveTab("results")]),

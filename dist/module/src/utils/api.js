@@ -26,7 +26,7 @@ export const fetchTestData = async (projectName, filepath, runTime) => {
                 logs: await logsRes.text(),
                 typeErrors: await typeRes.text(),
                 lintErrors: await lintRes.text(),
-                error: "Tests did not complete successfully. Please check the build and runtime logs for errors."
+                error: "Tests did not complete successfully. Please check the build and runtime logs for errors.",
             };
         }
         return {
@@ -34,7 +34,7 @@ export const fetchTestData = async (projectName, filepath, runTime) => {
             logs: await logsRes.text(),
             typeErrors: await typeRes.text(),
             lintErrors: await lintRes.text(),
-            error: null
+            error: null,
         };
     }
     catch (err) {
@@ -43,11 +43,7 @@ export const fetchTestData = async (projectName, filepath, runTime) => {
             logs: "",
             typeErrors: "",
             lintErrors: "",
-            error: `Failed to load test data: ${err instanceof Error ? err.message : String(err)}`
+            error: `Failed to load test data: ${err instanceof Error ? err.message : String(err)}`,
         };
     }
-};
-export const fetchBuildLogs = async (projectName, runtime) => {
-    const res = await fetch(`reports/${projectName}/src/lib/${projectName}.${testName}/${runtime}/metafile.json`);
-    return await res.json();
 };

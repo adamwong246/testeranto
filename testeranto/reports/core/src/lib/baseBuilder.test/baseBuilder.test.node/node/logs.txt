@@ -1,6 +1,43 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/014a9716-4f96-41e6-84fb-8cf8062f49ae"}
-Initialization result: [object Object]
+stdout > receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/871cb63b-0aac-4152-a0fc-4b17f3b33aa0"}
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
 Then addArtifact suite-0/given-testInitialization/then-0/butThen/hello.txt
-Initialization result: [object Object]
-Initialization result: [object Object]
+Then addArtifact suite-0/given-testInitialization/then-1/butThen/artifact_test.txt
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
 stderr > goodbye node with failures 0

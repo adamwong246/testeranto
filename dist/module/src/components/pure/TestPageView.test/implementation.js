@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+// import { IInput, ISelection, IStore, ISubject, O } from "./types";
+import { assert, expect } from "chai";
 import * as React from "react";
 import * as ReactDom from "react-dom/client";
 const mockTestData = {
@@ -92,6 +95,11 @@ export const implementation = {
         },
     },
     thens: {
+        takeScreenshot: (name) => async ({ htmlElement }, pm) => {
+            const p = await pm.page();
+            await pm.customScreenShot({ path: name }, p);
+            return { htmlElement };
+        },
         RendersNavBar: () => async (selection) => {
             const navBar = selection.container.querySelector(".navbar");
             expect(navBar).toBeTruthy();
@@ -124,7 +132,7 @@ export const implementation = {
         },
         ShowsLintErrors: () => async (selection) => {
             const lintErrors = selection.container.querySelector("#lint-tab");
-            expect(lintErrors).toBeTruthy();
+            assert(lintErrors).toBeTruthy();
             return selection;
         },
         AiderButtonCopiesCommand: () => async (selection) => {

@@ -75,7 +75,7 @@ const template = (title, content) => `
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/testeranto/testeranto" target="_blank">GitHub</a>
+                        <a class="nav-link" href="https://github.com/adamwong246/testeranto" target="_blank">GitHub</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://www.npmjs.com/package/testeranto" target="_blank">NPM</a>

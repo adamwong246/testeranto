@@ -24,7 +24,7 @@
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (93,30): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any>' provides no match for the signature '(store: any): any'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (99,34): Type '(builder: TestSubject) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (99,34): Type '(builder: TestSubject, utils: PM) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any>' provides no match for the signature '(store: any): any'.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (74,49): Function lacks ending return statement and return type does not include 'undefined'.

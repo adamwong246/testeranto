@@ -1037,7 +1037,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 1988,
+        "bytes": 2215,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -1068,7 +1068,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 3998,
+        "bytes": 4100,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -1104,7 +1104,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-        "bytes": 782,
+        "bytes": 796,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -4806,16 +4806,16 @@
             "bytesInOutput": 849
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3300
+            "bytesInOutput": 3363
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 923
+            "bytesInOutput": 1150
           },
           "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 563
+            "bytesInOutput": 577
           }
         },
-        "bytes": 6475
+        "bytes": 6779
       },
       "testeranto/bundles/node/core/src/mothership/test.mjs": {
         "imports": [

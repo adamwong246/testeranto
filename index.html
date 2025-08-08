@@ -98,8 +98,11 @@
 </tr>
 </tbody></table>
 <h2>Quick Start</h2>
-<ol>
-<li>Install testeranto:</li>
+<ol start="0">
+<li><p>Install Aider and signup for a LLM service.</p>
+</li>
+<li><p>Install testeranto:</p>
+</li>
 </ol>
 <pre>npm install testeranto</pre><ol start="2">
 <li>Create a test file (e.g., <code>rectangle.test.ts</code>):</li>
@@ -147,7 +150,7 @@ yarn t-run rectangle.test.ts yourProject dev</pre><p>or build and run your tests
 <tr>
 <td><strong>Pure</strong> : node v8, dynamically imported</td>
 <td>testing code that can run on both node-v8 and the browser</td>
-<td>Very similar to &quot;Node&quot; but has no IO access and thus no console.log. This runtime is theoretically faster.</td>
+<td>Very similar to &quot;Node&quot; but has no IO access. Console logs will spew into the main thread, but this runtime is theoretically faster.</td>
 </tr>
 </tbody></table>
 <h2>CLI Commands</h2>
@@ -174,10 +177,6 @@ yarn t-run rectangle.test.ts yourProject dev</pre><p>or build and run your tests
 <td><code>yarn t-report</code></td>
 <td>Launch test report server</td>
 </tr>
-<tr>
-<td><code>yarn t-aider</code></td>
-<td>Fix failing tests with AI</td>
-</tr>
 </tbody></table>
 <h2>Example workflow:</h2>
 <pre># Initialize project
@@ -193,10 +192,7 @@ yarn t-run test/rectangle.test.ts dev
 
 # Or for single-run mode:
 yarn t-build test/rectangle.test.ts once
-yarn t-run test/rectangle.test.ts once
-
-# Get AI help with failures
-yarn t-aider</pre><h2>Aider</h2>
+yarn t-run test/rectangle.test.ts once</pre><h2>Aider</h2>
 <p>Testeranto generates a &quot;prompt&quot; alongside test results. This prompt is passed to aider as input.</p>
 <pre>// input src files that can be edited by Aider
 /add test/node.ts
@@ -259,7 +255,7 @@ test0: Given.Default(
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/testeranto/testeranto" target="_blank">GitHub</a>
+                        <a class="nav-link" href="https://github.com/adamwong246/testeranto" target="_blank">GitHub</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://www.npmjs.com/package/testeranto" target="_blank">NPM</a>

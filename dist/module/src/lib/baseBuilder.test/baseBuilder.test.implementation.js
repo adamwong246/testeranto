@@ -68,10 +68,12 @@ export const implementation = {
             }
             return builder;
         },
-        "it tracks artifacts": () => (builder) => {
+        "it tracks artifacts": () => (builder, utils) => {
             if (!Array.isArray(builder.artifacts)) {
                 throw new Error("Artifacts array not initialized");
             }
+            // Verify we can write artifacts
+            utils.writeFileSync("artifact_test.txt", "test");
             return builder;
         },
         resourceRequirementsSet: () => (builder) => {

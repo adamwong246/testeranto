@@ -67,23 +67,33 @@ var MockBaseBuilder = class extends BaseBuilder {
   /**
    * Simplified version for testing that doesn't actually run tests
    */
-  testRun(puppetMaster) {
-    this.summary = {
-      [puppetMaster.testResourceConfiguration.name]: {
-        typeErrors: 0,
-        staticErrors: 0,
-        runTimeError: "",
-        prompt: "",
-        failingFeatures: {}
-      }
-    };
-    return Promise.resolve({
-      failed: false,
-      fails: 0,
-      artifacts: [],
-      // logPromise: Promise.resolve(),
-      features: []
-    });
+  async testRun(puppetMaster) {
+    try {
+      this.summary = {
+        [puppetMaster.testResourceConfiguration.name]: {
+          typeErrors: 0,
+          staticErrors: 0,
+          runTimeError: "",
+          prompt: "",
+          failingFeatures: {}
+        }
+      };
+      return {
+        failed: false,
+        fails: 0,
+        artifacts: this.artifacts,
+        features: []
+      };
+    } catch (error) {
+      console.error("Test run failed:", error);
+      return {
+        failed: true,
+        fails: 1,
+        artifacts: this.artifacts,
+        features: [],
+        error: error.message
+      };
+    }
   }
 };
 
@@ -172,10 +182,11 @@ var implementation = {
       }
       return builder;
     },
-    "it tracks artifacts": () => (builder) => {
+    "it tracks artifacts": () => (builder, utils) => {
       if (!Array.isArray(builder.artifacts)) {
         throw new Error("Artifacts array not initialized");
       }
+      utils.writeFileSync("artifact_test.txt", "test");
       return builder;
     },
     resourceRequirementsSet: () => (builder) => {
@@ -219,7 +230,7 @@ var testAdapter = {
   beforeAll: async (input, testResource, pm) => input,
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
     const result = initializer();
-    console.log("Initialization result:", result.toString());
+    console.log("Initialization result:", JSON.stringify(result, null, 2));
     return result;
   },
   andWhen: async (store, whenCB, testResource, utils) => {

@@ -49,6 +49,21 @@
     {
       "id": "",
       "location": {
+        "column": 23,
+        "file": "src/lib/BaseSuite.test/pure.test.ts",
+        "length": 12,
+        "line": 2,
+        "lineText": "import Testeranto from \"../../Pure\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
         "column": 26,
         "file": "src/lib/BaseSuite.test/pure.test.ts",
         "length": 14,
@@ -154,21 +169,6 @@
     {
       "id": "",
       "location": {
-        "column": 23,
-        "file": "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
-        "length": 12,
-        "line": 2,
-        "lineText": "import Testeranto from \"../../Pure\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
         "column": 31,
         "file": "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
         "length": 35,
@@ -195,6 +195,21 @@
       "notes": [],
       "pluginName": "console-detector",
       "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 32,
+        "file": "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
+        "length": 25,
+        "line": 9,
+        "lineText": "import { MockBaseBuilder } from \"./baseBuilder.test.mock\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
     },
     {
       "id": "",
@@ -641,7 +656,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 1988,
+        "bytes": 2215,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -667,7 +682,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 3998,
+        "bytes": 4100,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -698,7 +713,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-        "bytes": 782,
+        "bytes": 796,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -812,19 +827,19 @@
             "bytesInOutput": 832
           },
           "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 906
+            "bytesInOutput": 1133
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3283
+            "bytesInOutput": 3346
           },
           "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 546
+            "bytesInOutput": 560
           },
           "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
             "bytesInOutput": 131
           }
         },
-        "bytes": 6209
+        "bytes": 6513
       },
       "testeranto/bundles/pure/core/chunk-DHS753P2.mjs": {
         "imports": [],

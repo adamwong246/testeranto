@@ -1,15 +1,54 @@
 Failed to load resource: net::ERR_FILE_NOT_FOUND
 {"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.css"}
 [{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.css"}]
-Initialization result: [object Object]
-{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754616766641","lineNumber":221,"columnNumber":12}
-[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754616766641","lineNumber":221,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3237,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2885,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2614,"columnNumber":31}]
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":232,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":232,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3237,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2885,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2614,"columnNumber":31}]
 Then addArtifact suite-0/given-testInitialization/then-0/butThen/hello.txt
 {"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2991,"columnNumber":12}
-[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2991,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2320,"columnNumber":8},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2285,"columnNumber":40},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754616766641","lineNumber":140,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3010,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754616766641","lineNumber":228,"columnNumber":11},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3258,"columnNumber":35},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3005,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2908,"columnNumber":33}]
-Initialization result: [object Object]
-{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754616766641","lineNumber":221,"columnNumber":12}
-[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754616766641","lineNumber":221,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3237,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2885,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2614,"columnNumber":31}]
-Initialization result: [object Object]
-{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754616766641","lineNumber":221,"columnNumber":12}
-[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754616766641","lineNumber":221,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3237,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2885,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2614,"columnNumber":31}]
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2991,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2320,"columnNumber":8},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2285,"columnNumber":40},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":150,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3010,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":239,"columnNumber":11},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3258,"columnNumber":35},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3005,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2908,"columnNumber":33}]
+Then addArtifact suite-0/given-testInitialization/then-1/butThen/artifact_test.txt
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2991,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2991,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2320,"columnNumber":8},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2285,"columnNumber":40},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":188,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3010,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":239,"columnNumber":11},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3258,"columnNumber":35},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3005,"columnNumber":16},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2908,"columnNumber":33}]
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":232,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":232,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3237,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2885,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2614,"columnNumber":31}]
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
+{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":232,"columnNumber":12}
+[{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs?cacheBust=1754618573988","lineNumber":232,"columnNumber":12},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":3237,"columnNumber":29},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2885,"columnNumber":30},{"url":"file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-DYBZPQJQ.mjs","lineNumber":2614,"columnNumber":31}]

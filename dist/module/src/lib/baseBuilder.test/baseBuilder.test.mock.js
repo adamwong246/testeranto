@@ -10,22 +10,33 @@ export class MockBaseBuilder extends BaseBuilder {
     /**
      * Simplified version for testing that doesn't actually run tests
      */
-    testRun(puppetMaster) {
-        this.summary = {
-            [puppetMaster.testResourceConfiguration.name]: {
-                typeErrors: 0,
-                staticErrors: 0,
-                runTimeError: "",
-                prompt: "",
-                failingFeatures: {},
-            },
-        };
-        return Promise.resolve({
-            failed: false,
-            fails: 0,
-            artifacts: [],
-            // logPromise: Promise.resolve(),
-            features: [],
-        });
+    async testRun(puppetMaster) {
+        try {
+            this.summary = {
+                [puppetMaster.testResourceConfiguration.name]: {
+                    typeErrors: 0,
+                    staticErrors: 0,
+                    runTimeError: "",
+                    prompt: "",
+                    failingFeatures: {},
+                },
+            };
+            return {
+                failed: false,
+                fails: 0,
+                artifacts: this.artifacts,
+                features: [],
+            };
+        }
+        catch (error) {
+            console.error("Test run failed:", error);
+            return {
+                failed: true,
+                fails: 1,
+                artifacts: this.artifacts,
+                features: [],
+                error: error.message
+            };
+        }
     }
 }
