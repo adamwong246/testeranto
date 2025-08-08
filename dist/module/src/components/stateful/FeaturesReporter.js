@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { buildTree, renderTree } from '../../utils/featureUtils';
 export const FeaturesReporter = () => {
     const [features, setFeatures] = useState([]);
     useEffect(() => {
@@ -61,30 +62,6 @@ export const FeaturesReporter = () => {
         };
         fetchAllFeatures();
     }, []);
-    const renderTree = (nodes) => (React.createElement("ul", null, Object.entries(nodes).map(([key, value]) => (React.createElement("li", { key: key }, typeof value === 'string' ? (React.createElement("span", null,
-        key,
-        " - ",
-        value)) : (React.createElement(React.Fragment, null,
-        React.createElement("span", null, key),
-        renderTree(value))))))));
-    const buildTree = (features) => {
-        const tree = {};
-        features.forEach(({ name, status }) => {
-            const parts = name.split(' - ');
-            const projectAndTest = parts.slice(0, 2).join(' - ');
-            const givenAndThen = parts.slice(2).join(' - ');
-            const pathParts = projectAndTest.split('/');
-            let current = tree;
-            pathParts.forEach((part) => {
-                if (!current[part]) {
-                    current[part] = {};
-                }
-                current = current[part];
-            });
-            current[givenAndThen] = status;
-        });
-        return tree;
-    };
     const featureTree = buildTree(features);
     return (React.createElement("div", null,
         React.createElement("h1", null, "Features Reporter"),
