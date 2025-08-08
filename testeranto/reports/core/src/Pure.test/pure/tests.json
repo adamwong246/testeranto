@@ -1,0 +1,50 @@
+{
+  "name": "Core Functionality",
+  "givens": [
+    {
+      "key": "initializationTest",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "verifyNoProxy: undefined",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should initialize with default configuration"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "resourceConfigTest",
+      "name": "Default",
+      "whens": [
+        {
+          "name": "applyProxy: resourceConfig",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "verifyResourceConfig: undefined",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should handle test resource configuration"
+      ],
+      "artifacts": []
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "Should initialize with default configuration",
+    "Should handle test resource configuration"
+  ]
+}

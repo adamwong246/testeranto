@@ -1,0 +1,42 @@
+{
+  "name": "ModalContent Component Tests",
+  "givens": [
+    {
+      "key": "basicRender",
+      "name": "Default",
+      "whens": [],
+      "thens": [
+        {
+          "name": "hasModalHeader: undefined",
+          "error": false,
+          "artifacts": []
+        },
+        {
+          "name": "hasThemeCards: undefined",
+          "error": false,
+          "artifacts": []
+        },
+        {
+          "name": "takeScreenshot: modal-content.png",
+          "error": false,
+          "artifacts": [
+            "suite-0/given-basicRender/then-2/butThen/modal-content.png"
+          ]
+        }
+      ],
+      "error": null,
+      "features": [
+        "ModalContent should render",
+        "It should contain a Modal.Header",
+        "It should render the ThemeCard components"
+      ],
+      "artifacts": []
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "ModalContent should render",
+    "It should contain a Modal.Header",
+    "It should render the ThemeCard components"
+  ]
+}

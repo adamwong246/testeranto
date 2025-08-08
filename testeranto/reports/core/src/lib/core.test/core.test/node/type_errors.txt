@@ -1,0 +1,61 @@
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (74,49): Function lacks ending return statement and return type does not include 'undefined'.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (80,17): This expression is not callable.
+  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+    Type 'void' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (86,18): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (101,28): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.adapter.ts (27,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.adapter.ts (30,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.adapter.ts (32,25): Type 'MockCore<any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (21,11): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (23,11): Argument of type '{ ports: number[]; }' is not assignable to parameter of type 'ITTestResourceRequest'.
+  Types of property 'ports' are incompatible.
+    Type 'number[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (24,11): Cannot find name 'testAdapter'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (36,9): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (38,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (39,9): Cannot find name 'testAdapter'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (46,9): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (49,9): Cannot find name 'testAdapter'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (56,9): Cannot find name 'specification'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (58,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (59,14): Cannot find name 'testAdapter'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (93,51): Property 'constructor' does not exist on type 'never'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.implementation.ts (138,30): Type '(builder: MockCore<any, any, any>) => Promise<MockCore<any, any, any>>' is not assignable to type '(builder: MockCore<any, any, any>) => MockCore<any, any, any>'.
+  Type 'Promise<MockCore<any, any, any>>' is missing the following properties from type 'MockCore<any, any, any>': specs, testJobs, artifacts, testResourceRequirement, and 14 more.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.specification.ts (29,7): Expected 2 arguments, but got 4.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.specification.ts (42,13): Object literal may only specify known properties, and 'test' does not exist in type 'string[]'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.specification.ts (49,13): Object literal may only specify known properties, and 'ports' does not exist in type 'string[]'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.specification.ts (55,13): Object literal may only specify known properties, and 'assertThis' does not exist in type 'string[]'.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.specification.ts (82,105): Expected 2 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/core.test/core.test.types.ts (15,17): Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
+/Users/adam/Code/testeranto/src/lib/core.test/MockCore.ts (32,56): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/core.test/MockCore.ts (49,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/lib/core.ts (46,7): Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }' is not assignable to type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }'.
+    Types of property 'suites' are incompatible.
+      Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
+        'string' index signatures are incompatible.
+          Type 'any' is not assignable to type 'never'.
+/Users/adam/Code/testeranto/src/lib/index.ts (15,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+  Types of parameters 'initialValues' and 'initializer' are incompatible.
+    Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
+      'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
+/Users/adam/Code/testeranto/src/lib/index.ts (17,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (39,13): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (51,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
+  Types of property 'assertThis' are incompatible.
+    Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
+      Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+/Users/adam/Code/testeranto/src/PM/pure.ts (114,3): Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
+    Types of parameters 'opts' and 'opts' are incompatible.
+      Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
+        Types of property 'path' are incompatible.
+          Type 'string' is not assignable to type '`${string}.webm`'.
+/Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
+  Property 'mainFrame' does not exist on type 'string'.
+/Users/adam/Code/testeranto/src/Pure.ts (32,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens

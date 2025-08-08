@@ -1,0 +1,43 @@
+stdout > receiveTestResourceConfig {"name":"src/lib/baseBuilder.test/baseBuilder.test.node.ts","ports":[],"fs":"testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.node/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/ad2e6554-b6d5-45fd-9b24-d38f6d2d5715"}
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
+Then addArtifact suite-0/given-testInitialization/then-0/butThen/hello.txt
+Then addArtifact suite-0/given-testInitialization/then-1/butThen/artifact_test.txt
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
+Initialization result: {
+  "artifacts": [],
+  "testResourceRequirement": {
+    "ports": 0
+  },
+  "suitesOverrides": {},
+  "givenOverides": {},
+  "whenOverides": {},
+  "thenOverides": {},
+  "specs": [],
+  "testJobs": [],
+  "summary": {}
+}
+stderr > goodbye node with failures 0

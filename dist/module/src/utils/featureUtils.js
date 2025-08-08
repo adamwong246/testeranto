@@ -16,19 +16,9 @@ export const buildTree = (features) => {
     });
     return tree;
 };
-// export const renderTree = (nodes: any) => (
-//   <ul>
-//     {Object.entries(nodes).map(([key, value]) => (
-//       <li key={key}>
-//         {typeof value === 'string' ? (
-//           <span>{key} - {value}</span>
-//         ) : (
-//           <>
-//             <span>{key}</span>
-//             {renderTree(value)}
-//           </>
-//         )}
-//       </li>
-//     ))}
-//   </ul>
-// );
+export const renderTree = (nodes) => (React.createElement("ul", null, Object.entries(nodes).map(([key, value]) => (React.createElement("li", { key: key }, typeof value === "string" ? (React.createElement("span", null,
+    key,
+    " - ",
+    value)) : (React.createElement(React.Fragment, null,
+    React.createElement("span", null, key),
+    renderTree(value))))))));

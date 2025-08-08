@@ -1,0 +1,2 @@
+src/components/pure/ProjectPageView.test/index.tsx
+8:8 'appcss' is defined but never used. (@typescript-eslint/no-unused-vars)

@@ -1,0 +1,87 @@
+/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (33,14): Type '(testInput: typeof Component) => { beforeAll: (subject: typeof Component, artificer: ITTestResourceConfiguration) => Promise<{ htmlElement: HTMLElement; }>; ... 5 more ...; assertThis: (x: (s: ISelection) => ISelection) => (s: ISelection) => ISelection; }' is not assignable to type '(testInput: typeof Component) => ITestAdapter<I>'.
+  Call signature return types '{ beforeAll: (subject: typeof Component, artificer: ITTestResourceConfiguration) => Promise<{ htmlElement: HTMLElement; }>; ... 5 more ...; assertThis: (x: (s: ISelection) => ISelection) => (s: ISelection) => ISelection; }' and 'ITestAdapter<I>' are incompatible.
+    The types returned by 'beforeAll(...)' are incompatible between these types.
+      Type 'Promise<{ htmlElement: HTMLElement; }>' is not assignable to type 'Promise<ISubject>'.
+        Property 'domRoot' is missing in type '{ htmlElement: HTMLElement; }' but required in type 'ISubject'.
+/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (47,45): Property 'subject' does not exist on type 'Readonly<{}>'.
+/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (114,9): Expected 1 arguments, but got 3.
+/Users/adam/Code/testeranto-react/src/react/component/index.ts (3,44): Cannot find module '../../../Types' or its corresponding type declarations.
+/Users/adam/Code/testeranto/src/components/pure/NavBar.tsx (76,23): Object literal may only specify known properties, and '':hover'' does not exist in type 'Properties<string | number, string & {}>'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (10,3): Property 'Navigation' is missing in type '{ Default: () => { summary: { "test-suite-1": { testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; }; "test-suite-2": { testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; }; }; ... 9 more ...; navigate: () => void; }; WithError: () => { ...; }; }' but required in type '{ Default: (...args: any[]) => IProjectPageViewProps; WithError: (...args: any[]) => IProjectPageViewProps; Navigation: (...args: any[]) => IProjectPageViewProps; }'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (114,9): Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (114,18): Property 'htmlElement' does not exist on type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (122,9): Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (122,18): Property 'htmlElement' does not exist on type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (130,9): Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (130,18): Property 'htmlElement' does not exist on type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (138,9): Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (138,18): Property 'htmlElement' does not exist on type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (146,9): Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (146,18): Property 'htmlElement' does not exist on type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (149,24): 'el' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (156,9): Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (156,18): Property 'htmlElement' does not exist on type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (159,24): 'el' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (165,9): Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IProjectPageViewProps': summary, nodeLogs, webLogs, pureLogs, and 7 more.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (165,18): Property 'htmlElement' does not exist on type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/implementation.tsx (175,5): Type '(name: string) => ({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(...args: any[]) => (state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { ...; }'.
+  Type '({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
+    Target signature provides too few arguments. Expected 2 or more, but got 1.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/index.tsx (8,20): Cannot find module './../../../App.scss' or its corresponding type declarations.
+/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/index.tsx (18,3): Argument of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").I, import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").O>' is not assignable to parameter of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I, import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").O>'.
+  Types of parameters 'Suite' and 'Suite' are incompatible.
+    Type 'import("/Users/adam/Code/testeranto/src/Types").SuiteSpecification<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I, import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").O>' is not assignable to type 'import("/Users/adam/Code/testeranto/src/Types").SuiteSpecification<import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").I, import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").O>'.
+      Types of property 'Default' are incompatible.
+        Type '(name: string, givens: import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I>) => import("/Users/adam/Code/testeranto/src/lib/BaseSuite").BaseSuite<...>' is not assignable to type '(name: string, givens: import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").I>) => import("/Users/adam/Code/testeranto/src/lib/BaseSuite").BaseSuite<...>'.
+          Types of parameters 'givens' and 'givens' are incompatible.
+            Type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").I>' is not assignable to type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I>'.
+              Type 'import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").I' is not assignable to type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I'.
+                Types of property 'iinput' are incompatible.
+                  Property 'prototype' is missing in type 'IProjectPageViewProps' but required in type 'typeof Component'.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (74,49): Function lacks ending return statement and return type does not include 'undefined'.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (80,17): This expression is not callable.
+  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
+    Type 'void' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (86,18): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (101,28): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/core.ts (46,7): Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }' is not assignable to type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }'.
+    Types of property 'suites' are incompatible.
+      Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
+        'string' index signatures are incompatible.
+          Type 'any' is not assignable to type 'never'.
+/Users/adam/Code/testeranto/src/lib/index.ts (15,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+  Types of parameters 'initialValues' and 'initializer' are incompatible.
+    Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
+      'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
+/Users/adam/Code/testeranto/src/lib/index.ts (17,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (39,13): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (51,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
+  Types of property 'assertThis' are incompatible.
+    Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
+      Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+/Users/adam/Code/testeranto/src/PM/pure.ts (114,3): Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
+    Types of parameters 'opts' and 'opts' are incompatible.
+      Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
+        Types of property 'path' are incompatible.
+          Type 'string' is not assignable to type '`${string}.webm`'.
+/Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
+  Property 'mainFrame' does not exist on type 'string'.
+/Users/adam/Code/testeranto/src/Web.ts (43,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
