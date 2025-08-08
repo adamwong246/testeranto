@@ -1,5 +1,5 @@
 stdout > Suite { TheMothership: [Function (anonymous)] }
-receiveTestResourceConfig {"name":"src/mothership/test.ts","ports":[],"fs":"testeranto/reports/core/src/mothership/test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/871cb63b-0aac-4152-a0fc-4b17f3b33aa0"}
+receiveTestResourceConfig {"name":"src/mothership/test.ts","ports":[],"fs":"testeranto/reports/core/src/mothership/test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/0a77cd5d-6575-443f-a2ec-290787cc5a1c"}
 beforeAll - initial setup
 beforeEach - starting app on port undefined
 andWhen - executing action

@@ -18,8 +18,9 @@ export const App = () => {
                         React.createElement(Route, { path: "/projects/:projectName/tests/*", element: React.createElement(TestPage, null) }),
                         React.createElement(Route, { path: "/projects/:projectName#:tab", element: React.createElement(ProjectPage, null) })))),
             React.createElement("footer", { className: "bg-light py-3 d-flex justify-content-between align-items-center" },
+                React.createElement("div", { className: "ms-3" },
+                    React.createElement(SettingsButton, null)),
                 React.createElement(Container, { className: "text-end", fluid: true },
-                    React.createElement(SettingsButton, null),
                     "made with \u2764\uFE0F and ",
                     React.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))))));
 };
