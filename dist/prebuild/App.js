@@ -33284,6 +33284,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }, []);
     const [showModal, setShowModal] = (0, import_react67.useState)(false);
+    (0, import_react67.useEffect)(() => {
+      let themeToApply = theme;
+      if (theme === "system") {
+        themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-bs-theme", themeToApply);
+    }, []);
     const [theme, setTheme] = (0, import_react67.useState)(localStorage.getItem("theme") || "system");
     const handleThemeChange = (e) => {
       const newTheme = e.target.value;

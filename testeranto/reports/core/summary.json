@@ -23,7 +23,7 @@
   "src/lib/BaseSuite.test/node.test.ts": {
     "typeErrors": 47,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": 1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/BaseSuite.test/node.test/prompt.txt",
     "failingFeatures": {}
   },

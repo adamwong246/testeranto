@@ -9,6 +9,13 @@ export const SettingsButton = ({ className }) => {
         };
     }, []);
     const [showModal, setShowModal] = useState(false);
+    useEffect(() => {
+        let themeToApply = theme;
+        if (theme === 'system') {
+            themeToApply = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        }
+        document.documentElement.setAttribute('data-bs-theme', themeToApply);
+    }, []);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'system');
     const handleThemeChange = (e) => {
         const newTheme = e.target.value;
