@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { beforeAllProxy, afterAllProxy } from "./pmProxy";
 export class BaseSuite {
     addArtifact(path) {

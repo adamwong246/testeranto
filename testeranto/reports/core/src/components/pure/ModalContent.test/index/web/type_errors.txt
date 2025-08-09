@@ -21,26 +21,26 @@
                   Type '{ hasModalHeader: () => (s: ISelection) => ISelection; hasThemeCards: () => (s: ISelection) => ISelection; takeScreenshot: (name: string) => (s: ISelection, pm: any) => Promise<...>; }' is not assignable to type '(s: ISelection) => ISelection'.
                     Type '{ hasModalHeader: () => (s: ISelection) => ISelection; hasThemeCards: () => (s: ISelection) => ISelection; takeScreenshot: (name: string) => (s: ISelection, pm: any) => Promise<...>; }' provides no match for the signature '(s: ISelection): ISelection'.
 /Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types.ts (7,10): '"../ModalContent"' has no exported member named 'IModalContentProps'. Did you mean 'ModalContent'?
-/Users/adam/Code/testeranto/src/lib/basebuilder.ts (74,49): Function lacks ending return statement and return type does not include 'undefined'.
-/Users/adam/Code/testeranto/src/lib/basebuilder.ts (80,17): This expression is not callable.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (76,49): Function lacks ending return statement and return type does not include 'undefined'.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (82,17): This expression is not callable.
   Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/classBuilder.ts (86,18): A spread argument must either have a tuple type or be passed to a rest parameter.
-/Users/adam/Code/testeranto/src/lib/classBuilder.ts (101,28): A spread argument must either have a tuple type or be passed to a rest parameter.
-/Users/adam/Code/testeranto/src/lib/core.ts (46,7): Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (89,18): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/classBuilder.ts (104,28): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/core.ts (48,7): Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }' is not assignable to type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }'.
     Types of property 'suites' are incompatible.
       Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
         'string' index signatures are incompatible.
           Type 'any' is not assignable to type 'never'.
-/Users/adam/Code/testeranto/src/lib/index.ts (15,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+/Users/adam/Code/testeranto/src/lib/index.ts (17,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
   Types of parameters 'initialValues' and 'initializer' are incompatible.
     Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
       'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
-/Users/adam/Code/testeranto/src/lib/index.ts (17,20): Type '"iinitialValues"' cannot be used to index type 'T'.
-/Users/adam/Code/testeranto/src/lib/index.ts (39,13): This expression is not callable.
+/Users/adam/Code/testeranto/src/lib/index.ts (19,20): Type '"iinitialValues"' cannot be used to index type 'T'.
+/Users/adam/Code/testeranto/src/lib/index.ts (41,13): This expression is not callable.
   Type 'unknown' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/index.ts (51,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
+/Users/adam/Code/testeranto/src/lib/index.ts (53,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.

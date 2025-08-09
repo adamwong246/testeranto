@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+// Do not add logging to this file as it is used by the pure runtime.
+
 import { Ibdd_in_any, ITestAdapter, Ibdd_out_any } from "../CoreTypes";
 import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";

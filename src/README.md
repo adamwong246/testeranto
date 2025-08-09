@@ -1,11 +1,18 @@
 # Testeranto src
 
+## imports
+
+External packages are imported first, then local files. Sort these local import statements by "distance" from the current file.
+
 ## runtimes
 
 there are 3 runtimes- web, node and pure. They all produce a file `exit.log` which describes the final output, or error of a test.
+
+This file will capture all uncaught errors.
+
 If the last line in this file is '0', the test has passed.
 If the last line in this file is a number N greater then zero, the test has run to completion, but failed N times.
-Otherwise this file will describe the uncaught error of the test process.
+If the last line in this file is a number N less then zero, the test has run errored with code N.
 
 ### web
 

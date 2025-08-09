@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
+// Do not add logging to this file as it is used by the pure runtime.
+
 import { ITTestResourceConfiguration, ITestArtifactory } from ".";
 import { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
 import { IGivens } from "./abstractBase";

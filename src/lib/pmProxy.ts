@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+// Do not add logging to this file as it is used by the pure runtime.
+
 import { IPM } from "./types";
 
 export type IProxyBase = (

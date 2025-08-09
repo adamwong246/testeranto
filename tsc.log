@@ -10,9 +10,84 @@ $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
 ../testeranto-react/src/react-dom/jsx/dynamic.ts(25,17): error TS2345: Argument of type 'null' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
 ../testeranto-react/src/react-dom/jsx/dynamic.ts(30,17): error TS2345: Argument of type 'FunctionComponentElement<any>' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
 ../testeranto-react/src/react/component/index.ts(3,44): error TS2307: Cannot find module '../../../Types' or its corresponding type declarations.
-src/App.tsx(29,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
-src/App.tsx(39,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
-src/App.tsx(41,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
+src/App.tsx(31,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
+src/App.tsx(41,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
+src/App.tsx(43,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
+src/components/pure/AppFrame.test/implementation.tsx(15,20): error TS2322: Type '{ children: JSX.Element; }' is not assignable to type '(s: ISelection) => ISelection'.
+  Type '{ children: Element; }' provides no match for the signature '(s: ISelection): ISelection'.
+src/components/pure/AppFrame.test/implementation.tsx(18,5): error TS2322: Type '(children: React.ReactNode) => () => { children: React.ReactNode; }' is not assignable to type '(Ig_0: ReactNode) => (s: ISelection) => ISelection'.
+  Call signature return types '() => { children: ReactNode; }' and '(s: ISelection) => ISelection' are incompatible.
+    Type '{ children: ReactNode; }' is missing the following properties from type 'ISelection': htmlElement, reactElement, domRoot
+src/components/pure/AppFrame.test/implementation.tsx(26,5): error TS2322: Type '(name: string) => ({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
+  Call signature return types '({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: HTMLElement; }>' and '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }' are incompatible.
+    Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
+src/components/pure/AppFrame.test/implementation.tsx(33,29): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
+  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
+src/components/pure/AppFrame.test/implementation.tsx(38,27): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
+  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
+src/components/pure/AppFrame.test/implementation.tsx(43,22): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
+  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
+src/components/pure/AppFrame.test/implementation.tsx(48,30): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
+  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
+src/components/pure/AppFrame.test/implementation.tsx(53,30): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
+  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
+src/components/pure/AppFrame.test/index.tsx(16,3): error TS2345: Argument of type 'ITestImplementation<I, O>' is not assignable to parameter of type 'ITestImplementation<I, O, { whens: TestWhenImplementation<I, O>; }>'.
+  Type 'ITestImplementation<I, O>' is not assignable to type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, "whens">'.
+    The types returned by 'thens.RendersContainer(...)(...)' are incompatible between these types.
+      Type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }' is not assignable to type '(s: ISelection) => ISelection'.
+        Type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }' provides no match for the signature '(s: ISelection): ISelection'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(18,13): error TS2322: Type '"test"' is not assignable to type '"file" | "project"'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(23,17): error TS2322: Type '"given"' is not assignable to type '"file" | "project"'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(28,21): error TS2322: Type '"then"' is not assignable to type '"file" | "project"'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(60,9): error TS2322: Type '({ htmlElement }: IInput & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IInput & { container?: HTMLElement | undefined; }) => IInput & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IInput & { container?: HTMLElement | undefined; }'.
+    Property 'treeData' is missing in type 'Promise<{ htmlElement: any; }>' but required in type 'IInput'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(60,18): error TS2339: Property 'htmlElement' does not exist on type 'IInput & { container?: HTMLElement | undefined; }'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(68,9): error TS2322: Type '({ htmlElement }: IInput & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IInput & { container?: HTMLElement | undefined; }) => IInput & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IInput & { container?: HTMLElement | undefined; }'.
+    Property 'treeData' is missing in type 'Promise<{ htmlElement: any; }>' but required in type 'IInput'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(68,18): error TS2339: Property 'htmlElement' does not exist on type 'IInput & { container?: HTMLElement | undefined; }'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(76,9): error TS2322: Type '({ htmlElement }: IInput & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IInput & { container?: HTMLElement | undefined; }) => IInput & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IInput & { container?: HTMLElement | undefined; }'.
+    Property 'treeData' is missing in type 'Promise<{ htmlElement: any; }>' but required in type 'IInput'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(76,18): error TS2339: Property 'htmlElement' does not exist on type 'IInput & { container?: HTMLElement | undefined; }'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(84,9): error TS2322: Type '({ htmlElement }: IInput & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IInput & { container?: HTMLElement | undefined; }) => IInput & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IInput & { container?: HTMLElement | undefined; }'.
+    Property 'treeData' is missing in type 'Promise<{ htmlElement: any; }>' but required in type 'IInput'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(84,18): error TS2339: Property 'htmlElement' does not exist on type 'IInput & { container?: HTMLElement | undefined; }'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(92,9): error TS2322: Type '({ htmlElement }: IInput & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IInput & { container?: HTMLElement | undefined; }) => IInput & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IInput & { container?: HTMLElement | undefined; }'.
+    Property 'treeData' is missing in type 'Promise<{ htmlElement: any; }>' but required in type 'IInput'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(92,18): error TS2339: Property 'htmlElement' does not exist on type 'IInput & { container?: HTMLElement | undefined; }'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(98,5): error TS2322: Type '(name: string) => ({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(...args: any[]) => (state: IInput & { container?: HTMLElement | undefined; }) => IInput & { container?: HTMLElement | undefined; }'.
+  Type '({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IInput & { container?: HTMLElement | undefined; }) => IInput & { container?: HTMLElement | undefined; }'.
+    Target signature provides too few arguments. Expected 2 or more, but got 1.
+src/components/pure/FeaturesReporterView.test/index.tsx(16,3): error TS2345: Argument of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").I, import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").O>' is not assignable to parameter of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I, import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").O>'.
+  Types of parameters 'Suite' and 'Suite' are incompatible.
+    Type 'import("/Users/adam/Code/testeranto/src/Types").SuiteSpecification<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I, import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").O>' is not assignable to type 'import("/Users/adam/Code/testeranto/src/Types").SuiteSpecification<import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").I, import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").O>'.
+      Types of property 'Default' are incompatible.
+        Type '(name: string, givens: import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I>) => import("/Users/adam/Code/testeranto/src/lib/BaseSuite").BaseSuite<...>' is not assignable to type '(name: string, givens: import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").I>) => import("/Users/adam/Code/testeranto/src/lib/BaseSuite").BaseSuite<...>'.
+          Types of parameters 'givens' and 'givens' are incompatible.
+            Type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").I>' is not assignable to type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I>'.
+              Type 'import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").I' is not assignable to type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I'.
+                Types of property 'iinput' are incompatible.
+                  Property 'prototype' is missing in type 'IInput' but required in type 'typeof Component'.
+src/components/pure/ModalContent.test/implementation.tsx(35,5): error TS2322: Type '(name: string) => ({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(...args: any[]) => (state: any) => any'.
+  Type '({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: any) => any'.
+    Target signature provides too few arguments. Expected 2 or more, but got 1.
+src/components/pure/ModalContent.test/index.tsx(13,3): error TS2345: Argument of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I, import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").O>' is not assignable to parameter of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I, import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").O>'.
+  Types of parameters 'Suite' and 'Suite' are incompatible.
+    Type 'import("/Users/adam/Code/testeranto/src/Types").SuiteSpecification<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I, import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").O>' is not assignable to type 'import("/Users/adam/Code/testeranto/src/Types").SuiteSpecification<import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I, import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").O>'.
+      Types of property 'Default' are incompatible.
+        Type '(name: string, givens: import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I>) => import("/Users/adam/Code/testeranto/src/lib/BaseSuite").BaseSuite<...>' is not assignable to type '(name: string, givens: import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I>) => import("/Users/adam/Code/testeranto/src/lib/BaseSuite").BaseSuite<...>'.
+          Types of parameters 'givens' and 'givens' are incompatible.
+            Type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I>' is not assignable to type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I>'.
+              Type 'import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I' is not assignable to type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I'.
+                Types of property 'then' are incompatible.
+                  Type '{ hasModalHeader: () => (s: ISelection) => ISelection; hasThemeCards: () => (s: ISelection) => ISelection; takeScreenshot: (name: string) => (s: ISelection, pm: any) => Promise<...>; }' is not assignable to type '(s: ISelection) => ISelection'.
+                    Type '{ hasModalHeader: () => (s: ISelection) => ISelection; hasThemeCards: () => (s: ISelection) => ISelection; takeScreenshot: (name: string) => (s: ISelection, pm: any) => Promise<...>; }' provides no match for the signature '(s: ISelection): ISelection'.
+src/components/pure/ModalContent.test/types.ts(7,10): error TS2724: '"../ModalContent"' has no exported member named 'IModalContentProps'. Did you mean 'ModalContent'?
+src/components/pure/NavBar.tsx(76,23): error TS2353: Object literal may only specify known properties, and '':hover'' does not exist in type 'Properties<string | number, string & {}>'.
 src/components/pure/ProjectPageView.test/implementation.tsx(10,3): error TS2741: Property 'Navigation' is missing in type '{ Default: () => { summary: { "test-suite-1": { testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; }; "test-suite-2": { testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; }; }; ... 9 more ...; navigate: () => void; }; WithError: () => { ...; }; }' but required in type '{ Default: (...args: any[]) => IProjectPageViewProps; WithError: (...args: any[]) => IProjectPageViewProps; Navigation: (...args: any[]) => IProjectPageViewProps; }'.
 src/components/pure/ProjectPageView.test/implementation.tsx(114,9): error TS2322: Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
   Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
@@ -58,7 +133,6 @@ src/components/pure/ProjectPageView.test/index.tsx(18,3): error TS2345: Argument
               Type 'import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").I' is not assignable to type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I'.
                 Types of property 'iinput' are incompatible.
                   Property 'prototype' is missing in type 'IProjectPageViewProps' but required in type 'typeof Component'.
-src/components/pure/ProjectsPageView.tsx(58,34): error TS2322: Type 'null' is not assignable to type 'string | undefined'.
 src/components/pure/TestPageView.test/implementation.ts(22,13): error TS2304: Cannot find name 'IInput'.
 src/components/pure/TestPageView.test/implementation.ts(23,15): error TS2304: Cannot find name 'ISubject'.
 src/components/pure/TestPageView.test/implementation.ts(24,13): error TS2304: Cannot find name 'IStore'.
@@ -114,9 +188,16 @@ src/components/pure/TestPageView.test/implementation.ts(161,37): error TS2322: T
 src/components/pure/TestPageView.test/implementation.ts(164,22): error TS2304: Cannot find name 'jest'.
 src/components/pure/TestPageView.test/implementation.ts(168,13): error TS2554: Expected 3 arguments, but got 1.
 src/components/pure/TestPageView.test/implementation.ts(169,45): error TS2339: Property 'toHaveBeenCalled' does not exist on type 'Assertion'.
-src/components/pure/TestPageView.test/index.tsx(8,20): error TS2307: Cannot find module './../../../App.scss' or its corresponding type declarations.
-src/components/pure/TestPageView.test/specification.ts(8,13): error TS2304: Cannot find name 'ISelection'.
-src/components/pure/TestPageView.test/specification.ts(9,17): error TS2304: Cannot find name 'ISelection'.
+src/components/pure/TestPageView.test/index.tsx(18,3): error TS2345: Argument of type 'ITestSpecification<{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }, O>' is not assignable to parameter of type 'ITestSpecification<I, O>'.
+  Types of parameters 'Suite' and 'Suite' are incompatible.
+    Type 'SuiteSpecification<I, O>' is not assignable to type 'SuiteSpecification<{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }, O>'.
+      Types of property 'Default' are incompatible.
+        Type '(name: string, givens: IGivens<I>) => BaseSuite<I, O>' is not assignable to type '(name: string, givens: IGivens<{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }>) => BaseSuite<{ iinput: any; ... 5 more ...; then: any; }, O>'.
+          Types of parameters 'givens' and 'givens' are incompatible.
+            Type 'IGivens<{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }>' is not assignable to type 'IGivens<I>'.
+              Type '{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }' is not assignable to type 'I'.
+                Types of property 'istore' are incompatible.
+                  Type 'ISelection' is missing the following properties from type 'HTMLElement': accessKey, accessKeyLabel, autocapitalize, autocorrect, and 314 more.
 src/components/pure/TestPageView.tsx(140,29): error TS2554: Expected 1 arguments, but got 2.
 src/components/stateful/ProjectsPage.tsx(66,7): error TS2322: Type 'Record<string, ISummary>' is not assignable to type 'TestSummary'.
   'string' index signatures are incompatible.
@@ -127,7 +208,7 @@ src/components/stateful/ProjectsPage.tsx(67,7): error TS2322: Type 'Record<strin
 src/components/stateful/TestPage.tsx(52,17): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string>'.
   Type 'undefined' is not assignable to type 'SetStateAction<string>'.
 src/components/stateful/TestPage.tsx(77,18): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
-src/components/stateful/TestPage.tsx(89,7): error TS2322: Type 'string' is not assignable to type '"results" | "logs" | "types" | "lint" | "coverage"'.
+src/components/stateful/TestPage.tsx(89,7): error TS2322: Type 'string' is not assignable to type '"coverage" | "results" | "logs" | "types" | "lint"'.
 src/components/stateful/TestPage.tsx(92,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
   Type 'undefined' is not assignable to type 'string'.
 src/components/SunriseAnimation.test/interface.ts(2,10): error TS2305: Module '"../../CoreTypes"' has no exported member 'ITestInterface'.
@@ -187,8 +268,8 @@ src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(93,30): error TS2322
 src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(99,34): error TS2322: Type '(builder: TestSubject, utils: PM) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
   Type 'TestSubject' is not assignable to type '(store: any) => any'.
     Type 'MockBaseBuilder<any, any, any, any, any, any>' provides no match for the signature '(store: any): any'.
-src/lib/basebuilder.ts(74,49): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/lib/basebuilder.ts(80,17): error TS2349: This expression is not callable.
+src/lib/basebuilder.ts(76,49): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/lib/basebuilder.ts(82,17): error TS2349: This expression is not callable.
   Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
     Type 'void' has no call signatures.
 src/lib/BaseSuite.test/mock.ts(36,9): error TS2416: Property 'andWhen' in type 'MockWhen' is not assignable to the same property in base type 'BaseWhen<I>'.
@@ -295,8 +376,8 @@ src/lib/classBuilder.test/classBuilder.test.specification.ts(83,54): error TS230
 src/lib/classBuilder.test/classBuilder.test.specification.ts(101,7): error TS2554: Expected 2 arguments, but got 3.
 src/lib/classBuilder.test/mock.ts(45,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-src/lib/classBuilder.ts(86,18): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/classBuilder.ts(101,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/classBuilder.ts(89,18): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
+src/lib/classBuilder.ts(104,28): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
 src/lib/core.test/core.test.adapter.ts(27,26): error TS2554: Expected 1 arguments, but got 2.
 src/lib/core.test/core.test.adapter.ts(30,26): error TS2554: Expected 1 arguments, but got 2.
 src/lib/core.test/core.test.adapter.ts(32,25): error TS2739: Type 'MockCore<any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
@@ -325,20 +406,20 @@ src/lib/core.test/core.test.types.ts(15,17): error TS2707: Generic type 'Ibdd_ou
 src/lib/core.test/MockCore.ts(32,56): error TS2322: Type 'never[]' is not assignable to type 'number'.
 src/lib/core.test/MockCore.ts(49,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-src/lib/core.ts(46,7): error TS2345: Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
+src/lib/core.ts(48,7): error TS2345: Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }' is not assignable to type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }'.
     Types of property 'suites' are incompatible.
       Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
         'string' index signatures are incompatible.
           Type 'any' is not assignable to type 'never'.
-src/lib/index.ts(15,3): error TS2322: Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
+src/lib/index.ts(17,3): error TS2322: Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
   Types of parameters 'initialValues' and 'initializer' are incompatible.
     Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
       'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
-src/lib/index.ts(17,20): error TS2536: Type '"iinitialValues"' cannot be used to index type 'T'.
-src/lib/index.ts(39,13): error TS2349: This expression is not callable.
+src/lib/index.ts(19,20): error TS2536: Type '"iinitialValues"' cannot be used to index type 'T'.
+src/lib/index.ts(41,13): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
-src/lib/index.ts(51,3): error TS2322: Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
+src/lib/index.ts(53,3): error TS2322: Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
   Types of property 'assertThis' are incompatible.
     Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
       Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
@@ -391,7 +472,6 @@ src/lib/pmProxy.test/mockPM.ts(23,3): error TS2416: Property 'launchSideCar' in 
 src/lib/pmProxy.test/types.ts(19,17): error TS2707: Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
 src/mothership/test.ts(64,7): error TS2554: Expected 2 arguments, but got 3.
 src/mothership/test.ts(70,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
-src/NavBar.tsx(76,23): error TS2353: Object literal may only specify known properties, and '':hover'' does not exist in type 'Properties<string | number, string & {}>'.
 src/Node.ts(34,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 src/PM/__tests__/nodeSidecar.testeranto.ts(51,43): error TS2304: Cannot find name 'I'.
@@ -420,36 +500,39 @@ src/PM/__tests__/webSidecar.testeranto.ts(94,38): error TS2322: Type 'boolean' i
 src/PM/__tests__/webSidecar.testeranto.ts(109,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
 src/PM/__tests__/webSidecar.testeranto.ts(118,20): error TS2304: Cannot find name 'IPartialNodeAdapter'.
 src/PM/__tests__/webSidecar.testeranto.ts(118,40): error TS2304: Cannot find name 'I'.
-src/PM/main.ts(824,38): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
-  Type 'null' is not assignable to type 'number'.
-src/PM/main.ts(825,31): error TS2345: Argument of type 'number | null' is not assignable to parameter of type 'number'.
-  Type 'null' is not assignable to type 'number'.
-src/PM/main.ts(991,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1029,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1157,16): error TS2339: Property 'sidecars' does not exist on type 'PM_Main'.
-src/PM/main.ts(1195,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1210,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
-src/PM/main.ts(1475,9): error TS2532: Object is possibly 'undefined'.
+src/PM/main.ts(255,7): error TS2322: Type '[number, Page]' is not assignable to type '[number, ITTestResourceConfiguration]'.
+  Type at position 1 in source is not compatible with type at position 1 in target.
+    Type 'Page' is missing the following properties from type 'ITTestResourceConfiguration': name, fs, ports
+src/PM/main.ts(594,27): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+src/PM/main.ts(655,11): error TS18048: 'logs.stdout' is possibly 'undefined'.
+src/PM/main.ts(660,11): error TS18048: 'logs.stderr' is possibly 'undefined'.
+src/PM/main.ts(772,27): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+src/PM/main.ts(791,32): error TS2304: Cannot find name 'argz'.
+src/PM/main.ts(929,56): error TS2304: Cannot find name 'errFile'.
+src/PM/main.ts(978,15): error TS2304: Cannot find name 'oStream'.
+src/PM/main.ts(1000,17): error TS2552: Cannot find name 'logs'. Did you mean 'log'?
+src/PM/main.ts(1003,17): error TS2552: Cannot find name 'logs'. Did you mean 'log'?
+src/PM/main.ts(1006,17): error TS2304: Cannot find name 'logs'.
+src/PM/main.ts(1009,17): error TS2304: Cannot find name 'logs'.
+src/PM/main.ts(1065,31): error TS2322: Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
+  Property '#private' in type 'Page' refers to a different member that cannot be accessed from within type 'Page'.
+src/PM/main.ts(1072,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1199,13): error TS2304: Cannot find name 'logs'.
+src/PM/main.ts(1266,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/PM/main.ts(1281,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(1389,13): error TS2304: Cannot find name 'oStream'.
+src/PM/main.ts(1407,16): error TS2304: Cannot find name 'oStream'.
+src/PM/main.ts(1408,13): error TS2304: Cannot find name 'oStream'.
+src/PM/main.ts(1409,13): error TS2304: Cannot find name 'oStream'.
+src/PM/main.ts(1545,9): error TS2532: Object is possibly 'undefined'.
 src/PM/pure.ts(114,3): error TS2416: Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
     Types of parameters 'opts' and 'opts' are incompatible.
       Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
         Types of property 'path' are incompatible.
           Type 'string' is not assignable to type '`${string}.webm`'.
-src/PM/web.ts(56,12): error TS2304: Cannot find name 'opts'.
-src/PM/web.ts(57,57): error TS2304: Cannot find name 'opts'.
-src/PM/web.ts(59,7): error TS2663: Cannot find name 'page'. Did you mean the instance member 'this.page'?
-src/ProjectPage.tsx(290,35): error TS2339: Property 'tests' does not exist on type 'object'.
-src/ProjectPage.tsx(314,19): error TS2801: This condition will always return true since this 'Promise<boolean>' is always defined.
-src/ProjectPage.tsx(314,47): error TS2339: Property 'testsExist' does not exist on type 'string | { runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'.
-  Property 'testsExist' does not exist on type 'string'.
-src/ProjectPage.tsx(315,38): error TS2339: Property 'runTimeErrors' does not exist on type 'string | { runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'.
-  Property 'runTimeErrors' does not exist on type 'string'.
-src/ProjectPage.tsx(316,35): error TS2339: Property 'typeErrors' does not exist on type 'string | { runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'.
-  Property 'typeErrors' does not exist on type 'string'.
-src/ProjectPage.tsx(317,37): error TS2339: Property 'staticErrors' does not exist on type 'string | { runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'.
-  Property 'staticErrors' does not exist on type 'string'.
-src/ProjectPage.tsx(397,45): error TS2339: Property 'tests' does not exist on type 'object'.
+src/PM/web.ts(59,12): error TS2339: Property 'mainFrame' does not exist on type 'string | Page'.
+  Property 'mainFrame' does not exist on type 'string'.
 src/Pure.test.ts(58,20): error TS2322: Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; befor...' is not assignable to type '() => IPM'.
   Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; befor...' provides no match for the signature '(): IPM'.
 src/Pure.test.ts(65,54): error TS2554: Expected 1 arguments, but got 2.
@@ -532,23 +615,11 @@ src/ReportServer.test.ts/index.ts(190,3): error TS2345: Argument of type '(port:
   Type 'void' is not assignable to type 'Server<typeof IncomingMessage, typeof ServerResponse>'.
 src/ReportServer.ts(5,20): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
 src/ReportServerLib.ts(111,33): error TS2339: Property 'status' does not exist on type 'Error'.
-src/TestPage.tsx(41,16): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<"results" | "logs" | "types" | "lint" | "coverage">'.
-src/TestPage.tsx(90,17): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string>'.
-  Type 'undefined' is not assignable to type 'SetStateAction<string>'.
-src/TestPage.tsx(241,20): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<"results" | "logs" | "types" | "lint" | "coverage">'.
-src/TestPage.tsx(279,28): error TS18048: 'given.features.length' is possibly 'undefined'.
-src/TestPage.tsx(283,34): error TS18048: 'given.features' is possibly 'undefined'.
-src/TestPage.tsx(298,26): error TS18048: 'given.artifacts.length' is possibly 'undefined'.
-src/TestPage.tsx(305,43): error TS18048: 'given.artifacts' is possibly 'undefined'.
-src/TestPage.tsx(308,32): error TS18048: 'given.artifacts' is possibly 'undefined'.
-src/TestPage.tsx(332,34): error TS18048: 'when.features.length' is possibly 'undefined'.
-src/TestPage.tsx(336,40): error TS18048: 'when.features' is possibly 'undefined'.
-src/TestPage.tsx(353,30): error TS18048: 'when.artifacts.length' is possibly 'undefined'.
-src/TestPage.tsx(357,36): error TS18048: 'when.artifacts' is possibly 'undefined'.
-src/TestPage.tsx(381,34): error TS18048: 'then.features.length' is possibly 'undefined'.
-src/TestPage.tsx(385,40): error TS18048: 'then.features' is possibly 'undefined'.
-src/TestPage.tsx(402,30): error TS18048: 'then.artifacts.length' is possibly 'undefined'.
-src/TestPage.tsx(406,36): error TS18048: 'then.artifacts' is possibly 'undefined'.
+src/utils/featureUtils.tsx(26,4): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
+src/utils/featureUtils.tsx(28,8): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
+src/utils/featureUtils.tsx(30,12): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
+src/utils/featureUtils.tsx(34,11): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
+src/utils/featureUtils.tsx(35,14): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 src/Web.ts(43,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

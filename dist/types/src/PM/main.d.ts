@@ -5,15 +5,29 @@ import { IRunnables, ITTestResourceConfiguration } from "../lib/index.js";
 import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 import { Sidecar } from "../lib/Sidecar.js";
 import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
+type LogStreams = {
+    closeAll: () => void;
+    writeExitCode: (code: number, error?: Error) => void;
+    stdout?: fs.WriteStream;
+    stderr?: fs.WriteStream;
+    info?: fs.WriteStream;
+    warn?: fs.WriteStream;
+    error?: fs.WriteStream;
+    debug?: fs.WriteStream;
+    exit: fs.WriteStream;
+};
+declare function createLogStreams(reportDest: string, runtime: IRunTime): LogStreams;
 export declare class PM_Main extends PM_WithEslintAndTsc {
     ports: Record<number, string>;
     queue: string[];
+    logStreams: Record<string, ReturnType<typeof createLogStreams>>;
     webMetafileWatcher: fs.FSWatcher;
     nodeMetafileWatcher: fs.FSWatcher;
     importMetafileWatcher: fs.FSWatcher;
     pureSidecars: Record<number, Sidecar>;
     nodeSidecars: Record<number, ChildProcess>;
     webSidecars: Record<number, Page>;
+    sidecars: Record<number, any>;
     launchers: Record<string, () => void>;
     constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
     stopSideCar(uid: number): Promise<any>;
@@ -30,9 +44,9 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
         pureEntryPointSidecars: {};
     }) => IRunnables;
     metafileOutputs(platform: IRunTime): Promise<void>;
-    launchPure: (src: string, dest: string) => Promise<void>;
-    launchNode: (src: string, dest: string) => Promise<void>;
-    launchWebSideCar: (testConfig: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
+    launchPure: (src: string, dest: string) => Promise<(string | number)[] | undefined>;
+    launchNode: (src: string, dest: string) => Promise<any[] | undefined>;
+    launchWebSideCar: (testConfig: ITestTypes) => Promise<[number, Page]>;
     launchNodeSideCar: (sidecar: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
     stopPureSideCar: (uid: number) => Promise<void>;
     launchPureSideCar: (sidecar: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
@@ -41,3 +55,4 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     checkQueue(): void;
     checkForShutdown: () => void;
 }
+export {};

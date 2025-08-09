@@ -3,6 +3,8 @@
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+// Do not add logging to this file as it is used by the pure runtime.
+
 import { PassThrough } from "stream";
 
 import type {

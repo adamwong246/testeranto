@@ -1,4 +1,6 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClassBuilder = void 0;
 const basebuilder_js_1 = require("./basebuilder.js");

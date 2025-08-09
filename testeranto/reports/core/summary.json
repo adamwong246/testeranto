@@ -2,21 +2,21 @@
   "src/components/pure/TestPageView.test/index.tsx": {
     "typeErrors": 50,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/TestPageView.test/index/prompt.txt",
     "failingFeatures": {}
   },
   "src/components/pure/ProjectPageView.test/index.tsx": {
     "typeErrors": 37,
     "staticErrors": 1,
-    "runTimeErrors": 0,
+    "runTimeErrors": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/ProjectPageView.test/index/prompt.txt",
     "failingFeatures": {}
   },
   "src/components/pure/ModalContent.test/index.tsx": {
     "typeErrors": 19,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/ModalContent.test/index/prompt.txt",
     "failingFeatures": {}
   },
@@ -37,7 +37,7 @@
   "src/lib/BaseSuite.test/web.test.ts": {
     "typeErrors": 47,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/BaseSuite.test/web.test/prompt.txt",
     "failingFeatures": {}
   },
@@ -86,21 +86,21 @@
   "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
     "typeErrors": 26,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/baseBuilder.test/baseBuilder.test.web/prompt.txt",
     "failingFeatures": {}
   },
   "src/components/pure/AppFrame.test/index.tsx": {
     "typeErrors": 25,
     "staticErrors": 1,
-    "runTimeErrors": 0,
+    "runTimeErrors": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/AppFrame.test/index/prompt.txt",
     "failingFeatures": {}
   },
   "src/components/pure/FeaturesReporterView.test/index.tsx": {
     "typeErrors": 31,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": "?",
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/FeaturesReporterView.test/index/prompt.txt",
     "failingFeatures": {}
   },
