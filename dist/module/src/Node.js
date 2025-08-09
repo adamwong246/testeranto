@@ -9,7 +9,7 @@ export class NodeTesteranto extends Testeranto {
         });
     }
     async receiveTestResourceConfig(partialTestResource) {
-        console.log("receiveTestResourceConfig", partialTestResource);
+        // console.log("receiveTestResourceConfig", partialTestResource);
         const t = JSON.parse(partialTestResource);
         const pm = new PM_Node(t, ipcfile);
         return await this.testJobs[0].receiveTestResourceConfig(pm);

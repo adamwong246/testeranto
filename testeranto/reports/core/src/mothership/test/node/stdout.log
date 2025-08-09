@@ -1,0 +1,8 @@
+Suite { TheMothership: [Function (anonymous)] }
+beforeAll - initial setup
+beforeEach - starting app on port undefined
+andWhen - executing action
+afterEach - cleaning up
+afterAll - final cleanup
+Example app listening on port undefined
+[TOOBJ] Serializing When with artifacts: []

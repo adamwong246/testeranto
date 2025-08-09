@@ -4,23 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestStatusBadge = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const react_1 = __importDefault(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
 const TestStatusBadge = (props) => {
-    // Enhanced logging
-    console.groupCollapsed(`[TestStatusBadge] Rendering for ${props.testName}`);
-    console.log('Raw props:', JSON.parse(JSON.stringify(props)));
     // Simplified status determination
     const hasTests = props.testsExist !== false;
     const testCompleted = props.runTimeErrors !== -1;
     const hasRuntimeErrors = props.runTimeErrors > 0;
-    console.log('Status flags:', {
-        hasTests,
-        testCompleted,
-        hasRuntimeErrors,
-        typeErrors: props.typeErrors,
-        staticErrors: props.staticErrors
-    });
     let bddStatus;
     if (!hasTests) {
         console.warn('No tests.json found - marking as failed');

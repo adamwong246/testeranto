@@ -97,6 +97,13 @@
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/AppFrame.test/index/prompt.txt",
     "failingFeatures": {}
   },
+  "src/components/pure/FeaturesReporterView.test/index.tsx": {
+    "typeErrors": 31,
+    "staticErrors": 0,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/FeaturesReporterView.test/index/prompt.txt",
+    "failingFeatures": {}
+  },
   "src/mothership/test.ts": {
     "typeErrors": 14,
     "staticErrors": 0,

@@ -1,4 +1,3 @@
-stdout > receiveTestResourceConfig {"name":"src/lib/classBuilder.test/classBuilder.test.ts","ports":[],"fs":"testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/ad2e6554-b6d5-45fd-9b24-d38f6d2d5715"}
 Running beforeEach with initializer: [Function: Default]
 Creating default test builder instance
 Builder created: TestClassBuilderMock {
@@ -182,7 +181,7 @@ Initializer returned: TestClassBuilderMock {
   testJobs: [],
   summary: {}
 }
-stdout > Checking builder initialization: {
+Checking builder initialization: {
   builder: TestClassBuilderMock {
     artifacts: [],
     testResourceRequirement: [class (anonymous)],
@@ -418,7 +417,7 @@ Initializer returned: TestClassBuilderMock {
   givenOverides: {
     Default: [Function (anonymous)],
     WithCustomInput: [Function (anonymous)],
-    WithResourceRequirements: [Fstdout > unction (anonymous)],
+    WithResourceRequirements: [Function (anonymous)],
     WithCustomImplementation: [Function (anonymous)],
     WithCustomSpecification: [Function (anonymous)]
   },
@@ -618,4 +617,3 @@ Initializer returned: TestClassBuilderMock {
   summary: {}
 }
 [TOOBJ] Serializing When with artifacts: []
-stderr > goodbye node with failures 0

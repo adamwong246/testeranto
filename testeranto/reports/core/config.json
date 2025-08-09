@@ -113,6 +113,14 @@
       []
     ],
     [
+      "src/components/pure/FeaturesReporterView.test/index.tsx",
+      "web",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
       "src/mothership/test.ts",
       "node",
       {

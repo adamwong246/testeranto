@@ -41,7 +41,7 @@ export class NodeTesteranto<
   }
 
   async receiveTestResourceConfig(partialTestResource: string) {
-    console.log("receiveTestResourceConfig", partialTestResource);
+    // console.log("receiveTestResourceConfig", partialTestResource);
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Node(t, ipcfile);
     return await this.testJobs[0].receiveTestResourceConfig(pm);

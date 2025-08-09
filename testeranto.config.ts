@@ -82,6 +82,13 @@ const config: IProject = {
           [],
         ],
 
+        [
+          "src/components/pure/FeaturesReporterView.test/index.tsx",
+          "web",
+          { ports: 0 },
+          [],
+        ],
+
         ["src/mothership/test.ts", "node", { ports: 0 }, []],
         // ["./src/lib/abstractBase.test/index.ts", "node", { ports: 0 }, []],
         // [

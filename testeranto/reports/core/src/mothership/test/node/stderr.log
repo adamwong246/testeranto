@@ -1,12 +1,4 @@
-stdout > Suite { TheMothership: [Function (anonymous)] }
-receiveTestResourceConfig {"name":"src/mothership/test.ts","ports":[],"fs":"testeranto/reports/core/src/mothership/test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/ad2e6554-b6d5-45fd-9b24-d38f6d2d5715"}
-beforeAll - initial setup
-beforeEach - starting app on port undefined
-andWhen - executing action
-afterEach - cleaning up
-afterAll - final cleanup
-Example app listening on port undefined
-stderr > [ERROR] Resource claim failed: TypeError: Failed to parse URL from http://localhost:undefined/claim?resource=test
+[ERROR] Resource claim failed: TypeError: Failed to parse URL from http://localhost:undefined/claim?resource=test
     at Object.fetch (node:internal/deps/undici/undici:11576:11)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/mothership/test.mjs:24101:26
     at async When.andWhen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:869:18)
@@ -15,8 +7,8 @@ stderr > [ERROR] Resource claim failed: TypeError: Failed to parse URL from http
     at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:564:20)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:349:21
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:380:31)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-FY5VYZH2.mjs:232:12)
-    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-FY5VYZH2.mjs:248:15) {
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-HF42XB4C.mjs:231:12)
+    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-HF42XB4C.mjs:247:15) {
   [cause]: TypeError [ERR_INVALID_URL]: Invalid URL
       at new NodeError (node:internal/errors:405:5)
       at new URL (node:internal/url:778:13)
@@ -33,5 +25,4 @@ stderr > [ERROR] Resource claim failed: TypeError: Failed to parse URL from http
   }
 }
 [ERROR] When step failed: IClaimTheResource: test TypeError: Failed to parse URL from http://localhost:undefined/claim?resource=test
-stdout > [TOOBJ] Serializing When with artifacts: []
-stderr > goodbye node with failures 0
+goodbye node with failures 0

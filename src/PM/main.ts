@@ -37,6 +37,28 @@ const fileHashes = {};
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
+function createLogStreams(reportDest: string, runtime: IRunTime) {
+  // Only create streams needed for each runtime
+  const streams = runtime === 'node' || runtime === 'pure'
+    ? {
+        stdout: fs.createWriteStream(`${reportDest}/stdout.log`),
+        stderr: fs.createWriteStream(`${reportDest}/stderr.log`)
+      }
+    : {
+        info: fs.createWriteStream(`${reportDest}/info.log`),
+        warn: fs.createWriteStream(`${reportDest}/warn.log`),
+        error: fs.createWriteStream(`${reportDest}/error.log`),
+        debug: fs.createWriteStream(`${reportDest}/debug.log`)
+      };
+
+  return {
+    ...streams,
+    closeAll: () => {
+      Object.values(streams).forEach(stream => !stream.closed && stream.close());
+    }
+  };
+}
+
 async function fileHash(filePath, algorithm = "md5") {
   return new Promise<string>((resolve, reject) => {
     const hash = crypto.createHash(algorithm);
@@ -406,6 +428,10 @@ export class PM_Main extends PM_WithEslintAndTsc {
     this.nodeMetafileWatcher.close();
     this.webMetafileWatcher.close();
     this.importMetafileWatcher.close();
+    
+    // Close any remaining log streams
+    Object.values(this.logStreams || {}).forEach(logs => logs.closeAll());
+    
     this.checkForShutdown();
   }
 
@@ -573,8 +599,23 @@ export class PM_Main extends PM_WithEslintAndTsc {
     //   })
     // );
 
+    const logs = createLogStreams(reportDest, "pure");
+
     try {
       await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+        // Override console methods to redirect logs
+        // Only override stdout/stderr methods for pure runtime
+        const originalConsole = {...console};
+        
+        console.log = (...args) => {
+          logs.stdout.write(args.join(' ') + '\n');
+          originalConsole.log(...args);
+        };
+        
+        console.error = (...args) => {
+          logs.stderr.write(args.join(' ') + '\n'); 
+          originalConsole.error(...args);
+        };
         return module.default
           .then((defaultModule) => {
             defaultModule
@@ -777,20 +818,16 @@ export class PM_Main extends PM_WithEslintAndTsc {
       });
     });
 
-    const oStream = fs.createWriteStream(`${reportDest}/logs.txt`);
-
-    const errFile = `${reportDest}/logs.txt`;
-
-    if (fs.existsSync(errFile)) {
-      fs.rmSync(errFile);
-    }
+    const logs = createLogStreams(reportDest, "node");
 
     server.listen(ipcfile, () => {
-      child.stderr?.on("data", (data) => {
-        oStream.write(`stderr > ${data}`);
-      });
+      // Only handle stdout/stderr for node runtime
       child.stdout?.on("data", (data) => {
-        oStream.write(`stdout > ${data}`);
+        logs.stdout.write(data);
+      });
+      
+      child.stderr?.on("data", (data) => {
+        logs.stderr.write(data);
       });
       child.on("error", (err) => {});
       child.on("close", (code) => {
@@ -1252,12 +1289,29 @@ export class PM_Main extends PM_WithEslintAndTsc {
 
     const d = `${dest}?cacheBust=${Date.now()}`;
 
-    const ofile = `${reportDest}/logs.txt`;
-    const oStream = fs.createWriteStream(ofile);
+    const logs = createLogStreams(reportDest, "web");
+    const oStream = fs.createWriteStream(`${reportDest}/logs.txt`);
 
     this.browser
       .newPage()
       .then((page) => {
+        page.on("console", (log: ConsoleMessage) => {
+          const msg = `${log.text()}\n`;
+          
+          // Only handle web console levels
+          switch(log.type()) {
+            case 'info': logs.info.write(msg); break;
+            case 'warning': logs.warn.write(msg); break; 
+            case 'error': logs.error.write(msg); break;
+            case 'debug': logs.debug.write(msg); break;
+            default: break; // Skip other types
+          }
+        });
+
+        page.on("close", () => {
+          logs.closeAll();
+          oStream.close();
+        });
         this.mapping().forEach(async ([command, func]) => {
           if (command === "page") {
             page.exposeFunction(command, (x?) => {
@@ -1326,16 +1380,8 @@ export class PM_Main extends PM_WithEslintAndTsc {
         });
 
         page.on("console", (log: ConsoleMessage) => {
-          // console.log("console message: ", log.text());
-          if (oStream.closed) {
-            console.log("missed console message: ", log.text());
-            return;
-          } else {
+          if (!oStream.closed) {
             oStream.write(log.text());
-            oStream.write("\n");
-            oStream.write(JSON.stringify(log.location()));
-            oStream.write("\n");
-            oStream.write(JSON.stringify(log.stackTrace()));
             oStream.write("\n");
           }
         });

@@ -1,20 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { Badge } from 'react-bootstrap';
 export const TestStatusBadge = (props) => {
-    // Enhanced logging
-    console.groupCollapsed(`[TestStatusBadge] Rendering for ${props.testName}`);
-    console.log('Raw props:', JSON.parse(JSON.stringify(props)));
     // Simplified status determination
     const hasTests = props.testsExist !== false;
     const testCompleted = props.runTimeErrors !== -1;
     const hasRuntimeErrors = props.runTimeErrors > 0;
-    console.log('Status flags:', {
-        hasTests,
-        testCompleted,
-        hasRuntimeErrors,
-        typeErrors: props.typeErrors,
-        staticErrors: props.staticErrors
-    });
     let bddStatus;
     if (!hasTests) {
         console.warn('No tests.json found - marking as failed');

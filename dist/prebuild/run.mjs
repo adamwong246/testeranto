@@ -668,6 +668,23 @@ var changes = {};
 var fileHashes = {};
 var files2 = {};
 var screenshots2 = {};
+function createLogStreams(reportDest, runtime) {
+  const streams = runtime === "node" || runtime === "pure" ? {
+    stdout: fs3.createWriteStream(`${reportDest}/stdout.log`),
+    stderr: fs3.createWriteStream(`${reportDest}/stderr.log`)
+  } : {
+    info: fs3.createWriteStream(`${reportDest}/info.log`),
+    warn: fs3.createWriteStream(`${reportDest}/warn.log`),
+    error: fs3.createWriteStream(`${reportDest}/error.log`),
+    debug: fs3.createWriteStream(`${reportDest}/debug.log`)
+  };
+  return {
+    ...streams,
+    closeAll: () => {
+      Object.values(streams).forEach((stream) => !stream.closed && stream.close());
+    }
+  };
+}
 async function fileHash(filePath, algorithm = "md5") {
   return new Promise((resolve, reject) => {
     const hash = crypto.createHash(algorithm);
@@ -794,8 +811,18 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         process.exit(-1);
       }
       const builtfile = dest;
+      const logs = createLogStreams(reportDest, "pure");
       try {
         await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+          const originalConsole = { ...console };
+          console.log = (...args) => {
+            logs.stdout.write(args.join(" ") + "\n");
+            originalConsole.log(...args);
+          };
+          console.error = (...args) => {
+            logs.stderr.write(args.join(" ") + "\n");
+            originalConsole.error(...args);
+          };
           return module.default.then((defaultModule) => {
             defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
               statusMessagePretty(results.fails, src, "pure");
@@ -948,17 +975,13 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           }
         });
       });
-      const oStream = fs3.createWriteStream(`${reportDest}/logs.txt`);
-      const errFile = `${reportDest}/logs.txt`;
-      if (fs3.existsSync(errFile)) {
-        fs3.rmSync(errFile);
-      }
+      const logs = createLogStreams(reportDest, "node");
       server.listen(ipcfile, () => {
-        child.stderr?.on("data", (data) => {
-          oStream.write(`stderr > ${data}`);
-        });
         child.stdout?.on("data", (data) => {
-          oStream.write(`stdout > ${data}`);
+          logs.stdout.write(data);
+        });
+        child.stderr?.on("data", (data) => {
+          logs.stderr.write(data);
         });
         child.on("error", (err) => {
         });
@@ -1017,7 +1040,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       console.log(ansiC2.green(ansiC2.inverse(`launchWebSideCar ${src}`)));
       const fileStreams2 = [];
       const doneFileStream2 = [];
-      const oStream = fs3.createWriteStream(`${destFolder}/logs.txt`);
+      const oStream2 = fs3.createWriteStream(`${destFolder}/logs.txt`);
       return new Promise((res, rej) => {
         this.browser.newPage().then(async (page) => {
           this.mapping().forEach(async ([command, func]) => {
@@ -1031,34 +1054,34 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             Promise.all(screenshots2[src] || []).then(() => {
               delete screenshots2[src];
               page.close();
-              oStream.close();
+              oStream2.close();
             });
           };
           page.on("pageerror", (err) => {
             console.debug(`Error from ${src}: [${err.name}] `);
-            oStream.write(err.name);
-            oStream.write("\n");
+            oStream2.write(err.name);
+            oStream2.write("\n");
             if (err.cause) {
               console.debug(`Error from ${src} cause: [${err.cause}] `);
-              oStream.write(err.cause);
-              oStream.write("\n");
+              oStream2.write(err.cause);
+              oStream2.write("\n");
             }
             if (err.stack) {
               console.debug(`Error from stack ${src}: [${err.stack}] `);
-              oStream.write(err.stack);
-              oStream.write("\n");
+              oStream2.write(err.stack);
+              oStream2.write("\n");
             }
             console.debug(`Error from message ${src}: [${err.message}] `);
-            oStream.write(err.message);
-            oStream.write("\n");
+            oStream2.write(err.message);
+            oStream2.write("\n");
             this.bddTestIsNowDone(src, -1);
             close();
           });
           page.on("console", (log) => {
-            oStream.write(log.text());
-            oStream.write(JSON.stringify(log.location()));
-            oStream.write(JSON.stringify(log.stackTrace()));
-            oStream.write("\n");
+            oStream2.write(log.text());
+            oStream2.write(JSON.stringify(log.location()));
+            oStream2.write(JSON.stringify(log.stackTrace()));
+            oStream2.write("\n");
           });
           await page.goto(`file://${`${destFolder}.html`}`, {});
           const webArgz = JSON.stringify({
@@ -1159,22 +1182,22 @@ var PM_Main = class extends PM_WithEslintAndTsc {
               });
             });
           });
-          const oStream = fs3.createWriteStream(`${reportDest}/logs.txt`);
+          const oStream2 = fs3.createWriteStream(`${reportDest}/logs.txt`);
           const child = spawn("node", [builtfile, JSON.stringify(argz)], {
             stdio: ["pipe", "pipe", "pipe", "ipc"]
             // silent: true
           });
           const p = "/tmp/tpipe" + Math.random();
-          const errFile = `${reportDest}/logs.txt`;
+          const errFile2 = `${reportDest}/logs.txt`;
           server.listen(p, () => {
             child.stderr?.on("data", (data) => {
-              oStream.write(`stderr > ${data}`);
+              oStream2.write(`stderr > ${data}`);
             });
             child.stdout?.on("data", (data) => {
-              oStream.write(`stdout > ${data}`);
+              oStream2.write(`stdout > ${data}`);
             });
             child.on("close", (code) => {
-              oStream.close();
+              oStream2.close();
               server.close();
               haltReturns = true;
             });
@@ -1194,7 +1217,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
               console.log(
                 ansiC2.red(
                   ansiC2.inverse(
-                    `launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`
+                    `launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile2}for more info`
                   )
                 )
               );
@@ -1289,9 +1312,33 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         browserWSEndpoint: this.browser.wsEndpoint()
       });
       const d = `${dest}?cacheBust=${Date.now()}`;
-      const ofile = `${reportDest}/logs.txt`;
-      const oStream = fs3.createWriteStream(ofile);
+      const logs = createLogStreams(reportDest, "web");
+      const oStream2 = fs3.createWriteStream(`${reportDest}/logs.txt`);
       this.browser.newPage().then((page) => {
+        page.on("console", (log) => {
+          const msg = `${log.text()}
+`;
+          switch (log.type()) {
+            case "info":
+              logs.info.write(msg);
+              break;
+            case "warning":
+              logs.warn.write(msg);
+              break;
+            case "error":
+              logs.error.write(msg);
+              break;
+            case "debug":
+              logs.debug.write(msg);
+              break;
+            default:
+              break;
+          }
+        });
+        page.on("close", () => {
+          logs.closeAll();
+          oStream2.close();
+        });
         this.mapping().forEach(async ([command, func]) => {
           if (command === "page") {
             page.exposeFunction(command, (x) => {
@@ -1315,7 +1362,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           Promise.all(screenshots2[src] || []).then(() => {
             delete screenshots2[src];
             page.close();
-            oStream.close();
+            oStream2.close();
           });
           return;
         };
@@ -1325,34 +1372,27 @@ var PM_Main = class extends PM_WithEslintAndTsc {
               `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
             )
           );
-          oStream.write(err.name);
-          oStream.write("\n");
+          oStream2.write(err.name);
+          oStream2.write("\n");
           if (err.cause) {
-            oStream.write(err.cause);
-            oStream.write("\n");
+            oStream2.write(err.cause);
+            oStream2.write("\n");
           }
           if (err.stack) {
-            oStream.write(err.stack);
-            oStream.write("\n");
+            oStream2.write(err.stack);
+            oStream2.write("\n");
           }
           if (err.message) {
-            oStream.write(err.message);
-            oStream.write("\n");
+            oStream2.write(err.message);
+            oStream2.write("\n");
           }
           this.bddTestIsNowDone(src, -1);
           close();
         });
         page.on("console", (log) => {
-          if (oStream.closed) {
-            console.log("missed console message: ", log.text());
-            return;
-          } else {
-            oStream.write(log.text());
-            oStream.write("\n");
-            oStream.write(JSON.stringify(log.location()));
-            oStream.write("\n");
-            oStream.write(JSON.stringify(log.stackTrace()));
-            oStream.write("\n");
+          if (!oStream2.closed) {
+            oStream2.write(log.text());
+            oStream2.write("\n");
           }
         });
         await page.goto(`file://${`${destFolder}.html`}`, {});
@@ -1720,6 +1760,7 @@ import('${d}').then(async (x) => {
     this.nodeMetafileWatcher.close();
     this.webMetafileWatcher.close();
     this.importMetafileWatcher.close();
+    Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
     this.checkForShutdown();
   }
   async metafileOutputs(platform) {

@@ -15,7 +15,7 @@ class NodeTesteranto extends core_js_1.default {
         });
     }
     async receiveTestResourceConfig(partialTestResource) {
-        console.log("receiveTestResourceConfig", partialTestResource);
+        // console.log("receiveTestResourceConfig", partialTestResource);
         const t = JSON.parse(partialTestResource);
         const pm = new node_js_1.PM_Node(t, ipcfile);
         return await this.testJobs[0].receiveTestResourceConfig(pm);
