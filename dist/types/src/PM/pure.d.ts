@@ -29,10 +29,13 @@ export declare class PM_Pure extends PM {
     screencastStop(p: string): any;
     customScreenShot(opts: ScreencastOptions, page: string): any;
     existsSync(destFolder: string): Promise<boolean>;
-    mkdirSync(): any;
-    write(uid: number, contents: string): any;
-    writeFileSync(x: any): any;
-    createWriteStream(filepath: string): any;
+    mkdirSync(): boolean;
+    write(uid: number, contents: string): Promise<boolean>;
+    writeFileSync(): Promise<boolean>;
+    createWriteStream(): {
+        write: () => boolean;
+        end: () => void;
+    };
     end(uid: number): any;
     customclose(): void;
     testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): void;

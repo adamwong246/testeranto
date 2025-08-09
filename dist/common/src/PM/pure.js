@@ -77,23 +77,27 @@ class PM_Pure extends _1.PM {
         return globalThis["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page, this.testResourceConfiguration.name);
     }
     existsSync(destFolder) {
-        return globalThis["existsSync"](this.testResourceConfiguration.fs + "/" + destFolder);
+        // Pure runtime doesn't need filesystem checks
+        return Promise.resolve(true);
     }
     mkdirSync() {
-        return globalThis["mkdirSync"](this.testResourceConfiguration.fs + "/");
+        // Pure runtime doesn't need directories
+        return true;
     }
     write(uid, contents) {
-        return globalThis["write"](uid, contents);
+        // Pure runtime doesn't need file writing
+        return Promise.resolve(true);
     }
-    writeFileSync(x) {
-        // eslint-disable-next-line prefer-rest-params
-        const z = arguments["0"];
-        const filepath = z[0];
-        const contents = z[1];
-        return globalThis["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
+    writeFileSync() {
+        // Pure runtime doesn't need file writing
+        return Promise.resolve(true);
     }
-    createWriteStream(filepath) {
-        return globalThis["createWriteStream"](this.testResourceConfiguration.fs + "/" + filepath, this.testResourceConfiguration.name);
+    createWriteStream() {
+        // Pure runtime doesn't need file streams
+        return {
+            write: () => true,
+            end: () => { }
+        };
     }
     end(uid) {
         return globalThis["end"](uid);

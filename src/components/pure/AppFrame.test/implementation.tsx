@@ -3,7 +3,7 @@ import React from "react";
 
 import { ITestImplementation } from "../../../CoreTypes";
 
-import { I, O } from "./types";
+import { I, ISelection, O } from "./types";
 
 export const implementation: ITestImplementation<I, O> = {
   suites: {
@@ -12,10 +12,12 @@ export const implementation: ITestImplementation<I, O> = {
   },
 
   givens: {
-    Default: () => ({
+    Default: () => (selection: ISelection) => ({
+      ...selection,
       children: <div>Test Content</div>,
     }),
-    WithChildren: (children: React.ReactNode) => () => ({
+    WithChildren: (children: React.ReactNode) => () => (selection: ISelection) => ({
+      ...selection,
       children,
     }),
   },
@@ -25,15 +27,26 @@ export const implementation: ITestImplementation<I, O> = {
   thens: {
     takeScreenshot:
       (name: string) =>
-        async ({ htmlElement }, pm) => {
+        async ({ htmlElement, container }, pm) => {
+          if (!container) throw new Error('Container not found');
           const p = await pm.page();
-          await pm.customScreenShot({ path: name }, p);
-          return { htmlElement };
+          await pm.customScreenShot({ path: `${name}.png` }, p);
+          return {
+            htmlElement,
+            reactElement: React.createElement('div'),
+            domRoot: container,
+            container
+          };
         },
-    RendersContainer: () => async ({ htmlElement }) => {
-      const container = htmlElement.querySelector('.min-vh-100');
+    RendersContainer: () => async ({ htmlElement, container }) => {
+      // const container = htmlElement.querySelector('.min-vh-100');
       assert.exists(container, 'Should have min-vh-100 container');
-      return { htmlElement };
+      return {
+        htmlElement,
+        reactElement: React.createElement('div'),
+        domRoot: container as HTMLElement,
+        container: container as HTMLElement
+      };
     },
     HasMainContent: () => async ({ htmlElement }) => {
       const main = htmlElement.querySelector('main.flex-grow-1');

@@ -3,9 +3,9 @@
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (9,3): Type '(subject: import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestR...' is not assignable to type '(subject: import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestR...'. Two different types with this name exist, but they are unrelated.
   Type 'Promise<() => BaseBuilder<any, any, any, any, any, any>>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
     Type '() => BaseBuilder<any, any, any, any, any, any>' is not assignable to type 'BaseBuilder<any, any, any, any, any, any>'.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (15,26): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (18,26): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (20,25): Type 'BaseBuilder<any, any, any, any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (14,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (17,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.adapter.ts (19,25): Type 'BaseBuilder<any, any, any, any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
 /Users/adam/Code/testeranto/src/lib/baseBuilder.test/baseBuilder.test.implementation.ts (19,5): Type '() => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}>' is not assignable to type '() => () => BaseBuilder<any, any, any, any, any, any>'.
   Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}>' is not assignable to type '() => BaseBuilder<any, any, any, any, any, any>'.
     Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}>' provides no match for the signature '(): BaseBuilder<any, any, any, any, any, any>'.
@@ -56,6 +56,9 @@
       Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
         Types of property 'path' are incompatible.
           Type 'string' is not assignable to type '`${string}.webm`'.
+/Users/adam/Code/testeranto/src/PM/pure.ts (145,3): Property 'createWriteStream' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '() => { write: () => boolean; end: () => void; }' is not assignable to type '(filepath: string, testName: string) => Promise<string>'.
+    Type '{ write: () => boolean; end: () => void; }' is missing the following properties from type 'Promise<string>': then, catch, finally, [Symbol.toStringTag]
 /Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
   Property 'mainFrame' does not exist on type 'string'.
 /Users/adam/Code/testeranto/src/Web.ts (43,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.

@@ -56,33 +56,86 @@ const changes = {};
 const fileHashes = {};
 const files = {};
 const screenshots = {};
+function runtimeLogs(runtime, reportDest) {
+    const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+    try {
+        if (!fs_1.default.existsSync(safeDest)) {
+            fs_1.default.mkdirSync(safeDest, { recursive: true });
+        }
+        if (runtime === "node") {
+            return {
+                stdout: fs_1.default.createWriteStream(`${safeDest}/stdout.log`),
+                stderr: fs_1.default.createWriteStream(`${safeDest}/stderr.log`),
+                exit: fs_1.default.createWriteStream(`${safeDest}/exit.log`),
+            };
+        }
+        else if (runtime === "web") {
+            return {
+                info: fs_1.default.createWriteStream(`${safeDest}/info.log`),
+                warn: fs_1.default.createWriteStream(`${safeDest}/warn.log`),
+                error: fs_1.default.createWriteStream(`${safeDest}/error.log`),
+                debug: fs_1.default.createWriteStream(`${safeDest}/debug.log`),
+                exit: fs_1.default.createWriteStream(`${safeDest}/exit.log`),
+            };
+        }
+        else if (runtime === "pure") {
+            return {
+                exit: fs_1.default.createWriteStream(`${safeDest}/exit.log`),
+            };
+        }
+        else {
+            throw `unknown runtime: ${runtime}`;
+        }
+    }
+    catch (e) {
+        console.error(`Failed to create log streams in ${safeDest}:`, e);
+        throw e;
+    }
+}
 function createLogStreams(reportDest, runtime) {
     // Create directory if it doesn't exist
     if (!fs_1.default.existsSync(reportDest)) {
         fs_1.default.mkdirSync(reportDest, { recursive: true });
     }
-    const streams = Object.assign({ exit: fs_1.default.createWriteStream(`${reportDest}/exit.log`) }, (runtime === "node" || runtime === "pure"
-        ? {
-            stdout: fs_1.default.createWriteStream(`${reportDest}/stdout.log`),
-            stderr: fs_1.default.createWriteStream(`${reportDest}/stderr.log`),
+    const streams = runtimeLogs(runtime, reportDest);
+    // const streams = {
+    //   exit: fs.createWriteStream(`${reportDest}/exit.log`),
+    const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+    try {
+        if (!fs_1.default.existsSync(safeDest)) {
+            fs_1.default.mkdirSync(safeDest, { recursive: true });
         }
-        : {
-            info: fs_1.default.createWriteStream(`${reportDest}/info.log`),
-            warn: fs_1.default.createWriteStream(`${reportDest}/warn.log`),
-            error: fs_1.default.createWriteStream(`${reportDest}/error.log`),
-            debug: fs_1.default.createWriteStream(`${reportDest}/debug.log`),
-        }));
-    return Object.assign(Object.assign({}, streams), { closeAll: () => {
-            Object.values(streams).forEach((stream) => !stream.closed && stream.close());
-        }, writeExitCode: (code, error) => {
-            if (error) {
-                streams.exit.write(`Error: ${error.message}\n`);
-                if (error.stack) {
-                    streams.exit.write(`Stack Trace:\n${error.stack}\n`);
+        const streams = runtimeLogs(runtime, safeDest);
+        // const streams = {
+        //   exit: fs.createWriteStream(`${safeDest}/exit.log`),
+        //   ...(runtime === "node" || runtime === "pure"
+        //     ? {
+        //         stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
+        //         stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
+        //       }
+        //     : {
+        //         info: fs.createWriteStream(`${safeDest}/info.log`),
+        //         warn: fs.createWriteStream(`${safeDest}/warn.log`),
+        //         error: fs.createWriteStream(`${safeDest}/error.log`),
+        //         debug: fs.createWriteStream(`${safeDest}/debug.log`),
+        //       }),
+        // };
+        return Object.assign(Object.assign({}, streams), { closeAll: () => {
+                Object.values(streams).forEach((stream) => !stream.closed && stream.close());
+            }, writeExitCode: (code, error) => {
+                if (error) {
+                    streams.exit.write(`Error: ${error.message}\n`);
+                    if (error.stack) {
+                        streams.exit.write(`Stack Trace:\n${error.stack}\n`);
+                    }
                 }
-            }
-            streams.exit.write(`${code}\n`);
-        } });
+                streams.exit.write(`${code}\n`);
+            }, exit: streams.exit });
+    }
+    catch (e) {
+        console.error(`Failed to create log streams in ${safeDest}:`, e);
+        throw e;
+    }
 }
 async function fileHash(filePath, algorithm = "md5") {
     return new Promise((resolve, reject) => {
@@ -102,7 +155,7 @@ async function fileHash(filePath, algorithm = "md5") {
 }
 const statusMessagePretty = (failures, test, runtime) => {
     if (failures === 0) {
-        console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`${runtime} > ${test} completed successfully (exit code: 0)`)));
+        console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`${runtime} > ${test}`)));
     }
     else if (failures > 0) {
         console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${runtime} > ${test} failed ${failures} times (exit code: ${failures})`)));
@@ -196,7 +249,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 const openPorts = Object.entries(this.ports).filter(([portnumber, status]) => status === "");
                 if (openPorts.length >= testConfigResource.ports) {
                     for (let i = 0; i < testConfigResource.ports; i++) {
-                        portsToUse.push(Number(openPorts[i][0]));
+                        portsToUse.push(openPorts[i][0]);
                         this.ports[openPorts[i][0]] = src; // port is now claimed
                     }
                     argz = JSON.stringify({
@@ -248,14 +301,14 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     // Override console methods to redirect logs
                     // Only override stdout/stderr methods for pure runtime
                     const originalConsole = Object.assign({}, console);
-                    console.log = (...args) => {
-                        logs.stdout.write(args.join(" ") + "\n");
-                        originalConsole.log(...args);
-                    };
-                    console.error = (...args) => {
-                        logs.stderr.write(args.join(" ") + "\n");
-                        originalConsole.error(...args);
-                    };
+                    // console.log = (...args) => {
+                    //   logs.stdout.write(args.join(" ") + "\n");
+                    //   originalConsole.log(...args);
+                    // };
+                    // console.error = (...args) => {
+                    //   logs.stderr.write(args.join(" ") + "\n");
+                    //   originalConsole.error(...args);
+                    // };
                     return module.default
                         .then((defaultModule) => {
                         defaultModule
@@ -277,7 +330,9 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     })
                         .catch((e2) => {
                         console.log(ansi_colors_1.default.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`));
-                        this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
+                        // this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
+                        logs.exit.write(e2.stack);
+                        logs.exit.write(-1);
                         this.bddTestIsNowDone(src, -1);
                         statusMessagePretty(-1, src, "pure");
                         // console.error(e);
@@ -294,7 +349,9 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             catch (e3) {
                 logs.writeExitCode(-1, e3);
                 console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} 1 errored with: ${e3}. Check ${reportDest}/error.log for more info`)));
-                this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
+                // this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
+                logs.exit.write(e3.stack);
+                logs.exit.write(-1);
                 this.bddTestIsNowDone(src, -1);
                 statusMessagePretty(-1, src, "pure");
             }
@@ -339,7 +396,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen === "");
                 if (openPorts.length >= testConfigResource.ports) {
                     for (let i = 0; i < testConfigResource.ports; i++) {
-                        portsToUse.push(Number(openPorts[i][0])); // Convert string port to number
+                        portsToUse.push(openPorts[i][0]); // Convert string port to number
                         this.ports[openPorts[i][0]] = src; // port is now claimed
                     }
                     testResources = JSON.stringify({
@@ -464,7 +521,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 child.on("error", (e) => {
                     console.log("error");
                     haltReturns = true;
-                    console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} errored with: ${e.name}. Check ${errFile} for more info`)));
+                    console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} errored with: ${e.name}. Check error logs for more info`)));
                     this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
                     this.bddTestIsNowDone(src, -1);
                     statusMessagePretty(-1, src, "node");
@@ -477,8 +534,9 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             // const d = dest + ".mjs";
             const destFolder = dest.replace(".mjs", "");
             console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`launchWebSideCar ${src}`)));
-            const fileStreams2 = [];
-            const doneFileStream2 = [];
+            // const fileStreams2: fs.WriteStream[] = [];
+            // const doneFileStream2: Promise<any>[] = [];
+            const logs = createLogStreams(dest, "web");
             return new Promise((res, rej) => {
                 this.browser
                     .newPage()
@@ -499,7 +557,6 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         Promise.all(screenshots[src] || []).then(() => {
                             delete screenshots[src];
                             page.close();
-                            oStream.close();
                         });
                     };
                     page.on("pageerror", (err) => {
@@ -593,6 +650,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 browserWSEndpoint: this.browser.wsEndpoint(),
             };
             const testReq = sidecar[2];
+            const logs = createLogStreams(dest, "node");
             const portsToUse = [];
             if (testReq.ports === 0) {
                 // argz = {
@@ -672,7 +730,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                             }
                             haltReturns = true;
                             console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`)));
-                            (_a = logs.error) === null || _a === void 0 ? void 0 : _a.write(e.toString() + '\n');
+                            (_a = logs.error) === null || _a === void 0 ? void 0 : _a.write(e.toString() + "\n");
                             // this.bddTestIsNowDone(src, -1);
                             // statusMessagePretty(-1, src);
                         });
@@ -722,7 +780,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 const openPorts = Object.entries(this.ports).filter(([portnumber, portopen]) => portopen === "");
                 if (openPorts.length >= testConfigResource.ports) {
                     for (let i = 0; i < testConfigResource.ports; i++) {
-                        portsToUse.push(openPorts[i][0]);
+                        portsToUse.push(Number(openPorts[i][0]));
                         this.ports[openPorts[i][0]] = src; // port is now claimed
                     }
                     argz = {
@@ -736,7 +794,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 }
                 else {
                     this.queue.push(src);
-                    return;
+                    // return;
                 }
             }
             else {
@@ -835,7 +893,6 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     Promise.all(screenshots[src] || []).then(() => {
                         delete screenshots[src];
                         page.close();
-                        oStream.close();
                     });
                     return;
                 };
@@ -845,12 +902,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     this.bddTestIsNowDone(src, -1);
                     close();
                 });
-                page.on("console", (log) => {
-                    if (!oStream.closed) {
-                        oStream.write(log.text());
-                        oStream.write("\n");
-                    }
-                });
+                // page.on("console", (log: ConsoleMessage) => {});
                 await page.goto(`file://${`${destFolder}.html`}`, {});
                 await page
                     .evaluate(`

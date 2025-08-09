@@ -4,6 +4,9 @@ import { SettingsButton } from './SettingsButton';
 
 type AppFrameProps = {
   children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  'data-testid'?: string;
 };
 
 export const AppFrame = ({ children }: AppFrameProps) => {

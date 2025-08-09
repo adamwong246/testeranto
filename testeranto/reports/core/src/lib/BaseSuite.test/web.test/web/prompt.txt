@@ -9,6 +9,7 @@
 /read node_modules/testeranto/src/CoreTypes.ts
 
 /read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/tests.json
-/read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/logs.txt
 /read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/type_errors.txt
 /read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/lint_errors.txt
+
+/read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/log.log testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/debug.log testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/info.log testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/error.log

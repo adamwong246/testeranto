@@ -24,7 +24,7 @@ export class PM_Pure_Sidecar extends PM_sidecar {
       process.on("message", (message: { path?: string }) => {
         if (message.path) {
           this.client = net.createConnection(message.path, () => {
-            // super.start()
+            // No stdout/stderr logging for pure sidecars
             res();
           });
         }

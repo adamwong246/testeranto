@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import net from "net";
 import { ITTestResourceConfiguration } from "../../lib";
 import { PM_Node_Sidecar } from "../nodeSidecar";

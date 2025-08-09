@@ -1,14 +1,15 @@
-import { Ibdd_in, Ibdd_out } from "../../../CoreTypes";
 import * as React from "react";
 import * as ReactDom from "react-dom/client";
-import { IPM } from "../../../lib/types";
+import { Ibdd_in, Ibdd_out } from "../../../CoreTypes";
 export type IInput = {
     children: React.ReactNode;
 };
 export type ISelection = {
     htmlElement: HTMLElement;
     reactElement: React.ReactElement;
-    domRoot: ReactDom.Root;
+    domRoot: HTMLElement | null;
+    container?: HTMLElement;
+    testId?: string;
 };
 export type IStore = ISelection;
 export type ISubject = {
@@ -29,13 +30,4 @@ export type O = Ibdd_out<{
     HasTesterantoLink: [];
     takeScreenshot: [string];
 }>;
-export type I = Ibdd_in<IInput, ISubject, ISelection, IStore, (s: IStore) => IStore, (s: IStore) => IStore, {
-    hasContainerFluid: () => (s: IStore) => IStore;
-    hasNavBar: () => (s: IStore) => IStore;
-    hasNavBarTitle: () => (s: IStore) => IStore;
-    hasTestTable: () => (s: IStore) => IStore;
-    rendersTestSuite1: () => (s: IStore) => IStore;
-    rendersTestSuite2: () => (s: IStore) => IStore;
-    unhappyPath: () => (s: IStore) => IStore;
-    takeScreenshot: (name: string) => (s: IStore, pm: IPM) => Promise<IStore>;
-}>;
+export type I = Ibdd_in<IInput, ISubject, ISelection, IStore, (s: IStore) => IStore, (s: IStore) => IStore, {}>;

@@ -11,6 +11,7 @@
 /read node_modules/testeranto/src/CoreTypes.ts
 
 /read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/tests.json
-/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/logs.txt
 /read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/type_errors.txt
 /read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/lint_errors.txt
+
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.pure/pure/exit.log

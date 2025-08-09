@@ -9,6 +9,7 @@
 /read node_modules/testeranto/src/CoreTypes.ts
 
 /read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/tests.json
-/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/logs.txt
 /read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/type_errors.txt
 /read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/lint_errors.txt
+
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/log.log testeranto/reports/core/src/components/pure/ModalContent.test/index/web/debug.log testeranto/reports/core/src/components/pure/ModalContent.test/index/web/info.log testeranto/reports/core/src/components/pure/ModalContent.test/index/web/error.log

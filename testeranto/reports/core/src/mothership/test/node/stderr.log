@@ -1,14 +1,14 @@
 [ERROR] Resource claim failed: TypeError: Failed to parse URL from http://localhost:undefined/claim?resource=test
     at Object.fetch (node:internal/deps/undici/undici:11576:11)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/mothership/test.mjs:24101:26
-    at async When.andWhen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:869:18)
-    at async When.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:761:22)
-    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:696:9)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:564:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:349:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:380:31)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-HF42XB4C.mjs:231:12)
-    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-HF42XB4C.mjs:247:15) {
+    at async When.andWhen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:865:18)
+    at async When.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:757:22)
+    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:692:9)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-K4PFDPDZ.mjs:231:12)
+    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-K4PFDPDZ.mjs:247:15) {
   [cause]: TypeError [ERR_INVALID_URL]: Invalid URL
       at new NodeError (node:internal/errors:405:5)
       at new URL (node:internal/url:778:13)
@@ -18,8 +18,8 @@
       at fetch (node:internal/process/pre_execution:252:25)
       at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/mothership/test.mjs:24101:32
       at Object.andWhen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/mothership/test.mjs:24139:12)
-      at When.andWhen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:869:36)
-      at When.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-QPFMTGMK.mjs:761:33) {
+      at When.andWhen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:865:36)
+      at When.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:757:33) {
     input: 'http://localhost:undefined/claim?resource=test',
     code: 'ERR_INVALID_URL'
   }

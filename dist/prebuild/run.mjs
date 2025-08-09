@@ -8,7 +8,7 @@ import readline from "readline";
 import { spawn } from "node:child_process";
 import ansiColors from "ansi-colors";
 import net from "net";
-import fs3, { watch } from "fs";
+import fs4, { watch } from "fs";
 import path4 from "path";
 import puppeteer from "puppeteer-core";
 import ansiC2 from "ansi-colors";
@@ -123,15 +123,114 @@ var Queue = class {
 
 // src/PM/PM_WithEslintAndTsc.ts
 import ts from "typescript";
-import fs2 from "fs";
-import path3 from "path";
+import fs3 from "fs";
 import ansiC from "ansi-colors";
 import { ESLint } from "eslint";
 import tsc from "tsc-prog";
 
-// src/PM/base.ts
+// src/utils/makePrompt.ts
 import fs from "fs";
 import path2 from "path";
+var makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
+  summary[entryPoint].prompt = "?";
+  const promptPath = promptPather(entryPoint, runtime, name);
+  const testPaths = path2.join(
+    "testeranto",
+    "reports",
+    name,
+    entryPoint.split(".").slice(0, -1).join("."),
+    runtime,
+    `tests.json`
+  );
+  const lintPath = path2.join(
+    "testeranto",
+    "reports",
+    name,
+    entryPoint.split(".").slice(0, -1).join("."),
+    runtime,
+    `lint_errors.txt`
+  );
+  const typePath = path2.join(
+    "testeranto",
+    "reports",
+    name,
+    entryPoint.split(".").slice(0, -1).join("."),
+    runtime,
+    `type_errors.txt`
+  );
+  const messagePath = path2.join(
+    "testeranto",
+    "reports",
+    name,
+    entryPoint.split(".").slice(0, -1).join("."),
+    runtime,
+    `message.txt`
+  );
+  const p = path2.join(
+    "testeranto",
+    "reports",
+    name,
+    entryPoint.split(".").slice(0, -1).join("."),
+    runtime
+  );
+  fs.writeFileSync(
+    promptPath,
+    `
+${addableFiles.map((x) => {
+      return `/add ${x}`;
+    }).join("\n")}
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read ${testPaths}
+/read ${typePath}
+/read ${lintPath}
+
+/read ${logsOfRuntime(runtime, p)}
+`
+  );
+  fs.writeFileSync(
+    messagePath,
+    `
+There are 3 types of test reports. 
+1) bdd (highest priority)
+2) type checker
+3) static analysis (lowest priority)
+
+"tests.json" is the detailed result of the bdd tests.
+if these files do not exist, then something has gone badly wrong and needs to be addressed.
+
+"type_errors.txt" is the result of the type checker.
+if this file does not exist, then type check passed without errors;
+
+"lint_errors.txt" is the result of the static analysis.
+if this file does not exist, then static analysis passed without errors;
+
+BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns.
+Do not add error throwing/catching to the tests themselves. 
+`
+  );
+  summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${name}/reports/${runtime}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
+};
+function logsOfRuntime(runtime, p) {
+  if (runtime === "node") {
+    return ["stdout.log", "stderr.log", "exit.log"].map((f) => `${p}/${f}`).join(" ");
+  }
+  if (runtime === "web") {
+    return ["log.log", "debug.log", "info.log", "error.log"].map((f) => `${p}/${f}`).join(" ");
+  }
+  if (runtime === "pure") {
+    return ["exit.log"].map((f) => `${p}/${f}`).join(" ");
+  }
+  throw new Error("unknown runtime");
+}
+
+// src/PM/base.ts
+import fs2 from "fs";
+import path3 from "path";
 var fileStreams3 = [];
 var fPaths = [];
 var files = {};
@@ -188,8 +287,8 @@ var PM_Base = class {
   }
   async screencast(ssOpts, testName, page) {
     const p = ssOpts.path;
-    const dir = path2.dirname(p);
-    fs.mkdirSync(dir, {
+    const dir = path3.dirname(p);
+    fs2.mkdirSync(dir, {
       recursive: true
     });
     if (!files[testName]) {
@@ -209,8 +308,8 @@ var PM_Base = class {
   }
   async customScreenShot(ssOpts, testName, pageUid) {
     const p = ssOpts.path;
-    const dir = path2.dirname(p);
-    fs.mkdirSync(dir, {
+    const dir = path3.dirname(p);
+    fs2.mkdirSync(dir, {
       recursive: true
     });
     if (!files[testName]) {
@@ -236,11 +335,11 @@ var PM_Base = class {
     return true;
   }
   existsSync(destFolder) {
-    return fs.existsSync(destFolder);
+    return fs2.existsSync(destFolder);
   }
   async mkdirSync(fp) {
-    if (!fs.existsSync(fp)) {
-      return fs.mkdirSync(fp, {
+    if (!fs2.existsSync(fp)) {
+      return fs2.mkdirSync(fp, {
         recursive: true
       });
     }
@@ -251,26 +350,26 @@ var PM_Base = class {
     const contents = x[1];
     const testName = x[2];
     return new Promise(async (res) => {
-      fs.mkdirSync(path2.dirname(filepath), {
+      fs2.mkdirSync(path3.dirname(filepath), {
         recursive: true
       });
       if (!files[testName]) {
         files[testName] = /* @__PURE__ */ new Set();
       }
       files[testName].add(filepath);
-      await fs.writeFileSync(filepath, contents);
+      await fs2.writeFileSync(filepath, contents);
       res(true);
     });
   }
   async createWriteStream(filepath, testName) {
     const folder = filepath.split("/").slice(0, -1).join("/");
     return new Promise((res) => {
-      if (!fs.existsSync(folder)) {
-        return fs.mkdirSync(folder, {
+      if (!fs2.existsSync(folder)) {
+        return fs2.mkdirSync(folder, {
           recursive: true
         });
       }
-      const f = fs.createWriteStream(filepath);
+      const f = fs2.createWriteStream(filepath);
       fileStreams3.push(f);
       if (!files[testName]) {
         files[testName] = /* @__PURE__ */ new Set();
@@ -284,15 +383,15 @@ var PM_Base = class {
       callback(
         new Promise((res, rej) => {
           tLog("testArtiFactory =>", fPath);
-          const cleanPath = path2.resolve(fPath);
+          const cleanPath = path3.resolve(fPath);
           fPaths.push(cleanPath.replace(process.cwd(), ``));
           const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-          fs.mkdir(targetDir, { recursive: true }, async (error) => {
+          fs2.mkdir(targetDir, { recursive: true }, async (error) => {
             if (error) {
               console.error(`\u2757\uFE0FtestArtiFactory failed`, targetDir, error);
             }
-            fs.writeFileSync(
-              path2.resolve(
+            fs2.writeFileSync(
+              path3.resolve(
                 targetDir.split("/").slice(0, -1).join("/"),
                 "manifest"
               ),
@@ -303,16 +402,16 @@ var PM_Base = class {
               }
             );
             if (Buffer.isBuffer(value)) {
-              fs.writeFileSync(fPath, value, "binary");
+              fs2.writeFileSync(fPath, value, "binary");
               res();
             } else if (`string` === typeof value) {
-              fs.writeFileSync(fPath, value.toString(), {
+              fs2.writeFileSync(fPath, value.toString(), {
                 encoding: "utf-8"
               });
               res();
             } else {
               const pipeStream = value;
-              const myFile = fs.createWriteStream(fPath);
+              const myFile = fs2.createWriteStream(fPath);
               pipeStream.pipe(myFile);
               pipeStream.on("close", () => {
                 myFile.close();
@@ -451,7 +550,7 @@ var PM_WithEslintAndTsc = class extends PM_Base {
           );
         }
       });
-      fs2.writeFileSync(tscPath, results.join("\n"));
+      fs3.writeFileSync(tscPath, results.join("\n"));
       this.typeCheckIsNowDone(entrypoint, results.length);
     };
     this.eslintCheck = async (entrypoint, platform, addableFiles) => {
@@ -466,111 +565,19 @@ var PM_WithEslintAndTsc = class extends PM_Base {
         process.exit(-1);
       }
       const filepath = lintPather(entrypoint, platform, this.name);
-      if (fs2.existsSync(filepath))
-        fs2.rmSync(filepath);
+      if (fs3.existsSync(filepath))
+        fs3.rmSync(filepath);
       const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
         return r.messages[0].ruleId !== null;
       }).map((r) => {
         delete r.source;
         return r;
       });
-      fs2.writeFileSync(filepath, await formatter.format(results));
+      fs3.writeFileSync(filepath, await formatter.format(results));
       this.lintIsNowDone(entrypoint, results.length);
     };
     this.makePrompt = async (entryPoint, addableFiles, platform) => {
-      this.summary[entryPoint].prompt = "?";
-      const promptPath = promptPather(entryPoint, platform, this.name);
-      const testPaths = path3.join(
-        "testeranto",
-        "reports",
-        this.name,
-        entryPoint.split(".").slice(0, -1).join("."),
-        platform,
-        `tests.json`
-      );
-      const featuresPath = path3.join(
-        "testeranto",
-        "reports",
-        this.name,
-        platform,
-        entryPoint.split(".").slice(0, -1).join("."),
-        `featurePrompt.txt`
-      );
-      const logPath = path3.join(
-        "testeranto",
-        "reports",
-        this.name,
-        entryPoint.split(".").slice(0, -1).join("."),
-        platform,
-        `logs.txt`
-      );
-      const lintPath = path3.join(
-        "testeranto",
-        "reports",
-        this.name,
-        entryPoint.split(".").slice(0, -1).join("."),
-        platform,
-        `lint_errors.txt`
-      );
-      const typePath = path3.join(
-        "testeranto",
-        "reports",
-        this.name,
-        entryPoint.split(".").slice(0, -1).join("."),
-        platform,
-        `type_errors.txt`
-      );
-      const messagePath = path3.join(
-        "testeranto",
-        "reports",
-        this.name,
-        entryPoint.split(".").slice(0, -1).join("."),
-        platform,
-        `message.txt`
-      );
-      fs2.writeFileSync(
-        promptPath,
-        `
-${addableFiles.map((x) => {
-          return `/add ${x}`;
-        }).join("\n")}
-
-/read node_modules/testeranto/docs/index.md
-/read node_modules/testeranto/docs/style.md
-/read node_modules/testeranto/docs/testing.ai.txt
-/read node_modules/testeranto/src/CoreTypes.ts
-
-/read ${testPaths}
-/read ${logPath}
-/read ${typePath}
-/read ${lintPath}
-`
-      );
-      fs2.writeFileSync(
-        messagePath,
-        `
-
-There are 3 types of test reports. 
-1) bdd (highest priority)
-2) type checker
-3) static analysis (lowest priority)
-
-"bdd_errors.txt" is the exit code of the bdd tests. Zero means all tests passed.
-"tests.json" is the detailed result of the bdd tests.
-"logs.txt" is the logging output of the bdd tests.
-if these files do not exist, then something has gone badly wrong and needs to be addressed.
-
-"type_errors.txt" is the result of the type checker.
-if this file does not exist, then type check passed without errors;
-
-"lint_errors.txt" is the result of the static analysis.
-if this file does not exist, then static analysis passed without errors;
-
-BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns. 
-Do not add error checking to the tests themselves. 
-`
-      );
-      this.summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${this.name}/reports/${platform}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
+      await makePrompt(this.summary, this.name, entryPoint, addableFiles, platform);
       this.checkForShutdown();
     };
     this.typeCheckIsRunning = (src) => {
@@ -632,7 +639,7 @@ Do not add error checking to the tests themselves.
       this.checkForShutdown();
     };
     this.writeBigBoard = () => {
-      fs2.writeFileSync(
+      fs3.writeFileSync(
         `./testeranto/reports/${this.name}/summary.json`,
         JSON.stringify(this.summary, null, 2)
       );
@@ -668,48 +675,80 @@ var changes = {};
 var fileHashes = {};
 var files2 = {};
 var screenshots2 = {};
-function createLogStreams(reportDest, runtime) {
-  if (!fs3.existsSync(reportDest)) {
-    fs3.mkdirSync(reportDest, { recursive: true });
-  }
-  const streams = {
-    exit: fs3.createWriteStream(`${reportDest}/exit.log`),
-    ...runtime === "node" || runtime === "pure" ? {
-      stdout: fs3.createWriteStream(`${reportDest}/stdout.log`),
-      stderr: fs3.createWriteStream(`${reportDest}/stderr.log`)
-    } : {
-      info: fs3.createWriteStream(`${reportDest}/info.log`),
-      warn: fs3.createWriteStream(`${reportDest}/warn.log`),
-      error: fs3.createWriteStream(`${reportDest}/error.log`),
-      debug: fs3.createWriteStream(`${reportDest}/debug.log`)
+function runtimeLogs(runtime, reportDest) {
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs4.existsSync(safeDest)) {
+      fs4.mkdirSync(safeDest, { recursive: true });
     }
-  };
-  return {
-    ...streams,
-    closeAll: () => {
-      Object.values(streams).forEach(
-        (stream) => !stream.closed && stream.close()
-      );
-    },
-    writeExitCode: (code, error) => {
-      if (error) {
-        streams.exit.write(`Error: ${error.message}
+    if (runtime === "node") {
+      return {
+        stdout: fs4.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs4.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs4.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "web") {
+      return {
+        info: fs4.createWriteStream(`${safeDest}/info.log`),
+        warn: fs4.createWriteStream(`${safeDest}/warn.log`),
+        error: fs4.createWriteStream(`${safeDest}/error.log`),
+        debug: fs4.createWriteStream(`${safeDest}/debug.log`),
+        exit: fs4.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "pure") {
+      return {
+        exit: fs4.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else {
+      throw `unknown runtime: ${runtime}`;
+    }
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+function createLogStreams(reportDest, runtime) {
+  if (!fs4.existsSync(reportDest)) {
+    fs4.mkdirSync(reportDest, { recursive: true });
+  }
+  const streams = runtimeLogs(runtime, reportDest);
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs4.existsSync(safeDest)) {
+      fs4.mkdirSync(safeDest, { recursive: true });
+    }
+    const streams2 = runtimeLogs(runtime, safeDest);
+    return {
+      ...streams2,
+      closeAll: () => {
+        Object.values(streams2).forEach(
+          (stream) => !stream.closed && stream.close()
+        );
+      },
+      writeExitCode: (code, error) => {
+        if (error) {
+          streams2.exit.write(`Error: ${error.message}
 `);
-        if (error.stack) {
-          streams.exit.write(`Stack Trace:
+          if (error.stack) {
+            streams2.exit.write(`Stack Trace:
 ${error.stack}
 `);
+          }
         }
-      }
-      streams.exit.write(`${code}
+        streams2.exit.write(`${code}
 `);
-    }
-  };
+      },
+      exit: streams2.exit
+    };
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
 }
 async function fileHash(filePath, algorithm = "md5") {
   return new Promise((resolve, reject) => {
     const hash = crypto.createHash(algorithm);
-    const fileStream = fs3.createReadStream(filePath);
+    const fileStream = fs4.createReadStream(filePath);
     fileStream.on("data", (data) => {
       hash.update(data);
     });
@@ -724,13 +763,7 @@ async function fileHash(filePath, algorithm = "md5") {
 }
 var statusMessagePretty = (failures, test, runtime) => {
   if (failures === 0) {
-    console.log(
-      ansiC2.green(
-        ansiC2.inverse(
-          `${runtime} > ${test} completed successfully (exit code: 0)`
-        )
-      )
-    );
+    console.log(ansiC2.green(ansiC2.inverse(`${runtime} > ${test}`)));
   } else if (failures > 0) {
     console.log(
       ansiC2.red(
@@ -748,8 +781,8 @@ var statusMessagePretty = (failures, test, runtime) => {
 async function writeFileAndCreateDir(filePath, data) {
   const dirPath = path4.dirname(filePath);
   try {
-    await fs3.promises.mkdir(dirPath, { recursive: true });
-    await fs3.writeFileSync(filePath, data);
+    await fs4.promises.mkdir(dirPath, { recursive: true });
+    await fs4.writeFileSync(filePath, data);
   } catch (error) {
     console.error(`Error writing file: ${error}`);
   }
@@ -774,7 +807,7 @@ function isValidUrl(string) {
 async function pollForFile(path5, timeout = 2e3) {
   const intervalObj = setInterval(function() {
     const file = path5;
-    const fileExists = fs3.existsSync(file);
+    const fileExists = fs4.existsSync(file);
     if (fileExists) {
       clearInterval(intervalObj);
     }
@@ -799,8 +832,8 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       console.log(ansiC2.green(ansiC2.inverse(`pure < ${src}`)));
       this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
-      if (!fs3.existsSync(reportDest)) {
-        fs3.mkdirSync(reportDest, { recursive: true });
+      if (!fs4.existsSync(reportDest)) {
+        fs4.mkdirSync(reportDest, { recursive: true });
       }
       const destFolder = dest.replace(".mjs", "");
       let argz2 = "";
@@ -827,7 +860,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         );
         if (openPorts.length >= testConfigResource.ports) {
           for (let i = 0; i < testConfigResource.ports; i++) {
-            portsToUse.push(Number(openPorts[i][0]));
+            portsToUse.push(openPorts[i][0]);
             this.ports[openPorts[i][0]] = src;
           }
           argz2 = JSON.stringify({
@@ -846,18 +879,10 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         process.exit(-1);
       }
       const builtfile = dest;
-      const logs2 = createLogStreams(reportDest, "pure");
+      const logs = createLogStreams(reportDest, "pure");
       try {
         await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
           const originalConsole = { ...console };
-          console.log = (...args) => {
-            logs2.stdout.write(args.join(" ") + "\n");
-            originalConsole.log(...args);
-          };
-          console.error = (...args) => {
-            logs2.stderr.write(args.join(" ") + "\n");
-            originalConsole.error(...args);
-          };
           return module.default.then((defaultModule) => {
             defaultModule.receiveTestResourceConfig(argz2).then(async (results) => {
               statusMessagePretty(results.fails, src, "pure");
@@ -875,14 +900,15 @@ var PM_Main = class extends PM_WithEslintAndTsc {
                 `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
               )
             );
-            this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
+            logs.exit.write(e2.stack);
+            logs.exit.write(-1);
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "pure");
           }).finally((x) => {
           });
         });
       } catch (e3) {
-        logs2.writeExitCode(-1, e3);
+        logs.writeExitCode(-1, e3);
         console.log(
           ansiC2.red(
             ansiC2.inverse(
@@ -890,7 +916,8 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             )
           )
         );
-        this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
+        logs.exit.write(e3.stack);
+        logs.exit.write(-1);
         this.bddTestIsNowDone(src, -1);
         statusMessagePretty(-1, src, "pure");
       }
@@ -904,8 +931,8 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       console.log(ansiC2.green(ansiC2.inverse(`node < ${src}`)));
       this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
-      if (!fs3.existsSync(reportDest)) {
-        fs3.mkdirSync(reportDest, { recursive: true });
+      if (!fs4.existsSync(reportDest)) {
+        fs4.mkdirSync(reportDest, { recursive: true });
       }
       let testResources = "";
       const testConfig = this.configs.tests.find((t) => {
@@ -934,7 +961,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
         );
         if (openPorts.length >= testConfigResource.ports) {
           for (let i = 0; i < testConfigResource.ports; i++) {
-            portsToUse.push(Number(openPorts[i][0]));
+            portsToUse.push(openPorts[i][0]);
             this.ports[openPorts[i][0]] = src;
           }
           testResources = JSON.stringify({
@@ -1010,27 +1037,27 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           }
         });
       });
-      const logs2 = createLogStreams(reportDest, "node");
+      const logs = createLogStreams(reportDest, "node");
       server.listen(ipcfile, () => {
         child.stdout?.on("data", (data) => {
-          logs2.stdout?.write(data);
+          logs.stdout?.write(data);
         });
         child.stderr?.on("data", (data) => {
-          logs2.stderr?.write(data);
+          logs.stderr?.write(data);
         });
         child.on("error", (err) => {
         });
         child.on("close", (code) => {
           const exitCode = code === null ? -1 : code;
           if (exitCode < 0) {
-            logs2.writeExitCode(
+            logs.writeExitCode(
               exitCode,
               new Error("Process crashed or was terminated")
             );
           } else {
-            logs2.writeExitCode(exitCode);
+            logs.writeExitCode(exitCode);
           }
-          logs2.closeAll();
+          logs.closeAll();
           server.close();
           if (!files2[src]) {
             files2[src] = /* @__PURE__ */ new Set();
@@ -1067,7 +1094,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           console.log(
             ansiC2.red(
               ansiC2.inverse(
-                `${src} errored with: ${e.name}. Check ${errFile} for more info`
+                `${src} errored with: ${e.name}. Check error logs for more info`
               )
             )
           );
@@ -1082,8 +1109,7 @@ var PM_Main = class extends PM_WithEslintAndTsc {
       const dest = src.split(".").slice(0, -1).join(".");
       const destFolder = dest.replace(".mjs", "");
       console.log(ansiC2.green(ansiC2.inverse(`launchWebSideCar ${src}`)));
-      const fileStreams2 = [];
-      const doneFileStream2 = [];
+      const logs = createLogStreams(dest, "web");
       return new Promise((res, rej) => {
         this.browser.newPage().then(async (page) => {
           this.mapping().forEach(async ([command, func]) => {
@@ -1097,7 +1123,6 @@ var PM_Main = class extends PM_WithEslintAndTsc {
             Promise.all(screenshots2[src] || []).then(() => {
               delete screenshots2[src];
               page.close();
-              oStream.close();
             });
           };
           page.on("pageerror", (err) => {
@@ -1115,7 +1140,9 @@ var PM_Main = class extends PM_WithEslintAndTsc {
           });
           page.on("console", (log) => {
             const msg = `${log.text()}
-${JSON.stringify(log.location())}
+${JSON.stringify(
+              log.location()
+            )}
 ${JSON.stringify(log.stackTrace())}
 `;
             switch (log.type()) {
@@ -1186,6 +1213,7 @@ ${JSON.stringify(log.stackTrace())}
         browserWSEndpoint: this.browser.wsEndpoint()
       };
       const testReq = sidecar[2];
+      const logs = createLogStreams(dest, "node");
       const portsToUse = [];
       if (testReq.ports === 0) {
       } else if (testReq.ports > 0) {
@@ -1239,7 +1267,7 @@ ${JSON.stringify(log.stackTrace())}
             // silent: true
           });
           const p = "/tmp/tpipe" + Math.random();
-          const errFile2 = `${reportDest}/logs.txt`;
+          const errFile = `${reportDest}/logs.txt`;
           server.listen(p, () => {
             child.on("close", (code) => {
               server.close();
@@ -1254,14 +1282,14 @@ ${JSON.stringify(log.stackTrace())}
               }
             });
             child.on("error", (e) => {
-              if (fs3.existsSync(p)) {
-                fs3.rmSync(p);
+              if (fs4.existsSync(p)) {
+                fs4.rmSync(p);
               }
               haltReturns = true;
               console.log(
                 ansiC2.red(
                   ansiC2.inverse(
-                    `launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile2}for more info`
+                    `launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`
                   )
                 )
               );
@@ -1316,7 +1344,7 @@ ${JSON.stringify(log.stackTrace())}
         );
         if (openPorts.length >= testConfigResource.ports) {
           for (let i = 0; i < testConfigResource.ports; i++) {
-            portsToUse.push(openPorts[i][0]);
+            portsToUse.push(Number(openPorts[i][0]));
             this.ports[openPorts[i][0]] = src;
           }
           argz2 = {
@@ -1329,7 +1357,6 @@ ${JSON.stringify(log.stackTrace())}
           };
         } else {
           this.queue.push(src);
-          return;
         }
       } else {
         console.error("negative port makes no sense", src);
@@ -1347,8 +1374,8 @@ ${JSON.stringify(log.stackTrace())}
       console.log(ansiC2.green(ansiC2.inverse(`web < ${src}`)));
       this.bddTestIsRunning(src);
       const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
-      if (!fs3.existsSync(reportDest)) {
-        fs3.mkdirSync(reportDest, { recursive: true });
+      if (!fs4.existsSync(reportDest)) {
+        fs4.mkdirSync(reportDest, { recursive: true });
       }
       const destFolder = dest.replace(".mjs", "");
       const webArgz = JSON.stringify({
@@ -1358,32 +1385,32 @@ ${JSON.stringify(log.stackTrace())}
         browserWSEndpoint: this.browser.wsEndpoint()
       });
       const d = `${dest}?cacheBust=${Date.now()}`;
-      const logs2 = createLogStreams(reportDest, "web");
+      const logs = createLogStreams(reportDest, "web");
       this.browser.newPage().then((page) => {
         page.on("console", (log) => {
           const msg = `${log.text()}
 `;
           switch (log.type()) {
             case "info":
-              logs2.info?.write(msg);
+              logs.info?.write(msg);
               break;
             case "warn":
-              logs2.warn?.write(msg);
+              logs.warn?.write(msg);
               break;
             case "error":
-              logs2.error?.write(msg);
+              logs.error?.write(msg);
               break;
             case "debug":
-              logs2.debug?.write(msg);
+              logs.debug?.write(msg);
               break;
             default:
               break;
           }
         });
         page.on("close", () => {
-          logs2.writeExitCode(0);
-          logs2.closeAll();
-          logs2.closeAll();
+          logs.writeExitCode(0);
+          logs.closeAll();
+          logs.closeAll();
         });
         this.mapping().forEach(async ([command, func]) => {
           if (command === "page") {
@@ -1408,12 +1435,11 @@ ${JSON.stringify(log.stackTrace())}
           Promise.all(screenshots2[src] || []).then(() => {
             delete screenshots2[src];
             page.close();
-            oStream.close();
           });
           return;
         };
         page.on("pageerror", (err) => {
-          logs2.writeExitCode(-1, err);
+          logs.writeExitCode(-1, err);
           console.log(
             ansiColors.red(
               `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
@@ -1421,12 +1447,6 @@ ${JSON.stringify(log.stackTrace())}
           );
           this.bddTestIsNowDone(src, -1);
           close();
-        });
-        page.on("console", (log) => {
-          if (!oStream.closed) {
-            oStream.write(log.text());
-            oStream.write("\n");
-          }
         });
         await page.goto(`file://${`${destFolder}.html`}`, {});
         await page.evaluate(
@@ -1467,7 +1487,7 @@ import('${d}').then(async (x) => {
         srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
       );
       const testReport = JSON.parse(
-        fs3.readFileSync(`${reportDest}/tests.json`).toString()
+        fs4.readFileSync(`${reportDest}/tests.json`).toString()
       );
       testReport.features.reduce(async (mm, featureStringKey) => {
         const accum = await mm;
@@ -1487,14 +1507,14 @@ import('${d}').then(async (x) => {
             accum.files.push(newPath);
           }
         } else {
-          await fs3.promises.mkdir(path4.dirname(featureDestination), {
+          await fs4.promises.mkdir(path4.dirname(featureDestination), {
             recursive: true
           });
           accum.strings.push(featureStringKey);
         }
         return accum;
       }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
-        fs3.writeFileSync(
+        fs4.writeFileSync(
           `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
           files3.map((f) => {
             return `/read ${f}`;
@@ -1553,7 +1573,9 @@ import('${d}').then(async (x) => {
         if (this.browser) {
           if (this.browser) {
             this.browser.disconnect().then(() => {
-              console.log(ansiC2.inverse(`${this.name} has been tested. Goodbye.`));
+              console.log(
+                ansiC2.inverse(`${this.name} has been tested. Goodbye.`)
+              );
               process.exit();
             });
           }
@@ -1646,8 +1668,8 @@ import('${d}').then(async (x) => {
     this.mapping().forEach(async ([command, func]) => {
       globalThis[command] = func;
     });
-    if (!fs3.existsSync(`testeranto/reports/${this.name}`)) {
-      fs3.mkdirSync(`testeranto/reports/${this.name}`);
+    if (!fs4.existsSync(`testeranto/reports/${this.name}`)) {
+      fs4.mkdirSync(`testeranto/reports/${this.name}`);
     }
     const executablePath = "/opt/homebrew/bin/chromium";
     try {
@@ -1797,12 +1819,12 @@ import('${d}').then(async (x) => {
     this.nodeMetafileWatcher.close();
     this.webMetafileWatcher.close();
     this.importMetafileWatcher.close();
-    Object.values(this.logStreams || {}).forEach((logs2) => logs2.closeAll());
+    Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
     this.checkForShutdown();
   }
   async metafileOutputs(platform) {
     const metafile = JSON.parse(
-      fs3.readFileSync(
+      fs4.readFileSync(
         `./testeranto/bundles/${platform}/${this.name}/metafile.json`
       ).toString()
     ).metafile;
@@ -1815,7 +1837,7 @@ import('${d}').then(async (x) => {
         return false;
       }
       const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
-        if (!fs3.existsSync(i))
+        if (!fs4.existsSync(i))
           return false;
         if (i.startsWith("node_modules"))
           return false;
@@ -1824,8 +1846,8 @@ import('${d}').then(async (x) => {
         return true;
       });
       const f = `${k.split(".").slice(0, -1).join(".")}/`;
-      if (!fs3.existsSync(f)) {
-        fs3.mkdirSync(f);
+      if (!fs4.existsSync(f)) {
+        fs4.mkdirSync(f);
       }
       const entrypoint = outputs[k].entryPoint;
       if (entrypoint) {

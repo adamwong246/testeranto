@@ -1,1 +1,56 @@
 Failed to load resource: net::ERR_FILE_NOT_FOUND
+AssertionError: Should show project names: expected +0 to be at least 1
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1754764891109:77:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-KXTLO4WE.mjs:21704:14)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3006:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2909:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
+AssertionError: Should show file paths: expected +0 to be at least 1
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1754764891109:82:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-KXTLO4WE.mjs:21704:14)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3006:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2909:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
+AssertionError: Should show test names: expected +0 to be at least 1
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1754764891109:87:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-KXTLO4WE.mjs:21704:14)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3006:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2909:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
+AssertionError: Should show status badges: expected +0 to be at least 1
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1754764891109:92:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-KXTLO4WE.mjs:21704:14)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3006:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2909:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
+AssertionError: Should show empty message: expected null to exist
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1754764891109:97:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-KXTLO4WE.mjs:21704:14)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3006:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2909:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)

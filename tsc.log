@@ -13,29 +13,17 @@ $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
 src/App.tsx(31,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
 src/App.tsx(41,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
 src/App.tsx(43,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
-src/components/pure/AppFrame.test/implementation.tsx(15,20): error TS2322: Type '{ children: JSX.Element; }' is not assignable to type '(s: ISelection) => ISelection'.
-  Type '{ children: Element; }' provides no match for the signature '(s: ISelection): ISelection'.
-src/components/pure/AppFrame.test/implementation.tsx(18,5): error TS2322: Type '(children: React.ReactNode) => () => { children: React.ReactNode; }' is not assignable to type '(Ig_0: ReactNode) => (s: ISelection) => ISelection'.
-  Call signature return types '() => { children: ReactNode; }' and '(s: ISelection) => ISelection' are incompatible.
-    Type '{ children: ReactNode; }' is missing the following properties from type 'ISelection': htmlElement, reactElement, domRoot
-src/components/pure/AppFrame.test/implementation.tsx(26,5): error TS2322: Type '(name: string) => ({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
-  Call signature return types '({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: HTMLElement; }>' and '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }' are incompatible.
-    Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
-src/components/pure/AppFrame.test/implementation.tsx(33,29): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
-  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
-src/components/pure/AppFrame.test/implementation.tsx(38,27): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
-  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
-src/components/pure/AppFrame.test/implementation.tsx(43,22): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
-  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
-src/components/pure/AppFrame.test/implementation.tsx(48,30): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
-  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
-src/components/pure/AppFrame.test/implementation.tsx(53,30): error TS2322: Type '({ htmlElement }: ISelection) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(ssel: ISelection, utils: PM) => { hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; ... 5 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }'.
-  Type 'Promise<{ htmlElement: HTMLElement; }>' is missing the following properties from type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }': hasContainerFluid, hasNavBar, hasNavBarTitle, hasTestTable, and 4 more.
-src/components/pure/AppFrame.test/index.tsx(16,3): error TS2345: Argument of type 'ITestImplementation<I, O>' is not assignable to parameter of type 'ITestImplementation<I, O, { whens: TestWhenImplementation<I, O>; }>'.
+src/components/pure/AppFrame.test/implementation.tsx(19,19): error TS2322: Type '(children: React.ReactNode) => () => (selection: ISelection) => { children: React.ReactNode; htmlElement: HTMLElement; reactElement: React.ReactElement; domRoot: HTMLElement | null; container?: HTMLElement; testId?: string; }' is not assignable to type '(Ig_0: ReactNode) => (s: ISelection) => ISelection'.
+  Call signature return types '() => (selection: ISelection) => { children: ReactNode; htmlElement: HTMLElement; reactElement: ReactElement<any, string | JSXElementConstructor<any>>; domRoot: HTMLElement | null; container?: HTMLElement | undefined; testId?: string | undefined; }' and '(s: ISelection) => ISelection' are incompatible.
+    Type '(selection: ISelection) => { children: React.ReactNode; htmlElement: HTMLElement; reactElement: React.ReactElement; domRoot: HTMLElement | null; container?: HTMLElement; testId?: string; }' is not assignable to type 'ISelection'.
+src/components/pure/AppFrame.test/index.tsx(19,3): error TS2345: Argument of type 'ITestImplementation<I, O>' is not assignable to parameter of type 'ITestImplementation<I, O, { whens: TestWhenImplementation<I, O>; }>'.
   Type 'ITestImplementation<I, O>' is not assignable to type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, "whens">'.
-    The types returned by 'thens.RendersContainer(...)(...)' are incompatible between these types.
-      Type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }' is not assignable to type '(s: ISelection) => ISelection'.
-        Type '{ hasContainerFluid: () => (s: ISelection) => ISelection; hasNavBar: () => (s: ISelection) => ISelection; hasNavBarTitle: () => (s: ISelection) => ISelection; ... 4 more ...; takeScreenshot: (name: string) => (s: ISelection, pm: IPM) => Promise<...>; }' provides no match for the signature '(s: ISelection): ISelection'.
+    The types returned by 'givens.Default(...)' are incompatible between these types.
+      Type '(s: import("/Users/adam/Code/testeranto/src/components/pure/AppFrame.test/types").ISelection) => import("/Users/adam/Code/testeranto/src/components/pure/AppFrame.test/types").ISelection' is not assignable to type '(s: import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").ISelection) => import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").ISelection'.
+        Types of parameters 's' and 's' are incompatible.
+          Type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").ISelection' is not assignable to type 'import("/Users/adam/Code/testeranto/src/components/pure/AppFrame.test/types").ISelection'.
+            Types of property 'domRoot' are incompatible.
+              Type 'Root' is missing the following properties from type 'HTMLElement': accessKey, accessKeyLabel, autocapitalize, autocorrect, and 314 more.
 src/components/pure/FeaturesReporterView.test/implementation.tsx(18,13): error TS2322: Type '"test"' is not assignable to type '"file" | "project"'.
 src/components/pure/FeaturesReporterView.test/implementation.tsx(23,17): error TS2322: Type '"given"' is not assignable to type '"file" | "project"'.
 src/components/pure/FeaturesReporterView.test/implementation.tsx(28,21): error TS2322: Type '"then"' is not assignable to type '"file" | "project"'.
@@ -244,9 +232,9 @@ src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(8,49): error TS2322: Type '
 src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(9,3): error TS2719: Type '(subject: import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestR...' is not assignable to type '(subject: import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/src/lib/basebuilder").BaseBuilder<any, any, any, any, any, any>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestR...'. Two different types with this name exist, but they are unrelated.
   Type 'Promise<() => BaseBuilder<any, any, any, any, any, any>>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
     Type '() => BaseBuilder<any, any, any, any, any, any>' is not assignable to type 'BaseBuilder<any, any, any, any, any, any>'.
-src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(15,26): error TS2554: Expected 1 arguments, but got 2.
-src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(18,26): error TS2554: Expected 1 arguments, but got 2.
-src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(20,25): error TS2739: Type 'BaseBuilder<any, any, any, any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
+src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(14,26): error TS2554: Expected 1 arguments, but got 2.
+src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(17,26): error TS2554: Expected 1 arguments, but got 2.
+src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(19,25): error TS2739: Type 'BaseBuilder<any, any, any, any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
 src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(19,5): error TS2322: Type '() => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}>' is not assignable to type '() => () => BaseBuilder<any, any, any, any, any, any>'.
   Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}>' is not assignable to type '() => BaseBuilder<any, any, any, any, any, any>'.
     Type 'MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}>' provides no match for the signature '(): BaseBuilder<any, any, any, any, any, any>'.
@@ -474,12 +462,12 @@ src/mothership/test.ts(64,7): error TS2554: Expected 2 arguments, but got 3.
 src/mothership/test.ts(70,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
 src/Node.ts(34,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-src/PM/__tests__/nodeSidecar.testeranto.ts(51,43): error TS2304: Cannot find name 'I'.
-src/PM/__tests__/nodeSidecar.testeranto.ts(52,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
-src/PM/__tests__/nodeSidecar.testeranto.ts(93,29): error TS2454: Variable 'callbackFn' is used before being assigned.
-src/PM/__tests__/nodeSidecar.testeranto.ts(124,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
-src/PM/__tests__/nodeSidecar.testeranto.ts(133,20): error TS2304: Cannot find name 'IPartialNodeAdapter'.
-src/PM/__tests__/nodeSidecar.testeranto.ts(133,40): error TS2304: Cannot find name 'I'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(53,43): error TS2304: Cannot find name 'I'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(54,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(95,29): error TS2454: Variable 'callbackFn' is used before being assigned.
+src/PM/__tests__/nodeSidecar.testeranto.ts(126,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(135,20): error TS2304: Cannot find name 'IPartialNodeAdapter'.
+src/PM/__tests__/nodeSidecar.testeranto.ts(135,40): error TS2304: Cannot find name 'I'.
 src/PM/__tests__/pureSidecar.testeranto.ts(53,43): error TS2304: Cannot find name 'I'.
 src/PM/__tests__/pureSidecar.testeranto.ts(54,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
 src/PM/__tests__/pureSidecar.testeranto.ts(69,7): error TS2322: Type '(event: string, callback: Function) => void' is not assignable to type '{ (event: "beforeExit", listener: BeforeExitListener): Process; (event: "disconnect", listener: DisconnectListener): Process; (event: "exit", listener: ExitListener): Process; (event: "rejectionHandled", listener: RejectionHandledListener): Process; (event: "uncaughtException", listener: UncaughtExceptionListener): ...'.
@@ -500,37 +488,24 @@ src/PM/__tests__/webSidecar.testeranto.ts(94,38): error TS2322: Type 'boolean' i
 src/PM/__tests__/webSidecar.testeranto.ts(109,18): error TS2339: Property 'removeListenerCalled' does not exist on type 'PM'.
 src/PM/__tests__/webSidecar.testeranto.ts(118,20): error TS2304: Cannot find name 'IPartialNodeAdapter'.
 src/PM/__tests__/webSidecar.testeranto.ts(118,40): error TS2304: Cannot find name 'I'.
-src/PM/main.ts(255,7): error TS2322: Type '[number, Page]' is not assignable to type '[number, ITTestResourceConfiguration]'.
+src/PM/main.ts(305,7): error TS2322: Type '[number, Page]' is not assignable to type '[number, ITTestResourceConfiguration]'.
   Type at position 1 in source is not compatible with type at position 1 in target.
     Type 'Page' is missing the following properties from type 'ITTestResourceConfiguration': name, fs, ports
-src/PM/main.ts(594,27): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
-src/PM/main.ts(655,11): error TS18048: 'logs.stdout' is possibly 'undefined'.
-src/PM/main.ts(660,11): error TS18048: 'logs.stderr' is possibly 'undefined'.
-src/PM/main.ts(772,27): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
-src/PM/main.ts(791,32): error TS2304: Cannot find name 'argz'.
-src/PM/main.ts(929,56): error TS2304: Cannot find name 'errFile'.
-src/PM/main.ts(978,15): error TS2304: Cannot find name 'oStream'.
-src/PM/main.ts(1000,17): error TS2552: Cannot find name 'logs'. Did you mean 'log'?
-src/PM/main.ts(1003,17): error TS2552: Cannot find name 'logs'. Did you mean 'log'?
-src/PM/main.ts(1006,17): error TS2304: Cannot find name 'logs'.
-src/PM/main.ts(1009,17): error TS2304: Cannot find name 'logs'.
-src/PM/main.ts(1065,31): error TS2322: Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
+src/PM/main.ts(846,32): error TS2304: Cannot find name 'argz'.
+src/PM/main.ts(1123,31): error TS2322: Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
   Property '#private' in type 'Page' refers to a different member that cannot be accessed from within type 'Page'.
-src/PM/main.ts(1072,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1199,13): error TS2304: Cannot find name 'logs'.
-src/PM/main.ts(1266,27): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
-src/PM/main.ts(1281,9): error TS2322: Type 'undefined' is not assignable to type '[number, ITTestResourceConfiguration]'.
-src/PM/main.ts(1389,13): error TS2304: Cannot find name 'oStream'.
-src/PM/main.ts(1407,16): error TS2304: Cannot find name 'oStream'.
-src/PM/main.ts(1408,13): error TS2304: Cannot find name 'oStream'.
-src/PM/main.ts(1409,13): error TS2304: Cannot find name 'oStream'.
-src/PM/main.ts(1545,9): error TS2532: Object is possibly 'undefined'.
+src/PM/main.ts(1130,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1356,16): error TS2454: Variable 'argz' is used before being assigned.
+src/PM/main.ts(1600,9): error TS2532: Object is possibly 'undefined'.
 src/PM/pure.ts(114,3): error TS2416: Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
     Types of parameters 'opts' and 'opts' are incompatible.
       Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
         Types of property 'path' are incompatible.
           Type 'string' is not assignable to type '`${string}.webm`'.
+src/PM/pure.ts(145,3): error TS2416: Property 'createWriteStream' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
+  Type '() => { write: () => boolean; end: () => void; }' is not assignable to type '(filepath: string, testName: string) => Promise<string>'.
+    Type '{ write: () => boolean; end: () => void; }' is missing the following properties from type 'Promise<string>': then, catch, finally, [Symbol.toStringTag]
 src/PM/web.ts(59,12): error TS2339: Property 'mainFrame' does not exist on type 'string | Page'.
   Property 'mainFrame' does not exist on type 'string'.
 src/Pure.test.ts(58,20): error TS2322: Type '{ pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; }; befor...' is not assignable to type '() => IPM'.

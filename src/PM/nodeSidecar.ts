@@ -48,6 +48,7 @@ export class PM_Node_Sidecar extends PM_sidecar {
 
   testArtiFactoryfileWriter(tLog: ITLog, callback: (p: Promise<void>) => void) {
     return (fPath: string, value: string | Buffer | PassThrough) => {
+      tLog(`Pure runtime skipping file write to ${fPath}`);
       callback(Promise.resolve());
     };
   }

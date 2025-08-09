@@ -11,6 +11,7 @@
 /read node_modules/testeranto/src/CoreTypes.ts
 
 /read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/tests.json
-/read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/logs.txt
 /read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/type_errors.txt
 /read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/lint_errors.txt
+
+/read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/stdout.log testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/stderr.log testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/exit.log

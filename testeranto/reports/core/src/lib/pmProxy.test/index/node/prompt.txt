@@ -11,6 +11,7 @@
 /read node_modules/testeranto/src/CoreTypes.ts
 
 /read testeranto/reports/core/src/lib/pmProxy.test/index/node/tests.json
-/read testeranto/reports/core/src/lib/pmProxy.test/index/node/logs.txt
 /read testeranto/reports/core/src/lib/pmProxy.test/index/node/type_errors.txt
 /read testeranto/reports/core/src/lib/pmProxy.test/index/node/lint_errors.txt
+
+/read testeranto/reports/core/src/lib/pmProxy.test/index/node/stdout.log testeranto/reports/core/src/lib/pmProxy.test/index/node/stderr.log testeranto/reports/core/src/lib/pmProxy.test/index/node/exit.log

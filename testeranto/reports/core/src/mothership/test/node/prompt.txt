@@ -8,6 +8,7 @@
 /read node_modules/testeranto/src/CoreTypes.ts
 
 /read testeranto/reports/core/src/mothership/test/node/tests.json
-/read testeranto/reports/core/src/mothership/test/node/logs.txt
 /read testeranto/reports/core/src/mothership/test/node/type_errors.txt
 /read testeranto/reports/core/src/mothership/test/node/lint_errors.txt
+
+/read testeranto/reports/core/src/mothership/test/node/stdout.log testeranto/reports/core/src/mothership/test/node/stderr.log testeranto/reports/core/src/mothership/test/node/exit.log

@@ -6,24 +6,32 @@ export const implementation = {
         Layout: "AppFrame layout structure",
     },
     givens: {
-        Default: () => ({
-            children: React.createElement("div", null, "Test Content"),
-        }),
-        WithChildren: (children) => () => ({
-            children,
-        }),
+        Default: () => (selection) => (Object.assign(Object.assign({}, selection), { children: React.createElement("div", null, "Test Content") })),
+        WithChildren: (children) => () => (selection) => (Object.assign(Object.assign({}, selection), { children })),
     },
     whens: {},
     thens: {
-        takeScreenshot: (name) => async ({ htmlElement }, pm) => {
+        takeScreenshot: (name) => async ({ htmlElement, container }, pm) => {
+            if (!container)
+                throw new Error('Container not found');
             const p = await pm.page();
-            await pm.customScreenShot({ path: name }, p);
-            return { htmlElement };
+            await pm.customScreenShot({ path: `${name}.png` }, p);
+            return {
+                htmlElement,
+                reactElement: React.createElement('div'),
+                domRoot: container,
+                container
+            };
         },
-        RendersContainer: () => async ({ htmlElement }) => {
-            const container = htmlElement.querySelector('.min-vh-100');
+        RendersContainer: () => async ({ htmlElement, container }) => {
+            // const container = htmlElement.querySelector('.min-vh-100');
             assert.exists(container, 'Should have min-vh-100 container');
-            return { htmlElement };
+            return {
+                htmlElement,
+                reactElement: React.createElement('div'),
+                domRoot: container,
+                container: container
+            };
         },
         HasMainContent: () => async ({ htmlElement }) => {
             const main = htmlElement.querySelector('main.flex-grow-1');

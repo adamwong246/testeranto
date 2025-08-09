@@ -12,6 +12,7 @@ import tsc from "tsc-prog";
 
 import { lintPather, promptPather, tscPather } from "../utils";
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
+import { makePrompt } from "../utils/makePrompt";
 
 import { PM_Base } from "./base.js";
 
@@ -143,117 +144,7 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     addableFiles: string[],
     platform: IRunTime
   ) => {
-    this.summary[entryPoint].prompt = "?";
-    const promptPath = promptPather(entryPoint, platform, this.name);
-
-    const testPaths = path.join(
-      "testeranto",
-      "reports",
-      this.name,
-      entryPoint.split(".").slice(0, -1).join("."),
-      platform,
-      `tests.json`
-    );
-
-    const featuresPath = path.join(
-      "testeranto",
-      "reports",
-      this.name,
-      platform,
-      entryPoint.split(".").slice(0, -1).join("."),
-      `featurePrompt.txt`
-    );
-
-    const logPath = path.join(
-      "testeranto",
-      "reports",
-      this.name,
-      entryPoint.split(".").slice(0, -1).join("."),
-      platform,
-      `logs.txt`
-    );
-
-    const lintPath = path.join(
-      "testeranto",
-      "reports",
-      this.name,
-      entryPoint.split(".").slice(0, -1).join("."),
-      platform,
-      `lint_errors.txt`
-    );
-
-    const typePath = path.join(
-      "testeranto",
-      "reports",
-      this.name,
-      entryPoint.split(".").slice(0, -1).join("."),
-      platform,
-      `type_errors.txt`
-    );
-
-    const messagePath = path.join(
-      "testeranto",
-      "reports",
-      this.name,
-      entryPoint.split(".").slice(0, -1).join("."),
-      platform,
-      `message.txt`
-    );
-
-    fs.writeFileSync(
-      promptPath,
-      `
-${addableFiles
-  .map((x) => {
-    return `/add ${x}`;
-  })
-  .join("\n")}
-
-/read node_modules/testeranto/docs/index.md
-/read node_modules/testeranto/docs/style.md
-/read node_modules/testeranto/docs/testing.ai.txt
-/read node_modules/testeranto/src/CoreTypes.ts
-
-/read ${testPaths}
-/read ${logPath}
-/read ${typePath}
-/read ${lintPath}
-`
-    );
-
-    fs.writeFileSync(
-      messagePath,
-      `
-
-There are 3 types of test reports. 
-1) bdd (highest priority)
-2) type checker
-3) static analysis (lowest priority)
-
-"bdd_errors.txt" is the exit code of the bdd tests. Zero means all tests passed.
-"tests.json" is the detailed result of the bdd tests.
-"logs.txt" is the logging output of the bdd tests.
-if these files do not exist, then something has gone badly wrong and needs to be addressed.
-
-"type_errors.txt" is the result of the type checker.
-if this file does not exist, then type check passed without errors;
-
-"lint_errors.txt" is the result of the static analysis.
-if this file does not exist, then static analysis passed without errors;
-
-BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns. 
-Do not add error checking to the tests themselves. 
-`
-    );
-
-    this.summary[
-      entryPoint
-    ].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${
-      this.name
-    }/reports/${platform}/${entryPoint
-      .split(".")
-      .slice(0, -1)
-      .join(".")}/prompt.txt`;
+    await makePrompt(this.summary, this.name, entryPoint, addableFiles, platform);
     this.checkForShutdown();
   };
 
