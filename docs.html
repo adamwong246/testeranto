@@ -21,12 +21,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
             
-            // Parallax effect
+            // Safe scroll effect without eval
             const parallaxBg = document.querySelector('.parallax-background');
-            window.addEventListener('scroll', function() {
-                const scrollPosition = window.pageYOffset;
-                parallaxBg.style.transform = 'translateY(scrollPosition)';
-            });
+            if (parallaxBg) {
+                window.addEventListener('scroll', function() {
+                    const scrollPosition = window.pageYOffset;
+                    parallaxBg.style.transform = 'translateY(' + scrollPosition + 'px)';
+                });
+            }
         });
     </script>
     
@@ -520,7 +522,29 @@ export default Testeranto<
 );
 
 
-</pre><h2>Trouble shooting</h2>
+</pre><h2>Explainer Video Development</h2>
+<p>The Testeranto explainer video is built using:</p>
+<h3>Revision.js Animation System</h3>
+<ul>
+<li>Frame-by-frame animation control</li>
+<li>Timeline-based sequencing</li>
+<li>Audio synchronization</li>
+<li>Custom easing functions</li>
+</ul>
+<h3>Scene Composition</h3>
+<p>Each scene from the storyboard is implemented as:</p>
+<pre class="language-typescript line-numbers"><code class="language-typescript">{
+  duration: 4, // seconds
+  render: (ctx: CanvasRenderingContext2D, progress: number) => {
+    // Drawing commands using progress (0-1)
+  }
+}</code></pre><h3>Audio Integration</h3>
+<ul>
+<li>Voiceover track provides timing cues</li>
+<li>Sound effects enhance key moments</li>
+<li>Volume automation for emphasis</li>
+</ul>
+<h2>Trouble shooting</h2>
 <h3>Double check your runtimes.</h3>
 <p>Every test has a runtime, which must defined in 2 places. Both must match.</p>
 <ol>
@@ -544,7 +568,10 @@ export default Testeranto<
             <div class="container-fluid justify-content-center">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="README.html">README</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docs.html">Docs</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://github.com/adamwong246/testeranto" target="_blank">GitHub</a>

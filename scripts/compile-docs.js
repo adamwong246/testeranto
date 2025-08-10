@@ -39,12 +39,14 @@ const template = (title, content) => `
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
             
-            // Parallax effect
+            // Safe scroll effect without eval
             const parallaxBg = document.querySelector('.parallax-background');
-            window.addEventListener('scroll', function() {
-                const scrollPosition = window.pageYOffset;
-                parallaxBg.style.transform = 'translateY(scrollPosition)';
-            });
+            if (parallaxBg) {
+                window.addEventListener('scroll', function() {
+                    const scrollPosition = window.pageYOffset;
+                    parallaxBg.style.transform = 'translateY(' + scrollPosition + 'px)';
+                });
+            }
         });
     </script>
     
@@ -72,7 +74,10 @@ const template = (title, content) => `
             <div class="container-fluid justify-content-center">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="README.html">README</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="docs.html">Docs</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="https://github.com/adamwong246/testeranto" target="_blank">GitHub</a>
@@ -115,12 +120,17 @@ const main = () => {
             fs.mkdirSync(outDir);
         }
 
-        // Process README.md -> documentation.html
-        const readmeHtml = processFile("README.md");
-        fs.writeFileSync(path.join(outDir, "index.html"), readmeHtml);
+        // Process frontpage template -> index.html
+        const frontpageContent = fs.readFileSync("src/templates/frontpage.html", "utf8");
+        fs.writeFileSync(path.join(outDir, "index.html"), template("Testeranto", frontpageContent));
         console.log("Generated: index.html");
 
-        // Process docs/index.md -> api-reference.html
+        // Process README.md -> README.html
+        const readmeHtml = processFile("README.md");
+        fs.writeFileSync(path.join(outDir, "README.html"), readmeHtml);
+        console.log("Generated: README.html");
+
+        // Process docs/index.md -> docs.html 
         const docsHtml = processFile("docs/index.md");
         fs.writeFileSync(path.join(outDir, "docs.html"), docsHtml);
         console.log("Generated: docs.html");

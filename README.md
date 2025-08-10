@@ -1,14 +1,29 @@
 # testeranto
 
-## The AI-powered BDD test framework for TypeScript projects
+## Brings vibe coding to the real world
 
-#### 🚧 Testeranto is still under development but a beta version will be released soon. If you are interested in joining the beta program, send an email to testeranto.dev@gmail.com. 🚧
+Testeranto lets you vibe code large, real-world codebases by intelligently managing the AI context
+
+#### 🚀 Join Our Beta Program! 🚀
+
+We're launching a private beta for GitHub stargazers first, followed by a public beta.
+
+**Private Beta (GitHub Stargazers):**
+
+- Early access to AI-powered test fixing
+- Lifetime priority support from the creator
+- Personal onboarding assistance
+- Direct influence on the roadmap
+- Permanent "Beta Pioneer" status
+
+Star this repo to get early access, or [email us](mailto:testeranto.dev@gmail.com) to express interest.
 
 ## quick links
 
-- an example of the reports generated: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/projects.html)
+- Example test reports: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/projects.html)
 - demo of me using testeranto to fix a bug: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 - a starter testeranto project: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
+- Explainer video source: [github.com/adamwong246/testeranto-video](https://github.com/adamwong246/testeranto-video)
 
 ## What is testeranto?
 
@@ -18,7 +33,12 @@
 - Testeranto can be used to test anything that can be bundled with esbuild.
 - Testeranto connects "features" to "tests". This allows the AI to read feature documentation from external systems, like Jira.
 - Testeranto generates test results as a static website that can be easily deployed to GitHub Pages.
-- Testeranto uses esbuild to bundle its tests. The result is used to refine the list of files added to the AI's context. **The consequence of this is that you can fit all relevant files, and only the relevant files, into the LLM's context.**
+- Testeranto uses esbuild to analyze dependencies and bundle only the essential files needed for test fixing. This context optimization means:
+  - No wasted tokens on irrelevant code
+  - All type signatures and dependencies included
+  - Related documentation automatically linked
+  - Failed tests get priority placement
+- **The result:** Your LLM works with laser focus on exactly what needs fixing
 
 ## Key Technologies
 

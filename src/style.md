@@ -6,3 +6,5 @@ themes.scss defines themes.
 fonts.scss defines fonts.
 
 Project and TestReport components each have their own respective scss files.
+
+testeranto base style is white and panels make use of the frosted glass effect. Themes should compliment this base style.
