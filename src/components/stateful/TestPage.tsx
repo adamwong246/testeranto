@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { TestPageView } from '../pure/TestPageView';
 import { fetchTestData } from '../../utils/api';
+
+import { TestPageView } from '../pure/TestPageView';
+
 
 export const TestPage = () => {
   const navigate = useNavigate();
@@ -20,10 +23,10 @@ export const TestPage = () => {
   }, [location.hash]);
 
   const [testName, setTestName] = useState('');
-  const [testData, setTestData] = useState(null);
-  const [logs, setLogs] = useState('');
-  const [typeErrors, setTypeErrors] = useState('');
-  const [lintErrors, setLintErrors] = useState('');
+  // const [testData, setTestData] = useState(null);
+  const [logs, setLogs] = useState<Record<string, string>>({});
+  // const [typeErrors, setTypeErrors] = useState('');
+  // const [lintErrors, setLintErrors] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [testsExist, setTestsExist] = useState(true);
@@ -47,11 +50,21 @@ export const TestPage = () => {
     const fetchData = async () => {
       try {
         const testResponse = await fetchTestData(projectName, testPath, runtime);
-        setTestData(testResponse.testData);
-        setTestsExist(!!testResponse.testData);
-        setLogs(testResponse.logs === null ? undefined : testResponse.logs);
-        setTypeErrors(testResponse.typeErrors);
-        setLintErrors(testResponse.lintErrors);
+        console.log("testResponse", testResponse)
+        // setTestData(testResponse.testData);
+        // setTestsExist(!!testResponse.testData);
+        const receivedLogs = await testResponse.logs;
+        // Ensure tests.json is properly formatted
+        if (receivedLogs['tests.json'] && typeof receivedLogs['tests.json'] === 'string') {
+          try {
+            receivedLogs['tests.json'] = JSON.parse(receivedLogs['tests.json']);
+          } catch (e) {
+            console.error('Failed to parse tests.json:', e);
+          }
+        }
+        setLogs(receivedLogs);
+        // setTypeErrors(testResponse.typeErrors);
+        // setLintErrors(testResponse.lintErrors);
 
         try {
           const summaryResponse = await fetch(`reports/${projectName}/summary.json`);
@@ -84,24 +97,20 @@ export const TestPage = () => {
     fetchData();
   }, []);
 
+  if (!logs) return <div>loading...</div>
+
   return (
     <TestPageView
-      route={route}
+      route={route as 'results' | 'logs' | 'types' | 'lint' | 'coverage'}
       setRoute={setRoute}
       navigate={navigate}
-      projectName={projectName}
+      projectName={projectName as string}
       testName={testName}
       decodedTestPath={decodedTestPath}
       runtime={runtime}
-      testData={testData}
       logs={logs}
-      typeErrors={typeErrors}
-      lintErrors={lintErrors}
-      loading={loading}
-      error={error}
       testsExist={testsExist}
       errorCounts={errorCounts}
-      summary={summary}
     />
   );
 };

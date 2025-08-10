@@ -2,61 +2,65 @@
 /Users/adam/Code/testeranto-react/src/react-dom/jsx/dynamic.ts (25,17): Argument of type 'null' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
 /Users/adam/Code/testeranto-react/src/react-dom/jsx/dynamic.ts (30,17): Argument of type 'FunctionComponentElement<any>' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
 /Users/adam/Code/testeranto/src/components/pure/NavBar.tsx (76,23): Object literal may only specify known properties, and '':hover'' does not exist in type 'Properties<string | number, string & {}>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (22,13): Cannot find name 'IInput'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (23,15): Cannot find name 'ISubject'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (24,13): Cannot find name 'IStore'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (25,17): Cannot find name 'ISelection'. Did you mean 'Selection'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (26,20): Cannot find name 'IInput'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (26,31): Cannot find name 'ISelection'. Did you mean 'Selection'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (27,17): Cannot find name 'ISelection'. Did you mean 'Selection'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (27,32): Cannot find name 'ISelection'. Did you mean 'Selection'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (28,17): Cannot find name 'ISelection'. Did you mean 'Selection'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (28,40): Cannot find name 'ISelection'. Did you mean 'Selection'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (40,20): Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IInput) => ISelection'.
-  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IInput): ISelection'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (59,23): Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' is not assignable to type '(props: IInput) => ISelection'.
-  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' provides no match for the signature '(props: IInput): ISelection'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (78,21): Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IInput) => ISelection'.
-  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IInput): ISelection'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (119,5): Type '(name: string) => ({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: ISelection; }>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
-  Call signature return types '({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: ISelection; }>' and '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>' are incompatible.
-    Type 'Promise<{ htmlElement: ISelection; }>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
-      Type 'Promise<{ htmlElement: ISelection; }>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (126,26): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (42,20): Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IProjectPageViewProps) => ISelection'.
+  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IProjectPageViewProps): ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (61,23): Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' is not assignable to type '(props: IProjectPageViewProps) => ISelection'.
+  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' provides no match for the signature '(props: IProjectPageViewProps): ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (80,21): Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IProjectPageViewProps) => ISelection'.
+  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IProjectPageViewProps): ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (102,5): Type '(tabName: string) => (selection: ISelection) => ISelection' is not assignable to type '(Iw_0: string) => (zel: ISelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(sel: ISelection) => ISelection>'.
+  Call signature return types '(selection: ISelection) => ISelection' and '(zel: ISelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(sel: ISelection) => ISelection>' are incompatible.
+    Type 'ISelection' is missing the following properties from type 'Promise<(sel: ISelection) => ISelection>': then, catch, finally, [Symbol.toStringTag]
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (106,27): Argument of type 'Root' is not assignable to parameter of type 'Element | DocumentFragment'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (109,29): Type '(selection: ISelection) => ISelection' is not assignable to type '(zel: ISelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(sel: ISelection) => ISelection>'.
+  Type 'ISelection' is missing the following properties from type 'Promise<(sel: ISelection) => ISelection>': then, catch, finally, [Symbol.toStringTag]
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (110,32): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (121,5): Type '(name: string) => ({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+  Call signature return types '({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: HTMLElement; }>' and '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>' are incompatible.
+    Type 'Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
+      Type 'Promise<{ htmlElement: HTMLElement; }>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (128,26): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (128,22): Property 'toBeTruthy' does not exist on type 'Assertion'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (131,5): Type '(tabName: string) => (selection: ISelection) => Promise<ISelection>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (129,32): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (133,5): Type '(tabName: string) => (selection: ISelection) => Promise<ISelection>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Call signature return types '(selection: ISelection) => Promise<ISelection>' and '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>' are incompatible.
     Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
       Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (133,38): Property 'toContain' does not exist on type 'Assertion'. Did you mean 'contain'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (136,29): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (134,35): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (138,29): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (138,29): Property 'toBeGreaterThan' does not exist on type 'Assertion'. Did you mean 'greaterThan'?
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (141,29): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (139,32): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (141,22): Property 'testsExist' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (143,36): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (147,26): Property 'errorCounts' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (149,21): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (153,26): Property 'errorCounts' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (154,37): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (159,29): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (143,27): Property 'toBeTruthy' does not exist on type 'Assertion'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (146,22): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (161,21): Property 'testsExist' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (162,39): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (167,22): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (148,20): Property 'toBeTruthy' does not exist on type 'Assertion'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (151,28): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (168,30): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (172,28): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (153,26): Property 'toBeTruthy' does not exist on type 'Assertion'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (156,28): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (173,36): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (177,28): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (158,26): Property 'toBeTruthy' does not exist on type 'void'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (161,37): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (178,36): Property 'container' does not exist on type 'ISelection'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (182,37): Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (164,22): Cannot find name 'jest'.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (168,13): Expected 3 arguments, but got 1.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (169,45): Property 'toHaveBeenCalled' does not exist on type 'Assertion'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (185,22): Cannot find name 'jest'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (189,13): Expected 3 arguments, but got 1.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.test/implementation.ts (190,51): Property 'called' does not exist on type '(data: string) => Promise<void>'.
 /Users/adam/Code/testeranto/src/components/pure/TestPageView.test/index.tsx (18,3): Argument of type 'ITestSpecification<{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }, O>' is not assignable to parameter of type 'ITestSpecification<I, O>'.
   Types of parameters 'Suite' and 'Suite' are incompatible.
     Type 'SuiteSpecification<I, O>' is not assignable to type 'SuiteSpecification<{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }, O>'.
@@ -67,7 +71,8 @@
               Type '{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }' is not assignable to type 'I'.
                 Types of property 'istore' are incompatible.
                   Type 'ISelection' is missing the following properties from type 'HTMLElement': accessKey, accessKeyLabel, autocapitalize, autocorrect, and 314 more.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.tsx (140,29): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.tsx (278,21): Type '{ testName: string; testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; variant: "compact"; className: string; }' is not assignable to type 'IntrinsicAttributes & TestStatusBadgeProps'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & TestStatusBadgeProps'.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (76,49): Function lacks ending return statement and return type does not include 'undefined'.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (82,17): This expression is not callable.
   Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.

@@ -472,7 +472,7 @@
               }
             }
           }
-          var ReactElement = function(type, key, ref, self, source, owner, props) {
+          var ReactElement2 = function(type, key, ref, self, source, owner, props) {
             var element = {
               // This tag allows us to uniquely identify this as a React Element
               $$typeof: REACT_ELEMENT_TYPE,
@@ -573,10 +573,10 @@
                 }
               }
             }
-            return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+            return ReactElement2(type, key, ref, self, source, ReactCurrentOwner.current, props);
           }
           function cloneAndReplaceKey(oldElement, newKey) {
-            var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
+            var newElement = ReactElement2(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
             return newElement;
           }
           function cloneElement8(element, config, children) {
@@ -625,7 +625,7 @@
               }
               props.children = childArray;
             }
-            return ReactElement(element.type, key, ref, self, source, owner, props);
+            return ReactElement2(element.type, key, ref, self, source, owner, props);
           }
           function isValidElement2(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
@@ -972,7 +972,7 @@
             }
             return lazyType;
           }
-          function forwardRef55(render) {
+          function forwardRef57(render) {
             {
               if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1869,7 +1869,7 @@
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
-          exports.forwardRef = forwardRef55;
+          exports.forwardRef = forwardRef57;
           exports.isValidElement = isValidElement2;
           exports.lazy = lazy;
           exports.memo = memo2;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React95 = require_react();
+          var React97 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React95.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React97.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React95.Children.forEach(props.children, function(child) {
+                  React97.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React95.Component().refs;
+          var emptyRefsObject = new React97.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23514,7 +23514,7 @@
       (function() {
         "use strict";
         var hasOwn = {}.hasOwnProperty;
-        function classNames44() {
+        function classNames46() {
           var classes = "";
           for (var i = 0; i < arguments.length; i++) {
             var arg = arguments[i];
@@ -23532,7 +23532,7 @@
             return "";
           }
           if (Array.isArray(arg)) {
-            return classNames44.apply(null, arg);
+            return classNames46.apply(null, arg);
           }
           if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes("[native code]")) {
             return arg.toString();
@@ -23555,14 +23555,14 @@
           return value + newClass;
         }
         if (typeof module !== "undefined" && module.exports) {
-          classNames44.default = classNames44;
-          module.exports = classNames44;
+          classNames46.default = classNames46;
+          module.exports = classNames46;
         } else if (typeof define === "function" && typeof define.amd === "object" && define.amd) {
           define("classnames", [], function() {
-            return classNames44;
+            return classNames46;
           });
         } else {
-          window.classNames = classNames44;
+          window.classNames = classNames46;
         }
       })();
     }
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React95 = require_react();
+          var React97 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React95.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React97.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24160,7 +24160,7 @@
               });
             }
           }
-          var ReactElement = function(type, key, ref, self, source, owner, props) {
+          var ReactElement2 = function(type, key, ref, self, source, owner, props) {
             var element = {
               // This tag allows us to uniquely identify this as a React Element
               $$typeof: REACT_ELEMENT_TYPE,
@@ -24243,7 +24243,7 @@
                   defineRefPropWarningGetter(props, displayName);
                 }
               }
-              return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+              return ReactElement2(type, key, ref, self, source, ReactCurrentOwner.current, props);
             }
           }
           var ReactCurrentOwner$1 = ReactSharedInternals.ReactCurrentOwner;
@@ -27685,6 +27685,85 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // src/components/stateful/TestPage.tsx
   var import_react59 = __toESM(require_react(), 1);
 
+  // src/utils/logFiles.ts
+  var NODE_LOG_FILES = ["stdout.log", "stderr.log", "exit.log"];
+  var WEB_LOG_FILES = [
+    "info.log",
+    "debug.log",
+    "error.log",
+    "warn.log",
+    "exit.log"
+  ];
+  var PURE_LOG_FILES = ["exit.log"];
+  var getLogFilesForRuntime = (runtime) => {
+    switch (runtime) {
+      case "node":
+        return NODE_LOG_FILES;
+      case "web":
+        return WEB_LOG_FILES;
+      case "pure":
+        return PURE_LOG_FILES;
+      default:
+        throw new Error(`Unknown runtime: ${runtime}`);
+    }
+  };
+
+  // src/utils/api.ts
+  var fetchTestData = async (projectName, filepath, runTime) => {
+    const basePath = `reports/${projectName}/${filepath.split(".").slice(0, -1).join(".")}/${runTime}`;
+    try {
+      const logFiles = getLogFilesForRuntime(runTime);
+      console.log("mark2", logFiles);
+      const [testRes, ...logRes] = await Promise.all([
+        fetch(`${basePath}/tests.json`),
+        ...logFiles.map((f) => fetch(`${basePath}/${f}`)),
+        fetch(`${basePath}/type_errors.txt`),
+        fetch(`${basePath}/lint_errors.txt`)
+      ]);
+      const logs = {
+        "tests.json": await (await fetch(`${basePath}/tests.json`)).json(),
+        "type_errors.txt": await (await fetch(`${basePath}/type_errors.txt`)).text(),
+        "lint_errors.txt": await (await fetch(`${basePath}/lint_errors.txt`)).text(),
+        "exit.log": await (await fetch(`${basePath}/exit.log`)).text()
+      };
+      if (runTime === "node") {
+        logs["stdout.log"] = await (await fetch(`${basePath}/stdout.log`)).text();
+        logs["stderr.log"] = await (await fetch(`${basePath}/stderr.log`)).text();
+      }
+      if (runTime === "web") {
+        logs["info.log"] = await (await fetch(`${basePath}/info.log`)).text();
+        logs["error.log"] = await (await fetch(`${basePath}/error.log`)).text();
+        logs["debug.log"] = await (await fetch(`${basePath}/debug.log`)).text();
+        logs["warn.log"] = await (await fetch(`${basePath}/warn.log`)).text();
+      }
+      if (!testRes.ok) {
+        return {
+          // testData: null,
+          logs,
+          // typeErrors: await logRes[logFiles.length].text(),
+          // lintErrors: await logRes[logFiles.length + 1].text(),
+          error: "Tests did not complete successfully. Please check the build and runtime logs for errors."
+        };
+      }
+      console.log("mark1", logs);
+      return {
+        // testData: await testRes.json(),
+        logs,
+        // typeErrors: await logRes[logFiles.length].text(),
+        // lintErrors: await logRes[logFiles.length + 1].text(),
+        error: null
+      };
+    } catch (err) {
+      return {
+        // testData: null,
+        logs: {},
+        // typeErrors: "",
+        // lintErrors: "",
+        error: `Failed to load test data: ${err instanceof Error ? err.message : String(err)}`
+      };
+    }
+  };
+
   // src/components/pure/TestPageView.tsx
   var import_react58 = __toESM(require_react(), 1);
 
@@ -27841,6 +27920,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       prefixes
     } = (0, import_react3.useContext)(ThemeContext);
     return prefix || prefixes[defaultPrefix] || defaultPrefix;
+  }
+  function useBootstrapBreakpoints() {
+    const {
+      breakpoints
+    } = (0, import_react3.useContext)(ThemeContext);
+    return breakpoints;
+  }
+  function useBootstrapMinBreakpoint() {
+    const {
+      minBreakpoint
+    } = (0, import_react3.useContext)(ThemeContext);
+    return minBreakpoint;
   }
   function useIsRTL() {
     const {
@@ -29472,12 +29563,81 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     (0, import_react27.useEffect)(() => () => onUnmount.current(), []);
   }
 
-  // node_modules/react-bootstrap/esm/Container.js
+  // node_modules/react-bootstrap/esm/Col.js
   var import_classnames20 = __toESM(require_classnames());
   var React40 = __toESM(require_react());
   var import_jsx_runtime25 = __toESM(require_jsx_runtime());
   "use client";
-  var Container = /* @__PURE__ */ React40.forwardRef(({
+  function useCol({
+    as,
+    bsPrefix,
+    className,
+    ...props
+  }) {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "col");
+    const breakpoints = useBootstrapBreakpoints();
+    const minBreakpoint = useBootstrapMinBreakpoint();
+    const spans = [];
+    const classes = [];
+    breakpoints.forEach((brkPoint) => {
+      const propValue = props[brkPoint];
+      delete props[brkPoint];
+      let span;
+      let offset;
+      let order;
+      if (typeof propValue === "object" && propValue != null) {
+        ({
+          span,
+          offset,
+          order
+        } = propValue);
+      } else {
+        span = propValue;
+      }
+      const infix = brkPoint !== minBreakpoint ? `-${brkPoint}` : "";
+      if (span)
+        spans.push(span === true ? `${bsPrefix}${infix}` : `${bsPrefix}${infix}-${span}`);
+      if (order != null)
+        classes.push(`order${infix}-${order}`);
+      if (offset != null)
+        classes.push(`offset${infix}-${offset}`);
+    });
+    return [{
+      ...props,
+      className: (0, import_classnames20.default)(className, ...spans, ...classes)
+    }, {
+      as,
+      bsPrefix,
+      spans
+    }];
+  }
+  var Col = /* @__PURE__ */ React40.forwardRef(
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    (props, ref) => {
+      const [{
+        className,
+        ...colProps
+      }, {
+        as: Component4 = "div",
+        bsPrefix,
+        spans
+      }] = useCol(props);
+      return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Component4, {
+        ...colProps,
+        ref,
+        className: (0, import_classnames20.default)(className, !spans.length && bsPrefix)
+      });
+    }
+  );
+  Col.displayName = "Col";
+  var Col_default = Col;
+
+  // node_modules/react-bootstrap/esm/Container.js
+  var import_classnames21 = __toESM(require_classnames());
+  var React41 = __toESM(require_react());
+  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
+  "use client";
+  var Container = /* @__PURE__ */ React41.forwardRef(({
     bsPrefix,
     fluid = false,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
@@ -29487,10 +29647,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     const prefix = useBootstrapPrefix(bsPrefix, "container");
     const suffix = typeof fluid === "string" ? `-${fluid}` : "-fluid";
-    return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Component4, {
       ref,
       ...props,
-      className: (0, import_classnames20.default)(className, fluid ? `${prefix}${suffix}` : prefix)
+      className: (0, import_classnames21.default)(className, fluid ? `${prefix}${suffix}` : prefix)
     });
   });
   Container.displayName = "Container";
@@ -29600,8 +29760,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/SelectableContext.js
-  var React41 = __toESM(require_react());
-  var SelectableContext = /* @__PURE__ */ React41.createContext(null);
+  var React42 = __toESM(require_react());
+  var SelectableContext = /* @__PURE__ */ React42.createContext(null);
   var makeEventKey = (eventKey, href = null) => {
     if (eventKey != null)
       return String(eventKey);
@@ -29610,8 +29770,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var SelectableContext_default = SelectableContext;
 
   // node_modules/@restart/ui/esm/NavContext.js
-  var React42 = __toESM(require_react());
-  var NavContext = /* @__PURE__ */ React42.createContext(null);
+  var React43 = __toESM(require_react());
+  var NavContext = /* @__PURE__ */ React43.createContext(null);
   NavContext.displayName = "NavContext";
   var NavContext_default = NavContext;
 
@@ -29642,19 +29802,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react32.useLayoutEffect : import_react32.useEffect;
 
   // node_modules/react-bootstrap/esm/NavbarContext.js
-  var React43 = __toESM(require_react());
+  var React44 = __toESM(require_react());
   "use client";
-  var context2 = /* @__PURE__ */ React43.createContext(null);
+  var context2 = /* @__PURE__ */ React44.createContext(null);
   context2.displayName = "NavbarContext";
   var NavbarContext_default = context2;
 
   // node_modules/react-bootstrap/esm/ListGroup.js
-  var import_classnames22 = __toESM(require_classnames());
-  var React48 = __toESM(require_react());
+  var import_classnames23 = __toESM(require_classnames());
+  var React49 = __toESM(require_react());
   var import_warning2 = __toESM(require_warning());
 
   // node_modules/@restart/ui/esm/Nav.js
-  var React46 = __toESM(require_react());
+  var React47 = __toESM(require_react());
   var import_react35 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js
@@ -29678,14 +29838,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var useMergedRefs_default2 = useMergedRefs2;
 
   // node_modules/@restart/ui/esm/TabContext.js
-  var React44 = __toESM(require_react());
-  var TabContext = /* @__PURE__ */ React44.createContext(null);
+  var React45 = __toESM(require_react());
+  var TabContext = /* @__PURE__ */ React45.createContext(null);
   var TabContext_default = TabContext;
 
   // node_modules/@restart/ui/esm/NavItem.js
-  var React45 = __toESM(require_react());
+  var React46 = __toESM(require_react());
   var import_react34 = __toESM(require_react());
-  var import_jsx_runtime26 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
   var _excluded3 = ["as", "active", "eventKey"];
   function _objectWithoutPropertiesLoose4(r, e) {
     if (null == r)
@@ -29750,7 +29910,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       isActive
     }];
   }
-  var NavItem = /* @__PURE__ */ React45.forwardRef((_ref, ref) => {
+  var NavItem = /* @__PURE__ */ React46.forwardRef((_ref, ref) => {
     let {
       as: Component4 = Button_default,
       active,
@@ -29761,7 +29921,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       active
     }, options));
     props[dataAttr("active")] = meta.isActive;
-    return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Component4, Object.assign({}, options, props, {
+    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Component4, Object.assign({}, options, props, {
       ref
     }));
   });
@@ -29769,7 +29929,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavItem_default = NavItem;
 
   // node_modules/@restart/ui/esm/Nav.js
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
   var _excluded4 = ["as", "onSelect", "activeKey", "role", "onKeyDown"];
   function _objectWithoutPropertiesLoose5(r, e) {
     if (null == r)
@@ -29786,7 +29946,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var noop2 = () => {
   };
   var EVENT_KEY_ATTR = dataAttr("event-key");
-  var Nav = /* @__PURE__ */ React46.forwardRef((_ref, ref) => {
+  var Nav = /* @__PURE__ */ React47.forwardRef((_ref, ref) => {
     let {
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
       as: Component4 = "div",
@@ -29864,9 +30024,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       needsRefocusRef.current = false;
     });
     const mergedRef = useMergedRefs_default2(ref, listNode);
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(SelectableContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(SelectableContext_default.Provider, {
       value: handleSelect,
-      children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(NavContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(NavContext_default.Provider, {
         value: {
           role,
           // used by NavLink to determine it's role
@@ -29874,7 +30034,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           getControlledId: getControlledId || noop2,
           getControllerId: getControllerId || noop2
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Component4, Object.assign({}, props, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Component4, Object.assign({}, props, {
           onKeyDown: handleKeyDown,
           ref: mergedRef,
           role
@@ -29888,12 +30048,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/ListGroupItem.js
-  var import_classnames21 = __toESM(require_classnames());
-  var React47 = __toESM(require_react());
+  var import_classnames22 = __toESM(require_classnames());
+  var React48 = __toESM(require_react());
   var import_warning = __toESM(require_warning());
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
   "use client";
-  var ListGroupItem = /* @__PURE__ */ React47.forwardRef(({
+  var ListGroupItem = /* @__PURE__ */ React48.forwardRef(({
     bsPrefix,
     active,
     disabled,
@@ -29924,21 +30084,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     const Component4 = as || (action ? props.href ? "a" : "button" : "div");
     true ? (0, import_warning.default)(as || !(!action && props.href), "`action=false` and `href` should not be used together.") : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Component4, {
       ref,
       ...props,
       ...navItemProps,
       onClick: handleClick,
-      className: (0, import_classnames21.default)(className, bsPrefix, meta.isActive && "active", disabled && "disabled", variant && `${bsPrefix}-${variant}`, action && `${bsPrefix}-action`)
+      className: (0, import_classnames22.default)(className, bsPrefix, meta.isActive && "active", disabled && "disabled", variant && `${bsPrefix}-${variant}`, action && `${bsPrefix}-action`)
     });
   });
   ListGroupItem.displayName = "ListGroupItem";
   var ListGroupItem_default = ListGroupItem;
 
   // node_modules/react-bootstrap/esm/ListGroup.js
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
   "use client";
-  var ListGroup = /* @__PURE__ */ React48.forwardRef((props, ref) => {
+  var ListGroup = /* @__PURE__ */ React49.forwardRef((props, ref) => {
     const {
       className,
       bsPrefix: initialBsPrefix,
@@ -29957,11 +30117,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       horizontalVariant = horizontal === true ? "horizontal" : `horizontal-${horizontal}`;
     }
     true ? (0, import_warning2.default)(!(horizontal && variant === "flush"), '`variant="flush"` and `horizontal` should not be used together.') : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Nav_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Nav_default, {
       ref,
       ...controlledProps,
       as,
-      className: (0, import_classnames22.default)(className, bsPrefix, variant && `${bsPrefix}-${variant}`, horizontalVariant && `${bsPrefix}-${horizontalVariant}`, numbered && `${bsPrefix}-numbered`)
+      className: (0, import_classnames23.default)(className, bsPrefix, variant && `${bsPrefix}-${variant}`, horizontalVariant && `${bsPrefix}-${horizontalVariant}`, numbered && `${bsPrefix}-numbered`)
     });
   });
   ListGroup.displayName = "ListGroup";
@@ -29970,7 +30130,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Modal.js
-  var import_classnames28 = __toESM(require_classnames());
+  var import_classnames29 = __toESM(require_classnames());
 
   // node_modules/dom-helpers/esm/scrollbarSize.js
   var size;
@@ -29998,7 +30158,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/react-bootstrap/esm/Modal.js
-  var React59 = __toESM(require_react());
+  var React60 = __toESM(require_react());
   var import_react45 = __toESM(require_react());
 
   // node_modules/dom-helpers/esm/activeElement.js
@@ -30018,7 +30178,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/@restart/ui/esm/Modal.js
   var import_react43 = __toESM(require_react());
-  var React51 = __toESM(require_react());
+  var React52 = __toESM(require_react());
   var import_react_dom3 = __toESM(require_react_dom());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js
@@ -30202,7 +30362,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NoopTransition_default = NoopTransition;
 
   // node_modules/@restart/ui/esm/RTGTransition.js
-  var React49 = __toESM(require_react());
+  var React50 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/useRTGTransitionProps.js
   var import_react41 = __toESM(require_react());
@@ -30273,7 +30433,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/RTGTransition.js
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
   var _excluded6 = ["component"];
   function _objectWithoutPropertiesLoose7(r, e) {
     if (null == r)
@@ -30287,19 +30447,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     return t;
   }
-  var RTGTransition = /* @__PURE__ */ React49.forwardRef((_ref, ref) => {
+  var RTGTransition = /* @__PURE__ */ React50.forwardRef((_ref, ref) => {
     let {
       component: Component4
     } = _ref, props = _objectWithoutPropertiesLoose7(_ref, _excluded6);
     const transitionProps = useRTGTransitionProps(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Component4, Object.assign({
+    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Component4, Object.assign({
       ref
     }, transitionProps));
   });
   var RTGTransition_default = RTGTransition;
 
   // node_modules/@restart/ui/esm/ImperativeTransition.js
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
   function useTransition({
     in: inProp,
     onTransition
@@ -30368,20 +30528,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   function renderTransition(component, runTransition, props) {
     if (component) {
-      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(RTGTransition_default, Object.assign({}, props, {
+      return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(RTGTransition_default, Object.assign({}, props, {
         component
       }));
     }
     if (runTransition) {
-      return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(ImperativeTransition, Object.assign({}, props, {
+      return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(ImperativeTransition, Object.assign({}, props, {
         transition: runTransition
       }));
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(NoopTransition_default, Object.assign({}, props));
+    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(NoopTransition_default, Object.assign({}, props));
   }
 
   // node_modules/@restart/ui/esm/Modal.js
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
   var _excluded7 = ["show", "role", "className", "style", "children", "backdrop", "keyboard", "onBackdropClick", "onEscapeKeyDown", "transition", "runTransition", "backdropTransition", "runBackdropTransition", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "renderDialog", "renderBackdrop", "manager", "container", "onShow", "onHide", "onExit", "onExited", "onExiting", "onEnter", "onEntering", "onEntered"];
   function _objectWithoutPropertiesLoose8(r, e) {
     if (null == r)
@@ -30442,7 +30602,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       restoreFocus = true,
       restoreFocusOptions,
       renderDialog,
-      renderBackdrop = (props) => /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", Object.assign({}, props)),
+      renderBackdrop = (props) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", Object.assign({}, props)),
       manager: providedManager,
       container: containerRef,
       onShow,
@@ -30565,8 +30725,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       className,
       tabIndex: -1
     });
-    let dialog = renderDialog ? renderDialog(dialogProps) : /* @__PURE__ */ (0, import_jsx_runtime32.jsx)("div", Object.assign({}, dialogProps, {
-      children: /* @__PURE__ */ React51.cloneElement(children, {
+    let dialog = renderDialog ? renderDialog(dialogProps) : /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", Object.assign({}, dialogProps, {
+      children: /* @__PURE__ */ React52.cloneElement(children, {
         role: "document"
       })
     }));
@@ -30597,8 +30757,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         children: backdropElement
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(import_jsx_runtime32.Fragment, {
-      children: /* @__PURE__ */ import_react_dom3.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime32.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_jsx_runtime33.Fragment, {
+      children: /* @__PURE__ */ import_react_dom3.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, {
         children: [backdropElement, dialog]
       }), container)
     });
@@ -30695,20 +30855,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var BootstrapModalManager_default = BootstrapModalManager;
 
   // node_modules/react-bootstrap/esm/ModalBody.js
-  var React52 = __toESM(require_react());
-  var import_classnames23 = __toESM(require_classnames());
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+  var React53 = __toESM(require_react());
+  var import_classnames24 = __toESM(require_classnames());
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalBody = /* @__PURE__ */ React52.forwardRef(({
+  var ModalBody = /* @__PURE__ */ React53.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal-body");
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Component4, {
       ref,
-      className: (0, import_classnames23.default)(className, bsPrefix),
+      className: (0, import_classnames24.default)(className, bsPrefix),
       ...props
     });
   });
@@ -30716,20 +30876,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalBody_default = ModalBody;
 
   // node_modules/react-bootstrap/esm/ModalContext.js
-  var React53 = __toESM(require_react());
+  var React54 = __toESM(require_react());
   "use client";
-  var ModalContext = /* @__PURE__ */ React53.createContext({
+  var ModalContext = /* @__PURE__ */ React54.createContext({
     onHide() {
     }
   });
   var ModalContext_default = ModalContext;
 
   // node_modules/react-bootstrap/esm/ModalDialog.js
-  var import_classnames24 = __toESM(require_classnames());
-  var React54 = __toESM(require_react());
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
+  var import_classnames25 = __toESM(require_classnames());
+  var React55 = __toESM(require_react());
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalDialog = /* @__PURE__ */ React54.forwardRef(({
+  var ModalDialog = /* @__PURE__ */ React55.forwardRef(({
     bsPrefix,
     className,
     contentClassName,
@@ -30743,12 +30903,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal");
     const dialogClass = `${bsPrefix}-dialog`;
     const fullScreenClass = typeof fullscreen === "string" ? `${bsPrefix}-fullscreen-${fullscreen}` : `${bsPrefix}-fullscreen`;
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", {
       ...props,
       ref,
-      className: (0, import_classnames24.default)(dialogClass, className, size2 && `${bsPrefix}-${size2}`, centered && `${dialogClass}-centered`, scrollable && `${dialogClass}-scrollable`, fullscreen && fullScreenClass),
-      children: /* @__PURE__ */ (0, import_jsx_runtime34.jsx)("div", {
-        className: (0, import_classnames24.default)(`${bsPrefix}-content`, contentClassName),
+      className: (0, import_classnames25.default)(dialogClass, className, size2 && `${bsPrefix}-${size2}`, centered && `${dialogClass}-centered`, scrollable && `${dialogClass}-scrollable`, fullscreen && fullScreenClass),
+      children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", {
+        className: (0, import_classnames25.default)(`${bsPrefix}-content`, contentClassName),
         children
       })
     });
@@ -30757,20 +30917,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalDialog_default = ModalDialog;
 
   // node_modules/react-bootstrap/esm/ModalFooter.js
-  var React55 = __toESM(require_react());
-  var import_classnames25 = __toESM(require_classnames());
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var React56 = __toESM(require_react());
+  var import_classnames26 = __toESM(require_classnames());
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalFooter = /* @__PURE__ */ React55.forwardRef(({
+  var ModalFooter = /* @__PURE__ */ React56.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal-footer");
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Component4, {
       ref,
-      className: (0, import_classnames25.default)(className, bsPrefix),
+      className: (0, import_classnames26.default)(className, bsPrefix),
       ...props
     });
   });
@@ -30778,16 +30938,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalFooter_default = ModalFooter;
 
   // node_modules/react-bootstrap/esm/ModalHeader.js
-  var import_classnames26 = __toESM(require_classnames());
-  var React57 = __toESM(require_react());
+  var import_classnames27 = __toESM(require_classnames());
+  var React58 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/AbstractModalHeader.js
-  var React56 = __toESM(require_react());
+  var React57 = __toESM(require_react());
   var import_react44 = __toESM(require_react());
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
   var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
   "use client";
-  var AbstractModalHeader = /* @__PURE__ */ React56.forwardRef(({
+  var AbstractModalHeader = /* @__PURE__ */ React57.forwardRef(({
     closeLabel = "Close",
     closeVariant,
     closeButton = false,
@@ -30800,10 +30960,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       context3 == null || context3.onHide();
       onHide == null || onHide();
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime37.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", {
       ref,
       ...props,
-      children: [children, closeButton && /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(CloseButton_default, {
+      children: [children, closeButton && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(CloseButton_default, {
         "aria-label": closeLabel,
         variant: closeVariant,
         onClick: handleClick
@@ -30814,9 +30974,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var AbstractModalHeader_default = AbstractModalHeader;
 
   // node_modules/react-bootstrap/esm/ModalHeader.js
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalHeader = /* @__PURE__ */ React57.forwardRef(({
+  var ModalHeader = /* @__PURE__ */ React58.forwardRef(({
     bsPrefix,
     className,
     closeLabel = "Close",
@@ -30824,10 +30984,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal-header");
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)(AbstractModalHeader_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(AbstractModalHeader_default, {
       ref,
       ...props,
-      className: (0, import_classnames26.default)(className, bsPrefix),
+      className: (0, import_classnames27.default)(className, bsPrefix),
       closeLabel,
       closeButton
     });
@@ -30836,21 +30996,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalHeader_default = ModalHeader;
 
   // node_modules/react-bootstrap/esm/ModalTitle.js
-  var React58 = __toESM(require_react());
-  var import_classnames27 = __toESM(require_classnames());
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  var React59 = __toESM(require_react());
+  var import_classnames28 = __toESM(require_classnames());
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
   "use client";
   var DivStyledAsH42 = divWithClassName_default("h4");
-  var ModalTitle = /* @__PURE__ */ React58.forwardRef(({
+  var ModalTitle = /* @__PURE__ */ React59.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = DivStyledAsH42,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal-title");
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Component4, {
       ref,
-      className: (0, import_classnames27.default)(className, bsPrefix),
+      className: (0, import_classnames28.default)(className, bsPrefix),
       ...props
     });
   });
@@ -30858,21 +31018,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalTitle_default = ModalTitle;
 
   // node_modules/react-bootstrap/esm/Modal.js
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
   "use client";
   function DialogTransition(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Fade_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Fade_default, {
       ...props,
       timeout: null
     });
   }
   function BackdropTransition(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Fade_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Fade_default, {
       ...props,
       timeout: null
     });
   }
-  var Modal2 = /* @__PURE__ */ React59.forwardRef(({
+  var Modal2 = /* @__PURE__ */ React60.forwardRef(({
     bsPrefix,
     className,
     style: style2,
@@ -31008,27 +31168,27 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExited == null || onExited(node);
       removeEventListener_default(window, "resize", handleWindowResize);
     };
-    const renderBackdrop = (0, import_react45.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", {
+    const renderBackdrop = (0, import_react45.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", {
       ...backdropProps,
-      className: (0, import_classnames28.default)(`${bsPrefix}-backdrop`, backdropClassName, !animation && "show")
+      className: (0, import_classnames29.default)(`${bsPrefix}-backdrop`, backdropClassName, !animation && "show")
     }), [animation, backdropClassName, bsPrefix]);
     const baseModalStyle = {
       ...style2,
       ...modalStyle
     };
     baseModalStyle.display = "block";
-    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)("div", {
+    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", {
       role: "dialog",
       ...dialogProps,
       style: baseModalStyle,
-      className: (0, import_classnames28.default)(className, bsPrefix, animateStaticModal && `${bsPrefix}-static`, !animation && "show"),
+      className: (0, import_classnames29.default)(className, bsPrefix, animateStaticModal && `${bsPrefix}-static`, !animation && "show"),
       onClick: backdrop ? handleClick : void 0,
       onMouseUp: handleMouseUp,
       "data-bs-theme": dataBsTheme,
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledby,
       "aria-describedby": ariaDescribedby,
-      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Dialog, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Dialog, {
         ...props,
         onMouseDown: handleDialogMouseDown,
         className: dialogClassName,
@@ -31036,9 +31196,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         children
       })
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(ModalContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(ModalContext_default.Provider, {
       value: modalContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Modal_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Modal_default, {
         show,
         ref: mergedRef,
         backdrop,
@@ -31077,25 +31237,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Nav.js
-  var import_classnames31 = __toESM(require_classnames());
-  var React62 = __toESM(require_react());
+  var import_classnames32 = __toESM(require_classnames());
+  var React63 = __toESM(require_react());
   var import_react46 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavItem.js
-  var React60 = __toESM(require_react());
-  var import_classnames29 = __toESM(require_classnames());
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+  var React61 = __toESM(require_react());
+  var import_classnames30 = __toESM(require_classnames());
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
   "use client";
-  var NavItem2 = /* @__PURE__ */ React60.forwardRef(({
+  var NavItem2 = /* @__PURE__ */ React61.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "nav-item");
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Component4, {
       ref,
-      className: (0, import_classnames29.default)(className, bsPrefix),
+      className: (0, import_classnames30.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31103,11 +31263,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavItem_default2 = NavItem2;
 
   // node_modules/react-bootstrap/esm/NavLink.js
-  var import_classnames30 = __toESM(require_classnames());
-  var React61 = __toESM(require_react());
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+  var import_classnames31 = __toESM(require_classnames());
+  var React62 = __toESM(require_react());
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
   "use client";
-  var NavLink2 = /* @__PURE__ */ React61.forwardRef(({
+  var NavLink2 = /* @__PURE__ */ React62.forwardRef(({
     bsPrefix,
     className,
     as: Component4 = Anchor_default,
@@ -31123,21 +31283,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       disabled,
       ...props
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Component4, {
       ...props,
       ...navItemProps,
       ref,
       disabled,
-      className: (0, import_classnames30.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
+      className: (0, import_classnames31.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
     });
   });
   NavLink2.displayName = "NavLink";
   var NavLink_default = NavLink2;
 
   // node_modules/react-bootstrap/esm/Nav.js
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
   "use client";
-  var Nav2 = /* @__PURE__ */ React62.forwardRef((uncontrolledProps, ref) => {
+  var Nav2 = /* @__PURE__ */ React63.forwardRef((uncontrolledProps, ref) => {
     const {
       as = "div",
       bsPrefix: initialBsPrefix,
@@ -31166,11 +31326,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         cardHeaderBsPrefix
       } = cardHeaderContext);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Nav_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Nav_default, {
       as,
       ref,
       activeKey,
-      className: (0, import_classnames31.default)(className, {
+      className: (0, import_classnames32.default)(className, {
         [bsPrefix]: !isNavbar,
         [`${navbarBsPrefix}-nav`]: isNavbar,
         [`${navbarBsPrefix}-nav-scroll`]: isNavbar && navbarScroll,
@@ -31189,16 +31349,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Navbar.js
-  var import_classnames40 = __toESM(require_classnames());
-  var React73 = __toESM(require_react());
+  var import_classnames41 = __toESM(require_classnames());
+  var React74 = __toESM(require_react());
   var import_react53 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavbarBrand.js
-  var import_classnames32 = __toESM(require_classnames());
-  var React63 = __toESM(require_react());
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
+  var import_classnames33 = __toESM(require_classnames());
+  var React64 = __toESM(require_react());
+  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarBrand = /* @__PURE__ */ React63.forwardRef(({
+  var NavbarBrand = /* @__PURE__ */ React64.forwardRef(({
     bsPrefix,
     className,
     as,
@@ -31206,31 +31366,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-brand");
     const Component4 = as || (props.href ? "a" : "span");
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Component4, {
       ...props,
       ref,
-      className: (0, import_classnames32.default)(className, bsPrefix)
+      className: (0, import_classnames33.default)(className, bsPrefix)
     });
   });
   NavbarBrand.displayName = "NavbarBrand";
   var NavbarBrand_default = NavbarBrand;
 
   // node_modules/react-bootstrap/esm/NavbarCollapse.js
-  var React64 = __toESM(require_react());
+  var React65 = __toESM(require_react());
   var import_react47 = __toESM(require_react());
-  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarCollapse = /* @__PURE__ */ React64.forwardRef(({
+  var NavbarCollapse = /* @__PURE__ */ React65.forwardRef(({
     children,
     bsPrefix,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-collapse");
     const context3 = (0, import_react47.useContext)(NavbarContext_default);
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Collapse_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Collapse_default, {
       in: !!(context3 && context3.expanded),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", {
         ref,
         className: bsPrefix,
         children
@@ -31241,12 +31401,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarCollapse_default = NavbarCollapse;
 
   // node_modules/react-bootstrap/esm/NavbarToggle.js
-  var import_classnames33 = __toESM(require_classnames());
-  var React65 = __toESM(require_react());
+  var import_classnames34 = __toESM(require_classnames());
+  var React66 = __toESM(require_react());
   var import_react48 = __toESM(require_react());
-  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarToggle = /* @__PURE__ */ React65.forwardRef(({
+  var NavbarToggle = /* @__PURE__ */ React66.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -31270,13 +31430,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (Component4 === "button") {
       props.type = "button";
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Component4, {
       ...props,
       ref,
       onClick: handleClick,
       "aria-label": label,
-      className: (0, import_classnames33.default)(className, bsPrefix, !expanded && "collapsed"),
-      children: children || /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("span", {
+      className: (0, import_classnames34.default)(className, bsPrefix, !expanded && "collapsed"),
+      children: children || /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("span", {
         className: `${bsPrefix}-icon`
       })
     });
@@ -31285,11 +31445,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarToggle_default = NavbarToggle;
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var React71 = __toESM(require_react());
+  var React72 = __toESM(require_react());
   var import_react52 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var import_classnames38 = __toESM(require_classnames());
+  var import_classnames39 = __toESM(require_classnames());
 
   // node_modules/@restart/hooks/esm/useMediaQuery.js
   var import_react49 = __toESM(require_react());
@@ -31399,24 +31559,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var useBreakpoint_default = useBreakpoint;
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var React70 = __toESM(require_react());
+  var React71 = __toESM(require_react());
   var import_react51 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/OffcanvasBody.js
-  var React66 = __toESM(require_react());
-  var import_classnames34 = __toESM(require_classnames());
-  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
+  var React67 = __toESM(require_react());
+  var import_classnames35 = __toESM(require_classnames());
+  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
   "use client";
-  var OffcanvasBody = /* @__PURE__ */ React66.forwardRef(({
+  var OffcanvasBody = /* @__PURE__ */ React67.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-body");
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Component4, {
       ref,
-      className: (0, import_classnames34.default)(className, bsPrefix),
+      className: (0, import_classnames35.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31424,15 +31584,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasBody_default = OffcanvasBody;
 
   // node_modules/react-bootstrap/esm/OffcanvasToggling.js
-  var import_classnames35 = __toESM(require_classnames());
-  var React67 = __toESM(require_react());
-  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
+  var import_classnames36 = __toESM(require_classnames());
+  var React68 = __toESM(require_react());
+  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
   "use client";
   var transitionStyles = {
     [ENTERING]: "show",
     [ENTERED]: "show"
   };
-  var OffcanvasToggling = /* @__PURE__ */ React67.forwardRef(({
+  var OffcanvasToggling = /* @__PURE__ */ React68.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -31443,7 +31603,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(TransitionWrapper_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(TransitionWrapper_default, {
       ref,
       addEndListener: transitionEndListener,
       in: inProp,
@@ -31452,9 +31612,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       appear,
       ...props,
       childRef: getChildRef(children),
-      children: (status, innerProps) => /* @__PURE__ */ React67.cloneElement(children, {
+      children: (status, innerProps) => /* @__PURE__ */ React68.cloneElement(children, {
         ...innerProps,
-        className: (0, import_classnames35.default)(className, children.props.className, (status === ENTERING || status === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
+        className: (0, import_classnames36.default)(className, children.props.className, (status === ENTERING || status === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
       })
     });
   });
@@ -31462,11 +31622,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasToggling_default = OffcanvasToggling;
 
   // node_modules/react-bootstrap/esm/OffcanvasHeader.js
-  var import_classnames36 = __toESM(require_classnames());
-  var React68 = __toESM(require_react());
-  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
+  var import_classnames37 = __toESM(require_classnames());
+  var React69 = __toESM(require_react());
+  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
   "use client";
-  var OffcanvasHeader = /* @__PURE__ */ React68.forwardRef(({
+  var OffcanvasHeader = /* @__PURE__ */ React69.forwardRef(({
     bsPrefix,
     className,
     closeLabel = "Close",
@@ -31474,10 +31634,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-header");
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(AbstractModalHeader_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(AbstractModalHeader_default, {
       ref,
       ...props,
-      className: (0, import_classnames36.default)(className, bsPrefix),
+      className: (0, import_classnames37.default)(className, bsPrefix),
       closeLabel,
       closeButton
     });
@@ -31486,21 +31646,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasHeader_default = OffcanvasHeader;
 
   // node_modules/react-bootstrap/esm/OffcanvasTitle.js
-  var React69 = __toESM(require_react());
-  var import_classnames37 = __toESM(require_classnames());
-  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
+  var React70 = __toESM(require_react());
+  var import_classnames38 = __toESM(require_classnames());
+  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
   "use client";
   var DivStyledAsH52 = divWithClassName_default("h5");
-  var OffcanvasTitle = /* @__PURE__ */ React69.forwardRef(({
+  var OffcanvasTitle = /* @__PURE__ */ React70.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = DivStyledAsH52,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-title");
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Component4, {
       ref,
-      className: (0, import_classnames37.default)(className, bsPrefix),
+      className: (0, import_classnames38.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31508,21 +31668,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasTitle_default = OffcanvasTitle;
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
   var import_jsx_runtime52 = __toESM(require_jsx_runtime());
   var import_jsx_runtime53 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
   "use client";
   function DialogTransition2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(OffcanvasToggling_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(OffcanvasToggling_default, {
       ...props
     });
   }
   function BackdropTransition2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Fade_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Fade_default, {
       ...props
     });
   }
-  var Offcanvas = /* @__PURE__ */ React70.forwardRef(({
+  var Offcanvas = /* @__PURE__ */ React71.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -31586,21 +31746,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         node.style.visibility = "";
       onExited == null || onExited(...args);
     };
-    const renderBackdrop = (0, import_react51.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", {
+    const renderBackdrop = (0, import_react51.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", {
       ...backdropProps,
-      className: (0, import_classnames38.default)(`${bsPrefix}-backdrop`, backdropClassName)
+      className: (0, import_classnames39.default)(`${bsPrefix}-backdrop`, backdropClassName)
     }), [backdropClassName, bsPrefix]);
-    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime51.jsx)("div", {
+    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", {
       ...dialogProps,
       ...props,
-      className: (0, import_classnames38.default)(className, responsive ? `${bsPrefix}-${responsive}` : bsPrefix, `${bsPrefix}-${placement}`),
+      className: (0, import_classnames39.default)(className, responsive ? `${bsPrefix}-${responsive}` : bsPrefix, `${bsPrefix}-${placement}`),
       "aria-labelledby": ariaLabelledby,
       children
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime53.jsxs)(import_jsx_runtime52.Fragment, {
-      children: [!showOffcanvas && (responsive || renderStaticNode) && renderDialog({}), /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(ModalContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(import_jsx_runtime53.Fragment, {
+      children: [!showOffcanvas && (responsive || renderStaticNode) && renderDialog({}), /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(ModalContext_default.Provider, {
         value: modalContext,
-        children: /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Modal_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Modal_default, {
           show: showOffcanvas,
           ref,
           backdrop,
@@ -31636,9 +31796,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarOffcanvas = /* @__PURE__ */ React71.forwardRef(({
+  var NavbarOffcanvas = /* @__PURE__ */ React72.forwardRef(({
     onHide,
     ...props
   }, ref) => {
@@ -31647,7 +31807,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       context3 == null || context3.onToggle == null || context3.onToggle();
       onHide == null || onHide();
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(Offcanvas_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Offcanvas_default, {
       ref,
       show: !!(context3 != null && context3.expanded),
       ...props,
@@ -31659,20 +31819,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarOffcanvas_default = NavbarOffcanvas;
 
   // node_modules/react-bootstrap/esm/NavbarText.js
-  var React72 = __toESM(require_react());
-  var import_classnames39 = __toESM(require_classnames());
-  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
+  var React73 = __toESM(require_react());
+  var import_classnames40 = __toESM(require_classnames());
+  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarText = /* @__PURE__ */ React72.forwardRef(({
+  var NavbarText = /* @__PURE__ */ React73.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "span",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-text");
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Component4, {
       ref,
-      className: (0, import_classnames39.default)(className, bsPrefix),
+      className: (0, import_classnames40.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31680,9 +31840,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarText_default = NavbarText;
 
   // node_modules/react-bootstrap/esm/Navbar.js
-  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
   "use client";
-  var Navbar = /* @__PURE__ */ React73.forwardRef((props, ref) => {
+  var Navbar = /* @__PURE__ */ React74.forwardRef((props, ref) => {
     const {
       bsPrefix: initialBsPrefix,
       expand = true,
@@ -31720,14 +31880,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       expanded: !!expanded,
       expand
     }), [bsPrefix, expanded, expand, onToggle]);
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(NavbarContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(NavbarContext_default.Provider, {
       value: navbarContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(SelectableContext_default.Provider, {
         value: handleCollapse,
-        children: /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Component4, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Component4, {
           ref,
           ...controlledProps,
-          className: (0, import_classnames40.default)(className, bsPrefix, expand && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
+          className: (0, import_classnames41.default)(className, bsPrefix, expand && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
         })
       })
     });
@@ -31741,17 +31901,58 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     Toggle: NavbarToggle_default
   });
 
+  // node_modules/react-bootstrap/esm/Row.js
+  var import_classnames42 = __toESM(require_classnames());
+  var React75 = __toESM(require_react());
+  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
+  "use client";
+  var Row = /* @__PURE__ */ React75.forwardRef(({
+    bsPrefix,
+    className,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component4 = "div",
+    ...props
+  }, ref) => {
+    const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "row");
+    const breakpoints = useBootstrapBreakpoints();
+    const minBreakpoint = useBootstrapMinBreakpoint();
+    const sizePrefix = `${decoratedBsPrefix}-cols`;
+    const classes = [];
+    breakpoints.forEach((brkPoint) => {
+      const propValue = props[brkPoint];
+      delete props[brkPoint];
+      let cols;
+      if (propValue != null && typeof propValue === "object") {
+        ({
+          cols
+        } = propValue);
+      } else {
+        cols = propValue;
+      }
+      const infix = brkPoint !== minBreakpoint ? `-${brkPoint}` : "";
+      if (cols != null)
+        classes.push(`${sizePrefix}${infix}-${cols}`);
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Component4, {
+      ref,
+      ...props,
+      className: (0, import_classnames42.default)(className, decoratedBsPrefix, ...classes)
+    });
+  });
+  Row.displayName = "Row";
+  var Row_default = Row;
+
   // node_modules/react-bootstrap/esm/Tab.js
   var import_prop_types4 = __toESM(require_prop_types());
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var React75 = __toESM(require_react());
+  var React77 = __toESM(require_react());
   var import_react55 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/TabPanel.js
-  var React74 = __toESM(require_react());
+  var React76 = __toESM(require_react());
   var import_react54 = __toESM(require_react());
-  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
   var _excluded8 = ["active", "eventKey", "mountOnEnter", "transition", "unmountOnExit", "role", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited"];
   var _excluded22 = ["activeKey", "getControlledId", "getControllerId"];
   var _excluded32 = ["as"];
@@ -31823,7 +32024,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExited
     }];
   }
-  var TabPanel = /* @__PURE__ */ React74.forwardRef(
+  var TabPanel = /* @__PURE__ */ React76.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (_ref2, ref) => {
       let {
@@ -31841,11 +32042,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         unmountOnExit,
         transition: Transition2 = NoopTransition_default
       }] = useTabPanel(props);
-      return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(TabContext_default.Provider, {
+      return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(TabContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(SelectableContext_default.Provider, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(SelectableContext_default.Provider, {
           value: null,
-          children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Transition2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Transition2, {
             in: isActive,
             onEnter,
             onEntering,
@@ -31855,7 +32056,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             onExited,
             mountOnEnter,
             unmountOnExit,
-            children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Component4, Object.assign({}, tabPanelProps, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Component4, Object.assign({}, tabPanelProps, {
               ref,
               hidden: !isActive,
               "aria-hidden": !isActive
@@ -31869,7 +32070,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabPanel_default = TabPanel;
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
   var Tabs = (props) => {
     const {
       id: userId,
@@ -31894,9 +32095,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       getControlledId: (key) => generateChildId(key, "tabpane"),
       getControllerId: (key) => generateChildId(key, "tab")
     }), [onSelect, activeKey, transition, mountOnEnter, unmountOnExit, generateChildId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(TabContext_default.Provider, {
       value: tabContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(SelectableContext_default.Provider, {
         value: onSelect || null,
         children
       })
@@ -31914,11 +32115,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/react-bootstrap/esm/TabContainer.js
-  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
   var TabContainer = ({
     transition,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Tabs_default, {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Tabs_default, {
     ...props,
     transition: getTabTransitionComponent(transition)
   });
@@ -31926,20 +32127,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabContainer_default = TabContainer;
 
   // node_modules/react-bootstrap/esm/TabContent.js
-  var React76 = __toESM(require_react());
-  var import_classnames41 = __toESM(require_classnames());
-  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
+  var React78 = __toESM(require_react());
+  var import_classnames43 = __toESM(require_classnames());
+  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
   "use client";
-  var TabContent = /* @__PURE__ */ React76.forwardRef(({
+  var TabContent = /* @__PURE__ */ React78.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "tab-content");
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Component4, {
       ref,
-      className: (0, import_classnames41.default)(className, bsPrefix),
+      className: (0, import_classnames43.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31947,11 +32148,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabContent_default = TabContent;
 
   // node_modules/react-bootstrap/esm/TabPane.js
-  var import_classnames42 = __toESM(require_classnames());
-  var React77 = __toESM(require_react());
-  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
+  var import_classnames44 = __toESM(require_classnames());
+  var React79 = __toESM(require_react());
+  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
   "use client";
-  var TabPane = /* @__PURE__ */ React77.forwardRef(({
+  var TabPane = /* @__PURE__ */ React79.forwardRef(({
     bsPrefix,
     transition,
     ...props
@@ -31977,11 +32178,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       transition: getTabTransitionComponent(transition)
     });
     const prefix = useBootstrapPrefix(bsPrefix, "tab-pane");
-    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(TabContext_default.Provider, {
       value: null,
-      children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(SelectableContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Transition2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(Transition2, {
           in: isActive,
           onEnter,
           onEntering,
@@ -31991,10 +32192,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           onExited,
           mountOnEnter,
           unmountOnExit,
-          children: /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Component4, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(Component4, {
             ...rest,
             ref,
-            className: (0, import_classnames42.default)(className, prefix, isActive && "active")
+            className: (0, import_classnames44.default)(className, prefix, isActive && "active")
           })
         })
       })
@@ -32034,11 +32235,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Table.js
-  var import_classnames43 = __toESM(require_classnames());
-  var React78 = __toESM(require_react());
-  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
+  var import_classnames45 = __toESM(require_classnames());
+  var React80 = __toESM(require_react());
+  var import_jsx_runtime64 = __toESM(require_jsx_runtime());
   "use client";
-  var Table = /* @__PURE__ */ React78.forwardRef(({
+  var Table = /* @__PURE__ */ React80.forwardRef(({
     bsPrefix,
     className,
     striped,
@@ -32051,8 +32252,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "table");
-    const classes = (0, import_classnames43.default)(className, decoratedBsPrefix, variant && `${decoratedBsPrefix}-${variant}`, size2 && `${decoratedBsPrefix}-${size2}`, striped && `${decoratedBsPrefix}-${typeof striped === "string" ? `striped-${striped}` : "striped"}`, bordered && `${decoratedBsPrefix}-bordered`, borderless && `${decoratedBsPrefix}-borderless`, hover && `${decoratedBsPrefix}-hover`);
-    const table = /* @__PURE__ */ (0, import_jsx_runtime62.jsx)("table", {
+    const classes = (0, import_classnames45.default)(className, decoratedBsPrefix, variant && `${decoratedBsPrefix}-${variant}`, size2 && `${decoratedBsPrefix}-${size2}`, striped && `${decoratedBsPrefix}-${typeof striped === "string" ? `striped-${striped}` : "striped"}`, bordered && `${decoratedBsPrefix}-bordered`, borderless && `${decoratedBsPrefix}-borderless`, hover && `${decoratedBsPrefix}-hover`);
+    const table = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("table", {
       ...props,
       className: classes,
       ref
@@ -32062,7 +32263,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (typeof responsive === "string") {
         responsiveClass = `${responsiveClass}-${responsive}`;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)("div", {
+      return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("div", {
         className: responsiveClass,
         children: table
       });
@@ -32136,49 +32337,73 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const hasRuntimeErrors = props.runTimeErrors > 0;
     let bddStatus;
     if (!hasTests) {
-      console.warn("No tests.json found - marking as failed");
       bddStatus = { text: "\u274C No Tests", variant: "danger" };
     } else if (!testCompleted) {
-      console.warn("Test did not complete (runTimeErrors=-1) - marking as failed");
       bddStatus = { text: "\u274C No Tests", variant: "danger" };
     } else if (hasRuntimeErrors) {
-      console.warn(`Test failed with ${props.runTimeErrors} runtime errors`);
       bddStatus = { text: `\u274C BDD (${props.runTimeErrors})`, variant: "danger" };
     } else {
-      console.log("Test passed all runtime checks");
       bddStatus = { text: "\u2705 BDD", variant: "success" };
     }
     if (props.variant === "compact") {
-      console.log("Rendering compact badge:", bddStatus);
       console.groupEnd();
       return /* @__PURE__ */ import_react57.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
     }
-    console.log("Rendering full badge set with:", {
-      bddStatus,
-      typeErrors: props.typeErrors,
-      staticErrors: props.staticErrors
-    });
-    console.groupEnd();
     return /* @__PURE__ */ import_react57.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react57.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
   };
 
   // src/components/pure/TestPageView.tsx
   var TestPageView = ({
-    route,
-    setRoute,
-    navigate,
     projectName,
     testName,
     decodedTestPath,
     runtime,
-    testData,
-    logs,
-    typeErrors,
-    lintErrors,
     testsExist,
-    errorCounts
+    errorCounts,
+    logs
   }) => {
-    return /* @__PURE__ */ import_react58.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react58.default.createElement(
+    const [activeTab, setActiveTab] = import_react58.default.useState("tests.json");
+    const renderTestResults = (testData) => {
+      return /* @__PURE__ */ import_react58.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i) => /* @__PURE__ */ import_react58.default.createElement("div", { key: i, className: "mb-4 card" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer", className: "text-white" }, new URL(feature).hostname) : /* @__PURE__ */ import_react58.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react58.default.createElement(
+        "button",
+        {
+          className: "btn btn-sm btn-light dropdown-toggle",
+          type: "button",
+          "data-bs-toggle": "dropdown"
+        },
+        "Artifacts (",
+        given.artifacts.length,
+        ")"
+      ), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
+        "a",
+        {
+          className: "dropdown-item",
+          href: `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+          target: "_blank",
+          rel: "noopener noreferrer"
+        },
+        artifact.split("/").pop()
+      ))))))), /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname) : feature)))), when.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
+        "a",
+        {
+          href: `/testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+          target: "_blank",
+          className: "text-white",
+          rel: "noopener noreferrer"
+        },
+        artifact.split("/").pop()
+      )))))))), given.thens.map((then, k) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname) : feature)))), then.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
+        "a",
+        {
+          href: `/testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+          target: "_blank",
+          className: "text-white",
+          rel: "noopener noreferrer"
+        },
+        artifact.split("/").pop()
+      ))))))))))));
+    };
+    return /* @__PURE__ */ import_react58.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react58.default.createElement(
       NavBar,
       {
         title: decodedTestPath,
@@ -32191,37 +32416,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               text: runtime
             },
             className: "pe-none d-flex align-items-center gap-2"
-          },
-          {
-            to: `#results`,
-            label: /* @__PURE__ */ import_react58.default.createElement(
-              TestStatusBadge,
-              {
-                testName: decodedTestPath,
-                testsExist,
-                runTimeErrors: errorCounts.runTimeErrors,
-                typeErrors: errorCounts.typeErrors,
-                staticErrors: errorCounts.staticErrors,
-                variant: "compact"
-              }
-            ),
-            className: !testsExist || errorCounts.runTimeErrors > 0 ? "text-danger fw-bold" : "",
-            active: route === "results"
-          },
-          {
-            to: `#logs`,
-            label: `Runtime logs`,
-            active: route === "logs"
-          },
-          {
-            to: `#types`,
-            label: errorCounts.typeErrors > 0 ? `tsc (\u274C * ${errorCounts.typeErrors})` : "tsc \u2705 ",
-            active: route === "types"
-          },
-          {
-            to: `#lint`,
-            label: errorCounts.staticErrors > 0 ? `eslint (\u274C *${errorCounts.staticErrors}) ` : "eslint \u2705",
-            active: route === "lint"
           }
         ],
         rightContent: /* @__PURE__ */ import_react58.default.createElement(
@@ -32245,101 +32439,42 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           "\u{1F916}"
         )
       }
-    ), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
-      if (k) {
-        setRoute(k);
-        navigate(`#${k}`, { replace: true });
+    ), /* @__PURE__ */ import_react58.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react58.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react58.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, Object.keys(logs).map((logName) => {
+      const displayName = logName.replace(".json", "").replace(/_/g, " ");
+      let statusIndicator = null;
+      if (logName === "type_errors.txt" && errorCounts.typeErrors > 0) {
+        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.typeErrors);
+      } else if (logName === "lint_errors.txt" && errorCounts.staticErrors > 0) {
+        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.staticErrors);
+      } else if (logName === "stderr.log" && errorCounts.runTimeErrors > 0) {
+        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.runTimeErrors);
+      } else if (logName === "exit.log" && logs["exit.log"]?.trim() !== "0") {
+        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("span", { className: "ms-1" }, "\u26A0\uFE0F");
+      } else if (logName === "tests.json" && logs["tests.json"]) {
+        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-1" }, /* @__PURE__ */ import_react58.default.createElement(
+          TestStatusBadge,
+          {
+            testName: decodedTestPath,
+            testsExist,
+            runTimeErrors: errorCounts.runTimeErrors,
+            typeErrors: errorCounts.typeErrors,
+            staticErrors: errorCounts.staticErrors,
+            variant: "compact",
+            className: "mt-1"
+          }
+        ));
       }
-    } }, /* @__PURE__ */ import_react58.default.createElement(Tab_default.Content, { className: "mt-3" }, /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "results" }, !testsExist ? /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "danger", className: "mt-3" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Tests did not run to completion"), /* @__PURE__ */ import_react58.default.createElement("p", null, "The test results file (tests.json) was not found or could not be loaded."), /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react58.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-light",
-        onClick: () => setRoute("logs"),
-        className: "me-2"
-      },
-      "View Runtime Logs"
-    ), /* @__PURE__ */ import_react58.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-light",
-        onClick: () => navigate(`/projects/${projectName}#${runtime}`)
-      },
-      "View Build Logs"
-    ))) : testData ? /* @__PURE__ */ import_react58.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i) => /* @__PURE__ */ import_react58.default.createElement("div", { key: i, className: "mb-4 card" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer", className: "text-white" }, new URL(feature).hostname) : /* @__PURE__ */ import_react58.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react58.default.createElement(
-      "button",
-      {
-        className: "btn btn-sm btn-light dropdown-toggle",
-        type: "button",
-        "data-bs-toggle": "dropdown"
-      },
-      "Artifacts (",
-      given.artifacts.length,
-      ")"
-    ), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
-      "a",
-      {
-        className: "dropdown-item",
-        href: `/testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-        target: "_blank",
-        rel: "noopener noreferrer"
-      },
-      artifact.split("/").pop()
-    ))))))), /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname) : feature)))), when.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
-      "a",
-      {
-        href: `/testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-        target: "_blank",
-        className: "text-white",
-        rel: "noopener noreferrer"
-      },
-      artifact.split("/").pop()
-    )))))))), given.thens.map((then, k) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname) : feature)))), then.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react58.default.createElement(
-      "a",
-      {
-        href: `/testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-        target: "_blank",
-        className: "text-white",
-        rel: "noopener noreferrer"
-      },
-      artifact.split("/").pop()
-    )))))))))))) : /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "warning" }, "No test results found")), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "logs" }, logs === void 0 ? /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "danger" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Logs file missing"), /* @__PURE__ */ import_react58.default.createElement("p", null, "The runtime logs file (logs.txt) was not found."), /* @__PURE__ */ import_react58.default.createElement("p", null, "This suggests the test may not have executed properly.")) : logs === "" ? /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "No runtime logs"), /* @__PURE__ */ import_react58.default.createElement("p", null, "The test executed successfully with no log output.")) : /* @__PURE__ */ import_react58.default.createElement("pre", { className: "bg-dark text-white p-3" }, logs)), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "types" }, typeErrors ? /* @__PURE__ */ import_react58.default.createElement("pre", { className: "bg-dark text-white p-3" }, typeErrors) : /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "warning" }, "No type errors found")), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "lint" }, lintErrors ? /* @__PURE__ */ import_react58.default.createElement("pre", { className: "bg-dark text-white p-3" }, lintErrors) : /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "warning" }, "No lint errors found")), /* @__PURE__ */ import_react58.default.createElement(Tab_default.Pane, { eventKey: "coverage" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "coverage-report" }, /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "info" }, "Coverage reports coming soon!"), /* @__PURE__ */ import_react58.default.createElement("div", { className: "coverage-stats" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "stat-card bg-success text-white" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "85%"), /* @__PURE__ */ import_react58.default.createElement("p", null, "Lines Covered")), /* @__PURE__ */ import_react58.default.createElement("div", { className: "stat-card bg-warning text-dark" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "72%"), /* @__PURE__ */ import_react58.default.createElement("p", null, "Branches Covered")), /* @__PURE__ */ import_react58.default.createElement("div", { className: "stat-card bg-info text-white" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "91%"), /* @__PURE__ */ import_react58.default.createElement("p", null, "Functions Covered"))))))));
-  };
-
-  // src/utils/api.ts
-  var fetchTestData = async (projectName, filepath, runTime) => {
-    const basePath = `reports/${projectName}/${filepath.split(".").slice(0, -1).join(".")}/${runTime}`;
-    try {
-      const [testRes, logsRes, typeRes, lintRes] = await Promise.all([
-        fetch(`${basePath}/tests.json`),
-        fetch(`${basePath}/logs.txt`),
-        fetch(`${basePath}/type_errors.txt`),
-        fetch(`${basePath}/lint_errors.txt`)
-      ]);
-      if (!testRes.ok) {
-        return {
-          testData: null,
-          logs: await logsRes.text(),
-          typeErrors: await typeRes.text(),
-          lintErrors: await lintRes.text(),
-          error: "Tests did not complete successfully. Please check the build and runtime logs for errors."
-        };
-      }
-      return {
-        testData: await testRes.json(),
-        logs: await logsRes.text(),
-        typeErrors: await typeRes.text(),
-        lintErrors: await lintRes.text(),
-        error: null
-      };
-    } catch (err) {
-      return {
-        testData: null,
-        logs: "",
-        typeErrors: "",
-        lintErrors: "",
-        error: `Failed to load test data: ${err instanceof Error ? err.message : String(err)}`
-      };
-    }
+      return /* @__PURE__ */ import_react58.default.createElement(Nav_default2.Item, { key: logName }, /* @__PURE__ */ import_react58.default.createElement(
+        Nav_default2.Link,
+        {
+          eventKey: logName,
+          active: activeTab === logName,
+          onClick: () => setActiveTab(logName),
+          className: "d-flex flex-column align-items-start"
+        },
+        /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react58.default.createElement("span", { className: "text-capitalize" }, displayName), statusIndicator)
+      ));
+    }))), /* @__PURE__ */ import_react58.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "p-3" }, !testsExist && activeTab === "tests.json" ? /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "danger" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Tests did not run to completion"), /* @__PURE__ */ import_react58.default.createElement("p", null, "The test results file (tests.json) was not found or could not be loaded.")) : activeTab === "tests.json" && logs["tests.json"] ? typeof logs["tests.json"] === "string" ? renderTestResults(JSON.parse(logs["tests.json"])) : renderTestResults(logs["tests.json"]) : logs[activeTab] ? /* @__PURE__ */ import_react58.default.createElement("pre", { className: "bg-dark text-white p-3" }, /* @__PURE__ */ import_react58.default.createElement("code", null, typeof logs[activeTab] === "string" ? logs[activeTab] : JSON.stringify(logs[activeTab], null, 2))) : /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "info" }, "No content available for this log")))));
   };
 
   // src/components/stateful/TestPage.tsx
@@ -32356,10 +32491,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }, [location.hash]);
     const [testName, setTestName] = (0, import_react59.useState)("");
-    const [testData, setTestData] = (0, import_react59.useState)(null);
-    const [logs, setLogs] = (0, import_react59.useState)("");
-    const [typeErrors, setTypeErrors] = (0, import_react59.useState)("");
-    const [lintErrors, setLintErrors] = (0, import_react59.useState)("");
+    const [logs, setLogs] = (0, import_react59.useState)({});
     const [loading, setLoading] = (0, import_react59.useState)(true);
     const [error, setError] = (0, import_react59.useState)(null);
     const [testsExist, setTestsExist] = (0, import_react59.useState)(true);
@@ -32381,11 +32513,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const fetchData = async () => {
         try {
           const testResponse = await fetchTestData(projectName, testPath, runtime);
-          setTestData(testResponse.testData);
-          setTestsExist(!!testResponse.testData);
-          setLogs(testResponse.logs === null ? void 0 : testResponse.logs);
-          setTypeErrors(testResponse.typeErrors);
-          setLintErrors(testResponse.lintErrors);
+          console.log("testResponse", testResponse);
+          const receivedLogs = await testResponse.logs;
+          if (receivedLogs["tests.json"] && typeof receivedLogs["tests.json"] === "string") {
+            try {
+              receivedLogs["tests.json"] = JSON.parse(receivedLogs["tests.json"]);
+            } catch (e) {
+              console.error("Failed to parse tests.json:", e);
+            }
+          }
+          setLogs(receivedLogs);
           try {
             const summaryResponse = await fetch(`reports/${projectName}/summary.json`);
             if (!summaryResponse.ok)
@@ -32414,6 +32551,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       fetchData();
     }, []);
+    if (!logs)
+      return /* @__PURE__ */ import_react59.default.createElement("div", null, "loading...");
     return /* @__PURE__ */ import_react59.default.createElement(
       TestPageView,
       {
@@ -32424,15 +32563,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         testName,
         decodedTestPath,
         runtime,
-        testData,
         logs,
-        typeErrors,
-        lintErrors,
-        loading,
-        error,
         testsExist,
-        errorCounts,
-        summary
+        errorCounts
       }
     );
   };
@@ -32459,9 +32592,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     loading,
     error,
     projectName,
-    route,
-    setRoute,
-    navigate
+    activeTab,
+    setActiveTab
   }) => {
     if (loading)
       return /* @__PURE__ */ import_react60.default.createElement("div", null, "Loading project data...");
@@ -32484,40 +32616,44 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       NavBar,
       {
         title: projectName,
-        backLink: "/",
-        navItems: [
-          {
-            to: `#tests`,
-            label: testStatuses.some((t) => t.runTimeErrors > 0) ? "\u274C Tests" : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "\u26A0\uFE0F Tests" : "\u2705 Tests",
-            active: route === "tests",
-            className: testStatuses.some((t) => t.runTimeErrors > 0) ? "text-danger fw-bold" : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? "text-warning fw-bold" : ""
-          },
-          {
-            to: `#node`,
-            label: nodeLogs?.errors?.length ? "\u274C Node Build" : nodeLogs?.warnings?.length ? "\u26A0\uFE0F Node Build" : "Node Build",
-            active: route === "node",
-            className: nodeLogs?.errors?.length ? "text-danger fw-bold" : nodeLogs?.warnings?.length ? "text-warning fw-bold" : ""
-          },
-          {
-            to: `#web`,
-            label: webLogs?.errors?.length ? "\u274C Web Build" : webLogs?.warnings?.length ? "\u26A0\uFE0F Web Build" : "Web Build",
-            active: route === "web",
-            className: webLogs?.errors?.length ? "text-danger fw-bold" : webLogs?.warnings?.length ? "text-warning fw-bold" : ""
-          },
-          {
-            to: `#pure`,
-            label: pureLogs?.errors?.length ? "\u274C Pure Build" : pureLogs?.warnings?.length ? "\u26A0\uFE0F Pure Build" : "Pure Build",
-            active: route === "pure",
-            className: pureLogs?.errors?.length ? "text-danger fw-bold" : pureLogs?.warnings?.length ? "text-warning fw-bold" : ""
-          }
-        ]
+        backLink: "/"
       }
-    ), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Container, { activeKey: route, onSelect: (k) => {
-      if (k) {
-        setRoute(k);
-        navigate(`#${k}`, { replace: true });
-      }
-    } }, /* @__PURE__ */ import_react60.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "tests" }, /* @__PURE__ */ import_react60.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react60.default.createElement("thead", null, /* @__PURE__ */ import_react60.default.createElement("tr", null, /* @__PURE__ */ import_react60.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react60.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react60.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement(
+    ), /* @__PURE__ */ import_react60.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react60.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react60.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(
+      Nav_default2.Link,
+      {
+        active: activeTab === "tests",
+        onClick: () => setActiveTab("tests"),
+        className: "d-flex flex-column align-items-start"
+      },
+      /* @__PURE__ */ import_react60.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react60.default.createElement("span", null, "Tests"), testStatuses.some((t) => t.runTimeErrors > 0) ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some((t) => t.typeErrors > 0 || t.staticErrors > 0) ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
+    )), /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(
+      Nav_default2.Link,
+      {
+        active: activeTab === "node",
+        onClick: () => setActiveTab("node"),
+        className: "d-flex justify-content-between align-items-center"
+      },
+      "Node build logs",
+      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(
+      Nav_default2.Link,
+      {
+        active: activeTab === "web",
+        onClick: () => setActiveTab("web"),
+        className: "d-flex justify-content-between align-items-center"
+      },
+      "Web build logs",
+      webLogs?.errors?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(
+      Nav_default2.Link,
+      {
+        active: activeTab === "pure",
+        onClick: () => setActiveTab("pure"),
+        className: "d-flex justify-content-between align-items-center"
+      },
+      "Pure build logs",
+      pureLogs?.errors?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )))), /* @__PURE__ */ import_react60.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react60.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react60.default.createElement("thead", null, /* @__PURE__ */ import_react60.default.createElement("tr", null, /* @__PURE__ */ import_react60.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react60.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react60.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement(
       TestStatusBadge,
       {
         testName: test.testName,
@@ -32526,7 +32662,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         typeErrors: test.typeErrors,
         staticErrors: test.staticErrors
       }
-    )), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705")), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `\u274C ${test.staticErrors}` : "\u2705"))))))), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "node" }, /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" })), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "web" }, /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" })), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "pure" }, /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" })))));
+    )), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705")), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `\u274C ${test.staticErrors}` : "\u2705")))))) : activeTab === "node" ? /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
   };
 
   // src/components/stateful/ProjectPage.tsx
@@ -32595,9 +32731,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         loading,
         error,
         projectName,
-        route,
-        setRoute,
-        navigate
+        activeTab: route,
+        setActiveTab: setRoute
       }
     );
   };

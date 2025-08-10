@@ -59,5 +59,5 @@ export const ProjectPage = () => {
         };
         fetchData();
     }, [name]);
-    return (React.createElement(ProjectPageView, { summary: summary, nodeLogs: nodeLogs, webLogs: webLogs, pureLogs: pureLogs, config: config, loading: loading, error: error, projectName: projectName, route: route, setRoute: setRoute, navigate: navigate }));
+    return (React.createElement(ProjectPageView, { summary: summary, nodeLogs: nodeLogs, webLogs: webLogs, pureLogs: pureLogs, config: config, loading: loading, error: error, projectName: projectName, activeTab: route, setActiveTab: setRoute }));
 };

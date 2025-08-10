@@ -7,8 +7,8 @@ exports.ProjectPageView = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const react_1 = __importDefault(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
-const NavBar_1 = require("./NavBar");
 const TestStatusBadge_1 = require("../TestStatusBadge");
+const NavBar_1 = require("./NavBar");
 require("./../../App.scss");
 const BuildLogViewer = ({ logs, runtime }) => {
     var _a, _b, _c, _d, _e, _f;
@@ -107,8 +107,8 @@ const BuildLogViewer = ({ logs, runtime }) => {
                     react_1.default.createElement("h5", null, "No Errors Found"),
                     react_1.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))))));
 };
-const ProjectPageView = ({ summary, nodeLogs, webLogs, pureLogs, config, loading, error, projectName, route, setRoute, navigate }) => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+const ProjectPageView = ({ summary, nodeLogs, webLogs, pureLogs, config, loading, error, projectName, activeTab, setActiveTab }) => {
+    var _a, _b, _c, _d, _e, _f;
     if (loading)
         return react_1.default.createElement("div", null, "Loading project data...");
     if (error)
@@ -130,72 +130,52 @@ const ProjectPageView = ({ summary, nodeLogs, webLogs, pureLogs, config, loading
         };
     });
     return (react_1.default.createElement(react_bootstrap_1.Container, { fluid: true },
-        react_1.default.createElement(NavBar_1.NavBar, { title: projectName, backLink: "/", navItems: [
-                {
-                    to: `#tests`,
-                    label: testStatuses.some(t => t.runTimeErrors > 0) ? '❌ Tests' :
-                        testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? '⚠️ Tests' : '✅ Tests',
-                    active: route === 'tests',
-                    className: testStatuses.some(t => t.runTimeErrors > 0) ? 'text-danger fw-bold' :
-                        testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? 'text-warning fw-bold' : ''
-                },
-                {
-                    to: `#node`,
-                    label: ((_a = nodeLogs === null || nodeLogs === void 0 ? void 0 : nodeLogs.errors) === null || _a === void 0 ? void 0 : _a.length) ? '❌ Node Build' :
-                        ((_b = nodeLogs === null || nodeLogs === void 0 ? void 0 : nodeLogs.warnings) === null || _b === void 0 ? void 0 : _b.length) ? '⚠️ Node Build' : 'Node Build',
-                    active: route === 'node',
-                    className: ((_c = nodeLogs === null || nodeLogs === void 0 ? void 0 : nodeLogs.errors) === null || _c === void 0 ? void 0 : _c.length) ? 'text-danger fw-bold' :
-                        ((_d = nodeLogs === null || nodeLogs === void 0 ? void 0 : nodeLogs.warnings) === null || _d === void 0 ? void 0 : _d.length) ? 'text-warning fw-bold' : ''
-                },
-                {
-                    to: `#web`,
-                    label: ((_e = webLogs === null || webLogs === void 0 ? void 0 : webLogs.errors) === null || _e === void 0 ? void 0 : _e.length) ? '❌ Web Build' :
-                        ((_f = webLogs === null || webLogs === void 0 ? void 0 : webLogs.warnings) === null || _f === void 0 ? void 0 : _f.length) ? '⚠️ Web Build' : 'Web Build',
-                    active: route === 'web',
-                    className: ((_g = webLogs === null || webLogs === void 0 ? void 0 : webLogs.errors) === null || _g === void 0 ? void 0 : _g.length) ? 'text-danger fw-bold' :
-                        ((_h = webLogs === null || webLogs === void 0 ? void 0 : webLogs.warnings) === null || _h === void 0 ? void 0 : _h.length) ? 'text-warning fw-bold' : ''
-                },
-                {
-                    to: `#pure`,
-                    label: ((_j = pureLogs === null || pureLogs === void 0 ? void 0 : pureLogs.errors) === null || _j === void 0 ? void 0 : _j.length) ? '❌ Pure Build' :
-                        ((_k = pureLogs === null || pureLogs === void 0 ? void 0 : pureLogs.warnings) === null || _k === void 0 ? void 0 : _k.length) ? '⚠️ Pure Build' : 'Pure Build',
-                    active: route === 'pure',
-                    className: ((_l = pureLogs === null || pureLogs === void 0 ? void 0 : pureLogs.errors) === null || _l === void 0 ? void 0 : _l.length) ? 'text-danger fw-bold' :
-                        ((_m = pureLogs === null || pureLogs === void 0 ? void 0 : pureLogs.warnings) === null || _m === void 0 ? void 0 : _m.length) ? 'text-warning fw-bold' : ''
-                },
-            ] }),
-        react_1.default.createElement(react_bootstrap_1.Tab.Container, { activeKey: route, onSelect: (k) => {
-                if (k) {
-                    setRoute(k);
-                    navigate(`#${k}`, { replace: true });
-                }
-            } },
-            react_1.default.createElement(react_bootstrap_1.Tab.Content, null,
-                react_1.default.createElement(react_bootstrap_1.Tab.Pane, { eventKey: "tests" },
-                    react_1.default.createElement(react_bootstrap_1.Table, { striped: true, bordered: true, hover: true },
-                        react_1.default.createElement("thead", null,
-                            react_1.default.createElement("tr", null,
-                                react_1.default.createElement("th", null, "Test"),
-                                react_1.default.createElement("th", null, "Runtime"),
-                                react_1.default.createElement("th", null, "Status"),
-                                react_1.default.createElement("th", null, "Type Errors"),
-                                react_1.default.createElement("th", null, "Lint Errors"))),
-                        react_1.default.createElement("tbody", null, testStatuses.map((test) => (react_1.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` },
-                            react_1.default.createElement("td", null,
-                                react_1.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)),
-                            react_1.default.createElement("td", null,
-                                react_1.default.createElement(react_bootstrap_1.Badge, { bg: "secondary", className: "ms-2" }, test.runTime)),
-                            react_1.default.createElement("td", null,
-                                react_1.default.createElement(TestStatusBadge_1.TestStatusBadge, { testName: test.testName, testsExist: test.testsExist, runTimeErrors: test.runTimeErrors, typeErrors: test.typeErrors, staticErrors: test.staticErrors })),
-                            react_1.default.createElement("td", null,
-                                react_1.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `❌ ${test.typeErrors}` : '✅')),
-                            react_1.default.createElement("td", null,
-                                react_1.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `❌ ${test.staticErrors}` : '✅')))))))),
-                react_1.default.createElement(react_bootstrap_1.Tab.Pane, { eventKey: "node" },
-                    react_1.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" })),
-                react_1.default.createElement(react_bootstrap_1.Tab.Pane, { eventKey: "web" },
-                    react_1.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" })),
-                react_1.default.createElement(react_bootstrap_1.Tab.Pane, { eventKey: "pure" },
-                    react_1.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }))))));
+        react_1.default.createElement(NavBar_1.NavBar, { title: projectName, backLink: "/" }),
+        react_1.default.createElement(react_bootstrap_1.Row, { className: "g-0" },
+            react_1.default.createElement(react_bootstrap_1.Col, { sm: 3, className: "border-end" },
+                react_1.default.createElement(react_bootstrap_1.Nav, { variant: "pills", className: "flex-column" },
+                    react_1.default.createElement(react_bootstrap_1.Nav.Item, null,
+                        react_1.default.createElement(react_bootstrap_1.Nav.Link, { active: activeTab === 'tests', onClick: () => setActiveTab('tests'), className: "d-flex flex-column align-items-start" },
+                            react_1.default.createElement("div", { className: "d-flex justify-content-between w-100" },
+                                react_1.default.createElement("span", null, "Tests"),
+                                testStatuses.some(t => t.runTimeErrors > 0) ? (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "danger" }, "\u274C")) : testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "warning", text: "dark" }, "\u26A0\uFE0F")) : (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "success" }, "\u2713"))))),
+                    react_1.default.createElement(react_bootstrap_1.Nav.Item, null,
+                        react_1.default.createElement(react_bootstrap_1.Nav.Link, { active: activeTab === 'node', onClick: () => setActiveTab('node'), className: "d-flex justify-content-between align-items-center" },
+                            "Node build logs",
+                            ((_a = nodeLogs === null || nodeLogs === void 0 ? void 0 : nodeLogs.errors) === null || _a === void 0 ? void 0 : _a.length) ? (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "danger" },
+                                "\u274C ",
+                                nodeLogs.errors.length)) : ((_b = nodeLogs === null || nodeLogs === void 0 ? void 0 : nodeLogs.warnings) === null || _b === void 0 ? void 0 : _b.length) ? (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "warning", text: "dark" }, "\u26A0\uFE0F")) : null)),
+                    react_1.default.createElement(react_bootstrap_1.Nav.Item, null,
+                        react_1.default.createElement(react_bootstrap_1.Nav.Link, { active: activeTab === 'web', onClick: () => setActiveTab('web'), className: "d-flex justify-content-between align-items-center" },
+                            "Web build logs",
+                            ((_c = webLogs === null || webLogs === void 0 ? void 0 : webLogs.errors) === null || _c === void 0 ? void 0 : _c.length) ? (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "danger" },
+                                "\u274C ",
+                                webLogs.errors.length)) : ((_d = webLogs === null || webLogs === void 0 ? void 0 : webLogs.warnings) === null || _d === void 0 ? void 0 : _d.length) ? (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "warning", text: "dark" }, "\u26A0\uFE0F")) : null)),
+                    react_1.default.createElement(react_bootstrap_1.Nav.Item, null,
+                        react_1.default.createElement(react_bootstrap_1.Nav.Link, { active: activeTab === 'pure', onClick: () => setActiveTab('pure'), className: "d-flex justify-content-between align-items-center" },
+                            "Pure build logs",
+                            ((_e = pureLogs === null || pureLogs === void 0 ? void 0 : pureLogs.errors) === null || _e === void 0 ? void 0 : _e.length) ? (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "danger" },
+                                "\u274C ",
+                                pureLogs.errors.length)) : ((_f = pureLogs === null || pureLogs === void 0 ? void 0 : pureLogs.warnings) === null || _f === void 0 ? void 0 : _f.length) ? (react_1.default.createElement(react_bootstrap_1.Badge, { bg: "warning", text: "dark" }, "\u26A0\uFE0F")) : null)))),
+            react_1.default.createElement(react_bootstrap_1.Col, { sm: 9 },
+                react_1.default.createElement("div", { className: "p-3" }, activeTab === 'tests' ? (react_1.default.createElement(react_bootstrap_1.Table, { striped: true, bordered: true, hover: true },
+                    react_1.default.createElement("thead", null,
+                        react_1.default.createElement("tr", null,
+                            react_1.default.createElement("th", null, "Test"),
+                            react_1.default.createElement("th", null, "Runtime"),
+                            react_1.default.createElement("th", null, "Status"),
+                            react_1.default.createElement("th", null, "Type Errors"),
+                            react_1.default.createElement("th", null, "Lint Errors"))),
+                    react_1.default.createElement("tbody", null, testStatuses.map((test) => (react_1.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` },
+                        react_1.default.createElement("td", null,
+                            react_1.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)),
+                        react_1.default.createElement("td", null,
+                            react_1.default.createElement(react_bootstrap_1.Badge, { bg: "secondary", className: "ms-2" }, test.runTime)),
+                        react_1.default.createElement("td", null,
+                            react_1.default.createElement(TestStatusBadge_1.TestStatusBadge, { testName: test.testName, testsExist: test.testsExist, runTimeErrors: test.runTimeErrors, typeErrors: test.typeErrors, staticErrors: test.staticErrors })),
+                        react_1.default.createElement("td", null,
+                            react_1.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `❌ ${test.typeErrors}` : '✅')),
+                        react_1.default.createElement("td", null,
+                            react_1.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `❌ ${test.staticErrors}` : '✅')))))))) : activeTab === 'node' ? (react_1.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" })) : activeTab === 'web' ? (react_1.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" })) : activeTab === 'pure' ? (react_1.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" })) : null)))));
 };
 exports.ProjectPageView = ProjectPageView;

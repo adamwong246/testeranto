@@ -1,20 +1,20 @@
 {
   "src/components/pure/TestPageView.test/index.tsx": {
-    "typeErrors": 51,
+    "typeErrors": 52,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/TestPageView.test/index/prompt.txt",
     "failingFeatures": {}
   },
   "src/components/pure/ProjectPageView.test/index.tsx": {
-    "typeErrors": 38,
+    "typeErrors": 39,
     "staticErrors": 1,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/ProjectPageView.test/index/prompt.txt",
     "failingFeatures": {}
   },
   "src/components/pure/ModalContent.test/index.tsx": {
-    "typeErrors": 20,
+    "typeErrors": 23,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/ModalContent.test/index/prompt.txt",

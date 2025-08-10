@@ -1,36 +1,29 @@
 import fs from "fs";
 import path from "path";
 import { promptPather } from "../utils";
-export const makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
+import { getLogFilesForRuntime } from "./logFiles";
+const makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
     summary[entryPoint].prompt = "?";
     const promptPath = promptPather(entryPoint, runtime, name);
-    const testPaths = path.join("testeranto", "reports", name, entryPoint.split(".").slice(0, -1).join("."), runtime, `tests.json`);
-    // const featuresPath = path.join(
-    //   "testeranto",
-    //   "reports",
-    //   name,
-    //   platform,
-    //   entryPoint.split(".").slice(0, -1).join("."),
-    //   `featurePrompt.txt`
-    // );
-    // const logPath = path.join(
-    //   "testeranto",
-    //   "reports",
-    //   name,
-    //   entryPoint.split(".").slice(0, -1).join("."),
-    //   platform,
-    //   `logs.txt`
-    // );
-    const lintPath = path.join("testeranto", "reports", name, entryPoint.split(".").slice(0, -1).join("."), runtime, `lint_errors.txt`);
-    const typePath = path.join("testeranto", "reports", name, entryPoint.split(".").slice(0, -1).join("."), runtime, `type_errors.txt`);
-    const messagePath = path.join("testeranto", "reports", name, entryPoint.split(".").slice(0, -1).join("."), runtime, `message.txt`);
-    const p = path.join("testeranto", "reports", name, entryPoint.split(".").slice(0, -1).join("."), runtime);
-    fs.writeFileSync(promptPath, `
+    // Correct directory structure: testeranto/reports/<name>/<testname>/<runtime>/
+    const testDir = path.join("testeranto", "reports", name, entryPoint.split(".").slice(0, -1).join("."), runtime);
+    // Ensure directory exists
+    if (!fs.existsSync(testDir)) {
+        fs.mkdirSync(testDir, { recursive: true });
+    }
+    // Test result files
+    const testPaths = path.join(testDir, "tests.json");
+    const lintPath = path.join(testDir, "lint_errors.txt");
+    const typePath = path.join(testDir, "type_errors.txt");
+    const messagePath = path.join(testDir, "message.txt");
+    try {
+        await Promise.all([
+            fs.promises.writeFile(promptPath, `
 ${addableFiles
-        .map((x) => {
-        return `/add ${x}`;
-    })
-        .join("\n")}
+                .map((x) => {
+                return `/add ${x}`;
+            })
+                .join("\n")}
 
 /read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md
@@ -41,10 +34,12 @@ ${addableFiles
 /read ${typePath}
 /read ${lintPath}
 
-/read ${logsOfRuntime(runtime, p)}
-`);
-    fs.writeFileSync(messagePath, `
-There are 3 types of test reports. 
+/read ${getLogFilesForRuntime(runtime)
+                .map((p) => `${testDir}/${p}`)
+                .join(" ")}
+`),
+            fs.promises.writeFile(messagePath, `
+There are 3 types of test reports.
 1) bdd (highest priority)
 2) type checker
 3) static analysis (lowest priority)
@@ -59,26 +54,55 @@ if this file does not exist, then type check passed without errors;
 if this file does not exist, then static analysis passed without errors;
 
 BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns.
-Do not add error throwing/catching to the tests themselves. 
-`);
+Do not add error throwing/catching to the tests themselves.
+`),
+        ]);
+    }
+    catch (e) {
+        console.error(`Failed to write prompt files at ${testDir}`);
+        console.error(e);
+        throw e;
+    }
     summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${name}/reports/${runtime}/${entryPoint
         .split(".")
         .slice(0, -1)
         .join(".")}/prompt.txt`;
 };
-function logsOfRuntime(runtime, p) {
-    if (runtime === "node") {
-        return ["stdout.log", "stderr.log", "exit.log"]
-            .map((f) => `${p}/${f}`)
-            .join(" ");
+// function logs(r: IRunTime) {
+//   return getLogFilesForRuntime(r);
+// }
+// async function logsOfRuntime(
+//   runTime: IRunTime,
+//   testDir: string
+// ): Promise<string> {
+//   try {
+//     const fileChecks = await Promise.all(
+//       getLogFilesForRuntime(runTime).map(async (f) => {
+//         const filePath = path.join(testDir, f);
+//         try {
+//           await fs.promises.access(filePath);
+//           const content = await fs.promises.readFile(filePath, "utf-8");
+//           return content;
+//         } catch {
+//           return null;
+//         }
+//       })
+//     );
+//     return fileChecks.filter(Boolean).join("\n");
+//   } catch (e) {
+//     console.error(`Error checking log files in ${testDir}`);
+//     console.error(e);
+//     return "";
+//   }
+// }
+export const makePromptInternal = (summary, name, entryPoint, addableFiles, runTime) => {
+    if (runTime === "node") {
+        return makePrompt(summary, name, entryPoint, addableFiles, "node");
     }
-    if (runtime === "web") {
-        return ["log.log", "debug.log", "info.log", "error.log"]
-            .map((f) => `${p}/${f}`)
-            .join(" ");
+    if (runTime === "web") {
+        return makePrompt(summary, name, entryPoint, addableFiles, "web");
     }
-    if (runtime === "pure") {
-        return ["exit.log"].map((f) => `${p}/${f}`).join(" ");
+    if (runTime === "pure") {
+        return makePrompt(summary, name, entryPoint, addableFiles, "pure");
     }
-    throw new Error("unknown runtime");
-}
+};

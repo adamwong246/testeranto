@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { Tab, Container, Alert, Table, Badge, Nav, Card, ListGroup } from 'react-bootstrap';
-import { NavBar } from './NavBar';
+import { Tab, Container, Alert, Table, Badge, Nav, Card, ListGroup, Col, Row } from 'react-bootstrap';
+
 import { TestStatusBadge } from '../TestStatusBadge';
+
+import { NavBar } from './NavBar';
 
 import "./../../App.scss";
 
@@ -183,17 +185,16 @@ const BuildLogViewer = ({ logs, runtime }: { logs: any, runtime: string }) => {
 };
 
 export type IProjectPageViewProps = {
-  summary,
-  nodeLogs,
-  webLogs,
-  pureLogs,
-  config,
-  loading,
-  error,
-  projectName,
-  route,
-  setRoute,
-  navigate
+  summary: any;
+  nodeLogs: any;
+  webLogs: any;
+  pureLogs: any;
+  config: any;
+  loading: boolean;
+  error: string | null;
+  projectName: string;
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
 };
 
 export const ProjectPageView = ({
@@ -205,9 +206,8 @@ export const ProjectPageView = ({
   loading,
   error,
   projectName,
-  route,
-  setRoute,
-  navigate
+  activeTab,
+  setActiveTab
 }: IProjectPageViewProps) => {
   if (loading) return <div>Loading project data...</div>;
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
@@ -235,108 +235,132 @@ export const ProjectPageView = ({
       <NavBar
         title={projectName}
         backLink="/"
-        navItems={[
-          {
-            to: `#tests`,
-            label: testStatuses.some(t => t.runTimeErrors > 0) ? '❌ Tests' :
-              testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? '⚠️ Tests' : '✅ Tests',
-            active: route === 'tests',
-            className: testStatuses.some(t => t.runTimeErrors > 0) ? 'text-danger fw-bold' :
-              testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? 'text-warning fw-bold' : ''
-          },
-          {
-            to: `#node`,
-            label: nodeLogs?.errors?.length ? '❌ Node Build' :
-              nodeLogs?.warnings?.length ? '⚠️ Node Build' : 'Node Build',
-            active: route === 'node',
-            className: nodeLogs?.errors?.length ? 'text-danger fw-bold' :
-              nodeLogs?.warnings?.length ? 'text-warning fw-bold' : ''
-          },
-          {
-            to: `#web`,
-            label: webLogs?.errors?.length ? '❌ Web Build' :
-              webLogs?.warnings?.length ? '⚠️ Web Build' : 'Web Build',
-            active: route === 'web',
-            className: webLogs?.errors?.length ? 'text-danger fw-bold' :
-              webLogs?.warnings?.length ? 'text-warning fw-bold' : ''
-          },
-          {
-            to: `#pure`,
-            label: pureLogs?.errors?.length ? '❌ Pure Build' :
-              pureLogs?.warnings?.length ? '⚠️ Pure Build' : 'Pure Build',
-            active: route === 'pure',
-            className: pureLogs?.errors?.length ? 'text-danger fw-bold' :
-              pureLogs?.warnings?.length ? 'text-warning fw-bold' : ''
-          },
-        ]}
       />
 
-      <Tab.Container activeKey={route} onSelect={(k) => {
-        if (k) {
-          setRoute(k);
-          navigate(`#${k}`, { replace: true });
-        }
-      }}>
-        <Tab.Content>
-          <Tab.Pane eventKey="tests">
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Test</th>
-                  <th>Runtime</th>
-                  <th>Status</th>
-                  <th>Type Errors</th>
-                  <th>Lint Errors</th>
-                </tr>
-              </thead>
-              <tbody>
-                {testStatuses.map((test) => (
-                  <tr key={test.testName} data-testid={`test-row-${test.testName}`}>
-                    <td>
-                      <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}`}>
-                        {test.testName}
-                      </a>
-                    </td>
-                    <td>
-                      <Badge bg="secondary" className="ms-2">
-                        {test.runTime}
-                      </Badge>
-                    </td>
-                    <td>
-                      <TestStatusBadge
-                        testName={test.testName}
-                        testsExist={test.testsExist}
-                        runTimeErrors={test.runTimeErrors}
-                        typeErrors={test.typeErrors}
-                        staticErrors={test.staticErrors}
-                      />
-                    </td>
-                    <td>
-                      <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types`}>
-                        {test.typeErrors > 0 ? `❌ ${test.typeErrors}` : '✅'}
-                      </a>
-                    </td>
-                    <td>
-                      <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint`}>
-                        {test.staticErrors > 0 ? `❌ ${test.staticErrors}` : '✅'}
-                      </a>
-                    </td>
+      <Row className="g-0">
+        <Col sm={3} className="border-end">
+          <Nav variant="pills" className="flex-column">
+            <Nav.Item>
+              <Nav.Link
+                active={activeTab === 'tests'}
+                onClick={() => setActiveTab('tests')}
+                className="d-flex flex-column align-items-start"
+              >
+                <div className="d-flex justify-content-between w-100">
+                  <span>Tests</span>
+                  {testStatuses.some(t => t.runTimeErrors > 0) ? (
+                    <Badge bg="danger">❌</Badge>
+                  ) : testStatuses.some(t => t.typeErrors > 0 || t.staticErrors > 0) ? (
+                    <Badge bg="warning" text="dark">⚠️</Badge>
+                  ) : (
+                    <Badge bg="success">✓</Badge>
+                  )}
+                </div>
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                active={activeTab === 'node'}
+                onClick={() => setActiveTab('node')}
+                className="d-flex justify-content-between align-items-center"
+              >
+                Node build logs
+                {nodeLogs?.errors?.length ? (
+                  <Badge bg="danger">❌ {nodeLogs.errors.length}</Badge>
+                ) : nodeLogs?.warnings?.length ? (
+                  <Badge bg="warning" text="dark">⚠️</Badge>
+                ) : null}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                active={activeTab === 'web'}
+                onClick={() => setActiveTab('web')}
+                className="d-flex justify-content-between align-items-center"
+              >
+                Web build logs
+                {webLogs?.errors?.length ? (
+                  <Badge bg="danger">❌ {webLogs.errors.length}</Badge>
+                ) : webLogs?.warnings?.length ? (
+                  <Badge bg="warning" text="dark">⚠️</Badge>
+                ) : null}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                active={activeTab === 'pure'}
+                onClick={() => setActiveTab('pure')}
+                className="d-flex justify-content-between align-items-center"
+              >
+                Pure build logs
+                {pureLogs?.errors?.length ? (
+                  <Badge bg="danger">❌ {pureLogs.errors.length}</Badge>
+                ) : pureLogs?.warnings?.length ? (
+                  <Badge bg="warning" text="dark">⚠️</Badge>
+                ) : null}
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Col>
+        <Col sm={9}>
+          <div className="p-3">
+            {activeTab === 'tests' ? (
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Test</th>
+                    <th>Runtime</th>
+                    <th>Status</th>
+                    <th>Type Errors</th>
+                    <th>Lint Errors</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Tab.Pane>
-          <Tab.Pane eventKey="node">
-            <BuildLogViewer logs={nodeLogs} runtime="Node" />
-          </Tab.Pane>
-          <Tab.Pane eventKey="web">
-            <BuildLogViewer logs={webLogs} runtime="Web" />
-          </Tab.Pane>
-          <Tab.Pane eventKey="pure">
-            <BuildLogViewer logs={pureLogs} runtime="Pure" />
-          </Tab.Pane>
-        </Tab.Content>
-      </Tab.Container>
+                </thead>
+                <tbody>
+                  {testStatuses.map((test) => (
+                    <tr key={test.testName} data-testid={`test-row-${test.testName}`}>
+                      <td>
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}`}>
+                          {test.testName}
+                        </a>
+                      </td>
+                      <td>
+                        <Badge bg="secondary" className="ms-2">
+                          {test.runTime}
+                        </Badge>
+                      </td>
+                      <td>
+                        <TestStatusBadge
+                          testName={test.testName}
+                          testsExist={test.testsExist}
+                          runTimeErrors={test.runTimeErrors}
+                          typeErrors={test.typeErrors}
+                          staticErrors={test.staticErrors}
+                        />
+                      </td>
+                      <td>
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types`}>
+                          {test.typeErrors > 0 ? `❌ ${test.typeErrors}` : '✅'}
+                        </a>
+                      </td>
+                      <td>
+                        <a href={`#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint`}>
+                          {test.staticErrors > 0 ? `❌ ${test.staticErrors}` : '✅'}
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            ) : activeTab === 'node' ? (
+              <BuildLogViewer logs={nodeLogs} runtime="Node" />
+            ) : activeTab === 'web' ? (
+              <BuildLogViewer logs={webLogs} runtime="Web" />
+            ) : activeTab === 'pure' ? (
+              <BuildLogViewer logs={pureLogs} runtime="Pure" />
+            ) : null}
+          </div>
+        </Col>
+      </Row>
     </Container>
   );
 };

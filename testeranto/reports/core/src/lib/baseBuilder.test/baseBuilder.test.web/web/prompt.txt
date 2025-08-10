@@ -14,4 +14,4 @@
 /read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/type_errors.txt
 /read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/lint_errors.txt
 
-/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/log.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/debug.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/info.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/error.log
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/info.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/debug.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/error.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/warn.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/exit.log

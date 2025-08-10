@@ -9,10 +9,7 @@ export class NodeTesteranto extends Testeranto {
         });
     }
     async receiveTestResourceConfig(partialTestResource) {
-        // console.log("receiveTestResourceConfig", partialTestResource);
-        const t = JSON.parse(partialTestResource);
-        const pm = new PM_Node(t, ipcfile);
-        return await this.testJobs[0].receiveTestResourceConfig(pm);
+        return await this.testJobs[0].receiveTestResourceConfig(new PM_Node(JSON.parse(partialTestResource), ipcfile));
     }
 }
 const testeranto = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement) => {
@@ -24,12 +21,11 @@ const testeranto = async (input, testSpecification, testImplementation, testAdap
             // t.registerUncaughtPromise(reason, promise);
         });
         ipcfile = process.argv[3];
-        const f = await t.receiveTestResourceConfig(process.argv[2]);
-        console.error("goodbye node with failures", f.fails);
-        process.exit(f.fails);
+        process.exit((await t.receiveTestResourceConfig(process.argv[2])).fails);
     }
     catch (e) {
-        console.error("goodbye node with caught error", e);
+        console.error(e);
+        console.error(e.stack);
         process.exit(-1);
     }
 };

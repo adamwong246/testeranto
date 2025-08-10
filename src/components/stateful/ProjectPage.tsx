@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+
 import { ProjectPageView } from '../pure/ProjectPageView';
 import { ISummary } from '../../Types';
 
@@ -75,9 +77,8 @@ export const ProjectPage = () => {
       loading={loading}
       error={error}
       projectName={projectName}
-      route={route}
-      setRoute={setRoute}
-      navigate={navigate}
+      activeTab={route}
+      setActiveTab={setRoute}
     />
   );
 };

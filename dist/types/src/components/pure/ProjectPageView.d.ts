@@ -5,11 +5,10 @@ export type IProjectPageViewProps = {
     webLogs: any;
     pureLogs: any;
     config: any;
-    loading: any;
-    error: any;
-    projectName: any;
-    route: any;
-    setRoute: any;
-    navigate: any;
+    loading: boolean;
+    error: string | null;
+    projectName: string;
+    activeTab: string;
+    setActiveTab: (tab: string) => void;
 };
-export declare const ProjectPageView: ({ summary, nodeLogs, webLogs, pureLogs, config, loading, error, projectName, route, setRoute, navigate }: IProjectPageViewProps) => JSX.Element;
+export declare const ProjectPageView: ({ summary, nodeLogs, webLogs, pureLogs, config, loading, error, projectName, activeTab, setActiveTab }: IProjectPageViewProps) => JSX.Element;

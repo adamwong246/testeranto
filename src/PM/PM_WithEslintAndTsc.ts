@@ -5,16 +5,15 @@
 
 import ts from "typescript";
 import fs from "fs";
-import path from "path";
 import ansiC from "ansi-colors";
 import { ESLint } from "eslint";
 import tsc from "tsc-prog";
 
-import { lintPather, promptPather, tscPather } from "../utils";
+import { lintPather, tscPather } from "../utils";
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
-import { makePrompt } from "../utils/makePrompt";
 
 import { PM_Base } from "./base.js";
+import { makePromptInternal } from "../utils/makePrompt";
 
 const eslint = new ESLint();
 const formatter = await eslint.loadFormatter(
@@ -144,7 +143,13 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     addableFiles: string[],
     platform: IRunTime
   ) => {
-    await makePrompt(this.summary, this.name, entryPoint, addableFiles, platform);
+    await makePromptInternal(
+      this.summary,
+      this.name,
+      entryPoint,
+      addableFiles,
+      platform
+    );
     this.checkForShutdown();
   };
 

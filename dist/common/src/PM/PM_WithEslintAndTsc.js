@@ -14,8 +14,8 @@ const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const eslint_1 = require("eslint");
 const tsc_prog_1 = __importDefault(require("tsc-prog"));
 const utils_1 = require("../utils");
-const makePrompt_1 = require("../utils/makePrompt");
 const base_js_1 = require("./base.js");
+const makePrompt_1 = require("../utils/makePrompt");
 const eslint = new eslint_1.ESLint();
 const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs");
 class PM_WithEslintAndTsc extends base_js_1.PM_Base {
@@ -91,7 +91,7 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
             this.lintIsNowDone(entrypoint, results.length);
         };
         this.makePrompt = async (entryPoint, addableFiles, platform) => {
-            await (0, makePrompt_1.makePrompt)(this.summary, this.name, entryPoint, addableFiles, platform);
+            await (0, makePrompt_1.makePromptInternal)(this.summary, this.name, entryPoint, addableFiles, platform);
             this.checkForShutdown();
         };
         this.typeCheckIsRunning = (src) => {

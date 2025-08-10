@@ -6,8 +6,16 @@
 /Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (47,45): Property 'subject' does not exist on type 'Readonly<{}>'.
 /Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (114,9): Expected 1 arguments, but got 3.
 /Users/adam/Code/testeranto-react/src/react/component/index.ts (3,44): Cannot find module '../../../Types' or its corresponding type declarations.
-/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/implementation.tsx (35,5): Type '(name: string) => ({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(...args: any[]) => (state: any) => any'.
-  Type '({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: any) => any'.
+/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/implementation.tsx (21,9): Type '({ htmlElement }: IModalContentProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IModalContentProps': theme, handleThemeChange
+/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/implementation.tsx (21,18): Property 'htmlElement' does not exist on type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/implementation.tsx (29,9): Type '({ htmlElement }: IModalContentProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IModalContentProps': theme, handleThemeChange
+/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/implementation.tsx (29,18): Property 'htmlElement' does not exist on type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
+/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/implementation.tsx (35,5): Type '(name: string) => ({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(...args: any[]) => (state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
+  Type '({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
     Target signature provides too few arguments. Expected 2 or more, but got 1.
 /Users/adam/Code/testeranto/src/components/pure/ModalContent.test/index.tsx (13,3): Argument of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I, import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").O>' is not assignable to parameter of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I, import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").O>'.
   Types of parameters 'Suite' and 'Suite' are incompatible.
@@ -17,10 +25,8 @@
           Types of parameters 'givens' and 'givens' are incompatible.
             Type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I>' is not assignable to type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I>'.
               Type 'import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I' is not assignable to type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I'.
-                Types of property 'then' are incompatible.
-                  Type '{ hasModalHeader: () => (s: ISelection) => ISelection; hasThemeCards: () => (s: ISelection) => ISelection; takeScreenshot: (name: string) => (s: ISelection, pm: any) => Promise<...>; }' is not assignable to type '(s: ISelection) => ISelection'.
-                    Type '{ hasModalHeader: () => (s: ISelection) => ISelection; hasThemeCards: () => (s: ISelection) => ISelection; takeScreenshot: (name: string) => (s: ISelection, pm: any) => Promise<...>; }' provides no match for the signature '(s: ISelection): ISelection'.
-/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types.ts (7,10): '"../ModalContent"' has no exported member named 'IModalContentProps'. Did you mean 'ModalContent'?
+                Types of property 'iinput' are incompatible.
+                  Property 'prototype' is missing in type 'IModalContentProps' but required in type 'typeof Component'.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (76,49): Function lacks ending return statement and return type does not include 'undefined'.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (82,17): This expression is not callable.
   Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.

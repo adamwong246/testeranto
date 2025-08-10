@@ -4,13 +4,15 @@ import { ThemeCard } from "./ThemeCard";
 
 import "../../App.scss";
 
+export type IModalContentProps = {
+  theme: string;
+  handleThemeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 export const ModalContent = ({
   theme,
   handleThemeChange,
-}: {
-  theme: string;
-  handleThemeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => (
+}: IModalContentProps) => (
   <>
     <Modal.Header closeButton className="border-0">
       <Modal.Title className="d-flex align-items-center">

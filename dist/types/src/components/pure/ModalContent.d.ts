@@ -1,6 +1,7 @@
 import React from "react";
 import "../../App.scss";
-export declare const ModalContent: ({ theme, handleThemeChange, }: {
+export type IModalContentProps = {
     theme: string;
     handleThemeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => JSX.Element;
+};
+export declare const ModalContent: ({ theme, handleThemeChange, }: IModalContentProps) => JSX.Element;

@@ -291,7 +291,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     })
                         .catch((e2) => {
                         console.log(ansiColors.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`));
-                        // this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
                         logs.exit.write(e2.stack);
                         logs.exit.write(-1);
                         this.bddTestIsNowDone(src, -1);
@@ -309,8 +308,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
             }
             catch (e3) {
                 logs.writeExitCode(-1, e3);
-                console.log(ansiC.red(ansiC.inverse(`${src} 1 errored with: ${e3}. Check ${reportDest}/error.log for more info`)));
-                // this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
+                console.log(ansiC.red(ansiC.inverse(`${src} 1 errored with: ${e3}. Check logs for more info`)));
                 logs.exit.write(e3.stack);
                 logs.exit.write(-1);
                 this.bddTestIsNowDone(src, -1);
@@ -483,7 +481,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
                     console.log("error");
                     haltReturns = true;
                     console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${e.name}. Check error logs for more info`)));
-                    this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
                     this.bddTestIsNowDone(src, -1);
                     statusMessagePretty(-1, src, "node");
                 });
@@ -670,7 +667,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
                         // silent: true
                     });
                     const p = "/tmp/tpipe" + Math.random();
-                    const errFile = `${reportDest}/logs.txt`;
                     server.listen(p, () => {
                         child.on("close", (code) => {
                             server.close();
@@ -690,7 +686,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
                                 fs.rmSync(p);
                             }
                             haltReturns = true;
-                            console.log(ansiC.red(ansiC.inverse(`launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`)));
+                            console.log(ansiC.red(ansiC.inverse(`launchNodeSideCar - ${src} errored with: ${e.name}. Check logs for more info`)));
                             (_a = logs.error) === null || _a === void 0 ? void 0 : _a.write(e.toString() + "\n");
                             // this.bddTestIsNowDone(src, -1);
                             // statusMessagePretty(-1, src);
@@ -882,7 +878,7 @@ import('${d}').then(async (x) => {
                 })
                     .catch((e) => {
                     console.log(ansiC.red(ansiC.inverse(e.stack)));
-                    console.log(ansiC.red(ansiC.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`)));
+                    console.log(ansiC.red(ansiC.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`)));
                     this.bddTestIsNowDone(src, -1);
                 })
                     .finally(() => {

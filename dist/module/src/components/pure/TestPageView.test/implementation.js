@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-// import { IInput, ISelection, IStore, ISubject, O } from "./types";
-import { assert, expect } from "chai";
+import { assert } from "chai";
 import * as React from "react";
 import * as ReactDom from "react-dom/client";
 const mockTestData = {
@@ -34,9 +33,9 @@ export const implementation = {
             lintErrors: "",
             testsExist: true,
             errorCounts: {
-                runTimeErrors: 0,
-                typeErrors: 0,
-                staticErrors: 0,
+                runTimeErrors: 0, // BDD test failures
+                typeErrors: 0, // Type checker errors
+                staticErrors: 0, // Linter errors
             },
         }),
         WithErrors: () => ({
@@ -47,15 +46,15 @@ export const implementation = {
             testName: "test-suite.test.ts",
             decodedTestPath: "test-suite",
             runtime: "node",
-            testData: null,
+            testData: null, // Missing tests.json indicates BDD failure
             logs: undefined,
-            typeErrors: "Type error message",
-            lintErrors: "Lint error message",
+            typeErrors: "Type error message", // Only shown if tests.json exists
+            lintErrors: "Lint error message", // Only shown if tests.json exists
             testsExist: false,
             errorCounts: {
-                runTimeErrors: 1,
-                typeErrors: 2,
-                staticErrors: 3,
+                runTimeErrors: 1, // Highest priority - BDD failed
+                typeErrors: 2, // Secondary - type errors
+                staticErrors: 3, // Lowest priority - linter errors
             },
         }),
         WithLogs: () => ({
@@ -102,37 +101,55 @@ export const implementation = {
         },
         RendersNavBar: () => async (selection) => {
             const navBar = selection.container.querySelector(".navbar");
-            expect(navBar).toBeTruthy();
+            assert.isNotNull(navBar);
             return selection;
         },
         ShowsActiveTab: (tabName) => async (selection) => {
             const activeTab = selection.container.querySelector(".tab-pane.active");
-            expect(activeTab === null || activeTab === void 0 ? void 0 : activeTab.textContent).toContain(tabName);
+            assert.include(activeTab === null || activeTab === void 0 ? void 0 : activeTab.textContent, tabName);
             return selection;
         },
         ShowsErrorCounts: () => async (selection) => {
             const badges = selection.container.querySelectorAll(".badge");
-            expect(badges.length).toBeGreaterThan(0);
+            // First check for BDD failures
+            if (!selection.testsExist) {
+                assert.isAbove(badges.length, 0);
+                const bddBadge = selection.container.querySelector(".badge.bg-danger");
+                assert.isNotNull(bddBadge);
+            }
+            // Then check type errors if BDD passed
+            else if (selection.errorCounts.typeErrors > 0) {
+                const typeBadge = selection.container.querySelector(".badge.bg-warning");
+                assert.isNotNull(typeBadge);
+            }
+            // Finally check linter errors if both above passed
+            else if (selection.errorCounts.staticErrors > 0) {
+                const lintBadge = selection.container.querySelector(".badge.bg-info");
+                assert.isNotNull(lintBadge);
+            }
             return selection;
         },
         ShowsTestResults: () => async (selection) => {
-            const testResults = selection.container.querySelector(".test-results");
-            expect(testResults).toBeTruthy();
+            // Only expect test results if BDD tests passed
+            if (selection.testsExist) {
+                const testResults = selection.container.querySelector(".test-results");
+                assert.isNotNull(testResults);
+            }
             return selection;
         },
         ShowsLogs: () => async (selection) => {
             const logs = selection.container.querySelector("pre");
-            expect(logs).toBeTruthy();
+            assert.isNotNull(logs);
             return selection;
         },
         ShowsTypeErrors: () => async (selection) => {
             const typeErrors = selection.container.querySelector("#types-tab");
-            expect(typeErrors).toBeTruthy();
+            assert.isNotNull(typeErrors);
             return selection;
         },
         ShowsLintErrors: () => async (selection) => {
             const lintErrors = selection.container.querySelector("#lint-tab");
-            assert(lintErrors).toBeTruthy();
+            assert.isNotNull(lintErrors);
             return selection;
         },
         AiderButtonCopiesCommand: () => async (selection) => {
@@ -142,7 +159,7 @@ export const implementation = {
                 },
             });
             await implementation.whens.ClickAiderButton()(selection);
-            expect(navigator.clipboard.writeText).toHaveBeenCalled();
+            assert.isTrue(navigator.clipboard.writeText.called);
             return selection;
         },
     },

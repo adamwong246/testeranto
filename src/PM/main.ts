@@ -2,6 +2,7 @@
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { ChildProcess, spawn } from "node:child_process";
 import ansiColors from "ansi-colors";
 import net from "net";
@@ -23,7 +24,6 @@ import { Sidecar } from "../lib/Sidecar.js";
 import { Queue } from "../utils/queue.js";
 
 import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
-import { WriteStream } from "node:fs";
 
 type IOutputs = Record<
   string,
@@ -740,7 +740,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
               )
             );
 
-            // this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
             logs.exit.write(e2.stack);
             logs.exit.write(-1);
             this.bddTestIsNowDone(src, -1);
@@ -760,11 +759,11 @@ export class PM_Main extends PM_WithEslintAndTsc {
       console.log(
         ansiC.red(
           ansiC.inverse(
-            `${src} 1 errored with: ${e3}. Check ${reportDest}/error.log for more info`
+            `${src} 1 errored with: ${e3}. Check logs for more info`
           )
         )
       );
-      // this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
+
       logs.exit.write(e3.stack);
       logs.exit.write(-1);
       this.bddTestIsNowDone(src, -1);
@@ -985,7 +984,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
             )
           )
         );
-        this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
         this.bddTestIsNowDone(src, -1);
         statusMessagePretty(-1, src, "node");
       });
@@ -1226,8 +1224,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
 
         const p = "/tmp/tpipe" + Math.random();
 
-        const errFile = `${reportDest}/logs.txt`;
-
         server.listen(p, () => {
           child.on("close", (code) => {
             server.close();
@@ -1252,7 +1248,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
             console.log(
               ansiC.red(
                 ansiC.inverse(
-                  `launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`
+                  `launchNodeSideCar - ${src} errored with: ${e.name}. Check logs for more info`
                 )
               )
             );
@@ -1490,7 +1486,7 @@ import('${d}').then(async (x) => {
             console.log(
               ansiC.red(
                 ansiC.inverse(
-                  `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`
+                  `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
                 )
               )
             );

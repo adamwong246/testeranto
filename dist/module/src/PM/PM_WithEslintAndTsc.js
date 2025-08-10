@@ -8,8 +8,8 @@ import ansiC from "ansi-colors";
 import { ESLint } from "eslint";
 import tsc from "tsc-prog";
 import { lintPather, tscPather } from "../utils";
-import { makePrompt } from "../utils/makePrompt";
 import { PM_Base } from "./base.js";
+import { makePromptInternal } from "../utils/makePrompt";
 const eslint = new ESLint();
 const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs");
 export class PM_WithEslintAndTsc extends PM_Base {
@@ -85,7 +85,7 @@ export class PM_WithEslintAndTsc extends PM_Base {
             this.lintIsNowDone(entrypoint, results.length);
         };
         this.makePrompt = async (entryPoint, addableFiles, platform) => {
-            await makePrompt(this.summary, this.name, entryPoint, addableFiles, platform);
+            await makePromptInternal(this.summary, this.name, entryPoint, addableFiles, platform);
             this.checkForShutdown();
         };
         this.typeCheckIsRunning = (src) => {

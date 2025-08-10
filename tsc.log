@@ -60,8 +60,16 @@ src/components/pure/FeaturesReporterView.test/index.tsx(16,3): error TS2345: Arg
               Type 'import("/Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/types").I' is not assignable to type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I'.
                 Types of property 'iinput' are incompatible.
                   Property 'prototype' is missing in type 'IInput' but required in type 'typeof Component'.
-src/components/pure/ModalContent.test/implementation.tsx(35,5): error TS2322: Type '(name: string) => ({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(...args: any[]) => (state: any) => any'.
-  Type '({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: any) => any'.
+src/components/pure/ModalContent.test/implementation.tsx(21,9): error TS2322: Type '({ htmlElement }: IModalContentProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IModalContentProps': theme, handleThemeChange
+src/components/pure/ModalContent.test/implementation.tsx(21,18): error TS2339: Property 'htmlElement' does not exist on type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
+src/components/pure/ModalContent.test/implementation.tsx(29,9): error TS2322: Type '({ htmlElement }: IModalContentProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
+  Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
+    Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IModalContentProps': theme, handleThemeChange
+src/components/pure/ModalContent.test/implementation.tsx(29,18): error TS2339: Property 'htmlElement' does not exist on type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
+src/components/pure/ModalContent.test/implementation.tsx(35,5): error TS2322: Type '(name: string) => ({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(...args: any[]) => (state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
+  Type '({ htmlElement }: { htmlElement: any; }, pm: any) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
     Target signature provides too few arguments. Expected 2 or more, but got 1.
 src/components/pure/ModalContent.test/index.tsx(13,3): error TS2345: Argument of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I, import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").O>' is not assignable to parameter of type 'import("/Users/adam/Code/testeranto/src/CoreTypes").ITestSpecification<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I, import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").O>'.
   Types of parameters 'Suite' and 'Suite' are incompatible.
@@ -71,10 +79,8 @@ src/components/pure/ModalContent.test/index.tsx(13,3): error TS2345: Argument of
           Types of parameters 'givens' and 'givens' are incompatible.
             Type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I>' is not assignable to type 'import("/Users/adam/Code/testeranto/src/lib/abstractBase").IGivens<import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I>'.
               Type 'import("/Users/adam/Code/testeranto/src/components/pure/ModalContent.test/types").I' is not assignable to type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I'.
-                Types of property 'then' are incompatible.
-                  Type '{ hasModalHeader: () => (s: ISelection) => ISelection; hasThemeCards: () => (s: ISelection) => ISelection; takeScreenshot: (name: string) => (s: ISelection, pm: any) => Promise<...>; }' is not assignable to type '(s: ISelection) => ISelection'.
-                    Type '{ hasModalHeader: () => (s: ISelection) => ISelection; hasThemeCards: () => (s: ISelection) => ISelection; takeScreenshot: (name: string) => (s: ISelection, pm: any) => Promise<...>; }' provides no match for the signature '(s: ISelection): ISelection'.
-src/components/pure/ModalContent.test/types.ts(7,10): error TS2724: '"../ModalContent"' has no exported member named 'IModalContentProps'. Did you mean 'ModalContent'?
+                Types of property 'iinput' are incompatible.
+                  Property 'prototype' is missing in type 'IModalContentProps' but required in type 'typeof Component'.
 src/components/pure/NavBar.tsx(76,23): error TS2353: Object literal may only specify known properties, and '':hover'' does not exist in type 'Properties<string | number, string & {}>'.
 src/components/pure/ProjectPageView.test/implementation.tsx(10,3): error TS2741: Property 'Navigation' is missing in type '{ Default: () => { summary: { "test-suite-1": { testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; }; "test-suite-2": { testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; }; }; ... 9 more ...; navigate: () => void; }; WithError: () => { ...; }; }' but required in type '{ Default: (...args: any[]) => IProjectPageViewProps; WithError: (...args: any[]) => IProjectPageViewProps; Navigation: (...args: any[]) => IProjectPageViewProps; }'.
 src/components/pure/ProjectPageView.test/implementation.tsx(114,9): error TS2322: Type '({ htmlElement }: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IProjectPageViewProps & { container?: HTMLElement | undefined; }) => IProjectPageViewProps & { container?: HTMLElement | undefined; }'.
@@ -121,61 +127,65 @@ src/components/pure/ProjectPageView.test/index.tsx(18,3): error TS2345: Argument
               Type 'import("/Users/adam/Code/testeranto/src/components/pure/ProjectPageView.test/types").I' is not assignable to type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").I'.
                 Types of property 'iinput' are incompatible.
                   Property 'prototype' is missing in type 'IProjectPageViewProps' but required in type 'typeof Component'.
-src/components/pure/TestPageView.test/implementation.ts(22,13): error TS2304: Cannot find name 'IInput'.
-src/components/pure/TestPageView.test/implementation.ts(23,15): error TS2304: Cannot find name 'ISubject'.
-src/components/pure/TestPageView.test/implementation.ts(24,13): error TS2304: Cannot find name 'IStore'.
-src/components/pure/TestPageView.test/implementation.ts(25,17): error TS2304: Cannot find name 'ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(26,20): error TS2304: Cannot find name 'IInput'.
-src/components/pure/TestPageView.test/implementation.ts(26,31): error TS2304: Cannot find name 'ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(27,17): error TS2304: Cannot find name 'ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(27,32): error TS2304: Cannot find name 'ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(28,17): error TS2304: Cannot find name 'ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(28,40): error TS2304: Cannot find name 'ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(40,20): error TS2322: Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IInput) => ISelection'.
-  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IInput): ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(59,23): error TS2322: Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' is not assignable to type '(props: IInput) => ISelection'.
-  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' provides no match for the signature '(props: IInput): ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(78,21): error TS2322: Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IInput) => ISelection'.
-  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IInput): ISelection'.
-src/components/pure/TestPageView.test/implementation.ts(119,5): error TS2322: Type '(name: string) => ({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: ISelection; }>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
-  Call signature return types '({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: ISelection; }>' and '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>' are incompatible.
-    Type 'Promise<{ htmlElement: ISelection; }>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
-      Type 'Promise<{ htmlElement: ISelection; }>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(126,26): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(42,20): error TS2322: Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IProjectPageViewProps) => ISelection'.
+  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IProjectPageViewProps): ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(61,23): error TS2322: Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' is not assignable to type '(props: IProjectPageViewProps) => ISelection'.
+  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: null; logs: undefined; typeErrors: string; lintErrors: string; testsExist: boolean; errorCounts: { ...; }; }' provides no match for the signature '(props: IProjectPageViewProps): ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(80,21): error TS2322: Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' is not assignable to type '(props: IProjectPageViewProps) => ISelection'.
+  Type '{ route: string; setRoute: () => void; navigate: () => void; projectName: string; testName: string; decodedTestPath: string; runtime: string; testData: { name: string; givens: { name: string; whens: { name: string; }[]; thens: { ...; }[]; }[]; }; ... 4 more ...; errorCounts: { ...; }; }' provides no match for the signature '(props: IProjectPageViewProps): ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(102,5): error TS2322: Type '(tabName: string) => (selection: ISelection) => ISelection' is not assignable to type '(Iw_0: string) => (zel: ISelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(sel: ISelection) => ISelection>'.
+  Call signature return types '(selection: ISelection) => ISelection' and '(zel: ISelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(sel: ISelection) => ISelection>' are incompatible.
+    Type 'ISelection' is missing the following properties from type 'Promise<(sel: ISelection) => ISelection>': then, catch, finally, [Symbol.toStringTag]
+src/components/pure/TestPageView.test/implementation.ts(106,27): error TS2345: Argument of type 'Root' is not assignable to parameter of type 'Element | DocumentFragment'.
+src/components/pure/TestPageView.test/implementation.ts(109,29): error TS2322: Type '(selection: ISelection) => ISelection' is not assignable to type '(zel: ISelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(sel: ISelection) => ISelection>'.
+  Type 'ISelection' is missing the following properties from type 'Promise<(sel: ISelection) => ISelection>': then, catch, finally, [Symbol.toStringTag]
+src/components/pure/TestPageView.test/implementation.ts(110,32): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(121,5): error TS2322: Type '(name: string) => ({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+  Call signature return types '({ htmlElement }: ISelection, pm: PM) => Promise<{ htmlElement: HTMLElement; }>' and '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>' are incompatible.
+    Type 'Promise<{ htmlElement: HTMLElement; }>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
+      Type 'Promise<{ htmlElement: HTMLElement; }>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(128,26): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(128,22): error TS2339: Property 'toBeTruthy' does not exist on type 'Assertion'.
-src/components/pure/TestPageView.test/implementation.ts(131,5): error TS2322: Type '(tabName: string) => (selection: ISelection) => Promise<ISelection>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(129,32): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(133,5): error TS2322: Type '(tabName: string) => (selection: ISelection) => Promise<ISelection>' is not assignable to type '(It_0: string) => (ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Call signature return types '(selection: ISelection) => Promise<ISelection>' and '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>' are incompatible.
     Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
       Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(133,38): error TS2551: Property 'toContain' does not exist on type 'Assertion'. Did you mean 'contain'?
-src/components/pure/TestPageView.test/implementation.ts(136,29): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(134,35): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(138,29): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(138,29): error TS2551: Property 'toBeGreaterThan' does not exist on type 'Assertion'. Did you mean 'greaterThan'?
-src/components/pure/TestPageView.test/implementation.ts(141,29): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(139,32): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(141,22): error TS2339: Property 'testsExist' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(143,36): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(147,26): error TS2339: Property 'errorCounts' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(149,21): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(153,26): error TS2339: Property 'errorCounts' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(154,37): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(159,29): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(143,27): error TS2339: Property 'toBeTruthy' does not exist on type 'Assertion'.
-src/components/pure/TestPageView.test/implementation.ts(146,22): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(161,21): error TS2339: Property 'testsExist' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(162,39): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(167,22): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(148,20): error TS2339: Property 'toBeTruthy' does not exist on type 'Assertion'.
-src/components/pure/TestPageView.test/implementation.ts(151,28): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(168,30): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(172,28): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(153,26): error TS2339: Property 'toBeTruthy' does not exist on type 'Assertion'.
-src/components/pure/TestPageView.test/implementation.ts(156,28): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(173,36): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(177,28): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(158,26): error TS2339: Property 'toBeTruthy' does not exist on type 'void'.
-src/components/pure/TestPageView.test/implementation.ts(161,37): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
+src/components/pure/TestPageView.test/implementation.ts(178,36): error TS2339: Property 'container' does not exist on type 'ISelection'.
+src/components/pure/TestPageView.test/implementation.ts(182,37): error TS2322: Type '(selection: ISelection) => Promise<ISelection>' is not assignable to type '(ssel: ISelection, utils: PM) => (sel: ISelection) => Promise<ISelection>'.
   Type 'Promise<ISelection>' is not assignable to type '(sel: ISelection) => Promise<ISelection>'.
     Type 'Promise<ISelection>' provides no match for the signature '(sel: ISelection): Promise<ISelection>'.
-src/components/pure/TestPageView.test/implementation.ts(164,22): error TS2304: Cannot find name 'jest'.
-src/components/pure/TestPageView.test/implementation.ts(168,13): error TS2554: Expected 3 arguments, but got 1.
-src/components/pure/TestPageView.test/implementation.ts(169,45): error TS2339: Property 'toHaveBeenCalled' does not exist on type 'Assertion'.
+src/components/pure/TestPageView.test/implementation.ts(185,22): error TS2304: Cannot find name 'jest'.
+src/components/pure/TestPageView.test/implementation.ts(189,13): error TS2554: Expected 3 arguments, but got 1.
+src/components/pure/TestPageView.test/implementation.ts(190,51): error TS2339: Property 'called' does not exist on type '(data: string) => Promise<void>'.
 src/components/pure/TestPageView.test/index.tsx(18,3): error TS2345: Argument of type 'ITestSpecification<{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }, O>' is not assignable to parameter of type 'ITestSpecification<I, O>'.
   Types of parameters 'Suite' and 'Suite' are incompatible.
     Type 'SuiteSpecification<I, O>' is not assignable to type 'SuiteSpecification<{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }, O>'.
@@ -186,19 +196,15 @@ src/components/pure/TestPageView.test/index.tsx(18,3): error TS2345: Argument of
               Type '{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }' is not assignable to type 'I'.
                 Types of property 'istore' are incompatible.
                   Type 'ISelection' is missing the following properties from type 'HTMLElement': accessKey, accessKeyLabel, autocapitalize, autocorrect, and 314 more.
-src/components/pure/TestPageView.tsx(140,29): error TS2554: Expected 1 arguments, but got 2.
 src/components/stateful/ProjectsPage.tsx(66,7): error TS2322: Type 'Record<string, ISummary>' is not assignable to type 'TestSummary'.
   'string' index signatures are incompatible.
     Type 'ISummary' has no properties in common with type '{ testsExist?: boolean | undefined; runTimeErrors?: number | undefined; typeErrors?: number | undefined; staticErrors?: number | undefined; }'.
 src/components/stateful/ProjectsPage.tsx(67,7): error TS2322: Type 'Record<string, object>' is not assignable to type 'ProjectConfig'.
   'string' index signatures are incompatible.
     Property 'tests' is missing in type '{}' but required in type '{ tests: [string, string][]; }'.
-src/components/stateful/TestPage.tsx(52,17): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'SetStateAction<string>'.
-  Type 'undefined' is not assignable to type 'SetStateAction<string>'.
-src/components/stateful/TestPage.tsx(77,18): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
-src/components/stateful/TestPage.tsx(89,7): error TS2322: Type 'string' is not assignable to type '"coverage" | "results" | "logs" | "types" | "lint"'.
-src/components/stateful/TestPage.tsx(92,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
-  Type 'undefined' is not assignable to type 'string'.
+src/components/stateful/TestPage.tsx(90,18): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
+src/components/stateful/TestPage.tsx(104,7): error TS2322: Type '{ route: "coverage" | "results" | "logs" | "types" | "lint"; setRoute: Dispatch<SetStateAction<string>>; navigate: NavigateFunction; ... 6 more ...; errorCounts: { ...; }; }' is not assignable to type 'IntrinsicAttributes & TestPageViewProps'.
+  Property 'route' does not exist on type 'IntrinsicAttributes & TestPageViewProps'.
 src/components/SunriseAnimation.test/interface.ts(2,10): error TS2305: Module '"../../CoreTypes"' has no exported member 'ITestInterface'.
 src/components/SunriseAnimation.test/interface.ts(5,34): error TS2307: Cannot find module './SunriseAnimation' or its corresponding type declarations.
 src/components/SunriseAnimation.test/interface.ts(7,14): error TS1214: Identifier expected. 'interface' is a reserved word in strict mode. Modules are automatically in strict mode.
@@ -491,12 +497,12 @@ src/PM/__tests__/webSidecar.testeranto.ts(118,40): error TS2304: Cannot find nam
 src/PM/main.ts(305,7): error TS2322: Type '[number, Page]' is not assignable to type '[number, ITTestResourceConfiguration]'.
   Type at position 1 in source is not compatible with type at position 1 in target.
     Type 'Page' is missing the following properties from type 'ITTestResourceConfiguration': name, fs, ports
-src/PM/main.ts(846,32): error TS2304: Cannot find name 'argz'.
-src/PM/main.ts(1123,31): error TS2322: Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
+src/PM/main.ts(845,32): error TS2304: Cannot find name 'argz'.
+src/PM/main.ts(1121,31): error TS2322: Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
   Property '#private' in type 'Page' refers to a different member that cannot be accessed from within type 'Page'.
-src/PM/main.ts(1130,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1356,16): error TS2454: Variable 'argz' is used before being assigned.
-src/PM/main.ts(1600,9): error TS2532: Object is possibly 'undefined'.
+src/PM/main.ts(1128,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1352,16): error TS2454: Variable 'argz' is used before being assigned.
+src/PM/main.ts(1596,9): error TS2532: Object is possibly 'undefined'.
 src/PM/pure.ts(114,3): error TS2416: Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
     Types of parameters 'opts' and 'opts' are incompatible.

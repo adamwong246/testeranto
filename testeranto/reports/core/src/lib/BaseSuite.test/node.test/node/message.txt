@@ -1,5 +1,5 @@
 
-There are 3 types of test reports. 
+There are 3 types of test reports.
 1) bdd (highest priority)
 2) type checker
 3) static analysis (lowest priority)
@@ -14,4 +14,4 @@ if this file does not exist, then type check passed without errors;
 if this file does not exist, then static analysis passed without errors;
 
 BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns.
-Do not add error throwing/catching to the tests themselves. 
+Do not add error throwing/catching to the tests themselves.

@@ -1,4 +1,8 @@
 "use strict";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-async-promise-executor */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -37,10 +41,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_Main = void 0;
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable no-async-promise-executor */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 const node_child_process_1 = require("node:child_process");
 const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const net_1 = __importDefault(require("net"));
@@ -330,7 +330,6 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     })
                         .catch((e2) => {
                         console.log(ansi_colors_1.default.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`));
-                        // this.writeFileSync(`${reportDest}/logs.txt`, e2.stack, src);
                         logs.exit.write(e2.stack);
                         logs.exit.write(-1);
                         this.bddTestIsNowDone(src, -1);
@@ -348,8 +347,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             }
             catch (e3) {
                 logs.writeExitCode(-1, e3);
-                console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} 1 errored with: ${e3}. Check ${reportDest}/error.log for more info`)));
-                // this.writeFileSync(`${reportDest}/logs.txt`, e3.stack, src);
+                console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} 1 errored with: ${e3}. Check logs for more info`)));
                 logs.exit.write(e3.stack);
                 logs.exit.write(-1);
                 this.bddTestIsNowDone(src, -1);
@@ -522,7 +520,6 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     console.log("error");
                     haltReturns = true;
                     console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} errored with: ${e.name}. Check error logs for more info`)));
-                    this.writeFileSync(`${reportDest}/logs.txt`, e.toString(), src);
                     this.bddTestIsNowDone(src, -1);
                     statusMessagePretty(-1, src, "node");
                 });
@@ -709,7 +706,6 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                         // silent: true
                     });
                     const p = "/tmp/tpipe" + Math.random();
-                    const errFile = `${reportDest}/logs.txt`;
                     server.listen(p, () => {
                         child.on("close", (code) => {
                             server.close();
@@ -729,7 +725,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                                 fs_1.default.rmSync(p);
                             }
                             haltReturns = true;
-                            console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`launchNodeSideCar - ${src} errored with: ${e.name}. Check ${errFile}for more info`)));
+                            console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`launchNodeSideCar - ${src} errored with: ${e.name}. Check logs for more info`)));
                             (_a = logs.error) === null || _a === void 0 ? void 0 : _a.write(e.toString() + "\n");
                             // this.bddTestIsNowDone(src, -1);
                             // statusMessagePretty(-1, src);
@@ -921,7 +917,7 @@ import('${d}').then(async (x) => {
                 })
                     .catch((e) => {
                     console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(e.stack)));
-                    console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/logs.txt for more info`)));
+                    console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`)));
                     this.bddTestIsNowDone(src, -1);
                 })
                     .finally(() => {

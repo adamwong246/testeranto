@@ -4,9 +4,6 @@ export declare const fetchProjectData: (projectName: string) => Promise<{
     config: IBuiltConfig;
 }>;
 export declare const fetchTestData: (projectName: string, filepath: string, runTime: string) => Promise<{
-    testData: any | null;
-    logs: string;
-    typeErrors: string;
-    lintErrors: string;
+    logs: Record<string, string>;
     error: string | null;
 }>;

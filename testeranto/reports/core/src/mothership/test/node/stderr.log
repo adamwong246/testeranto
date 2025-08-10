@@ -7,8 +7,8 @@
     at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-K4PFDPDZ.mjs:231:12)
-    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-K4PFDPDZ.mjs:247:15) {
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:229:12)
+    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:247:19) {
   [cause]: TypeError [ERR_INVALID_URL]: Invalid URL
       at new NodeError (node:internal/errors:405:5)
       at new URL (node:internal/url:778:13)
@@ -25,4 +25,3 @@
   }
 }
 [ERROR] When step failed: IClaimTheResource: test TypeError: Failed to parse URL from http://localhost:undefined/claim?resource=test
-goodbye node with failures 0

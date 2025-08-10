@@ -1,4 +1,5 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -34,8 +35,6 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.implementation = void 0;
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-// import { IInput, ISelection, IStore, ISubject, O } from "./types";
 const chai_1 = require("chai");
 const React = __importStar(require("react"));
 const ReactDom = __importStar(require("react-dom/client"));
@@ -70,9 +69,9 @@ exports.implementation = {
             lintErrors: "",
             testsExist: true,
             errorCounts: {
-                runTimeErrors: 0,
-                typeErrors: 0,
-                staticErrors: 0,
+                runTimeErrors: 0, // BDD test failures
+                typeErrors: 0, // Type checker errors
+                staticErrors: 0, // Linter errors
             },
         }),
         WithErrors: () => ({
@@ -83,15 +82,15 @@ exports.implementation = {
             testName: "test-suite.test.ts",
             decodedTestPath: "test-suite",
             runtime: "node",
-            testData: null,
+            testData: null, // Missing tests.json indicates BDD failure
             logs: undefined,
-            typeErrors: "Type error message",
-            lintErrors: "Lint error message",
+            typeErrors: "Type error message", // Only shown if tests.json exists
+            lintErrors: "Lint error message", // Only shown if tests.json exists
             testsExist: false,
             errorCounts: {
-                runTimeErrors: 1,
-                typeErrors: 2,
-                staticErrors: 3,
+                runTimeErrors: 1, // Highest priority - BDD failed
+                typeErrors: 2, // Secondary - type errors
+                staticErrors: 3, // Lowest priority - linter errors
             },
         }),
         WithLogs: () => ({
@@ -138,37 +137,55 @@ exports.implementation = {
         },
         RendersNavBar: () => async (selection) => {
             const navBar = selection.container.querySelector(".navbar");
-            (0, chai_1.expect)(navBar).toBeTruthy();
+            chai_1.assert.isNotNull(navBar);
             return selection;
         },
         ShowsActiveTab: (tabName) => async (selection) => {
             const activeTab = selection.container.querySelector(".tab-pane.active");
-            (0, chai_1.expect)(activeTab === null || activeTab === void 0 ? void 0 : activeTab.textContent).toContain(tabName);
+            chai_1.assert.include(activeTab === null || activeTab === void 0 ? void 0 : activeTab.textContent, tabName);
             return selection;
         },
         ShowsErrorCounts: () => async (selection) => {
             const badges = selection.container.querySelectorAll(".badge");
-            (0, chai_1.expect)(badges.length).toBeGreaterThan(0);
+            // First check for BDD failures
+            if (!selection.testsExist) {
+                chai_1.assert.isAbove(badges.length, 0);
+                const bddBadge = selection.container.querySelector(".badge.bg-danger");
+                chai_1.assert.isNotNull(bddBadge);
+            }
+            // Then check type errors if BDD passed
+            else if (selection.errorCounts.typeErrors > 0) {
+                const typeBadge = selection.container.querySelector(".badge.bg-warning");
+                chai_1.assert.isNotNull(typeBadge);
+            }
+            // Finally check linter errors if both above passed
+            else if (selection.errorCounts.staticErrors > 0) {
+                const lintBadge = selection.container.querySelector(".badge.bg-info");
+                chai_1.assert.isNotNull(lintBadge);
+            }
             return selection;
         },
         ShowsTestResults: () => async (selection) => {
-            const testResults = selection.container.querySelector(".test-results");
-            (0, chai_1.expect)(testResults).toBeTruthy();
+            // Only expect test results if BDD tests passed
+            if (selection.testsExist) {
+                const testResults = selection.container.querySelector(".test-results");
+                chai_1.assert.isNotNull(testResults);
+            }
             return selection;
         },
         ShowsLogs: () => async (selection) => {
             const logs = selection.container.querySelector("pre");
-            (0, chai_1.expect)(logs).toBeTruthy();
+            chai_1.assert.isNotNull(logs);
             return selection;
         },
         ShowsTypeErrors: () => async (selection) => {
             const typeErrors = selection.container.querySelector("#types-tab");
-            (0, chai_1.expect)(typeErrors).toBeTruthy();
+            chai_1.assert.isNotNull(typeErrors);
             return selection;
         },
         ShowsLintErrors: () => async (selection) => {
             const lintErrors = selection.container.querySelector("#lint-tab");
-            (0, chai_1.assert)(lintErrors).toBeTruthy();
+            chai_1.assert.isNotNull(lintErrors);
             return selection;
         },
         AiderButtonCopiesCommand: () => async (selection) => {
@@ -178,7 +195,7 @@ exports.implementation = {
                 },
             });
             await exports.implementation.whens.ClickAiderButton()(selection);
-            (0, chai_1.expect)(navigator.clipboard.writeText).toHaveBeenCalled();
+            chai_1.assert.isTrue(navigator.clipboard.writeText.called);
             return selection;
         },
     },

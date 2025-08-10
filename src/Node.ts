@@ -1,7 +1,6 @@
 import Testeranto from "./lib/core.js";
 import {
   defaultTestResourceRequirement,
-  ITTestResourceConfiguration,
   ITTestResourceRequest,
 } from "./lib/index.js";
 import { PM_Node } from "./PM/node.js";
@@ -41,10 +40,9 @@ export class NodeTesteranto<
   }
 
   async receiveTestResourceConfig(partialTestResource: string) {
-    // console.log("receiveTestResourceConfig", partialTestResource);
-    const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
-    const pm = new PM_Node(t, ipcfile);
-    return await this.testJobs[0].receiveTestResourceConfig(pm);
+    return await this.testJobs[0].receiveTestResourceConfig(
+      new PM_Node(JSON.parse(partialTestResource), ipcfile)
+    );
   }
 }
 
@@ -71,12 +69,11 @@ const testeranto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
     });
 
     ipcfile = process.argv[3];
-    const f = await t.receiveTestResourceConfig(process.argv[2]);
 
-    console.error("goodbye node with failures", f.fails);
-    process.exit(f.fails);
+    process.exit((await t.receiveTestResourceConfig(process.argv[2])).fails);
   } catch (e) {
-    console.error("goodbye node with caught error", e);
+    console.error(e);
+    console.error(e.stack);
     process.exit(-1);
   }
 };
