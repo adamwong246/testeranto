@@ -13,6 +13,8 @@
     <!-- load style AFTER prism -->
     <link rel="stylesheet" href="style.css">
 
+    <!-- Bundled Revideo JS -->
+    <script src="revideo-bundle.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
@@ -21,7 +23,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
             
-            // Safe scroll effect without eval
             const parallaxBg = document.querySelector('.parallax-background');
             if (parallaxBg) {
                 window.addEventListener('scroll', function() {
@@ -59,7 +60,6 @@
 <p>Star this repo to get early access, or <a href="mailto:testeranto.dev@gmail.com">email us</a> to express interest.</p>
 <h2>quick links</h2>
 <ul>
-<li>Interactive explainer: <a href="https://testeranto.dev/demo">Launch Demo</a></li>
 <li>Example test reports: <a href="https://adamwong246.github.io/testeranto/testeranto/projects.html">adamwong246.github.io/testeranto/testeranto</a></li>
 <li>demo of me using testeranto to fix a bug: <a href="https://www.youtube.com/embed/WvU5xMqGi6Q">youtube</a></li>
 <li>a starter testeranto project: <a href="https://github.com/adamwong246/testeranto-starter">testeranto-starter</a></li>
@@ -265,7 +265,7 @@ test0: Given.Default(
                 </div>
             </div>
         
-            <div class="col-xs-0 col-sm-0" col-md-1">
+            <div class="col-xs-0 col-sm-0 col-md-1">
         </div>
     </div>
 

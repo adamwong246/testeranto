@@ -3,6 +3,7 @@ import path from "path";
 import { marked } from "marked";
 
 import * as sass from 'sass';
+import * as esbuild from 'esbuild';
 
 marked.use({
     renderer: {
@@ -31,6 +32,8 @@ const template = (title, content) => `
     <!-- load style AFTER prism -->
     <link rel="stylesheet" href="style.css">
 
+    <!-- Bundled Revideo JS -->
+    <script src="revideo-bundle.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
@@ -39,7 +42,6 @@ const template = (title, content) => `
         document.addEventListener('DOMContentLoaded', function() {
             Prism.highlightAll();
             
-            // Safe scroll effect without eval
             const parallaxBg = document.querySelector('.parallax-background');
             if (parallaxBg) {
                 window.addEventListener('scroll', function() {
@@ -65,7 +67,7 @@ const template = (title, content) => `
                 </div>
             </div>
         
-            <div class="col-xs-0 col-sm-0" col-md-1">
+            <div class="col-xs-0 col-sm-0 col-md-1">
         </div>
     </div>
 
@@ -112,13 +114,41 @@ const processFile = (filePath) => {
 };
 
 // Main function
-const main = () => {
+const main = async () => {
     try {
         // Create docs-output directory if it doesn't exist
         const outDir = "./";
         if (!fs.existsSync(outDir)) {
             fs.mkdirSync(outDir);
         }
+
+        // Bundle Revideo dependencies
+        // await esbuild.build({
+        //     entryPoints: ['src/revideo-entry.ts'],
+        //     bundle: true,
+        //     outfile: path.join(outDir, 'revideo-bundle.js'),
+        //     format: 'iife',
+        //     globalName: 'RevideoBundle',
+        //     minify: true,
+        //     external: ['fs', 'path'],
+        //     loader: {
+        //         '.woff': 'file',
+        //         '.woff2': 'file',
+        //         '.ttf': 'file'
+        //     }
+        // });
+
+        // // Bundle video player
+        // await esbuild.build({
+        //     entryPoints: ['src/video-player.tsx'],
+        //     bundle: true,
+        //     outfile: path.join(outDir, 'video-player-bundle.js'),
+        //     format: 'iife',
+        //     globalName: 'VideoPlayer',
+        //     minify: true,
+        //     // external: ['@revideo/core', '@revideo/player']
+        // });
+
 
         // Process frontpage template -> index.html
         const frontpageContent = fs.readFileSync("src/templates/frontpage.html", "utf8");
