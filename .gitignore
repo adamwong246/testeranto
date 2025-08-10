@@ -1,5 +1,9 @@
 node_modules
 secret*
 .aider*
+
+!testeranto/bundles/node/core/metafile.json
+!testeranto/bundles/web/core/metafile.json
+!testeranto/bundles/pure/core/metafile.json
+
 testeranto/bundles
-!testeranto/bundles/*/metafile.json
