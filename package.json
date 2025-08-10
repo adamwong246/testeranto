@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.186.0",
+  "version": "0.187.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -118,8 +118,7 @@
     "ATDD"
   ],
   "scripts": {
-    "build-hard": "rm -rf testeranto/**; rm -rf dist/**; yarn build; yarn t-init; yarn t-build allTests once; cp dist/prebuild/Project.* testeranto; cp dist/prebuild/TestReport.* testeranto; node scripts/compile-docs.js; yarn type-check",
-    "doit": "rm -rf node_modules && yarn install && yarn build",
+    "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
     "dev": "sh prebuild.sh;  cp ./src/cjs-shim.js ./dist/cjs-shim.js; sh postBuild.sh; tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch  ",
     "bundle": "node bundle.js",
@@ -133,7 +132,6 @@
     "t-init": "tsx dist/prebuild/init-docs.mjs",
     "t-report": "tsx dist/prebuild/ReportServer.mjs",
     "build-docs": "node scripts/compile-docs.js",
-    "do_it": "clear && rm -rf testeranto/** && yarn build && yarn t-init && yarn t-build allTests once && yarn t-run allTests once && yarn build-docs && yarn type-check",
     "prepublish": "self-import"
   },
   "peerDependencies": {

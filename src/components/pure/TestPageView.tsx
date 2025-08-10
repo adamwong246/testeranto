@@ -140,7 +140,7 @@ export const TestPageView = ({
                           {when.artifacts.map((artifact, ai) => (
                             <li key={ai}>
                               <a
-                                href={`/testeranto/reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtime}/${artifact}`}
+                                href={`testeranto/reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtime}/${artifact}`}
                                 target="_blank"
                                 className="text-white"
                                 rel="noopener noreferrer"
@@ -189,7 +189,7 @@ export const TestPageView = ({
                           {then.artifacts.map((artifact, ai) => (
                             <li key={ai}>
                               <a
-                                href={`/testeranto/reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtime}/${artifact}`}
+                                href={`testeranto/reports/${projectName}/${testName.split('.').slice(0, -1).join('.')}/${runtime}/${artifact}`}
                                 target="_blank"
                                 className="text-white"
                                 rel="noopener noreferrer"
