@@ -1,0 +1,8 @@
+{
+  "problem": "AI has changed the game forever. It's never been easier to generate code, but it's also never been harder to know if your code is as robust as ChatGpt would lead you to believe. Sure, you can scaffold out a react app from scratch with 1 prompt... but can you vibe your way around a real-world codebase?",
+  "solution": "Introducing Testeranto - the AI-powered BDD testing framework for typescript projects.",
+  "context": "Precision context optimization - only what's needed for each fix",
+  "runtimes": "Write once, test anywhere - Node, Browser, and Pure JavaScript",
+  "type-safety": "Type-safe across all runtimes with built-in validation",
+  "cta": "Get started today with npm install testeranto at beta"
+}
