@@ -1,45 +1,56 @@
 {
-  "extends": "@revideo/2d/tsconfig.project.json",
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "moduleResolution": "node",
-    "strict": true,
-    "jsx": "react",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": ".",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "composite": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
-    "incremental": true,
-    "baseUrl": ".",
-    "paths": {
-      "@revideo/*": [
-        "node_modules/@revideo/*"
-      ]
+  "ts-node": {
+    "compilerOptions": {
+      "module": "esnext",
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "target": "es2020",
+      "esModuleInterop": true,
     }
   },
+  "declaration": true,
+  "compilerOptions": {
+    "paths": {
+      "react": [
+        "./node_modules/@types/react"
+      ]
+    },
+    "useDefineForClassFields": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "module": "esnext",
+    "target": "ES2022",
+    "allowJs": true,
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "incremental": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "outDir": "dist",
+    "alwaysStrict": true
+  },
   "include": [
-    "src/**/*",
-    "scripts/**/*",
-    "index.d.ts"
+    "./node_modules/testeranto/src/**/*.*ts",
+    "index.d.ts",
+    "./src/**/*.*ts",
+    "./src/**/*.*tsx",
+    "testeranto.config.ts",
   ],
   "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.test.ts"
+    "node_modules"
   ]
 }

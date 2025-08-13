@@ -36,10 +36,12 @@
     "alwaysStrict": true
   },
   "include": [
-    "./**/*.*ts",
+    "./src/**/*.*ts",
+    "./src//**/*.*tsx",
     "index.d.ts"
   ],
   "exclude": [
     "node_modules",
+    "videos"
   ]
 }

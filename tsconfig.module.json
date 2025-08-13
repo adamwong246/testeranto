@@ -35,11 +35,12 @@
     "alwaysStrict": true
   },
   "include": [
-    "./**/*.*ts",
-    "./**/*.*tsx",
+    "./**/*.ts",
+    "./**/*.tsx",
     "index.d.ts"
   ],
   "exclude": [
     "node_modules",
+    "videos"
   ]
 }

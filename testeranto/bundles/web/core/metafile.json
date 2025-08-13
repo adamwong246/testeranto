@@ -20,10 +20,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -52,10 +52,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -84,10 +84,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -116,10 +116,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -148,10 +148,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -180,10 +180,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -212,10 +212,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -244,10 +244,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -276,10 +276,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -308,10 +308,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -340,10 +340,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -372,10 +372,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -404,10 +404,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -421,10 +421,10 @@
       "id": "",
       "location": {
         "column": 7,
-        "file": "src/components/pure/ModalContent.tsx",
-        "length": 16,
-        "line": 5,
-        "lineText": "import \"../../App.scss\";",
+        "file": "src/components/pure/TestPageView.test/index.tsx",
+        "length": 21,
+        "line": 8,
+        "lineText": "import \"./../../../App.scss\";",
         "namespace": "",
         "suggestion": ""
       },
@@ -451,10 +451,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -483,10 +483,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/ModalContent.tsx",
-            "length": 16,
-            "line": 5,
-            "lineText": "import \"../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -15002,7 +15002,7 @@
         "imports": []
       },
       "src/App.scss": {
-        "bytes": 293028,
+        "bytes": 293290,
         "imports": [
           {
             "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
@@ -17743,10 +17743,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 290598
+            "bytesInOutput": 290859
           }
         },
-        "bytes": 290814
+        "bytes": 291075
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css": {
         "imports": [
@@ -17901,10 +17901,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 290598
+            "bytesInOutput": 290859
           }
         },
-        "bytes": 290814
+        "bytes": 291075
       },
       "testeranto/bundles/web/core/src/components/pure/ModalContent.test/index.css": {
         "imports": [
@@ -18059,10 +18059,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 290598
+            "bytesInOutput": 290859
           }
         },
-        "bytes": 290814
+        "bytes": 291075
       },
       "testeranto/bundles/web/core/src/components/pure/AppFrame.test/index.css": {
         "imports": [
@@ -18217,10 +18217,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 290598
+            "bytesInOutput": 290859
           }
         },
-        "bytes": 290814
+        "bytes": 291075
       }
     }
   }

@@ -49,36 +49,6 @@
     {
       "id": "",
       "location": {
-        "column": 46,
-        "file": "src/lib/BaseSuite.test/mock.ts",
-        "length": 17,
-        "line": 4,
-        "lineText": "import { BaseGiven, BaseWhen, BaseThen } from \"../abstractBase\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 46,
-        "file": "src/lib/BaseSuite.test/mock.ts",
-        "length": 17,
-        "line": 4,
-        "lineText": "import { BaseGiven, BaseWhen, BaseThen } from \"../abstractBase\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
         "column": 23,
         "file": "src/lib/BaseSuite.test/pure.test.ts",
         "length": 12,
@@ -185,9 +155,9 @@
       "id": "",
       "location": {
         "column": 28,
-        "file": "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts",
+        "file": "src/lib/baseBuilder.test/baseBuilder.test.mock.ts",
         "length": 16,
-        "line": 8,
+        "line": 5,
         "lineText": "import { BaseBuilder } from \"../basebuilder\";",
         "namespace": "",
         "suggestion": ""
@@ -225,6 +195,36 @@
       "notes": [],
       "pluginName": "console-detector",
       "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 46,
+        "file": "src/lib/core.ts",
+        "length": 19,
+        "line": 22,
+        "lineText": "import { BaseGiven, BaseWhen, BaseThen } from \"./abstractBase.js\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 46,
+        "file": "src/lib/core.ts",
+        "length": 19,
+        "line": 22,
+        "lineText": "import { BaseGiven, BaseWhen, BaseThen } from \"./abstractBase.js\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
     }
   ],
   "metafile": {
