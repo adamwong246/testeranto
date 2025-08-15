@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.189.0",
+  "version": "0.190.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -132,7 +132,8 @@
     "t-init": "tsx dist/prebuild/init-docs.mjs",
     "t-report": "tsx dist/prebuild/ReportServer.mjs",
     "compile-docs": "node scripts/compile-docs.js",
-    "prepublish": "self-import"
+    "prepublish": "self-import",
+    "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt"
   },
   "peerDependencies": {
     "@types/react": "18.2.0",
