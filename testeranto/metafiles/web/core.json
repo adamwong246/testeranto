@@ -20,10 +20,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -52,10 +52,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -84,10 +84,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -116,10 +116,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -148,10 +148,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -180,10 +180,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -212,10 +212,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -244,10 +244,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -276,10 +276,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -308,10 +308,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -340,10 +340,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -372,10 +372,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -404,10 +404,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -421,10 +421,10 @@
       "id": "",
       "location": {
         "column": 7,
-        "file": "src/components/pure/AppFrame.test/index.tsx",
-        "length": 19,
-        "line": 10,
-        "lineText": "import \"../../../App.scss\";",
+        "file": "src/components/pure/TestPageView.test/index.tsx",
+        "length": 21,
+        "line": 8,
+        "lineText": "import \"./../../../App.scss\";",
         "namespace": "",
         "suggestion": ""
       },
@@ -451,10 +451,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -483,10 +483,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },

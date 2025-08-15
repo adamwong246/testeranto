@@ -18,10 +18,9 @@ export default (
   register: (entrypoint: string, sources: string[]) => void;
   inputFilesPluginFactory: Plugin;
 } => {
-  const d = `testeranto/bundles/${platform}/${testName}/`;
-  const f = `testeranto/bundles/${platform}/${testName}/metafile.json`;
-  if (!fs.existsSync(d)) {
-    fs.mkdirSync(d);
+  const f = `testeranto/metafiles/${platform}/${testName}.json`;
+  if (!fs.existsSync(`testeranto/metafiles/${platform}`)) {
+    fs.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
   }
   return {
     register,

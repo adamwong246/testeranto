@@ -12,10 +12,9 @@ const register = (entrypoint, sources) => {
     sources.forEach((s) => otherInputs[entrypoint].add(s));
 };
 exports.default = (platform, testName) => {
-    const d = `testeranto/bundles/${platform}/${testName}/`;
-    const f = `testeranto/bundles/${platform}/${testName}/metafile.json`;
-    if (!fs_1.default.existsSync(d)) {
-        fs_1.default.mkdirSync(d);
+    const f = `testeranto/metafiles/${platform}/${testName}.json`;
+    if (!fs_1.default.existsSync(`testeranto/metafiles/${platform}`)) {
+        fs_1.default.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
     }
     return {
         register,

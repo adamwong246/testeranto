@@ -119,14 +119,21 @@ exports.DesignEditor = react_1.default.forwardRef(({ projectId }, ref) => {
             return null;
         }
         try {
+            // Get current canvas state
             const json = canvasRef.current.toJSON();
             setDesign(json);
+            // Send update to collaborators
             if (wsRef.current) {
                 wsRef.current.send(JSON.stringify({
                     type: 'design_update',
                     data: json
                 }));
             }
+            // Force re-render of all objects
+            canvasRef.current.getObjects().forEach(obj => {
+                obj.set('dirty', true);
+            });
+            canvasRef.current.renderAll();
             console.log('Design saved:', json);
             return json;
         }

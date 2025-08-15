@@ -38,9 +38,9 @@ export const ProjectPage = () => {
       try {
         const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
           fetch(`reports/${name}/summary.json`),
-          fetch(`bundles/node/${name}/metafile.json`),
-          fetch(`bundles/web/${name}/metafile.json`),
-          fetch(`bundles/pure/${name}/metafile.json`),
+          fetch(`metafiles/node/${name}.json`),
+          fetch(`metafiles/web/${name}.json`),
+          fetch(`metafiles/pure/${name}.json`),
           fetch(`reports/${name}/config.json`)
         ]);
 

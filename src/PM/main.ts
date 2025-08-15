@@ -438,7 +438,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
         IRunTime,
         (f: fs.FSWatcher) => void
       ]) => {
-        const metafile = `./testeranto/bundles/${runtime}/${this.name}/metafile.json`;
+        const metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
 
         await pollForFile(metafile);
 
@@ -548,7 +548,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
     const metafile = JSON.parse(
       fs
         .readFileSync(
-          `./testeranto/bundles/${platform}/${this.name}/metafile.json`
+          `./testeranto/metafiles/${platform}/${this.name}.json`
         )
         .toString()
     ).metafile;

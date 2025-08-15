@@ -116,10 +116,9 @@ var register = (entrypoint, sources) => {
   sources.forEach((s) => otherInputs[entrypoint].add(s));
 };
 var inputFilesPlugin_default = (platform, testName2) => {
-  const d = `testeranto/bundles/${platform}/${testName2}/`;
-  const f = `testeranto/bundles/${platform}/${testName2}/metafile.json`;
-  if (!fs.existsSync(d)) {
-    fs.mkdirSync(d);
+  const f = `testeranto/metafiles/${platform}/${testName2}.json`;
+  if (!fs.existsSync(`testeranto/metafiles/${platform}`)) {
+    fs.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
   }
   return {
     register,

@@ -47,7 +47,7 @@ const DesignEditorPage = () => {
                 console.warn('Design editor ref not available');
                 return;
             }
-            // Get current design state from canvas
+            // Get and save current design state
             const designData = designEditorRef.current.saveDesign();
             if (!designData) {
                 console.warn('No design data to save');
@@ -55,6 +55,10 @@ const DesignEditorPage = () => {
             }
             // Include projectId in the saved data
             const fullDesign = Object.assign(Object.assign({}, designData), { projectId });
+            // Force immediate render after save
+            if (designEditorRef.current) {
+                designEditorRef.current.loadDesign(fullDesign);
+            }
             // @ts-ignore - File System Access API
             const newHandle = await window.showSaveFilePicker({
                 types: [{

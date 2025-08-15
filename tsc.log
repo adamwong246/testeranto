@@ -11,14 +11,14 @@ $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
 ../testeranto-react/src/react-dom/jsx/dynamic.ts(30,17): error TS2345: Argument of type 'FunctionComponentElement<any>' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
 ../testeranto-react/src/react/component/index.ts(21,3): error TS2739: Type '{ beforeEach: () => Promise<CElement<any, any>>; andWhen: (s: CElement<any, any>, whenCB: () => (s: CElement<any, any>) => any) => any; }' is missing the following properties from type 'ITestAdapter<I>': assertThis, butThen, afterAll, afterEach, beforeAll
 design-editor/DesignEditor.tsx(45,5): error TS2740: Type 'Canvas' is missing the following properties from type 'Canvas': initialize, containsPoint, restorePointerVpt, _setObjectScale, and 17 more.
-design-editor/DesignEditor.tsx(114,20): error TS2352: Conversion of type '{ version: string; objects: Object[]; }' to type 'Design' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+design-editor/DesignEditor.tsx(115,20): error TS2352: Conversion of type '{ version: string; objects: Object[]; }' to type 'Design' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
   Property 'background' is missing in type '{ version: string; objects: Object[]; }' but required in type 'Design'.
 src/App.tsx(35,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
 src/App.tsx(45,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
 src/App.tsx(47,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
-src/components/DesignEditorPage.tsx(59,40): error TS2304: Cannot find name 'Design'.
-src/components/DesignEditorPage.tsx(65,19): error TS2339: Property 'showOpenFilePicker' does not exist on type 'Window & typeof globalThis'.
-src/components/DesignEditorPage.tsx(70,37): error TS2339: Property 'showOpenFilePicker' does not exist on type 'Window & typeof globalThis'.
+src/components/DesignEditorPage.tsx(64,40): error TS2304: Cannot find name 'Design'.
+src/components/DesignEditorPage.tsx(70,19): error TS2339: Property 'showOpenFilePicker' does not exist on type 'Window & typeof globalThis'.
+src/components/DesignEditorPage.tsx(75,37): error TS2339: Property 'showOpenFilePicker' does not exist on type 'Window & typeof globalThis'.
 src/components/pure/AppFrame.test/implementation.tsx(19,19): error TS2322: Type '(children: React.ReactNode) => () => (selection: ISelection) => { children: React.ReactNode; htmlElement: HTMLElement; reactElement: React.ReactElement; domRoot: HTMLElement | null; container?: HTMLElement; testId?: string; }' is not assignable to type '(Ig_0: ReactNode) => (s: ISelection) => ISelection'.
   Call signature return types '() => (selection: ISelection) => { children: ReactNode; htmlElement: HTMLElement; reactElement: ReactElement<any, string | JSXElementConstructor<any>>; domRoot: HTMLElement | null; container?: HTMLElement | undefined; testId?: string | undefined; }' and '(s: ISelection) => ISelection' are incompatible.
     Type '(selection: ISelection) => { children: React.ReactNode; htmlElement: HTMLElement; reactElement: React.ReactElement; domRoot: HTMLElement | null; container?: HTMLElement; testId?: string; }' is not assignable to type 'ISelection'.

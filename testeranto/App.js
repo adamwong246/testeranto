@@ -32777,9 +32777,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         try {
           const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
             fetch(`reports/${name}/summary.json`),
-            fetch(`bundles/node/${name}/metafile.json`),
-            fetch(`bundles/web/${name}/metafile.json`),
-            fetch(`bundles/pure/${name}/metafile.json`),
+            fetch(`metafiles/node/${name}.json`),
+            fetch(`metafiles/web/${name}.json`),
+            fetch(`metafiles/pure/${name}.json`),
             fetch(`reports/${name}/config.json`)
           ]);
           const [summaryData, nodeData, webData, pureData, configData] = await Promise.all([
@@ -32905,9 +32905,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             projectNames.map(async (name) => {
               const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
                 fetch(`reports/${name}/summary.json`),
-                fetch(`bundles/node/${name}/metafile.json`),
-                fetch(`bundles/web/${name}/metafile.json`),
-                fetch(`bundles/pure/${name}/metafile.json`),
+                fetch(`metafiles/node/${name}.json`),
+                fetch(`metafiles/web/${name}.json`),
+                fetch(`metafiles/pure/${name}.json`),
                 fetch(`reports/${name}/config.json`)
               ]);
               const [summary, nodeData, webData, pureData, configData] = await Promise.all([
@@ -42026,6 +42026,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               data: json
             }));
           }
+          canvasRef.current.getObjects().forEach((obj) => {
+            obj.set("dirty", true);
+          });
+          canvasRef.current.renderAll();
           console.log("Design saved:", json);
           return json;
         } catch (err) {
@@ -42124,6 +42128,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           ...designData,
           projectId
         };
+        if (designEditorRef.current) {
+          designEditorRef.current.loadDesign(fullDesign);
+        }
         const newHandle = await window.showSaveFilePicker({
           types: [{
             description: "Design Files",

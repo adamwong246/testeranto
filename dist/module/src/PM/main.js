@@ -1164,7 +1164,7 @@ import('${d}').then(async (x) => {
                 },
             ],
         ].forEach(async ([eps, launcher, runtime, watcher]) => {
-            const metafile = `./testeranto/bundles/${runtime}/${this.name}/metafile.json`;
+            const metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
             await pollForFile(metafile);
             Object.entries(eps).forEach(async ([inputFile, outputFile]) => {
                 // await pollForFile(outputFile);\
@@ -1237,7 +1237,7 @@ import('${d}').then(async (x) => {
     }
     async metafileOutputs(platform) {
         const metafile = JSON.parse(fs
-            .readFileSync(`./testeranto/bundles/${platform}/${this.name}/metafile.json`)
+            .readFileSync(`./testeranto/metafiles/${platform}/${this.name}.json`)
             .toString()).metafile;
         if (!metafile)
             return;
