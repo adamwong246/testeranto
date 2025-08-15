@@ -133,7 +133,7 @@
     "t-report": "tsx dist/prebuild/ReportServer.mjs",
     "compile-docs": "node scripts/compile-docs.js",
     "prepublish": "self-import",
-    "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt"
+    "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt"
   },
   "peerDependencies": {
     "@types/react": "18.2.0",
@@ -202,6 +202,7 @@
     "fs-extra": "^11.2.0",
     "fs.promises.exists": "^1.1.4",
     "get-audio-duration": "^4.0.1",
+    "license-checker": "^25.0.1",
     "mermaid": "^11.8.1",
     "mermaid-isomorphic": "^3.0.4",
     "node-static": "^0.7.11",
