@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- SMIL 3.0 Animation Module ============================================ -->
+<!--
+  file: SMIL-anim.mod
+  
+  This is SMIL 3.0.
+  
+        Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+        Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+        Editor for SMIL 3.0: Sjoerd Mullender, CWI
+        Editor for previous versions of SMIL: Jacco van Ossenbruggen,
+        Sjoerd Mullender.
+        $Revision: 1.7 $
+        $Date: 2008/09/07 20:36:49 $
+  
+     This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+     PUBLIC "-//W3C//ELEMENTS SMIL 3.0 Animation//EN"
+     SYSTEM "http://www.w3.org/2008/SMIL30/SMIL-anim.mod"
+  
+     ======================================================================
+-->
+<!-- ============================= Dependencies =========================== -->
+<!--
+  The integrating profile is expected to define the following entities,
+  Unless the defaults provided are sufficient.
+-->
+<!--
+  SMIL.SplineAnimation.module entity: Define as "INCLUDE" if the
+  integrating profile includes the SMIL 3.0 SplineAnimation Module,
+  "IGNORE" if not.  The default is "IGNORE", i.e. by default
+  SplineAnimation is not included in the integrating language
+  profile.
+-->
+<!--
+  Language Designer chooses to integrate targetElement or XLink
+  attributes.  To integrate the targetElement attribute, define the
+  entity animation-targetElement as "INCLUDE"; to integrate the
+  XLink attributes, define animation-XLinkTarget as "INCLUDE".
+  
+  One or the other MUST be defined.  It is strongly recommended
+  that only one of the two be defined.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:attributeGroup name="SMIL.animTargetElementAttr">
+    <xs:attribute name="targetElement" type="xs:IDREF"/>
+  </xs:attributeGroup>
+  <!-- ========================== Attribute Groups ========================== -->
+  <!-- All animation elements include these attributes -->
+  <xs:attributeGroup name="SMIL.animAttrsCommon">
+    <xs:attributeGroup ref="SMIL.Core.attrib"/>
+    <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+    <xs:attributeGroup ref="SMIL.animTargetElementAttr"/>
+  </xs:attributeGroup>
+  <!-- All except animateMotion need an identified target attribute -->
+  <xs:attributeGroup name="SMIL.animAttrsNamedTarget">
+    <xs:attributeGroup ref="SMIL.animAttrsCommon"/>
+    <xs:attribute name="attributeName" use="required" type="xs:NMTOKEN"/>
+    <xs:attribute name="attributeType" default="auto">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="CSS"/>
+          <xs:enumeration value="XML"/>
+          <xs:enumeration value="auto"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <!--
+    All except set support the full animation-function specification,
+    additive and cumulative animation.
+    SplineAnimation adds the attributes keyTimes, keySplines and
+    path, and the calcMode value "spline", to those of
+    BasicAnimation.
+  -->
+  <xs:attributeGroup name="SMIL.animValueAttrs">
+    <xs:attributeGroup ref="SMIL.BasicAnimation.attrib"/>
+    <xs:attribute name="calcMode" default="linear">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="discrete"/>
+          <xs:enumeration value="linear"/>
+          <xs:enumeration value="paced"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="additive" default="replace">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="replace"/>
+          <xs:enumeration value="sum"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="accumulate" default="none">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="none"/>
+          <xs:enumeration value="sum"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <!-- ========================== Animation Elements ======================== -->
+  <xs:element name="animate">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.animate.content">
+          <xs:attributeGroup ref="SMIL.animate.attrib"/>
+          <xs:attributeGroup ref="SMIL.animAttrsNamedTarget"/>
+          <xs:attributeGroup ref="SMIL.animValueAttrs"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="set">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.set.content">
+          <xs:attributeGroup ref="SMIL.set.attrib"/>
+          <xs:attributeGroup ref="SMIL.animAttrsNamedTarget"/>
+          <xs:attribute name="to"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="animateMotion">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.animateMotion.content">
+          <xs:attributeGroup ref="SMIL.animateMotion.attrib"/>
+          <xs:attributeGroup ref="SMIL.animAttrsCommon"/>
+          <xs:attributeGroup ref="SMIL.animValueAttrs"/>
+          <xs:attribute name="origin" default="default">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="default"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="animateColor">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.animateColor.content">
+          <xs:attributeGroup ref="SMIL.animateColor.attrib"/>
+          <xs:attributeGroup ref="SMIL.animAttrsNamedTarget"/>
+          <xs:attributeGroup ref="SMIL.animValueAttrs"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+<!-- BasicAnimation.module -->
+<!-- ========================== End Animation ============================= -->
+<!-- end of SMIL-anim.mod -->

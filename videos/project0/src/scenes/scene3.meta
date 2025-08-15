@@ -1,0 +1,26 @@
+{
+  "version": 0,
+  "timeEvents": [
+    {
+      "name": "semantic-layer-complete",
+      "targetTime": 0.5
+    },
+    {
+      "name": "gherkin-complete",
+      "targetTime": 1.5
+    },
+    {
+      "name": "env-switcher-complete",
+      "targetTime": 3.5
+    },
+    {
+      "name": "prompt-builder-complete",
+      "targetTime": 5.5
+    },
+    {
+      "name": "fix-button-complete",
+      "targetTime": 5.5
+    }
+  ],
+  "seed": 3479008058
+}

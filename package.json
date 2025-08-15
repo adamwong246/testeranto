@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.188.0",
+  "version": "0.189.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -170,12 +170,14 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "@aws-sdk/client-polly": "^3.864.0",
     "@bscotch/debounce-watch": "^1.1.0",
     "@humanwhocodes/config-array": "^0.13.0",
     "@jest/globals": "^30.0.4",
     "@types/eslint": "^9.6.1",
     "@types/node-static": "^0.7.11",
     "@types/react-router-dom": "^5.3.3",
+    "@types/xmldom": "^0.1.34",
     "@ungap/structured-clone": "^1.3.0",
     "ansi-colors": "^4.1.3",
     "babel-loader": "^8.2.5",
@@ -195,6 +197,7 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^5.1.0",
     "express": "^4.21.2",
+    "fast-xml-parser": "^5.2.5",
     "fs-extra": "^11.2.0",
     "fs.promises.exists": "^1.1.4",
     "get-audio-duration": "^4.0.1",
@@ -209,11 +212,14 @@
     "react-dom": "18.2.0",
     "react-router-dom": "^7.7.0",
     "sass": "^1.90.0",
+    "ssml-check": "^0.4.6",
     "tsc-prog": "^2.3.0",
     "tsx": "^4.19.3",
     "type-fest": "^4.41.0",
     "typescript-eslint": "^8.29.1",
     "url": "^0.11.4",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "validate-with-xmllint": "^1.2.1",
+    "xmldom": "^0.6.0"
   }
 }

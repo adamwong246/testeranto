@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- SMIL 3.0 Metainformation Module ====================================== -->
+<!--
+  file: SMIL-metainformation.mod
+  
+  This is SMIL 3.0.
+  
+     Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+     Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+     Editor for SMIL 3.0: Sjoerd Mullender, CWI
+     Editor for previous versions of SMIL: Thierry Michel,
+     Jacco van Ossenbruggen, Sjoerd Mullender.
+     $Revision: 1.7 $
+     $Date: 2008/09/07 20:36:50 $
+  
+  This module declares the meta and metadata elements types and 
+  its attributes, used to provide declarative document metainformation.
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+  PUBLIC "-//W3C//ELEMENTS SMIL 3.0 Document Metainformation//EN"
+  SYSTEM "http://www.w3.org/2008/SMIL30/SMIL-metainformation.mod"
+  
+  ======================================================================
+-->
+<!-- ================== Profiling Entities ================================ -->
+<!-- ================== meta element ==================================== -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="meta">
+    <xs:complexType>
+      <xs:attributeGroup ref="SMIL.meta.attrib"/>
+      <xs:attributeGroup ref="SMIL.Core.attrib"/>
+      <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+      <xs:attribute name="content" use="required"/>
+      <xs:attribute name="name" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================== metadata element ================================ -->
+  <xs:element name="metadata" substitutionGroup="SMIL.head-meta.content"/>
+</xs:schema>
+<!-- end of SMIL-metainformation.mod -->

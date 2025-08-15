@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ...................................................................... -->
+<!-- SMIL Qualified Names Module  ......................................... -->
+<!--
+  file: smil-qname-1.mod
+  
+  This is SMIL 3.0.
+  
+     Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+     Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+     Editor for SMIL 3.0: Sjoerd Mullender, CWI
+     Editor for previous versions of SMIL: Jacco van Ossenbruggen,
+     Sjoerd Mullender.
+     $Revision: 1.9 $
+     $Date: 2008/09/07 20:36:50 $
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+    PUBLIC "-//W3C//ENTITIES SMIL 3.0 Qualified Names 1.0//EN"
+    SYSTEM "http://www.w3.org/2008/SMIL30/smil-qname-1.mod"
+  
+  ......................................................................
+-->
+<!--
+  SMIL Qualified Names
+  
+  This module is contained in two parts, labeled Section 'A' and 'B':
+  
+    Section A declares parameter entities to support namespace-
+    qualified names, namespace declarations, and name prefixing 
+    for SMIL and extensions.
+  
+    Section B declares parameter entities used to provide
+    namespace-qualified names for all SMIL element types:
+  
+      %SMIL.animation.qname; the xmlns-qualified name for <animation>
+      %SMIL.video.qname;     the xmlns-qualified name for <video>
+      ...
+  
+  SMIL extensions would create a module similar to this one, 
+  using the '%smil-qname-extra.mod;' parameter entity to insert 
+  it within Section A.  A template module suitable for this purpose 
+  ('template-qname-1.mod') is included in the XHTML distribution.
+-->
+<!-- Section A: SMIL XML Namespace Framework :::::::::::::::::::::::::::::: -->
+<!--
+  1. Declare a %SMIL.prefixed; conditional section keyword, used
+  to activate namespace prefixing. The default value should 
+  inherit '%NS.prefixed;' from the DTD driver, so that unless 
+  overridden, the default behavior follows the overall DTD 
+  prefixing scheme.
+-->
+<!--
+  2. Declare parameter entities (e.g., %SMIL.xmlns;) containing 
+  the URI reference used to identify the SMIL namespace:
+-->
+<!--
+  3. Declare parameter entities (e.g., %SMIL.prefix;) containing
+     the default namespace prefix string(s) to use when prefixing 
+     is enabled. This may be overridden in the DTD driver or the
+     internal subset of a document instance. If no default prefix
+     is desired, this may be declared as an empty string.
+  
+  NOTE: As specified in [XMLNAMES], the namespace prefix serves 
+  as a proxy for the URI reference, and is not in itself significant.
+-->
+<!--
+  4. Declare parameter entities (e.g., %SMIL.pfx;) containing the 
+  colonized prefix(es) (e.g., '%SMIL.prefix;:') used when 
+  prefixing is active, an empty string when it is not.
+-->
+<!--
+  5. The parameter entity %SMIL.xmlns.extra.attrib; may be
+  redeclared to contain any non-SMIL namespace declaration
+  attributes for namespaces embedded in SMIL. When prefixing
+  is active it contains the prefixed xmlns attribute and any
+  namespace declarations embedded in SMIL, otherwise an empty
+  string.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+</xs:schema>
+<!--
+  Declare the two parameter entities used to support XLink,
+  first the parameter entity container for the URI used to
+  identify the XLink namespace:
+-->
+<!-- This contains the XLink namespace declaration attribute. -->
+<!-- declare qualified name extensions here -->
+<!-- Section B: SMIL Qualified Names :::::::::::::::::::::::::::::::::::::: -->
+<!--
+  This section declares parameter entities used to provide
+  namespace-qualified names for all SMIL element types.
+-->
+<!-- Structure Module -->
+<!-- BasicMedia Module -->
+<!-- MediaParam Module -->
+<!-- BrushMedia Module -->
+<!-- BasicTimeContainers Module -->
+<!-- BasicExclTimeContainers Module -->
+<!-- BasicPriorityClassContainers Module -->
+<!-- BasicContentControl Module -->
+<!-- CustomTestAttributes Module -->
+<!-- PrefetchControl Module -->
+<!-- StructureLayout Module -->
+<!-- BasicLayout Module -->
+<!-- MultiWindowLayout Module -->
+<!-- AlignmentLayout Module -->
+<!-- BasicText Module -->
+<!-- TextStyling Module -->
+<!-- BasicLinking -->
+<!-- Metainformation Module -->
+<!-- BasicTransitions Module -->
+<!-- InlineTransitions Module -->
+<!-- BasicAnimation Module -->
+<!-- UserState Module -->
+<!-- StateSubmission Module -->
+<!-- External Timing (Timesheets) -->
+<!-- end of smil-qname-1.mod -->

@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ...................................................................... -->
+<!-- SMIL 3.0 Common Attributes Module  ................................... -->
+<!--
+  file: smil-attribs-1.mod
+  
+   This is SMIL 3.0.
+  
+     Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+     Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+     Editor for SMIL 3.0: Sjoerd Mullender, CWI
+     Editor for previous versions of SMIL: Warner ten Kate,
+     Jacco van Ossenbruggen, Sjoerd Mullender.
+     $Revision: 1.16 $
+     $Date: 2008/09/07 20:36:49 $
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+  PUBLIC "-//W3C//ENTITIES SMIL 3.0 Common Attributes 1.0//EN"
+  SYSTEM "http://www.w3.org/2008/SMIL30/smil-attribs-1.mod"
+  
+  ......................................................................
+-->
+<!--
+  Common Attributes
+  
+  This module declares the common attributes for the SMIL DTD Modules.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:attributeGroup name="SMIL.id.attrib">
+    <xs:attribute ref="xml:id"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.class.attrib">
+    <xs:attribute name="class"/>
+  </xs:attributeGroup>
+  <!--
+    the title and xml:lang attributes are defined both in the
+    Structure module and the MediaDescription module, but they are
+    defined identically
+  -->
+  <xs:attributeGroup name="SMIL.title.attrib">
+    <xs:attribute name="title" type="Text.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.xml.lang.attrib">
+    <xs:attribute ref="xml:lang"/>
+  </xs:attributeGroup>
+  <!-- the baseProfile declaration may be overridden by the profile -->
+  <xs:attributeGroup name="SMIL.Identity.attrib">
+    <xs:attribute name="version" default="3.0">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="3.0"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="baseProfile" default="Language">
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="Language"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.label.attrib">
+    <xs:attribute name="label" type="URI.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.Accessibility.attrib">
+    <xs:attribute name="alt" type="Text.datatype"/>
+    <xs:attribute name="longdesc" type="URI.datatype"/>
+    <xs:attribute name="readIndex" default="0"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.Core.attrib">
+    <xs:attribute ref="xml:base"/>
+    <xs:attributeGroup ref="SMIL.id.attrib"/>
+    <xs:attributeGroup ref="SMIL.class.attrib"/>
+    <xs:attributeGroup ref="SMIL.title.attrib"/>
+    <xs:attributeGroup ref="SMIL.Accessibility.attrib"/>
+    <xs:attributeGroup ref="SMIL.label.attrib"/>
+    <xs:attributeGroup ref="SMIL.Identity.attrib"/>
+  </xs:attributeGroup>
+  <!--
+    Entity for the definition of the ITS namespace, necessary for
+    DTD processing
+  -->
+  <!-- Prefix commonly used for ITS markup -->
+  <!--
+    Entity which contains local ITS markup for internationalization
+    and localization purposes. Explanatations:
+    - its:translate : Attribute to express translation
+      information. See
+      http://www.w3.org/TR/2007/REC-its-20070403/#trans-datacat .
+    - its:locNote : Attribute for localization notes. See
+      http://www.w3.org/TR/2007/REC-its-20070403/#locNote-datacat .
+    - its:locNoteType: Attribute for the localization note type
+      (description or alert). See
+      http://www.w3.org/TR/2007/REC-its-20070403/#locNote-datacat .
+    - its:term : Attribute to specify terms. See
+      http://www.w3.org/TR/2007/REC-its-20070403/#terminology .
+    - its:termInfoRef : Attribute to provide references to
+      additional information about a term. See
+      http://www.w3.org/TR/2007/REC-its-20070403/#terminology .
+    - its:dir : Attribute to supply information about text
+      directionality. See
+      http://www.w3.org/TR/2007/REC-its-20070403/#directionality .
+  -->
+  <xs:attributeGroup name="ITS-LOCAL-ATTR">
+    <xs:attribute ref="its:translate"/>
+    <xs:attribute ref="its:locNote"/>
+    <xs:attribute ref="its:locNoteType"/>
+    <xs:attribute ref="its:locNoteRef"/>
+    <xs:attribute ref="its:termInfoRef"/>
+    <xs:attribute ref="its:term"/>
+    <xs:attribute ref="its:dir"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.I18n.attrib">
+    <xs:attributeGroup ref="SMIL.xml.lang.attrib"/>
+    <xs:attributeGroup ref="ITS-LOCAL-ATTR"/>
+  </xs:attributeGroup>
+  <!--
+    ITS-LOCAL-ATTR contains attribute declarations for
+    internationalization and localization related markup. See
+    http://www.w3.org/TR/2007/REC-its-20070403/ for more information.
+  -->
+  <xs:attributeGroup name="SMIL.Description.attrib">
+    <xs:attribute name="abstract" type="Text.datatype"/>
+    <xs:attribute name="author" type="Text.datatype"/>
+    <xs:attribute name="copyright" type="Text.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.tabindex.attrib">
+    <xs:attribute name="tabindex" type="Number.datatype"/>
+  </xs:attributeGroup>
+  <!-- ================== BasicLayout ======================================= -->
+  <xs:attributeGroup name="SMIL.regionAttr.attrib">
+    <xs:attribute name="region"/>
+  </xs:attributeGroup>
+  <!-- add one &#38; for each level of indirection -->
+  <xs:attributeGroup name="SMIL.backgroundColor.attrib">
+    <xs:attribute name="backgroundColor" type="Color.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.backgroundColor.deprecated.attrib">
+    <xs:attribute name="background-color" type="Color.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.region-positioning.attrib">
+    <xs:attribute name="top" default="auto"/>
+    <xs:attribute name="bottom" default="auto"/>
+    <xs:attribute name="left" default="auto"/>
+    <xs:attribute name="right" default="auto"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.region-size.attrib">
+    <xs:attribute name="height" default="auto"/>
+    <xs:attribute name="width" default="auto"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.z-index.attrib">
+    <xs:attribute name="z-index"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.fit.attrib">
+    <xs:attribute name="fit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="hidden"/>
+          <xs:enumeration value="fill"/>
+          <xs:enumeration value="meet"/>
+          <xs:enumeration value="meetBest"/>
+          <xs:enumeration value="scroll"/>
+          <xs:enumeration value="slice"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <!-- ================== SubRegionLayout =================================== -->
+  <!-- requires BasicLayout -->
+  <!-- ================== OverrideLayout ==================================== -->
+  <!-- requires BasicLayout -->
+  <!-- ================ Registration Point attribute for media elements ===== -->
+  <!-- integrating language using AlignmentLayout must include regPoint -->
+  <!-- attribute on media elements for regPoint elements to be useful -->
+  <xs:attributeGroup name="SMIL.regPointAttr.attrib">
+    <xs:attribute name="regPoint"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.regAlign.attrib">
+    <xs:attribute name="regAlign">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="topLeft"/>
+          <xs:enumeration value="topMid"/>
+          <xs:enumeration value="topRight"/>
+          <xs:enumeration value="midLeft"/>
+          <xs:enumeration value="center"/>
+          <xs:enumeration value="midRight"/>
+          <xs:enumeration value="bottomLeft"/>
+          <xs:enumeration value="bottomMid"/>
+          <xs:enumeration value="bottomRight"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.mediaAlign.attrib">
+    <xs:attribute name="mediaAlign">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="topLeft"/>
+          <xs:enumeration value="topMid"/>
+          <xs:enumeration value="topRight"/>
+          <xs:enumeration value="midLeft"/>
+          <xs:enumeration value="center"/>
+          <xs:enumeration value="midRight"/>
+          <xs:enumeration value="bottomLeft"/>
+          <xs:enumeration value="bottomMid"/>
+          <xs:enumeration value="bottomRight"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.soundAlign.attrib">
+    <xs:attribute name="soundAlign">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="left"/>
+          <xs:enumeration value="both"/>
+          <xs:enumeration value="right"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.RegistrationPoint.attrib">
+    <xs:attributeGroup ref="SMIL.regPointAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.regAlign.attrib"/>
+    <xs:attributeGroup ref="SMIL.mediaAlign.attrib"/>
+  </xs:attributeGroup>
+  <!-- =================== Content Control ======================= -->
+  <!-- customTest Attribute, do not confuse with customTest element! -->
+  <xs:attributeGroup name="SMIL.customTestAttr.attrib">
+    <xs:attribute name="customTest"/>
+  </xs:attributeGroup>
+  <!-- ========================= SkipContentControl Module ================== -->
+  <xs:attributeGroup name="SMIL.skip-content.attrib">
+    <xs:attribute name="skip-content" default="true">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="true"/>
+          <xs:enumeration value="false"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <!-- Content Control Test Attributes -->
+  <xs:attributeGroup name="SMIL.BasicContentControl.attrib">
+    <xs:attribute name="systemAudioDesc">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="on"/>
+          <xs:enumeration value="off"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="systemBaseProfile" type="xs:NMTOKEN"/>
+    <xs:attribute name="systemBitrate"/>
+    <xs:attribute name="systemCaptions">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="on"/>
+          <xs:enumeration value="off"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="systemComponent"/>
+    <xs:attribute name="systemCPU" type="xs:NMTOKEN"/>
+    <xs:attribute name="systemLanguage"/>
+    <xs:attribute name="systemOperatingSystem" type="xs:NMTOKEN"/>
+    <xs:attribute name="systemOverdubOrSubtitle">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="overdub"/>
+          <xs:enumeration value="subtitle"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="systemScreenDepth"/>
+    <xs:attribute name="systemScreenSize"/>
+    <xs:attribute name="systemVersion">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="3.0"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.BasicContentControl.deprecated.attrib">
+    <xs:attribute name="system-bitrate"/>
+    <xs:attribute name="system-captions">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="on"/>
+          <xs:enumeration value="off"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="system-language"/>
+    <xs:attribute name="system-overdub-or-caption">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="overdub"/>
+          <xs:enumeration value="caption"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="system-screen-depth"/>
+    <xs:attribute name="system-screen-size"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.RequiredContentControl.attrib">
+    <xs:attribute name="systemRequired"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.RequiredContentControl.deprecated.attrib">
+    <xs:attribute name="system-required"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.Test.attrib">
+    <xs:attributeGroup ref="SMIL.BasicContentControl.attrib"/>
+    <xs:attributeGroup ref="SMIL.BasicContentControl.deprecated.attrib"/>
+    <xs:attributeGroup ref="SMIL.RequiredContentControl.attrib"/>
+    <xs:attributeGroup ref="SMIL.RequiredContentControl.deprecated.attrib"/>
+  </xs:attributeGroup>
+  <!-- SMIL Animation Module  =============================================== -->
+  <xs:attributeGroup name="SMIL.BasicAnimation.attrib">
+    <xs:attribute name="values"/>
+    <xs:attribute name="from"/>
+    <xs:attribute name="to"/>
+    <xs:attribute name="by"/>
+  </xs:attributeGroup>
+  <!-- SMIL SMILtext Module  ================================================ -->
+  <xs:attributeGroup name="SMIL.BasicText.attrib">
+    <xs:attribute name="textWrapOption" default="wrap">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="wrap"/>
+          <xs:enumeration value="noWrap"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute ref="xml:space" default="default"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="SMIL.textMode-motion-values">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="crawl"/>
+      <xs:enumeration value="scroll"/>
+      <xs:enumeration value="jump"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="SMIL.TextMotion.attrib">
+    <xs:attribute name="textConceal" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="none"/>
+          <xs:enumeration value="initial"/>
+          <xs:enumeration value="final"/>
+          <xs:enumeration value="both"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="textRate" default="auto"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.textAlign.attrib">
+    <xs:attribute name="textAlign" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="start"/>
+          <xs:enumeration value="end"/>
+          <xs:enumeration value="left"/>
+          <xs:enumeration value="right"/>
+          <xs:enumeration value="center"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.textDirection.attrib">
+    <xs:attribute name="textDirection" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="ltr"/>
+          <xs:enumeration value="rtl"/>
+          <xs:enumeration value="ltro"/>
+          <xs:enumeration value="rtlo"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.textMode.attrib">
+    <xs:attribute name="textMode" default="inherit">
+      <xs:simpleType>
+        <xs:union memberTypes="SMIL.textMode-motion-values">
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="append"/>
+            </xs:restriction>
+          </xs:simpleType>
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="replace"/>
+            </xs:restriction>
+          </xs:simpleType>
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="inherit"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:union>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.textPlace.attrib">
+    <xs:attribute name="textPlace" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="start"/>
+          <xs:enumeration value="center"/>
+          <xs:enumeration value="end"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.textWritingMode.attrib">
+    <xs:attribute name="textWritingMode" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="lr-tb"/>
+          <xs:enumeration value="rl-tb"/>
+          <xs:enumeration value="tb-lr"/>
+          <xs:enumeration value="tb-rl"/>
+          <xs:enumeration value="lr"/>
+          <xs:enumeration value="rl"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.TextStyling.attrib">
+    <xs:attribute name="textBackgroundColor" default="transparent" type="Color.datatype"/>
+    <xs:attribute name="textColor" type="Color.datatype"/>
+    <xs:attribute name="textFontFamily" default="inherit"/>
+    <xs:attribute name="textFontSize" default="inherit"/>
+    <xs:attribute name="textFontStyle" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="normal"/>
+          <xs:enumeration value="italic"/>
+          <xs:enumeration value="oblique"/>
+          <xs:enumeration value="reverseOblique"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="textFontWeight" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="normal"/>
+          <xs:enumeration value="bold"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="textStyle" type="xs:IDREF"/>
+  </xs:attributeGroup>
+  <!-- SMIL State Module  =================================================== -->
+  <xs:attributeGroup name="SMIL.StateTest.attrib">
+    <xs:attribute name="expr"/>
+  </xs:attributeGroup>
+  <!-- SMIL Timing Module  ================================================== -->
+  <xs:attributeGroup name="SMIL.begin.attrib">
+    <xs:attribute name="begin" type="TimeValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.end.attrib">
+    <xs:attribute name="end" type="TimeValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.BasicInlineTiming.attrib">
+    <xs:attributeGroup ref="SMIL.begin.attrib"/>
+    <xs:attribute name="dur" type="TimeValue.datatype"/>
+    <xs:attributeGroup ref="SMIL.end.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.RepeatTiming.attrib">
+    <xs:attribute name="repeatCount" type="Number.datatype"/>
+    <xs:attribute name="repeatDur" type="TimeValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.RepeatTiming.deprecated.attrib">
+    <xs:attribute name="repeat" type="TimeValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.fill.attrib">
+    <xs:attribute name="fill" default="default">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="remove"/>
+          <xs:enumeration value="freeze"/>
+          <xs:enumeration value="hold"/>
+          <xs:enumeration value="transition"/>
+          <xs:enumeration value="auto"/>
+          <xs:enumeration value="default"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.endsync.attrib">
+    <xs:attribute name="endsync" default="last"/>
+  </xs:attributeGroup>
+  <!-- endsync has a different default when applied to media elements -->
+  <xs:attributeGroup name="SMIL.fillDefault.attrib">
+    <xs:attribute name="fillDefault" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="remove"/>
+          <xs:enumeration value="freeze"/>
+          <xs:enumeration value="hold"/>
+          <xs:enumeration value="transition"/>
+          <xs:enumeration value="auto"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.RestartTiming.attrib">
+    <xs:attribute name="restart" default="default">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="always"/>
+          <xs:enumeration value="whenNotActive"/>
+          <xs:enumeration value="never"/>
+          <xs:enumeration value="default"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.RestartDefaultTiming.attrib">
+    <xs:attribute name="restartDefault" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="inherit"/>
+          <xs:enumeration value="always"/>
+          <xs:enumeration value="never"/>
+          <xs:enumeration value="whenNotActive"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.SyncBehavior.attrib">
+    <xs:attribute name="syncBehavior" default="default">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="canSlip"/>
+          <xs:enumeration value="locked"/>
+          <xs:enumeration value="independent"/>
+          <xs:enumeration value="default"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="syncTolerance" default="default" type="TimeValue.datatype"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.SyncBehaviorDefault.attrib">
+    <xs:attribute name="syncBehaviorDefault" default="inherit">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="canSlip"/>
+          <xs:enumeration value="locked"/>
+          <xs:enumeration value="independent"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="syncToleranceDefault" default="inherit" type="TimeValue.datatype"/>
+  </xs:attributeGroup>
+  <!-- ================== Time Manipulations ================================ -->
+  <!-- ================== Media Objects ===================================== -->
+  <xs:attributeGroup name="SMIL.MediaClip.attrib">
+    <xs:attribute name="clipBegin"/>
+    <xs:attribute name="clipEnd"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.MediaClip.attrib.deprecated">
+    <xs:attribute name="clip-begin"/>
+    <xs:attribute name="clip-end"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.MediaRenderAttributes.attrib">
+    <xs:attribute name="erase" default="whenDone">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="whenDone"/>
+          <xs:enumeration value="never"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="sensitivity" default="opaque"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.MediaOpacity.attrib">
+    <xs:attribute name="chromaKey"/>
+    <xs:attribute name="chromaKeyOpacity"/>
+    <xs:attribute name="chromaKeyTolerance"/>
+    <xs:attribute name="mediaOpacity"/>
+    <xs:attribute name="mediaBackgroundOpacity"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.MediaPanZoom.attrib">
+    <xs:attribute name="panZoom"/>
+  </xs:attributeGroup>
+  <!-- ================== Transitions Media ================================= -->
+  <!-- ================== Timesheets ======================================== -->
+  <!-- ================== Module Namespace Prefixes ========================= -->
+</xs:schema>
+<!-- end of smil-attribs-1.mod -->

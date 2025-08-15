@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- SMIL 3.0 Content Control Module ====================================== -->
+<!--
+  file: SMIL-control.mod
+  
+   This is SMIL 3.0.
+  
+     Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+     Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+     Editor for SMIL 3.0: Sjoerd Mullender, CWI
+     Editor for previous versions of SMIL: Jacco van Ossenbruggen,
+     Aaron Cohen, Sjoerd Mullender.
+     $Revision: 1.7 $
+     $Date: 2008/09/07 20:36:49 $
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+  PUBLIC "-//W3C//ELEMENTS SMIL 3.0 Content Control//EN"
+  SYSTEM "http://www.w3.org/2008/SMIL30/SMIL-control.mod"
+  
+  ======================================================================
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="switch" substitutionGroup="SMIL.switch-control"/>
+  <!-- ========================= CustomTest Elements ======================== -->
+  <xs:element name="customTest">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.customTest.content">
+          <xs:attributeGroup ref="SMIL.customTest.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="defaultState" default="false">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="true"/>
+                <xs:enumeration value="false"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="override" default="hidden">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="visible"/>
+                <xs:enumeration value="hidden"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="uid" type="URI.datatype"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="customAttributes">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.customAttributes.content">
+          <xs:attributeGroup ref="SMIL.customAttributes.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!-- end of CustomTestAttributes -->
+  <!-- ========================= PrefetchControl Elements =================== -->
+  <xs:element name="prefetch" substitutionGroup="SMIL.prefetch-control"/>
+</xs:schema>
+<!-- end of SMIL-control.mod -->

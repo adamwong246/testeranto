@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- SMIL 3.0 State Modules =============================================== -->
+<!--
+  file: SMIL-state.mod
+  
+  This is SMIL 3.0.
+  
+  Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+  Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+  Editor for SMIL 3.0: Sjoerd Mullender, CWI
+  $Revision: 1.8 $
+  $Date: 2008/09/07 20:36:50 $
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+  PUBLIC "-//W3C//ELEMENTS SMIL 3.0 State//EN"
+  SYSTEM "http://www.w3.org/2008/SMIL30/SMIL-state.mod"
+  
+  ===================================================================
+-->
+<!-- ================== StateTest ========================================= -->
+<!--
+  this module only defines the expr attribute, for which
+  see smil-attribs-1.mod
+-->
+<!-- ================== UserState ========================================= -->
+<!-- can be overridden by the profile -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="state">
+    <xs:complexType>
+      <xs:attributeGroup ref="SMIL.state.attrib"/>
+      <xs:attributeGroup ref="SMIL.Core.attrib"/>
+      <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+      <xs:attribute name="language" default="http://www.w3.org/TR/1999/REC-xpath-19991116" type="URI.datatype"/>
+      <xs:attribute name="src" type="URI.datatype"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="setvalue" substitutionGroup="SMIL.state.elements">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.setvalue.content">
+          <xs:attributeGroup ref="SMIL.setvalue.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="ref" use="required"/>
+          <xs:attribute name="value" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="newvalue" substitutionGroup="SMIL.state.elements">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.newvalue.content">
+          <xs:attributeGroup ref="SMIL.newvalue.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="ref" default="/*"/>
+          <xs:attribute name="where" default="child">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="before"/>
+                <xs:enumeration value="after"/>
+                <xs:enumeration value="child"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="name" use="required"/>
+          <xs:attribute name="value"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="delvalue" substitutionGroup="SMIL.state.elements">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.delvalue.content">
+          <xs:attributeGroup ref="SMIL.delvalue.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="ref" use="required"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================== StateSubmission =================================== -->
+  <xs:element name="submission">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.submission.content">
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="ref"/>
+          <xs:attribute name="action" use="required" type="URI.datatype"/>
+          <xs:attribute name="method" use="required">
+            <xs:simpleType>
+              <xs:union memberTypes="SMIL.method-types">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="put"/>
+                  </xs:restriction>
+                </xs:simpleType>
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="get"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:union>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="replace">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="all"/>
+                <xs:enumeration value="instance"/>
+                <xs:enumeration value="none"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="target"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="send" substitutionGroup="SMIL.send.element"/>
+</xs:schema>
+<!-- ================== StateInterpolation ================================ -->
+<!-- no new elements or attributes -->
+<!-- end of SMIL-state.mod -->

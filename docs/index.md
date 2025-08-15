@@ -557,23 +557,14 @@ export default Testeranto<
 The Testeranto explainer video is built using:
 
 ### Revision.js Animation System
+
 - Frame-by-frame animation control
 - Timeline-based sequencing
 - Audio synchronization
 - Custom easing functions
 
-### Scene Composition
-Each scene from the storyboard is implemented as:
-```typescript
-{
-  duration: 4, // seconds
-  render: (ctx: CanvasRenderingContext2D, progress: number) => {
-    // Drawing commands using progress (0-1)
-  }
-}
-```
-
 ### Audio Integration
+
 - Voiceover track provides timing cues
 - Sound effects enhance key moments
 - Volume automation for emphasis

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE smil PUBLIC "-//W3C//DTD SMIL 2.0//EN" "http://www.w3.org/2008/SMIL30/SMIL30Language.dtd">
+<smil xmlns="http://www.w3.org/ns/SMIL">
+  <head>
+    <layout>
+      <root-layout width="800" height="600" background-color="blue" />
+      <region id="textRegion" width="700" height="100" top="250" left="50" z-index="2"
+        fit="hidden" backgroundColor="black" />
+    </layout>
+  </head>
+  <body>
+    <par>
+      <!-- Audio generated from SSML -->
+      <audio src="src/audio/narration.mp3" begin="0s" />
+      <!-- Working text display example -->
+      <smilText region="textRegion" begin="0s" dur="121.752s" fill="freeze">
+        <param name="fontColor" value="white" />
+        <param name="fontFamily" value="Arial" />
+        <param
+          name="fontSize" value="36" />
+        <param name="textAlign" value="center" /> HELLO WORLD </smilText>
+    </par>
+  </body>
+</smil>
+`

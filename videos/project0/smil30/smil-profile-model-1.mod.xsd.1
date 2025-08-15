@@ -1,0 +1,1331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- SMIL 3.0 Document Model Module ======================================= -->
+<!--
+  file: smil-profile-model-1.mod
+  
+  This is SMIL 3.0.
+  
+     Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+     Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+     Editor for SMIL 3.0: Sjoerd Mullender, CWI
+     Editor for previous versions of SMIL: Warner ten Kate,
+     Jacco van Ossenbruggen, Aaron Cohen, Sjoerd Mullender.
+     $Id: smil-profile-model-1.mod,v 1.22 2008/09/07 20:36:50 smullend Exp $
+     $Date: 2008/09/07 20:36:50 $
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+  PUBLIC "-//W3C//ENTITIES SMIL 3.0 Document Model 1.0//EN"
+  SYSTEM "http://www.w3.org/2008/SMIL30/smil-profile-model-1.mod"
+  
+  ======================================================================
+-->
+<!--
+  This file defines the SMIL 3.0 Document Model.
+  All attributes and content models are defined in the second
+  half of this file.  We first start with some utility definitions.
+  These are mainly used to simplify the use of Modules in the
+  second part of the file.
+  
+  Note that in this model, the Metainformation module is required.
+-->
+<!-- ================== Util: Body - Content Control ====================== -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="SMIL.switch-control" abstract="true" substitutionGroup="SMIL.content-control">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.switch.content">
+          <xs:attributeGroup ref="SMIL.switch.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="allowReorder" default="no">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="yes"/>
+                <xs:enumeration value="no"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SMIL.prefetch-control" abstract="true" substitutionGroup="SMIL.content-control">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.prefetch.content">
+          <xs:attributeGroup ref="SMIL.prefetch.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="bandwidth" default="100%"/>
+          <xs:attribute name="mediaSize"/>
+          <xs:attribute name="mediaTime"/>
+          <xs:attribute name="src" type="URI.datatype"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SMIL.content-control" abstract="true"/>
+  <xs:attributeGroup name="SMIL.content-control-attrs">
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== Util: Head ======================================== -->
+  <xs:element name="SMIL.head-meta.content" abstract="true">
+    <xs:complexType>
+      <xs:attributeGroup ref="SMIL.metadata.attrib"/>
+      <xs:attributeGroup ref="SMIL.Core.attrib"/>
+      <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="SMIL.head-textStyling.content">
+    <xs:sequence>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="textStyling"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="SMIL.head-layout.content">
+    <xs:sequence>
+      <xs:sequence minOccurs="0">
+        <xs:choice>
+          <xs:element ref="layout"/>
+          <xs:element ref="SMIL.switch-control"/>
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="SMIL.head-control.content">
+    <xs:sequence>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="customAttributes"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="SMIL.head-transition.content">
+    <xs:sequence>
+      <xs:sequence minOccurs="0">
+        <xs:element maxOccurs="unbounded" ref="transition"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="SMIL.head-media.content">
+    <xs:sequence>
+      <xs:sequence minOccurs="0">
+        <xs:element maxOccurs="unbounded" ref="paramGroup"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="SMIL.head-state.content">
+    <xs:sequence>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="state"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="SMIL.head-submission.content">
+    <xs:sequence>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="submission"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <!-- =================== Util: Body - Animation ============================ -->
+  <xs:group name="SMIL.animation.elements">
+    <xs:choice>
+      <xs:element ref="animate"/>
+      <xs:element ref="set"/>
+      <xs:element ref="animateMotion"/>
+      <xs:element ref="animateColor"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="SMIL.simple-animation.elements">
+    <xs:choice>
+      <xs:element ref="animate"/>
+      <xs:element ref="set"/>
+    </xs:choice>
+  </xs:group>
+  <!-- =================== Util: Body - Media ================================ -->
+  <xs:element name="SMIL.BasicText.content" abstract="true" substitutionGroup="SMIL.media-object">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.smilText.content">
+          <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+          <xs:attribute name="begin"/>
+          <xs:attribute name="dur"/>
+          <xs:attribute name="end"/>
+          <xs:attribute name="repeatCount"/>
+          <xs:attribute name="repeatDur"/>
+          <xs:attribute name="repeat"/>
+          <xs:attribute name="restart" default="default">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="always"/>
+                <xs:enumeration value="whenNotActive"/>
+                <xs:enumeration value="never"/>
+                <xs:enumeration value="default"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="restartDefault" default="inherit">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="inherit"/>
+                <xs:enumeration value="always"/>
+                <xs:enumeration value="never"/>
+                <xs:enumeration value="whenNotActive"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="syncBehavior" default="default">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="canSlip"/>
+                <xs:enumeration value="locked"/>
+                <xs:enumeration value="independent"/>
+                <xs:enumeration value="default"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="syncTolerance" default="default"/>
+          <xs:attribute name="syncBehaviorDefault" default="inherit">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="canSlip"/>
+                <xs:enumeration value="locked"/>
+                <xs:enumeration value="independent"/>
+                <xs:enumeration value="inherit"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="syncToleranceDefault" default="inherit"/>
+          <xs:attribute name="fillDefault" default="inherit">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="remove"/>
+                <xs:enumeration value="freeze"/>
+                <xs:enumeration value="hold"/>
+                <xs:enumeration value="transition"/>
+                <xs:enumeration value="auto"/>
+                <xs:enumeration value="inherit"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="endsync" default="media"/>
+          <xs:attribute name="fill" default="default">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="remove"/>
+                <xs:enumeration value="freeze"/>
+                <xs:enumeration value="hold"/>
+                <xs:enumeration value="transition"/>
+                <xs:enumeration value="auto"/>
+                <xs:enumeration value="default"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="systemAudioDesc">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="on"/>
+                <xs:enumeration value="off"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="systemBaseProfile" type="xs:NMTOKEN"/>
+          <xs:attribute name="systemBitrate"/>
+          <xs:attribute name="systemCaptions">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="on"/>
+                <xs:enumeration value="off"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="systemComponent"/>
+          <xs:attribute name="systemCPU" type="xs:NMTOKEN"/>
+          <xs:attribute name="systemLanguage"/>
+          <xs:attribute name="systemOperatingSystem" type="xs:NMTOKEN"/>
+          <xs:attribute name="systemOverdubOrSubtitle">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="overdub"/>
+                <xs:enumeration value="subtitle"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="systemScreenDepth"/>
+          <xs:attribute name="systemScreenSize"/>
+          <xs:attribute name="systemVersion">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="3.0"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="system-bitrate"/>
+          <xs:attribute name="system-captions">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="on"/>
+                <xs:enumeration value="off"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="system-language"/>
+          <xs:attribute name="system-overdub-or-caption">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="overdub"/>
+                <xs:enumeration value="caption"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="system-screen-depth"/>
+          <xs:attribute name="system-screen-size"/>
+          <xs:attribute name="systemRequired"/>
+          <xs:attribute name="system-required"/>
+          <xs:attribute name="customTest"/>
+          <xs:attribute name="region"/>
+          <xs:attribute name="transIn"/>
+          <xs:attribute name="transOut"/>
+          <xs:attribute name="top" default="auto"/>
+          <xs:attribute name="bottom" default="auto"/>
+          <xs:attribute name="left" default="auto"/>
+          <xs:attribute name="right" default="auto"/>
+          <xs:attribute name="height" default="auto"/>
+          <xs:attribute name="width" default="auto"/>
+          <xs:attribute name="backgroundColor"/>
+          <xs:attribute name="backgroundOpacity" default="100%"/>
+          <xs:attribute name="fit">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="hidden"/>
+                <xs:enumeration value="fill"/>
+                <xs:enumeration value="meet"/>
+                <xs:enumeration value="meetBest"/>
+                <xs:enumeration value="scroll"/>
+                <xs:enumeration value="slice"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="z-index"/>
+          <xs:attribute name="regPoint"/>
+          <xs:attribute name="regAlign">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="topLeft"/>
+                <xs:enumeration value="topMid"/>
+                <xs:enumeration value="topRight"/>
+                <xs:enumeration value="midLeft"/>
+                <xs:enumeration value="center"/>
+                <xs:enumeration value="midRight"/>
+                <xs:enumeration value="bottomLeft"/>
+                <xs:enumeration value="bottomMid"/>
+                <xs:enumeration value="bottomRight"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="mediaAlign">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="topLeft"/>
+                <xs:enumeration value="topMid"/>
+                <xs:enumeration value="topRight"/>
+                <xs:enumeration value="midLeft"/>
+                <xs:enumeration value="center"/>
+                <xs:enumeration value="midRight"/>
+                <xs:enumeration value="bottomLeft"/>
+                <xs:enumeration value="bottomMid"/>
+                <xs:enumeration value="bottomRight"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="tabindex"/>
+          <xs:attribute name="paramGroup" type="xs:NMTOKEN"/>
+          <xs:attribute name="expr"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.Description.attrib"/>
+          <xs:attributeGroup ref="SMIL.BasicText.attrib"/>
+          <xs:attributeGroup ref="SMIL.textAlign.attrib"/>
+          <xs:attributeGroup ref="SMIL.TextStyling.attrib"/>
+          <xs:attributeGroup ref="SMIL.textMode.attrib"/>
+          <xs:attributeGroup ref="SMIL.textPlace.attrib"/>
+          <xs:attributeGroup ref="SMIL.textWritingMode.attrib"/>
+          <xs:attributeGroup ref="SMIL.TextMotion.attrib"/>
+          <xs:attributeGroup ref="SMIL.MediaOpacity.attrib"/>
+          <xs:attributeGroup ref="SMIL.MediaRenderAttributes.attrib"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SMIL.BrushMedia.content" abstract="true" substitutionGroup="SMIL.media-object">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.brush.content">
+          <xs:attributeGroup ref="SMIL.brush.attrib"/>
+          <xs:attribute name="begin"/>
+          <xs:attribute name="dur"/>
+          <xs:attribute name="end"/>
+          <xs:attribute name="repeatCount"/>
+          <xs:attribute name="repeatDur"/>
+          <xs:attribute name="repeat"/>
+          <xs:attribute name="restart" default="default">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="always"/>
+                <xs:enumeration value="whenNotActive"/>
+                <xs:enumeration value="never"/>
+                <xs:enumeration value="default"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="restartDefault" default="inherit">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="inherit"/>
+                <xs:enumeration value="always"/>
+                <xs:enumeration value="never"/>
+                <xs:enumeration value="whenNotActive"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="syncBehavior" default="default">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="canSlip"/>
+                <xs:enumeration value="locked"/>
+                <xs:enumeration value="independent"/>
+                <xs:enumeration value="default"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="syncTolerance" default="default"/>
+          <xs:attribute name="syncBehaviorDefault" default="inherit">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="canSlip"/>
+                <xs:enumeration value="locked"/>
+                <xs:enumeration value="independent"/>
+                <xs:enumeration value="inherit"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="syncToleranceDefault" default="inherit"/>
+          <xs:attribute name="fillDefault" default="inherit">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="remove"/>
+                <xs:enumeration value="freeze"/>
+                <xs:enumeration value="hold"/>
+                <xs:enumeration value="transition"/>
+                <xs:enumeration value="auto"/>
+                <xs:enumeration value="inherit"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="endsync" default="media"/>
+          <xs:attribute name="fill" default="default">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="remove"/>
+                <xs:enumeration value="freeze"/>
+                <xs:enumeration value="hold"/>
+                <xs:enumeration value="transition"/>
+                <xs:enumeration value="auto"/>
+                <xs:enumeration value="default"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="systemAudioDesc">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="on"/>
+                <xs:enumeration value="off"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="systemBaseProfile" type="xs:NMTOKEN"/>
+          <xs:attribute name="systemBitrate"/>
+          <xs:attribute name="systemCaptions">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="on"/>
+                <xs:enumeration value="off"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="systemComponent"/>
+          <xs:attribute name="systemCPU" type="xs:NMTOKEN"/>
+          <xs:attribute name="systemLanguage"/>
+          <xs:attribute name="systemOperatingSystem" type="xs:NMTOKEN"/>
+          <xs:attribute name="systemOverdubOrSubtitle">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="overdub"/>
+                <xs:enumeration value="subtitle"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="systemScreenDepth"/>
+          <xs:attribute name="systemScreenSize"/>
+          <xs:attribute name="systemVersion">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="3.0"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="system-bitrate"/>
+          <xs:attribute name="system-captions">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="on"/>
+                <xs:enumeration value="off"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="system-language"/>
+          <xs:attribute name="system-overdub-or-caption">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="overdub"/>
+                <xs:enumeration value="caption"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="system-screen-depth"/>
+          <xs:attribute name="system-screen-size"/>
+          <xs:attribute name="systemRequired"/>
+          <xs:attribute name="system-required"/>
+          <xs:attribute name="customTest"/>
+          <xs:attribute name="region"/>
+          <xs:attribute name="transIn"/>
+          <xs:attribute name="transOut"/>
+          <xs:attribute name="top" default="auto"/>
+          <xs:attribute name="bottom" default="auto"/>
+          <xs:attribute name="left" default="auto"/>
+          <xs:attribute name="right" default="auto"/>
+          <xs:attribute name="height" default="auto"/>
+          <xs:attribute name="width" default="auto"/>
+          <xs:attribute name="backgroundColor"/>
+          <xs:attribute name="backgroundOpacity" default="100%"/>
+          <xs:attribute name="fit">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="hidden"/>
+                <xs:enumeration value="fill"/>
+                <xs:enumeration value="meet"/>
+                <xs:enumeration value="meetBest"/>
+                <xs:enumeration value="scroll"/>
+                <xs:enumeration value="slice"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="z-index"/>
+          <xs:attribute name="regPoint"/>
+          <xs:attribute name="regAlign">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="topLeft"/>
+                <xs:enumeration value="topMid"/>
+                <xs:enumeration value="topRight"/>
+                <xs:enumeration value="midLeft"/>
+                <xs:enumeration value="center"/>
+                <xs:enumeration value="midRight"/>
+                <xs:enumeration value="bottomLeft"/>
+                <xs:enumeration value="bottomMid"/>
+                <xs:enumeration value="bottomRight"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="mediaAlign">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="topLeft"/>
+                <xs:enumeration value="topMid"/>
+                <xs:enumeration value="topRight"/>
+                <xs:enumeration value="midLeft"/>
+                <xs:enumeration value="center"/>
+                <xs:enumeration value="midRight"/>
+                <xs:enumeration value="bottomLeft"/>
+                <xs:enumeration value="bottomMid"/>
+                <xs:enumeration value="bottomRight"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="tabindex"/>
+          <xs:attribute name="paramGroup" type="xs:NMTOKEN"/>
+          <xs:attribute name="expr"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.Description.attrib"/>
+          <xs:attributeGroup ref="SMIL.MediaRenderAttributes.attrib"/>
+          <xs:attribute name="color" type="Color.datatype"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SMIL.media-object" abstract="true"/>
+  <!-- =================== Util: Body - State ================================ -->
+  <xs:element name="SMIL.send.element" abstract="true" substitutionGroup="SMIL.state.elements">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.send.content">
+          <xs:attributeGroup ref="SMIL.send.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="submission" type="xs:IDREF"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SMIL.submission.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SMIL.method-types">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="post"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SMIL.state.elements" abstract="true"/>
+  <xs:attributeGroup name="SMIL.state.attrib">
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== Util: Body - Linking ============================== -->
+  <xs:element name="SMIL.anchor-control" abstract="true"/>
+  <xs:element name="SMIL.a-control" abstract="true">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.a.content">
+          <xs:attributeGroup ref="SMIL.a.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.linking-attrs"/>
+          <xs:attribute name="href" use="required" type="URI.datatype"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!-- =================== Util: Body - Timing =============================== -->
+  <xs:element name="SMIL.BasicTimeContainers.class" abstract="true" substitutionGroup="SMIL.timecontainer.class"/>
+  <xs:element name="SMIL.ExclTimeContainers.class" abstract="true" substitutionGroup="SMIL.timecontainer.class">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.excl.content">
+          <xs:attributeGroup ref="SMIL.excl.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.Description.attrib"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SMIL.timecontainer.class" abstract="true"/>
+  <xs:group name="SMIL.timecontainer.content">
+    <xs:choice>
+      <xs:element ref="SMIL.timecontainer.class"/>
+      <xs:element ref="SMIL.media-object"/>
+      <xs:group ref="SMIL.animation.elements"/>
+      <xs:element ref="SMIL.content-control"/>
+      <xs:element ref="SMIL.a-control"/>
+      <xs:element ref="SMIL.state.elements"/>
+    </xs:choice>
+  </xs:group>
+  <xs:attributeGroup name="SMIL.smil-basictime.attrib">
+    <xs:attributeGroup ref="SMIL.BasicInlineTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RepeatTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RepeatTiming.deprecated.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.timecontainer.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.SyncBehavior.attrib"/>
+    <xs:attributeGroup ref="SMIL.SyncBehaviorDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+  </xs:attributeGroup>
+  <!-- ====================================================================== -->
+  <!-- ====================================================================== -->
+  <!-- ====================================================================== -->
+  <!--
+    The actual content model and attribute definitions for each module 
+    sections follow below.
+  -->
+  <!-- ================== Linking =========================================== -->
+  <xs:complexType name="SMIL.a.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="SMIL.timecontainer.class"/>
+      <xs:element ref="SMIL.media-object"/>
+      <xs:group ref="SMIL.animation.elements"/>
+      <xs:element ref="SMIL.state.elements"/>
+      <xs:element ref="SMIL.content-control"/>
+      <xs:element ref="metadata"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.area.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:group ref="SMIL.simple-animation.elements"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.anchor.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:group ref="SMIL.simple-animation.elements"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.a.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.area.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.anchor.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== Content Control =================================== -->
+  <xs:group name="SMIL.animation-switch">
+    <xs:sequence>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:choice>
+          <xs:element ref="animate"/>
+          <xs:element ref="set"/>
+          <xs:element ref="animateMotion"/>
+          <xs:element ref="animateColor"/>
+        </xs:choice>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="metadata"/>
+          <xs:element ref="SMIL.switch-control"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <!--
+    The content model of the switch element is very complex:
+    - if switch occurs inside the head element, the only allowed
+      content is layout (and Metainformation and nested switch);
+    - if switch occurs inside a media element, the only allowed
+      content is param, area (anchor), and animation elements (and
+      Metainformation and nested switch);
+    - if switch occurs inside a par, seq or excl element, the only
+      allowed content is time containers (par, seq, excl), media
+      elements (ref and friends, smilText, etc.), animation elements,
+      and the a and prefetch elements (and Metainformation and nested
+      switch).
+    Note that there is overlap in the allowed content for the various
+    cases.
+  -->
+  <xs:group name="SMIL.param-anchor">
+    <xs:choice>
+      <xs:element ref="param"/>
+      <xs:element ref="SMIL.anchor-control"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="SMIL.switch.content">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="metadata"/>
+        <xs:element ref="SMIL.switch-control"/>
+      </xs:choice>
+      <xs:choice>
+        <xs:choice>
+          <xs:group ref="SMIL.animation-switch"/>
+          <xs:choice>
+            <xs:sequence maxOccurs="unbounded">
+              <xs:choice maxOccurs="unbounded">
+                <xs:element ref="SMIL.timecontainer.class"/>
+                <xs:element ref="SMIL.media-object"/>
+                <xs:element ref="SMIL.state.elements"/>
+                <xs:element ref="SMIL.prefetch-control"/>
+                <xs:element ref="SMIL.a-control"/>
+              </xs:choice>
+              <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="metadata"/>
+                <xs:group ref="SMIL.animation.elements"/>
+                <xs:element ref="SMIL.switch-control"/>
+              </xs:choice>
+            </xs:sequence>
+            <xs:choice maxOccurs="unbounded">
+              <xs:group ref="SMIL.param-anchor"/>
+              <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="metadata"/>
+                <xs:group ref="SMIL.animation.elements"/>
+                <xs:element ref="SMIL.switch-control"/>
+              </xs:choice>
+            </xs:choice>
+          </xs:choice>
+        </xs:choice>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="layout"/>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="metadata"/>
+            <xs:element ref="SMIL.switch-control"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.switch.attrib">
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.prefetch.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.prefetch.attrib">
+    <xs:attributeGroup ref="SMIL.timecontainer.attrib"/>
+    <xs:attributeGroup ref="SMIL.MediaClip.attrib"/>
+    <xs:attributeGroup ref="SMIL.MediaClip.attrib.deprecated"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.customAttributes.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+      <xs:sequence maxOccurs="unbounded">
+        <xs:element ref="customTest"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.customAttributes.attrib">
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.customTest.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.customTest.attrib">
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== Animation ========================================= -->
+  <!-- choose targetElement or XLink: -->
+  <xs:complexType name="SMIL.animate.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.animateColor.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.animateMotion.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.set.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.animate.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.fill.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.animateColor.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.fill.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.animateMotion.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.fill.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.set.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.fill.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== Layout ============================================ -->
+  <xs:group name="SMIL.BasicLayout-content">
+    <xs:choice>
+      <xs:element ref="region"/>
+      <xs:element ref="root-layout"/>
+    </xs:choice>
+  </xs:group>
+  <xs:element name="SMIL.MultiWindowLayout-content" abstract="true">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.topLayout.content">
+          <xs:attributeGroup ref="SMIL.topLayout.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.region-size.attrib"/>
+          <xs:attributeGroup ref="SMIL.backgroundColor.attrib"/>
+          <xs:attribute name="backgroundOpacity" default="100%"/>
+          <xs:attribute name="close" default="onRequest">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="onRequest"/>
+                <xs:enumeration value="whenNotActive"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="open" default="onStart">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="onStart"/>
+                <xs:enumeration value="whenActive"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attributeGroup ref="SMIL.BackgroundTiling-attrs"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SMIL.AlignmentLayout-content" abstract="true">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.regPoint.content">
+          <xs:attributeGroup ref="SMIL.regPoint.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.regAlign.attrib"/>
+          <xs:attributeGroup ref="SMIL.region-positioning.attrib"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="SMIL.SubRegionLayout-content">
+    <xs:sequence>
+      <xs:element ref="region"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="SMIL.layout.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:group ref="SMIL.BasicLayout-content"/>
+      <xs:element ref="SMIL.MultiWindowLayout-content"/>
+      <xs:element ref="SMIL.AlignmentLayout-content"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.region.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:group ref="SMIL.SubRegionLayout-content"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.topLayout.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="region"/>
+      <xs:element ref="metadata"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.rootlayout.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.rootlayout.attrib">
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.region.attrib">
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+    <xs:attributeGroup ref="SMIL.BasicText.attrib"/>
+    <xs:attributeGroup ref="SMIL.MediaOpacity.attrib"/>
+    <xs:attributeGroup ref="SMIL.MediaPanZoom.attrib"/>
+    <xs:attributeGroup ref="SMIL.MediaRenderAttributes.attrib"/>
+    <xs:attributeGroup ref="SMIL.textAlign.attrib"/>
+    <xs:attributeGroup ref="SMIL.textDirection.attrib"/>
+    <xs:attributeGroup ref="SMIL.textMode.attrib"/>
+    <xs:attributeGroup ref="SMIL.textPlace.attrib"/>
+    <xs:attributeGroup ref="SMIL.TextStyling.attrib"/>
+    <xs:attributeGroup ref="SMIL.textWritingMode.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.regPoint.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.regPoint.attrib">
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.topLayout.attrib">
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.layout.attrib">
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== Media  ============================================ -->
+  <xs:complexType name="SMIL.param.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.param.attrib">
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.paramGroup.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="param"/>
+      <xs:element ref="metadata"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.paramGroup.attrib">
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+  </xs:attributeGroup>
+  <xs:element name="SMIL.param-control" abstract="true">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.param.content">
+          <xs:attributeGroup ref="SMIL.param.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="name"/>
+          <xs:attribute name="value"/>
+          <xs:attribute name="valuetype" default="data">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="data"/>
+                <xs:enumeration value="ref"/>
+                <xs:enumeration value="object"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="type" type="ContentType.datatype"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="SMIL.media-object.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:element ref="SMIL.param-control"/>
+      <xs:element ref="SMIL.anchor-control"/>
+      <xs:element ref="SMIL.switch-control"/>
+      <xs:group ref="SMIL.animation.elements"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.brush.attrib">
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== Metadata ========================================== -->
+  <xs:attributeGroup name="SMIL.meta.attrib">
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.metadata.attrib">
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== smilText ========================================== -->
+  <xs:complexType name="SMIL.smilText.content" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:element ref="tev"/>
+      <xs:element ref="clear"/>
+      <xs:element ref="br"/>
+      <xs:element ref="span"/>
+      <xs:element ref="p"/>
+      <xs:element ref="div"/>
+      <xs:element ref="SMIL.param-control"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.tev.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.clear.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.br.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.div.content" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:element ref="tev"/>
+      <xs:element ref="clear"/>
+      <xs:element ref="br"/>
+      <xs:element ref="div"/>
+      <xs:element ref="p"/>
+      <xs:element ref="span"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.p.content" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:element ref="tev"/>
+      <xs:element ref="clear"/>
+      <xs:element ref="br"/>
+      <xs:element ref="span"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.span.content" mixed="true">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="metadata"/>
+      <xs:element ref="tev"/>
+      <xs:element ref="clear"/>
+      <xs:element ref="br"/>
+      <xs:element ref="span"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.textStyle.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.textStyling.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+      <xs:sequence maxOccurs="unbounded">
+        <xs:element ref="textStyle"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.textStyle.attrib">
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== UserState ========================================= -->
+  <xs:attributeGroup name="SMIL.newvalue.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.setvalue.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.delvalue.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.newvalue.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.setvalue.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.delvalue.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.send.attrib">
+    <xs:attributeGroup ref="SMIL.smil-basictime.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.RestartDefaultTiming.attrib"/>
+    <xs:attributeGroup ref="SMIL.fillDefault.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.send.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- ================== Structure ========================================= -->
+  <xs:complexType name="SMIL.smil.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="head"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+      </xs:sequence>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="body"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.head.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      <xs:group ref="SMIL.head-control.content"/>
+      <xs:sequence minOccurs="0">
+        <xs:element ref="SMIL.head-meta.content"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="meta"/>
+      </xs:sequence>
+      <xs:group ref="SMIL.head-textStyling.content"/>
+      <xs:group ref="SMIL.head-layout.content"/>
+      <xs:group ref="SMIL.head-state.content"/>
+      <xs:group ref="SMIL.head-submission.content"/>
+      <xs:group ref="SMIL.head-transition.content"/>
+      <xs:group ref="SMIL.head-media.content"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="SMIL.body.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element ref="SMIL.timecontainer.class"/>
+      <xs:element ref="SMIL.media-object"/>
+      <xs:group ref="SMIL.animation.elements"/>
+      <xs:element ref="SMIL.state.elements"/>
+      <xs:element ref="SMIL.content-control"/>
+      <xs:element ref="SMIL.a-control"/>
+      <xs:element ref="metadata"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.smil.attrib">
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.body.attrib">
+    <xs:attributeGroup ref="SMIL.timecontainer.attrib"/>
+    <xs:attributeGroup ref="SMIL.Description.attrib"/>
+    <xs:attributeGroup ref="SMIL.fill.attrib"/>
+  </xs:attributeGroup>
+  <!-- ================== Transitions ======================================= -->
+  <xs:complexType name="SMIL.transition.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.transition.attrib">
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+  </xs:attributeGroup>
+  <!-- ================== Timing ============================================ -->
+  <xs:attributeGroup name="SMIL.par.attrib">
+    <xs:attributeGroup ref="SMIL.endsync.attrib"/>
+    <xs:attributeGroup ref="SMIL.fill.attrib"/>
+    <xs:attributeGroup ref="SMIL.timecontainer.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.regionAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.seq.attrib">
+    <xs:attributeGroup ref="SMIL.fill.attrib"/>
+    <xs:attributeGroup ref="SMIL.timecontainer.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.regionAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="SMIL.excl.attrib">
+    <xs:attributeGroup ref="SMIL.endsync.attrib"/>
+    <xs:attributeGroup ref="SMIL.fill.attrib"/>
+    <xs:attributeGroup ref="SMIL.timecontainer.attrib"/>
+    <xs:attributeGroup ref="SMIL.Test.attrib"/>
+    <xs:attributeGroup ref="SMIL.customTestAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.regionAttr.attrib"/>
+    <xs:attributeGroup ref="SMIL.skip-content.attrib"/>
+    <xs:attributeGroup ref="SMIL.StateTest.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.par.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="SMIL.timecontainer.content"/>
+      <xs:element ref="metadata"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="SMIL.seq.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="SMIL.timecontainer.content"/>
+      <xs:element ref="metadata"/>
+    </xs:choice>
+  </xs:complexType>
+  <!--
+    An excl element contains either only priorityClass children or
+    no priorityClass children.  It is made more complex by the fact
+    that in either case there may be switch, meta, and metadata
+    children interspersed.
+  -->
+  <xs:complexType name="SMIL.excl.content">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+      <xs:choice>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+          <xs:group ref="SMIL.timecontainer.content"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+        </xs:sequence>
+        <xs:sequence maxOccurs="unbounded">
+          <xs:element ref="priorityClass"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="metadata"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:attributeGroup name="SMIL.priorityClass.attrib">
+    <xs:attributeGroup ref="SMIL.content-control-attrs"/>
+  </xs:attributeGroup>
+  <xs:complexType name="SMIL.priorityClass.content">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="SMIL.timecontainer.content"/>
+      <xs:element ref="metadata"/>
+    </xs:choice>
+  </xs:complexType>
+</xs:schema>
+<!-- External Timing -->
+<!-- end of smil-profile-model-1.mod -->

@@ -12,9 +12,6 @@
 
     <!-- load style AFTER prism -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- Bundled Revideo JS -->
-    <script src="revideo-bundle.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
@@ -532,14 +529,7 @@ export default Testeranto<
 <li>Audio synchronization</li>
 <li>Custom easing functions</li>
 </ul>
-<h3>Scene Composition</h3>
-<p>Each scene from the storyboard is implemented as:</p>
-<pre class="language-typescript line-numbers"><code class="language-typescript">{
-  duration: 4, // seconds
-  render: (ctx: CanvasRenderingContext2D, progress: number) => {
-    // Drawing commands using progress (0-1)
-  }
-}</code></pre><h3>Audio Integration</h3>
+<h3>Audio Integration</h3>
 <ul>
 <li>Voiceover track provides timing cues</li>
 <li>Sound effects enhance key moments</li>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ...................................................................... -->
+<!-- SMIL 3.0 Language DTD ................................................ -->
+<!--
+  file: SMIL30Language.dtd
+  
+         This is SMIL 3.0.
+  
+         Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+         Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+         Editor for SMIL 3.0: Sjoerd Mullender, CWI
+         Editor for previous versions of SMIL: Jacco van Ossenbruggen,
+         Sjoerd Mullender.
+         $Revision: 1.8 $
+         $Date: 2008/09/07 20:36:50 $
+  
+  This is the driver file for the SMIL 3.0 Language Profile DTD.
+  
+      This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+      PUBLIC "-//W3C//DTD SMIL 3.0 Language//EN"
+      SYSTEM "http://www.w3.org/2008/SMIL30/SMIL30Language.dtd"
+  
+-->
+<!-- Define the prefix to be used (none) -->
+<!-- Define the default for the baseProfile attribute -->
+<!-- Define which modules to include -->
+<!-- Structure -->
+<!-- Media Object -->
+<!-- Timing and Synchronization -->
+<!-- Content Control -->
+<!-- Layout -->
+<!-- smilText -->
+<!-- Linking -->
+<!-- Metainformation -->
+<!-- Transition Effects -->
+<!-- Animation -->
+<!-- State -->
+<!-- Time Manipulation -->
+<!-- External Timing -->
+<!-- Define which variants to use -->
+<!-- Define the Content Model -->
+<!-- Modular Framework Module  ............................................ -->
+<xs:schema targetNamespace="http://www.w3.org/ns/SMIL" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:include schemaLocation="smil-framework-1.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-struct.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-anim.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-control.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-metainformation.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-layout.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-link.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-media.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-smiltext.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-state.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-timing.mod.xsd"/>
+  <xs:include schemaLocation="SMIL-transition.mod.xsd"/>
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <!-- List module files to include -->
+  <!-- Include module files -->
+</xs:schema>
+<!-- end of SMIL30Language.dtd -->

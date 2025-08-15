@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/2005/11/its" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import schemaLocation="SMIL.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:attribute name="translate">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="yes"/>
+        <xs:enumeration value="no"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="locNote"/>
+  <xs:attribute name="locNoteType">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="alert"/>
+        <xs:enumeration value="description"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="locNoteRef"/>
+  <xs:attribute name="termInfoRef"/>
+  <xs:attribute name="term">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="yes"/>
+        <xs:enumeration value="no"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="dir">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="ltr"/>
+        <xs:enumeration value="rtl"/>
+        <xs:enumeration value="lro"/>
+        <xs:enumeration value="rlo"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+</xs:schema>

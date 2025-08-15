@@ -8,7 +8,7 @@ Testeranto lets you vibe code large, real-world codebases by intelligently manag
 
 We're launching a private beta for GitHub stargazers first, followed by a public beta.
 
-**Private Beta (GitHub Stargazers):**
+**Private Beta **
 
 - Early access to AI-powered test fixing
 - Lifetime priority support from the creator
@@ -16,7 +16,7 @@ We're launching a private beta for GitHub stargazers first, followed by a public
 - Direct influence on the roadmap
 - Permanent "Beta Pioneer" status
 
-Star this repo to get early access, or [email us](mailto:testeranto.dev@gmail.com) to express interest.
+[email us](mailto:testeranto.dev@gmail.com) to express interest.
 
 ## quick links
 

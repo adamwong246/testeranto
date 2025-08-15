@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- SMIL 3.0 Transition Module =========================================== -->
+<!--
+  file: SMIL-transition.mod
+  
+  This is SMIL 3.0.
+  
+     Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+     Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+     Editor for SMIL 3.0: Sjoerd Mullender, CWI
+     Editor for previous versions of SMIL: Jacco van Ossenbruggen,
+     Sjoerd Mullender.
+     $Revision: 1.7 $
+     $Date: 2008/09/07 20:36:50 $
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+  PUBLIC "-//W3C//ELEMENTS SMIL 3.0 Transition//EN"
+  SYSTEM "http://www.w3.org/2008/SMIL30/SMIL-transition.mod"
+  
+  ======================================================================
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:attributeGroup name="SMIL.transition-modifiers-attrs">
+    <xs:attribute name="horzRepeat" default="1"/>
+    <xs:attribute name="vertRepeat" default="1"/>
+    <xs:attribute name="borderWidth" default="0"/>
+    <xs:attribute name="borderColor" default="black"/>
+  </xs:attributeGroup>
+  <!-- End of TransitionModifiers.module -->
+  <xs:simpleType name="SMIL.transition-types">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="barWipe"/>
+      <xs:enumeration value="boxWipe"/>
+      <xs:enumeration value="fourBoxWipe"/>
+      <xs:enumeration value="barnDoorWipe"/>
+      <xs:enumeration value="diagonalWipe"/>
+      <xs:enumeration value="bowTieWipe"/>
+      <xs:enumeration value="miscDiagonalWipe"/>
+      <xs:enumeration value="veeWipe"/>
+      <xs:enumeration value="barnVeeWipe"/>
+      <xs:enumeration value="zigZagWipe"/>
+      <xs:enumeration value="barnZigZagWipe"/>
+      <xs:enumeration value="irisWipe"/>
+      <xs:enumeration value="triangleWipe"/>
+      <xs:enumeration value="arrowHeadWipe"/>
+      <xs:enumeration value="pentagonWipe"/>
+      <xs:enumeration value="hexagonWipe"/>
+      <xs:enumeration value="ellipseWipe"/>
+      <xs:enumeration value="eyeWipe"/>
+      <xs:enumeration value="roundRectWipe"/>
+      <xs:enumeration value="starWipe"/>
+      <xs:enumeration value="miscShapeWipe"/>
+      <xs:enumeration value="clockWipe"/>
+      <xs:enumeration value="pinWheelWipe"/>
+      <xs:enumeration value="singleSweepWipe"/>
+      <xs:enumeration value="fanWipe"/>
+      <xs:enumeration value="doubleFanWipe"/>
+      <xs:enumeration value="doubleSweepWipe"/>
+      <xs:enumeration value="saloonDoorWipe"/>
+      <xs:enumeration value="windshieldWipe"/>
+      <xs:enumeration value="snakeWipe"/>
+      <xs:enumeration value="spiralWipe"/>
+      <xs:enumeration value="parallelSnakesWipe"/>
+      <xs:enumeration value="boxSnakesWipe"/>
+      <xs:enumeration value="waterfallWipe"/>
+      <xs:enumeration value="pushWipe"/>
+      <xs:enumeration value="slideWipe"/>
+      <xs:enumeration value="fade"/>
+      <xs:enumeration value="audioFade"/>
+      <xs:enumeration value="audioVisualFade"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SMIL.transition-subtypes">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="bottom"/>
+      <xs:enumeration value="bottomCenter"/>
+      <xs:enumeration value="bottomLeft"/>
+      <xs:enumeration value="bottomLeftClockwise"/>
+      <xs:enumeration value="bottomLeftCounterClockwise"/>
+      <xs:enumeration value="bottomLeftDiagonal"/>
+      <xs:enumeration value="bottomRight"/>
+      <xs:enumeration value="bottomRightClockwise"/>
+      <xs:enumeration value="bottomRightCounterClockwise"/>
+      <xs:enumeration value="bottomRightDiagonal"/>
+      <xs:enumeration value="centerRight"/>
+      <xs:enumeration value="centerTop"/>
+      <xs:enumeration value="circle"/>
+      <xs:enumeration value="clockwiseBottom"/>
+      <xs:enumeration value="clockwiseBottomRight"/>
+      <xs:enumeration value="clockwiseLeft"/>
+      <xs:enumeration value="clockwiseNine"/>
+      <xs:enumeration value="clockwiseRight"/>
+      <xs:enumeration value="clockwiseSix"/>
+      <xs:enumeration value="clockwiseThree"/>
+      <xs:enumeration value="clockwiseTop"/>
+      <xs:enumeration value="clockwiseTopLeft"/>
+      <xs:enumeration value="clockwiseTwelve"/>
+      <xs:enumeration value="cornersIn"/>
+      <xs:enumeration value="cornersOut"/>
+      <xs:enumeration value="counterClockwiseBottomLeft"/>
+      <xs:enumeration value="counterClockwiseTopRight"/>
+      <xs:enumeration value="crossfade"/>
+      <xs:enumeration value="diagonalBottomLeft"/>
+      <xs:enumeration value="diagonalBottomLeftOpposite"/>
+      <xs:enumeration value="diagonalTopLeft"/>
+      <xs:enumeration value="diagonalTopLeftOpposite"/>
+      <xs:enumeration value="diamond"/>
+      <xs:enumeration value="doubleBarnDoor"/>
+      <xs:enumeration value="doubleDiamond"/>
+      <xs:enumeration value="down"/>
+      <xs:enumeration value="fadeFromColor"/>
+      <xs:enumeration value="fadeToColor"/>
+      <xs:enumeration value="fanInHorizontal"/>
+      <xs:enumeration value="fanInVertical"/>
+      <xs:enumeration value="fanOutHorizontal"/>
+      <xs:enumeration value="fanOutVertical"/>
+      <xs:enumeration value="fivePoint"/>
+      <xs:enumeration value="fourBlade"/>
+      <xs:enumeration value="fourBoxHorizontal"/>
+      <xs:enumeration value="fourBoxVertical"/>
+      <xs:enumeration value="fourPoint"/>
+      <xs:enumeration value="fromBottom"/>
+      <xs:enumeration value="fromLeft"/>
+      <xs:enumeration value="fromRight"/>
+      <xs:enumeration value="fromTop"/>
+      <xs:enumeration value="heart"/>
+      <xs:enumeration value="horizontal"/>
+      <xs:enumeration value="horizontalLeft"/>
+      <xs:enumeration value="horizontalLeftSame"/>
+      <xs:enumeration value="horizontalRight"/>
+      <xs:enumeration value="horizontalRightSame"/>
+      <xs:enumeration value="horizontalTopLeftOpposite"/>
+      <xs:enumeration value="horizontalTopRightOpposite"/>
+      <xs:enumeration value="keyhole"/>
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="leftCenter"/>
+      <xs:enumeration value="leftToRight"/>
+      <xs:enumeration value="oppositeHorizontal"/>
+      <xs:enumeration value="oppositeVertical"/>
+      <xs:enumeration value="parallelDiagonal"/>
+      <xs:enumeration value="parallelDiagonalBottomLeft"/>
+      <xs:enumeration value="parallelDiagonalTopLeft"/>
+      <xs:enumeration value="parallelVertical"/>
+      <xs:enumeration value="rectangle"/>
+      <xs:enumeration value="right"/>
+      <xs:enumeration value="rightCenter"/>
+      <xs:enumeration value="sixPoint"/>
+      <xs:enumeration value="top"/>
+      <xs:enumeration value="topCenter"/>
+      <xs:enumeration value="topLeft"/>
+      <xs:enumeration value="topLeftClockwise"/>
+      <xs:enumeration value="topLeftCounterClockwise"/>
+      <xs:enumeration value="topLeftDiagonal"/>
+      <xs:enumeration value="topLeftHorizontal"/>
+      <xs:enumeration value="topLeftVertical"/>
+      <xs:enumeration value="topRight"/>
+      <xs:enumeration value="topRightClockwise"/>
+      <xs:enumeration value="topRightCounterClockwise"/>
+      <xs:enumeration value="topRightDiagonal"/>
+      <xs:enumeration value="topToBottom"/>
+      <xs:enumeration value="twoBladeHorizontal"/>
+      <xs:enumeration value="twoBladeVertical"/>
+      <xs:enumeration value="twoBoxBottom"/>
+      <xs:enumeration value="twoBoxLeft"/>
+      <xs:enumeration value="twoBoxRight"/>
+      <xs:enumeration value="twoBoxTop"/>
+      <xs:enumeration value="up"/>
+      <xs:enumeration value="vertical"/>
+      <xs:enumeration value="verticalBottomLeftOpposite"/>
+      <xs:enumeration value="verticalBottomSame"/>
+      <xs:enumeration value="verticalLeft"/>
+      <xs:enumeration value="verticalRight"/>
+      <xs:enumeration value="verticalTopLeftOpposite"/>
+      <xs:enumeration value="verticalTopSame"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="SMIL.transition-attrs">
+    <xs:attribute name="type" type="SMIL.transition-types"/>
+    <xs:attribute name="subtype" type="SMIL.transition-subtypes"/>
+    <xs:attribute name="fadeColor" default="black"/>
+    <xs:attributeGroup ref="SMIL.transition-modifiers-attrs"/>
+  </xs:attributeGroup>
+  <xs:element name="transition">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.transition.content">
+          <xs:attributeGroup ref="SMIL.transition.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.transition-attrs"/>
+          <xs:attribute name="dur" type="TimeValue.datatype"/>
+          <xs:attribute name="startProgress" default="0.0"/>
+          <xs:attribute name="endProgress" default="1.0"/>
+          <xs:attribute name="direction" default="forward">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="forward"/>
+                <xs:enumeration value="reverse"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attributeGroup ref="SMIL.scope-attrs"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!-- End of BasicTransitions.module -->
+  <!-- End of InlineTransitions.module -->
+  <!-- ================== FullScreenTransitionEffects ======================= -->
+  <!-- ================== FullScreenTransitionEffects Entities ============ -->
+  <xs:attributeGroup name="SMIL.scope-attrs">
+    <xs:attribute name="scope" default="region">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="region"/>
+          <xs:enumeration value="screen"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+</xs:schema>
+<!-- ================ Add attributes to region element ================== -->
+<!-- end FullScreenTransitionEffects.module -->
+<!-- end of SMIL-transition.mod -->

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ...................................................................... -->
+<!-- SMIL 3.0 Datatypes Module  ........................................... -->
+<!--
+  file: smil-datatypes-1.mod
+  
+  This is SMIL 3.0.
+  
+     Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+     Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+     Editor for SMIL 3.0: Sjoerd Mullender, CWI
+     Editor for previous versions of SMIL: Jacco van Ossenbruggen,
+     Sjoerd Mullender.
+     $Revision: 1.6 $
+     $Date: 2008/09/07 20:36:49 $
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+  PUBLIC "-//W3C//ENTITIES SMIL 3.0 Datatypes 1.0//EN"
+  SYSTEM "http://www.w3.org/2008/SMIL30/smil-datatypes-1.mod"
+  
+  ......................................................................
+-->
+<!--
+  Datatypes
+  
+  defines containers for the following datatypes, many of
+  these imported from other specifications and standards.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:simpleType name="Character.datatype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!-- a single character from [ISO10646] -->
+  <xs:simpleType name="Color.datatype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!-- a CSS2 color specification -->
+  <xs:simpleType name="ContentType.datatype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!-- media type, as per [RFC2045] -->
+  <xs:simpleType name="LanguageCode.datatype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!-- a language code, as per [BCP47] -->
+  <!-- comma-separated list of language codes, as per [BCP47] -->
+  <xs:simpleType name="Number.datatype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!-- one or more digits -->
+  <!-- script expression -->
+  <xs:simpleType name="Text.datatype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!-- used for titles etc. -->
+  <xs:simpleType name="TimeValue.datatype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!--
+    a Number, possibly with its dimension, or a reserved 
+    word like 'indefinite'
+  -->
+  <xs:simpleType name="URI.datatype">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+</xs:schema>
+<!-- used for URI (IRI) references -->
+<!-- end of smil-datatypes-1.mod -->

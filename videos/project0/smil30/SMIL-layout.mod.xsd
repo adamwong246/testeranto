@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== -->
+<!-- SMIL 3.0 Layout Modules ============================================== -->
+<!--
+  file: SMIL-layout.mod
+  
+  This is SMIL 3.0.
+  
+  Copyright: 1998-2008 W3C (MIT, ERCIM, Keio), All Rights
+  Reserved.  See http://www.w3.org/Consortium/Legal/.
+  
+  Editor for SMIL 3.0: Sjoerd Mullender, CWI
+  Editor for previous versions of SMIL: Jacco van Ossenbruggen,
+  Aaron Cohen, Sjoerd Mullender.
+  $Revision: 1.12 $
+  $Date: 2008/09/18 10:33:45 $
+  
+  This DTD module is identified by the PUBLIC and SYSTEM identifiers:
+  
+  PUBLIC "-//W3C//ELEMENTS SMIL 3.0 Layout//EN"
+  SYSTEM "http://www.w3.org/2008/SMIL30/SMIL-layout.mod"
+  
+  ===================================================================
+-->
+<!-- ================== StructureLayout =================================== -->
+<!-- ================== StructureLayout Profiling Entities ============== -->
+<!-- ================== StructureLayout Elements ======================== -->
+<!--
+  Layout contains the region and root-layout elements defined by
+  smil-basic-layout or other elements defined by an external layout
+  mechanism.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" xmlns:its="http://www.w3.org/2005/11/its">
+  <xs:import namespace="http://www.w3.org/2005/11/its" schemaLocation="its.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:element name="layout">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.layout.content">
+          <xs:attributeGroup ref="SMIL.layout.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attribute name="type" default="text/smil-basic-layout"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!-- end StructureLayout.module -->
+  <!-- ================== BasicLayout ======================================= -->
+  <!-- ================== BasicLayout Profiling Entities ================== -->
+  <!-- ================== BasicLayout Entities ============================ -->
+  <!--
+    Serious hacking: we need an extra level of indirection to get
+    the correct default value of the backgroundOpacity attribute
+  -->
+  <xs:attributeGroup name="SMIL.region-attrs">
+    <xs:attributeGroup ref="SMIL.region-positioning.attrib"/>
+    <xs:attributeGroup ref="SMIL.z-index.attrib"/>
+    <xs:attributeGroup ref="SMIL.fit.attrib"/>
+    <xs:attribute name="showBackground" default="always">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="always"/>
+          <xs:enumeration value="whenActive"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <!-- ================== Region Element ================================== -->
+  <xs:element name="region">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.region.content">
+          <xs:attributeGroup ref="SMIL.region.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.backgroundColor.deprecated.attrib"/>
+          <xs:attributeGroup ref="SMIL.region-size.attrib"/>
+          <xs:attributeGroup ref="SMIL.backgroundColor.attrib"/>
+          <xs:attribute name="backgroundOpacity" default="100%"/>
+          <xs:attributeGroup ref="SMIL.region-attrs"/>
+          <xs:attribute name="regionName" type="xs:NMTOKEN"/>
+          <xs:attributeGroup ref="SMIL.soundLevel.attrib"/>
+          <xs:attributeGroup ref="SMIL.RegistrationPoint.attrib"/>
+          <xs:attributeGroup ref="SMIL.soundAlign.attrib"/>
+          <xs:attributeGroup ref="SMIL.BackgroundTiling-attrs"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!-- ================== Root-layout Element ============================= -->
+  <xs:element name="root-layout">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="SMIL.rootlayout.content">
+          <xs:attributeGroup ref="SMIL.rootlayout.attrib"/>
+          <xs:attributeGroup ref="SMIL.Core.attrib"/>
+          <xs:attributeGroup ref="SMIL.I18n.attrib"/>
+          <xs:attributeGroup ref="SMIL.backgroundColor.deprecated.attrib"/>
+          <xs:attributeGroup ref="SMIL.region-size.attrib"/>
+          <xs:attributeGroup ref="SMIL.backgroundColor.attrib"/>
+          <xs:attribute name="backgroundOpacity" default="100%"/>
+          <xs:attributeGroup ref="SMIL.BackgroundTiling-attrs"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <!-- end BasicLayout.module -->
+  <!-- ================== AudioLayout ======================================= -->
+  <!-- ================== AudioLayout Entities ============================ -->
+  <xs:attributeGroup name="SMIL.soundLevel.attrib">
+    <xs:attribute name="soundLevel" default="+0.0dB"/>
+  </xs:attributeGroup>
+  <!-- ================ AudioLayout Elements ============================== -->
+  <!-- ================ Add soundLevel to region element ================== -->
+  <!-- ================ Add soundLevel to media elements ================== -->
+  <!-- end AudioLayout.module -->
+  <!-- ================ MultiWindowLayout =================================== -->
+  <!-- ============== MultiWindowLayout Profiling Entities ================ -->
+  <!-- ============== MultiWindowLayout Elements ========================== -->
+  <!-- ================= topLayout element ================================= -->
+  <xs:element name="topLayout" substitutionGroup="SMIL.MultiWindowLayout-content"/>
+  <!-- end MultiWindowLayout.module -->
+  <!-- ====================== AlignmentLayout =============================== -->
+  <!-- ========== AlignmentLayout Profiling Entities ====================== -->
+  <!-- ============ AlignmentLayout Elements ============================== -->
+  <xs:element name="regPoint" substitutionGroup="SMIL.AlignmentLayout-content"/>
+  <!-- end AlignmentLayout.module -->
+  <!-- ================== BackgroundTilingLayout ============================ -->
+  <!-- ================== BackgroundTilingLayout Entities ================= -->
+  <xs:attributeGroup name="SMIL.BackgroundTiling-attrs">
+    <xs:attribute name="backgroundImage" default="none" type="URI.datatype"/>
+    <xs:attribute name="backgroundRepeat" default="repeat">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="repeat"/>
+          <xs:enumeration value="repeatX"/>
+          <xs:enumeration value="repeatY"/>
+          <xs:enumeration value="noRepeat"/>
+          <xs:enumeration value="inherit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+</xs:schema>
+<!-- ================ BackgroundTilingLayout Elements =================== -->
+<!-- ================ Add attributes to region element ================== -->
+<!-- end BackgroundTilingLayout.module -->
+<!-- end of SMIL-layout.mod -->
