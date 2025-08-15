@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-
+import { DesignEditor } from '../../../design-editor/DesignEditor';
 import { fetchTestData } from '../../utils/api';
 
 import { TestPageView } from '../pure/TestPageView';
@@ -100,17 +100,20 @@ export const TestPage = () => {
   if (!logs) return <div>loading...</div>
 
   return (
-    <TestPageView
-      route={route as 'results' | 'logs' | 'types' | 'lint' | 'coverage'}
-      setRoute={setRoute}
-      navigate={navigate}
-      projectName={projectName as string}
-      testName={testName}
-      decodedTestPath={decodedTestPath}
-      runtime={runtime}
-      logs={logs}
-      testsExist={testsExist}
-      errorCounts={errorCounts}
-    />
+    <>
+      {/* <DesignEditor projectId="demo-project" /> */}
+      <TestPageView
+        route={route as 'results' | 'logs' | 'types' | 'lint' | 'coverage'}
+        setRoute={setRoute}
+        navigate={navigate}
+        projectName={projectName as string}
+        testName={testName}
+        decodedTestPath={decodedTestPath}
+        runtime={runtime}
+        logs={logs}
+        testsExist={testsExist}
+        errorCounts={errorCounts}
+      />
+    </>
   );
 };

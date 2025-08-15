@@ -3614,23 +3614,7 @@
         ],
         "format": "cjs"
       },
-      "node_modules/express/node_modules/safe-buffer/index.js": {
-        "bytes": 1670,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "buffer",
-            "kind": "require-call",
-            "external": true
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/content-disposition/node_modules/safe-buffer/index.js": {
+      "node_modules/safe-buffer/index.js": {
         "bytes": 1670,
         "imports": [
           {
@@ -3660,7 +3644,7 @@
             "external": true
           },
           {
-            "path": "node_modules/content-disposition/node_modules/safe-buffer/index.js",
+            "path": "node_modules/safe-buffer/index.js",
             "kind": "require-call",
             "original": "safe-buffer"
           }
@@ -4010,7 +3994,7 @@
             "external": true
           },
           {
-            "path": "node_modules/express/node_modules/safe-buffer/index.js",
+            "path": "node_modules/safe-buffer/index.js",
             "kind": "require-call",
             "original": "safe-buffer"
           },
@@ -4352,7 +4336,7 @@
             "external": true
           },
           {
-            "path": "node_modules/express/node_modules/safe-buffer/index.js",
+            "path": "node_modules/safe-buffer/index.js",
             "kind": "require-call",
             "original": "safe-buffer"
           },
@@ -5018,11 +5002,6 @@
             "external": true
           },
           {
-            "path": "buffer",
-            "kind": "require-call",
-            "external": true
-          },
-          {
             "path": "path",
             "kind": "require-call",
             "external": true
@@ -5520,14 +5499,11 @@
           "node_modules/express/lib/view.js": {
             "bytesInOutput": 2500
           },
-          "node_modules/express/node_modules/safe-buffer/index.js": {
-            "bytesInOutput": 1784
-          },
-          "node_modules/content-disposition/node_modules/safe-buffer/index.js": {
-            "bytesInOutput": 1797
+          "node_modules/safe-buffer/index.js": {
+            "bytesInOutput": 1763
           },
           "node_modules/content-disposition/index.js": {
-            "bytesInOutput": 6158
+            "bytesInOutput": 6157
           },
           "node_modules/send/node_modules/debug/node_modules/ms/index.js": {
             "bytesInOutput": 2609
@@ -5632,7 +5608,7 @@
             "bytesInOutput": 494
           }
         },
-        "bytes": 1200536
+        "bytes": 1198515
       },
       "testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs": {
         "imports": [

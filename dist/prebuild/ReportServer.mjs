@@ -113,17 +113,115 @@ server.on("error", (err) => {
 process.on("uncaughtException", (err) => {
   console.error("Uncaught exception:", err);
 });
-var start = (port) => {
-  if (port) {
-    server.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
+var start = (port2) => {
+  if (port2) {
+    server.listen(port2, () => {
+      console.log(`Server running on http://localhost:${port2}`);
       console.log("Serving files from:", process.cwd());
     });
   } else {
     console.log("you need to specify a port");
   }
 };
-var ReportServerOfPort = (port) => start(port);
+var ReportServerOfPort = (port2) => start(port2);
+
+// design-editor/server.ts
+import { WebSocketServer } from "ws";
+import fs2 from "fs";
+import path2 from "path";
+var projects = /* @__PURE__ */ new Map();
+function startDesignEditorServer(wssPort2, httpPort) {
+  const wss = new WebSocketServer({ port: wssPort2 });
+  wss.on("connection", (ws, req) => {
+    const url = new URL(req.url || "", `http://${req.headers.host}`);
+    const projectId = url.searchParams.get("project") || "default";
+    if (!projects.has(projectId)) {
+      projects.set(projectId, {
+        connections: /* @__PURE__ */ new Set(),
+        design: loadDesign(projectId)
+      });
+    }
+    const project = projects.get(projectId);
+    project.connections.add(ws);
+    ws.send(
+      JSON.stringify({
+        type: "design_update",
+        data: project.design
+      })
+    );
+    broadcastCollaborators(projectId);
+    ws.on("message", (message) => {
+      const data = JSON.parse(message);
+      if (data.type === "design_update") {
+        project.design = data.data;
+        saveDesign(projectId, data.data);
+        broadcastToProject(projectId, message.toString());
+      }
+    });
+    ws.on("close", (code, reason) => {
+      project.connections.delete(ws);
+      if (project.connections.size === 0) {
+        projects.delete(projectId);
+      } else {
+        broadcastCollaborators(projectId);
+      }
+    });
+  });
+  console.log(`Design editor WebSocket server running on port ${wssPort2}`);
+}
+function broadcastToProject(projectId, message) {
+  const project = projects.get(projectId);
+  if (project) {
+    project.connections.forEach((client) => {
+      if (client.readyState === client.OPEN) {
+        client.send(message);
+      }
+    });
+  }
+}
+function broadcastCollaborators(projectId) {
+  const project = projects.get(projectId);
+  if (project) {
+    const collaborators = Array.from(project.connections).map((_, i) => ({
+      id: `user-${i}`,
+      name: `Collaborator ${i + 1}`
+    }));
+    broadcastToProject(
+      projectId,
+      JSON.stringify({
+        type: "collaborators_update",
+        data: collaborators
+      })
+    );
+  }
+}
+function loadDesign(projectId) {
+  const designsDir = path2.join(process.cwd(), "designs");
+  const filePath = path2.join(designsDir, `${projectId}.json`);
+  try {
+    const data = fs2.readFileSync(filePath, "utf-8");
+    return JSON.parse(data);
+  } catch {
+    return {
+      version: "1.0",
+      background: "#ffffff",
+      objects: []
+    };
+  }
+}
+function saveDesign(projectId, design) {
+  const designsDir = path2.join(process.cwd(), "designs");
+  if (!fs2.existsSync(designsDir)) {
+    fs2.mkdirSync(designsDir, { recursive: true });
+  }
+  const filePath = path2.join(designsDir, `${projectId}.json`);
+  fs2.writeFileSync(filePath, JSON.stringify(design, null, 2));
+}
 
 // src/ReportServer.ts
-ReportServerOfPort(process.argv[2]);
+var port = process.argv[2] || 3e3;
+var wssPort = Number(port) + 1;
+ReportServerOfPort(port);
+startDesignEditorServer(wssPort);
+console.log(`Report server running on http://localhost:${port}`);
+console.log(`Design editor WebSocket running on ws://localhost:${wssPort}`);

@@ -9,10 +9,16 @@ $ /Users/adam/Code/testeranto/node_modules/.bin/tsc --noEmit
 ../testeranto-react/src/react-dom/jsx/dynamic.ts(22,3): error TS2741: Property 'assertThis' is missing in type '{ beforeAll: (prototype: IInput, artificer: ITTestResourceConfiguration) => Promise<HTMLElement>; beforeEach: () => Promise<...>; andWhen: (s: HTMLElement, whenCB: any) => Promise<...>; butThen: (s: HTMLElement) => Promise<...>; afterEach: (store: HTMLElement, ndx: string, artificer: IPM) => Promise<...>; afterAll: ...' but required in type 'ITestAdapter<I>'.
 ../testeranto-react/src/react-dom/jsx/dynamic.ts(25,17): error TS2345: Argument of type 'null' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
 ../testeranto-react/src/react-dom/jsx/dynamic.ts(30,17): error TS2345: Argument of type 'FunctionComponentElement<any>' is not assignable to parameter of type 'HTMLElement | PromiseLike<HTMLElement>'.
-../testeranto-react/src/react/component/index.ts(3,44): error TS2307: Cannot find module '../../../Types' or its corresponding type declarations.
-src/App.tsx(31,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
-src/App.tsx(41,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
-src/App.tsx(43,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
+../testeranto-react/src/react/component/index.ts(21,3): error TS2739: Type '{ beforeEach: () => Promise<CElement<any, any>>; andWhen: (s: CElement<any, any>, whenCB: () => (s: CElement<any, any>) => any) => any; }' is missing the following properties from type 'ITestAdapter<I>': assertThis, butThen, afterAll, afterEach, beforeAll
+design-editor/DesignEditor.tsx(45,5): error TS2740: Type 'Canvas' is missing the following properties from type 'Canvas': initialize, containsPoint, restorePointerVpt, _setObjectScale, and 17 more.
+design-editor/DesignEditor.tsx(114,20): error TS2352: Conversion of type '{ version: string; objects: Object[]; }' to type 'Design' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Property 'background' is missing in type '{ version: string; objects: Object[]; }' but required in type 'Design'.
+src/App.tsx(35,34): error TS2339: Property 'createRoot' does not exist on type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")'.
+src/App.tsx(45,10): error TS2339: Property 'App' does not exist on type 'Window & typeof globalThis'.
+src/App.tsx(47,3): error TS2740: Type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/client")' is missing the following properties from type 'typeof import("/Users/adam/Code/testeranto/node_modules/@types/react-dom/index")': findDOMNode, unmountComponentAtNode, createPortal, flushSync, and 5 more.
+src/components/DesignEditorPage.tsx(59,40): error TS2304: Cannot find name 'Design'.
+src/components/DesignEditorPage.tsx(65,19): error TS2339: Property 'showOpenFilePicker' does not exist on type 'Window & typeof globalThis'.
+src/components/DesignEditorPage.tsx(70,37): error TS2339: Property 'showOpenFilePicker' does not exist on type 'Window & typeof globalThis'.
 src/components/pure/AppFrame.test/implementation.tsx(19,19): error TS2322: Type '(children: React.ReactNode) => () => (selection: ISelection) => { children: React.ReactNode; htmlElement: HTMLElement; reactElement: React.ReactElement; domRoot: HTMLElement | null; container?: HTMLElement; testId?: string; }' is not assignable to type '(Ig_0: ReactNode) => (s: ISelection) => ISelection'.
   Call signature return types '() => (selection: ISelection) => { children: ReactNode; htmlElement: HTMLElement; reactElement: ReactElement<any, string | JSXElementConstructor<any>>; domRoot: HTMLElement | null; container?: HTMLElement | undefined; testId?: string | undefined; }' and '(s: ISelection) => ISelection' are incompatible.
     Type '(selection: ISelection) => { children: React.ReactNode; htmlElement: HTMLElement; reactElement: React.ReactElement; domRoot: HTMLElement | null; container?: HTMLElement; testId?: string; }' is not assignable to type 'ISelection'.
@@ -24,9 +30,9 @@ src/components/pure/AppFrame.test/index.tsx(19,3): error TS2345: Argument of typ
           Type 'import("/Users/adam/Code/testeranto-react/src/react-dom/component/dynamic").ISelection' is not assignable to type 'import("/Users/adam/Code/testeranto/src/components/pure/AppFrame.test/types").ISelection'.
             Types of property 'domRoot' are incompatible.
               Type 'Root' is missing the following properties from type 'HTMLElement': accessKey, accessKeyLabel, autocapitalize, autocorrect, and 314 more.
-src/components/pure/FeaturesReporterView.test/implementation.tsx(18,13): error TS2322: Type '"test"' is not assignable to type '"file" | "project"'.
-src/components/pure/FeaturesReporterView.test/implementation.tsx(23,17): error TS2322: Type '"given"' is not assignable to type '"file" | "project"'.
-src/components/pure/FeaturesReporterView.test/implementation.tsx(28,21): error TS2322: Type '"then"' is not assignable to type '"file" | "project"'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(18,13): error TS2322: Type '"test"' is not assignable to type '"project" | "file"'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(23,17): error TS2322: Type '"given"' is not assignable to type '"project" | "file"'.
+src/components/pure/FeaturesReporterView.test/implementation.tsx(28,21): error TS2322: Type '"then"' is not assignable to type '"project" | "file"'.
 src/components/pure/FeaturesReporterView.test/implementation.tsx(60,9): error TS2322: Type '({ htmlElement }: IInput & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IInput & { container?: HTMLElement | undefined; }) => IInput & { container?: HTMLElement | undefined; }'.
   Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IInput & { container?: HTMLElement | undefined; }'.
     Property 'treeData' is missing in type 'Promise<{ htmlElement: any; }>' but required in type 'IInput'.
@@ -199,6 +205,8 @@ src/components/pure/TestPageView.test/index.tsx(18,3): error TS2345: Argument of
                   Type 'ISelection' is missing the following properties from type 'HTMLElement': accessKey, accessKeyLabel, autocapitalize, autocorrect, and 314 more.
 src/components/pure/TestPageView.tsx(278,21): error TS2322: Type '{ testName: string; testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; variant: "compact"; className: string; }' is not assignable to type 'IntrinsicAttributes & TestStatusBadgeProps'.
   Property 'className' does not exist on type 'IntrinsicAttributes & TestStatusBadgeProps'.
+src/components/stateful/FileTree.tsx(2,10): error TS2459: Module '"./TextEditorPage"' declares 'FileType' locally, but it is not exported.
+src/components/stateful/FileTree.tsx(53,12): error TS18046: 'dirFiles' is of type 'unknown'.
 src/components/stateful/ProjectsPage.tsx(66,7): error TS2322: Type 'Record<string, ISummary>' is not assignable to type 'TestSummary'.
   'string' index signatures are incompatible.
     Type 'ISummary' has no properties in common with type '{ testsExist?: boolean | undefined; runTimeErrors?: number | undefined; typeErrors?: number | undefined; staticErrors?: number | undefined; }'.
@@ -206,8 +214,10 @@ src/components/stateful/ProjectsPage.tsx(67,7): error TS2322: Type 'Record<strin
   'string' index signatures are incompatible.
     Property 'tests' is missing in type '{}' but required in type '{ tests: [string, string][]; }'.
 src/components/stateful/TestPage.tsx(90,18): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
-src/components/stateful/TestPage.tsx(104,7): error TS2322: Type '{ route: "coverage" | "results" | "logs" | "types" | "lint"; setRoute: Dispatch<SetStateAction<string>>; navigate: NavigateFunction; ... 6 more ...; errorCounts: { ...; }; }' is not assignable to type 'IntrinsicAttributes & TestPageViewProps'.
+src/components/stateful/TestPage.tsx(106,9): error TS2322: Type '{ route: "coverage" | "results" | "logs" | "types" | "lint"; setRoute: Dispatch<SetStateAction<string>>; navigate: NavigateFunction; ... 6 more ...; errorCounts: { ...; }; }' is not assignable to type 'IntrinsicAttributes & TestPageViewProps'.
   Property 'route' does not exist on type 'IntrinsicAttributes & TestPageViewProps'.
+src/components/stateful/TextEditorPage.tsx(82,11): error TS2322: Type 'string | undefined' is not assignable to type 'string | null'.
+  Type 'undefined' is not assignable to type 'string | null'.
 src/components/SunriseAnimation.test/interface.ts(2,10): error TS2305: Module '"../../CoreTypes"' has no exported member 'ITestInterface'.
 src/components/SunriseAnimation.test/interface.ts(5,34): error TS2307: Cannot find module './SunriseAnimation' or its corresponding type declarations.
 src/components/SunriseAnimation.test/interface.ts(7,14): error TS1214: Identifier expected. 'interface' is a reserved word in strict mode. Modules are automatically in strict mode.
@@ -597,7 +607,8 @@ src/ReportServer.test.ts/index.ts(180,14): error TS2304: Cannot find name 'IProj
 src/ReportServer.test.ts/index.ts(182,10): error TS2304: Cannot find name 'IProjectPageViewProps'.
 src/ReportServer.test.ts/index.ts(190,3): error TS2345: Argument of type '(port: number) => void' is not assignable to parameter of type '(port: number) => Server<typeof IncomingMessage, typeof ServerResponse>'.
   Type 'void' is not assignable to type 'Server<typeof IncomingMessage, typeof ServerResponse>'.
-src/ReportServer.ts(5,20): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.
+src/ReportServer.ts(8,20): error TS2345: Argument of type 'string | 3000' is not assignable to parameter of type 'number'.
+  Type 'string' is not assignable to type 'number'.
 src/ReportServerLib.ts(111,33): error TS2339: Property 'status' does not exist on type 'Error'.
 src/utils/featureUtils.tsx(26,4): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 src/utils/featureUtils.tsx(28,8): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.

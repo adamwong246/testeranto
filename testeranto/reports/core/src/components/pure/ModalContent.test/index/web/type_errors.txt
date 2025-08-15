@@ -5,7 +5,7 @@
         Property 'domRoot' is missing in type '{ htmlElement: HTMLElement; }' but required in type 'ISubject'.
 /Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (47,45): Property 'subject' does not exist on type 'Readonly<{}>'.
 /Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (114,9): Expected 1 arguments, but got 3.
-/Users/adam/Code/testeranto-react/src/react/component/index.ts (3,44): Cannot find module '../../../Types' or its corresponding type declarations.
+/Users/adam/Code/testeranto-react/src/react/component/index.ts (21,3): Type '{ beforeEach: () => Promise<CElement<any, any>>; andWhen: (s: CElement<any, any>, whenCB: () => (s: CElement<any, any>) => any) => any; }' is missing the following properties from type 'ITestAdapter<I>': assertThis, butThen, afterAll, afterEach, beforeAll
 /Users/adam/Code/testeranto/src/components/pure/ModalContent.test/implementation.tsx (21,9): Type '({ htmlElement }: IModalContentProps & { container?: HTMLElement | undefined; }) => Promise<{ htmlElement: any; }>' is not assignable to type '(state: IModalContentProps & { container?: HTMLElement | undefined; }) => IModalContentProps & { container?: HTMLElement | undefined; }'.
   Type 'Promise<{ htmlElement: any; }>' is not assignable to type 'IModalContentProps & { container?: HTMLElement | undefined; }'.
     Type 'Promise<{ htmlElement: any; }>' is missing the following properties from type 'IModalContentProps': theme, handleThemeChange

@@ -5,7 +5,7 @@
         Property 'domRoot' is missing in type '{ htmlElement: HTMLElement; }' but required in type 'ISubject'.
 /Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (47,45): Property 'subject' does not exist on type 'Readonly<{}>'.
 /Users/adam/Code/testeranto-react/src/react-dom/component/dynamic.ts (114,9): Expected 1 arguments, but got 3.
-/Users/adam/Code/testeranto-react/src/react/component/index.ts (3,44): Cannot find module '../../../Types' or its corresponding type declarations.
+/Users/adam/Code/testeranto-react/src/react/component/index.ts (21,3): Type '{ beforeEach: () => Promise<CElement<any, any>>; andWhen: (s: CElement<any, any>, whenCB: () => (s: CElement<any, any>) => any) => any; }' is missing the following properties from type 'ITestAdapter<I>': assertThis, butThen, afterAll, afterEach, beforeAll
 /Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/implementation.tsx (18,13): Type '"test"' is not assignable to type '"project" | "file"'.
 /Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/implementation.tsx (23,17): Type '"given"' is not assignable to type '"project" | "file"'.
 /Users/adam/Code/testeranto/src/components/pure/FeaturesReporterView.test/implementation.tsx (28,21): Type '"then"' is not assignable to type '"project" | "file"'.

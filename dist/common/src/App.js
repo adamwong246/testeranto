@@ -12,6 +12,8 @@ const ProjectPage_1 = require("./components/stateful/ProjectPage");
 const ProjectsPage_1 = require("./components/stateful/ProjectsPage");
 const AppFrame_1 = require("./components/pure/AppFrame");
 const FeaturesReporter_1 = require("./components/stateful/FeaturesReporter");
+const DesignEditorPage_1 = require("./components/DesignEditorPage");
+const TextEditorPage_1 = require("./components/stateful/TextEditorPage");
 const App = () => {
     return (react_1.default.createElement(react_router_dom_1.HashRouter, null,
         react_1.default.createElement(AppFrame_1.AppFrame, null,
@@ -20,7 +22,9 @@ const App = () => {
                 react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName", element: react_1.default.createElement(ProjectPage_1.ProjectPage, null) }),
                 react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName/tests/*", element: react_1.default.createElement(TestPage_1.TestPage, null) }),
                 react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName#:tab", element: react_1.default.createElement(ProjectPage_1.ProjectPage, null) }),
-                react_1.default.createElement(react_router_dom_1.Route, { path: "/features-reporter", element: react_1.default.createElement(FeaturesReporter_1.FeaturesReporter, null) })))));
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/features-reporter", element: react_1.default.createElement(FeaturesReporter_1.FeaturesReporter, null) }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/design-editor", element: react_1.default.createElement(DesignEditorPage_1.DesignEditorPage, null) }),
+                react_1.default.createElement(react_router_dom_1.Route, { path: "/text-editor", element: react_1.default.createElement(TextEditorPage_1.TextEditorPage, null) })))));
 };
 exports.App = App;
 // Export App to global scope

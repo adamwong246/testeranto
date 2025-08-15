@@ -50,6 +50,24 @@ The metafile is extra data emitted by the bundling process. Through it, the src 
 
 The report app is capable of showing the features and documentation "collated" into a single place. This is a feature of the React app and has its own route. The `FeaturesReporter` component gathers all the features from all `tests.json` files across all projects, along with the status of individual tests and larger jobs. Maintaining the original file structures, it displays all these features and statuses in a single view, providing a comprehensive overview of the testing landscape. This view takes the list of tests and using the file structures, shows each test as an entry in a tree matching the source code directories.
 
+## TextEditor
+
+The TextEditor is a powerful React component that provides a comprehensive development environment with:
+
+- **Three-column layout**:
+  1. File tree - Navigate project structure
+  2. Tabbed editor - Edit files with Monaco's TypeScript syntax highlighting
+  3. GUI preview - Visual representation of the active file
+
+Key features:
+
+- Built on Monaco Editor (same engine as VS Code)
+- Supports TypeScript out of the box
+- Real-time preview updates
+- File tree navigation
+- Tabbed interface for multiple open files
+- Keyboard shortcuts for common actions
+
 ## Core Testing Principles
 
 1. Tests follow BDD structure with Given/When/Then

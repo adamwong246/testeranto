@@ -92,5 +92,6 @@ export const TestPage = () => {
     }, []);
     if (!logs)
         return React.createElement("div", null, "loading...");
-    return (React.createElement(TestPageView, { route: route, setRoute: setRoute, navigate: navigate, projectName: projectName, testName: testName, decodedTestPath: decodedTestPath, runtime: runtime, logs: logs, testsExist: testsExist, errorCounts: errorCounts }));
+    return (React.createElement(React.Fragment, null,
+        React.createElement(TestPageView, { route: route, setRoute: setRoute, navigate: navigate, projectName: projectName, testName: testName, decodedTestPath: decodedTestPath, runtime: runtime, logs: logs, testsExist: testsExist, errorCounts: errorCounts })));
 };

@@ -128,6 +128,7 @@ const TestPage = () => {
     }, []);
     if (!logs)
         return react_1.default.createElement("div", null, "loading...");
-    return (react_1.default.createElement(TestPageView_1.TestPageView, { route: route, setRoute: setRoute, navigate: navigate, projectName: projectName, testName: testName, decodedTestPath: decodedTestPath, runtime: runtime, logs: logs, testsExist: testsExist, errorCounts: errorCounts }));
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(TestPageView_1.TestPageView, { route: route, setRoute: setRoute, navigate: navigate, projectName: projectName, testName: testName, decodedTestPath: decodedTestPath, runtime: runtime, logs: logs, testsExist: testsExist, errorCounts: errorCounts })));
 };
 exports.TestPage = TestPage;

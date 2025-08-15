@@ -7,6 +7,8 @@ import { ProjectPage } from './components/stateful/ProjectPage';
 import { ProjectsPage } from './components/stateful/ProjectsPage';
 import { AppFrame } from './components/pure/AppFrame';
 import { FeaturesReporter } from './components/stateful/FeaturesReporter';
+import { DesignEditorPage } from './components/DesignEditorPage';
+import { TextEditorPage } from './components/stateful/TextEditorPage';
 
 export const App = () => {
   return (
@@ -18,6 +20,8 @@ export const App = () => {
           <Route path="/projects/:projectName/tests/*" element={<TestPage />} />
           <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
           <Route path="/features-reporter" element={<FeaturesReporter />} />
+          <Route path="/design-editor" element={<DesignEditorPage />} />
+          <Route path="/text-editor" element={<TextEditorPage />} />
         </Routes>
       </AppFrame>
     </Router>

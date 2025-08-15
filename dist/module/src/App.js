@@ -6,6 +6,8 @@ import { ProjectPage } from './components/stateful/ProjectPage';
 import { ProjectsPage } from './components/stateful/ProjectsPage';
 import { AppFrame } from './components/pure/AppFrame';
 import { FeaturesReporter } from './components/stateful/FeaturesReporter';
+import { DesignEditorPage } from './components/DesignEditorPage';
+import { TextEditorPage } from './components/stateful/TextEditorPage';
 export const App = () => {
     return (React.createElement(Router, null,
         React.createElement(AppFrame, null,
@@ -14,7 +16,9 @@ export const App = () => {
                 React.createElement(Route, { path: "/projects/:projectName", element: React.createElement(ProjectPage, null) }),
                 React.createElement(Route, { path: "/projects/:projectName/tests/*", element: React.createElement(TestPage, null) }),
                 React.createElement(Route, { path: "/projects/:projectName#:tab", element: React.createElement(ProjectPage, null) }),
-                React.createElement(Route, { path: "/features-reporter", element: React.createElement(FeaturesReporter, null) })))));
+                React.createElement(Route, { path: "/features-reporter", element: React.createElement(FeaturesReporter, null) }),
+                React.createElement(Route, { path: "/design-editor", element: React.createElement(DesignEditorPage, null) }),
+                React.createElement(Route, { path: "/text-editor", element: React.createElement(TextEditorPage, null) })))));
 };
 // Export App to global scope
 function initApp() {
