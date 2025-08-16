@@ -1,35 +1,6 @@
 {
   "errors": [],
-  "warnings": [
-    {
-      "id": "duplicate-object-key",
-      "location": {
-        "column": 4,
-        "file": "tsconfig.json",
-        "length": 19,
-        "line": 29,
-        "lineText": "    \"resolveJsonModule\": true,",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [
-        {
-          "location": {
-            "column": 4,
-            "file": "tsconfig.json",
-            "length": 19,
-            "line": 13,
-            "lineText": "    \"resolveJsonModule\": true,",
-            "namespace": "",
-            "suggestion": ""
-          },
-          "text": "The original key \"resolveJsonModule\" is here:"
-        }
-      ],
-      "pluginName": "",
-      "text": "Duplicate key \"resolveJsonModule\" in object literal"
-    }
-  ],
+  "warnings": [],
   "metafile": {
     "inputs": {
       "dist/cjs-shim.js": {

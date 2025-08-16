@@ -1,5 +1,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
-@import "./fonts.scss";
+// @import "./fonts.scss";
+@import "./themes.scss";
 
 .video-container {
   position: relative;
@@ -8,9 +9,9 @@
   margin: 1rem 0;
   background: #1a1a1a;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  
+
   canvas {
     width: 100%;
     height: 100%;
@@ -37,6 +38,9 @@ body {
 .snap-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+
+  scroll-behavior: smooth;
+
   height: 100vh;
   width: 100%;
   position: relative;
@@ -45,6 +49,10 @@ body {
 
 .snap-container {
   position: relative;
+
+  // scroll-snap-type: y mandatory; /* or other snap settings */
+  // scroll-behavior: smooth;
+  // overflow-y: scroll; /* or auto */
 }
 
 // body {
@@ -101,16 +109,6 @@ tr:last-child td {
 //   transform: scaleX(1);
 // }
 
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li {
-  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
-}
 
 // pre.mermaid {
 //   background-color: var(--light);

@@ -55,16 +55,14 @@ const template = (title, content) => `
 
     <div class="container-fluid" style="padding-bottom: 5rem;">
         <div class="row">
-            <div class="col-xs-0 col-sm-0 col-md-1">
-            </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-10">
-                <div id="container">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div id="container-fluid">
                     ${content.replace(/<p>⚠️(.*?)<\/p>/g, '<div class="warning">$1</div>')}
                 </div>
             </div>
         
-            <div class="col-xs-0 col-sm-0 col-md-1">
+
         </div>
     </div>
 

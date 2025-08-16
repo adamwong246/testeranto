@@ -1,4 +1,23 @@
-// Common theme initialization
+// Frontpage color variables
+:root {
+  --light-vibrant-bg: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 25%, #80deea 50%, #4dd0e1 75%, #00bcd4 100%);
+  --light-vibrant-text: #3a1c42;
+  
+  --dark-vibrant-bg: linear-gradient(135deg, #16213e 0%, #1a1a2e 25%, #0f3460 50%, #533483 75%, #e94560 100%);
+  --dark-vibrant-text: #fff9fb;
+  
+  --primary-vibrant-bg: #ff2d75;
+  --primary-vibrant-text: #fff9fb;
+  
+  --secondary-vibrant-bg: #00e5ff;
+  --secondary-vibrant-text: #3a1c42;
+  
+  --accent-vibrant-bg: #ffeb3b;
+  --accent-vibrant-text: #3a1c42;
+  
+  --light-bg: #fff9fb;
+  --light-text: #3a1c42;
+}
 // :root {
 //   @each $theme, $colors in $themes {
 //     &[data-bs-theme="#{$theme}"] {

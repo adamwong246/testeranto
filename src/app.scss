@@ -1,12 +1,13 @@
 @use "./style.scss";
-@use "./themes.scss";
 
 :root {
   --bs-heading-color: rgba(0, 0, 0, 0.9);
   --bs-modal-color: rgba(0, 0, 0, 0.9);
   --frosted-bg: rgba(255, 255, 255, 0.2);
   --frosted-border: rgba(255, 255, 255, 0.3);
-  --frosted-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --frosted-text-shadow: 
+    -1px -1px 0 rgba(255, 255, 255, 0.3),
+    1px 1px 0 rgba(0, 0, 0, 0.3);
   --frosted-inset-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
@@ -15,7 +16,9 @@
   --bs-modal-color: rgba(255, 255, 255, 0.9);
   --frosted-bg: rgba(0, 0, 0, 0.2);
   --frosted-border: rgba(0, 0, 0, 0.3);
-  --frosted-text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+  --frosted-text-shadow: 
+    -1px -1px 0 rgba(255, 255, 255, 0.3),
+    1px 1px 0 rgba(0, 0, 0, 0.3);
   --frosted-inset-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -37,18 +40,19 @@ code,
   background-color: var(--frosted-bg);
   backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid var(--frosted-border);
-  box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.1),
-    var(--frosted-inset-shadow);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), var(--frosted-inset-shadow);
   isolation: isolate;
   text-shadow: var(--frosted-text-shadow);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--bs-heading-color);
-  text-shadow: 
-    var(--frosted-text-shadow),
-    0 0 8px rgba(255, 255, 255, 0.3);
+  text-shadow: var(--frosted-text-shadow), 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
 .modal-content {
@@ -56,9 +60,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: var(--frosted-bg);
   backdrop-filter: blur(24px) saturate(200%);
   border: 1px solid var(--frosted-border);
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    var(--frosted-inset-shadow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), var(--frosted-inset-shadow);
 }
 
 #settings-button {
