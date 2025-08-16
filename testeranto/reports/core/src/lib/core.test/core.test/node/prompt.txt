@@ -16,4 +16,4 @@
 /read testeranto/reports/core/src/lib/core.test/core.test/node/type_errors.txt
 /read testeranto/reports/core/src/lib/core.test/core.test/node/lint_errors.txt
 
-/read testeranto/reports/core/src/lib/core.test/core.test/node/stdout.log testeranto/reports/core/src/lib/core.test/core.test/node/stderr.log testeranto/reports/core/src/lib/core.test/core.test/node/exit.log
+/read testeranto/reports/core/src/lib/core.test/core.test/node/tests.json testeranto/reports/core/src/lib/core.test/core.test/node/type_errors.txt testeranto/reports/core/src/lib/core.test/core.test/node/lint_errors.txt testeranto/reports/core/src/lib/core.test/core.test/node/exit.log testeranto/reports/core/src/lib/core.test/core.test/node/message.txt testeranto/reports/core/src/lib/core.test/core.test/node/prompt.txt testeranto/reports/core/src/lib/core.test/core.test/node/stdout.log testeranto/reports/core/src/lib/core.test/core.test/node/stderr.log

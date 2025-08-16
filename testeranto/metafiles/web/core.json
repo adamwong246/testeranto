@@ -495,6 +495,34 @@
       ],
       "pluginName": "sass-plugin",
       "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
+      "id": "duplicate-object-key",
+      "location": {
+        "column": 4,
+        "file": "tsconfig.json",
+        "length": 19,
+        "line": 29,
+        "lineText": "    \"resolveJsonModule\": true,",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 4,
+            "file": "tsconfig.json",
+            "length": 19,
+            "line": 13,
+            "lineText": "    \"resolveJsonModule\": true,",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The original key \"resolveJsonModule\" is here:"
+        }
+      ],
+      "pluginName": "",
+      "text": "Duplicate key \"resolveJsonModule\" in object literal"
     }
   ],
   "metafile": {
@@ -1640,6 +1668,27 @@
             "kind": "import-statement",
             "external": true
           },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/utils/logFiles.ts": {
+        "bytes": 1513,
+        "imports": [
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
@@ -14865,6 +14914,393 @@
         ],
         "format": "esm"
       },
+      "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js": {
+        "bytes": 4188,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/state-local/lib/es/state-local.js": {
+        "bytes": 5549,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/config/index.js": {
+        "bytes": 124,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/utils/curry.js": {
+        "bytes": 546,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/utils/isObject.js": {
+        "bytes": 108,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/validators/index.js": {
+        "bytes": 1514,
+        "imports": [
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/utils/curry.js",
+            "kind": "import-statement",
+            "original": "../utils/curry.js"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/utils/isObject.js",
+            "kind": "import-statement",
+            "original": "../utils/isObject.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/utils/compose.js": {
+        "bytes": 297,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js": {
+        "bytes": 414,
+        "imports": [
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js",
+            "kind": "import-statement",
+            "original": "../_virtual/_rollupPluginBabelHelpers.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js": {
+        "bytes": 643,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/loader/index.js": {
+        "bytes": 4360,
+        "imports": [
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js",
+            "kind": "import-statement",
+            "original": "../_virtual/_rollupPluginBabelHelpers.js"
+          },
+          {
+            "path": "node_modules/state-local/lib/es/state-local.js",
+            "kind": "import-statement",
+            "original": "state-local"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/config/index.js",
+            "kind": "import-statement",
+            "original": "../config/index.js"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/validators/index.js",
+            "kind": "import-statement",
+            "original": "../validators/index.js"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/utils/compose.js",
+            "kind": "import-statement",
+            "original": "../utils/compose.js"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js",
+            "kind": "import-statement",
+            "original": "../utils/deepMerge.js"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js",
+            "kind": "import-statement",
+            "original": "../utils/makeCancelable.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/loader/lib/es/index.js": {
+        "bytes": 85,
+        "imports": [
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/loader/index.js",
+            "kind": "import-statement",
+            "original": "./loader/index.js"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/loader/index.js",
+            "kind": "import-statement",
+            "original": "./loader/index.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/@monaco-editor/react/dist/index.mjs": {
+        "bytes": 6528,
+        "imports": [
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/index.js",
+            "kind": "import-statement",
+            "original": "@monaco-editor/loader"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/index.js",
+            "kind": "import-statement",
+            "original": "@monaco-editor/loader"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/index.js",
+            "kind": "import-statement",
+            "original": "@monaco-editor/loader"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/@monaco-editor/loader/lib/es/index.js",
+            "kind": "import-statement",
+            "original": "@monaco-editor/loader"
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
       "src/components/pure/NavBar.tsx": {
         "bytes": 3051,
         "imports": [
@@ -14933,7 +15369,7 @@
         "format": "esm"
       },
       "src/components/pure/TestPageView.tsx": {
-        "bytes": 13272,
+        "bytes": 32577,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -14941,9 +15377,19 @@
             "original": "react"
           },
           {
+            "path": "src/utils/logFiles.ts",
+            "kind": "import-statement",
+            "original": "../../utils/logFiles"
+          },
+          {
             "path": "node_modules/react-bootstrap/esm/index.js",
             "kind": "import-statement",
             "original": "react-bootstrap"
+          },
+          {
+            "path": "node_modules/@monaco-editor/react/dist/index.mjs",
+            "kind": "import-statement",
+            "original": "@monaco-editor/react"
           },
           {
             "path": "src/components/pure/NavBar.tsx",
@@ -15002,7 +15448,7 @@
         "imports": []
       },
       "src/App.scss": {
-        "bytes": 293290,
+        "bytes": 294749,
         "imports": [
           {
             "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
@@ -16518,10 +16964,10 @@
         "cssBundle": "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.css",
         "inputs": {
           "node_modules/react-dom/client.js": {
-            "bytesInOutput": 837
+            "bytesInOutput": 839
           },
           "src/components/pure/TestPageView.test/index.tsx": {
-            "bytesInOutput": 387
+            "bytesInOutput": 390
           },
           "../testeranto-react/src/react-dom/jsx/web.ts": {
             "bytesInOutput": 255
@@ -16536,10 +16982,49 @@
             "bytesInOutput": 1364
           },
           "src/components/pure/TestPageView.tsx": {
-            "bytesInOutput": 11795
+            "bytesInOutput": 27644
+          },
+          "src/utils/logFiles.ts": {
+            "bytesInOutput": 617
+          },
+          "node_modules/@monaco-editor/react/dist/index.mjs": {
+            "bytesInOutput": 8912
+          },
+          "node_modules/@monaco-editor/loader/lib/es/index.js": {
+            "bytesInOutput": 47
+          },
+          "node_modules/@monaco-editor/loader/lib/es/loader/index.js": {
+            "bytesInOutput": 2934
+          },
+          "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js": {
+            "bytesInOutput": 3852
+          },
+          "node_modules/state-local/lib/es/state-local.js": {
+            "bytesInOutput": 5601
+          },
+          "node_modules/@monaco-editor/loader/lib/es/config/index.js": {
+            "bytesInOutput": 176
+          },
+          "node_modules/@monaco-editor/loader/lib/es/validators/index.js": {
+            "bytesInOutput": 1251
+          },
+          "node_modules/@monaco-editor/loader/lib/es/utils/curry.js": {
+            "bytesInOutput": 595
+          },
+          "node_modules/@monaco-editor/loader/lib/es/utils/isObject.js": {
+            "bytesInOutput": 164
+          },
+          "node_modules/@monaco-editor/loader/lib/es/utils/compose.js": {
+            "bytesInOutput": 350
+          },
+          "node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js": {
+            "bytesInOutput": 375
+          },
+          "node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js": {
+            "bytesInOutput": 562
           }
         },
-        "bytes": 21648
+        "bytes": 63942
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
         "imports": [
@@ -17743,10 +18228,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 290859
+            "bytesInOutput": 292306
           }
         },
-        "bytes": 291075
+        "bytes": 292522
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css": {
         "imports": [
@@ -17901,10 +18386,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 290859
+            "bytesInOutput": 292306
           }
         },
-        "bytes": 291075
+        "bytes": 292522
       },
       "testeranto/bundles/web/core/src/components/pure/ModalContent.test/index.css": {
         "imports": [
@@ -18059,10 +18544,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 290859
+            "bytesInOutput": 292306
           }
         },
-        "bytes": 291075
+        "bytes": 292522
       },
       "testeranto/bundles/web/core/src/components/pure/AppFrame.test/index.css": {
         "imports": [
@@ -18217,10 +18702,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 290859
+            "bytesInOutput": 292306
           }
         },
-        "bytes": 291075
+        "bytes": 292522
       }
     }
   }

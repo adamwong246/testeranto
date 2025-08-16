@@ -8,6 +8,7 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const utils_1 = require("../utils");
 const logFiles_1 = require("./logFiles");
+const logFiles_2 = require("./logFiles");
 const makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
     summary[entryPoint].prompt = "?";
     const promptPath = (0, utils_1.promptPather)(entryPoint, runtime, name);
@@ -18,10 +19,10 @@ const makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
         fs_1.default.mkdirSync(testDir, { recursive: true });
     }
     // Test result files
-    const testPaths = path_1.default.join(testDir, "tests.json");
-    const lintPath = path_1.default.join(testDir, "lint_errors.txt");
-    const typePath = path_1.default.join(testDir, "type_errors.txt");
-    const messagePath = path_1.default.join(testDir, "message.txt");
+    const testPaths = path_1.default.join(testDir, logFiles_2.LOG_FILES.TESTS);
+    const lintPath = path_1.default.join(testDir, logFiles_2.LOG_FILES.LINT_ERRORS);
+    const typePath = path_1.default.join(testDir, logFiles_2.LOG_FILES.TYPE_ERRORS);
+    const messagePath = path_1.default.join(testDir, logFiles_2.LOG_FILES.MESSAGE);
     try {
         await Promise.all([
             fs_1.default.promises.writeFile(promptPath, `

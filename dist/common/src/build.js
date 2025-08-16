@@ -137,7 +137,7 @@ Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __i
             status = "built";
         }
         if (nodeDone && webDone && importDone && mode === "once") {
-            console.log(ansi_colors_1.default.inverse(`${testName} has been built. Goodbye.`));
+            console.log(ansi_colors_1.default.inverse(`${testName} was built and the builder exited successfully.`));
             process.exit();
         }
     };

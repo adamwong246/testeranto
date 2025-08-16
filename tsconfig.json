@@ -10,6 +10,7 @@
   },
   "declaration": true,
   "compilerOptions": {
+    "resolveJsonModule": true,
     "paths": {
       "react": [
         "./node_modules/@types/react"

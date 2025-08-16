@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { promptPather } from "../utils";
 import { getLogFilesForRuntime } from "./logFiles";
+import { LOG_FILES } from "./logFiles";
 const makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
     summary[entryPoint].prompt = "?";
     const promptPath = promptPather(entryPoint, runtime, name);
@@ -12,10 +13,10 @@ const makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
         fs.mkdirSync(testDir, { recursive: true });
     }
     // Test result files
-    const testPaths = path.join(testDir, "tests.json");
-    const lintPath = path.join(testDir, "lint_errors.txt");
-    const typePath = path.join(testDir, "type_errors.txt");
-    const messagePath = path.join(testDir, "message.txt");
+    const testPaths = path.join(testDir, LOG_FILES.TESTS);
+    const lintPath = path.join(testDir, LOG_FILES.LINT_ERRORS);
+    const typePath = path.join(testDir, LOG_FILES.TYPE_ERRORS);
+    const messagePath = path.join(testDir, LOG_FILES.MESSAGE);
     try {
         await Promise.all([
             fs.promises.writeFile(promptPath, `

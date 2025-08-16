@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState27(initialState) {
+          function useState28(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1097,7 +1097,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect31(create2, deps) {
+          function useEffect32(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1113,7 +1113,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo15(create2, deps) {
+          function useMemo16(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create2, deps);
           }
@@ -1879,15 +1879,15 @@
           exports.useContext = useContext16;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect31;
+          exports.useEffect = useEffect32;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect6;
-          exports.useMemo = useMemo15;
+          exports.useMemo = useMemo16;
           exports.useReducer = useReducer2;
           exports.useRef = useRef24;
-          exports.useState = useState27;
+          exports.useState = useState28;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -25399,7 +25399,7 @@
   });
 
   // src/App.tsx
-  var import_react87 = __toESM(require_react(), 1);
+  var import_react88 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs
@@ -27765,74 +27765,90 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   "use client";
 
   // src/components/stateful/TestPage.tsx
-  var import_react59 = __toESM(require_react(), 1);
+  var import_react71 = __toESM(require_react(), 1);
 
   // src/utils/logFiles.ts
-  var NODE_LOG_FILES = ["stdout.log", "stderr.log", "exit.log"];
-  var WEB_LOG_FILES = [
-    "info.log",
-    "debug.log",
-    "error.log",
-    "warn.log",
-    "exit.log"
-  ];
-  var PURE_LOG_FILES = ["exit.log"];
-  var getLogFilesForRuntime = (runtime) => {
-    switch (runtime) {
-      case "node":
-        return NODE_LOG_FILES;
-      case "web":
-        return WEB_LOG_FILES;
-      case "pure":
-        return PURE_LOG_FILES;
-      default:
-        throw new Error(`Unknown runtime: ${runtime}`);
-    }
+  var STANDARD_LOGS = {
+    TESTS: "tests.json",
+    TYPE_ERRORS: "type_errors.txt",
+    LINT_ERRORS: "lint_errors.txt",
+    EXIT: "exit.log",
+    MESSAGE: "message.txt",
+    PROMPT: "prompt.txt"
   };
+  var RUNTIME_SPECIFIC_LOGS = {
+    node: {
+      STDOUT: "stdout.log",
+      STDERR: "stderr.log"
+    },
+    web: {
+      INFO: "info.log",
+      ERROR: "error.log",
+      WARN: "warn.log",
+      DEBUG: "debug.log"
+    },
+    pure: {}
+    // No runtime-specific logs for pure
+  };
+  var ALL_LOGS = {
+    ...STANDARD_LOGS,
+    ...Object.values(RUNTIME_SPECIFIC_LOGS).reduce((acc, logs) => ({ ...acc, ...logs }), {})
+  };
+  var getRuntimeLogs = (runtime) => {
+    return {
+      standard: Object.values(STANDARD_LOGS),
+      runtimeSpecific: Object.values(RUNTIME_SPECIFIC_LOGS[runtime])
+    };
+  };
+  function getLogFilesForRuntime(runtime) {
+    const { standard, runtimeSpecific } = getRuntimeLogs(runtime);
+    return [...standard, ...runtimeSpecific];
+  }
 
   // src/utils/api.ts
   var fetchTestData = async (projectName, filepath, runTime) => {
     const basePath = `reports/${projectName}/${filepath.split(".").slice(0, -1).join(".")}/${runTime}`;
     try {
       const logFiles = getLogFilesForRuntime(runTime);
-      console.log("mark2", logFiles);
-      const [testRes, ...logRes] = await Promise.all([
-        fetch(`${basePath}/tests.json`),
-        ...logFiles.map((f) => fetch(`${basePath}/${f}`)),
-        fetch(`${basePath}/type_errors.txt`),
-        fetch(`${basePath}/lint_errors.txt`)
-      ]);
-      const logs = {
-        "tests.json": await (await fetch(`${basePath}/tests.json`)).json(),
-        "type_errors.txt": await (await fetch(`${basePath}/type_errors.txt`)).text(),
-        "lint_errors.txt": await (await fetch(`${basePath}/lint_errors.txt`)).text(),
-        "exit.log": await (await fetch(`${basePath}/exit.log`)).text()
-      };
-      if (runTime === "node") {
-        logs["stdout.log"] = await (await fetch(`${basePath}/stdout.log`)).text();
-        logs["stderr.log"] = await (await fetch(`${basePath}/stderr.log`)).text();
+      const logs = {};
+      const logRequests = logFiles.map(async (file) => {
+        try {
+          const response = await fetch(`${basePath}/${file}`);
+          if (!response.ok)
+            return null;
+          const content = file.endsWith(".json") ? await response.json() : await response.text();
+          return { file, content };
+        } catch (err) {
+          console.error(`Failed to fetch ${file}:`, err);
+          return null;
+        }
+      });
+      const logResults = await Promise.all(logRequests);
+      logResults.forEach((result) => {
+        if (result) {
+          logs[result.file] = result.content;
+        }
+      });
+      for (const file of Object.values(STANDARD_LOGS)) {
+        if (!logs[file]) {
+          try {
+            const response = await fetch(`${basePath}/${file}`);
+            if (response.ok) {
+              logs[file] = file.endsWith(".json") ? await response.json() : await response.text();
+            }
+          } catch (err) {
+            console.error(`Failed to fetch ${file}:`, err);
+          }
+        }
       }
-      if (runTime === "web") {
-        logs["info.log"] = await (await fetch(`${basePath}/info.log`)).text();
-        logs["error.log"] = await (await fetch(`${basePath}/error.log`)).text();
-        logs["debug.log"] = await (await fetch(`${basePath}/debug.log`)).text();
-        logs["warn.log"] = await (await fetch(`${basePath}/warn.log`)).text();
-      }
-      if (!testRes.ok) {
+      if (Object.keys(logs).length === 0) {
         return {
-          // testData: null,
-          logs,
-          // typeErrors: await logRes[logFiles.length].text(),
-          // lintErrors: await logRes[logFiles.length + 1].text(),
-          error: "Tests did not complete successfully. Please check the build and runtime logs for errors."
+          logs: {},
+          error: "No test logs found. The test may not have run or the report files are missing."
         };
       }
-      console.log("mark1", logs);
       return {
-        // testData: await testRes.json(),
         logs,
-        // typeErrors: await logRes[logFiles.length].text(),
-        // lintErrors: await logRes[logFiles.length + 1].text(),
         error: null
       };
     } catch (err) {
@@ -27847,7 +27863,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/pure/TestPageView.tsx
-  var import_react58 = __toESM(require_react(), 1);
+  var import_react69 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -32355,15 +32371,709 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   Table.displayName = "Table";
   var Table_default = Table;
 
-  // src/components/pure/NavBar.tsx
+  // node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
+  function _objectSpread2(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = arguments[i2] != null ? arguments[i2] : {};
+      if (i2 % 2) {
+        ownKeys(Object(source), true).forEach(function(key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function(key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+    return target;
+  }
+  function _objectWithoutPropertiesLoose10(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  function _objectWithoutProperties(source, excluded) {
+    if (source == null)
+      return {};
+    var target = _objectWithoutPropertiesLoose10(source, excluded);
+    var key, i2;
+    if (Object.getOwnPropertySymbols) {
+      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+      for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
+        key = sourceSymbolKeys[i2];
+        if (excluded.indexOf(key) >= 0)
+          continue;
+        if (!Object.prototype.propertyIsEnumerable.call(source, key))
+          continue;
+        target[key] = source[key];
+      }
+    }
+    return target;
+  }
+  function _slicedToArray(arr, i2) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i2) || _unsupportedIterableToArray(arr, i2) || _nonIterableRest();
+  }
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr))
+      return arr;
+  }
+  function _iterableToArrayLimit(arr, i2) {
+    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr)))
+      return;
+    var _arr = [];
+    var _n2 = true;
+    var _d = false;
+    var _e3 = void 0;
+    try {
+      for (var _i2 = arr[Symbol.iterator](), _s2; !(_n2 = (_s2 = _i2.next()).done); _n2 = true) {
+        _arr.push(_s2.value);
+        if (i2 && _arr.length === i2)
+          break;
+      }
+    } catch (err) {
+      _d = true;
+      _e3 = err;
+    } finally {
+      try {
+        if (!_n2 && _i2["return"] != null)
+          _i2["return"]();
+      } finally {
+        if (_d)
+          throw _e3;
+      }
+    }
+    return _arr;
+  }
+  function _unsupportedIterableToArray(o2, minLen) {
+    if (!o2)
+      return;
+    if (typeof o2 === "string")
+      return _arrayLikeToArray(o2, minLen);
+    var n2 = Object.prototype.toString.call(o2).slice(8, -1);
+    if (n2 === "Object" && o2.constructor)
+      n2 = o2.constructor.name;
+    if (n2 === "Map" || n2 === "Set")
+      return Array.from(o2);
+    if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
+      return _arrayLikeToArray(o2, minLen);
+  }
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length)
+      len = arr.length;
+    for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++)
+      arr2[i2] = arr[i2];
+    return arr2;
+  }
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  // node_modules/state-local/lib/es/state-local.js
+  function _defineProperty2(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  function ownKeys2(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly)
+        symbols = symbols.filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      keys.push.apply(keys, symbols);
+    }
+    return keys;
+  }
+  function _objectSpread22(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = arguments[i2] != null ? arguments[i2] : {};
+      if (i2 % 2) {
+        ownKeys2(Object(source), true).forEach(function(key) {
+          _defineProperty2(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys2(Object(source)).forEach(function(key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+    return target;
+  }
+  function compose() {
+    for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+      fns[_key] = arguments[_key];
+    }
+    return function(x2) {
+      return fns.reduceRight(function(y2, f) {
+        return f(y2);
+      }, x2);
+    };
+  }
+  function curry(fn2) {
+    return function curried() {
+      var _this = this;
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+      return args.length >= fn2.length ? fn2.apply(this, args) : function() {
+        for (var _len3 = arguments.length, nextArgs = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+          nextArgs[_key3] = arguments[_key3];
+        }
+        return curried.apply(_this, [].concat(args, nextArgs));
+      };
+    };
+  }
+  function isObject(value) {
+    return {}.toString.call(value).includes("Object");
+  }
+  function isEmpty(obj) {
+    return !Object.keys(obj).length;
+  }
+  function isFunction(value) {
+    return typeof value === "function";
+  }
+  function hasOwnProperty(object, property) {
+    return Object.prototype.hasOwnProperty.call(object, property);
+  }
+  function validateChanges(initial, changes) {
+    if (!isObject(changes))
+      errorHandler("changeType");
+    if (Object.keys(changes).some(function(field) {
+      return !hasOwnProperty(initial, field);
+    }))
+      errorHandler("changeField");
+    return changes;
+  }
+  function validateSelector(selector) {
+    if (!isFunction(selector))
+      errorHandler("selectorType");
+  }
+  function validateHandler(handler) {
+    if (!(isFunction(handler) || isObject(handler)))
+      errorHandler("handlerType");
+    if (isObject(handler) && Object.values(handler).some(function(_handler) {
+      return !isFunction(_handler);
+    }))
+      errorHandler("handlersType");
+  }
+  function validateInitial(initial) {
+    if (!initial)
+      errorHandler("initialIsRequired");
+    if (!isObject(initial))
+      errorHandler("initialType");
+    if (isEmpty(initial))
+      errorHandler("initialContent");
+  }
+  function throwError(errorMessages3, type) {
+    throw new Error(errorMessages3[type] || errorMessages3["default"]);
+  }
+  var errorMessages = {
+    initialIsRequired: "initial state is required",
+    initialType: "initial state should be an object",
+    initialContent: "initial state shouldn't be an empty object",
+    handlerType: "handler should be an object or a function",
+    handlersType: "all handlers should be a functions",
+    selectorType: "selector should be a function",
+    changeType: "provided value of changes should be an object",
+    changeField: 'it seams you want to change a field in the state which is not specified in the "initial" state',
+    "default": "an unknown error accured in `state-local` package"
+  };
+  var errorHandler = curry(throwError)(errorMessages);
+  var validators = {
+    changes: validateChanges,
+    selector: validateSelector,
+    handler: validateHandler,
+    initial: validateInitial
+  };
+  function create(initial) {
+    var handler = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+    validators.initial(initial);
+    validators.handler(handler);
+    var state = {
+      current: initial
+    };
+    var didUpdate = curry(didStateUpdate)(state, handler);
+    var update = curry(updateState)(state);
+    var validate = curry(validators.changes)(initial);
+    var getChanges = curry(extractChanges)(state);
+    function getState2() {
+      var selector = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : function(state2) {
+        return state2;
+      };
+      validators.selector(selector);
+      return selector(state.current);
+    }
+    function setState2(causedChanges) {
+      compose(didUpdate, update, validate, getChanges)(causedChanges);
+    }
+    return [getState2, setState2];
+  }
+  function extractChanges(state, causedChanges) {
+    return isFunction(causedChanges) ? causedChanges(state.current) : causedChanges;
+  }
+  function updateState(state, changes) {
+    state.current = _objectSpread22(_objectSpread22({}, state.current), changes);
+    return changes;
+  }
+  function didStateUpdate(state, handler, changes) {
+    isFunction(handler) ? handler(state.current) : Object.keys(changes).forEach(function(field) {
+      var _handler$field;
+      return (_handler$field = handler[field]) === null || _handler$field === void 0 ? void 0 : _handler$field.call(handler, state.current[field]);
+    });
+    return changes;
+  }
+  var index = {
+    create
+  };
+  var state_local_default = index;
+
+  // node_modules/@monaco-editor/loader/lib/es/config/index.js
+  var config = {
+    paths: {
+      vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs"
+    }
+  };
+  var config_default2 = config;
+
+  // node_modules/@monaco-editor/loader/lib/es/utils/curry.js
+  function curry2(fn2) {
+    return function curried() {
+      var _this = this;
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+      return args.length >= fn2.length ? fn2.apply(this, args) : function() {
+        for (var _len2 = arguments.length, nextArgs = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          nextArgs[_key2] = arguments[_key2];
+        }
+        return curried.apply(_this, [].concat(args, nextArgs));
+      };
+    };
+  }
+  var curry_default = curry2;
+
+  // node_modules/@monaco-editor/loader/lib/es/utils/isObject.js
+  function isObject2(value) {
+    return {}.toString.call(value).includes("Object");
+  }
+  var isObject_default = isObject2;
+
+  // node_modules/@monaco-editor/loader/lib/es/validators/index.js
+  function validateConfig(config3) {
+    if (!config3)
+      errorHandler2("configIsRequired");
+    if (!isObject_default(config3))
+      errorHandler2("configType");
+    if (config3.urls) {
+      informAboutDeprecation();
+      return {
+        paths: {
+          vs: config3.urls.monacoBase
+        }
+      };
+    }
+    return config3;
+  }
+  function informAboutDeprecation() {
+    console.warn(errorMessages2.deprecation);
+  }
+  function throwError2(errorMessages3, type) {
+    throw new Error(errorMessages3[type] || errorMessages3["default"]);
+  }
+  var errorMessages2 = {
+    configIsRequired: "the configuration object is required",
+    configType: "the configuration object should be an object",
+    "default": "an unknown error accured in `@monaco-editor/loader` package",
+    deprecation: "Deprecation warning!\n    You are using deprecated way of configuration.\n\n    Instead of using\n      monaco.config({ urls: { monacoBase: '...' } })\n    use\n      monaco.config({ paths: { vs: '...' } })\n\n    For more please check the link https://github.com/suren-atoyan/monaco-loader#config\n  "
+  };
+  var errorHandler2 = curry_default(throwError2)(errorMessages2);
+  var validators2 = {
+    config: validateConfig
+  };
+  var validators_default = validators2;
+
+  // node_modules/@monaco-editor/loader/lib/es/utils/compose.js
+  var compose2 = function compose3() {
+    for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+      fns[_key] = arguments[_key];
+    }
+    return function(x2) {
+      return fns.reduceRight(function(y2, f) {
+        return f(y2);
+      }, x2);
+    };
+  };
+  var compose_default = compose2;
+
+  // node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js
+  function merge(target, source) {
+    Object.keys(source).forEach(function(key) {
+      if (source[key] instanceof Object) {
+        if (target[key]) {
+          Object.assign(source[key], merge(target[key], source[key]));
+        }
+      }
+    });
+    return _objectSpread2(_objectSpread2({}, target), source);
+  }
+  var deepMerge_default = merge;
+
+  // node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js
+  var CANCELATION_MESSAGE = {
+    type: "cancelation",
+    msg: "operation is manually canceled"
+  };
+  function makeCancelable(promise) {
+    var hasCanceled_ = false;
+    var wrappedPromise = new Promise(function(resolve, reject) {
+      promise.then(function(val) {
+        return hasCanceled_ ? reject(CANCELATION_MESSAGE) : resolve(val);
+      });
+      promise["catch"](reject);
+    });
+    return wrappedPromise.cancel = function() {
+      return hasCanceled_ = true;
+    }, wrappedPromise;
+  }
+  var makeCancelable_default = makeCancelable;
+
+  // node_modules/@monaco-editor/loader/lib/es/loader/index.js
+  var _state$create = state_local_default.create({
+    config: config_default2,
+    isInitialized: false,
+    resolve: null,
+    reject: null,
+    monaco: null
+  });
+  var _state$create2 = _slicedToArray(_state$create, 2);
+  var getState = _state$create2[0];
+  var setState = _state$create2[1];
+  function config2(globalConfig) {
+    var _validators$config = validators_default.config(globalConfig), monaco = _validators$config.monaco, config3 = _objectWithoutProperties(_validators$config, ["monaco"]);
+    setState(function(state) {
+      return {
+        config: deepMerge_default(state.config, config3),
+        monaco
+      };
+    });
+  }
+  function init() {
+    var state = getState(function(_ref) {
+      var monaco = _ref.monaco, isInitialized = _ref.isInitialized, resolve = _ref.resolve;
+      return {
+        monaco,
+        isInitialized,
+        resolve
+      };
+    });
+    if (!state.isInitialized) {
+      setState({
+        isInitialized: true
+      });
+      if (state.monaco) {
+        state.resolve(state.monaco);
+        return makeCancelable_default(wrapperPromise);
+      }
+      if (window.monaco && window.monaco.editor) {
+        storeMonacoInstance(window.monaco);
+        state.resolve(window.monaco);
+        return makeCancelable_default(wrapperPromise);
+      }
+      compose_default(injectScripts, getMonacoLoaderScript)(configureLoader);
+    }
+    return makeCancelable_default(wrapperPromise);
+  }
+  function injectScripts(script) {
+    return document.body.appendChild(script);
+  }
+  function createScript(src) {
+    var script = document.createElement("script");
+    return src && (script.src = src), script;
+  }
+  function getMonacoLoaderScript(configureLoader2) {
+    var state = getState(function(_ref2) {
+      var config3 = _ref2.config, reject = _ref2.reject;
+      return {
+        config: config3,
+        reject
+      };
+    });
+    var loaderScript = createScript("".concat(state.config.paths.vs, "/loader.js"));
+    loaderScript.onload = function() {
+      return configureLoader2();
+    };
+    loaderScript.onerror = state.reject;
+    return loaderScript;
+  }
+  function configureLoader() {
+    var state = getState(function(_ref3) {
+      var config3 = _ref3.config, resolve = _ref3.resolve, reject = _ref3.reject;
+      return {
+        config: config3,
+        resolve,
+        reject
+      };
+    });
+    var require2 = window.require;
+    require2.config(state.config);
+    require2(["vs/editor/editor.main"], function(monaco) {
+      storeMonacoInstance(monaco);
+      state.resolve(monaco);
+    }, function(error) {
+      state.reject(error);
+    });
+  }
+  function storeMonacoInstance(monaco) {
+    if (!getState().monaco) {
+      setState({
+        monaco
+      });
+    }
+  }
+  function __getMonacoInstance() {
+    return getState(function(_ref4) {
+      var monaco = _ref4.monaco;
+      return monaco;
+    });
+  }
+  var wrapperPromise = new Promise(function(resolve, reject) {
+    return setState({
+      resolve,
+      reject
+    });
+  });
+  var loader = {
+    config: config2,
+    init,
+    __getMonacoInstance
+  };
+  var loader_default = loader;
+
+  // node_modules/@monaco-editor/react/dist/index.mjs
   var import_react56 = __toESM(require_react(), 1);
+  var import_react57 = __toESM(require_react(), 1);
+  var import_react58 = __toESM(require_react(), 1);
+  var import_react59 = __toESM(require_react(), 1);
+  var import_react60 = __toESM(require_react(), 1);
+  var import_react61 = __toESM(require_react(), 1);
+  var import_react62 = __toESM(require_react(), 1);
+  var import_react63 = __toESM(require_react(), 1);
+  var import_react64 = __toESM(require_react(), 1);
+  var import_react65 = __toESM(require_react(), 1);
+  var import_react66 = __toESM(require_react(), 1);
+  var le = { wrapper: { display: "flex", position: "relative", textAlign: "initial" }, fullWidth: { width: "100%" }, hide: { display: "none" } };
+  var v = le;
+  var ae = { container: { display: "flex", height: "100%", width: "100%", justifyContent: "center", alignItems: "center" } };
+  var Y = ae;
+  function Me({ children: e3 }) {
+    return import_react60.default.createElement("div", { style: Y.container }, e3);
+  }
+  var Z = Me;
+  var $ = Z;
+  function Ee({ width: e3, height: r2, isEditorReady: n2, loading: t2, _ref: a2, className: m2, wrapperProps: E2 }) {
+    return import_react59.default.createElement("section", { style: { ...v.wrapper, width: e3, height: r2 }, ...E2 }, !n2 && import_react59.default.createElement($, null, t2), import_react59.default.createElement("div", { ref: a2, style: { ...v.fullWidth, ...!n2 && v.hide }, className: m2 }));
+  }
+  var ee = Ee;
+  var H = (0, import_react58.memo)(ee);
+  function Ce(e3) {
+    (0, import_react61.useEffect)(e3, []);
+  }
+  var k = Ce;
+  function he(e3, r2, n2 = true) {
+    let t2 = (0, import_react62.useRef)(true);
+    (0, import_react62.useEffect)(t2.current || !n2 ? () => {
+      t2.current = false;
+    } : e3, r2);
+  }
+  var l = he;
+  function D() {
+  }
+  function h(e3, r2, n2, t2) {
+    return De(e3, t2) || be(e3, r2, n2, t2);
+  }
+  function De(e3, r2) {
+    return e3.editor.getModel(te(e3, r2));
+  }
+  function be(e3, r2, n2, t2) {
+    return e3.editor.createModel(r2, n2, t2 ? te(e3, t2) : void 0);
+  }
+  function te(e3, r2) {
+    return e3.Uri.parse(r2);
+  }
+  function Oe({ original: e3, modified: r2, language: n2, originalLanguage: t2, modifiedLanguage: a2, originalModelPath: m2, modifiedModelPath: E2, keepCurrentOriginalModel: g2 = false, keepCurrentModifiedModel: N2 = false, theme: x2 = "light", loading: P2 = "Loading...", options: y2 = {}, height: V2 = "100%", width: z2 = "100%", className: F2, wrapperProps: j2 = {}, beforeMount: A2 = D, onMount: q2 = D }) {
+    let [M2, O2] = (0, import_react57.useState)(false), [T2, s2] = (0, import_react57.useState)(true), u2 = (0, import_react57.useRef)(null), c2 = (0, import_react57.useRef)(null), w2 = (0, import_react57.useRef)(null), d2 = (0, import_react57.useRef)(q2), o2 = (0, import_react57.useRef)(A2), b2 = (0, import_react57.useRef)(false);
+    k(() => {
+      let i2 = loader_default.init();
+      return i2.then((f) => (c2.current = f) && s2(false)).catch((f) => f?.type !== "cancelation" && console.error("Monaco initialization: error:", f)), () => u2.current ? I2() : i2.cancel();
+    }), l(() => {
+      if (u2.current && c2.current) {
+        let i2 = u2.current.getOriginalEditor(), f = h(c2.current, e3 || "", t2 || n2 || "text", m2 || "");
+        f !== i2.getModel() && i2.setModel(f);
+      }
+    }, [m2], M2), l(() => {
+      if (u2.current && c2.current) {
+        let i2 = u2.current.getModifiedEditor(), f = h(c2.current, r2 || "", a2 || n2 || "text", E2 || "");
+        f !== i2.getModel() && i2.setModel(f);
+      }
+    }, [E2], M2), l(() => {
+      let i2 = u2.current.getModifiedEditor();
+      i2.getOption(c2.current.editor.EditorOption.readOnly) ? i2.setValue(r2 || "") : r2 !== i2.getValue() && (i2.executeEdits("", [{ range: i2.getModel().getFullModelRange(), text: r2 || "", forceMoveMarkers: true }]), i2.pushUndoStop());
+    }, [r2], M2), l(() => {
+      u2.current?.getModel()?.original.setValue(e3 || "");
+    }, [e3], M2), l(() => {
+      let { original: i2, modified: f } = u2.current.getModel();
+      c2.current.editor.setModelLanguage(i2, t2 || n2 || "text"), c2.current.editor.setModelLanguage(f, a2 || n2 || "text");
+    }, [n2, t2, a2], M2), l(() => {
+      c2.current?.editor.setTheme(x2);
+    }, [x2], M2), l(() => {
+      u2.current?.updateOptions(y2);
+    }, [y2], M2);
+    let L2 = (0, import_react57.useCallback)(() => {
+      if (!c2.current)
+        return;
+      o2.current(c2.current);
+      let i2 = h(c2.current, e3 || "", t2 || n2 || "text", m2 || ""), f = h(c2.current, r2 || "", a2 || n2 || "text", E2 || "");
+      u2.current?.setModel({ original: i2, modified: f });
+    }, [n2, r2, a2, e3, t2, m2, E2]), U2 = (0, import_react57.useCallback)(() => {
+      !b2.current && w2.current && (u2.current = c2.current.editor.createDiffEditor(w2.current, { automaticLayout: true, ...y2 }), L2(), c2.current?.editor.setTheme(x2), O2(true), b2.current = true);
+    }, [y2, x2, L2]);
+    (0, import_react57.useEffect)(() => {
+      M2 && d2.current(u2.current, c2.current);
+    }, [M2]), (0, import_react57.useEffect)(() => {
+      !T2 && !M2 && U2();
+    }, [T2, M2, U2]);
+    function I2() {
+      let i2 = u2.current?.getModel();
+      g2 || i2?.original?.dispose(), N2 || i2?.modified?.dispose(), u2.current?.dispose();
+    }
+    return import_react57.default.createElement(H, { width: z2, height: V2, isEditorReady: M2, loading: P2, _ref: w2, className: F2, wrapperProps: j2 });
+  }
+  var ie = Oe;
+  var we = (0, import_react56.memo)(ie);
+  function He(e3) {
+    let r2 = (0, import_react66.useRef)();
+    return (0, import_react66.useEffect)(() => {
+      r2.current = e3;
+    }, [e3]), r2.current;
+  }
+  var se = He;
+  var _ = /* @__PURE__ */ new Map();
+  function Ve({ defaultValue: e3, defaultLanguage: r2, defaultPath: n2, value: t2, language: a2, path: m2, theme: E2 = "light", line: g2, loading: N2 = "Loading...", options: x2 = {}, overrideServices: P2 = {}, saveViewState: y2 = true, keepCurrentModel: V2 = false, width: z2 = "100%", height: F2 = "100%", className: j2, wrapperProps: A2 = {}, beforeMount: q2 = D, onMount: M2 = D, onChange: O2, onValidate: T2 = D }) {
+    let [s2, u2] = (0, import_react65.useState)(false), [c2, w2] = (0, import_react65.useState)(true), d2 = (0, import_react65.useRef)(null), o2 = (0, import_react65.useRef)(null), b2 = (0, import_react65.useRef)(null), L2 = (0, import_react65.useRef)(M2), U2 = (0, import_react65.useRef)(q2), I2 = (0, import_react65.useRef)(), i2 = (0, import_react65.useRef)(t2), f = se(m2), Q2 = (0, import_react65.useRef)(false), B2 = (0, import_react65.useRef)(false);
+    k(() => {
+      let p2 = loader_default.init();
+      return p2.then((R2) => (d2.current = R2) && w2(false)).catch((R2) => R2?.type !== "cancelation" && console.error("Monaco initialization: error:", R2)), () => o2.current ? pe2() : p2.cancel();
+    }), l(() => {
+      let p2 = h(d2.current, e3 || t2 || "", r2 || a2 || "", m2 || n2 || "");
+      p2 !== o2.current?.getModel() && (y2 && _.set(f, o2.current?.saveViewState()), o2.current?.setModel(p2), y2 && o2.current?.restoreViewState(_.get(m2)));
+    }, [m2], s2), l(() => {
+      o2.current?.updateOptions(x2);
+    }, [x2], s2), l(() => {
+      !o2.current || t2 === void 0 || (o2.current.getOption(d2.current.editor.EditorOption.readOnly) ? o2.current.setValue(t2) : t2 !== o2.current.getValue() && (B2.current = true, o2.current.executeEdits("", [{ range: o2.current.getModel().getFullModelRange(), text: t2, forceMoveMarkers: true }]), o2.current.pushUndoStop(), B2.current = false));
+    }, [t2], s2), l(() => {
+      let p2 = o2.current?.getModel();
+      p2 && a2 && d2.current?.editor.setModelLanguage(p2, a2);
+    }, [a2], s2), l(() => {
+      g2 !== void 0 && o2.current?.revealLine(g2);
+    }, [g2], s2), l(() => {
+      d2.current?.editor.setTheme(E2);
+    }, [E2], s2);
+    let X2 = (0, import_react65.useCallback)(() => {
+      if (!(!b2.current || !d2.current) && !Q2.current) {
+        U2.current(d2.current);
+        let p2 = m2 || n2, R2 = h(d2.current, t2 || e3 || "", r2 || a2 || "", p2 || "");
+        o2.current = d2.current?.editor.create(b2.current, { model: R2, automaticLayout: true, ...x2 }, P2), y2 && o2.current.restoreViewState(_.get(p2)), d2.current.editor.setTheme(E2), g2 !== void 0 && o2.current.revealLine(g2), u2(true), Q2.current = true;
+      }
+    }, [e3, r2, n2, t2, a2, m2, x2, P2, y2, E2, g2]);
+    (0, import_react65.useEffect)(() => {
+      s2 && L2.current(o2.current, d2.current);
+    }, [s2]), (0, import_react65.useEffect)(() => {
+      !c2 && !s2 && X2();
+    }, [c2, s2, X2]), i2.current = t2, (0, import_react65.useEffect)(() => {
+      s2 && O2 && (I2.current?.dispose(), I2.current = o2.current?.onDidChangeModelContent((p2) => {
+        B2.current || O2(o2.current.getValue(), p2);
+      }));
+    }, [s2, O2]), (0, import_react65.useEffect)(() => {
+      if (s2) {
+        let p2 = d2.current.editor.onDidChangeMarkers((R2) => {
+          let G2 = o2.current.getModel()?.uri;
+          if (G2 && R2.find((J2) => J2.path === G2.path)) {
+            let J2 = d2.current.editor.getModelMarkers({ resource: G2 });
+            T2?.(J2);
+          }
+        });
+        return () => {
+          p2?.dispose();
+        };
+      }
+      return () => {
+      };
+    }, [s2, T2]);
+    function pe2() {
+      I2.current?.dispose(), V2 ? y2 && _.set(m2, o2.current.saveViewState()) : o2.current.getModel()?.dispose(), o2.current.dispose();
+    }
+    return import_react65.default.createElement(H, { width: z2, height: F2, isEditorReady: s2, loading: N2, _ref: b2, className: j2, wrapperProps: A2 });
+  }
+  var fe = Ve;
+  var de = (0, import_react64.memo)(fe);
+
+  // src/components/pure/NavBar.tsx
+  var import_react67 = __toESM(require_react(), 1);
   var NavBar = ({
     title,
     backLink,
     navItems = [],
     rightContent
   }) => {
-    return /* @__PURE__ */ import_react56.default.createElement(Navbar_default, { bg: "light", expand: "lg", className: "mb-4", sticky: "top" }, /* @__PURE__ */ import_react56.default.createElement(Container_default, { fluid: true }, backLink && /* @__PURE__ */ import_react56.default.createElement(
+    return /* @__PURE__ */ import_react67.default.createElement(Navbar_default, { bg: "light", expand: "lg", className: "mb-4", sticky: "top" }, /* @__PURE__ */ import_react67.default.createElement(Container_default, { fluid: true }, backLink && /* @__PURE__ */ import_react67.default.createElement(
       Nav_default2.Link,
       {
         as: Link,
@@ -32382,7 +33092,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         title: "Go up one level"
       },
       "\u2191"
-    ), /* @__PURE__ */ import_react56.default.createElement(Navbar_default.Brand, { className: backLink ? "ms-2" : "" }, title), /* @__PURE__ */ import_react56.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react56.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, navItems.length > 0 && /* @__PURE__ */ import_react56.default.createElement(Nav_default2, { className: "me-auto" }, navItems.map((item, i2) => {
+    ), /* @__PURE__ */ import_react67.default.createElement(Navbar_default.Brand, { className: backLink ? "ms-2" : "" }, title), /* @__PURE__ */ import_react67.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react67.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, navItems.length > 0 && /* @__PURE__ */ import_react67.default.createElement(Nav_default2, { className: "me-auto" }, navItems.map((item, i2) => {
       const className = [
         item.className,
         item.active ? "text-primary fw-bold border-bottom border-2 border-primary" : "",
@@ -32390,7 +33100,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         typeof item.label === "string" && item.label.includes("\u2705") ? "text-success fw-bold" : "",
         !item.active && typeof item.label !== "string" ? "text-secondary" : ""
       ].filter(Boolean).join(" ");
-      return /* @__PURE__ */ import_react56.default.createElement(
+      return /* @__PURE__ */ import_react67.default.createElement(
         Nav_default2.Link,
         {
           key: i2,
@@ -32406,13 +33116,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         },
         item.label,
-        item.badge && /* @__PURE__ */ import_react56.default.createElement(Badge_default, { bg: item.badge.variant, className: "ms-2" }, item.badge.text)
+        item.badge && /* @__PURE__ */ import_react67.default.createElement(Badge_default, { bg: item.badge.variant, className: "ms-2" }, item.badge.text)
       );
-    })), rightContent && /* @__PURE__ */ import_react56.default.createElement(Nav_default2, null, rightContent))));
+    })), rightContent && /* @__PURE__ */ import_react67.default.createElement(Nav_default2, null, rightContent))));
   };
 
   // src/components/TestStatusBadge.tsx
-  var import_react57 = __toESM(require_react(), 1);
+  var import_react68 = __toESM(require_react(), 1);
   var TestStatusBadge = (props) => {
     const hasTests = props.testsExist !== false;
     const testCompleted = props.runTimeErrors !== -1;
@@ -32429,12 +33139,53 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     if (props.variant === "compact") {
       console.groupEnd();
-      return /* @__PURE__ */ import_react57.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
+      return /* @__PURE__ */ import_react68.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
     }
-    return /* @__PURE__ */ import_react57.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react57.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
+    return /* @__PURE__ */ import_react68.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react68.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
   };
 
   // src/components/pure/TestPageView.tsx
+  var FileTree = ({ data: data2, onSelect, level = 0, selectedSourcePath }) => {
+    const [expanded, setExpanded] = (0, import_react69.useState)({});
+    const toggleExpand = (path) => {
+      setExpanded((prev) => ({ ...prev, [path]: !prev[path] }));
+    };
+    return /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled", style: { paddingLeft: `${level * 16}px` } }, Object.entries(data2).map(([name, node]) => {
+      const path = Object.keys(expanded).find((k3) => k3.endsWith(name)) || name;
+      const isExpanded = expanded[path];
+      if (node.__isFile) {
+        return /* @__PURE__ */ import_react69.default.createElement("li", { key: name, className: "py-1" }, /* @__PURE__ */ import_react69.default.createElement(
+          "button",
+          {
+            className: `btn btn-link text-start p-0 text-decoration-none ${selectedSourcePath === path ? "text-primary fw-bold" : ""}`,
+            onClick: () => onSelect(path, node.content)
+          },
+          /* @__PURE__ */ import_react69.default.createElement(
+            "i",
+            {
+              className: `bi bi-file-earmark-text me-2 ${selectedSourcePath === path ? "text-primary" : ""}`
+            }
+          ),
+          name
+        ));
+      } else {
+        return /* @__PURE__ */ import_react69.default.createElement("li", { key: name, className: "py-1" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react69.default.createElement(
+          "button",
+          {
+            className: "btn btn-link text-start p-0 text-decoration-none me-1",
+            onClick: () => toggleExpand(path)
+          },
+          /* @__PURE__ */ import_react69.default.createElement(
+            "i",
+            {
+              className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-2`
+            }
+          ),
+          name
+        )), isExpanded && /* @__PURE__ */ import_react69.default.createElement(FileTree, { data: node, onSelect, level: level + 1 }));
+      }
+    }));
+  };
   var TestPageView = ({
     projectName,
     testName,
@@ -32444,9 +33195,52 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     errorCounts,
     logs
   }) => {
-    const [activeTab, setActiveTab] = import_react58.default.useState("tests.json");
+    const [showAiderModal, setShowAiderModal] = (0, import_react69.useState)(false);
+    const [messageOption, setMessageOption] = (0, import_react69.useState)("default");
+    const [customMessage, setCustomMessage] = (0, import_react69.useState)(
+      typeof logs["message.txt"] === "string" ? logs["message.txt"] : "make a script that prints hello"
+    );
+    (0, import_react69.useEffect)(() => {
+      if (typeof logs["message.txt"] === "string" && logs["message.txt"].trim()) {
+        setCustomMessage(logs["message.txt"]);
+      }
+    }, [logs]);
+    const [activeTab, setActiveTab] = import_react69.default.useState("tests.json");
+    const [selectedFile, setSelectedFile] = (0, import_react69.useState)(null);
+    const [selectedSourcePath, setSelectedSourcePath] = (0, import_react69.useState)(
+      null
+    );
+    const [editorTheme, setEditorTheme] = (0, import_react69.useState)(
+      "vs-dark"
+    );
+    const getLanguage = (path) => {
+      const ext = path.split(".").pop()?.toLowerCase();
+      switch (ext) {
+        case "ts":
+          return "typescript";
+        case "tsx":
+          return "typescript";
+        case "js":
+          return "javascript";
+        case "json":
+          return "json";
+        case "md":
+          return "markdown";
+        default:
+          return "plaintext";
+      }
+    };
     const renderTestResults = (testData) => {
-      return /* @__PURE__ */ import_react58.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i2) => /* @__PURE__ */ import_react58.default.createElement("div", { key: i2, className: "mb-4 card" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi2) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer", className: "text-white" }, new URL(feature).hostname) : /* @__PURE__ */ import_react58.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react58.default.createElement(
+      return /* @__PURE__ */ import_react69.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i2) => /* @__PURE__ */ import_react69.default.createElement("div", { key: i2, className: "mb-4 card" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react69.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react69.default.createElement(
+        "a",
+        {
+          href: feature,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "text-white"
+        },
+        new URL(feature).hostname
+      ) : /* @__PURE__ */ import_react69.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react69.default.createElement(
         "button",
         {
           className: "btn btn-sm btn-light dropdown-toggle",
@@ -32456,7 +33250,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         "Artifacts (",
         given.artifacts.length,
         ")"
-      ), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react58.default.createElement(
+      ), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react69.default.createElement(
         "a",
         {
           className: "dropdown-item",
@@ -32465,27 +33259,63 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           rel: "noopener noreferrer"
         },
         artifact.split("/").pop()
-      ))))))), /* @__PURE__ */ import_react58.default.createElement("div", { className: "card-body" }, given.whens.map((when, j2) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `w-${j2}`, className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi2) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname) : feature)))), when.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react58.default.createElement(
-        "a",
+      ))))))), /* @__PURE__ */ import_react69.default.createElement("div", { className: "card-body" }, given.whens.map((when, j2) => /* @__PURE__ */ import_react69.default.createElement(
+        "div",
         {
-          href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-          target: "_blank",
-          className: "text-white",
-          rel: "noopener noreferrer"
+          key: `w-${j2}`,
+          className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}`
         },
-        artifact.split("/").pop()
-      )))))))), given.thens.map((then, k3) => /* @__PURE__ */ import_react58.default.createElement("div", { key: `t-${k3}`, className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}` }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("div", null, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react58.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi2) => /* @__PURE__ */ import_react58.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react58.default.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname) : feature)))), then.error && /* @__PURE__ */ import_react58.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react58.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react58.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react58.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react58.default.createElement(
-        "a",
+        /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react69.default.createElement(
+          "a",
+          {
+            href: feature,
+            target: "_blank",
+            rel: "noopener noreferrer"
+          },
+          new URL(feature).hostname
+        ) : feature)))), when.error && /* @__PURE__ */ import_react69.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react69.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react69.default.createElement(
+          "a",
+          {
+            href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+            target: "_blank",
+            className: "text-white",
+            rel: "noopener noreferrer"
+          },
+          artifact.split("/").pop()
+        ))))))
+      )), given.thens.map((then, k3) => /* @__PURE__ */ import_react69.default.createElement(
+        "div",
         {
-          href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-          target: "_blank",
-          className: "text-white",
-          rel: "noopener noreferrer"
+          key: `t-${k3}`,
+          className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}`
         },
-        artifact.split("/").pop()
-      ))))))))))));
+        /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react69.default.createElement(
+          "a",
+          {
+            href: feature,
+            target: "_blank",
+            rel: "noopener noreferrer"
+          },
+          new URL(feature).hostname
+        ) : feature)))), then.error && /* @__PURE__ */ import_react69.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react69.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react69.default.createElement(
+          "a",
+          {
+            href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+            target: "_blank",
+            className: "text-white",
+            rel: "noopener noreferrer"
+          },
+          artifact.split("/").pop()
+        ))))))
+      ))))));
     };
-    return /* @__PURE__ */ import_react58.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react58.default.createElement(
+    console.log("Rendering TestPageView with logs:", {
+      logKeys: Object.keys(logs),
+      sourceFiles: logs.source_files ? Object.keys(logs.source_files) : null,
+      selectedFile,
+      activeTab
+    });
+    return /* @__PURE__ */ import_react69.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react69.default.createElement(
       NavBar,
       {
         title: decodedTestPath,
@@ -32500,71 +33330,355 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             className: "pe-none d-flex align-items-center gap-2"
           }
         ],
-        rightContent: /* @__PURE__ */ import_react58.default.createElement(
+        rightContent: /* @__PURE__ */ import_react69.default.createElement(import_react69.default.Fragment, null, /* @__PURE__ */ import_react69.default.createElement(
           Button_default2,
           {
             variant: "info",
-            onClick: async () => {
-              try {
-                const promptPath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/prompt.txt`;
-                const messagePath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/message.txt`;
-                const command = `aider --load ${promptPath} --message-file ${messagePath}`;
-                await navigator.clipboard.writeText(command);
-                alert("Copied aider command to clipboard!");
-              } catch (err) {
-                alert("Failed to copy command to clipboard");
-                console.error("Copy failed:", err);
-              }
-            },
+            onClick: () => setShowAiderModal(true),
             className: "ms-2"
           },
           "\u{1F916}"
-        )
-      }
-    ), /* @__PURE__ */ import_react58.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react58.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react58.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, Object.keys(logs).map((logName) => {
-      const displayName = logName.replace(".json", "").replace(/_/g, " ");
-      let statusIndicator = null;
-      if (logName === "type_errors.txt" && errorCounts.typeErrors > 0) {
-        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.typeErrors);
-      } else if (logName === "lint_errors.txt" && errorCounts.staticErrors > 0) {
-        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.staticErrors);
-      } else if (logName === "stderr.log" && errorCounts.runTimeErrors > 0) {
-        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.runTimeErrors);
-      } else if (logName === "exit.log" && logs["exit.log"]?.trim() !== "0") {
-        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("span", { className: "ms-1" }, "\u26A0\uFE0F");
-      } else if (logName === "tests.json" && logs["tests.json"]) {
-        statusIndicator = /* @__PURE__ */ import_react58.default.createElement("div", { className: "ms-1" }, /* @__PURE__ */ import_react58.default.createElement(
-          TestStatusBadge,
+        ), /* @__PURE__ */ import_react69.default.createElement(Modal_default2, { show: showAiderModal, onHide: () => setShowAiderModal(false), size: "lg", onShow: () => setMessageOption("default") }, /* @__PURE__ */ import_react69.default.createElement(Modal_default2.Header, { closeButton: true }, /* @__PURE__ */ import_react69.default.createElement(Modal_default2.Title, null, "Aider")), /* @__PURE__ */ import_react69.default.createElement(Modal_default2.Body, null, /* @__PURE__ */ import_react69.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react69.default.createElement(
+          "input",
           {
-            testName: decodedTestPath,
-            testsExist,
-            runTimeErrors: errorCounts.runTimeErrors,
-            typeErrors: errorCounts.typeErrors,
-            staticErrors: errorCounts.staticErrors,
-            variant: "compact",
-            className: "mt-1"
+            className: "form-check-input",
+            type: "radio",
+            name: "messageOption",
+            id: "defaultMessage",
+            value: "default",
+            checked: messageOption === "default",
+            onChange: () => setMessageOption("default")
+          }
+        ), /* @__PURE__ */ import_react69.default.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")), /* @__PURE__ */ import_react69.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react69.default.createElement(
+          "input",
+          {
+            className: "form-check-input",
+            type: "radio",
+            name: "messageOption",
+            id: "customMessage",
+            value: "custom",
+            checked: messageOption === "custom",
+            onChange: () => setMessageOption("custom")
+          }
+        ), /* @__PURE__ */ import_react69.default.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")), messageOption === "custom" && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement(
+          "textarea",
+          {
+            className: "form-control",
+            rows: 8,
+            placeholder: "Enter your custom message",
+            value: customMessage,
+            onChange: (e3) => setCustomMessage(e3.target.value),
+            style: { minHeight: "500px" }
+          }
+        )))), /* @__PURE__ */ import_react69.default.createElement(Modal_default2.Footer, null, /* @__PURE__ */ import_react69.default.createElement(
+          Button_default2,
+          {
+            variant: "primary",
+            onClick: async () => {
+              try {
+                const promptPath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/prompt.txt`;
+                let command = `aider --load ${promptPath}`;
+                if (messageOption === "default") {
+                  const messagePath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/message.txt`;
+                  command += ` --message-file ${messagePath}`;
+                } else {
+                  command += ` --message "${customMessage}"`;
+                }
+                await navigator.clipboard.writeText(command);
+                setShowAiderModal(false);
+              } catch (err) {
+                console.error("Copy failed:", err);
+              }
+            }
+          },
+          "Copy Aider Command"
+        ))))
+      }
+    ), /* @__PURE__ */ import_react69.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react69.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react69.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Standard Logs"), Object.entries(logs).filter(
+      ([logName]) => Object.values(STANDARD_LOGS).includes(logName)
+    ).filter(
+      ([, logContent]) => typeof logContent === "string" && logContent.trim() || typeof logContent === "object" && Object.keys(logContent).length > 0
+    ).map(([logName, logContent]) => /* @__PURE__ */ import_react69.default.createElement(
+      LogNavItem,
+      {
+        key: logName,
+        logName,
+        logContent,
+        activeTab,
+        setActiveTab,
+        setSelectedFile,
+        errorCounts,
+        decodedTestPath,
+        testsExist
+      }
+    )), Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react69.default.createElement(import_react69.default.Fragment, null, /* @__PURE__ */ import_react69.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Runtime Logs"), Object.entries(logs).filter(
+      ([logName]) => Object.values(
+        RUNTIME_SPECIFIC_LOGS[runtime]
+      ).includes(logName)
+    ).filter(([, logContent]) => {
+      return typeof logContent === "string" && logContent.trim() || typeof logContent === "object" && Object.keys(logContent).length > 0;
+    }).map(([logName, logContent]) => /* @__PURE__ */ import_react69.default.createElement(
+      LogNavItem,
+      {
+        key: logName,
+        logName,
+        logContent,
+        activeTab,
+        setActiveTab,
+        setSelectedFile,
+        errorCounts,
+        decodedTestPath,
+        testsExist
+      }
+    ))), logs.source_files && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Source Files"), /* @__PURE__ */ import_react69.default.createElement(
+      FileTree,
+      {
+        data: logs.source_files,
+        onSelect: (path, content) => {
+          setActiveTab("source_file");
+          setSelectedSourcePath(path);
+          setSelectedFile({
+            path,
+            content,
+            language: getLanguage(path)
+          });
+        },
+        level: 0,
+        selectedSourcePath
+      }
+    )), logs[STANDARD_LOGS.TESTS] && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Artifacts"), /* @__PURE__ */ import_react69.default.createElement(
+      ArtifactTree,
+      {
+        treeData: buildArtifactTree(
+          typeof logs[STANDARD_LOGS.TESTS] === "string" ? JSON.parse(logs[STANDARD_LOGS.TESTS]) : logs[STANDARD_LOGS.TESTS]
+        ),
+        projectName,
+        testName,
+        runtime,
+        onSelect: async (path) => {
+          setActiveTab("artifact_viewer");
+          try {
+            const response = await fetch(
+              `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${path}`
+            );
+            const content = await (path.match(/\.(png|jpg|jpeg|gif|svg)$/i) ? URL.createObjectURL(await response.blob()) : await response.text());
+            setSelectedFile({
+              path,
+              content,
+              language: getLanguage(path)
+            });
+          } catch (err) {
+            setSelectedFile({
+              path,
+              content: `Failed to load artifact: ${err}`,
+              language: "plaintext"
+            });
+          }
+        },
+        level: 0
+      }
+    )))), /* @__PURE__ */ import_react69.default.createElement(
+      Col_default,
+      {
+        sm: 6,
+        className: "border-end p-0",
+        style: { height: "calc(100vh - 56px)", overflow: "hidden" }
+      },
+      /* @__PURE__ */ import_react69.default.createElement(
+        de,
+        {
+          height: "100%",
+          path: selectedFile?.path || "empty",
+          defaultLanguage: selectedFile?.language || "plaintext",
+          value: selectedFile?.content || "// Select a file to view its contents",
+          theme: editorTheme,
+          options: {
+            minimap: { enabled: false },
+            fontSize: 14,
+            wordWrap: "on",
+            automaticLayout: true,
+            readOnly: !selectedFile?.path.includes("source_files")
+          }
+        }
+      )
+    ), /* @__PURE__ */ import_react69.default.createElement(
+      Col_default,
+      {
+        sm: 3,
+        className: "p-0",
+        style: { height: "calc(100vh - 56px)", overflow: "auto" }
+      },
+      /* @__PURE__ */ import_react69.default.createElement("div", { className: "p-3" }, selectedFile?.path.endsWith("tests.json") ? typeof selectedFile.content === "string" ? renderTestResults(JSON.parse(selectedFile.content)) : renderTestResults(selectedFile.content) : selectedFile?.path.includes("source_files") ? /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react69.default.createElement(
+        Button_default2,
+        {
+          variant: "primary",
+          className: "mb-2",
+          onClick: () => {
+            alert("Save functionality will be implemented here");
+          }
+        },
+        "Save Changes"
+      ), /* @__PURE__ */ import_react69.default.createElement("div", { className: "flex-grow-1 overflow-auto" }, selectedFile && /* @__PURE__ */ import_react69.default.createElement("pre", { className: "bg-light p-3" }, /* @__PURE__ */ import_react69.default.createElement("code", null, selectedFile.content)))) : activeTab === "artifact_viewer" && selectedFile && /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react69.default.createElement("h5", null, selectedFile.path), /* @__PURE__ */ import_react69.default.createElement(
+        "a",
+        {
+          href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${selectedFile.path}`,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "btn btn-primary mb-2"
+        },
+        "Open Full Artifact"
+      )), /* @__PURE__ */ import_react69.default.createElement("div", { className: "flex-grow-1 overflow-auto" }, selectedFile.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) ? /* @__PURE__ */ import_react69.default.createElement(
+        "img",
+        {
+          src: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${selectedFile.path}`,
+          alt: selectedFile.path,
+          className: "img-fluid",
+          style: { maxHeight: "100%" }
+        }
+      ) : /* @__PURE__ */ import_react69.default.createElement("pre", { className: "bg-light p-3" }, /* @__PURE__ */ import_react69.default.createElement("code", null, selectedFile.content)))))
+    )));
+  };
+  var ArtifactTree = ({
+    treeData,
+    projectName,
+    testName,
+    runtime,
+    onSelect,
+    level = 0,
+    basePath = ""
+  }) => {
+    const [expanded, setExpanded] = (0, import_react69.useState)({});
+    const toggleExpand = (path) => {
+      setExpanded((prev) => ({ ...prev, [path]: !prev[path] }));
+    };
+    return /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled", style: { paddingLeft: `${level * 16}px` } }, Object.entries(treeData).map(([name, node]) => {
+      const fullPath = basePath ? `${basePath}/${name}` : name;
+      const isExpanded = expanded[fullPath];
+      if (node.__isFile) {
+        return /* @__PURE__ */ import_react69.default.createElement("li", { key: fullPath, className: "py-1" }, /* @__PURE__ */ import_react69.default.createElement(
+          "a",
+          {
+            href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${node.path}`,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "text-decoration-none",
+            onClick: (e3) => {
+              e3.preventDefault();
+              onSelect(node.path);
+            }
+          },
+          /* @__PURE__ */ import_react69.default.createElement("i", { className: "bi bi-file-earmark-text me-2" }),
+          name
+        ));
+      } else {
+        return /* @__PURE__ */ import_react69.default.createElement("li", { key: fullPath, className: "py-1" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react69.default.createElement(
+          "button",
+          {
+            className: "btn btn-link text-start p-0 text-decoration-none me-1",
+            onClick: () => toggleExpand(fullPath)
+          },
+          /* @__PURE__ */ import_react69.default.createElement(
+            "i",
+            {
+              className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-2`
+            }
+          ),
+          name
+        )), isExpanded && /* @__PURE__ */ import_react69.default.createElement(
+          ArtifactTree,
+          {
+            treeData: node,
+            projectName,
+            testName,
+            runtime,
+            onSelect,
+            level: level + 1,
+            basePath: fullPath
           }
         ));
       }
-      return /* @__PURE__ */ import_react58.default.createElement(Nav_default2.Item, { key: logName }, /* @__PURE__ */ import_react58.default.createElement(
-        Nav_default2.Link,
+    }));
+  };
+  var buildArtifactTree = (testData) => {
+    const artifactPaths = /* @__PURE__ */ new Set();
+    testData.givens?.forEach((given) => {
+      given.artifacts?.forEach((artifact) => artifactPaths.add(artifact));
+      given.whens?.forEach((when) => when.artifacts?.forEach((artifact) => artifactPaths.add(artifact)));
+      given.thens?.forEach((then) => then.artifacts?.forEach((artifact) => artifactPaths.add(artifact)));
+    });
+    const sortedArtifacts = Array.from(artifactPaths).sort();
+    return sortedArtifacts.reduce((tree, artifactPath) => {
+      const parts = artifactPath.split("/");
+      let currentLevel = tree;
+      parts.forEach((part, i2) => {
+        if (!currentLevel[part]) {
+          currentLevel[part] = i2 === parts.length - 1 ? { __isFile: true, path: artifactPath } : {};
+        }
+        currentLevel = currentLevel[part];
+      });
+      return tree;
+    }, {});
+  };
+  var LogNavItem = ({
+    logName,
+    logContent,
+    activeTab,
+    setActiveTab,
+    setSelectedFile,
+    errorCounts,
+    decodedTestPath,
+    testsExist
+  }) => {
+    const displayName = logName.replace(".json", "").replace(".txt", "").replace(".log", "").replace(/_/g, " ").replace(/^std/, "Standard ").replace(/^exit/, "Exit Code");
+    const logValue = typeof logContent === "string" ? logContent.trim() : "";
+    let statusIndicator = null;
+    if (logName === STANDARD_LOGS.TYPE_ERRORS && (errorCounts.typeErrors > 0 || logValue && logValue !== "0")) {
+      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.typeErrors || (logValue ? 1 : 0));
+    } else if (logName === STANDARD_LOGS.LINT_ERRORS && (errorCounts.staticErrors > 0 || logValue && logValue !== "0")) {
+      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.staticErrors || (logValue ? 1 : 0));
+    } else if (logName === RUNTIME_SPECIFIC_LOGS.node.STDERR && (errorCounts.runTimeErrors > 0 || logValue && logValue !== "0")) {
+      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.runTimeErrors || (logValue ? 1 : 0));
+    } else if (logName === STANDARD_LOGS.EXIT && logValue !== "0") {
+      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("span", { className: "ms-1" }, "\u26A0\uFE0F ", logValue);
+    } else if (logName === STANDARD_LOGS.TESTS && logValue) {
+      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("div", { className: "ms-1" }, /* @__PURE__ */ import_react69.default.createElement(
+        TestStatusBadge,
         {
-          eventKey: logName,
-          active: activeTab === logName,
-          onClick: () => setActiveTab(logName),
-          className: "d-flex flex-column align-items-start"
-        },
-        /* @__PURE__ */ import_react58.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react58.default.createElement("span", { className: "text-capitalize" }, displayName), statusIndicator)
+          testName: decodedTestPath,
+          testsExist,
+          runTimeErrors: errorCounts.runTimeErrors,
+          typeErrors: errorCounts.typeErrors,
+          staticErrors: errorCounts.staticErrors,
+          variant: "compact",
+          className: "mt-1"
+        }
       ));
-    }))), /* @__PURE__ */ import_react58.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react58.default.createElement("div", { className: "p-3" }, !testsExist && activeTab === "tests.json" ? /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "danger" }, /* @__PURE__ */ import_react58.default.createElement("h4", null, "Tests did not run to completion"), /* @__PURE__ */ import_react58.default.createElement("p", null, "The test results file (tests.json) was not found or could not be loaded.")) : activeTab === "tests.json" && logs["tests.json"] ? typeof logs["tests.json"] === "string" ? renderTestResults(JSON.parse(logs["tests.json"])) : renderTestResults(logs["tests.json"]) : logs[activeTab] ? /* @__PURE__ */ import_react58.default.createElement("pre", { className: "bg-dark text-white p-3" }, /* @__PURE__ */ import_react58.default.createElement("code", null, typeof logs[activeTab] === "string" ? logs[activeTab] : JSON.stringify(logs[activeTab], null, 2))) : /* @__PURE__ */ import_react58.default.createElement(Alert_default, { variant: "info" }, "No content available for this log")))));
+    }
+    return /* @__PURE__ */ import_react69.default.createElement(Nav_default2.Item, { key: logName }, /* @__PURE__ */ import_react69.default.createElement(
+      Nav_default2.Link,
+      {
+        eventKey: logName,
+        active: activeTab === logName,
+        onClick: () => {
+          setActiveTab(logName);
+          setSelectedFile({
+            path: logName,
+            content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+            language: logName.endsWith(".json") ? "json" : logName.endsWith(".txt") ? "plaintext" : logName.endsWith(".log") ? "log" : "plaintext"
+          });
+        },
+        className: "d-flex flex-column align-items-start"
+      },
+      /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react69.default.createElement("span", { className: "text-capitalize" }, displayName), statusIndicator)
+    ));
   };
 
   // src/components/stateful/TestPage.tsx
   var TestPage = () => {
     const navigate = useNavigate();
     const location2 = useLocation();
-    const [route, setRoute] = (0, import_react59.useState)("results");
-    (0, import_react59.useEffect)(() => {
+    const [route, setRoute] = (0, import_react71.useState)("results");
+    (0, import_react71.useEffect)(() => {
       const hash = location2.hash.replace("#", "");
       if (hash && ["results", "logs", "types", "lint", "coverage"].includes(hash)) {
         setRoute(hash);
@@ -32572,36 +33686,112 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         setRoute("results");
       }
     }, [location2.hash]);
-    const [testName, setTestName] = (0, import_react59.useState)("");
-    const [logs, setLogs] = (0, import_react59.useState)({});
-    const [loading, setLoading] = (0, import_react59.useState)(true);
-    const [error, setError] = (0, import_react59.useState)(null);
-    const [testsExist, setTestsExist] = (0, import_react59.useState)(true);
-    const [errorCounts, setErrorCounts] = (0, import_react59.useState)({
+    const [testName, setTestName] = (0, import_react71.useState)("");
+    const [logs, setLogs] = (0, import_react71.useState)({});
+    const [loading, setLoading] = (0, import_react71.useState)(true);
+    const [error, setError] = (0, import_react71.useState)(null);
+    const [testsExist, setTestsExist] = (0, import_react71.useState)(true);
+    const [errorCounts, setErrorCounts] = (0, import_react71.useState)({
       typeErrors: 0,
       staticErrors: 0,
       runTimeErrors: 0
     });
-    const [summary, setSummary] = (0, import_react59.useState)(null);
+    const [summary, setSummary] = (0, import_react71.useState)(null);
     const { projectName, "*": splat } = useParams();
     const pathParts = splat ? splat.split("/") : [];
     const runtime = pathParts.pop() || "";
     const testPath = pathParts.join("/");
     const decodedTestPath = testPath ? decodeURIComponent(testPath) : "";
-    (0, import_react59.useEffect)(() => {
+    (0, import_react71.useEffect)(() => {
       if (!projectName || !testPath || !runtime)
         return;
       setTestName(testPath);
       const fetchData = async () => {
         try {
-          const testResponse = await fetchTestData(projectName, testPath, runtime);
-          console.log("testResponse", testResponse);
+          const [testResponse, metafileRes] = await Promise.all([
+            fetchTestData(projectName, testPath, runtime),
+            fetch(`metafiles/${runtime}/${projectName}.json`)
+          ]);
+          console.log("Fetching test data for:", { projectName, testPath, runtime });
           const receivedLogs = await testResponse.logs;
-          if (receivedLogs["tests.json"] && typeof receivedLogs["tests.json"] === "string") {
+          console.log("Received logs:", Object.keys(receivedLogs));
+          let sourceFiles = {};
+          if (metafileRes.ok) {
+            const metafile = await metafileRes.json();
+            if (metafile?.metafile?.outputs) {
+              const tsSources = /* @__PURE__ */ new Set();
+              const testEntryPoint = `src/${testPath}`;
+              const matchingOutputs = Object.entries(metafile.metafile.outputs).filter(([outputPath, output]) => {
+                const normalizedTestPath = testPath.replace(/\./g, "_");
+                const testFileName = testPath.split("/").pop();
+                const testBaseName = testFileName?.split(".").slice(0, -1).join(".");
+                return output.entryPoint === testEntryPoint || outputPath.includes(normalizedTestPath) || testBaseName && outputPath.includes(testBaseName);
+              });
+              matchingOutputs.forEach(([_3, output]) => {
+                Object.keys(output.inputs).forEach((inputPath) => {
+                  if ((inputPath.endsWith(".ts") || inputPath.endsWith(".tsx")) && !inputPath.includes("node_modules")) {
+                    const inputDetails = metafile.metafile.inputs[inputPath];
+                    if (inputDetails) {
+                      tsSources.add(inputPath);
+                      inputDetails.imports.forEach((imp) => {
+                        if ((imp.path.endsWith(".ts") || imp.path.endsWith(".tsx")) && !imp.path.includes("node_modules") && !imp.external) {
+                          tsSources.add(imp.path);
+                        }
+                      });
+                    }
+                  }
+                });
+              });
+              const fileTree = {};
+              const filesList = await Promise.all(
+                Array.from(tsSources).map(async (filePath) => {
+                  try {
+                    const fetchPath = filePath.startsWith("/") ? filePath : `/${filePath.replace(/^\.\//, "")}`;
+                    const res = await fetch(fetchPath);
+                    if (res.ok) {
+                      return {
+                        path: filePath,
+                        content: await res.text()
+                      };
+                    }
+                    return null;
+                  } catch (err) {
+                    console.warn(`Failed to fetch source file ${filePath}:`, err);
+                    return null;
+                  }
+                })
+              );
+              filesList.forEach((file) => {
+                if (!file)
+                  return;
+                const parts = file.path.split("/");
+                let currentLevel = fileTree;
+                parts.forEach((part, index2) => {
+                  if (!currentLevel[part]) {
+                    if (index2 === parts.length - 1) {
+                      currentLevel[part] = {
+                        __isFile: true,
+                        content: file.content
+                      };
+                    } else {
+                      currentLevel[part] = {};
+                    }
+                  }
+                  currentLevel = currentLevel[part];
+                });
+              });
+              sourceFiles = fileTree;
+            }
+          }
+          receivedLogs["source_files"] = sourceFiles;
+          console.log("Source files structure:", sourceFiles);
+          if (receivedLogs["tests.json"]) {
+            console.log("tests.json content type:", typeof receivedLogs["tests.json"]);
             try {
-              receivedLogs["tests.json"] = JSON.parse(receivedLogs["tests.json"]);
+              receivedLogs["tests.json"] = typeof receivedLogs["tests.json"] === "string" ? JSON.parse(receivedLogs["tests.json"]) : receivedLogs["tests.json"];
             } catch (e3) {
               console.error("Failed to parse tests.json:", e3);
+              receivedLogs["tests.json"] = { error: "Invalid test data format" };
             }
           }
           setLogs(receivedLogs);
@@ -32634,8 +33824,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       fetchData();
     }, []);
     if (!logs)
-      return /* @__PURE__ */ import_react59.default.createElement("div", null, "loading...");
-    return /* @__PURE__ */ import_react59.default.createElement(import_react59.default.Fragment, null, /* @__PURE__ */ import_react59.default.createElement(
+      return /* @__PURE__ */ import_react71.default.createElement("div", null, "loading...");
+    return /* @__PURE__ */ import_react71.default.createElement(import_react71.default.Fragment, null, /* @__PURE__ */ import_react71.default.createElement(
       TestPageView,
       {
         route,
@@ -32653,17 +33843,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/stateful/ProjectPage.tsx
-  var import_react61 = __toESM(require_react(), 1);
+  var import_react73 = __toESM(require_react(), 1);
 
   // src/components/pure/ProjectPageView.tsx
-  var import_react60 = __toESM(require_react(), 1);
+  var import_react72 = __toESM(require_react(), 1);
   var BuildLogViewer = ({ logs, runtime }) => {
     if (!logs)
-      return /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
+      return /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
     const hasErrors = logs.errors?.length > 0;
     const hasWarnings = logs.warnings?.length > 0;
-    const [activeTab, setActiveTab] = import_react60.default.useState("summary");
-    return /* @__PURE__ */ import_react60.default.createElement("div", null, /* @__PURE__ */ import_react60.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k3) => setActiveTab(k3 || "summary") }, /* @__PURE__ */ import_react60.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react60.default.createElement(Card_default, null, /* @__PURE__ */ import_react60.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react60.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react60.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react60.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react60.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react60.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react60.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react60.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react60.default.createElement("code", null, file), /* @__PURE__ */ import_react60.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react60.default.createElement("div", null, /* @__PURE__ */ import_react60.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react60.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react60.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react60.default.createElement("code", null, file), /* @__PURE__ */ import_react60.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react60.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react60.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react60.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react60.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react60.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react60.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i2) => /* @__PURE__ */ import_react60.default.createElement(ListGroup_default.Item, { key: i2, className: "text-warning" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react60.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react60.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react60.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react60.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(warn)))))))) : /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react60.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react60.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react60.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react60.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react60.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react60.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i2) => /* @__PURE__ */ import_react60.default.createElement(ListGroup_default.Item, { key: i2, className: "text-danger" }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react60.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react60.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react60.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react60.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(err)))))))) : /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react60.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react60.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
+    const [activeTab, setActiveTab] = import_react72.default.useState("summary");
+    return /* @__PURE__ */ import_react72.default.createElement("div", null, /* @__PURE__ */ import_react72.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k3) => setActiveTab(k3 || "summary") }, /* @__PURE__ */ import_react72.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react72.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react72.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react72.default.createElement(Card_default, null, /* @__PURE__ */ import_react72.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react72.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react72.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react72.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react72.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react72.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react72.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react72.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react72.default.createElement("code", null, file), /* @__PURE__ */ import_react72.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react72.default.createElement("div", null, /* @__PURE__ */ import_react72.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react72.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react72.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react72.default.createElement("code", null, file), /* @__PURE__ */ import_react72.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react72.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react72.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react72.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react72.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react72.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react72.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react72.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i2) => /* @__PURE__ */ import_react72.default.createElement(ListGroup_default.Item, { key: i2, className: "text-warning" }, /* @__PURE__ */ import_react72.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react72.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react72.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react72.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react72.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(warn)))))))) : /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react72.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react72.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react72.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react72.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react72.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react72.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i2) => /* @__PURE__ */ import_react72.default.createElement(ListGroup_default.Item, { key: i2, className: "text-danger" }, /* @__PURE__ */ import_react72.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react72.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react72.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react72.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react72.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(err)))))))) : /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react72.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react72.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
   };
   var ProjectPageView = ({
     summary,
@@ -32678,11 +33868,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     setActiveTab
   }) => {
     if (loading)
-      return /* @__PURE__ */ import_react60.default.createElement("div", null, "Loading project data...");
+      return /* @__PURE__ */ import_react72.default.createElement("div", null, "Loading project data...");
     if (error)
-      return /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+      return /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
     if (!summary)
-      return /* @__PURE__ */ import_react60.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
+      return /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
     const testStatuses = Object.entries(summary).map(([testName, testData]) => {
       const runTime = config3.tests?.find((t2) => t2[0] === testName)?.[1] || "node";
       return {
@@ -32694,21 +33884,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         runTime
       };
     });
-    return /* @__PURE__ */ import_react60.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react60.default.createElement(
+    return /* @__PURE__ */ import_react72.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react72.default.createElement(
       NavBar,
       {
         title: projectName,
         backLink: "/"
       }
-    ), /* @__PURE__ */ import_react60.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react60.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react60.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(
+    ), /* @__PURE__ */ import_react72.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react72.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react72.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "tests",
         onClick: () => setActiveTab("tests"),
         className: "d-flex flex-column align-items-start"
       },
-      /* @__PURE__ */ import_react60.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react60.default.createElement("span", null, "Tests"), testStatuses.some((t2) => t2.runTimeErrors > 0) ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some((t2) => t2.typeErrors > 0 || t2.staticErrors > 0) ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
-    )), /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(
+      /* @__PURE__ */ import_react72.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react72.default.createElement("span", null, "Tests"), testStatuses.some((t2) => t2.runTimeErrors > 0) ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some((t2) => t2.typeErrors > 0 || t2.staticErrors > 0) ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
+    )), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "node",
@@ -32716,8 +33906,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         className: "d-flex justify-content-between align-items-center"
       },
       "Node build logs",
-      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )), /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(
+      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "web",
@@ -32725,8 +33915,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         className: "d-flex justify-content-between align-items-center"
       },
       "Web build logs",
-      webLogs?.errors?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )), /* @__PURE__ */ import_react60.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react60.default.createElement(
+      webLogs?.errors?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "pure",
@@ -32734,8 +33924,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         className: "d-flex justify-content-between align-items-center"
       },
       "Pure build logs",
-      pureLogs?.errors?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )))), /* @__PURE__ */ import_react60.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react60.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react60.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react60.default.createElement("thead", null, /* @__PURE__ */ import_react60.default.createElement("tr", null, /* @__PURE__ */ import_react60.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react60.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react60.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react60.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement(
+      pureLogs?.errors?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )))), /* @__PURE__ */ import_react72.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react72.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react72.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react72.default.createElement("thead", null, /* @__PURE__ */ import_react72.default.createElement("tr", null, /* @__PURE__ */ import_react72.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react72.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react72.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react72.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react72.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react72.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react72.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)), /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement(
       TestStatusBadge,
       {
         testName: test.testName,
@@ -32744,23 +33934,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         typeErrors: test.typeErrors,
         staticErrors: test.staticErrors
       }
-    )), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705")), /* @__PURE__ */ import_react60.default.createElement("td", null, /* @__PURE__ */ import_react60.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `\u274C ${test.staticErrors}` : "\u2705")))))) : activeTab === "node" ? /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react60.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
+    )), /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705")), /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `\u274C ${test.staticErrors}` : "\u2705")))))) : activeTab === "node" ? /* @__PURE__ */ import_react72.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react72.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react72.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
   };
 
   // src/components/stateful/ProjectPage.tsx
   var ProjectPage = () => {
-    const [summary, setSummary] = (0, import_react61.useState)(null);
-    const [nodeLogs, setNodeLogs] = (0, import_react61.useState)(null);
-    const [webLogs, setWebLogs] = (0, import_react61.useState)(null);
-    const [pureLogs, setPureLogs] = (0, import_react61.useState)(null);
-    const [config3, setConfig] = (0, import_react61.useState)({});
-    const [loading, setLoading] = (0, import_react61.useState)(true);
-    const [error, setError] = (0, import_react61.useState)(null);
-    const [projectName, setProjectName] = (0, import_react61.useState)("");
+    const [summary, setSummary] = (0, import_react73.useState)(null);
+    const [nodeLogs, setNodeLogs] = (0, import_react73.useState)(null);
+    const [webLogs, setWebLogs] = (0, import_react73.useState)(null);
+    const [pureLogs, setPureLogs] = (0, import_react73.useState)(null);
+    const [config3, setConfig] = (0, import_react73.useState)({});
+    const [loading, setLoading] = (0, import_react73.useState)(true);
+    const [error, setError] = (0, import_react73.useState)(null);
+    const [projectName, setProjectName] = (0, import_react73.useState)("");
     const navigate = useNavigate();
     const location2 = useLocation();
-    const [route, setRoute] = (0, import_react61.useState)("tests");
-    (0, import_react61.useEffect)(() => {
+    const [route, setRoute] = (0, import_react73.useState)("tests");
+    (0, import_react73.useEffect)(() => {
       const hash = location2.hash.replace("#", "");
       if (hash && ["tests", "node", "web", "pure"].includes(hash)) {
         setRoute(hash);
@@ -32769,7 +33959,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }, [location2.hash]);
     const { projectName: name } = useParams();
-    (0, import_react61.useEffect)(() => {
+    (0, import_react73.useEffect)(() => {
       if (!name)
         return;
       setProjectName(name);
@@ -32802,7 +33992,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       fetchData();
     }, [name]);
-    return /* @__PURE__ */ import_react61.default.createElement(
+    return /* @__PURE__ */ import_react73.default.createElement(
       ProjectPageView,
       {
         summary,
@@ -32820,10 +34010,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/stateful/ProjectsPage.tsx
-  var import_react63 = __toESM(require_react(), 1);
+  var import_react75 = __toESM(require_react(), 1);
 
   // src/components/pure/ProjectsPageView.tsx
-  var import_react62 = __toESM(require_react(), 1);
+  var import_react74 = __toESM(require_react(), 1);
   var ProjectsPageView = ({
     projects,
     summaries,
@@ -32845,18 +34035,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     };
     if (loading)
-      return /* @__PURE__ */ import_react62.default.createElement("div", null, "Loading projects...");
+      return /* @__PURE__ */ import_react74.default.createElement("div", null, "Loading projects...");
     if (error)
-      return /* @__PURE__ */ import_react62.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    return /* @__PURE__ */ import_react62.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react62.default.createElement(NavBar, { title: "Testeranto", backLink: void 0 }), /* @__PURE__ */ import_react62.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react62.default.createElement("thead", null, /* @__PURE__ */ import_react62.default.createElement("tr", null, /* @__PURE__ */ import_react62.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react62.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react62.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react62.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement("a", { href: "#", onClick: (e3) => {
+      return /* @__PURE__ */ import_react74.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+    return /* @__PURE__ */ import_react74.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react74.default.createElement(NavBar, { title: "Testeranto", backLink: void 0 }), /* @__PURE__ */ import_react74.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react74.default.createElement("thead", null, /* @__PURE__ */ import_react74.default.createElement("tr", null, /* @__PURE__ */ import_react74.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react74.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react74.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react74.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react74.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react74.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react74.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement("a", { href: "#", onClick: (e3) => {
       e3.preventDefault();
       navigate(`/projects/${project.name}`);
-    } }, project.name)), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName) => {
+    } }, project.name)), /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName) => {
       const testData = summaries[project.name][testName];
       const runTime = configs[project.name]?.tests?.find((t2) => t2[0] === testName)?.[1] || "node";
       const hasRuntimeErrors = testData.runTimeErrors > 0;
       const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
-      return /* @__PURE__ */ import_react62.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react62.default.createElement(
+      return /* @__PURE__ */ import_react74.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react74.default.createElement(
         "a",
         {
           href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`
@@ -32864,21 +34054,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         hasRuntimeErrors ? "\u274C " : hasStaticErrors ? "\u26A0\uFE0F " : "",
         testName.split("/").pop() || testName
       ));
-    }) : /* @__PURE__ */ import_react62.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement(
+    }) : /* @__PURE__ */ import_react74.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement(
       "a",
       {
         href: `#/projects/${project.name}#node`
       },
       getStatusIcon(project.nodeStatus),
       " Node build logs"
-    )), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement(
+    )), /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement(
       "a",
       {
         href: `#/projects/${project.name}#web`
       },
       getStatusIcon(project.webStatus),
       " Web build logs"
-    )), /* @__PURE__ */ import_react62.default.createElement("td", null, /* @__PURE__ */ import_react62.default.createElement(
+    )), /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement(
       "a",
       {
         href: `#/projects/${project.name}#pure`
@@ -32890,13 +34080,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/components/stateful/ProjectsPage.tsx
   var ProjectsPage = () => {
-    const [projects, setProjects] = (0, import_react63.useState)([]);
-    const [summaries, setSummaries] = (0, import_react63.useState)({});
-    const [loading, setLoading] = (0, import_react63.useState)(true);
-    const [error, setError] = (0, import_react63.useState)(null);
-    const [configs, setConfigs] = (0, import_react63.useState)({});
+    const [projects, setProjects] = (0, import_react75.useState)([]);
+    const [summaries, setSummaries] = (0, import_react75.useState)({});
+    const [loading, setLoading] = (0, import_react75.useState)(true);
+    const [error, setError] = (0, import_react75.useState)(null);
+    const [configs, setConfigs] = (0, import_react75.useState)({});
     const navigate = useNavigate();
-    (0, import_react63.useEffect)(() => {
+    (0, import_react75.useEffect)(() => {
       const fetchProjects = async () => {
         try {
           const projectsRes = await fetch(`projects.json`);
@@ -32937,7 +34127,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       fetchProjects();
     }, []);
-    return /* @__PURE__ */ import_react63.default.createElement(
+    return /* @__PURE__ */ import_react75.default.createElement(
       ProjectsPageView,
       {
         projects,
@@ -32951,16 +34141,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/pure/AppFrame.tsx
-  var import_react68 = __toESM(require_react(), 1);
+  var import_react80 = __toESM(require_react(), 1);
 
   // src/components/pure/SettingsButton.tsx
-  var import_react67 = __toESM(require_react(), 1);
+  var import_react79 = __toESM(require_react(), 1);
 
   // src/components/pure/ModalContent.tsx
-  var import_react65 = __toESM(require_react(), 1);
+  var import_react77 = __toESM(require_react(), 1);
 
   // src/components/pure/ThemeCard.tsx
-  var import_react64 = __toESM(require_react(), 1);
+  var import_react76 = __toESM(require_react(), 1);
   var ThemeCard = ({
     theme,
     handleThemeChange,
@@ -32968,7 +34158,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     title,
     description,
     style: style2
-  }) => /* @__PURE__ */ import_react64.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react64.default.createElement(
+  }) => /* @__PURE__ */ import_react76.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react76.default.createElement(
     "div",
     {
       className: `card theme-card ${theme === value ? "border-primary" : ""}`,
@@ -32977,14 +34167,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }),
       style: style2
     },
-    /* @__PURE__ */ import_react64.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react64.default.createElement("h5", { className: "card-title mb-1" }, title), /* @__PURE__ */ import_react64.default.createElement("p", { className: "small text-muted mb-0" }, description))
+    /* @__PURE__ */ import_react76.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react76.default.createElement("h5", { className: "card-title mb-1" }, title), /* @__PURE__ */ import_react76.default.createElement("p", { className: "small text-muted mb-0" }, description))
   ));
 
   // src/components/pure/ModalContent.tsx
   var ModalContent = ({
     theme,
     handleThemeChange
-  }) => /* @__PURE__ */ import_react65.default.createElement(import_react65.default.Fragment, null, /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react65.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react65.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react65.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react65.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react65.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react65.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react65.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react65.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react65.default.createElement(
+  }) => /* @__PURE__ */ import_react77.default.createElement(import_react77.default.Fragment, null, /* @__PURE__ */ import_react77.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react77.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react77.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react77.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react77.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react77.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react77.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react77.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react77.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react77.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -32997,7 +34187,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         borderColor: "#adb5bd"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33012,7 +34202,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         borderWidth: "2px"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33027,7 +34217,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         borderWidth: "2px"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33041,7 +34231,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         color: "#fff"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33055,7 +34245,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         color: "#fff"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33069,7 +34259,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         color: "#3a3226"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33084,7 +34274,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         borderWidth: "2px"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33099,7 +34289,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         borderWidth: "2px"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33113,7 +34303,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         color: "#00192d"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33127,7 +34317,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         color: "#333"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33141,7 +34331,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         color: "#333"
       }
     }
-  ), /* @__PURE__ */ import_react65.default.createElement(
+  ), /* @__PURE__ */ import_react77.default.createElement(
     ThemeCard,
     {
       theme,
@@ -33158,12 +34348,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   )))));
 
   // src/components/SunriseAnimation.tsx
-  var import_react66 = __toESM(require_react(), 1);
+  var import_react78 = __toESM(require_react(), 1);
   var SunriseAnimation = ({ active }) => {
-    const [position, setPosition] = (0, import_react66.useState)(0);
-    const [dimensions, setDimensions] = (0, import_react66.useState)({ width: 0, height: 0 });
-    const animationIdRef = (0, import_react66.useRef)(null);
-    (0, import_react66.useEffect)(() => {
+    const [position, setPosition] = (0, import_react78.useState)(0);
+    const [dimensions, setDimensions] = (0, import_react78.useState)({ width: 0, height: 0 });
+    const animationIdRef = (0, import_react78.useRef)(null);
+    (0, import_react78.useEffect)(() => {
       setDimensions({
         width: window.innerWidth,
         height: window.innerHeight
@@ -33181,7 +34371,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }, []);
     const ANIMATION_DURATION = 1e4;
     const UPDATE_INTERVAL = 50;
-    (0, import_react66.useEffect)(() => {
+    (0, import_react78.useEffect)(() => {
       if (!active) {
         if (animationIdRef.current) {
           cancelAnimationFrame(animationIdRef.current);
@@ -33216,7 +34406,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const normalizedPos = (position + 1) / 2;
     if (!active)
       return null;
-    return /* @__PURE__ */ import_react66.default.createElement("div", { id: "sunrise", style: {
+    return /* @__PURE__ */ import_react78.default.createElement("div", { id: "sunrise", style: {
       width: "100vw",
       height: "100vh",
       position: "fixed",
@@ -33225,7 +34415,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       backgroundColor: "transparent",
       overflow: "hidden",
       pointerEvents: "none"
-    } }, /* @__PURE__ */ import_react66.default.createElement("div", { id: "daily-bg", style: {
+    } }, /* @__PURE__ */ import_react78.default.createElement("div", { id: "daily-bg", style: {
       position: "absolute",
       top: 0,
       left: 0,
@@ -33233,7 +34423,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       height: "100%",
       backgroundColor: "rgba(0,0,0,0.3)",
       zIndex: -1001
-    } }), "Stars Container", /* @__PURE__ */ import_react66.default.createElement(
+    } }), "Stars Container", /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "starsContainer",
@@ -33250,7 +34440,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 0.5 - normalizedPos * 0.5)
         }
       },
-      /* @__PURE__ */ import_react66.default.createElement(
+      /* @__PURE__ */ import_react78.default.createElement(
         "div",
         {
           id: "stars",
@@ -33266,7 +34456,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       )
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "sun",
@@ -33282,7 +34472,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: 0.5
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "sunDay",
@@ -33297,7 +34487,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 1 - yPos / dimensions.height)
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "sunSet",
@@ -33312,7 +34502,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos / dimensions.height - 0.2)
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "sky",
@@ -33327,7 +34517,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, 1 - yPos / dimensions.height)
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "horizon",
@@ -33342,7 +34532,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) + 0.2 : yPos / (dimensions.height / 2))
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "horizonNight",
@@ -33357,7 +34547,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, (yPos - dimensions.height * 4 / 5) / (dimensions.height - dimensions.height * 4 / 5))
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "moon",
@@ -33372,7 +34562,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, (yPos - dimensions.height * 9 / 10) / (dimensions.height - dimensions.height * 9 / 10))
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "water",
@@ -33387,7 +34577,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -400
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "waterReflectionContainer",
@@ -33404,7 +34594,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           transform: `translateY(${dimensions.height - yPos}px)`
         }
       },
-      /* @__PURE__ */ import_react66.default.createElement(
+      /* @__PURE__ */ import_react78.default.createElement(
         "div",
         {
           id: "waterReflectionMiddle",
@@ -33421,7 +34611,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       )
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "waterDistance",
@@ -33436,7 +34626,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           opacity: Math.max(0, yPos / dimensions.height + 0.6)
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "darknessOverlaySky",
@@ -33451,7 +34641,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -50
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "darknessOverlay",
@@ -33466,7 +34656,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           zIndex: -5
         }
       }
-    ), /* @__PURE__ */ import_react66.default.createElement(
+    ), /* @__PURE__ */ import_react78.default.createElement(
       "div",
       {
         id: "oceanRipple",
@@ -33487,19 +34677,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/components/pure/SettingsButton.tsx
   var SettingsButton = ({ className }) => {
-    (0, import_react67.useEffect)(() => {
+    (0, import_react79.useEffect)(() => {
       return () => {
       };
     }, []);
-    const [showModal, setShowModal] = (0, import_react67.useState)(false);
-    (0, import_react67.useEffect)(() => {
+    const [showModal, setShowModal] = (0, import_react79.useState)(false);
+    (0, import_react79.useEffect)(() => {
       let themeToApply = theme;
       if (theme === "system") {
         themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
       }
       document.documentElement.setAttribute("data-bs-theme", themeToApply);
     }, []);
-    const [theme, setTheme] = (0, import_react67.useState)(localStorage.getItem("theme") || "system");
+    const [theme, setTheme] = (0, import_react79.useState)(localStorage.getItem("theme") || "system");
     const handleThemeChange = (e3) => {
       const newTheme = e3.target.value;
       setTheme(newTheme);
@@ -33510,31 +34700,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       document.documentElement.setAttribute("data-bs-theme", themeToApply);
     };
-    return /* @__PURE__ */ import_react67.default.createElement(import_react67.default.Fragment, null, /* @__PURE__ */ import_react67.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react67.default.createElement(
+    return /* @__PURE__ */ import_react79.default.createElement(import_react79.default.Fragment, null, /* @__PURE__ */ import_react79.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react79.default.createElement(
       "button",
       {
         className: `btn btn-sm btn-outline-secondary ${className}`,
         onClick: () => setShowModal(true)
       },
-      /* @__PURE__ */ import_react67.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
-    )), /* @__PURE__ */ import_react67.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react67.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react67.default.createElement(ModalContent, { theme, handleThemeChange }), /* @__PURE__ */ import_react67.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react67.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
+      /* @__PURE__ */ import_react79.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
+    )), /* @__PURE__ */ import_react79.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react79.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react79.default.createElement(ModalContent, { theme, handleThemeChange }), /* @__PURE__ */ import_react79.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react79.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
   };
 
   // src/components/pure/AppFrame.tsx
   var AppFrame = ({ children }) => {
-    return /* @__PURE__ */ import_react68.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react68.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react68.default.createElement(Container_default, { fluid: true }, children)), /* @__PURE__ */ import_react68.default.createElement("footer", { className: "bg-light py-2 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react68.default.createElement(SettingsButton, null), /* @__PURE__ */ import_react68.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react68.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))));
+    return /* @__PURE__ */ import_react80.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react80.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react80.default.createElement(Container_default, { fluid: true }, children)), /* @__PURE__ */ import_react80.default.createElement("footer", { className: "bg-light py-2 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react80.default.createElement(SettingsButton, null), /* @__PURE__ */ import_react80.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react80.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))));
   };
 
   // src/components/stateful/FeaturesReporter.tsx
-  var import_react70 = __toESM(require_react(), 1);
+  var import_react82 = __toESM(require_react(), 1);
 
   // src/components/pure/FeaturesReporterView.tsx
-  var import_react69 = __toESM(require_react(), 1);
+  var import_react81 = __toESM(require_react(), 1);
   var FeaturesReporterView = ({ treeData }) => {
-    return /* @__PURE__ */ import_react69.default.createElement("div", { className: "features-reporter" }, /* @__PURE__ */ import_react69.default.createElement("h1", null, "File Structure"), /* @__PURE__ */ import_react69.default.createElement("div", { className: "tree-container" }, treeData.map((project) => /* @__PURE__ */ import_react69.default.createElement("div", { key: project.name, className: "project" }, /* @__PURE__ */ import_react69.default.createElement("h3", null, project.name), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "file-tree" }, project.children?.map((file) => renderFile(file)))))));
+    return /* @__PURE__ */ import_react81.default.createElement("div", { className: "features-reporter" }, /* @__PURE__ */ import_react81.default.createElement("h1", null, "File Structure"), /* @__PURE__ */ import_react81.default.createElement("div", { className: "tree-container" }, treeData.map((project) => /* @__PURE__ */ import_react81.default.createElement("div", { key: project.name, className: "project" }, /* @__PURE__ */ import_react81.default.createElement("h3", null, project.name), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "file-tree" }, project.children?.map((file) => renderFile(file)))))));
   };
   function renderFile(node) {
-    return /* @__PURE__ */ import_react69.default.createElement("li", { key: node.name }, /* @__PURE__ */ import_react69.default.createElement("span", null, node.name), node.children && /* @__PURE__ */ import_react69.default.createElement("ul", null, node.children.map((child) => renderFile(child))));
+    return /* @__PURE__ */ import_react81.default.createElement("li", { key: node.name }, /* @__PURE__ */ import_react81.default.createElement("span", null, node.name), node.children && /* @__PURE__ */ import_react81.default.createElement("ul", null, node.children.map((child) => renderFile(child))));
   }
 
   // src/types/features.ts
@@ -33572,8 +34762,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/components/stateful/FeaturesReporter.tsx
   var FeaturesReporter = () => {
-    const [treeData, setTreeData] = (0, import_react70.useState)([]);
-    (0, import_react70.useEffect)(() => {
+    const [treeData, setTreeData] = (0, import_react82.useState)([]);
+    (0, import_react82.useEffect)(() => {
       const fetchProjects = async () => {
         try {
           const response = await fetch("testeranto/projects.json");
@@ -33587,14 +34777,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       fetchProjects();
     }, []);
-    return /* @__PURE__ */ import_react70.default.createElement(FeaturesReporterView, { treeData });
+    return /* @__PURE__ */ import_react82.default.createElement(FeaturesReporterView, { treeData });
   };
 
   // src/components/DesignEditorPage.tsx
-  var import_react72 = __toESM(require_react(), 1);
+  var import_react84 = __toESM(require_react(), 1);
 
   // design-editor/DesignEditor.tsx
-  var import_react71 = __toESM(require_react(), 1);
+  var import_react83 = __toESM(require_react(), 1);
 
   // node_modules/fabric/dist/index.min.mjs
   function t(t2, e3, s2) {
@@ -33695,19 +34885,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       s2[i2 - 1] = arguments[i2];
     return console[t2]("fabric", ...s2);
   };
-  var h = class extends Error {
+  var h2 = class extends Error {
     constructor(t2, e3) {
       super("fabric: ".concat(t2), e3);
     }
   };
-  var c = class extends h {
+  var c = class extends h2 {
     constructor(t2) {
       super("".concat(t2, " 'options.signal' is in 'aborted' state"));
     }
   };
-  var l = class {
+  var l2 = class {
   };
-  var u = class extends l {
+  var u = class extends l2 {
     testPrecision(t2, e3) {
       const s2 = "precision ".concat(e3, " float;\nvoid main(){}"), i2 = t2.createShader(t2.FRAGMENT_SHADER);
       return !!i2 && (t2.shaderSource(i2, s2), t2.compileShader(i2), !!t2.getShaderParameter(i2, t2.COMPILE_STATUS));
@@ -33725,12 +34915,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var p = () => g || (g = { document, window, isTouchSupported: "ontouchstart" in window || "ontouchstart" in document || window && window.navigator && window.navigator.maxTouchPoints > 0, WebGLProbe: new u(), dispose() {
   }, copyPasteData: d });
   var m = () => p().document;
-  var v = () => p().window;
+  var v2 = () => p().window;
   var y = () => {
     var t2;
-    return Math.max(null !== (t2 = o.devicePixelRatio) && void 0 !== t2 ? t2 : v().devicePixelRatio, 1);
+    return Math.max(null !== (t2 = o.devicePixelRatio) && void 0 !== t2 ? t2 : v2().devicePixelRatio, 1);
   };
-  var _ = new class {
+  var _2 = new class {
     constructor() {
       t(this, "charWidthsCache", {}), t(this, "boundsOfCurveCache", {});
     }
@@ -33749,15 +34939,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   }();
   var x = "6.7.1";
-  function C() {
+  function C2() {
   }
   var b = Math.PI / 2;
-  var S = 2 * Math.PI;
+  var S2 = 2 * Math.PI;
   var w = Math.PI / 180;
   var T = Object.freeze([1, 0, 0, 1, 0, 0]);
   var O = 16;
-  var k = 0.4477152502;
-  var D = "center";
+  var k2 = 0.4477152502;
+  var D2 = "center";
   var M = "left";
   var P = "top";
   var E = "bottom";
@@ -33769,41 +34959,41 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var I = "rotating";
   var B = "rotate";
   var X = "skewing";
-  var Y = "resizing";
-  var W = "modifyPoly";
+  var Y2 = "resizing";
+  var W2 = "modifyPoly";
   var V = "modifyPath";
   var z = "changed";
   var G = "scale";
-  var H = "scaleX";
+  var H2 = "scaleX";
   var N = "scaleY";
   var U = "skewX";
   var q = "skewY";
-  var K = "fill";
+  var K2 = "fill";
   var J = "stroke";
   var Q = "modified";
-  var Z = "json";
-  var $ = "svg";
+  var Z2 = "json";
+  var $2 = "svg";
   var tt = new class {
     constructor() {
-      this[Z] = /* @__PURE__ */ new Map(), this[$] = /* @__PURE__ */ new Map();
+      this[Z2] = /* @__PURE__ */ new Map(), this[$2] = /* @__PURE__ */ new Map();
     }
     has(t2) {
-      return this[Z].has(t2);
+      return this[Z2].has(t2);
     }
     getClass(t2) {
-      const e3 = this[Z].get(t2);
+      const e3 = this[Z2].get(t2);
       if (!e3)
-        throw new h("No class registered for ".concat(t2));
+        throw new h2("No class registered for ".concat(t2));
       return e3;
     }
     setClass(t2, e3) {
-      e3 ? this[Z].set(e3, t2) : (this[Z].set(t2.type, t2), this[Z].set(t2.type.toLowerCase(), t2));
+      e3 ? this[Z2].set(e3, t2) : (this[Z2].set(t2.type, t2), this[Z2].set(t2.type.toLowerCase(), t2));
     }
     getSVGClass(t2) {
-      return this[$].get(t2);
+      return this[$2].get(t2);
     }
     setSVGClass(t2, e3) {
-      this[$].set(null != e3 ? e3 : t2.type.toLowerCase(), t2);
+      this[$2].set(null != e3 ? e3 : t2.type.toLowerCase(), t2);
     }
   }();
   var et = new class extends Array {
@@ -34183,17 +35373,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   };
   function ut(t2) {
-    return v().requestAnimationFrame(t2);
+    return v2().requestAnimationFrame(t2);
   }
   function dt(t2) {
-    return v().cancelAnimationFrame(t2);
+    return v2().cancelAnimationFrame(t2);
   }
   var gt = 0;
   var ft = () => gt++;
   var pt = () => {
     const t2 = m().createElement("canvas");
     if (!t2 || void 0 === t2.getContext)
-      throw new h("Failed to create `canvas` element");
+      throw new h2("Failed to create `canvas` element");
     return t2;
   };
   var mt = () => m().createElement("img");
@@ -34262,12 +35452,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         n2.onload = n2.onerror = null, o2 && (null == e3 || e3.removeEventListener("abort", o2)), i2(n2);
       };
       t2 ? (n2.onload = a2, n2.onerror = function() {
-        o2 && (null == e3 || e3.removeEventListener("abort", o2)), r2(new h("Error loading ".concat(n2.src)));
+        o2 && (null == e3 || e3.removeEventListener("abort", o2)), r2(new h2("Error loading ".concat(n2.src)));
       }, s2 && (n2.crossOrigin = s2), n2.src = t2) : a2();
     });
   };
   var Bt = function(t2) {
-    let { signal: e3, reviver: s2 = C } = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
+    let { signal: e3, reviver: s2 = C2 } = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
     return new Promise((i2, r2) => {
       const n2 = [];
       e3 && e3.addEventListener("abort", r2, { once: true }), Promise.all(t2.map((t3) => tt.getClass(t3.type).fromObject(t3, { signal: e3 }).then((e4) => (s2(t3, e4), n2.push(e4), e4)))).then(i2).catch((t3) => {
@@ -34334,7 +35524,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function $t(t2) {
     return void 0 !== t2.onselectstart && (t2.onselectstart = () => false), t2.style.userSelect = j, t2;
   }
-  var te = class {
+  var te2 = class {
     constructor(e3) {
       t(this, "_originalCanvasStyle", void 0), t(this, "lower", void 0);
       const s2 = this.createLowerCanvas(e3);
@@ -34344,7 +35534,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const e3 = (s2 = t2) && void 0 !== s2.getContext ? t2 : t2 && m().getElementById(t2) || pt();
       var s2;
       if (e3.hasAttribute("data-fabric"))
-        throw new h("Trying to initialize a canvas that has already been initialized. Did you forget to dispose the canvas?");
+        throw new h2("Trying to initialize a canvas that has already been initialized. Did you forget to dispose the canvas?");
       return this._originalCanvasStyle = e3.style.cssText, e3.setAttribute("data-fabric", "main"), e3.classList.add("lower-canvas"), e3;
     }
     cleanupDOM(t2) {
@@ -34378,8 +35568,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       p().dispose(this.lower.el), delete this.lower;
     }
   };
-  var ee = { backgroundVpt: true, backgroundColor: "", overlayVpt: true, overlayColor: "", includeDefaultValues: true, svgViewportTransformation: true, renderOnAddRemove: true, skipOffscreen: true, enableRetinaScaling: true, imageSmoothingEnabled: true, controlsAboveOverlay: false, allowTouchScrolling: false, viewportTransform: [...T] };
-  var se = class extends ct(lt) {
+  var ee2 = { backgroundVpt: true, backgroundColor: "", overlayVpt: true, overlayColor: "", includeDefaultValues: true, svgViewportTransformation: true, renderOnAddRemove: true, skipOffscreen: true, enableRetinaScaling: true, imageSmoothingEnabled: true, controlsAboveOverlay: false, allowTouchScrolling: false, viewportTransform: [...T] };
+  var se2 = class extends ct(lt) {
     get lowerCanvasEl() {
       var t2;
       return null === (t2 = this.elements.lower) || void 0 === t2 ? void 0 : t2.el;
@@ -34389,14 +35579,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return null === (t2 = this.elements.lower) || void 0 === t2 ? void 0 : t2.ctx;
     }
     static getDefaults() {
-      return se.ownDefaults;
+      return se2.ownDefaults;
     }
     constructor(t2) {
       let e3 = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
       super(), Object.assign(this, this.constructor.getDefaults()), this.set(e3), this.initElements(t2), this._setDimensionsImpl({ width: this.width || this.elements.lower.el.width || 0, height: this.height || this.elements.lower.el.height || 0 }), this.skipControlsDrawing = false, this.viewportTransform = [...this.viewportTransform], this.calcViewportBoundaries();
     }
     initElements(t2) {
-      this.elements = new te(t2);
+      this.elements = new te2(t2);
     }
     add() {
       const t2 = super.add(...arguments);
@@ -34569,7 +35759,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return St(this.getCenterPoint(), wt(this.viewportTransform));
     }
     _centerObject(t2, e3) {
-      t2.setXY(e3, D, D), t2.setCoords(), this.renderOnAddRemove && this.requestRenderAll();
+      t2.setXY(e3, D2, D2), t2.setCoords(), this.renderOnAddRemove && this.requestRenderAll();
     }
     toDatalessJSON(t2) {
       return this.toDatalessObject(t2);
@@ -34674,7 +35864,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     loadFromJSON(t2, e3) {
       let { signal: s2 } = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {};
       if (!t2)
-        return Promise.reject(new h("`json` is undefined"));
+        return Promise.reject(new h2("`json` is undefined"));
       const i2 = "string" == typeof t2 ? JSON.parse(t2) : t2, { objects: r2 = [], backgroundImage: n2, background: o2, overlayImage: a2, overlay: c2, clipPath: l3 } = i2, u2 = this.renderOnAddRemove;
       return this.renderOnAddRemove = false, Promise.all([Bt(r2, { reviver: e3, signal: s2 }), Xt({ backgroundImage: n2, backgroundColor: o2, overlayImage: a2, overlayColor: c2, clipPath: l3 }, { signal: s2 })]).then((t3) => {
         let [e4, s3] = t3;
@@ -34719,20 +35909,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return "#<Canvas (".concat(this.complexity(), "): { objects: ").concat(this._objects.length, " }>");
     }
   };
-  t(se, "ownDefaults", ee);
-  var ie = ["touchstart", "touchmove", "touchend"];
-  var re = (t2) => {
+  t(se2, "ownDefaults", ee2);
+  var ie2 = ["touchstart", "touchmove", "touchend"];
+  var re2 = (t2) => {
     const e3 = qt(t2.target), s2 = function(t3) {
       const e4 = t3.changedTouches;
       return e4 && e4[0] ? e4[0] : t3;
     }(t2);
     return new ot(s2.clientX + e3.left, s2.clientY + e3.top);
   };
-  var ne = (t2) => ie.includes(t2.type) || "touch" === t2.pointerType;
-  var oe = (t2) => {
+  var ne2 = (t2) => ie2.includes(t2.type) || "touch" === t2.pointerType;
+  var oe2 = (t2) => {
     t2.preventDefault(), t2.stopPropagation();
   };
-  var ae = (t2) => {
+  var ae2 = (t2) => {
     let e3 = 0, s2 = 0, i2 = 0, r2 = 0;
     for (let n2 = 0, o2 = t2.length; n2 < o2; n2++) {
       const { x: o3, y: a2 } = t2[n2];
@@ -34740,72 +35930,72 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     return { left: e3, top: s2, width: i2 - e3, height: r2 - s2 };
   };
-  var he = ["translateX", "translateY", "scaleX", "scaleY"];
-  var ce = (t2, e3) => le(t2, Tt(e3, t2.calcOwnMatrix()));
-  var le = (t2, e3) => {
-    const s2 = Dt(e3), { translateX: r2, translateY: n2, scaleX: o2, scaleY: a2 } = s2, h3 = i(s2, he), c2 = new ot(r2, n2);
-    t2.flipX = false, t2.flipY = false, Object.assign(t2, h3), t2.set({ scaleX: o2, scaleY: a2 }), t2.setPositionByOrigin(c2, D, D);
+  var he2 = ["translateX", "translateY", "scaleX", "scaleY"];
+  var ce = (t2, e3) => le2(t2, Tt(e3, t2.calcOwnMatrix()));
+  var le2 = (t2, e3) => {
+    const s2 = Dt(e3), { translateX: r2, translateY: n2, scaleX: o2, scaleY: a2 } = s2, h3 = i(s2, he2), c2 = new ot(r2, n2);
+    t2.flipX = false, t2.flipY = false, Object.assign(t2, h3), t2.set({ scaleX: o2, scaleY: a2 }), t2.setPositionByOrigin(c2, D2, D2);
   };
-  var ue = (t2) => {
+  var ue2 = (t2) => {
     t2.scaleX = 1, t2.scaleY = 1, t2.skewX = 0, t2.skewY = 0, t2.flipX = false, t2.flipY = false, t2.rotate(0);
   };
-  var de = (t2) => ({ scaleX: t2.scaleX, scaleY: t2.scaleY, skewX: t2.skewX, skewY: t2.skewY, angle: t2.angle, left: t2.left, flipX: t2.flipX, flipY: t2.flipY, top: t2.top });
-  var ge = (t2, e3, s2) => {
-    const i2 = t2 / 2, r2 = e3 / 2, n2 = [new ot(-i2, -r2), new ot(i2, -r2), new ot(-i2, r2), new ot(i2, r2)].map((t3) => t3.transform(s2)), o2 = ae(n2);
+  var de2 = (t2) => ({ scaleX: t2.scaleX, scaleY: t2.scaleY, skewX: t2.skewX, skewY: t2.skewY, angle: t2.angle, left: t2.left, flipX: t2.flipX, flipY: t2.flipY, top: t2.top });
+  var ge2 = (t2, e3, s2) => {
+    const i2 = t2 / 2, r2 = e3 / 2, n2 = [new ot(-i2, -r2), new ot(i2, -r2), new ot(-i2, r2), new ot(i2, r2)].map((t3) => t3.transform(s2)), o2 = ae2(n2);
     return new ot(o2.width, o2.height);
   };
-  var fe = function() {
+  var fe2 = function() {
     let t2 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : T;
     return Tt(wt(arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : T), t2);
   };
   var pe = function(t2) {
     let e3 = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : T, s2 = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : T;
-    return t2.transform(fe(e3, s2));
+    return t2.transform(fe2(e3, s2));
   };
-  var me = function(t2) {
+  var me2 = function(t2) {
     let e3 = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : T, s2 = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : T;
-    return t2.transform(fe(e3, s2), true);
+    return t2.transform(fe2(e3, s2), true);
   };
-  var ve = (t2, e3, s2) => {
-    const i2 = fe(e3, s2);
-    return le(t2, Tt(i2, t2.calcOwnMatrix())), i2;
+  var ve2 = (t2, e3, s2) => {
+    const i2 = fe2(e3, s2);
+    return le2(t2, Tt(i2, t2.calcOwnMatrix())), i2;
   };
-  var ye = (t2, e3) => {
+  var ye2 = (t2, e3) => {
     var i2;
     const { transform: { target: r2 } } = e3;
     null === (i2 = r2.canvas) || void 0 === i2 || i2.fire("object:".concat(t2), s(s({}, e3), {}, { target: r2 })), r2.fire(t2, e3);
   };
-  var _e = { left: -0.5, top: -0.5, center: 0, bottom: 0.5, right: 0.5 };
-  var xe = (t2) => "string" == typeof t2 ? _e[t2] : t2 - 0.5;
-  var Ce = "not-allowed";
-  function be(t2) {
-    return xe(t2.originX) === xe(D) && xe(t2.originY) === xe(D);
+  var _e2 = { left: -0.5, top: -0.5, center: 0, bottom: 0.5, right: 0.5 };
+  var xe2 = (t2) => "string" == typeof t2 ? _e2[t2] : t2 - 0.5;
+  var Ce2 = "not-allowed";
+  function be2(t2) {
+    return xe2(t2.originX) === xe2(D2) && xe2(t2.originY) === xe2(D2);
   }
   function Se(t2) {
-    return 0.5 - xe(t2);
+    return 0.5 - xe2(t2);
   }
-  var we = (t2, e3) => t2[e3];
-  var Te = (t2, e3, s2, i2) => ({ e: t2, transform: e3, pointer: new ot(s2, i2) });
-  function Oe(t2, e3) {
+  var we2 = (t2, e3) => t2[e3];
+  var Te2 = (t2, e3, s2, i2) => ({ e: t2, transform: e3, pointer: new ot(s2, i2) });
+  function Oe2(t2, e3) {
     const s2 = t2.getTotalAngle() + Ct(Math.atan2(e3.y, e3.x)) + 360;
     return Math.round(s2 % 360 / 45);
   }
-  function ke(t2, e3, s2, i2, r2) {
+  function ke2(t2, e3, s2, i2, r2) {
     var n2;
     let { target: o2, corner: a2 } = t2;
     const h3 = o2.controls[a2], c2 = (null === (n2 = o2.canvas) || void 0 === n2 ? void 0 : n2.getZoom()) || 1, l3 = o2.padding / c2, u2 = function(t3, e4, s3, i3) {
-      const r3 = t3.getRelativeCenterPoint(), n3 = void 0 !== s3 && void 0 !== i3 ? t3.translateToGivenOrigin(r3, D, D, s3, i3) : new ot(t3.left, t3.top);
+      const r3 = t3.getRelativeCenterPoint(), n3 = void 0 !== s3 && void 0 !== i3 ? t3.translateToGivenOrigin(r3, D2, D2, s3, i3) : new ot(t3.left, t3.top);
       return (t3.angle ? e4.rotate(-xt(t3.angle), r3) : e4).subtract(n3);
     }(o2, new ot(i2, r2), e3, s2);
     return u2.x >= l3 && (u2.x -= l3), u2.x <= -l3 && (u2.x += l3), u2.y >= l3 && (u2.y -= l3), u2.y <= l3 && (u2.y += l3), u2.x -= h3.offsetX, u2.y -= h3.offsetY, u2;
   }
-  var De = (t2, e3, s2, i2) => {
-    const { target: r2, offsetX: n2, offsetY: o2 } = e3, a2 = s2 - n2, h3 = i2 - o2, c2 = !we(r2, "lockMovementX") && r2.left !== a2, l3 = !we(r2, "lockMovementY") && r2.top !== h3;
-    return c2 && r2.set(M, a2), l3 && r2.set(P, h3), (c2 || l3) && ye(L, Te(t2, e3, s2, i2)), c2 || l3;
+  var De2 = (t2, e3, s2, i2) => {
+    const { target: r2, offsetX: n2, offsetY: o2 } = e3, a2 = s2 - n2, h3 = i2 - o2, c2 = !we2(r2, "lockMovementX") && r2.left !== a2, l3 = !we2(r2, "lockMovementY") && r2.top !== h3;
+    return c2 && r2.set(M, a2), l3 && r2.set(P, h3), (c2 || l3) && ye2(L, Te2(t2, e3, s2, i2)), c2 || l3;
   };
-  var Me = { aliceblue: "#F0F8FF", antiquewhite: "#FAEBD7", aqua: "#0FF", aquamarine: "#7FFFD4", azure: "#F0FFFF", beige: "#F5F5DC", bisque: "#FFE4C4", black: "#000", blanchedalmond: "#FFEBCD", blue: "#00F", blueviolet: "#8A2BE2", brown: "#A52A2A", burlywood: "#DEB887", cadetblue: "#5F9EA0", chartreuse: "#7FFF00", chocolate: "#D2691E", coral: "#FF7F50", cornflowerblue: "#6495ED", cornsilk: "#FFF8DC", crimson: "#DC143C", cyan: "#0FF", darkblue: "#00008B", darkcyan: "#008B8B", darkgoldenrod: "#B8860B", darkgray: "#A9A9A9", darkgrey: "#A9A9A9", darkgreen: "#006400", darkkhaki: "#BDB76B", darkmagenta: "#8B008B", darkolivegreen: "#556B2F", darkorange: "#FF8C00", darkorchid: "#9932CC", darkred: "#8B0000", darksalmon: "#E9967A", darkseagreen: "#8FBC8F", darkslateblue: "#483D8B", darkslategray: "#2F4F4F", darkslategrey: "#2F4F4F", darkturquoise: "#00CED1", darkviolet: "#9400D3", deeppink: "#FF1493", deepskyblue: "#00BFFF", dimgray: "#696969", dimgrey: "#696969", dodgerblue: "#1E90FF", firebrick: "#B22222", floralwhite: "#FFFAF0", forestgreen: "#228B22", fuchsia: "#F0F", gainsboro: "#DCDCDC", ghostwhite: "#F8F8FF", gold: "#FFD700", goldenrod: "#DAA520", gray: "#808080", grey: "#808080", green: "#008000", greenyellow: "#ADFF2F", honeydew: "#F0FFF0", hotpink: "#FF69B4", indianred: "#CD5C5C", indigo: "#4B0082", ivory: "#FFFFF0", khaki: "#F0E68C", lavender: "#E6E6FA", lavenderblush: "#FFF0F5", lawngreen: "#7CFC00", lemonchiffon: "#FFFACD", lightblue: "#ADD8E6", lightcoral: "#F08080", lightcyan: "#E0FFFF", lightgoldenrodyellow: "#FAFAD2", lightgray: "#D3D3D3", lightgrey: "#D3D3D3", lightgreen: "#90EE90", lightpink: "#FFB6C1", lightsalmon: "#FFA07A", lightseagreen: "#20B2AA", lightskyblue: "#87CEFA", lightslategray: "#789", lightslategrey: "#789", lightsteelblue: "#B0C4DE", lightyellow: "#FFFFE0", lime: "#0F0", limegreen: "#32CD32", linen: "#FAF0E6", magenta: "#F0F", maroon: "#800000", mediumaquamarine: "#66CDAA", mediumblue: "#0000CD", mediumorchid: "#BA55D3", mediumpurple: "#9370DB", mediumseagreen: "#3CB371", mediumslateblue: "#7B68EE", mediumspringgreen: "#00FA9A", mediumturquoise: "#48D1CC", mediumvioletred: "#C71585", midnightblue: "#191970", mintcream: "#F5FFFA", mistyrose: "#FFE4E1", moccasin: "#FFE4B5", navajowhite: "#FFDEAD", navy: "#000080", oldlace: "#FDF5E6", olive: "#808000", olivedrab: "#6B8E23", orange: "#FFA500", orangered: "#FF4500", orchid: "#DA70D6", palegoldenrod: "#EEE8AA", palegreen: "#98FB98", paleturquoise: "#AFEEEE", palevioletred: "#DB7093", papayawhip: "#FFEFD5", peachpuff: "#FFDAB9", peru: "#CD853F", pink: "#FFC0CB", plum: "#DDA0DD", powderblue: "#B0E0E6", purple: "#800080", rebeccapurple: "#639", red: "#F00", rosybrown: "#BC8F8F", royalblue: "#4169E1", saddlebrown: "#8B4513", salmon: "#FA8072", sandybrown: "#F4A460", seagreen: "#2E8B57", seashell: "#FFF5EE", sienna: "#A0522D", silver: "#C0C0C0", skyblue: "#87CEEB", slateblue: "#6A5ACD", slategray: "#708090", slategrey: "#708090", snow: "#FFFAFA", springgreen: "#00FF7F", steelblue: "#4682B4", tan: "#D2B48C", teal: "#008080", thistle: "#D8BFD8", tomato: "#FF6347", turquoise: "#40E0D0", violet: "#EE82EE", wheat: "#F5DEB3", white: "#FFF", whitesmoke: "#F5F5F5", yellow: "#FF0", yellowgreen: "#9ACD32" };
+  var Me2 = { aliceblue: "#F0F8FF", antiquewhite: "#FAEBD7", aqua: "#0FF", aquamarine: "#7FFFD4", azure: "#F0FFFF", beige: "#F5F5DC", bisque: "#FFE4C4", black: "#000", blanchedalmond: "#FFEBCD", blue: "#00F", blueviolet: "#8A2BE2", brown: "#A52A2A", burlywood: "#DEB887", cadetblue: "#5F9EA0", chartreuse: "#7FFF00", chocolate: "#D2691E", coral: "#FF7F50", cornflowerblue: "#6495ED", cornsilk: "#FFF8DC", crimson: "#DC143C", cyan: "#0FF", darkblue: "#00008B", darkcyan: "#008B8B", darkgoldenrod: "#B8860B", darkgray: "#A9A9A9", darkgrey: "#A9A9A9", darkgreen: "#006400", darkkhaki: "#BDB76B", darkmagenta: "#8B008B", darkolivegreen: "#556B2F", darkorange: "#FF8C00", darkorchid: "#9932CC", darkred: "#8B0000", darksalmon: "#E9967A", darkseagreen: "#8FBC8F", darkslateblue: "#483D8B", darkslategray: "#2F4F4F", darkslategrey: "#2F4F4F", darkturquoise: "#00CED1", darkviolet: "#9400D3", deeppink: "#FF1493", deepskyblue: "#00BFFF", dimgray: "#696969", dimgrey: "#696969", dodgerblue: "#1E90FF", firebrick: "#B22222", floralwhite: "#FFFAF0", forestgreen: "#228B22", fuchsia: "#F0F", gainsboro: "#DCDCDC", ghostwhite: "#F8F8FF", gold: "#FFD700", goldenrod: "#DAA520", gray: "#808080", grey: "#808080", green: "#008000", greenyellow: "#ADFF2F", honeydew: "#F0FFF0", hotpink: "#FF69B4", indianred: "#CD5C5C", indigo: "#4B0082", ivory: "#FFFFF0", khaki: "#F0E68C", lavender: "#E6E6FA", lavenderblush: "#FFF0F5", lawngreen: "#7CFC00", lemonchiffon: "#FFFACD", lightblue: "#ADD8E6", lightcoral: "#F08080", lightcyan: "#E0FFFF", lightgoldenrodyellow: "#FAFAD2", lightgray: "#D3D3D3", lightgrey: "#D3D3D3", lightgreen: "#90EE90", lightpink: "#FFB6C1", lightsalmon: "#FFA07A", lightseagreen: "#20B2AA", lightskyblue: "#87CEFA", lightslategray: "#789", lightslategrey: "#789", lightsteelblue: "#B0C4DE", lightyellow: "#FFFFE0", lime: "#0F0", limegreen: "#32CD32", linen: "#FAF0E6", magenta: "#F0F", maroon: "#800000", mediumaquamarine: "#66CDAA", mediumblue: "#0000CD", mediumorchid: "#BA55D3", mediumpurple: "#9370DB", mediumseagreen: "#3CB371", mediumslateblue: "#7B68EE", mediumspringgreen: "#00FA9A", mediumturquoise: "#48D1CC", mediumvioletred: "#C71585", midnightblue: "#191970", mintcream: "#F5FFFA", mistyrose: "#FFE4E1", moccasin: "#FFE4B5", navajowhite: "#FFDEAD", navy: "#000080", oldlace: "#FDF5E6", olive: "#808000", olivedrab: "#6B8E23", orange: "#FFA500", orangered: "#FF4500", orchid: "#DA70D6", palegoldenrod: "#EEE8AA", palegreen: "#98FB98", paleturquoise: "#AFEEEE", palevioletred: "#DB7093", papayawhip: "#FFEFD5", peachpuff: "#FFDAB9", peru: "#CD853F", pink: "#FFC0CB", plum: "#DDA0DD", powderblue: "#B0E0E6", purple: "#800080", rebeccapurple: "#639", red: "#F00", rosybrown: "#BC8F8F", royalblue: "#4169E1", saddlebrown: "#8B4513", salmon: "#FA8072", sandybrown: "#F4A460", seagreen: "#2E8B57", seashell: "#FFF5EE", sienna: "#A0522D", silver: "#C0C0C0", skyblue: "#87CEEB", slateblue: "#6A5ACD", slategray: "#708090", slategrey: "#708090", snow: "#FFFAFA", springgreen: "#00FF7F", steelblue: "#4682B4", tan: "#D2B48C", teal: "#008080", thistle: "#D8BFD8", tomato: "#FF6347", turquoise: "#40E0D0", violet: "#EE82EE", wheat: "#F5DEB3", white: "#FFF", whitesmoke: "#F5F5F5", yellow: "#FF0", yellowgreen: "#9ACD32" };
   var Pe = (t2, e3, s2) => (s2 < 0 && (s2 += 1), s2 > 1 && (s2 -= 1), s2 < 1 / 6 ? t2 + 6 * (e3 - t2) * s2 : s2 < 0.5 ? e3 : s2 < 2 / 3 ? t2 + (e3 - t2) * (2 / 3 - s2) * 6 : t2);
-  var Ee = (t2, e3, s2, i2) => {
+  var Ee2 = (t2, e3, s2, i2) => {
     t2 /= 255, e3 /= 255, s2 /= 255;
     const r2 = Math.max(t2, e3, s2), n2 = Math.min(t2, e3, s2);
     let o2, a2;
@@ -34852,7 +36042,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         this.setSource([0, 0, 0, 1]);
     }
     _tryParsingColor(t2) {
-      return (t2 = t2.toLowerCase()) in Me && (t2 = Me[t2]), "transparent" === t2 ? [255, 255, 255, 0] : Le.sourceFromHex(t2) || Le.sourceFromRgb(t2) || Le.sourceFromHsl(t2) || (this.isUnrecognised = true) && [0, 0, 0, 1];
+      return (t2 = t2.toLowerCase()) in Me2 && (t2 = Me2[t2]), "transparent" === t2 ? [255, 255, 255, 0] : Le.sourceFromHex(t2) || Le.sourceFromRgb(t2) || Le.sourceFromHsl(t2) || (this.isUnrecognised = true) && [0, 0, 0, 1];
     }
     getSource() {
       return this._source;
@@ -34868,11 +36058,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return "rgba(".concat(this.getSource().join(","), ")");
     }
     toHsl() {
-      const [t2, e3, s2] = Ee(...this.getSource());
+      const [t2, e3, s2] = Ee2(...this.getSource());
       return "hsl(".concat(t2, ",").concat(e3, "%,").concat(s2, "%)");
     }
     toHsla() {
-      const [t2, e3, s2, i2] = Ee(...this.getSource());
+      const [t2, e3, s2, i2] = Ee2(...this.getSource());
       return "hsla(".concat(t2, ",").concat(e3, "%,").concat(s2, "%,").concat(i2, ")");
     }
     toHex() {
@@ -34953,7 +36143,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return e3.includes("rad") ? Ct(s2) : e3.includes("turn") ? 360 * s2 : s2;
     }
   };
-  var Re = function(t2) {
+  var Re2 = function(t2) {
     let e3 = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : O;
     const s2 = /\D{0,2}$/.exec(t2), i2 = parseFloat(t2), r2 = o.DPI;
     switch (null == s2 ? void 0 : s2[0]) {
@@ -34973,7 +36163,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return i2;
     }
   };
-  var Ie = (t2) => {
+  var Ie2 = (t2) => {
     const [e3, s2] = t2.trim().split(" "), [i2, r2] = (n2 = e3) && n2 !== j ? [n2.slice(1, 4), n2.slice(5, 8)] : n2 === j ? [n2, n2] : ["Mid", "Mid"];
     var n2;
     return { meetOrSlice: s2 || "meet", alignX: i2, alignY: r2 };
@@ -34993,7 +36183,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   var Xe = class {
     getSvgStyles(t2) {
-      const e3 = this.fillRule ? this.fillRule : "nonzero", s2 = this.strokeWidth ? this.strokeWidth : "0", i2 = this.strokeDashArray ? this.strokeDashArray.join(" ") : j, r2 = this.strokeDashOffset ? this.strokeDashOffset : "0", n2 = this.strokeLineCap ? this.strokeLineCap : "butt", o2 = this.strokeLineJoin ? this.strokeLineJoin : "miter", a2 = this.strokeMiterLimit ? this.strokeMiterLimit : "4", h3 = void 0 !== this.opacity ? this.opacity : "1", c2 = this.visible ? "" : " visibility: hidden;", l3 = t2 ? "" : this.getSvgFilter(), u2 = Be(K, this.fill);
+      const e3 = this.fillRule ? this.fillRule : "nonzero", s2 = this.strokeWidth ? this.strokeWidth : "0", i2 = this.strokeDashArray ? this.strokeDashArray.join(" ") : j, r2 = this.strokeDashOffset ? this.strokeDashOffset : "0", n2 = this.strokeLineCap ? this.strokeLineCap : "butt", o2 = this.strokeLineJoin ? this.strokeLineJoin : "miter", a2 = this.strokeMiterLimit ? this.strokeMiterLimit : "4", h3 = void 0 !== this.opacity ? this.opacity : "1", c2 = this.visible ? "" : " visibility: hidden;", l3 = t2 ? "" : this.getSvgFilter(), u2 = Be(K2, this.fill);
       return [Be(J, this.stroke), "stroke-width: ", s2, "; ", "stroke-dasharray: ", i2, "; ", "stroke-linecap: ", n2, "; ", "stroke-dashoffset: ", r2, "; ", "stroke-linejoin: ", o2, "; ", "stroke-miterlimit: ", a2, "; ", u2, "fill-rule: ", e3, "; ", "opacity: ", h3, ";", l3, c2].join("");
     }
     getSvgFilter() {
@@ -35030,19 +36220,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return t2[f] = m2, Gt(u2) && g2.push(u2.toSVG(this)), Gt(l3) && g2.push(l3.toSVG(this)), d2 && g2.push(d2.toSVG(this)), a2 && g2.push(p2), g2.push(t2.join("")), g2.push("</g>\n"), c2 && g2.push("</g>\n"), s2 ? s2(g2.join("")) : g2.join("");
     }
     addPaintOrder() {
-      return this.paintFirst !== K ? ' paint-order="'.concat(this.paintFirst, '" ') : "";
+      return this.paintFirst !== K2 ? ' paint-order="'.concat(this.paintFirst, '" ') : "";
     }
   };
   function Ye(t2) {
     return new RegExp("^(" + t2.join("|") + ")\\b", "i");
   }
-  var We = "textDecorationThickness";
-  var Ve = ["fontSize", "fontWeight", "fontFamily", "fontStyle"];
-  var ze = ["underline", "overline", "linethrough"];
-  var Ge = [...Ve, "lineHeight", "text", "charSpacing", "textAlign", "styles", "path", "pathStartOffset", "pathSide", "pathAlign"];
-  var He = [...Ge, ...ze, "textBackgroundColor", "direction", We];
-  var Ne = [...Ve, ...ze, J, "strokeWidth", K, "deltaY", "textBackgroundColor", We];
-  var Ue = { _reNewline: F, _reSpacesAndTabs: /[ \t\r]/g, _reSpaceAndTab: /[ \t\r]/, _reWords: /\S+/g, fontSize: 40, fontWeight: "normal", fontFamily: "Times New Roman", underline: false, overline: false, linethrough: false, textAlign: M, fontStyle: "normal", lineHeight: 1.16, textBackgroundColor: "", stroke: null, shadow: null, path: void 0, pathStartOffset: 0, pathSide: M, pathAlign: "baseline", charSpacing: 0, deltaY: 0, direction: "ltr", CACHE_FONT_SIZE: 400, MIN_TEXT_WIDTH: 2, superscript: { size: 0.6, baseline: -0.35 }, subscript: { size: 0.6, baseline: 0.11 }, _fontSizeFraction: 0.222, offsets: { underline: 0.1, linethrough: -0.28167, overline: -0.81333 }, _fontSizeMult: 1.13, [We]: 66.667 };
+  var We2 = "textDecorationThickness";
+  var Ve2 = ["fontSize", "fontWeight", "fontFamily", "fontStyle"];
+  var ze2 = ["underline", "overline", "linethrough"];
+  var Ge = [...Ve2, "lineHeight", "text", "charSpacing", "textAlign", "styles", "path", "pathStartOffset", "pathSide", "pathAlign"];
+  var He2 = [...Ge, ...ze2, "textBackgroundColor", "direction", We2];
+  var Ne = [...Ve2, ...ze2, J, "strokeWidth", K2, "deltaY", "textBackgroundColor", We2];
+  var Ue2 = { _reNewline: F, _reSpacesAndTabs: /[ \t\r]/g, _reSpaceAndTab: /[ \t\r]/, _reWords: /\S+/g, fontSize: 40, fontWeight: "normal", fontFamily: "Times New Roman", underline: false, overline: false, linethrough: false, textAlign: M, fontStyle: "normal", lineHeight: 1.16, textBackgroundColor: "", stroke: null, shadow: null, path: void 0, pathStartOffset: 0, pathSide: M, pathAlign: "baseline", charSpacing: 0, deltaY: 0, direction: "ltr", CACHE_FONT_SIZE: 400, MIN_TEXT_WIDTH: 2, superscript: { size: 0.6, baseline: -0.35 }, subscript: { size: 0.6, baseline: 0.11 }, _fontSizeFraction: 0.222, offsets: { underline: 0.1, linethrough: -0.28167, overline: -0.81333 }, _fontSizeMult: 1.13, [We2]: 66.667 };
   var qe = "justify";
   var Ke = "justify-left";
   var Je = "justify-right";
@@ -35053,7 +36243,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var es = String.raw(Ze || (Ze = r(["[-+]?(?:d*.d+|d+.?)(?:[eE][-+]?d+)?"], ["[-+]?(?:\\d*\\.\\d+|\\d+\\.?)(?:[eE][-+]?\\d+)?"])));
   var ss = String.raw($e || ($e = r(["(?:s*,?s+|s*,s*)"], ["(?:\\s*,?\\s+|\\s*,\\s*)"])));
   var rs = new RegExp("(normal|italic)?\\s*(normal|small-caps)?\\s*(normal|bold|bolder|lighter|100|200|300|400|500|600|700|800|900)?\\s*(" + es + "(?:px|cm|mm|em|pt|pc|in)*)(?:\\/(normal|" + es + "))?\\s+(.*)");
-  var ns = { cx: M, x: M, r: "radius", cy: P, y: P, display: "visible", visibility: "visible", transform: "transformMatrix", "fill-opacity": "fillOpacity", "fill-rule": "fillRule", "font-family": "fontFamily", "font-size": "fontSize", "font-style": "fontStyle", "font-weight": "fontWeight", "letter-spacing": "charSpacing", "paint-order": "paintFirst", "stroke-dasharray": "strokeDashArray", "stroke-dashoffset": "strokeDashOffset", "stroke-linecap": "strokeLineCap", "stroke-linejoin": "strokeLineJoin", "stroke-miterlimit": "strokeMiterLimit", "stroke-opacity": "strokeOpacity", "stroke-width": "strokeWidth", "text-decoration": "textDecoration", "text-anchor": "textAnchor", opacity: "opacity", "clip-path": "clipPath", "clip-rule": "clipRule", "vector-effect": "strokeUniform", "image-rendering": "imageSmoothing", "text-decoration-thickness": We };
+  var ns = { cx: M, x: M, r: "radius", cy: P, y: P, display: "visible", visibility: "visible", transform: "transformMatrix", "fill-opacity": "fillOpacity", "fill-rule": "fillRule", "font-family": "fontFamily", "font-size": "fontSize", "font-style": "fontStyle", "font-weight": "fontWeight", "letter-spacing": "charSpacing", "paint-order": "paintFirst", "stroke-dasharray": "strokeDashArray", "stroke-dashoffset": "strokeDashOffset", "stroke-linecap": "strokeLineCap", "stroke-linejoin": "strokeLineJoin", "stroke-miterlimit": "strokeMiterLimit", "stroke-opacity": "strokeOpacity", "stroke-width": "strokeWidth", "text-decoration": "textDecoration", "text-anchor": "textAnchor", opacity: "opacity", "clip-path": "clipPath", "clip-rule": "clipRule", "vector-effect": "strokeUniform", "image-rendering": "imageSmoothing", "text-decoration-thickness": We2 };
   var os = "font-size";
   var as = "clip-path";
   var hs = Ye(["path", "circle", "polygon", "polyline", "ellipse", "rect", "line", "image", "text"]);
@@ -35109,11 +36299,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   t(Os, "ownDefaults", { color: "rgb(0,0,0)", blur: 0, offsetX: 0, offsetY: 0, affectStroke: false, includeDefaultValues: true, nonScaling: false }), t(Os, "type", "shadow"), tt.setClass(Os, "shadow");
   var ks = (t2, e3, s2) => Math.max(t2, Math.min(e3, s2));
-  var Ds = [P, M, H, N, "flipX", "flipY", "originX", "originY", "angle", "opacity", "globalCompositeOperation", "shadow", "visible", U, q];
-  var Ms = [K, J, "strokeWidth", "strokeDashArray", "width", "height", "paintFirst", "strokeUniform", "strokeLineCap", "strokeDashOffset", "strokeLineJoin", "strokeMiterLimit", "backgroundColor", "clipPath"];
-  var Ps = { top: 0, left: 0, width: 0, height: 0, angle: 0, flipX: false, flipY: false, scaleX: 1, scaleY: 1, minScaleLimit: 0, skewX: 0, skewY: 0, originX: M, originY: P, strokeWidth: 1, strokeUniform: false, padding: 0, opacity: 1, paintFirst: K, fill: "rgb(0,0,0)", fillRule: "nonzero", stroke: null, strokeDashArray: null, strokeDashOffset: 0, strokeLineCap: "butt", strokeLineJoin: "miter", strokeMiterLimit: 4, globalCompositeOperation: "source-over", backgroundColor: "", shadow: null, visible: true, includeDefaultValues: true, excludeFromExport: false, objectCaching: true, clipPath: void 0, inverted: false, absolutePositioned: false, centeredRotation: true, centeredScaling: false, dirty: true };
-  var Es = (t2, e3, s2, i2) => (t2 < Math.abs(e3) ? (t2 = e3, i2 = s2 / 4) : i2 = 0 === e3 && 0 === t2 ? s2 / S * Math.asin(1) : s2 / S * Math.asin(e3 / t2), { a: t2, c: e3, p: s2, s: i2 });
-  var As = (t2, e3, s2, i2, r2) => t2 * Math.pow(2, 10 * (i2 -= 1)) * Math.sin((i2 * r2 - e3) * S / s2);
+  var Ds = [P, M, H2, N, "flipX", "flipY", "originX", "originY", "angle", "opacity", "globalCompositeOperation", "shadow", "visible", U, q];
+  var Ms = [K2, J, "strokeWidth", "strokeDashArray", "width", "height", "paintFirst", "strokeUniform", "strokeLineCap", "strokeDashOffset", "strokeLineJoin", "strokeMiterLimit", "backgroundColor", "clipPath"];
+  var Ps = { top: 0, left: 0, width: 0, height: 0, angle: 0, flipX: false, flipY: false, scaleX: 1, scaleY: 1, minScaleLimit: 0, skewX: 0, skewY: 0, originX: M, originY: P, strokeWidth: 1, strokeUniform: false, padding: 0, opacity: 1, paintFirst: K2, fill: "rgb(0,0,0)", fillRule: "nonzero", stroke: null, strokeDashArray: null, strokeDashOffset: 0, strokeLineCap: "butt", strokeLineJoin: "miter", strokeMiterLimit: 4, globalCompositeOperation: "source-over", backgroundColor: "", shadow: null, visible: true, includeDefaultValues: true, excludeFromExport: false, objectCaching: true, clipPath: void 0, inverted: false, absolutePositioned: false, centeredRotation: true, centeredScaling: false, dirty: true };
+  var Es = (t2, e3, s2, i2) => (t2 < Math.abs(e3) ? (t2 = e3, i2 = s2 / 4) : i2 = 0 === e3 && 0 === t2 ? s2 / S2 * Math.asin(1) : s2 / S2 * Math.asin(e3 / t2), { a: t2, c: e3, p: s2, s: i2 });
+  var As = (t2, e3, s2, i2, r2) => t2 * Math.pow(2, 10 * (i2 -= 1)) * Math.sin((i2 * r2 - e3) * S2 / s2);
   var js = (t2, e3, s2, i2) => -s2 * Math.cos(t2 / i2 * b) + s2 + e3;
   var Fs = (t2, e3, s2, i2) => (t2 /= i2) < 1 / 2.75 ? s2 * (7.5625 * t2 * t2) + e3 : t2 < 2 / 2.75 ? s2 * (7.5625 * (t2 -= 1.5 / 2.75) * t2 + 0.75) + e3 : t2 < 2.5 / 2.75 ? s2 * (7.5625 * (t2 -= 2.25 / 2.75) * t2 + 0.9375) + e3 : s2 * (7.5625 * (t2 -= 2.625 / 2.75) * t2 + 0.984375) + e3;
   var Ls = (t2, e3, s2, i2) => s2 - Fs(i2 - t2, 0, s2, i2) + e3;
@@ -35142,7 +36332,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return e3 + s2;
     n2 || (n2 = i2 * (0.3 * 1.5));
     const { a: o2, s: a2, p: h3, c: c2 } = Es(r2, s2, n2, 1.70158);
-    return t2 < 1 ? -0.5 * As(o2, a2, h3, t2, i2) + e3 : o2 * Math.pow(2, -10 * (t2 -= 1)) * Math.sin((t2 * i2 - a2) * S / h3) * 0.5 + c2 + e3;
+    return t2 < 1 ? -0.5 * As(o2, a2, h3, t2, i2) + e3 : o2 * Math.pow(2, -10 * (t2 -= 1)) * Math.sin((t2 * i2 - a2) * S2 / h3) * 0.5 + c2 + e3;
   }, easeInOutExpo: (t2, e3, s2, i2) => 0 === t2 ? e3 : t2 === i2 ? e3 + s2 : (t2 /= i2 / 2) < 1 ? s2 / 2 * 2 ** (10 * (t2 - 1)) + e3 : s2 / 2 * -(2 ** (-10 * --t2) + 2) + e3, easeInOutQuad: (t2, e3, s2, i2) => (t2 /= i2 / 2) < 1 ? s2 / 2 * t2 ** 2 + e3 : -s2 / 2 * (--t2 * (t2 - 2) - 1) + e3, easeInOutQuart: (t2, e3, s2, i2) => (t2 /= i2 / 2) < 1 ? s2 / 2 * t2 ** 4 + e3 : -s2 / 2 * ((t2 -= 2) * t2 ** 3 - 2) + e3, easeInOutQuint: (t2, e3, s2, i2) => (t2 /= i2 / 2) < 1 ? s2 / 2 * t2 ** 5 + e3 : s2 / 2 * ((t2 - 2) ** 5 + 2) + e3, easeInOutSine: (t2, e3, s2, i2) => -s2 / 2 * (Math.cos(Math.PI * t2 / i2) - 1) + e3, easeInQuad: (t2, e3, s2, i2) => s2 * (t2 /= i2) * t2 + e3, easeInQuart: (t2, e3, s2, i2) => s2 * (t2 /= i2) * t2 ** 3 + e3, easeInQuint: (t2, e3, s2, i2) => s2 * (t2 / i2) ** 5 + e3, easeInSine: (t2, e3, s2, i2) => -s2 * Math.cos(t2 / i2 * b) + s2 + e3, easeOutBack: function(t2, e3, s2, i2) {
     let r2 = arguments.length > 4 && void 0 !== arguments[4] ? arguments[4] : 1.70158;
     return s2 * ((t2 = t2 / i2 - 1) * t2 * ((r2 + 1) * t2 + r2) + 1) + e3;
@@ -35155,12 +36345,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return e3 + s2;
     n2 || (n2 = 0.3 * i2);
     const { a: o2, s: a2, p: h3, c: c2 } = Es(r2, s2, n2, 1.70158);
-    return o2 * 2 ** (-10 * t2) * Math.sin((t2 * i2 - a2) * S / h3) + c2 + e3;
+    return o2 * 2 ** (-10 * t2) * Math.sin((t2 * i2 - a2) * S2 / h3) + c2 + e3;
   }, easeOutExpo: (t2, e3, s2, i2) => t2 === i2 ? e3 + s2 : s2 * -(2 ** (-10 * t2 / i2) + 1) + e3, easeOutQuad: (t2, e3, s2, i2) => -s2 * (t2 /= i2) * (t2 - 2) + e3, easeOutQuart: (t2, e3, s2, i2) => -s2 * ((t2 = t2 / i2 - 1) * t2 ** 3 - 1) + e3, easeOutQuint: (t2, e3, s2, i2) => s2 * ((t2 / i2 - 1) ** 5 + 1) + e3, easeOutSine: (t2, e3, s2, i2) => s2 * Math.sin(t2 / i2 * b) + e3 });
   var Is = () => false;
   var Bs = class {
     constructor(e3) {
-      let { startValue: s2, byValue: i2, duration: r2 = 500, delay: n2 = 0, easing: o2 = js, onStart: a2 = C, onChange: h3 = C, onComplete: c2 = C, abort: l3 = Is, target: u2 } = e3;
+      let { startValue: s2, byValue: i2, duration: r2 = 500, delay: n2 = 0, easing: o2 = js, onStart: a2 = C2, onChange: h3 = C2, onComplete: c2 = C2, abort: l3 = Is, target: u2 } = e3;
       t(this, "_state", "pending"), t(this, "durationProgress", 0), t(this, "valueProgress", 0), this.tick = this.tick.bind(this), this.duration = r2, this.delay = n2, this.easing = o2, this._onStart = a2, this._onChange = h3, this._onComplete = c2, this._abort = l3, this.target = u2, this.startValue = s2, this.byValue = i2, this.value = this.startValue, this.endValue = Object.freeze(this.calculate(this.duration).value);
     }
     get state() {
@@ -35401,7 +36591,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return this.getCoords().every((s2) => (s2.x >= e3.x || s2.x <= t2.x) && (s2.y >= e3.y || s2.y <= t2.y)) && this.containsPoint(t2.midPointFrom(e3));
     }
     getBoundingRect() {
-      return ae(this.getCoords());
+      return ae2(this.getCoords());
     }
     getScaledWidth() {
       return this._getTransformedDimensions().x;
@@ -35410,7 +36600,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return this._getTransformedDimensions().y;
     }
     scale(t2) {
-      this._set(H, t2), this._set(N, t2), this.setCoords();
+      this._set(H2, t2), this._set(N, t2), this.setCoords();
     }
     scaleToWidth(t2) {
       const e3 = this.getBoundingRect().width / this.getScaledWidth();
@@ -35440,7 +36630,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     transformMatrixKey() {
       let t2 = arguments.length > 0 && void 0 !== arguments[0] && arguments[0], e3 = [];
-      return !t2 && this.group && (e3 = this.group.transformMatrixKey(t2)), e3.push(this.top, this.left, this.width, this.height, this.scaleX, this.scaleY, this.angle, this.strokeWidth, this.skewX, this.skewY, +this.flipX, +this.flipY, xe(this.originX), xe(this.originY)), e3;
+      return !t2 && this.group && (e3 = this.group.transformMatrixKey(t2)), e3.push(this.top, this.left, this.width, this.height, this.scaleX, this.scaleY, this.angle, this.strokeWidth, this.skewX, this.skewY, +this.flipX, +this.flipY, xe2(this.originX), xe2(this.originY)), e3;
     }
     calcTransformMatrix() {
       let t2 = arguments.length > 0 && void 0 !== arguments[0] && arguments[0], e3 = this.calcOwnMatrix();
@@ -35469,11 +36659,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       this.strokeUniform && (r2 = 0, n2 = i2);
       const o2 = e3.width + r2, a2 = e3.height + r2;
       let h3;
-      return h3 = 0 === e3.skewX && 0 === e3.skewY ? new ot(o2 * e3.scaleX, a2 * e3.scaleY) : ge(o2, a2, Lt(e3)), h3.scalarAdd(n2);
+      return h3 = 0 === e3.skewX && 0 === e3.skewY ? new ot(o2 * e3.scaleX, a2 * e3.scaleY) : ge2(o2, a2, Lt(e3)), h3.scalarAdd(n2);
     }
     translateToGivenOrigin(t2, e3, s2, i2, r2) {
       let n2 = t2.x, o2 = t2.y;
-      const a2 = xe(i2) - xe(e3), h3 = xe(r2) - xe(s2);
+      const a2 = xe2(i2) - xe2(e3), h3 = xe2(r2) - xe2(s2);
       if (a2 || h3) {
         const t3 = this._getTransformedDimensions();
         n2 += a2 * t3.x, o2 += h3 * t3.y;
@@ -35481,13 +36671,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return new ot(n2, o2);
     }
     translateToCenterPoint(t2, e3, s2) {
-      if (e3 === D && s2 === D)
+      if (e3 === D2 && s2 === D2)
         return t2;
-      const i2 = this.translateToGivenOrigin(t2, e3, s2, D, D);
+      const i2 = this.translateToGivenOrigin(t2, e3, s2, D2, D2);
       return this.angle ? i2.rotate(xt(this.angle), t2) : i2;
     }
     translateToOriginPoint(t2, e3, s2) {
-      const i2 = this.translateToGivenOrigin(t2, D, D, e3, s2);
+      const i2 = this.translateToGivenOrigin(t2, D2, D2, e3, s2);
       return this.angle ? i2.rotate(xt(this.angle), t2) : i2;
     }
     getCenterPoint() {
@@ -35531,7 +36721,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const e3 = t2.width, s2 = t2.height, i2 = o.maxCacheSideLimit, r2 = o.minCacheSideLimit;
       if (e3 <= i2 && s2 <= i2 && e3 * s2 <= o.perfLimitSizeTotal)
         return e3 < r2 && (t2.width = r2), s2 < r2 && (t2.height = r2), t2;
-      const n2 = e3 / s2, [a2, h3] = _.limitDimsByArea(n2), c2 = ks(r2, a2, i2), l3 = ks(r2, h3, i2);
+      const n2 = e3 / s2, [a2, h3] = _2.limitDimsByArea(n2), c2 = ks(r2, a2, i2), l3 = ks(r2, h3, i2);
       return e3 > c2 && (t2.zoomX /= e3 / c2, t2.width = c2, t2.capped = true), s2 > l3 && (t2.zoomY /= s2 / l3, t2.height = l3, t2.capped = true), t2;
     }
     _getCacheCanvasDimensions() {
@@ -35579,7 +36769,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return Math.abs(t2) < this.minScaleLimit ? t2 < 0 ? -this.minScaleLimit : this.minScaleLimit : 0 === t2 ? 1e-4 : t2;
     }
     _set(t2, e3) {
-      t2 !== H && t2 !== N || (e3 = this._constrainScale(e3)), t2 === H && e3 < 0 ? (this.flipX = !this.flipX, e3 *= -1) : "scaleY" === t2 && e3 < 0 ? (this.flipY = !this.flipY, e3 *= -1) : "shadow" !== t2 || !e3 || e3 instanceof Os || (e3 = new Os(e3));
+      t2 !== H2 && t2 !== N || (e3 = this._constrainScale(e3)), t2 === H2 && e3 < 0 ? (this.flipX = !this.flipX, e3 *= -1) : "scaleY" === t2 && e3 < 0 ? (this.flipY = !this.flipY, e3 *= -1) : "shadow" !== t2 || !e3 || e3 instanceof Os || (e3 = new Os(e3));
       const s2 = this[t2] !== e3;
       return this[t2] = e3, s2 && this.constructor.cacheProperties.includes(t2) && (this.dirty = true), this.parent && (this.dirty || s2 && this.constructor.stateProperties.includes(t2)) && this.parent._set("dirty", true), this;
     }
@@ -35722,8 +36912,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     toCanvasElement() {
       let t2 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {};
-      const e3 = de(this), s2 = this.group, i2 = this.shadow, r2 = Math.abs, n2 = t2.enableRetinaScaling ? y() : 1, o2 = (t2.multiplier || 1) * n2, a2 = t2.canvasProvider || ((t3) => new se(t3, { enableRetinaScaling: false, renderOnAddRemove: false, skipOffscreen: false }));
-      delete this.group, t2.withoutTransform && ue(this), t2.withoutShadow && (this.shadow = null), t2.viewportTransform && ve(this, this.getViewportTransform()), this.setCoords();
+      const e3 = de2(this), s2 = this.group, i2 = this.shadow, r2 = Math.abs, n2 = t2.enableRetinaScaling ? y() : 1, o2 = (t2.multiplier || 1) * n2, a2 = t2.canvasProvider || ((t3) => new se2(t3, { enableRetinaScaling: false, renderOnAddRemove: false, skipOffscreen: false }));
+      delete this.group, t2.withoutTransform && ue2(this), t2.withoutShadow && (this.shadow = null), t2.viewportTransform && ve2(this, this.getViewportTransform()), this.setCoords();
       const h3 = pt(), c2 = this.getBoundingRect(), l3 = this.shadow, u2 = new ot();
       if (l3) {
         const t3 = l3.blur, e4 = l3.nonScaling ? new ot(1, 1) : this.getObjectScaling();
@@ -35732,7 +36922,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const d2 = c2.width + u2.x, g2 = c2.height + u2.y;
       h3.width = Math.ceil(d2), h3.height = Math.ceil(g2);
       const f = a2(h3);
-      "jpeg" === t2.format && (f.backgroundColor = "#fff"), this.setPositionByOrigin(new ot(f.width / 2, f.height / 2), D, D);
+      "jpeg" === t2.format && (f.backgroundColor = "#fff"), this.setPositionByOrigin(new ot(f.width / 2, f.height / 2), D2, D2);
       const p2 = this.canvas;
       f._objects = [this], this.set("canvas", f), this.setCoords();
       const m2 = f.toCanvasElement(o2 || 1, t2);
@@ -35761,7 +36951,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const { centeredRotation: e3, originX: s2, originY: i2 } = this;
       if (e3) {
         const { x: t3, y: e4 } = this.getRelativeCenterPoint();
-        this.originX = D, this.originY = D, this.left = t3, this.top = e4;
+        this.originX = D2, this.originY = D2, this.left = t3, this.top = e4;
       }
       if (this.set("angle", t2), e3) {
         const { x: t3, y: e4 } = this.translateToOriginPoint(this.getRelativeCenterPoint(), s2, i2);
@@ -35870,10 +37060,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return this._fromObject(t2, e3);
     }
   };
-  t($s, "stateProperties", Ds), t($s, "cacheProperties", Ms), t($s, "ownDefaults", Ps), t($s, "type", "FabricObject"), t($s, "colorProperties", [K, J, "backgroundColor"]), t($s, "customProperties", []), tt.setClass($s), tt.setClass($s, "object");
+  t($s, "stateProperties", Ds), t($s, "cacheProperties", Ms), t($s, "ownDefaults", Ps), t($s, "type", "FabricObject"), t($s, "colorProperties", [K2, J, "backgroundColor"]), t($s, "customProperties", []), tt.setClass($s), tt.setClass($s, "object");
   var ti = (t2, e3, i2) => (r2, n2, o2, a2) => {
     const h3 = e3(r2, n2, o2, a2);
-    return h3 && ye(t2, s(s({}, Te(r2, n2, o2, a2)), i2)), h3;
+    return h3 && ye2(t2, s(s({}, Te2(r2, n2, o2, a2)), i2)), h3;
   };
   function ei(t2) {
     return (e3, s2, i2, r2) => {
@@ -35881,23 +37071,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return n2.setPositionByOrigin(c2, s2.originX, s2.originY), l3;
     };
   }
-  var si = ti(Y, ei((t2, e3, s2, i2) => {
-    const r2 = ke(e3, e3.originX, e3.originY, s2, i2);
-    if (xe(e3.originX) === xe(D) || xe(e3.originX) === xe(A) && r2.x < 0 || xe(e3.originX) === xe(M) && r2.x > 0) {
-      const { target: t3 } = e3, s3 = t3.strokeWidth / (t3.strokeUniform ? t3.scaleX : 1), i3 = be(e3) ? 2 : 1, n2 = t3.width, o2 = Math.abs(r2.x * i3 / t3.scaleX) - s3;
+  var si = ti(Y2, ei((t2, e3, s2, i2) => {
+    const r2 = ke2(e3, e3.originX, e3.originY, s2, i2);
+    if (xe2(e3.originX) === xe2(D2) || xe2(e3.originX) === xe2(A) && r2.x < 0 || xe2(e3.originX) === xe2(M) && r2.x > 0) {
+      const { target: t3 } = e3, s3 = t3.strokeWidth / (t3.strokeUniform ? t3.scaleX : 1), i3 = be2(e3) ? 2 : 1, n2 = t3.width, o2 = Math.abs(r2.x * i3 / t3.scaleX) - s3;
       return t3.set("width", Math.max(o2, 1)), n2 !== t3.width;
     }
     return false;
   }));
   function ii(t2, e3, s2, i2, r2) {
     i2 = i2 || {};
-    const n2 = this.sizeX || i2.cornerSize || r2.cornerSize, o2 = this.sizeY || i2.cornerSize || r2.cornerSize, a2 = void 0 !== i2.transparentCorners ? i2.transparentCorners : r2.transparentCorners, h3 = a2 ? J : K, c2 = !a2 && (i2.cornerStrokeColor || r2.cornerStrokeColor);
+    const n2 = this.sizeX || i2.cornerSize || r2.cornerSize, o2 = this.sizeY || i2.cornerSize || r2.cornerSize, a2 = void 0 !== i2.transparentCorners ? i2.transparentCorners : r2.transparentCorners, h3 = a2 ? J : K2, c2 = !a2 && (i2.cornerStrokeColor || r2.cornerStrokeColor);
     let l3, u2 = e3, d2 = s2;
-    t2.save(), t2.fillStyle = i2.cornerColor || r2.cornerColor || "", t2.strokeStyle = i2.cornerStrokeColor || r2.cornerStrokeColor || "", n2 > o2 ? (l3 = n2, t2.scale(1, o2 / n2), d2 = s2 * n2 / o2) : o2 > n2 ? (l3 = o2, t2.scale(n2 / o2, 1), u2 = e3 * o2 / n2) : l3 = n2, t2.beginPath(), t2.arc(u2, d2, l3 / 2, 0, S, false), t2[h3](), c2 && t2.stroke(), t2.restore();
+    t2.save(), t2.fillStyle = i2.cornerColor || r2.cornerColor || "", t2.strokeStyle = i2.cornerStrokeColor || r2.cornerStrokeColor || "", n2 > o2 ? (l3 = n2, t2.scale(1, o2 / n2), d2 = s2 * n2 / o2) : o2 > n2 ? (l3 = o2, t2.scale(n2 / o2, 1), u2 = e3 * o2 / n2) : l3 = n2, t2.beginPath(), t2.arc(u2, d2, l3 / 2, 0, S2, false), t2[h3](), c2 && t2.stroke(), t2.restore();
   }
   function ri(t2, e3, s2, i2, r2) {
     i2 = i2 || {};
-    const n2 = this.sizeX || i2.cornerSize || r2.cornerSize, o2 = this.sizeY || i2.cornerSize || r2.cornerSize, a2 = void 0 !== i2.transparentCorners ? i2.transparentCorners : r2.transparentCorners, h3 = a2 ? J : K, c2 = !a2 && (i2.cornerStrokeColor || r2.cornerStrokeColor), l3 = n2 / 2, u2 = o2 / 2;
+    const n2 = this.sizeX || i2.cornerSize || r2.cornerSize, o2 = this.sizeY || i2.cornerSize || r2.cornerSize, a2 = void 0 !== i2.transparentCorners ? i2.transparentCorners : r2.transparentCorners, h3 = a2 ? J : K2, c2 = !a2 && (i2.cornerStrokeColor || r2.cornerStrokeColor), l3 = n2 / 2, u2 = o2 / 2;
     t2.save(), t2.fillStyle = i2.cornerColor || r2.cornerColor || "", t2.strokeStyle = i2.cornerStrokeColor || r2.cornerStrokeColor || "", t2.translate(e3, s2);
     const d2 = r2.getTotalAngle();
     t2.rotate(xt(d2)), t2["".concat(h3, "Rect")](-l3, -u2, n2, o2), c2 && t2.strokeRect(-l3, -u2, n2, o2), t2.restore();
@@ -35947,11 +37137,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ri.call(this, t2, e3, s2, i2, r2);
     }
   };
-  var oi = (t2, e3, s2) => s2.lockRotation ? Ce : e3.cursorStyle;
+  var oi = (t2, e3, s2) => s2.lockRotation ? Ce2 : e3.cursorStyle;
   var ai = ti(I, ei((t2, e3, s2, i2) => {
     let { target: r2, ex: n2, ey: o2, theta: a2, originX: h3, originY: c2 } = e3;
     const l3 = r2.translateToOriginPoint(r2.getRelativeCenterPoint(), h3, c2);
-    if (we(r2, "lockRotation"))
+    if (we2(r2, "lockRotation"))
       return false;
     const u2 = Math.atan2(o2 - l3.y, n2 - l3.x), d2 = Math.atan2(i2 - l3.y, s2 - l3.x);
     let g2 = Ct(d2 - u2 + a2);
@@ -35968,7 +37158,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return s2.uniformScaling && !i2 || !s2.uniformScaling && i2;
   }
   function ci(t2, e3, s2) {
-    const i2 = we(t2, "lockScalingX"), r2 = we(t2, "lockScalingY");
+    const i2 = we2(t2, "lockScalingX"), r2 = we2(t2, "lockScalingY");
     if (i2 && r2)
       return true;
     if (!e3 && (i2 || r2) && s2)
@@ -35984,8 +37174,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ui = (t2, e3, s2) => {
     const i2 = hi(t2, s2);
     if (ci(s2, 0 !== e3.x && 0 === e3.y ? "x" : 0 === e3.x && 0 !== e3.y ? "y" : "", i2))
-      return Ce;
-    const r2 = Oe(s2, e3);
+      return Ce2;
+    const r2 = Oe2(s2, e3);
     return "".concat(li[r2], "-resize");
   };
   function di(t2, e3, s2, i2) {
@@ -35997,44 +37187,44 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (e3.gestureScale)
       c2 = e3.scaleX * e3.gestureScale, l3 = e3.scaleY * e3.gestureScale;
     else {
-      if (h3 = ke(e3, e3.originX, e3.originY, s2, i2), d2 = "y" !== o2 ? Math.sign(h3.x || e3.signX || 1) : 1, g2 = "x" !== o2 ? Math.sign(h3.y || e3.signY || 1) : 1, e3.signX || (e3.signX = d2), e3.signY || (e3.signY = g2), we(n2, "lockScalingFlip") && (e3.signX !== d2 || e3.signY !== g2))
+      if (h3 = ke2(e3, e3.originX, e3.originY, s2, i2), d2 = "y" !== o2 ? Math.sign(h3.x || e3.signX || 1) : 1, g2 = "x" !== o2 ? Math.sign(h3.y || e3.signY || 1) : 1, e3.signX || (e3.signX = d2), e3.signY || (e3.signY = g2), we2(n2, "lockScalingFlip") && (e3.signX !== d2 || e3.signY !== g2))
         return false;
       if (u2 = n2._getTransformedDimensions(), a2 && !o2) {
         const t3 = Math.abs(h3.x) + Math.abs(h3.y), { original: s3 } = e3, i3 = t3 / (Math.abs(u2.x * s3.scaleX / n2.scaleX) + Math.abs(u2.y * s3.scaleY / n2.scaleY));
         c2 = s3.scaleX * i3, l3 = s3.scaleY * i3;
       } else
         c2 = Math.abs(h3.x * n2.scaleX / u2.x), l3 = Math.abs(h3.y * n2.scaleY / u2.y);
-      be(e3) && (c2 *= 2, l3 *= 2), e3.signX !== d2 && "y" !== o2 && (e3.originX = Se(e3.originX), c2 *= -1, e3.signX = d2), e3.signY !== g2 && "x" !== o2 && (e3.originY = Se(e3.originY), l3 *= -1, e3.signY = g2);
+      be2(e3) && (c2 *= 2, l3 *= 2), e3.signX !== d2 && "y" !== o2 && (e3.originX = Se(e3.originX), c2 *= -1, e3.signX = d2), e3.signY !== g2 && "x" !== o2 && (e3.originY = Se(e3.originY), l3 *= -1, e3.signY = g2);
     }
     const f = n2.scaleX, p2 = n2.scaleY;
-    return o2 ? ("x" === o2 && n2.set(H, c2), "y" === o2 && n2.set(N, l3)) : (!we(n2, "lockScalingX") && n2.set(H, c2), !we(n2, "lockScalingY") && n2.set(N, l3)), f !== n2.scaleX || p2 !== n2.scaleY;
+    return o2 ? ("x" === o2 && n2.set(H2, c2), "y" === o2 && n2.set(N, l3)) : (!we2(n2, "lockScalingX") && n2.set(H2, c2), !we2(n2, "lockScalingY") && n2.set(N, l3)), f !== n2.scaleX || p2 !== n2.scaleY;
   }
   var gi = ti(R, ei((t2, e3, s2, i2) => di(t2, e3, s2, i2)));
   var fi = ti(R, ei((t2, e3, s2, i2) => di(t2, e3, s2, i2, { by: "x" })));
   var pi = ti(R, ei((t2, e3, s2, i2) => di(t2, e3, s2, i2, { by: "y" })));
   var mi = ["target", "ex", "ey", "skewingSide"];
-  var vi = { x: { counterAxis: "y", scale: H, skew: U, lockSkewing: "lockSkewingX", origin: "originX", flip: "flipX" }, y: { counterAxis: "x", scale: N, skew: q, lockSkewing: "lockSkewingY", origin: "originY", flip: "flipY" } };
+  var vi = { x: { counterAxis: "y", scale: H2, skew: U, lockSkewing: "lockSkewingX", origin: "originX", flip: "flipX" }, y: { counterAxis: "x", scale: N, skew: q, lockSkewing: "lockSkewingY", origin: "originY", flip: "flipY" } };
   var yi = ["ns", "nesw", "ew", "nwse"];
   var _i = (t2, e3, s2) => {
-    if (0 !== e3.x && we(s2, "lockSkewingY"))
-      return Ce;
-    if (0 !== e3.y && we(s2, "lockSkewingX"))
-      return Ce;
-    const i2 = Oe(s2, e3) % 4;
+    if (0 !== e3.x && we2(s2, "lockSkewingY"))
+      return Ce2;
+    if (0 !== e3.y && we2(s2, "lockSkewingX"))
+      return Ce2;
+    const i2 = Oe2(s2, e3) % 4;
     return "".concat(yi[i2], "-resize");
   };
   function xi(t2, e3, r2, n2, o2) {
     const { target: a2 } = r2, { counterAxis: h3, origin: c2, lockSkewing: l3, skew: u2, flip: d2 } = vi[t2];
-    if (we(a2, l3))
+    if (we2(a2, l3))
       return false;
-    const { origin: g2, flip: f } = vi[h3], p2 = xe(r2[g2]) * (a2[f] ? -1 : 1), m2 = -Math.sign(p2) * (a2[d2] ? -1 : 1), v3 = 0.5 * -((0 === a2[u2] && ke(r2, D, D, n2, o2)[t2] > 0 || a2[u2] > 0 ? 1 : -1) * m2) + 0.5, y2 = ti(X, ei((e4, s2, r3, n3) => function(t3, e5, s3) {
+    const { origin: g2, flip: f } = vi[h3], p2 = xe2(r2[g2]) * (a2[f] ? -1 : 1), m2 = -Math.sign(p2) * (a2[d2] ? -1 : 1), v3 = 0.5 * -((0 === a2[u2] && ke2(r2, D2, D2, n2, o2)[t2] > 0 || a2[u2] > 0 ? 1 : -1) * m2) + 0.5, y2 = ti(X, ei((e4, s2, r3, n3) => function(t3, e5, s3) {
       let { target: r4, ex: n4, ey: o3, skewingSide: a3 } = e5, h4 = i(e5, mi);
       const { skew: c3 } = vi[t3], l4 = s3.subtract(new ot(n4, o3)).divide(new ot(r4.scaleX, r4.scaleY))[t3], u3 = r4[c3], d3 = h4[c3], g3 = Math.tan(xt(d3)), f2 = "y" === t3 ? r4._getTransformedDimensions({ scaleX: 1, scaleY: 1, skewX: 0 }).x : r4._getTransformedDimensions({ scaleX: 1, scaleY: 1 }).y, p3 = 2 * l4 * a3 / Math.max(f2, 1) + g3, m3 = Ct(Math.atan(p3));
       r4.set(c3, m3);
       const v4 = u3 !== r4[c3];
       if (v4 && "y" === t3) {
         const { skewX: t4, scaleX: e6 } = r4, s4 = r4._getTransformedDimensions({ skewY: u3 }), i2 = r4._getTransformedDimensions(), n5 = 0 !== t4 ? s4.x / i2.x : 1;
-        1 !== n5 && r4.set(H, n5 * e6);
+        1 !== n5 && r4.set(H2, n5 * e6);
       }
       return v4;
     }(t2, s2, new ot(r3, n3))));
@@ -36047,13 +37237,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   var wi = (t2, e3, s2) => {
     const i2 = Si(t2, s2);
-    return 0 === e3.x ? i2 ? U : N : 0 === e3.y ? i2 ? q : H : "";
+    return 0 === e3.x ? i2 ? U : N : 0 === e3.y ? i2 ? q : H2 : "";
   };
   var Ti = (t2, e3, s2) => Si(t2, s2) ? _i(0, e3, s2) : ui(t2, e3, s2);
   var Oi = (t2, e3, s2, i2) => Si(t2, e3.target) ? bi(t2, e3, s2, i2) : fi(t2, e3, s2, i2);
   var ki = (t2, e3, s2, i2) => Si(t2, e3.target) ? Ci(t2, e3, s2, i2) : pi(t2, e3, s2, i2);
   var Di = () => ({ ml: new ni({ x: -0.5, y: 0, cursorStyleHandler: Ti, actionHandler: Oi, getActionName: wi }), mr: new ni({ x: 0.5, y: 0, cursorStyleHandler: Ti, actionHandler: Oi, getActionName: wi }), mb: new ni({ x: 0, y: 0.5, cursorStyleHandler: Ti, actionHandler: ki, getActionName: wi }), mt: new ni({ x: 0, y: -0.5, cursorStyleHandler: Ti, actionHandler: ki, getActionName: wi }), tl: new ni({ x: -0.5, y: -0.5, cursorStyleHandler: ui, actionHandler: gi }), tr: new ni({ x: 0.5, y: -0.5, cursorStyleHandler: ui, actionHandler: gi }), bl: new ni({ x: -0.5, y: 0.5, cursorStyleHandler: ui, actionHandler: gi }), br: new ni({ x: 0.5, y: 0.5, cursorStyleHandler: ui, actionHandler: gi }), mtr: new ni({ x: 0, y: -0.5, actionHandler: ai, cursorStyleHandler: oi, offsetY: -40, withConnection: true, actionName: B }) });
-  var Mi = () => ({ mr: new ni({ x: 0.5, y: 0, actionHandler: si, cursorStyleHandler: Ti, actionName: Y }), ml: new ni({ x: -0.5, y: 0, actionHandler: si, cursorStyleHandler: Ti, actionName: Y }) });
+  var Mi = () => ({ mr: new ni({ x: 0.5, y: 0, actionHandler: si, cursorStyleHandler: Ti, actionName: Y2 }), ml: new ni({ x: -0.5, y: 0, actionHandler: si, cursorStyleHandler: Ti, actionName: Y2 }) });
   var Pi = () => s(s({}, Di()), Mi());
   var Ei = class extends $s {
     static getDefaults() {
@@ -36133,7 +37323,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     drawBorders(t2, e3, s2) {
       let i2;
       if (s2 && s2.forActiveSelection || this.group) {
-        const t3 = ge(this.width, this.height, Lt(e3)), s3 = this.isStrokeAccountedForInDimensions() ? at : (this.strokeUniform ? new ot().scalarAdd(this.canvas ? this.canvas.getZoom() : 1) : new ot(e3.scaleX, e3.scaleY)).scalarMultiply(this.strokeWidth);
+        const t3 = ge2(this.width, this.height, Lt(e3)), s3 = this.isStrokeAccountedForInDimensions() ? at : (this.strokeUniform ? new ot().scalarAdd(this.canvas ? this.canvas.getZoom() : 1) : new ot(e3.scaleX, e3.scaleY)).scalarMultiply(this.strokeWidth);
         i2 = t3.add(s3).scalarAdd(this.borderScaleFactor).scalarAdd(2 * this.padding);
       } else
         i2 = this._calculateCurrentDimensions().scalarAdd(this.borderScaleFactor);
@@ -36257,7 +37447,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     projectBevel() {
       const t2 = [];
-      return (this.alpha % S == 0 ? [this.B] : [this.B, this.C]).forEach((e3) => {
+      return (this.alpha % S2 == 0 ? [this.B] : [this.B, this.C]).forEach((e3) => {
         t2.push(this.projectOrthogonally(this.A, e3)), t2.push(this.projectOrthogonally(this.A, e3, -this.strokeProjectionMagnitude));
       }), t2;
     }
@@ -36280,7 +37470,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     projectRound() {
       const t2 = [];
       t2.push(...this.projectBevel());
-      const e3 = this.alpha % S == 0, s2 = this.applySkew(this.A), i2 = t2[e3 ? 0 : 2].subtract(s2), r2 = t2[e3 ? 1 : 0].subtract(s2), n2 = e3 ? this.applySkew(this.AB.scalarMultiply(-1)) : this.applySkew(this.bisector.multiply(this.strokeUniformScalar).scalarMultiply(-1)), o2 = Cs(i2, n2) > 0, a2 = o2 ? i2 : r2, h3 = o2 ? r2 : i2;
+      const e3 = this.alpha % S2 == 0, s2 = this.applySkew(this.A), i2 = t2[e3 ? 0 : 2].subtract(s2), r2 = t2[e3 ? 1 : 0].subtract(s2), n2 = e3 ? this.applySkew(this.AB.scalarMultiply(-1)) : this.applySkew(this.bisector.multiply(this.strokeUniformScalar).scalarMultiply(-1)), o2 = Cs(i2, n2) > 0, a2 = o2 ? i2 : r2, h3 = o2 ? r2 : i2;
       return this.isSkewed() ? t2.push(...this.projectRoundWithSkew(a2, h3)) : t2.push(...this.projectRoundNoSkew(a2, h3)), t2;
     }
     projectPoints() {
@@ -36376,7 +37566,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var Wi = (t2) => t2.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   var Vi;
   var zi = (t2) => {
-    if (Vi || Vi || (Vi = "Intl" in v() && "Segmenter" in Intl && new Intl.Segmenter(void 0, { granularity: "grapheme" })), Vi) {
+    if (Vi || Vi || (Vi = "Intl" in v2() && "Segmenter" in Intl && new Intl.Segmenter(void 0, { granularity: "grapheme" })), Vi) {
       const e3 = Vi.segment(t2);
       return Array.from(e3).map((t3) => {
         let { segment: e4 } = t3;
@@ -36449,7 +37639,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     return r2;
   };
-  var Ji = ["display", "transform", K, "fill-opacity", "fill-rule", "opacity", J, "stroke-dasharray", "stroke-linecap", "stroke-dashoffset", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "id", "paint-order", "vector-effect", "instantiated_by_use", "clip-path"];
+  var Ji = ["display", "transform", K2, "fill-opacity", "fill-rule", "opacity", J, "stroke-dasharray", "stroke-linecap", "stroke-dashoffset", "stroke-linejoin", "stroke-miterlimit", "stroke-opacity", "stroke-width", "id", "paint-order", "vector-effect", "instantiated_by_use", "clip-path"];
   function Qi(t2, e3) {
     const s2 = t2.nodeName, i2 = t2.getAttribute("class"), r2 = t2.getAttribute("id"), n2 = "(?![a-zA-Z\\-]+)";
     let o2;
@@ -36532,7 +37722,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function Sr(t2, e3, s2, i2) {
     const r2 = Array.isArray(e3);
     let n2, o2 = e3;
-    if (t2 !== K && t2 !== J || e3 !== j) {
+    if (t2 !== K2 && t2 !== J || e3 !== j) {
       if ("strokeUniform" === t2)
         return "non-scaling-stroke" === e3;
       if ("strokeDashArray" === t2)
@@ -36544,18 +37734,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       else if ("opacity" === t2)
         o2 = parseFloat(e3), s2 && void 0 !== s2.opacity && (o2 *= s2.opacity);
       else if ("textAnchor" === t2)
-        o2 = "start" === e3 ? M : "end" === e3 ? A : D;
-      else if ("charSpacing" === t2 || t2 === We)
-        n2 = Re(e3, i2) / i2 * 1e3;
+        o2 = "start" === e3 ? M : "end" === e3 ? A : D2;
+      else if ("charSpacing" === t2 || t2 === We2)
+        n2 = Re2(e3, i2) / i2 * 1e3;
       else if ("paintFirst" === t2) {
-        const t3 = e3.indexOf(K), s3 = e3.indexOf(J);
-        o2 = K, (t3 > -1 && s3 > -1 && s3 < t3 || -1 === t3 && s3 > -1) && (o2 = J);
+        const t3 = e3.indexOf(K2), s3 = e3.indexOf(J);
+        o2 = K2, (t3 > -1 && s3 > -1 && s3 < t3 || -1 === t3 && s3 > -1) && (o2 = J);
       } else {
         if ("href" === t2 || "xlink:href" === t2 || "font" === t2 || "id" === t2)
           return e3;
         if ("imageSmoothing" === t2)
           return "optimizeQuality" === e3;
-        n2 = r2 ? e3.map(Re) : Re(e3, i2);
+        n2 = r2 ? e3.map(Re2) : Re2(e3, i2);
       }
     } else
       o2 = "";
@@ -36566,7 +37756,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (!s2)
       return;
     const i2 = s2[1], r2 = s2[3], n2 = s2[4], o2 = s2[5], a2 = s2[6];
-    i2 && (e3.fontStyle = i2), r2 && (e3.fontWeight = isNaN(parseFloat(r2)) ? r2 : parseFloat(r2)), n2 && (e3.fontSize = Re(n2)), a2 && (e3.fontFamily = a2), o2 && (e3.lineHeight = "normal" === o2 ? 1 : o2);
+    i2 && (e3.fontStyle = i2), r2 && (e3.fontWeight = isNaN(parseFloat(r2)) ? r2 : parseFloat(r2)), n2 && (e3.fontSize = Re2(n2)), a2 && (e3.fontFamily = a2), o2 && (e3.lineHeight = "normal" === o2 ? 1 : o2);
   }
   function Tr(t2, e3) {
     t2.replace(/;\s*$/, "").split(";").forEach((t3) => {
@@ -36590,7 +37780,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (!t2)
       return {};
     let r2, n2 = {}, o2 = O;
-    t2.parentNode && ls.test(t2.parentNode.nodeName) && (n2 = Dr(t2.parentElement, e3, i2), n2.fontSize && (r2 = o2 = Re(n2.fontSize)));
+    t2.parentNode && ls.test(t2.parentNode.nodeName) && (n2 = Dr(t2.parentElement, e3, i2), n2.fontSize && (r2 = o2 = Re2(n2.fontSize)));
     const a2 = s(s(s({}, e3.reduce((e4, s2) => {
       const i3 = t2.getAttribute(s2);
       return i3 && (e4[s2] = i3), e4;
@@ -36600,7 +37790,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         Zi(t3, r3.split(" ")) && (i3 = s(s({}, i3), e4[r3]));
       return i3;
     }(t2, i2)), Or(t2));
-    a2[as] && t2.setAttribute(as, a2[as]), a2[os] && (r2 = Re(a2[os], o2), a2[os] = "".concat(r2));
+    a2[as] && t2.setAttribute(as, a2[as]), a2[os] && (r2 = Re2(a2[os], o2), a2[os] = "".concat(r2));
     const h3 = {};
     for (const t3 in a2) {
       const e4 = $i(t3), s2 = Sr(e4, a2[t3], n2, r2);
@@ -36641,7 +37831,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     _render(t2) {
       const { width: e3, height: s2 } = this, i2 = -e3 / 2, r2 = -s2 / 2, n2 = this.rx ? Math.min(this.rx, e3 / 2) : 0, o2 = this.ry ? Math.min(this.ry, s2 / 2) : 0, a2 = 0 !== n2 || 0 !== o2;
-      t2.beginPath(), t2.moveTo(i2 + n2, r2), t2.lineTo(i2 + e3 - n2, r2), a2 && t2.bezierCurveTo(i2 + e3 - k * n2, r2, i2 + e3, r2 + k * o2, i2 + e3, r2 + o2), t2.lineTo(i2 + e3, r2 + s2 - o2), a2 && t2.bezierCurveTo(i2 + e3, r2 + s2 - k * o2, i2 + e3 - k * n2, r2 + s2, i2 + e3 - n2, r2 + s2), t2.lineTo(i2 + n2, r2 + s2), a2 && t2.bezierCurveTo(i2 + k * n2, r2 + s2, i2, r2 + s2 - k * o2, i2, r2 + s2 - o2), t2.lineTo(i2, r2 + o2), a2 && t2.bezierCurveTo(i2, r2 + k * o2, i2 + k * n2, r2, i2 + n2, r2), t2.closePath(), this._renderPaintInOrder(t2);
+      t2.beginPath(), t2.moveTo(i2 + n2, r2), t2.lineTo(i2 + e3 - n2, r2), a2 && t2.bezierCurveTo(i2 + e3 - k2 * n2, r2, i2 + e3, r2 + k2 * o2, i2 + e3, r2 + o2), t2.lineTo(i2 + e3, r2 + s2 - o2), a2 && t2.bezierCurveTo(i2 + e3, r2 + s2 - k2 * o2, i2 + e3 - k2 * n2, r2 + s2, i2 + e3 - n2, r2 + s2), t2.lineTo(i2 + n2, r2 + s2), a2 && t2.bezierCurveTo(i2 + k2 * n2, r2 + s2, i2, r2 + s2 - k2 * o2, i2, r2 + s2 - o2), t2.lineTo(i2, r2 + o2), a2 && t2.bezierCurveTo(i2, r2 + k2 * o2, i2 + k2 * n2, r2, i2 + n2, r2), t2.closePath(), this._renderPaintInOrder(t2);
     }
     toObject() {
       let t2 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [];
@@ -36662,7 +37852,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var Fr = "removed";
   var Lr = "imperative";
   var Rr = (t2, e3) => {
-    const { strokeUniform: s2, strokeWidth: i2, width: r2, height: n2, group: o2 } = e3, a2 = o2 && o2 !== t2 ? fe(o2.calcTransformMatrix(), t2.calcTransformMatrix()) : null, h3 = a2 ? e3.getRelativeCenterPoint().transform(a2) : e3.getRelativeCenterPoint(), c2 = !e3.isStrokeAccountedForInDimensions(), l3 = s2 && c2 ? me(new ot(i2, i2), void 0, t2.calcTransformMatrix()) : at, u2 = !s2 && c2 ? i2 : 0, d2 = ge(r2 + u2, n2 + u2, Ot([a2, e3.calcOwnMatrix()], true)).add(l3).scalarDivide(2);
+    const { strokeUniform: s2, strokeWidth: i2, width: r2, height: n2, group: o2 } = e3, a2 = o2 && o2 !== t2 ? fe2(o2.calcTransformMatrix(), t2.calcTransformMatrix()) : null, h3 = a2 ? e3.getRelativeCenterPoint().transform(a2) : e3.getRelativeCenterPoint(), c2 = !e3.isStrokeAccountedForInDimensions(), l3 = s2 && c2 ? me2(new ot(i2, i2), void 0, t2.calcTransformMatrix()) : at, u2 = !s2 && c2 ? i2 : 0, d2 = ge2(r2 + u2, n2 + u2, Ot([a2, e3.calcOwnMatrix()], true)).add(l3).scalarDivide(2);
     return [h3.subtract(d2), h3.add(d2)];
   };
   var Ir = class {
@@ -36687,7 +37877,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return e3.overrides;
       if (0 === t2.length)
         return;
-      const { left: r2, top: n2, width: o2, height: a2 } = ae(t2.map((t3) => Rr(i2, t3)).reduce((t3, e4) => t3.concat(e4), [])), h3 = new ot(o2, a2), c2 = new ot(r2, n2).add(h3.scalarDivide(2));
+      const { left: r2, top: n2, width: o2, height: a2 } = ae2(t2.map((t3) => Rr(i2, t3)).reduce((t3, e4) => t3.concat(e4), [])), h3 = new ot(o2, a2), c2 = new ot(r2, n2).add(h3.scalarDivide(2));
       if (s2 === Ar) {
         const t3 = this.getInitialSize(e3, { size: h3, center: c2 });
         return { center: c2, relativeCorrection: new ot(0, 0), size: t3 };
@@ -36720,7 +37910,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     attachHandlers(t2, e3) {
       const { target: s2 } = e3;
-      return [Q, L, Y, I, R, X, z, W, V].map((e4) => t2.on(e4, (t3) => this.performLayout(e4 === Q ? { type: "object_modified", trigger: e4, e: t3, target: s2 } : { type: "object_modifying", trigger: e4, e: t3, target: s2 })));
+      return [Q, L, Y2, I, R, X, z, W2, V].map((e4) => t2.on(e4, (t3) => this.performLayout(e4 === Q ? { type: "object_modified", trigger: e4, e: t3, target: s2 } : { type: "object_modifying", trigger: e4, e: t3, target: s2 })));
     }
     subscribe(t2, e3) {
       this.unsubscribe(t2, e3);
@@ -36753,7 +37943,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     commitLayout(t2, e3) {
       const { target: s2 } = t2, { result: { size: i2 }, nextCenter: r2 } = e3;
       var n2, o2;
-      (s2.set({ width: i2.x, height: i2.y }), this.layoutObjects(t2, e3), t2.type === Ar) ? s2.set({ left: null !== (n2 = t2.x) && void 0 !== n2 ? n2 : r2.x + i2.x * xe(s2.originX), top: null !== (o2 = t2.y) && void 0 !== o2 ? o2 : r2.y + i2.y * xe(s2.originY) }) : (s2.setPositionByOrigin(r2, D, D), s2.setCoords(), s2.set("dirty", true));
+      (s2.set({ width: i2.x, height: i2.y }), this.layoutObjects(t2, e3), t2.type === Ar) ? s2.set({ left: null !== (n2 = t2.x) && void 0 !== n2 ? n2 : r2.x + i2.x * xe2(s2.originX), top: null !== (o2 = t2.y) && void 0 !== o2 ? o2 : r2.y + i2.y * xe2(s2.originY) }) : (s2.setPositionByOrigin(r2, D2, D2), s2.setCoords(), s2.set("dirty", true));
     }
     layoutObjects(t2, e3) {
       const { target: s2 } = t2;
@@ -36865,7 +38055,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       t2.group && t2.group.remove(t2), t2._set("parent", this), this._enterGroup(t2, e3);
     }
     _enterGroup(t2, e3) {
-      e3 && le(t2, Tt(wt(this.calcTransformMatrix()), t2.calcTransformMatrix())), this._shouldSetNestedCoords() && t2.setCoords(), t2._set("group", this), t2._set("canvas", this.canvas), this._watchObject(true, t2);
+      e3 && le2(t2, Tt(wt(this.calcTransformMatrix()), t2.calcTransformMatrix())), this._shouldSetNestedCoords() && t2.setCoords(), t2._set("group", this), t2._set("canvas", this.canvas), this._watchObject(true, t2);
       const s2 = this.canvas && this.canvas.getActiveObject && this.canvas.getActiveObject();
       s2 && (s2 === t2 || t2.isDescendantOf(s2)) && this._activeObjects.push(t2);
     }
@@ -36873,7 +38063,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       this._exitGroup(t2, e3), t2._set("parent", void 0), t2._set("canvas", void 0);
     }
     _exitGroup(t2, e3) {
-      t2._set("group", void 0), e3 || (le(t2, Tt(this.calcTransformMatrix(), t2.calcTransformMatrix())), t2.setCoords()), this._watchObject(false, t2);
+      t2._set("group", void 0), e3 || (le2(t2, Tt(this.calcTransformMatrix(), t2.calcTransformMatrix())), t2.setCoords()), this._watchObject(false, t2);
       const s2 = this._activeObjects.length > 0 ? this._activeObjects.indexOf(t2) : -1;
       s2 > -1 && this._activeObjects.splice(s2, 1);
     }
@@ -36997,8 +38187,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   function tn(t2, e3, s2, i2, r2, n2, a2, h3) {
     let c2;
-    if (o.cachesBoundsOfCurve && (c2 = [...arguments].join(), _.boundsOfCurveCache[c2]))
-      return _.boundsOfCurveCache[c2];
+    if (o.cachesBoundsOfCurve && (c2 = [...arguments].join(), _2.boundsOfCurveCache[c2]))
+      return _2.boundsOfCurveCache[c2];
     const l3 = Math.sqrt, u2 = Math.abs, d2 = [], g2 = [[0, 0], [0, 0]];
     let f = 6 * t2 - 12 * s2 + 6 * r2, p2 = -3 * t2 + 9 * s2 - 9 * r2 + 3 * a2, m2 = 3 * s2 - 3 * t2;
     for (let t3 = 0; t3 < 2; ++t3) {
@@ -37025,7 +38215,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     g2[0][y2] = t2, g2[1][y2] = e3, g2[0][y2 + 1] = a2, g2[1][y2 + 1] = h3;
     const C3 = [new ot(Math.min(...g2[0]), Math.min(...g2[1])), new ot(Math.max(...g2[0]), Math.max(...g2[1]))];
-    return o.cachesBoundsOfCurve && (_.boundsOfCurveCache[c2] = C3), C3;
+    return o.cachesBoundsOfCurve && (_2.boundsOfCurveCache[c2] = C3), C3;
   }
   var en = (t2, e3, s2) => {
     let [i2, r2, n2, o2, a2, h3, c2, l3] = s2;
@@ -37246,15 +38436,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var wn = (t2, e3) => Math.floor(Math.random() * (e3 - t2 + 1)) + t2;
   function Tn(t2) {
     let e3 = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
-    const s2 = e3.onComplete || C, i2 = new (v()).XMLHttpRequest(), r2 = e3.signal, n2 = function() {
+    const s2 = e3.onComplete || C2, i2 = new (v2()).XMLHttpRequest(), r2 = e3.signal, n2 = function() {
       i2.abort();
     }, o2 = function() {
-      r2 && r2.removeEventListener("abort", n2), i2.onerror = i2.ontimeout = C;
+      r2 && r2.removeEventListener("abort", n2), i2.onerror = i2.ontimeout = C2;
     };
     if (r2 && r2.aborted)
       throw new c("request");
     return r2 && r2.addEventListener("abort", n2, { once: true }), i2.onreadystatechange = function() {
-      4 === i2.readyState && (o2(), s2(i2), i2.onreadystatechange = C);
+      4 === i2.readyState && (o2(), s2(i2), i2.onreadystatechange = C2);
     }, i2.onerror = i2.ontimeout = o2, i2.open("get", t2, true), i2.send(), i2;
   }
   var On = (t2, e3) => {
@@ -37262,15 +38452,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     t2.transformMatrix && (((t3) => {
       if (t3.transformMatrix) {
         const { scaleX: e4, scaleY: s3, angle: i2, skewX: r2 } = Dt(t3.transformMatrix);
-        t3.flipX = false, t3.flipY = false, t3.set(H, e4), t3.set(N, s3), t3.angle = i2, t3.skewX = r2, t3.skewY = 0;
+        t3.flipX = false, t3.flipY = false, t3.set(H2, e4), t3.set(N, s3), t3.angle = i2, t3.skewX = r2, t3.skewY = 0;
       }
-    })(t2), s2 = s2.transform(t2.transformMatrix)), delete t2.transformMatrix, e3 && (t2.scaleX *= e3.scaleX, t2.scaleY *= e3.scaleY, t2.cropX = e3.cropX, t2.cropY = e3.cropY, s2.x += e3.offsetLeft, s2.y += e3.offsetTop, t2.width = e3.width, t2.height = e3.height), t2.setPositionByOrigin(s2, D, D);
+    })(t2), s2 = s2.transform(t2.transformMatrix)), delete t2.transformMatrix, e3 && (t2.scaleX *= e3.scaleX, t2.scaleY *= e3.scaleY, t2.cropX = e3.cropX, t2.cropY = e3.cropY, s2.x += e3.offsetLeft, s2.y += e3.offsetTop, t2.width = e3.width, t2.height = e3.height), t2.setPositionByOrigin(s2, D2, D2);
   };
-  var kn = Object.freeze({ __proto__: null, addTransformToObject: ce, animate: Us, animateColor: qs, applyTransformToObject: le, calcAngleBetweenVectors: vs, calcDimensionsMatrix: Lt, calcPlaneChangeMatrix: fe, calcVectorRotation: ys, cancelAnimFrame: dt, capValue: ks, composeMatrix: Rt, copyCanvasElement: (t2) => {
+  var kn = Object.freeze({ __proto__: null, addTransformToObject: ce, animate: Us, animateColor: qs, applyTransformToObject: le2, calcAngleBetweenVectors: vs, calcDimensionsMatrix: Lt, calcPlaneChangeMatrix: fe2, calcVectorRotation: ys, cancelAnimFrame: dt, capValue: ks, composeMatrix: Rt, copyCanvasElement: (t2) => {
     var e3;
     const s2 = vt(t2);
     return null === (e3 = s2.getContext("2d")) || void 0 === e3 || e3.drawImage(t2, 0, 0), s2;
-  }, cos: rt, createCanvasElement: pt, createImage: mt, createRotateMatrix: Pt, createScaleMatrix: Et, createSkewXMatrix: jt, createSkewYMatrix: Ft, createTranslateMatrix: Mt, createVector: ps, crossProduct: Cs, degreesToRadians: xt, dotProduct: bs, ease: Rs, enlivenObjectEnlivables: Xt, enlivenObjects: Bt, findScaleToCover: Ur, findScaleToFit: Nr, getBoundsOfCurve: tn, getOrthonormalVector: xs, getPathSegmentsInfo: fn, getPointOnPath: pn, getPointer: re, getRandomInt: wn, getRegularPolygonPath: (t2, e3) => {
+  }, cos: rt, createCanvasElement: pt, createImage: mt, createRotateMatrix: Pt, createScaleMatrix: Et, createSkewXMatrix: jt, createSkewYMatrix: Ft, createTranslateMatrix: Mt, createVector: ps, crossProduct: Cs, degreesToRadians: xt, dotProduct: bs, ease: Rs, enlivenObjectEnlivables: Xt, enlivenObjects: Bt, findScaleToCover: Ur, findScaleToFit: Nr, getBoundsOfCurve: tn, getOrthonormalVector: xs, getPathSegmentsInfo: fn, getPointOnPath: pn, getPointer: re2, getRandomInt: wn, getRegularPolygonPath: (t2, e3) => {
     const s2 = 2 * Math.PI / t2;
     let i2 = -b;
     t2 % 2 == 0 && (i2 += s2 / 2);
@@ -37291,16 +38481,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return e3.concat(["offset", "stop-color", "stop-opacity"]);
     }
     return e3;
-  }, getUnitVector: _s, groupSVGElements: (t2, e3) => t2 && 1 === t2.length ? t2[0] : new Hr(t2, e3), hasStyleChanged: Ui, invertTransform: wt, isBetweenVectors: Ss, isIdentityMatrix: bt, isTouchEvent: ne, isTransparent: Fi, joinPath: bn, loadImage: It, magnitude: ms, makeBoundingBoxFromPoints: ae, makePathSimpler: sn, matrixToSVG: zt, mergeClipPaths: (t2, e3) => {
+  }, getUnitVector: _s, groupSVGElements: (t2, e3) => t2 && 1 === t2.length ? t2[0] : new Hr(t2, e3), hasStyleChanged: Ui, invertTransform: wt, isBetweenVectors: Ss, isIdentityMatrix: bt, isTouchEvent: ne2, isTransparent: Fi, joinPath: bn, loadImage: It, magnitude: ms, makeBoundingBoxFromPoints: ae2, makePathSimpler: sn, matrixToSVG: zt, mergeClipPaths: (t2, e3) => {
     var s2;
     let i2 = t2, r2 = e3;
-    i2.inverted && !r2.inverted && (i2 = e3, r2 = t2), ve(r2, null === (s2 = r2.group) || void 0 === s2 ? void 0 : s2.calcTransformMatrix(), i2.calcTransformMatrix());
+    i2.inverted && !r2.inverted && (i2 = e3, r2 = t2), ve2(r2, null === (s2 = r2.group) || void 0 === s2 ? void 0 : s2.calcTransformMatrix(), i2.calcTransformMatrix());
     const n2 = i2.inverted && r2.inverted;
     return n2 && (i2.inverted = r2.inverted = false), new Hr([i2], { clipPath: r2, inverted: n2 });
-  }, multiplyTransformMatrices: Tt, multiplyTransformMatrixArray: Ot, parsePath: xn, parsePreserveAspectRatioAttribute: Ie, parseUnit: Re, pick: Yt, projectStrokeOnPoints: Xi, qrDecompose: Dt, radiansToDegrees: Ct, removeFromArray: it, removeTransformFromObject: (t2, e3) => {
+  }, multiplyTransformMatrices: Tt, multiplyTransformMatrixArray: Ot, parsePath: xn, parsePreserveAspectRatioAttribute: Ie2, parseUnit: Re2, pick: Yt, projectStrokeOnPoints: Xi, qrDecompose: Dt, radiansToDegrees: Ct, removeFromArray: it, removeTransformFromObject: (t2, e3) => {
     const s2 = wt(e3), i2 = Tt(s2, t2.calcOwnMatrix());
-    le(t2, i2);
-  }, removeTransformMatrixForSvgParsing: On, request: Tn, requestAnimFrame: ut, resetObjectTransform: ue, rotatePoint: (t2, e3, s2) => t2.rotate(s2, e3), rotateVector: fs, saveObjectTransform: de, sendObjectToPlane: ve, sendPointToPlane: pe, sendVectorToPlane: me, setStyle: Sn, sin: nt, sizeAfterTransform: ge, string: Ni, stylesFromArray: Ki, stylesToArray: qi, toBlob: _t, toDataURL: yt, toFixed: Vt, transformPath: (t2, e3, s2) => (s2 && (e3 = Tt(e3, [1, 0, 0, 1, -s2.x, -s2.y])), t2.map((t3) => {
+    le2(t2, i2);
+  }, removeTransformMatrixForSvgParsing: On, request: Tn, requestAnimFrame: ut, resetObjectTransform: ue2, rotatePoint: (t2, e3, s2) => t2.rotate(s2, e3), rotateVector: fs, saveObjectTransform: de2, sendObjectToPlane: ve2, sendPointToPlane: pe, sendVectorToPlane: me2, setStyle: Sn, sin: nt, sizeAfterTransform: ge2, string: Ni, stylesFromArray: Ki, stylesToArray: qi, toBlob: _t, toDataURL: yt, toFixed: Vt, transformPath: (t2, e3, s2) => (s2 && (e3 = Tt(e3, [1, 0, 0, 1, -s2.x, -s2.y])), t2.map((t3) => {
     const s3 = [...t3];
     for (let i2 = 1; i2 < t3.length - 1; i2 += 2) {
       const { x: r2, y: n2 } = St({ x: t3[i2], y: t3[i2 + 1] }, e3);
@@ -37308,7 +38498,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     return s3;
   })), transformPoint: St });
-  var Dn = class extends te {
+  var Dn = class extends te2 {
     constructor(e3) {
       let { allowTouchScrolling: s2 = false, containerClass: i2 = "" } = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
       super(e3), t(this, "upper", void 0), t(this, "container", void 0);
@@ -37345,7 +38535,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       super.dispose(), p().dispose(this.upper.el), delete this.upper, delete this.container;
     }
   };
-  var Mn = class extends se {
+  var Mn = class extends se2 {
     constructor() {
       super(...arguments), t(this, "targets", []), t(this, "_hoveredTargets", []), t(this, "_objectsToRender", void 0), t(this, "_currentTransform", null), t(this, "_groupSelector", null), t(this, "contextTopDirty", false);
     }
@@ -37414,7 +38604,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (!t2)
         return;
       let i2;
-      return e3 === G || e3 === H || e3 === N || e3 === Y ? i2 = this.centeredScaling || t2.centeredScaling : e3 === B && (i2 = this.centeredRotation || t2.centeredRotation), i2 ? !s2 : s2;
+      return e3 === G || e3 === H2 || e3 === N || e3 === Y2 ? i2 = this.centeredScaling || t2.centeredScaling : e3 === B && (i2 = this.centeredRotation || t2.centeredRotation), i2 ? !s2 : s2;
     }
     _getOriginFromCorner(t2, e3) {
       const s2 = { x: t2.originX, y: t2.originY };
@@ -37422,12 +38612,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     _setupCurrentTransform(t2, e3, i2) {
       var r2;
-      const n2 = e3.group ? pe(this.getScenePoint(t2), void 0, e3.group.calcTransformMatrix()) : this.getScenePoint(t2), { key: o2 = "", control: a2 } = e3.getActiveControl() || {}, h3 = i2 && a2 ? null === (r2 = a2.getActionHandler(t2, e3, a2)) || void 0 === r2 ? void 0 : r2.bind(a2) : De, c2 = ((t3, e4, s2, i3) => {
+      const n2 = e3.group ? pe(this.getScenePoint(t2), void 0, e3.group.calcTransformMatrix()) : this.getScenePoint(t2), { key: o2 = "", control: a2 } = e3.getActiveControl() || {}, h3 = i2 && a2 ? null === (r2 = a2.getActionHandler(t2, e3, a2)) || void 0 === r2 ? void 0 : r2.bind(a2) : De2, c2 = ((t3, e4, s2, i3) => {
         if (!e4 || !t3)
           return "drag";
         const r3 = i3.controls[e4];
         return r3.getActionName(s2, r3, i3);
-      })(i2, o2, t2, e3), l3 = t2[this.centeredKey], u2 = this._shouldCenterTransform(e3, c2, l3) ? { x: D, y: D } : this._getOriginFromCorner(e3, o2), d2 = { target: e3, action: c2, actionHandler: h3, actionPerformed: false, corner: o2, scaleX: e3.scaleX, scaleY: e3.scaleY, skewX: e3.skewX, skewY: e3.skewY, offsetX: n2.x - e3.left, offsetY: n2.y - e3.top, originX: u2.x, originY: u2.y, ex: n2.x, ey: n2.y, lastX: n2.x, lastY: n2.y, theta: xt(e3.angle), width: e3.width, height: e3.height, shiftKey: t2.shiftKey, altKey: l3, original: s(s({}, de(e3)), {}, { originX: u2.x, originY: u2.y }) };
+      })(i2, o2, t2, e3), l3 = t2[this.centeredKey], u2 = this._shouldCenterTransform(e3, c2, l3) ? { x: D2, y: D2 } : this._getOriginFromCorner(e3, o2), d2 = { target: e3, action: c2, actionHandler: h3, actionPerformed: false, corner: o2, scaleX: e3.scaleX, scaleY: e3.scaleY, skewX: e3.skewX, skewY: e3.skewY, offsetX: n2.x - e3.left, offsetY: n2.y - e3.top, originX: u2.x, originY: u2.y, ex: n2.x, ey: n2.y, lastX: n2.x, lastY: n2.y, theta: xt(e3.angle), width: e3.width, height: e3.height, shiftKey: t2.shiftKey, altKey: l3, original: s(s({}, de2(e3)), {}, { originX: u2.x, originY: u2.y }) };
       this._currentTransform = d2, this.fire("before:transform", { e: t2, transform: d2 });
     }
     setCursor(t2) {
@@ -37443,7 +38633,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return;
       const e3 = this.getViewportPoint(t2), s2 = this._activeObject, i2 = this.getActiveObjects();
       if (this.targets = [], s2 && i2.length >= 1) {
-        if (s2.findControl(e3, ne(t2)))
+        if (s2.findControl(e3, ne2(t2)))
           return s2;
         if (i2.length > 1 && this.searchPossibleTargets([s2], e3))
           return s2;
@@ -37512,7 +38702,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     getPointer(t2) {
       let e3 = arguments.length > 1 && void 0 !== arguments[1] && arguments[1];
       const s2 = this.upperCanvasEl, i2 = s2.getBoundingClientRect();
-      let r2 = re(t2), n2 = i2.width || 0, o2 = i2.height || 0;
+      let r2 = re2(t2), n2 = i2.width || 0, o2 = i2.height || 0;
       n2 && o2 || (P in i2 && E in i2 && (o2 = Math.abs(i2.top - i2.bottom)), A in i2 && M in i2 && (n2 = Math.abs(i2.right - i2.left))), this.calcOffset(), r2.x = r2.x - this._offset.left, r2.y = r2.y - this._offset.top, e3 || (r2 = pe(r2, void 0, this.viewportTransform));
       const a2 = this.getRetinaScaling();
       1 !== a2 && (r2.x /= a2, r2.y /= a2);
@@ -37599,7 +38789,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     _realizeGroupTransformOnObject(t2) {
       const { group: e3 } = t2;
       if (e3 && Ut(e3) && this._activeObject === e3) {
-        const s2 = Yt(t2, ["angle", "flipX", "flipY", M, H, N, U, q, P]);
+        const s2 = Yt(t2, ["angle", "flipX", "flipY", M, H2, N, U, q, P]);
         return ce(t2, e3.calcOwnMatrix()), s2;
       }
       return {};
@@ -37702,7 +38892,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         const s2 = { e: t2, target: e3 };
         return this.fire("dragstart", s2), e3.fire("dragstart", s2), void Fn(this.upperCanvasEl, "drag", this._onDragProgress);
       }
-      oe(t2);
+      oe2(t2);
     }
     _renderDragEffects(t2, e3, s2) {
       let i2 = false;
@@ -37747,7 +38937,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     _onContextMenu(t2) {
       const e3 = this.findTarget(t2), s2 = this.targets || [], i2 = this._basicEventHandler("contextmenu:before", { e: t2, target: e3, subTargets: s2 });
-      return this.stopContextMenu && oe(t2), this._basicEventHandler("contextmenu", i2), false;
+      return this.stopContextMenu && oe2(t2), this._basicEventHandler("contextmenu", i2), false;
     }
     _onClick(t2) {
       const e3 = t2.detail;
@@ -37818,7 +39008,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         this.handleSelection(t2), h3 || (h3 = this._shouldRender(r2) || !e4 && r2 === this._activeObject);
       }
       if (r2) {
-        const e4 = r2.findControl(this.getViewportPoint(t2), ne(t2)), { key: i3, control: n3 } = e4 || {};
+        const e4 = r2.findControl(this.getViewportPoint(t2), ne2(t2)), { key: i3, control: n3 } = e4 || {};
         if (a2 = i3, r2.selectable && r2 !== this._activeObject && "up" === r2.activeOn)
           this.setActiveObject(r2, t2), h3 = true;
         else if (n3) {
@@ -37881,7 +39071,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       if (s2 = !!e3 && e3 === this._activeObject, e3) {
         e3.selectable && "down" === e3.activeOn && this.setActiveObject(e3, t2);
-        const i3 = e3.findControl(this.getViewportPoint(t2), ne(t2));
+        const i3 = e3.findControl(this.getViewportPoint(t2), ne2(t2));
         if (e3 === this._activeObject && (i3 || !n2)) {
           this._setupCurrentTransform(t2, e3, s2);
           const r3 = i3 ? i3.control : void 0, n3 = this.getScenePoint(t2), o2 = r3 && r3.getMouseDownHandler(t2, e3, r3);
@@ -38231,7 +39421,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     setBoundingBox(t2) {
       const { width: e3, height: s2, pathOffset: i2 } = this._calcDimensions();
-      this.set({ width: e3, height: s2, pathOffset: i2 }), t2 && this.setPositionByOrigin(i2, D, D);
+      this.set({ width: e3, height: s2, pathOffset: i2 }), t2 && this.setPositionByOrigin(i2, D2, D2);
     }
     _calcBoundsFromPath() {
       const t2 = [];
@@ -38253,7 +39443,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           case "Z":
             i2 = e3, r2 = s2;
         }
-      return ae(t2);
+      return ae2(t2);
     }
     _calcDimensions() {
       const t2 = this._calcBoundsFromPath();
@@ -38284,7 +39474,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       t2.beginPath(), t2.arc(0, 0, this.radius, xt(this.startAngle), xt(this.endAngle), this.counterClockwise), this._renderPaintInOrder(t2);
     }
     getRadiusX() {
-      return this.get("radius") * this.get(H);
+      return this.get("radius") * this.get(H2);
     }
     getRadiusY() {
       return this.get("radius") * this.get(N);
@@ -38327,8 +39517,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     _setWidthHeight() {
       const { x1: t2, y1: e3, x2: s2, y2: i2 } = this;
       this.width = Math.abs(s2 - t2), this.height = Math.abs(i2 - e3);
-      const { left: r2, top: n2, width: o2, height: a2 } = ae([{ x: t2, y: e3 }, { x: s2, y: i2 }]), h3 = new ot(r2 + o2 / 2, n2 + a2 / 2);
-      this.setPositionByOrigin(h3, D, D);
+      const { left: r2, top: n2, width: o2, height: a2 } = ae2([{ x: t2, y: e3 }, { x: s2, y: i2 }]), h3 = new ot(r2 + o2 / 2, n2 + a2 / 2);
+      this.setPositionByOrigin(h3, D2, D2);
     }
     _set(t2, e3) {
       return super._set(t2, e3), po.includes(t2) && this._setWidthHeight(), this;
@@ -38407,7 +39597,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return this;
     }
     getRx() {
-      return this.get("rx") * this.get(H);
+      return this.get("rx") * this.get(H2);
     }
     getRy() {
       return this.get("ry") * this.get(N);
@@ -38420,7 +39610,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       return ["<ellipse ", "COMMON_PARTS", 'cx="0" cy="0" rx="'.concat(this.rx, '" ry="').concat(this.ry, '" />\n')];
     }
     _render(t2) {
-      t2.beginPath(), t2.save(), t2.transform(1, 0, 0, this.ry / this.rx, 0, 0), t2.arc(0, 0, this.rx, 0, S, false), t2.restore(), this._renderPaintInOrder(t2);
+      t2.beginPath(), t2.save(), t2.transform(1, 0, 0, this.ry / this.rx, 0, 0), t2.arc(0, 0, this.rx, 0, S2, false), t2.restore(), this._renderPaintInOrder(t2);
     }
     static async fromElement(t2, e3, s2) {
       const i2 = Dr(t2, this.ATTRIBUTE_NAMES, s2);
@@ -38459,12 +39649,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const e3 = this.exactBoundingBox ? this._projectStrokeOnPoints(t2).map((t3) => t3.projectedPoint) : this.points;
       if (0 === e3.length)
         return { left: 0, top: 0, width: 0, height: 0, pathOffset: new ot(), strokeOffset: new ot(), strokeDiff: new ot() };
-      const i2 = ae(e3), r2 = Lt(s(s({}, t2), {}, { scaleX: 1, scaleY: 1 })), n2 = ae(this.points.map((t3) => St(t3, r2, true))), o2 = new ot(this.scaleX, this.scaleY);
+      const i2 = ae2(e3), r2 = Lt(s(s({}, t2), {}, { scaleX: 1, scaleY: 1 })), n2 = ae2(this.points.map((t3) => St(t3, r2, true))), o2 = new ot(this.scaleX, this.scaleY);
       let a2 = i2.left + i2.width / 2, h3 = i2.top + i2.height / 2;
       return this.exactBoundingBox && (a2 -= h3 * Math.tan(xt(this.skewX)), h3 -= a2 * Math.tan(xt(this.skewY))), s(s({}, i2), {}, { pathOffset: new ot(a2, h3), strokeOffset: new ot(n2.left, n2.top).subtract(new ot(i2.left, i2.top)).multiply(o2), strokeDiff: new ot(i2.width, i2.height).subtract(new ot(n2.width, n2.height)).multiply(o2) });
     }
     _findCenterFromElement() {
-      const t2 = ae(this.points);
+      const t2 = ae2(this.points);
       return new ot(t2.left + t2.width / 2, t2.top + t2.height / 2);
     }
     setDimensions() {
@@ -38472,7 +39662,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     setBoundingBox(t2) {
       const { left: e3, top: s2, width: i2, height: r2, pathOffset: n2, strokeOffset: o2, strokeDiff: a2 } = this._calcDimensions();
-      this.set({ width: i2, height: r2, pathOffset: n2, strokeOffset: o2, strokeDiff: a2 }), t2 && this.setPositionByOrigin(new ot(e3 + i2 / 2, s2 + r2 / 2), D, D);
+      this.set({ width: i2, height: r2, pathOffset: n2, strokeOffset: o2, strokeDiff: a2 }), t2 && this.setPositionByOrigin(new ot(e3 + i2 / 2, s2 + r2 / 2), D2, D2);
     }
     isStrokeAccountedForInDimensions() {
       return this.exactBoundingBox;
@@ -38498,7 +39688,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     _set(t2, e3) {
       const s2 = this.initialized && this[t2] !== e3, i2 = super._set(t2, e3);
-      return this.exactBoundingBox && s2 && ((t2 === H || t2 === N) && this.strokeUniform && this.constructor.layoutProperties.includes("strokeUniform") || this.constructor.layoutProperties.includes(t2)) && this.setDimensions(), i2;
+      return this.exactBoundingBox && s2 && ((t2 === H2 || t2 === N) && this.strokeUniform && this.constructor.layoutProperties.includes("strokeUniform") || this.constructor.layoutProperties.includes(t2)) && this.setDimensions(), i2;
     }
     toObject() {
       let t2 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [];
@@ -38645,7 +39835,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function Do(t2, e3, s2, i2, r2) {
     return "		".concat(function(t3, e4) {
       let { left: s3, top: i3, width: r3, height: n2 } = e4, a2 = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : o.NUM_FRACTION_DIGITS;
-      const h3 = Be(K, t3, false), [c2, l3, u2, d2] = [s3, i3, r3, n2].map((t4) => Vt(t4, a2));
+      const h3 = Be(K2, t3, false), [c2, l3, u2, d2] = [s3, i3, r3, n2].map((t4) => Vt(t4, a2));
       return "<rect ".concat(h3, ' x="').concat(c2, '" y="').concat(l3, '" width="').concat(u2, '" height="').concat(d2, '"></rect>');
     }(t2, { left: e3, top: s2, width: i2, height: r2 }), "\n");
   }
@@ -38711,7 +39901,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     _setTextStyles(t2, e3, s2) {
       if (t2.textBaseline = "alphabetic", this.path)
         switch (this.pathAlign) {
-          case D:
+          case D2:
             t2.textBaseline = "middle";
             break;
           case "ascender":
@@ -38755,7 +39945,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       t2.fillStyle = e3, this._removeShadow(t2);
     }
     _measureChar(t2, e3, s2, i2) {
-      const r2 = _.getFontCache(e3), n2 = this._getFontDeclaration(e3), o2 = s2 + t2, a2 = s2 && n2 === this._getFontDeclaration(i2), h3 = e3.fontSize / this.CACHE_FONT_SIZE;
+      const r2 = _2.getFontCache(e3), n2 = this._getFontDeclaration(e3), o2 = s2 + t2, a2 = s2 && n2 === this._getFontDeclaration(i2), h3 = e3.fontSize / this.CACHE_FONT_SIZE;
       let c2, l3, u2, d2;
       if (s2 && void 0 !== r2[s2] && (u2 = r2[s2]), void 0 !== r2[t2] && (d2 = c2 = r2[t2]), a2 && void 0 !== r2[o2] && (l3 = r2[o2], d2 = l3 - u2), void 0 === c2 || void 0 === u2 || void 0 === l3) {
         const i3 = function() {
@@ -38791,7 +39981,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           case M:
             t3 = r2 ? e4 - i2 : 0;
             break;
-          case D:
+          case D2:
             t3 = (e4 - i2) / 2;
             break;
           case A:
@@ -38849,7 +40039,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       t2.restore();
     }
     _renderTextFill(t2) {
-      (this.fill || this.styleHas(K)) && this._renderTextCommon(t2, "fillText");
+      (this.fill || this.styleHas(K2)) && this._renderTextCommon(t2, "fillText");
     }
     _renderTextStroke(t2) {
       (this.stroke && 0 !== this.strokeWidth || !this.isEmptyStyles()) && (this.shadow && !this.shadow.affectStroke && this._removeShadow(t2), t2.save(), this._setLineDash(t2, this.strokeDashArray), t2.beginPath(), this._renderTextCommon(t2, "strokeText"), t2.closePath(), t2.restore());
@@ -38906,7 +40096,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     _getLineLeftOffset(t2) {
       const e3 = this.getLineWidth(t2), s2 = this.width - e3, i2 = this.textAlign, r2 = this.direction, n2 = this.isEndOfWrapping(t2);
       let o2 = 0;
-      return i2 === qe || i2 === Qe && !n2 || i2 === Je && !n2 || i2 === Ke && !n2 ? 0 : (i2 === D && (o2 = s2 / 2), i2 === A && (o2 = s2), i2 === Qe && (o2 = s2 / 2), i2 === Je && (o2 = s2), "rtl" === r2 && (i2 === A || i2 === qe || i2 === Je ? o2 = 0 : i2 === M || i2 === Ke ? o2 = -s2 : i2 !== D && i2 !== Qe || (o2 = -s2 / 2)), o2);
+      return i2 === qe || i2 === Qe && !n2 || i2 === Je && !n2 || i2 === Ke && !n2 ? 0 : (i2 === D2 && (o2 = s2 / 2), i2 === A && (o2 = s2), i2 === Qe && (o2 = s2 / 2), i2 === Je && (o2 = s2), "rtl" === r2 && (i2 === A || i2 === qe || i2 === Je ? o2 = 0 : i2 === M || i2 === Ke ? o2 = -s2 : i2 !== D2 && i2 !== Qe || (o2 = -s2 / 2)), o2);
     }
     _clearCache() {
       this._forceClearCache = false, this.__lineWidths = [], this.__lineHeights = [], this.__charBounds = [];
@@ -38936,12 +40126,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           continue;
         }
         const l3 = this._textLines[h3], u2 = c3 / this.lineHeight, d2 = this._getLineLeftOffset(h3);
-        let g2 = 0, f = 0, p2 = this.getValueOfPropertyAt(h3, 0, e3), m2 = this.getValueOfPropertyAt(h3, 0, K), v3 = this.getValueOfPropertyAt(h3, 0, We), y2 = p2, _3 = m2, x2 = v3;
+        let g2 = 0, f = 0, p2 = this.getValueOfPropertyAt(h3, 0, e3), m2 = this.getValueOfPropertyAt(h3, 0, K2), v3 = this.getValueOfPropertyAt(h3, 0, We2), y2 = p2, _3 = m2, x2 = v3;
         const C3 = s2 + u2 * (1 - this._fontSizeFraction);
         let b2 = this.getHeightOfChar(h3, 0), S3 = this.getValueOfPropertyAt(h3, 0, "deltaY");
         for (let s3 = 0, n3 = l3.length; s3 < n3; s3++) {
           const n4 = this.__charBounds[h3][s3];
-          y2 = this.getValueOfPropertyAt(h3, s3, e3), _3 = this.getValueOfPropertyAt(h3, s3, K), x2 = this.getValueOfPropertyAt(h3, s3, We);
+          y2 = this.getValueOfPropertyAt(h3, s3, e3), _3 = this.getValueOfPropertyAt(h3, s3, K2), x2 = this.getValueOfPropertyAt(h3, s3, We2);
           const c4 = this.getHeightOfChar(h3, s3), l4 = this.getValueOfPropertyAt(h3, s3, "deltaY");
           if (r2 && y2 && _3) {
             const e4 = this.fontSize * x2 / 1e3;
@@ -38980,7 +40170,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     toObject() {
       let t2 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [];
-      return s(s({}, super.toObject([...He, ...t2])), {}, { styles: qi(this.styles, this.text) }, this.path ? { path: this.path.toObject() } : {});
+      return s(s({}, super.toObject([...He2, ...t2])), {}, { styles: qi(this.styles, this.text) }, this.path ? { path: this.path.toObject() } : {});
     }
     set(t2, e3) {
       const { textLayoutProperties: s2 } = this.constructor;
@@ -38999,13 +40189,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     static async fromElement(t2, e3, r2) {
       const n2 = Dr(t2, Eo.ATTRIBUTE_NAMES, r2), o2 = s(s({}, e3), n2), { textAnchor: a2 = M, textDecoration: h3 = "", dx: c2 = 0, dy: l3 = 0, top: u2 = 0, left: d2 = 0, fontSize: g2 = O, strokeWidth: f = 1 } = o2, p2 = i(o2, Mo), m2 = new this((t2.textContent || "").replace(/^\s+|\s+$|\n+/g, "").replace(/\s+/g, " "), s({ left: d2 + c2, top: u2 + l3, underline: h3.includes("underline"), overline: h3.includes("overline"), linethrough: h3.includes("line-through"), strokeWidth: 0, fontSize: g2 }, p2)), v3 = m2.getScaledHeight() / m2.height, y2 = ((m2.height + m2.strokeWidth) * m2.lineHeight - m2.height) * v3, _3 = m2.getScaledHeight() + y2;
       let x2 = 0;
-      return a2 === D && (x2 = m2.getScaledWidth() / 2), a2 === A && (x2 = m2.getScaledWidth()), m2.set({ left: m2.left - x2, top: m2.top - (_3 - m2.fontSize * (0.07 + m2._fontSizeFraction)) / m2.lineHeight, strokeWidth: f }), m2;
+      return a2 === D2 && (x2 = m2.getScaledWidth() / 2), a2 === A && (x2 = m2.getScaledWidth()), m2.set({ left: m2.left - x2, top: m2.top - (_3 - m2.fontSize * (0.07 + m2._fontSizeFraction)) / m2.lineHeight, strokeWidth: f }), m2;
     }
     static fromObject(t2) {
       return this._fromObject(s(s({}, t2), {}, { styles: Ki(t2.styles || {}, t2.text) }), { extraParam: "text" });
     }
   };
-  t(Eo, "textLayoutProperties", Ge), t(Eo, "cacheProperties", [...Ms, ...He]), t(Eo, "ownDefaults", Ue), t(Eo, "type", "Text"), t(Eo, "genericFonts", ["serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui", "ui-serif", "ui-sans-serif", "ui-monospace", "ui-rounded", "math", "emoji", "fangsong"]), t(Eo, "ATTRIBUTE_NAMES", Ji.concat("x", "y", "dx", "dy", "font-family", "font-style", "font-weight", "font-size", "letter-spacing", "text-decoration", "text-anchor")), Ai(Eo, [class extends Xe {
+  t(Eo, "textLayoutProperties", Ge), t(Eo, "cacheProperties", [...Ms, ...He2]), t(Eo, "ownDefaults", Ue2), t(Eo, "type", "Text"), t(Eo, "genericFonts", ["serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui", "ui-serif", "ui-sans-serif", "ui-monospace", "ui-rounded", "math", "emoji", "fangsong"]), t(Eo, "ATTRIBUTE_NAMES", Ji.concat("x", "y", "dx", "dy", "font-family", "font-style", "font-weight", "font-size", "letter-spacing", "text-decoration", "text-anchor")), Ai(Eo, [class extends Xe {
     _toSVG() {
       const t2 = this._getSVGLeftTopOffsets(), e3 = this._getSVGTextAndBg(t2.textTop, t2.textLeft);
       return this._wrapSVGTextAndBg(e3);
@@ -39071,7 +40261,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     getSvgSpanStyles(t2, e3) {
       const { fontFamily: s2, strokeWidth: i2, stroke: r2, fill: n2, fontSize: a2, fontStyle: h3, fontWeight: c2, deltaY: l3, textDecorationThickness: u2, linethrough: d2, overline: g2, underline: f } = t2, p2 = this.getSvgTextDecoration({ underline: null != f ? f : this.underline, overline: null != g2 ? g2 : this.overline, linethrough: null != d2 ? d2 : this.linethrough }), m2 = u2 || this.textDecorationThickness;
-      return [r2 ? Be(J, r2) : "", i2 ? "stroke-width: ".concat(i2, "; ") : "", s2 ? "font-family: ".concat(s2.includes("'") || s2.includes('"') ? s2 : "'".concat(s2, "'"), "; ") : "", a2 ? "font-size: ".concat(a2, "px; ") : "", h3 ? "font-style: ".concat(h3, "; ") : "", c2 ? "font-weight: ".concat(c2, "; ") : "", p2 ? "text-decoration: ".concat(p2, "; text-decoration-thickness: ").concat(Vt(m2 * this.getObjectScaling().y / 10, o.NUM_FRACTION_DIGITS), "%; ") : "", n2 ? Be(K, n2) : "", l3 ? "baseline-shift: ".concat(-l3, "; ") : "", e3 ? "white-space: pre; " : ""].join("");
+      return [r2 ? Be(J, r2) : "", i2 ? "stroke-width: ".concat(i2, "; ") : "", s2 ? "font-family: ".concat(s2.includes("'") || s2.includes('"') ? s2 : "'".concat(s2, "'"), "; ") : "", a2 ? "font-size: ".concat(a2, "px; ") : "", h3 ? "font-style: ".concat(h3, "; ") : "", c2 ? "font-weight: ".concat(c2, "; ") : "", p2 ? "text-decoration: ".concat(p2, "; text-decoration-thickness: ").concat(Vt(m2 * this.getObjectScaling().y / 10, o.NUM_FRACTION_DIGITS), "%; ") : "", n2 ? Be(K2, n2) : "", l3 ? "baseline-shift: ".concat(-l3, "; ") : "", e3 ? "white-space: pre; " : ""].join("");
     }
     getSvgTextDecoration(t2) {
       return ["overline", "underline", "line-through"].filter((e3) => t2[e3.replace("-", "")]).join(" ");
@@ -39775,7 +40965,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const n2 = this._getLineLeftOffset(r2), o2 = this.__charBounds[r2][i2];
       o2 && (s2 = o2.left), 0 !== this.charSpacing && i2 === this._textLines[r2].length && (s2 -= this._getWidthOfCharSpacing());
       const a2 = { top: e3, left: n2 + (s2 > 0 ? s2 : 0) };
-      return "rtl" === this.direction && (this.textAlign === A || this.textAlign === qe || this.textAlign === Je ? a2.left *= -1 : this.textAlign === M || this.textAlign === Ke ? a2.left = n2 - (s2 > 0 ? s2 : 0) : this.textAlign !== D && this.textAlign !== Qe || (a2.left = n2 - (s2 > 0 ? s2 : 0))), a2;
+      return "rtl" === this.direction && (this.textAlign === A || this.textAlign === qe || this.textAlign === Je ? a2.left *= -1 : this.textAlign === M || this.textAlign === Ke ? a2.left = n2 - (s2 > 0 ? s2 : 0) : this.textAlign !== D2 && this.textAlign !== Qe || (a2.left = n2 - (s2 > 0 ? s2 : 0))), a2;
     }
     renderCursorAt(t2) {
       this._renderCursor(this.canvas.contextTop, this._getCursorBoundaries(t2, true), t2);
@@ -39821,7 +41011,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         o3 = r3, (this.lineHeight < 1 || e4 === c2 && this.lineHeight > 1) && (r3 /= this.lineHeight);
         let g2 = s2.left + i3 + a3, f = r3, p2 = 0;
         const m2 = d2 - a3;
-        this.inCompositionMode ? (t2.fillStyle = this.compositionColor || "black", f = 1, p2 = r3) : t2.fillStyle = this.selectionColor, "rtl" === this.direction && (this.textAlign === A || this.textAlign === qe || this.textAlign === Je ? g2 = this.width - g2 - m2 : this.textAlign === M || this.textAlign === Ke ? g2 = s2.left + i3 - d2 : this.textAlign !== D && this.textAlign !== Qe || (g2 = s2.left + i3 - d2)), t2.fillRect(g2, s2.top + s2.topOffset + p2, m2, f), s2.topOffset += o3;
+        this.inCompositionMode ? (t2.fillStyle = this.compositionColor || "black", f = 1, p2 = r3) : t2.fillStyle = this.selectionColor, "rtl" === this.direction && (this.textAlign === A || this.textAlign === qe || this.textAlign === Je ? g2 = this.width - g2 - m2 : this.textAlign === M || this.textAlign === Ke ? g2 = s2.left + i3 - d2 : this.textAlign !== D2 && this.textAlign !== Qe || (g2 = s2.left + i3 - d2)), t2.fillRect(g2, s2.top + s2.topOffset + p2, m2, f), s2.topOffset += o3;
       }
     }
     getCurrentCharFontSize() {
@@ -39830,7 +41020,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     getCurrentCharColor() {
       const t2 = this._getCurrentCharIndex();
-      return this.getValueOfPropertyAt(t2.l, t2.c, K);
+      return this.getValueOfPropertyAt(t2.l, t2.c, K2);
     }
     _getCurrentCharIndex() {
       const t2 = this.get2DCursorLocation(this.selectionStart, true), e3 = t2.charIndex > 0 ? t2.charIndex - 1 : 0;
@@ -39995,7 +41185,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const { target: s2 } = t2, { clipPath: i2, group: r2 } = s2;
       if (!i2 || !this.shouldPerformLayout(t2))
         return;
-      const { width: n2, height: o2 } = ae(Rr(s2, i2)), a2 = new ot(n2, o2);
+      const { width: n2, height: o2 } = ae2(Rr(s2, i2)), a2 = new ot(n2, o2);
       if (i2.absolutePositioned) {
         return { center: pe(i2.getRelativeCenterPoint(), void 0, r2 ? r2.calcTransformMatrix() : void 0), size: a2 };
       }
@@ -40263,7 +41453,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         const t3 = this.fill;
         this.fill = null, n2 = ['	<rect x="'.concat(s2, '" y="').concat(i2, '" width="').concat(this.width, '" height="').concat(this.height, '" style="').concat(this.getSvgStyles(), '" />\n')], this.fill = t3;
       }
-      return r2 = this.paintFirst !== K ? r2.concat(n2, t2) : r2.concat(t2, n2), r2;
+      return r2 = this.paintFirst !== K2 ? r2.concat(n2, t2) : r2.concat(t2, n2), r2;
     }
     getSrc(t2) {
       const e3 = t2 ? this._element : this._originalElement;
@@ -40329,7 +41519,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       this.width = t2 || s2.width, this.height = e3 || s2.height;
     }
     parsePreserveAspectRatioAttribute() {
-      const t2 = Ie(this.preserveAspectRatio || ""), e3 = this.width, s2 = this.height, i2 = { width: e3, height: s2 };
+      const t2 = Ie2(this.preserveAspectRatio || ""), e3 = this.width, s2 = this.height, i2 = { width: e3, height: s2 };
       let r2, n2 = this._element.width, o2 = this._element.height, a2 = 1, h3 = 1, c2 = 0, l3 = 0, u2 = 0, d2 = 0;
       return !t2 || t2.alignX === j && t2.alignY === j ? (a2 = e3 / n2, h3 = s2 / o2) : ("meet" === t2.meetOrSlice && (a2 = h3 = Nr(this._element, i2), r2 = (e3 - n2 * a2) / 2, "Min" === t2.alignX && (c2 = -r2), "Max" === t2.alignX && (c2 = r2), r2 = (s2 - o2 * h3) / 2, "Min" === t2.alignY && (l3 = -r2), "Max" === t2.alignY && (l3 = r2)), "slice" === t2.meetOrSlice && (a2 = h3 = Ur(this._element, i2), r2 = n2 - e3 / a2, "Mid" === t2.alignX && (u2 = r2 / 2), "Max" === t2.alignX && (u2 = r2), r2 = o2 - s2 / h3, "Mid" === t2.alignY && (d2 = r2 / 2), "Max" === t2.alignY && (d2 = r2), n2 = e3 / a2, o2 = s2 / h3)), { width: n2, height: o2, scaleX: a2, scaleY: h3, offsetLeft: c2, offsetTop: l3, cropX: u2, cropY: d2 };
     }
@@ -40352,7 +41542,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   t(na, "type", "Image"), t(na, "cacheProperties", [...Ms, ...ra]), t(na, "ownDefaults", { strokeWidth: 0, srcFromAttribute: false, minimumScaleTrigger: 0.5, cropX: 0, cropY: 0, imageSmoothing: true }), t(na, "CSS_CANVAS", "canvas-img"), t(na, "ATTRIBUTE_NAMES", [...Ji, "x", "y", "width", "height", "preserveAspectRatio", "xlink:href", "href", "crossOrigin", "image-rendering"]), tt.setClass(na), tt.setSVGClass(na);
   var ha = Ye(["pattern", "defs", "symbol", "metadata", "clipPath", "mask", "desc"]);
-  var ba = W;
+  var ba = W2;
   var Sa = (t2) => function(e3, s2, i2) {
     const { points: r2, pathOffset: n2 } = i2;
     return new ot(r2[t2]).subtract(n2).transform(Tt(i2.getViewportTransform(), i2.calcTransformMatrix()));
@@ -40381,7 +41571,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const u2 = h4.subtract(t3.pathOffset).transform(t3.calcOwnMatrix()).subtract(c2);
       return t3.left -= u2.x, t3.top -= u2.y, t3.set("dirty", true), true;
     })(n2, i2, r2, o2, a2);
-    return ye(this.actionName, s(s({}, Te(t2, e3, i2, r2)), {}, { commandIndex: o2, pointIndex: a2 })), h3;
+    return ye2(this.actionName, s(s({}, Te2(t2, e3, i2, r2)), {}, { commandIndex: o2, pointIndex: a2 })), h3;
   }
   var Pa = class extends ni {
     constructor(t2) {
@@ -40430,7 +41620,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     for (let r2 = 0; r2 < ("number" == typeof t2 ? t2 : t2.points.length); r2++)
       i2["p".concat(r2)] = new ni(s({ actionName: ba, positionHandler: Sa(r2), actionHandler: Oa(r2) }, e3));
     return i2;
-  }, createPolyPositionHandler: Sa, createResizeControls: Mi, createTextboxDefaultControls: Pi, dragHandler: De, factoryPolyActionHandler: Ta, getLocalPoint: ke, polyActionHandler: wa, renderCircleControl: ii, renderSquareControl: ri, rotationStyleHandler: oi, rotationWithSnapping: ai, scaleCursorStyleHandler: ui, scaleOrSkewActionName: wi, scaleSkewCursorStyleHandler: Ti, scalingEqually: gi, scalingX: fi, scalingXOrSkewingY: Oi, scalingY: pi, scalingYOrSkewingX: ki, skewCursorStyleHandler: _i, skewHandlerX: Ci, skewHandlerY: bi, wrapWithFireEvent: ti, wrapWithFixedAnchor: ei });
+  }, createPolyPositionHandler: Sa, createResizeControls: Mi, createTextboxDefaultControls: Pi, dragHandler: De2, factoryPolyActionHandler: Ta, getLocalPoint: ke2, polyActionHandler: wa, renderCircleControl: ii, renderSquareControl: ri, rotationStyleHandler: oi, rotationWithSnapping: ai, scaleCursorStyleHandler: ui, scaleOrSkewActionName: wi, scaleSkewCursorStyleHandler: Ti, scalingEqually: gi, scalingX: fi, scalingXOrSkewingY: Oi, scalingY: pi, scalingYOrSkewingX: ki, skewCursorStyleHandler: _i, skewHandlerX: Ci, skewHandlerY: bi, wrapWithFireEvent: ti, wrapWithFixedAnchor: ei });
   var Fa = (t2) => void 0 !== t2.webgl;
   var Ra = "precision highp float";
   var Ia = "\n    ".concat(Ra, ";\n    varying vec2 vTexCoord;\n    uniform sampler2D uTexture;\n    void main() {\n      gl_FragColor = texture2D(uTexture, vTexCoord);\n    }");
@@ -40457,13 +41647,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       "highp" !== i2 && (e3 = e3.replace(Ya, Ra.replace("highp", i2)));
       const r2 = t2.createShader(t2.VERTEX_SHADER), n2 = t2.createShader(t2.FRAGMENT_SHADER), o2 = t2.createProgram();
       if (!r2 || !n2 || !o2)
-        throw new h("Vertex, fragment shader or program creation error");
+        throw new h2("Vertex, fragment shader or program creation error");
       if (t2.shaderSource(r2, s2), t2.compileShader(r2), !t2.getShaderParameter(r2, t2.COMPILE_STATUS))
-        throw new h("Vertex shader compile error for ".concat(this.type, ": ").concat(t2.getShaderInfoLog(r2)));
+        throw new h2("Vertex shader compile error for ".concat(this.type, ": ").concat(t2.getShaderInfoLog(r2)));
       if (t2.shaderSource(n2, e3), t2.compileShader(n2), !t2.getShaderParameter(n2, t2.COMPILE_STATUS))
-        throw new h("Fragment shader compile error for ".concat(this.type, ": ").concat(t2.getShaderInfoLog(n2)));
+        throw new h2("Fragment shader compile error for ".concat(this.type, ": ").concat(t2.getShaderInfoLog(n2)));
       if (t2.attachShader(o2, r2), t2.attachShader(o2, n2), t2.linkProgram(o2), !t2.getProgramParameter(o2, t2.LINK_STATUS))
-        throw new h('Shader link error for "'.concat(this.type, '" ').concat(t2.getProgramInfoLog(o2)));
+        throw new h2('Shader link error for "'.concat(this.type, '" ').concat(t2.getProgramInfoLog(o2)));
       const a2 = this.getUniformLocations(t2, o2) || {};
       return a2.uStepW = t2.getUniformLocation(o2, "uStepW"), a2.uStepH = t2.getUniformLocation(o2, "uStepH"), { program: o2, attributeLocations: this.getAttributeLocations(t2, o2), uniformLocations: a2 };
     }
@@ -41940,17 +43130,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // design-editor/DesignEditor.tsx
-  var DesignEditor = import_react71.default.forwardRef(
+  var DesignEditor = import_react83.default.forwardRef(
     ({ projectId }, ref) => {
-      const canvasRef = (0, import_react71.useRef)(null);
-      const [design, setDesign] = (0, import_react71.useState)({
+      const canvasRef = (0, import_react83.useRef)(null);
+      const [design, setDesign] = (0, import_react83.useState)({
         objects: [],
         background: "#ffffff",
         version: "1.0"
       });
-      const [collaborators, setCollaborators] = (0, import_react71.useState)([]);
-      const wsRef = (0, import_react71.useRef)(null);
-      (0, import_react71.useEffect)(() => {
+      const [collaborators, setCollaborators] = (0, import_react83.useState)([]);
+      const wsRef = (0, import_react83.useRef)(null);
+      (0, import_react83.useEffect)(() => {
         const canvas = new In("design-canvas", {
           width: 800,
           height: 600
@@ -42075,7 +43265,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       };
-      import_react71.default.useImperativeHandle(ref, () => ({
+      import_react83.default.useImperativeHandle(ref, () => ({
         loadDesign,
         saveDesign
       }));
@@ -42104,15 +43294,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           console.error("Error exporting PNG:", error);
         }
       };
-      return /* @__PURE__ */ import_react71.default.createElement("div", { className: "design-editor" }, /* @__PURE__ */ import_react71.default.createElement("div", { className: "toolbar" }, /* @__PURE__ */ import_react71.default.createElement("button", { onClick: () => addShape("rectangle") }, "Add Rectangle"), /* @__PURE__ */ import_react71.default.createElement("button", { onClick: () => addShape("circle") }, "Add Circle"), /* @__PURE__ */ import_react71.default.createElement("button", { onClick: () => addShape("text") }, "Add Text"), /* @__PURE__ */ import_react71.default.createElement("button", { onClick: exportAsPNG }, "Export PNG")), /* @__PURE__ */ import_react71.default.createElement("canvas", { id: "design-canvas" }), /* @__PURE__ */ import_react71.default.createElement("div", { className: "collaborators" }, /* @__PURE__ */ import_react71.default.createElement("h3", null, "Collaborators (", collaborators.length, ")"), /* @__PURE__ */ import_react71.default.createElement("ul", null, collaborators.map((user) => /* @__PURE__ */ import_react71.default.createElement("li", { key: user.id }, user.name)))));
+      return /* @__PURE__ */ import_react83.default.createElement("div", { className: "design-editor" }, /* @__PURE__ */ import_react83.default.createElement("div", { className: "toolbar" }, /* @__PURE__ */ import_react83.default.createElement("button", { onClick: () => addShape("rectangle") }, "Add Rectangle"), /* @__PURE__ */ import_react83.default.createElement("button", { onClick: () => addShape("circle") }, "Add Circle"), /* @__PURE__ */ import_react83.default.createElement("button", { onClick: () => addShape("text") }, "Add Text"), /* @__PURE__ */ import_react83.default.createElement("button", { onClick: exportAsPNG }, "Export PNG")), /* @__PURE__ */ import_react83.default.createElement("canvas", { id: "design-canvas" }), /* @__PURE__ */ import_react83.default.createElement("div", { className: "collaborators" }, /* @__PURE__ */ import_react83.default.createElement("h3", null, "Collaborators (", collaborators.length, ")"), /* @__PURE__ */ import_react83.default.createElement("ul", null, collaborators.map((user) => /* @__PURE__ */ import_react83.default.createElement("li", { key: user.id }, user.name)))));
     }
   );
 
   // src/components/DesignEditorPage.tsx
   var import_file_saver = __toESM(require_FileSaver_min(), 1);
   var DesignEditorPage = () => {
-    const [projectId, setProjectId] = (0, import_react72.useState)("default-project");
-    const [fileHandle, setFileHandle] = (0, import_react72.useState)(null);
+    const [projectId, setProjectId] = (0, import_react84.useState)("default-project");
+    const [fileHandle, setFileHandle] = (0, import_react84.useState)(null);
     const handleSave = async () => {
       try {
         if (!designEditorRef.current) {
@@ -42157,8 +43347,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       }
     };
-    const [design, setDesign] = (0, import_react72.useState)(null);
-    const designEditorRef = (0, import_react72.useRef)(null);
+    const [design, setDesign] = (0, import_react84.useState)(null);
+    const designEditorRef = (0, import_react84.useRef)(null);
     const handleOpen = async () => {
       console.log("handleOpen triggered");
       try {
@@ -42224,7 +43414,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const blob = new Blob([designData], { type: "application/json" });
       (0, import_file_saver.saveAs)(blob, `${projectId}.json`);
     };
-    return /* @__PURE__ */ import_react72.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react72.default.createElement(Row_default, { className: "mb-3" }, /* @__PURE__ */ import_react72.default.createElement(Col_default, null, /* @__PURE__ */ import_react72.default.createElement("h1", null, "Design Editor"), /* @__PURE__ */ import_react72.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react72.default.createElement(Button_default2, { variant: "primary", onClick: handleOpen }, "Open"), /* @__PURE__ */ import_react72.default.createElement(Button_default2, { variant: "success", onClick: handleSave }, "Save"), /* @__PURE__ */ import_react72.default.createElement(Button_default2, { variant: "secondary", onClick: handleExport }, "Export")))), /* @__PURE__ */ import_react72.default.createElement(Row_default, null, /* @__PURE__ */ import_react72.default.createElement(Col_default, null, /* @__PURE__ */ import_react72.default.createElement(
+    return /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(Row_default, { className: "mb-3" }, /* @__PURE__ */ import_react84.default.createElement(Col_default, null, /* @__PURE__ */ import_react84.default.createElement("h1", null, "Design Editor"), /* @__PURE__ */ import_react84.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react84.default.createElement(Button_default2, { variant: "primary", onClick: handleOpen }, "Open"), /* @__PURE__ */ import_react84.default.createElement(Button_default2, { variant: "success", onClick: handleSave }, "Save"), /* @__PURE__ */ import_react84.default.createElement(Button_default2, { variant: "secondary", onClick: handleExport }, "Export")))), /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, null, /* @__PURE__ */ import_react84.default.createElement(
       DesignEditor,
       {
         projectId,
@@ -42234,705 +43424,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/stateful/TextEditorPage.tsx
-  var import_react85 = __toESM(require_react(), 1);
-
-  // node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-    return obj;
-  }
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-      keys.push.apply(keys, symbols);
-    }
-    return keys;
-  }
-  function _objectSpread2(target) {
-    for (var i2 = 1; i2 < arguments.length; i2++) {
-      var source = arguments[i2] != null ? arguments[i2] : {};
-      if (i2 % 2) {
-        ownKeys(Object(source), true).forEach(function(key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function(key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-    return target;
-  }
-  function _objectWithoutPropertiesLoose10(source, excluded) {
-    if (source == null)
-      return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i2;
-    for (i2 = 0; i2 < sourceKeys.length; i2++) {
-      key = sourceKeys[i2];
-      if (excluded.indexOf(key) >= 0)
-        continue;
-      target[key] = source[key];
-    }
-    return target;
-  }
-  function _objectWithoutProperties(source, excluded) {
-    if (source == null)
-      return {};
-    var target = _objectWithoutPropertiesLoose10(source, excluded);
-    var key, i2;
-    if (Object.getOwnPropertySymbols) {
-      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-      for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
-        key = sourceSymbolKeys[i2];
-        if (excluded.indexOf(key) >= 0)
-          continue;
-        if (!Object.prototype.propertyIsEnumerable.call(source, key))
-          continue;
-        target[key] = source[key];
-      }
-    }
-    return target;
-  }
-  function _slicedToArray(arr, i2) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i2) || _unsupportedIterableToArray(arr, i2) || _nonIterableRest();
-  }
-  function _arrayWithHoles(arr) {
-    if (Array.isArray(arr))
-      return arr;
-  }
-  function _iterableToArrayLimit(arr, i2) {
-    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr)))
-      return;
-    var _arr = [];
-    var _n2 = true;
-    var _d = false;
-    var _e3 = void 0;
-    try {
-      for (var _i2 = arr[Symbol.iterator](), _s2; !(_n2 = (_s2 = _i2.next()).done); _n2 = true) {
-        _arr.push(_s2.value);
-        if (i2 && _arr.length === i2)
-          break;
-      }
-    } catch (err) {
-      _d = true;
-      _e3 = err;
-    } finally {
-      try {
-        if (!_n2 && _i2["return"] != null)
-          _i2["return"]();
-      } finally {
-        if (_d)
-          throw _e3;
-      }
-    }
-    return _arr;
-  }
-  function _unsupportedIterableToArray(o2, minLen) {
-    if (!o2)
-      return;
-    if (typeof o2 === "string")
-      return _arrayLikeToArray(o2, minLen);
-    var n2 = Object.prototype.toString.call(o2).slice(8, -1);
-    if (n2 === "Object" && o2.constructor)
-      n2 = o2.constructor.name;
-    if (n2 === "Map" || n2 === "Set")
-      return Array.from(o2);
-    if (n2 === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n2))
-      return _arrayLikeToArray(o2, minLen);
-  }
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length)
-      len = arr.length;
-    for (var i2 = 0, arr2 = new Array(len); i2 < len; i2++)
-      arr2[i2] = arr[i2];
-    return arr2;
-  }
-  function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  // node_modules/state-local/lib/es/state-local.js
-  function _defineProperty2(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-    return obj;
-  }
-  function ownKeys2(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-      keys.push.apply(keys, symbols);
-    }
-    return keys;
-  }
-  function _objectSpread22(target) {
-    for (var i2 = 1; i2 < arguments.length; i2++) {
-      var source = arguments[i2] != null ? arguments[i2] : {};
-      if (i2 % 2) {
-        ownKeys2(Object(source), true).forEach(function(key) {
-          _defineProperty2(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys2(Object(source)).forEach(function(key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-    return target;
-  }
-  function compose() {
-    for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
-      fns[_key] = arguments[_key];
-    }
-    return function(x2) {
-      return fns.reduceRight(function(y2, f) {
-        return f(y2);
-      }, x2);
-    };
-  }
-  function curry(fn2) {
-    return function curried() {
-      var _this = this;
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
-      return args.length >= fn2.length ? fn2.apply(this, args) : function() {
-        for (var _len3 = arguments.length, nextArgs = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-          nextArgs[_key3] = arguments[_key3];
-        }
-        return curried.apply(_this, [].concat(args, nextArgs));
-      };
-    };
-  }
-  function isObject(value) {
-    return {}.toString.call(value).includes("Object");
-  }
-  function isEmpty(obj) {
-    return !Object.keys(obj).length;
-  }
-  function isFunction(value) {
-    return typeof value === "function";
-  }
-  function hasOwnProperty(object, property) {
-    return Object.prototype.hasOwnProperty.call(object, property);
-  }
-  function validateChanges(initial, changes) {
-    if (!isObject(changes))
-      errorHandler("changeType");
-    if (Object.keys(changes).some(function(field) {
-      return !hasOwnProperty(initial, field);
-    }))
-      errorHandler("changeField");
-    return changes;
-  }
-  function validateSelector(selector) {
-    if (!isFunction(selector))
-      errorHandler("selectorType");
-  }
-  function validateHandler(handler) {
-    if (!(isFunction(handler) || isObject(handler)))
-      errorHandler("handlerType");
-    if (isObject(handler) && Object.values(handler).some(function(_handler) {
-      return !isFunction(_handler);
-    }))
-      errorHandler("handlersType");
-  }
-  function validateInitial(initial) {
-    if (!initial)
-      errorHandler("initialIsRequired");
-    if (!isObject(initial))
-      errorHandler("initialType");
-    if (isEmpty(initial))
-      errorHandler("initialContent");
-  }
-  function throwError(errorMessages3, type) {
-    throw new Error(errorMessages3[type] || errorMessages3["default"]);
-  }
-  var errorMessages = {
-    initialIsRequired: "initial state is required",
-    initialType: "initial state should be an object",
-    initialContent: "initial state shouldn't be an empty object",
-    handlerType: "handler should be an object or a function",
-    handlersType: "all handlers should be a functions",
-    selectorType: "selector should be a function",
-    changeType: "provided value of changes should be an object",
-    changeField: 'it seams you want to change a field in the state which is not specified in the "initial" state',
-    "default": "an unknown error accured in `state-local` package"
-  };
-  var errorHandler = curry(throwError)(errorMessages);
-  var validators = {
-    changes: validateChanges,
-    selector: validateSelector,
-    handler: validateHandler,
-    initial: validateInitial
-  };
-  function create(initial) {
-    var handler = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-    validators.initial(initial);
-    validators.handler(handler);
-    var state = {
-      current: initial
-    };
-    var didUpdate = curry(didStateUpdate)(state, handler);
-    var update = curry(updateState)(state);
-    var validate = curry(validators.changes)(initial);
-    var getChanges = curry(extractChanges)(state);
-    function getState2() {
-      var selector = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : function(state2) {
-        return state2;
-      };
-      validators.selector(selector);
-      return selector(state.current);
-    }
-    function setState2(causedChanges) {
-      compose(didUpdate, update, validate, getChanges)(causedChanges);
-    }
-    return [getState2, setState2];
-  }
-  function extractChanges(state, causedChanges) {
-    return isFunction(causedChanges) ? causedChanges(state.current) : causedChanges;
-  }
-  function updateState(state, changes) {
-    state.current = _objectSpread22(_objectSpread22({}, state.current), changes);
-    return changes;
-  }
-  function didStateUpdate(state, handler, changes) {
-    isFunction(handler) ? handler(state.current) : Object.keys(changes).forEach(function(field) {
-      var _handler$field;
-      return (_handler$field = handler[field]) === null || _handler$field === void 0 ? void 0 : _handler$field.call(handler, state.current[field]);
-    });
-    return changes;
-  }
-  var index = {
-    create
-  };
-  var state_local_default = index;
-
-  // node_modules/@monaco-editor/loader/lib/es/config/index.js
-  var config = {
-    paths: {
-      vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs"
-    }
-  };
-  var config_default2 = config;
-
-  // node_modules/@monaco-editor/loader/lib/es/utils/curry.js
-  function curry2(fn2) {
-    return function curried() {
-      var _this = this;
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      return args.length >= fn2.length ? fn2.apply(this, args) : function() {
-        for (var _len2 = arguments.length, nextArgs = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          nextArgs[_key2] = arguments[_key2];
-        }
-        return curried.apply(_this, [].concat(args, nextArgs));
-      };
-    };
-  }
-  var curry_default = curry2;
-
-  // node_modules/@monaco-editor/loader/lib/es/utils/isObject.js
-  function isObject2(value) {
-    return {}.toString.call(value).includes("Object");
-  }
-  var isObject_default = isObject2;
-
-  // node_modules/@monaco-editor/loader/lib/es/validators/index.js
-  function validateConfig(config3) {
-    if (!config3)
-      errorHandler2("configIsRequired");
-    if (!isObject_default(config3))
-      errorHandler2("configType");
-    if (config3.urls) {
-      informAboutDeprecation();
-      return {
-        paths: {
-          vs: config3.urls.monacoBase
-        }
-      };
-    }
-    return config3;
-  }
-  function informAboutDeprecation() {
-    console.warn(errorMessages2.deprecation);
-  }
-  function throwError2(errorMessages3, type) {
-    throw new Error(errorMessages3[type] || errorMessages3["default"]);
-  }
-  var errorMessages2 = {
-    configIsRequired: "the configuration object is required",
-    configType: "the configuration object should be an object",
-    "default": "an unknown error accured in `@monaco-editor/loader` package",
-    deprecation: "Deprecation warning!\n    You are using deprecated way of configuration.\n\n    Instead of using\n      monaco.config({ urls: { monacoBase: '...' } })\n    use\n      monaco.config({ paths: { vs: '...' } })\n\n    For more please check the link https://github.com/suren-atoyan/monaco-loader#config\n  "
-  };
-  var errorHandler2 = curry_default(throwError2)(errorMessages2);
-  var validators2 = {
-    config: validateConfig
-  };
-  var validators_default = validators2;
-
-  // node_modules/@monaco-editor/loader/lib/es/utils/compose.js
-  var compose2 = function compose3() {
-    for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
-      fns[_key] = arguments[_key];
-    }
-    return function(x2) {
-      return fns.reduceRight(function(y2, f) {
-        return f(y2);
-      }, x2);
-    };
-  };
-  var compose_default = compose2;
-
-  // node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js
-  function merge(target, source) {
-    Object.keys(source).forEach(function(key) {
-      if (source[key] instanceof Object) {
-        if (target[key]) {
-          Object.assign(source[key], merge(target[key], source[key]));
-        }
-      }
-    });
-    return _objectSpread2(_objectSpread2({}, target), source);
-  }
-  var deepMerge_default = merge;
-
-  // node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js
-  var CANCELATION_MESSAGE = {
-    type: "cancelation",
-    msg: "operation is manually canceled"
-  };
-  function makeCancelable(promise) {
-    var hasCanceled_ = false;
-    var wrappedPromise = new Promise(function(resolve, reject) {
-      promise.then(function(val) {
-        return hasCanceled_ ? reject(CANCELATION_MESSAGE) : resolve(val);
-      });
-      promise["catch"](reject);
-    });
-    return wrappedPromise.cancel = function() {
-      return hasCanceled_ = true;
-    }, wrappedPromise;
-  }
-  var makeCancelable_default = makeCancelable;
-
-  // node_modules/@monaco-editor/loader/lib/es/loader/index.js
-  var _state$create = state_local_default.create({
-    config: config_default2,
-    isInitialized: false,
-    resolve: null,
-    reject: null,
-    monaco: null
-  });
-  var _state$create2 = _slicedToArray(_state$create, 2);
-  var getState = _state$create2[0];
-  var setState = _state$create2[1];
-  function config2(globalConfig) {
-    var _validators$config = validators_default.config(globalConfig), monaco = _validators$config.monaco, config3 = _objectWithoutProperties(_validators$config, ["monaco"]);
-    setState(function(state) {
-      return {
-        config: deepMerge_default(state.config, config3),
-        monaco
-      };
-    });
-  }
-  function init() {
-    var state = getState(function(_ref) {
-      var monaco = _ref.monaco, isInitialized = _ref.isInitialized, resolve = _ref.resolve;
-      return {
-        monaco,
-        isInitialized,
-        resolve
-      };
-    });
-    if (!state.isInitialized) {
-      setState({
-        isInitialized: true
-      });
-      if (state.monaco) {
-        state.resolve(state.monaco);
-        return makeCancelable_default(wrapperPromise);
-      }
-      if (window.monaco && window.monaco.editor) {
-        storeMonacoInstance(window.monaco);
-        state.resolve(window.monaco);
-        return makeCancelable_default(wrapperPromise);
-      }
-      compose_default(injectScripts, getMonacoLoaderScript)(configureLoader);
-    }
-    return makeCancelable_default(wrapperPromise);
-  }
-  function injectScripts(script) {
-    return document.body.appendChild(script);
-  }
-  function createScript(src) {
-    var script = document.createElement("script");
-    return src && (script.src = src), script;
-  }
-  function getMonacoLoaderScript(configureLoader2) {
-    var state = getState(function(_ref2) {
-      var config3 = _ref2.config, reject = _ref2.reject;
-      return {
-        config: config3,
-        reject
-      };
-    });
-    var loaderScript = createScript("".concat(state.config.paths.vs, "/loader.js"));
-    loaderScript.onload = function() {
-      return configureLoader2();
-    };
-    loaderScript.onerror = state.reject;
-    return loaderScript;
-  }
-  function configureLoader() {
-    var state = getState(function(_ref3) {
-      var config3 = _ref3.config, resolve = _ref3.resolve, reject = _ref3.reject;
-      return {
-        config: config3,
-        resolve,
-        reject
-      };
-    });
-    var require2 = window.require;
-    require2.config(state.config);
-    require2(["vs/editor/editor.main"], function(monaco) {
-      storeMonacoInstance(monaco);
-      state.resolve(monaco);
-    }, function(error) {
-      state.reject(error);
-    });
-  }
-  function storeMonacoInstance(monaco) {
-    if (!getState().monaco) {
-      setState({
-        monaco
-      });
-    }
-  }
-  function __getMonacoInstance() {
-    return getState(function(_ref4) {
-      var monaco = _ref4.monaco;
-      return monaco;
-    });
-  }
-  var wrapperPromise = new Promise(function(resolve, reject) {
-    return setState({
-      resolve,
-      reject
-    });
-  });
-  var loader = {
-    config: config2,
-    init,
-    __getMonacoInstance
-  };
-  var loader_default = loader;
-
-  // node_modules/@monaco-editor/react/dist/index.mjs
-  var import_react73 = __toESM(require_react(), 1);
-  var import_react74 = __toESM(require_react(), 1);
-  var import_react75 = __toESM(require_react(), 1);
-  var import_react76 = __toESM(require_react(), 1);
-  var import_react77 = __toESM(require_react(), 1);
-  var import_react78 = __toESM(require_react(), 1);
-  var import_react79 = __toESM(require_react(), 1);
-  var import_react80 = __toESM(require_react(), 1);
-  var import_react81 = __toESM(require_react(), 1);
-  var import_react82 = __toESM(require_react(), 1);
-  var import_react83 = __toESM(require_react(), 1);
-  var le2 = { wrapper: { display: "flex", position: "relative", textAlign: "initial" }, fullWidth: { width: "100%" }, hide: { display: "none" } };
-  var v2 = le2;
-  var ae2 = { container: { display: "flex", height: "100%", width: "100%", justifyContent: "center", alignItems: "center" } };
-  var Y2 = ae2;
-  function Me2({ children: e3 }) {
-    return import_react77.default.createElement("div", { style: Y2.container }, e3);
-  }
-  var Z2 = Me2;
-  var $2 = Z2;
-  function Ee2({ width: e3, height: r2, isEditorReady: n2, loading: t2, _ref: a2, className: m2, wrapperProps: E2 }) {
-    return import_react76.default.createElement("section", { style: { ...v2.wrapper, width: e3, height: r2 }, ...E2 }, !n2 && import_react76.default.createElement($2, null, t2), import_react76.default.createElement("div", { ref: a2, style: { ...v2.fullWidth, ...!n2 && v2.hide }, className: m2 }));
-  }
-  var ee2 = Ee2;
-  var H2 = (0, import_react75.memo)(ee2);
-  function Ce2(e3) {
-    (0, import_react78.useEffect)(e3, []);
-  }
-  var k2 = Ce2;
-  function he2(e3, r2, n2 = true) {
-    let t2 = (0, import_react79.useRef)(true);
-    (0, import_react79.useEffect)(t2.current || !n2 ? () => {
-      t2.current = false;
-    } : e3, r2);
-  }
-  var l2 = he2;
-  function D2() {
-  }
-  function h2(e3, r2, n2, t2) {
-    return De2(e3, t2) || be2(e3, r2, n2, t2);
-  }
-  function De2(e3, r2) {
-    return e3.editor.getModel(te2(e3, r2));
-  }
-  function be2(e3, r2, n2, t2) {
-    return e3.editor.createModel(r2, n2, t2 ? te2(e3, t2) : void 0);
-  }
-  function te2(e3, r2) {
-    return e3.Uri.parse(r2);
-  }
-  function Oe2({ original: e3, modified: r2, language: n2, originalLanguage: t2, modifiedLanguage: a2, originalModelPath: m2, modifiedModelPath: E2, keepCurrentOriginalModel: g2 = false, keepCurrentModifiedModel: N2 = false, theme: x2 = "light", loading: P2 = "Loading...", options: y2 = {}, height: V2 = "100%", width: z2 = "100%", className: F2, wrapperProps: j2 = {}, beforeMount: A2 = D2, onMount: q2 = D2 }) {
-    let [M2, O2] = (0, import_react74.useState)(false), [T2, s2] = (0, import_react74.useState)(true), u2 = (0, import_react74.useRef)(null), c2 = (0, import_react74.useRef)(null), w2 = (0, import_react74.useRef)(null), d2 = (0, import_react74.useRef)(q2), o2 = (0, import_react74.useRef)(A2), b2 = (0, import_react74.useRef)(false);
-    k2(() => {
-      let i2 = loader_default.init();
-      return i2.then((f) => (c2.current = f) && s2(false)).catch((f) => f?.type !== "cancelation" && console.error("Monaco initialization: error:", f)), () => u2.current ? I2() : i2.cancel();
-    }), l2(() => {
-      if (u2.current && c2.current) {
-        let i2 = u2.current.getOriginalEditor(), f = h2(c2.current, e3 || "", t2 || n2 || "text", m2 || "");
-        f !== i2.getModel() && i2.setModel(f);
-      }
-    }, [m2], M2), l2(() => {
-      if (u2.current && c2.current) {
-        let i2 = u2.current.getModifiedEditor(), f = h2(c2.current, r2 || "", a2 || n2 || "text", E2 || "");
-        f !== i2.getModel() && i2.setModel(f);
-      }
-    }, [E2], M2), l2(() => {
-      let i2 = u2.current.getModifiedEditor();
-      i2.getOption(c2.current.editor.EditorOption.readOnly) ? i2.setValue(r2 || "") : r2 !== i2.getValue() && (i2.executeEdits("", [{ range: i2.getModel().getFullModelRange(), text: r2 || "", forceMoveMarkers: true }]), i2.pushUndoStop());
-    }, [r2], M2), l2(() => {
-      u2.current?.getModel()?.original.setValue(e3 || "");
-    }, [e3], M2), l2(() => {
-      let { original: i2, modified: f } = u2.current.getModel();
-      c2.current.editor.setModelLanguage(i2, t2 || n2 || "text"), c2.current.editor.setModelLanguage(f, a2 || n2 || "text");
-    }, [n2, t2, a2], M2), l2(() => {
-      c2.current?.editor.setTheme(x2);
-    }, [x2], M2), l2(() => {
-      u2.current?.updateOptions(y2);
-    }, [y2], M2);
-    let L2 = (0, import_react74.useCallback)(() => {
-      if (!c2.current)
-        return;
-      o2.current(c2.current);
-      let i2 = h2(c2.current, e3 || "", t2 || n2 || "text", m2 || ""), f = h2(c2.current, r2 || "", a2 || n2 || "text", E2 || "");
-      u2.current?.setModel({ original: i2, modified: f });
-    }, [n2, r2, a2, e3, t2, m2, E2]), U2 = (0, import_react74.useCallback)(() => {
-      !b2.current && w2.current && (u2.current = c2.current.editor.createDiffEditor(w2.current, { automaticLayout: true, ...y2 }), L2(), c2.current?.editor.setTheme(x2), O2(true), b2.current = true);
-    }, [y2, x2, L2]);
-    (0, import_react74.useEffect)(() => {
-      M2 && d2.current(u2.current, c2.current);
-    }, [M2]), (0, import_react74.useEffect)(() => {
-      !T2 && !M2 && U2();
-    }, [T2, M2, U2]);
-    function I2() {
-      let i2 = u2.current?.getModel();
-      g2 || i2?.original?.dispose(), N2 || i2?.modified?.dispose(), u2.current?.dispose();
-    }
-    return import_react74.default.createElement(H2, { width: z2, height: V2, isEditorReady: M2, loading: P2, _ref: w2, className: F2, wrapperProps: j2 });
-  }
-  var ie2 = Oe2;
-  var we2 = (0, import_react73.memo)(ie2);
-  function He2(e3) {
-    let r2 = (0, import_react83.useRef)();
-    return (0, import_react83.useEffect)(() => {
-      r2.current = e3;
-    }, [e3]), r2.current;
-  }
-  var se2 = He2;
-  var _2 = /* @__PURE__ */ new Map();
-  function Ve2({ defaultValue: e3, defaultLanguage: r2, defaultPath: n2, value: t2, language: a2, path: m2, theme: E2 = "light", line: g2, loading: N2 = "Loading...", options: x2 = {}, overrideServices: P2 = {}, saveViewState: y2 = true, keepCurrentModel: V2 = false, width: z2 = "100%", height: F2 = "100%", className: j2, wrapperProps: A2 = {}, beforeMount: q2 = D2, onMount: M2 = D2, onChange: O2, onValidate: T2 = D2 }) {
-    let [s2, u2] = (0, import_react82.useState)(false), [c2, w2] = (0, import_react82.useState)(true), d2 = (0, import_react82.useRef)(null), o2 = (0, import_react82.useRef)(null), b2 = (0, import_react82.useRef)(null), L2 = (0, import_react82.useRef)(M2), U2 = (0, import_react82.useRef)(q2), I2 = (0, import_react82.useRef)(), i2 = (0, import_react82.useRef)(t2), f = se2(m2), Q2 = (0, import_react82.useRef)(false), B2 = (0, import_react82.useRef)(false);
-    k2(() => {
-      let p2 = loader_default.init();
-      return p2.then((R2) => (d2.current = R2) && w2(false)).catch((R2) => R2?.type !== "cancelation" && console.error("Monaco initialization: error:", R2)), () => o2.current ? pe2() : p2.cancel();
-    }), l2(() => {
-      let p2 = h2(d2.current, e3 || t2 || "", r2 || a2 || "", m2 || n2 || "");
-      p2 !== o2.current?.getModel() && (y2 && _2.set(f, o2.current?.saveViewState()), o2.current?.setModel(p2), y2 && o2.current?.restoreViewState(_2.get(m2)));
-    }, [m2], s2), l2(() => {
-      o2.current?.updateOptions(x2);
-    }, [x2], s2), l2(() => {
-      !o2.current || t2 === void 0 || (o2.current.getOption(d2.current.editor.EditorOption.readOnly) ? o2.current.setValue(t2) : t2 !== o2.current.getValue() && (B2.current = true, o2.current.executeEdits("", [{ range: o2.current.getModel().getFullModelRange(), text: t2, forceMoveMarkers: true }]), o2.current.pushUndoStop(), B2.current = false));
-    }, [t2], s2), l2(() => {
-      let p2 = o2.current?.getModel();
-      p2 && a2 && d2.current?.editor.setModelLanguage(p2, a2);
-    }, [a2], s2), l2(() => {
-      g2 !== void 0 && o2.current?.revealLine(g2);
-    }, [g2], s2), l2(() => {
-      d2.current?.editor.setTheme(E2);
-    }, [E2], s2);
-    let X2 = (0, import_react82.useCallback)(() => {
-      if (!(!b2.current || !d2.current) && !Q2.current) {
-        U2.current(d2.current);
-        let p2 = m2 || n2, R2 = h2(d2.current, t2 || e3 || "", r2 || a2 || "", p2 || "");
-        o2.current = d2.current?.editor.create(b2.current, { model: R2, automaticLayout: true, ...x2 }, P2), y2 && o2.current.restoreViewState(_2.get(p2)), d2.current.editor.setTheme(E2), g2 !== void 0 && o2.current.revealLine(g2), u2(true), Q2.current = true;
-      }
-    }, [e3, r2, n2, t2, a2, m2, x2, P2, y2, E2, g2]);
-    (0, import_react82.useEffect)(() => {
-      s2 && L2.current(o2.current, d2.current);
-    }, [s2]), (0, import_react82.useEffect)(() => {
-      !c2 && !s2 && X2();
-    }, [c2, s2, X2]), i2.current = t2, (0, import_react82.useEffect)(() => {
-      s2 && O2 && (I2.current?.dispose(), I2.current = o2.current?.onDidChangeModelContent((p2) => {
-        B2.current || O2(o2.current.getValue(), p2);
-      }));
-    }, [s2, O2]), (0, import_react82.useEffect)(() => {
-      if (s2) {
-        let p2 = d2.current.editor.onDidChangeMarkers((R2) => {
-          let G2 = o2.current.getModel()?.uri;
-          if (G2 && R2.find((J2) => J2.path === G2.path)) {
-            let J2 = d2.current.editor.getModelMarkers({ resource: G2 });
-            T2?.(J2);
-          }
-        });
-        return () => {
-          p2?.dispose();
-        };
-      }
-      return () => {
-      };
-    }, [s2, T2]);
-    function pe2() {
-      I2.current?.dispose(), V2 ? y2 && _2.set(m2, o2.current.saveViewState()) : o2.current.getModel()?.dispose(), o2.current.dispose();
-    }
-    return import_react82.default.createElement(H2, { width: z2, height: F2, isEditorReady: s2, loading: N2, _ref: b2, className: j2, wrapperProps: A2 });
-  }
-  var fe2 = Ve2;
-  var de2 = (0, import_react81.memo)(fe2);
+  var import_react86 = __toESM(require_react(), 1);
 
   // src/components/stateful/FileTree.tsx
-  var import_react84 = __toESM(require_react(), 1);
-  var FileTree = ({ files, onSelect, activeFile }) => {
+  var import_react85 = __toESM(require_react(), 1);
+  var FileTree2 = ({ files, onSelect, activeFile }) => {
     const fileGroups = files.reduce((acc, file) => {
       const dir = file.path.split("/").slice(0, -1).join("/");
       if (!acc[dir]) {
@@ -42963,7 +43459,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       backgroundColor: "#e0e0e0",
       fontWeight: "bold"
     };
-    return /* @__PURE__ */ import_react84.default.createElement("div", { style: fileTreeStyle }, Object.entries(fileGroups).map(([dir, dirFiles]) => /* @__PURE__ */ import_react84.default.createElement("div", { key: dir, style: directoryStyle }, /* @__PURE__ */ import_react84.default.createElement("div", { style: directoryNameStyle }, dir || "/"), dirFiles.map((file) => /* @__PURE__ */ import_react84.default.createElement(
+    return /* @__PURE__ */ import_react85.default.createElement("div", { style: fileTreeStyle }, Object.entries(fileGroups).map(([dir, dirFiles]) => /* @__PURE__ */ import_react85.default.createElement("div", { key: dir, style: directoryStyle }, /* @__PURE__ */ import_react85.default.createElement("div", { style: directoryNameStyle }, dir || "/"), dirFiles.map((file) => /* @__PURE__ */ import_react85.default.createElement(
       "div",
       {
         key: file.path,
@@ -42976,10 +43472,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/components/stateful/TextEditorPage.tsx
   var TextEditorPage = () => {
-    const [files, setFiles] = (0, import_react85.useState)([]);
-    const [activeFile, setActiveFile] = (0, import_react85.useState)(null);
-    const [editorTheme, setEditorTheme] = (0, import_react85.useState)("vs-dark");
-    (0, import_react85.useEffect)(() => {
+    const [files, setFiles] = (0, import_react86.useState)([]);
+    const [activeFile, setActiveFile] = (0, import_react86.useState)(null);
+    const [editorTheme, setEditorTheme] = (0, import_react86.useState)("vs-dark");
+    (0, import_react86.useEffect)(() => {
       const sampleFiles = [
         {
           path: "src/index.ts",
@@ -43008,36 +43504,76 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ));
       }
     };
+    const [widths, setWidths] = (0, import_react86.useState)({
+      fileTree: 250,
+      editor: window.innerWidth - 550,
+      // Initial editor width (total width minus side panels)
+      preview: 300
+    });
     const containerStyle = {
       display: "flex",
       height: "100vh",
       width: "100%"
     };
-    const fileTreeStyle = {
-      width: "250px",
-      borderRight: "1px solid #ddd",
-      overflowY: "auto"
+    const panelStyle = {
+      height: "100%",
+      overflow: "hidden",
+      position: "relative"
     };
-    const editorStyle = {
-      flex: 1,
-      minWidth: 0
+    const [isResizing, setIsResizing] = (0, import_react86.useState)(false);
+    const [startX, setStartX] = (0, import_react86.useState)(0);
+    const [startWidth, setStartWidth] = (0, import_react86.useState)(0);
+    const startResizing = (e3, panel) => {
+      setIsResizing(true);
+      setStartX(e3.clientX);
+      setStartWidth(widths[panel]);
     };
-    const previewStyle = {
-      width: "300px",
-      borderLeft: "1px solid #ddd",
-      overflowY: "auto",
-      padding: "10px",
-      backgroundColor: "#f5f5f5"
+    const resize = (e3) => {
+      if (isResizing) {
+        const dx = e3.clientX - startX;
+        const newFileTreeWidth = Math.max(200, Math.min(400, startWidth + dx));
+        setWidths({
+          fileTree: newFileTreeWidth,
+          editor: window.innerWidth - newFileTreeWidth - widths.preview,
+          preview: widths.preview
+        });
+      }
     };
-    return /* @__PURE__ */ import_react85.default.createElement("div", { style: containerStyle }, /* @__PURE__ */ import_react85.default.createElement("div", { style: fileTreeStyle }, /* @__PURE__ */ import_react85.default.createElement(
-      FileTree,
+    const stopResizing = () => {
+      setIsResizing(false);
+    };
+    (0, import_react86.useEffect)(() => {
+      window.addEventListener("mousemove", resize);
+      window.addEventListener("mouseup", stopResizing);
+      return () => {
+        window.removeEventListener("mousemove", resize);
+        window.removeEventListener("mouseup", stopResizing);
+      };
+    }, [isResizing, startX, startWidth]);
+    return /* @__PURE__ */ import_react86.default.createElement("div", { style: containerStyle }, /* @__PURE__ */ import_react86.default.createElement("div", { style: { ...panelStyle, width: widths.fileTree } }, /* @__PURE__ */ import_react86.default.createElement(
+      FileTree2,
       {
         files,
         onSelect: handleFileSelect,
         activeFile: activeFile?.path
       }
-    )), /* @__PURE__ */ import_react85.default.createElement("div", { style: editorStyle }, activeFile && /* @__PURE__ */ import_react85.default.createElement(
-      de2,
+    ), /* @__PURE__ */ import_react86.default.createElement(
+      "div",
+      {
+        style: {
+          width: "4px",
+          height: "100%",
+          cursor: "col-resize",
+          backgroundColor: isResizing ? "#aaa" : "#ddd",
+          position: "absolute",
+          right: 0,
+          top: 0,
+          zIndex: 1
+        },
+        onMouseDown: (e3) => startResizing(e3, "fileTree")
+      }
+    )), /* @__PURE__ */ import_react86.default.createElement("div", { style: { ...panelStyle, width: widths.editor } }, activeFile && /* @__PURE__ */ import_react86.default.createElement(
+      de,
       {
         height: "100%",
         path: activeFile.path,
@@ -43052,16 +43588,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           automaticLayout: true
         }
       }
-    )), /* @__PURE__ */ import_react85.default.createElement("div", { style: previewStyle }, activeFile && /* @__PURE__ */ import_react85.default.createElement("div", null)));
+    )), /* @__PURE__ */ import_react86.default.createElement("div", { style: { ...panelStyle, width: widths.preview } }, /* @__PURE__ */ import_react86.default.createElement(
+      "div",
+      {
+        style: {
+          width: "4px",
+          height: "100%",
+          cursor: "col-resize",
+          backgroundColor: isResizing ? "#aaa" : "#ddd",
+          position: "absolute",
+          left: 0,
+          top: 0,
+          zIndex: 1
+        },
+        onMouseDown: (e3) => startResizing(e3, "editor")
+      }
+    ), activeFile && /* @__PURE__ */ import_react86.default.createElement("div", null)));
   };
 
   // src/App.tsx
   var App = () => {
-    return /* @__PURE__ */ import_react87.default.createElement(HashRouter, null, /* @__PURE__ */ import_react87.default.createElement(AppFrame, null, /* @__PURE__ */ import_react87.default.createElement(Routes, null, /* @__PURE__ */ import_react87.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react87.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react87.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react87.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react87.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react87.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react87.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react87.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react87.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react87.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react87.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react87.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react87.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react87.default.createElement(TextEditorPage, null) }))));
+    return /* @__PURE__ */ import_react88.default.createElement(HashRouter, null, /* @__PURE__ */ import_react88.default.createElement(AppFrame, null, /* @__PURE__ */ import_react88.default.createElement(Routes, null, /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react88.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react88.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react88.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react88.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react88.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react88.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react88.default.createElement(TextEditorPage, null) }))));
   };
   if (typeof window !== "undefined") {
     window.App = App;
-    window.React = import_react87.default;
+    window.React = import_react88.default;
     window.ReactDOM = import_client.default;
   }
 })();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import * as monaco from 'monaco-editor';
 import { Editor } from '@monaco-editor/react';
 import { FileTree } from './FileTree';
 // import { FilePreview } from './FilePreview';
+// Removed external CSS import - styles are now inline
 
 type FileType = {
   path: string;
@@ -48,41 +48,83 @@ export const TextEditorPage = () => {
     }
   };
 
+  const [widths, setWidths] = useState({
+    fileTree: 250,
+    editor: window.innerWidth - 550, // Initial editor width (total width minus side panels)
+    preview: 300
+  });
+
   const containerStyle = {
     display: 'flex',
     height: '100vh',
     width: '100%'
   };
 
-  const fileTreeStyle = {
-    width: '250px',
-    borderRight: '1px solid #ddd',
-    overflowY: 'auto' as const
+  const panelStyle = {
+    height: '100%',
+    overflow: 'hidden',
+    position: 'relative' as const
   };
 
-  const editorStyle = {
-    flex: 1,
-    minWidth: 0
+  const [isResizing, setIsResizing] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [startWidth, setStartWidth] = useState(0);
+
+  const startResizing = (e: React.MouseEvent, panel: 'fileTree' | 'editor') => {
+    setIsResizing(true);
+    setStartX(e.clientX);
+    setStartWidth(widths[panel]);
   };
 
-  const previewStyle = {
-    width: '300px',
-    borderLeft: '1px solid #ddd',
-    overflowY: 'auto' as const,
-    padding: '10px',
-    backgroundColor: '#f5f5f5'
+  const resize = (e: MouseEvent) => {
+    if (isResizing) {
+      const dx = e.clientX - startX;
+      const newFileTreeWidth = Math.max(200, Math.min(400, startWidth + dx));
+      setWidths({
+        fileTree: newFileTreeWidth,
+        editor: window.innerWidth - newFileTreeWidth - widths.preview,
+        preview: widths.preview
+      });
+    }
   };
+
+  const stopResizing = () => {
+    setIsResizing(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', resize);
+    window.addEventListener('mouseup', stopResizing);
+    return () => {
+      window.removeEventListener('mousemove', resize);
+      window.removeEventListener('mouseup', stopResizing);
+    };
+  }, [isResizing, startX, startWidth]);
 
   return (
     <div style={containerStyle}>
-      <div style={fileTreeStyle}>
+      <div style={{ ...panelStyle, width: widths.fileTree }}>
         <FileTree
           files={files}
           onSelect={handleFileSelect}
           activeFile={activeFile?.path}
         />
+        <div 
+          style={{
+            width: '4px',
+            height: '100%',
+            cursor: 'col-resize',
+            backgroundColor: isResizing ? '#aaa' : '#ddd',
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            zIndex: 1
+          }}
+          onMouseDown={(e) => startResizing(e, 'fileTree')}
+        />
       </div>
-      <div style={editorStyle}>
+
+      <div style={{ ...panelStyle, width: widths.editor }}>
         {activeFile && (
           <Editor
             height="100%"
@@ -100,7 +142,21 @@ export const TextEditorPage = () => {
           />
         )}
       </div>
-      <div style={previewStyle}>
+
+      <div style={{ ...panelStyle, width: widths.preview }}>
+        <div 
+          style={{
+            width: '4px',
+            height: '100%',
+            cursor: 'col-resize',
+            backgroundColor: isResizing ? '#aaa' : '#ddd',
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            zIndex: 1
+          }}
+          onMouseDown={(e) => startResizing(e, 'editor')}
+        />
         {activeFile && (
           <div></div>
           // <FilePreview 

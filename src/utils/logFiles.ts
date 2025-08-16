@@ -1,26 +1,60 @@
-export const NODE_LOG_FILES = ["stdout.log", "stderr.log", "exit.log"] as const;
-export const WEB_LOG_FILES = [
-  "info.log",
-  "debug.log",
-  "error.log",
-  "warn.log",
-  "exit.log",
-] as const;
-export const PURE_LOG_FILES = ["exit.log"] as const;
+export type RuntimeName = 'node' | 'web' | 'pure';
 
-export type NodeLogFile = (typeof NODE_LOG_FILES)[number];
-export type WebLogFile = (typeof WEB_LOG_FILES)[number];
-export type PureLogFile = (typeof PURE_LOG_FILES)[number];
+export const LOG_FILES = {
+  TESTS: 'tests.json',
+  TYPE_ERRORS: 'type_errors.txt', 
+  LINT_ERRORS: 'lint_errors.txt',
+  EXIT: 'exit.log',
+  MESSAGE: 'message.txt',
+  PROMPT: 'prompt.txt',
+  STDOUT: 'stdout.log',
+  STDERR: 'stderr.log',
+  INFO: 'info.log',
+  ERROR: 'error.log',
+  WARN: 'warn.log',
+  DEBUG: 'debug.log'
+} as const;
 
-export const getLogFilesForRuntime = (runtime: string) => {
-  switch (runtime) {
-    case "node":
-      return NODE_LOG_FILES;
-    case "web":
-      return WEB_LOG_FILES;
-    case "pure":
-      return PURE_LOG_FILES;
-    default:
-      throw new Error(`Unknown runtime: ${runtime}`);
-  }
+export const STANDARD_LOGS = {
+  TESTS: 'tests.json',
+  TYPE_ERRORS: 'type_errors.txt',
+  LINT_ERRORS: 'lint_errors.txt',
+  EXIT: 'exit.log',
+  MESSAGE: 'message.txt',
+  PROMPT: 'prompt.txt'
+} as const;
+
+export const RUNTIME_SPECIFIC_LOGS = {
+  node: {
+    STDOUT: 'stdout.log',
+    STDERR: 'stderr.log'
+  },
+  web: {
+    INFO: 'info.log',
+    ERROR: 'error.log',
+    WARN: 'warn.log',
+    DEBUG: 'debug.log'
+  },
+  pure: {} // No runtime-specific logs for pure
+} as const;
+
+export const ALL_LOGS = {
+  ...STANDARD_LOGS,
+  ...Object.values(RUNTIME_SPECIFIC_LOGS).reduce((acc, logs) => 
+    ({...acc, ...logs}), {})
+} as const;
+
+export const getRuntimeLogs = (runtime: RuntimeName) => {
+  return {
+    standard: Object.values(STANDARD_LOGS),
+    runtimeSpecific: Object.values(RUNTIME_SPECIFIC_LOGS[runtime])
+  };
 };
+
+export type RuntimeLogs = typeof RUNTIME_SPECIFIC_LOGS;
+export type LogFileType<T extends RuntimeName> = keyof RuntimeLogs[T];
+
+export function getLogFilesForRuntime(runtime: RuntimeName): string[] {
+  const { standard, runtimeSpecific } = getRuntimeLogs(runtime);
+  return [...standard, ...runtimeSpecific];
+}

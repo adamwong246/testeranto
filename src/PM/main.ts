@@ -547,9 +547,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
   async metafileOutputs(platform: IRunTime) {
     const metafile = JSON.parse(
       fs
-        .readFileSync(
-          `./testeranto/metafiles/${platform}/${this.name}.json`
-        )
+        .readFileSync(`./testeranto/metafiles/${platform}/${this.name}.json`)
         .toString()
     ).metafile;
 

@@ -1,4 +1,4 @@
-import { getLogFilesForRuntime } from "./logFiles";
+import { getLogFilesForRuntime, STANDARD_LOGS } from "./logFiles";
 export const fetchProjectData = async (projectName) => {
     const [summaryRes, configRes] = await Promise.all([
         fetch(`reports/${projectName}/summary.json`),
@@ -16,49 +16,60 @@ export const fetchTestData = async (projectName, filepath, runTime) => {
         .join(".")}/${runTime}`;
     try {
         const logFiles = getLogFilesForRuntime(runTime);
-        console.log("mark2", logFiles);
-        const [testRes, ...logRes] = await Promise.all([
-            fetch(`${basePath}/tests.json`),
-            ...logFiles.map((f) => fetch(`${basePath}/${f}`)),
-            fetch(`${basePath}/type_errors.txt`),
-            fetch(`${basePath}/lint_errors.txt`),
-        ]);
-        const logs = {
-            "tests.json": await (await fetch(`${basePath}/tests.json`)).json(),
-            "type_errors.txt": await (await fetch(`${basePath}/type_errors.txt`)).text(),
-            "lint_errors.txt": await (await fetch(`${basePath}/lint_errors.txt`)).text(),
-            "exit.log": await (await fetch(`${basePath}/exit.log`)).text(),
-        };
-        if (runTime === "node") {
-            logs["stdout.log"] = await (await fetch(`${basePath}/stdout.log`)).text();
-            logs["stderr.log"] = await (await fetch(`${basePath}/stderr.log`)).text();
-        }
-        if (runTime === "web") {
-            logs["info.log"] = await (await fetch(`${basePath}/info.log`)).text();
-            logs["error.log"] = await (await fetch(`${basePath}/error.log`)).text();
-            logs["debug.log"] = await (await fetch(`${basePath}/debug.log`)).text();
-            logs["warn.log"] = await (await fetch(`${basePath}/warn.log`)).text();
+        const logs = {};
+        // Fetch all log files in parallel
+        const logRequests = logFiles.map(async (file) => {
+            try {
+                const response = await fetch(`${basePath}/${file}`);
+                if (!response.ok)
+                    return null;
+                const content = file.endsWith('.json')
+                    ? await response.json()
+                    : await response.text();
+                return { file, content };
+            }
+            catch (err) {
+                console.error(`Failed to fetch ${file}:`, err);
+                return null;
+            }
+        });
+        // Wait for all requests and populate logs
+        const logResults = await Promise.all(logRequests);
+        logResults.forEach(result => {
+            if (result) {
+                logs[result.file] = result.content;
+            }
+        });
+        // Ensure we fetch all standard logs
+        for (const file of Object.values(STANDARD_LOGS)) {
+            if (!logs[file]) {
+                try {
+                    const response = await fetch(`${basePath}/${file}`);
+                    if (response.ok) {
+                        logs[file] = file.endsWith('.json')
+                            ? await response.json()
+                            : await response.text();
+                    }
+                }
+                catch (err) {
+                    console.error(`Failed to fetch ${file}:`, err);
+                }
+            }
         }
         // const logs = await logFiles.reduce(async (acc, file, i) => {
         //   acc[file.split(".")[0]] = await logRes[i].text();
         //   return acc;
         // }, {});
-        if (!testRes.ok) {
+        // Check if we got any logs at all
+        if (Object.keys(logs).length === 0) {
             return {
-                // testData: null,
-                logs,
-                // typeErrors: await logRes[logFiles.length].text(),
-                // lintErrors: await logRes[logFiles.length + 1].text(),
-                error: "Tests did not complete successfully. Please check the build and runtime logs for errors.",
+                logs: {},
+                error: "No test logs found. The test may not have run or the report files are missing."
             };
         }
-        console.log("mark1", logs);
         return {
-            // testData: await testRes.json(),
             logs,
-            // typeErrors: await logRes[logFiles.length].text(),
-            // lintErrors: await logRes[logFiles.length + 1].text(),
-            error: null,
+            error: null
         };
     }
     catch (err) {

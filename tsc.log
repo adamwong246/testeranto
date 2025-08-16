@@ -203,7 +203,10 @@ src/components/pure/TestPageView.test/index.tsx(18,3): error TS2345: Argument of
               Type '{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }' is not assignable to type 'I'.
                 Types of property 'istore' are incompatible.
                   Type 'ISelection' is missing the following properties from type 'HTMLElement': accessKey, accessKeyLabel, autocapitalize, autocorrect, and 314 more.
-src/components/pure/TestPageView.tsx(278,21): error TS2322: Type '{ testName: string; testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; variant: "compact"; className: string; }' is not assignable to type 'IntrinsicAttributes & TestStatusBadgeProps'.
+src/components/pure/TestPageView.tsx(63,13): error TS18046: 'node' is of type 'unknown'.
+src/components/pure/TestPageView.tsx(69,47): error TS18046: 'node' is of type 'unknown'.
+src/components/pure/TestPageView.tsx(95,18): error TS2741: Property 'selectedSourcePath' is missing in type '{ data: unknown; onSelect: any; level: number; }' but required in type '{ data: any; onSelect: any; level?: number | undefined; selectedSourcePath: any; }'.
+src/components/pure/TestPageView.tsx(891,11): error TS2322: Type '{ testName: string; testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; variant: "compact"; className: string; }' is not assignable to type 'IntrinsicAttributes & TestStatusBadgeProps'.
   Property 'className' does not exist on type 'IntrinsicAttributes & TestStatusBadgeProps'.
 src/components/stateful/FileTree.tsx(2,10): error TS2459: Module '"./TextEditorPage"' declares 'FileType' locally, but it is not exported.
 src/components/stateful/FileTree.tsx(53,12): error TS18046: 'dirFiles' is of type 'unknown'.
@@ -213,10 +216,14 @@ src/components/stateful/ProjectsPage.tsx(66,7): error TS2322: Type 'Record<strin
 src/components/stateful/ProjectsPage.tsx(67,7): error TS2322: Type 'Record<string, object>' is not assignable to type 'ProjectConfig'.
   'string' index signatures are incompatible.
     Property 'tests' is missing in type '{}' but required in type '{ tests: [string, string][]; }'.
-src/components/stateful/TestPage.tsx(90,18): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
-src/components/stateful/TestPage.tsx(106,9): error TS2322: Type '{ route: "coverage" | "results" | "logs" | "types" | "lint"; setRoute: Dispatch<SetStateAction<string>>; navigate: NavigateFunction; ... 6 more ...; errorCounts: { ...; }; }' is not assignable to type 'IntrinsicAttributes & TestPageViewProps'.
+src/components/stateful/TestPage.tsx(76,24): error TS18046: 'output' is of type 'unknown'.
+src/components/stateful/TestPage.tsx(83,27): error TS18046: 'output' is of type 'unknown'.
+src/components/stateful/TestPage.tsx(153,9): error TS2322: Type '{}' is not assignable to type 'string'.
+src/components/stateful/TestPage.tsx(166,13): error TS2322: Type '{ error: string; }' is not assignable to type 'string'.
+src/components/stateful/TestPage.tsx(194,18): error TS2345: Argument of type 'string' is not assignable to parameter of type 'SetStateAction<null>'.
+src/components/stateful/TestPage.tsx(210,9): error TS2322: Type '{ route: "coverage" | "results" | "logs" | "types" | "lint"; setRoute: Dispatch<SetStateAction<string>>; navigate: NavigateFunction; ... 6 more ...; errorCounts: { ...; }; }' is not assignable to type 'IntrinsicAttributes & TestPageViewProps'.
   Property 'route' does not exist on type 'IntrinsicAttributes & TestPageViewProps'.
-src/components/stateful/TextEditorPage.tsx(82,11): error TS2322: Type 'string | undefined' is not assignable to type 'string | null'.
+src/components/stateful/TextEditorPage.tsx(110,11): error TS2322: Type 'string | undefined' is not assignable to type 'string | null'.
   Type 'undefined' is not assignable to type 'string | null'.
 src/components/SunriseAnimation.test/interface.ts(2,10): error TS2305: Module '"../../CoreTypes"' has no exported member 'ITestInterface'.
 src/components/SunriseAnimation.test/interface.ts(5,34): error TS2307: Cannot find module './SunriseAnimation' or its corresponding type declarations.
@@ -510,12 +517,12 @@ src/PM/__tests__/webSidecar.testeranto.ts(118,40): error TS2304: Cannot find nam
 src/PM/main.ts(305,7): error TS2322: Type '[number, Page]' is not assignable to type '[number, ITTestResourceConfiguration]'.
   Type at position 1 in source is not compatible with type at position 1 in target.
     Type 'Page' is missing the following properties from type 'ITTestResourceConfiguration': name, fs, ports
-src/PM/main.ts(845,32): error TS2304: Cannot find name 'argz'.
-src/PM/main.ts(1121,31): error TS2322: Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
+src/PM/main.ts(843,32): error TS2304: Cannot find name 'argz'.
+src/PM/main.ts(1119,31): error TS2322: Type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/types").Page' is not assignable to type 'import("/Users/adam/Code/testeranto/node_modules/puppeteer-core/lib/esm/puppeteer/api/Page").Page'.
   Property '#private' in type 'Page' refers to a different member that cannot be accessed from within type 'Page'.
-src/PM/main.ts(1128,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/PM/main.ts(1352,16): error TS2454: Variable 'argz' is used before being assigned.
-src/PM/main.ts(1596,9): error TS2532: Object is possibly 'undefined'.
+src/PM/main.ts(1126,6): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
+src/PM/main.ts(1350,16): error TS2454: Variable 'argz' is used before being assigned.
+src/PM/main.ts(1594,9): error TS2532: Object is possibly 'undefined'.
 src/PM/pure.ts(114,3): error TS2416: Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
   Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
     Types of parameters 'opts' and 'opts' are incompatible.
@@ -610,11 +617,14 @@ src/ReportServer.test.ts/index.ts(190,3): error TS2345: Argument of type '(port:
 src/ReportServer.ts(8,20): error TS2345: Argument of type 'string | 3000' is not assignable to parameter of type 'number'.
   Type 'string' is not assignable to type 'number'.
 src/ReportServerLib.ts(111,33): error TS2339: Property 'status' does not exist on type 'Error'.
+src/utils/api.ts(34,44): error TS2345: Argument of type 'string' is not assignable to parameter of type 'RuntimeName'.
 src/utils/featureUtils.tsx(26,4): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 src/utils/featureUtils.tsx(28,8): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 src/utils/featureUtils.tsx(30,12): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 src/utils/featureUtils.tsx(34,11): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
 src/utils/featureUtils.tsx(35,14): error TS2686: 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.
+src/utils/makePrompt.ts(60,31): error TS2345: Argument of type 'IRunTime' is not assignable to parameter of type 'RuntimeName'.
+  Type '"spawn"' is not assignable to type 'RuntimeName'.
 src/Web.ts(43,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

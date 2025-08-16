@@ -14,4 +14,4 @@
 /read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/type_errors.txt
 /read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/lint_errors.txt
 
-/read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/stdout.log testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/stderr.log testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/exit.log
+/read testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/tests.json testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/type_errors.txt testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/lint_errors.txt testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/exit.log testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/message.txt testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/prompt.txt testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/stdout.log testeranto/reports/core/src/lib/classBuilder.test/classBuilder.test/node/stderr.log

@@ -71,7 +71,10 @@
               Type '{ iinput: any; isubject: any; istore: ISelection; iselection: ISelection; given: any; when: any; then: any; }' is not assignable to type 'I'.
                 Types of property 'istore' are incompatible.
                   Type 'ISelection' is missing the following properties from type 'HTMLElement': accessKey, accessKeyLabel, autocapitalize, autocorrect, and 314 more.
-/Users/adam/Code/testeranto/src/components/pure/TestPageView.tsx (278,21): Type '{ testName: string; testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; variant: "compact"; className: string; }' is not assignable to type 'IntrinsicAttributes & TestStatusBadgeProps'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.tsx (63,13): 'node' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.tsx (69,47): 'node' is of type 'unknown'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.tsx (95,18): Property 'selectedSourcePath' is missing in type '{ data: unknown; onSelect: any; level: number; }' but required in type '{ data: any; onSelect: any; level?: number | undefined; selectedSourcePath: any; }'.
+/Users/adam/Code/testeranto/src/components/pure/TestPageView.tsx (891,11): Type '{ testName: string; testsExist: boolean; runTimeErrors: number; typeErrors: number; staticErrors: number; variant: "compact"; className: string; }' is not assignable to type 'IntrinsicAttributes & TestStatusBadgeProps'.
   Property 'className' does not exist on type 'IntrinsicAttributes & TestStatusBadgeProps'.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (76,49): Function lacks ending return statement and return type does not include 'undefined'.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (82,17): This expression is not callable.

@@ -393,27 +393,56 @@ import fs2 from "fs";
 import path3 from "path";
 
 // src/utils/logFiles.ts
-var NODE_LOG_FILES = ["stdout.log", "stderr.log", "exit.log"];
-var WEB_LOG_FILES = [
-  "info.log",
-  "debug.log",
-  "error.log",
-  "warn.log",
-  "exit.log"
-];
-var PURE_LOG_FILES = ["exit.log"];
-var getLogFilesForRuntime = (runtime) => {
-  switch (runtime) {
-    case "node":
-      return NODE_LOG_FILES;
-    case "web":
-      return WEB_LOG_FILES;
-    case "pure":
-      return PURE_LOG_FILES;
-    default:
-      throw new Error(`Unknown runtime: ${runtime}`);
-  }
+var LOG_FILES = {
+  TESTS: "tests.json",
+  TYPE_ERRORS: "type_errors.txt",
+  LINT_ERRORS: "lint_errors.txt",
+  EXIT: "exit.log",
+  MESSAGE: "message.txt",
+  PROMPT: "prompt.txt",
+  STDOUT: "stdout.log",
+  STDERR: "stderr.log",
+  INFO: "info.log",
+  ERROR: "error.log",
+  WARN: "warn.log",
+  DEBUG: "debug.log"
 };
+var STANDARD_LOGS = {
+  TESTS: "tests.json",
+  TYPE_ERRORS: "type_errors.txt",
+  LINT_ERRORS: "lint_errors.txt",
+  EXIT: "exit.log",
+  MESSAGE: "message.txt",
+  PROMPT: "prompt.txt"
+};
+var RUNTIME_SPECIFIC_LOGS = {
+  node: {
+    STDOUT: "stdout.log",
+    STDERR: "stderr.log"
+  },
+  web: {
+    INFO: "info.log",
+    ERROR: "error.log",
+    WARN: "warn.log",
+    DEBUG: "debug.log"
+  },
+  pure: {}
+  // No runtime-specific logs for pure
+};
+var ALL_LOGS = {
+  ...STANDARD_LOGS,
+  ...Object.values(RUNTIME_SPECIFIC_LOGS).reduce((acc, logs) => ({ ...acc, ...logs }), {})
+};
+var getRuntimeLogs = (runtime) => {
+  return {
+    standard: Object.values(STANDARD_LOGS),
+    runtimeSpecific: Object.values(RUNTIME_SPECIFIC_LOGS[runtime])
+  };
+};
+function getLogFilesForRuntime(runtime) {
+  const { standard, runtimeSpecific } = getRuntimeLogs(runtime);
+  return [...standard, ...runtimeSpecific];
+}
 
 // src/utils/makePrompt.ts
 var makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
@@ -429,10 +458,10 @@ var makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
   if (!fs2.existsSync(testDir)) {
     fs2.mkdirSync(testDir, { recursive: true });
   }
-  const testPaths = path3.join(testDir, "tests.json");
-  const lintPath = path3.join(testDir, "lint_errors.txt");
-  const typePath = path3.join(testDir, "type_errors.txt");
-  const messagePath = path3.join(testDir, "message.txt");
+  const testPaths = path3.join(testDir, LOG_FILES.TESTS);
+  const lintPath = path3.join(testDir, LOG_FILES.LINT_ERRORS);
+  const typePath = path3.join(testDir, LOG_FILES.TYPE_ERRORS);
+  const messagePath = path3.join(testDir, LOG_FILES.MESSAGE);
   try {
     await Promise.all([
       fs2.promises.writeFile(
@@ -1835,9 +1864,7 @@ import('${d}').then(async (x) => {
   }
   async metafileOutputs(platform) {
     const metafile = JSON.parse(
-      fs4.readFileSync(
-        `./testeranto/metafiles/${platform}/${this.name}.json`
-      ).toString()
+      fs4.readFileSync(`./testeranto/metafiles/${platform}/${this.name}.json`).toString()
     ).metafile;
     if (!metafile)
       return;

@@ -1,5 +1,5 @@
 AssertionError: Should render test table: expected null to exist
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755293486252:167:14)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755306139632:167:14)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VAYOSMXI.mjs:21704:14)
     at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
@@ -10,7 +10,7 @@ AssertionError: Should render test table: expected null to exist
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
     at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
 TypeError: Cannot read properties of null (reading 'querySelectorAll')
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755293486252:172:46)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755306139632:172:46)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VAYOSMXI.mjs:21704:14)
     at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
@@ -21,7 +21,7 @@ TypeError: Cannot read properties of null (reading 'querySelectorAll')
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
     at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
 TypeError: Cannot read properties of null (reading 'querySelectorAll')
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755293486252:178:46)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755306139632:178:46)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VAYOSMXI.mjs:21704:14)
     at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)

@@ -1,6 +1,6 @@
 {
   "src/components/pure/TestPageView.test/index.tsx": {
-    "typeErrors": 52,
+    "typeErrors": 55,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/TestPageView.test/index/prompt.txt",

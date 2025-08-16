@@ -12,4 +12,4 @@
 /read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/type_errors.txt
 /read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/lint_errors.txt
 
-/read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/exit.log
+/read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/tests.json testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/type_errors.txt testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/lint_errors.txt testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/exit.log testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/message.txt testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/prompt.txt
