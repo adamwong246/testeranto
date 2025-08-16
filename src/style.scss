@@ -17,6 +17,12 @@
   }
 }
 
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
+
 body {
   font-family: "M PLUS Rounded 1c", sans-serif;
   color: var(--dark);
@@ -26,6 +32,19 @@ body {
   min-height: 100vh;
   position: relative;
   transition: background-color 0.3s ease;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.snap-container {
+  position: relative;
 }
 
 // body {
