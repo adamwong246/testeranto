@@ -1,20 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { marked } from "marked";
-
+import { micromark } from 'micromark';
 import * as sass from 'sass';
-import * as esbuild from 'esbuild';
-
-marked.use({
-    renderer: {
-        code: function (code, lang) {
-            if (lang == "mermaid") return `<pre class="mermaid">${code}</pre>`;
-            if (lang == "typescript")
-                return `<pre class="language-typescript line-numbers"><code class="language-typescript">${code}</code></pre>`;
-            return `<pre>${code}</pre>`;
-        },
-    },
-});
 
 // Simple HTML template with our CSS
 const template = (title, content) => `
@@ -69,7 +56,7 @@ const template = (title, content) => `
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div id="container-fluid">
-                    ${content.replace(/<p>⚠️(.*?)<\/p>/g, '<div class="warning">$1</div>')}
+                    ${content}
                 </div>
             </div>
         
@@ -116,7 +103,12 @@ const template = (title, content) => `
 // Process markdown files
 const processFile = (filePath) => {
     const markdown = fs.readFileSync(filePath, "utf8");
-    return template(path.basename(filePath), marked.parse(markdown));
+    const html = micromark(markdown, {
+        allowDangerousHtml: true,
+        extensions: [],
+        htmlExtensions: []
+    });
+    return template(path.basename(filePath), html);
 };
 
 // Main function

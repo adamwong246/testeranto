@@ -54,7 +54,7 @@
 <h2>Brings vibe coding to the real world</h2>
 <p>Testeranto lets you vibe code large, real-world codebases by intelligently managing the AI context</p>
 <h4>🚀 Join Our Beta Program! 🚀</h4>
-<p>We&#39;re launching a private beta for GitHub stargazers first, followed by a public beta.</p>
+<p>We're launching a private beta for GitHub stargazers first, followed by a public beta.</p>
 <p>**Private Beta **</p>
 <ul>
 <li>Early access to AI-powered test fixing</li>
@@ -79,7 +79,8 @@
 <li>Testeranto can be used to test anything that can be bundled with esbuild.</li>
 <li>Testeranto connects &quot;features&quot; to &quot;tests&quot;. This allows the AI to read feature documentation from external systems, like Jira.</li>
 <li>Testeranto generates test results as a static website that can be easily deployed to GitHub Pages.</li>
-<li>Testeranto uses esbuild to analyze dependencies and bundle only the essential files needed for test fixing. This context optimization means:<ul>
+<li>Testeranto uses esbuild to analyze dependencies and bundle only the essential files needed for test fixing. This context optimization means:
+<ul>
 <li>No wasted tokens on irrelevant code</li>
 <li>All type signatures and dependencies included</li>
 <li>Related documentation automatically linked</li>
@@ -89,125 +90,71 @@
 <li><strong>The result:</strong> Your LLM works with laser focus on exactly what needs fixing</li>
 </ul>
 <h2>Key Technologies</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ESM</td>
-<td>Modern javascript tooling</td>
-</tr>
-<tr>
-<td>TypeScript</td>
-<td>Strongly-typed test definitions</td>
-</tr>
-<tr>
-<td>Puppeteer</td>
-<td>Cross-runtime testing (Node &amp; Browser)</td>
-</tr>
-<tr>
-<td>esbuild</td>
-<td>Fast test bundling</td>
-</tr>
-<tr>
-<td>Aider.ai</td>
-<td>AI-powered test fixing</td>
-</tr>
-<tr>
-<td>ESLint</td>
-<td>Static analysis of test files</td>
-</tr>
-<tr>
-<td>tsc</td>
-<td>Type checking of test files</td>
-</tr>
-</tbody></table>
+<p>|            |                                        |
+| ---------- | -------------------------------------- |
+| ESM        | Modern javascript tooling              |
+| TypeScript | Strongly-typed test definitions        |
+| Puppeteer  | Cross-runtime testing (Node &amp; Browser) |
+| esbuild    | Fast test bundling                     |
+| Aider.ai   | AI-powered test fixing                 |
+| ESLint     | Static analysis of test files          |
+| tsc        | Type checking of test files            |</p>
 <h2>Quick Start</h2>
 <ol start="0">
-<li><p>Install Aider and signup for a LLM service.</p>
+<li>
+<p>Install Aider and signup for a LLM service.</p>
 </li>
-<li><p>Install testeranto:</p>
+<li>
+<p>Install testeranto:</p>
 </li>
 </ol>
-<pre>npm install testeranto</pre><ol start="2">
+<pre><code class="language-bash">npm install testeranto
+</code></pre>
+<ol start="2">
 <li>Create a test file (e.g., <code>rectangle.test.ts</code>):</li>
 </ol>
-<pre class="language-typescript line-numbers"><code class="language-typescript">import { Given, When, Then } from "testeranto";
+<pre><code class="language-typescript">import { Given, When, Then } from &quot;testeranto&quot;;
 
 type Rectangle = { width: number; height: number };
 
-const RectangleSpec = (Suite, Given, When, Then) => [
-  Suite.Default("Rectangle tests", {
+const RectangleSpec = (Suite, Given, When, Then) =&gt; [
+  Suite.Default(&quot;Rectangle tests&quot;, {
     test1: Given.Default(
-      ["Basic rectangle operations"],
+      [&quot;Basic rectangle operations&quot;],
       [When.setWidth(5), When.setHeight(10)],
       [Then.getWidth(5), Then.getHeight(10)]
     ),
   }),
-];</code></pre><ol start="3">
+];
+</code></pre>
+<ol start="3">
 <li>Run the tests</li>
 </ol>
 <p>To start testeranto in dev mode, build your tests in one terminal and execute them in another</p>
-<pre># Terminal 1 - Build in watch mode
+<pre><code class="language-bash"># Terminal 1 - Build in watch mode
 yarn t-build rectangle.test.ts yourProject dev
 
 # Terminal 2 - Run in watch mode
-yarn t-run rectangle.test.ts yourProject dev</pre><p>or build and run your tests only once</p>
-<pre>yarn t-build rectangle.test.ts yourProject once && yarn t-run rectangle.test.ts yourProject once</pre><h2>Runtime Platforms</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>You should use this runtime for...</th>
-<th>Important differences</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>Node</strong> : node V8 with fork</td>
-<td>testing backend code, Node APIs (like <code>fs</code> and <code>crypto</code>), or anything needing filesystem access</td>
-<td>has access to the filesystem and io</td>
-</tr>
-<tr>
-<td><strong>Web</strong> : chrome browser</td>
-<td>testing frontend code, anything that uses <code>document</code> or <code>window</code>, UI interactions, or visual regression</td>
-<td>can take screenshots/recordings</td>
-</tr>
-<tr>
-<td><strong>Pure</strong> : node v8, dynamically imported</td>
-<td>testing code that can run on both node-v8 and the browser</td>
-<td>Very similar to &quot;Node&quot; but has no IO access. Console logs will spew into the main thread, but this runtime is theoretically faster.</td>
-</tr>
-</tbody></table>
+yarn t-run rectangle.test.ts yourProject dev
+</code></pre>
+<p>or build and run your tests only once</p>
+<pre><code class="language-bash">yarn t-build rectangle.test.ts yourProject once &amp;&amp; yarn t-run rectangle.test.ts yourProject once
+</code></pre>
+<h2>Runtime Platforms</h2>
+<p>|                                          | You should use this runtime for...                                                                      | Important differences                                                                                                               |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| <strong>Node</strong> : node V8 with fork             | testing backend code, Node APIs (like <code>fs</code> and <code>crypto</code>), or anything needing filesystem access         | has access to the filesystem and io                                                                                                 |
+| <strong>Web</strong> : chrome browser                 | testing frontend code, anything that uses <code>document</code> or <code>window</code>, UI interactions, or visual regression | can take screenshots/recordings                                                                                                     |
+| <strong>Pure</strong> : node v8, dynamically imported | testing code that can run on both node-v8 and the browser                                               | Very similar to &quot;Node&quot; but has no IO access. Console logs will spew into the main thread, but this runtime is theoretically faster. |</p>
 <h2>CLI Commands</h2>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>yarn t-init</code></td>
-<td>Create a new testeranto project</td>
-</tr>
-<tr>
-<td><code>yarn t-build &lt;YOUR_TESTS&gt; dev|once</code></td>
-<td>Build test bundles (watch or single-run mode)</td>
-</tr>
-<tr>
-<td><code>yarn t-run &lt;YOUR_TESTS&gt; dev|once</code></td>
-<td>Run tests (watch or single-run mode)</td>
-</tr>
-<tr>
-<td><code>yarn t-report</code></td>
-<td>Launch test report server</td>
-</tr>
-</tbody></table>
+<p>|                                       |                                               |
+| ------------------------------------- | --------------------------------------------- |
+| <code>yarn t-init</code>                         | Create a new testeranto project               |
+| <code>yarn t-build &lt;YOUR_TESTS&gt; dev\|once</code> | Build test bundles (watch or single-run mode) |
+| <code>yarn t-run &lt;YOUR_TESTS&gt; dev\|once</code>   | Run tests (watch or single-run mode)          |
+| <code>yarn t-report</code>                       | Launch test report server                     |</p>
 <h2>Example workflow:</h2>
-<pre># Initialize project
+<pre><code class="language-bash"># Initialize project
 yarn t-init
 
 # Write tests in test/*.test.ts
@@ -220,9 +167,11 @@ yarn t-run test/rectangle.test.ts dev
 
 # Or for single-run mode:
 yarn t-build test/rectangle.test.ts once
-yarn t-run test/rectangle.test.ts once</pre><h2>Aider</h2>
+yarn t-run test/rectangle.test.ts once
+</code></pre>
+<h2>Aider</h2>
 <p>Testeranto generates a &quot;prompt&quot; alongside test results. This prompt is passed to aider as input.</p>
-<pre>// input src files that can be edited by Aider
+<pre><code>// input src files that can be edited by Aider
 /add test/node.ts
 
 // test report files that inform aider but should not be edited
@@ -234,16 +183,18 @@ yarn t-run test/rectangle.test.ts once</pre><h2>Aider</h2>
 /load testeranto/reports/allTests/node/test/node/featurePrompt.txt
 
 // tell the AI what to do
-Fix the failing tests described in testeranto/reports/allTests/node/test/node/tests.json. Correct any type signature errors described in the files testeranto/reports/allTests/test/node/node/type_errors.txt. Implement any method which throws "Function not implemented. Resolve the lint errors described in testeranto/reports/allTests/test/node/node/lint_errors.json"</pre><h2>&quot;Features&quot;</h2>
+Fix the failing tests described in testeranto/reports/allTests/node/test/node/tests.json. Correct any type signature errors described in the files testeranto/reports/allTests/test/node/node/type_errors.txt. Implement any method which throws &quot;Function not implemented. Resolve the lint errors described in testeranto/reports/allTests/test/node/node/lint_errors.json&quot;
+</code></pre>
+<h2>&quot;Features&quot;</h2>
 <p>Testeranto connects &quot;features&quot; to tests. The features may be simple strings, but they can also take the form of local markdown files, or remote URLs to external feature tracking systems. For instance, this could be a jira ticket or a github issue. These features are used to inform the AI context.</p>
-<pre class="language-typescript line-numbers"><code class="language-typescript">import someMarkdownFile from "someMarkdownFile.md";
+<pre><code class="language-typescript">import someMarkdownFile from &quot;someMarkdownFile.md&quot;;
 
 ...
 
 test0: Given.Default(
   [
-    "https://api.github.com/repos/adamwong246/testeranto/issues/8",
-    "you can set the width and height of a Rectangle",
+    &quot;https://api.github.com/repos/adamwong246/testeranto/issues/8&quot;,
+    &quot;you can set the width and height of a Rectangle&quot;,
     someMarkdownFile
     ],
 
@@ -251,7 +202,9 @@ test0: Given.Default(
   [Then.getWidth(4), Then.getHeight(19)]
 ),
 ...
-</code></pre><h2>eslint and tsc</h2>
+
+</code></pre>
+<h2>eslint and tsc</h2>
 <p>Alongside the BDD tests, Testeranto runs ESLint and tsc on the input files to generate a list of static analysis errors and type errors, respectively. Aider will use this to resolve both.</p>
 <h2>Subprojects</h2>
 <p>Testeranto has a core repo, but there are also sub-projects which implement tests by type and by technology</p>

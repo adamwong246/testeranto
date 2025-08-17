@@ -51,12 +51,12 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div id="container-fluid">
                     <h1>Testeranto docs and core concepts</h1>
-<p>Testeranto&#39;s type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. The API may seem complex but everything you need to know can be summed up in <strong>1 function, 3 runtimes and 5 essential types, and 1 optional type</strong>. Follow these patterns, and TypeScript&#39;s type checker will guide you through the rest.</p>
+<p>Testeranto's type system provides a rigorous framework for Behavior-Driven Development (BDD) testing. The API may seem complex but everything you need to know can be summed up in <strong>1 function, 3 runtimes and 5 essential types, and 1 optional type</strong>. Follow these patterns, and TypeScript's type checker will guide you through the rest.</p>
 <h3>⚠️ this doc is a work in progress. It is 99% accurate but needs some attention to be complete. ⚠️</h3>
-<p>Let&#39;s break down the key components using a Rectangle class example.</p>
+<p>Let's break down the key components using a Rectangle class example.</p>
 <h3>The Test Subject</h3>
 <p>This is the thing-to-be-tested, for this example, a very simple implementation of a Rectangle</p>
-<pre class="language-typescript line-numbers"><code class="language-typescript">class Rectangle {
+<pre><code class="language-typescript">class Rectangle {
   constructor(public width: number, public height: number) {}
 
   setWidth(w: number) {
@@ -68,71 +68,81 @@
   getArea() {
     return this.width * this.height;
   }
-}</code></pre><h3>Testeranto&#39;s 1 function</h3>
+}
+</code></pre>
+<h3>Testeranto's 1 function</h3>
 <p>Testeranto has 1 function. This function launches and runs the tests. It is here that all 5 types converge and if you can type this function call correctly, the TS type system should guide you through the rest.</p>
-<pre>async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
-  input: I["iinput"],
-  testSpecification: ITestSpecification<I, O>,
-  testImplementation: ITestImplementation<I, O, M>,
-  testAdapter: Partial<ITestInterface<I>>,
+<pre><code class="language-ts">async &lt;I extends Ibdd_in_any, O extends Ibdd_out, M&gt;(
+  input: I[&quot;iinput&quot;],
+  testSpecification: ITestSpecification&lt;I, O&gt;,
+  testImplementation: ITestImplementation&lt;I, O, M&gt;,
+  testAdapter: Partial&lt;ITestInterface&lt;I&gt;&gt;,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<I, O, M>></pre><h3>Testeranto&#39;s 3 runtimes</h3>
-<p>For each of testeranto&#39;s runtime, there is a specific Testeranto main function. Each is it&#39;s own import but all 3 are called in the same way.</p>
+): Promise&lt;Testeranto&lt;I, O, M&gt;&gt;
+</code></pre>
+<h3>Testeranto's 3 runtimes</h3>
+<p>For each of testeranto's runtime, there is a specific Testeranto main function. Each is it's own import but all 3 are called in the same way.</p>
 <h4>Node</h4>
-<pre>import Testeranto from "testeranto/src/Node"; // <- import the Node main function
+<pre><code class="language-ts">import Testeranto from &quot;testeranto/src/Node&quot;; // &lt;- import the Node main function
 // below this point, all runtimes are identical!
 
-import { implementation } from "./Rectangle.test.implementation";
-import { specification } from "./Rectangle.test.specification";
-import { interface } from "./Rectangle.test.interface";
+import { implementation } from &quot;./Rectangle.test.implementation&quot;;
+import { specification } from &quot;./Rectangle.test.specification&quot;;
+import { interface } from &quot;./Rectangle.test.interface&quot;;
 
 // Note the type parameters I, O, and M: these will be important later
-export default Testeranto<
+export default Testeranto&lt;
   I extends Ibdd_in,
   O extends Ibdd_out,
   M
-  >(
-    Rectangle.prototype, // <- the subject of the test.
+  &gt;(
+    Rectangle.prototype, // &lt;- the subject of the test.
     specification,
     implementation,
     interface
-);</pre><h4>Web</h4>
-<pre>import Testeranto from "testeranto/src/Web"; // <- import the Web main function
+);
+</code></pre>
+<h4>Web</h4>
+<pre><code class="language-ts">import Testeranto from &quot;testeranto/src/Web&quot;; // &lt;- import the Web main function
 // below this point, all runtimes are identical!
 
-import { implementation } from "./Rectangle.test.implementation";
-import { specification } from "./Rectangle.test.specification";
-import { interface } from "./Rectangle.test.interface";
+import { implementation } from &quot;./Rectangle.test.implementation&quot;;
+import { specification } from &quot;./Rectangle.test.specification&quot;;
+import { interface } from &quot;./Rectangle.test.interface&quot;;
 
 // Note the type parameters I, O, and M: these will be important later
-export default Testeranto<
+export default Testeranto&lt;
   I extends Ibdd_in,
   O extends Ibdd_out,
   M
-  >(
-    Rectangle.prototype, // <- the subject of the test.
+  &gt;(
+    Rectangle.prototype, // &lt;- the subject of the test.
     specification,
     implementation,
     interface
-);</pre><h4>Pure</h4>
-<pre>import Testeranto from "testeranto/src/Pure"; // <- import the Pure main function
+);
+</code></pre>
+<h4>Pure</h4>
+<pre><code class="language-ts">import Testeranto from &quot;testeranto/src/Pure&quot;; // &lt;- import the Pure main function
 // below this point, all runtimes are identical!
 
-import { implementation } from "./Rectangle.test.implementation";
-import { specification } from "./Rectangle.test.specification";
-import { interface } from "./Rectangle.test.interface";
+import { implementation } from &quot;./Rectangle.test.implementation&quot;;
+import { specification } from &quot;./Rectangle.test.specification&quot;;
+import { interface } from &quot;./Rectangle.test.interface&quot;;
 
 // Note the type parameters I, O, and M: these will be important later
-export default Testeranto<
+export default Testeranto&lt;
   I extends Ibdd_in,
   O extends Ibdd_out,
   M
-  >(
-    Rectangle.prototype, // <- the subject of the test.
+  &gt;(
+    Rectangle.prototype, // &lt;- the subject of the test.
     specification,
     implementation,
     interface
-);</pre><h3>Testeranto&#39;s 5 essential types</h3>
+);
+</code></pre>
+<h3>Testeranto's 5 essential types</h3>
 <p>Every testeranto test is built around these 5 types that form a complete testing pipeline.</p>
 <h4>The Specification (ITestSpecification)</h4>
 <p>The Specification defines the business requirements in plain language, completely separate from implementation details. This is where you describe <strong>what</strong> should be tested without worrying about <strong>how</strong>.</p>
@@ -142,29 +152,29 @@ export default Testeranto<
 <li>Defines test suites, scenarios (Given/When/Then)</li>
 <li>Maps directly to BDD concepts</li>
 </ul>
-<pre class="language-typescript line-numbers"><code class="language-typescript">import {
+<pre><code class="language-typescript">import {
   Ibdd_in,
   Ibdd_out,
   ITestSpecification,
-} from "testeranto/src/CoreTypes";
+} from &quot;testeranto/src/CoreTypes&quot;;
 
 //  Note the type parameters I and O. These are important!
-export const specification: ITestSpecification<
+export const specification: ITestSpecification&lt;
   I extends Ibdd_in,
   O extends Ibdd_out,
-> = (
+&gt; = (
   Suite,
   Given,
   When,
   Then,
   Check
-) => {
+) =&gt; {
   return [
     Suite.Default(
-      "Testing the Rectangle class",
+      &quot;Testing the Rectangle class&quot;,
       {
         test0: Given.Default(
-          ["https://api.github.com/repos/adamwong246/testeranto/issues/8"],
+          [&quot;https://api.github.com/repos/adamwong246/testeranto/issues/8&quot;],
           [],
           [Then.getWidth(2)]
         ),
@@ -179,7 +189,9 @@ export const specification: ITestSpecification<
       []
     ),
   ];
-};</code></pre><h4>The Implementation (ITestImplementation)</h4>
+};
+</code></pre>
+<h4>The Implementation (ITestImplementation)</h4>
 <p>The Implementation provides the concrete operations that bring specifications to life. This is where you define <strong>how</strong> each test step actually works.</p>
 <ul>
 <li><code>suites</code>: Test grouping and organization</li>
@@ -187,117 +199,123 @@ export const specification: ITestSpecification<
 <li><code>whens</code>: Actions that change state</li>
 <li><code>thens</code>: Assertions and validations</li>
 </ul>
-<pre>import {
+<pre><code class="language-ts">import {
   Ibdd_in,
   Ibdd_out,
   ITestImplementation,
-} from "testeranto/src/CoreTypes";
+} from &quot;testeranto/src/CoreTypes&quot;;
 
 //  Note the type parameters I and O. These are important!
-export const implementation: ITestImplementation<
+export const implementation: ITestImplementation&lt;
   I extends Ibdd_in,
   O extends Ibdd_out,
   M
-> = {
+&gt; = {
   suites: {
-    Default: "a default suite",
+    Default: &quot;a default suite&quot;,
   },
 
   givens: {
-    Default: () => new Rectangle(2, 2),
-    WidthAndHeightOf: (width, height) => new Rectangle(width, height),
+    Default: () =&gt; new Rectangle(2, 2),
+    WidthAndHeightOf: (width, height) =&gt; new Rectangle(width, height),
   },
 
   whens: {
-    setWidth: (width: number) => (rectangle) => {
+    setWidth: (width: number) =&gt; (rectangle) =&gt; {
       rectangle.setWidth(width);
       return rectangle;
     },
-    setHeight: (height: number) => (rectangle) => {
+    setHeight: (height: number) =&gt; (rectangle) =&gt; {
       rectangle.setHeight(height);
       return rectangle;
     },
   },
 
   thens: {
-    getWidth: (expectedWidth) => (rectangle) => {
+    getWidth: (expectedWidth) =&gt; (rectangle) =&gt; {
       assert.equal(rectangle.getWidth(), expectedWidth);
       return rectangle;
     },
-    getHeight: (expectedHeight) => (rectangle) => {
+    getHeight: (expectedHeight) =&gt; (rectangle) =&gt; {
       assert.equal(rectangle.getHeight(), expectedHeight);
       return rectangle;
     },
-    area: (area) => (rectangle) => {
+    area: (area) =&gt; (rectangle) =&gt; {
       assert.equal(rectangle.area(), area);
       return rectangle;
     },
-    circumference: (circumference: number) => (rectangle: Rectangle) => {
+    circumference: (circumference: number) =&gt; (rectangle: Rectangle) =&gt; {
       assert.equal(rectangle.circumference(), circumference);
       return rectangle;
     },
   }
-};</pre><h4>The Interface aka ITestInterface</h4>
+};
+</code></pre>
+<h4>The Interface aka ITestInterface</h4>
 <p>The test interface is code which is NOT business logic. The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps &quot;before all&quot;, &quot;after all&quot;, &quot;before each&quot;, &quot;after each&quot;, etc</p>
-<pre>import {
+<pre><code class="language-ts">import {
   Ibdd_in,
   ITestInterface,
-} from "testeranto/src/CoreTypes";
+} from &quot;testeranto/src/CoreTypes&quot;;
 
 //  Note the type parameter. This is important!
-export const testAdapter: ITestInterface<
+export const testAdapter: ITestInterface&lt;
   I extends Ibdd_in,
-> = {
-  beforeEach: async (subject, i) => {
+&gt; = {
+  beforeEach: async (subject, i) =&gt; {
     return i();
   },
   andWhen: async function (s, whenCB, tr, utils) {
     return whenCB(s, utils);
   },
-  butThen: async (s, t, tr, pm) => {
+  butThen: async (s, t, tr, pm) =&gt; {
     return t(s, pm);
   },
-  afterEach: (z) => {
+  afterEach: (z) =&gt; {
     return z;
   },
-  afterAll: () => {},
-  assertThis: (x: any, y) => {},
-};</pre><h4>type I aka Ibdd_in</h4>
+  afterAll: () =&gt; {},
+  assertThis: (x: any, y) =&gt; {},
+};
+</code></pre>
+<h4>type I aka Ibdd_in</h4>
 <p>This type describes the &quot;inner&quot; shape of your BDD tests. Over the course of the execution of the test, the subject will change shapes- this test describe those changes.</p>
-<pre>import { Ibdd_in } from "testeranto/src/CoreTypes";
+<pre><code class="language-ts">import { Ibdd_in } from &quot;testeranto/src/CoreTypes&quot;;
 
 // TODO this is inaccurate
-export type I = Ibdd_in<
+export type I = Ibdd_in&lt;
   null,
   null,
   Rectangle,
   Rectangle,
   Rectangle,
-  (...x) => (rectangle: Rectangle, utils: IPM) => Rectangle,
-  (rectangle: Rectangle, utils: IPM) => Rectangle
->;</pre><h4>type O aka Ibdd_out</h4>
+  (...x) =&gt; (rectangle: Rectangle, utils: IPM) =&gt; Rectangle,
+  (rectangle: Rectangle, utils: IPM) =&gt; Rectangle
+&gt;;
+</code></pre>
+<h4>type O aka Ibdd_out</h4>
 <p>This type describes the &quot;outer&quot; shape of your BDD tests. This type describes the set of legal BDD clauses.</p>
-<pre>import { Ibdd_out } from "testeranto/src/CoreTypes";
+<pre><code class="language-ts">import { Ibdd_out } from &quot;testeranto/src/CoreTypes&quot;;
 
-export type O = Ibdd_out<
+export type O = Ibdd_out&lt;
   // Suite
   {
     Default: [string];
   },
-  // "Given" are initial states
+  // &quot;Given&quot; are initial states
   {
     Default;
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   },
-  // "Whens" are steps which change the state of the test subject
+  // &quot;Whens&quot; are steps which change the state of the test subject
   {
     HeightIsPubliclySetTo: [number];
     WidthIsPubliclySetTo: [number];
     setWidth: [number];
     setHeight: [number];
   },
-  // "Thens" are steps which make assertions of the test subject
+  // &quot;Thens&quot; are steps which make assertions of the test subject
   {
     AreaPlusCircumference: [number];
     circumference: [number];
@@ -306,32 +324,36 @@ export type O = Ibdd_out<
     area: [number];
     prototype: [];
   },
-  // "Checks" are similar to "Givens"
+  // &quot;Checks&quot; are similar to &quot;Givens&quot;
   {
     Default;
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   }
->;</pre><h3>Testeranto&#39;s 1 optional type</h3>
+&gt;;
+</code></pre>
+<h3>Testeranto's 1 optional type</h3>
 <h4>type M (optional)</h4>
 <p>this type describes the modifications to the shape of the &quot;specification&quot;. It can be used to make your BDD tests DRYer but is not necessary</p>
-<pre>export type M = {
+<pre><code class="language-ts">export type M = {
   givens: {
-    [K in keyof O["givens"]]: (...Iw: O["givens"][K]) => Rectangle;
+    [K in keyof O[&quot;givens&quot;]]: (...Iw: O[&quot;givens&quot;][K]) =&gt; Rectangle;
   };
   whens: {
-    [K in keyof O["whens"]]: (
-      ...Iw: O["whens"][K]
-    ) => (rectangle: Rectangle, utils: PM) => Rectangle;
+    [K in keyof O[&quot;whens&quot;]]: (
+      ...Iw: O[&quot;whens&quot;][K]
+    ) =&gt; (rectangle: Rectangle, utils: PM) =&gt; Rectangle;
   };
   thens: {
-    [K in keyof O["thens"]]: (
-      ...Iw: O["thens"][K]
-    ) => (rectangle: Rectangle, utils: PM) => Rectangle;
+    [K in keyof O[&quot;thens&quot;]]: (
+      ...Iw: O[&quot;thens&quot;][K]
+    ) =&gt; (rectangle: Rectangle, utils: PM) =&gt; Rectangle;
   };
-};</pre><h2>Putting it all together</h2>
-<pre>//  Make sure you import the right runtime
-import Testeranto from "testeranto/src/Pure";
+};
+</code></pre>
+<h2>Putting it all together</h2>
+<pre><code class="language-ts">//  Make sure you import the right runtime
+import Testeranto from &quot;testeranto/src/Pure&quot;;
 
 import {
   Ibdd_in,
@@ -339,7 +361,7 @@ import {
   ITestImplementation,
   ITestSpecification,
   ITestInterface,
-} from "testeranto/src/CoreTypes";
+} from &quot;testeranto/src/CoreTypes&quot;;
 
 // The test subject
 class Rectangle {
@@ -359,17 +381,17 @@ class Rectangle {
 ////////////////////////////////////////////////////////
 
 // TODO this is inaccurate
-type I = Ibdd_in<
+type I = Ibdd_in&lt;
   null,
   null,
   Rectangle,
   Rectangle,
   Rectangle,
-  (...x) => (rectangle: Rectangle, utils: IPM) => Rectangle,
-  (rectangle: Rectangle, utils: IPM) => Rectangle
->;
+  (...x) =&gt; (rectangle: Rectangle, utils: IPM) =&gt; Rectangle,
+  (rectangle: Rectangle, utils: IPM) =&gt; Rectangle
+&gt;;
 
-type O = Ibdd_out<
+type O = Ibdd_out&lt;
   // Suites
   {
     Default: [string];
@@ -402,104 +424,104 @@ type O = Ibdd_out<
     WidthOfOneAndHeightOfOne;
     WidthAndHeightOf: [number, number];
   }
->;
+&gt;;
 
 type M = {
   givens: {
-    [K in keyof O["givens"]]: (...Iw: O["givens"][K]) => Rectangle;
+    [K in keyof O[&quot;givens&quot;]]: (...Iw: O[&quot;givens&quot;][K]) =&gt; Rectangle;
   };
   whens: {
-    [K in keyof O["whens"]]: (
-      ...Iw: O["whens"][K]
-    ) => (rectangle: Rectangle, utils: PM) => Rectangle;
+    [K in keyof O[&quot;whens&quot;]]: (
+      ...Iw: O[&quot;whens&quot;][K]
+    ) =&gt; (rectangle: Rectangle, utils: PM) =&gt; Rectangle;
   };
   thens: {
-    [K in keyof O["thens"]]: (
-      ...Iw: O["thens"][K]
-    ) => (rectangle: Rectangle, utils: PM) => Rectangle;
+    [K in keyof O[&quot;thens&quot;]]: (
+      ...Iw: O[&quot;thens&quot;][K]
+    ) =&gt; (rectangle: Rectangle, utils: PM) =&gt; Rectangle;
   };
 };
 
-const testAdapter: ITestInterface<
+const testAdapter: ITestInterface&lt;
   I extends Ibdd_in,
-> = {
-  beforeEach: async (subject, i) => {
+&gt; = {
+  beforeEach: async (subject, i) =&gt; {
     return i();
   },
   andWhen: async function (s, whenCB, tr, utils) {
     return whenCB(s, utils);
   },
-  butThen: async (s, t, tr, pm) => {
+  butThen: async (s, t, tr, pm) =&gt; {
     return t(s, pm);
   },
-  afterEach: (z) => {
+  afterEach: (z) =&gt; {
     return z;
   },
-  afterAll: () => {},
-  assertThis: (x: any, y) => {},
+  afterAll: () =&gt; {},
+  assertThis: (x: any, y) =&gt; {},
 };
 
-const testImplementation: ITestImplementation<
+const testImplementation: ITestImplementation&lt;
   I extends Ibdd_in,
   O extends Ibdd_out,
   M
-> = {
+&gt; = {
   suites: {
-    Default: "a default suite",
+    Default: &quot;a default suite&quot;,
   },
 
   givens: {
-    Default: () => new Rectangle(2, 2),
-    WidthAndHeightOf: (width, height) => new Rectangle(width, height),
+    Default: () =&gt; new Rectangle(2, 2),
+    WidthAndHeightOf: (width, height) =&gt; new Rectangle(width, height),
   },
 
   whens: {
-    setWidth: (width: number) => (rectangle) => {
+    setWidth: (width: number) =&gt; (rectangle) =&gt; {
       rectangle.setWidth(width);
       return rectangle;
     },
-    setHeight: (height: number) => (rectangle) => {
+    setHeight: (height: number) =&gt; (rectangle) =&gt; {
       rectangle.setHeight(height);
       return rectangle;
     },
   },
 
   thens: {
-    getWidth: (expectedWidth) => (rectangle) => {
+    getWidth: (expectedWidth) =&gt; (rectangle) =&gt; {
       assert.equal(rectangle.getWidth(), expectedWidth);
       return rectangle;
     },
-    getHeight: (expectedHeight) => (rectangle) => {
+    getHeight: (expectedHeight) =&gt; (rectangle) =&gt; {
       assert.equal(rectangle.getHeight(), expectedHeight);
       return rectangle;
     },
-    area: (area) => (rectangle) => {
+    area: (area) =&gt; (rectangle) =&gt; {
       assert.equal(rectangle.area(), area);
       return rectangle;
     },
-    circumference: (circumference: number) => (rectangle: Rectangle) => {
+    circumference: (circumference: number) =&gt; (rectangle: Rectangle) =&gt; {
       assert.equal(rectangle.circumference(), circumference);
       return rectangle;
     },
   }
 };
 
-const testSpecification: ITestSpecification<
+const testSpecification: ITestSpecification&lt;
   I extends Ibdd_in,
   O extends Ibdd_out,
-> = (
+&gt; = (
   Suite,
   Given,
   When,
   Then,
   Check
-) => {
+) =&gt; {
   return [
     Suite.Default(
-      "Testing the Rectangle class",
+      &quot;Testing the Rectangle class&quot;,
       {
         test0: Given.Default(
-          ["https://api.github.com/repos/adamwong246/testeranto/issues/8"],
+          [&quot;https://api.github.com/repos/adamwong246/testeranto/issues/8&quot;],
           [],
           [Then.getWidth(2)]
         ),
@@ -517,11 +539,11 @@ const testSpecification: ITestSpecification<
 };
 
 // 1 function will launch the test
-export default Testeranto<
+export default Testeranto&lt;
   I extends Ibdd_in,
   O extends Ibdd_out,
   M
-  >(
+  &gt;(
     Rectangle.prototype,
     testSpecification,
     testSmplementation,
@@ -529,7 +551,9 @@ export default Testeranto<
 );
 
 
-</pre><h2>Explainer Video Development</h2>
+
+</code></pre>
+<h2>Explainer Video Development</h2>
 <p>The Testeranto explainer video is built using:</p>
 <h3>Revision.js Animation System</h3>
 <ul>
@@ -552,9 +576,9 @@ export default Testeranto<
 <li>The runtime defined alongside the test in testeranto.config.ts</li>
 </ol>
 <p>By convention, test filenames reveal their runtime. Ex: <code>__tests__/yourClass.node.test</code>. This is ONLY a convention. It has no real bearing on the runtime.</p>
-<h2>Dos and Don&#39;ts</h2>
+<h2>Dos and Don'ts</h2>
 <h3>Do pass your test subject to the main testeranto function.</h3>
-<h3>Don&#39;t import your test subject elsewhere in your tests.</h3>
+<h3>Don't import your test subject elsewhere in your tests.</h3>
 
                 </div>
             </div>
