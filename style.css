@@ -11856,17 +11856,22 @@ textarea.form-control-lg {
 }
 :root {
   --light-vibrant-bg: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 25%, #80deea 50%, #4dd0e1 75%, #00bcd4 100%);
-  --light-vibrant-text: #3a1c42;
+  --light-vibrant-text: #fff9fb;
   --dark-vibrant-bg: linear-gradient(135deg, #16213e 0%, #1a1a2e 25%, #0f3460 50%, #533483 75%, #e94560 100%);
   --dark-vibrant-text: #fff9fb;
   --primary-vibrant-bg: #ff2d75;
   --primary-vibrant-text: #fff9fb;
   --secondary-vibrant-bg: #00e5ff;
-  --secondary-vibrant-text: #3a1c42;
+  --secondary-vibrant-text: #fff9fb;
   --accent-vibrant-bg: #ffeb3b;
-  --accent-vibrant-text: #3a1c42;
+  --accent-vibrant-text: #fff9fb;
   --light-bg: #fff9fb;
-  --light-text: #3a1c42;
+  --light-text: #fff9fb;
+  --text-panel-bg: rgba(0,0,0,0.3);
+  --text-panel-blur: blur(8px);
+  --text-shadow-heavy: 0 1px 3px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.6);
+  --text-shadow-light: 0 1px 2px rgba(0,0,0,0.5);
+  --panel-border: inset 0 0 0 1px rgba(255,255,255,0.2);
 }
 
 :root[data-bs-theme=light-vibrant] {
@@ -12331,15 +12336,12 @@ body:not([data-bs-theme=daily]) {
     opacity: 0.5;
   }
 }
-@keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
+@keyframes vibrantPulse {
+  0%, 100% {
+    filter: brightness(1) saturate(1.2);
   }
   50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+    filter: brightness(1.1) saturate(1.3);
   }
 }
 #sky {

@@ -1,11 +1,11 @@
 ---
-comment: frontpage is a series of full-page sections which snap into place as the use scrolls down. The first and last slides have centered content.  The first is white text on background, the last slide is black text on white background. The rest alternate between left and right aligned, each with a different color sourced from our branding style.
+comment: frontpage is a series of full-page sections which snap into place as the use scrolls down. The first and last slides have centered content.  The first is white text on background, the last slide is black text on white background. The rest alternate between left and right aligned, each with a different color.
 slides:
-  - Slide 0: Hero/Jumbotron. White text on black background
-  - Slide 1: background gradient is black at top and the bottom is our coolest branding color.
-  - Second to last slide: background gradient is our hottest branding color at top and white at bottom
-  - Last slide: solid white background with black text.
-  - all other slides have a background gradient sourced from our branding. These should be sorted (roughly) from dark and cool, to hot and white.
+  - Slide 0: Hero/Jumbotron. White text on black gradient background, but no animation
+  - Slide 1: background gradient is black at top and the bottom is our coolest  color.
+  - Second to last slide: background gradient is our hottest  color at top and white at bottom
+  - Last slide: White text on black gradient background, but no animation
+  - all other slides have a background gradient. These should be sorted (roughly) from dark and cool, to hot and white.
 ---
 
 #### Testeranto

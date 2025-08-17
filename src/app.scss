@@ -42,7 +42,11 @@ code,
   border: 1px solid var(--frosted-border);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), var(--frosted-inset-shadow);
   isolation: isolate;
-  text-shadow: var(--frosted-text-shadow);
+  text-shadow: 
+    0 1px 3px rgba(0,0,0,0.8),
+    0 0 10px rgba(0,0,0,0.6),
+    0 0 20px rgba(0,0,0,0.3),
+    0 0 40px rgba(0,0,0,0.1);
 }
 
 h1,
@@ -51,8 +55,26 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--bs-heading-color);
-  text-shadow: var(--frosted-text-shadow), 0 0 8px rgba(255, 255, 255, 0.3);
+  color: var(--light-text);
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  backdrop-filter: var(--text-panel-blur);
+  background-color: var(--text-panel-bg);
+  border-radius: 8px;
+  text-shadow: var(--text-shadow-heavy);
+  box-shadow: var(--panel-border), 0 4px 6px rgba(0,0,0,0.1);
+  margin: 0.5rem 0;
+}
+
+p, .lead {
+  color: var(--light-text);
+  text-shadow: var(--text-shadow-light);
+  backdrop-filter: var(--text-panel-blur);
+  background-color: var(--text-panel-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: var(--panel-border);
+  margin: 1rem 0;
 }
 
 .modal-content {
