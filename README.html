@@ -90,15 +90,44 @@
 <li><strong>The result:</strong> Your LLM works with laser focus on exactly what needs fixing</li>
 </ul>
 <h2>Key Technologies</h2>
-<p>|            |                                        |
-| ---------- | -------------------------------------- |
-| ESM        | Modern javascript tooling              |
-| TypeScript | Strongly-typed test definitions        |
-| Puppeteer  | Cross-runtime testing (Node &amp; Browser) |
-| esbuild    | Fast test bundling                     |
-| Aider.ai   | AI-powered test fixing                 |
-| ESLint     | Static analysis of test files          |
-| tsc        | Type checking of test files            |</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ESM</td>
+<td>Modern javascript tooling</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>Strongly-typed test definitions</td>
+</tr>
+<tr>
+<td>Puppeteer</td>
+<td>Cross-runtime testing (Node &amp; Browser)</td>
+</tr>
+<tr>
+<td>esbuild</td>
+<td>Fast test bundling</td>
+</tr>
+<tr>
+<td>Aider.ai</td>
+<td>AI-powered test fixing</td>
+</tr>
+<tr>
+<td>ESLint</td>
+<td>Static analysis of test files</td>
+</tr>
+<tr>
+<td>tsc</td>
+<td>Type checking of test files</td>
+</tr>
+</tbody>
+</table>
 <h2>Quick Start</h2>
 <ol start="0">
 <li>
@@ -141,18 +170,59 @@ yarn t-run rectangle.test.ts yourProject dev
 <pre><code class="language-bash">yarn t-build rectangle.test.ts yourProject once &amp;&amp; yarn t-run rectangle.test.ts yourProject once
 </code></pre>
 <h2>Runtime Platforms</h2>
-<p>|                                          | You should use this runtime for...                                                                      | Important differences                                                                                                               |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| <strong>Node</strong> : node V8 with fork             | testing backend code, Node APIs (like <code>fs</code> and <code>crypto</code>), or anything needing filesystem access         | has access to the filesystem and io                                                                                                 |
-| <strong>Web</strong> : chrome browser                 | testing frontend code, anything that uses <code>document</code> or <code>window</code>, UI interactions, or visual regression | can take screenshots/recordings                                                                                                     |
-| <strong>Pure</strong> : node v8, dynamically imported | testing code that can run on both node-v8 and the browser                                               | Very similar to &quot;Node&quot; but has no IO access. Console logs will spew into the main thread, but this runtime is theoretically faster. |</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>You should use this runtime for...</th>
+<th>Important differences</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Node</strong> : node V8 with fork</td>
+<td>testing backend code, Node APIs (like <code>fs</code> and <code>crypto</code>), or anything needing filesystem access</td>
+<td>has access to the filesystem and io</td>
+</tr>
+<tr>
+<td><strong>Web</strong> : chrome browser</td>
+<td>testing frontend code, anything that uses <code>document</code> or <code>window</code>, UI interactions, or visual regression</td>
+<td>can take screenshots/recordings</td>
+</tr>
+<tr>
+<td><strong>Pure</strong> : node v8, dynamically imported</td>
+<td>testing code that can run on both node-v8 and the browser</td>
+<td>Very similar to &quot;Node&quot; but has no IO access. Console logs will spew into the main thread, but this runtime is theoretically faster.</td>
+</tr>
+</tbody>
+</table>
 <h2>CLI Commands</h2>
-<p>|                                       |                                               |
-| ------------------------------------- | --------------------------------------------- |
-| <code>yarn t-init</code>                         | Create a new testeranto project               |
-| <code>yarn t-build &lt;YOUR_TESTS&gt; dev\|once</code> | Build test bundles (watch or single-run mode) |
-| <code>yarn t-run &lt;YOUR_TESTS&gt; dev\|once</code>   | Run tests (watch or single-run mode)          |
-| <code>yarn t-report</code>                       | Launch test report server                     |</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>yarn t-init</code></td>
+<td>Create a new testeranto project</td>
+</tr>
+<tr>
+<td><code>yarn t-build &lt;YOUR_TESTS&gt; dev|once</code></td>
+<td>Build test bundles (watch or single-run mode)</td>
+</tr>
+<tr>
+<td><code>yarn t-run &lt;YOUR_TESTS&gt; dev|once</code></td>
+<td>Run tests (watch or single-run mode)</td>
+</tr>
+<tr>
+<td><code>yarn t-report</code></td>
+<td>Launch test report server</td>
+</tr>
+</tbody>
+</table>
 <h2>Example workflow:</h2>
 <pre><code class="language-bash"># Initialize project
 yarn t-init

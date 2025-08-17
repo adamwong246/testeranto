@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { micromark } from 'micromark';
+import { gfmTable, gfmTableHtml } from 'micromark-extension-gfm-table';
 import * as sass from 'sass';
 
 // Simple HTML template with our CSS
@@ -105,8 +106,8 @@ const processFile = (filePath) => {
     const markdown = fs.readFileSync(filePath, "utf8");
     const html = micromark(markdown, {
         allowDangerousHtml: true,
-        extensions: [],
-        htmlExtensions: []
+        extensions: [gfmTable()],
+        htmlExtensions: [gfmTableHtml()]
     });
     return template(path.basename(filePath), html);
 };
