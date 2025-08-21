@@ -19,21 +19,6 @@
     {
       "id": "",
       "location": {
-        "column": 23,
-        "file": "src/lib/BaseSuite.test/pure.test.ts",
-        "length": 12,
-        "line": 2,
-        "lineText": "import Testeranto from \"../../Pure\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
         "column": 26,
         "file": "src/lib/BaseSuite.test/pure.test.ts",
         "length": 14,
@@ -129,6 +114,21 @@
         "length": 16,
         "line": 5,
         "lineText": "import { BaseBuilder } from \"../basebuilder\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 23,
+        "file": "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
+        "length": 12,
+        "line": 2,
+        "lineText": "import Testeranto from \"../../Pure\";",
         "namespace": "",
         "suggestion": ""
       },
