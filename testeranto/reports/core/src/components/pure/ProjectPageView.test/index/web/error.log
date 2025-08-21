@@ -1,22 +1,3 @@
-TypeError: Cannot read properties of undefined (reading 'path')
-    at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2756:62)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2288:32)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755794589621:216:16)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3039:28
-    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3276:18)
-    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2922:19)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2634:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3084:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3115:31)
-    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3300:12)
-TypeError: Cannot read properties of undefined (reading 'path')
-    at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2756:62)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2288:32)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755794589621:216:16)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3039:28
-    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3276:18)
-    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2922:19)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2634:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3084:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3115:31)
-    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3300:12)
+Failed to load resource: net::ERR_FILE_NOT_FOUND
+Failed to load resource: net::ERR_FILE_NOT_FOUND
+Failed to load resource: net::ERR_FILE_NOT_FOUND

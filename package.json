@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.195.0",
+  "version": "0.196.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -184,7 +184,7 @@
     "ansi-colors": "^4.1.3",
     "axios": "^1.11.0",
     "babel-loader": "^8.2.5",
-    "bootstrap": "^5.3.4",
+    "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",
     "chai": "^5.2.0",
     "chromium": "^3.0.3",
@@ -227,6 +227,7 @@
     "react-router-dom": "^7.7.0",
     "sass": "^1.90.0",
     "ssml-check": "^0.4.6",
+    "testeranto-stilo": "0.0.7",
     "tsc-prog": "^2.3.0",
     "tsx": "^4.19.3",
     "type-fest": "^4.41.0",

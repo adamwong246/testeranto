@@ -25402,7 +25402,7 @@
   var import_react100 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
-  // node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs
+  // node_modules/react-router/dist/development/chunk-UH6JLGW7.mjs
   var React = __toESM(require_react(), 1);
   var React2 = __toESM(require_react(), 1);
   var React3 = __toESM(require_react(), 1);
@@ -25674,8 +25674,8 @@
       handle: route.handle
     };
   }
-  function flattenRoutes(routes, branches = [], parentsMeta = [], parentPath = "") {
-    let flattenRoute = (route, index2, relativePath) => {
+  function flattenRoutes(routes, branches = [], parentsMeta = [], parentPath = "", _hasParentOptionalSegments = false) {
+    let flattenRoute = (route, index2, hasParentOptionalSegments = _hasParentOptionalSegments, relativePath) => {
       let meta = {
         relativePath: relativePath === void 0 ? route.path || "" : relativePath,
         caseSensitive: route.caseSensitive === true,
@@ -25683,6 +25683,9 @@
         route
       };
       if (meta.relativePath.startsWith("/")) {
+        if (!meta.relativePath.startsWith(parentPath) && hasParentOptionalSegments) {
+          return;
+        }
         invariant(
           meta.relativePath.startsWith(parentPath),
           `Absolute route path "${meta.relativePath}" nested under path "${parentPath}" is not valid. An absolute child route path must start with the combined path of all its parent routes.`
@@ -25698,7 +25701,13 @@
           route.index !== true,
           `Index routes must not have child routes. Please remove all child routes from route path "${path}".`
         );
-        flattenRoutes(route.children, branches, routesMeta, path);
+        flattenRoutes(
+          route.children,
+          branches,
+          routesMeta,
+          path,
+          hasParentOptionalSegments
+        );
       }
       if (route.path == null && !route.index) {
         return;
@@ -25714,7 +25723,7 @@
         flattenRoute(route, index2);
       } else {
         for (let exploded of explodeOptionalSegments(route.path)) {
-          flattenRoute(route, index2, exploded);
+          flattenRoute(route, index2, true, exploded);
         }
       }
     });
@@ -25880,7 +25889,7 @@
         params.push({ paramName, isOptional: isOptional != null });
         return isOptional ? "/?([^\\/]+)?" : "/([^\\/]+)";
       }
-    );
+    ).replace(/\/([\w-]+)\?(\/|$)/g, "(/$1)?$2");
     if (path.endsWith("*")) {
       params.push({ paramName: "*" });
       regexpSource += path === "*" || path === "/*" ? "(.*)$" : "(?:\\/(.+)|\\/*)$";
@@ -27176,7 +27185,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   try {
     if (isBrowser) {
       window.__reactRouterVersion = // @ts-expect-error
-      "7.8.0";
+      "7.8.1";
     }
   } catch (e3) {
   }
@@ -44450,9 +44459,9 @@ object-assign/index.js:
   @license MIT
   *)
 
-react-router/dist/development/chunk-ZYFC6VSF.mjs:
+react-router/dist/development/chunk-UH6JLGW7.mjs:
   (**
-   * react-router v7.8.0
+   * react-router v7.8.1
    *
    * Copyright (c) Remix Software Inc.
    *
@@ -44464,7 +44473,7 @@ react-router/dist/development/chunk-ZYFC6VSF.mjs:
 
 react-router/dist/development/index.mjs:
   (**
-   * react-router v7.8.0
+   * react-router v7.8.1
    *
    * Copyright (c) Remix Software Inc.
    *
