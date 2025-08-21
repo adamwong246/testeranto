@@ -1,33 +1,22 @@
-AssertionError: Should render test table: expected null to exist
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755359733102:167:14)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VAYOSMXI.mjs:21704:14)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3006:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2909:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
-    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
-TypeError: Cannot read properties of null (reading 'querySelectorAll')
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755359733102:172:46)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VAYOSMXI.mjs:21704:14)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3006:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2909:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
-    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
-TypeError: Cannot read properties of null (reading 'querySelectorAll')
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755359733102:178:46)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3011:31
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-VAYOSMXI.mjs:21704:14)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3255:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3006:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2909:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)
-    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)
+TypeError: Cannot read properties of undefined (reading 'path')
+    at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2756:62)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2288:32)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755794589621:216:16)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3039:28
+    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3276:18)
+    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2922:19)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2634:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3084:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3115:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3300:12)
+TypeError: Cannot read properties of undefined (reading 'path')
+    at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2756:62)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2288:32)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1755794589621:216:16)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3039:28
+    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3276:18)
+    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2922:19)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2634:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3084:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3115:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3300:12)

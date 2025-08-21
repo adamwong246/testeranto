@@ -5,12 +5,14 @@ import { PM } from ".";
 type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Pure extends PM {
     getInnerHtml(selector: string, page: string): Promise<string>;
-    stopSideCar(uid: number): Promise<boolean>;
+    stopSideCar(uid: number): Promise<any>;
     server: PuppetMasterServer;
     testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t: ITTestResourceConfiguration);
+    protected trackCall(method: string, args: any): void;
     start(): Promise<void>;
     stop(): Promise<void>;
+    createWriteStream(filepath: string, testName: string): Promise<string>;
     launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]>;
     pages(): any;
     waitForSelector(p: string, s: string): any;
@@ -27,17 +29,15 @@ export declare class PM_Pure extends PM {
     click(selector: string): string | undefined;
     screencast(opts: ScreencastOptions, page: string): any;
     screencastStop(p: string): any;
-    customScreenShot(opts: ScreencastOptions, page: string): any;
+    customScreenShot(opts: {
+        path: string;
+    }, page?: string): any;
     existsSync(destFolder: string): Promise<boolean>;
     mkdirSync(): boolean;
     write(uid: number, contents: string): Promise<boolean>;
     writeFileSync(): Promise<boolean>;
-    createWriteStream(): {
-        write: () => boolean;
-        end: () => void;
-    };
     end(uid: number): any;
     customclose(): void;
-    testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): void;
+    testArtiFactoryfileWriter(tLog: ITLog, callback: (promise: Promise<any>) => void): (fPath: string, value: string | Buffer | any) => void;
 }
 export {};

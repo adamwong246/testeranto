@@ -1,6 +1,6 @@
 
-/add src/lib/BaseSuite.test/node.test.ts
 /add src/lib/BaseSuite.test/test.ts
+/add src/lib/BaseSuite.test/node.test.ts
 
 /read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md

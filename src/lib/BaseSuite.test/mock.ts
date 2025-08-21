@@ -18,13 +18,13 @@ export class MockGiven extends BaseGiven<I> {
       features,
       whens,
       thens,
-      async () => ({ testStore: true, testSelection: false }), // givenCB
+      async () => ({ testStore: true }), // givenCB
       {} // initialValues
     );
   }
 
   async givenThat(): Promise<TestStore> {
-    return { testStore: true, testSelection: false };
+    return { testStore: true };
   }
 
   uberCatcher(e: Error): void {
@@ -35,55 +35,34 @@ export class MockGiven extends BaseGiven<I> {
 export class MockWhen extends BaseWhen<I> {
   async andWhen(
     store: TestStore,
-    whenCB: (store: TestStore) => Promise<TestStore>,
+    whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>,
     testResource: any,
     pm: IPM
   ): Promise<TestStore> {
-    const newStore = {
-      ...store,
-      testSelection: true, // Ensure testSelection is set for assertions
-    };
-
-    const result = await whenCB(newStore);
-
-    return result;
+    // Create a TestSelection from the store
+    const selection: TestSelection = { testSelection: true };
+    const result = await whenCB(selection)(store);
+    // Convert back to TestStore
+    return { ...store, ...result };
   }
 
-  addArtifact(name: string, content: string): this {
-    // Mock implementation that just returns this for chaining
-    return this;
+  addArtifact(path: string): void {
+    // Mock implementation
   }
 }
 
 export class MockThen extends BaseThen<I> {
   async butThen(
     store: TestStore,
-    thenCB: (selection: TestSelection) => Promise<TestSelection>,
+    thenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>,
     testResourceConfiguration: any,
-    pm: any
+    pm: IPM,
+    ...args: any[]
   ): Promise<TestSelection> {
-    // Create test selection with explicit type
-    const testSelection: TestSelection = {
-      name: store.name,
-      index: store.index,
-      testSelection: store.testSelection || false,
-      error: store.error ? true : undefined,
-    };
-
-    try {
-      const result = await thenCB(testSelection);
-
-      if (!result || typeof result.testSelection === "undefined") {
-        throw new Error(
-          `Invalid test selection result: ${JSON.stringify(result)}`
-        );
-      }
-
-      return result;
-    } catch (e) {
-      console.error("[ERROR] MockThen - butThen failed:", e);
-      throw e;
-    }
+    // Create a TestSelection from the store
+    const selection: TestSelection = { testSelection: true };
+    await thenCB(selection);
+    return selection;
   }
 }
 
@@ -93,15 +72,15 @@ export class MockSuite extends BaseSuite<I, O> {
       throw new Error("MockSuite requires a non-empty name");
     }
 
-    const suiteName = name || "testSuite"; // Ensure name is never undefined
+    const suiteName = name || "testSuite";
     super(suiteName, index, {
       testGiven: new MockGiven(
         "testGiven",
         ["testFeature"],
-        [new MockWhen("testWhen", () => Promise.resolve({ testStore: true }))],
+        [new MockWhen("testWhen", async () => Promise.resolve({ testSelection: true }))],
         [
           new MockThen("testThen", async () =>
-            Promise.resolve({ testSelection: true })
+            Promise.resolve(new BaseSuite("temp", 0, {} as any))
           ),
         ]
       ),

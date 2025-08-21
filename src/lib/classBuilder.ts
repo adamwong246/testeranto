@@ -82,10 +82,10 @@ export abstract class ClassBuilder<
     );
 
     const classyWhens = Object.entries(testImplementation.whens).reduce(
-      (a, [key, whEn]: [string, (x) => any]) => {
-        a[key] = (...payload: any) => {
+      (a, [key, whEn]: [string, (...x: any[]) => any]) => {
+        a[key] = (...payload: any[]) => {
           return new whenKlasser.prototype.constructor(
-            `${whEn.name}: ${payload && payload.toString()}`,
+            `${key}: ${payload && payload.toString()}`,
             whEn(...payload)
           );
         };
@@ -94,14 +94,12 @@ export abstract class ClassBuilder<
       {}
     );
 
-    const classyThens = Object.entries<(expected: any, ...x: any[]) => any>(
-      testImplementation.thens
-    ).reduce(
-      (a, [key, thEn]: [string, (s: I["iselection"]) => I["isubject"]]) => {
-        a[key] = (expected, ...x) => {
+    const classyThens = Object.entries(testImplementation.thens).reduce(
+      (a, [key, thEn]: [string, (...x: any[]) => any]) => {
+        a[key] = (...args: any[]) => {
           return new thenKlasser.prototype.constructor(
-            `${thEn.name}: ${expected && expected.toString()}`,
-            thEn(expected, ...x)
+            `${key}: ${args && args.toString()}`,
+            thEn(...args)
           );
         };
         return a;

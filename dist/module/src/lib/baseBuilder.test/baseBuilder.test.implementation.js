@@ -5,7 +5,7 @@ export const implementation = {
         Default: "BaseBuilder test suite",
     },
     givens: {
-        "the default BaseBuilder": () => {
+        "the default BaseBuilder": () => () => {
             return new MockBaseBuilder({}, // input
             {}, // suitesOverrides
             {}, // givenOverrides
@@ -15,19 +15,19 @@ export const implementation = {
             () => [] // testSpecification
             );
         },
-        "a BaseBuilder with TestInput": (input) => {
+        "a BaseBuilder with TestInput": (input) => () => {
             return new MockBaseBuilder(input, {}, {}, {}, {}, { ports: [] }, () => []);
         },
-        "a BaseBuilder with Test Resource Requirements": (requirements) => {
+        "a BaseBuilder with Test Resource Requirements": (requirements) => () => {
             return new MockBaseBuilder({}, {}, {}, {}, {}, requirements, () => []);
         },
     },
     whens: {
-        addArtifact: (artifact) => (builder) => {
+        addArtifact: (artifact) => (builder, utils) => {
             builder.artifacts.push(artifact);
             return builder;
         },
-        setTestJobs: (jobs) => (builder) => {
+        setTestJobs: (jobs) => (builder, utils) => {
             builder.testJobs = jobs;
             return builder;
         },
@@ -56,13 +56,13 @@ export const implementation = {
             });
             return builder;
         },
-        "it generates TestSpecifications": () => (builder) => {
+        "it generates TestSpecifications": () => (builder, utils) => {
             if (!Array.isArray(builder.specs)) {
                 throw new Error("Specs were not generated");
             }
             return builder;
         },
-        "it creates jobs": () => (builder) => {
+        "it creates jobs": () => (builder, utils) => {
             if (!Array.isArray(builder.testJobs)) {
                 throw new Error("Test jobs were not created");
             }
@@ -76,31 +76,31 @@ export const implementation = {
             utils.writeFileSync("artifact_test.txt", "test");
             return builder;
         },
-        resourceRequirementsSet: () => (builder) => {
+        resourceRequirementsSet: () => (builder, utils) => {
             if (!builder.testResourceRequirement) {
                 throw new Error("Resource requirements not set");
             }
             return builder;
         },
-        suitesOverridesConfigured: () => (builder) => {
+        suitesOverridesConfigured: () => (builder, utils) => {
             if (!builder.suitesOverrides) {
                 throw new Error("Suites overrides not configured");
             }
             return builder;
         },
-        givensOverridesConfigured: () => (builder) => {
+        givensOverridesConfigured: () => (builder, utils) => {
             if (!builder.givenOverides) {
                 throw new Error("Givens overrides not configured");
             }
             return builder;
         },
-        whensOverridesConfigured: () => (builder) => {
+        whensOverridesConfigured: () => (builder, utils) => {
             if (!builder.whenOverides) {
                 throw new Error("Whens overrides not configured");
             }
             return builder;
         },
-        thensOverridesConfigured: () => (builder) => {
+        thensOverridesConfigured: () => (builder, utils) => {
             if (!builder.thenOverides) {
                 throw new Error("Thens overrides not configured");
             }

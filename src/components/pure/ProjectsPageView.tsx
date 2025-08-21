@@ -1,6 +1,5 @@
-import React from 'react';
-import { Table, Alert } from 'react-bootstrap';
-import { NavBar } from './NavBar';
+import React from "react";
+import { Table, Alert } from "react-bootstrap";
 
 type Project = {
   name: string;
@@ -39,14 +38,18 @@ export const ProjectsPageView = ({
   configs,
   loading,
   error,
-  navigate
+  navigate,
 }: ProjectsPageViewProps) => {
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'success': return '✅';
-      case 'failed': return '❌';
-      case 'warning': return '⚠️';
-      default: return '❓';
+      case "success":
+        return "✅";
+      case "failed":
+        return "❌";
+      case "warning":
+        return "⚠️";
+      default:
+        return "❓";
     }
   };
 
@@ -54,8 +57,7 @@ export const ProjectsPageView = ({
   if (error) return <Alert variant="danger">Error: {error}</Alert>;
 
   return (
-    <div className="p-3">
-      <NavBar title="Testeranto" backLink={undefined} />
+    <div className="">
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -70,30 +72,44 @@ export const ProjectsPageView = ({
           {projects.map((project) => (
             <tr key={project.name}>
               <td>
-                <a href="#" onClick={(e) => {
-                  e.preventDefault();
-                  navigate(`/projects/${project.name}`);
-                }}>{project.name}</a>
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/projects/${project.name}`);
+                  }}
+                >
+                  {project.name}
+                </a>
               </td>
               <td>
-                <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                <div>
                   {summaries[project.name] ? (
-                    Object.keys(summaries[project.name]).map(testName => {
+                    Object.keys(summaries[project.name]).map((testName) => {
                       const testData = summaries[project.name][testName];
-                      const runTime = configs[project.name]?.tests?.find((t) => t[0] === testName)?.[1] || 'node';
+                      const runTime =
+                        configs[project.name]?.tests?.find(
+                          (t) => t[0] === testName
+                        )?.[1] || "node";
                       const hasRuntimeErrors = testData.runTimeErrors > 0;
-                      const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
+                      const hasStaticErrors =
+                        testData.typeErrors > 0 || testData.staticErrors > 0;
 
                       return (
                         <div key={testName}>
                           <a
-                            href={`#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`}
+                            href={`#/projects/${project.name
+                              }/tests/${encodeURIComponent(testName)}/${runTime}`}
                           >
-                            {hasRuntimeErrors ? '❌ ' : hasStaticErrors ? '⚠️ ' : ''}
-                            {testName.split('/').pop() || testName}
+                            {hasRuntimeErrors
+                              ? "❌ "
+                              : hasStaticErrors
+                                ? "⚠️ "
+                                : ""}
+                            {testName.split("/").pop() || testName}
                           </a>
                         </div>
-                      )
+                      );
                     })
                   ) : (
                     <div>Loading tests...</div>
@@ -101,23 +117,17 @@ export const ProjectsPageView = ({
                 </div>
               </td>
               <td>
-                <a
-                  href={`#/projects/${project.name}#node`}
-                >
+                <a href={`#/projects/${project.name}#node`}>
                   {getStatusIcon(project.nodeStatus)} Node build logs
                 </a>
               </td>
               <td>
-                <a
-                  href={`#/projects/${project.name}#web`}
-                >
+                <a href={`#/projects/${project.name}#web`}>
                   {getStatusIcon(project.webStatus)} Web build logs
                 </a>
               </td>
               <td>
-                <a
-                  href={`#/projects/${project.name}#pure`}
-                >
+                <a href={`#/projects/${project.name}#pure`}>
                   {getStatusIcon(project.pureStatus)} Pure build logs
                 </a>
               </td>

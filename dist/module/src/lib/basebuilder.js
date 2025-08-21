@@ -33,17 +33,13 @@ export class BaseBuilder {
                 },
                 runner,
                 receiveTestResourceConfig: async function (puppetMaster) {
-                    // deprecated?
                     const tLog = async (...l) => {
                         //
                     };
                     try {
                         const suiteDone = await runner(puppetMaster, tLog);
                         const fails = suiteDone.fails;
-                        await puppetMaster.writeFileSync([
-                            `tests.json`,
-                            JSON.stringify(this.toObj(), null, 2),
-                        ]);
+                        await puppetMaster.writeFileSync(`tests.json`, JSON.stringify(this.toObj(), null, 2), "test");
                         return {
                             failed: fails > 0,
                             fails,
@@ -60,10 +56,6 @@ export class BaseBuilder {
                             features: [],
                         };
                     }
-                    // const logPromise = new Promise(async (res) => {
-                    //   await puppetMaster.end(access);
-                    //   res(true);
-                    // });
                 },
             };
         });

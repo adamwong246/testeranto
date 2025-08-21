@@ -15,13 +15,11 @@ type PuppetMasterServer = Record<string, Promise<any>>;
 
 export class PM_Pure extends PM {
   getInnerHtml(selector: string, page: string): Promise<string> {
-    throw new Error("pure.ts getInnHtml not implemented");
-    return Promise.resolve("");
+    throw new Error("pure.ts getInnerHtml not implemented");
   }
 
-  stopSideCar(uid: number): Promise<boolean> {
-    throw new Error("pure.ts getInnHtml not implemented");
-    return Promise.resolve(true);
+  stopSideCar(uid: number): Promise<any> {
+    throw new Error("pure.ts stopSideCar not implemented");
   }
   server: PuppetMasterServer;
   testResourceConfiguration: ITTestResourceConfiguration;
@@ -32,12 +30,21 @@ export class PM_Pure extends PM {
     this.testResourceConfiguration = t;
   }
 
+  protected trackCall(method: string, args: any) {
+    // Track calls if needed
+  }
+
   start(): Promise<void> {
     return new Promise((r) => r());
   }
 
   stop(): Promise<void> {
     return new Promise((r) => r());
+  }
+
+  async createWriteStream(filepath: string, testName: string): Promise<string> {
+    throw new Error("pure.ts createWriteStream not implemented");
+    return "";
   }
 
   launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]> {
@@ -111,7 +118,7 @@ export class PM_Pure extends PM {
     return globalThis["screencastStop"](p);
   }
 
-  customScreenShot(opts: ScreencastOptions, page: string) {
+  customScreenShot(opts: { path: string }, page?: string) {
     return globalThis["customScreenShot"](
       {
         ...opts,
@@ -122,33 +129,23 @@ export class PM_Pure extends PM {
     );
   }
 
+  // TODO: fix these
   existsSync(destFolder: string): Promise<boolean> {
-    // Pure runtime doesn't need filesystem checks
     return Promise.resolve(true);
   }
 
   mkdirSync() {
-    // Pure runtime doesn't need directories
     return true;
   }
 
   write(uid: number, contents: string) {
-    // Pure runtime doesn't need file writing
     return Promise.resolve(true);
   }
 
   writeFileSync() {
-    // Pure runtime doesn't need file writing
     return Promise.resolve(true);
   }
-
-  createWriteStream() {
-    // Pure runtime doesn't need file streams
-    return {
-      write: () => true,
-      end: () => {}
-    };
-  }
+  /////////////////////////////////////////////////////
 
   end(uid: number) {
     return globalThis["end"](uid);
@@ -161,49 +158,14 @@ export class PM_Pure extends PM {
     );
   }
 
-  testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void) {
-    // return (fPath, value: string | Buffer | PassThrough) => {
-    //   callback(
-    //     new Promise<void>((res) => {
-    //       tLog("testArtiFactory =>", fPath);
-    //       const cleanPath = path.resolve(fPath);
-    //       fPaths.push(cleanPath.replace(process.cwd(), ``));
-    //       const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-    //       fs.mkdir(targetDir, { recursive: true }, async (error) => {
-    //         if (error) {
-    //           console.error(`❗️testArtiFactory failed`, targetDir, error);
-    //         }
-    //         fs.writeFileSync(
-    //           path.resolve(
-    //             targetDir.split("/").slice(0, -1).join("/"),
-    //             "manifest"
-    //           ),
-    //           fPaths.join(`\n`),
-    //           {
-    //             encoding: "utf-8",
-    //           }
-    //         );
-    //         if (Buffer.isBuffer(value)) {
-    //           fs.writeFileSync(fPath, value, "binary");
-    //           res();
-    //         } else if (`string` === typeof value) {
-    //           fs.writeFileSync(fPath, value.toString(), {
-    //             encoding: "utf-8",
-    //           });
-    //           res();
-    //         } else {
-    //           const pipeStream: PassThrough = value;
-    //           const myFile = fs.createWriteStream(fPath);
-    //           pipeStream.pipe(myFile);
-    //           pipeStream.on("close", () => {
-    //             myFile.close();
-    //             res();
-    //           });
-    //         }
-    //       });
-    //     })
-    //   );
-    // };
+  testArtiFactoryfileWriter(
+    tLog: ITLog,
+    callback: (promise: Promise<any>) => void
+  ) {
+    return (fPath: string, value: string | Buffer | any) => {
+      this.trackCall("testArtiFactoryfileWriter", { fPath, value });
+      callback(Promise.resolve());
+    };
   }
 
   // startPuppeteer(options?: any): any {

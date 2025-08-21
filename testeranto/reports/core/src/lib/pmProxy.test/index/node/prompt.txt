@@ -1,9 +1,9 @@
 
-/add src/lib/pmProxy.test/index.ts
-/add src/lib/pmProxy.test/implementation.ts
 /add src/lib/pmProxy.test/mockPMBase.ts
+/add src/lib/pmProxy.test/implementation.ts
 /add src/lib/pmProxy.test/specification.ts
 /add src/lib/pmProxy.test/adapter.ts
+/add src/lib/pmProxy.test/index.ts
 
 /read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md

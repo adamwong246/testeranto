@@ -20,10 +20,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -52,10 +52,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -84,10 +84,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -116,10 +116,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -148,10 +148,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -180,10 +180,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -212,10 +212,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -244,10 +244,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -276,10 +276,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -308,10 +308,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -340,10 +340,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -372,10 +372,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -404,10 +404,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -418,13 +418,43 @@
       "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
     },
     {
+      "id": "different-path-case",
+      "location": {
+        "column": 7,
+        "file": "src/components/pure/ProjectPageView.tsx",
+        "length": 18,
+        "line": 9,
+        "lineText": "import \"./../../App.scss\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Use \"src/app.scss\" instead of \"src/App.scss\" to avoid issues with case-sensitive file systems"
+    },
+    {
+      "id": "different-path-case",
+      "location": {
+        "column": 7,
+        "file": "src/components/pure/TestPageView.test/index.tsx",
+        "length": 21,
+        "line": 8,
+        "lineText": "import \"./../../../App.scss\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Use \"src/app.scss\" instead of \"src/App.scss\" to avoid issues with case-sensitive file systems"
+    },
+    {
       "id": "",
       "location": {
         "column": 7,
-        "file": "src/components/pure/AppFrame.test/index.tsx",
-        "length": 19,
-        "line": 10,
-        "lineText": "import \"../../../App.scss\";",
+        "file": "src/components/pure/TestPageView.test/index.tsx",
+        "length": 21,
+        "line": 8,
+        "lineText": "import \"./../../../App.scss\";",
         "namespace": "",
         "suggestion": ""
       },
@@ -451,10 +481,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -467,15 +497,15 @@
     {
       "detail": {
         "deprecation": true,
-        "stack": "src/style.scss 2:9  @use\n- 1:1               root stylesheet\n"
+        "stack": "src/style.scss 3:9  @use\n- 1:1               root stylesheet\n"
       },
       "id": "",
       "location": {
         "column": 8,
         "file": "src/style.scss",
         "length": 0,
-        "line": 1,
-        "lineText": "\"./fonts.scss\"",
+        "line": 2,
+        "lineText": "\"./themes.scss\"",
         "namespace": "file",
         "suggestion": ""
       },
@@ -483,10 +513,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/AppFrame.test/index.tsx",
-            "length": 19,
-            "line": 10,
-            "lineText": "import \"../../../App.scss\";",
+            "file": "src/components/pure/TestPageView.test/index.tsx",
+            "length": 21,
+            "line": 8,
+            "lineText": "import \"./../../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -595,7 +625,7 @@
         "format": "esm"
       },
       "src/PM/index.ts": {
-        "bytes": 1837,
+        "bytes": 1856,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -631,7 +661,7 @@
         "format": "esm"
       },
       "src/PM/web.ts": {
-        "bytes": 4283,
+        "bytes": 4364,
         "imports": [
           {
             "path": "stream",
@@ -677,7 +707,7 @@
         "format": "esm"
       },
       "src/lib/index.ts": {
-        "bytes": 3609,
+        "bytes": 3739,
         "imports": [
           {
             "path": "../CoreTypes",
@@ -738,7 +768,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 7276,
+        "bytes": 8407,
         "imports": [
           {
             "path": "./types",
@@ -764,7 +794,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 7855,
+        "bytes": 8832,
         "imports": [
           {
             "path": ".",
@@ -800,7 +830,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 5120,
+        "bytes": 4963,
         "imports": [
           {
             "path": "stream",
@@ -846,7 +876,7 @@
         "format": "esm"
       },
       "src/lib/classBuilder.ts": {
-        "bytes": 3102,
+        "bytes": 3021,
         "imports": [
           {
             "path": "type-fest",
@@ -887,7 +917,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 3818,
+        "bytes": 4006,
         "imports": [
           {
             "path": ".",
@@ -933,7 +963,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 3601,
+        "bytes": 3302,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -1019,63 +1049,21 @@
         ],
         "format": "esm"
       },
-      "node_modules/react/cjs/react.development.js": {
-        "bytes": 87574,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/react/index.js": {
-        "bytes": 190,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/react/cjs/react.development.js",
-            "kind": "require-call",
-            "original": "./cjs/react.development.js"
-          }
-        ],
-        "format": "cjs"
-      },
       "../testeranto-react/src/react-dom/jsx/dynamic.ts": {
-        "bytes": 959,
+        "bytes": 1418,
         "imports": [
           {
-            "path": "node_modules/react/index.js",
+            "path": "react",
             "kind": "import-statement",
-            "original": "react"
+            "external": true
           },
           {
             "path": "testeranto/src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "testeranto/src/lib",
             "kind": "import-statement",
             "external": true
           },
@@ -1137,6 +1125,53 @@
           }
         ],
         "format": "esm"
+      },
+      "node_modules/react/cjs/react.development.js": {
+        "bytes": 87574,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react/index.js": {
+        "bytes": 190,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react/cjs/react.development.js",
+            "kind": "require-call",
+            "original": "./cjs/react.development.js"
+          }
+        ],
+        "format": "cjs"
       },
       "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs": {
         "bytes": 330085,
@@ -1582,7 +1617,7 @@
         "format": "cjs"
       },
       "src/components/pure/TestPageView.test/implementation.ts": {
-        "bytes": 5942,
+        "bytes": 5904,
         "imports": [
           {
             "path": "node_modules/chai/chai.js",
@@ -1610,6 +1645,11 @@
             "external": true
           },
           {
+            "path": "../../../lib",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
             "external": true
@@ -1628,7 +1668,7 @@
         "format": "esm"
       },
       "src/components/pure/TestPageView.test/specification.ts": {
-        "bytes": 1658,
+        "bytes": 1602,
         "imports": [
           {
             "path": "../../../CoreTypes",
@@ -1640,27 +1680,6 @@
             "kind": "import-statement",
             "external": true
           },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/utils/logFiles.ts": {
-        "bytes": 1513,
-        "imports": [
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
@@ -14886,6 +14905,27 @@
         ],
         "format": "esm"
       },
+      "src/utils/logFiles.ts": {
+        "bytes": 1513,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
       "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js": {
         "bytes": 4188,
         "imports": [
@@ -15274,7 +15314,7 @@
         "format": "esm"
       },
       "src/components/pure/NavBar.tsx": {
-        "bytes": 3051,
+        "bytes": 3448,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -15341,12 +15381,22 @@
         "format": "esm"
       },
       "src/components/pure/TestPageView.tsx": {
-        "bytes": 32577,
+        "bytes": 36124,
         "imports": [
           {
             "path": "node_modules/react/index.js",
             "kind": "import-statement",
             "original": "react"
+          },
+          {
+            "path": "node_modules/react-bootstrap/esm/index.js",
+            "kind": "import-statement",
+            "original": "react-bootstrap"
+          },
+          {
+            "path": "node_modules/react-router-dom/dist/index.mjs",
+            "kind": "import-statement",
+            "original": "react-router-dom"
           },
           {
             "path": "src/utils/logFiles.ts",
@@ -15391,36 +15441,8 @@
         ],
         "format": "esm"
       },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf": {
-        "bytes": 2819076,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf": {
-        "bytes": 3193048,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf": {
-        "bytes": 3284152,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf": {
-        "bytes": 3325496,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf": {
-        "bytes": 3432832,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf": {
-        "bytes": 3515332,
-        "imports": []
-      },
-      "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf": {
-        "bytes": 3521968,
-        "imports": []
-      },
       "src/App.scss": {
-        "bytes": 295033,
+        "bytes": 294635,
         "imports": [
           {
             "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
@@ -15536,41 +15558,6 @@
             "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
             "kind": "url-token",
             "external": true
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf"
-          },
-          {
-            "path": "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf",
-            "kind": "url-token",
-            "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf"
           },
           {
             "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
@@ -15853,7 +15840,7 @@
         "format": "esm"
       },
       "src/components/pure/ProjectPageView.test/implementation.tsx": {
-        "bytes": 5089,
+        "bytes": 6141,
         "imports": [
           {
             "path": "node_modules/chai/chai.js",
@@ -15966,7 +15953,7 @@
         "format": "esm"
       },
       "src/components/pure/ProjectPageView.test/index.tsx": {
-        "bytes": 570,
+        "bytes": 527,
         "imports": [
           {
             "path": "../testeranto-react/src/react-dom/component/web.ts",
@@ -15999,191 +15986,6 @@
             "original": "react"
           },
           {
-            "path": "./../../../App.scss",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/ModalContent.test/implementation.tsx": {
-        "bytes": 1122,
-        "imports": [
-          {
-            "path": "node_modules/chai/chai.js",
-            "kind": "import-statement",
-            "original": "chai"
-          },
-          {
-            "path": "../../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/ModalContent.test/specification.ts": {
-        "bytes": 620,
-        "imports": [
-          {
-            "path": "../../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/ThemeCard.tsx": {
-        "bytes": 797,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/ModalContent.tsx": {
-        "bytes": 5906,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-bootstrap/esm/index.js",
-            "kind": "import-statement",
-            "original": "react-bootstrap"
-          },
-          {
-            "path": "src/components/pure/ThemeCard.tsx",
-            "kind": "import-statement",
-            "original": "./ThemeCard"
-          },
-          {
-            "path": "src/App.scss",
-            "kind": "import-statement",
-            "original": "../../App.scss"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/ModalContent.test/index.tsx": {
-        "bytes": 409,
-        "imports": [
-          {
-            "path": "../testeranto-react/src/react-dom/component/web.ts",
-            "kind": "import-statement",
-            "original": "testeranto-react/src/react-dom/component/web"
-          },
-          {
-            "path": "src/components/pure/ModalContent.test/implementation.tsx",
-            "kind": "import-statement",
-            "original": "./implementation"
-          },
-          {
-            "path": "src/components/pure/ModalContent.test/specification.ts",
-            "kind": "import-statement",
-            "original": "./specification"
-          },
-          {
-            "path": "src/components/pure/ModalContent.tsx",
-            "kind": "import-statement",
-            "original": "../ModalContent"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
             "external": true
@@ -16202,7 +16004,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 2797,
+        "bytes": 2307,
         "imports": [
           {
             "path": "src/lib/abstractBase.ts",
@@ -16243,7 +16045,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 11841,
+        "bytes": 12087,
         "imports": [
           {
             "path": "..",
@@ -16397,7 +16199,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 4100,
+        "bytes": 4281,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -16425,6 +16227,11 @@
             "original": "../basebuilder"
           },
           {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
             "external": true
@@ -16443,7 +16250,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-        "bytes": 720,
+        "bytes": 917,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -16452,6 +16259,16 @@
           },
           {
             "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../types",
             "kind": "import-statement",
             "external": true
           },
@@ -16505,232 +16322,6 @@
             "path": "src/lib/baseBuilder.test/baseBuilder.test.mock.ts",
             "kind": "import-statement",
             "original": "./baseBuilder.test.mock"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/AppFrame.test/implementation.tsx": {
-        "bytes": 2339,
-        "imports": [
-          {
-            "path": "node_modules/chai/chai.js",
-            "kind": "import-statement",
-            "original": "chai"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "../../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/AppFrame.test/specification.ts": {
-        "bytes": 908,
-        "imports": [
-          {
-            "path": "../../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/SunriseAnimation.tsx": {
-        "bytes": 10363,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/SettingsButton.tsx": {
-        "bytes": 2208,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-bootstrap/esm/index.js",
-            "kind": "import-statement",
-            "original": "react-bootstrap"
-          },
-          {
-            "path": "src/components/pure/ModalContent.tsx",
-            "kind": "import-statement",
-            "original": "./ModalContent"
-          },
-          {
-            "path": "src/components/SunriseAnimation.tsx",
-            "kind": "import-statement",
-            "original": "../SunriseAnimation"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/AppFrame.tsx": {
-        "bytes": 861,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-bootstrap/esm/index.js",
-            "kind": "import-statement",
-            "original": "react-bootstrap"
-          },
-          {
-            "path": "src/components/pure/SettingsButton.tsx",
-            "kind": "import-statement",
-            "original": "./SettingsButton"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/AppFrame.test/index.tsx": {
-        "bytes": 536,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "../testeranto-react/src/react-dom/component/web.ts",
-            "kind": "import-statement",
-            "original": "testeranto-react/src/react-dom/component/web"
-          },
-          {
-            "path": "src/components/pure/AppFrame.test/implementation.tsx",
-            "kind": "import-statement",
-            "original": "./implementation"
-          },
-          {
-            "path": "src/components/pure/AppFrame.test/specification.ts",
-            "kind": "import-statement",
-            "original": "./specification"
-          },
-          {
-            "path": "src/components/pure/AppFrame.tsx",
-            "kind": "import-statement",
-            "original": "../AppFrame"
-          },
-          {
-            "path": "src/App.scss",
-            "kind": "import-statement",
-            "original": "../../../App.scss"
           },
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -16909,23 +16500,15 @@
       "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-BADF3AZF.mjs",
+            "path": "testeranto/bundles/web/core/chunk-XMPEVCFW.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-FNXFUNA7.mjs",
+            "path": "testeranto/bundles/web/core/chunk-6EX6T2UQ.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-QWII7WIM.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
+            "path": "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16945,22 +16528,22 @@
             "bytesInOutput": 255
           },
           "../testeranto-react/src/react-dom/jsx/dynamic.ts": {
-            "bytesInOutput": 692
+            "bytesInOutput": 1012
           },
           "src/components/pure/TestPageView.test/implementation.ts": {
-            "bytesInOutput": 5294
+            "bytesInOutput": 4379
           },
           "src/components/pure/TestPageView.test/specification.ts": {
             "bytesInOutput": 1364
           },
           "src/components/pure/TestPageView.tsx": {
-            "bytesInOutput": 27644
+            "bytesInOutput": 25867
           },
           "src/utils/logFiles.ts": {
             "bytesInOutput": 617
           },
           "node_modules/@monaco-editor/react/dist/index.mjs": {
-            "bytesInOutput": 8912
+            "bytesInOutput": 8908
           },
           "node_modules/@monaco-editor/loader/lib/es/index.js": {
             "bytesInOutput": 47
@@ -16996,32 +16579,24 @@
             "bytesInOutput": 562
           }
         },
-        "bytes": 63942
+        "bytes": 61492
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-BADF3AZF.mjs",
+            "path": "testeranto/bundles/web/core/chunk-XMPEVCFW.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-FNXFUNA7.mjs",
+            "path": "testeranto/bundles/web/core/chunk-5DYRYE3D.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-QWII7WIM.mjs",
+            "path": "testeranto/bundles/web/core/chunk-6EX6T2UQ.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-VAYOSMXI.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
+            "path": "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs",
             "kind": "import-statement"
           }
         ],
@@ -17035,7 +16610,7 @@
             "bytesInOutput": 404
           },
           "src/components/pure/ProjectPageView.test/implementation.tsx": {
-            "bytesInOutput": 4690
+            "bytesInOutput": 5647
           },
           "src/components/pure/ProjectPageView.test/specification.ts": {
             "bytesInOutput": 1187
@@ -17044,222 +16619,16 @@
             "bytesInOutput": 14778
           }
         },
-        "bytes": 21996
+        "bytes": 22855
       },
-      "testeranto/bundles/web/core/chunk-BADF3AZF.mjs": {
+      "testeranto/bundles/web/core/chunk-XMPEVCFW.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-FNXFUNA7.mjs",
+            "path": "testeranto/bundles/web/core/chunk-6EX6T2UQ.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-QWII7WIM.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "NavBar",
-          "TestStatusBadge"
-        ],
-        "inputs": {
-          "src/components/pure/NavBar.tsx": {
-            "bytesInOutput": 2484
-          },
-          "src/components/TestStatusBadge.tsx": {
-            "bytesInOutput": 1070
-          }
-        },
-        "bytes": 3979
-      },
-      "testeranto/bundles/web/core/src/components/pure/ModalContent.test/index.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-EIYZKF2C.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-FNXFUNA7.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-VAYOSMXI.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/components/pure/ModalContent.test/index.tsx",
-        "cssBundle": "testeranto/bundles/web/core/src/components/pure/ModalContent.test/index.css",
-        "inputs": {
-          "src/components/pure/ModalContent.test/index.tsx": {
-            "bytesInOutput": 312
-          },
-          "src/components/pure/ModalContent.test/implementation.tsx": {
-            "bytesInOutput": 905
-          },
-          "src/components/pure/ModalContent.test/specification.ts": {
-            "bytesInOutput": 528
-          }
-        },
-        "bytes": 2368
-      },
-      "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/BaseSuite.test/web.test.ts",
-        "inputs": {
-          "src/lib/BaseSuite.test/web.test.ts": {
-            "bytesInOutput": 148
-          },
-          "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 7954
-          },
-          "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 2011
-          }
-        },
-        "bytes": 10496
-      },
-      "testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
-        "inputs": {
-          "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
-            "bytesInOutput": 176
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-            "bytesInOutput": 879
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3393
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 1180
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 531
-          }
-        },
-        "bytes": 6744
-      },
-      "testeranto/bundles/web/core/src/components/pure/AppFrame.test/index.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-EIYZKF2C.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-FNXFUNA7.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-VAYOSMXI.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/components/pure/AppFrame.test/index.tsx",
-        "cssBundle": "testeranto/bundles/web/core/src/components/pure/AppFrame.test/index.css",
-        "inputs": {
-          "src/components/pure/AppFrame.test/index.tsx": {
-            "bytesInOutput": 414
-          },
-          "src/components/pure/AppFrame.test/implementation.tsx": {
-            "bytesInOutput": 2107
-          },
-          "src/components/pure/AppFrame.test/specification.ts": {
-            "bytesInOutput": 815
-          },
-          "src/components/pure/AppFrame.tsx": {
-            "bytesInOutput": 965
-          },
-          "src/components/pure/SettingsButton.tsx": {
-            "bytesInOutput": 2144
-          },
-          "src/components/SunriseAnimation.tsx": {
-            "bytesInOutput": 10363
-          }
-        },
-        "bytes": 17675
-      },
-      "testeranto/bundles/web/core/chunk-EIYZKF2C.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-FNXFUNA7.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "ModalContent"
-        ],
-        "inputs": {
-          "src/components/pure/ModalContent.tsx": {
-            "bytesInOutput": 5502
-          },
-          "src/components/pure/ThemeCard.tsx": {
-            "bytesInOutput": 821
-          }
-        },
-        "bytes": 6680
-      },
-      "testeranto/bundles/web/core/chunk-FNXFUNA7.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
+            "path": "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs",
             "kind": "import-statement"
           }
         ],
@@ -17272,11 +16641,14 @@
           "Container_default",
           "ListGroup_default",
           "Modal_default",
+          "NavBar",
           "Nav_default",
-          "Navbar_default",
           "Row_default",
           "Tab_default",
           "Table_default",
+          "TestStatusBadge",
+          "ToastContainer_default",
+          "Toast_default",
           "require_react_dom"
         ],
         "inputs": {
@@ -17727,6 +17099,30 @@
           "node_modules/react-bootstrap/esm/Table.js": {
             "bytesInOutput": 1397
           },
+          "node_modules/react-bootstrap/esm/Toast.js": {
+            "bytesInOutput": 2246
+          },
+          "node_modules/@restart/hooks/esm/useTimeout.js": {
+            "bytesInOutput": 996
+          },
+          "node_modules/@restart/hooks/esm/useMounted.js": {
+            "bytesInOutput": 407
+          },
+          "node_modules/react-bootstrap/esm/ToastFade.js": {
+            "bytesInOutput": 480
+          },
+          "node_modules/react-bootstrap/esm/ToastHeader.js": {
+            "bytesInOutput": 1245
+          },
+          "node_modules/react-bootstrap/esm/ToastContext.js": {
+            "bytesInOutput": 223
+          },
+          "node_modules/react-bootstrap/esm/ToastBody.js": {
+            "bytesInOutput": 644
+          },
+          "node_modules/react-bootstrap/esm/ToastContainer.js": {
+            "bytesInOutput": 1389
+          },
           "node_modules/react-bootstrap/esm/index.js": {
             "bytesInOutput": 47
           },
@@ -17777,26 +17173,82 @@
           },
           "node_modules/react-bootstrap/esm/NavbarText.js": {
             "bytesInOutput": 651
+          },
+          "src/components/pure/NavBar.tsx": {
+            "bytesInOutput": 2919
+          },
+          "src/components/TestStatusBadge.tsx": {
+            "bytesInOutput": 1074
           }
         },
-        "bytes": 1158535
+        "bytes": 1170863
+      },
+      "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/BaseSuite.test/web.test.ts",
+        "inputs": {
+          "src/lib/BaseSuite.test/web.test.ts": {
+            "bytesInOutput": 148
+          },
+          "src/lib/BaseSuite.test/test.ts": {
+            "bytesInOutput": 7690
+          },
+          "src/lib/BaseSuite.test/mock.ts": {
+            "bytesInOutput": 1471
+          }
+        },
+        "bytes": 9692
+      },
+      "testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs",
+            "kind": "import-statement"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
+        "inputs": {
+          "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
+            "bytesInOutput": 176
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
+            "bytesInOutput": 879
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
+            "bytesInOutput": 3474
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
+            "bytesInOutput": 1180
+          },
+          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
+            "bytesInOutput": 647
+          }
+        },
+        "bytes": 6941
       },
       "testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-QWII7WIM.mjs",
+            "path": "testeranto/bundles/web/core/chunk-5DYRYE3D.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-VAYOSMXI.mjs",
+            "path": "testeranto/bundles/web/core/chunk-6EX6T2UQ.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
+            "path": "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs",
             "kind": "import-statement"
           }
         ],
@@ -17818,41 +17270,16 @@
             "bytesInOutput": 1093
           }
         },
-        "bytes": 5467
+        "bytes": 5418
       },
-      "testeranto/bundles/web/core/chunk-QWII7WIM.mjs": {
+      "testeranto/bundles/web/core/chunk-5DYRYE3D.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
+            "path": "testeranto/bundles/web/core/chunk-6EX6T2UQ.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "Link",
-          "MemoryRouter"
-        ],
-        "inputs": {
-          "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs": {
-            "bytesInOutput": 74057
-          },
-          "node_modules/react-router/dist/development/index.mjs": {
-            "bytesInOutput": 61
-          }
-        },
-        "bytes": 75043
-      },
-      "testeranto/bundles/web/core/chunk-VAYOSMXI.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-BXV27S2S.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
+            "path": "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs",
             "kind": "import-statement"
           }
         ],
@@ -17884,31 +17311,41 @@
         },
         "bytes": 929596
       },
-      "testeranto/bundles/web/core/chunk-BXV27S2S.mjs": {
+      "testeranto/bundles/web/core/chunk-6EX6T2UQ.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-LU364HVS.mjs",
+            "path": "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs",
             "kind": "import-statement"
           }
         ],
         "exports": [
+          "Link",
+          "MemoryRouter",
           "assert",
-          "require_react"
+          "require_react",
+          "useLocation",
+          "useNavigate"
         ],
         "inputs": {
           "node_modules/react/cjs/react.development.js": {
-            "bytesInOutput": 77246
+            "bytesInOutput": 77293
           },
           "node_modules/react/index.js": {
             "bytesInOutput": 286
           },
+          "node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs": {
+            "bytesInOutput": 74068
+          },
+          "node_modules/react-router/dist/development/index.mjs": {
+            "bytesInOutput": 61
+          },
           "node_modules/chai/chai.js": {
-            "bytesInOutput": 134531
+            "bytesInOutput": 134544
           }
         },
-        "bytes": 220070
+        "bytes": 295024
       },
-      "testeranto/bundles/web/core/chunk-LU364HVS.mjs": {
+      "testeranto/bundles/web/core/chunk-A7W2ENY4.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -17945,107 +17382,37 @@
             "bytesInOutput": 127
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2420
+            "bytesInOutput": 2500
           },
           "src/lib/pmProxy.ts": {
-            "bytesInOutput": 5643
+            "bytesInOutput": 6512
           },
           "src/Web.ts": {
             "bytesInOutput": 840
           },
           "src/PM/web.ts": {
-            "bytesInOutput": 3073
+            "bytesInOutput": 3059
           },
           "src/PM/index.ts": {
             "bytesInOutput": 69
           },
           "src/lib/core.ts": {
-            "bytesInOutput": 1876
+            "bytesInOutput": 1689
           },
           "src/lib/index.ts": {
-            "bytesInOutput": 705
+            "bytesInOutput": 721
           },
           "src/lib/abstractBase.ts": {
-            "bytesInOutput": 5073
+            "bytesInOutput": 5598
           },
           "src/lib/classBuilder.ts": {
-            "bytesInOutput": 1901
+            "bytesInOutput": 1855
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2708
+            "bytesInOutput": 2728
           }
         },
-        "bytes": 97590
-      },
-      "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf": {
-        "imports": [],
-        "exports": [],
-        "inputs": {
-          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf": {
-            "bytesInOutput": 2819076
-          }
-        },
-        "bytes": 2819076
-      },
-      "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf": {
-        "imports": [],
-        "exports": [],
-        "inputs": {
-          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf": {
-            "bytesInOutput": 3193048
-          }
-        },
-        "bytes": 3193048
-      },
-      "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf": {
-        "imports": [],
-        "exports": [],
-        "inputs": {
-          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf": {
-            "bytesInOutput": 3284152
-          }
-        },
-        "bytes": 3284152
-      },
-      "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf": {
-        "imports": [],
-        "exports": [],
-        "inputs": {
-          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf": {
-            "bytesInOutput": 3325496
-          }
-        },
-        "bytes": 3325496
-      },
-      "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf": {
-        "imports": [],
-        "exports": [],
-        "inputs": {
-          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf": {
-            "bytesInOutput": 3432832
-          }
-        },
-        "bytes": 3432832
-      },
-      "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf": {
-        "imports": [],
-        "exports": [],
-        "inputs": {
-          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf": {
-            "bytesInOutput": 3515332
-          }
-        },
-        "bytes": 3515332
-      },
-      "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf": {
-        "imports": [],
-        "exports": [],
-        "inputs": {
-          "fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf": {
-            "bytesInOutput": 3521968
-          }
-        },
-        "bytes": 3521968
+        "bytes": 98853
       },
       "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.css": {
         "imports": [
@@ -18165,34 +17532,6 @@
             "external": true
           },
           {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
-            "kind": "url-token"
-          },
-          {
             "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
             "kind": "url-token",
             "external": true
@@ -18200,10 +17539,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 292587
+            "bytesInOutput": 292237
           }
         },
-        "bytes": 292803
+        "bytes": 292453
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css": {
         "imports": [
@@ -18323,34 +17662,6 @@
             "external": true
           },
           {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
-            "kind": "url-token"
-          },
-          {
             "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
             "kind": "url-token",
             "external": true
@@ -18358,326 +17669,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 292587
+            "bytesInOutput": 292237
           }
         },
-        "bytes": 292803
-      },
-      "testeranto/bundles/web/core/src/components/pure/ModalContent.test/index.css": {
-        "imports": [
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
-            "kind": "url-token",
-            "external": true
-          }
-        ],
-        "inputs": {
-          "src/App.scss": {
-            "bytesInOutput": 292587
-          }
-        },
-        "bytes": 292803
-      },
-      "testeranto/bundles/web/core/src/components/pure/AppFrame.test/index.css": {
-        "imports": [
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100\" height=\"100\" viewBox=\"0 0 100 100\"><circle cx=\"10\" cy=\"10\" r=\"0.5\" fill=\"white\"/><circle cx=\"30\" cy=\"25\" r=\"0.5\" fill=\"white\"/><circle cx=\"70\" cy=\"15\" r=\"0.5\" fill=\"white\"/><circle cx=\"90\" cy=\"40\" r=\"0.5\" fill=\"white\"/><circle cx=\"20\" cy=\"60\" r=\"0.5\" fill=\"white\"/><circle cx=\"50\" cy=\"70\" r=\"0.5\" fill=\"white\"/><circle cx=\"80\" cy=\"85\" r=\"0.5\" fill=\"white\"/></svg>",
-            "kind": "url-token",
-            "external": true
-          }
-        ],
-        "inputs": {
-          "src/App.scss": {
-            "bytesInOutput": 292587
-          }
-        },
-        "bytes": 292803
+        "bytes": 292453
       }
     }
   }

@@ -2,7 +2,6 @@
 import { beforeAllProxy, afterAllProxy } from "./pmProxy";
 export class BaseSuite {
     addArtifact(path) {
-        console.log("Suite addArtifact", path);
         const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
         this.artifacts.push(normalizedPath);
     }
@@ -58,7 +57,9 @@ export class BaseSuite {
         // console.log("\nSuite:", this.index, this.name);
         // tLog("\nSuite:", this.index, this.name);
         const sNdx = this.index;
-        const proxiedPm = beforeAllProxy(pm, sNdx.toString(), this);
+        // Ensure addArtifact is properly bound to 'this'
+        const addArtifact = this.addArtifact.bind(this);
+        const proxiedPm = beforeAllProxy(pm, sNdx.toString(), addArtifact);
         const subject = await this.setup(input, suiteArtifactory, testResourceConfiguration, proxiedPm);
         for (const [gKey, g] of Object.entries(this.givens)) {
             const giver = this.givens[gKey];
@@ -71,7 +72,9 @@ export class BaseSuite {
             });
         }
         try {
-            const afterAllPm = afterAllProxy(pm, sNdx.toString(), this);
+            // Ensure addArtifact is properly bound to 'this'
+            const addArtifact = this.addArtifact.bind(this);
+            const afterAllPm = afterAllProxy(pm, sNdx.toString(), addArtifact);
             this.afterAll(this.store, artifactory, afterAllPm);
         }
         catch (e) {

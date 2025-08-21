@@ -1,6 +1,8 @@
 import { ChildProcess } from "node:child_process";
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
+import { WebSocketServer } from "ws";
+import http from "http";
 import { IRunnables, ITTestResourceConfiguration } from "../lib/index.js";
 import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 import { Sidecar } from "../lib/Sidecar.js";
@@ -29,6 +31,20 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     webSidecars: Record<number, Page>;
     sidecars: Record<number, any>;
     launchers: Record<string, () => void>;
+    wss: WebSocketServer;
+    clients: Set<any>;
+    httpServer: http.Server;
+    runningProcesses: Map<string, ChildProcess>;
+    allProcesses: Map<string, {
+        child?: ChildProcess;
+        status: "running" | "exited" | "error";
+        exitCode?: number;
+        error?: string;
+        command: string;
+        pid?: number;
+        timestamp: string;
+    }>;
+    processLogs: Map<string, string[]>;
     constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
     stopSideCar(uid: number): Promise<any>;
     launchSideCar(n: number, name: string): Promise<[number, ITTestResourceConfiguration]>;
@@ -52,6 +68,9 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     launchPureSideCar: (sidecar: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
     launchWeb: (src: string, dest: string) => Promise<void>;
     receiveFeaturesV2: (reportDest: string, srcTest: string, platform: IRunTime) => void;
+    requestHandler(req: http.IncomingMessage, res: http.ServerResponse): void;
+    findIndexHtml(): string | null;
+    broadcast(message: any): void;
     checkQueue(): void;
     checkForShutdown: () => void;
 }

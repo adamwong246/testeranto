@@ -4,6 +4,8 @@ type AppFrameProps = {
     className?: string;
     style?: React.CSSProperties;
     'data-testid'?: string;
+    title?: string;
+    rightContent?: React.ReactNode;
 };
-export declare const AppFrame: ({ children }: AppFrameProps) => JSX.Element;
+export declare const AppFrame: ({ children, title, rightContent }: AppFrameProps) => JSX.Element;
 export {};

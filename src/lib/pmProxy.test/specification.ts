@@ -84,6 +84,17 @@ export const specification: ITestSpecification<I, O> = (
       ],
       "special chars test"
     ),
+    testsJsonTest: Given.SomeBaseString(
+      ["butThenProxy should handle tests.json correctly"],
+      [],
+      [
+        Then.theButTheProxyReturns(
+          "writeFileSync",
+          "test/path/butThen/tests.json"
+        ),
+      ],
+      "tests.json test"
+    ),
   }),
 
   Suite.Default("Proxy Type Coverage", {

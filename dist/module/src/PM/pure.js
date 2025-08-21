@@ -4,23 +4,28 @@ import { PM } from ".";
 const fPaths = [];
 export class PM_Pure extends PM {
     getInnerHtml(selector, page) {
-        throw new Error("pure.ts getInnHtml not implemented");
-        return Promise.resolve("");
+        throw new Error("pure.ts getInnerHtml not implemented");
     }
     stopSideCar(uid) {
-        throw new Error("pure.ts getInnHtml not implemented");
-        return Promise.resolve(true);
+        throw new Error("pure.ts stopSideCar not implemented");
     }
     constructor(t) {
         super();
         this.server = {};
         this.testResourceConfiguration = t;
     }
+    trackCall(method, args) {
+        // Track calls if needed
+    }
     start() {
         return new Promise((r) => r());
     }
     stop() {
         return new Promise((r) => r());
+    }
+    async createWriteStream(filepath, testName) {
+        throw new Error("pure.ts createWriteStream not implemented");
+        return "";
     }
     launchSideCar(n) {
         return globalThis["launchSideCar"](n, this.testResourceConfiguration.name);
@@ -73,29 +78,20 @@ export class PM_Pure extends PM {
     customScreenShot(opts, page) {
         return globalThis["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), page, this.testResourceConfiguration.name);
     }
+    // TODO: fix these
     existsSync(destFolder) {
-        // Pure runtime doesn't need filesystem checks
         return Promise.resolve(true);
     }
     mkdirSync() {
-        // Pure runtime doesn't need directories
         return true;
     }
     write(uid, contents) {
-        // Pure runtime doesn't need file writing
         return Promise.resolve(true);
     }
     writeFileSync() {
-        // Pure runtime doesn't need file writing
         return Promise.resolve(true);
     }
-    createWriteStream() {
-        // Pure runtime doesn't need file streams
-        return {
-            write: () => true,
-            end: () => { }
-        };
-    }
+    /////////////////////////////////////////////////////
     end(uid) {
         return globalThis["end"](uid);
     }
@@ -103,47 +99,9 @@ export class PM_Pure extends PM {
         globalThis["customclose"](this.testResourceConfiguration.fs, this.testResourceConfiguration.name);
     }
     testArtiFactoryfileWriter(tLog, callback) {
-        // return (fPath, value: string | Buffer | PassThrough) => {
-        //   callback(
-        //     new Promise<void>((res) => {
-        //       tLog("testArtiFactory =>", fPath);
-        //       const cleanPath = path.resolve(fPath);
-        //       fPaths.push(cleanPath.replace(process.cwd(), ``));
-        //       const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-        //       fs.mkdir(targetDir, { recursive: true }, async (error) => {
-        //         if (error) {
-        //           console.error(`❗️testArtiFactory failed`, targetDir, error);
-        //         }
-        //         fs.writeFileSync(
-        //           path.resolve(
-        //             targetDir.split("/").slice(0, -1).join("/"),
-        //             "manifest"
-        //           ),
-        //           fPaths.join(`\n`),
-        //           {
-        //             encoding: "utf-8",
-        //           }
-        //         );
-        //         if (Buffer.isBuffer(value)) {
-        //           fs.writeFileSync(fPath, value, "binary");
-        //           res();
-        //         } else if (`string` === typeof value) {
-        //           fs.writeFileSync(fPath, value.toString(), {
-        //             encoding: "utf-8",
-        //           });
-        //           res();
-        //         } else {
-        //           const pipeStream: PassThrough = value;
-        //           const myFile = fs.createWriteStream(fPath);
-        //           pipeStream.pipe(myFile);
-        //           pipeStream.on("close", () => {
-        //             myFile.close();
-        //             res();
-        //           });
-        //         }
-        //       });
-        //     })
-        //   );
-        // };
+        return (fPath, value) => {
+            this.trackCall("testArtiFactoryfileWriter", { fPath, value });
+            callback(Promise.resolve());
+        };
     }
 }

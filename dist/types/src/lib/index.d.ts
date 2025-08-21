@@ -29,7 +29,7 @@ export type ILogWriter = {
     createWriteStream: (line: string) => any | any;
     writeFileSync: (fp: string, contents: string) => any;
     mkdirSync: () => any;
-    testArtiFactoryfileWriter: (tLog: ITLog, n: (Promise: any) => void) => (fPath: string, value: unknown) => void;
+    testArtiFactoryfileWriter: (tLog: ITLog, n: (promise: Promise<any>) => void) => (fPath: string, value: unknown) => void;
 };
 export type ITestArtificer = (key: string, data: any) => void;
 type ITest = {

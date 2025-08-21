@@ -17,8 +17,8 @@ export const specification: ITestSpecification<I, O> = (
         ],
         [],
         [
-          Then.hasModalHeader(),
-          Then.hasThemeCards(),
+          Then.hasModalHeader(undefined),
+          Then.hasThemeCards(undefined),
           Then.takeScreenshot("modal-content.png"),
         ]
       ),

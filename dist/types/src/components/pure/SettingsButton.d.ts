@@ -1,3 +1,2 @@
-export declare const SettingsButton: ({ className }: {
-    className?: string;
-}) => JSX.Element;
+import React from 'react';
+export declare const SettingsButton: React.FC;

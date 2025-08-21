@@ -34,7 +34,7 @@ export abstract class BaseBuilder<
 > {
   specs: any;
 
-  assertThis: (t: I["then"]) => {};
+  assertThis: (t: I["then"]) => any;
 
   testResourceRequirement: ITTestResourceRequest;
   artifacts: Promise<unknown>[] = [];
@@ -111,7 +111,6 @@ export abstract class BaseBuilder<
         receiveTestResourceConfig: async function (
           puppetMaster: IPM
         ): Promise<IFinalResults> {
-          // deprecated?
           const tLog = async (...l: string[]) => {
             //
           };
@@ -119,10 +118,11 @@ export abstract class BaseBuilder<
           try {
             const suiteDone: BaseSuite<I, O> = await runner(puppetMaster, tLog);
             const fails = suiteDone.fails;
-            await puppetMaster.writeFileSync([
+            await puppetMaster.writeFileSync(
               `tests.json`,
               JSON.stringify(this.toObj(), null, 2),
-            ]);
+              "test"
+            );
 
             return {
               failed: fails > 0,
@@ -139,11 +139,6 @@ export abstract class BaseBuilder<
               features: [],
             };
           }
-
-          // const logPromise = new Promise(async (res) => {
-          //   await puppetMaster.end(access);
-          //   res(true);
-          // });
         },
       };
     });

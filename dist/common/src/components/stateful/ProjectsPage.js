@@ -45,19 +45,45 @@ const ProjectsPage = () => {
     const [error, setError] = (0, react_1.useState)(null);
     const [configs, setConfigs] = (0, react_1.useState)({});
     const navigate = (0, react_router_dom_1.useNavigate)();
+    const [ws, setWs] = (0, react_1.useState)(null);
+    (0, react_1.useEffect)(() => {
+        // Connect to WebSocket on the same host and port as the HTTP server
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}`;
+        const websocket = new WebSocket(wsUrl);
+        setWs(websocket);
+        websocket.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                if (data.type === 'summaryUpdate') {
+                    // Update summaries when we receive updates
+                    setSummaries(prev => (Object.assign(Object.assign({}, prev), data.data)));
+                }
+            }
+            catch (error) {
+                console.error('Error parsing WebSocket message:', error);
+            }
+        };
+        websocket.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
+        return () => {
+            websocket.close();
+        };
+    }, []);
     (0, react_1.useEffect)(() => {
         const fetchProjects = async () => {
             try {
-                const projectsRes = await fetch(`projects.json`);
+                const projectsRes = await fetch(`/projects.json`);
                 const projectNames = await projectsRes.json();
                 const projectsData = await Promise.all(projectNames.map(async (name) => {
                     var _a, _b, _c, _d, _e, _f;
                     const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                        fetch(`reports/${name}/summary.json`),
-                        fetch(`metafiles/node/${name}.json`),
-                        fetch(`metafiles/web/${name}.json`),
-                        fetch(`metafiles/pure/${name}.json`),
-                        fetch(`reports/${name}/config.json`),
+                        fetch(`/reports/${name}/summary.json`),
+                        fetch(`/metafiles/node/${name}.json`),
+                        fetch(`/metafiles/web/${name}.json`),
+                        fetch(`/metafiles/pure/${name}.json`),
+                        fetch(`/reports/${name}/config.json`),
                     ]);
                     const [summary, nodeData, webData, pureData, configData] = await Promise.all([
                         summaryRes.json(),

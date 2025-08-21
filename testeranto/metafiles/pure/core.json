@@ -19,36 +19,6 @@
     {
       "id": "",
       "location": {
-        "column": 7,
-        "file": "src/Pure.ts",
-        "length": 16,
-        "line": 13,
-        "lineText": "} from \"./lib/index.js\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 24,
-        "file": "src/Pure.ts",
-        "length": 14,
-        "line": 15,
-        "lineText": "import { PM_Pure } from \"./PM/pure.js\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
         "column": 23,
         "file": "src/lib/BaseSuite.test/pure.test.ts",
         "length": 12,
@@ -230,7 +200,7 @@
   "metafile": {
     "inputs": {
       "src/lib/index.ts": {
-        "bytes": 3609,
+        "bytes": 3739,
         "imports": [
           {
             "path": "../CoreTypes",
@@ -276,7 +246,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 7276,
+        "bytes": 8407,
         "imports": [
           {
             "path": "./types",
@@ -287,7 +257,7 @@
         "format": "esm"
       },
       "src/lib/abstractBase.ts": {
-        "bytes": 7855,
+        "bytes": 8832,
         "imports": [
           {
             "path": ".",
@@ -308,7 +278,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 5120,
+        "bytes": 4963,
         "imports": [
           {
             "path": "stream",
@@ -339,7 +309,7 @@
         "format": "esm"
       },
       "src/lib/classBuilder.ts": {
-        "bytes": 3102,
+        "bytes": 3021,
         "imports": [
           {
             "path": "type-fest",
@@ -365,7 +335,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 3818,
+        "bytes": 4006,
         "imports": [
           {
             "path": ".",
@@ -396,7 +366,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 3601,
+        "bytes": 3302,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -427,7 +397,7 @@
         "format": "esm"
       },
       "src/PM/index.ts": {
-        "bytes": 1837,
+        "bytes": 1856,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -448,7 +418,7 @@
         "format": "esm"
       },
       "src/PM/pure.ts": {
-        "bytes": 5589,
+        "bytes": 4140,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -500,7 +470,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 2797,
+        "bytes": 2307,
         "imports": [
           {
             "path": "src/lib/abstractBase.ts",
@@ -526,7 +496,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 11841,
+        "bytes": 12087,
         "imports": [
           {
             "path": "..",
@@ -578,7 +548,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.test/mockPMBase.ts": {
-        "bytes": 4363,
+        "bytes": 4372,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -599,7 +569,7 @@
         "format": "esm"
       },
       "src/Pure.test.ts": {
-        "bytes": 11153,
+        "bytes": 10227,
         "imports": [
           {
             "path": "./CoreTypes",
@@ -667,7 +637,7 @@
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 4100,
+        "bytes": 4281,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -693,12 +663,17 @@
             "path": "src/lib/basebuilder.ts",
             "kind": "import-statement",
             "original": "../basebuilder"
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
           }
         ],
         "format": "esm"
       },
       "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-        "bytes": 720,
+        "bytes": 917,
         "imports": [
           {
             "path": "../../CoreTypes",
@@ -707,6 +682,16 @@
           },
           {
             "path": "./baseBuilder.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../types",
             "kind": "import-statement",
             "external": true
           }
@@ -754,7 +739,7 @@
       "testeranto/bundles/pure/core/src/lib/BaseSuite.test/pure.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/core/chunk-KHJ35R7C.mjs",
+            "path": "testeranto/bundles/pure/core/chunk-62UVCSQC.mjs",
             "kind": "import-statement"
           }
         ],
@@ -764,21 +749,21 @@
         "entryPoint": "src/lib/BaseSuite.test/pure.test.ts",
         "inputs": {
           "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 1964
+            "bytesInOutput": 1424
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 7907
+            "bytesInOutput": 7643
           },
           "src/lib/BaseSuite.test/pure.test.ts": {
             "bytesInOutput": 103
           }
         },
-        "bytes": 10326
+        "bytes": 9522
       },
       "testeranto/bundles/pure/core/src/Pure.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/core/chunk-KHJ35R7C.mjs",
+            "path": "testeranto/bundles/pure/core/chunk-62UVCSQC.mjs",
             "kind": "import-statement"
           }
         ],
@@ -791,15 +776,15 @@
             "bytesInOutput": 3221
           },
           "src/Pure.test.ts": {
-            "bytesInOutput": 8538
+            "bytesInOutput": 8006
           }
         },
-        "bytes": 12005
+        "bytes": 11473
       },
       "testeranto/bundles/pure/core/src/lib/baseBuilder.test/baseBuilder.test.pure.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/core/chunk-KHJ35R7C.mjs",
+            "path": "testeranto/bundles/pure/core/chunk-62UVCSQC.mjs",
             "kind": "import-statement"
           }
         ],
@@ -815,18 +800,18 @@
             "bytesInOutput": 1133
           },
           "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3346
+            "bytesInOutput": 3427
           },
           "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 484
+            "bytesInOutput": 600
           },
           "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
             "bytesInOutput": 131
           }
         },
-        "bytes": 6437
+        "bytes": 6634
       },
-      "testeranto/bundles/pure/core/chunk-KHJ35R7C.mjs": {
+      "testeranto/bundles/pure/core/chunk-62UVCSQC.mjs": {
         "imports": [],
         "exports": [
           "BaseBuilder",
@@ -838,37 +823,37 @@
         ],
         "inputs": {
           "src/lib/pmProxy.ts": {
-            "bytesInOutput": 5594
+            "bytesInOutput": 6463
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2369
+            "bytesInOutput": 2449
           },
           "src/lib/index.ts": {
-            "bytesInOutput": 656
+            "bytesInOutput": 672
           },
           "src/lib/abstractBase.ts": {
-            "bytesInOutput": 5022
+            "bytesInOutput": 5547
           },
           "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2659
+            "bytesInOutput": 2679
           },
           "src/lib/classBuilder.ts": {
-            "bytesInOutput": 1850
+            "bytesInOutput": 1804
           },
           "src/lib/core.ts": {
-            "bytesInOutput": 1827
+            "bytesInOutput": 1640
           },
           "src/PM/index.ts": {
             "bytesInOutput": 20
           },
           "src/PM/pure.ts": {
-            "bytesInOutput": 2755
+            "bytesInOutput": 2976
           },
           "src/Pure.ts": {
             "bytesInOutput": 1067
           }
         },
-        "bytes": 24226
+        "bytes": 25724
       }
     }
   }

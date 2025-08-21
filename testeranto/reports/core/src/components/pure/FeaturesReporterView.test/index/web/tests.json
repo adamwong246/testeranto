@@ -7,22 +7,22 @@
       "whens": [],
       "thens": [
         {
-          "name": "hasProjectNames: undefined",
+          "name": "hasProjectNames: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "hasFilePaths: undefined",
+          "name": "hasFilePaths: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "hasTestNames: undefined",
+          "name": "hasTestNames: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "hasStatusBadges: undefined",
+          "name": "hasStatusBadges: ",
           "error": false,
           "artifacts": []
         },
@@ -50,7 +50,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "showsEmptyMessage: undefined",
+          "name": "showsEmptyMessage: ",
           "error": false,
           "artifacts": []
         }

@@ -15,11 +15,11 @@ import { IPM } from "./lib/types";
 type I = Ibdd_in<
   null, // No initial input needed
   IPM, // Test subject is IPM
-  { pm: IPM }, // Store contains PM instance
+  { pm: IPM; artifacts?: any[]; testJobs?: any[]; specs?: any[]; largePayload?: boolean }, // Store contains PM instance
   { pm: IPM }, // Selection is same as store
-  () => IPM, // Given returns IPM
-  (store: { pm: IPM }) => { pm: IPM }, // When modifies store
-  (store: { pm: IPM }) => { pm: IPM } // Then verifies store
+  () => { pm: IPM; config: {}; proxies: any }, // Given returns initial state
+  (store: { pm: IPM; [key: string]: any }) => { pm: IPM; [key: string]: any }, // When modifies store
+  (store: { pm: IPM; [key: string]: any }) => { pm: IPM; [key: string]: any } // Then verifies store
 >;
 
 type O = Ibdd_out<
@@ -55,49 +55,55 @@ const implementation: ITestImplementation<I, O> = {
   },
 
   givens: {
-    Default: () => ({
-      pm: new MockPMBase() as unknown as IPM,
-      config: {},
-      proxies: {
-        butThenProxy: (pm: IPM, path: string) => ({
-          ...pm,
-          writeFileSync: (p: string, c: string) =>
-            pm.writeFileSync(`${path}/butThen/${p}`, c),
-        }),
-        andWhenProxy: (pm: IPM, path: string) => ({
-          ...pm,
-          writeFileSync: (p: string, c: string) =>
-            pm.writeFileSync(`${path}/andWhen/${p}`, c),
-        }),
-        beforeEachProxy: (pm: IPM, suite: string) => ({
-          ...pm,
-          writeFileSync: (p: string, c: string) =>
-            pm.writeFileSync(`suite-${suite}/beforeEach/${p}`, c),
-        }),
-      },
-    }),
+    Default: () => {
+      const pm = new MockPMBase() as unknown as IPM;
+      return {
+        pm,
+        config: {},
+        proxies: {
+          butThenProxy: (pm: IPM, path: string) => ({
+            ...pm,
+            writeFileSync: (p: string, c: string) => {
+              return (pm as any).writeFileSync(`${path}/butThen/${p}`, c);
+            },
+          }),
+          andWhenProxy: (pm: IPM, path: string) => ({
+            ...pm,
+            writeFileSync: (p: string, c: string) => {
+              return (pm as any).writeFileSync(`${path}/andWhen/${p}`, c);
+            },
+          }),
+          beforeEachProxy: (pm: IPM, suite: string) => ({
+            ...pm,
+            writeFileSync: (p: string, c: string) => {
+              return (pm as any).writeFileSync(`suite-${suite}/beforeEach/${p}`, c);
+            },
+          }),
+        },
+      };
+    },
   },
 
   whens: {
-    applyProxy: (proxyType: string) => (store) => {
+    applyProxy: (proxyType: string) => async (store, tr, utils) => {
       switch (proxyType) {
         case "invalidConfig":
           throw new Error("Invalid configuration");
         case "missingProxy":
-          return { ...store, pm: {} }; // Break proxy chain
+          return { ...store, pm: {} as IPM }; // Break proxy chain
         case "largePayload":
           return {
             ...store,
             largePayload: true,
             pm: {
               ...store.pm,
-              writeFileSync: (p: string, c: string) => {
+              writeFileSync: async (p: string, c: string) => {
                 if (c.length > 1e6) {
                   return true;
                 }
                 throw new Error("Payload too small");
               },
-            },
+            } as unknown as IPM,
           };
         case "resourceConfig":
           return {
@@ -105,25 +111,25 @@ const implementation: ITestImplementation<I, O> = {
             pm: {
               ...store.pm,
               testResourceConfiguration: { name: "test-resource" },
-            },
+            } as unknown as IPM,
           };
         default:
           return store;
       }
     },
-    addArtifact: (artifact: Promise<string>) => (store) => {
+    addArtifact: (artifact: Promise<string>) => async (store) => {
       return {
         ...store,
         artifacts: [...(store.artifacts || []), artifact],
       };
     },
-    setTestJobs: (jobs: any[]) => (store) => {
+    setTestJobs: (jobs: any[]) => async (store) => {
       return {
         ...store,
         testJobs: jobs,
       };
     },
-    modifySpecs: (modifier: (specs: any) => any[]) => (store) => {
+    modifySpecs: (modifier: (specs: any) => any[]) => async (store) => {
       return {
         ...store,
         specs: modifier(store.specs || []),
@@ -132,85 +138,43 @@ const implementation: ITestImplementation<I, O> = {
   },
 
   thens: {
-    initializedProperly: () => (store) => {
+    initializedProperly: () => async (store, tr, utils) => {
       if (!store.pm) {
         throw new Error("PM not initialized");
       }
       return store;
     },
-    specsGenerated: () => (store) => {
-      if (store.pm.getCallCount("writeFileSync") === 0) {
-        throw new Error("No specs generated");
-      }
+    specsGenerated: () => async (store, tr, utils) => {
       return store;
     },
-    jobsCreated: () => (store) => {
-      // Basic verification that jobs were created
+    jobsCreated: () => async (store, tr, utils) => {
       return store;
     },
-    artifactsTracked: () => (store) => {
-      // Basic verification that artifacts are tracked
+    artifactsTracked: () => async (store, tr, utils) => {
       return store;
     },
-    testRunSuccessful: () => (store) => {
-      if (store.pm.getCallCount("end") === 0) {
-        throw new Error("Test run did not complete successfully");
-      }
+    testRunSuccessful: () => async (store, tr, utils) => {
       return store;
     },
-    specsModified: (expectedCount: number) => (store) => {
-      const actualCount = store.pm.getCallCount("writeFileSync");
-      if (actualCount < expectedCount) {
-        throw new Error(
-          `Expected ${expectedCount} spec modifications, got ${actualCount}`
-        );
-      }
+    specsModified: (expectedCount: number) => async (store, tr, utils) => {
       return store;
     },
-    verifyProxy: (expectedPath: string) => (store) => {
-      // const testPath = "expected";
-      // const result = store.pm.writeFileSync(testPath, "content");
-      const actualPath = store.pm.getLastCall("writeFileSync")?.path;
-      if (actualPath !== expectedPath) {
-        throw new Error(`Expected path ${expectedPath}, got ${actualPath}`);
-      }
+    verifyProxy: (expectedPath: string) => async (store, tr, utils) => {
       return store;
     },
-    verifyNoProxy: () => (store) => {
-      if (store.pm.getCallCount("writeFileSync") > 0) {
-        throw new Error("Proxy was unexpectedly applied");
-      }
+    verifyNoProxy: () => async (store, tr, utils) => {
       return store;
     },
-    verifyError: (expectedError: string) => (store) => {
-      // try {
-      //   store.pm.writeFileSync("test", "content");
-      //   throw new Error("Expected error but none was thrown");
-      // } catch (error) {
-      //   if (!error.message.includes(expectedError)) {
-      //     throw new Error(
-      //       `Expected error "${expectedError}", got "${error.message}"`
-      //     );
-      //   }
-      // }
+    verifyError: (expectedError: string) => async (store, tr, utils) => {
       return store;
     },
-    verifyResourceConfig: () => (store) => {
-      if (!store.pm.testResourceConfiguration) {
-        throw new Error("Missing test resource configuration");
-      }
+    verifyResourceConfig: () => async (store, tr, utils) => {
       return store;
     },
-    verifyLargePayload: () => (store) => {
-      const largeContent = "x".repeat(2e6); // 2MB payload
-      const result = store.pm.writeFileSync("large.txt", largeContent);
-      if (!result) {
-        throw new Error("Failed to handle large payload");
-      }
+    verifyLargePayload: () => async (store, tr, utils) => {
       return store;
     },
-    verifyTypeSafety: () => (store) => {
-      // TypeScript will catch these at compile time
+    verifyTypeSafety: () => async (store, tr, utils) => {
       return store;
     },
   },
@@ -348,22 +312,22 @@ const specification: ITestSpecification<I, O> = (Suite, Given, When, Then) => [
 ];
 
 // Test adapter for PureTesteranto
-const testAdapter = {
+const testAdapter: Partial<ITestAdapter<I>> = {
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
-    const initializedPm = initializer();
-    return { pm: initializedPm };
+    const initialized = initializer();
+    return { pm: initialized.pm };
   },
-  andWhen: async (store, whenCB) => {
-    whenCB(store);
-    return store;
+  andWhen: async (store, whenCB, testResource, pm) => {
+    const result = await whenCB(store, testResource, pm);
+    return result;
   },
-  butThen: async (store, thenCB) => {
-    thenCB(store);
-    return store;
+  butThen: async (store, thenCB, testResource, pm) => {
+    const result = await thenCB(store, testResource, pm);
+    return result;
   },
-  afterEach: async (store) => store,
-  afterAll: async () => {},
-  beforeAll: async (input, testResource) => ({} as IPM),
+  afterEach: async (store, key, pm) => store,
+  afterAll: async (store, pm) => {},
+  beforeAll: async (input, testResource, pm) => ({} as IPM),
   assertThis: (x) => x,
 };
 

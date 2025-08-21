@@ -17,7 +17,7 @@ export declare class MockPMBase implements PM_Base {
     createWriteStream(path: string, testName?: string): Promise<number>;
     screencast(opts: any, testName: string, page?: any): Promise<any>;
     customScreenShot(opts: any, testName: string, pageUid?: any): Promise<any>;
-    testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): any;
+    testArtiFactoryfileWriter(tLog: ITLog, callback: (promise: Promise<any>) => void): any;
     closePage(p: any): any;
     $(selector: string, p: string): Promise<any>;
     click(selector: string, page: any): any;

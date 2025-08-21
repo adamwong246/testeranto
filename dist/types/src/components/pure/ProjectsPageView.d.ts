@@ -25,5 +25,5 @@ type ProjectsPageViewProps = {
     error: string | null;
     navigate: (path: string) => void;
 };
-export declare const ProjectsPageView: ({ projects, summaries, configs, loading, error, navigate }: ProjectsPageViewProps) => JSX.Element;
+export declare const ProjectsPageView: ({ projects, summaries, configs, loading, error, navigate, }: ProjectsPageViewProps) => JSX.Element;
 export {};

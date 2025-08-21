@@ -6,8 +6,8 @@ export const specification = (Suite, Given, When, Then) => {
                 "It should contain a Modal.Header",
                 "It should render the ThemeCard components",
             ], [], [
-                Then.hasModalHeader(),
-                Then.hasThemeCards(),
+                Then.hasModalHeader(undefined),
+                Then.hasThemeCards(undefined),
                 Then.takeScreenshot("modal-content.png"),
             ]),
         }),

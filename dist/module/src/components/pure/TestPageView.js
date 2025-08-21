@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
+import { Toast, ToastContainer } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { STANDARD_LOGS, RUNTIME_SPECIFIC_LOGS } from "../../utils/logFiles";
 import { Container, Row, Col, Nav, Button, Modal } from "react-bootstrap";
 import { Editor } from "@monaco-editor/react";
@@ -11,35 +13,56 @@ const FileTree = ({ data, onSelect, level = 0, selectedSourcePath }) => {
     const toggleExpand = (path) => {
         setExpanded((prev) => (Object.assign(Object.assign({}, prev), { [path]: !prev[path] })));
     };
-    return (React.createElement("ul", { className: "list-unstyled", style: { paddingLeft: `${level * 16}px` } }, Object.entries(data).map(([name, node]) => {
+    return (React.createElement("div", null, Object.entries(data).map(([name, node]) => {
         const path = Object.keys(expanded).find((k) => k.endsWith(name)) || name;
         const isExpanded = expanded[path];
         if (node.__isFile) {
-            return (React.createElement("li", { key: name, className: "py-1" },
-                React.createElement("button", { className: `btn btn-link text-start p-0 text-decoration-none ${selectedSourcePath === path ? "text-primary fw-bold" : ""}`, onClick: () => onSelect(path, node.content) },
-                    React.createElement("i", { className: `bi bi-file-earmark-text me-2 ${selectedSourcePath === path ? "text-primary" : ""}` }),
-                    name)));
+            return (React.createElement(FileTreeItem, { key: name, name: name, isFile: true, level: level, isSelected: selectedSourcePath === path, onClick: () => onSelect(path, node.content) }));
         }
         else {
-            return (React.createElement("li", { key: name, className: "py-1" },
-                React.createElement("div", { className: "d-flex align-items-center" },
-                    React.createElement("button", { className: "btn btn-link text-start p-0 text-decoration-none me-1", onClick: () => toggleExpand(path) },
-                        React.createElement("i", { className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-2` }),
-                        name)),
-                isExpanded && (React.createElement(FileTree, { data: node, onSelect: onSelect, level: level + 1 }))));
+            return (React.createElement("div", { key: name },
+                React.createElement("div", { className: "d-flex align-items-center py-1 text-dark", style: {
+                        paddingLeft: `${level * 16}px`,
+                        cursor: 'pointer',
+                        fontSize: '0.875rem'
+                    }, onClick: () => toggleExpand(path) },
+                    React.createElement("i", { className: `bi ${isExpanded ? 'bi-folder2-open' : 'bi-folder'} me-1` }),
+                    React.createElement("span", null, name)),
+                isExpanded && (React.createElement(FileTree, { data: node, onSelect: onSelect, level: level + 1, selectedSourcePath: selectedSourcePath }))));
         }
     })));
 };
 export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsExist, errorCounts, logs, }) => {
+    const navigate = useNavigate();
     const [showAiderModal, setShowAiderModal] = useState(false);
     const [messageOption, setMessageOption] = useState('default');
     const [customMessage, setCustomMessage] = useState(typeof logs['message.txt'] === 'string' ? logs['message.txt'] : 'make a script that prints hello');
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [toastVariant, setToastVariant] = useState('success');
+    const [ws, setWs] = useState(null);
+    const [expandedSections, setExpandedSections] = useState({
+        standardLogs: true,
+        runtimeLogs: true,
+        sourceFiles: true
+    });
+    const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(false);
     // Update customMessage when logs change
     useEffect(() => {
         if (typeof logs['message.txt'] === 'string' && logs['message.txt'].trim()) {
             setCustomMessage(logs['message.txt']);
         }
     }, [logs]);
+    // Set up WebSocket connection
+    useEffect(() => {
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}`;
+        const websocket = new WebSocket(wsUrl);
+        setWs(websocket);
+        return () => {
+            websocket.close();
+        };
+    }, []);
     const [activeTab, setActiveTab] = React.useState("tests.json");
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectedSourcePath, setSelectedSourcePath] = useState(null);
@@ -146,68 +169,137 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
                     },
                     className: "pe-none d-flex align-items-center gap-2",
                 },
-            ], rightContent: React.createElement(React.Fragment, null,
-                React.createElement(Button, { variant: "info", onClick: () => setShowAiderModal(true), className: "ms-2" }, "\uD83E\uDD16"),
-                React.createElement(Modal, { show: showAiderModal, onHide: () => setShowAiderModal(false), size: "lg", onShow: () => setMessageOption('default') },
-                    React.createElement(Modal.Header, { closeButton: true },
-                        React.createElement(Modal.Title, null, "Aider")),
-                    React.createElement(Modal.Body, null,
-                        React.createElement("div", { className: "mb-3" },
-                            React.createElement("div", { className: "form-check" },
-                                React.createElement("input", { className: "form-check-input", type: "radio", name: "messageOption", id: "defaultMessage", value: "default", checked: messageOption === 'default', onChange: () => setMessageOption('default') }),
-                                React.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")),
-                            React.createElement("div", { className: "form-check" },
-                                React.createElement("input", { className: "form-check-input", type: "radio", name: "messageOption", id: "customMessage", value: "custom", checked: messageOption === 'custom', onChange: () => setMessageOption('custom') }),
-                                React.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")),
-                            messageOption === 'custom' && (React.createElement("div", { className: "mt-2" },
-                                React.createElement("textarea", { className: "form-control", rows: 8, placeholder: "Enter your custom message", value: customMessage, onChange: (e) => setCustomMessage(e.target.value), style: { minHeight: '500px' } }))))),
-                    React.createElement(Modal.Footer, null,
-                        React.createElement(Button, { variant: "primary", onClick: async () => {
-                                try {
-                                    const promptPath = `testeranto/reports/${projectName}/${testName
-                                        .split(".")
-                                        .slice(0, -1)
-                                        .join(".")}/${runtime}/prompt.txt`;
-                                    let command = `aider --load ${promptPath}`;
-                                    if (messageOption === 'default') {
-                                        const messagePath = `testeranto/reports/${projectName}/${testName
-                                            .split(".")
-                                            .slice(0, -1)
-                                            .join(".")}/${runtime}/message.txt`;
-                                        command += ` --message-file ${messagePath}`;
-                                    }
-                                    else {
-                                        command += ` --message "${customMessage}"`;
-                                    }
-                                    await navigator.clipboard.writeText(command);
-                                    setShowAiderModal(false);
-                                }
-                                catch (err) {
-                                    console.error("Copy failed:", err);
-                                }
-                            } }, "Copy Aider Command")))) }),
+            ], rightContent: React.createElement(Button, { variant: "info", onClick: () => setShowAiderModal(true), className: "ms-2", title: "AI Assistant" }, "\uD83E\uDD16") }),
+        React.createElement(Modal, { show: showAiderModal, onHide: () => setShowAiderModal(false), size: "lg", onShow: () => setMessageOption('default') },
+            React.createElement(Modal.Header, { closeButton: true },
+                React.createElement(Modal.Title, null, "Aider")),
+            React.createElement(Modal.Body, null,
+                React.createElement("div", { className: "mb-3" },
+                    React.createElement("div", { className: "form-check" },
+                        React.createElement("input", { className: "form-check-input", type: "radio", name: "messageOption", id: "defaultMessage", value: "default", checked: messageOption === 'default', onChange: () => setMessageOption('default') }),
+                        React.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")),
+                    React.createElement("div", { className: "form-check" },
+                        React.createElement("input", { className: "form-check-input", type: "radio", name: "messageOption", id: "customMessage", value: "custom", checked: messageOption === 'custom', onChange: () => setMessageOption('custom') }),
+                        React.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")),
+                    messageOption === 'custom' && (React.createElement("div", { className: "mt-2" },
+                        React.createElement("textarea", { className: "form-control", rows: 8, placeholder: "Enter your custom message", value: customMessage, onChange: (e) => setCustomMessage(e.target.value), style: { minHeight: '500px' } }))))),
+            React.createElement(Modal.Footer, null,
+                React.createElement(Button, { variant: "primary", onClick: async () => {
+                        try {
+                            const promptPath = `testeranto/reports/${projectName}/${testName
+                                .split(".")
+                                .slice(0, -1)
+                                .join(".")}/${runtime}/prompt.txt`;
+                            let command = `aider --load ${promptPath}`;
+                            if (messageOption === 'default') {
+                                const messagePath = `testeranto/reports/${projectName}/${testName
+                                    .split(".")
+                                    .slice(0, -1)
+                                    .join(".")}/${runtime}/message.txt`;
+                                command += ` --message-file ${messagePath}`;
+                            }
+                            else {
+                                command += ` --message "${customMessage}"`;
+                            }
+                            // Send command to server via WebSocket
+                            const ws = new WebSocket(`ws://${window.location.host}`);
+                            ws.onopen = () => {
+                                ws.send(JSON.stringify({
+                                    type: 'executeCommand',
+                                    command: command
+                                }));
+                                setToastMessage('Command sent to server');
+                                setToastVariant('success');
+                                setShowToast(true);
+                                setShowAiderModal(false);
+                                ws.close();
+                                // Navigate to process manager page
+                                setTimeout(() => {
+                                    navigate('/processes');
+                                }, 1000);
+                            };
+                            ws.onerror = (error) => {
+                                setToastMessage('Failed to connect to server');
+                                setToastVariant('danger');
+                                setShowToast(true);
+                            };
+                        }
+                        catch (err) {
+                            console.error("WebSocket error:", err);
+                            setToastMessage('Error preparing command');
+                            setToastVariant('danger');
+                            setShowToast(true);
+                        }
+                    } }, "Run Aider Command"))),
         React.createElement(Row, { className: "g-0" },
-            React.createElement(Col, { sm: 3, className: "border-end" },
-                React.createElement(Nav, { variant: "pills", className: "flex-column" },
-                    React.createElement("div", { className: "px-3 py-1 small text-muted" }, "Standard Logs"),
-                    Object.entries(logs)
-                        .filter(([logName]) => Object.values(STANDARD_LOGS).includes(logName))
-                        .filter(([, logContent]) => (typeof logContent === "string" && logContent.trim()) ||
-                        (typeof logContent === "object" &&
-                            Object.keys(logContent).length > 0))
-                        .map(([logName, logContent]) => (React.createElement(LogNavItem, { key: logName, logName: logName, logContent: logContent, activeTab: activeTab, setActiveTab: setActiveTab, setSelectedFile: setSelectedFile, errorCounts: errorCounts, decodedTestPath: decodedTestPath, testsExist: testsExist }))),
-                    Object.values(RUNTIME_SPECIFIC_LOGS[runtime])
-                        .length > 0 && (React.createElement(React.Fragment, null,
-                        React.createElement("div", { className: "px-3 py-1 small text-muted" }, "Runtime Logs"),
-                        Object.entries(logs)
-                            .filter(([logName]) => Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).includes(logName))
-                            .filter(([, logContent]) => {
-                            return (typeof logContent === "string" && logContent.trim()) ||
-                                (typeof logContent === "object" && Object.keys(logContent).length > 0);
-                        })
-                            .map(([logName, logContent]) => (React.createElement(LogNavItem, { key: logName, logName: logName, logContent: logContent, activeTab: activeTab, setActiveTab: setActiveTab, setSelectedFile: setSelectedFile, errorCounts: errorCounts, decodedTestPath: decodedTestPath, testsExist: testsExist }))))),
-                    logs.source_files && (React.createElement("div", { className: "mt-2" },
-                        React.createElement("div", { className: "px-3 py-1 small text-muted" }, "Source Files"),
+            React.createElement(Col, { sm: 3, className: "border-end", style: {
+                    height: "calc(100vh - 56px)",
+                    overflow: "auto",
+                    backgroundColor: '#f8f9fa'
+                } },
+                React.createElement("div", { className: "p-2 border-bottom" },
+                    React.createElement("small", { className: "fw-bold text-muted" }, "EXPLORER")),
+                React.createElement("div", { className: "p-2" },
+                    React.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { standardLogs: !prev.standardLogs }))) },
+                        React.createElement("i", { className: `bi bi-chevron-${expandedSections.standardLogs ? 'down' : 'right'} me-1` }),
+                        React.createElement("span", null, "Standard Logs")),
+                    expandedSections.standardLogs && (React.createElement("div", null, Object.values(STANDARD_LOGS).map((logName) => {
+                        const logContent = logs[logName];
+                        const exists = logContent !== undefined &&
+                            ((typeof logContent === "string" && logContent.trim() !== "") ||
+                                (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                        return (React.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 1, isSelected: activeTab === logName, exists: exists, onClick: () => {
+                                if (exists) {
+                                    setActiveTab(logName);
+                                    setSelectedFile({
+                                        path: logName,
+                                        content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                                        language: logName.endsWith(".json") ? "json" : "plaintext",
+                                    });
+                                }
+                                else {
+                                    setActiveTab(logName);
+                                    setSelectedFile({
+                                        path: logName,
+                                        content: `// ${logName} not found or empty\nThis file was not generated during the test run.`,
+                                        language: "plaintext",
+                                    });
+                                }
+                            } }));
+                    })))),
+                Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && (React.createElement("div", { className: "p-2" },
+                    React.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { runtimeLogs: !prev.runtimeLogs }))) },
+                        React.createElement("i", { className: `bi bi-chevron-${expandedSections.runtimeLogs ? 'down' : 'right'} me-1` }),
+                        React.createElement("span", null, "Runtime Logs")),
+                    expandedSections.runtimeLogs && (React.createElement("div", null, Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).map((logName) => {
+                        const logContent = logs[logName];
+                        const exists = logContent !== undefined &&
+                            ((typeof logContent === "string" && logContent.trim() !== "") ||
+                                (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                        return (React.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 1, isSelected: activeTab === logName, exists: exists, onClick: () => {
+                                if (exists) {
+                                    setActiveTab(logName);
+                                    setSelectedFile({
+                                        path: logName,
+                                        content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                                        language: logName.endsWith(".json") ? "json" : "plaintext",
+                                    });
+                                }
+                                else {
+                                    setActiveTab(logName);
+                                    setSelectedFile({
+                                        path: logName,
+                                        content: `// ${logName} not found or empty\nThis file was not generated during the test run.`,
+                                        language: "plaintext",
+                                    });
+                                }
+                            } }));
+                    }))))),
+                logs.source_files && (React.createElement("div", { className: "p-2" },
+                    React.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { sourceFiles: !prev.sourceFiles }))) },
+                        React.createElement("i", { className: `bi bi-chevron-${expandedSections.sourceFiles ? 'down' : 'right'} me-1` }),
+                        React.createElement("span", null, "Source Files")),
+                    expandedSections.sourceFiles && (React.createElement("div", null,
                         React.createElement(FileTree, { data: logs.source_files, onSelect: (path, content) => {
                                 setActiveTab("source_file");
                                 setSelectedSourcePath(path);
@@ -216,35 +308,7 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
                                     content,
                                     language: getLanguage(path),
                                 });
-                            }, level: 0, selectedSourcePath: selectedSourcePath }))),
-                    logs[STANDARD_LOGS.TESTS] && (React.createElement("div", { className: "mt-2" },
-                        React.createElement("div", { className: "px-3 py-1 small text-muted" }, "Artifacts"),
-                        React.createElement(ArtifactTree, { treeData: buildArtifactTree(typeof logs[STANDARD_LOGS.TESTS] === 'string'
-                                ? JSON.parse(logs[STANDARD_LOGS.TESTS])
-                                : logs[STANDARD_LOGS.TESTS]), projectName: projectName, testName: testName, runtime: runtime, onSelect: async (path) => {
-                                setActiveTab("artifact_viewer");
-                                try {
-                                    const response = await fetch(`reports/${projectName}/${testName
-                                        .split('.')
-                                        .slice(0, -1)
-                                        .join('.')}/${runtime}/${path}`);
-                                    const content = await (path.match(/\.(png|jpg|jpeg|gif|svg)$/i)
-                                        ? URL.createObjectURL(await response.blob())
-                                        : await response.text());
-                                    setSelectedFile({
-                                        path,
-                                        content,
-                                        language: getLanguage(path),
-                                    });
-                                }
-                                catch (err) {
-                                    setSelectedFile({
-                                        path,
-                                        content: `Failed to load artifact: ${err}`,
-                                        language: 'plaintext',
-                                    });
-                                }
-                            }, level: 0 }))))),
+                            }, level: 1, selectedSourcePath: selectedSourcePath })))))),
             React.createElement(Col, { sm: 6, className: "border-end p-0", style: { height: "calc(100vh - 56px)", overflow: "hidden" } },
                 React.createElement(Editor, { height: "100%", path: (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path) || "empty", defaultLanguage: (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.language) || "plaintext", value: (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.content) || "// Select a file to view its contents", theme: editorTheme, options: {
                         minimap: { enabled: false },
@@ -253,29 +317,50 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
                         automaticLayout: true,
                         readOnly: !(selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.includes("source_files")),
                     } })),
-            React.createElement(Col, { sm: 3, className: "p-0", style: { height: "calc(100vh - 56px)", overflow: "auto" } },
-                React.createElement("div", { className: "p-3" }, (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith("tests.json"))
-                    ? typeof selectedFile.content === "string"
+            React.createElement(Col, { sm: 3, className: "p-0 border-start", style: { height: "calc(100vh - 56px)", overflow: "auto" } },
+                React.createElement("div", { className: "p-3" },
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith("tests.json")) && (React.createElement("div", { className: "test-results-preview" }, typeof selectedFile.content === "string"
                         ? renderTestResults(JSON.parse(selectedFile.content))
-                        : renderTestResults(selectedFile.content)
-                    : (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.includes("source_files")) ? (React.createElement("div", { className: "d-flex flex-column h-100" },
-                        React.createElement(Button, { variant: "primary", className: "mb-2", onClick: () => {
+                        : renderTestResults(selectedFile.content))),
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.match(/\.(png|jpg|jpeg|gif|svg)$/i)) && (React.createElement("div", { className: "text-center" },
+                        React.createElement("img", { src: selectedFile.content, alt: selectedFile.path, className: "img-fluid", style: { maxHeight: '300px' } }),
+                        React.createElement("div", { className: "mt-2" },
+                            React.createElement("a", { href: selectedFile.content, target: "_blank", rel: "noopener noreferrer", className: "btn btn-sm btn-outline-primary" }, "Open Full Size")))),
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith(".json")) && !selectedFile.path.endsWith("tests.json") && (React.createElement("pre", { className: "bg-light p-2 small" },
+                        React.createElement("code", null, selectedFile.content))),
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.includes("source_files")) && (React.createElement("div", null,
+                        React.createElement("div", { className: "mb-2 small text-muted" },
+                            React.createElement("i", { className: "bi bi-file-earmark-text me-1" }),
+                            selectedFile.path.split('/').pop()),
+                        React.createElement(Button, { variant: "outline-primary", size: "sm", className: "mb-2", onClick: () => {
                                 // TODO: Add save functionality
                                 alert("Save functionality will be implemented here");
-                            } }, "Save Changes"),
-                        React.createElement("div", { className: "flex-grow-1 overflow-auto" }, selectedFile && (React.createElement("pre", { className: "bg-light p-3" },
-                            React.createElement("code", null, selectedFile.content)))))) : activeTab === "artifact_viewer" && selectedFile && (React.createElement("div", { className: "d-flex flex-column h-100" },
-                        React.createElement("div", { className: "mb-3" },
-                            React.createElement("h5", null, selectedFile.path),
-                            React.createElement("a", { href: `reports/${projectName}/${testName
-                                    .split('.')
-                                    .slice(0, -1)
-                                    .join('.')}/${runtime}/${selectedFile.path}`, target: "_blank", rel: "noopener noreferrer", className: "btn btn-primary mb-2" }, "Open Full Artifact")),
-                        React.createElement("div", { className: "flex-grow-1 overflow-auto" }, selectedFile.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) ? (React.createElement("img", { src: `reports/${projectName}/${testName
-                                .split('.')
-                                .slice(0, -1)
-                                .join('.')}/${runtime}/${selectedFile.path}`, alt: selectedFile.path, className: "img-fluid", style: { maxHeight: '100%' } })) : (React.createElement("pre", { className: "bg-light p-3" },
-                            React.createElement("code", null, selectedFile.content)))))))))));
+                            } }, "Save Changes")))))),
+        React.createElement(ToastContainer, { position: "top-end", className: "p-3" },
+            React.createElement(Toast, { show: showToast, onClose: () => setShowToast(false), delay: 3000, autohide: true, bg: toastVariant },
+                React.createElement(Toast.Header, null,
+                    React.createElement("strong", { className: "me-auto" }, "Command Status")),
+                React.createElement(Toast.Body, { className: "text-white" }, toastMessage)))));
+};
+// Simple file tree item component
+const FileTreeItem = ({ name, isFile, level, isSelected, exists = true, onClick }) => {
+    const displayName = name
+        .replace(".json", "")
+        .replace(".txt", "")
+        .replace(".log", "")
+        .replace(/_/g, " ")
+        .replace(/^std/, "Standard ")
+        .replace(/^exit/, "Exit Code")
+        .split('/').pop();
+    return (React.createElement("div", { className: `d-flex align-items-center py-1 ${isSelected ? 'text-primary fw-bold' : exists ? 'text-dark' : 'text-muted'}`, style: {
+            paddingLeft: `${level * 16}px`,
+            cursor: exists ? 'pointer' : 'not-allowed',
+            fontSize: '0.875rem',
+            opacity: exists ? 1 : 0.6
+        }, onClick: exists ? onClick : undefined, title: exists ? undefined : "File not found or empty" },
+        React.createElement("i", { className: `bi ${isFile ? (exists ? 'bi-file-earmark-text' : 'bi-file-earmark') : 'bi-folder'} me-1` }),
+        React.createElement("span", null, displayName),
+        !exists && (React.createElement("i", { className: "bi bi-question-circle ms-1", title: "File not found or empty" }))));
 };
 const ArtifactTree = ({ treeData, projectName, testName, runtime, onSelect, level = 0, basePath = '' }) => {
     const [expanded, setExpanded] = useState({});

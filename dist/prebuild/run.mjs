@@ -13,6 +13,10 @@ import path4 from "path";
 import puppeteer from "puppeteer-core";
 import ansiC2 from "ansi-colors";
 import crypto from "node:crypto";
+import { WebSocketServer } from "ws";
+import http from "http";
+import url from "url";
+import mime from "mime-types";
 
 // src/utils.ts
 import path from "path";
@@ -163,10 +167,10 @@ var PM_Base = class {
   async newPage() {
     return (await this.browser.newPage()).mainFrame()._id;
   }
-  goto(p, url) {
+  goto(p, url2) {
     return new Promise((res) => {
       this.doInPage(p, async (page) => {
-        await page?.goto(url);
+        await page?.goto(url2);
         res({});
       });
     });
@@ -681,10 +685,13 @@ var PM_WithEslintAndTsc = class extends PM_Base {
       this.checkForShutdown();
     };
     this.writeBigBoard = () => {
-      fs3.writeFileSync(
-        `./testeranto/reports/${this.name}/summary.json`,
-        JSON.stringify(this.summary, null, 2)
-      );
+      const summaryPath = `./testeranto/reports/${this.name}/summary.json`;
+      const summaryData = JSON.stringify(this.summary, null, 2);
+      fs3.writeFileSync(summaryPath, summaryData);
+      this.broadcast({
+        type: "summaryUpdate",
+        data: this.summary
+      });
     };
     this.name = name;
     this.mode = mode2;
@@ -860,6 +867,10 @@ var PM_Main = class extends PM_WithEslintAndTsc {
     super(configs, name, mode2);
     this.logStreams = {};
     this.sidecars = {};
+    this.clients = /* @__PURE__ */ new Set();
+    this.runningProcesses = /* @__PURE__ */ new Map();
+    this.allProcesses = /* @__PURE__ */ new Map();
+    this.processLogs = /* @__PURE__ */ new Map();
     this.getRunnables = (tests, testName, payload = {
       nodeEntryPoints: {},
       nodeEntryPointSidecars: {},
@@ -1526,9 +1537,19 @@ import('${d}').then(async (x) => {
         "strings",
         srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
       );
-      const testReport = JSON.parse(
-        fs4.readFileSync(`${reportDest}/tests.json`).toString()
-      );
+      const testReportPath = `${reportDest}/tests.json`;
+      if (!fs4.existsSync(testReportPath)) {
+        console.error(`tests.json not found at: ${testReportPath}`);
+        return;
+      }
+      const testReport = JSON.parse(fs4.readFileSync(testReportPath, "utf8"));
+      if (testReport.tests) {
+        testReport.tests.forEach((test) => {
+          test.fullPath = path4.resolve(process.cwd(), srcTest);
+        });
+      }
+      testReport.fullPath = path4.resolve(process.cwd(), srcTest);
+      fs4.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
       testReport.features.reduce(async (mm, featureStringKey) => {
         const accum = await mm;
         const isUrl = isValidUrl(featureStringKey);
@@ -1630,6 +1651,185 @@ import('${d}').then(async (x) => {
     this.pureSidecars = {};
     this.configs.ports.forEach((element) => {
       this.ports[element] = "";
+    });
+    this.httpServer = http.createServer(this.requestHandler.bind(this));
+    this.wss = new WebSocketServer({ server: this.httpServer });
+    this.wss.on("connection", (ws) => {
+      this.clients.add(ws);
+      console.log("Client connected");
+      ws.on("message", (data) => {
+        try {
+          const message = JSON.parse(data.toString());
+          if (message.type === "executeCommand") {
+            if (message.command && message.command.trim().startsWith("aider")) {
+              console.log(`Executing command: ${message.command}`);
+              const processId = Date.now().toString();
+              const child = spawn(message.command, {
+                shell: true,
+                cwd: process.cwd()
+              });
+              this.runningProcesses.set(processId, child);
+              this.allProcesses.set(processId, {
+                child,
+                status: "running",
+                command: message.command,
+                pid: child.pid,
+                timestamp: (/* @__PURE__ */ new Date()).toISOString()
+              });
+              this.processLogs.set(processId, []);
+              this.broadcast({
+                type: "processStarted",
+                processId,
+                command: message.command,
+                timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                logs: []
+              });
+              child.stdout?.on("data", (data2) => {
+                const logData = data2.toString();
+                const logs = this.processLogs.get(processId) || [];
+                logs.push(logData);
+                this.processLogs.set(processId, logs);
+                this.broadcast({
+                  type: "processStdout",
+                  processId,
+                  data: logData,
+                  timestamp: (/* @__PURE__ */ new Date()).toISOString()
+                });
+              });
+              child.stderr?.on("data", (data2) => {
+                const logData = data2.toString();
+                const logs = this.processLogs.get(processId) || [];
+                logs.push(logData);
+                this.processLogs.set(processId, logs);
+                this.broadcast({
+                  type: "processStderr",
+                  processId,
+                  data: logData,
+                  timestamp: (/* @__PURE__ */ new Date()).toISOString()
+                });
+              });
+              child.on("error", (error) => {
+                console.error(`Failed to execute command: ${error}`);
+                this.runningProcesses.delete(processId);
+                const processInfo = this.allProcesses.get(processId);
+                if (processInfo) {
+                  this.allProcesses.set(processId, {
+                    ...processInfo,
+                    status: "error",
+                    error: error.message
+                  });
+                }
+                this.broadcast({
+                  type: "processError",
+                  processId,
+                  error: error.message,
+                  timestamp: (/* @__PURE__ */ new Date()).toISOString()
+                });
+              });
+              child.on("exit", (code) => {
+                console.log(`Command exited with code ${code}`);
+                this.runningProcesses.delete(processId);
+                const processInfo = this.allProcesses.get(processId);
+                if (processInfo) {
+                  this.allProcesses.set(processId, {
+                    ...processInfo,
+                    status: "exited",
+                    exitCode: code
+                  });
+                }
+                this.broadcast({
+                  type: "processExited",
+                  processId,
+                  exitCode: code,
+                  timestamp: (/* @__PURE__ */ new Date()).toISOString()
+                });
+              });
+            } else {
+              console.error('Invalid command: must start with "aider"');
+            }
+          } else if (message.type === "getRunningProcesses") {
+            const processes = Array.from(this.allProcesses.entries()).map(
+              ([id, procInfo]) => ({
+                processId: id,
+                command: procInfo.command,
+                pid: procInfo.pid,
+                status: procInfo.status,
+                exitCode: procInfo.exitCode,
+                error: procInfo.error,
+                timestamp: procInfo.timestamp,
+                logs: this.processLogs.get(id) || []
+              })
+            );
+            ws.send(
+              JSON.stringify({
+                type: "runningProcesses",
+                processes
+              })
+            );
+          } else if (message.type === "getProcess") {
+            const processId = message.processId;
+            const procInfo = this.allProcesses.get(processId);
+            if (procInfo) {
+              ws.send(
+                JSON.stringify({
+                  type: "processData",
+                  processId,
+                  command: procInfo.command,
+                  pid: procInfo.pid,
+                  status: procInfo.status,
+                  exitCode: procInfo.exitCode,
+                  error: procInfo.error,
+                  timestamp: procInfo.timestamp,
+                  logs: this.processLogs.get(processId) || []
+                })
+              );
+            }
+          } else if (message.type === "stdin") {
+            const processId = message.processId;
+            const data2 = message.data;
+            console.log("Received stdin for process", processId, ":", data2);
+            const childProcess = this.runningProcesses.get(processId);
+            if (childProcess && childProcess.stdin) {
+              console.log("Writing to process stdin");
+              childProcess.stdin.write(data2);
+            } else {
+              console.log(
+                "Cannot write to stdin - process not found or no stdin:",
+                {
+                  processExists: !!childProcess,
+                  stdinExists: childProcess?.stdin ? true : false
+                }
+              );
+            }
+          } else if (message.type === "killProcess") {
+            const processId = message.processId;
+            console.log("Received killProcess for process", processId);
+            const childProcess = this.runningProcesses.get(processId);
+            if (childProcess) {
+              console.log("Killing process");
+              childProcess.kill("SIGTERM");
+            } else {
+              console.log("Cannot kill process - process not found:", {
+                processExists: !!childProcess
+              });
+            }
+          }
+        } catch (error) {
+          console.error("Error handling WebSocket message:", error);
+        }
+      });
+      ws.on("close", () => {
+        this.clients.delete(ws);
+        console.log("Client disconnected");
+      });
+      ws.on("error", (error) => {
+        console.error("WebSocket error:", error);
+        this.clients.delete(ws);
+      });
+    });
+    const httpPort = Number(process.env.HTTP_PORT) || 3e3;
+    this.httpServer.listen(httpPort, () => {
+      console.log(`HTTP server running on http://localhost:${httpPort}`);
     });
   }
   async stopSideCar(uid) {
@@ -1860,6 +2060,16 @@ import('${d}').then(async (x) => {
     this.webMetafileWatcher.close();
     this.importMetafileWatcher.close();
     Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
+    this.wss.close(() => {
+      console.log("WebSocket server closed");
+    });
+    this.clients.forEach((client) => {
+      client.terminate();
+    });
+    this.clients.clear();
+    this.httpServer.close(() => {
+      console.log("HTTP server closed");
+    });
     this.checkForShutdown();
   }
   async metafileOutputs(platform) {
@@ -1901,6 +2111,121 @@ import('${d}').then(async (x) => {
           this.eslintCheck(entrypoint, platform, addableFiles);
           this.makePrompt(entrypoint, addableFiles, platform);
         }
+      }
+    });
+  }
+  requestHandler(req, res) {
+    const parsedUrl = url.parse(req.url || "/");
+    let pathname = parsedUrl.pathname || "/";
+    if (pathname === "/") {
+      pathname = "/index.html";
+    }
+    let filePath = pathname.substring(1);
+    if (filePath.startsWith("reports/")) {
+      filePath = `testeranto/${filePath}`;
+    } else if (filePath.startsWith("metafiles/")) {
+      filePath = `testeranto/${filePath}`;
+    } else if (filePath === "projects.json") {
+      filePath = `testeranto/${filePath}`;
+    } else {
+      const possiblePaths = [
+        `dist/${filePath}`,
+        `testeranto/dist/${filePath}`,
+        `../dist/${filePath}`,
+        `./${filePath}`
+      ];
+      let foundPath = null;
+      for (const possiblePath of possiblePaths) {
+        if (fs4.existsSync(possiblePath)) {
+          foundPath = possiblePath;
+          break;
+        }
+      }
+      if (foundPath) {
+        filePath = foundPath;
+      } else {
+        const indexPath = this.findIndexHtml();
+        if (indexPath) {
+          fs4.readFile(indexPath, (err, data) => {
+            if (err) {
+              res.writeHead(404, { "Content-Type": "text/plain" });
+              res.end("404 Not Found");
+              return;
+            }
+            res.writeHead(200, { "Content-Type": "text/html" });
+            res.end(data);
+          });
+          return;
+        } else {
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          res.end("404 Not Found");
+          return;
+        }
+      }
+    }
+    fs4.exists(filePath, (exists) => {
+      if (!exists) {
+        if (!pathname.includes(".") && pathname !== "/") {
+          const indexPath = this.findIndexHtml();
+          if (indexPath) {
+            fs4.readFile(indexPath, (err, data) => {
+              if (err) {
+                res.writeHead(404, { "Content-Type": "text/plain" });
+                res.end("404 Not Found");
+                return;
+              }
+              res.writeHead(200, { "Content-Type": "text/html" });
+              res.end(data);
+            });
+            return;
+          } else {
+            res.writeHead(200, { "Content-Type": "text/html" });
+            res.end(`
+              <html>
+                <body>
+                  <h1>Testeranto is running</h1>
+                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
+                </body>
+              </html>
+            `);
+            return;
+          }
+        }
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        res.end("404 Not Found");
+        return;
+      }
+      fs4.readFile(filePath, (err, data) => {
+        if (err) {
+          res.writeHead(500, { "Content-Type": "text/plain" });
+          res.end("500 Internal Server Error");
+          return;
+        }
+        const mimeType = mime.lookup(filePath) || "application/octet-stream";
+        res.writeHead(200, { "Content-Type": mimeType });
+        res.end(data);
+      });
+    });
+  }
+  findIndexHtml() {
+    const possiblePaths = [
+      "dist/index.html",
+      "testeranto/dist/index.html",
+      "../dist/index.html",
+      "./index.html"
+    ];
+    for (const path5 of possiblePaths) {
+      if (fs4.existsSync(path5)) {
+        return path5;
+      }
+    }
+    return null;
+  }
+  broadcast(message) {
+    const data = typeof message === "string" ? message : JSON.stringify(message);
+    this.clients.forEach((client) => {
+      if (client.readyState === 1) {
+        client.send(data);
       }
     });
   }

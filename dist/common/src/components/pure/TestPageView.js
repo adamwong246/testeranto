@@ -37,8 +37,10 @@ exports.TestPageView = void 0;
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const react_1 = __importStar(require("react"));
-const logFiles_1 = require("../../utils/logFiles");
 const react_bootstrap_1 = require("react-bootstrap");
+const react_router_dom_1 = require("react-router-dom");
+const logFiles_1 = require("../../utils/logFiles");
+const react_bootstrap_2 = require("react-bootstrap");
 const react_2 = require("@monaco-editor/react");
 const NavBar_1 = require("./NavBar");
 const TestStatusBadge_1 = require("../TestStatusBadge");
@@ -47,35 +49,56 @@ const FileTree = ({ data, onSelect, level = 0, selectedSourcePath }) => {
     const toggleExpand = (path) => {
         setExpanded((prev) => (Object.assign(Object.assign({}, prev), { [path]: !prev[path] })));
     };
-    return (react_1.default.createElement("ul", { className: "list-unstyled", style: { paddingLeft: `${level * 16}px` } }, Object.entries(data).map(([name, node]) => {
+    return (react_1.default.createElement("div", null, Object.entries(data).map(([name, node]) => {
         const path = Object.keys(expanded).find((k) => k.endsWith(name)) || name;
         const isExpanded = expanded[path];
         if (node.__isFile) {
-            return (react_1.default.createElement("li", { key: name, className: "py-1" },
-                react_1.default.createElement("button", { className: `btn btn-link text-start p-0 text-decoration-none ${selectedSourcePath === path ? "text-primary fw-bold" : ""}`, onClick: () => onSelect(path, node.content) },
-                    react_1.default.createElement("i", { className: `bi bi-file-earmark-text me-2 ${selectedSourcePath === path ? "text-primary" : ""}` }),
-                    name)));
+            return (react_1.default.createElement(FileTreeItem, { key: name, name: name, isFile: true, level: level, isSelected: selectedSourcePath === path, onClick: () => onSelect(path, node.content) }));
         }
         else {
-            return (react_1.default.createElement("li", { key: name, className: "py-1" },
-                react_1.default.createElement("div", { className: "d-flex align-items-center" },
-                    react_1.default.createElement("button", { className: "btn btn-link text-start p-0 text-decoration-none me-1", onClick: () => toggleExpand(path) },
-                        react_1.default.createElement("i", { className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-2` }),
-                        name)),
-                isExpanded && (react_1.default.createElement(FileTree, { data: node, onSelect: onSelect, level: level + 1 }))));
+            return (react_1.default.createElement("div", { key: name },
+                react_1.default.createElement("div", { className: "d-flex align-items-center py-1 text-dark", style: {
+                        paddingLeft: `${level * 16}px`,
+                        cursor: 'pointer',
+                        fontSize: '0.875rem'
+                    }, onClick: () => toggleExpand(path) },
+                    react_1.default.createElement("i", { className: `bi ${isExpanded ? 'bi-folder2-open' : 'bi-folder'} me-1` }),
+                    react_1.default.createElement("span", null, name)),
+                isExpanded && (react_1.default.createElement(FileTree, { data: node, onSelect: onSelect, level: level + 1, selectedSourcePath: selectedSourcePath }))));
         }
     })));
 };
 const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsExist, errorCounts, logs, }) => {
+    const navigate = (0, react_router_dom_1.useNavigate)();
     const [showAiderModal, setShowAiderModal] = (0, react_1.useState)(false);
     const [messageOption, setMessageOption] = (0, react_1.useState)('default');
     const [customMessage, setCustomMessage] = (0, react_1.useState)(typeof logs['message.txt'] === 'string' ? logs['message.txt'] : 'make a script that prints hello');
+    const [showToast, setShowToast] = (0, react_1.useState)(false);
+    const [toastMessage, setToastMessage] = (0, react_1.useState)('');
+    const [toastVariant, setToastVariant] = (0, react_1.useState)('success');
+    const [ws, setWs] = (0, react_1.useState)(null);
+    const [expandedSections, setExpandedSections] = (0, react_1.useState)({
+        standardLogs: true,
+        runtimeLogs: true,
+        sourceFiles: true
+    });
+    const [isNavbarCollapsed, setIsNavbarCollapsed] = (0, react_1.useState)(false);
     // Update customMessage when logs change
     (0, react_1.useEffect)(() => {
         if (typeof logs['message.txt'] === 'string' && logs['message.txt'].trim()) {
             setCustomMessage(logs['message.txt']);
         }
     }, [logs]);
+    // Set up WebSocket connection
+    (0, react_1.useEffect)(() => {
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}`;
+        const websocket = new WebSocket(wsUrl);
+        setWs(websocket);
+        return () => {
+            websocket.close();
+        };
+    }, []);
     const [activeTab, setActiveTab] = react_1.default.useState("tests.json");
     const [selectedFile, setSelectedFile] = (0, react_1.useState)(null);
     const [selectedSourcePath, setSelectedSourcePath] = (0, react_1.useState)(null);
@@ -168,7 +191,7 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
         selectedFile,
         activeTab,
     });
-    return (react_1.default.createElement(react_bootstrap_1.Container, { fluid: true, className: "px-0" },
+    return (react_1.default.createElement(react_bootstrap_2.Container, { fluid: true, className: "px-0" },
         react_1.default.createElement(NavBar_1.NavBar, { title: decodedTestPath, backLink: `/projects/${projectName}`, navItems: [
                 {
                     label: "",
@@ -182,68 +205,137 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
                     },
                     className: "pe-none d-flex align-items-center gap-2",
                 },
-            ], rightContent: react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement(react_bootstrap_1.Button, { variant: "info", onClick: () => setShowAiderModal(true), className: "ms-2" }, "\uD83E\uDD16"),
-                react_1.default.createElement(react_bootstrap_1.Modal, { show: showAiderModal, onHide: () => setShowAiderModal(false), size: "lg", onShow: () => setMessageOption('default') },
-                    react_1.default.createElement(react_bootstrap_1.Modal.Header, { closeButton: true },
-                        react_1.default.createElement(react_bootstrap_1.Modal.Title, null, "Aider")),
-                    react_1.default.createElement(react_bootstrap_1.Modal.Body, null,
-                        react_1.default.createElement("div", { className: "mb-3" },
-                            react_1.default.createElement("div", { className: "form-check" },
-                                react_1.default.createElement("input", { className: "form-check-input", type: "radio", name: "messageOption", id: "defaultMessage", value: "default", checked: messageOption === 'default', onChange: () => setMessageOption('default') }),
-                                react_1.default.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")),
-                            react_1.default.createElement("div", { className: "form-check" },
-                                react_1.default.createElement("input", { className: "form-check-input", type: "radio", name: "messageOption", id: "customMessage", value: "custom", checked: messageOption === 'custom', onChange: () => setMessageOption('custom') }),
-                                react_1.default.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")),
-                            messageOption === 'custom' && (react_1.default.createElement("div", { className: "mt-2" },
-                                react_1.default.createElement("textarea", { className: "form-control", rows: 8, placeholder: "Enter your custom message", value: customMessage, onChange: (e) => setCustomMessage(e.target.value), style: { minHeight: '500px' } }))))),
-                    react_1.default.createElement(react_bootstrap_1.Modal.Footer, null,
-                        react_1.default.createElement(react_bootstrap_1.Button, { variant: "primary", onClick: async () => {
-                                try {
-                                    const promptPath = `testeranto/reports/${projectName}/${testName
-                                        .split(".")
-                                        .slice(0, -1)
-                                        .join(".")}/${runtime}/prompt.txt`;
-                                    let command = `aider --load ${promptPath}`;
-                                    if (messageOption === 'default') {
-                                        const messagePath = `testeranto/reports/${projectName}/${testName
-                                            .split(".")
-                                            .slice(0, -1)
-                                            .join(".")}/${runtime}/message.txt`;
-                                        command += ` --message-file ${messagePath}`;
-                                    }
-                                    else {
-                                        command += ` --message "${customMessage}"`;
-                                    }
-                                    await navigator.clipboard.writeText(command);
-                                    setShowAiderModal(false);
+            ], rightContent: react_1.default.createElement(react_bootstrap_2.Button, { variant: "info", onClick: () => setShowAiderModal(true), className: "ms-2", title: "AI Assistant" }, "\uD83E\uDD16") }),
+        react_1.default.createElement(react_bootstrap_2.Modal, { show: showAiderModal, onHide: () => setShowAiderModal(false), size: "lg", onShow: () => setMessageOption('default') },
+            react_1.default.createElement(react_bootstrap_2.Modal.Header, { closeButton: true },
+                react_1.default.createElement(react_bootstrap_2.Modal.Title, null, "Aider")),
+            react_1.default.createElement(react_bootstrap_2.Modal.Body, null,
+                react_1.default.createElement("div", { className: "mb-3" },
+                    react_1.default.createElement("div", { className: "form-check" },
+                        react_1.default.createElement("input", { className: "form-check-input", type: "radio", name: "messageOption", id: "defaultMessage", value: "default", checked: messageOption === 'default', onChange: () => setMessageOption('default') }),
+                        react_1.default.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")),
+                    react_1.default.createElement("div", { className: "form-check" },
+                        react_1.default.createElement("input", { className: "form-check-input", type: "radio", name: "messageOption", id: "customMessage", value: "custom", checked: messageOption === 'custom', onChange: () => setMessageOption('custom') }),
+                        react_1.default.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")),
+                    messageOption === 'custom' && (react_1.default.createElement("div", { className: "mt-2" },
+                        react_1.default.createElement("textarea", { className: "form-control", rows: 8, placeholder: "Enter your custom message", value: customMessage, onChange: (e) => setCustomMessage(e.target.value), style: { minHeight: '500px' } }))))),
+            react_1.default.createElement(react_bootstrap_2.Modal.Footer, null,
+                react_1.default.createElement(react_bootstrap_2.Button, { variant: "primary", onClick: async () => {
+                        try {
+                            const promptPath = `testeranto/reports/${projectName}/${testName
+                                .split(".")
+                                .slice(0, -1)
+                                .join(".")}/${runtime}/prompt.txt`;
+                            let command = `aider --load ${promptPath}`;
+                            if (messageOption === 'default') {
+                                const messagePath = `testeranto/reports/${projectName}/${testName
+                                    .split(".")
+                                    .slice(0, -1)
+                                    .join(".")}/${runtime}/message.txt`;
+                                command += ` --message-file ${messagePath}`;
+                            }
+                            else {
+                                command += ` --message "${customMessage}"`;
+                            }
+                            // Send command to server via WebSocket
+                            const ws = new WebSocket(`ws://${window.location.host}`);
+                            ws.onopen = () => {
+                                ws.send(JSON.stringify({
+                                    type: 'executeCommand',
+                                    command: command
+                                }));
+                                setToastMessage('Command sent to server');
+                                setToastVariant('success');
+                                setShowToast(true);
+                                setShowAiderModal(false);
+                                ws.close();
+                                // Navigate to process manager page
+                                setTimeout(() => {
+                                    navigate('/processes');
+                                }, 1000);
+                            };
+                            ws.onerror = (error) => {
+                                setToastMessage('Failed to connect to server');
+                                setToastVariant('danger');
+                                setShowToast(true);
+                            };
+                        }
+                        catch (err) {
+                            console.error("WebSocket error:", err);
+                            setToastMessage('Error preparing command');
+                            setToastVariant('danger');
+                            setShowToast(true);
+                        }
+                    } }, "Run Aider Command"))),
+        react_1.default.createElement(react_bootstrap_2.Row, { className: "g-0" },
+            react_1.default.createElement(react_bootstrap_2.Col, { sm: 3, className: "border-end", style: {
+                    height: "calc(100vh - 56px)",
+                    overflow: "auto",
+                    backgroundColor: '#f8f9fa'
+                } },
+                react_1.default.createElement("div", { className: "p-2 border-bottom" },
+                    react_1.default.createElement("small", { className: "fw-bold text-muted" }, "EXPLORER")),
+                react_1.default.createElement("div", { className: "p-2" },
+                    react_1.default.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { standardLogs: !prev.standardLogs }))) },
+                        react_1.default.createElement("i", { className: `bi bi-chevron-${expandedSections.standardLogs ? 'down' : 'right'} me-1` }),
+                        react_1.default.createElement("span", null, "Standard Logs")),
+                    expandedSections.standardLogs && (react_1.default.createElement("div", null, Object.values(logFiles_1.STANDARD_LOGS).map((logName) => {
+                        const logContent = logs[logName];
+                        const exists = logContent !== undefined &&
+                            ((typeof logContent === "string" && logContent.trim() !== "") ||
+                                (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                        return (react_1.default.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 1, isSelected: activeTab === logName, exists: exists, onClick: () => {
+                                if (exists) {
+                                    setActiveTab(logName);
+                                    setSelectedFile({
+                                        path: logName,
+                                        content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                                        language: logName.endsWith(".json") ? "json" : "plaintext",
+                                    });
                                 }
-                                catch (err) {
-                                    console.error("Copy failed:", err);
+                                else {
+                                    setActiveTab(logName);
+                                    setSelectedFile({
+                                        path: logName,
+                                        content: `// ${logName} not found or empty\nThis file was not generated during the test run.`,
+                                        language: "plaintext",
+                                    });
                                 }
-                            } }, "Copy Aider Command")))) }),
-        react_1.default.createElement(react_bootstrap_1.Row, { className: "g-0" },
-            react_1.default.createElement(react_bootstrap_1.Col, { sm: 3, className: "border-end" },
-                react_1.default.createElement(react_bootstrap_1.Nav, { variant: "pills", className: "flex-column" },
-                    react_1.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Standard Logs"),
-                    Object.entries(logs)
-                        .filter(([logName]) => Object.values(logFiles_1.STANDARD_LOGS).includes(logName))
-                        .filter(([, logContent]) => (typeof logContent === "string" && logContent.trim()) ||
-                        (typeof logContent === "object" &&
-                            Object.keys(logContent).length > 0))
-                        .map(([logName, logContent]) => (react_1.default.createElement(LogNavItem, { key: logName, logName: logName, logContent: logContent, activeTab: activeTab, setActiveTab: setActiveTab, setSelectedFile: setSelectedFile, errorCounts: errorCounts, decodedTestPath: decodedTestPath, testsExist: testsExist }))),
-                    Object.values(logFiles_1.RUNTIME_SPECIFIC_LOGS[runtime])
-                        .length > 0 && (react_1.default.createElement(react_1.default.Fragment, null,
-                        react_1.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Runtime Logs"),
-                        Object.entries(logs)
-                            .filter(([logName]) => Object.values(logFiles_1.RUNTIME_SPECIFIC_LOGS[runtime]).includes(logName))
-                            .filter(([, logContent]) => {
-                            return (typeof logContent === "string" && logContent.trim()) ||
-                                (typeof logContent === "object" && Object.keys(logContent).length > 0);
-                        })
-                            .map(([logName, logContent]) => (react_1.default.createElement(LogNavItem, { key: logName, logName: logName, logContent: logContent, activeTab: activeTab, setActiveTab: setActiveTab, setSelectedFile: setSelectedFile, errorCounts: errorCounts, decodedTestPath: decodedTestPath, testsExist: testsExist }))))),
-                    logs.source_files && (react_1.default.createElement("div", { className: "mt-2" },
-                        react_1.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Source Files"),
+                            } }));
+                    })))),
+                Object.values(logFiles_1.RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && (react_1.default.createElement("div", { className: "p-2" },
+                    react_1.default.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { runtimeLogs: !prev.runtimeLogs }))) },
+                        react_1.default.createElement("i", { className: `bi bi-chevron-${expandedSections.runtimeLogs ? 'down' : 'right'} me-1` }),
+                        react_1.default.createElement("span", null, "Runtime Logs")),
+                    expandedSections.runtimeLogs && (react_1.default.createElement("div", null, Object.values(logFiles_1.RUNTIME_SPECIFIC_LOGS[runtime]).map((logName) => {
+                        const logContent = logs[logName];
+                        const exists = logContent !== undefined &&
+                            ((typeof logContent === "string" && logContent.trim() !== "") ||
+                                (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                        return (react_1.default.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 1, isSelected: activeTab === logName, exists: exists, onClick: () => {
+                                if (exists) {
+                                    setActiveTab(logName);
+                                    setSelectedFile({
+                                        path: logName,
+                                        content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                                        language: logName.endsWith(".json") ? "json" : "plaintext",
+                                    });
+                                }
+                                else {
+                                    setActiveTab(logName);
+                                    setSelectedFile({
+                                        path: logName,
+                                        content: `// ${logName} not found or empty\nThis file was not generated during the test run.`,
+                                        language: "plaintext",
+                                    });
+                                }
+                            } }));
+                    }))))),
+                logs.source_files && (react_1.default.createElement("div", { className: "p-2" },
+                    react_1.default.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { sourceFiles: !prev.sourceFiles }))) },
+                        react_1.default.createElement("i", { className: `bi bi-chevron-${expandedSections.sourceFiles ? 'down' : 'right'} me-1` }),
+                        react_1.default.createElement("span", null, "Source Files")),
+                    expandedSections.sourceFiles && (react_1.default.createElement("div", null,
                         react_1.default.createElement(FileTree, { data: logs.source_files, onSelect: (path, content) => {
                                 setActiveTab("source_file");
                                 setSelectedSourcePath(path);
@@ -252,36 +344,8 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
                                     content,
                                     language: getLanguage(path),
                                 });
-                            }, level: 0, selectedSourcePath: selectedSourcePath }))),
-                    logs[logFiles_1.STANDARD_LOGS.TESTS] && (react_1.default.createElement("div", { className: "mt-2" },
-                        react_1.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Artifacts"),
-                        react_1.default.createElement(ArtifactTree, { treeData: buildArtifactTree(typeof logs[logFiles_1.STANDARD_LOGS.TESTS] === 'string'
-                                ? JSON.parse(logs[logFiles_1.STANDARD_LOGS.TESTS])
-                                : logs[logFiles_1.STANDARD_LOGS.TESTS]), projectName: projectName, testName: testName, runtime: runtime, onSelect: async (path) => {
-                                setActiveTab("artifact_viewer");
-                                try {
-                                    const response = await fetch(`reports/${projectName}/${testName
-                                        .split('.')
-                                        .slice(0, -1)
-                                        .join('.')}/${runtime}/${path}`);
-                                    const content = await (path.match(/\.(png|jpg|jpeg|gif|svg)$/i)
-                                        ? URL.createObjectURL(await response.blob())
-                                        : await response.text());
-                                    setSelectedFile({
-                                        path,
-                                        content,
-                                        language: getLanguage(path),
-                                    });
-                                }
-                                catch (err) {
-                                    setSelectedFile({
-                                        path,
-                                        content: `Failed to load artifact: ${err}`,
-                                        language: 'plaintext',
-                                    });
-                                }
-                            }, level: 0 }))))),
-            react_1.default.createElement(react_bootstrap_1.Col, { sm: 6, className: "border-end p-0", style: { height: "calc(100vh - 56px)", overflow: "hidden" } },
+                            }, level: 1, selectedSourcePath: selectedSourcePath })))))),
+            react_1.default.createElement(react_bootstrap_2.Col, { sm: 6, className: "border-end p-0", style: { height: "calc(100vh - 56px)", overflow: "hidden" } },
                 react_1.default.createElement(react_2.Editor, { height: "100%", path: (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path) || "empty", defaultLanguage: (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.language) || "plaintext", value: (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.content) || "// Select a file to view its contents", theme: editorTheme, options: {
                         minimap: { enabled: false },
                         fontSize: 14,
@@ -289,31 +353,52 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
                         automaticLayout: true,
                         readOnly: !(selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.includes("source_files")),
                     } })),
-            react_1.default.createElement(react_bootstrap_1.Col, { sm: 3, className: "p-0", style: { height: "calc(100vh - 56px)", overflow: "auto" } },
-                react_1.default.createElement("div", { className: "p-3" }, (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith("tests.json"))
-                    ? typeof selectedFile.content === "string"
+            react_1.default.createElement(react_bootstrap_2.Col, { sm: 3, className: "p-0 border-start", style: { height: "calc(100vh - 56px)", overflow: "auto" } },
+                react_1.default.createElement("div", { className: "p-3" },
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith("tests.json")) && (react_1.default.createElement("div", { className: "test-results-preview" }, typeof selectedFile.content === "string"
                         ? renderTestResults(JSON.parse(selectedFile.content))
-                        : renderTestResults(selectedFile.content)
-                    : (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.includes("source_files")) ? (react_1.default.createElement("div", { className: "d-flex flex-column h-100" },
-                        react_1.default.createElement(react_bootstrap_1.Button, { variant: "primary", className: "mb-2", onClick: () => {
+                        : renderTestResults(selectedFile.content))),
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.match(/\.(png|jpg|jpeg|gif|svg)$/i)) && (react_1.default.createElement("div", { className: "text-center" },
+                        react_1.default.createElement("img", { src: selectedFile.content, alt: selectedFile.path, className: "img-fluid", style: { maxHeight: '300px' } }),
+                        react_1.default.createElement("div", { className: "mt-2" },
+                            react_1.default.createElement("a", { href: selectedFile.content, target: "_blank", rel: "noopener noreferrer", className: "btn btn-sm btn-outline-primary" }, "Open Full Size")))),
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith(".json")) && !selectedFile.path.endsWith("tests.json") && (react_1.default.createElement("pre", { className: "bg-light p-2 small" },
+                        react_1.default.createElement("code", null, selectedFile.content))),
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.includes("source_files")) && (react_1.default.createElement("div", null,
+                        react_1.default.createElement("div", { className: "mb-2 small text-muted" },
+                            react_1.default.createElement("i", { className: "bi bi-file-earmark-text me-1" }),
+                            selectedFile.path.split('/').pop()),
+                        react_1.default.createElement(react_bootstrap_2.Button, { variant: "outline-primary", size: "sm", className: "mb-2", onClick: () => {
                                 // TODO: Add save functionality
                                 alert("Save functionality will be implemented here");
-                            } }, "Save Changes"),
-                        react_1.default.createElement("div", { className: "flex-grow-1 overflow-auto" }, selectedFile && (react_1.default.createElement("pre", { className: "bg-light p-3" },
-                            react_1.default.createElement("code", null, selectedFile.content)))))) : activeTab === "artifact_viewer" && selectedFile && (react_1.default.createElement("div", { className: "d-flex flex-column h-100" },
-                        react_1.default.createElement("div", { className: "mb-3" },
-                            react_1.default.createElement("h5", null, selectedFile.path),
-                            react_1.default.createElement("a", { href: `reports/${projectName}/${testName
-                                    .split('.')
-                                    .slice(0, -1)
-                                    .join('.')}/${runtime}/${selectedFile.path}`, target: "_blank", rel: "noopener noreferrer", className: "btn btn-primary mb-2" }, "Open Full Artifact")),
-                        react_1.default.createElement("div", { className: "flex-grow-1 overflow-auto" }, selectedFile.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) ? (react_1.default.createElement("img", { src: `reports/${projectName}/${testName
-                                .split('.')
-                                .slice(0, -1)
-                                .join('.')}/${runtime}/${selectedFile.path}`, alt: selectedFile.path, className: "img-fluid", style: { maxHeight: '100%' } })) : (react_1.default.createElement("pre", { className: "bg-light p-3" },
-                            react_1.default.createElement("code", null, selectedFile.content)))))))))));
+                            } }, "Save Changes")))))),
+        react_1.default.createElement(react_bootstrap_1.ToastContainer, { position: "top-end", className: "p-3" },
+            react_1.default.createElement(react_bootstrap_1.Toast, { show: showToast, onClose: () => setShowToast(false), delay: 3000, autohide: true, bg: toastVariant },
+                react_1.default.createElement(react_bootstrap_1.Toast.Header, null,
+                    react_1.default.createElement("strong", { className: "me-auto" }, "Command Status")),
+                react_1.default.createElement(react_bootstrap_1.Toast.Body, { className: "text-white" }, toastMessage)))));
 };
 exports.TestPageView = TestPageView;
+// Simple file tree item component
+const FileTreeItem = ({ name, isFile, level, isSelected, exists = true, onClick }) => {
+    const displayName = name
+        .replace(".json", "")
+        .replace(".txt", "")
+        .replace(".log", "")
+        .replace(/_/g, " ")
+        .replace(/^std/, "Standard ")
+        .replace(/^exit/, "Exit Code")
+        .split('/').pop();
+    return (react_1.default.createElement("div", { className: `d-flex align-items-center py-1 ${isSelected ? 'text-primary fw-bold' : exists ? 'text-dark' : 'text-muted'}`, style: {
+            paddingLeft: `${level * 16}px`,
+            cursor: exists ? 'pointer' : 'not-allowed',
+            fontSize: '0.875rem',
+            opacity: exists ? 1 : 0.6
+        }, onClick: exists ? onClick : undefined, title: exists ? undefined : "File not found or empty" },
+        react_1.default.createElement("i", { className: `bi ${isFile ? (exists ? 'bi-file-earmark-text' : 'bi-file-earmark') : 'bi-folder'} me-1` }),
+        react_1.default.createElement("span", null, displayName),
+        !exists && (react_1.default.createElement("i", { className: "bi bi-question-circle ms-1", title: "File not found or empty" }))));
+};
 const ArtifactTree = ({ treeData, projectName, testName, runtime, onSelect, level = 0, basePath = '' }) => {
     const [expanded, setExpanded] = (0, react_1.useState)({});
     const toggleExpand = (path) => {
@@ -405,8 +490,8 @@ const LogNavItem = ({ logName, logContent, activeTab, setActiveTab, setSelectedF
         statusIndicator = (react_1.default.createElement("div", { className: "ms-1" },
             react_1.default.createElement(TestStatusBadge_1.TestStatusBadge, { testName: decodedTestPath, testsExist: testsExist, runTimeErrors: errorCounts.runTimeErrors, typeErrors: errorCounts.typeErrors, staticErrors: errorCounts.staticErrors, variant: "compact", className: "mt-1" })));
     }
-    return (react_1.default.createElement(react_bootstrap_1.Nav.Item, { key: logName },
-        react_1.default.createElement(react_bootstrap_1.Nav.Link, { eventKey: logName, active: activeTab === logName, onClick: () => {
+    return (react_1.default.createElement(react_bootstrap_2.Nav.Item, { key: logName },
+        react_1.default.createElement(react_bootstrap_2.Nav.Link, { eventKey: logName, active: activeTab === logName, onClick: () => {
                 setActiveTab(logName);
                 setSelectedFile({
                     path: logName,

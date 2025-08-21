@@ -627,7 +627,7 @@
             }
             return ReactElement2(element.type, key, ref, self2, source, owner, props);
           }
-          function isValidElement2(object) {
+          function isValidElement3(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
           }
           var SEPARATOR = ".";
@@ -692,7 +692,7 @@
                   return c2;
                 });
               } else if (mappedChild != null) {
-                if (isValidElement2(mappedChild)) {
+                if (isValidElement3(mappedChild)) {
                   {
                     if (mappedChild.key && (!_child || _child.key !== mappedChild.key)) {
                       checkKeyStringCoercion(mappedChild.key);
@@ -780,12 +780,12 @@
             }) || [];
           }
           function onlyChild(children) {
-            if (!isValidElement2(children)) {
+            if (!isValidElement3(children)) {
               throw new Error("React.Children.only expected to receive a single React element child.");
             }
             return children;
           }
-          function createContext12(defaultValue) {
+          function createContext14(defaultValue) {
             var context3 = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -940,7 +940,7 @@
             };
             {
               var defaultProps;
-              var propTypes3;
+              var propTypes5;
               Object.defineProperties(lazyType, {
                 defaultProps: {
                   configurable: true,
@@ -958,11 +958,11 @@
                 propTypes: {
                   configurable: true,
                   get: function() {
-                    return propTypes3;
+                    return propTypes5;
                   },
                   set: function(newPropTypes) {
                     error("React.lazy(...): It is not supported to assign `propTypes` to a lazy component import. Either specify them where the component is defined, or create a wrapping component around it.");
-                    propTypes3 = newPropTypes;
+                    propTypes5 = newPropTypes;
                     Object.defineProperty(lazyType, "propTypes", {
                       enumerable: true
                     });
@@ -972,7 +972,7 @@
             }
             return lazyType;
           }
-          function forwardRef57(render) {
+          function forwardRef76(render) {
             {
               if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
                 error("forwardRef requires a render function but received a `memo` component. Instead of forwardRef(memo(...)), use memo(forwardRef(...)).");
@@ -1071,7 +1071,7 @@
             }
             return dispatcher;
           }
-          function useContext16(Context2) {
+          function useContext24(Context2) {
             var dispatcher = resolveDispatcher();
             {
               if (Context2._context !== void 0) {
@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState28(initialState) {
+          function useState32(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1093,11 +1093,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init2);
           }
-          function useRef24(initialValue) {
+          function useRef27(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect32(create2, deps) {
+          function useEffect37(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1109,11 +1109,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create2, deps);
           }
-          function useCallback17(callback, deps) {
+          function useCallback21(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo16(create2, deps) {
+          function useMemo20(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create2, deps);
           }
@@ -1511,11 +1511,11 @@
             if (isArray(node)) {
               for (var i2 = 0; i2 < node.length; i2++) {
                 var child = node[i2];
-                if (isValidElement2(child)) {
+                if (isValidElement3(child)) {
                   validateExplicitKey(child, parentType);
                 }
               }
-            } else if (isValidElement2(node)) {
+            } else if (isValidElement3(node)) {
               if (node._store) {
                 node._store.validated = true;
               }
@@ -1526,7 +1526,7 @@
                   var iterator = iteratorFn.call(node);
                   var step;
                   while (!(step = iterator.next()).done) {
-                    if (isValidElement2(step.value)) {
+                    if (isValidElement3(step.value)) {
                       validateExplicitKey(step.value, parentType);
                     }
                   }
@@ -1540,19 +1540,19 @@
               if (type === null || type === void 0 || typeof type === "string") {
                 return;
               }
-              var propTypes3;
+              var propTypes5;
               if (typeof type === "function") {
-                propTypes3 = type.propTypes;
+                propTypes5 = type.propTypes;
               } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
               // Inner props are checked in the reconciler.
               type.$$typeof === REACT_MEMO_TYPE)) {
-                propTypes3 = type.propTypes;
+                propTypes5 = type.propTypes;
               } else {
                 return;
               }
-              if (propTypes3) {
+              if (propTypes5) {
                 var name = getComponentNameFromType(type);
-                checkPropTypes(propTypes3, element.props, "prop", name, element);
+                checkPropTypes(propTypes5, element.props, "prop", name, element);
               } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
                 propTypesMisspellWarningShown = true;
                 var _name = getComponentNameFromType(type);
@@ -1849,14 +1849,14 @@
           var createElement$1 = createElementWithValidation;
           var cloneElement$1 = cloneElementWithValidation;
           var createFactory = createFactoryWithValidation;
-          var Children2 = {
+          var Children3 = {
             map: mapChildren,
             forEach: forEachChildren,
             count: countChildren,
             toArray: toArray3,
             only: onlyChild
           };
-          exports.Children = Children2;
+          exports.Children = Children3;
           exports.Component = Component4;
           exports.Fragment = REACT_FRAGMENT_TYPE;
           exports.Profiler = REACT_PROFILER_TYPE;
@@ -1865,29 +1865,29 @@
           exports.Suspense = REACT_SUSPENSE_TYPE;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext12;
+          exports.createContext = createContext14;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
-          exports.forwardRef = forwardRef57;
-          exports.isValidElement = isValidElement2;
+          exports.forwardRef = forwardRef76;
+          exports.isValidElement = isValidElement3;
           exports.lazy = lazy;
           exports.memo = memo2;
           exports.startTransition = startTransition3;
           exports.unstable_act = act;
-          exports.useCallback = useCallback17;
-          exports.useContext = useContext16;
+          exports.useCallback = useCallback21;
+          exports.useContext = useContext24;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect32;
+          exports.useEffect = useEffect37;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect6;
-          exports.useMemo = useMemo16;
+          exports.useMemo = useMemo20;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef24;
-          exports.useState = useState28;
+          exports.useRef = useRef27;
+          exports.useState = useState32;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React101 = require_react();
+          var React123 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React101.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React123.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React101.Children.forEach(props.children, function(child) {
+                  React123.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React101.Component().refs;
+          var emptyRefsObject = new React123.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23514,7 +23514,7 @@
       (function() {
         "use strict";
         var hasOwn = {}.hasOwnProperty;
-        function classNames46() {
+        function classNames62() {
           var classes = "";
           for (var i2 = 0; i2 < arguments.length; i2++) {
             var arg = arguments[i2];
@@ -23532,7 +23532,7 @@
             return "";
           }
           if (Array.isArray(arg)) {
-            return classNames46.apply(null, arg);
+            return classNames62.apply(null, arg);
           }
           if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes("[native code]")) {
             return arg.toString();
@@ -23555,14 +23555,14 @@
           return value + newClass;
         }
         if (typeof module !== "undefined" && module.exports) {
-          classNames46.default = classNames46;
-          module.exports = classNames46;
+          classNames62.default = classNames62;
+          module.exports = classNames62;
         } else if (typeof define === "function" && typeof define.amd === "object" && define.amd) {
           define("classnames", [], function() {
-            return classNames46;
+            return classNames62;
           });
         } else {
-          window.classNames = classNames46;
+          window.classNames = classNames62;
         }
       })();
     }
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React101 = require_react();
+          var React123 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React101.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React123.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24263,7 +24263,7 @@
           {
             propTypesMisspellWarningShown = false;
           }
-          function isValidElement2(object) {
+          function isValidElement3(object) {
             {
               return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
             }
@@ -24330,11 +24330,11 @@
               if (isArray(node)) {
                 for (var i2 = 0; i2 < node.length; i2++) {
                   var child = node[i2];
-                  if (isValidElement2(child)) {
+                  if (isValidElement3(child)) {
                     validateExplicitKey(child, parentType);
                   }
                 }
-              } else if (isValidElement2(node)) {
+              } else if (isValidElement3(node)) {
                 if (node._store) {
                   node._store.validated = true;
                 }
@@ -24345,7 +24345,7 @@
                     var iterator = iteratorFn.call(node);
                     var step;
                     while (!(step = iterator.next()).done) {
-                      if (isValidElement2(step.value)) {
+                      if (isValidElement3(step.value)) {
                         validateExplicitKey(step.value, parentType);
                       }
                     }
@@ -24360,19 +24360,19 @@
               if (type === null || type === void 0 || typeof type === "string") {
                 return;
               }
-              var propTypes3;
+              var propTypes5;
               if (typeof type === "function") {
-                propTypes3 = type.propTypes;
+                propTypes5 = type.propTypes;
               } else if (typeof type === "object" && (type.$$typeof === REACT_FORWARD_REF_TYPE || // Note: Memo only checks outer props here.
               // Inner props are checked in the reconciler.
               type.$$typeof === REACT_MEMO_TYPE)) {
-                propTypes3 = type.propTypes;
+                propTypes5 = type.propTypes;
               } else {
                 return;
               }
-              if (propTypes3) {
+              if (propTypes5) {
                 var name = getComponentNameFromType(type);
-                checkPropTypes(propTypes3, element.props, "prop", name, element);
+                checkPropTypes(propTypes5, element.props, "prop", name, element);
               } else if (type.PropTypes !== void 0 && !propTypesMisspellWarningShown) {
                 propTypesMisspellWarningShown = true;
                 var _name = getComponentNameFromType(type);
@@ -24837,7 +24837,7 @@
       function emptyFunctionThatReturnsNull() {
         return null;
       }
-      module.exports = function(isValidElement2, throwOnDirectAccess) {
+      module.exports = function(isValidElement3, throwOnDirectAccess) {
         var ITERATOR_SYMBOL = typeof Symbol === "function" && Symbol.iterator;
         var FAUX_ITERATOR_SYMBOL = "@@iterator";
         function getIteratorFn(maybeIterable) {
@@ -24965,7 +24965,7 @@
         function createElementTypeChecker() {
           function validate(props, propName, componentName, location2, propFullName) {
             var propValue = props[propName];
-            if (!isValidElement2(propValue)) {
+            if (!isValidElement3(propValue)) {
               var propType = getPropType(propValue);
               return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement."));
             }
@@ -25153,7 +25153,7 @@
               if (Array.isArray(propValue)) {
                 return propValue.every(isNode);
               }
-              if (propValue === null || isValidElement2(propValue)) {
+              if (propValue === null || isValidElement3(propValue)) {
                 return true;
               }
               var iteratorFn = getIteratorFn(propValue);
@@ -25274,7 +25274,7 @@
     "node_modules/warning/warning.js"(exports, module) {
       "use strict";
       var __DEV__ = true;
-      var warning4 = function() {
+      var warning6 = function() {
       };
       if (__DEV__) {
         printWarning = function printWarning2(format, args) {
@@ -25295,7 +25295,7 @@
           } catch (x2) {
           }
         };
-        warning4 = function(condition, format, args) {
+        warning6 = function(condition, format, args) {
           var len = arguments.length;
           args = new Array(len > 2 ? len - 2 : 0);
           for (var key = 2; key < len; key++) {
@@ -25312,7 +25312,7 @@
         };
       }
       var printWarning;
-      module.exports = warning4;
+      module.exports = warning6;
     }
   });
 
@@ -25399,7 +25399,7 @@
   });
 
   // src/App.tsx
-  var import_react88 = __toESM(require_react(), 1);
+  var import_react100 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-ZYFC6VSF.mjs
@@ -27765,7 +27765,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   "use client";
 
   // src/components/stateful/TestPage.tsx
-  var import_react71 = __toESM(require_react(), 1);
+  var import_react83 = __toESM(require_react(), 1);
 
   // src/utils/logFiles.ts
   var STANDARD_LOGS = {
@@ -27863,7 +27863,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/pure/TestPageView.tsx
-  var import_react69 = __toESM(require_react(), 1);
+  var import_react81 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -29646,24 +29646,77 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ImgOverlay: CardImgOverlay_default
   });
 
-  // node_modules/@restart/hooks/esm/useUpdatedRef.js
+  // node_modules/@restart/hooks/esm/useTimeout.js
+  var import_react29 = __toESM(require_react());
+
+  // node_modules/@restart/hooks/esm/useMounted.js
   var import_react26 = __toESM(require_react());
+  function useMounted2() {
+    const mounted = (0, import_react26.useRef)(true);
+    const isMounted = (0, import_react26.useRef)(() => mounted.current);
+    (0, import_react26.useEffect)(() => {
+      mounted.current = true;
+      return () => {
+        mounted.current = false;
+      };
+    }, []);
+    return isMounted.current;
+  }
+
+  // node_modules/@restart/hooks/esm/useUpdatedRef.js
+  var import_react27 = __toESM(require_react());
   function useUpdatedRef(value) {
-    const valueRef = (0, import_react26.useRef)(value);
+    const valueRef = (0, import_react27.useRef)(value);
     valueRef.current = value;
     return valueRef;
   }
 
   // node_modules/@restart/hooks/esm/useWillUnmount.js
-  var import_react27 = __toESM(require_react());
+  var import_react28 = __toESM(require_react());
   function useWillUnmount(fn2) {
     const onUnmount = useUpdatedRef(fn2);
-    (0, import_react27.useEffect)(() => () => onUnmount.current(), []);
+    (0, import_react28.useEffect)(() => () => onUnmount.current(), []);
+  }
+
+  // node_modules/@restart/hooks/esm/useTimeout.js
+  var MAX_DELAY_MS = 2 ** 31 - 1;
+  function setChainedTimeout(handleRef, fn2, timeoutAtMs) {
+    const delayMs = timeoutAtMs - Date.now();
+    handleRef.current = delayMs <= MAX_DELAY_MS ? setTimeout(fn2, delayMs) : setTimeout(() => setChainedTimeout(handleRef, fn2, timeoutAtMs), MAX_DELAY_MS);
+  }
+  function useTimeout() {
+    const isMounted = useMounted2();
+    const handleRef = (0, import_react29.useRef)();
+    useWillUnmount(() => clearTimeout(handleRef.current));
+    return (0, import_react29.useMemo)(() => {
+      const clear = () => clearTimeout(handleRef.current);
+      function set(fn2, delayMs = 0) {
+        if (!isMounted())
+          return;
+        clear();
+        if (delayMs <= MAX_DELAY_MS) {
+          handleRef.current = setTimeout(fn2, delayMs);
+        } else {
+          setChainedTimeout(handleRef, fn2, Date.now() + delayMs);
+        }
+      }
+      return {
+        set,
+        clear,
+        handleRef
+      };
+    }, []);
+  }
+
+  // node_modules/react-bootstrap/esm/ElementChildren.js
+  var React40 = __toESM(require_react());
+  function hasChildOfType(children, type) {
+    return React40.Children.toArray(children).some((child) => /* @__PURE__ */ React40.isValidElement(child) && child.type === type);
   }
 
   // node_modules/react-bootstrap/esm/Col.js
   var import_classnames20 = __toESM(require_classnames());
-  var React40 = __toESM(require_react());
+  var React41 = __toESM(require_react());
   var import_jsx_runtime25 = __toESM(require_jsx_runtime());
   "use client";
   function useCol({
@@ -29709,7 +29762,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       spans
     }];
   }
-  var Col = /* @__PURE__ */ React40.forwardRef(
+  var Col = /* @__PURE__ */ React41.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (props, ref) => {
       const [{
@@ -29732,10 +29785,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Container.js
   var import_classnames21 = __toESM(require_classnames());
-  var React41 = __toESM(require_react());
+  var React42 = __toESM(require_react());
   var import_jsx_runtime26 = __toESM(require_jsx_runtime());
   "use client";
-  var Container = /* @__PURE__ */ React41.forwardRef(({
+  var Container = /* @__PURE__ */ React42.forwardRef(({
     bsPrefix,
     fluid = false,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
@@ -29761,17 +29814,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js
-  var import_react28 = __toESM(require_react());
+  var import_react30 = __toESM(require_react());
   function useUncontrolledProp2(propValue, defaultValue, handler) {
-    const wasPropRef = (0, import_react28.useRef)(propValue !== void 0);
-    const [stateValue, setState2] = (0, import_react28.useState)(defaultValue);
+    const wasPropRef = (0, import_react30.useRef)(propValue !== void 0);
+    const [stateValue, setState2] = (0, import_react30.useState)(defaultValue);
     const isProp2 = propValue !== void 0;
     const wasProp = wasPropRef.current;
     wasPropRef.current = isProp2;
     if (!isProp2 && wasProp && stateValue !== defaultValue) {
       setState2(defaultValue);
     }
-    return [isProp2 ? propValue : stateValue, (0, import_react28.useCallback)((...args) => {
+    return [isProp2 ? propValue : stateValue, (0, import_react30.useCallback)((...args) => {
       const [value, ...rest] = args;
       let returnValue = handler == null ? void 0 : handler(value, ...rest);
       setState2(value);
@@ -29780,9 +29833,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js
-  var import_react29 = __toESM(require_react());
+  var import_react31 = __toESM(require_react());
   function useForceUpdate() {
-    const [, dispatch] = (0, import_react29.useReducer)((revision) => revision + 1, 0);
+    const [, dispatch] = (0, import_react31.useReducer)((revision) => revision + 1, 0);
     return dispatch;
   }
 
@@ -29795,21 +29848,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@react-aria/ssr/dist/SSRProvider.mjs
-  var import_react30 = __toESM(require_react(), 1);
+  var import_react32 = __toESM(require_react(), 1);
   var $b5e257d569688ac6$var$defaultContext = {
     prefix: String(Math.round(Math.random() * 1e10)),
     current: 0
   };
-  var $b5e257d569688ac6$var$SSRContext = /* @__PURE__ */ (0, import_react30.default).createContext($b5e257d569688ac6$var$defaultContext);
-  var $b5e257d569688ac6$var$IsSSRContext = /* @__PURE__ */ (0, import_react30.default).createContext(false);
+  var $b5e257d569688ac6$var$SSRContext = /* @__PURE__ */ (0, import_react32.default).createContext($b5e257d569688ac6$var$defaultContext);
+  var $b5e257d569688ac6$var$IsSSRContext = /* @__PURE__ */ (0, import_react32.default).createContext(false);
   var $b5e257d569688ac6$var$canUseDOM = Boolean(typeof window !== "undefined" && window.document && window.document.createElement);
   var $b5e257d569688ac6$var$componentIds = /* @__PURE__ */ new WeakMap();
   function $b5e257d569688ac6$var$useCounter(isDisabled = false) {
-    let ctx = (0, import_react30.useContext)($b5e257d569688ac6$var$SSRContext);
-    let ref = (0, import_react30.useRef)(null);
+    let ctx = (0, import_react32.useContext)($b5e257d569688ac6$var$SSRContext);
+    let ref = (0, import_react32.useRef)(null);
     if (ref.current === null && !isDisabled) {
       var _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner, _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      let currentOwner = (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = (0, import_react30.default).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === void 0 ? void 0 : (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner = _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner === void 0 ? void 0 : _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner.current;
+      let currentOwner = (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = (0, import_react32.default).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === void 0 ? void 0 : (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner = _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner === void 0 ? void 0 : _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner.current;
       if (currentOwner) {
         let prevComponentValue = $b5e257d569688ac6$var$componentIds.get(currentOwner);
         if (prevComponentValue == null)
@@ -29827,7 +29880,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return ref.current;
   }
   function $b5e257d569688ac6$var$useLegacySSRSafeId(defaultId) {
-    let ctx = (0, import_react30.useContext)($b5e257d569688ac6$var$SSRContext);
+    let ctx = (0, import_react32.useContext)($b5e257d569688ac6$var$SSRContext);
     if (ctx === $b5e257d569688ac6$var$defaultContext && !$b5e257d569688ac6$var$canUseDOM && true)
       console.warn("When server rendering, you must wrap your application in an <SSRProvider> to ensure consistent ids are generated between the client and server.");
     let counter = $b5e257d569688ac6$var$useCounter(!!defaultId);
@@ -29835,12 +29888,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return defaultId || `${prefix}-${counter}`;
   }
   function $b5e257d569688ac6$var$useModernSSRSafeId(defaultId) {
-    let id = (0, import_react30.default).useId();
-    let [didSSR] = (0, import_react30.useState)($b5e257d569688ac6$export$535bd6ca7f90a273());
+    let id = (0, import_react32.default).useId();
+    let [didSSR] = (0, import_react32.useState)($b5e257d569688ac6$export$535bd6ca7f90a273());
     let prefix = didSSR || false ? "react-aria" : `react-aria${$b5e257d569688ac6$var$defaultContext.prefix}`;
     return defaultId || `${prefix}-${id}`;
   }
-  var $b5e257d569688ac6$export$619500959fc48b26 = typeof (0, import_react30.default)["useId"] === "function" ? $b5e257d569688ac6$var$useModernSSRSafeId : $b5e257d569688ac6$var$useLegacySSRSafeId;
+  var $b5e257d569688ac6$export$619500959fc48b26 = typeof (0, import_react32.default)["useId"] === "function" ? $b5e257d569688ac6$var$useModernSSRSafeId : $b5e257d569688ac6$var$useLegacySSRSafeId;
   function $b5e257d569688ac6$var$getSnapshot() {
     return false;
   }
@@ -29852,14 +29905,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
   }
   function $b5e257d569688ac6$export$535bd6ca7f90a273() {
-    if (typeof (0, import_react30.default)["useSyncExternalStore"] === "function")
-      return (0, import_react30.default)["useSyncExternalStore"]($b5e257d569688ac6$var$subscribe, $b5e257d569688ac6$var$getSnapshot, $b5e257d569688ac6$var$getServerSnapshot);
-    return (0, import_react30.useContext)($b5e257d569688ac6$var$IsSSRContext);
+    if (typeof (0, import_react32.default)["useSyncExternalStore"] === "function")
+      return (0, import_react32.default)["useSyncExternalStore"]($b5e257d569688ac6$var$subscribe, $b5e257d569688ac6$var$getSnapshot, $b5e257d569688ac6$var$getServerSnapshot);
+    return (0, import_react32.useContext)($b5e257d569688ac6$var$IsSSRContext);
   }
 
   // node_modules/@restart/ui/esm/SelectableContext.js
-  var React42 = __toESM(require_react());
-  var SelectableContext = /* @__PURE__ */ React42.createContext(null);
+  var React43 = __toESM(require_react());
+  var SelectableContext = /* @__PURE__ */ React43.createContext(null);
   var makeEventKey = (eventKey, href = null) => {
     if (eventKey != null)
       return String(eventKey);
@@ -29868,8 +29921,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var SelectableContext_default = SelectableContext;
 
   // node_modules/@restart/ui/esm/NavContext.js
-  var React43 = __toESM(require_react());
-  var NavContext = /* @__PURE__ */ React43.createContext(null);
+  var React44 = __toESM(require_react());
+  var NavContext = /* @__PURE__ */ React44.createContext(null);
   NavContext.displayName = "NavContext";
   var NavContext_default = NavContext;
 
@@ -29884,39 +29937,521 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/useWindow.js
-  var import_react31 = __toESM(require_react());
-  var Context = /* @__PURE__ */ (0, import_react31.createContext)(canUseDOM_default ? window : void 0);
+  var import_react33 = __toESM(require_react());
+  var Context = /* @__PURE__ */ (0, import_react33.createContext)(canUseDOM_default ? window : void 0);
   var WindowProvider = Context.Provider;
   function useWindow() {
-    return (0, import_react31.useContext)(Context);
+    return (0, import_react33.useContext)(Context);
   }
 
   // node_modules/@restart/hooks/esm/useIsomorphicEffect.js
-  var import_react32 = __toESM(require_react());
+  var import_react34 = __toESM(require_react());
   var isReactNative2 = typeof global !== "undefined" && // @ts-ignore
   global.navigator && // @ts-ignore
   global.navigator.product === "ReactNative";
   var isDOM2 = typeof document !== "undefined";
-  var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react32.useLayoutEffect : import_react32.useEffect;
+  var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react34.useLayoutEffect : import_react34.useEffect;
 
   // node_modules/react-bootstrap/esm/NavbarContext.js
-  var React44 = __toESM(require_react());
+  var React45 = __toESM(require_react());
   "use client";
-  var context2 = /* @__PURE__ */ React44.createContext(null);
+  var context2 = /* @__PURE__ */ React45.createContext(null);
   context2.displayName = "NavbarContext";
   var NavbarContext_default = context2;
 
-  // node_modules/react-bootstrap/esm/ListGroup.js
-  var import_classnames23 = __toESM(require_classnames());
-  var React49 = __toESM(require_react());
-  var import_warning2 = __toESM(require_warning());
+  // node_modules/react-bootstrap/esm/Form.js
+  var import_classnames33 = __toESM(require_classnames());
+  var import_prop_types5 = __toESM(require_prop_types());
+  var React60 = __toESM(require_react());
 
-  // node_modules/@restart/ui/esm/Nav.js
-  var React47 = __toESM(require_react());
+  // node_modules/react-bootstrap/esm/FormCheck.js
+  var import_classnames25 = __toESM(require_classnames());
+  var React50 = __toESM(require_react());
+  var import_react37 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/Feedback.js
+  var import_classnames22 = __toESM(require_classnames());
+  var React46 = __toESM(require_react());
+  var import_prop_types4 = __toESM(require_prop_types());
+  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+  var propTypes2 = {
+    /**
+     * Specify whether the feedback is for valid or invalid fields
+     *
+     * @type {('valid'|'invalid')}
+     */
+    type: import_prop_types4.default.string,
+    /** Display feedback as a tooltip. */
+    tooltip: import_prop_types4.default.bool,
+    as: import_prop_types4.default.elementType
+  };
+  var Feedback = /* @__PURE__ */ React46.forwardRef(
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    ({
+      as: Component4 = "div",
+      className,
+      type = "valid",
+      tooltip = false,
+      ...props
+    }, ref) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Component4, {
+      ...props,
+      ref,
+      className: (0, import_classnames22.default)(className, `${type}-${tooltip ? "tooltip" : "feedback"}`)
+    })
+  );
+  Feedback.displayName = "Feedback";
+  Feedback.propTypes = propTypes2;
+  var Feedback_default = Feedback;
+
+  // node_modules/react-bootstrap/esm/FormCheckInput.js
+  var import_classnames23 = __toESM(require_classnames());
+  var React48 = __toESM(require_react());
   var import_react35 = __toESM(require_react());
 
+  // node_modules/react-bootstrap/esm/FormContext.js
+  var React47 = __toESM(require_react());
+  "use client";
+  var FormContext = /* @__PURE__ */ React47.createContext({});
+  var FormContext_default = FormContext;
+
+  // node_modules/react-bootstrap/esm/FormCheckInput.js
+  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormCheckInput = /* @__PURE__ */ React48.forwardRef(({
+    id,
+    bsPrefix,
+    className,
+    type = "checkbox",
+    isValid = false,
+    isInvalid = false,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component4 = "input",
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react35.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-check-input");
+    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Component4, {
+      ...props,
+      ref,
+      type,
+      id: id || controlId,
+      className: (0, import_classnames23.default)(className, bsPrefix, isValid && "is-valid", isInvalid && "is-invalid")
+    });
+  });
+  FormCheckInput.displayName = "FormCheckInput";
+  var FormCheckInput_default = FormCheckInput;
+
+  // node_modules/react-bootstrap/esm/FormCheckLabel.js
+  var import_classnames24 = __toESM(require_classnames());
+  var React49 = __toESM(require_react());
+  var import_react36 = __toESM(require_react());
+  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormCheckLabel = /* @__PURE__ */ React49.forwardRef(({
+    bsPrefix,
+    className,
+    htmlFor,
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react36.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-check-label");
+    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)("label", {
+      ...props,
+      ref,
+      htmlFor: htmlFor || controlId,
+      className: (0, import_classnames24.default)(className, bsPrefix)
+    });
+  });
+  FormCheckLabel.displayName = "FormCheckLabel";
+  var FormCheckLabel_default = FormCheckLabel;
+
+  // node_modules/react-bootstrap/esm/FormCheck.js
+  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormCheck = /* @__PURE__ */ React50.forwardRef(({
+    id,
+    bsPrefix,
+    bsSwitchPrefix,
+    inline = false,
+    reverse = false,
+    disabled = false,
+    isValid = false,
+    isInvalid = false,
+    feedbackTooltip = false,
+    feedback,
+    feedbackType,
+    className,
+    style: style2,
+    title = "",
+    type = "checkbox",
+    label,
+    children,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: as2 = "input",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-check");
+    bsSwitchPrefix = useBootstrapPrefix(bsSwitchPrefix, "form-switch");
+    const {
+      controlId
+    } = (0, import_react37.useContext)(FormContext_default);
+    const innerFormContext = (0, import_react37.useMemo)(() => ({
+      controlId: id || controlId
+    }), [controlId, id]);
+    const hasLabel = !children && label != null && label !== false || hasChildOfType(children, FormCheckLabel_default);
+    const input = /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(FormCheckInput_default, {
+      ...props,
+      type: type === "switch" ? "checkbox" : type,
+      ref,
+      isValid,
+      isInvalid,
+      disabled,
+      as: as2
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(FormContext_default.Provider, {
+      value: innerFormContext,
+      children: /* @__PURE__ */ (0, import_jsx_runtime30.jsx)("div", {
+        style: style2,
+        className: (0, import_classnames25.default)(className, hasLabel && bsPrefix, inline && `${bsPrefix}-inline`, reverse && `${bsPrefix}-reverse`, type === "switch" && bsSwitchPrefix),
+        children: children || /* @__PURE__ */ (0, import_jsx_runtime32.jsxs)(import_jsx_runtime31.Fragment, {
+          children: [input, hasLabel && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(FormCheckLabel_default, {
+            title,
+            children: label
+          }), feedback && /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Feedback_default, {
+            type: feedbackType,
+            tooltip: feedbackTooltip,
+            children: feedback
+          })]
+        })
+      })
+    });
+  });
+  FormCheck.displayName = "FormCheck";
+  var FormCheck_default = Object.assign(FormCheck, {
+    Input: FormCheckInput_default,
+    Label: FormCheckLabel_default
+  });
+
+  // node_modules/react-bootstrap/esm/FormControl.js
+  var import_classnames26 = __toESM(require_classnames());
+  var React51 = __toESM(require_react());
+  var import_react38 = __toESM(require_react());
+  var import_warning = __toESM(require_warning());
+  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormControl = /* @__PURE__ */ React51.forwardRef(({
+    bsPrefix,
+    type,
+    size: size2,
+    htmlSize,
+    id,
+    className,
+    isValid = false,
+    isInvalid = false,
+    plaintext,
+    readOnly,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component4 = "input",
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react38.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-control");
+    true ? (0, import_warning.default)(controlId == null || !id, "`controlId` is ignored on `<FormControl>` when `id` is specified.") : void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(Component4, {
+      ...props,
+      type,
+      size: htmlSize,
+      ref,
+      readOnly,
+      id: id || controlId,
+      className: (0, import_classnames26.default)(className, plaintext ? `${bsPrefix}-plaintext` : bsPrefix, size2 && `${bsPrefix}-${size2}`, type === "color" && `${bsPrefix}-color`, isValid && "is-valid", isInvalid && "is-invalid")
+    });
+  });
+  FormControl.displayName = "FormControl";
+  var FormControl_default = Object.assign(FormControl, {
+    Feedback: Feedback_default
+  });
+
+  // node_modules/react-bootstrap/esm/FormFloating.js
+  var React52 = __toESM(require_react());
+  var import_classnames27 = __toESM(require_classnames());
+  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormFloating = /* @__PURE__ */ React52.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component4 = "div",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-floating");
+    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Component4, {
+      ref,
+      className: (0, import_classnames27.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  FormFloating.displayName = "FormFloating";
+  var FormFloating_default = FormFloating;
+
+  // node_modules/react-bootstrap/esm/FormGroup.js
+  var React53 = __toESM(require_react());
+  var import_react39 = __toESM(require_react());
+  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var FormGroup = /* @__PURE__ */ React53.forwardRef(({
+    controlId,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component4 = "div",
+    ...props
+  }, ref) => {
+    const context3 = (0, import_react39.useMemo)(() => ({
+      controlId
+    }), [controlId]);
+    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(FormContext_default.Provider, {
+      value: context3,
+      children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)(Component4, {
+        ...props,
+        ref
+      })
+    });
+  });
+  FormGroup.displayName = "FormGroup";
+  var FormGroup_default = FormGroup;
+
+  // node_modules/react-bootstrap/esm/FormLabel.js
+  var import_classnames28 = __toESM(require_classnames());
+  var React54 = __toESM(require_react());
+  var import_react40 = __toESM(require_react());
+  var import_warning2 = __toESM(require_warning());
+  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormLabel = /* @__PURE__ */ React54.forwardRef(({
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component4 = "label",
+    bsPrefix,
+    column = false,
+    visuallyHidden = false,
+    className,
+    htmlFor,
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react40.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-label");
+    let columnClass = "col-form-label";
+    if (typeof column === "string")
+      columnClass = `${columnClass} ${columnClass}-${column}`;
+    const classes = (0, import_classnames28.default)(className, bsPrefix, visuallyHidden && "visually-hidden", column && columnClass);
+    true ? (0, import_warning2.default)(controlId == null || !htmlFor, "`controlId` is ignored on `<FormLabel>` when `htmlFor` is specified.") : void 0;
+    htmlFor = htmlFor || controlId;
+    if (column)
+      return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Col_default, {
+        ref,
+        as: "label",
+        className: classes,
+        htmlFor,
+        ...props
+      });
+    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Component4, {
+      ref,
+      className: classes,
+      htmlFor,
+      ...props
+    });
+  });
+  FormLabel.displayName = "FormLabel";
+  var FormLabel_default = FormLabel;
+
+  // node_modules/react-bootstrap/esm/FormRange.js
+  var import_classnames29 = __toESM(require_classnames());
+  var React55 = __toESM(require_react());
+  var import_react41 = __toESM(require_react());
+  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormRange = /* @__PURE__ */ React55.forwardRef(({
+    bsPrefix,
+    className,
+    id,
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react41.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-range");
+    return /* @__PURE__ */ (0, import_jsx_runtime37.jsx)("input", {
+      ...props,
+      type: "range",
+      ref,
+      className: (0, import_classnames29.default)(className, bsPrefix),
+      id: id || controlId
+    });
+  });
+  FormRange.displayName = "FormRange";
+  var FormRange_default = FormRange;
+
+  // node_modules/react-bootstrap/esm/FormSelect.js
+  var import_classnames30 = __toESM(require_classnames());
+  var React56 = __toESM(require_react());
+  var import_react42 = __toESM(require_react());
+  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormSelect = /* @__PURE__ */ React56.forwardRef(({
+    bsPrefix,
+    size: size2,
+    htmlSize,
+    className,
+    isValid = false,
+    isInvalid = false,
+    id,
+    ...props
+  }, ref) => {
+    const {
+      controlId
+    } = (0, import_react42.useContext)(FormContext_default);
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-select");
+    return /* @__PURE__ */ (0, import_jsx_runtime38.jsx)("select", {
+      ...props,
+      size: htmlSize,
+      ref,
+      className: (0, import_classnames30.default)(className, bsPrefix, size2 && `${bsPrefix}-${size2}`, isValid && `is-valid`, isInvalid && `is-invalid`),
+      id: id || controlId
+    });
+  });
+  FormSelect.displayName = "FormSelect";
+  var FormSelect_default = FormSelect;
+
+  // node_modules/react-bootstrap/esm/FormText.js
+  var import_classnames31 = __toESM(require_classnames());
+  var React57 = __toESM(require_react());
+  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  "use client";
+  var FormText = /* @__PURE__ */ React57.forwardRef(
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    ({
+      bsPrefix,
+      className,
+      as: Component4 = "small",
+      muted,
+      ...props
+    }, ref) => {
+      bsPrefix = useBootstrapPrefix(bsPrefix, "form-text");
+      return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(Component4, {
+        ...props,
+        ref,
+        className: (0, import_classnames31.default)(className, bsPrefix, muted && "text-muted")
+      });
+    }
+  );
+  FormText.displayName = "FormText";
+  var FormText_default = FormText;
+
+  // node_modules/react-bootstrap/esm/Switch.js
+  var React58 = __toESM(require_react());
+  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  var Switch = /* @__PURE__ */ React58.forwardRef((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(FormCheck_default, {
+    ...props,
+    ref,
+    type: "switch"
+  }));
+  Switch.displayName = "Switch";
+  var Switch_default = Object.assign(Switch, {
+    Input: FormCheck_default.Input,
+    Label: FormCheck_default.Label
+  });
+
+  // node_modules/react-bootstrap/esm/FloatingLabel.js
+  var import_classnames32 = __toESM(require_classnames());
+  var React59 = __toESM(require_react());
+  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+  "use client";
+  var FloatingLabel = /* @__PURE__ */ React59.forwardRef(({
+    bsPrefix,
+    className,
+    children,
+    controlId,
+    label,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "form-floating");
+    return /* @__PURE__ */ (0, import_jsx_runtime42.jsxs)(FormGroup_default, {
+      ref,
+      className: (0, import_classnames32.default)(className, bsPrefix),
+      controlId,
+      ...props,
+      children: [children, /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("label", {
+        htmlFor: controlId,
+        children: label
+      })]
+    });
+  });
+  FloatingLabel.displayName = "FloatingLabel";
+  var FloatingLabel_default = FloatingLabel;
+
+  // node_modules/react-bootstrap/esm/Form.js
+  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
+  var propTypes3 = {
+    /**
+     * The Form `ref` will be forwarded to the underlying element,
+     * which means, unless it's rendered `as` a composite component,
+     * it will be a DOM node, when resolved.
+     *
+     * @type {ReactRef}
+     * @alias ref
+     */
+    _ref: import_prop_types5.default.any,
+    /**
+     * Mark a form as having been validated. Setting it to `true` will
+     * toggle any validation styles on the forms elements.
+     */
+    validated: import_prop_types5.default.bool,
+    as: import_prop_types5.default.elementType
+  };
+  var Form2 = /* @__PURE__ */ React60.forwardRef(({
+    className,
+    validated,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component4 = "form",
+    ...props
+  }, ref) => /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Component4, {
+    ...props,
+    ref,
+    className: (0, import_classnames33.default)(className, validated && "was-validated")
+  }));
+  Form2.displayName = "Form";
+  Form2.propTypes = propTypes3;
+  var Form_default = Object.assign(Form2, {
+    Group: FormGroup_default,
+    Control: FormControl_default,
+    Floating: FormFloating_default,
+    Check: FormCheck_default,
+    Switch: Switch_default,
+    Label: FormLabel_default,
+    Text: FormText_default,
+    Range: FormRange_default,
+    Select: FormSelect_default,
+    FloatingLabel: FloatingLabel_default
+  });
+
+  // node_modules/react-bootstrap/esm/ListGroup.js
+  var import_classnames35 = __toESM(require_classnames());
+  var React65 = __toESM(require_react());
+  var import_warning4 = __toESM(require_warning());
+
+  // node_modules/@restart/ui/esm/Nav.js
+  var React63 = __toESM(require_react());
+  var import_react45 = __toESM(require_react());
+
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js
-  var import_react33 = __toESM(require_react());
+  var import_react43 = __toESM(require_react());
   var toFnRef2 = (ref) => !ref || typeof ref === "function" ? ref : (value) => {
     ref.current = value;
   };
@@ -29931,19 +30466,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
   }
   function useMergedRefs2(refA, refB) {
-    return (0, import_react33.useMemo)(() => mergeRefs3(refA, refB), [refA, refB]);
+    return (0, import_react43.useMemo)(() => mergeRefs3(refA, refB), [refA, refB]);
   }
   var useMergedRefs_default2 = useMergedRefs2;
 
   // node_modules/@restart/ui/esm/TabContext.js
-  var React45 = __toESM(require_react());
-  var TabContext = /* @__PURE__ */ React45.createContext(null);
+  var React61 = __toESM(require_react());
+  var TabContext = /* @__PURE__ */ React61.createContext(null);
   var TabContext_default = TabContext;
 
   // node_modules/@restart/ui/esm/NavItem.js
-  var React46 = __toESM(require_react());
-  var import_react34 = __toESM(require_react());
-  var import_jsx_runtime27 = __toESM(require_jsx_runtime());
+  var React62 = __toESM(require_react());
+  var import_react44 = __toESM(require_react());
+  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
   var _excluded3 = ["as", "active", "eventKey"];
   function _objectWithoutPropertiesLoose4(r2, e3) {
     if (null == r2)
@@ -29965,9 +30500,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     role,
     disabled
   }) {
-    const parentOnSelect = (0, import_react34.useContext)(SelectableContext_default);
-    const navContext = (0, import_react34.useContext)(NavContext_default);
-    const tabContext = (0, import_react34.useContext)(TabContext_default);
+    const parentOnSelect = (0, import_react44.useContext)(SelectableContext_default);
+    const navContext = (0, import_react44.useContext)(NavContext_default);
+    const tabContext = (0, import_react44.useContext)(TabContext_default);
     let isActive = active;
     const props = {
       role
@@ -30008,7 +30543,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       isActive
     }];
   }
-  var NavItem = /* @__PURE__ */ React46.forwardRef((_ref, ref) => {
+  var NavItem = /* @__PURE__ */ React62.forwardRef((_ref, ref) => {
     let {
       as: Component4 = Button_default,
       active,
@@ -30019,7 +30554,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       active
     }, options));
     props[dataAttr("active")] = meta.isActive;
-    return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Component4, Object.assign({}, options, props, {
+    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Component4, Object.assign({}, options, props, {
       ref
     }));
   });
@@ -30027,7 +30562,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavItem_default = NavItem;
 
   // node_modules/@restart/ui/esm/Nav.js
-  var import_jsx_runtime28 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
   var _excluded4 = ["as", "onSelect", "activeKey", "role", "onKeyDown"];
   function _objectWithoutPropertiesLoose5(r2, e3) {
     if (null == r2)
@@ -30044,7 +30579,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var noop2 = () => {
   };
   var EVENT_KEY_ATTR = dataAttr("event-key");
-  var Nav = /* @__PURE__ */ React47.forwardRef((_ref, ref) => {
+  var Nav = /* @__PURE__ */ React63.forwardRef((_ref, ref) => {
     let {
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
       as: Component4 = "div",
@@ -30054,9 +30589,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onKeyDown
     } = _ref, props = _objectWithoutPropertiesLoose5(_ref, _excluded4);
     const forceUpdate = useForceUpdate();
-    const needsRefocusRef = (0, import_react35.useRef)(false);
-    const parentOnSelect = (0, import_react35.useContext)(SelectableContext_default);
-    const tabContext = (0, import_react35.useContext)(TabContext_default);
+    const needsRefocusRef = (0, import_react45.useRef)(false);
+    const parentOnSelect = (0, import_react45.useContext)(SelectableContext_default);
+    const tabContext = (0, import_react45.useContext)(TabContext_default);
     let getControlledId, getControllerId;
     if (tabContext) {
       role = role || "tablist";
@@ -30064,7 +30599,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       getControlledId = tabContext.getControlledId;
       getControllerId = tabContext.getControllerId;
     }
-    const listNode = (0, import_react35.useRef)(null);
+    const listNode = (0, import_react45.useRef)(null);
     const getNextActiveTab = (offset) => {
       const currentListNode = listNode.current;
       if (!currentListNode)
@@ -30114,7 +30649,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       needsRefocusRef.current = true;
       forceUpdate();
     };
-    (0, import_react35.useEffect)(() => {
+    (0, import_react45.useEffect)(() => {
       if (listNode.current && needsRefocusRef.current) {
         const activeChild = listNode.current.querySelector(`[${EVENT_KEY_ATTR}][aria-selected=true]`);
         activeChild == null ? void 0 : activeChild.focus();
@@ -30122,9 +30657,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       needsRefocusRef.current = false;
     });
     const mergedRef = useMergedRefs_default2(ref, listNode);
-    return /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(SelectableContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(SelectableContext_default.Provider, {
       value: handleSelect,
-      children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(NavContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(NavContext_default.Provider, {
         value: {
           role,
           // used by NavLink to determine it's role
@@ -30132,7 +30667,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           getControlledId: getControlledId || noop2,
           getControllerId: getControllerId || noop2
         },
-        children: /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Component4, Object.assign({}, props, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Component4, Object.assign({}, props, {
           onKeyDown: handleKeyDown,
           ref: mergedRef,
           role
@@ -30146,12 +30681,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/ListGroupItem.js
-  var import_classnames22 = __toESM(require_classnames());
-  var React48 = __toESM(require_react());
-  var import_warning = __toESM(require_warning());
-  var import_jsx_runtime29 = __toESM(require_jsx_runtime());
+  var import_classnames34 = __toESM(require_classnames());
+  var React64 = __toESM(require_react());
+  var import_warning3 = __toESM(require_warning());
+  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
   "use client";
-  var ListGroupItem = /* @__PURE__ */ React48.forwardRef(({
+  var ListGroupItem = /* @__PURE__ */ React64.forwardRef(({
     bsPrefix,
     active,
     disabled,
@@ -30181,22 +30716,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       props["aria-disabled"] = true;
     }
     const Component4 = as2 || (action ? props.href ? "a" : "button" : "div");
-    true ? (0, import_warning.default)(as2 || !(!action && props.href), "`action=false` and `href` should not be used together.") : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(Component4, {
+    true ? (0, import_warning3.default)(as2 || !(!action && props.href), "`action=false` and `href` should not be used together.") : void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Component4, {
       ref,
       ...props,
       ...navItemProps,
       onClick: handleClick,
-      className: (0, import_classnames22.default)(className, bsPrefix, meta.isActive && "active", disabled && "disabled", variant && `${bsPrefix}-${variant}`, action && `${bsPrefix}-action`)
+      className: (0, import_classnames34.default)(className, bsPrefix, meta.isActive && "active", disabled && "disabled", variant && `${bsPrefix}-${variant}`, action && `${bsPrefix}-action`)
     });
   });
   ListGroupItem.displayName = "ListGroupItem";
   var ListGroupItem_default = ListGroupItem;
 
   // node_modules/react-bootstrap/esm/ListGroup.js
-  var import_jsx_runtime30 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
   "use client";
-  var ListGroup = /* @__PURE__ */ React49.forwardRef((props, ref) => {
+  var ListGroup = /* @__PURE__ */ React65.forwardRef((props, ref) => {
     const {
       className,
       bsPrefix: initialBsPrefix,
@@ -30214,12 +30749,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (horizontal) {
       horizontalVariant = horizontal === true ? "horizontal" : `horizontal-${horizontal}`;
     }
-    true ? (0, import_warning2.default)(!(horizontal && variant === "flush"), '`variant="flush"` and `horizontal` should not be used together.') : void 0;
-    return /* @__PURE__ */ (0, import_jsx_runtime30.jsx)(Nav_default, {
+    true ? (0, import_warning4.default)(!(horizontal && variant === "flush"), '`variant="flush"` and `horizontal` should not be used together.') : void 0;
+    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Nav_default, {
       ref,
       ...controlledProps,
       as: as2,
-      className: (0, import_classnames23.default)(className, bsPrefix, variant && `${bsPrefix}-${variant}`, horizontalVariant && `${bsPrefix}-${horizontalVariant}`, numbered && `${bsPrefix}-numbered`)
+      className: (0, import_classnames35.default)(className, bsPrefix, variant && `${bsPrefix}-${variant}`, horizontalVariant && `${bsPrefix}-${horizontalVariant}`, numbered && `${bsPrefix}-numbered`)
     });
   });
   ListGroup.displayName = "ListGroup";
@@ -30228,7 +30763,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Modal.js
-  var import_classnames29 = __toESM(require_classnames());
+  var import_classnames41 = __toESM(require_classnames());
 
   // node_modules/dom-helpers/esm/scrollbarSize.js
   var size;
@@ -30250,14 +30785,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/hooks/esm/useCallbackRef.js
-  var import_react36 = __toESM(require_react());
+  var import_react46 = __toESM(require_react());
   function useCallbackRef2() {
-    return (0, import_react36.useState)(null);
+    return (0, import_react46.useState)(null);
   }
 
   // node_modules/react-bootstrap/esm/Modal.js
-  var React60 = __toESM(require_react());
-  var import_react45 = __toESM(require_react());
+  var React76 = __toESM(require_react());
+  var import_react55 = __toESM(require_react());
 
   // node_modules/dom-helpers/esm/activeElement.js
   function activeElement(doc) {
@@ -30275,23 +30810,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/Modal.js
-  var import_react43 = __toESM(require_react());
-  var React52 = __toESM(require_react());
+  var import_react53 = __toESM(require_react());
+  var React68 = __toESM(require_react());
   var import_react_dom3 = __toESM(require_react_dom());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js
-  var import_react37 = __toESM(require_react());
+  var import_react47 = __toESM(require_react());
   function useUpdatedRef2(value) {
-    const valueRef = (0, import_react37.useRef)(value);
+    const valueRef = (0, import_react47.useRef)(value);
     valueRef.current = value;
     return valueRef;
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js
-  var import_react38 = __toESM(require_react());
+  var import_react48 = __toESM(require_react());
   function useWillUnmount2(fn2) {
     const onUnmount = useUpdatedRef2(fn2);
-    (0, import_react38.useEffect)(() => () => onUnmount.current(), []);
+    (0, import_react48.useEffect)(() => () => onUnmount.current(), []);
   }
 
   // node_modules/@restart/ui/esm/getScrollbarWidth.js
@@ -30385,7 +30920,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalManager_default = ModalManager;
 
   // node_modules/@restart/ui/esm/useWaitForDOMRef.js
-  var import_react39 = __toESM(require_react());
+  var import_react49 = __toESM(require_react());
   var resolveContainerRef = (ref, document2) => {
     if (!canUseDOM_default)
       return null;
@@ -30401,18 +30936,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   function useWaitForDOMRef(ref, onResolved) {
     const window2 = useWindow();
-    const [resolvedRef, setRef] = (0, import_react39.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
+    const [resolvedRef, setRef] = (0, import_react49.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
     if (!resolvedRef) {
       const earlyRef = resolveContainerRef(ref);
       if (earlyRef)
         setRef(earlyRef);
     }
-    (0, import_react39.useEffect)(() => {
+    (0, import_react49.useEffect)(() => {
       if (onResolved && resolvedRef) {
         onResolved(resolvedRef);
       }
     }, [onResolved, resolvedRef]);
-    (0, import_react39.useEffect)(() => {
+    (0, import_react49.useEffect)(() => {
       const nextRef = resolveContainerRef(ref);
       if (nextRef !== resolvedRef) {
         setRef(nextRef);
@@ -30422,10 +30957,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/ImperativeTransition.js
-  var import_react42 = __toESM(require_react());
+  var import_react52 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/NoopTransition.js
-  var import_react40 = __toESM(require_react());
+  var import_react50 = __toESM(require_react());
   function NoopTransition({
     children,
     in: inProp,
@@ -30433,10 +30968,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     mountOnEnter,
     unmountOnExit
   }) {
-    const ref = (0, import_react40.useRef)(null);
-    const hasEnteredRef = (0, import_react40.useRef)(inProp);
+    const ref = (0, import_react50.useRef)(null);
+    const hasEnteredRef = (0, import_react50.useRef)(inProp);
     const handleExited = useEventCallback2(onExited);
-    (0, import_react40.useEffect)(() => {
+    (0, import_react50.useEffect)(() => {
       if (inProp)
         hasEnteredRef.current = true;
       else {
@@ -30444,7 +30979,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }, [inProp, handleExited]);
     const combinedRef = useMergedRefs_default2(ref, getChildRef(children));
-    const child = /* @__PURE__ */ (0, import_react40.cloneElement)(children, {
+    const child = /* @__PURE__ */ (0, import_react50.cloneElement)(children, {
       ref: combinedRef
     });
     if (inProp)
@@ -30460,10 +30995,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NoopTransition_default = NoopTransition;
 
   // node_modules/@restart/ui/esm/RTGTransition.js
-  var React50 = __toESM(require_react());
+  var React66 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/useRTGTransitionProps.js
-  var import_react41 = __toESM(require_react());
+  var import_react51 = __toESM(require_react());
   var _excluded5 = ["onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "addEndListener", "children"];
   function _objectWithoutPropertiesLoose6(r2, e3) {
     if (null == r2)
@@ -30488,20 +31023,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       addEndListener,
       children
     } = _ref, props = _objectWithoutPropertiesLoose6(_ref, _excluded5);
-    const nodeRef = (0, import_react41.useRef)(null);
+    const nodeRef = (0, import_react51.useRef)(null);
     const mergedRef = useMergedRefs_default2(nodeRef, getChildRef(children));
     const normalize = (callback) => (param) => {
       if (callback && nodeRef.current) {
         callback(nodeRef.current, param);
       }
     };
-    const handleEnter = (0, import_react41.useCallback)(normalize(onEnter), [onEnter]);
-    const handleEntering = (0, import_react41.useCallback)(normalize(onEntering), [onEntering]);
-    const handleEntered = (0, import_react41.useCallback)(normalize(onEntered), [onEntered]);
-    const handleExit = (0, import_react41.useCallback)(normalize(onExit), [onExit]);
-    const handleExiting = (0, import_react41.useCallback)(normalize(onExiting), [onExiting]);
-    const handleExited = (0, import_react41.useCallback)(normalize(onExited), [onExited]);
-    const handleAddEndListener = (0, import_react41.useCallback)(normalize(addEndListener), [addEndListener]);
+    const handleEnter = (0, import_react51.useCallback)(normalize(onEnter), [onEnter]);
+    const handleEntering = (0, import_react51.useCallback)(normalize(onEntering), [onEntering]);
+    const handleEntered = (0, import_react51.useCallback)(normalize(onEntered), [onEntered]);
+    const handleExit = (0, import_react51.useCallback)(normalize(onExit), [onExit]);
+    const handleExiting = (0, import_react51.useCallback)(normalize(onExiting), [onExiting]);
+    const handleExited = (0, import_react51.useCallback)(normalize(onExited), [onExited]);
+    const handleAddEndListener = (0, import_react51.useCallback)(normalize(addEndListener), [addEndListener]);
     return Object.assign({}, props, {
       nodeRef
     }, onEnter && {
@@ -30524,14 +31059,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         children(status, Object.assign({}, innerProps, {
           ref: mergedRef
         }))
-      ) : /* @__PURE__ */ (0, import_react41.cloneElement)(children, {
+      ) : /* @__PURE__ */ (0, import_react51.cloneElement)(children, {
         ref: mergedRef
       })
     });
   }
 
   // node_modules/@restart/ui/esm/RTGTransition.js
-  var import_jsx_runtime31 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
   var _excluded6 = ["component"];
   function _objectWithoutPropertiesLoose7(r2, e3) {
     if (null == r2)
@@ -30545,25 +31080,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     return t2;
   }
-  var RTGTransition = /* @__PURE__ */ React50.forwardRef((_ref, ref) => {
+  var RTGTransition = /* @__PURE__ */ React66.forwardRef((_ref, ref) => {
     let {
       component: Component4
     } = _ref, props = _objectWithoutPropertiesLoose7(_ref, _excluded6);
     const transitionProps = useRTGTransitionProps(props);
-    return /* @__PURE__ */ (0, import_jsx_runtime31.jsx)(Component4, Object.assign({
+    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Component4, Object.assign({
       ref
     }, transitionProps));
   });
   var RTGTransition_default = RTGTransition;
 
   // node_modules/@restart/ui/esm/ImperativeTransition.js
-  var import_jsx_runtime32 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
   function useTransition({
     in: inProp,
     onTransition
   }) {
-    const ref = (0, import_react42.useRef)(null);
-    const isInitialRef = (0, import_react42.useRef)(true);
+    const ref = (0, import_react52.useRef)(null);
+    const isInitialRef = (0, import_react52.useRef)(true);
     const handleTransition = useEventCallback2(onTransition);
     useIsomorphicEffect_default(() => {
       if (!ref.current) {
@@ -30595,7 +31130,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     onEntered,
     transition
   }) {
-    const [exited, setExited] = (0, import_react42.useState)(!inProp);
+    const [exited, setExited] = (0, import_react52.useState)(!inProp);
     if (inProp && exited) {
       setExited(false);
     }
@@ -30620,26 +31155,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     });
     const combinedRef = useMergedRefs_default2(ref, getChildRef(children));
-    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react42.cloneElement)(children, {
+    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react52.cloneElement)(children, {
       ref: combinedRef
     });
   }
   function renderTransition(component, runTransition, props) {
     if (component) {
-      return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(RTGTransition_default, Object.assign({}, props, {
+      return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(RTGTransition_default, Object.assign({}, props, {
         component
       }));
     }
     if (runTransition) {
-      return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(ImperativeTransition, Object.assign({}, props, {
+      return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(ImperativeTransition, Object.assign({}, props, {
         transition: runTransition
       }));
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime32.jsx)(NoopTransition_default, Object.assign({}, props));
+    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(NoopTransition_default, Object.assign({}, props));
   }
 
   // node_modules/@restart/ui/esm/Modal.js
-  var import_jsx_runtime33 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
   var _excluded7 = ["show", "role", "className", "style", "children", "backdrop", "keyboard", "onBackdropClick", "onEscapeKeyDown", "transition", "runTransition", "backdropTransition", "runBackdropTransition", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "renderDialog", "renderBackdrop", "manager", "container", "onShow", "onHide", "onExit", "onExited", "onExiting", "onEnter", "onEntering", "onEntered"];
   function _objectWithoutPropertiesLoose8(r2, e3) {
     if (null == r2)
@@ -30664,7 +31199,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function useModalManager(provided) {
     const window2 = useWindow();
     const modalManager = provided || getManager(window2);
-    const modal = (0, import_react43.useRef)({
+    const modal = (0, import_react53.useRef)({
       dialog: null,
       backdrop: null
     });
@@ -30672,15 +31207,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       add: () => modalManager.add(modal.current),
       remove: () => modalManager.remove(modal.current),
       isTopModal: () => modalManager.isTopModal(modal.current),
-      setDialogRef: (0, import_react43.useCallback)((ref) => {
+      setDialogRef: (0, import_react53.useCallback)((ref) => {
         modal.current.dialog = ref;
       }, []),
-      setBackdropRef: (0, import_react43.useCallback)((ref) => {
+      setBackdropRef: (0, import_react53.useCallback)((ref) => {
         modal.current.backdrop = ref;
       }, [])
     });
   }
-  var Modal = /* @__PURE__ */ (0, import_react43.forwardRef)((_ref, ref) => {
+  var Modal = /* @__PURE__ */ (0, import_react53.forwardRef)((_ref, ref) => {
     let {
       show = false,
       role = "dialog",
@@ -30700,7 +31235,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       restoreFocus = true,
       restoreFocusOptions,
       renderDialog,
-      renderBackdrop = (props) => /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", Object.assign({}, props)),
+      renderBackdrop = (props) => /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", Object.assign({}, props)),
       manager: providedManager,
       container: containerRef,
       onShow,
@@ -30718,9 +31253,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const modal = useModalManager(providedManager);
     const isMounted = useMounted();
     const prevShow = usePrevious(show);
-    const [exited, setExited] = (0, import_react43.useState)(!show);
-    const lastFocusRef = (0, import_react43.useRef)(null);
-    (0, import_react43.useImperativeHandle)(ref, () => modal, [modal]);
+    const [exited, setExited] = (0, import_react53.useState)(!show);
+    const lastFocusRef = (0, import_react53.useRef)(null);
+    (0, import_react53.useImperativeHandle)(ref, () => modal, [modal]);
     if (canUseDOM_default && !prevShow && show) {
       lastFocusRef.current = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
     }
@@ -30760,7 +31295,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         lastFocusRef.current = null;
       }
     });
-    (0, import_react43.useEffect)(() => {
+    (0, import_react53.useEffect)(() => {
       if (!show || !container)
         return;
       handleShow();
@@ -30770,7 +31305,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       /* should never change: */
       handleShow
     ]);
-    (0, import_react43.useEffect)(() => {
+    (0, import_react53.useEffect)(() => {
       if (!exited)
         return;
       handleHide();
@@ -30804,8 +31339,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       }
     });
-    const removeFocusListenerRef = (0, import_react43.useRef)();
-    const removeKeydownListenerRef = (0, import_react43.useRef)();
+    const removeFocusListenerRef = (0, import_react53.useRef)();
+    const removeKeydownListenerRef = (0, import_react53.useRef)();
     const handleHidden = (...args) => {
       setExited(true);
       onExited == null ? void 0 : onExited(...args);
@@ -30823,8 +31358,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       className,
       tabIndex: -1
     });
-    let dialog = renderDialog ? renderDialog(dialogProps) : /* @__PURE__ */ (0, import_jsx_runtime33.jsx)("div", Object.assign({}, dialogProps, {
-      children: /* @__PURE__ */ React52.cloneElement(children, {
+    let dialog = renderDialog ? renderDialog(dialogProps) : /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("div", Object.assign({}, dialogProps, {
+      children: /* @__PURE__ */ React68.cloneElement(children, {
         role: "document"
       })
     }));
@@ -30855,8 +31390,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         children: backdropElement
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime33.jsx)(import_jsx_runtime33.Fragment, {
-      children: /* @__PURE__ */ import_react_dom3.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime33.jsxs)(import_jsx_runtime33.Fragment, {
+    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(import_jsx_runtime50.Fragment, {
+      children: /* @__PURE__ */ import_react_dom3.default.createPortal(/* @__PURE__ */ (0, import_jsx_runtime50.jsxs)(import_jsx_runtime50.Fragment, {
         children: [backdropElement, dialog]
       }), container)
     });
@@ -30953,20 +31488,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var BootstrapModalManager_default = BootstrapModalManager;
 
   // node_modules/react-bootstrap/esm/ModalBody.js
-  var React53 = __toESM(require_react());
-  var import_classnames24 = __toESM(require_classnames());
-  var import_jsx_runtime34 = __toESM(require_jsx_runtime());
+  var React69 = __toESM(require_react());
+  var import_classnames36 = __toESM(require_classnames());
+  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalBody = /* @__PURE__ */ React53.forwardRef(({
+  var ModalBody = /* @__PURE__ */ React69.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal-body");
-    return /* @__PURE__ */ (0, import_jsx_runtime34.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Component4, {
       ref,
-      className: (0, import_classnames24.default)(className, bsPrefix),
+      className: (0, import_classnames36.default)(className, bsPrefix),
       ...props
     });
   });
@@ -30974,20 +31509,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalBody_default = ModalBody;
 
   // node_modules/react-bootstrap/esm/ModalContext.js
-  var React54 = __toESM(require_react());
+  var React70 = __toESM(require_react());
   "use client";
-  var ModalContext = /* @__PURE__ */ React54.createContext({
+  var ModalContext = /* @__PURE__ */ React70.createContext({
     onHide() {
     }
   });
   var ModalContext_default = ModalContext;
 
   // node_modules/react-bootstrap/esm/ModalDialog.js
-  var import_classnames25 = __toESM(require_classnames());
-  var React55 = __toESM(require_react());
-  var import_jsx_runtime35 = __toESM(require_jsx_runtime());
+  var import_classnames37 = __toESM(require_classnames());
+  var React71 = __toESM(require_react());
+  var import_jsx_runtime52 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalDialog = /* @__PURE__ */ React55.forwardRef(({
+  var ModalDialog = /* @__PURE__ */ React71.forwardRef(({
     bsPrefix,
     className,
     contentClassName,
@@ -31001,12 +31536,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal");
     const dialogClass = `${bsPrefix}-dialog`;
     const fullScreenClass = typeof fullscreen === "string" ? `${bsPrefix}-fullscreen-${fullscreen}` : `${bsPrefix}-fullscreen`;
-    return /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", {
       ...props,
       ref,
-      className: (0, import_classnames25.default)(dialogClass, className, size2 && `${bsPrefix}-${size2}`, centered && `${dialogClass}-centered`, scrollable && `${dialogClass}-scrollable`, fullscreen && fullScreenClass),
-      children: /* @__PURE__ */ (0, import_jsx_runtime35.jsx)("div", {
-        className: (0, import_classnames25.default)(`${bsPrefix}-content`, contentClassName),
+      className: (0, import_classnames37.default)(dialogClass, className, size2 && `${bsPrefix}-${size2}`, centered && `${dialogClass}-centered`, scrollable && `${dialogClass}-scrollable`, fullscreen && fullScreenClass),
+      children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", {
+        className: (0, import_classnames37.default)(`${bsPrefix}-content`, contentClassName),
         children
       })
     });
@@ -31015,20 +31550,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalDialog_default = ModalDialog;
 
   // node_modules/react-bootstrap/esm/ModalFooter.js
-  var React56 = __toESM(require_react());
-  var import_classnames26 = __toESM(require_classnames());
-  var import_jsx_runtime36 = __toESM(require_jsx_runtime());
+  var React72 = __toESM(require_react());
+  var import_classnames38 = __toESM(require_classnames());
+  var import_jsx_runtime53 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalFooter = /* @__PURE__ */ React56.forwardRef(({
+  var ModalFooter = /* @__PURE__ */ React72.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal-footer");
-    return /* @__PURE__ */ (0, import_jsx_runtime36.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime53.jsx)(Component4, {
       ref,
-      className: (0, import_classnames26.default)(className, bsPrefix),
+      className: (0, import_classnames38.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31036,16 +31571,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalFooter_default = ModalFooter;
 
   // node_modules/react-bootstrap/esm/ModalHeader.js
-  var import_classnames27 = __toESM(require_classnames());
-  var React58 = __toESM(require_react());
+  var import_classnames39 = __toESM(require_classnames());
+  var React74 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/AbstractModalHeader.js
-  var React57 = __toESM(require_react());
-  var import_react44 = __toESM(require_react());
-  var import_jsx_runtime37 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime38 = __toESM(require_jsx_runtime());
+  var React73 = __toESM(require_react());
+  var import_react54 = __toESM(require_react());
+  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
   "use client";
-  var AbstractModalHeader = /* @__PURE__ */ React57.forwardRef(({
+  var AbstractModalHeader = /* @__PURE__ */ React73.forwardRef(({
     closeLabel = "Close",
     closeVariant,
     closeButton = false,
@@ -31053,15 +31588,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     children,
     ...props
   }, ref) => {
-    const context3 = (0, import_react44.useContext)(ModalContext_default);
+    const context3 = (0, import_react54.useContext)(ModalContext_default);
     const handleClick = useEventCallback(() => {
       context3 == null || context3.onHide();
       onHide == null || onHide();
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime38.jsxs)("div", {
+    return /* @__PURE__ */ (0, import_jsx_runtime55.jsxs)("div", {
       ref,
       ...props,
-      children: [children, closeButton && /* @__PURE__ */ (0, import_jsx_runtime37.jsx)(CloseButton_default, {
+      children: [children, closeButton && /* @__PURE__ */ (0, import_jsx_runtime54.jsx)(CloseButton_default, {
         "aria-label": closeLabel,
         variant: closeVariant,
         onClick: handleClick
@@ -31072,9 +31607,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var AbstractModalHeader_default = AbstractModalHeader;
 
   // node_modules/react-bootstrap/esm/ModalHeader.js
-  var import_jsx_runtime39 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
   "use client";
-  var ModalHeader = /* @__PURE__ */ React58.forwardRef(({
+  var ModalHeader = /* @__PURE__ */ React74.forwardRef(({
     bsPrefix,
     className,
     closeLabel = "Close",
@@ -31082,10 +31617,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal-header");
-    return /* @__PURE__ */ (0, import_jsx_runtime39.jsx)(AbstractModalHeader_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(AbstractModalHeader_default, {
       ref,
       ...props,
-      className: (0, import_classnames27.default)(className, bsPrefix),
+      className: (0, import_classnames39.default)(className, bsPrefix),
       closeLabel,
       closeButton
     });
@@ -31094,21 +31629,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalHeader_default = ModalHeader;
 
   // node_modules/react-bootstrap/esm/ModalTitle.js
-  var React59 = __toESM(require_react());
-  var import_classnames28 = __toESM(require_classnames());
-  var import_jsx_runtime40 = __toESM(require_jsx_runtime());
+  var React75 = __toESM(require_react());
+  var import_classnames40 = __toESM(require_classnames());
+  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
   "use client";
   var DivStyledAsH42 = divWithClassName_default("h4");
-  var ModalTitle = /* @__PURE__ */ React59.forwardRef(({
+  var ModalTitle = /* @__PURE__ */ React75.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = DivStyledAsH42,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal-title");
-    return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Component4, {
       ref,
-      className: (0, import_classnames28.default)(className, bsPrefix),
+      className: (0, import_classnames40.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31116,21 +31651,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalTitle_default = ModalTitle;
 
   // node_modules/react-bootstrap/esm/Modal.js
-  var import_jsx_runtime41 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
   "use client";
   function DialogTransition(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Fade_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Fade_default, {
       ...props,
       timeout: null
     });
   }
   function BackdropTransition(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Fade_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Fade_default, {
       ...props,
       timeout: null
     });
   }
-  var Modal2 = /* @__PURE__ */ React60.forwardRef(({
+  var Modal2 = /* @__PURE__ */ React76.forwardRef(({
     bsPrefix,
     className,
     style: style2,
@@ -31165,17 +31700,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     manager: propsManager,
     ...props
   }, ref) => {
-    const [modalStyle, setStyle] = (0, import_react45.useState)({});
-    const [animateStaticModal, setAnimateStaticModal] = (0, import_react45.useState)(false);
-    const waitingForMouseUpRef = (0, import_react45.useRef)(false);
-    const ignoreBackdropClickRef = (0, import_react45.useRef)(false);
-    const removeStaticModalAnimationRef = (0, import_react45.useRef)(null);
+    const [modalStyle, setStyle] = (0, import_react55.useState)({});
+    const [animateStaticModal, setAnimateStaticModal] = (0, import_react55.useState)(false);
+    const waitingForMouseUpRef = (0, import_react55.useRef)(false);
+    const ignoreBackdropClickRef = (0, import_react55.useRef)(false);
+    const removeStaticModalAnimationRef = (0, import_react55.useRef)(null);
     const [modal, setModalRef] = useCallbackRef2();
     const mergedRef = useMergedRefs_default(ref, setModalRef);
     const handleHide = useEventCallback(onHide);
     const isRTL = useIsRTL();
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal");
-    const modalContext = (0, import_react45.useMemo)(() => ({
+    const modalContext = (0, import_react55.useMemo)(() => ({
       onHide: handleHide
     }), [handleHide]);
     function getModalManager() {
@@ -31266,27 +31801,27 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExited == null || onExited(node);
       removeEventListener_default(window, "resize", handleWindowResize);
     };
-    const renderBackdrop = (0, import_react45.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", {
+    const renderBackdrop = (0, import_react55.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("div", {
       ...backdropProps,
-      className: (0, import_classnames29.default)(`${bsPrefix}-backdrop`, backdropClassName, !animation && "show")
+      className: (0, import_classnames41.default)(`${bsPrefix}-backdrop`, backdropClassName, !animation && "show")
     }), [animation, backdropClassName, bsPrefix]);
     const baseModalStyle = {
       ...style2,
       ...modalStyle
     };
     baseModalStyle.display = "block";
-    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("div", {
+    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime58.jsx)("div", {
       role: "dialog",
       ...dialogProps,
       style: baseModalStyle,
-      className: (0, import_classnames29.default)(className, bsPrefix, animateStaticModal && `${bsPrefix}-static`, !animation && "show"),
+      className: (0, import_classnames41.default)(className, bsPrefix, animateStaticModal && `${bsPrefix}-static`, !animation && "show"),
       onClick: backdrop ? handleClick : void 0,
       onMouseUp: handleMouseUp,
       "data-bs-theme": dataBsTheme,
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledby,
       "aria-describedby": ariaDescribedby,
-      children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Dialog, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Dialog, {
         ...props,
         onMouseDown: handleDialogMouseDown,
         className: dialogClassName,
@@ -31294,9 +31829,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         children
       })
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(ModalContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(ModalContext_default.Provider, {
       value: modalContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime41.jsx)(Modal_default, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Modal_default, {
         show,
         ref: mergedRef,
         backdrop,
@@ -31335,25 +31870,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Nav.js
-  var import_classnames32 = __toESM(require_classnames());
-  var React63 = __toESM(require_react());
-  var import_react46 = __toESM(require_react());
+  var import_classnames44 = __toESM(require_classnames());
+  var React79 = __toESM(require_react());
+  var import_react56 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavItem.js
-  var React61 = __toESM(require_react());
-  var import_classnames30 = __toESM(require_classnames());
-  var import_jsx_runtime42 = __toESM(require_jsx_runtime());
+  var React77 = __toESM(require_react());
+  var import_classnames42 = __toESM(require_classnames());
+  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
   "use client";
-  var NavItem2 = /* @__PURE__ */ React61.forwardRef(({
+  var NavItem2 = /* @__PURE__ */ React77.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "nav-item");
-    return /* @__PURE__ */ (0, import_jsx_runtime42.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Component4, {
       ref,
-      className: (0, import_classnames30.default)(className, bsPrefix),
+      className: (0, import_classnames42.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31361,11 +31896,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavItem_default2 = NavItem2;
 
   // node_modules/react-bootstrap/esm/NavLink.js
-  var import_classnames31 = __toESM(require_classnames());
-  var React62 = __toESM(require_react());
-  var import_jsx_runtime43 = __toESM(require_jsx_runtime());
+  var import_classnames43 = __toESM(require_classnames());
+  var React78 = __toESM(require_react());
+  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
   "use client";
-  var NavLink2 = /* @__PURE__ */ React62.forwardRef(({
+  var NavLink2 = /* @__PURE__ */ React78.forwardRef(({
     bsPrefix,
     className,
     as: Component4 = Anchor_default,
@@ -31381,21 +31916,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       disabled,
       ...props
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime43.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(Component4, {
       ...props,
       ...navItemProps,
       ref,
       disabled,
-      className: (0, import_classnames31.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
+      className: (0, import_classnames43.default)(className, bsPrefix, disabled && "disabled", meta.isActive && "active")
     });
   });
   NavLink2.displayName = "NavLink";
   var NavLink_default = NavLink2;
 
   // node_modules/react-bootstrap/esm/Nav.js
-  var import_jsx_runtime44 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
   "use client";
-  var Nav2 = /* @__PURE__ */ React63.forwardRef((uncontrolledProps, ref) => {
+  var Nav2 = /* @__PURE__ */ React79.forwardRef((uncontrolledProps, ref) => {
     const {
       as: as2 = "div",
       bsPrefix: initialBsPrefix,
@@ -31414,8 +31949,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     let navbarBsPrefix;
     let cardHeaderBsPrefix;
     let isNavbar = false;
-    const navbarContext = (0, import_react46.useContext)(NavbarContext_default);
-    const cardHeaderContext = (0, import_react46.useContext)(CardHeaderContext_default);
+    const navbarContext = (0, import_react56.useContext)(NavbarContext_default);
+    const cardHeaderContext = (0, import_react56.useContext)(CardHeaderContext_default);
     if (navbarContext) {
       navbarBsPrefix = navbarContext.bsPrefix;
       isNavbar = navbar == null ? true : navbar;
@@ -31424,11 +31959,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         cardHeaderBsPrefix
       } = cardHeaderContext);
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime44.jsx)(Nav_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Nav_default, {
       as: as2,
       ref,
       activeKey,
-      className: (0, import_classnames32.default)(className, {
+      className: (0, import_classnames44.default)(className, {
         [bsPrefix]: !isNavbar,
         [`${navbarBsPrefix}-nav`]: isNavbar,
         [`${navbarBsPrefix}-nav-scroll`]: isNavbar && navbarScroll,
@@ -31447,16 +31982,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Navbar.js
-  var import_classnames41 = __toESM(require_classnames());
-  var React74 = __toESM(require_react());
-  var import_react53 = __toESM(require_react());
+  var import_classnames53 = __toESM(require_classnames());
+  var React90 = __toESM(require_react());
+  var import_react63 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavbarBrand.js
-  var import_classnames33 = __toESM(require_classnames());
-  var React64 = __toESM(require_react());
-  var import_jsx_runtime45 = __toESM(require_jsx_runtime());
+  var import_classnames45 = __toESM(require_classnames());
+  var React80 = __toESM(require_react());
+  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarBrand = /* @__PURE__ */ React64.forwardRef(({
+  var NavbarBrand = /* @__PURE__ */ React80.forwardRef(({
     bsPrefix,
     className,
     as: as2,
@@ -31464,31 +31999,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-brand");
     const Component4 = as2 || (props.href ? "a" : "span");
-    return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Component4, {
       ...props,
       ref,
-      className: (0, import_classnames33.default)(className, bsPrefix)
+      className: (0, import_classnames45.default)(className, bsPrefix)
     });
   });
   NavbarBrand.displayName = "NavbarBrand";
   var NavbarBrand_default = NavbarBrand;
 
   // node_modules/react-bootstrap/esm/NavbarCollapse.js
-  var React65 = __toESM(require_react());
-  var import_react47 = __toESM(require_react());
-  var import_jsx_runtime46 = __toESM(require_jsx_runtime());
+  var React81 = __toESM(require_react());
+  var import_react57 = __toESM(require_react());
+  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarCollapse = /* @__PURE__ */ React65.forwardRef(({
+  var NavbarCollapse = /* @__PURE__ */ React81.forwardRef(({
     children,
     bsPrefix,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-collapse");
-    const context3 = (0, import_react47.useContext)(NavbarContext_default);
-    return /* @__PURE__ */ (0, import_jsx_runtime46.jsx)(Collapse_default, {
+    const context3 = (0, import_react57.useContext)(NavbarContext_default);
+    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(Collapse_default, {
       in: !!(context3 && context3.expanded),
       ...props,
-      children: /* @__PURE__ */ (0, import_jsx_runtime46.jsx)("div", {
+      children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)("div", {
         ref,
         className: bsPrefix,
         children
@@ -31499,12 +32034,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarCollapse_default = NavbarCollapse;
 
   // node_modules/react-bootstrap/esm/NavbarToggle.js
-  var import_classnames34 = __toESM(require_classnames());
-  var React66 = __toESM(require_react());
-  var import_react48 = __toESM(require_react());
-  var import_jsx_runtime47 = __toESM(require_jsx_runtime());
+  var import_classnames46 = __toESM(require_classnames());
+  var React82 = __toESM(require_react());
+  var import_react58 = __toESM(require_react());
+  var import_jsx_runtime64 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarToggle = /* @__PURE__ */ React66.forwardRef(({
+  var NavbarToggle = /* @__PURE__ */ React82.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -31518,7 +32053,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const {
       onToggle,
       expanded
-    } = (0, import_react48.useContext)(NavbarContext_default) || {};
+    } = (0, import_react58.useContext)(NavbarContext_default) || {};
     const handleClick = useEventCallback((e3) => {
       if (onClick)
         onClick(e3);
@@ -31528,13 +32063,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (Component4 === "button") {
       props.type = "button";
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)(Component4, {
       ...props,
       ref,
       onClick: handleClick,
       "aria-label": label,
-      className: (0, import_classnames34.default)(className, bsPrefix, !expanded && "collapsed"),
-      children: children || /* @__PURE__ */ (0, import_jsx_runtime47.jsx)("span", {
+      className: (0, import_classnames46.default)(className, bsPrefix, !expanded && "collapsed"),
+      children: children || /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("span", {
         className: `${bsPrefix}-icon`
       })
     });
@@ -31543,14 +32078,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarToggle_default = NavbarToggle;
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var React72 = __toESM(require_react());
-  var import_react52 = __toESM(require_react());
+  var React88 = __toESM(require_react());
+  var import_react62 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var import_classnames39 = __toESM(require_classnames());
+  var import_classnames51 = __toESM(require_classnames());
 
   // node_modules/@restart/hooks/esm/useMediaQuery.js
-  var import_react49 = __toESM(require_react());
+  var import_react59 = __toESM(require_react());
   var matchersByWindow = /* @__PURE__ */ new WeakMap();
   var getMatcher = (query, targetWindow) => {
     if (!query || !targetWindow)
@@ -31567,7 +32102,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   function useMediaQuery(query, targetWindow = typeof window === "undefined" ? void 0 : window) {
     const mql = getMatcher(query, targetWindow);
-    const [matches, setMatches] = (0, import_react49.useState)(() => mql ? mql.matches : false);
+    const [matches, setMatches] = (0, import_react59.useState)(() => mql ? mql.matches : false);
     useIsomorphicEffect_default2(() => {
       let mql2 = getMatcher(query, targetWindow);
       if (!mql2) {
@@ -31593,7 +32128,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/hooks/esm/useBreakpoint.js
-  var import_react50 = __toESM(require_react());
+  var import_react60 = __toESM(require_react());
   function createBreakpointHook(breakpointValues) {
     const names = Object.keys(breakpointValues);
     function and(query, next) {
@@ -31633,7 +32168,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           [breakpointOrMap]: direction
         };
       }
-      let query = (0, import_react50.useMemo)(() => Object.entries(breakpointMap).reduce((query2, [key, direction2]) => {
+      let query = (0, import_react60.useMemo)(() => Object.entries(breakpointMap).reduce((query2, [key, direction2]) => {
         if (direction2 === "up" || direction2 === true) {
           query2 = and(query2, getMinQuery(key));
         }
@@ -31657,24 +32192,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var useBreakpoint_default = useBreakpoint;
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var React71 = __toESM(require_react());
-  var import_react51 = __toESM(require_react());
+  var React87 = __toESM(require_react());
+  var import_react61 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/OffcanvasBody.js
-  var React67 = __toESM(require_react());
-  var import_classnames35 = __toESM(require_classnames());
-  var import_jsx_runtime48 = __toESM(require_jsx_runtime());
+  var React83 = __toESM(require_react());
+  var import_classnames47 = __toESM(require_classnames());
+  var import_jsx_runtime65 = __toESM(require_jsx_runtime());
   "use client";
-  var OffcanvasBody = /* @__PURE__ */ React67.forwardRef(({
+  var OffcanvasBody = /* @__PURE__ */ React83.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-body");
-    return /* @__PURE__ */ (0, import_jsx_runtime48.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime65.jsx)(Component4, {
       ref,
-      className: (0, import_classnames35.default)(className, bsPrefix),
+      className: (0, import_classnames47.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31682,15 +32217,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasBody_default = OffcanvasBody;
 
   // node_modules/react-bootstrap/esm/OffcanvasToggling.js
-  var import_classnames36 = __toESM(require_classnames());
-  var React68 = __toESM(require_react());
-  var import_jsx_runtime49 = __toESM(require_jsx_runtime());
+  var import_classnames48 = __toESM(require_classnames());
+  var React84 = __toESM(require_react());
+  var import_jsx_runtime66 = __toESM(require_jsx_runtime());
   "use client";
   var transitionStyles = {
     [ENTERING]: "show",
     [ENTERED]: "show"
   };
-  var OffcanvasToggling = /* @__PURE__ */ React68.forwardRef(({
+  var OffcanvasToggling = /* @__PURE__ */ React84.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -31701,7 +32236,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
-    return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)(TransitionWrapper_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime66.jsx)(TransitionWrapper_default, {
       ref,
       addEndListener: transitionEndListener,
       in: inProp,
@@ -31710,9 +32245,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       appear,
       ...props,
       childRef: getChildRef(children),
-      children: (status, innerProps) => /* @__PURE__ */ React68.cloneElement(children, {
+      children: (status, innerProps) => /* @__PURE__ */ React84.cloneElement(children, {
         ...innerProps,
-        className: (0, import_classnames36.default)(className, children.props.className, (status === ENTERING || status === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
+        className: (0, import_classnames48.default)(className, children.props.className, (status === ENTERING || status === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
       })
     });
   });
@@ -31720,11 +32255,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasToggling_default = OffcanvasToggling;
 
   // node_modules/react-bootstrap/esm/OffcanvasHeader.js
-  var import_classnames37 = __toESM(require_classnames());
-  var React69 = __toESM(require_react());
-  var import_jsx_runtime50 = __toESM(require_jsx_runtime());
+  var import_classnames49 = __toESM(require_classnames());
+  var React85 = __toESM(require_react());
+  var import_jsx_runtime67 = __toESM(require_jsx_runtime());
   "use client";
-  var OffcanvasHeader = /* @__PURE__ */ React69.forwardRef(({
+  var OffcanvasHeader = /* @__PURE__ */ React85.forwardRef(({
     bsPrefix,
     className,
     closeLabel = "Close",
@@ -31732,10 +32267,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-header");
-    return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)(AbstractModalHeader_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime67.jsx)(AbstractModalHeader_default, {
       ref,
       ...props,
-      className: (0, import_classnames37.default)(className, bsPrefix),
+      className: (0, import_classnames49.default)(className, bsPrefix),
       closeLabel,
       closeButton
     });
@@ -31744,21 +32279,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasHeader_default = OffcanvasHeader;
 
   // node_modules/react-bootstrap/esm/OffcanvasTitle.js
-  var React70 = __toESM(require_react());
-  var import_classnames38 = __toESM(require_classnames());
-  var import_jsx_runtime51 = __toESM(require_jsx_runtime());
+  var React86 = __toESM(require_react());
+  var import_classnames50 = __toESM(require_classnames());
+  var import_jsx_runtime68 = __toESM(require_jsx_runtime());
   "use client";
   var DivStyledAsH52 = divWithClassName_default("h5");
-  var OffcanvasTitle = /* @__PURE__ */ React70.forwardRef(({
+  var OffcanvasTitle = /* @__PURE__ */ React86.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = DivStyledAsH52,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas-title");
-    return /* @__PURE__ */ (0, import_jsx_runtime51.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime68.jsx)(Component4, {
       ref,
-      className: (0, import_classnames38.default)(className, bsPrefix),
+      className: (0, import_classnames50.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31766,21 +32301,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasTitle_default = OffcanvasTitle;
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var import_jsx_runtime52 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime53 = __toESM(require_jsx_runtime());
-  var import_jsx_runtime54 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime69 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime70 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime71 = __toESM(require_jsx_runtime());
   "use client";
   function DialogTransition2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(OffcanvasToggling_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(OffcanvasToggling_default, {
       ...props
     });
   }
   function BackdropTransition2(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Fade_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(Fade_default, {
       ...props
     });
   }
-  var Offcanvas = /* @__PURE__ */ React71.forwardRef(({
+  var Offcanvas = /* @__PURE__ */ React87.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -31811,15 +32346,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     renderStaticNode = false,
     ...props
   }, ref) => {
-    const modalManager = (0, import_react51.useRef)();
+    const modalManager = (0, import_react61.useRef)();
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
-    const [showOffcanvas, setShowOffcanvas] = (0, import_react51.useState)(false);
+    const [showOffcanvas, setShowOffcanvas] = (0, import_react61.useState)(false);
     const handleHide = useEventCallback(onHide);
     const hideResponsiveOffcanvas = useBreakpoint_default(responsive || "xs", "up");
-    (0, import_react51.useEffect)(() => {
+    (0, import_react61.useEffect)(() => {
       setShowOffcanvas(responsive ? show && !hideResponsiveOffcanvas : show);
     }, [show, responsive, hideResponsiveOffcanvas]);
-    const modalContext = (0, import_react51.useMemo)(() => ({
+    const modalContext = (0, import_react61.useMemo)(() => ({
       onHide: handleHide
     }), [handleHide]);
     function getModalManager() {
@@ -31844,21 +32379,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         node.style.visibility = "";
       onExited == null || onExited(...args);
     };
-    const renderBackdrop = (0, import_react51.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", {
+    const renderBackdrop = (0, import_react61.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("div", {
       ...backdropProps,
-      className: (0, import_classnames39.default)(`${bsPrefix}-backdrop`, backdropClassName)
+      className: (0, import_classnames51.default)(`${bsPrefix}-backdrop`, backdropClassName)
     }), [backdropClassName, bsPrefix]);
-    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime52.jsx)("div", {
+    const renderDialog = (dialogProps) => /* @__PURE__ */ (0, import_jsx_runtime69.jsx)("div", {
       ...dialogProps,
       ...props,
-      className: (0, import_classnames39.default)(className, responsive ? `${bsPrefix}-${responsive}` : bsPrefix, `${bsPrefix}-${placement}`),
+      className: (0, import_classnames51.default)(className, responsive ? `${bsPrefix}-${responsive}` : bsPrefix, `${bsPrefix}-${placement}`),
       "aria-labelledby": ariaLabelledby,
       children
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime54.jsxs)(import_jsx_runtime53.Fragment, {
-      children: [!showOffcanvas && (responsive || renderStaticNode) && renderDialog({}), /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(ModalContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime71.jsxs)(import_jsx_runtime70.Fragment, {
+      children: [!showOffcanvas && (responsive || renderStaticNode) && renderDialog({}), /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(ModalContext_default.Provider, {
         value: modalContext,
-        children: /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(Modal_default, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime69.jsx)(Modal_default, {
           show: showOffcanvas,
           ref,
           backdrop,
@@ -31894,18 +32429,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var import_jsx_runtime55 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime72 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarOffcanvas = /* @__PURE__ */ React72.forwardRef(({
+  var NavbarOffcanvas = /* @__PURE__ */ React88.forwardRef(({
     onHide,
     ...props
   }, ref) => {
-    const context3 = (0, import_react52.useContext)(NavbarContext_default);
+    const context3 = (0, import_react62.useContext)(NavbarContext_default);
     const handleHide = useEventCallback(() => {
       context3 == null || context3.onToggle == null || context3.onToggle();
       onHide == null || onHide();
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime55.jsx)(Offcanvas_default, {
+    return /* @__PURE__ */ (0, import_jsx_runtime72.jsx)(Offcanvas_default, {
       ref,
       show: !!(context3 != null && context3.expanded),
       ...props,
@@ -31917,20 +32452,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarOffcanvas_default = NavbarOffcanvas;
 
   // node_modules/react-bootstrap/esm/NavbarText.js
-  var React73 = __toESM(require_react());
-  var import_classnames40 = __toESM(require_classnames());
-  var import_jsx_runtime56 = __toESM(require_jsx_runtime());
+  var React89 = __toESM(require_react());
+  var import_classnames52 = __toESM(require_classnames());
+  var import_jsx_runtime73 = __toESM(require_jsx_runtime());
   "use client";
-  var NavbarText = /* @__PURE__ */ React73.forwardRef(({
+  var NavbarText = /* @__PURE__ */ React89.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "span",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-text");
-    return /* @__PURE__ */ (0, import_jsx_runtime56.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime73.jsx)(Component4, {
       ref,
-      className: (0, import_classnames40.default)(className, bsPrefix),
+      className: (0, import_classnames52.default)(className, bsPrefix),
       ...props
     });
   });
@@ -31938,9 +32473,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarText_default = NavbarText;
 
   // node_modules/react-bootstrap/esm/Navbar.js
-  var import_jsx_runtime57 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime74 = __toESM(require_jsx_runtime());
   "use client";
-  var Navbar = /* @__PURE__ */ React74.forwardRef((props, ref) => {
+  var Navbar = /* @__PURE__ */ React90.forwardRef((props, ref) => {
     const {
       bsPrefix: initialBsPrefix,
       expand = true,
@@ -31960,7 +32495,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       expanded: "onToggle"
     });
     const bsPrefix = useBootstrapPrefix(initialBsPrefix, "navbar");
-    const handleCollapse = (0, import_react53.useCallback)((...args) => {
+    const handleCollapse = (0, import_react63.useCallback)((...args) => {
       onSelect == null || onSelect(...args);
       if (collapseOnSelect && expanded) {
         onToggle == null || onToggle(false);
@@ -31972,20 +32507,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     let expandClass = `${bsPrefix}-expand`;
     if (typeof expand === "string")
       expandClass = `${expandClass}-${expand}`;
-    const navbarContext = (0, import_react53.useMemo)(() => ({
+    const navbarContext = (0, import_react63.useMemo)(() => ({
       onToggle: () => onToggle == null ? void 0 : onToggle(!expanded),
       bsPrefix,
       expanded: !!expanded,
       expand
     }), [bsPrefix, expanded, expand, onToggle]);
-    return /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(NavbarContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(NavbarContext_default.Provider, {
       value: navbarContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(SelectableContext_default.Provider, {
         value: handleCollapse,
-        children: /* @__PURE__ */ (0, import_jsx_runtime57.jsx)(Component4, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime74.jsx)(Component4, {
           ref,
           ...controlledProps,
-          className: (0, import_classnames41.default)(className, bsPrefix, expand && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
+          className: (0, import_classnames53.default)(className, bsPrefix, expand && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
         })
       })
     });
@@ -32000,11 +32535,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Row.js
-  var import_classnames42 = __toESM(require_classnames());
-  var React75 = __toESM(require_react());
-  var import_jsx_runtime58 = __toESM(require_jsx_runtime());
+  var import_classnames54 = __toESM(require_classnames());
+  var React91 = __toESM(require_react());
+  var import_jsx_runtime75 = __toESM(require_jsx_runtime());
   "use client";
-  var Row = /* @__PURE__ */ React75.forwardRef(({
+  var Row = /* @__PURE__ */ React91.forwardRef(({
     bsPrefix,
     className,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
@@ -32031,26 +32566,26 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (cols != null)
         classes.push(`${sizePrefix}${infix}-${cols}`);
     });
-    return /* @__PURE__ */ (0, import_jsx_runtime58.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(Component4, {
       ref,
       ...props,
-      className: (0, import_classnames42.default)(className, decoratedBsPrefix, ...classes)
+      className: (0, import_classnames54.default)(className, decoratedBsPrefix, ...classes)
     });
   });
   Row.displayName = "Row";
   var Row_default = Row;
 
   // node_modules/react-bootstrap/esm/Tab.js
-  var import_prop_types4 = __toESM(require_prop_types());
+  var import_prop_types6 = __toESM(require_prop_types());
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var React77 = __toESM(require_react());
-  var import_react55 = __toESM(require_react());
+  var React93 = __toESM(require_react());
+  var import_react65 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/TabPanel.js
-  var React76 = __toESM(require_react());
-  var import_react54 = __toESM(require_react());
-  var import_jsx_runtime59 = __toESM(require_jsx_runtime());
+  var React92 = __toESM(require_react());
+  var import_react64 = __toESM(require_react());
+  var import_jsx_runtime76 = __toESM(require_jsx_runtime());
   var _excluded8 = ["active", "eventKey", "mountOnEnter", "transition", "unmountOnExit", "role", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited"];
   var _excluded22 = ["activeKey", "getControlledId", "getControllerId"];
   var _excluded32 = ["as"];
@@ -32081,7 +32616,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExiting,
       onExited
     } = _ref, props = _objectWithoutPropertiesLoose9(_ref, _excluded8);
-    const context3 = (0, import_react54.useContext)(TabContext_default);
+    const context3 = (0, import_react64.useContext)(TabContext_default);
     if (!context3)
       return [Object.assign({}, props, {
         role
@@ -32122,7 +32657,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExited
     }];
   }
-  var TabPanel = /* @__PURE__ */ React76.forwardRef(
+  var TabPanel = /* @__PURE__ */ React92.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (_ref2, ref) => {
       let {
@@ -32140,11 +32675,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         unmountOnExit,
         transition: Transition2 = NoopTransition_default
       }] = useTabPanel(props);
-      return /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(TabContext_default.Provider, {
+      return /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(TabContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(SelectableContext_default.Provider, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(SelectableContext_default.Provider, {
           value: null,
-          children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Transition2, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(Transition2, {
             in: isActive,
             onEnter,
             onEntering,
@@ -32154,7 +32689,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             onExited,
             mountOnEnter,
             unmountOnExit,
-            children: /* @__PURE__ */ (0, import_jsx_runtime59.jsx)(Component4, Object.assign({}, tabPanelProps, {
+            children: /* @__PURE__ */ (0, import_jsx_runtime76.jsx)(Component4, Object.assign({}, tabPanelProps, {
               ref,
               hidden: !isActive,
               "aria-hidden": !isActive
@@ -32168,7 +32703,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabPanel_default = TabPanel;
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var import_jsx_runtime60 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime77 = __toESM(require_jsx_runtime());
   var Tabs = (props) => {
     const {
       id: userId,
@@ -32183,8 +32718,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     } = props;
     const [activeKey, onSelect] = useUncontrolledProp2(propsActiveKey, defaultActiveKey, propsOnSelect);
     const id = $b5e257d569688ac6$export$619500959fc48b26(userId);
-    const generateChildId = (0, import_react55.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
-    const tabContext = (0, import_react55.useMemo)(() => ({
+    const generateChildId = (0, import_react65.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
+    const tabContext = (0, import_react65.useMemo)(() => ({
       onSelect,
       activeKey,
       transition,
@@ -32193,9 +32728,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       getControlledId: (key) => generateChildId(key, "tabpane"),
       getControllerId: (key) => generateChildId(key, "tab")
     }), [onSelect, activeKey, transition, mountOnEnter, unmountOnExit, generateChildId]);
-    return /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(TabContext_default.Provider, {
       value: tabContext,
-      children: /* @__PURE__ */ (0, import_jsx_runtime60.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime77.jsx)(SelectableContext_default.Provider, {
         value: onSelect || null,
         children
       })
@@ -32213,11 +32748,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/react-bootstrap/esm/TabContainer.js
-  var import_jsx_runtime61 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime78 = __toESM(require_jsx_runtime());
   var TabContainer = ({
     transition,
     ...props
-  }) => /* @__PURE__ */ (0, import_jsx_runtime61.jsx)(Tabs_default, {
+  }) => /* @__PURE__ */ (0, import_jsx_runtime78.jsx)(Tabs_default, {
     ...props,
     transition: getTabTransitionComponent(transition)
   });
@@ -32225,20 +32760,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabContainer_default = TabContainer;
 
   // node_modules/react-bootstrap/esm/TabContent.js
-  var React78 = __toESM(require_react());
-  var import_classnames43 = __toESM(require_classnames());
-  var import_jsx_runtime62 = __toESM(require_jsx_runtime());
+  var React94 = __toESM(require_react());
+  var import_classnames55 = __toESM(require_classnames());
+  var import_jsx_runtime79 = __toESM(require_jsx_runtime());
   "use client";
-  var TabContent = /* @__PURE__ */ React78.forwardRef(({
+  var TabContent = /* @__PURE__ */ React94.forwardRef(({
     className,
     bsPrefix,
     as: Component4 = "div",
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "tab-content");
-    return /* @__PURE__ */ (0, import_jsx_runtime62.jsx)(Component4, {
+    return /* @__PURE__ */ (0, import_jsx_runtime79.jsx)(Component4, {
       ref,
-      className: (0, import_classnames43.default)(className, bsPrefix),
+      className: (0, import_classnames55.default)(className, bsPrefix),
       ...props
     });
   });
@@ -32246,11 +32781,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabContent_default = TabContent;
 
   // node_modules/react-bootstrap/esm/TabPane.js
-  var import_classnames44 = __toESM(require_classnames());
-  var React79 = __toESM(require_react());
-  var import_jsx_runtime63 = __toESM(require_jsx_runtime());
+  var import_classnames56 = __toESM(require_classnames());
+  var React95 = __toESM(require_react());
+  var import_jsx_runtime80 = __toESM(require_jsx_runtime());
   "use client";
-  var TabPane = /* @__PURE__ */ React79.forwardRef(({
+  var TabPane = /* @__PURE__ */ React95.forwardRef(({
     bsPrefix,
     transition,
     ...props
@@ -32276,11 +32811,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       transition: getTabTransitionComponent(transition)
     });
     const prefix = useBootstrapPrefix(bsPrefix, "tab-pane");
-    return /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(TabContext_default.Provider, {
+    return /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(TabContext_default.Provider, {
       value: null,
-      children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(SelectableContext_default.Provider, {
+      children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(SelectableContext_default.Provider, {
         value: null,
-        children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(Transition2, {
+        children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(Transition2, {
           in: isActive,
           onEnter,
           onEntering,
@@ -32290,10 +32825,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           onExited,
           mountOnEnter,
           unmountOnExit,
-          children: /* @__PURE__ */ (0, import_jsx_runtime63.jsx)(Component4, {
+          children: /* @__PURE__ */ (0, import_jsx_runtime80.jsx)(Component4, {
             ...rest,
             ref,
-            className: (0, import_classnames44.default)(className, prefix, isActive && "active")
+            className: (0, import_classnames56.default)(className, prefix, isActive && "active")
           })
         })
       })
@@ -32303,29 +32838,29 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabPane_default = TabPane;
 
   // node_modules/react-bootstrap/esm/Tab.js
-  var propTypes2 = {
-    eventKey: import_prop_types4.default.oneOfType([import_prop_types4.default.string, import_prop_types4.default.number]),
+  var propTypes4 = {
+    eventKey: import_prop_types6.default.oneOfType([import_prop_types6.default.string, import_prop_types6.default.number]),
     /**
      * Content for the tab title.
      */
-    title: import_prop_types4.default.node.isRequired,
+    title: import_prop_types6.default.node.isRequired,
     /**
      * The disabled state of the tab.
      */
-    disabled: import_prop_types4.default.bool,
+    disabled: import_prop_types6.default.bool,
     /**
      * Class to pass to the underlying nav link.
      */
-    tabClassName: import_prop_types4.default.string,
+    tabClassName: import_prop_types6.default.string,
     /**
      * Object containing attributes to pass to underlying nav link.
      */
-    tabAttrs: import_prop_types4.default.object
+    tabAttrs: import_prop_types6.default.object
   };
   var Tab = () => {
     throw new Error("ReactBootstrap: The `Tab` component is not meant to be rendered! It's an abstract component that is only valid as a direct Child of the `Tabs` Component. For custom tabs components use TabPane and TabsContainer directly");
   };
-  Tab.propTypes = propTypes2;
+  Tab.propTypes = propTypes4;
   var Tab_default = Object.assign(Tab, {
     Container: TabContainer_default,
     Content: TabContent_default,
@@ -32333,11 +32868,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Table.js
-  var import_classnames45 = __toESM(require_classnames());
-  var React80 = __toESM(require_react());
-  var import_jsx_runtime64 = __toESM(require_jsx_runtime());
+  var import_classnames57 = __toESM(require_classnames());
+  var React96 = __toESM(require_react());
+  var import_jsx_runtime81 = __toESM(require_jsx_runtime());
   "use client";
-  var Table = /* @__PURE__ */ React80.forwardRef(({
+  var Table = /* @__PURE__ */ React96.forwardRef(({
     bsPrefix,
     className,
     striped,
@@ -32350,8 +32885,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     const decoratedBsPrefix = useBootstrapPrefix(bsPrefix, "table");
-    const classes = (0, import_classnames45.default)(className, decoratedBsPrefix, variant && `${decoratedBsPrefix}-${variant}`, size2 && `${decoratedBsPrefix}-${size2}`, striped && `${decoratedBsPrefix}-${typeof striped === "string" ? `striped-${striped}` : "striped"}`, bordered && `${decoratedBsPrefix}-bordered`, borderless && `${decoratedBsPrefix}-borderless`, hover && `${decoratedBsPrefix}-hover`);
-    const table = /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("table", {
+    const classes = (0, import_classnames57.default)(className, decoratedBsPrefix, variant && `${decoratedBsPrefix}-${variant}`, size2 && `${decoratedBsPrefix}-${size2}`, striped && `${decoratedBsPrefix}-${typeof striped === "string" ? `striped-${striped}` : "striped"}`, bordered && `${decoratedBsPrefix}-bordered`, borderless && `${decoratedBsPrefix}-borderless`, hover && `${decoratedBsPrefix}-hover`);
+    const table = /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("table", {
       ...props,
       className: classes,
       ref
@@ -32361,7 +32896,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (typeof responsive === "string") {
         responsiveClass = `${responsiveClass}-${responsive}`;
       }
-      return /* @__PURE__ */ (0, import_jsx_runtime64.jsx)("div", {
+      return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("div", {
         className: responsiveClass,
         children: table
       });
@@ -32370,6 +32905,200 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
   Table.displayName = "Table";
   var Table_default = Table;
+
+  // node_modules/react-bootstrap/esm/Toast.js
+  var React101 = __toESM(require_react());
+  var import_react67 = __toESM(require_react());
+  var import_classnames60 = __toESM(require_classnames());
+
+  // node_modules/react-bootstrap/esm/ToastFade.js
+  var React97 = __toESM(require_react());
+  var import_jsx_runtime82 = __toESM(require_jsx_runtime());
+  var fadeStyles2 = {
+    [ENTERING]: "showing",
+    [EXITING]: "showing show"
+  };
+  var ToastFade = /* @__PURE__ */ React97.forwardRef((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(Fade_default, {
+    ...props,
+    ref,
+    transitionClasses: fadeStyles2
+  }));
+  ToastFade.displayName = "ToastFade";
+  var ToastFade_default = ToastFade;
+
+  // node_modules/react-bootstrap/esm/ToastHeader.js
+  var import_classnames58 = __toESM(require_classnames());
+  var React99 = __toESM(require_react());
+  var import_react66 = __toESM(require_react());
+
+  // node_modules/react-bootstrap/esm/ToastContext.js
+  var React98 = __toESM(require_react());
+  "use client";
+  var ToastContext = /* @__PURE__ */ React98.createContext({
+    onClose() {
+    }
+  });
+  var ToastContext_default = ToastContext;
+
+  // node_modules/react-bootstrap/esm/ToastHeader.js
+  var import_jsx_runtime83 = __toESM(require_jsx_runtime());
+  var import_jsx_runtime84 = __toESM(require_jsx_runtime());
+  "use client";
+  var ToastHeader = /* @__PURE__ */ React99.forwardRef(({
+    bsPrefix,
+    closeLabel = "Close",
+    closeVariant,
+    closeButton = true,
+    className,
+    children,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "toast-header");
+    const context3 = (0, import_react66.useContext)(ToastContext_default);
+    const handleClick = useEventCallback((e3) => {
+      context3 == null || context3.onClose == null || context3.onClose(e3);
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime84.jsxs)("div", {
+      ref,
+      ...props,
+      className: (0, import_classnames58.default)(bsPrefix, className),
+      children: [children, closeButton && /* @__PURE__ */ (0, import_jsx_runtime83.jsx)(CloseButton_default, {
+        "aria-label": closeLabel,
+        variant: closeVariant,
+        onClick: handleClick,
+        "data-dismiss": "toast"
+      })]
+    });
+  });
+  ToastHeader.displayName = "ToastHeader";
+  var ToastHeader_default = ToastHeader;
+
+  // node_modules/react-bootstrap/esm/ToastBody.js
+  var React100 = __toESM(require_react());
+  var import_classnames59 = __toESM(require_classnames());
+  var import_jsx_runtime85 = __toESM(require_jsx_runtime());
+  "use client";
+  var ToastBody = /* @__PURE__ */ React100.forwardRef(({
+    className,
+    bsPrefix,
+    as: Component4 = "div",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "toast-body");
+    return /* @__PURE__ */ (0, import_jsx_runtime85.jsx)(Component4, {
+      ref,
+      className: (0, import_classnames59.default)(className, bsPrefix),
+      ...props
+    });
+  });
+  ToastBody.displayName = "ToastBody";
+  var ToastBody_default = ToastBody;
+
+  // node_modules/react-bootstrap/esm/Toast.js
+  var import_jsx_runtime86 = __toESM(require_jsx_runtime());
+  "use client";
+  var Toast = /* @__PURE__ */ React101.forwardRef(({
+    bsPrefix,
+    className,
+    transition: Transition2 = ToastFade_default,
+    show = true,
+    animation = true,
+    delay = 5e3,
+    autohide = false,
+    onClose,
+    onEntered,
+    onExit,
+    onExiting,
+    onEnter,
+    onEntering,
+    onExited,
+    bg,
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "toast");
+    const delayRef = (0, import_react67.useRef)(delay);
+    const onCloseRef = (0, import_react67.useRef)(onClose);
+    (0, import_react67.useEffect)(() => {
+      delayRef.current = delay;
+      onCloseRef.current = onClose;
+    }, [delay, onClose]);
+    const autohideTimeout = useTimeout();
+    const autohideToast = !!(autohide && show);
+    const autohideFunc = (0, import_react67.useCallback)(() => {
+      if (autohideToast) {
+        onCloseRef.current == null || onCloseRef.current();
+      }
+    }, [autohideToast]);
+    (0, import_react67.useEffect)(() => {
+      autohideTimeout.set(autohideFunc, delayRef.current);
+    }, [autohideTimeout, autohideFunc]);
+    const toastContext = (0, import_react67.useMemo)(() => ({
+      onClose
+    }), [onClose]);
+    const hasAnimation = !!(Transition2 && animation);
+    const toast = /* @__PURE__ */ (0, import_jsx_runtime86.jsx)("div", {
+      ...props,
+      ref,
+      className: (0, import_classnames60.default)(bsPrefix, className, bg && `bg-${bg}`, !hasAnimation && (show ? "show" : "hide")),
+      role: "alert",
+      "aria-live": "assertive",
+      "aria-atomic": "true"
+    });
+    return /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(ToastContext_default.Provider, {
+      value: toastContext,
+      children: hasAnimation && Transition2 ? /* @__PURE__ */ (0, import_jsx_runtime86.jsx)(Transition2, {
+        in: show,
+        onEnter,
+        onEntering,
+        onEntered,
+        onExit,
+        onExiting,
+        onExited,
+        unmountOnExit: true,
+        children: toast
+      }) : toast
+    });
+  });
+  Toast.displayName = "Toast";
+  var Toast_default = Object.assign(Toast, {
+    Body: ToastBody_default,
+    Header: ToastHeader_default
+  });
+
+  // node_modules/react-bootstrap/esm/ToastContainer.js
+  var import_classnames61 = __toESM(require_classnames());
+  var React102 = __toESM(require_react());
+  var import_jsx_runtime87 = __toESM(require_jsx_runtime());
+  "use client";
+  var positionClasses = {
+    "top-start": "top-0 start-0",
+    "top-center": "top-0 start-50 translate-middle-x",
+    "top-end": "top-0 end-0",
+    "middle-start": "top-50 start-0 translate-middle-y",
+    "middle-center": "top-50 start-50 translate-middle",
+    "middle-end": "top-50 end-0 translate-middle-y",
+    "bottom-start": "bottom-0 start-0",
+    "bottom-center": "bottom-0 start-50 translate-middle-x",
+    "bottom-end": "bottom-0 end-0"
+  };
+  var ToastContainer = /* @__PURE__ */ React102.forwardRef(({
+    bsPrefix,
+    position,
+    containerPosition,
+    className,
+    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+    as: Component4 = "div",
+    ...props
+  }, ref) => {
+    bsPrefix = useBootstrapPrefix(bsPrefix, "toast-container");
+    return /* @__PURE__ */ (0, import_jsx_runtime87.jsx)(Component4, {
+      ref,
+      ...props,
+      className: (0, import_classnames61.default)(bsPrefix, position && positionClasses[position], containerPosition && `position-${containerPosition}`, className)
+    });
+  });
+  ToastContainer.displayName = "ToastContainer";
+  var ToastContainer_default = ToastContainer;
 
   // node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js
   function _defineProperty(obj, key, value) {
@@ -32898,38 +33627,38 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var loader_default = loader;
 
   // node_modules/@monaco-editor/react/dist/index.mjs
-  var import_react56 = __toESM(require_react(), 1);
-  var import_react57 = __toESM(require_react(), 1);
-  var import_react58 = __toESM(require_react(), 1);
-  var import_react59 = __toESM(require_react(), 1);
-  var import_react60 = __toESM(require_react(), 1);
-  var import_react61 = __toESM(require_react(), 1);
-  var import_react62 = __toESM(require_react(), 1);
-  var import_react63 = __toESM(require_react(), 1);
-  var import_react64 = __toESM(require_react(), 1);
-  var import_react65 = __toESM(require_react(), 1);
-  var import_react66 = __toESM(require_react(), 1);
+  var import_react68 = __toESM(require_react(), 1);
+  var import_react69 = __toESM(require_react(), 1);
+  var import_react70 = __toESM(require_react(), 1);
+  var import_react71 = __toESM(require_react(), 1);
+  var import_react72 = __toESM(require_react(), 1);
+  var import_react73 = __toESM(require_react(), 1);
+  var import_react74 = __toESM(require_react(), 1);
+  var import_react75 = __toESM(require_react(), 1);
+  var import_react76 = __toESM(require_react(), 1);
+  var import_react77 = __toESM(require_react(), 1);
+  var import_react78 = __toESM(require_react(), 1);
   var le = { wrapper: { display: "flex", position: "relative", textAlign: "initial" }, fullWidth: { width: "100%" }, hide: { display: "none" } };
   var v = le;
   var ae = { container: { display: "flex", height: "100%", width: "100%", justifyContent: "center", alignItems: "center" } };
   var Y = ae;
   function Me({ children: e3 }) {
-    return import_react60.default.createElement("div", { style: Y.container }, e3);
+    return import_react72.default.createElement("div", { style: Y.container }, e3);
   }
   var Z = Me;
   var $ = Z;
   function Ee({ width: e3, height: r2, isEditorReady: n2, loading: t2, _ref: a2, className: m2, wrapperProps: E2 }) {
-    return import_react59.default.createElement("section", { style: { ...v.wrapper, width: e3, height: r2 }, ...E2 }, !n2 && import_react59.default.createElement($, null, t2), import_react59.default.createElement("div", { ref: a2, style: { ...v.fullWidth, ...!n2 && v.hide }, className: m2 }));
+    return import_react71.default.createElement("section", { style: { ...v.wrapper, width: e3, height: r2 }, ...E2 }, !n2 && import_react71.default.createElement($, null, t2), import_react71.default.createElement("div", { ref: a2, style: { ...v.fullWidth, ...!n2 && v.hide }, className: m2 }));
   }
   var ee = Ee;
-  var H = (0, import_react58.memo)(ee);
+  var H = (0, import_react70.memo)(ee);
   function Ce(e3) {
-    (0, import_react61.useEffect)(e3, []);
+    (0, import_react73.useEffect)(e3, []);
   }
   var k = Ce;
   function he(e3, r2, n2 = true) {
-    let t2 = (0, import_react62.useRef)(true);
-    (0, import_react62.useEffect)(t2.current || !n2 ? () => {
+    let t2 = (0, import_react74.useRef)(true);
+    (0, import_react74.useEffect)(t2.current || !n2 ? () => {
       t2.current = false;
     } : e3, r2);
   }
@@ -32949,7 +33678,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return e3.Uri.parse(r2);
   }
   function Oe({ original: e3, modified: r2, language: n2, originalLanguage: t2, modifiedLanguage: a2, originalModelPath: m2, modifiedModelPath: E2, keepCurrentOriginalModel: g2 = false, keepCurrentModifiedModel: N2 = false, theme: x2 = "light", loading: P2 = "Loading...", options: y2 = {}, height: V2 = "100%", width: z2 = "100%", className: F2, wrapperProps: j2 = {}, beforeMount: A2 = D, onMount: q2 = D }) {
-    let [M2, O2] = (0, import_react57.useState)(false), [T2, s2] = (0, import_react57.useState)(true), u2 = (0, import_react57.useRef)(null), c2 = (0, import_react57.useRef)(null), w2 = (0, import_react57.useRef)(null), d2 = (0, import_react57.useRef)(q2), o2 = (0, import_react57.useRef)(A2), b2 = (0, import_react57.useRef)(false);
+    let [M2, O2] = (0, import_react69.useState)(false), [T2, s2] = (0, import_react69.useState)(true), u2 = (0, import_react69.useRef)(null), c2 = (0, import_react69.useRef)(null), w2 = (0, import_react69.useRef)(null), d2 = (0, import_react69.useRef)(q2), o2 = (0, import_react69.useRef)(A2), b2 = (0, import_react69.useRef)(false);
     k(() => {
       let i2 = loader_default.init();
       return i2.then((f) => (c2.current = f) && s2(false)).catch((f) => f?.type !== "cancelation" && console.error("Monaco initialization: error:", f)), () => u2.current ? I2() : i2.cancel();
@@ -32976,38 +33705,38 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }, [x2], M2), l(() => {
       u2.current?.updateOptions(y2);
     }, [y2], M2);
-    let L2 = (0, import_react57.useCallback)(() => {
+    let L2 = (0, import_react69.useCallback)(() => {
       if (!c2.current)
         return;
       o2.current(c2.current);
       let i2 = h(c2.current, e3 || "", t2 || n2 || "text", m2 || ""), f = h(c2.current, r2 || "", a2 || n2 || "text", E2 || "");
       u2.current?.setModel({ original: i2, modified: f });
-    }, [n2, r2, a2, e3, t2, m2, E2]), U2 = (0, import_react57.useCallback)(() => {
+    }, [n2, r2, a2, e3, t2, m2, E2]), U2 = (0, import_react69.useCallback)(() => {
       !b2.current && w2.current && (u2.current = c2.current.editor.createDiffEditor(w2.current, { automaticLayout: true, ...y2 }), L2(), c2.current?.editor.setTheme(x2), O2(true), b2.current = true);
     }, [y2, x2, L2]);
-    (0, import_react57.useEffect)(() => {
+    (0, import_react69.useEffect)(() => {
       M2 && d2.current(u2.current, c2.current);
-    }, [M2]), (0, import_react57.useEffect)(() => {
+    }, [M2]), (0, import_react69.useEffect)(() => {
       !T2 && !M2 && U2();
     }, [T2, M2, U2]);
     function I2() {
       let i2 = u2.current?.getModel();
       g2 || i2?.original?.dispose(), N2 || i2?.modified?.dispose(), u2.current?.dispose();
     }
-    return import_react57.default.createElement(H, { width: z2, height: V2, isEditorReady: M2, loading: P2, _ref: w2, className: F2, wrapperProps: j2 });
+    return import_react69.default.createElement(H, { width: z2, height: V2, isEditorReady: M2, loading: P2, _ref: w2, className: F2, wrapperProps: j2 });
   }
   var ie = Oe;
-  var we = (0, import_react56.memo)(ie);
+  var we = (0, import_react68.memo)(ie);
   function He(e3) {
-    let r2 = (0, import_react66.useRef)();
-    return (0, import_react66.useEffect)(() => {
+    let r2 = (0, import_react78.useRef)();
+    return (0, import_react78.useEffect)(() => {
       r2.current = e3;
     }, [e3]), r2.current;
   }
   var se = He;
   var _ = /* @__PURE__ */ new Map();
   function Ve({ defaultValue: e3, defaultLanguage: r2, defaultPath: n2, value: t2, language: a2, path: m2, theme: E2 = "light", line: g2, loading: N2 = "Loading...", options: x2 = {}, overrideServices: P2 = {}, saveViewState: y2 = true, keepCurrentModel: V2 = false, width: z2 = "100%", height: F2 = "100%", className: j2, wrapperProps: A2 = {}, beforeMount: q2 = D, onMount: M2 = D, onChange: O2, onValidate: T2 = D }) {
-    let [s2, u2] = (0, import_react65.useState)(false), [c2, w2] = (0, import_react65.useState)(true), d2 = (0, import_react65.useRef)(null), o2 = (0, import_react65.useRef)(null), b2 = (0, import_react65.useRef)(null), L2 = (0, import_react65.useRef)(M2), U2 = (0, import_react65.useRef)(q2), I2 = (0, import_react65.useRef)(), i2 = (0, import_react65.useRef)(t2), f = se(m2), Q2 = (0, import_react65.useRef)(false), B2 = (0, import_react65.useRef)(false);
+    let [s2, u2] = (0, import_react77.useState)(false), [c2, w2] = (0, import_react77.useState)(true), d2 = (0, import_react77.useRef)(null), o2 = (0, import_react77.useRef)(null), b2 = (0, import_react77.useRef)(null), L2 = (0, import_react77.useRef)(M2), U2 = (0, import_react77.useRef)(q2), I2 = (0, import_react77.useRef)(), i2 = (0, import_react77.useRef)(t2), f = se(m2), Q2 = (0, import_react77.useRef)(false), B2 = (0, import_react77.useRef)(false);
     k(() => {
       let p2 = loader_default.init();
       return p2.then((R2) => (d2.current = R2) && w2(false)).catch((R2) => R2?.type !== "cancelation" && console.error("Monaco initialization: error:", R2)), () => o2.current ? pe2() : p2.cancel();
@@ -33026,22 +33755,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }, [g2], s2), l(() => {
       d2.current?.editor.setTheme(E2);
     }, [E2], s2);
-    let X2 = (0, import_react65.useCallback)(() => {
+    let X2 = (0, import_react77.useCallback)(() => {
       if (!(!b2.current || !d2.current) && !Q2.current) {
         U2.current(d2.current);
         let p2 = m2 || n2, R2 = h(d2.current, t2 || e3 || "", r2 || a2 || "", p2 || "");
         o2.current = d2.current?.editor.create(b2.current, { model: R2, automaticLayout: true, ...x2 }, P2), y2 && o2.current.restoreViewState(_.get(p2)), d2.current.editor.setTheme(E2), g2 !== void 0 && o2.current.revealLine(g2), u2(true), Q2.current = true;
       }
     }, [e3, r2, n2, t2, a2, m2, x2, P2, y2, E2, g2]);
-    (0, import_react65.useEffect)(() => {
+    (0, import_react77.useEffect)(() => {
       s2 && L2.current(o2.current, d2.current);
-    }, [s2]), (0, import_react65.useEffect)(() => {
+    }, [s2]), (0, import_react77.useEffect)(() => {
       !c2 && !s2 && X2();
-    }, [c2, s2, X2]), i2.current = t2, (0, import_react65.useEffect)(() => {
+    }, [c2, s2, X2]), i2.current = t2, (0, import_react77.useEffect)(() => {
       s2 && O2 && (I2.current?.dispose(), I2.current = o2.current?.onDidChangeModelContent((p2) => {
         B2.current || O2(o2.current.getValue(), p2);
       }));
-    }, [s2, O2]), (0, import_react65.useEffect)(() => {
+    }, [s2, O2]), (0, import_react77.useEffect)(() => {
       if (s2) {
         let p2 = d2.current.editor.onDidChangeMarkers((R2) => {
           let G2 = o2.current.getModel()?.uri;
@@ -33060,69 +33789,85 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     function pe2() {
       I2.current?.dispose(), V2 ? y2 && _.set(m2, o2.current.saveViewState()) : o2.current.getModel()?.dispose(), o2.current.dispose();
     }
-    return import_react65.default.createElement(H, { width: z2, height: F2, isEditorReady: s2, loading: N2, _ref: b2, className: j2, wrapperProps: A2 });
+    return import_react77.default.createElement(H, { width: z2, height: F2, isEditorReady: s2, loading: N2, _ref: b2, className: j2, wrapperProps: A2 });
   }
   var fe = Ve;
-  var de = (0, import_react64.memo)(fe);
+  var de = (0, import_react76.memo)(fe);
 
   // src/components/pure/NavBar.tsx
-  var import_react67 = __toESM(require_react(), 1);
+  var import_react79 = __toESM(require_react(), 1);
   var NavBar = ({
     title,
     backLink,
     navItems = [],
     rightContent
   }) => {
-    return /* @__PURE__ */ import_react67.default.createElement(Navbar_default, { bg: "light", expand: "lg", className: "mb-4", sticky: "top" }, /* @__PURE__ */ import_react67.default.createElement(Container_default, { fluid: true }, backLink && /* @__PURE__ */ import_react67.default.createElement(
-      Nav_default2.Link,
+    const location2 = useLocation();
+    return /* @__PURE__ */ import_react79.default.createElement(
+      Navbar_default,
       {
-        as: Link,
-        to: backLink,
-        className: "me-2 fs-3 text-primary",
-        style: {
-          padding: "0.25rem 0.75rem",
-          border: "2px solid var(--bs-primary)",
-          borderRadius: "50%",
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "2.5rem",
-          height: "2.5rem"
-        },
-        title: "Go up one level"
+        bg: "light",
+        expand: "lg",
+        className: "mb-2",
+        sticky: "top",
+        expanded: false
       },
-      "\u2191"
-    ), /* @__PURE__ */ import_react67.default.createElement(Navbar_default.Brand, { className: backLink ? "ms-2" : "" }, title), /* @__PURE__ */ import_react67.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav" }), /* @__PURE__ */ import_react67.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, navItems.length > 0 && /* @__PURE__ */ import_react67.default.createElement(Nav_default2, { className: "me-auto" }, navItems.map((item, i2) => {
-      const className = [
-        item.className,
-        item.active ? "text-primary fw-bold border-bottom border-2 border-primary" : "",
-        typeof item.label === "string" && item.label.includes("\u274C") ? "text-danger fw-bold" : "",
-        typeof item.label === "string" && item.label.includes("\u2705") ? "text-success fw-bold" : "",
-        !item.active && typeof item.label !== "string" ? "text-secondary" : ""
-      ].filter(Boolean).join(" ");
-      return /* @__PURE__ */ import_react67.default.createElement(
+      /* @__PURE__ */ import_react79.default.createElement(Container_default, { fluid: true }, backLink && /* @__PURE__ */ import_react79.default.createElement(
         Nav_default2.Link,
         {
-          key: i2,
-          as: item.to ? Link : "div",
-          to: item.to,
-          active: item.active,
-          className,
+          as: Link,
+          to: backLink,
+          className: "me-2 fs-3 text-primary",
           style: {
-            ":hover": {
-              color: "var(--bs-primary)",
-              textDecoration: "none"
-            }
-          }
+            padding: "0.25rem 0.75rem",
+            border: "2px solid var(--bs-primary)",
+            borderRadius: "50%",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "2.5rem",
+            height: "2.5rem"
+          },
+          title: "Go up one level"
         },
-        item.label,
-        item.badge && /* @__PURE__ */ import_react67.default.createElement(Badge_default, { bg: item.badge.variant, className: "ms-2" }, item.badge.text)
-      );
-    })), rightContent && /* @__PURE__ */ import_react67.default.createElement(Nav_default2, null, rightContent))));
+        "\u2191"
+      ), /* @__PURE__ */ import_react79.default.createElement(Navbar_default.Brand, { className: backLink ? "ms-2" : "" }, title), /* @__PURE__ */ import_react79.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav", style: { display: "none" } }), /* @__PURE__ */ import_react79.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, navItems.length > 0 && /* @__PURE__ */ import_react79.default.createElement(Nav_default2, { className: "me-auto" }, navItems.map((item, i2) => {
+        const className = [
+          item.className,
+          item.active ? "text-primary fw-bold border-bottom border-2 border-primary" : "",
+          typeof item.label === "string" && item.label.includes("\u274C") ? "text-danger fw-bold" : "",
+          typeof item.label === "string" && item.label.includes("\u2705") ? "text-success fw-bold" : "",
+          !item.active && typeof item.label !== "string" ? "text-secondary" : ""
+        ].filter(Boolean).join(" ");
+        return /* @__PURE__ */ import_react79.default.createElement(
+          Nav_default2.Link,
+          {
+            key: i2,
+            as: item.to ? Link : "div",
+            to: item.to,
+            active: item.active,
+            className,
+            title: typeof item.label === "string" ? item.label : void 0
+          },
+          item.icon && /* @__PURE__ */ import_react79.default.createElement("span", { className: "me-2" }, item.icon),
+          item.label,
+          item.badge && /* @__PURE__ */ import_react79.default.createElement(
+            Badge_default,
+            {
+              bg: item.badge.variant,
+              className: "ms-2"
+            },
+            item.badge.text
+          )
+        );
+      })), rightContent && /* @__PURE__ */ import_react79.default.createElement(Nav_default2, null, import_react79.default.Children.map(rightContent, (child) => {
+        return child;
+      }))))
+    );
   };
 
   // src/components/TestStatusBadge.tsx
-  var import_react68 = __toESM(require_react(), 1);
+  var import_react80 = __toESM(require_react(), 1);
   var TestStatusBadge = (props) => {
     const hasTests = props.testsExist !== false;
     const testCompleted = props.runTimeErrors !== -1;
@@ -33139,50 +33884,55 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     if (props.variant === "compact") {
       console.groupEnd();
-      return /* @__PURE__ */ import_react68.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
+      return /* @__PURE__ */ import_react80.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
     }
-    return /* @__PURE__ */ import_react68.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react68.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
+    return /* @__PURE__ */ import_react80.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react80.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
   };
 
   // src/components/pure/TestPageView.tsx
   var FileTree = ({ data: data2, onSelect, level = 0, selectedSourcePath }) => {
-    const [expanded, setExpanded] = (0, import_react69.useState)({});
+    const [expanded, setExpanded] = (0, import_react81.useState)({});
     const toggleExpand = (path) => {
       setExpanded((prev) => ({ ...prev, [path]: !prev[path] }));
     };
-    return /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled", style: { paddingLeft: `${level * 16}px` } }, Object.entries(data2).map(([name, node]) => {
+    return /* @__PURE__ */ import_react81.default.createElement("div", null, Object.entries(data2).map(([name, node]) => {
       const path = Object.keys(expanded).find((k3) => k3.endsWith(name)) || name;
       const isExpanded = expanded[path];
       if (node.__isFile) {
-        return /* @__PURE__ */ import_react69.default.createElement("li", { key: name, className: "py-1" }, /* @__PURE__ */ import_react69.default.createElement(
-          "button",
+        return /* @__PURE__ */ import_react81.default.createElement(
+          FileTreeItem,
           {
-            className: `btn btn-link text-start p-0 text-decoration-none ${selectedSourcePath === path ? "text-primary fw-bold" : ""}`,
+            key: name,
+            name,
+            isFile: true,
+            level,
+            isSelected: selectedSourcePath === path,
             onClick: () => onSelect(path, node.content)
-          },
-          /* @__PURE__ */ import_react69.default.createElement(
-            "i",
-            {
-              className: `bi bi-file-earmark-text me-2 ${selectedSourcePath === path ? "text-primary" : ""}`
-            }
-          ),
-          name
-        ));
+          }
+        );
       } else {
-        return /* @__PURE__ */ import_react69.default.createElement("li", { key: name, className: "py-1" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react69.default.createElement(
-          "button",
+        return /* @__PURE__ */ import_react81.default.createElement("div", { key: name }, /* @__PURE__ */ import_react81.default.createElement(
+          "div",
           {
-            className: "btn btn-link text-start p-0 text-decoration-none me-1",
+            className: "d-flex align-items-center py-1 text-dark",
+            style: {
+              paddingLeft: `${level * 16}px`,
+              cursor: "pointer",
+              fontSize: "0.875rem"
+            },
             onClick: () => toggleExpand(path)
           },
-          /* @__PURE__ */ import_react69.default.createElement(
-            "i",
-            {
-              className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-2`
-            }
-          ),
-          name
-        )), isExpanded && /* @__PURE__ */ import_react69.default.createElement(FileTree, { data: node, onSelect, level: level + 1 }));
+          /* @__PURE__ */ import_react81.default.createElement("i", { className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-1` }),
+          /* @__PURE__ */ import_react81.default.createElement("span", null, name)
+        ), isExpanded && /* @__PURE__ */ import_react81.default.createElement(
+          FileTree,
+          {
+            data: node,
+            onSelect,
+            level: level + 1,
+            selectedSourcePath
+          }
+        ));
       }
     }));
   };
@@ -33195,22 +33945,42 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     errorCounts,
     logs
   }) => {
-    const [showAiderModal, setShowAiderModal] = (0, import_react69.useState)(false);
-    const [messageOption, setMessageOption] = (0, import_react69.useState)("default");
-    const [customMessage, setCustomMessage] = (0, import_react69.useState)(
+    const navigate = useNavigate();
+    const [showAiderModal, setShowAiderModal] = (0, import_react81.useState)(false);
+    const [messageOption, setMessageOption] = (0, import_react81.useState)("default");
+    const [customMessage, setCustomMessage] = (0, import_react81.useState)(
       typeof logs["message.txt"] === "string" ? logs["message.txt"] : "make a script that prints hello"
     );
-    (0, import_react69.useEffect)(() => {
+    const [showToast, setShowToast] = (0, import_react81.useState)(false);
+    const [toastMessage, setToastMessage] = (0, import_react81.useState)("");
+    const [toastVariant, setToastVariant] = (0, import_react81.useState)("success");
+    const [ws2, setWs] = (0, import_react81.useState)(null);
+    const [expandedSections, setExpandedSections] = (0, import_react81.useState)({
+      standardLogs: true,
+      runtimeLogs: true,
+      sourceFiles: true
+    });
+    const [isNavbarCollapsed, setIsNavbarCollapsed] = (0, import_react81.useState)(false);
+    (0, import_react81.useEffect)(() => {
       if (typeof logs["message.txt"] === "string" && logs["message.txt"].trim()) {
         setCustomMessage(logs["message.txt"]);
       }
     }, [logs]);
-    const [activeTab, setActiveTab] = import_react69.default.useState("tests.json");
-    const [selectedFile, setSelectedFile] = (0, import_react69.useState)(null);
-    const [selectedSourcePath, setSelectedSourcePath] = (0, import_react69.useState)(
+    (0, import_react81.useEffect)(() => {
+      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const wsUrl = `${wsProtocol}//${window.location.host}`;
+      const websocket = new WebSocket(wsUrl);
+      setWs(websocket);
+      return () => {
+        websocket.close();
+      };
+    }, []);
+    const [activeTab, setActiveTab] = import_react81.default.useState("tests.json");
+    const [selectedFile, setSelectedFile] = (0, import_react81.useState)(null);
+    const [selectedSourcePath, setSelectedSourcePath] = (0, import_react81.useState)(
       null
     );
-    const [editorTheme, setEditorTheme] = (0, import_react69.useState)(
+    const [editorTheme, setEditorTheme] = (0, import_react81.useState)(
       "vs-dark"
     );
     const getLanguage = (path) => {
@@ -33231,7 +34001,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     };
     const renderTestResults = (testData) => {
-      return /* @__PURE__ */ import_react69.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i2) => /* @__PURE__ */ import_react69.default.createElement("div", { key: i2, className: "mb-4 card" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react69.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react69.default.createElement(
+      return /* @__PURE__ */ import_react81.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i2) => /* @__PURE__ */ import_react81.default.createElement("div", { key: i2, className: "mb-4 card" }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react81.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi2) => /* @__PURE__ */ import_react81.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react81.default.createElement(
         "a",
         {
           href: feature,
@@ -33240,7 +34010,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           className: "text-white"
         },
         new URL(feature).hostname
-      ) : /* @__PURE__ */ import_react69.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react69.default.createElement(
+      ) : /* @__PURE__ */ import_react81.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react81.default.createElement(
         "button",
         {
           className: "btn btn-sm btn-light dropdown-toggle",
@@ -33250,7 +34020,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         "Artifacts (",
         given.artifacts.length,
         ")"
-      ), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react69.default.createElement(
+      ), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react81.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react81.default.createElement(
         "a",
         {
           className: "dropdown-item",
@@ -33259,13 +34029,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           rel: "noopener noreferrer"
         },
         artifact.split("/").pop()
-      ))))))), /* @__PURE__ */ import_react69.default.createElement("div", { className: "card-body" }, given.whens.map((when, j2) => /* @__PURE__ */ import_react69.default.createElement(
+      ))))))), /* @__PURE__ */ import_react81.default.createElement("div", { className: "card-body" }, given.whens.map((when, j2) => /* @__PURE__ */ import_react81.default.createElement(
         "div",
         {
           key: `w-${j2}`,
           className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}`
         },
-        /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react69.default.createElement(
+        /* @__PURE__ */ import_react81.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react81.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi2) => /* @__PURE__ */ import_react81.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react81.default.createElement(
           "a",
           {
             href: feature,
@@ -33273,7 +34043,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             rel: "noopener noreferrer"
           },
           new URL(feature).hostname
-        ) : feature)))), when.error && /* @__PURE__ */ import_react69.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react69.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react69.default.createElement(
+        ) : feature)))), when.error && /* @__PURE__ */ import_react81.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react81.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react81.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react81.default.createElement(
           "a",
           {
             href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
@@ -33283,13 +34053,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           },
           artifact.split("/").pop()
         ))))))
-      )), given.thens.map((then, k3) => /* @__PURE__ */ import_react69.default.createElement(
+      )), given.thens.map((then, k3) => /* @__PURE__ */ import_react81.default.createElement(
         "div",
         {
           key: `t-${k3}`,
           className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}`
         },
-        /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("div", null, /* @__PURE__ */ import_react69.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react69.default.createElement(
+        /* @__PURE__ */ import_react81.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react81.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi2) => /* @__PURE__ */ import_react81.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react81.default.createElement(
           "a",
           {
             href: feature,
@@ -33297,7 +34067,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             rel: "noopener noreferrer"
           },
           new URL(feature).hostname
-        ) : feature)))), then.error && /* @__PURE__ */ import_react69.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react69.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react69.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react69.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react69.default.createElement(
+        ) : feature)))), then.error && /* @__PURE__ */ import_react81.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react81.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react81.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react81.default.createElement(
           "a",
           {
             href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
@@ -33315,7 +34085,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       selectedFile,
       activeTab
     });
-    return /* @__PURE__ */ import_react69.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react69.default.createElement(
+    return /* @__PURE__ */ import_react81.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react81.default.createElement(
       NavBar,
       {
         title: decodedTestPath,
@@ -33330,107 +34100,188 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             className: "pe-none d-flex align-items-center gap-2"
           }
         ],
-        rightContent: /* @__PURE__ */ import_react69.default.createElement(import_react69.default.Fragment, null, /* @__PURE__ */ import_react69.default.createElement(
+        rightContent: /* @__PURE__ */ import_react81.default.createElement(
           Button_default2,
           {
             variant: "info",
             onClick: () => setShowAiderModal(true),
-            className: "ms-2"
+            className: "ms-2",
+            title: "AI Assistant"
           },
           "\u{1F916}"
-        ), /* @__PURE__ */ import_react69.default.createElement(Modal_default2, { show: showAiderModal, onHide: () => setShowAiderModal(false), size: "lg", onShow: () => setMessageOption("default") }, /* @__PURE__ */ import_react69.default.createElement(Modal_default2.Header, { closeButton: true }, /* @__PURE__ */ import_react69.default.createElement(Modal_default2.Title, null, "Aider")), /* @__PURE__ */ import_react69.default.createElement(Modal_default2.Body, null, /* @__PURE__ */ import_react69.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react69.default.createElement(
-          "input",
-          {
-            className: "form-check-input",
-            type: "radio",
-            name: "messageOption",
-            id: "defaultMessage",
-            value: "default",
-            checked: messageOption === "default",
-            onChange: () => setMessageOption("default")
-          }
-        ), /* @__PURE__ */ import_react69.default.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")), /* @__PURE__ */ import_react69.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react69.default.createElement(
-          "input",
-          {
-            className: "form-check-input",
-            type: "radio",
-            name: "messageOption",
-            id: "customMessage",
-            value: "custom",
-            checked: messageOption === "custom",
-            onChange: () => setMessageOption("custom")
-          }
-        ), /* @__PURE__ */ import_react69.default.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")), messageOption === "custom" && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement(
-          "textarea",
-          {
-            className: "form-control",
-            rows: 8,
-            placeholder: "Enter your custom message",
-            value: customMessage,
-            onChange: (e3) => setCustomMessage(e3.target.value),
-            style: { minHeight: "500px" }
-          }
-        )))), /* @__PURE__ */ import_react69.default.createElement(Modal_default2.Footer, null, /* @__PURE__ */ import_react69.default.createElement(
-          Button_default2,
-          {
-            variant: "primary",
-            onClick: async () => {
-              try {
-                const promptPath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/prompt.txt`;
-                let command = `aider --load ${promptPath}`;
-                if (messageOption === "default") {
-                  const messagePath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/message.txt`;
-                  command += ` --message-file ${messagePath}`;
-                } else {
-                  command += ` --message "${customMessage}"`;
-                }
-                await navigator.clipboard.writeText(command);
-                setShowAiderModal(false);
-              } catch (err) {
-                console.error("Copy failed:", err);
-              }
+        )
+      }
+    ), /* @__PURE__ */ import_react81.default.createElement(Modal_default2, { show: showAiderModal, onHide: () => setShowAiderModal(false), size: "lg", onShow: () => setMessageOption("default") }, /* @__PURE__ */ import_react81.default.createElement(Modal_default2.Header, { closeButton: true }, /* @__PURE__ */ import_react81.default.createElement(Modal_default2.Title, null, "Aider")), /* @__PURE__ */ import_react81.default.createElement(Modal_default2.Body, null, /* @__PURE__ */ import_react81.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react81.default.createElement(
+      "input",
+      {
+        className: "form-check-input",
+        type: "radio",
+        name: "messageOption",
+        id: "defaultMessage",
+        value: "default",
+        checked: messageOption === "default",
+        onChange: () => setMessageOption("default")
+      }
+    ), /* @__PURE__ */ import_react81.default.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")), /* @__PURE__ */ import_react81.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react81.default.createElement(
+      "input",
+      {
+        className: "form-check-input",
+        type: "radio",
+        name: "messageOption",
+        id: "customMessage",
+        value: "custom",
+        checked: messageOption === "custom",
+        onChange: () => setMessageOption("custom")
+      }
+    ), /* @__PURE__ */ import_react81.default.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")), messageOption === "custom" && /* @__PURE__ */ import_react81.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react81.default.createElement(
+      "textarea",
+      {
+        className: "form-control",
+        rows: 8,
+        placeholder: "Enter your custom message",
+        value: customMessage,
+        onChange: (e3) => setCustomMessage(e3.target.value),
+        style: { minHeight: "500px" }
+      }
+    )))), /* @__PURE__ */ import_react81.default.createElement(Modal_default2.Footer, null, /* @__PURE__ */ import_react81.default.createElement(
+      Button_default2,
+      {
+        variant: "primary",
+        onClick: async () => {
+          try {
+            const promptPath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/prompt.txt`;
+            let command = `aider --load ${promptPath}`;
+            if (messageOption === "default") {
+              const messagePath = `testeranto/reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/message.txt`;
+              command += ` --message-file ${messagePath}`;
+            } else {
+              command += ` --message "${customMessage}"`;
             }
-          },
-          "Copy Aider Command"
-        ))))
-      }
-    ), /* @__PURE__ */ import_react69.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react69.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react69.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Standard Logs"), Object.entries(logs).filter(
-      ([logName]) => Object.values(STANDARD_LOGS).includes(logName)
-    ).filter(
-      ([, logContent]) => typeof logContent === "string" && logContent.trim() || typeof logContent === "object" && Object.keys(logContent).length > 0
-    ).map(([logName, logContent]) => /* @__PURE__ */ import_react69.default.createElement(
-      LogNavItem,
+            const ws3 = new WebSocket(`ws://${window.location.host}`);
+            ws3.onopen = () => {
+              ws3.send(JSON.stringify({
+                type: "executeCommand",
+                command
+              }));
+              setToastMessage("Command sent to server");
+              setToastVariant("success");
+              setShowToast(true);
+              setShowAiderModal(false);
+              ws3.close();
+              setTimeout(() => {
+                navigate("/processes");
+              }, 1e3);
+            };
+            ws3.onerror = (error) => {
+              setToastMessage("Failed to connect to server");
+              setToastVariant("danger");
+              setShowToast(true);
+            };
+          } catch (err) {
+            console.error("WebSocket error:", err);
+            setToastMessage("Error preparing command");
+            setToastVariant("danger");
+            setShowToast(true);
+          }
+        }
+      },
+      "Run Aider Command"
+    ))), /* @__PURE__ */ import_react81.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react81.default.createElement(Col_default, { sm: 3, className: "border-end", style: {
+      height: "calc(100vh - 56px)",
+      overflow: "auto",
+      backgroundColor: "#f8f9fa"
+    } }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-2 border-bottom" }, /* @__PURE__ */ import_react81.default.createElement("small", { className: "fw-bold text-muted" }, "EXPLORER")), /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react81.default.createElement(
+      "div",
       {
-        key: logName,
-        logName,
-        logContent,
-        activeTab,
-        setActiveTab,
-        setSelectedFile,
-        errorCounts,
-        decodedTestPath,
-        testsExist
-      }
-    )), Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react69.default.createElement(import_react69.default.Fragment, null, /* @__PURE__ */ import_react69.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Runtime Logs"), Object.entries(logs).filter(
-      ([logName]) => Object.values(
-        RUNTIME_SPECIFIC_LOGS[runtime]
-      ).includes(logName)
-    ).filter(([, logContent]) => {
-      return typeof logContent === "string" && logContent.trim() || typeof logContent === "object" && Object.keys(logContent).length > 0;
-    }).map(([logName, logContent]) => /* @__PURE__ */ import_react69.default.createElement(
-      LogNavItem,
+        className: "d-flex align-items-center text-muted mb-1",
+        style: { cursor: "pointer", fontSize: "0.875rem" },
+        onClick: () => setExpandedSections((prev) => ({ ...prev, standardLogs: !prev.standardLogs }))
+      },
+      /* @__PURE__ */ import_react81.default.createElement("i", { className: `bi bi-chevron-${expandedSections.standardLogs ? "down" : "right"} me-1` }),
+      /* @__PURE__ */ import_react81.default.createElement("span", null, "Standard Logs")
+    ), expandedSections.standardLogs && /* @__PURE__ */ import_react81.default.createElement("div", null, Object.values(STANDARD_LOGS).map((logName) => {
+      const logContent = logs[logName];
+      const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && Object.keys(logContent).length > 0);
+      return /* @__PURE__ */ import_react81.default.createElement(
+        FileTreeItem,
+        {
+          key: logName,
+          name: logName,
+          isFile: true,
+          level: 1,
+          isSelected: activeTab === logName,
+          exists,
+          onClick: () => {
+            if (exists) {
+              setActiveTab(logName);
+              setSelectedFile({
+                path: logName,
+                content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                language: logName.endsWith(".json") ? "json" : "plaintext"
+              });
+            } else {
+              setActiveTab(logName);
+              setSelectedFile({
+                path: logName,
+                content: `// ${logName} not found or empty
+This file was not generated during the test run.`,
+                language: "plaintext"
+              });
+            }
+          }
+        }
+      );
+    }))), Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react81.default.createElement(
+      "div",
       {
-        key: logName,
-        logName,
-        logContent,
-        activeTab,
-        setActiveTab,
-        setSelectedFile,
-        errorCounts,
-        decodedTestPath,
-        testsExist
-      }
-    ))), logs.source_files && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Source Files"), /* @__PURE__ */ import_react69.default.createElement(
+        className: "d-flex align-items-center text-muted mb-1",
+        style: { cursor: "pointer", fontSize: "0.875rem" },
+        onClick: () => setExpandedSections((prev) => ({ ...prev, runtimeLogs: !prev.runtimeLogs }))
+      },
+      /* @__PURE__ */ import_react81.default.createElement("i", { className: `bi bi-chevron-${expandedSections.runtimeLogs ? "down" : "right"} me-1` }),
+      /* @__PURE__ */ import_react81.default.createElement("span", null, "Runtime Logs")
+    ), expandedSections.runtimeLogs && /* @__PURE__ */ import_react81.default.createElement("div", null, Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).map((logName) => {
+      const logContent = logs[logName];
+      const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && Object.keys(logContent).length > 0);
+      return /* @__PURE__ */ import_react81.default.createElement(
+        FileTreeItem,
+        {
+          key: logName,
+          name: logName,
+          isFile: true,
+          level: 1,
+          isSelected: activeTab === logName,
+          exists,
+          onClick: () => {
+            if (exists) {
+              setActiveTab(logName);
+              setSelectedFile({
+                path: logName,
+                content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                language: logName.endsWith(".json") ? "json" : "plaintext"
+              });
+            } else {
+              setActiveTab(logName);
+              setSelectedFile({
+                path: logName,
+                content: `// ${logName} not found or empty
+This file was not generated during the test run.`,
+                language: "plaintext"
+              });
+            }
+          }
+        }
+      );
+    }))), logs.source_files && /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react81.default.createElement(
+      "div",
+      {
+        className: "d-flex align-items-center text-muted mb-1",
+        style: { cursor: "pointer", fontSize: "0.875rem" },
+        onClick: () => setExpandedSections((prev) => ({ ...prev, sourceFiles: !prev.sourceFiles }))
+      },
+      /* @__PURE__ */ import_react81.default.createElement("i", { className: `bi bi-chevron-${expandedSections.sourceFiles ? "down" : "right"} me-1` }),
+      /* @__PURE__ */ import_react81.default.createElement("span", null, "Source Files")
+    ), expandedSections.sourceFiles && /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement(
       FileTree,
       {
         data: logs.source_files,
@@ -33443,48 +34294,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             language: getLanguage(path)
           });
         },
-        level: 0,
+        level: 1,
         selectedSourcePath
       }
-    )), logs[STANDARD_LOGS.TESTS] && /* @__PURE__ */ import_react69.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "px-3 py-1 small text-muted" }, "Artifacts"), /* @__PURE__ */ import_react69.default.createElement(
-      ArtifactTree,
-      {
-        treeData: buildArtifactTree(
-          typeof logs[STANDARD_LOGS.TESTS] === "string" ? JSON.parse(logs[STANDARD_LOGS.TESTS]) : logs[STANDARD_LOGS.TESTS]
-        ),
-        projectName,
-        testName,
-        runtime,
-        onSelect: async (path) => {
-          setActiveTab("artifact_viewer");
-          try {
-            const response = await fetch(
-              `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${path}`
-            );
-            const content = await (path.match(/\.(png|jpg|jpeg|gif|svg)$/i) ? URL.createObjectURL(await response.blob()) : await response.text());
-            setSelectedFile({
-              path,
-              content,
-              language: getLanguage(path)
-            });
-          } catch (err) {
-            setSelectedFile({
-              path,
-              content: `Failed to load artifact: ${err}`,
-              language: "plaintext"
-            });
-          }
-        },
-        level: 0
-      }
-    )))), /* @__PURE__ */ import_react69.default.createElement(
+    )))), /* @__PURE__ */ import_react81.default.createElement(
       Col_default,
       {
         sm: 6,
         className: "border-end p-0",
         style: { height: "calc(100vh - 56px)", overflow: "hidden" }
       },
-      /* @__PURE__ */ import_react69.default.createElement(
+      /* @__PURE__ */ import_react81.default.createElement(
         de,
         {
           height: "100%",
@@ -33501,184 +34321,81 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       )
-    ), /* @__PURE__ */ import_react69.default.createElement(
-      Col_default,
+    ), /* @__PURE__ */ import_react81.default.createElement(Col_default, { sm: 3, className: "p-0 border-start", style: { height: "calc(100vh - 56px)", overflow: "auto" } }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-3" }, selectedFile?.path.endsWith("tests.json") && /* @__PURE__ */ import_react81.default.createElement("div", { className: "test-results-preview" }, typeof selectedFile.content === "string" ? renderTestResults(JSON.parse(selectedFile.content)) : renderTestResults(selectedFile.content)), selectedFile?.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) && /* @__PURE__ */ import_react81.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react81.default.createElement(
+      "img",
       {
-        sm: 3,
-        className: "p-0",
-        style: { height: "calc(100vh - 56px)", overflow: "auto" }
+        src: selectedFile.content,
+        alt: selectedFile.path,
+        className: "img-fluid",
+        style: { maxHeight: "300px" }
+      }
+    ), /* @__PURE__ */ import_react81.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react81.default.createElement(
+      "a",
+      {
+        href: selectedFile.content,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "btn btn-sm btn-outline-primary"
       },
-      /* @__PURE__ */ import_react69.default.createElement("div", { className: "p-3" }, selectedFile?.path.endsWith("tests.json") ? typeof selectedFile.content === "string" ? renderTestResults(JSON.parse(selectedFile.content)) : renderTestResults(selectedFile.content) : selectedFile?.path.includes("source_files") ? /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react69.default.createElement(
-        Button_default2,
-        {
-          variant: "primary",
-          className: "mb-2",
-          onClick: () => {
-            alert("Save functionality will be implemented here");
-          }
-        },
-        "Save Changes"
-      ), /* @__PURE__ */ import_react69.default.createElement("div", { className: "flex-grow-1 overflow-auto" }, selectedFile && /* @__PURE__ */ import_react69.default.createElement("pre", { className: "bg-light p-3" }, /* @__PURE__ */ import_react69.default.createElement("code", null, selectedFile.content)))) : activeTab === "artifact_viewer" && selectedFile && /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react69.default.createElement("h5", null, selectedFile.path), /* @__PURE__ */ import_react69.default.createElement(
-        "a",
-        {
-          href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${selectedFile.path}`,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "btn btn-primary mb-2"
-        },
-        "Open Full Artifact"
-      )), /* @__PURE__ */ import_react69.default.createElement("div", { className: "flex-grow-1 overflow-auto" }, selectedFile.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) ? /* @__PURE__ */ import_react69.default.createElement(
-        "img",
-        {
-          src: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${selectedFile.path}`,
-          alt: selectedFile.path,
-          className: "img-fluid",
-          style: { maxHeight: "100%" }
+      "Open Full Size"
+    ))), selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && /* @__PURE__ */ import_react81.default.createElement("pre", { className: "bg-light p-2 small" }, /* @__PURE__ */ import_react81.default.createElement("code", null, selectedFile.content)), selectedFile?.path.includes("source_files") && /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("div", { className: "mb-2 small text-muted" }, /* @__PURE__ */ import_react81.default.createElement("i", { className: "bi bi-file-earmark-text me-1" }), selectedFile.path.split("/").pop()), /* @__PURE__ */ import_react81.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-primary",
+        size: "sm",
+        className: "mb-2",
+        onClick: () => {
+          alert("Save functionality will be implemented here");
         }
-      ) : /* @__PURE__ */ import_react69.default.createElement("pre", { className: "bg-light p-3" }, /* @__PURE__ */ import_react69.default.createElement("code", null, selectedFile.content)))))
+      },
+      "Save Changes"
+    ))))), /* @__PURE__ */ import_react81.default.createElement(ToastContainer_default, { position: "top-end", className: "p-3" }, /* @__PURE__ */ import_react81.default.createElement(
+      Toast_default,
+      {
+        show: showToast,
+        onClose: () => setShowToast(false),
+        delay: 3e3,
+        autohide: true,
+        bg: toastVariant
+      },
+      /* @__PURE__ */ import_react81.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react81.default.createElement("strong", { className: "me-auto" }, "Command Status")),
+      /* @__PURE__ */ import_react81.default.createElement(Toast_default.Body, { className: "text-white" }, toastMessage)
     )));
   };
-  var ArtifactTree = ({
-    treeData,
-    projectName,
-    testName,
-    runtime,
-    onSelect,
-    level = 0,
-    basePath = ""
+  var FileTreeItem = ({
+    name,
+    isFile,
+    level,
+    isSelected,
+    exists = true,
+    onClick
   }) => {
-    const [expanded, setExpanded] = (0, import_react69.useState)({});
-    const toggleExpand = (path) => {
-      setExpanded((prev) => ({ ...prev, [path]: !prev[path] }));
-    };
-    return /* @__PURE__ */ import_react69.default.createElement("ul", { className: "list-unstyled", style: { paddingLeft: `${level * 16}px` } }, Object.entries(treeData).map(([name, node]) => {
-      const fullPath = basePath ? `${basePath}/${name}` : name;
-      const isExpanded = expanded[fullPath];
-      if (node.__isFile) {
-        return /* @__PURE__ */ import_react69.default.createElement("li", { key: fullPath, className: "py-1" }, /* @__PURE__ */ import_react69.default.createElement(
-          "a",
-          {
-            href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${node.path}`,
-            target: "_blank",
-            rel: "noopener noreferrer",
-            className: "text-decoration-none",
-            onClick: (e3) => {
-              e3.preventDefault();
-              onSelect(node.path);
-            }
-          },
-          /* @__PURE__ */ import_react69.default.createElement("i", { className: "bi bi-file-earmark-text me-2" }),
-          name
-        ));
-      } else {
-        return /* @__PURE__ */ import_react69.default.createElement("li", { key: fullPath, className: "py-1" }, /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react69.default.createElement(
-          "button",
-          {
-            className: "btn btn-link text-start p-0 text-decoration-none me-1",
-            onClick: () => toggleExpand(fullPath)
-          },
-          /* @__PURE__ */ import_react69.default.createElement(
-            "i",
-            {
-              className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-2`
-            }
-          ),
-          name
-        )), isExpanded && /* @__PURE__ */ import_react69.default.createElement(
-          ArtifactTree,
-          {
-            treeData: node,
-            projectName,
-            testName,
-            runtime,
-            onSelect,
-            level: level + 1,
-            basePath: fullPath
-          }
-        ));
-      }
-    }));
-  };
-  var buildArtifactTree = (testData) => {
-    const artifactPaths = /* @__PURE__ */ new Set();
-    testData.givens?.forEach((given) => {
-      given.artifacts?.forEach((artifact) => artifactPaths.add(artifact));
-      given.whens?.forEach((when) => when.artifacts?.forEach((artifact) => artifactPaths.add(artifact)));
-      given.thens?.forEach((then) => then.artifacts?.forEach((artifact) => artifactPaths.add(artifact)));
-    });
-    const sortedArtifacts = Array.from(artifactPaths).sort();
-    return sortedArtifacts.reduce((tree, artifactPath) => {
-      const parts = artifactPath.split("/");
-      let currentLevel = tree;
-      parts.forEach((part, i2) => {
-        if (!currentLevel[part]) {
-          currentLevel[part] = i2 === parts.length - 1 ? { __isFile: true, path: artifactPath } : {};
-        }
-        currentLevel = currentLevel[part];
-      });
-      return tree;
-    }, {});
-  };
-  var LogNavItem = ({
-    logName,
-    logContent,
-    activeTab,
-    setActiveTab,
-    setSelectedFile,
-    errorCounts,
-    decodedTestPath,
-    testsExist
-  }) => {
-    const displayName = logName.replace(".json", "").replace(".txt", "").replace(".log", "").replace(/_/g, " ").replace(/^std/, "Standard ").replace(/^exit/, "Exit Code");
-    const logValue = typeof logContent === "string" ? logContent.trim() : "";
-    let statusIndicator = null;
-    if (logName === STANDARD_LOGS.TYPE_ERRORS && (errorCounts.typeErrors > 0 || logValue && logValue !== "0")) {
-      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.typeErrors || (logValue ? 1 : 0));
-    } else if (logName === STANDARD_LOGS.LINT_ERRORS && (errorCounts.staticErrors > 0 || logValue && logValue !== "0")) {
-      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.staticErrors || (logValue ? 1 : 0));
-    } else if (logName === RUNTIME_SPECIFIC_LOGS.node.STDERR && (errorCounts.runTimeErrors > 0 || logValue && logValue !== "0")) {
-      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("span", { className: "ms-1" }, "\u274C ", errorCounts.runTimeErrors || (logValue ? 1 : 0));
-    } else if (logName === STANDARD_LOGS.EXIT && logValue !== "0") {
-      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("span", { className: "ms-1" }, "\u26A0\uFE0F ", logValue);
-    } else if (logName === STANDARD_LOGS.TESTS && logValue) {
-      statusIndicator = /* @__PURE__ */ import_react69.default.createElement("div", { className: "ms-1" }, /* @__PURE__ */ import_react69.default.createElement(
-        TestStatusBadge,
-        {
-          testName: decodedTestPath,
-          testsExist,
-          runTimeErrors: errorCounts.runTimeErrors,
-          typeErrors: errorCounts.typeErrors,
-          staticErrors: errorCounts.staticErrors,
-          variant: "compact",
-          className: "mt-1"
-        }
-      ));
-    }
-    return /* @__PURE__ */ import_react69.default.createElement(Nav_default2.Item, { key: logName }, /* @__PURE__ */ import_react69.default.createElement(
-      Nav_default2.Link,
+    const displayName = name.replace(".json", "").replace(".txt", "").replace(".log", "").replace(/_/g, " ").replace(/^std/, "Standard ").replace(/^exit/, "Exit Code").split("/").pop();
+    return /* @__PURE__ */ import_react81.default.createElement(
+      "div",
       {
-        eventKey: logName,
-        active: activeTab === logName,
-        onClick: () => {
-          setActiveTab(logName);
-          setSelectedFile({
-            path: logName,
-            content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
-            language: logName.endsWith(".json") ? "json" : logName.endsWith(".txt") ? "plaintext" : logName.endsWith(".log") ? "log" : "plaintext"
-          });
+        className: `d-flex align-items-center py-1 ${isSelected ? "text-primary fw-bold" : exists ? "text-dark" : "text-muted"}`,
+        style: {
+          paddingLeft: `${level * 16}px`,
+          cursor: exists ? "pointer" : "not-allowed",
+          fontSize: "0.875rem",
+          opacity: exists ? 1 : 0.6
         },
-        className: "d-flex flex-column align-items-start"
+        onClick: exists ? onClick : void 0,
+        title: exists ? void 0 : "File not found or empty"
       },
-      /* @__PURE__ */ import_react69.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react69.default.createElement("span", { className: "text-capitalize" }, displayName), statusIndicator)
-    ));
+      /* @__PURE__ */ import_react81.default.createElement("i", { className: `bi ${isFile ? exists ? "bi-file-earmark-text" : "bi-file-earmark" : "bi-folder"} me-1` }),
+      /* @__PURE__ */ import_react81.default.createElement("span", null, displayName),
+      !exists && /* @__PURE__ */ import_react81.default.createElement("i", { className: "bi bi-question-circle ms-1", title: "File not found or empty" })
+    );
   };
 
   // src/components/stateful/TestPage.tsx
   var TestPage = () => {
     const navigate = useNavigate();
     const location2 = useLocation();
-    const [route, setRoute] = (0, import_react71.useState)("results");
-    (0, import_react71.useEffect)(() => {
+    const [route, setRoute] = (0, import_react83.useState)("results");
+    (0, import_react83.useEffect)(() => {
       const hash = location2.hash.replace("#", "");
       if (hash && ["results", "logs", "types", "lint", "coverage"].includes(hash)) {
         setRoute(hash);
@@ -33686,23 +34403,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         setRoute("results");
       }
     }, [location2.hash]);
-    const [testName, setTestName] = (0, import_react71.useState)("");
-    const [logs, setLogs] = (0, import_react71.useState)({});
-    const [loading, setLoading] = (0, import_react71.useState)(true);
-    const [error, setError] = (0, import_react71.useState)(null);
-    const [testsExist, setTestsExist] = (0, import_react71.useState)(true);
-    const [errorCounts, setErrorCounts] = (0, import_react71.useState)({
+    const [testName, setTestName] = (0, import_react83.useState)("");
+    const [logs, setLogs] = (0, import_react83.useState)({});
+    const [loading, setLoading] = (0, import_react83.useState)(true);
+    const [error, setError] = (0, import_react83.useState)(null);
+    const [testsExist, setTestsExist] = (0, import_react83.useState)(true);
+    const [errorCounts, setErrorCounts] = (0, import_react83.useState)({
       typeErrors: 0,
       staticErrors: 0,
       runTimeErrors: 0
     });
-    const [summary, setSummary] = (0, import_react71.useState)(null);
+    const [summary, setSummary] = (0, import_react83.useState)(null);
     const { projectName, "*": splat } = useParams();
     const pathParts = splat ? splat.split("/") : [];
     const runtime = pathParts.pop() || "";
     const testPath = pathParts.join("/");
     const decodedTestPath = testPath ? decodeURIComponent(testPath) : "";
-    (0, import_react71.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       if (!projectName || !testPath || !runtime)
         return;
       setTestName(testPath);
@@ -33710,7 +34427,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         try {
           const [testResponse, metafileRes] = await Promise.all([
             fetchTestData(projectName, testPath, runtime),
-            fetch(`metafiles/${runtime}/${projectName}.json`)
+            fetch(`/metafiles/${runtime}/${projectName}.json`)
           ]);
           console.log("Fetching test data for:", { projectName, testPath, runtime });
           const receivedLogs = await testResponse.logs;
@@ -33788,15 +34505,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           if (receivedLogs["tests.json"]) {
             console.log("tests.json content type:", typeof receivedLogs["tests.json"]);
             try {
-              receivedLogs["tests.json"] = typeof receivedLogs["tests.json"] === "string" ? JSON.parse(receivedLogs["tests.json"]) : receivedLogs["tests.json"];
+              if (typeof receivedLogs["tests.json"] === "string") {
+                receivedLogs["tests.json"] = JSON.parse(receivedLogs["tests.json"]);
+              }
             } catch (e3) {
               console.error("Failed to parse tests.json:", e3);
-              receivedLogs["tests.json"] = { error: "Invalid test data format" };
             }
           }
           setLogs(receivedLogs);
           try {
-            const summaryResponse = await fetch(`reports/${projectName}/summary.json`);
+            const summaryResponse = await fetch(`/reports/${projectName}/summary.json`);
             if (!summaryResponse.ok)
               throw new Error("Failed to fetch summary");
             const allSummaries = await summaryResponse.json();
@@ -33824,8 +34542,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       fetchData();
     }, []);
     if (!logs)
-      return /* @__PURE__ */ import_react71.default.createElement("div", null, "loading...");
-    return /* @__PURE__ */ import_react71.default.createElement(import_react71.default.Fragment, null, /* @__PURE__ */ import_react71.default.createElement(
+      return /* @__PURE__ */ import_react83.default.createElement("div", null, "loading...");
+    return /* @__PURE__ */ import_react83.default.createElement(import_react83.default.Fragment, null, /* @__PURE__ */ import_react83.default.createElement(
       TestPageView,
       {
         route,
@@ -33843,17 +34561,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/stateful/ProjectPage.tsx
-  var import_react73 = __toESM(require_react(), 1);
+  var import_react85 = __toESM(require_react(), 1);
 
   // src/components/pure/ProjectPageView.tsx
-  var import_react72 = __toESM(require_react(), 1);
+  var import_react84 = __toESM(require_react(), 1);
   var BuildLogViewer = ({ logs, runtime }) => {
     if (!logs)
-      return /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
+      return /* @__PURE__ */ import_react84.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
     const hasErrors = logs.errors?.length > 0;
     const hasWarnings = logs.warnings?.length > 0;
-    const [activeTab, setActiveTab] = import_react72.default.useState("summary");
-    return /* @__PURE__ */ import_react72.default.createElement("div", null, /* @__PURE__ */ import_react72.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k3) => setActiveTab(k3 || "summary") }, /* @__PURE__ */ import_react72.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react72.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react72.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react72.default.createElement(Card_default, null, /* @__PURE__ */ import_react72.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react72.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react72.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react72.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react72.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react72.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react72.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react72.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react72.default.createElement("code", null, file), /* @__PURE__ */ import_react72.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react72.default.createElement("div", null, /* @__PURE__ */ import_react72.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react72.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react72.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react72.default.createElement("code", null, file), /* @__PURE__ */ import_react72.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react72.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react72.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react72.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react72.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react72.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react72.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react72.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i2) => /* @__PURE__ */ import_react72.default.createElement(ListGroup_default.Item, { key: i2, className: "text-warning" }, /* @__PURE__ */ import_react72.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react72.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react72.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react72.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react72.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(warn)))))))) : /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react72.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react72.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react72.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react72.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react72.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react72.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i2) => /* @__PURE__ */ import_react72.default.createElement(ListGroup_default.Item, { key: i2, className: "text-danger" }, /* @__PURE__ */ import_react72.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react72.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react72.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react72.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react72.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(err)))))))) : /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react72.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react72.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
+    const [activeTab, setActiveTab] = import_react84.default.useState("summary");
+    return /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k3) => setActiveTab(k3 || "summary") }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react84.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react84.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react84.default.createElement(Card_default, null, /* @__PURE__ */ import_react84.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react84.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react84.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react84.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react84.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react84.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react84.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react84.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react84.default.createElement("code", null, file), /* @__PURE__ */ import_react84.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react84.default.createElement("div", null, /* @__PURE__ */ import_react84.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react84.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react84.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react84.default.createElement("code", null, file), /* @__PURE__ */ import_react84.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react84.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react84.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react84.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react84.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react84.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react84.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react84.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i2) => /* @__PURE__ */ import_react84.default.createElement(ListGroup_default.Item, { key: i2, className: "text-warning" }, /* @__PURE__ */ import_react84.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react84.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react84.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react84.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react84.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(warn)))))))) : /* @__PURE__ */ import_react84.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react84.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react84.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react84.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react84.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react84.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react84.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i2) => /* @__PURE__ */ import_react84.default.createElement(ListGroup_default.Item, { key: i2, className: "text-danger" }, /* @__PURE__ */ import_react84.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react84.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react84.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react84.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react84.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(err)))))))) : /* @__PURE__ */ import_react84.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react84.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react84.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
   };
   var ProjectPageView = ({
     summary,
@@ -33868,11 +34586,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     setActiveTab
   }) => {
     if (loading)
-      return /* @__PURE__ */ import_react72.default.createElement("div", null, "Loading project data...");
+      return /* @__PURE__ */ import_react84.default.createElement("div", null, "Loading project data...");
     if (error)
-      return /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+      return /* @__PURE__ */ import_react84.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
     if (!summary)
-      return /* @__PURE__ */ import_react72.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
+      return /* @__PURE__ */ import_react84.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
     const testStatuses = Object.entries(summary).map(([testName, testData]) => {
       const runTime = config3.tests?.find((t2) => t2[0] === testName)?.[1] || "node";
       return {
@@ -33884,21 +34602,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         runTime
       };
     });
-    return /* @__PURE__ */ import_react72.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react72.default.createElement(
+    return /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(
       NavBar,
       {
         title: projectName,
         backLink: "/"
       }
-    ), /* @__PURE__ */ import_react72.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react72.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react72.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(
+    ), /* @__PURE__ */ import_react84.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react84.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "tests",
         onClick: () => setActiveTab("tests"),
         className: "d-flex flex-column align-items-start"
       },
-      /* @__PURE__ */ import_react72.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react72.default.createElement("span", null, "Tests"), testStatuses.some((t2) => t2.runTimeErrors > 0) ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some((t2) => t2.typeErrors > 0 || t2.staticErrors > 0) ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
-    )), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(
+      /* @__PURE__ */ import_react84.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react84.default.createElement("span", null, "Tests"), testStatuses.some((t2) => t2.runTimeErrors > 0) ? /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some((t2) => t2.typeErrors > 0 || t2.staticErrors > 0) ? /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
+    )), /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react84.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "node",
@@ -33906,8 +34624,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         className: "d-flex justify-content-between align-items-center"
       },
       "Node build logs",
-      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(
+      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react84.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "web",
@@ -33915,8 +34633,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         className: "d-flex justify-content-between align-items-center"
       },
       "Web build logs",
-      webLogs?.errors?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )), /* @__PURE__ */ import_react72.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react72.default.createElement(
+      webLogs?.errors?.length ? /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react84.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react84.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "pure",
@@ -33924,8 +34642,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         className: "d-flex justify-content-between align-items-center"
       },
       "Pure build logs",
-      pureLogs?.errors?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )))), /* @__PURE__ */ import_react72.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react72.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react72.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react72.default.createElement("thead", null, /* @__PURE__ */ import_react72.default.createElement("tr", null, /* @__PURE__ */ import_react72.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react72.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react72.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react72.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react72.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react72.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react72.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)), /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement(
+      pureLogs?.errors?.length ? /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )))), /* @__PURE__ */ import_react84.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react84.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react84.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react84.default.createElement("thead", null, /* @__PURE__ */ import_react84.default.createElement("tr", null, /* @__PURE__ */ import_react84.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react84.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react84.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react84.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react84.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react84.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react84.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react84.default.createElement("td", null, /* @__PURE__ */ import_react84.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}` }, test.testName)), /* @__PURE__ */ import_react84.default.createElement("td", null, /* @__PURE__ */ import_react84.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react84.default.createElement("td", null, /* @__PURE__ */ import_react84.default.createElement(
       TestStatusBadge,
       {
         testName: test.testName,
@@ -33934,23 +34652,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         typeErrors: test.typeErrors,
         staticErrors: test.staticErrors
       }
-    )), /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705")), /* @__PURE__ */ import_react72.default.createElement("td", null, /* @__PURE__ */ import_react72.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `\u274C ${test.staticErrors}` : "\u2705")))))) : activeTab === "node" ? /* @__PURE__ */ import_react72.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react72.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react72.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
+    )), /* @__PURE__ */ import_react84.default.createElement("td", null, /* @__PURE__ */ import_react84.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#types` }, test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705")), /* @__PURE__ */ import_react84.default.createElement("td", null, /* @__PURE__ */ import_react84.default.createElement("a", { href: `#/projects/${projectName}/tests/${encodeURIComponent(test.testName)}/${test.runTime}#lint` }, test.staticErrors > 0 ? `\u274C ${test.staticErrors}` : "\u2705")))))) : activeTab === "node" ? /* @__PURE__ */ import_react84.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react84.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react84.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
   };
 
   // src/components/stateful/ProjectPage.tsx
   var ProjectPage = () => {
-    const [summary, setSummary] = (0, import_react73.useState)(null);
-    const [nodeLogs, setNodeLogs] = (0, import_react73.useState)(null);
-    const [webLogs, setWebLogs] = (0, import_react73.useState)(null);
-    const [pureLogs, setPureLogs] = (0, import_react73.useState)(null);
-    const [config3, setConfig] = (0, import_react73.useState)({});
-    const [loading, setLoading] = (0, import_react73.useState)(true);
-    const [error, setError] = (0, import_react73.useState)(null);
-    const [projectName, setProjectName] = (0, import_react73.useState)("");
+    const [summary, setSummary] = (0, import_react85.useState)(null);
+    const [nodeLogs, setNodeLogs] = (0, import_react85.useState)(null);
+    const [webLogs, setWebLogs] = (0, import_react85.useState)(null);
+    const [pureLogs, setPureLogs] = (0, import_react85.useState)(null);
+    const [config3, setConfig] = (0, import_react85.useState)({});
+    const [loading, setLoading] = (0, import_react85.useState)(true);
+    const [error, setError] = (0, import_react85.useState)(null);
+    const [projectName, setProjectName] = (0, import_react85.useState)("");
     const navigate = useNavigate();
     const location2 = useLocation();
-    const [route, setRoute] = (0, import_react73.useState)("tests");
-    (0, import_react73.useEffect)(() => {
+    const [route, setRoute] = (0, import_react85.useState)("tests");
+    (0, import_react85.useEffect)(() => {
       const hash = location2.hash.replace("#", "");
       if (hash && ["tests", "node", "web", "pure"].includes(hash)) {
         setRoute(hash);
@@ -33959,18 +34677,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }, [location2.hash]);
     const { projectName: name } = useParams();
-    (0, import_react73.useEffect)(() => {
+    (0, import_react85.useEffect)(() => {
       if (!name)
         return;
       setProjectName(name);
       const fetchData = async () => {
         try {
           const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-            fetch(`reports/${name}/summary.json`),
-            fetch(`metafiles/node/${name}.json`),
-            fetch(`metafiles/web/${name}.json`),
-            fetch(`metafiles/pure/${name}.json`),
-            fetch(`reports/${name}/config.json`)
+            fetch(`/reports/${name}/summary.json`),
+            fetch(`/metafiles/node/${name}.json`),
+            fetch(`/metafiles/web/${name}.json`),
+            fetch(`/metafiles/pure/${name}.json`),
+            fetch(`/reports/${name}/config.json`)
           ]);
           const [summaryData, nodeData, webData, pureData, configData] = await Promise.all([
             summaryRes.ok ? summaryRes.json() : {},
@@ -33992,7 +34710,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       fetchData();
     }, [name]);
-    return /* @__PURE__ */ import_react73.default.createElement(
+    return /* @__PURE__ */ import_react85.default.createElement(
       ProjectPageView,
       {
         summary,
@@ -34010,10 +34728,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/stateful/ProjectsPage.tsx
-  var import_react75 = __toESM(require_react(), 1);
+  var import_react87 = __toESM(require_react(), 1);
 
   // src/components/pure/ProjectsPageView.tsx
-  var import_react74 = __toESM(require_react(), 1);
+  var import_react86 = __toESM(require_react(), 1);
   var ProjectsPageView = ({
     projects,
     summaries,
@@ -34035,18 +34753,27 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     };
     if (loading)
-      return /* @__PURE__ */ import_react74.default.createElement("div", null, "Loading projects...");
+      return /* @__PURE__ */ import_react86.default.createElement("div", null, "Loading projects...");
     if (error)
-      return /* @__PURE__ */ import_react74.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    return /* @__PURE__ */ import_react74.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react74.default.createElement(NavBar, { title: "Testeranto", backLink: void 0 }), /* @__PURE__ */ import_react74.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react74.default.createElement("thead", null, /* @__PURE__ */ import_react74.default.createElement("tr", null, /* @__PURE__ */ import_react74.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react74.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react74.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react74.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react74.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react74.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react74.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement("a", { href: "#", onClick: (e3) => {
-      e3.preventDefault();
-      navigate(`/projects/${project.name}`);
-    } }, project.name)), /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement("div", { style: { maxHeight: "200px", overflowY: "auto" } }, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName) => {
+      return /* @__PURE__ */ import_react86.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+    return /* @__PURE__ */ import_react86.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react86.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react86.default.createElement("thead", null, /* @__PURE__ */ import_react86.default.createElement("tr", null, /* @__PURE__ */ import_react86.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react86.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react86.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react86.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react86.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react86.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react86.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react86.default.createElement("td", null, /* @__PURE__ */ import_react86.default.createElement(
+      "a",
+      {
+        href: "#",
+        onClick: (e3) => {
+          e3.preventDefault();
+          navigate(`/projects/${project.name}`);
+        }
+      },
+      project.name
+    )), /* @__PURE__ */ import_react86.default.createElement("td", null, /* @__PURE__ */ import_react86.default.createElement("div", null, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName) => {
       const testData = summaries[project.name][testName];
-      const runTime = configs[project.name]?.tests?.find((t2) => t2[0] === testName)?.[1] || "node";
+      const runTime = configs[project.name]?.tests?.find(
+        (t2) => t2[0] === testName
+      )?.[1] || "node";
       const hasRuntimeErrors = testData.runTimeErrors > 0;
       const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
-      return /* @__PURE__ */ import_react74.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react74.default.createElement(
+      return /* @__PURE__ */ import_react86.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react86.default.createElement(
         "a",
         {
           href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`
@@ -34054,51 +34781,53 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         hasRuntimeErrors ? "\u274C " : hasStaticErrors ? "\u26A0\uFE0F " : "",
         testName.split("/").pop() || testName
       ));
-    }) : /* @__PURE__ */ import_react74.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement(
-      "a",
-      {
-        href: `#/projects/${project.name}#node`
-      },
-      getStatusIcon(project.nodeStatus),
-      " Node build logs"
-    )), /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement(
-      "a",
-      {
-        href: `#/projects/${project.name}#web`
-      },
-      getStatusIcon(project.webStatus),
-      " Web build logs"
-    )), /* @__PURE__ */ import_react74.default.createElement("td", null, /* @__PURE__ */ import_react74.default.createElement(
-      "a",
-      {
-        href: `#/projects/${project.name}#pure`
-      },
-      getStatusIcon(project.pureStatus),
-      " Pure build logs"
-    )))))));
+    }) : /* @__PURE__ */ import_react86.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react86.default.createElement("td", null, /* @__PURE__ */ import_react86.default.createElement("a", { href: `#/projects/${project.name}#node` }, getStatusIcon(project.nodeStatus), " Node build logs")), /* @__PURE__ */ import_react86.default.createElement("td", null, /* @__PURE__ */ import_react86.default.createElement("a", { href: `#/projects/${project.name}#web` }, getStatusIcon(project.webStatus), " Web build logs")), /* @__PURE__ */ import_react86.default.createElement("td", null, /* @__PURE__ */ import_react86.default.createElement("a", { href: `#/projects/${project.name}#pure` }, getStatusIcon(project.pureStatus), " Pure build logs")))))));
   };
 
   // src/components/stateful/ProjectsPage.tsx
   var ProjectsPage = () => {
-    const [projects, setProjects] = (0, import_react75.useState)([]);
-    const [summaries, setSummaries] = (0, import_react75.useState)({});
-    const [loading, setLoading] = (0, import_react75.useState)(true);
-    const [error, setError] = (0, import_react75.useState)(null);
-    const [configs, setConfigs] = (0, import_react75.useState)({});
+    const [projects, setProjects] = (0, import_react87.useState)([]);
+    const [summaries, setSummaries] = (0, import_react87.useState)({});
+    const [loading, setLoading] = (0, import_react87.useState)(true);
+    const [error, setError] = (0, import_react87.useState)(null);
+    const [configs, setConfigs] = (0, import_react87.useState)({});
     const navigate = useNavigate();
-    (0, import_react75.useEffect)(() => {
+    const [ws2, setWs] = (0, import_react87.useState)(null);
+    (0, import_react87.useEffect)(() => {
+      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const wsUrl = `${wsProtocol}//${window.location.host}`;
+      const websocket = new WebSocket(wsUrl);
+      setWs(websocket);
+      websocket.onmessage = (event) => {
+        try {
+          const data2 = JSON.parse(event.data);
+          if (data2.type === "summaryUpdate") {
+            setSummaries((prev) => ({ ...prev, ...data2.data }));
+          }
+        } catch (error2) {
+          console.error("Error parsing WebSocket message:", error2);
+        }
+      };
+      websocket.onerror = (error2) => {
+        console.error("WebSocket error:", error2);
+      };
+      return () => {
+        websocket.close();
+      };
+    }, []);
+    (0, import_react87.useEffect)(() => {
       const fetchProjects = async () => {
         try {
-          const projectsRes = await fetch(`projects.json`);
+          const projectsRes = await fetch(`/projects.json`);
           const projectNames = await projectsRes.json();
           const projectsData = await Promise.all(
             projectNames.map(async (name) => {
               const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                fetch(`reports/${name}/summary.json`),
-                fetch(`metafiles/node/${name}.json`),
-                fetch(`metafiles/web/${name}.json`),
-                fetch(`metafiles/pure/${name}.json`),
-                fetch(`reports/${name}/config.json`)
+                fetch(`/reports/${name}/summary.json`),
+                fetch(`/metafiles/node/${name}.json`),
+                fetch(`/metafiles/web/${name}.json`),
+                fetch(`/metafiles/pure/${name}.json`),
+                fetch(`/reports/${name}/config.json`)
               ]);
               const [summary, nodeData, webData, pureData, configData] = await Promise.all([
                 summaryRes.json(),
@@ -34127,7 +34856,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       fetchProjects();
     }, []);
-    return /* @__PURE__ */ import_react75.default.createElement(
+    return /* @__PURE__ */ import_react87.default.createElement(
       ProjectsPageView,
       {
         projects,
@@ -34141,590 +34870,85 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/pure/AppFrame.tsx
-  var import_react80 = __toESM(require_react(), 1);
-
-  // src/components/pure/SettingsButton.tsx
-  var import_react79 = __toESM(require_react(), 1);
-
-  // src/components/pure/ModalContent.tsx
-  var import_react77 = __toESM(require_react(), 1);
-
-  // src/components/pure/ThemeCard.tsx
-  var import_react76 = __toESM(require_react(), 1);
-  var ThemeCard = ({
-    theme,
-    handleThemeChange,
-    value,
-    title,
-    description,
-    style: style2
-  }) => /* @__PURE__ */ import_react76.default.createElement("div", { className: "col-md-4" }, /* @__PURE__ */ import_react76.default.createElement(
-    "div",
-    {
-      className: `card theme-card ${theme === value ? "border-primary" : ""}`,
-      onClick: () => handleThemeChange({
-        target: { value }
-      }),
-      style: style2
-    },
-    /* @__PURE__ */ import_react76.default.createElement("div", { className: "card-body text-center p-3" }, /* @__PURE__ */ import_react76.default.createElement("h5", { className: "card-title mb-1" }, title), /* @__PURE__ */ import_react76.default.createElement("p", { className: "small text-muted mb-0" }, description))
-  ));
-
-  // src/components/pure/ModalContent.tsx
-  var ModalContent = ({
-    theme,
-    handleThemeChange
-  }) => /* @__PURE__ */ import_react77.default.createElement(import_react77.default.Fragment, null, /* @__PURE__ */ import_react77.default.createElement(Modal_default2.Header, { closeButton: true, className: "border-0" }, /* @__PURE__ */ import_react77.default.createElement(Modal_default2.Title, { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react77.default.createElement("i", { className: "bi bi-palette-fill me-2" }), /* @__PURE__ */ import_react77.default.createElement("span", null, "Settings"))), /* @__PURE__ */ import_react77.default.createElement("div", { className: "alert alert-warning mx-3 mt-2 mb-0" }, /* @__PURE__ */ import_react77.default.createElement("i", { className: "bi bi-exclamation-triangle-fill me-2" }), /* @__PURE__ */ import_react77.default.createElement("strong", null, "Warning:"), ' Themes are an experimental feature. Only "Business casual" is fully supported at this time.'), /* @__PURE__ */ import_react77.default.createElement(Modal_default2.Body, { className: "p-0" }, /* @__PURE__ */ import_react77.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react77.default.createElement("div", { className: "row g-3" }, /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "system",
-      title: "9 to 5",
-      description: "Follows your OS theme",
-      style: {
-        background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
-        borderColor: "#adb5bd"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "light",
-      title: "Business casual",
-      description: "Clean & professional",
-      style: {
-        background: "linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%)",
-        borderColor: "#ced4da",
-        color: "#212529",
-        borderWidth: "2px"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "dark",
-      title: "Business formal",
-      description: "Premium & focused",
-      style: {
-        background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)",
-        borderColor: "#4ecdc4",
-        color: "#f8f9fa",
-        borderWidth: "2px"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "light-vibrant",
-      title: "Office Party",
-      description: "Colorful & fun",
-      style: {
-        background: "linear-gradient(135deg, #ff2d75 0%, #00e5ff 100%)",
-        borderColor: "#ffeb3b",
-        color: "#fff"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "dark-vibrant",
-      title: "After Party",
-      description: "Neon nightlife",
-      style: {
-        background: "linear-gradient(135deg, #16213e 0%, #e94560 100%)",
-        borderColor: "#00e5ff",
-        color: "#fff"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "sepia",
-      title: "WFH",
-      description: "Vintage warmth",
-      style: {
-        background: "linear-gradient(135deg, #f4ecd8 0%, #d0b88f 100%)",
-        borderColor: "#8b6b4a",
-        color: "#3a3226"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "light-grayscale",
-      title: "Serious Business",
-      description: "Simple & distraction-free",
-      style: {
-        background: "linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)",
-        borderColor: "#666",
-        color: "#333",
-        borderWidth: "2px"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "dark-grayscale",
-      title: "Very Serious business",
-      description: "Maximum readability",
-      style: {
-        background: "linear-gradient(135deg, #111 0%, #333 100%)",
-        borderColor: "#ff6b6b",
-        color: "#e0e0e0",
-        borderWidth: "2px"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "daily",
-      title: "Dreaming of PTO",
-      description: "Sunrise, sunset",
-      style: {
-        background: "linear-gradient(135deg, #6eafff 0%, #f9fbf0 100%)",
-        borderColor: "#f7d62e",
-        color: "#00192d"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "protanopia",
-      title: "Protanopia",
-      description: "Red-blind mode",
-      style: {
-        background: "linear-gradient(135deg, #f8f9fa 0%, #e0e8ff 100%)",
-        borderColor: "#3366cc",
-        color: "#333"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "deuteranopia",
-      title: "Deuteranopia",
-      description: "Green-blind mode",
-      style: {
-        background: "linear-gradient(135deg, #f8f9fa 0%, #ffe0e0 100%)",
-        borderColor: "#cc6633",
-        color: "#333"
-      }
-    }
-  ), /* @__PURE__ */ import_react77.default.createElement(
-    ThemeCard,
-    {
-      theme,
-      handleThemeChange,
-      value: "tritanopia",
-      title: "Tritanopia",
-      description: "Blue-blind mode",
-      style: {
-        background: "linear-gradient(135deg, #f8f9fa 0%, #e0ffe0 100%)",
-        borderColor: "#00aa66",
-        color: "#333"
-      }
-    }
-  )))));
-
-  // src/components/SunriseAnimation.tsx
-  var import_react78 = __toESM(require_react(), 1);
-  var SunriseAnimation = ({ active }) => {
-    const [position, setPosition] = (0, import_react78.useState)(0);
-    const [dimensions, setDimensions] = (0, import_react78.useState)({ width: 0, height: 0 });
-    const animationIdRef = (0, import_react78.useRef)(null);
-    (0, import_react78.useEffect)(() => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-      const handleResize = () => {
-        setDimensions({
-          width: window.innerWidth,
-          height: window.innerHeight
-        });
-      };
-      window.addEventListener("resize", handleResize);
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, []);
-    const ANIMATION_DURATION = 1e4;
-    const UPDATE_INTERVAL = 50;
-    (0, import_react78.useEffect)(() => {
-      if (!active) {
-        if (animationIdRef.current) {
-          cancelAnimationFrame(animationIdRef.current);
-          animationIdRef.current = null;
-        }
-        return;
-      }
-      console.log("Starting animation with duration:", ANIMATION_DURATION, "ms");
-      let startTime = performance.now();
-      let lastUpdateTime = 0;
-      const animate = (timestamp) => {
-        if (!active)
-          return;
-        const elapsed = (timestamp - startTime) % ANIMATION_DURATION;
-        const progress = elapsed / ANIMATION_DURATION;
-        if (timestamp - lastUpdateTime >= UPDATE_INTERVAL) {
-          const newPos = Math.cos(progress * Math.PI * 2);
-          setPosition(newPos);
-          lastUpdateTime = timestamp;
-        }
-        animationIdRef.current = requestAnimationFrame(animate);
-      };
-      animationIdRef.current = requestAnimationFrame(animate);
-      return () => {
-        if (animationIdRef.current) {
-          cancelAnimationFrame(animationIdRef.current);
-          animationIdRef.current = null;
-        }
-      };
-    }, [active]);
-    const yPos = dimensions.height * (1 - position);
-    const normalizedPos = (position + 1) / 2;
-    if (!active)
-      return null;
-    return /* @__PURE__ */ import_react78.default.createElement("div", { id: "sunrise", style: {
-      width: "100vw",
-      height: "100vh",
-      position: "fixed",
-      top: 0,
-      left: 0,
-      backgroundColor: "transparent",
-      overflow: "hidden",
-      pointerEvents: "none"
-    } }, /* @__PURE__ */ import_react78.default.createElement("div", { id: "daily-bg", style: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      backgroundColor: "rgba(0,0,0,0.3)",
-      zIndex: -1001
-    } }), "Stars Container", /* @__PURE__ */ import_react78.default.createElement(
+  var import_react88 = __toESM(require_react(), 1);
+  var AppFrame = ({ children, title, rightContent }) => {
+    const location2 = useLocation();
+    const [isExpanded, setIsExpanded] = (0, import_react88.useState)(true);
+    return /* @__PURE__ */ import_react88.default.createElement("div", { className: "d-flex min-vh-100", style: { backgroundColor: "#f8f9fa" } }, /* @__PURE__ */ import_react88.default.createElement(
       "div",
       {
-        id: "starsContainer",
+        className: "bg-light border-end d-flex flex-column",
         style: {
-          perspective: 350,
-          perspectiveOrigin: "50% 300%",
-          overflow: "hidden",
-          position: "absolute",
-          top: 0,
-          left: "-50%",
-          width: "200%",
-          height: "50%",
-          zIndex: -1e3,
-          opacity: Math.max(0, 0.5 - normalizedPos * 0.5)
-        }
+          width: isExpanded ? "250px" : "60px",
+          minHeight: "100vh",
+          transition: "width 0.3s ease"
+        },
+        onMouseEnter: () => setIsExpanded(true),
+        onMouseLeave: () => setIsExpanded(false)
       },
-      /* @__PURE__ */ import_react78.default.createElement(
-        "div",
+      /* @__PURE__ */ import_react88.default.createElement("div", { className: "p-3 border-bottom d-flex align-items-center justify-content-center" }, isExpanded ? /* @__PURE__ */ import_react88.default.createElement(
+        "img",
         {
-          id: "stars",
-          style: {
-            backgroundRepeat: "repeat",
-            position: "absolute",
-            width: "200%",
-            height: "200%",
-            left: "-50%",
-            bottom: 0,
-            opacity: 0.5,
-            transform: "rotateX(-90deg)"
-          }
+          src: "/logo.svg",
+          alt: "Testeranto Logo",
+          style: { width: "128px", height: "128px" }
         }
-      )
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "sun",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: "50%",
-          transform: `translateX(-50%) translateY(${yPos}px)`,
-          width: "100%",
-          height: "50%",
-          background: `radial-gradient(50% ${yPos}px, circle, rgba(242,248,247,1) 0%,rgba(249,249,28,1) 3%,rgba(247,214,46,1) 8%,rgba(248,200,95,1) 12%,rgba(201,165,132,1) 30%,rgba(115,130,133,1) 51%,rgba(46,97,122,1) 85%,rgba(24,75,106,1) 100%)`,
-          zIndex: -900,
-          opacity: 0.5
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "sunDay",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: `radial-gradient(50% ${yPos}px, circle, rgba(252,255,251,0.9) 0%,rgba(253,250,219,0.4) 30%,rgba(226,219,197,0.01) 70%,rgba(226,219,197,0.0) 70%,rgba(201,165,132,0) 100%)`,
-          zIndex: -800,
-          opacity: Math.max(0, 1 - yPos / dimensions.height)
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "sunSet",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: `radial-gradient(50% ${yPos}px, circle, rgba(254,255,255,0.8) 5%,rgba(236,255,0,1) 10%,rgba(253,50,41,1) 25%,rgba(243,0,0,1) 40%,rgba(93,0,0,1) 100%)`,
-          zIndex: -800,
-          opacity: Math.max(0, yPos / dimensions.height - 0.2)
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "sky",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          zIndex: -700,
-          background: "linear-gradient(to top, rgba(249,251,240,1) 10%,rgba(215,253,254,1) 20%,rgba(167,222,253,1) 40%,rgba(110,175,255,1) 100%)",
-          opacity: Math.max(0, 1 - yPos / dimensions.height)
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "horizon",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "linear-gradient(to top, rgba(212,87,43,0.9) 0%,rgba(246,149,52,0.8) 20%,rgba(24,75,106,0) 100%)",
-          zIndex: -700,
-          opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) + 0.2 : yPos / (dimensions.height / 2))
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "horizonNight",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "linear-gradient(to top, rgba(57,167,255,1) 0%,rgba(13,98,245,1) 20%,rgba(0,11,22,0.1) 60%)",
-          zIndex: -600,
-          opacity: Math.max(0, (yPos - dimensions.height * 4 / 5) / (dimensions.height - dimensions.height * 4 / 5))
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "moon",
-        style: {
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "radial-gradient(40% 55%, circle, rgba(249,249,250,1) -1%,rgba(189,255,254,1) 1%,rgba(8,49,78,1) 1%,rgba(8,26,56,1) 10%,rgba(4,16,46,1) 40%,rgba(2,8,13,1) 70%)",
-          zIndex: -500,
-          opacity: Math.max(0, (yPos - dimensions.height * 9 / 10) / (dimensions.height - dimensions.height * 9 / 10))
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "water",
-        style: {
-          overflow: "hidden",
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "linear-gradient(to top, rgba(0,25,45,1) 0%,rgba(14,71,117,1) 35%,rgba(26,126,174,1) 70%,rgba(62,168,220,1) 100%)",
-          zIndex: -400
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "waterReflectionContainer",
-        style: {
-          perspective: 30,
-          perspectiveOrigin: `50% ${-15 + normalizedPos * 30}%`,
-          overflow: "hidden",
-          position: "absolute",
-          top: "50%",
-          left: "-3%",
-          width: "103%",
-          height: "50%",
-          zIndex: -300,
-          transform: `translateY(${dimensions.height - yPos}px)`
-        }
-      },
-      /* @__PURE__ */ import_react78.default.createElement(
-        "div",
+      ) : /* @__PURE__ */ import_react88.default.createElement(
+        "img",
         {
-          id: "waterReflectionMiddle",
-          style: {
-            position: "absolute",
-            top: 0,
-            left: "-50%",
-            width: "200%",
-            height: "55%",
-            background: "radial-gradient(50% 0px, rgba(247,177,72,1) 3%,rgba(248,175,65,1) 6%,rgba(207,62,30,0.4) 35%,rgba(176,91,48,0.1) 45%,rgba(141,88,47,0.0) 60%,rgba(116,82,63,0.0) 70%,rgba(44,65,68,0.0) 80%,rgba(7,19,31,0.0) 100%)",
-            zIndex: -200,
-            opacity: Math.max(0, yPos > dimensions.height / 2 ? (dimensions.height - yPos) / (dimensions.height / 2) - 0.1 : yPos / (dimensions.height / 2) - 0.1),
-            transform: "rotateX(45deg)"
-          }
+          src: "/logo.svg",
+          alt: "Testeranto Logo",
+          style: { width: "40px", height: "40px" }
         }
-      )
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "waterDistance",
-        style: {
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          background: "linear-gradient(90deg, rgba(0,0,0,0.0) 10%,rgba(0,0,0,0.20) 44%,rgba(0,0,0,0.65) 95%,rgba(0,0,0,0.62) 100%)",
-          zIndex: -100,
-          opacity: Math.max(0, yPos / dimensions.height + 0.6)
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "darknessOverlaySky",
-        style: {
-          backgroundColor: "#000",
-          opacity: Math.max(0, (yPos - dimensions.height * 7 / 10) / (dimensions.height - dimensions.height * 7 / 10)),
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          zIndex: -50
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "darknessOverlay",
-        style: {
-          backgroundColor: "#000",
-          opacity: Math.max(0, (yPos - dimensions.height / 2) / (dimensions.height / 2)),
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          width: "100%",
-          height: "50%",
-          zIndex: -5
-        }
-      }
-    ), /* @__PURE__ */ import_react78.default.createElement(
-      "div",
-      {
-        id: "oceanRipple",
-        style: {
-          backgroundImage: "repeating-linear-gradient(175deg, rgba(165,165,165,0.08) 43%,rgba(175,175,175,0.08) 45%,rgba(235,235,235,0.08) 49%,rgba(195,195,195,0.08) 50%,rgba(165,165,165,0.08) 54%)",
-          opacity: 0.5,
-          position: "absolute",
-          left: "0%",
-          bottom: 0,
-          width: "100%",
-          height: "50%",
-          zIndex: -10
-        }
-      }
-    ));
-  };
-  var SunriseAnimation_default = SunriseAnimation;
-
-  // src/components/pure/SettingsButton.tsx
-  var SettingsButton = ({ className }) => {
-    (0, import_react79.useEffect)(() => {
-      return () => {
-      };
-    }, []);
-    const [showModal, setShowModal] = (0, import_react79.useState)(false);
-    (0, import_react79.useEffect)(() => {
-      let themeToApply = theme;
-      if (theme === "system") {
-        themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-      }
-      document.documentElement.setAttribute("data-bs-theme", themeToApply);
-    }, []);
-    const [theme, setTheme] = (0, import_react79.useState)(localStorage.getItem("theme") || "system");
-    const handleThemeChange = (e3) => {
-      const newTheme = e3.target.value;
-      setTheme(newTheme);
-      localStorage.setItem("theme", newTheme);
-      let themeToApply = newTheme;
-      if (newTheme === "system") {
-        themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-      }
-      document.documentElement.setAttribute("data-bs-theme", themeToApply);
-    };
-    return /* @__PURE__ */ import_react79.default.createElement(import_react79.default.Fragment, null, /* @__PURE__ */ import_react79.default.createElement("div", { id: "settings-button" }, /* @__PURE__ */ import_react79.default.createElement(
-      "button",
-      {
-        className: `btn btn-sm btn-outline-secondary ${className}`,
-        onClick: () => setShowModal(true)
-      },
-      /* @__PURE__ */ import_react79.default.createElement("div", { id: "gear-icon-settings" }, "\u2699\uFE0F")
-    )), /* @__PURE__ */ import_react79.default.createElement(SunriseAnimation_default, { active: theme === "daily" }), /* @__PURE__ */ import_react79.default.createElement(Modal_default2, { show: showModal, onHide: () => setShowModal(false), size: "lg" }, /* @__PURE__ */ import_react79.default.createElement(ModalContent, { theme, handleThemeChange }), /* @__PURE__ */ import_react79.default.createElement(Modal_default2.Footer, { className: "border-0" }, /* @__PURE__ */ import_react79.default.createElement(Button_default2, { variant: "btn-primary", onClick: () => setShowModal(false) }, "Done"))));
-  };
-
-  // src/components/pure/AppFrame.tsx
-  var AppFrame = ({ children }) => {
-    return /* @__PURE__ */ import_react80.default.createElement("div", { className: "d-flex flex-column min-vh-100", key: window.location.pathname }, /* @__PURE__ */ import_react80.default.createElement("main", { className: "flex-grow-1 p-3" }, /* @__PURE__ */ import_react80.default.createElement(Container_default, { fluid: true }, children)), /* @__PURE__ */ import_react80.default.createElement("footer", { className: "bg-light py-2 d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react80.default.createElement(SettingsButton, null), /* @__PURE__ */ import_react80.default.createElement(Container_default, { className: "text-end", fluid: true }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react80.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto"))));
+      )),
+      /* @__PURE__ */ import_react88.default.createElement(Nav_default2, { variant: "pills", className: "flex-column p-2 flex-grow-1" }, /* @__PURE__ */ import_react88.default.createElement(
+        Nav_default2.Link,
+        {
+          as: NavLink,
+          to: "/",
+          className: `${location2.pathname === "/" ? "active" : ""} text-truncate d-flex align-items-center`,
+          style: { width: "100%" },
+          title: "Projects"
+        },
+        /* @__PURE__ */ import_react88.default.createElement("span", { className: "me-2" }, "\u{1F4C1}"),
+        isExpanded && "Projects"
+      ), /* @__PURE__ */ import_react88.default.createElement(
+        Nav_default2.Link,
+        {
+          as: NavLink,
+          to: "/processes",
+          className: `${location2.pathname.startsWith("/processes") ? "active" : ""} text-truncate d-flex align-items-center`,
+          style: { width: "100%" },
+          title: "Process Manager"
+        },
+        /* @__PURE__ */ import_react88.default.createElement("span", { className: "me-2" }, "\u{1F4CA}"),
+        isExpanded && "Process Manager"
+      ), /* @__PURE__ */ import_react88.default.createElement(
+        Nav_default2.Link,
+        {
+          as: NavLink,
+          to: "/settings",
+          className: `${location2.pathname === "/settings" ? "active" : ""} text-truncate d-flex align-items-center`,
+          style: { width: "100%" },
+          title: "Settings"
+        },
+        /* @__PURE__ */ import_react88.default.createElement("span", { className: "me-2" }, "\u2699\uFE0F"),
+        isExpanded && "Settings"
+      )),
+      /* @__PURE__ */ import_react88.default.createElement("div", { className: "p-3 border-top text-center mt-auto" }, isExpanded ? /* @__PURE__ */ import_react88.default.createElement("small", { className: "text-muted" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react88.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")) : /* @__PURE__ */ import_react88.default.createElement("small", { className: "text-muted" }, "\u2764\uFE0F"))
+    ), /* @__PURE__ */ import_react88.default.createElement("div", { className: "flex-grow-1 d-flex flex-column" }, /* @__PURE__ */ import_react88.default.createElement("main", { className: "flex-grow-1 p-4", style: { overflow: "auto" } }, /* @__PURE__ */ import_react88.default.createElement(Container_default, { fluid: true, className: "h-100" }, children))));
   };
 
   // src/components/stateful/FeaturesReporter.tsx
-  var import_react82 = __toESM(require_react(), 1);
+  var import_react90 = __toESM(require_react(), 1);
 
   // src/components/pure/FeaturesReporterView.tsx
-  var import_react81 = __toESM(require_react(), 1);
+  var import_react89 = __toESM(require_react(), 1);
   var FeaturesReporterView = ({ treeData }) => {
-    return /* @__PURE__ */ import_react81.default.createElement("div", { className: "features-reporter" }, /* @__PURE__ */ import_react81.default.createElement("h1", null, "File Structure"), /* @__PURE__ */ import_react81.default.createElement("div", { className: "tree-container" }, treeData.map((project) => /* @__PURE__ */ import_react81.default.createElement("div", { key: project.name, className: "project" }, /* @__PURE__ */ import_react81.default.createElement("h3", null, project.name), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "file-tree" }, project.children?.map((file) => renderFile(file)))))));
+    return /* @__PURE__ */ import_react89.default.createElement("div", { className: "features-reporter" }, /* @__PURE__ */ import_react89.default.createElement("h1", null, "File Structure"), /* @__PURE__ */ import_react89.default.createElement("div", { className: "tree-container" }, treeData.map((project) => /* @__PURE__ */ import_react89.default.createElement("div", { key: project.name, className: "project" }, /* @__PURE__ */ import_react89.default.createElement("h3", null, project.name), /* @__PURE__ */ import_react89.default.createElement("ul", { className: "file-tree" }, project.children?.map((file) => renderFile(file)))))));
   };
   function renderFile(node) {
-    return /* @__PURE__ */ import_react81.default.createElement("li", { key: node.name }, /* @__PURE__ */ import_react81.default.createElement("span", null, node.name), node.children && /* @__PURE__ */ import_react81.default.createElement("ul", null, node.children.map((child) => renderFile(child))));
+    return /* @__PURE__ */ import_react89.default.createElement("li", { key: node.name }, /* @__PURE__ */ import_react89.default.createElement("span", null, node.name), node.children && /* @__PURE__ */ import_react89.default.createElement("ul", null, node.children.map((child) => renderFile(child))));
   }
 
   // src/types/features.ts
@@ -34762,11 +34986,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/components/stateful/FeaturesReporter.tsx
   var FeaturesReporter = () => {
-    const [treeData, setTreeData] = (0, import_react82.useState)([]);
-    (0, import_react82.useEffect)(() => {
+    const [treeData, setTreeData] = (0, import_react90.useState)([]);
+    (0, import_react90.useEffect)(() => {
       const fetchProjects = async () => {
         try {
-          const response = await fetch("testeranto/projects.json");
+          const response = await fetch("/projects.json");
           if (!response.ok)
             throw new Error("Failed to fetch projects");
           const projectNames = await response.json();
@@ -34777,14 +35001,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
       fetchProjects();
     }, []);
-    return /* @__PURE__ */ import_react82.default.createElement(FeaturesReporterView, { treeData });
+    return /* @__PURE__ */ import_react90.default.createElement(FeaturesReporterView, { treeData });
   };
 
   // src/components/DesignEditorPage.tsx
-  var import_react84 = __toESM(require_react(), 1);
+  var import_react92 = __toESM(require_react(), 1);
 
   // design-editor/DesignEditor.tsx
-  var import_react83 = __toESM(require_react(), 1);
+  var import_react91 = __toESM(require_react(), 1);
 
   // node_modules/fabric/dist/index.min.mjs
   function t(t2, e3, s2) {
@@ -43130,17 +43354,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // design-editor/DesignEditor.tsx
-  var DesignEditor = import_react83.default.forwardRef(
+  var DesignEditor = import_react91.default.forwardRef(
     ({ projectId }, ref) => {
-      const canvasRef = (0, import_react83.useRef)(null);
-      const [design, setDesign] = (0, import_react83.useState)({
+      const canvasRef = (0, import_react91.useRef)(null);
+      const [design, setDesign] = (0, import_react91.useState)({
         objects: [],
         background: "#ffffff",
         version: "1.0"
       });
-      const [collaborators, setCollaborators] = (0, import_react83.useState)([]);
-      const wsRef = (0, import_react83.useRef)(null);
-      (0, import_react83.useEffect)(() => {
+      const [collaborators, setCollaborators] = (0, import_react91.useState)([]);
+      const wsRef = (0, import_react91.useRef)(null);
+      (0, import_react91.useEffect)(() => {
         const canvas = new In("design-canvas", {
           width: 800,
           height: 600
@@ -43265,7 +43489,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         }
       };
-      import_react83.default.useImperativeHandle(ref, () => ({
+      import_react91.default.useImperativeHandle(ref, () => ({
         loadDesign,
         saveDesign
       }));
@@ -43294,15 +43518,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           console.error("Error exporting PNG:", error);
         }
       };
-      return /* @__PURE__ */ import_react83.default.createElement("div", { className: "design-editor" }, /* @__PURE__ */ import_react83.default.createElement("div", { className: "toolbar" }, /* @__PURE__ */ import_react83.default.createElement("button", { onClick: () => addShape("rectangle") }, "Add Rectangle"), /* @__PURE__ */ import_react83.default.createElement("button", { onClick: () => addShape("circle") }, "Add Circle"), /* @__PURE__ */ import_react83.default.createElement("button", { onClick: () => addShape("text") }, "Add Text"), /* @__PURE__ */ import_react83.default.createElement("button", { onClick: exportAsPNG }, "Export PNG")), /* @__PURE__ */ import_react83.default.createElement("canvas", { id: "design-canvas" }), /* @__PURE__ */ import_react83.default.createElement("div", { className: "collaborators" }, /* @__PURE__ */ import_react83.default.createElement("h3", null, "Collaborators (", collaborators.length, ")"), /* @__PURE__ */ import_react83.default.createElement("ul", null, collaborators.map((user) => /* @__PURE__ */ import_react83.default.createElement("li", { key: user.id }, user.name)))));
+      return /* @__PURE__ */ import_react91.default.createElement("div", { className: "design-editor" }, /* @__PURE__ */ import_react91.default.createElement("div", { className: "toolbar" }, /* @__PURE__ */ import_react91.default.createElement("button", { onClick: () => addShape("rectangle") }, "Add Rectangle"), /* @__PURE__ */ import_react91.default.createElement("button", { onClick: () => addShape("circle") }, "Add Circle"), /* @__PURE__ */ import_react91.default.createElement("button", { onClick: () => addShape("text") }, "Add Text"), /* @__PURE__ */ import_react91.default.createElement("button", { onClick: exportAsPNG }, "Export PNG")), /* @__PURE__ */ import_react91.default.createElement("canvas", { id: "design-canvas" }), /* @__PURE__ */ import_react91.default.createElement("div", { className: "collaborators" }, /* @__PURE__ */ import_react91.default.createElement("h3", null, "Collaborators (", collaborators.length, ")"), /* @__PURE__ */ import_react91.default.createElement("ul", null, collaborators.map((user) => /* @__PURE__ */ import_react91.default.createElement("li", { key: user.id }, user.name)))));
     }
   );
 
   // src/components/DesignEditorPage.tsx
   var import_file_saver = __toESM(require_FileSaver_min(), 1);
   var DesignEditorPage = () => {
-    const [projectId, setProjectId] = (0, import_react84.useState)("default-project");
-    const [fileHandle, setFileHandle] = (0, import_react84.useState)(null);
+    const [projectId, setProjectId] = (0, import_react92.useState)("default-project");
+    const [fileHandle, setFileHandle] = (0, import_react92.useState)(null);
     const handleSave = async () => {
       try {
         if (!designEditorRef.current) {
@@ -43347,8 +43571,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       }
     };
-    const [design, setDesign] = (0, import_react84.useState)(null);
-    const designEditorRef = (0, import_react84.useRef)(null);
+    const [design, setDesign] = (0, import_react92.useState)(null);
+    const designEditorRef = (0, import_react92.useRef)(null);
     const handleOpen = async () => {
       console.log("handleOpen triggered");
       try {
@@ -43414,7 +43638,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const blob = new Blob([designData], { type: "application/json" });
       (0, import_file_saver.saveAs)(blob, `${projectId}.json`);
     };
-    return /* @__PURE__ */ import_react84.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react84.default.createElement(Row_default, { className: "mb-3" }, /* @__PURE__ */ import_react84.default.createElement(Col_default, null, /* @__PURE__ */ import_react84.default.createElement("h1", null, "Design Editor"), /* @__PURE__ */ import_react84.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react84.default.createElement(Button_default2, { variant: "primary", onClick: handleOpen }, "Open"), /* @__PURE__ */ import_react84.default.createElement(Button_default2, { variant: "success", onClick: handleSave }, "Save"), /* @__PURE__ */ import_react84.default.createElement(Button_default2, { variant: "secondary", onClick: handleExport }, "Export")))), /* @__PURE__ */ import_react84.default.createElement(Row_default, null, /* @__PURE__ */ import_react84.default.createElement(Col_default, null, /* @__PURE__ */ import_react84.default.createElement(
+    return /* @__PURE__ */ import_react92.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react92.default.createElement(Row_default, { className: "mb-3" }, /* @__PURE__ */ import_react92.default.createElement(Col_default, null, /* @__PURE__ */ import_react92.default.createElement("h1", null, "Design Editor"), /* @__PURE__ */ import_react92.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react92.default.createElement(Button_default2, { variant: "primary", onClick: handleOpen }, "Open"), /* @__PURE__ */ import_react92.default.createElement(Button_default2, { variant: "success", onClick: handleSave }, "Save"), /* @__PURE__ */ import_react92.default.createElement(Button_default2, { variant: "secondary", onClick: handleExport }, "Export")))), /* @__PURE__ */ import_react92.default.createElement(Row_default, null, /* @__PURE__ */ import_react92.default.createElement(Col_default, null, /* @__PURE__ */ import_react92.default.createElement(
       DesignEditor,
       {
         projectId,
@@ -43424,10 +43648,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/components/stateful/TextEditorPage.tsx
-  var import_react86 = __toESM(require_react(), 1);
+  var import_react94 = __toESM(require_react(), 1);
 
   // src/components/stateful/FileTree.tsx
-  var import_react85 = __toESM(require_react(), 1);
+  var import_react93 = __toESM(require_react(), 1);
   var FileTree2 = ({ files, onSelect, activeFile }) => {
     const fileGroups = files.reduce((acc, file) => {
       const dir = file.path.split("/").slice(0, -1).join("/");
@@ -43459,7 +43683,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       backgroundColor: "#e0e0e0",
       fontWeight: "bold"
     };
-    return /* @__PURE__ */ import_react85.default.createElement("div", { style: fileTreeStyle }, Object.entries(fileGroups).map(([dir, dirFiles]) => /* @__PURE__ */ import_react85.default.createElement("div", { key: dir, style: directoryStyle }, /* @__PURE__ */ import_react85.default.createElement("div", { style: directoryNameStyle }, dir || "/"), dirFiles.map((file) => /* @__PURE__ */ import_react85.default.createElement(
+    return /* @__PURE__ */ import_react93.default.createElement("div", { style: fileTreeStyle }, Object.entries(fileGroups).map(([dir, dirFiles]) => /* @__PURE__ */ import_react93.default.createElement("div", { key: dir, style: directoryStyle }, /* @__PURE__ */ import_react93.default.createElement("div", { style: directoryNameStyle }, dir || "/"), dirFiles.map((file) => /* @__PURE__ */ import_react93.default.createElement(
       "div",
       {
         key: file.path,
@@ -43472,10 +43696,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // src/components/stateful/TextEditorPage.tsx
   var TextEditorPage = () => {
-    const [files, setFiles] = (0, import_react86.useState)([]);
-    const [activeFile, setActiveFile] = (0, import_react86.useState)(null);
-    const [editorTheme, setEditorTheme] = (0, import_react86.useState)("vs-dark");
-    (0, import_react86.useEffect)(() => {
+    const [files, setFiles] = (0, import_react94.useState)([]);
+    const [activeFile, setActiveFile] = (0, import_react94.useState)(null);
+    const [editorTheme, setEditorTheme] = (0, import_react94.useState)("vs-dark");
+    (0, import_react94.useEffect)(() => {
       const sampleFiles = [
         {
           path: "src/index.ts",
@@ -43504,7 +43728,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         ));
       }
     };
-    const [widths, setWidths] = (0, import_react86.useState)({
+    const [widths, setWidths] = (0, import_react94.useState)({
       fileTree: 250,
       editor: window.innerWidth - 550,
       // Initial editor width (total width minus side panels)
@@ -43520,9 +43744,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       overflow: "hidden",
       position: "relative"
     };
-    const [isResizing, setIsResizing] = (0, import_react86.useState)(false);
-    const [startX, setStartX] = (0, import_react86.useState)(0);
-    const [startWidth, setStartWidth] = (0, import_react86.useState)(0);
+    const [isResizing, setIsResizing] = (0, import_react94.useState)(false);
+    const [startX, setStartX] = (0, import_react94.useState)(0);
+    const [startWidth, setStartWidth] = (0, import_react94.useState)(0);
     const startResizing = (e3, panel) => {
       setIsResizing(true);
       setStartX(e3.clientX);
@@ -43542,7 +43766,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const stopResizing = () => {
       setIsResizing(false);
     };
-    (0, import_react86.useEffect)(() => {
+    (0, import_react94.useEffect)(() => {
       window.addEventListener("mousemove", resize);
       window.addEventListener("mouseup", stopResizing);
       return () => {
@@ -43550,14 +43774,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         window.removeEventListener("mouseup", stopResizing);
       };
     }, [isResizing, startX, startWidth]);
-    return /* @__PURE__ */ import_react86.default.createElement("div", { style: containerStyle }, /* @__PURE__ */ import_react86.default.createElement("div", { style: { ...panelStyle, width: widths.fileTree } }, /* @__PURE__ */ import_react86.default.createElement(
+    return /* @__PURE__ */ import_react94.default.createElement("div", { style: containerStyle }, /* @__PURE__ */ import_react94.default.createElement("div", { style: { ...panelStyle, width: widths.fileTree } }, /* @__PURE__ */ import_react94.default.createElement(
       FileTree2,
       {
         files,
         onSelect: handleFileSelect,
         activeFile: activeFile?.path
       }
-    ), /* @__PURE__ */ import_react86.default.createElement(
+    ), /* @__PURE__ */ import_react94.default.createElement(
       "div",
       {
         style: {
@@ -43572,7 +43796,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         },
         onMouseDown: (e3) => startResizing(e3, "fileTree")
       }
-    )), /* @__PURE__ */ import_react86.default.createElement("div", { style: { ...panelStyle, width: widths.editor } }, activeFile && /* @__PURE__ */ import_react86.default.createElement(
+    )), /* @__PURE__ */ import_react94.default.createElement("div", { style: { ...panelStyle, width: widths.editor } }, activeFile && /* @__PURE__ */ import_react94.default.createElement(
       de,
       {
         height: "100%",
@@ -43588,7 +43812,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           automaticLayout: true
         }
       }
-    )), /* @__PURE__ */ import_react86.default.createElement("div", { style: { ...panelStyle, width: widths.preview } }, /* @__PURE__ */ import_react86.default.createElement(
+    )), /* @__PURE__ */ import_react94.default.createElement("div", { style: { ...panelStyle, width: widths.preview } }, /* @__PURE__ */ import_react94.default.createElement(
       "div",
       {
         style: {
@@ -43603,16 +43827,543 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         },
         onMouseDown: (e3) => startResizing(e3, "editor")
       }
-    ), activeFile && /* @__PURE__ */ import_react86.default.createElement("div", null)));
+    ), activeFile && /* @__PURE__ */ import_react94.default.createElement("div", null)));
+  };
+
+  // src/components/stateful/ProcessManagerPage.tsx
+  var import_react97 = __toESM(require_react(), 1);
+
+  // src/components/pure/ProcessManagerView.tsx
+  var import_react96 = __toESM(require_react(), 1);
+  var ProcessManagerView = ({
+    processes,
+    onRefresh,
+    onBack,
+    loading,
+    onKillProcess
+  }) => {
+    const navigate = useNavigate();
+    const [selectedProcess, setSelectedProcess] = (0, import_react96.useState)(null);
+    const [ws2, setWs] = (0, import_react96.useState)(null);
+    const [processLogs, setProcessLogs] = (0, import_react96.useState)([]);
+    const [autoScroll, setAutoScroll] = (0, import_react96.useState)(true);
+    const logsContainerRef = (0, import_react96.useRef)(null);
+    const [isNavbarCollapsed, setIsNavbarCollapsed] = (0, import_react96.useState)(false);
+    (0, import_react96.useEffect)(() => {
+      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const wsUrl = `${wsProtocol}//${window.location.host}`;
+      const websocket = new WebSocket(wsUrl);
+      setWs(websocket);
+      websocket.onmessage = (event) => {
+        try {
+          const data2 = JSON.parse(event.data);
+          if (data2.type === "processData" && selectedProcess && data2.processId === selectedProcess.processId) {
+            setSelectedProcess(
+              (prev) => prev ? {
+                ...prev,
+                logs: data2.logs || []
+              } : null
+            );
+            setProcessLogs(data2.logs || []);
+          } else if ((data2.type === "processStdout" || data2.type === "processStderr") && selectedProcess && data2.processId === selectedProcess.processId) {
+            setProcessLogs((prev) => [...prev, data2.data]);
+          }
+        } catch (error) {
+          console.error("Error parsing WebSocket message:", error);
+        }
+      };
+      return () => {
+        websocket.close();
+      };
+    }, [selectedProcess]);
+    (0, import_react96.useEffect)(() => {
+      if (selectedProcess && ws2 && ws2.readyState === WebSocket.OPEN) {
+        ws2.send(
+          JSON.stringify({
+            type: "getProcess",
+            processId: selectedProcess.processId
+          })
+        );
+      }
+    }, [selectedProcess, ws2]);
+    (0, import_react96.useEffect)(() => {
+      if (autoScroll && logsContainerRef.current) {
+        logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
+      }
+    }, [processLogs, autoScroll]);
+    const handleLogsScroll = () => {
+      if (logsContainerRef.current) {
+        const { scrollTop, scrollHeight, clientHeight } = logsContainerRef.current;
+        const isAtBottom = scrollHeight - scrollTop <= clientHeight + 10;
+        setAutoScroll(isAtBottom);
+      }
+    };
+    const getStatusBadge = (process2) => {
+      switch (process2.status) {
+        case "running":
+          return /* @__PURE__ */ import_react96.default.createElement(Badge_default, { bg: "success" }, "Running");
+        case "exited":
+          return /* @__PURE__ */ import_react96.default.createElement(Badge_default, { bg: "secondary" }, "Exited (", process2.exitCode, ")");
+        case "error":
+          return /* @__PURE__ */ import_react96.default.createElement(Badge_default, { bg: "danger" }, "Error");
+        default:
+          return /* @__PURE__ */ import_react96.default.createElement(Badge_default, { bg: "warning" }, "Unknown");
+      }
+    };
+    const handleSelectProcess = (process2) => {
+      setSelectedProcess(process2);
+      setProcessLogs(process2.logs || []);
+    };
+    const handleInput = (data2) => {
+      if (ws2 && ws2.readyState === WebSocket.OPEN && selectedProcess?.status === "running") {
+        ws2.send(
+          JSON.stringify({
+            type: "stdin",
+            processId: selectedProcess.processId,
+            data: data2
+          })
+        );
+      }
+    };
+    return /* @__PURE__ */ import_react96.default.createElement(Container_default, { fluid: true, className: "px-0 h-100" }, /* @__PURE__ */ import_react96.default.createElement(Row_default, { className: "g-0", style: { height: "calc(100vh - 56px)" } }, /* @__PURE__ */ import_react96.default.createElement(
+      Col_default,
+      {
+        sm: 3,
+        className: "border-end",
+        style: {
+          height: "100%",
+          overflow: "auto",
+          backgroundColor: "#f8f9fa"
+        }
+      },
+      /* @__PURE__ */ import_react96.default.createElement("div", { className: "p-1" }, processes.map((process2) => /* @__PURE__ */ import_react96.default.createElement(
+        "div",
+        {
+          key: process2.processId,
+          className: `p-2 mb-1 rounded ${selectedProcess?.processId === process2.processId ? "bg-primary text-white" : "bg-white border"}`,
+          style: { cursor: "pointer" },
+          onClick: () => handleSelectProcess(process2),
+          title: process2.command
+        },
+        /* @__PURE__ */ import_react96.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react96.default.createElement("div", { className: "flex-grow-1", style: { minWidth: 0 } }, /* @__PURE__ */ import_react96.default.createElement("div", { className: "fw-bold text-truncate small" }, process2.command.split(" ")[0]), /* @__PURE__ */ import_react96.default.createElement(
+          "div",
+          {
+            className: `text-truncate ${selectedProcess?.processId === process2.processId ? "text-white-50" : "text-muted"}`,
+            style: { fontSize: "0.7rem" }
+          },
+          "PID: ",
+          process2.pid || "N/A",
+          " |",
+          " ",
+          new Date(process2.timestamp).toLocaleTimeString()
+        )), /* @__PURE__ */ import_react96.default.createElement("div", { className: "ms-2" }, getStatusBadge(process2))),
+        process2.error && /* @__PURE__ */ import_react96.default.createElement(
+          "div",
+          {
+            className: `mt-1 ${selectedProcess?.processId === process2.processId ? "text-warning" : "text-danger"}`,
+            style: { fontSize: "0.7rem" }
+          },
+          /* @__PURE__ */ import_react96.default.createElement("div", { className: "text-truncate" }, "Error: ", process2.error)
+        )
+      )), processes.length === 0 && !loading && /* @__PURE__ */ import_react96.default.createElement("div", { className: "p-2 text-center text-muted small" }, "No active processes"), loading && processes.length === 0 && /* @__PURE__ */ import_react96.default.createElement("div", { className: "p-2 text-center small" }, /* @__PURE__ */ import_react96.default.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" }, /* @__PURE__ */ import_react96.default.createElement("span", { className: "visually-hidden" }, "Loading..."))))
+    ), /* @__PURE__ */ import_react96.default.createElement(
+      Col_default,
+      {
+        sm: 5,
+        className: "border-end p-3",
+        style: { height: "100%", overflow: "auto" }
+      },
+      selectedProcess ? /* @__PURE__ */ import_react96.default.createElement("div", null, /* @__PURE__ */ import_react96.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react96.default.createElement("strong", null, "Command:"), /* @__PURE__ */ import_react96.default.createElement(
+        "code",
+        {
+          className: "bg-light p-2 rounded d-block mt-1",
+          style: { fontSize: "0.8rem" }
+        },
+        selectedProcess.command
+      )), /* @__PURE__ */ import_react96.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react96.default.createElement("strong", null, "Status:"), /* @__PURE__ */ import_react96.default.createElement("div", { className: "mt-1" }, getStatusBadge(selectedProcess))), /* @__PURE__ */ import_react96.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react96.default.createElement("strong", null, "PID:"), /* @__PURE__ */ import_react96.default.createElement("div", { className: "text-muted" }, selectedProcess.pid || "N/A")), /* @__PURE__ */ import_react96.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react96.default.createElement("strong", null, "Started:"), /* @__PURE__ */ import_react96.default.createElement("div", { className: "text-muted" }, new Date(selectedProcess.timestamp).toLocaleString())), selectedProcess.exitCode !== void 0 && /* @__PURE__ */ import_react96.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react96.default.createElement("strong", null, "Exit Code:"), /* @__PURE__ */ import_react96.default.createElement("div", { className: "text-muted" }, selectedProcess.exitCode)), selectedProcess.error && /* @__PURE__ */ import_react96.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react96.default.createElement("strong", { className: "text-danger" }, "Error:"), /* @__PURE__ */ import_react96.default.createElement("div", { className: "text-danger small mt-1" }, selectedProcess.error))) : /* @__PURE__ */ import_react96.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react96.default.createElement("i", null, "Select a process to view details"))
+    ), /* @__PURE__ */ import_react96.default.createElement(
+      Col_default,
+      {
+        sm: 4,
+        className: "p-0",
+        style: { height: "100%", overflow: "hidden" }
+      },
+      selectedProcess ? /* @__PURE__ */ import_react96.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react96.default.createElement(
+        "div",
+        {
+          ref: logsContainerRef,
+          className: "bg-dark text-light flex-grow-1",
+          style: {
+            overflowY: "auto",
+            fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+            fontSize: "14px",
+            lineHeight: "1.4"
+            // padding: '1rem'
+          },
+          onScroll: handleLogsScroll
+        },
+        processLogs.length > 0 ? /* @__PURE__ */ import_react96.default.createElement(
+          "pre",
+          {
+            className: "mb-0",
+            style: {
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+              backgroundColor: "transparent",
+              border: "none",
+              color: "inherit"
+            }
+          },
+          processLogs.join("")
+        ) : /* @__PURE__ */ import_react96.default.createElement("div", { className: "text-muted text-center py-4" }, /* @__PURE__ */ import_react96.default.createElement("i", null, "No output yet")),
+        !autoScroll && /* @__PURE__ */ import_react96.default.createElement("div", { className: "position-sticky bottom-0 d-flex justify-content-center mb-2" }, /* @__PURE__ */ import_react96.default.createElement(
+          Button_default2,
+          {
+            variant: "primary",
+            size: "sm",
+            onClick: () => {
+              setAutoScroll(true);
+              if (logsContainerRef.current) {
+                logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
+              }
+            }
+          },
+          "Scroll to Bottom"
+        ))
+      ), selectedProcess.status === "running" && /* @__PURE__ */ import_react96.default.createElement(
+        "div",
+        {
+          className: "border-top bg-white p-3",
+          style: { flexShrink: 0 }
+        },
+        onKillProcess && /* @__PURE__ */ import_react96.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react96.default.createElement(
+          Button_default2,
+          {
+            variant: "danger",
+            size: "sm",
+            onClick: () => onKillProcess(selectedProcess.processId),
+            className: "w-100"
+          },
+          "\u23F9\uFE0F Stop Process"
+        )),
+        /* @__PURE__ */ import_react96.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react96.default.createElement(
+          "input",
+          {
+            type: "text",
+            className: "form-control",
+            placeholder: "Type input and press Enter...",
+            onKeyPress: (e3) => {
+              if (e3.key === "Enter") {
+                const target = e3.target;
+                const inputValue = target.value;
+                if (inputValue.trim()) {
+                  handleInput(inputValue + "\n");
+                  target.value = "";
+                }
+              }
+            },
+            autoFocus: true
+          }
+        ), /* @__PURE__ */ import_react96.default.createElement(
+          "button",
+          {
+            className: "btn btn-primary",
+            type: "button",
+            onClick: () => {
+              const input = document.querySelector(
+                "input"
+              );
+              const inputValue = input.value;
+              if (inputValue.trim()) {
+                handleInput(inputValue + "\n");
+                input.value = "";
+              }
+            }
+          },
+          "Send"
+        )),
+        /* @__PURE__ */ import_react96.default.createElement("small", { className: "text-muted" }, "\u{1F4A1} Press Enter to send input to the process")
+      )) : /* @__PURE__ */ import_react96.default.createElement("div", { className: "p-3 text-center text-muted mt-5" }, /* @__PURE__ */ import_react96.default.createElement("i", null, "Live logs will appear here when a process is selected"))
+    )));
+  };
+
+  // src/components/stateful/ProcessManagerPage.tsx
+  var ProcessManagerPage = () => {
+    const [processes, setProcesses] = (0, import_react97.useState)([]);
+    const [ws2, setWs] = (0, import_react97.useState)(null);
+    const [loading, setLoading] = (0, import_react97.useState)(false);
+    const navigate = useNavigate();
+    (0, import_react97.useEffect)(() => {
+      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const wsUrl = `${wsProtocol}//${window.location.host}`;
+      const websocket = new WebSocket(wsUrl);
+      setWs(websocket);
+      websocket.onopen = () => {
+        setLoading(true);
+        websocket.send(JSON.stringify({ type: "getRunningProcesses" }));
+      };
+      const handleMessage = (event) => {
+        try {
+          const data2 = JSON.parse(event.data);
+          if (data2.type === "runningProcesses") {
+            setProcesses(data2.processes.map((p2) => ({
+              ...p2,
+              status: p2.status || "running",
+              logs: p2.logs || []
+            })));
+            setLoading(false);
+          } else if (data2.type === "processStarted") {
+            setProcesses((prev) => [...prev, {
+              ...data2,
+              status: "running",
+              logs: data2.logs || []
+            }]);
+          } else if (data2.type === "processExited") {
+            setProcesses((prev) => prev.map(
+              (p2) => p2.processId === data2.processId ? { ...p2, status: "exited", exitCode: data2.exitCode } : p2
+            ));
+          } else if (data2.type === "processError") {
+            setProcesses((prev) => prev.map(
+              (p2) => p2.processId === data2.processId ? { ...p2, status: "error", error: data2.error } : p2
+            ));
+          } else if (data2.type === "processStdout" || data2.type === "processStderr") {
+            setProcesses((prev) => prev.map(
+              (p2) => p2.processId === data2.processId ? {
+                ...p2,
+                logs: [...p2.logs || [], data2.data]
+              } : p2
+            ));
+          }
+        } catch (error) {
+          console.error("Error parsing process message:", error);
+          setLoading(false);
+        }
+      };
+      websocket.addEventListener("message", handleMessage);
+      return () => {
+        websocket.removeEventListener("message", handleMessage);
+        websocket.close();
+      };
+    }, []);
+    const handleRefresh = (0, import_react97.useCallback)(() => {
+      if (ws2 && ws2.readyState === WebSocket.OPEN) {
+        setLoading(true);
+        ws2.send(JSON.stringify({ type: "getRunningProcesses" }));
+      }
+    }, [ws2]);
+    const handleKillProcess = (0, import_react97.useCallback)((processId) => {
+      if (ws2 && ws2.readyState === WebSocket.OPEN) {
+        ws2.send(JSON.stringify({
+          type: "killProcess",
+          processId
+        }));
+      }
+    }, [ws2]);
+    const handleBack = (0, import_react97.useCallback)(() => {
+      navigate("/");
+    }, [navigate]);
+    return (
+      // don't put this in AppFrame- this is correct
+      /* @__PURE__ */ import_react97.default.createElement(
+        ProcessManagerView,
+        {
+          processes,
+          onRefresh: handleRefresh,
+          onBack: handleBack,
+          loading,
+          onKillProcess: handleKillProcess
+        }
+      )
+    );
+  };
+
+  // src/components/stateful/SingleProcessPage.tsx
+  var import_react98 = __toESM(require_react(), 1);
+  var SingleProcessPage = () => {
+    const [process2, setProcess] = (0, import_react98.useState)(null);
+    const [ws2, setWs] = (0, import_react98.useState)(null);
+    const [loading, setLoading] = (0, import_react98.useState)(true);
+    const navigate = useNavigate();
+    const { processId } = useParams();
+    (0, import_react98.useEffect)(() => {
+      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const wsUrl = `${wsProtocol}//${window.location.host}`;
+      const websocket = new WebSocket(wsUrl);
+      setWs(websocket);
+      const timeoutId = setTimeout(() => {
+        if (loading) {
+          setLoading(false);
+          setProcess(null);
+        }
+      }, 3e3);
+      websocket.onopen = () => {
+        setLoading(true);
+        if (processId) {
+          websocket.send(
+            JSON.stringify({
+              type: "getProcess",
+              processId
+            })
+          );
+        }
+      };
+      websocket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        setLoading(false);
+        setProcess(null);
+        clearTimeout(timeoutId);
+      };
+      const handleMessage = (event) => {
+        try {
+          const data2 = JSON.parse(event.data);
+          if (data2.type === "processData" && data2.processId === processId) {
+            setProcess({
+              processId: data2.processId,
+              command: data2.command,
+              pid: data2.pid,
+              timestamp: data2.timestamp,
+              status: data2.status || "running",
+              exitCode: data2.exitCode,
+              error: data2.error,
+              // Use the logs sent from the server, which should include all captured logs
+              logs: data2.logs || []
+            });
+            setLoading(false);
+            clearTimeout(timeoutId);
+          } else if ((data2.type === "processStdout" || data2.type === "processStderr") && data2.processId === processId) {
+            setProcess(
+              (prev) => prev ? {
+                ...prev,
+                logs: [...prev.logs || [], data2.data]
+              } : null
+            );
+          } else if ((data2.type === "processExited" || data2.type === "processError") && data2.processId === processId) {
+            setProcess(
+              (prev) => prev ? {
+                ...prev,
+                status: data2.type === "processExited" ? "exited" : "error",
+                exitCode: data2.exitCode,
+                error: data2.error
+              } : null
+            );
+          }
+        } catch (error) {
+          console.error("Error parsing process message:", error);
+          setLoading(false);
+          setProcess(null);
+          clearTimeout(timeoutId);
+        }
+      };
+      websocket.addEventListener("message", handleMessage);
+      return () => {
+        websocket.removeEventListener("message", handleMessage);
+        websocket.close();
+        clearTimeout(timeoutId);
+      };
+    }, [processId]);
+    (0, import_react98.useEffect)(() => {
+    }, []);
+    const handleBack = (0, import_react98.useCallback)(() => {
+      navigate("/processes");
+    }, [navigate]);
+    const handleKillProcess = (0, import_react98.useCallback)(
+      (processId2) => {
+        if (ws2 && ws2.readyState === WebSocket.OPEN) {
+          console.log("Sending killProcess for:", processId2);
+          ws2.send(
+            JSON.stringify({
+              type: "killProcess",
+              processId: processId2
+            })
+          );
+        } else {
+          console.log("Cannot send killProcess - WebSocket not ready:", {
+            wsExists: !!ws2,
+            wsReady: ws2?.readyState
+          });
+        }
+      },
+      [ws2]
+    );
+    return /* @__PURE__ */ import_react98.default.createElement(
+      void 0,
+      {
+        process: process2,
+        onBack: handleBack,
+        loading,
+        onKillProcess: handleKillProcess,
+        ws: ws2
+      }
+    );
+  };
+
+  // src/components/stateful/SettingsPage.tsx
+  var import_react99 = __toESM(require_react(), 1);
+  var SettingsPage = () => {
+    const [theme, setTheme] = (0, import_react99.useState)(localStorage.getItem("theme") || "system");
+    (0, import_react99.useEffect)(() => {
+      let themeToApply = theme;
+      if (theme === "system") {
+        themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-bs-theme", themeToApply);
+    }, [theme]);
+    const handleThemeChange = (e3) => {
+      const newTheme = e3.target.value;
+      setTheme(newTheme);
+      localStorage.setItem("theme", newTheme);
+      let themeToApply = newTheme;
+      if (newTheme === "system") {
+        themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      }
+      document.documentElement.setAttribute("data-bs-theme", themeToApply);
+    };
+    return /* @__PURE__ */ import_react99.default.createElement(Container_default, null, /* @__PURE__ */ import_react99.default.createElement(Row_default, { className: "justify-content-center" }, /* @__PURE__ */ import_react99.default.createElement(Col_default, { lg: 8 }, /* @__PURE__ */ import_react99.default.createElement(Card_default, { className: "theme-card" }, /* @__PURE__ */ import_react99.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react99.default.createElement(Form_default, null, /* @__PURE__ */ import_react99.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react99.default.createElement(Form_default.Label, { className: "h6 mb-3" }, "Theme"), /* @__PURE__ */ import_react99.default.createElement("div", { className: "d-flex flex-wrap gap-3" }, /* @__PURE__ */ import_react99.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        name: "theme",
+        id: "light-theme",
+        label: "Light",
+        value: "light",
+        checked: theme === "light",
+        onChange: handleThemeChange,
+        className: "theme-option"
+      }
+    ), /* @__PURE__ */ import_react99.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        name: "theme",
+        id: "dark-theme",
+        label: "Dark",
+        value: "dark",
+        checked: theme === "dark",
+        onChange: handleThemeChange,
+        className: "theme-option"
+      }
+    ), /* @__PURE__ */ import_react99.default.createElement(
+      Form_default.Check,
+      {
+        type: "radio",
+        name: "theme",
+        id: "system-theme",
+        label: "System",
+        value: "system",
+        checked: theme === "system",
+        onChange: handleThemeChange,
+        className: "theme-option"
+      }
+    )))))))));
   };
 
   // src/App.tsx
   var App = () => {
-    return /* @__PURE__ */ import_react88.default.createElement(HashRouter, null, /* @__PURE__ */ import_react88.default.createElement(AppFrame, null, /* @__PURE__ */ import_react88.default.createElement(Routes, null, /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react88.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react88.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react88.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react88.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react88.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react88.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react88.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react88.default.createElement(TextEditorPage, null) }))));
+    return /* @__PURE__ */ import_react100.default.createElement(HashRouter, null, /* @__PURE__ */ import_react100.default.createElement(AppFrame, null, /* @__PURE__ */ import_react100.default.createElement(Routes, null, /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react100.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react100.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react100.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react100.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react100.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react100.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react100.default.createElement(TextEditorPage, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/processes", element: /* @__PURE__ */ import_react100.default.createElement(ProcessManagerPage, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react100.default.createElement(SingleProcessPage, null) }), /* @__PURE__ */ import_react100.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react100.default.createElement(SettingsPage, null) }))));
   };
   if (typeof window !== "undefined") {
     window.App = App;
-    window.React = import_react88.default;
+    window.React = import_react100.default;
     window.ReactDOM = import_client.default;
   }
 })();

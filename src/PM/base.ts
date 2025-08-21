@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";

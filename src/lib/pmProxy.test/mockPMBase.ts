@@ -88,7 +88,7 @@ export class MockPMBase implements PM_Base {
 
   testArtiFactoryfileWriter(
     tLog: ITLog,
-    callback: (Promise: any) => void
+    callback: (promise: Promise<any>) => void
   ): any {
     return (fPath: string, value: string | Buffer | any) => {
       this.trackCall("testArtiFactoryfileWriter", { fPath, value });

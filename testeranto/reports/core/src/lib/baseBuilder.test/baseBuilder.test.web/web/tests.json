@@ -7,14 +7,14 @@
       "whens": [],
       "thens": [
         {
-          "name": "it is initialized: undefined",
+          "name": "it is initialized: ",
           "error": false,
           "artifacts": [
             "suite-0/given-testInitialization/then-0/butThen/hello.txt"
           ]
         },
         {
-          "name": "it tracks artifacts: undefined",
+          "name": "it tracks artifacts: ",
           "error": false,
           "artifacts": [
             "suite-0/given-testInitialization/then-1/butThen/artifact_test.txt"
@@ -33,7 +33,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "it generates TestSpecifications: undefined",
+          "name": "it generates TestSpecifications: ",
           "error": false,
           "artifacts": []
         }
@@ -50,7 +50,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "it creates jobs: undefined",
+          "name": "it creates jobs: ",
           "error": false,
           "artifacts": []
         }

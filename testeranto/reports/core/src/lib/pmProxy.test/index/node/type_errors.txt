@@ -1,26 +1,16 @@
+/Users/adam/Code/testeranto/src/lib/abstractBase.ts (328,41): A spread argument must either have a tuple type or be passed to a rest parameter.
 /Users/adam/Code/testeranto/src/lib/basebuilder.ts (76,49): Function lacks ending return statement and return type does not include 'undefined'.
-/Users/adam/Code/testeranto/src/lib/basebuilder.ts (82,17): This expression is not callable.
-  Not all constituents of type 'void | ((fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void)' are callable.
-    Type 'void' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/classBuilder.ts (89,18): A spread argument must either have a tuple type or be passed to a rest parameter.
-/Users/adam/Code/testeranto/src/lib/classBuilder.ts (104,28): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/basebuilder.ts (123,15): Expected 1 arguments, but got 3.
 /Users/adam/Code/testeranto/src/lib/core.ts (48,7): Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }' is not assignable to type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }'.
     Types of property 'suites' are incompatible.
       Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
         'string' index signatures are incompatible.
           Type 'any' is not assignable to type 'never'.
-/Users/adam/Code/testeranto/src/lib/index.ts (17,3): Type '(subject: T["isubject"], initialValues: T["iinitialValues"], x: unknown, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["isubject"]>' is not assignable to type '(subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
-  Types of parameters 'initialValues' and 'initializer' are incompatible.
-    Type '(c?: any) => T["given"]' is not assignable to type 'T["iinitialValues"]'.
-      'T["iinitialValues"]' could be instantiated with an arbitrary type which could be unrelated to '(c?: any) => T["given"]'.
-/Users/adam/Code/testeranto/src/lib/index.ts (19,20): Type '"iinitialValues"' cannot be used to index type 'T'.
-/Users/adam/Code/testeranto/src/lib/index.ts (41,13): This expression is not callable.
+/Users/adam/Code/testeranto/src/lib/index.ts (36,12): This expression is not callable.
   Type 'unknown' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/index.ts (53,3): Type '{ assertThis?: ((x: T["then"]) => any) | undefined; andWhen?: ((store: T["istore"], whenCB: T["when"], testResource: ITTestResourceConfiguration, pm: IPM) => Promise<T["istore"]>) | undefined; ... 4 more ...; beforeEach?: ((subject: T["isubject"], initializer: (c?: any) => T["given"], testResource: ITTestResourceCon...' is not assignable to type 'ITestAdapter<T>'.
-  Types of property 'assertThis' are incompatible.
-    Type '((x: T["then"]) => any) | undefined' is not assignable to type '(x: T["then"]) => any'.
-      Type 'undefined' is not assignable to type '(x: T["then"]) => any'.
+/Users/adam/Code/testeranto/src/lib/index.ts (44,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
 /Users/adam/Code/testeranto/src/lib/pmProxy.test/adapter.ts (13,3): Type '(subject: { proxies: import("/Users/adam/Code/testeranto/src/lib/pmProxy.test/index").ITestProxies; filepath: string; mockPm: import("/Users/adam/Code/testeranto/src/lib/types").IPM; }, initializer: (c?: any) => [...], testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, ini...' is not assignable to type '(subject: { proxies: import("/Users/adam/Code/testeranto/src/lib/pmProxy.test/index").ITestProxies; filepath: string; mockPm: import("/Users/adam/Code/testeranto/src/lib/types").IPM; }, initializer: (c?: any) => [...], testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, ini...'. Two different types with this name exist, but they are unrelated.
   Type 'Promise<{ proxies: ITestProxies; filepath: string; mockPm: IPM; }>' is not assignable to type 'Promise<{ butThenProxy: IProxy; }>'.
     Property 'butThenProxy' is missing in type '{ proxies: ITestProxies; filepath: string; mockPm: IPM; }' but required in type '{ butThenProxy: IProxy; }'.
@@ -31,31 +21,24 @@
   Type '[IPM, "string"]' has no call signatures.
 /Users/adam/Code/testeranto/src/lib/pmProxy.test/adapter.ts (42,3): Type '(input: any, testResource: any, pm: any, theGivenString: any) => Promise<{ beforeEachProxy: any; }>' is not assignable to type '(input: { butThenProxy: IProxy; }, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<{ proxies: ITestProxies; filepath: string; mockPm: IPM; }>'.
   Target signature provides too few arguments. Expected 4 or more, but got 3.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/adapter.ts (51,3): Type '(returnedFilePath: any, expectation: any) => void' is not assignable to type '(x: [IPM, "string"]) => any'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/adapter.ts (51,3): Type '(actualResult: any, expectedResult: any) => void' is not assignable to type '(x: [IPM, "string"]) => any'.
   Target signature provides too few arguments. Expected 2 or more, but got 1.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (55,5): Type '(method: string, expectedPath: string) => (store: { pathRewriter: PathRewriter; }) => [undefined, undefined] | [string, string, any] | [any, string]' is not assignable to type '(...It: any) => (ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
-  Type '(store: { pathRewriter: PathRewriter; }) => [undefined, undefined] | [string, string, any] | [any, string]' is not assignable to type '(ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (56,5): Type '(method: string, expectedPath: string) => (store: { pathRewriter: PathRewriter; }) => Promise<string | undefined>' is not assignable to type '(...It: any) => (ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
+  Type '(store: { pathRewriter: PathRewriter; }) => Promise<string | undefined>' is not assignable to type '(ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
     Types of parameters 'store' and 'ssel' are incompatible.
       Property 'pathRewriter' is missing in type '{ proxies: ITestProxies; filepath: string; mockPm: IPM; }' but required in type '{ pathRewriter: PathRewriter; }'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (81,17): Expected 1 arguments, but got 2.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (83,35): Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (84,38): Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (91,35): Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (97,19): Type '"screen.png"' is not assignable to type '`${string}.webm`'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (103,35): Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (104,38): Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (108,69): Type '"shot.png"' is not assignable to type '`${string}.webm`'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (109,35): Property 'getLastCall' does not exist on type 'IPM'.
-  Property 'getLastCall' does not exist on type 'PM_Node'.
-/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (126,5): Type '(expectedContent: any) => (result: any[]) => any[]' is not assignable to type '(...It: any) => (ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (67,9): Type '(path: string, content: string, testName?: string) => Promise<any>' is not assignable to type '((x: any) => Promise<boolean>) | (() => Promise<boolean>) | ((x: any) => any)'.
+  Type '(path: string, content: string, testName?: string) => Promise<any>' is not assignable to type '(x: any) => Promise<boolean>'.
+    Target signature provides too few arguments. Expected 2 or more, but got 1.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (103,17): Expected 1 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (115,19): Type '"screen.png"' is not assignable to type '`${string}.webm`'.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (137,5): Type '(expectedContent: any) => (result: any[]) => any[]' is not assignable to type '(...It: any) => (ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
   Type '(result: any[]) => any[]' is not assignable to type '(ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
     Types of parameters 'result' and 'ssel' are incompatible.
       Type '{ proxies: ITestProxies; filepath: string; mockPm: IPM; }' is missing the following properties from type 'any[]': length, pop, push, concat, and 35 more.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/implementation.ts (150,13): Type '(store: { pathRewriter: PathRewriter; }) => Promise<string>' is not assignable to type '(ssel: { proxies: ITestProxies; filepath: string; mockPm: IPM; }, utils: PM) => [IPM, "string"]'.
+  Types of parameters 'store' and 'ssel' are incompatible.
+    Property 'pathRewriter' is missing in type '{ proxies: ITestProxies; filepath: string; mockPm: IPM; }' but required in type '{ pathRewriter: PathRewriter; }'.
 /Users/adam/Code/testeranto/src/lib/pmProxy.test/index.ts (17,3): Argument of type 'ITestImplementation<I, any, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<any>; givens: TestGivenImplementation<I, any>; whens: TestWhenImplementation<I, any>; thens: TestThenImplementation<...>; }, never>'.
   Types of property 'givens' are incompatible.
     Type '{ [x: string]: (...Iw: any) => string; }' is not assignable to type 'TestGivenImplementation<I, any>'.
@@ -65,14 +48,5 @@
 /Users/adam/Code/testeranto/src/lib/pmProxy.test/types.ts (19,17): Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
 /Users/adam/Code/testeranto/src/Node.ts (33,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-/Users/adam/Code/testeranto/src/PM/pure.ts (114,3): Property 'customScreenShot' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
-  Type '(opts: ScreencastOptions, page: string) => any' is not assignable to type '(opts: { path: string; }, page?: string | undefined) => any'.
-    Types of parameters 'opts' and 'opts' are incompatible.
-      Type '{ path: string; }' is not assignable to type 'ScreencastOptions'.
-        Types of property 'path' are incompatible.
-          Type 'string' is not assignable to type '`${string}.webm`'.
-/Users/adam/Code/testeranto/src/PM/pure.ts (145,3): Property 'createWriteStream' in type 'PM_Pure' is not assignable to the same property in base type 'PM'.
-  Type '() => { write: () => boolean; end: () => void; }' is not assignable to type '(filepath: string, testName: string) => Promise<string>'.
-    Type '{ write: () => boolean; end: () => void; }' is missing the following properties from type 'Promise<string>': then, catch, finally, [Symbol.toStringTag]
 /Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
   Property 'mainFrame' does not exist on type 'string'.

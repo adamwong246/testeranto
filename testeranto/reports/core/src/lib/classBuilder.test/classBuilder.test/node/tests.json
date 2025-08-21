@@ -7,7 +7,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "initializedProperly: undefined",
+          "name": "initializedProperly: ",
           "error": false,
           "artifacts": []
         }
@@ -24,7 +24,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "initializedProperly: undefined",
+          "name": "initializedProperly: ",
           "error": false,
           "artifacts": []
         }
@@ -41,7 +41,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "resourceRequirementsSet: undefined",
+          "name": "resourceRequirementsSet: ",
           "error": false,
           "artifacts": []
         }
@@ -61,7 +61,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "specsGenerated: undefined",
+          "name": "specsGenerated: ",
           "error": false,
           "artifacts": []
         }
@@ -78,7 +78,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "jobsCreated: undefined",
+          "name": "jobsCreated: ",
           "error": false,
           "artifacts": []
         }
@@ -101,7 +101,7 @@
       ],
       "thens": [
         {
-          "name": "artifactsTracked: undefined",
+          "name": "artifactsTracked: ",
           "error": false,
           "artifacts": []
         }
@@ -118,22 +118,22 @@
       "whens": [],
       "thens": [
         {
-          "name": "suitesOverridesConfigured: undefined",
+          "name": "suitesOverridesConfigured: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "givensOverridesConfigured: undefined",
+          "name": "givensOverridesConfigured: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "whensOverridesConfigured: undefined",
+          "name": "whensOverridesConfigured: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "thensOverridesConfigured: undefined",
+          "name": "thensOverridesConfigured: ",
           "error": false,
           "artifacts": []
         }

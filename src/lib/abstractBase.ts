@@ -32,7 +32,6 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
   artifacts: string[] = [];
 
   addArtifact(path: string) {
-    console.log("Given addArtifact", path);
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
   }
@@ -120,11 +119,9 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     });
 
     try {
-      const proxiedPm = beforeEachProxy(
-        pm,
-        suiteNdx.toString(),
-        this.addArtifact.bind(this)
-      );
+      // Ensure addArtifact is properly bound to 'this'
+      const addArtifact = this.addArtifact.bind(this);
+      const proxiedPm = beforeEachProxy(pm, suiteNdx.toString(), addArtifact);
       this.store = await this.givenThat(
         subject,
         testResourceConfiguration,
@@ -170,18 +167,19 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
       // throw e;
     } finally {
       try {
+        // Ensure addArtifact is properly bound to 'this'
+        const addArtifact = this.addArtifact.bind(this);
         const proxiedPm = afterEachProxy(
           pm,
           suiteNdx.toString(),
           key,
-          this.addArtifact.bind(this)
+          addArtifact
         );
         // (proxiedPm as any).currentStep = this;
         await this.afterEach(this.store, this.key, givenArtifactory, proxiedPm);
       } catch (e) {
         this.failed = e;
         throw e;
-
         // this.error = e.message;
       }
     }
@@ -194,11 +192,9 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   public name: string;
   whenCB: (x: I["iselection"]) => I["then"];
   error: Error;
-
   artifacts: string[] = [];
 
   addArtifact(path: string) {
-    console.log("When addArtifact", path);
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
   }
@@ -239,7 +235,9 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   ) {
     try {
       // tLog(" When:", this.name);
-      const proxiedPm = andWhenProxy(pm, filepath, this.addArtifact.bind(this));
+      // Ensure addArtifact is properly bound to 'this'
+      const addArtifact = this.addArtifact.bind(this);
+      const proxiedPm = andWhenProxy(pm, filepath, addArtifact);
 
       // (proxiedPm as any).currentStep = this;
       const result = await this.andWhen(
@@ -279,7 +277,6 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
   }
 
   addArtifact(path: string) {
-    console.log("Then addArtifact", path);
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
   }
@@ -308,13 +305,35 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     pm: IPM,
     filepath: string
   ): Promise<I["then"] | undefined> {
-    const proxiedPm = butThenProxy(pm, filepath, this.addArtifact.bind(this));
+    // Ensure addArtifact is properly bound to 'this'
+    const addArtifact = this.addArtifact.bind(this);
+    const proxiedPm = butThenProxy(pm, filepath, addArtifact);
     return this.butThen(
       store,
       async (s: I["iselection"]) => {
         try {
           if (typeof this.thenCB === "function") {
-            return await this.thenCB(s, proxiedPm);
+            // Add debug logging to see what's being passed to thenCB
+
+            // Check if the thenCB is spreading the arguments incorrectly
+            // Wrap the proxy to see what's happening when writeFileSync is called
+            const wrappedPm = new Proxy(proxiedPm, {
+              get: (target, prop, receiver) => {
+                if (prop === "writeFileSync") {
+                  return (...args) => {
+                    console.log(
+                      `[DEBUG] writeFileSync called with args:`,
+                      args
+                    );
+                    return target[prop](...args);
+                  };
+                }
+                return target[prop];
+              },
+            });
+            const result = await this.thenCB(s, wrappedPm);
+
+            return result;
           } else {
             return this.thenCB;
           }

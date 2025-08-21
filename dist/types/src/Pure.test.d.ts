@@ -4,20 +4,32 @@ type I = Ibdd_in<null, // No initial input needed
 IPM, // Test subject is IPM
 {
     pm: IPM;
+    artifacts?: any[];
+    testJobs?: any[];
+    specs?: any[];
+    largePayload?: boolean;
 }, // Store contains PM instance
 {
     pm: IPM;
 }, // Selection is same as store
-() => IPM, // Given returns IPM
+() => {
+    pm: IPM;
+    config: {};
+    proxies: any;
+}, // Given returns initial state
 (store: {
     pm: IPM;
+    [key: string]: any;
 }) => {
     pm: IPM;
+    [key: string]: any;
 }, // When modifies store
 (store: {
     pm: IPM;
+    [key: string]: any;
 }) => {
     pm: IPM;
+    [key: string]: any;
 }>;
 type O = Ibdd_out<{
     Default: [string];

@@ -13,23 +13,27 @@ import { BaseSuite } from "./BaseSuite";
 import { IPM } from "./types";
 
 export const BaseAdapter = <T extends Ibdd_in_any>(): ITestAdapter<T> => ({
-  beforeAll: async (s: T["istore"]) => s,
+  beforeAll: async (input: T["iinput"], testResource: ITTestResourceConfiguration, pm: IPM) => {
+    return input as unknown as T["isubject"];
+  },
   beforeEach: async function (
     subject: T["isubject"],
-    initialValues: T["iinitialValues"],
-    x: unknown,
+    initializer: (c?: any) => T["given"],
     testResource: ITTestResourceConfiguration,
+    initialValues: any,
     pm: IPM
-  ): Promise<T["isubject"]> {
-    return subject;
+  ): Promise<T["istore"]> {
+    return subject as unknown as T["istore"];
   },
-  afterEach: async (s: T["istore"]) => s,
-  afterAll: (store: T["istore"]) => undefined,
+  afterEach: async (store: T["istore"], key: string, pm: IPM) => Promise.resolve(store),
+  afterAll: (store: T["istore"], pm: IPM) => undefined,
   butThen: async (
     store: T["istore"],
-    thenCb: (s: T["iselection"]) => Promise<T["isubject"]>
+    thenCb: T["then"],
+    testResource: ITTestResourceConfiguration,
+    pm: IPM
   ) => {
-    return thenCb(store);
+    return thenCb(store, pm);
   },
   andWhen: async (
     store: T["istore"],
@@ -37,23 +41,19 @@ export const BaseAdapter = <T extends Ibdd_in_any>(): ITestAdapter<T> => ({
     testResource: ITTestResourceConfiguration,
     pm: IPM
   ) => {
-    try {
-      await whenCB(store, testResource, pm);
-    } catch (error) {
-      console.error("Error in andWhen:", error);
-      throw error; // Re-throw to maintain test failure
-    }
+    return whenCB(store, pm);
   },
-  assertThis: (x: any) => x,
+  assertThis: (x: T["then"]) => x,
 });
 
 export const DefaultAdapter = <T extends Ibdd_in_any>(
   p: Partial<ITestAdapter<T>>
 ): ITestAdapter<T> => {
+  const base = BaseAdapter<T>();
   return {
-    ...BaseAdapter,
+    ...base,
     ...p,
-  };
+  } as ITestAdapter<T>;
 };
 
 export type ITTestResourceConfiguration = {
@@ -84,7 +84,7 @@ export type ILogWriter = {
   mkdirSync: () => any;
   testArtiFactoryfileWriter: (
     tLog: ITLog,
-    n: (Promise) => void
+    n: (promise: Promise<any>) => void
   ) => (fPath: string, value: unknown) => void;
 };
 

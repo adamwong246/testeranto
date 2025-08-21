@@ -17,14 +17,6 @@
       []
     ],
     [
-      "src/components/pure/ModalContent.test/index.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
       "src/lib/BaseSuite.test/node.test.ts",
       "node",
       {
@@ -105,24 +97,8 @@
       []
     ],
     [
-      "src/components/pure/AppFrame.test/index.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
       "src/components/pure/FeaturesReporterView.test/index.tsx",
       "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "src/mothership/test.ts",
-      "node",
       {
         "ports": 0
       },

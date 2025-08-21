@@ -9,6 +9,10 @@ import { AppFrame } from './components/pure/AppFrame';
 import { FeaturesReporter } from './components/stateful/FeaturesReporter';
 import { DesignEditorPage } from './components/DesignEditorPage';
 import { TextEditorPage } from './components/stateful/TextEditorPage';
+import { ProcessManagerPage } from './components/stateful/ProcessManagerPage';
+import { SingleProcessPage } from './components/stateful/SingleProcessPage';
+import { SettingsPage } from './components/stateful/SettingsPage';
+
 
 export const App = () => {
   return (
@@ -22,6 +26,9 @@ export const App = () => {
           <Route path="/features-reporter" element={<FeaturesReporter />} />
           <Route path="/design-editor" element={<DesignEditorPage />} />
           <Route path="/text-editor" element={<TextEditorPage />} />
+          <Route path="/processes" element={<ProcessManagerPage />} />
+          <Route path="/processes/:processId" element={<SingleProcessPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Routes>
       </AppFrame>
     </Router>

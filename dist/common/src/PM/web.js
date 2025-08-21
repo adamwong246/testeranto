@@ -85,9 +85,11 @@ class PM_Web extends _1.PM {
     }
     writeFileSync(x) {
         // eslint-disable-next-line prefer-rest-params
-        const z = arguments["0"];
-        const filepath = z[0];
-        const contents = z[1];
+        // const z = arguments["0"];
+        // const filepath = z[0];
+        // const contents = z[1];
+        const filepath = arguments[0];
+        const contents = arguments[1];
         return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {

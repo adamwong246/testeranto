@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactElement, useState, useMemo, useEffect } from "react";
+import { Toast, ToastContainer } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import {
   RuntimeName,
   STANDARD_LOGS,
@@ -54,51 +56,50 @@ const FileTree = ({ data, onSelect, level = 0, selectedSourcePath }) => {
   };
 
   return (
-    <ul className="list-unstyled" style={{ paddingLeft: `${level * 16}px` }}>
+    <div>
       {Object.entries(data).map(([name, node]) => {
-        const path =
-          Object.keys(expanded).find((k) => k.endsWith(name)) || name;
+        const path = Object.keys(expanded).find((k) => k.endsWith(name)) || name;
         const isExpanded = expanded[path];
 
         if (node.__isFile) {
           return (
-            <li key={name} className="py-1">
-              <button
-                className={`btn btn-link text-start p-0 text-decoration-none ${selectedSourcePath === path ? "text-primary fw-bold" : ""
-                  }`}
-                onClick={() => onSelect(path, node.content)}
-              >
-                <i
-                  className={`bi bi-file-earmark-text me-2 ${selectedSourcePath === path ? "text-primary" : ""
-                    }`}
-                ></i>
-                {name}
-              </button>
-            </li>
+            <FileTreeItem
+              key={name}
+              name={name}
+              isFile={true}
+              level={level}
+              isSelected={selectedSourcePath === path}
+              onClick={() => onSelect(path, node.content)}
+            />
           );
         } else {
           return (
-            <li key={name} className="py-1">
-              <div className="d-flex align-items-center">
-                <button
-                  className="btn btn-link text-start p-0 text-decoration-none me-1"
-                  onClick={() => toggleExpand(path)}
-                >
-                  <i
-                    className={`bi ${isExpanded ? "bi-folder2-open" : "bi-folder"
-                      } me-2`}
-                  ></i>
-                  {name}
-                </button>
+            <div key={name}>
+              <div
+                className="d-flex align-items-center py-1 text-dark"
+                style={{
+                  paddingLeft: `${level * 16}px`,
+                  cursor: 'pointer',
+                  fontSize: '0.875rem'
+                }}
+                onClick={() => toggleExpand(path)}
+              >
+                <i className={`bi ${isExpanded ? 'bi-folder2-open' : 'bi-folder'} me-1`}></i>
+                <span>{name}</span>
               </div>
               {isExpanded && (
-                <FileTree data={node} onSelect={onSelect} level={level + 1} />
+                <FileTree
+                  data={node}
+                  onSelect={onSelect}
+                  level={level + 1}
+                  selectedSourcePath={selectedSourcePath}
+                />
               )}
-            </li>
+            </div>
           );
         }
       })}
-    </ul>
+    </div>
   );
 };
 
@@ -111,11 +112,22 @@ export const TestPageView = ({
   errorCounts,
   logs,
 }: TestPageViewProps) => {
+  const navigate = useNavigate();
   const [showAiderModal, setShowAiderModal] = useState(false);
   const [messageOption, setMessageOption] = useState<'default' | 'custom'>('default');
   const [customMessage, setCustomMessage] = useState(
     typeof logs['message.txt'] === 'string' ? logs['message.txt'] : 'make a script that prints hello'
   );
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastVariant, setToastVariant] = useState<'success' | 'danger'>('success');
+  const [ws, setWs] = useState<WebSocket | null>(null);
+  const [expandedSections, setExpandedSections] = useState({
+    standardLogs: true,
+    runtimeLogs: true,
+    sourceFiles: true
+  });
+  const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(false);
 
   // Update customMessage when logs change
   useEffect(() => {
@@ -123,6 +135,18 @@ export const TestPageView = ({
       setCustomMessage(logs['message.txt']);
     }
   }, [logs]);
+
+  // Set up WebSocket connection
+  useEffect(() => {
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${wsProtocol}//${window.location.host}`;
+    const websocket = new WebSocket(wsUrl);
+    setWs(websocket);
+
+    return () => {
+      websocket.close();
+    };
+  }, []);
   const [activeTab, setActiveTab] = React.useState("tests.json");
   const [selectedFile, setSelectedFile] = useState<{
     path: string;
@@ -378,233 +402,276 @@ export const TestPageView = ({
           },
         ]}
         rightContent={
-          <>
-            <Button
-              variant="info"
-              onClick={() => setShowAiderModal(true)}
-              className="ms-2"
-            >
-              🤖
-            </Button>
+          <Button
+            variant="info"
+            onClick={() => setShowAiderModal(true)}
+            className="ms-2"
+            title="AI Assistant"
+          >
+            🤖
+          </Button>
+        }
+      />
 
-            <Modal show={showAiderModal} onHide={() => setShowAiderModal(false)} size="lg" onShow={() => setMessageOption('default')}>
-              <Modal.Header closeButton>
-                <Modal.Title>Aider</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
+      <Modal show={showAiderModal} onHide={() => setShowAiderModal(false)} size="lg" onShow={() => setMessageOption('default')}>
+        <Modal.Header closeButton>
+          <Modal.Title>Aider</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
 
-                <div className="mb-3">
+          <div className="mb-3">
 
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="messageOption"
-                      id="defaultMessage"
-                      value="default"
-                      checked={messageOption === 'default'}
-                      onChange={() => setMessageOption('default')}
-                    />
-                    <label className="form-check-label" htmlFor="defaultMessage">
-                      Use default message.txt
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="messageOption"
-                      id="customMessage"
-                      value="custom"
-                      checked={messageOption === 'custom'}
-                      onChange={() => setMessageOption('custom')}
-                    />
-                    <label className="form-check-label" htmlFor="customMessage">
-                      Use custom message
-                    </label>
-                  </div>
-                  {messageOption === 'custom' && (
-                    <div className="mt-2">
-                      <textarea
-                        className="form-control"
-                        rows={8}
-                        placeholder="Enter your custom message"
-                        value={customMessage}
-                        onChange={(e) => setCustomMessage(e.target.value)}
-                        style={{ minHeight: '500px' }}
-                      />
-                    </div>
-                  )}
-                </div>
-              </Modal.Body>
-              <Modal.Footer>
-                {/* <Button
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="messageOption"
+                id="defaultMessage"
+                value="default"
+                checked={messageOption === 'default'}
+                onChange={() => setMessageOption('default')}
+              />
+              <label className="form-check-label" htmlFor="defaultMessage">
+                Use default message.txt
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                name="messageOption"
+                id="customMessage"
+                value="custom"
+                checked={messageOption === 'custom'}
+                onChange={() => setMessageOption('custom')}
+              />
+              <label className="form-check-label" htmlFor="customMessage">
+                Use custom message
+              </label>
+            </div>
+            {messageOption === 'custom' && (
+              <div className="mt-2">
+                <textarea
+                  className="form-control"
+                  rows={8}
+                  placeholder="Enter your custom message"
+                  value={customMessage}
+                  onChange={(e) => setCustomMessage(e.target.value)}
+                  style={{ minHeight: '500px' }}
+                />
+              </div>
+            )}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button
                   variant="secondary"
                   onClick={() => setShowAiderModal(false)}
                 >
                   Close
                 </Button> */}
-                <Button
-                  variant="primary"
-                  onClick={async () => {
-                    try {
-                      const promptPath = `testeranto/reports/${projectName}/${testName
-                        .split(".")
-                        .slice(0, -1)
-                        .join(".")}/${runtime}/prompt.txt`;
+          <Button
+            variant="primary"
+            onClick={async () => {
+              try {
+                const promptPath = `testeranto/reports/${projectName}/${testName
+                  .split(".")
+                  .slice(0, -1)
+                  .join(".")}/${runtime}/prompt.txt`;
 
-                      let command = `aider --load ${promptPath}`;
+                let command = `aider --load ${promptPath}`;
 
-                      if (messageOption === 'default') {
-                        const messagePath = `testeranto/reports/${projectName}/${testName
-                          .split(".")
-                          .slice(0, -1)
-                          .join(".")}/${runtime}/message.txt`;
-                        command += ` --message-file ${messagePath}`;
-                      } else {
-                        command += ` --message "${customMessage}"`;
-                      }
+                if (messageOption === 'default') {
+                  const messagePath = `testeranto/reports/${projectName}/${testName
+                    .split(".")
+                    .slice(0, -1)
+                    .join(".")}/${runtime}/message.txt`;
+                  command += ` --message-file ${messagePath}`;
+                } else {
+                  command += ` --message "${customMessage}"`;
+                }
 
-                      await navigator.clipboard.writeText(command);
-                      setShowAiderModal(false);
-                    } catch (err) {
-                      console.error("Copy failed:", err);
-                    }
-                  }}
-                >
-                  Copy Aider Command
-                </Button>
-              </Modal.Footer>
-            </Modal>
+                // Send command to server via WebSocket
+                const ws = new WebSocket(`ws://${window.location.host}`);
+                ws.onopen = () => {
+                  ws.send(JSON.stringify({
+                    type: 'executeCommand',
+                    command: command
+                  }));
+                  setToastMessage('Command sent to server');
+                  setToastVariant('success');
+                  setShowToast(true);
+                  setShowAiderModal(false);
+                  ws.close();
 
-          </>
-        }
-      />
+                  // Navigate to process manager page
+                  setTimeout(() => {
+                    navigate('/processes');
+                  }, 1000);
+                };
+
+                ws.onerror = (error) => {
+                  setToastMessage('Failed to connect to server');
+                  setToastVariant('danger');
+                  setShowToast(true);
+                };
+              } catch (err) {
+                console.error("WebSocket error:", err);
+                setToastMessage('Error preparing command');
+                setToastVariant('danger');
+                setShowToast(true);
+              }
+            }}
+          >
+            Run Aider Command
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <Row className="g-0">
-        <Col sm={3} className="border-end">
-          <Nav variant="pills" className="flex-column">
-            {/* Standard Logs Section */}
-            <div className="px-3 py-1 small text-muted">Standard Logs</div>
-            {Object.entries(logs)
-              .filter(([logName]) =>
-                Object.values(STANDARD_LOGS).includes(logName as any)
-              )
-              .filter(
-                ([, logContent]) =>
-                  (typeof logContent === "string" && logContent.trim()) ||
-                  (typeof logContent === "object" &&
-                    Object.keys(logContent).length > 0)
-              )
-              .map(([logName, logContent]) => (
-                <LogNavItem
-                  key={logName}
-                  logName={logName}
-                  logContent={logContent}
-                  activeTab={activeTab}
-                  setActiveTab={setActiveTab}
-                  setSelectedFile={setSelectedFile}
-                  errorCounts={errorCounts}
-                  decodedTestPath={decodedTestPath}
-                  testsExist={testsExist}
-                />
-              ))}
+        <Col sm={3} className="border-end" style={{
+          height: "calc(100vh - 56px)",
+          overflow: "auto",
+          backgroundColor: '#f8f9fa'
+        }}>
+          {/* File Tree Header */}
+          <div className="p-2 border-bottom">
+            <small className="fw-bold text-muted">EXPLORER</small>
+          </div>
 
-            {/* Runtime Specific Logs Section */}
-            {Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName])
-              .length > 0 && (
-                <>
-                  <div className="px-3 py-1 small text-muted">Runtime Logs</div>
-                  {Object.entries(logs)
-                    .filter(([logName]) =>
-                      Object.values(
-                        RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]
-                      ).includes(logName as any)
-                    )
-                    .filter(([, logContent]) => {
-                      return (typeof logContent === "string" && logContent.trim()) ||
-                        (typeof logContent === "object" && Object.keys(logContent).length > 0);
-                    })
-                    .map(([logName, logContent]) => (
-                      <LogNavItem
-                        key={logName}
-                        logName={logName}
-                        logContent={logContent}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                        setSelectedFile={setSelectedFile}
-                        errorCounts={errorCounts}
-                        decodedTestPath={decodedTestPath}
-                        testsExist={testsExist}
-                      />
-                    ))}
+          {/* Standard Logs Section */}
+          <div className="p-2">
+            <div
+              className="d-flex align-items-center text-muted mb-1"
+              style={{ cursor: 'pointer', fontSize: '0.875rem' }}
+              onClick={() => setExpandedSections(prev => ({ ...prev, standardLogs: !prev.standardLogs }))}
+            >
+              <i className={`bi bi-chevron-${expandedSections.standardLogs ? 'down' : 'right'} me-1`}></i>
+              <span>Standard Logs</span>
+            </div>
+            {expandedSections.standardLogs && (
+              <div>
+                {Object.values(STANDARD_LOGS).map((logName) => {
+                  const logContent = logs[logName];
+                  const exists = logContent !== undefined &&
+                    ((typeof logContent === "string" && logContent.trim() !== "") ||
+                      (typeof logContent === "object" && Object.keys(logContent).length > 0));
 
-                </>
-              )}
-            {logs.source_files && (
-              <div className="mt-2">
-                <div className="px-3 py-1 small text-muted">Source Files</div>
-                <FileTree
-                  data={logs.source_files}
-                  onSelect={(path, content) => {
-                    setActiveTab("source_file");
-                    setSelectedSourcePath(path);
-                    setSelectedFile({
-                      path,
-                      content,
-                      language: getLanguage(path),
-                    });
-                  }}
-                  level={0}
-                  selectedSourcePath={selectedSourcePath}
-                />
+                  return (
+                    <FileTreeItem
+                      key={logName}
+                      name={logName}
+                      isFile={true}
+                      level={1}
+                      isSelected={activeTab === logName}
+                      exists={exists}
+                      onClick={() => {
+                        if (exists) {
+                          setActiveTab(logName);
+                          setSelectedFile({
+                            path: logName,
+                            content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                            language: logName.endsWith(".json") ? "json" : "plaintext",
+                          });
+                        } else {
+                          setActiveTab(logName);
+                          setSelectedFile({
+                            path: logName,
+                            content: `// ${logName} not found or empty\nThis file was not generated during the test run.`,
+                            language: "plaintext",
+                          });
+                        }
+                      }}
+                    />
+                  );
+                })}
               </div>
             )}
+          </div>
 
-            {/* Artifacts Section */}
-            {logs[STANDARD_LOGS.TESTS] && (
-              <div className="mt-2">
-                <div className="px-3 py-1 small text-muted">Artifacts</div>
-                <ArtifactTree
-                  treeData={buildArtifactTree(
-                    typeof logs[STANDARD_LOGS.TESTS] === 'string'
-                      ? JSON.parse(logs[STANDARD_LOGS.TESTS])
-                      : logs[STANDARD_LOGS.TESTS]
-                  )}
-                  projectName={projectName}
-                  testName={testName}
-                  runtime={runtime}
-                  onSelect={async (path) => {
-                    setActiveTab("artifact_viewer");
-                    try {
-                      const response = await fetch(
-                        `reports/${projectName}/${testName
-                          .split('.')
-                          .slice(0, -1)
-                          .join('.')}/${runtime}/${path}`
-                      );
-                      const content = await (path.match(/\.(png|jpg|jpeg|gif|svg)$/i)
-                        ? URL.createObjectURL(await response.blob())
-                        : await response.text());
+          {/* Runtime Logs Section */}
+          {Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).length > 0 && (
+            <div className="p-2">
+              <div
+                className="d-flex align-items-center text-muted mb-1"
+                style={{ cursor: 'pointer', fontSize: '0.875rem' }}
+                onClick={() => setExpandedSections(prev => ({ ...prev, runtimeLogs: !prev.runtimeLogs }))}
+              >
+                <i className={`bi bi-chevron-${expandedSections.runtimeLogs ? 'down' : 'right'} me-1`}></i>
+                <span>Runtime Logs</span>
+              </div>
+              {expandedSections.runtimeLogs && (
+                <div>
+                  {Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).map((logName) => {
+                    const logContent = logs[logName];
+                    const exists = logContent !== undefined &&
+                      ((typeof logContent === "string" && logContent.trim() !== "") ||
+                        (typeof logContent === "object" && Object.keys(logContent).length > 0));
 
+                    return (
+                      <FileTreeItem
+                        key={logName}
+                        name={logName}
+                        isFile={true}
+                        level={1}
+                        isSelected={activeTab === logName}
+                        exists={exists}
+                        onClick={() => {
+                          if (exists) {
+                            setActiveTab(logName);
+                            setSelectedFile({
+                              path: logName,
+                              content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                              language: logName.endsWith(".json") ? "json" : "plaintext",
+                            });
+                          } else {
+                            setActiveTab(logName);
+                            setSelectedFile({
+                              path: logName,
+                              content: `// ${logName} not found or empty\nThis file was not generated during the test run.`,
+                              language: "plaintext",
+                            });
+                          }
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Source Files Section */}
+          {logs.source_files && (
+            <div className="p-2">
+              <div
+                className="d-flex align-items-center text-muted mb-1"
+                style={{ cursor: 'pointer', fontSize: '0.875rem' }}
+                onClick={() => setExpandedSections(prev => ({ ...prev, sourceFiles: !prev.sourceFiles }))}
+              >
+                <i className={`bi bi-chevron-${expandedSections.sourceFiles ? 'down' : 'right'} me-1`}></i>
+                <span>Source Files</span>
+              </div>
+              {expandedSections.sourceFiles && (
+                <div>
+                  <FileTree
+                    data={logs.source_files}
+                    onSelect={(path, content) => {
+                      setActiveTab("source_file");
+                      setSelectedSourcePath(path);
                       setSelectedFile({
                         path,
                         content,
                         language: getLanguage(path),
                       });
-                    } catch (err) {
-                      setSelectedFile({
-                        path,
-                        content: `Failed to load artifact: ${err}`,
-                        language: 'plaintext',
-                      });
-                    }
-                  }}
-                  level={0}
-                />
-              </div>
-            )}
-          </Nav>
+                    }}
+                    level={1}
+                    selectedSourcePath={selectedSourcePath}
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </Col>
         <Col
           sm={6}
@@ -628,77 +695,130 @@ export const TestPageView = ({
             }}
           />
         </Col>
-        <Col
-          sm={3}
-          className="p-0"
-          style={{ height: "calc(100vh - 56px)", overflow: "auto" }}
-        >
+        <Col sm={3} className="p-0 border-start" style={{ height: "calc(100vh - 56px)", overflow: "auto" }}>
           <div className="p-3">
-            {selectedFile?.path.endsWith("tests.json")
-              ? typeof selectedFile.content === "string"
-                ? renderTestResults(JSON.parse(selectedFile.content))
-                : renderTestResults(selectedFile.content)
-              : selectedFile?.path.includes("source_files") ? (
-                <div className="d-flex flex-column h-100">
-                  <Button
-                    variant="primary"
-                    className="mb-2"
-                    onClick={() => {
-                      // TODO: Add save functionality
-                      alert("Save functionality will be implemented here");
-                    }}
+            {selectedFile?.path.endsWith("tests.json") && (
+              <div className="test-results-preview">
+                {typeof selectedFile.content === "string"
+                  ? renderTestResults(JSON.parse(selectedFile.content))
+                  : renderTestResults(selectedFile.content)
+                }
+              </div>
+            )}
+            {selectedFile?.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) && (
+              <div className="text-center">
+                <img
+                  src={selectedFile.content}
+                  alt={selectedFile.path}
+                  className="img-fluid"
+                  style={{ maxHeight: '300px' }}
+                />
+                <div className="mt-2">
+                  <a
+                    href={selectedFile.content}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline-primary"
                   >
-                    Save Changes
-                  </Button>
-                  <div className="flex-grow-1 overflow-auto">
-                    {selectedFile && (
-                      <pre className="bg-light p-3">
-                        <code>{selectedFile.content}</code>
-                      </pre>
-                    )}
-                  </div>
+                    Open Full Size
+                  </a>
                 </div>
-              ) : activeTab === "artifact_viewer" && selectedFile && (
-                <div className="d-flex flex-column h-100">
-                  <div className="mb-3">
-                    <h5>{selectedFile.path}</h5>
-                    <a
-                      href={`reports/${projectName}/${testName
-                        .split('.')
-                        .slice(0, -1)
-                        .join('.')}/${runtime}/${selectedFile.path}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn-primary mb-2"
-                    >
-                      Open Full Artifact
-                    </a>
-                  </div>
-                  <div className="flex-grow-1 overflow-auto">
-                    {selectedFile.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) ? (
-                      <img
-                        src={`reports/${projectName}/${testName
-                          .split('.')
-                          .slice(0, -1)
-                          .join('.')}/${runtime}/${selectedFile.path}`}
-                        alt={selectedFile.path}
-                        className="img-fluid"
-                        style={{ maxHeight: '100%' }}
-                      />
-                    ) : (
-                      <pre className="bg-light p-3">
-                        <code>{selectedFile.content}</code>
-                      </pre>
-                    )}
-                  </div>
+              </div>
+            )}
+            {selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && (
+              <pre className="bg-light p-2 small">
+                <code>{selectedFile.content}</code>
+              </pre>
+            )}
+            {selectedFile?.path.includes("source_files") && (
+              <div>
+                <div className="mb-2 small text-muted">
+                  <i className="bi bi-file-earmark-text me-1"></i>
+                  {selectedFile.path.split('/').pop()}
                 </div>
-              )}
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  className="mb-2"
+                  onClick={() => {
+                    // TODO: Add save functionality
+                    alert("Save functionality will be implemented here");
+                  }}
+                >
+                  Save Changes
+                </Button>
+              </div>
+            )}
           </div>
         </Col>
       </Row>
+
+      <ToastContainer position="top-end" className="p-3">
+        <Toast
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          delay={3000}
+          autohide
+          bg={toastVariant}
+        >
+          <Toast.Header>
+            <strong className="me-auto">Command Status</strong>
+          </Toast.Header>
+          <Toast.Body className="text-white">
+            {toastMessage}
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
+
     </Container>
   );
 };
+// Simple file tree item component
+const FileTreeItem = ({
+  name,
+  isFile,
+  level,
+  isSelected,
+  exists = true,
+  onClick
+}: {
+  name: string;
+  isFile: boolean;
+  level: number;
+  isSelected: boolean;
+  exists?: boolean;
+  onClick: () => void;
+}) => {
+  const displayName = name
+    .replace(".json", "")
+    .replace(".txt", "")
+    .replace(".log", "")
+    .replace(/_/g, " ")
+    .replace(/^std/, "Standard ")
+    .replace(/^exit/, "Exit Code")
+    .split('/').pop();
+
+  return (
+    <div
+      className={`d-flex align-items-center py-1 ${isSelected ? 'text-primary fw-bold' : exists ? 'text-dark' : 'text-muted'}`}
+      style={{
+        paddingLeft: `${level * 16}px`,
+        cursor: exists ? 'pointer' : 'not-allowed',
+        fontSize: '0.875rem',
+        opacity: exists ? 1 : 0.6
+      }}
+      onClick={exists ? onClick : undefined}
+      title={exists ? undefined : "File not found or empty"}
+    >
+      <i className={`bi ${isFile ? (exists ? 'bi-file-earmark-text' : 'bi-file-earmark') : 'bi-folder'} me-1`}></i>
+      <span>{displayName}</span>
+      {!exists && (
+        <i className="bi bi-question-circle ms-1" title="File not found or empty"></i>
+      )}
+    </div>
+  );
+};
+
 const ArtifactTree = ({
   treeData,
   projectName,

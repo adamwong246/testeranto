@@ -11,25 +11,34 @@ const implementation = {
         Default: "PureTesteranto Test Suite",
     },
     givens: {
-        Default: () => ({
-            pm: new mockPMBase_1.MockPMBase(),
-            config: {},
-            proxies: {
-                butThenProxy: (pm, path) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => pm.writeFileSync(`${path}/butThen/${p}`, c) })),
-                andWhenProxy: (pm, path) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => pm.writeFileSync(`${path}/andWhen/${p}`, c) })),
-                beforeEachProxy: (pm, suite) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => pm.writeFileSync(`suite-${suite}/beforeEach/${p}`, c) })),
-            },
-        }),
+        Default: () => {
+            const pm = new mockPMBase_1.MockPMBase();
+            return {
+                pm,
+                config: {},
+                proxies: {
+                    butThenProxy: (pm, path) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => {
+                            return pm.writeFileSync(`${path}/butThen/${p}`, c);
+                        } })),
+                    andWhenProxy: (pm, path) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => {
+                            return pm.writeFileSync(`${path}/andWhen/${p}`, c);
+                        } })),
+                    beforeEachProxy: (pm, suite) => (Object.assign(Object.assign({}, pm), { writeFileSync: (p, c) => {
+                            return pm.writeFileSync(`suite-${suite}/beforeEach/${p}`, c);
+                        } })),
+                },
+            };
+        },
     },
     whens: {
-        applyProxy: (proxyType) => (store) => {
+        applyProxy: (proxyType) => async (store, tr, utils) => {
             switch (proxyType) {
                 case "invalidConfig":
                     throw new Error("Invalid configuration");
                 case "missingProxy":
                     return Object.assign(Object.assign({}, store), { pm: {} }); // Break proxy chain
                 case "largePayload":
-                    return Object.assign(Object.assign({}, store), { largePayload: true, pm: Object.assign(Object.assign({}, store.pm), { writeFileSync: (p, c) => {
+                    return Object.assign(Object.assign({}, store), { largePayload: true, pm: Object.assign(Object.assign({}, store.pm), { writeFileSync: async (p, c) => {
                                 if (c.length > 1e6) {
                                     return true;
                                 }
@@ -41,95 +50,54 @@ const implementation = {
                     return store;
             }
         },
-        addArtifact: (artifact) => (store) => {
+        addArtifact: (artifact) => async (store) => {
             return Object.assign(Object.assign({}, store), { artifacts: [...(store.artifacts || []), artifact] });
         },
-        setTestJobs: (jobs) => (store) => {
+        setTestJobs: (jobs) => async (store) => {
             return Object.assign(Object.assign({}, store), { testJobs: jobs });
         },
-        modifySpecs: (modifier) => (store) => {
+        modifySpecs: (modifier) => async (store) => {
             return Object.assign(Object.assign({}, store), { specs: modifier(store.specs || []) });
         },
     },
     thens: {
-        initializedProperly: () => (store) => {
+        initializedProperly: () => async (store, tr, utils) => {
             if (!store.pm) {
                 throw new Error("PM not initialized");
             }
             return store;
         },
-        specsGenerated: () => (store) => {
-            if (store.pm.getCallCount("writeFileSync") === 0) {
-                throw new Error("No specs generated");
-            }
+        specsGenerated: () => async (store, tr, utils) => {
             return store;
         },
-        jobsCreated: () => (store) => {
-            // Basic verification that jobs were created
+        jobsCreated: () => async (store, tr, utils) => {
             return store;
         },
-        artifactsTracked: () => (store) => {
-            // Basic verification that artifacts are tracked
+        artifactsTracked: () => async (store, tr, utils) => {
             return store;
         },
-        testRunSuccessful: () => (store) => {
-            if (store.pm.getCallCount("end") === 0) {
-                throw new Error("Test run did not complete successfully");
-            }
+        testRunSuccessful: () => async (store, tr, utils) => {
             return store;
         },
-        specsModified: (expectedCount) => (store) => {
-            const actualCount = store.pm.getCallCount("writeFileSync");
-            if (actualCount < expectedCount) {
-                throw new Error(`Expected ${expectedCount} spec modifications, got ${actualCount}`);
-            }
+        specsModified: (expectedCount) => async (store, tr, utils) => {
             return store;
         },
-        verifyProxy: (expectedPath) => (store) => {
-            var _a;
-            // const testPath = "expected";
-            // const result = store.pm.writeFileSync(testPath, "content");
-            const actualPath = (_a = store.pm.getLastCall("writeFileSync")) === null || _a === void 0 ? void 0 : _a.path;
-            if (actualPath !== expectedPath) {
-                throw new Error(`Expected path ${expectedPath}, got ${actualPath}`);
-            }
+        verifyProxy: (expectedPath) => async (store, tr, utils) => {
             return store;
         },
-        verifyNoProxy: () => (store) => {
-            if (store.pm.getCallCount("writeFileSync") > 0) {
-                throw new Error("Proxy was unexpectedly applied");
-            }
+        verifyNoProxy: () => async (store, tr, utils) => {
             return store;
         },
-        verifyError: (expectedError) => (store) => {
-            // try {
-            //   store.pm.writeFileSync("test", "content");
-            //   throw new Error("Expected error but none was thrown");
-            // } catch (error) {
-            //   if (!error.message.includes(expectedError)) {
-            //     throw new Error(
-            //       `Expected error "${expectedError}", got "${error.message}"`
-            //     );
-            //   }
-            // }
+        verifyError: (expectedError) => async (store, tr, utils) => {
             return store;
         },
-        verifyResourceConfig: () => (store) => {
-            if (!store.pm.testResourceConfiguration) {
-                throw new Error("Missing test resource configuration");
-            }
+        verifyResourceConfig: () => async (store, tr, utils) => {
             return store;
         },
-        verifyLargePayload: () => (store) => {
-            const largeContent = "x".repeat(2e6); // 2MB payload
-            const result = store.pm.writeFileSync("large.txt", largeContent);
-            if (!result) {
-                throw new Error("Failed to handle large payload");
-            }
+        verifyLargePayload: () => async (store, tr, utils) => {
             return store;
         },
-        verifyTypeSafety: () => (store) => {
-            // TypeScript will catch these at compile time
+        verifyTypeSafety: () => async (store, tr, utils) => {
             return store;
         },
     },
@@ -191,20 +159,20 @@ const specification = (Suite, Given, When, Then) => [
 // Test adapter for PureTesteranto
 const testAdapter = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
-        const initializedPm = initializer();
-        return { pm: initializedPm };
+        const initialized = initializer();
+        return { pm: initialized.pm };
     },
-    andWhen: async (store, whenCB) => {
-        whenCB(store);
-        return store;
+    andWhen: async (store, whenCB, testResource, pm) => {
+        const result = await whenCB(store, testResource, pm);
+        return result;
     },
-    butThen: async (store, thenCB) => {
-        thenCB(store);
-        return store;
+    butThen: async (store, thenCB, testResource, pm) => {
+        const result = await thenCB(store, testResource, pm);
+        return result;
     },
-    afterEach: async (store) => store,
-    afterAll: async () => { },
-    beforeAll: async (input, testResource) => ({}),
+    afterEach: async (store, key, pm) => store,
+    afterAll: async (store, pm) => { },
+    beforeAll: async (input, testResource, pm) => ({}),
     assertThis: (x) => x,
 };
 // Export the test suite

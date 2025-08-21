@@ -241,10 +241,15 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
   };
 
   writeBigBoard = () => {
-    fs.writeFileSync(
-      `./testeranto/reports/${this.name}/summary.json`,
-      JSON.stringify(this.summary, null, 2)
-    );
+    const summaryPath = `./testeranto/reports/${this.name}/summary.json`;
+    const summaryData = JSON.stringify(this.summary, null, 2);
+    fs.writeFileSync(summaryPath, summaryData);
+    
+    // Broadcast the update
+    this.broadcast({
+      type: 'summaryUpdate',
+      data: this.summary
+    });
   };
 
   abstract checkForShutdown();

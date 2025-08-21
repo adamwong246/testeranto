@@ -42,7 +42,7 @@ export default abstract class TesterantoCore<
     testAdapter: Partial<ITestAdapter<I>>,
     uberCatcher: (cb: () => void) => void
   ) {
-    const fullAdapter = DefaultAdapter(testAdapter);
+    const fullAdapter = DefaultAdapter<I>(testAdapter);
 
     super(
       testImplementation,
@@ -64,20 +64,7 @@ export default abstract class TesterantoCore<
           tr: ITTestResourceConfiguration,
           pm: IPM
         ): Promise<I["isubject"]> {
-          return (
-            fullAdapter.beforeAll ||
-            (async (
-              input: I["iinput"],
-              artifactory: ITestArtifactory,
-              tr,
-              pm: IPM
-            ) => input as any)
-          )(
-            s,
-            this.testResourceConfiguration,
-            // artifactory,
-            pm
-          );
+          return fullAdapter.beforeAll?.(s, tr, pm) ?? (s as unknown as Promise<I["isubject"]>);
         }
       } as any,
 
@@ -107,11 +94,8 @@ export default abstract class TesterantoCore<
           artifactory,
           pm
         ): Promise<unknown> {
-          return new Promise((res) =>
-            res(fullAdapter.afterEach(store, key, pm))
-          );
+          return Promise.resolve(fullAdapter.afterEach(store, key, pm));
         }
-        s;
       } as any,
 
       class When extends BaseWhen<I> {

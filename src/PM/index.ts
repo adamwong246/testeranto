@@ -10,7 +10,7 @@ export abstract class PM {
 
   abstract start(): Promise<void>;
   abstract stop(): Promise<void>;
-  abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise) => void);
+  abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (promise: Promise<any>) => void): any;
 
   abstract $(selector: string, page: string): any;
   abstract click(selector: string): any;

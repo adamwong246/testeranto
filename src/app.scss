@@ -5,8 +5,7 @@
   --bs-modal-color: rgba(0, 0, 0, 0.9);
   --frosted-bg: rgba(255, 255, 255, 0.2);
   --frosted-border: rgba(255, 255, 255, 0.3);
-  --frosted-text-shadow: 
-    -1px -1px 0 rgba(255, 255, 255, 0.3),
+  --frosted-text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.3),
     1px 1px 0 rgba(0, 0, 0, 0.3);
   --frosted-inset-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
@@ -16,8 +15,7 @@
   --bs-modal-color: rgba(255, 255, 255, 0.9);
   --frosted-bg: rgba(0, 0, 0, 0.2);
   --frosted-border: rgba(0, 0, 0, 0.3);
-  --frosted-text-shadow: 
-    -1px -1px 0 rgba(255, 255, 255, 0.3),
+  --frosted-text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.3),
     1px 1px 0 rgba(0, 0, 0, 0.3);
   --frosted-inset-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
@@ -42,11 +40,11 @@ code,
   border: 1px solid var(--frosted-border);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), var(--frosted-inset-shadow);
   isolation: isolate;
-  text-shadow: 
-    0 1px 3px rgba(0,0,0,0.8),
-    0 0 10px rgba(0,0,0,0.6),
-    0 0 20px rgba(0,0,0,0.3),
-    0 0 40px rgba(0,0,0,0.1);
+  // text-shadow:
+  //   0 1px 3px rgba(0,0,0,0.8),
+  //   0 0 10px rgba(0,0,0,0.6),
+  //   0 0 20px rgba(0,0,0,0.3),
+  //   0 0 40px rgba(0,0,0,0.1);
 }
 
 h1,
@@ -62,11 +60,12 @@ h6 {
   background-color: var(--text-panel-bg);
   border-radius: 8px;
   text-shadow: var(--text-shadow-heavy);
-  box-shadow: var(--panel-border), 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: var(--panel-border), 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0.5rem 0;
 }
 
-p, .lead {
+p,
+.lead {
   color: var(--light-text);
   text-shadow: var(--text-shadow-light);
   backdrop-filter: var(--text-panel-blur);
@@ -85,23 +84,6 @@ p, .lead {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), var(--frosted-inset-shadow);
 }
 
-#settings-button {
-  margin-left: 0.5rem;
-
-  backdrop-filter: blur(20px) saturate(200%);
-
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-
-    #gear-icon-settings {
-      animation: spin 1s linear infinite;
-      transform-origin: center;
-    }
-  }
-}
 
 .theme-card {
   cursor: pointer;

@@ -7,16 +7,12 @@
       "whens": [],
       "thens": [
         {
-          "name": "RendersNavBar: undefined",
-          "error": false,
+          "name": "RendersNavBar: ",
+          "error": "TypeError: Cannot read properties of undefined (reading 'querySelector')\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1755794589620:207:36\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1755794589620:92:14)\n    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3276:18)\n    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2922:19)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2634:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3084:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3115:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3300:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
           "artifacts": []
         }
       ],
-      "error": [
-        "TypeError: fullAdapter.assertThis is not a function\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3217:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2916:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [],
       "artifacts": []
     },
@@ -26,16 +22,12 @@
       "whens": [],
       "thens": [
         {
-          "name": "ShowsErrorCounts: undefined",
-          "error": false,
+          "name": "ShowsErrorCounts: ",
+          "error": "TypeError: Cannot read properties of undefined (reading 'querySelectorAll')\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1755794589620:216:36\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1755794589620:92:14)\n    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3276:18)\n    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2922:19)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:2634:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3084:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3115:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-A7W2ENY4.mjs:3300:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
           "artifacts": []
         }
       ],
-      "error": [
-        "TypeError: fullAdapter.assertThis is not a function\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3217:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2916:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [],
       "artifacts": []
     },
@@ -50,16 +42,12 @@
           "artifacts": []
         },
         {
-          "name": "ShowsTestResults: undefined",
+          "name": "ShowsTestResults: ",
           "error": false,
           "artifacts": []
         }
       ],
-      "error": [
-        "TypeError: fullAdapter.assertThis is not a function\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3217:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2916:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:2615:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3055:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3086:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-LU364HVS.mjs:3279:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [],
       "artifacts": []
     }

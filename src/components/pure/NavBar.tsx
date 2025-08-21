@@ -1,6 +1,6 @@
-import React from 'react';
-import { Navbar, Container, Nav, Badge } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Navbar, Container, Nav, Badge, Button } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
 
 type NavItem = {
   to?: string;
@@ -11,6 +11,7 @@ type NavItem = {
     variant: string;
     text: string;
   };
+  icon?: React.ReactNode;
 };
 
 type NavBarProps = {
@@ -18,17 +19,28 @@ type NavBarProps = {
   backLink?: string;
   navItems?: NavItem[];
   rightContent?: React.ReactNode;
+  showProcessManagerLink?: boolean;
+  onToggleCollapse?: () => void;
+  isCollapsed?: boolean;
 };
 
 export const NavBar: React.FC<NavBarProps> = ({
   title,
   backLink,
   navItems = [],
-  rightContent
+  rightContent,
 }) => {
+  const location = useLocation();
+
   return (
-    <Navbar bg="light" expand="lg" className="mb-4" sticky="top">
-      <Container fluid={true}>
+    <Navbar
+      bg="light"
+      expand="lg"
+      className="mb-2"
+      sticky="top"
+      expanded={false}
+    >
+      <Container fluid>
         {backLink && (
           <Nav.Link
             as={Link}
@@ -49,10 +61,13 @@ export const NavBar: React.FC<NavBarProps> = ({
             ↑
           </Nav.Link>
         )}
+
         <Navbar.Brand className={backLink ? 'ms-2' : ''}>
           {title}
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        
+        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ display: 'none' }} />
+        
         <Navbar.Collapse id="basic-navbar-nav">
           {navItems.length > 0 && (
             <Nav className="me-auto">
@@ -72,16 +87,15 @@ export const NavBar: React.FC<NavBarProps> = ({
                     to={item.to}
                     active={item.active}
                     className={className}
-                    style={{
-                      ':hover': {
-                        color: 'var(--bs-primary)',
-                        textDecoration: 'none'
-                      }
-                    }}
+                    title={typeof item.label === 'string' ? item.label : undefined}
                   >
+                    {item.icon && <span className="me-2">{item.icon}</span>}
                     {item.label}
                     {item.badge && (
-                      <Badge bg={item.badge.variant} className="ms-2">
+                      <Badge
+                        bg={item.badge.variant}
+                        className="ms-2"
+                      >
                         {item.badge.text}
                       </Badge>
                     )}
@@ -92,7 +106,9 @@ export const NavBar: React.FC<NavBarProps> = ({
           )}
           {rightContent && (
             <Nav>
-              {rightContent}
+              {React.Children.map(rightContent, (child) => {
+                return child;
+              })}
             </Nav>
           )}
         </Navbar.Collapse>

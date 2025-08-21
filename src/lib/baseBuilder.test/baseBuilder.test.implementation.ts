@@ -6,6 +6,7 @@ import { MockBaseBuilder } from "./baseBuilder.test.mock";
 import { I, O } from "./baseBuilder.test.types";
 import { ITestJob, ITTestResourceRequest } from "..";
 import { BaseBuilder } from "../basebuilder";
+import { IPM } from "../types";
 
 // Define our test subject type
 type TestSubject = MockBaseBuilder<any, any, any, any, any, any>;
@@ -16,7 +17,7 @@ export const implementation: ITestImplementation<I, O, {}> = {
   },
 
   givens: {
-    "the default BaseBuilder": () => {
+    "the default BaseBuilder": () => () => {
       return new MockBaseBuilder(
         {}, // input
         {}, // suitesOverrides
@@ -27,7 +28,7 @@ export const implementation: ITestImplementation<I, O, {}> = {
         () => [] // testSpecification
       );
     },
-    "a BaseBuilder with TestInput": (input: any) => {
+    "a BaseBuilder with TestInput": (input: any) => () => {
       return new MockBaseBuilder(
         input,
         {},
@@ -40,24 +41,24 @@ export const implementation: ITestImplementation<I, O, {}> = {
     },
     "a BaseBuilder with Test Resource Requirements": (
       requirements: ITTestResourceRequest
-    ) => {
+    ) => () => {
       return new MockBaseBuilder({}, {}, {}, {}, {}, requirements, () => []);
     },
   },
 
   whens: {
-    addArtifact: (artifact: Promise<any>) => (builder: TestSubject) => {
+    addArtifact: (artifact: Promise<any>) => (builder: TestSubject, utils: IPM) => {
       builder.artifacts.push(artifact);
       return builder;
     },
-    setTestJobs: (jobs: ITestJob[]) => (builder: TestSubject) => {
+    setTestJobs: (jobs: ITestJob[]) => (builder: TestSubject, utils: IPM) => {
       builder.testJobs = jobs;
       return builder;
     },
   },
 
   thens: {
-    "it is initialized": () => (builder, utils) => {
+    "it is initialized": () => (builder: TestSubject, utils: IPM) => {
       utils.writeFileSync("hello.txt", "world");
 
       if (!(builder instanceof BaseBuilder)) {
@@ -84,19 +85,19 @@ export const implementation: ITestImplementation<I, O, {}> = {
 
       return builder;
     },
-    "it generates TestSpecifications": () => (builder: TestSubject) => {
+    "it generates TestSpecifications": () => (builder: TestSubject, utils: IPM) => {
       if (!Array.isArray(builder.specs)) {
         throw new Error("Specs were not generated");
       }
       return builder;
     },
-    "it creates jobs": () => (builder: TestSubject) => {
+    "it creates jobs": () => (builder: TestSubject, utils: IPM) => {
       if (!Array.isArray(builder.testJobs)) {
         throw new Error("Test jobs were not created");
       }
       return builder;
     },
-    "it tracks artifacts": () => (builder: TestSubject, utils) => {
+    "it tracks artifacts": () => (builder: TestSubject, utils: IPM) => {
       if (!Array.isArray(builder.artifacts)) {
         throw new Error("Artifacts array not initialized");
       }
@@ -104,31 +105,31 @@ export const implementation: ITestImplementation<I, O, {}> = {
       utils.writeFileSync("artifact_test.txt", "test");
       return builder;
     },
-    resourceRequirementsSet: () => (builder: TestSubject) => {
+    resourceRequirementsSet: () => (builder: TestSubject, utils: IPM) => {
       if (!builder.testResourceRequirement) {
         throw new Error("Resource requirements not set");
       }
       return builder;
     },
-    suitesOverridesConfigured: () => (builder: TestSubject) => {
+    suitesOverridesConfigured: () => (builder: TestSubject, utils: IPM) => {
       if (!builder.suitesOverrides) {
         throw new Error("Suites overrides not configured");
       }
       return builder;
     },
-    givensOverridesConfigured: () => (builder: TestSubject) => {
+    givensOverridesConfigured: () => (builder: TestSubject, utils: IPM) => {
       if (!builder.givenOverides) {
         throw new Error("Givens overrides not configured");
       }
       return builder;
     },
-    whensOverridesConfigured: () => (builder: TestSubject) => {
+    whensOverridesConfigured: () => (builder: TestSubject, utils: IPM) => {
       if (!builder.whenOverides) {
         throw new Error("Whens overrides not configured");
       }
       return builder;
     },
-    thensOverridesConfigured: () => (builder: TestSubject) => {
+    thensOverridesConfigured: () => (builder: TestSubject, utils: IPM) => {
       if (!builder.thenOverides) {
         throw new Error("Thens overrides not configured");
       }

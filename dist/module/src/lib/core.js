@@ -15,10 +15,8 @@ export default class TesterantoCore extends ClassBuilder {
                 return fullAdapter.assertThis(t);
             }
             async setup(s, artifactory, tr, pm) {
-                return (fullAdapter.beforeAll ||
-                    (async (input, artifactory, tr, pm) => input))(s, this.testResourceConfiguration, 
-                // artifactory,
-                pm);
+                var _a, _b;
+                return (_b = (_a = fullAdapter.beforeAll) === null || _a === void 0 ? void 0 : _a.call(fullAdapter, s, tr, pm)) !== null && _b !== void 0 ? _b : s;
             }
         }, class Given extends BaseGiven {
             constructor() {
@@ -29,7 +27,7 @@ export default class TesterantoCore extends ClassBuilder {
                 return fullAdapter.beforeEach(subject, initializer, testResource, initialValues, pm);
             }
             afterEach(store, key, artifactory, pm) {
-                return new Promise((res) => res(fullAdapter.afterEach(store, key, pm)));
+                return Promise.resolve(fullAdapter.afterEach(store, key, pm));
             }
         }, class When extends BaseWhen {
             async andWhen(store, whenCB, testResource, pm) {

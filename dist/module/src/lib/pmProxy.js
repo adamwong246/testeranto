@@ -7,10 +7,16 @@ const baseProxy = function (pm, mappings) {
                 const method = mapping[0];
                 const arger = mapping[1];
                 if (prop === method) {
-                    return (...x) => target[prop](arger(...x));
+                    return (...x) => {
+                        // Add debug logging
+                        const modifiedArgs = arger(...x);
+                        return target[prop](...modifiedArgs);
+                    };
                 }
             }
-            return (...x) => target[prop](...x);
+            return (...x) => {
+                return target[prop](...x);
+            };
         },
     });
 };
@@ -50,10 +56,27 @@ export const butThenProxy = (pm, filepath, addArtifact) => {
         ],
         [
             "writeFileSync",
-            (fp, contents) => {
+            (fp, contents, testName) => {
+                console.log(`[DEBUG] butThenProxy writeFileSync: fp="${fp}" (type: ${typeof fp}), contents="${contents}" (type: ${typeof contents}), testName="${testName}" (type: ${typeof testName})`);
+                // Check if fp is being treated as individual characters
+                if (typeof fp !== "string") {
+                    console.log(`[ERROR] fp is not a string:`, fp);
+                    // If fp is not a string, try to handle it
+                    if (Array.isArray(fp)) {
+                        // If it's an array, join it back into a string
+                        fp = fp.join("");
+                        console.log(`[DEBUG] Converted array to string: "${fp}"`);
+                    }
+                    else {
+                        // For other cases, convert to string
+                        fp = String(fp);
+                        console.log(`[DEBUG] Converted to string: "${fp}"`);
+                    }
+                }
                 const path = `${filepath}/butThen/${fp}`;
+                console.log(`[DEBUG] Generated path: "${path}"`);
                 addArtifact(path);
-                return [path, contents];
+                return [path, contents, testName];
             },
         ],
         [
@@ -92,10 +115,10 @@ export const andWhenProxy = (pm, filepath, addArtifact) => {
         ],
         [
             "writeFileSync",
-            (fp, contents) => {
+            (fp, contents, testName) => {
                 const path = `${filepath}/andWhen/${fp}`;
                 addArtifact(path);
-                return [path, contents];
+                return [path, contents, testName];
             },
         ],
         [
@@ -135,10 +158,10 @@ export const afterEachProxy = (pm, suite, given, addArtifact) => {
         ],
         [
             "writeFileSync",
-            (fp, contents) => {
+            (fp, contents, testName) => {
                 const path = `suite-${suite}/given-${given}/afterEach/${fp}`;
                 addArtifact(path);
-                return [path, contents];
+                return [path, contents, testName];
             },
         ],
         [
@@ -170,10 +193,10 @@ export const beforeEachProxy = (pm, suite, addArtifact) => {
         ],
         [
             "writeFileSync",
-            (fp, contents) => {
+            (fp, contents, testName) => {
                 const path = `suite-${suite}/beforeEach/${fp}`;
                 addArtifact(path);
-                return [path, contents];
+                return [path, contents, testName];
             },
         ],
         [
@@ -201,10 +224,10 @@ export const beforeAllProxy = (pm, suite, addArtifact) => {
     return baseProxy(pm, [
         [
             "writeFileSync",
-            (fp, contents) => {
+            (fp, contents, testName) => {
                 const path = `suite-${suite}/beforeAll/${fp}`;
                 addArtifact(path);
-                return [path, contents];
+                return [path, contents, testName];
             },
         ],
         [
@@ -240,10 +263,10 @@ export const afterAllProxy = (pm, suite, addArtifact) => {
         ],
         [
             "writeFileSync",
-            (fp, contents) => {
+            (fp, contents, testName) => {
                 const path = `suite-${suite}/afterAll/${fp}`;
                 addArtifact(path);
-                return [path, contents];
+                return [path, contents, testName];
             },
         ],
         [

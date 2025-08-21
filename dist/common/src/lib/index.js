@@ -4,29 +4,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultTestResourceRequirement = exports.DefaultAdapter = exports.BaseAdapter = void 0;
 const BaseAdapter = () => ({
-    beforeAll: async (s) => s,
-    beforeEach: async function (subject, initialValues, x, testResource, pm) {
+    beforeAll: async (input, testResource, pm) => {
+        return input;
+    },
+    beforeEach: async function (subject, initializer, testResource, initialValues, pm) {
         return subject;
     },
-    afterEach: async (s) => s,
-    afterAll: (store) => undefined,
-    butThen: async (store, thenCb) => {
-        return thenCb(store);
+    afterEach: async (store, key, pm) => Promise.resolve(store),
+    afterAll: (store, pm) => undefined,
+    butThen: async (store, thenCb, testResource, pm) => {
+        return thenCb(store, pm);
     },
     andWhen: async (store, whenCB, testResource, pm) => {
-        try {
-            await whenCB(store, testResource, pm);
-        }
-        catch (error) {
-            console.error("Error in andWhen:", error);
-            throw error; // Re-throw to maintain test failure
-        }
+        return whenCB(store, pm);
     },
     assertThis: (x) => x,
 });
 exports.BaseAdapter = BaseAdapter;
 const DefaultAdapter = (p) => {
-    return Object.assign(Object.assign({}, exports.BaseAdapter), p);
+    const base = (0, exports.BaseAdapter)();
+    return Object.assign(Object.assign({}, base), p);
 };
 exports.DefaultAdapter = DefaultAdapter;
 exports.defaultTestResourceRequirement = {

@@ -20,7 +20,6 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   artifacts: string[] = [];
 
   addArtifact(path: string) {
-    console.log("Suite addArtifact", path);
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
   }
@@ -97,7 +96,9 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
     // console.log("\nSuite:", this.index, this.name);
     // tLog("\nSuite:", this.index, this.name);
     const sNdx = this.index;
-    const proxiedPm = beforeAllProxy(pm, sNdx.toString(), this);
+    // Ensure addArtifact is properly bound to 'this'
+    const addArtifact = this.addArtifact.bind(this);
+    const proxiedPm = beforeAllProxy(pm, sNdx.toString(), addArtifact);
     const subject = await this.setup(
       input,
       suiteArtifactory,
@@ -126,7 +127,9 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
     }
 
     try {
-      const afterAllPm = afterAllProxy(pm, sNdx.toString(), this);
+      // Ensure addArtifact is properly bound to 'this'
+      const addArtifact = this.addArtifact.bind(this);
+      const afterAllPm = afterAllProxy(pm, sNdx.toString(), addArtifact);
       this.afterAll(this.store, artifactory, afterAllPm);
     } catch (e) {
       console.error(JSON.stringify(e));

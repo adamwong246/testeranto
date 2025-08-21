@@ -7,32 +7,32 @@
       "whens": [],
       "thens": [
         {
-          "name": "hasContainerFluid: undefined",
+          "name": "hasContainerFluid: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "hasNavBar: undefined",
+          "name": "hasNavBar: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "hasNavBarTitle: undefined",
+          "name": "hasNavBarTitle: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "hasTestTable: undefined",
+          "name": "hasTestTable: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "rendersTestSuite1: undefined",
+          "name": "rendersTestSuite1: ",
           "error": false,
           "artifacts": []
         },
         {
-          "name": "rendersTestSuite2: undefined",
+          "name": "rendersTestSuite2: ",
           "error": false,
           "artifacts": []
         },
@@ -62,7 +62,7 @@
       "whens": [],
       "thens": [
         {
-          "name": "unhappyPath: undefined",
+          "name": "unhappyPath: ",
           "error": false,
           "artifacts": []
         },

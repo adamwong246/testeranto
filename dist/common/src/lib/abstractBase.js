@@ -6,7 +6,6 @@ exports.BaseThen = exports.BaseWhen = exports.BaseGiven = void 0;
 const pmProxy_js_1 = require("./pmProxy.js");
 class BaseGiven {
     addArtifact(path) {
-        console.log("Given addArtifact", path);
         const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
         this.artifacts.push(normalizedPath);
     }
@@ -53,7 +52,9 @@ class BaseGiven {
             tLog(e.stack);
         });
         try {
-            const proxiedPm = (0, pmProxy_js_1.beforeEachProxy)(pm, suiteNdx.toString(), this.addArtifact.bind(this));
+            // Ensure addArtifact is properly bound to 'this'
+            const addArtifact = this.addArtifact.bind(this);
+            const proxiedPm = (0, pmProxy_js_1.beforeEachProxy)(pm, suiteNdx.toString(), addArtifact);
             this.store = await this.givenThat(subject, testResourceConfiguration, givenArtifactory, this.givenCB, this.initialValues, proxiedPm);
         }
         catch (e) {
@@ -80,7 +81,9 @@ class BaseGiven {
         }
         finally {
             try {
-                const proxiedPm = (0, pmProxy_js_1.afterEachProxy)(pm, suiteNdx.toString(), key, this.addArtifact.bind(this));
+                // Ensure addArtifact is properly bound to 'this'
+                const addArtifact = this.addArtifact.bind(this);
+                const proxiedPm = (0, pmProxy_js_1.afterEachProxy)(pm, suiteNdx.toString(), key, addArtifact);
                 // (proxiedPm as any).currentStep = this;
                 await this.afterEach(this.store, this.key, givenArtifactory, proxiedPm);
             }
@@ -96,7 +99,6 @@ class BaseGiven {
 exports.BaseGiven = BaseGiven;
 class BaseWhen {
     addArtifact(path) {
-        console.log("When addArtifact", path);
         const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
         this.artifacts.push(normalizedPath);
     }
@@ -119,7 +121,9 @@ class BaseWhen {
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
         try {
             // tLog(" When:", this.name);
-            const proxiedPm = (0, pmProxy_js_1.andWhenProxy)(pm, filepath, this.addArtifact.bind(this));
+            // Ensure addArtifact is properly bound to 'this'
+            const addArtifact = this.addArtifact.bind(this);
+            const proxiedPm = (0, pmProxy_js_1.andWhenProxy)(pm, filepath, addArtifact);
             // (proxiedPm as any).currentStep = this;
             const result = await this.andWhen(store, this.whenCB, testResourceConfiguration, proxiedPm);
             return result;
@@ -141,7 +145,6 @@ class BaseThen {
         this.artifacts = [];
     }
     addArtifact(path) {
-        console.log("Then addArtifact", path);
         const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
         this.artifacts.push(normalizedPath);
     }
@@ -154,11 +157,28 @@ class BaseThen {
         return obj;
     }
     async test(store, testResourceConfiguration, tLog, pm, filepath) {
-        const proxiedPm = (0, pmProxy_js_1.butThenProxy)(pm, filepath, this.addArtifact.bind(this));
+        // Ensure addArtifact is properly bound to 'this'
+        const addArtifact = this.addArtifact.bind(this);
+        const proxiedPm = (0, pmProxy_js_1.butThenProxy)(pm, filepath, addArtifact);
         return this.butThen(store, async (s) => {
             try {
                 if (typeof this.thenCB === "function") {
-                    return await this.thenCB(s, proxiedPm);
+                    // Add debug logging to see what's being passed to thenCB
+                    // Check if the thenCB is spreading the arguments incorrectly
+                    // Wrap the proxy to see what's happening when writeFileSync is called
+                    const wrappedPm = new Proxy(proxiedPm, {
+                        get: (target, prop, receiver) => {
+                            if (prop === "writeFileSync") {
+                                return (...args) => {
+                                    console.log(`[DEBUG] writeFileSync called with args:`, args);
+                                    return target[prop](...args);
+                                };
+                            }
+                            return target[prop];
+                        },
+                    });
+                    const result = await this.thenCB(s, wrappedPm);
+                    return result;
                 }
                 else {
                     return this.thenCB;

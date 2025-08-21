@@ -6,7 +6,7 @@ export declare abstract class PM {
     testResourceConfiguration: ITTestResourceConfiguration;
     abstract start(): Promise<void>;
     abstract stop(): Promise<void>;
-    abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): any;
+    abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (promise: Promise<any>) => void): any;
     abstract $(selector: string, page: string): any;
     abstract click(selector: string): any;
     abstract closePage(p: any): any;

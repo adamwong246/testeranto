@@ -7,16 +7,12 @@
       "whens": [],
       "thens": [
         {
-          "name": "theButTheProxyReturns: writeFileSync",
+          "name": "theButTheProxyReturns: writeFileSync,test/path/butThen/test.txt",
           "error": false,
           "artifacts": []
         }
       ],
-      "error": [
-        "AssertionError: expected [ …(2) ] to equal undefined\n    at Object.assertThis (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4544:12)\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:832:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:708:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:229:12)\n    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:247:19)",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [
         "butThenProxy should rewrite writeFileSync paths"
       ],
@@ -28,16 +24,12 @@
       "whens": [],
       "thens": [
         {
-          "name": "theButTheProxyReturns: createWriteStream",
+          "name": "theButTheProxyReturns: createWriteStream,test/path/butThen/stream.txt",
           "error": false,
           "artifacts": []
         }
       ],
-      "error": [
-        "AssertionError: expected [ …(2) ] to equal undefined\n    at Object.assertThis (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4544:12)\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:832:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:708:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:229:12)\n    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:247:19)",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [
         "butThenProxy should rewrite createWriteStream paths"
       ],
@@ -49,16 +41,12 @@
       "whens": [],
       "thens": [
         {
-          "name": "theButTheProxyReturns: screencast",
+          "name": "theButTheProxyReturns: screencast,test/path/butThen/screen.png",
           "error": false,
           "artifacts": []
         }
       ],
-      "error": [
-        "AssertionError: expected [ …(2) ] to equal undefined\n    at Object.assertThis (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4544:12)\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:832:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:708:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:229:12)\n    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:247:19)",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [
         "butThenProxy should rewrite screencast paths"
       ],
@@ -70,16 +58,12 @@
       "whens": [],
       "thens": [
         {
-          "name": "theButTheProxyReturns: customScreenShot",
+          "name": "theButTheProxyReturns: customScreenShot,test/path/butThen/shot.png",
           "error": false,
           "artifacts": []
         }
       ],
-      "error": [
-        "AssertionError: expected [ …(2) ] to equal undefined\n    at Object.assertThis (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4544:12)\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:832:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:708:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:229:12)\n    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:247:19)",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [
         "butThenProxy should rewrite customScreenShot paths"
       ],
@@ -91,16 +75,12 @@
       "whens": [],
       "thens": [
         {
-          "name": "theButTheProxyReturns: writeFileSync",
+          "name": "theButTheProxyReturns: writeFileSync,test/path/butThen/",
           "error": false,
           "artifacts": []
         }
       ],
-      "error": [
-        "AssertionError: expected [ …(2) ] to equal undefined\n    at Object.assertThis (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4544:12)\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:832:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:708:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:229:12)\n    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:247:19)",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [
         "butThenProxy should handle empty paths"
       ],
@@ -112,16 +92,12 @@
       "whens": [],
       "thens": [
         {
-          "name": "theButTheProxyReturns: writeFileSync",
+          "name": "theButTheProxyReturns: writeFileSync,test/path/butThen/nested/folder/test.txt",
           "error": false,
           "artifacts": []
         }
       ],
-      "error": [
-        "AssertionError: expected [ …(2) ] to equal undefined\n    at Object.assertThis (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4544:12)\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:832:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:708:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:229:12)\n    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:247:19)",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [
         "butThenProxy should handle nested paths"
       ],
@@ -133,18 +109,31 @@
       "whens": [],
       "thens": [
         {
-          "name": "theButTheProxyReturns: writeFileSync",
+          "name": "theButTheProxyReturns: writeFileSync,test/path/butThen/file with spaces.txt",
           "error": false,
           "artifacts": []
         }
       ],
-      "error": [
-        "AssertionError: expected [ …(2) ] to equal undefined\n    at Object.assertThis (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4544:12)\n    at assertThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:832:30)\n    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:708:9)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:560:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:349:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-L67RWZ4W.mjs:380:31)\n    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:229:12)\n    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-JBB5E3XJ.mjs:247:19)",
-        null
-      ],
-      "failed": true,
+      "error": null,
       "features": [
         "butThenProxy should handle special characters in paths"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testsJsonTest",
+      "name": "SomeBaseString",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: writeFileSync,test/path/butThen/tests.json",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "butThenProxy should handle tests.json correctly"
       ],
       "artifacts": []
     }
@@ -157,6 +146,7 @@
     "butThenProxy should rewrite customScreenShot paths",
     "butThenProxy should handle empty paths",
     "butThenProxy should handle nested paths",
-    "butThenProxy should handle special characters in paths"
+    "butThenProxy should handle special characters in paths",
+    "butThenProxy should handle tests.json correctly"
   ]
 }

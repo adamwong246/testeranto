@@ -1,13 +1,16 @@
-import React from 'react';
-import { Table, Alert } from 'react-bootstrap';
-import { NavBar } from './NavBar';
-export const ProjectsPageView = ({ projects, summaries, configs, loading, error, navigate }) => {
+import React from "react";
+import { Table, Alert } from "react-bootstrap";
+export const ProjectsPageView = ({ projects, summaries, configs, loading, error, navigate, }) => {
     const getStatusIcon = (status) => {
         switch (status) {
-            case 'success': return '✅';
-            case 'failed': return '❌';
-            case 'warning': return '⚠️';
-            default: return '❓';
+            case "success":
+                return "✅";
+            case "failed":
+                return "❌";
+            case "warning":
+                return "⚠️";
+            default:
+                return "❓";
         }
     };
     if (loading)
@@ -16,8 +19,7 @@ export const ProjectsPageView = ({ projects, summaries, configs, loading, error,
         return React.createElement(Alert, { variant: "danger" },
             "Error: ",
             error);
-    return (React.createElement("div", { className: "p-3" },
-        React.createElement(NavBar, { title: "Testeranto", backLink: undefined }),
+    return (React.createElement("div", { className: "" },
         React.createElement(Table, { striped: true, bordered: true, hover: true, responsive: true },
             React.createElement("thead", null,
                 React.createElement("tr", null,
@@ -33,16 +35,20 @@ export const ProjectsPageView = ({ projects, summaries, configs, loading, error,
                             navigate(`/projects/${project.name}`);
                         } }, project.name)),
                 React.createElement("td", null,
-                    React.createElement("div", { style: { maxHeight: '200px', overflowY: 'auto' } }, summaries[project.name] ? (Object.keys(summaries[project.name]).map(testName => {
+                    React.createElement("div", null, summaries[project.name] ? (Object.keys(summaries[project.name]).map((testName) => {
                         var _a, _b, _c;
                         const testData = summaries[project.name][testName];
-                        const runTime = ((_c = (_b = (_a = configs[project.name]) === null || _a === void 0 ? void 0 : _a.tests) === null || _b === void 0 ? void 0 : _b.find((t) => t[0] === testName)) === null || _c === void 0 ? void 0 : _c[1]) || 'node';
+                        const runTime = ((_c = (_b = (_a = configs[project.name]) === null || _a === void 0 ? void 0 : _a.tests) === null || _b === void 0 ? void 0 : _b.find((t) => t[0] === testName)) === null || _c === void 0 ? void 0 : _c[1]) || "node";
                         const hasRuntimeErrors = testData.runTimeErrors > 0;
                         const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
                         return (React.createElement("div", { key: testName },
                             React.createElement("a", { href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}` },
-                                hasRuntimeErrors ? '❌ ' : hasStaticErrors ? '⚠️ ' : '',
-                                testName.split('/').pop() || testName)));
+                                hasRuntimeErrors
+                                    ? "❌ "
+                                    : hasStaticErrors
+                                        ? "⚠️ "
+                                        : "",
+                                testName.split("/").pop() || testName)));
                     })) : (React.createElement("div", null, "Loading tests...")))),
                 React.createElement("td", null,
                     React.createElement("a", { href: `#/projects/${project.name}#node` },

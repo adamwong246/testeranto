@@ -51,7 +51,7 @@ export const TestPage = () => {
       try {
         const [testResponse, metafileRes] = await Promise.all([
           fetchTestData(projectName, testPath, runtime),
-          fetch(`metafiles/${runtime}/${projectName}.json`)
+          fetch(`/metafiles/${runtime}/${projectName}.json`)
         ]);
         
         console.log('Fetching test data for:', { projectName, testPath, runtime });
@@ -158,12 +158,13 @@ export const TestPage = () => {
           console.log('tests.json content type:', typeof receivedLogs['tests.json']);
           try {
             // Handle both string and already-parsed JSON
-            receivedLogs['tests.json'] = typeof receivedLogs['tests.json'] === 'string' 
-              ? JSON.parse(receivedLogs['tests.json'])
-              : receivedLogs['tests.json'];
+            if (typeof receivedLogs['tests.json'] === 'string') {
+              receivedLogs['tests.json'] = JSON.parse(receivedLogs['tests.json']);
+            }
+            // If it's already an object, leave it as is
           } catch (e) {
             console.error('Failed to parse tests.json:', e);
-            receivedLogs['tests.json'] = { error: 'Invalid test data format' };
+            // Keep the original content but don't replace it with an error object
           }
         }
         setLogs(receivedLogs);
@@ -171,7 +172,7 @@ export const TestPage = () => {
         // setLintErrors(testResponse.lintErrors);
 
         try {
-          const summaryResponse = await fetch(`reports/${projectName}/summary.json`);
+          const summaryResponse = await fetch(`/reports/${projectName}/summary.json`);
           if (!summaryResponse.ok) throw new Error('Failed to fetch summary');
           const allSummaries = await summaryResponse.json();
           const testSummary = allSummaries[testPath];

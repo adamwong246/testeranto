@@ -4,7 +4,7 @@ import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, IPM } from ".
 import { BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
 export declare abstract class BaseBuilder<I extends Ibdd_in_any, O extends Ibdd_out_any, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions> {
     specs: any;
-    assertThis: (t: I["then"]) => {};
+    assertThis: (t: I["then"]) => any;
     testResourceRequirement: ITTestResourceRequest;
     artifacts: Promise<unknown>[];
     testJobs: ITestJob[];

@@ -5,8 +5,6 @@ import { specification } from "./specification";
 import { ProjectPageView } from "../ProjectPageView";
 import React from "react";
 
-import appcss from "./../../../App.scss";
-
 const WrappedProjectPageView = (props) => (
   <MemoryRouter>
     <ProjectPageView {...props}> </ProjectPageView>
