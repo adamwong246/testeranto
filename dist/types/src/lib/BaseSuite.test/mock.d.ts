@@ -1,5 +1,7 @@
-import { BaseGiven, BaseWhen, BaseThen } from "../abstractBase";
+import { BaseGiven } from "../BaseGiven";
 import { BaseSuite } from "../BaseSuite";
+import { BaseThen } from "../BaseThen";
+import { BaseWhen } from "../BaseWhen";
 import { IPM } from "../types";
 import { I, TestStore, TestSelection, O } from "./test";
 export declare class MockGiven extends BaseGiven<I> {

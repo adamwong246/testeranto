@@ -12,13 +12,13 @@ export type I = Ibdd_in<{}, // iinput
         selected: boolean;
     };
 }, // iselection
-() => {
+() => () => {
     testStore: {
         value: string;
     };
 }, // given
-(store: any) => any, // when
-(store: any) => any>;
+(store: any) => (store: any) => any, // when
+(store: any) => (store: any) => any>;
 export type O = Ibdd_out<{
     Default: [string];
 }, // Suites

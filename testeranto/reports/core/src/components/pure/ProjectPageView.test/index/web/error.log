@@ -1,3 +1,22 @@
-Failed to load resource: net::ERR_FILE_NOT_FOUND
-Failed to load resource: net::ERR_FILE_NOT_FOUND
-Failed to load resource: net::ERR_FILE_NOT_FOUND
+TypeError: Cannot read properties of undefined (reading 'path')
+    at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2444:62)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:1976:32)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756046081519:216:16)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2737:28
+    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2974:18)
+    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2610:19)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2322:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2782:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2813:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2998:12)
+TypeError: Cannot read properties of undefined (reading 'path')
+    at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2444:62)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:1976:32)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756046081519:216:16)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2737:28
+    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2974:18)
+    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2610:19)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2322:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2782:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2813:31)
+    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2998:12)

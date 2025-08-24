@@ -1,5 +1,7 @@
-import { BaseThen } from "../abstractBase";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Ibdd_in_any } from "../../CoreTypes";
+import { BaseThen } from "../BaseThen";
 
 export class MockThen<I extends Ibdd_in_any> extends BaseThen<I> {
   constructor(
@@ -15,6 +17,9 @@ export class MockThen<I extends Ibdd_in_any> extends BaseThen<I> {
     testResourceConfiguration: any,
     pm: any
   ): Promise<I["iselection"]> {
-    return thenCB(store);
+    // The thenCB expects a selection, not the store directly
+    // We need to extract the selection from the store
+    const selection = { testSelection: (store as any).testSelection };
+    return thenCB(selection as any);
   }
 }

@@ -21,7 +21,9 @@ import {
   IThenKlasser,
   IPM,
 } from "./types.js";
-import { BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
+import { BaseWhen } from "./BaseWhen.js";
+import { BaseThen } from "./BaseThen.js";
+import { BaseGiven } from "./BaseGiven.js";
 import { BaseSuite } from "./BaseSuite";
 
 export abstract class BaseBuilder<

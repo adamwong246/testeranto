@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BaseGiven, BaseWhen, BaseThen } from "../abstractBase";
+import { BaseGiven } from "../BaseGiven";
 import { BaseSuite } from "../BaseSuite";
+import { BaseThen } from "../BaseThen";
+import { BaseWhen } from "../BaseWhen";
 export class MockGiven extends BaseGiven {
     constructor(name, features, whens, thens) {
         super(name, features, whens, thens, async () => ({ testStore: true }), // givenCB
@@ -42,7 +44,9 @@ export class MockSuite extends BaseSuite {
         }
         const suiteName = name || "testSuite";
         super(suiteName, index, {
-            testGiven: new MockGiven("testGiven", ["testFeature"], [new MockWhen("testWhen", async () => Promise.resolve({ testSelection: true }))], [
+            testGiven: new MockGiven("testGiven", ["testFeature"], [
+                new MockWhen("testWhen", async () => Promise.resolve({ testSelection: true })),
+            ], [
                 new MockThen("testThen", async () => Promise.resolve(new BaseSuite("temp", 0, {}))),
             ]),
         });

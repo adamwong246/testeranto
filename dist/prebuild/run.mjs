@@ -273,8 +273,8 @@ var PM_Base = class {
           recursive: true
         });
       }
-      const f = fs.createWriteStream(filepath);
-      fileStreams3.push(f);
+      const f2 = fs.createWriteStream(filepath);
+      fileStreams3.push(f2);
       if (!files[testName]) {
         files[testName] = /* @__PURE__ */ new Set();
       }
@@ -839,8 +839,8 @@ async function writeFileAndCreateDir(filePath, data) {
 var filesHash = async (files3, algorithm = "md5") => {
   return new Promise((resolve, reject) => {
     resolve(
-      files3.reduce(async (mm, f) => {
-        return await mm + await fileHash(f);
+      files3.reduce(async (mm, f2) => {
+        return await mm + await fileHash(f2);
       }, Promise.resolve(""))
     );
   });
@@ -1577,8 +1577,8 @@ import('${d}').then(async (x) => {
       }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
         fs4.writeFileSync(
           `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
-          files3.map((f) => {
-            return `/read ${f}`;
+          files3.map((f2) => {
+            return `/read ${f2}`;
           }).join("\n")
         );
       });
@@ -2093,9 +2093,9 @@ import('${d}').then(async (x) => {
           return false;
         return true;
       });
-      const f = `${k.split(".").slice(0, -1).join(".")}/`;
-      if (!fs4.existsSync(f)) {
-        fs4.mkdirSync(f);
+      const f2 = `${k.split(".").slice(0, -1).join(".")}/`;
+      if (!fs4.existsSync(f2)) {
+        fs4.mkdirSync(f2);
       }
       const entrypoint = outputs[k].entryPoint;
       if (entrypoint) {
@@ -2260,15 +2260,26 @@ if (mode !== "once" && mode !== "dev") {
   console.error("the 2nd argument should be 'dev' or 'once' ");
   process.exit(-1);
 }
-import(process.cwd() + "/testeranto.config.ts").then(async (module) => {
-  const bigConfig = module.default;
+var f = process.cwd() + "/testeranto.config.ts";
+console.log("config file:", f);
+import(f).then(async (module) => {
+  const bigConfig = module.default || module;
   const rawConfig = bigConfig.projects[projectName];
+  if (!rawConfig) {
+    console.error(`Project "${projectName}" does not exist in the configuration.`);
+    console.error("Available projects:", Object.keys(bigConfig.projects));
+    process.exit(-1);
+  }
+  if (!rawConfig.tests) {
+    console.error(projectName, "appears to have no tests: ", f);
+    console.error(`here is the config:`);
+    console.log(JSON.stringify(rawConfig));
+    process.exit(-1);
+  }
   const config = {
     ...rawConfig,
     buildDir: process.cwd() + `/testeranto/${projectName}.json`
   };
-  if (!config.tests)
-    throw "config has no tests?";
   const pm = new PM_Main(config, projectName, mode);
   pm.start();
   process.stdin.on("keypress", (str, key) => {

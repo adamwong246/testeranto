@@ -56,12 +56,23 @@ if (mode !== "once" && mode !== "dev") {
     console.error("the 2nd argument should be 'dev' or 'once' ");
     process.exit(-1);
 }
-Promise.resolve(`${process.cwd() + "/" + "testeranto.config.ts"}`).then(s => __importStar(require(s))).then(async (module) => {
-    const bigConfig = module.default;
+const f = process.cwd() + "/" + "testeranto.config.ts";
+console.log("config file:", f);
+Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) => {
+    const bigConfig = module.default || module;
     const rawConfig = bigConfig.projects[projectName];
+    if (!rawConfig) {
+        console.error(`Project "${projectName}" does not exist in the configuration.`);
+        console.error("Available projects:", Object.keys(bigConfig.projects));
+        process.exit(-1);
+    }
+    if (!rawConfig.tests) {
+        console.error(projectName, "appears to have no tests: ", f);
+        console.error(`here is the config:`);
+        console.log(JSON.stringify(rawConfig));
+        process.exit(-1);
+    }
     const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + `testeranto/${projectName}.json` });
-    if (!config.tests)
-        throw "config has no tests?";
     const pm = new main_1.PM_Main(config, projectName, mode);
     pm.start();
     process.stdin.on("keypress", (str, key) => {

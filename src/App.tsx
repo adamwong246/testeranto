@@ -38,18 +38,40 @@ export const App = () => {
 // Export App to global scope
 function initApp() {
   const rootElement = document.getElementById('root');
-  if (rootElement && window.React && window.ReactDOM) {
-    const root = window.ReactDOM.createRoot(rootElement);
-    root.render(window.React.createElement(App));
+  if (rootElement) {
+    try {
+      // Try to use React 18's createRoot if available
+      if (ReactDom.createRoot) {
+        const root = ReactDom.createRoot(rootElement);
+        root.render(React.createElement(App));
+      } else {
+        // Fall back to React 17's render
+        ReactDom.render(React.createElement(App), rootElement);
+      }
+    } catch (err) {
+      console.error('Error rendering app:', err);
+      // Retry if React isn't loaded yet
+      setTimeout(initApp, 100);
+    }
   } else {
-    // Retry if React isn't loaded yet
+    // Retry if root element isn't available yet
     setTimeout(initApp, 100);
   }
 }
 
 // Export App to global scope
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  // @ts-ignore
   window.App = App;
+  // @ts-ignore
   window.React = React;
+  // @ts-ignore
   window.ReactDOM = ReactDom;
+  
+  // Initialize the app when the window is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
+  }
 }

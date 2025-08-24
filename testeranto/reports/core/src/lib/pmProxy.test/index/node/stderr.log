@@ -1,88 +1,88 @@
 TypeError: addArtifact is not a function
-    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:76:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:23:34)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:177:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:786:39
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4397:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:847:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:767:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:669:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:538:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:329:21
+    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:18:34)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:176:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:785:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4516:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:846:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:766:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:664:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:533:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:324:21
 TypeError: addArtifact is not a function
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:54:9
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:23:34)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:184:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:786:39
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4397:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:847:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:767:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:669:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:538:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:329:21
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:49:9
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:18:34)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:183:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:785:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4516:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:846:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:766:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:664:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:533:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:324:21
 TypeError: addArtifact is not a function
-    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:40:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:23:34)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:190:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:786:39
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4397:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:847:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:767:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:669:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:538:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:329:21
+    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:35:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:18:34)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:189:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:785:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4516:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:846:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:766:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:664:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:533:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:324:21
 TypeError: addArtifact is not a function
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:84:9
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:23:34)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:196:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:786:39
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4397:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:847:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:767:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:669:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:538:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:329:21
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:79:9
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:18:34)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:195:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:785:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4516:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:846:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:766:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:664:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:533:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:324:21
 TypeError: addArtifact is not a function
-    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:76:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:23:34)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:177:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:786:39
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4397:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:847:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:767:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:669:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:538:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:329:21
+    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:18:34)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:176:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:785:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4516:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:846:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:766:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:664:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:533:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:324:21
 TypeError: addArtifact is not a function
-    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:76:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:23:34)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:177:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:786:39
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4397:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:847:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:767:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:669:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:538:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:329:21
+    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:18:34)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:176:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:785:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4516:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:846:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:766:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:664:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:533:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:324:21
 TypeError: addArtifact is not a function
-    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:76:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:23:34)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:177:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:786:39
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4397:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:847:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:767:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:669:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:538:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:329:21
+    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:18:34)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:176:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:785:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4516:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:846:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:766:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:664:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:533:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:324:21
 TypeError: addArtifact is not a function
-    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:76:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:23:34)
-    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:177:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:786:39
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4397:12)
-    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:847:36)
-    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:767:17)
-    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:669:34)
-    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:538:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-4CSH4UJE.mjs:329:21
+    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:18:34)
+    at Then.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:176:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:785:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4516:12)
+    at Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:846:36)
+    at Then.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:766:17)
+    at Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:664:34)
+    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:533:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-2TT3L44Q.mjs:324:21

@@ -6,18 +6,18 @@ exports.implementation = {
         Default: "Abstract Base Test Suite",
     },
     givens: {
-        Default: () => ({
+        Default: () => () => ({
             testStore: { value: "initial" },
             testSelection: { selected: true },
         }),
-        WithError: () => ({
+        WithError: () => () => ({
             testStore: { value: "error" },
             testSelection: { selected: false },
         }),
     },
     whens: {
         modifyStore: (newValue) => (store) => (Object.assign(Object.assign({}, store), { testStore: { value: newValue } })),
-        throwError: () => () => {
+        throwError: () => (store) => {
             throw new Error("Test error");
         },
     },

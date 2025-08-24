@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { BaseGiven, BaseWhen, BaseThen } from "../abstractBase";
+import { BaseGiven } from "../BaseGiven";
 import { BaseSuite } from "../BaseSuite";
+import { BaseThen } from "../BaseThen";
+import { BaseWhen } from "../BaseWhen";
 import { IPM } from "../types";
+
 import { I, TestStore, TestSelection, O } from "./test";
 
 export class MockGiven extends BaseGiven<I> {
@@ -77,7 +80,11 @@ export class MockSuite extends BaseSuite<I, O> {
       testGiven: new MockGiven(
         "testGiven",
         ["testFeature"],
-        [new MockWhen("testWhen", async () => Promise.resolve({ testSelection: true }))],
+        [
+          new MockWhen("testWhen", async () =>
+            Promise.resolve({ testSelection: true })
+          ),
+        ],
         [
           new MockThen("testThen", async () =>
             Promise.resolve(new BaseSuite("temp", 0, {} as any))

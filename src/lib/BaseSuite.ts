@@ -4,9 +4,22 @@
 
 import { ITTestResourceConfiguration, ITestArtifactory } from ".";
 import { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
-import { IGivens } from "./abstractBase";
+import { IGivens } from "./BaseGiven";
 import { beforeAllProxy, afterAllProxy } from "./pmProxy";
 import { IPM } from "./types";
+
+/**
+ * Represents a collection of test suites keyed by their names.
+ * Suites are organized as named collections because:
+ * - Tests are typically grouped into logical suites (e.g., by feature, component)
+ * - Suites may have different configurations or setup requirements
+ * - Named suites allow for selective test execution and better reporting
+ * - This supports the hierarchical structure of test organization
+ */
+export type ISuites<I extends Ibdd_in_any, O extends Ibdd_out_any> = Record<
+  string,
+  BaseSuite<I, O>
+>;
 
 export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   name: string;

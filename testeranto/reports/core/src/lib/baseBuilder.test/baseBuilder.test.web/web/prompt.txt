@@ -1,0 +1,17 @@
+
+/add src/lib/baseBuilder.test/baseBuilder.test.web.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.specification.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.mock.ts
+/add src/lib/baseBuilder.test/baseBuilder.test.adapter.ts
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/tests.json
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/type_errors.txt
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/lint_errors.txt
+
+/read testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/tests.json testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/type_errors.txt testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/lint_errors.txt testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/exit.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/message.txt testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/prompt.txt testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/info.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/error.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/warn.log testeranto/reports/core/src/lib/baseBuilder.test/baseBuilder.test.web/web/debug.log

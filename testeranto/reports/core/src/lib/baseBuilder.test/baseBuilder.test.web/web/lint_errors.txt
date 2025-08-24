@@ -1,0 +1,10 @@
+src/lib/baseBuilder.test/baseBuilder.test.implementation.ts
+50:69 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)
+54:63 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)
+88:69 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)
+94:53 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)
+108:59 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)
+114:61 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)
+120:61 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)
+126:60 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)
+132:60 'utils' is defined but never used. (@typescript-eslint/no-unused-vars)

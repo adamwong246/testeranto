@@ -5,9 +5,9 @@ export type I = Ibdd_in<
   {}, // isubject
   { testStore: { value: string }; error?: Error }, // istore
   { testSelection: { selected: boolean } }, // iselection
-  () => { testStore: { value: string } }, // given
-  (store: any) => any, // when
-  (store: any) => any // then
+  () => () => { testStore: { value: string } }, // given
+  (store: any) => (store: any) => any, // when
+  (store: any) => (store: any) => any // then
 >;
 
 export type O = Ibdd_out<

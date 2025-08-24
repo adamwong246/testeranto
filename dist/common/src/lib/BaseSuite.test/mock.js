@@ -3,9 +3,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MockSuite = exports.MockThen = exports.MockWhen = exports.MockGiven = void 0;
-const abstractBase_1 = require("../abstractBase");
+const BaseGiven_1 = require("../BaseGiven");
 const BaseSuite_1 = require("../BaseSuite");
-class MockGiven extends abstractBase_1.BaseGiven {
+const BaseThen_1 = require("../BaseThen");
+const BaseWhen_1 = require("../BaseWhen");
+class MockGiven extends BaseGiven_1.BaseGiven {
     constructor(name, features, whens, thens) {
         super(name, features, whens, thens, async () => ({ testStore: true }), // givenCB
         {} // initialValues
@@ -19,7 +21,7 @@ class MockGiven extends abstractBase_1.BaseGiven {
     }
 }
 exports.MockGiven = MockGiven;
-class MockWhen extends abstractBase_1.BaseWhen {
+class MockWhen extends BaseWhen_1.BaseWhen {
     async andWhen(store, whenCB, testResource, pm) {
         // Create a TestSelection from the store
         const selection = { testSelection: true };
@@ -32,7 +34,7 @@ class MockWhen extends abstractBase_1.BaseWhen {
     }
 }
 exports.MockWhen = MockWhen;
-class MockThen extends abstractBase_1.BaseThen {
+class MockThen extends BaseThen_1.BaseThen {
     async butThen(store, thenCB, testResourceConfiguration, pm, ...args) {
         // Create a TestSelection from the store
         const selection = { testSelection: true };
@@ -48,7 +50,9 @@ class MockSuite extends BaseSuite_1.BaseSuite {
         }
         const suiteName = name || "testSuite";
         super(suiteName, index, {
-            testGiven: new MockGiven("testGiven", ["testFeature"], [new MockWhen("testWhen", async () => Promise.resolve({ testSelection: true }))], [
+            testGiven: new MockGiven("testGiven", ["testFeature"], [
+                new MockWhen("testWhen", async () => Promise.resolve({ testSelection: true })),
+            ], [
                 new MockThen("testThen", async () => Promise.resolve(new BaseSuite_1.BaseSuite("temp", 0, {}))),
             ]),
         });

@@ -1,12 +1,4 @@
 {
-  "src/components/pure/TestPageView.test/index.tsx": {
-    "runTimeErrors": -1,
-    "failingFeatures": {}
-  },
-  "src/components/pure/ProjectPageView.test/index.tsx": {
-    "runTimeErrors": -1,
-    "failingFeatures": {}
-  },
   "src/lib/BaseSuite.test/node.test.ts": {
     "typeErrors": 31,
     "staticErrors": 0,
@@ -22,7 +14,24 @@
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/web.test.ts": {
-    "runTimeErrors": -1,
+    "typeErrors": 31,
+    "staticErrors": 0,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/BaseSuite.test/web.test/prompt.txt",
+    "failingFeatures": {}
+  },
+  "src/components/pure/TestPageView.test/index.tsx": {
+    "typeErrors": 46,
+    "staticErrors": 2,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/TestPageView.test/index/prompt.txt",
+    "failingFeatures": {}
+  },
+  "src/components/pure/ProjectPageView.test/index.tsx": {
+    "typeErrors": 25,
+    "staticErrors": 1,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/ProjectPageView.test/index/prompt.txt",
     "failingFeatures": {}
   },
   "src/Pure.test.ts": {
@@ -68,11 +77,17 @@
     "failingFeatures": {}
   },
   "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
-    "runTimeErrors": -1,
+    "typeErrors": 21,
+    "staticErrors": 1,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/baseBuilder.test/baseBuilder.test.web/prompt.txt",
     "failingFeatures": {}
   },
   "src/components/pure/FeaturesReporterView.test/index.tsx": {
-    "runTimeErrors": -1,
+    "typeErrors": 27,
+    "staticErrors": 0,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/FeaturesReporterView.test/index/prompt.txt",
     "failingFeatures": {}
   }
 }

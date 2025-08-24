@@ -3,7 +3,7 @@ import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";
 import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types";
-import { IGivens } from "./abstractBase";
+import { IGivens } from "./BaseGiven";
 import { BaseSuite } from "./BaseSuite";
 export declare const BaseAdapter: <T extends Ibdd_in_any>() => ITestAdapter<T>;
 export declare const DefaultAdapter: <T extends Ibdd_in_any>(p: Partial<ITestAdapter<T>>) => ITestAdapter<T>;

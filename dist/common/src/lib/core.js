@@ -3,7 +3,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_js_1 = require("./index.js");
-const abstractBase_js_1 = require("./abstractBase.js");
+const BaseGiven_js_1 = require("./BaseGiven.js");
+const BaseWhen_js_1 = require("./BaseWhen.js");
+const BaseThen_js_1 = require("./BaseThen.js");
 const classBuilder_js_1 = require("./classBuilder.js");
 const BaseSuite_js_1 = require("./BaseSuite.js");
 class TesterantoCore extends classBuilder_js_1.ClassBuilder {
@@ -20,7 +22,7 @@ class TesterantoCore extends classBuilder_js_1.ClassBuilder {
                 var _a, _b;
                 return (_b = (_a = fullAdapter.beforeAll) === null || _a === void 0 ? void 0 : _a.call(fullAdapter, s, tr, pm)) !== null && _b !== void 0 ? _b : s;
             }
-        }, class Given extends abstractBase_js_1.BaseGiven {
+        }, class Given extends BaseGiven_js_1.BaseGiven {
             constructor() {
                 super(...arguments);
                 this.uberCatcher = uberCatcher;
@@ -31,11 +33,11 @@ class TesterantoCore extends classBuilder_js_1.ClassBuilder {
             afterEach(store, key, artifactory, pm) {
                 return Promise.resolve(fullAdapter.afterEach(store, key, pm));
             }
-        }, class When extends abstractBase_js_1.BaseWhen {
+        }, class When extends BaseWhen_js_1.BaseWhen {
             async andWhen(store, whenCB, testResource, pm) {
                 return await fullAdapter.andWhen(store, whenCB, testResource, pm);
             }
-        }, class Then extends abstractBase_js_1.BaseThen {
+        }, class Then extends BaseThen_js_1.BaseThen {
             async butThen(store, thenCB, testResource, pm) {
                 return await fullAdapter.butThen(store, thenCB, testResource, pm);
             }

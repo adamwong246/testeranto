@@ -36,7 +36,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DesignEditor = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const react_1 = __importStar(require("react"));
-const fabric_1 = require("fabric");
 const html_to_image_1 = require("html-to-image");
 exports.DesignEditor = react_1.default.forwardRef(({ projectId }, ref) => {
     const canvasRef = (0, react_1.useRef)(null);
@@ -49,7 +48,8 @@ exports.DesignEditor = react_1.default.forwardRef(({ projectId }, ref) => {
     const wsRef = (0, react_1.useRef)(null);
     // Initialize canvas and WebSocket connection
     (0, react_1.useEffect)(() => {
-        const canvas = new fabric_1.Canvas('design-canvas', {
+        // @ts-ignore
+        const canvas = new fabric.Canvas('design-canvas', {
             width: 800,
             height: 600
         });
@@ -83,7 +83,8 @@ exports.DesignEditor = react_1.default.forwardRef(({ projectId }, ref) => {
         let object;
         switch (shape) {
             case 'rectangle':
-                object = new fabric_1.Rect({
+                // @ts-ignore
+                object = new fabric.Rect({
                     width: 100,
                     height: 100,
                     fill: 'red',
@@ -92,7 +93,8 @@ exports.DesignEditor = react_1.default.forwardRef(({ projectId }, ref) => {
                 });
                 break;
             case 'circle':
-                object = new fabric_1.Circle({
+                // @ts-ignore
+                object = new fabric.Circle({
                     radius: 50,
                     fill: 'blue',
                     left: 200,
@@ -100,7 +102,8 @@ exports.DesignEditor = react_1.default.forwardRef(({ projectId }, ref) => {
                 });
                 break;
             case 'text':
-                object = new fabric_1.Text('Double click to edit', {
+                // @ts-ignore
+                object = new fabric.Text('Double click to edit', {
                     fontFamily: 'Arial',
                     fontSize: 20,
                     left: 100,

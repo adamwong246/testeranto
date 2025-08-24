@@ -8,12 +8,17 @@ import { PM_Node } from "../PM/node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";
 import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types";
-import { IGivens } from "./abstractBase";
+import { IGivens } from "./BaseGiven";
+
 import { BaseSuite } from "./BaseSuite";
 import { IPM } from "./types";
 
 export const BaseAdapter = <T extends Ibdd_in_any>(): ITestAdapter<T> => ({
-  beforeAll: async (input: T["iinput"], testResource: ITTestResourceConfiguration, pm: IPM) => {
+  beforeAll: async (
+    input: T["iinput"],
+    testResource: ITTestResourceConfiguration,
+    pm: IPM
+  ) => {
     return input as unknown as T["isubject"];
   },
   beforeEach: async function (
@@ -25,7 +30,8 @@ export const BaseAdapter = <T extends Ibdd_in_any>(): ITestAdapter<T> => ({
   ): Promise<T["istore"]> {
     return subject as unknown as T["istore"];
   },
-  afterEach: async (store: T["istore"], key: string, pm: IPM) => Promise.resolve(store),
+  afterEach: async (store: T["istore"], key: string, pm: IPM) =>
+    Promise.resolve(store),
   afterAll: (store: T["istore"], pm: IPM) => undefined,
   butThen: async (
     store: T["istore"],

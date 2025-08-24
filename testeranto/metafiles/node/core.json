@@ -25,7 +25,7 @@
         "format": "esm"
       },
       "src/lib/index.ts": {
-        "bytes": 3739,
+        "bytes": 3757,
         "imports": [
           {
             "path": "../CoreTypes",
@@ -53,7 +53,7 @@
             "external": true
           },
           {
-            "path": "./abstractBase",
+            "path": "./BaseGiven",
             "kind": "import-statement",
             "external": true
           },
@@ -91,8 +91,65 @@
         ],
         "format": "esm"
       },
-      "src/lib/abstractBase.ts": {
-        "bytes": 8832,
+      "src/lib/BaseGiven.ts": {
+        "bytes": 5051,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          },
+          {
+            "path": "./BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseWhen.ts": {
+        "bytes": 2535,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseThen.ts": {
+        "bytes": 3339,
         "imports": [
           {
             "path": ".",
@@ -118,7 +175,7 @@
         "format": "esm"
       },
       "src/lib/basebuilder.ts": {
-        "bytes": 4963,
+        "bytes": 5024,
         "imports": [
           {
             "path": "stream",
@@ -136,7 +193,17 @@
             "external": true
           },
           {
-            "path": "./abstractBase.js",
+            "path": "./BaseWhen.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseThen.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseGiven.js",
             "kind": "import-statement",
             "external": true
           },
@@ -185,7 +252,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 4006,
+        "bytes": 4530,
         "imports": [
           {
             "path": ".",
@@ -198,7 +265,7 @@
             "external": true
           },
           {
-            "path": "./abstractBase",
+            "path": "./BaseGiven",
             "kind": "import-statement",
             "external": true
           },
@@ -221,7 +288,7 @@
         "format": "esm"
       },
       "src/lib/core.ts": {
-        "bytes": 3302,
+        "bytes": 3363,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -229,9 +296,19 @@
             "original": "./index.js"
           },
           {
-            "path": "src/lib/abstractBase.ts",
+            "path": "src/lib/BaseGiven.ts",
             "kind": "import-statement",
-            "original": "./abstractBase.js"
+            "original": "./BaseGiven.js"
+          },
+          {
+            "path": "src/lib/BaseWhen.ts",
+            "kind": "import-statement",
+            "original": "./BaseWhen.js"
+          },
+          {
+            "path": "src/lib/BaseThen.ts",
+            "kind": "import-statement",
+            "original": "./BaseThen.js"
           },
           {
             "path": "src/lib/classBuilder.ts",
@@ -360,17 +437,27 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 2307,
+        "bytes": 2409,
         "imports": [
           {
-            "path": "src/lib/abstractBase.ts",
+            "path": "src/lib/BaseGiven.ts",
             "kind": "import-statement",
-            "original": "../abstractBase"
+            "original": "../BaseGiven"
           },
           {
             "path": "src/lib/BaseSuite.ts",
             "kind": "import-statement",
             "original": "../BaseSuite"
+          },
+          {
+            "path": "src/lib/BaseThen.ts",
+            "kind": "import-statement",
+            "original": "../BaseThen"
+          },
+          {
+            "path": "src/lib/BaseWhen.ts",
+            "kind": "import-statement",
+            "original": "../BaseWhen"
           },
           {
             "path": "../types",
@@ -540,1279 +627,9 @@
         ],
         "format": "esm"
       },
-      "node_modules/check-error/index.js": {
-        "bytes": 4293,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/flag.js": {
-        "bytes": 881,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/test.js": {
-        "bytes": 477,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/type-detect.js": {
-        "bytes": 384,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/assertion-error/index.js": {
-        "bytes": 1436,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/expectTypes.js": {
-        "bytes": 1465,
-        "imports": [
-          {
-            "path": "node_modules/assertion-error/index.js",
-            "kind": "import-statement",
-            "original": "assertion-error"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/type-detect.js",
-            "kind": "import-statement",
-            "original": "./type-detect.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/getActual.js": {
-        "bytes": 484,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/helpers.js": {
-        "bytes": 5596,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/array.js": {
-        "bytes": 795,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/typedarray.js": {
-        "bytes": 1719,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/date.js": {
-        "bytes": 486,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/function.js": {
-        "bytes": 381,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/map.js": {
-        "bytes": 680,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/number.js": {
-        "bytes": 642,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/bigint.js": {
-        "bytes": 270,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/regexp.js": {
-        "bytes": 331,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/set.js": {
-        "bytes": 414,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/string.js": {
-        "bytes": 828,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/symbol.js": {
-        "bytes": 209,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/promise.js": {
-        "bytes": 78,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/object.js": {
-        "bytes": 924,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/class.js": {
-        "bytes": 584,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/object.js",
-            "kind": "import-statement",
-            "original": "./object.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/arguments.js": {
-        "bytes": 246,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/error.js": {
-        "bytes": 1105,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/html.js": {
-        "bytes": 1735,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/loupe/lib/index.js": {
-        "bytes": 5847,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/array.js",
-            "kind": "import-statement",
-            "original": "./array.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/typedarray.js",
-            "kind": "import-statement",
-            "original": "./typedarray.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/date.js",
-            "kind": "import-statement",
-            "original": "./date.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/function.js",
-            "kind": "import-statement",
-            "original": "./function.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/map.js",
-            "kind": "import-statement",
-            "original": "./map.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/number.js",
-            "kind": "import-statement",
-            "original": "./number.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/bigint.js",
-            "kind": "import-statement",
-            "original": "./bigint.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/regexp.js",
-            "kind": "import-statement",
-            "original": "./regexp.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/set.js",
-            "kind": "import-statement",
-            "original": "./set.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/string.js",
-            "kind": "import-statement",
-            "original": "./string.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/symbol.js",
-            "kind": "import-statement",
-            "original": "./symbol.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/promise.js",
-            "kind": "import-statement",
-            "original": "./promise.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/class.js",
-            "kind": "import-statement",
-            "original": "./class.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/object.js",
-            "kind": "import-statement",
-            "original": "./object.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/arguments.js",
-            "kind": "import-statement",
-            "original": "./arguments.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/error.js",
-            "kind": "import-statement",
-            "original": "./error.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/html.js",
-            "kind": "import-statement",
-            "original": "./html.js"
-          },
-          {
-            "path": "node_modules/loupe/lib/helpers.js",
-            "kind": "import-statement",
-            "original": "./helpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/config.js": {
-        "bytes": 3785,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/inspect.js": {
-        "bytes": 1120,
-        "imports": [
-          {
-            "path": "node_modules/loupe/lib/index.js",
-            "kind": "import-statement",
-            "original": "loupe"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/config.js",
-            "kind": "import-statement",
-            "original": "../config.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/objDisplay.js": {
-        "bytes": 1240,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/utils/inspect.js",
-            "kind": "import-statement",
-            "original": "./inspect.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/config.js",
-            "kind": "import-statement",
-            "original": "../config.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/getMessage.js": {
-        "bytes": 1397,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/getActual.js",
-            "kind": "import-statement",
-            "original": "./getActual.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/objDisplay.js",
-            "kind": "import-statement",
-            "original": "./objDisplay.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/transferFlags.js": {
-        "bytes": 1402,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/deep-eql/index.js": {
-        "bytes": 16662,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/pathval/index.js": {
-        "bytes": 7690,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/assertion.js": {
-        "bytes": 6525,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/config.js",
-            "kind": "import-statement",
-            "original": "./config.js"
-          },
-          {
-            "path": "node_modules/assertion-error/index.js",
-            "kind": "import-statement",
-            "original": "assertion-error"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/index.js",
-            "kind": "import-statement",
-            "original": "./utils/index.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/isProxyEnabled.js": {
-        "bytes": 601,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/config.js",
-            "kind": "import-statement",
-            "original": "../config.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/addProperty.js": {
-        "bytes": 2391,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/isProxyEnabled.js",
-            "kind": "import-statement",
-            "original": "./isProxyEnabled.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/transferFlags.js",
-            "kind": "import-statement",
-            "original": "./transferFlags.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/addLengthGuard.js": {
-        "bytes": 2529,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/getProperties.js": {
-        "bytes": 816,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/proxify.js": {
-        "bytes": 5493,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/config.js",
-            "kind": "import-statement",
-            "original": "../config.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/getProperties.js",
-            "kind": "import-statement",
-            "original": "./getProperties.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/isProxyEnabled.js",
-            "kind": "import-statement",
-            "original": "./isProxyEnabled.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/addMethod.js": {
-        "bytes": 2173,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/utils/addLengthGuard.js",
-            "kind": "import-statement",
-            "original": "./addLengthGuard.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/proxify.js",
-            "kind": "import-statement",
-            "original": "./proxify.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/transferFlags.js",
-            "kind": "import-statement",
-            "original": "./transferFlags.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/overwriteProperty.js": {
-        "bytes": 3235,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/isProxyEnabled.js",
-            "kind": "import-statement",
-            "original": "./isProxyEnabled.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/transferFlags.js",
-            "kind": "import-statement",
-            "original": "./transferFlags.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/overwriteMethod.js": {
-        "bytes": 3124,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/addLengthGuard.js",
-            "kind": "import-statement",
-            "original": "./addLengthGuard.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/proxify.js",
-            "kind": "import-statement",
-            "original": "./proxify.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/transferFlags.js",
-            "kind": "import-statement",
-            "original": "./transferFlags.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/addChainableMethod.js": {
-        "bytes": 5302,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/addLengthGuard.js",
-            "kind": "import-statement",
-            "original": "./addLengthGuard.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/proxify.js",
-            "kind": "import-statement",
-            "original": "./proxify.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/transferFlags.js",
-            "kind": "import-statement",
-            "original": "./transferFlags.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/overwriteChainableMethod.js": {
-        "bytes": 2165,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/transferFlags.js",
-            "kind": "import-statement",
-            "original": "./transferFlags.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/compareByInspect.js": {
-        "bytes": 770,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/utils/inspect.js",
-            "kind": "import-statement",
-            "original": "./inspect.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/getOwnEnumerablePropertySymbols.js": {
-        "bytes": 800,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/getOwnEnumerableProperties.js": {
-        "bytes": 736,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/utils/getOwnEnumerablePropertySymbols.js",
-            "kind": "import-statement",
-            "original": "./getOwnEnumerablePropertySymbols.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/isNaN.js": {
-        "bytes": 164,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/getOperator.js": {
-        "bytes": 1324,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/type-detect.js",
-            "kind": "import-statement",
-            "original": "./type-detect.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/utils/index.js": {
-        "bytes": 2721,
-        "imports": [
-          {
-            "path": "node_modules/check-error/index.js",
-            "kind": "import-statement",
-            "original": "check-error"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/test.js",
-            "kind": "import-statement",
-            "original": "./test.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/type-detect.js",
-            "kind": "import-statement",
-            "original": "./type-detect.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/expectTypes.js",
-            "kind": "import-statement",
-            "original": "./expectTypes.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/getMessage.js",
-            "kind": "import-statement",
-            "original": "./getMessage.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/getActual.js",
-            "kind": "import-statement",
-            "original": "./getActual.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/inspect.js",
-            "kind": "import-statement",
-            "original": "./inspect.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/objDisplay.js",
-            "kind": "import-statement",
-            "original": "./objDisplay.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/flag.js",
-            "kind": "import-statement",
-            "original": "./flag.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/transferFlags.js",
-            "kind": "import-statement",
-            "original": "./transferFlags.js"
-          },
-          {
-            "path": "node_modules/deep-eql/index.js",
-            "kind": "import-statement",
-            "original": "deep-eql"
-          },
-          {
-            "path": "node_modules/pathval/index.js",
-            "kind": "import-statement",
-            "original": "pathval"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/addProperty.js",
-            "kind": "import-statement",
-            "original": "./addProperty.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/addMethod.js",
-            "kind": "import-statement",
-            "original": "./addMethod.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/overwriteProperty.js",
-            "kind": "import-statement",
-            "original": "./overwriteProperty.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/overwriteMethod.js",
-            "kind": "import-statement",
-            "original": "./overwriteMethod.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/addChainableMethod.js",
-            "kind": "import-statement",
-            "original": "./addChainableMethod.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/overwriteChainableMethod.js",
-            "kind": "import-statement",
-            "original": "./overwriteChainableMethod.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/compareByInspect.js",
-            "kind": "import-statement",
-            "original": "./compareByInspect.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/getOwnEnumerablePropertySymbols.js",
-            "kind": "import-statement",
-            "original": "./getOwnEnumerablePropertySymbols.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/getOwnEnumerableProperties.js",
-            "kind": "import-statement",
-            "original": "./getOwnEnumerableProperties.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/proxify.js",
-            "kind": "import-statement",
-            "original": "./proxify.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/addLengthGuard.js",
-            "kind": "import-statement",
-            "original": "./addLengthGuard.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/isProxyEnabled.js",
-            "kind": "import-statement",
-            "original": "./isProxyEnabled.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/isNaN.js",
-            "kind": "import-statement",
-            "original": "./isNaN.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/getOperator.js",
-            "kind": "import-statement",
-            "original": "./getOperator.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/core/assertions.js": {
-        "bytes": 133661,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/assertion-error/index.js",
-            "kind": "import-statement",
-            "original": "assertion-error"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/index.js",
-            "kind": "import-statement",
-            "original": "../utils/index.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/config.js",
-            "kind": "import-statement",
-            "original": "../config.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "node_modules/chai/index.js": {
-        "bytes": 31,
+        "bytes": 142562,
         "imports": [
-          {
-            "path": "node_modules/chai/lib/chai.js",
-            "kind": "import-statement",
-            "original": "./lib/chai.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/interface/expect.js": {
-        "bytes": 1256,
-        "imports": [
-          {
-            "path": "node_modules/chai/index.js",
-            "kind": "import-statement",
-            "original": "../../../index.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/assertion-error/index.js",
-            "kind": "import-statement",
-            "original": "assertion-error"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/interface/should.js": {
-        "bytes": 6039,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/assertion-error/index.js",
-            "kind": "import-statement",
-            "original": "assertion-error"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai/interface/assert.js": {
-        "bytes": 89959,
-        "imports": [
-          {
-            "path": "node_modules/chai/index.js",
-            "kind": "import-statement",
-            "original": "../../../index.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "../assertion.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/utils/index.js",
-            "kind": "import-statement",
-            "original": "../utils/index.js"
-          },
-          {
-            "path": "node_modules/assertion-error/index.js",
-            "kind": "import-statement",
-            "original": "assertion-error"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/chai/lib/chai.js": {
-        "bytes": 1276,
-        "imports": [
-          {
-            "path": "node_modules/chai/lib/chai/utils/index.js",
-            "kind": "import-statement",
-            "original": "./chai/utils/index.js"
-          },
-          {
-            "path": "node_modules/assertion-error/index.js",
-            "kind": "import-statement",
-            "original": "assertion-error"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/config.js",
-            "kind": "import-statement",
-            "original": "./chai/config.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/core/assertions.js",
-            "kind": "import-statement",
-            "original": "./chai/core/assertions.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/interface/expect.js",
-            "kind": "import-statement",
-            "original": "./chai/interface/expect.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "./chai/assertion.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/interface/should.js",
-            "kind": "import-statement",
-            "original": "./chai/interface/should.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/interface/assert.js",
-            "kind": "import-statement",
-            "original": "./chai/interface/assert.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/assertion.js",
-            "kind": "import-statement",
-            "original": "./chai/assertion.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/interface/expect.js",
-            "kind": "import-statement",
-            "original": "./chai/interface/expect.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/interface/should.js",
-            "kind": "import-statement",
-            "original": "./chai/interface/should.js"
-          },
-          {
-            "path": "node_modules/chai/lib/chai/interface/assert.js",
-            "kind": "import-statement",
-            "original": "./chai/interface/assert.js"
-          },
           {
             "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
             "kind": "import-statement",
@@ -1825,7 +642,7 @@
         "bytes": 2069,
         "imports": [
           {
-            "path": "node_modules/chai/lib/chai.js",
+            "path": "node_modules/chai/index.js",
             "kind": "import-statement",
             "original": "chai"
           },
@@ -2455,15 +1272,15 @@
       "testeranto/bundles/node/core/src/lib/BaseSuite.test/node.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-C3APFDUV.mjs",
+            "path": "testeranto/bundles/node/core/chunk-PUJLNNL2.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/core/chunk-4JTDLQVA.mjs",
+            "path": "testeranto/bundles/node/core/chunk-MSQ46J7L.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/core/chunk-4CSH4UJE.mjs",
+            "path": "testeranto/bundles/node/core/chunk-2TT3L44Q.mjs",
             "kind": "import-statement"
           }
         ],
@@ -2484,11 +1301,11 @@
       "testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-4JTDLQVA.mjs",
+            "path": "testeranto/bundles/node/core/chunk-MSQ46J7L.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/core/chunk-4CSH4UJE.mjs",
+            "path": "testeranto/bundles/node/core/chunk-2TT3L44Q.mjs",
             "kind": "import-statement"
           }
         ],
@@ -2506,173 +1323,8 @@
           "src/lib/pmProxy.test/specification.ts": {
             "bytesInOutput": 4740
           },
-          "node_modules/chai/lib/chai/utils/index.js": {
-            "bytesInOutput": 1355
-          },
-          "node_modules/check-error/index.js": {
-            "bytesInOutput": 1991
-          },
-          "node_modules/chai/lib/chai/utils/flag.js": {
-            "bytesInOutput": 211
-          },
-          "node_modules/chai/lib/chai/utils/test.js": {
-            "bytesInOutput": 113
-          },
-          "node_modules/chai/lib/chai/utils/type-detect.js": {
-            "bytesInOutput": 324
-          },
-          "node_modules/assertion-error/index.js": {
-            "bytesInOutput": 685
-          },
-          "node_modules/chai/lib/chai/utils/expectTypes.js": {
-            "bytesInOutput": 771
-          },
-          "node_modules/chai/lib/chai/utils/getActual.js": {
-            "bytesInOutput": 81
-          },
-          "node_modules/loupe/lib/helpers.js": {
-            "bytesInOutput": 4447
-          },
-          "node_modules/loupe/lib/array.js": {
-            "bytesInOutput": 563
-          },
-          "node_modules/loupe/lib/typedarray.js": {
-            "bytesInOutput": 1164
-          },
-          "node_modules/loupe/lib/date.js": {
-            "bytesInOutput": 345
-          },
-          "node_modules/loupe/lib/function.js": {
-            "bytesInOutput": 311
-          },
-          "node_modules/loupe/lib/map.js": {
-            "bytesInOutput": 549
-          },
-          "node_modules/loupe/lib/number.js": {
-            "bytesInOutput": 513
-          },
-          "node_modules/loupe/lib/bigint.js": {
-            "bytesInOutput": 193
-          },
-          "node_modules/loupe/lib/regexp.js": {
-            "bytesInOutput": 267
-          },
-          "node_modules/loupe/lib/set.js": {
-            "bytesInOutput": 298
-          },
-          "node_modules/loupe/lib/string.js": {
-            "bytesInOutput": 717
-          },
-          "node_modules/loupe/lib/symbol.js": {
-            "bytesInOutput": 184
-          },
-          "node_modules/loupe/lib/promise.js": {
-            "bytesInOutput": 86
-          },
-          "node_modules/loupe/lib/object.js": {
-            "bytesInOutput": 808
-          },
-          "node_modules/loupe/lib/class.js": {
-            "bytesInOutput": 439
-          },
-          "node_modules/loupe/lib/arguments.js": {
-            "bytesInOutput": 177
-          },
-          "node_modules/loupe/lib/error.js": {
-            "bytesInOutput": 953
-          },
-          "node_modules/loupe/lib/html.js": {
-            "bytesInOutput": 1514
-          },
-          "node_modules/loupe/lib/index.js": {
-            "bytesInOutput": 3674
-          },
-          "node_modules/chai/lib/chai/config.js": {
-            "bytesInOutput": 3771
-          },
-          "node_modules/chai/lib/chai/utils/inspect.js": {
-            "bytesInOutput": 267
-          },
-          "node_modules/chai/lib/chai/utils/objDisplay.js": {
-            "bytesInOutput": 674
-          },
-          "node_modules/chai/lib/chai/utils/getMessage.js": {
-            "bytesInOutput": 585
-          },
-          "node_modules/chai/lib/chai/utils/transferFlags.js": {
-            "bytesInOutput": 491
-          },
-          "node_modules/deep-eql/index.js": {
-            "bytesInOutput": 10329
-          },
-          "node_modules/pathval/index.js": {
-            "bytesInOutput": 1560
-          },
-          "node_modules/chai/lib/chai/assertion.js": {
-            "bytesInOutput": 6111
-          },
-          "node_modules/chai/lib/chai/utils/isProxyEnabled.js": {
-            "bytesInOutput": 122
-          },
-          "node_modules/chai/lib/chai/utils/addProperty.js": {
-            "bytesInOutput": 522
-          },
-          "node_modules/chai/lib/chai/utils/addLengthGuard.js": {
-            "bytesInOutput": 682
-          },
-          "node_modules/chai/lib/chai/utils/getProperties.js": {
-            "bytesInOutput": 400
-          },
-          "node_modules/chai/lib/chai/utils/proxify.js": {
-            "bytesInOutput": 2374
-          },
-          "node_modules/chai/lib/chai/utils/addMethod.js": {
-            "bytesInOutput": 454
-          },
-          "node_modules/chai/lib/chai/utils/overwriteProperty.js": {
-            "bytesInOutput": 792
-          },
-          "node_modules/chai/lib/chai/utils/overwriteMethod.js": {
-            "bytesInOutput": 817
-          },
-          "node_modules/chai/lib/chai/utils/addChainableMethod.js": {
-            "bytesInOutput": 2058
-          },
-          "node_modules/chai/lib/chai/utils/overwriteChainableMethod.js": {
-            "bytesInOutput": 839
-          },
-          "node_modules/chai/lib/chai/utils/compareByInspect.js": {
-            "bytesInOutput": 81
-          },
-          "node_modules/chai/lib/chai/utils/getOwnEnumerablePropertySymbols.js": {
-            "bytesInOutput": 260
-          },
-          "node_modules/chai/lib/chai/utils/getOwnEnumerableProperties.js": {
-            "bytesInOutput": 117
-          },
-          "node_modules/chai/lib/chai/utils/isNaN.js": {
-            "bytesInOutput": 27
-          },
-          "node_modules/chai/lib/chai/utils/getOperator.js": {
-            "bytesInOutput": 735
-          },
-          "node_modules/chai/lib/chai/core/assertions.js": {
-            "bytesInOutput": 44728
-          },
           "node_modules/chai/index.js": {
-            "bytesInOutput": 0
-          },
-          "node_modules/chai/lib/chai/interface/expect.js": {
-            "bytesInOutput": 374
-          },
-          "node_modules/chai/lib/chai/interface/should.js": {
-            "bytesInOutput": 0
-          },
-          "node_modules/chai/lib/chai/interface/assert.js": {
-            "bytesInOutput": 22956
-          },
-          "node_modules/chai/lib/chai.js": {
-            "bytesInOutput": 0
+            "bytesInOutput": 133810
           },
           "src/lib/pmProxy.test/adapter.ts": {
             "bytesInOutput": 1315
@@ -2681,12 +1333,12 @@
             "bytesInOutput": 196
           }
         },
-        "bytes": 149583
+        "bytes": 154769
       },
       "testeranto/bundles/node/core/src/lib/core.test/core.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-4CSH4UJE.mjs",
+            "path": "testeranto/bundles/node/core/chunk-2TT3L44Q.mjs",
             "kind": "import-statement"
           }
         ],
@@ -2722,15 +1374,15 @@
       "testeranto/bundles/node/core/src/lib/classBuilder.test/classBuilder.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-C3APFDUV.mjs",
+            "path": "testeranto/bundles/node/core/chunk-PUJLNNL2.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/core/chunk-4JTDLQVA.mjs",
+            "path": "testeranto/bundles/node/core/chunk-MSQ46J7L.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/core/chunk-4CSH4UJE.mjs",
+            "path": "testeranto/bundles/node/core/chunk-2TT3L44Q.mjs",
             "kind": "import-statement"
           }
         ],
@@ -2757,10 +1409,10 @@
         },
         "bytes": 10930
       },
-      "testeranto/bundles/node/core/chunk-C3APFDUV.mjs": {
+      "testeranto/bundles/node/core/chunk-PUJLNNL2.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-4CSH4UJE.mjs",
+            "path": "testeranto/bundles/node/core/chunk-2TT3L44Q.mjs",
             "kind": "import-statement"
           }
         ],
@@ -2769,19 +1421,19 @@
         ],
         "inputs": {
           "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 1424
+            "bytesInOutput": 1480
           }
         },
-        "bytes": 1660
+        "bytes": 1716
       },
       "testeranto/bundles/node/core/src/lib/baseBuilder.test/baseBuilder.test.node.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-4JTDLQVA.mjs",
+            "path": "testeranto/bundles/node/core/chunk-MSQ46J7L.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/core/chunk-4CSH4UJE.mjs",
+            "path": "testeranto/bundles/node/core/chunk-2TT3L44Q.mjs",
             "kind": "import-statement"
           }
         ],
@@ -2808,10 +1460,10 @@
         },
         "bytes": 6680
       },
-      "testeranto/bundles/node/core/chunk-4JTDLQVA.mjs": {
+      "testeranto/bundles/node/core/chunk-MSQ46J7L.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-4CSH4UJE.mjs",
+            "path": "testeranto/bundles/node/core/chunk-2TT3L44Q.mjs",
             "kind": "import-statement"
           },
           {
@@ -2843,7 +1495,7 @@
         },
         "bytes": 6761
       },
-      "testeranto/bundles/node/core/chunk-4CSH4UJE.mjs": {
+      "testeranto/bundles/node/core/chunk-2TT3L44Q.mjs": {
         "imports": [
           {
             "path": "node:path",
@@ -2865,7 +1517,6 @@
           "ClassBuilder",
           "PM",
           "TesterantoCore",
-          "__export",
           "andWhenProxy",
           "butThenProxy",
           "defaultTestResourceRequirement"
@@ -2889,8 +1540,14 @@
           "src/lib/index.ts": {
             "bytesInOutput": 672
           },
-          "src/lib/abstractBase.ts": {
-            "bytesInOutput": 5553
+          "src/lib/BaseGiven.ts": {
+            "bytesInOutput": 2845
+          },
+          "src/lib/BaseWhen.ts": {
+            "bytesInOutput": 1127
+          },
+          "src/lib/BaseThen.ts": {
+            "bytesInOutput": 1581
           },
           "src/lib/core.ts": {
             "bytesInOutput": 1640
@@ -2899,7 +1556,7 @@
             "bytesInOutput": 20
           }
         },
-        "bytes": 22238
+        "bytes": 22104
       }
     }
   }

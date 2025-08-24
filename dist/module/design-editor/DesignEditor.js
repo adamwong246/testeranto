@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useRef } from 'react';
-import { Canvas, Rect, Circle, Text } from 'fabric';
 import { toPng } from 'html-to-image';
 export const DesignEditor = React.forwardRef(({ projectId }, ref) => {
     const canvasRef = useRef(null);
@@ -13,7 +12,8 @@ export const DesignEditor = React.forwardRef(({ projectId }, ref) => {
     const wsRef = useRef(null);
     // Initialize canvas and WebSocket connection
     useEffect(() => {
-        const canvas = new Canvas('design-canvas', {
+        // @ts-ignore
+        const canvas = new fabric.Canvas('design-canvas', {
             width: 800,
             height: 600
         });
@@ -47,7 +47,8 @@ export const DesignEditor = React.forwardRef(({ projectId }, ref) => {
         let object;
         switch (shape) {
             case 'rectangle':
-                object = new Rect({
+                // @ts-ignore
+                object = new fabric.Rect({
                     width: 100,
                     height: 100,
                     fill: 'red',
@@ -56,7 +57,8 @@ export const DesignEditor = React.forwardRef(({ projectId }, ref) => {
                 });
                 break;
             case 'circle':
-                object = new Circle({
+                // @ts-ignore
+                object = new fabric.Circle({
                     radius: 50,
                     fill: 'blue',
                     left: 200,
@@ -64,7 +66,8 @@ export const DesignEditor = React.forwardRef(({ projectId }, ref) => {
                 });
                 break;
             case 'text':
-                object = new Text('Double click to edit', {
+                // @ts-ignore
+                object = new fabric.Text('Double click to edit', {
                     fontFamily: 'Arial',
                     fontSize: 20,
                     left: 100,

@@ -19,7 +19,9 @@ import {
   ITestArtifactory,
   defaultTestResourceRequirement,
 } from "./index.js";
-import { BaseGiven, BaseWhen, BaseThen } from "./abstractBase.js";
+import { BaseGiven } from "./BaseGiven.js";
+import { BaseWhen } from "./BaseWhen.js";
+import { BaseThen } from "./BaseThen.js";
 import { ClassBuilder } from "./classBuilder.js";
 import { IPM } from "./types";
 import { BaseSuite } from "./BaseSuite.js";

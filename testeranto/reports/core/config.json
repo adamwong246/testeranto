@@ -1,22 +1,6 @@
 {
   "tests": [
     [
-      "src/components/pure/TestPageView.test/index.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "src/components/pure/ProjectPageView.test/index.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
       "src/lib/BaseSuite.test/node.test.ts",
       "node",
       {
@@ -34,6 +18,22 @@
     ],
     [
       "src/lib/BaseSuite.test/web.test.ts",
+      "web",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "src/components/pure/TestPageView.test/index.tsx",
+      "web",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "src/components/pure/ProjectPageView.test/index.tsx",
       "web",
       {
         "ports": 0

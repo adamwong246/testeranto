@@ -23,6 +23,10 @@ const config: IProject = {
 
     core: {
       tests: [
+        ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
+        ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
+        ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
+
         [
           "src/components/pure/TestPageView.test/index.tsx",
           "web",
@@ -35,19 +39,6 @@ const config: IProject = {
           { ports: 0 },
           [],
         ],
-
-        // broken
-        // [
-        //   "src/components/pure/ModalContent.test/index.tsx",
-        //   "web",
-        //   { ports: 0 },
-        //   [],
-        // ],
-
-        ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
-        ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
-        ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
-
         ["src/Pure.test.ts", "pure", { ports: 0 }, []],
         ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
         ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
@@ -57,7 +48,6 @@ const config: IProject = {
           { ports: 0 },
           [],
         ],
-
         [
           "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
           "node",
@@ -76,15 +66,6 @@ const config: IProject = {
           { ports: 0 },
           [],
         ],
-
-        // broken
-        // [
-        //   "src/components/pure/AppFrame.test/index.tsx",
-        //   "web",
-        //   { ports: 0 },
-        //   [],
-        // ],
-
         [
           "src/components/pure/FeaturesReporterView.test/index.tsx",
           "web",
@@ -92,6 +73,21 @@ const config: IProject = {
           [],
         ],
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // broken
+        // [
+        //   "src/components/pure/ModalContent.test/index.tsx",
+        //   "web",
+        //   { ports: 0 },
+        //   [],
+        // ],
+        // [
+        //   "src/components/pure/AppFrame.test/index.tsx",
+        //   "web",
+        //   { ports: 0 },
+        //   [],
+        // ],
         // ["src/mothership/test.ts", "node", { ports: 0 }, []],
         // ["./src/lib/abstractBase.test/index.ts", "node", { ports: 0 }, []],
         // [

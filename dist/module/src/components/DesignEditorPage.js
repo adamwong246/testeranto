@@ -23,16 +23,45 @@ export const DesignEditorPage = () => {
             if (designEditorRef.current) {
                 designEditorRef.current.loadDesign(fullDesign);
             }
-            // @ts-ignore - File System Access API
-            const newHandle = await window.showSaveFilePicker({
-                types: [{
-                        description: 'Design Files',
-                        accept: {
-                            'application/json': ['.json'],
-                        },
-                    }],
-                suggestedName: `${projectId}.json`
-            });
+            let newHandle;
+            if ('showSaveFilePicker' in window && window.showSaveFilePicker) {
+                try {
+                    newHandle = await window.showSaveFilePicker({
+                        types: [{
+                                description: 'Design Files',
+                                accept: {
+                                    'application/json': ['.json'],
+                                },
+                            }],
+                        suggestedName: `${projectId}.json`
+                    });
+                }
+                catch (err) {
+                    console.warn('Error using showSaveFilePicker:', err);
+                    // Fall back to traditional download
+                    const jsonData = JSON.stringify(fullDesign, null, 2);
+                    const blob = new Blob([jsonData], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${projectId}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    return;
+                }
+            }
+            else {
+                // Fall back to traditional download
+                const jsonData = JSON.stringify(fullDesign, null, 2);
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${projectId}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                return;
+            }
             const jsonData = JSON.stringify(fullDesign, null, 2);
             const writable = await newHandle.createWritable();
             await writable.write(jsonData);
@@ -60,15 +89,22 @@ export const DesignEditorPage = () => {
                 throw new Error('File System Access API not supported in this browser');
             }
             console.log('Attempting to show file picker...');
-            const [handle] = await window.showOpenFilePicker({
-                types: [{
-                        description: 'Design Files',
-                        accept: {
-                            'application/json': ['.json'],
-                        },
-                    }],
-                multiple: false
-            });
+            let handle;
+            if ('showOpenFilePicker' in window) {
+                // @ts-ignore
+                [handle] = await window.showOpenFilePicker({
+                    types: [{
+                            description: 'Design Files',
+                            accept: {
+                                'application/json': ['.json'],
+                            },
+                        }],
+                    multiple: false
+                });
+            }
+            else {
+                throw new Error('File System Access API not supported');
+            }
             if (!handle) {
                 throw new Error('No file selected');
             }

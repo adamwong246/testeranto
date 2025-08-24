@@ -1,9 +1,11 @@
 import { Plugin } from "esbuild";
 import { ITTestResourceConfiguration } from "./lib/index.js";
 import { PM } from "./PM/index.js";
-import { BaseWhen, BaseThen, BaseGiven, IGivens } from "./lib/abstractBase.js";
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
 import { BaseSuite } from "./lib/BaseSuite.js";
+import { IGivens, BaseGiven } from "./lib/BaseGiven.js";
+import { BaseThen } from "./lib/BaseThen.js";
+import { BaseWhen } from "./lib/BaseWhen.js";
 export type ISummary = Record<string, {
     runTimeErrors: number | "?" | undefined;
     typeErrors: number | "?" | undefined;

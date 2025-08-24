@@ -1,7 +1,9 @@
 import type { Ibdd_in_any, Ibdd_out_any, ITestSpecification } from "../CoreTypes";
 import { ITestJob, ITTestResourceRequest } from ".";
 import { ISuiteKlasser, IGivenKlasser, IWhenKlasser, IThenKlasser, IPM } from "./types.js";
-import { BaseWhen, BaseThen, BaseGiven } from "./abstractBase.js";
+import { BaseWhen } from "./BaseWhen.js";
+import { BaseThen } from "./BaseThen.js";
+import { BaseGiven } from "./BaseGiven.js";
 export declare abstract class BaseBuilder<I extends Ibdd_in_any, O extends Ibdd_out_any, SuiteExtensions, GivenExtensions, WhenExtensions, ThenExtensions> {
     specs: any;
     assertThis: (t: I["then"]) => any;
