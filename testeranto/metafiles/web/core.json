@@ -794,7 +794,7 @@
         "format": "esm"
       },
       "src/lib/BaseGiven.ts": {
-        "bytes": 5051,
+        "bytes": 5117,
         "imports": [
           {
             "path": ".",
@@ -906,103 +906,6 @@
         ],
         "format": "esm"
       },
-      "src/lib/basebuilder.ts": {
-        "bytes": 5024,
-        "imports": [
-          {
-            "path": "stream",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": ".",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./BaseWhen.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./BaseThen.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./BaseGiven.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./BaseSuite",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/classBuilder.ts": {
-        "bytes": 3021,
-        "imports": [
-          {
-            "path": "type-fest",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/basebuilder.ts",
-            "kind": "import-statement",
-            "original": "./basebuilder.js"
-          },
-          {
-            "path": "./types.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./index.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "src/lib/BaseSuite.ts": {
         "bytes": 4530,
         "imports": [
@@ -1049,9 +952,19 @@
         ],
         "format": "esm"
       },
-      "src/lib/core.ts": {
-        "bytes": 3363,
+      "src/lib/Tiposkripto.ts": {
+        "bytes": 8977,
         "imports": [
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "type-fest",
+            "kind": "import-statement",
+            "external": true
+          },
           {
             "path": "src/lib/index.ts",
             "kind": "import-statement",
@@ -1060,7 +973,7 @@
           {
             "path": "src/lib/BaseGiven.ts",
             "kind": "import-statement",
-            "original": "./BaseGiven.js"
+            "original": "./BaseGiven"
           },
           {
             "path": "src/lib/BaseWhen.ts",
@@ -1073,19 +986,14 @@
             "original": "./BaseThen.js"
           },
           {
-            "path": "src/lib/classBuilder.ts",
-            "kind": "import-statement",
-            "original": "./classBuilder.js"
-          },
-          {
-            "path": "./types",
+            "path": "./types.js",
             "kind": "import-statement",
             "external": true
           },
           {
             "path": "src/lib/BaseSuite.ts",
             "kind": "import-statement",
-            "original": "./BaseSuite.js"
+            "original": "./BaseSuite"
           },
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -1106,7 +1014,7 @@
         "format": "esm"
       },
       "src/Web.ts": {
-        "bytes": 2958,
+        "bytes": 2964,
         "imports": [
           {
             "path": "./CoreTypes",
@@ -1119,9 +1027,9 @@
             "original": "./PM/web"
           },
           {
-            "path": "src/lib/core.ts",
+            "path": "src/lib/Tiposkripto.ts",
             "kind": "import-statement",
-            "original": "./lib/core.js"
+            "original": "./lib/Tiposkripto"
           },
           {
             "path": "src/lib/index.ts",
@@ -16161,221 +16069,6 @@
         ],
         "format": "esm"
       },
-      "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-        "bytes": 985,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./baseBuilder.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-        "bytes": 2215,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/basebuilder.ts",
-            "kind": "import-statement",
-            "original": "../basebuilder"
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-        "bytes": 4281,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/baseBuilder.test/baseBuilder.test.mock.ts",
-            "kind": "import-statement",
-            "original": "./baseBuilder.test.mock"
-          },
-          {
-            "path": "./baseBuilder.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/basebuilder.ts",
-            "kind": "import-statement",
-            "original": "../basebuilder"
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-        "bytes": 917,
-        "imports": [
-          {
-            "path": "../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./baseBuilder.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "..",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
-        "bytes": 518,
-        "imports": [
-          {
-            "path": "src/Web.ts",
-            "kind": "import-statement",
-            "original": "../../Web"
-          },
-          {
-            "path": "src/lib/baseBuilder.test/baseBuilder.test.specification.ts",
-            "kind": "import-statement",
-            "original": "./baseBuilder.test.specification"
-          },
-          {
-            "path": "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts",
-            "kind": "import-statement",
-            "original": "./baseBuilder.test.implementation"
-          },
-          {
-            "path": "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts",
-            "kind": "import-statement",
-            "original": "./baseBuilder.test.adapter"
-          },
-          {
-            "path": "./baseBuilder.test.types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/baseBuilder.test/baseBuilder.test.mock.ts",
-            "kind": "import-statement",
-            "original": "./baseBuilder.test.mock"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "src/components/pure/FeaturesReporterView.test/implementation.tsx": {
         "bytes": 2755,
         "imports": [
@@ -16535,7 +16228,7 @@
       "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-TCOOP455.mjs",
+            "path": "testeranto/bundles/web/core/chunk-PV6EA47E.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16559,15 +16252,15 @@
       "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-KQCVJ7UP.mjs",
+            "path": "testeranto/bundles/web/core/chunk-A3JB5SVD.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-A52VB7BR.mjs",
+            "path": "testeranto/bundles/web/core/chunk-63ZYWIC2.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-TCOOP455.mjs",
+            "path": "testeranto/bundles/web/core/chunk-PV6EA47E.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16640,19 +16333,19 @@
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-KQCVJ7UP.mjs",
+            "path": "testeranto/bundles/web/core/chunk-A3JB5SVD.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-AU3OKALL.mjs",
+            "path": "testeranto/bundles/web/core/chunk-L6N2I5MB.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-A52VB7BR.mjs",
+            "path": "testeranto/bundles/web/core/chunk-63ZYWIC2.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-TCOOP455.mjs",
+            "path": "testeranto/bundles/web/core/chunk-PV6EA47E.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16677,14 +16370,14 @@
         },
         "bytes": 22855
       },
-      "testeranto/bundles/web/core/chunk-KQCVJ7UP.mjs": {
+      "testeranto/bundles/web/core/chunk-A3JB5SVD.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-A52VB7BR.mjs",
+            "path": "testeranto/bundles/web/core/chunk-63ZYWIC2.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-TCOOP455.mjs",
+            "path": "testeranto/bundles/web/core/chunk-PV6EA47E.mjs",
             "kind": "import-statement"
           }
         ],
@@ -17226,48 +16919,18 @@
         },
         "bytes": 245397
       },
-      "testeranto/bundles/web/core/src/lib/baseBuilder.test/baseBuilder.test.web.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-TCOOP455.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
-        "inputs": {
-          "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
-            "bytesInOutput": 176
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.specification.ts": {
-            "bytesInOutput": 879
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.implementation.ts": {
-            "bytesInOutput": 3474
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.mock.ts": {
-            "bytesInOutput": 1180
-          },
-          "src/lib/baseBuilder.test/baseBuilder.test.adapter.ts": {
-            "bytesInOutput": 647
-          }
-        },
-        "bytes": 6941
-      },
       "testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-AU3OKALL.mjs",
+            "path": "testeranto/bundles/web/core/chunk-L6N2I5MB.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-A52VB7BR.mjs",
+            "path": "testeranto/bundles/web/core/chunk-63ZYWIC2.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-TCOOP455.mjs",
+            "path": "testeranto/bundles/web/core/chunk-PV6EA47E.mjs",
             "kind": "import-statement"
           }
         ],
@@ -17291,14 +16954,14 @@
         },
         "bytes": 5418
       },
-      "testeranto/bundles/web/core/chunk-AU3OKALL.mjs": {
+      "testeranto/bundles/web/core/chunk-L6N2I5MB.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-A52VB7BR.mjs",
+            "path": "testeranto/bundles/web/core/chunk-63ZYWIC2.mjs",
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/core/chunk-TCOOP455.mjs",
+            "path": "testeranto/bundles/web/core/chunk-PV6EA47E.mjs",
             "kind": "import-statement"
           }
         ],
@@ -17315,10 +16978,10 @@
         },
         "bytes": 3091
       },
-      "testeranto/bundles/web/core/chunk-A52VB7BR.mjs": {
+      "testeranto/bundles/web/core/chunk-63ZYWIC2.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-TCOOP455.mjs",
+            "path": "testeranto/bundles/web/core/chunk-PV6EA47E.mjs",
             "kind": "import-statement"
           }
         ],
@@ -17366,10 +17029,9 @@
         },
         "bytes": 1221627
       },
-      "testeranto/bundles/web/core/chunk-TCOOP455.mjs": {
+      "testeranto/bundles/web/core/chunk-PV6EA47E.mjs": {
         "imports": [],
         "exports": [
-          "BaseBuilder",
           "BaseGiven",
           "BaseSuite",
           "BaseThen",
@@ -17408,7 +17070,7 @@
             "bytesInOutput": 6512
           },
           "src/Web.ts": {
-            "bytesInOutput": 840
+            "bytesInOutput": 837
           },
           "src/PM/web.ts": {
             "bytesInOutput": 3059
@@ -17416,29 +17078,23 @@
           "src/PM/index.ts": {
             "bytesInOutput": 69
           },
-          "src/lib/core.ts": {
-            "bytesInOutput": 1689
+          "src/lib/Tiposkripto.ts": {
+            "bytesInOutput": 5346
           },
           "src/lib/index.ts": {
             "bytesInOutput": 721
           },
           "src/lib/BaseGiven.ts": {
-            "bytesInOutput": 2892
+            "bytesInOutput": 2958
           },
           "src/lib/BaseWhen.ts": {
             "bytesInOutput": 1174
           },
           "src/lib/BaseThen.ts": {
             "bytesInOutput": 1628
-          },
-          "src/lib/classBuilder.ts": {
-            "bytesInOutput": 1853
-          },
-          "src/lib/basebuilder.ts": {
-            "bytesInOutput": 2728
           }
         },
-        "bytes": 90911
+        "bytes": 89966
       },
       "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf": {
         "imports": [],

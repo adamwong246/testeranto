@@ -1,0 +1,32 @@
+/Users/adam/Code/testeranto/src/lib/BaseThen.ts (76,41): A spread argument must either have a tuple type or be passed to a rest parameter.
+/Users/adam/Code/testeranto/src/lib/index.ts (42,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (50,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (32,56): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (47,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.adapter.ts (29,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.adapter.ts (32,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.adapter.ts (34,25): Type 'Tiposkripto<any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (28,13): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (42,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (62,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (72,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (82,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (189,20): Property 'testAdapter' does not exist on type 'Tiposkripto<any, any, any>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (210,30): Type '(builder: Tiposkripto<any, any, any>) => Promise<Tiposkripto<any, any, any>>' is not assignable to type '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Type 'Promise<Tiposkripto<any, any, any>>' is missing the following properties from type 'Tiposkripto<any, any, any>': receiveTestResourceConfig, specs, assertThis, testResourceRequirement, and 14 more.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (20,26): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (25,35): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (59,37): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (71,35): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (76,34): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (90,52): Cannot find name 'ITestJob'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (205,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (263,15): Expected 1 arguments, but got 3.
+/Users/adam/Code/testeranto/src/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/Node.ts (56,12): Cannot find name 'Testeranto'.
+/Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
+  Property 'mainFrame' does not exist on type 'string'.

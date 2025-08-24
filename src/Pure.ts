@@ -5,12 +5,13 @@ import {
   ITestAdapter,
   ITestSpecification,
 } from "./CoreTypes.js";
-import Testeranto from "./lib/core.js";
+
 import {
   defaultTestResourceRequirement,
   ITTestResourceConfiguration,
   ITTestResourceRequest,
 } from "./lib/index.js";
+import Tiposkripto from "./lib/Tiposkripto.js";
 
 import { PM_Pure } from "./PM/pure.js";
 
@@ -18,7 +19,7 @@ export class PureTesteranto<
   I extends Ibdd_in_any,
   O extends Ibdd_out,
   M
-> extends Testeranto<I, O, M> {
+> extends Tiposkripto<I, O, M> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,

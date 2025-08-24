@@ -1,2 +1,2 @@
-declare const _default: Promise<import("../../../lib/core").default<import("testeranto-react/src/react-dom/component/dynamic").I, import("./types").O, import("./types").M>>;
+declare const _default: Promise<Testeranto<I, O, M>>;
 export default _default;

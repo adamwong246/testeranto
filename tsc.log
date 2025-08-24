@@ -211,33 +211,6 @@ src/lib/abstractBase.test/implementation.ts(15,28): error TS2322: Type '{ testSt
 src/lib/abstractBase.test/MockGiven.ts(30,20): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
 src/lib/abstractBase.test/types.ts(13,17): error TS2707: Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
-src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(9,3): error TS2322: Type '(input: {}, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<{}>' is not assignable to type '(input: {}, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<BaseBuilder<any, any, any, any, any, any>>'.
-  Type 'Promise<{}>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
-    Type '{}' is missing the following properties from type 'BaseBuilder<any, any, any, any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 12 more.
-src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(17,34): error TS2554: Expected 1 arguments, but got 2.
-src/lib/baseBuilder.test/baseBuilder.test.adapter.ts(21,34): error TS2554: Expected 1 arguments, but got 2.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(31,5): error TS2322: Type '(input: any) => () => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}>' is not assignable to type '() => () => BaseBuilder<any, any, any, any, any, any>'.
-  Target signature provides too few arguments. Expected 1 or more, but got 0.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(38,11): error TS2322: Type 'never[]' is not assignable to type 'number'.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(42,5): error TS2322: Type '(requirements: ITTestResourceRequest) => () => MockBaseBuilder<Ibdd_in_any, Ibdd_out_any, {}, {}, {}, {}>' is not assignable to type '() => () => BaseBuilder<any, any, any, any, any, any>'.
-  Target signature provides too few arguments. Expected 1 or more, but got 0.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(61,32): error TS2322: Type '(builder: TestSubject, utils: IPM) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
-  Type 'TestSubject' is not assignable to type '(store: any) => any'.
-    Type 'MockBaseBuilder<any, any, any, any, any, any>' provides no match for the signature '(store: any): any'.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(62,40): error TS2554: Expected 1 arguments, but got 2.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(67,100): error TS2339: Property 'constructor' does not exist on type 'never'.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(88,46): error TS2322: Type '(builder: TestSubject, utils: IPM) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
-  Type 'TestSubject' is not assignable to type '(store: any) => any'.
-    Type 'MockBaseBuilder<any, any, any, any, any, any>' provides no match for the signature '(store: any): any'.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(94,30): error TS2322: Type '(builder: TestSubject, utils: IPM) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
-  Type 'TestSubject' is not assignable to type '(store: any) => any'.
-    Type 'MockBaseBuilder<any, any, any, any, any, any>' provides no match for the signature '(store: any): any'.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(100,34): error TS2322: Type '(builder: TestSubject, utils: IPM) => TestSubject' is not assignable to type '(ssel: BaseBuilder<any, any, any, any, any, any>, utils: PM) => (store: any) => any'.
-  Type 'TestSubject' is not assignable to type '(store: any) => any'.
-    Type 'MockBaseBuilder<any, any, any, any, any, any>' provides no match for the signature '(store: any): any'.
-src/lib/baseBuilder.test/baseBuilder.test.implementation.ts(105,48): error TS2554: Expected 1 arguments, but got 2.
-src/lib/basebuilder.ts(78,49): error TS2366: Function lacks ending return statement and return type does not include 'undefined'.
-src/lib/basebuilder.ts(125,15): error TS2554: Expected 1 arguments, but got 3.
 src/lib/BaseSuite.test/mock.ts(49,5): error TS2322: Type '{ testSelection: boolean; error?: boolean | Error | undefined; name?: string; index?: number; testStore: boolean; }' is not assignable to type 'TestStore'.
   Types of property 'error' are incompatible.
     Type 'boolean | Error | undefined' is not assignable to type 'Error | undefined'.
@@ -283,72 +256,10 @@ src/lib/BaseSuite.test/test.ts(398,3): error TS2322: Type '(store: TestStore, th
 src/lib/BaseSuite.test/test.ts(415,3): error TS2322: Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
   Type 'TestStore' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
 src/lib/BaseThen.ts(76,41): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
-src/lib/classBuilder.test/classBuilder.test.adapter.ts(9,3): error TS2322: Type '() => Promise<void>' is not assignable to type '(input: {}, testResource: ITTestResourceConfiguration, pm: IPM) => Promise<BaseBuilder<any, any, any, any, any, any>>'.
-  Type 'Promise<void>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
-    Type 'void' is not assignable to type 'BaseBuilder<any, any, any, any, any, any>'.
-src/lib/classBuilder.test/classBuilder.test.adapter.ts(10,3): error TS2322: Type '(subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>) => Promise<() => BaseBuilder<any, any, any, any, any, any>>' is not assignable to type '(subject: BaseBuilder<any, any, any, any, any, any>, initializer: (c?: any) => () => BaseBuilder<any, any, any, any, any, any>, testResource: ITTestResourceConfiguration, initialValues: any, pm: IPM) => Promise<...>'.
-  Type 'Promise<() => BaseBuilder<any, any, any, any, any, any>>' is not assignable to type 'Promise<BaseBuilder<any, any, any, any, any, any>>'.
-    Type '() => BaseBuilder<any, any, any, any, any, any>' is not assignable to type 'BaseBuilder<any, any, any, any, any, any>'.
-src/lib/classBuilder.test/classBuilder.test.adapter.ts(17,26): error TS2554: Expected 1 arguments, but got 2.
-src/lib/classBuilder.test/classBuilder.test.adapter.ts(20,26): error TS2554: Expected 1 arguments, but got 2.
-src/lib/classBuilder.test/classBuilder.test.adapter.ts(22,25): error TS2739: Type 'BaseBuilder<any, any, any, any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(7,10): error TS2724: '"../classBuilder"' has no exported member named 'TestClassBuilder'. Did you mean 'ClassBuilder'?
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(28,9): error TS2345: Argument of type 'typeof MockSuite' is not assignable to parameter of type 'ISuiteKlasser<I, O>'.
-  Type 'typeof MockSuite' provides no match for the signature '(name: string, index: number, givens: IGivens<I>): BaseSuite<I, O>'.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(47,9): error TS2554: Expected 8 arguments, but got 9.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(60,9): error TS2554: Expected 8 arguments, but got 9.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(73,9): error TS2554: Expected 8 arguments, but got 9.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(86,9): error TS2554: Expected 8 arguments, but got 9.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(207,30): error TS2322: Type '(builder: ClassBuilder<any, any, any>) => Promise<ClassBuilder<any, any, any>>' is not assignable to type '(builder: ClassBuilder<any, any, any>) => ClassBuilder<any, any, any>'.
-  Type 'Promise<ClassBuilder<any, any, any>>' is missing the following properties from type 'ClassBuilder<any, any, any>': specs, assertThis, testResourceRequirement, artifacts, and 12 more.
-src/lib/classBuilder.test/classBuilder.test.implementation.ts(209,23): error TS2339: Property 'testRun' does not exist on type 'ClassBuilder<any, any, any>'.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(19,26): error TS2554: Expected 4 arguments, but got 3.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(24,35): error TS2554: Expected 4 arguments, but got 3.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(64,37): error TS2554: Expected 4 arguments, but got 3.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(69,36): error TS2554: Expected 4 arguments, but got 3.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(83,54): error TS2304: Cannot find name 'ITestJob'.
-src/lib/classBuilder.test/classBuilder.test.specification.ts(101,7): error TS2554: Expected 2 arguments, but got 3.
-src/lib/classBuilder.test/mock.ts(45,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-src/lib/core.test/core.test.adapter.ts(27,26): error TS2554: Expected 1 arguments, but got 2.
-src/lib/core.test/core.test.adapter.ts(30,26): error TS2554: Expected 1 arguments, but got 2.
-src/lib/core.test/core.test.adapter.ts(32,25): error TS2739: Type 'MockCore<any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
-src/lib/core.test/core.test.implementation.ts(21,11): error TS2304: Cannot find name 'specification'.
-src/lib/core.test/core.test.implementation.ts(23,11): error TS2345: Argument of type '{ ports: number[]; }' is not assignable to parameter of type 'ITTestResourceRequest'.
-  Types of property 'ports' are incompatible.
-    Type 'number[]' is not assignable to type 'number'.
-src/lib/core.test/core.test.implementation.ts(24,11): error TS2304: Cannot find name 'testAdapter'.
-src/lib/core.test/core.test.implementation.ts(36,9): error TS2304: Cannot find name 'specification'.
-src/lib/core.test/core.test.implementation.ts(38,11): error TS2322: Type 'never[]' is not assignable to type 'number'.
-src/lib/core.test/core.test.implementation.ts(39,9): error TS2304: Cannot find name 'testAdapter'.
-src/lib/core.test/core.test.implementation.ts(46,9): error TS2304: Cannot find name 'specification'.
-src/lib/core.test/core.test.implementation.ts(49,9): error TS2304: Cannot find name 'testAdapter'.
-src/lib/core.test/core.test.implementation.ts(56,9): error TS2304: Cannot find name 'specification'.
-src/lib/core.test/core.test.implementation.ts(58,11): error TS2322: Type 'never[]' is not assignable to type 'number'.
-src/lib/core.test/core.test.implementation.ts(59,14): error TS2304: Cannot find name 'testAdapter'.
-src/lib/core.test/core.test.implementation.ts(93,51): error TS2339: Property 'constructor' does not exist on type 'never'.
-src/lib/core.test/core.test.implementation.ts(138,30): error TS2322: Type '(builder: MockCore<any, any, any>) => Promise<MockCore<any, any, any>>' is not assignable to type '(builder: MockCore<any, any, any>) => MockCore<any, any, any>'.
-  Type 'Promise<MockCore<any, any, any>>' is missing the following properties from type 'MockCore<any, any, any>': specs, testJobs, artifacts, testResourceRequirement, and 14 more.
-src/lib/core.test/core.test.specification.ts(29,7): error TS2554: Expected 2 arguments, but got 4.
-src/lib/core.test/core.test.specification.ts(42,13): error TS2353: Object literal may only specify known properties, and 'test' does not exist in type 'string[]'.
-src/lib/core.test/core.test.specification.ts(49,13): error TS2353: Object literal may only specify known properties, and 'ports' does not exist in type 'string[]'.
-src/lib/core.test/core.test.specification.ts(55,13): error TS2353: Object literal may only specify known properties, and 'assertThis' does not exist in type 'string[]'.
-src/lib/core.test/core.test.specification.ts(82,105): error TS2554: Expected 2 arguments, but got 3.
-src/lib/core.test/core.test.types.ts(15,17): error TS2707: Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
-src/lib/core.test/MockCore.ts(32,56): error TS2322: Type 'never[]' is not assignable to type 'number'.
-src/lib/core.test/MockCore.ts(49,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
-src/lib/core.ts(50,7): error TS2345: Argument of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....' is not assignable to parameter of type 'Omit<{ suites: import("/Users/adam/Code/testeranto/src/Types").TestSuiteImplementation<O>; givens: import("/Users/adam/Code/testeranto/src/Types").TestGivenImplementation<I, O>; whens: import("/Users/adam/Code/testeranto/src/Types").TestWhenImplementation<...>; thens: import("/Users/adam/Code/testeranto/src/Types")....'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }' is not assignable to type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }'.
-    Types of property 'suites' are incompatible.
-      Type 'Record<string, any>' is not assignable to type 'Record<string, never>'.
-        'string' index signatures are incompatible.
-          Type 'any' is not assignable to type 'never'.
 src/lib/index.ts(42,12): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
 src/lib/index.ts(50,12): error TS2349: This expression is not callable.
   Type 'unknown' has no call signatures.
-src/lib/mocks.test.ts(8,16): error TS2304: Cannot find name 'BaseSuite'.
 src/lib/pmProxy.test/adapter.ts(13,3): error TS2719: Type '(subject: { proxies: import("/Users/adam/Code/testeranto/src/lib/pmProxy.test/index").ITestProxies; filepath: string; mockPm: import("/Users/adam/Code/testeranto/src/lib/types").IPM; }, initializer: (c?: any) => [...], testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, ini...' is not assignable to type '(subject: { proxies: import("/Users/adam/Code/testeranto/src/lib/pmProxy.test/index").ITestProxies; filepath: string; mockPm: import("/Users/adam/Code/testeranto/src/lib/types").IPM; }, initializer: (c?: any) => [...], testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, ini...'. Two different types with this name exist, but they are unrelated.
   Type 'Promise<{ proxies: ITestProxies; filepath: string; mockPm: IPM; }>' is not assignable to type 'Promise<{ butThenProxy: IProxy; }>'.
     Property 'butThenProxy' is missing in type '{ proxies: ITestProxies; filepath: string; mockPm: IPM; }' but required in type '{ butThenProxy: IProxy; }'.
@@ -388,10 +299,33 @@ src/lib/pmProxy.test/mockPM.ts(23,3): error TS2416: Property 'launchSideCar' in 
     Type 'Promise<[number, any]>' is not assignable to type 'Promise<void>'.
       Type '[number, any]' is not assignable to type 'void'.
 src/lib/pmProxy.test/types.ts(19,17): error TS2707: Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
+src/lib/Tiposkripto.test/MockTiposkripto.ts(32,56): error TS2322: Type 'never[]' is not assignable to type 'number'.
+src/lib/Tiposkripto.test/MockTiposkripto.ts(47,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/lib/Tiposkripto.test/Tiposkripto.adapter.ts(29,26): error TS2554: Expected 1 arguments, but got 2.
+src/lib/Tiposkripto.test/Tiposkripto.adapter.ts(32,26): error TS2554: Expected 1 arguments, but got 2.
+src/lib/Tiposkripto.test/Tiposkripto.adapter.ts(34,25): error TS2739: Type 'Tiposkripto<any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
+src/lib/Tiposkripto.test/Tiposkripto.implementation.ts(28,13): error TS2322: Type 'never[]' is not assignable to type 'number'.
+src/lib/Tiposkripto.test/Tiposkripto.implementation.ts(42,11): error TS2322: Type 'never[]' is not assignable to type 'number'.
+src/lib/Tiposkripto.test/Tiposkripto.implementation.ts(62,11): error TS2322: Type 'never[]' is not assignable to type 'number'.
+src/lib/Tiposkripto.test/Tiposkripto.implementation.ts(72,11): error TS2322: Type 'never[]' is not assignable to type 'number'.
+src/lib/Tiposkripto.test/Tiposkripto.implementation.ts(82,11): error TS2322: Type 'never[]' is not assignable to type 'number'.
+src/lib/Tiposkripto.test/Tiposkripto.implementation.ts(189,20): error TS2339: Property 'testAdapter' does not exist on type 'Tiposkripto<any, any, any>'.
+src/lib/Tiposkripto.test/Tiposkripto.implementation.ts(210,30): error TS2322: Type '(builder: Tiposkripto<any, any, any>) => Promise<Tiposkripto<any, any, any>>' is not assignable to type '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Type 'Promise<Tiposkripto<any, any, any>>' is missing the following properties from type 'Tiposkripto<any, any, any>': receiveTestResourceConfig, specs, assertThis, testResourceRequirement, and 14 more.
+src/lib/Tiposkripto.test/Tiposkripto.specification.ts(20,26): error TS2554: Expected 4 arguments, but got 3.
+src/lib/Tiposkripto.test/Tiposkripto.specification.ts(25,35): error TS2554: Expected 4 arguments, but got 3.
+src/lib/Tiposkripto.test/Tiposkripto.specification.ts(59,37): error TS2554: Expected 4 arguments, but got 3.
+src/lib/Tiposkripto.test/Tiposkripto.specification.ts(71,35): error TS2554: Expected 4 arguments, but got 3.
+src/lib/Tiposkripto.test/Tiposkripto.specification.ts(76,34): error TS2554: Expected 4 arguments, but got 3.
+src/lib/Tiposkripto.test/Tiposkripto.specification.ts(90,52): error TS2304: Cannot find name 'ITestJob'.
+src/lib/Tiposkripto.ts(205,7): error TS2345: Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+src/lib/Tiposkripto.ts(263,15): error TS2554: Expected 1 arguments, but got 3.
 src/mothership/test.ts(64,7): error TS2554: Expected 2 arguments, but got 3.
 src/mothership/test.ts(70,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
-src/Node.ts(33,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/Node.ts(34,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/Node.ts(56,12): error TS2304: Cannot find name 'Testeranto'.
 src/PM/__tests__/nodeSidecar.testeranto.ts(53,43): error TS2304: Cannot find name 'I'.
 src/PM/__tests__/nodeSidecar.testeranto.ts(54,13): error TS2322: Type '(x: any) => any' is not assignable to type 'string'.
 src/PM/__tests__/nodeSidecar.testeranto.ts(95,29): error TS2454: Variable 'callbackFn' is used before being assigned.
@@ -487,8 +421,9 @@ src/Pure.test.ts(174,31): error TS2322: Type '(store: any, tr: any, utils: any) 
 src/Pure.test.ts(177,29): error TS2322: Type '(store: any, tr: any, utils: any) => Promise<any>' is not assignable to type '(ssel: { pm: IPM; }, utils: PM) => (store: { [key: string]: any; pm: IPM; }) => { [key: string]: any; pm: IPM; }'.
   Target signature provides too few arguments. Expected 3 or more, but got 2.
 src/Pure.test.ts(315,28): error TS2304: Cannot find name 'ITestAdapter'.
-src/Pure.ts(32,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/Pure.ts(33,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/Pure.ts(83,21): error TS2304: Cannot find name 'Testeranto'.
 src/ReportServer.test.ts/index.ts(117,3): error TS2719: Type '(store: import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>, thenCB: import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, pm: im...' is not assignable to type '(store: import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>, thenCB: import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, pm: im...'. Two different types with this name exist, but they are unrelated.
   Type 'Promise<Server<typeof IncomingMessage, typeof ServerResponse>>' is not assignable to type 'Promise<number>'.
     Type 'Server<typeof IncomingMessage, typeof ServerResponse>' is not assignable to type 'number'.
@@ -509,5 +444,6 @@ src/utils/featureUtils.tsx(35,14): error TS2686: 'React' refers to a UMD global,
 src/utils/makePrompt.ts(60,31): error TS2345: Argument of type 'IRunTime' is not assignable to parameter of type 'RuntimeName'.
   Type '"spawn"' is not assignable to type 'RuntimeName'.
 src/Web.ts(43,7): error TS2345: Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
-  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, any>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+src/Web.ts(92,12): error TS2552: Cannot find name 'Testeranto'. Did you mean 'WebTesteranto'?
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

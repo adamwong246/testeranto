@@ -1,6 +1,0 @@
-[DEBUG] writeFileSync called with args: [ 'hello.txt', 'world' ]
-[DEBUG] butThenProxy writeFileSync: fp="hello.txt" (type: string), contents="world" (type: string), testName="undefined" (type: undefined)
-[DEBUG] Generated path: "suite-0/given-testInitialization/then-0/butThen/hello.txt"
-[DEBUG] writeFileSync called with args: [ 'artifact_test.txt', 'test' ]
-[DEBUG] butThenProxy writeFileSync: fp="artifact_test.txt" (type: string), contents="test" (type: string), testName="undefined" (type: undefined)
-[DEBUG] Generated path: "suite-0/given-testInitialization/then-1/butThen/artifact_test.txt"

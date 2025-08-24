@@ -3,9 +3,10 @@
   "givens": [
     {
       "key": "initialization",
-      "name": "Default",
-      "whens": [],
-      "thens": [
+      "name": [
+        "BaseSuite should initialize with correct name and index"
+      ],
+      "whens": [
         {
           "name": "SuiteNameMatches: testSuite",
           "error": false,
@@ -17,15 +18,12 @@
           "artifacts": []
         }
       ],
+      "thens": [],
       "error": null,
-      "features": [
-        "BaseSuite should initialize with correct name and index"
-      ],
+      "features": [],
       "artifacts": []
     }
   ],
   "fails": 0,
-  "features": [
-    "BaseSuite should initialize with correct name and index"
-  ]
+  "features": []
 }

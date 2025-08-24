@@ -357,7 +357,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 logs.writeExitCode(-1, e3);
                 console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(`${src} 1 errored with: ${e3}. Check logs for more info`)));
                 logs.exit.write(e3.stack);
-                logs.exit.write(-1);
+                logs.exit.write("-1");
                 this.bddTestIsNowDone(src, -1);
                 statusMessagePretty(-1, src, "pure");
             }

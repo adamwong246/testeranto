@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PM_Web } from "./PM/web";
-import Testeranto from "./lib/core.js";
+import Tiposkripto from "./lib/Tiposkripto";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 // let errorCallback = (e: any) => {};
 // let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
@@ -10,7 +10,7 @@ import { defaultTestResourceRequirement, } from "./lib/index.js";
 //     JSON.stringify(event)
 //   );
 // };
-export class WebTesteranto extends Testeranto {
+export class WebTesteranto extends Tiposkripto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, (cb) => {
             // window.removeEventListener("error", errorCallback);

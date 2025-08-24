@@ -1017,7 +1017,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
       );
 
       logs.exit.write(e3.stack);
-      logs.exit.write(-1);
+      logs.exit.write("-1");
       this.bddTestIsNowDone(src, -1);
       statusMessagePretty(-1, src, "pure");
     }

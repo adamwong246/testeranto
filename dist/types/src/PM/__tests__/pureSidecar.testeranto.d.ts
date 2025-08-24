@@ -1,16 +1,2 @@
-import { Ibdd_out } from "../../CoreTypes";
-type O = Ibdd_out<{
-    SidecarInitialized: [null];
-}, {
-    SidecarReady: [];
-}, {
-    SendTestMessage: [string];
-    VerifyCleanup: [];
-}, {
-    MessageReceived: [string];
-    ListenersCleaned: [];
-}>;
-declare const _default: Promise<import("../../lib/core").default<I, O, {
-    whens: import("../../Types").TestWhenImplementation<I, O>;
-}>>;
+declare const _default: Promise<Testeranto<I, O, M>>;
 export default _default;

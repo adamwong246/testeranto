@@ -1,4 +1,5 @@
 
+/add src/lib/BaseSuite.test/mock.ts
 /add src/lib/BaseSuite.test/test.ts
 /add src/lib/BaseSuite.test/node.test.ts
 

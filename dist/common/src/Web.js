@@ -7,7 +7,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WebTesteranto = void 0;
 const web_1 = require("./PM/web");
-const core_js_1 = __importDefault(require("./lib/core.js"));
+const Tiposkripto_1 = __importDefault(require("./lib/Tiposkripto"));
 const index_js_1 = require("./lib/index.js");
 // let errorCallback = (e: any) => {};
 // let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
@@ -16,7 +16,7 @@ const index_js_1 = require("./lib/index.js");
 //     JSON.stringify(event)
 //   );
 // };
-class WebTesteranto extends core_js_1.default {
+class WebTesteranto extends Tiposkripto_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, (cb) => {
             // window.removeEventListener("error", errorCallback);

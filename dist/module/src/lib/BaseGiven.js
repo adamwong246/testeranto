@@ -9,9 +9,9 @@ export class BaseGiven {
     constructor(name, features, whens, thens, givenCB, initialValues) {
         this.artifacts = [];
         this.name = name;
-        this.features = features;
-        this.whens = whens;
-        this.thens = thens;
+        this.features = features || [];
+        this.whens = whens || [];
+        this.thens = thens || [];
         this.givenCB = givenCB;
         this.initialValues = initialValues;
     }
@@ -22,17 +22,17 @@ export class BaseGiven {
         return {
             key: this.key,
             name: this.name,
-            whens: this.whens.map((w) => {
+            whens: (this.whens || []).map((w) => {
                 if (w && w.toObj)
                     return w.toObj();
                 console.error("w is not as expected!", JSON.stringify(w));
                 return {};
             }),
-            thens: this.thens.map((t) => t.toObj()),
+            thens: (this.thens || []).map((t) => t && t.toObj ? t.toObj() : {}),
             error: this.error ? [this.error, this.error.stack] : null,
             failed: this.failed,
-            features: this.features,
-            artifacts: this.artifacts,
+            features: this.features || [],
+            artifacts: this.artifacts || [],
         };
     }
     async afterEach(store, key, artifactory, pm) {

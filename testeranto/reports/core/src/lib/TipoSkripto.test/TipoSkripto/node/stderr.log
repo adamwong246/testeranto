@@ -1,0 +1,18 @@
+TypeError: Then.initializedProperly is not a function
+    at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:286:15)
+    at new Tiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:930:18)
+    at new NodeTesteranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:1022:5)
+    at testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:1040:15)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:374:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+TypeError: Then.initializedProperly is not a function
+    at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:286:15)
+    at new Tiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:930:18)
+    at new NodeTesteranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:1022:5)
+    at testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:1040:15)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:374:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)

@@ -1,8 +1,9 @@
-import Testeranto from "./lib/core.js";
+// import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { PM_Node } from "./PM/node.js";
+import Tiposkripto from "./lib/Tiposkripto.js";
 let ipcfile;
-export class NodeTesteranto extends Testeranto {
+export class NodeTesteranto extends Tiposkripto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, () => {
             // no-op

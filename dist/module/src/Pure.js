@@ -1,7 +1,7 @@
-import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
+import Tiposkripto from "./lib/Tiposkripto.js";
 import { PM_Pure } from "./PM/pure.js";
-export class PureTesteranto extends Testeranto {
+export class PureTesteranto extends Tiposkripto {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, () => {
             // no-op

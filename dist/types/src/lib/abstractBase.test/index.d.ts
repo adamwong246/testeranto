@@ -1,3 +1,2 @@
-import { I } from "./types";
-declare const _default: Promise<import("../core").default<I, any, {}>>;
+declare const _default: Promise<Testeranto<I, O, M>>;
 export default _default;

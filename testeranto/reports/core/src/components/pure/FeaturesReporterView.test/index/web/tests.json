@@ -3,9 +3,14 @@
   "givens": [
     {
       "key": "basicRender",
-      "name": "Default",
-      "whens": [],
-      "thens": [
+      "name": [
+        "FeaturesReporterView should render",
+        "It should show project names",
+        "It should show file paths",
+        "It should show test names",
+        "It should show test statuses"
+      ],
+      "whens": [
         {
           "name": "hasProjectNames: ",
           "error": false,
@@ -30,47 +35,34 @@
           "name": "takeScreenshot: features-reporter.png",
           "error": false,
           "artifacts": [
-            "suite-0/given-basicRender/then-4/butThen/features-reporter.png"
+            "suite-0/given-basicRender/when/4/butThen/features-reporter.png"
           ]
         }
       ],
+      "thens": [],
       "error": null,
-      "features": [
-        "FeaturesReporterView should render",
-        "It should show project names",
-        "It should show file paths",
-        "It should show test names",
-        "It should show test statuses"
-      ],
+      "features": [],
       "artifacts": []
     },
     {
       "key": "emptyState",
-      "name": "WithEmptyData",
-      "whens": [],
-      "thens": [
+      "name": [
+        "FeaturesReporterView should handle empty state",
+        "It should show empty message when no projects exist"
+      ],
+      "whens": [
         {
           "name": "showsEmptyMessage: ",
           "error": false,
           "artifacts": []
         }
       ],
+      "thens": [],
       "error": null,
-      "features": [
-        "FeaturesReporterView should handle empty state",
-        "It should show empty message when no projects exist"
-      ],
+      "features": [],
       "artifacts": []
     }
   ],
   "fails": 0,
-  "features": [
-    "FeaturesReporterView should render",
-    "It should show project names",
-    "It should show file paths",
-    "It should show test names",
-    "It should show test statuses",
-    "FeaturesReporterView should handle empty state",
-    "It should show empty message when no projects exist"
-  ]
+  "features": []
 }

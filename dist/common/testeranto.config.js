@@ -38,31 +38,7 @@ const config = {
                 ],
                 ["src/Pure.test.ts", "pure", { ports: 0 }, []],
                 ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
-                ["src/lib/core.test/core.test.ts", "node", { ports: 0 }, []],
-                [
-                    "src/lib/classBuilder.test/classBuilder.test.ts",
-                    "node",
-                    { ports: 0 },
-                    [],
-                ],
-                [
-                    "src/lib/baseBuilder.test/baseBuilder.test.node.ts",
-                    "node",
-                    { ports: 0 },
-                    [],
-                ],
-                [
-                    "src/lib/baseBuilder.test/baseBuilder.test.pure.ts",
-                    "pure",
-                    { ports: 0 },
-                    [],
-                ],
-                [
-                    "src/lib/baseBuilder.test/baseBuilder.test.web.ts",
-                    "web",
-                    { ports: 0 },
-                    [],
-                ],
+                ["src/lib/TipoSkripto.test/TipoSkripto.ts", "node", { ports: 0 }, []],
                 [
                     "src/components/pure/FeaturesReporterView.test/index.tsx",
                     "web",

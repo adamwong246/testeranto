@@ -1,5 +1,10 @@
 {
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
-  "cSpell.words": ["hola", "mothership", "Testeranto"]
+  "cSpell.words": [
+    "hola",
+    "mothership",
+    "Testeranto",
+    "Tiposkripto"
+  ]
 }

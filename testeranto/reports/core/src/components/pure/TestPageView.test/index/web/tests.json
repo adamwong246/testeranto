@@ -3,39 +3,38 @@
   "givens": [
     {
       "key": "renders navigation bar",
-      "name": "Default",
-      "whens": [],
-      "thens": [
+      "name": [],
+      "whens": [
         {
           "name": "RendersNavBar: ",
-          "error": "TypeError: Cannot read properties of undefined (reading 'querySelector')\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1756046081518:172:36\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1756046081518:57:14)\n    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2974:18)\n    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2610:19)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2322:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2782:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2813:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2998:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
+          "error": "TypeError: Cannot read properties of undefined (reading 'querySelector')\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1756077043716:172:36\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1756077043716:57:14)\n    at async BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2829:22)\n    at async BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2601:9)\n    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2322:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2852:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2884:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2947:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
           "artifacts": []
         }
       ],
+      "thens": [],
       "error": null,
       "features": [],
       "artifacts": []
     },
     {
       "key": "shows error counts",
-      "name": "Default",
-      "whens": [],
-      "thens": [
+      "name": [],
+      "whens": [
         {
           "name": "ShowsErrorCounts: ",
-          "error": "TypeError: Cannot read properties of undefined (reading 'querySelectorAll')\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1756046081518:181:36\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1756046081518:57:14)\n    at async Then.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2974:18)\n    at async Given.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2610:19)\n    at async TesterantoCore.constructor.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2322:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2782:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2813:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-TCOOP455.mjs:2998:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
+          "error": "TypeError: Cannot read properties of undefined (reading 'querySelectorAll')\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1756077043716:181:36\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs?cacheBust=1756077043716:57:14)\n    at async BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2829:22)\n    at async BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2601:9)\n    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2322:20)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2852:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2884:31)\n    at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2947:12)\n    at async pptr:evaluate;file%3A%2F%2F%2FUsers%2Fadam%2FCode%2Ftesteranto%2Fsrc%2FPM%2Fmain.ts%3A17%3A996:4:12",
           "artifacts": []
         }
       ],
+      "thens": [],
       "error": null,
       "features": [],
       "artifacts": []
     },
     {
       "key": "shows test results when data exists",
-      "name": "Default",
-      "whens": [],
-      "thens": [
+      "name": [],
+      "whens": [
         {
           "name": "takeScreenshot: shot.png",
           "error": false,
@@ -47,6 +46,7 @@
           "artifacts": []
         }
       ],
+      "thens": [],
       "error": null,
       "features": [],
       "artifacts": []

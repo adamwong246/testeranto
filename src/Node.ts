@@ -1,4 +1,4 @@
-import Testeranto from "./lib/core.js";
+// import Testeranto from "./lib/core.js";
 import {
   defaultTestResourceRequirement,
   ITTestResourceRequest,
@@ -12,6 +12,7 @@ import {
   Ibdd_out_any,
   Ibdd_out,
 } from "./CoreTypes.js";
+import Tiposkripto from "./lib/Tiposkripto.js";
 
 let ipcfile;
 
@@ -19,7 +20,7 @@ export class NodeTesteranto<
   I extends Ibdd_in_any,
   O extends Ibdd_out_any,
   M
-> extends Testeranto<I, O, M> {
+> extends Tiposkripto<I, O, M> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,

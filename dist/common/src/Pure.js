@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PureTesteranto = void 0;
-const core_js_1 = __importDefault(require("./lib/core.js"));
 const index_js_1 = require("./lib/index.js");
+const Tiposkripto_js_1 = __importDefault(require("./lib/Tiposkripto.js"));
 const pure_js_1 = require("./PM/pure.js");
-class PureTesteranto extends core_js_1.default {
+class PureTesteranto extends Tiposkripto_js_1.default {
     constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, () => {
             // no-op

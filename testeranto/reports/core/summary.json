@@ -44,43 +44,15 @@
   "src/lib/pmProxy.test/index.ts": {
     "typeErrors": 21,
     "staticErrors": 2,
-    "runTimeErrors": 0,
+    "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/pmProxy.test/index/prompt.txt",
     "failingFeatures": {}
   },
-  "src/lib/core.test/core.test.ts": {
-    "typeErrors": 32,
-    "staticErrors": 1,
-    "runTimeErrors": 0,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/core.test/core.test/prompt.txt",
-    "failingFeatures": {}
-  },
-  "src/lib/classBuilder.test/classBuilder.test.ts": {
-    "typeErrors": 51,
+  "src/lib/TipoSkripto.test/TipoSkripto.ts": {
+    "typeErrors": 26,
     "staticErrors": 0,
-    "runTimeErrors": 0,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/classBuilder.test/classBuilder.test/prompt.txt",
-    "failingFeatures": {}
-  },
-  "src/lib/baseBuilder.test/baseBuilder.test.node.ts": {
-    "typeErrors": 21,
-    "staticErrors": 1,
-    "runTimeErrors": 0,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/baseBuilder.test/baseBuilder.test.node/prompt.txt",
-    "failingFeatures": {}
-  },
-  "src/lib/baseBuilder.test/baseBuilder.test.pure.ts": {
-    "typeErrors": 21,
-    "staticErrors": 1,
-    "runTimeErrors": 0,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/lib/baseBuilder.test/baseBuilder.test.pure/prompt.txt",
-    "failingFeatures": {}
-  },
-  "src/lib/baseBuilder.test/baseBuilder.test.web.ts": {
-    "typeErrors": 21,
-    "staticErrors": 1,
-    "runTimeErrors": 0,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/baseBuilder.test/baseBuilder.test.web/prompt.txt",
+    "runTimeErrors": -1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/TipoSkripto.test/TipoSkripto/prompt.txt",
     "failingFeatures": {}
   },
   "src/components/pure/FeaturesReporterView.test/index.tsx": {

@@ -9,8 +9,8 @@ import {
   Ibdd_out,
 } from "./CoreTypes";
 import { PM_Web } from "./PM/web";
+import Tiposkripto from "./lib/Tiposkripto";
 
-import Testeranto from "./lib/core.js";
 import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
@@ -29,7 +29,7 @@ export class WebTesteranto<
   I extends Ibdd_in_any,
   O extends Ibdd_out,
   M
-> extends Testeranto<I, O, M> {
+> extends Tiposkripto<I, O, M> {
   constructor(
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
