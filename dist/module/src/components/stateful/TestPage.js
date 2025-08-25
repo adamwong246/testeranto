@@ -51,6 +51,7 @@ export const TestPage = () => {
                 const receivedLogs = await testResponse.logs;
                 console.log('Received logs:', Object.keys(receivedLogs));
                 let sourceFiles = {};
+                let buildLogs = {};
                 if (metafileRes.ok) {
                     const metafile = await metafileRes.json();
                     if ((_a = metafile === null || metafile === void 0 ? void 0 : metafile.metafile) === null || _a === void 0 ? void 0 : _a.outputs) {
@@ -63,8 +64,11 @@ export const TestPage = () => {
                             const normalizedTestPath = testPath.replace(/\./g, '_');
                             const testFileName = testPath.split('/').pop();
                             const testBaseName = testFileName === null || testFileName === void 0 ? void 0 : testFileName.split('.').slice(0, -1).join('.');
+                            // Also check outputPath normalized for slashes replaced by underscores
+                            const normalizedOutputPath = outputPath.replace(/\//g, '_');
                             return output.entryPoint === testEntryPoint ||
                                 outputPath.includes(normalizedTestPath) ||
+                                normalizedOutputPath.includes(normalizedTestPath) ||
                                 (testBaseName && outputPath.includes(testBaseName));
                         });
                         // Then collect all inputs from matching outputs
@@ -131,11 +135,14 @@ export const TestPage = () => {
                             });
                         });
                         sourceFiles = fileTree;
+                        buildLogs = metafile;
                     }
                 }
-                // Add source files to logs
+                // Add source files and build logs to logs
                 receivedLogs['source_files'] = sourceFiles;
+                receivedLogs['build_logs'] = buildLogs;
                 console.log('Source files structure:', sourceFiles);
+                console.log('Build logs:', buildLogs);
                 // Ensure tests.json is properly formatted
                 if (receivedLogs['tests.json']) {
                     console.log('tests.json content type:', typeof receivedLogs['tests.json']);
@@ -173,6 +180,35 @@ export const TestPage = () => {
                 }
                 catch (err) {
                     console.error('Failed to load summary:', err);
+                }
+                // Fetch build.json to get build errors and warnings
+                try {
+                    // The build.json is in the runtime directory directly under the test path
+                    // testPath is "src/lib/pmProxy.test/index.ts"
+                    // We need to use the directory path without the filename
+                    const pathParts = testPath.split('/');
+                    const fileName = pathParts.pop();
+                    const directoryPath = pathParts.join('/');
+                    // Construct the path without the filename without extension
+                    const buildUrl = `/reports/${projectName}/${directoryPath}/${runtime}/build.json`;
+                    console.log(`Fetching build.json from: ${buildUrl}`);
+                    const buildResponse = await fetch(buildUrl);
+                    if (buildResponse.ok) {
+                        const buildData = await buildResponse.json();
+                        console.log('Build data received:', buildData);
+                        // Add build errors and warnings to logs
+                        receivedLogs['build.json'] = buildData;
+                    }
+                    else {
+                        console.log('Build.json not found or not accessible, status:', buildResponse.status);
+                        // Add an empty build.json to logs to prevent errors
+                        receivedLogs['build.json'] = { errors: [], warnings: [] };
+                    }
+                }
+                catch (err) {
+                    console.log('No build.json found or error fetching it:', err);
+                    // Add an empty build.json to logs to prevent errors
+                    receivedLogs['build.json'] = { errors: [], warnings: [] };
                 }
             }
             catch (err) {

@@ -1,18 +1,14 @@
-TypeError: Then.initializedProperly is not a function
-    at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:286:15)
-    at new Tiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:930:18)
-    at new NodeTesteranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:1022:5)
-    at testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:1040:15)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:374:27
-    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
-    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
-TypeError: Then.initializedProperly is not a function
-    at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:286:15)
-    at new Tiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:930:18)
-    at new NodeTesteranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:1022:5)
-    at testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-SQHAK5YB.mjs:1040:15)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:374:27
-    at ModuleJob.run (node:internal/modules/esm/module_job:263:25)
-    at async ModuleLoader.import (node:internal/modules/esm/loader:540:24)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+node:internal/modules/cjs/loader:1051
+  throw err;
+  ^
+
+Error: Cannot find module '/Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1048:15)
+    at Module._load (node:internal/modules/cjs/loader:901:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)
+    at node:internal/main/run_main_module:23:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v20.4.0

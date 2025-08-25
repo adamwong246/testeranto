@@ -1,7 +1,7 @@
 TypeError: Cannot read properties of undefined (reading 'path')
     at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2444:62)
     at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:1976:32)
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756077043716:216:16)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756090048937:216:16)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2737:28
     at async BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2829:22)
     at async BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2601:9)
@@ -12,7 +12,7 @@ TypeError: Cannot read properties of undefined (reading 'path')
 TypeError: Cannot read properties of undefined (reading 'path')
     at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2444:62)
     at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:1976:32)
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756077043716:216:16)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756090048937:216:16)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2737:28
     at async BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2829:22)
     at async BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-PV6EA47E.mjs:2601:9)

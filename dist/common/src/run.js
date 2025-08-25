@@ -1,83 +1,49 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const ansi_colors_1 = __importDefault(require("ansi-colors"));
-const readline_1 = __importDefault(require("readline"));
-const main_1 = require("./PM/main");
-readline_1.default.emitKeypressEvents(process.stdin);
-if (process.stdin.isTTY)
-    process.stdin.setRawMode(true);
-console.log(ansi_colors_1.default.inverse("Press 'q' to initiate a graceful shutdown."));
-console.log(ansi_colors_1.default.inverse("Press 'x' to quit forcefully."));
-process.stdin.on("keypress", (str, key) => {
-    if (key.name === "x") {
-        console.log(ansi_colors_1.default.inverse("Shutting down forcefully..."));
-        process.exit(-1);
-    }
-});
-const projectName = process.argv[2];
-const mode = process.argv[3];
-if (mode !== "once" && mode !== "dev") {
-    console.error("the 2nd argument should be 'dev' or 'once' ");
-    process.exit(-1);
-}
-const f = process.cwd() + "/" + "testeranto.config.ts";
-console.log("config file:", f);
-Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) => {
-    const bigConfig = module.default || module;
-    const rawConfig = bigConfig.projects[projectName];
-    if (!rawConfig) {
-        console.error(`Project "${projectName}" does not exist in the configuration.`);
-        console.error("Available projects:", Object.keys(bigConfig.projects));
-        process.exit(-1);
-    }
-    if (!rawConfig.tests) {
-        console.error(projectName, "appears to have no tests: ", f);
-        console.error(`here is the config:`);
-        console.log(JSON.stringify(rawConfig));
-        process.exit(-1);
-    }
-    const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/" + `testeranto/${projectName}.json` });
-    const pm = new main_1.PM_Main(config, projectName, mode);
-    pm.start();
-    process.stdin.on("keypress", (str, key) => {
-        if (key.name === "q") {
-            pm.stop();
-        }
-    });
-});
+// import ansiC from "ansi-colors";
+// import readline from "readline";
+// import { PM_Main } from "./PM/main";
+// import { ITestconfig, IBuiltConfig, IProject } from "./Types";
+// readline.emitKeypressEvents(process.stdin);
+// if (process.stdin.isTTY) process.stdin.setRawMode(true);
+// console.log(ansiC.inverse("Press 'q' to initiate a graceful shutdown."));
+// console.log(ansiC.inverse("Press 'x' to quit forcefully."));
+// process.stdin.on("keypress", (str, key) => {
+//   if (key.name === "x") {
+//     console.log(ansiC.inverse("Shutting down forcefully..."));
+//     process.exit(-1);
+//   }
+// });
+// const projectName = process.argv[2];
+// const mode = process.argv[3] as "once" | "dev";
+// if (mode !== "once" && mode !== "dev") {
+//   console.error("the 2nd argument should be 'dev' or 'once' ");
+//   process.exit(-1);
+// }
+// const f = process.cwd() + "/" + "testeranto.config.ts";
+// console.log("config file:", f);
+// import(f).then(async (module) => {
+//   const bigConfig: IProject = module.default || module;
+//   const rawConfig: ITestconfig = bigConfig.projects[projectName];
+//   if (!rawConfig) {
+//     console.error(`Project "${projectName}" does not exist in the configuration.`);
+//     console.error("Available projects:", Object.keys(bigConfig.projects));
+//     process.exit(-1);
+//   }
+//   if (!rawConfig.tests) {
+//     console.error(projectName, "appears to have no tests: ", f);
+//     console.error(`here is the config:`);
+//     console.log(JSON.stringify(rawConfig));
+//     process.exit(-1);
+//   }
+//   const config: IBuiltConfig = {
+//     ...rawConfig,
+//     buildDir: process.cwd() + "/" + `testeranto/${projectName}.json`,
+//   };
+//   const pm = new PM_Main(config, projectName, mode);
+//   pm.start();
+//   process.stdin.on("keypress", (str, key) => {
+//     if (key.name === "q") {
+//       pm.stop();
+//     }
+//   });
+// });

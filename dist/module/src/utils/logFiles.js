@@ -18,7 +18,8 @@ export const STANDARD_LOGS = {
     LINT_ERRORS: 'lint_errors.txt',
     EXIT: 'exit.log',
     MESSAGE: 'message.txt',
-    PROMPT: 'prompt.txt'
+    PROMPT: 'prompt.txt',
+    BUILD: 'build.json'
 };
 export const RUNTIME_SPECIFIC_LOGS = {
     node: {

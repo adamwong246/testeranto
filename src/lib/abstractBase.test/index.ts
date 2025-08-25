@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import Testeranto from "../../Node";
 import { specification } from "./specification";
 import { implementation } from "./implementation";

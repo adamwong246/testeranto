@@ -125,9 +125,45 @@ export const TestPageView = ({
   const [expandedSections, setExpandedSections] = useState({
     standardLogs: true,
     runtimeLogs: true,
-    sourceFiles: true
+    sourceFiles: true,
+    buildErrors: true,
   });
   const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(false);
+
+  // Extract build errors and warnings relevant to this test
+  const [buildErrors, setBuildErrors] = useState<{ errors: any[]; warnings: any[] }>({ errors: [], warnings: [] });
+
+  useEffect(() => {
+    const metafile = logs.build_logs?.metafile;
+    if (!metafile) {
+      setBuildErrors({ errors: [], warnings: [] });
+      return;
+    }
+    const sourceFilesSet = new Set<string>();
+    // Collect all input files from metafile outputs related to this test
+    Object.entries(metafile.outputs || {}).forEach(([outputPath, output]) => {
+      // Normalize paths for comparison
+      const normalizedTestName = testName.replace(/\\/g, '/');
+      const normalizedEntryPoint = output.entryPoint ? output.entryPoint.replace(/\\/g, '/') : '';
+      if (normalizedEntryPoint.includes(normalizedTestName)) {
+        Object.keys(output.inputs || {}).forEach((inputPath) => {
+          sourceFilesSet.add(inputPath.replace(/\\/g, '/'));
+        });
+      }
+    });
+
+    // Filter errors and warnings to those originating from source files of this test
+    const filteredErrors = (logs.build_logs?.errors || []).filter((err: any) => {
+      if (!err.location || !err.location.file) return false;
+      return sourceFilesSet.has(err.location.file.replace(/\\/g, '/'));
+    });
+    const filteredWarnings = (logs.build_logs?.warnings || []).filter((warn: any) => {
+      if (!warn.location || !warn.location.file) return false;
+      return sourceFilesSet.has(warn.location.file.replace(/\\/g, '/'));
+    });
+
+    setBuildErrors({ errors: filteredErrors, warnings: filteredWarnings });
+  }, [logs, testName]);
 
   // Update customMessage when logs change
   useEffect(() => {
@@ -370,6 +406,50 @@ export const TestPageView = ({
             </div>
           </div>
         ))}
+        {/* Render build errors and warnings */}
+        {(buildErrors.errors.length > 0 || buildErrors.warnings.length > 0) && (
+          <div className="mb-4 card border-danger">
+            <div className="card-header bg-danger text-white">
+              <h4>Build Errors and Warnings</h4>
+            </div>
+            <div className="card-body">
+              {buildErrors.errors.length > 0 && (
+                <>
+                  <h5>Errors</h5>
+                  <ul>
+                    {buildErrors.errors.map((error, idx) => (
+                      <li key={`build-error-${idx}`}>
+                        <strong>{error.text}</strong>
+                        {error.location && (
+                          <div>
+                            File: {error.location.file} Line: {error.location.line} Column: {error.location.column}
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {buildErrors.warnings.length > 0 && (
+                <>
+                  <h5>Warnings</h5>
+                  <ul>
+                    {buildErrors.warnings.map((warning, idx) => (
+                      <li key={`build-warning-${idx}`}>
+                        <strong>{warning.text}</strong>
+                        {warning.location && (
+                          <div>
+                            File: {warning.location.file} Line: {warning.location.line} Column: {warning.location.column}
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -725,7 +805,93 @@ export const TestPageView = ({
                 </div>
               </div>
             )}
-            {selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && (
+            {selectedFile?.path.endsWith("build.json") && (
+              <div>
+                <h5>Build Information</h5>
+                {(() => {
+                  try {
+                    const buildData = JSON.parse(selectedFile.content);
+                    return (
+                      <>
+                        {buildData.errors?.length > 0 && (
+                          <div className="mb-3">
+                            <h6 className="text-danger">Errors ({buildData.errors.length})</h6>
+                            <ul className="list-unstyled">
+                              {buildData.errors.map((error: any, index: number) => (
+                                <li key={index} className="mb-2 p-2 bg-light rounded">
+                                  <div className="text-danger fw-bold">{error.text}</div>
+                                  {error.location && (
+                                    <div className="small text-muted">
+                                      File: {error.location.file} 
+                                      Line: {error.location.line} 
+                                      Column: {error.location.column}
+                                    </div>
+                                  )}
+                                  {error.notes && error.notes.length > 0 && (
+                                    <div className="small">
+                                      Notes:
+                                      <ul>
+                                        {error.notes.map((note: any, noteIndex: number) => (
+                                          <li key={noteIndex}>{note.text}</li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {buildData.warnings?.length > 0 && (
+                          <div className="mb-3">
+                            <h6 className="text-warning">Warnings ({buildData.warnings.length})</h6>
+                            <ul className="list-unstyled">
+                              {buildData.warnings.map((warning: any, index: number) => (
+                                <li key={index} className="mb-2 p-2 bg-light rounded">
+                                  <div className="text-warning fw-bold">{warning.text}</div>
+                                  {warning.location && (
+                                    <div className="small text-muted">
+                                      File: {warning.location.file} 
+                                      Line: {warning.location.line} 
+                                      Column: {warning.location.column}
+                                    </div>
+                                  )}
+                                  {warning.notes && warning.notes.length > 0 && (
+                                    <div className="small">
+                                      Notes:
+                                      <ul>
+                                        {warning.notes.map((note: any, noteIndex: number) => (
+                                          <li key={noteIndex}>{note.text}</li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {(!buildData.errors || buildData.errors.length === 0) && 
+                         (!buildData.warnings || buildData.warnings.length === 0) && (
+                          <div className="alert alert-success">
+                            No build errors or warnings
+                          </div>
+                        )}
+                      </>
+                    );
+                  } catch (e) {
+                    return (
+                      <div className="alert alert-danger">
+                        Error parsing build.json: {e.message}
+                      </div>
+                    );
+                  }
+                })()}
+              </div>
+            )}
+            {selectedFile?.path.endsWith(".json") && 
+             !selectedFile.path.endsWith("tests.json") && 
+             !selectedFile.path.endsWith("build.json") && (
               <pre className="bg-light p-2 small">
                 <code>{selectedFile.content}</code>
               </pre>

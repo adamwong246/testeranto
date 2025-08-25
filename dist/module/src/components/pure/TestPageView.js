@@ -44,9 +44,44 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
     const [expandedSections, setExpandedSections] = useState({
         standardLogs: true,
         runtimeLogs: true,
-        sourceFiles: true
+        sourceFiles: true,
+        buildErrors: true,
     });
     const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(false);
+    // Extract build errors and warnings relevant to this test
+    const [buildErrors, setBuildErrors] = useState({ errors: [], warnings: [] });
+    useEffect(() => {
+        var _a, _b, _c;
+        const metafile = (_a = logs.build_logs) === null || _a === void 0 ? void 0 : _a.metafile;
+        if (!metafile) {
+            setBuildErrors({ errors: [], warnings: [] });
+            return;
+        }
+        const sourceFilesSet = new Set();
+        // Collect all input files from metafile outputs related to this test
+        Object.entries(metafile.outputs || {}).forEach(([outputPath, output]) => {
+            // Normalize paths for comparison
+            const normalizedTestName = testName.replace(/\\/g, '/');
+            const normalizedEntryPoint = output.entryPoint ? output.entryPoint.replace(/\\/g, '/') : '';
+            if (normalizedEntryPoint.includes(normalizedTestName)) {
+                Object.keys(output.inputs || {}).forEach((inputPath) => {
+                    sourceFilesSet.add(inputPath.replace(/\\/g, '/'));
+                });
+            }
+        });
+        // Filter errors and warnings to those originating from source files of this test
+        const filteredErrors = (((_b = logs.build_logs) === null || _b === void 0 ? void 0 : _b.errors) || []).filter((err) => {
+            if (!err.location || !err.location.file)
+                return false;
+            return sourceFilesSet.has(err.location.file.replace(/\\/g, '/'));
+        });
+        const filteredWarnings = (((_c = logs.build_logs) === null || _c === void 0 ? void 0 : _c.warnings) || []).filter((warn) => {
+            if (!warn.location || !warn.location.file)
+                return false;
+            return sourceFilesSet.has(warn.location.file.replace(/\\/g, '/'));
+        });
+        setBuildErrors({ errors: filteredErrors, warnings: filteredWarnings });
+    }, [logs, testName]);
     // Update customMessage when logs change
     useEffect(() => {
         if (typeof logs['message.txt'] === 'string' && logs['message.txt'].trim()) {
@@ -87,67 +122,94 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
         }
     };
     const renderTestResults = (testData) => {
-        return (React.createElement("div", { className: "test-results" }, testData.givens.map((given, i) => (React.createElement("div", { key: i, className: "mb-4 card" },
-            React.createElement("div", { className: "card-header bg-primary text-white" },
-                React.createElement("div", { className: "d-flex justify-content-between align-items-center" },
-                    React.createElement("div", null,
-                        React.createElement("h4", null,
-                            "Given: ",
-                            given.name),
-                        given.features && given.features.length > 0 && (React.createElement("div", { className: "mt-1" },
-                            React.createElement("small", null, "Features:"),
-                            React.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi) => (React.createElement("li", { key: fi }, feature.startsWith("http") ? (React.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer", className: "text-white" }, new URL(feature).hostname)) : (React.createElement("span", { className: "text-white" }, feature))))))))),
-                    given.artifacts && given.artifacts.length > 0 && (React.createElement("div", { className: "dropdown" },
-                        React.createElement("button", { className: "btn btn-sm btn-light dropdown-toggle", type: "button", "data-bs-toggle": "dropdown" },
-                            "Artifacts (",
-                            given.artifacts.length,
-                            ")"),
-                        React.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai) => (React.createElement("li", { key: ai },
-                            React.createElement("a", { className: "dropdown-item", href: `reports/${projectName}/${testName
-                                    .split(".")
-                                    .slice(0, -1)
-                                    .join(".")}/${runtime}/${artifact}`, target: "_blank", rel: "noopener noreferrer" }, artifact.split("/").pop()))))))))),
-            React.createElement("div", { className: "card-body" },
-                given.whens.map((when, j) => (React.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error
-                        ? "bg-danger text-white"
-                        : "bg-success text-white"}` },
-                    React.createElement("div", { className: "d-flex justify-content-between align-items-start" },
+        return (React.createElement("div", { className: "test-results" },
+            testData.givens.map((given, i) => (React.createElement("div", { key: i, className: "mb-4 card" },
+                React.createElement("div", { className: "card-header bg-primary text-white" },
+                    React.createElement("div", { className: "d-flex justify-content-between align-items-center" },
                         React.createElement("div", null,
-                            React.createElement("div", null,
-                                React.createElement("strong", null, "When:"),
-                                " ",
-                                when.name,
-                                when.features && when.features.length > 0 && (React.createElement("div", { className: "mt-2" },
-                                    React.createElement("small", null, "Features:"),
-                                    React.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi) => (React.createElement("li", { key: fi }, feature.startsWith("http") ? (React.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname)) : (feature))))))),
-                                when.error && React.createElement("pre", { className: "mt-2" }, when.error))),
-                        when.artifacts && when.artifacts.length > 0 && (React.createElement("div", { className: "ms-3" },
-                            React.createElement("strong", null, "Artifacts:"),
-                            React.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => (React.createElement("li", { key: ai },
-                                React.createElement("a", { href: `reports/${projectName}/${testName
+                            React.createElement("h4", null,
+                                "Given: ",
+                                given.name),
+                            given.features && given.features.length > 0 && (React.createElement("div", { className: "mt-1" },
+                                React.createElement("small", null, "Features:"),
+                                React.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi) => (React.createElement("li", { key: fi }, feature.startsWith("http") ? (React.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer", className: "text-white" }, new URL(feature).hostname)) : (React.createElement("span", { className: "text-white" }, feature))))))))),
+                        given.artifacts && given.artifacts.length > 0 && (React.createElement("div", { className: "dropdown" },
+                            React.createElement("button", { className: "btn btn-sm btn-light dropdown-toggle", type: "button", "data-bs-toggle": "dropdown" },
+                                "Artifacts (",
+                                given.artifacts.length,
+                                ")"),
+                            React.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai) => (React.createElement("li", { key: ai },
+                                React.createElement("a", { className: "dropdown-item", href: `reports/${projectName}/${testName
                                         .split(".")
                                         .slice(0, -1)
-                                        .join(".")}/${runtime}/${artifact}`, target: "_blank", className: "text-white", rel: "noopener noreferrer" }, artifact.split("/").pop()))))))))))),
-                given.thens.map((then, k) => (React.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error
-                        ? "bg-danger text-white"
-                        : "bg-success text-white"}` },
-                    React.createElement("div", { className: "d-flex justify-content-between align-items-start" },
-                        React.createElement("div", null,
+                                        .join(".")}/${runtime}/${artifact}`, target: "_blank", rel: "noopener noreferrer" }, artifact.split("/").pop()))))))))),
+                React.createElement("div", { className: "card-body" },
+                    given.whens.map((when, j) => (React.createElement("div", { key: `w-${j}`, className: `p-3 mb-2 ${when.error
+                            ? "bg-danger text-white"
+                            : "bg-success text-white"}` },
+                        React.createElement("div", { className: "d-flex justify-content-between align-items-start" },
                             React.createElement("div", null,
-                                React.createElement("strong", null, "Then:"),
-                                " ",
-                                then.name,
-                                then.features && then.features.length > 0 && (React.createElement("div", { className: "mt-2" },
-                                    React.createElement("small", null, "Features:"),
-                                    React.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi) => (React.createElement("li", { key: fi }, feature.startsWith("http") ? (React.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname)) : (feature))))))),
-                                then.error && React.createElement("pre", { className: "mt-2" }, then.error))),
-                        then.artifacts && then.artifacts.length > 0 && (React.createElement("div", { className: "ms-3" },
-                            React.createElement("strong", null, "Artifacts:"),
-                            React.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => (React.createElement("li", { key: ai },
-                                React.createElement("a", { href: `reports/${projectName}/${testName
-                                        .split(".")
-                                        .slice(0, -1)
-                                        .join(".")}/${runtime}/${artifact}`, target: "_blank", className: "text-white", rel: "noopener noreferrer" }, artifact.split("/").pop())))))))))))))))));
+                                React.createElement("div", null,
+                                    React.createElement("strong", null, "When:"),
+                                    " ",
+                                    when.name,
+                                    when.features && when.features.length > 0 && (React.createElement("div", { className: "mt-2" },
+                                        React.createElement("small", null, "Features:"),
+                                        React.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi) => (React.createElement("li", { key: fi }, feature.startsWith("http") ? (React.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname)) : (feature))))))),
+                                    when.error && React.createElement("pre", { className: "mt-2" }, when.error))),
+                            when.artifacts && when.artifacts.length > 0 && (React.createElement("div", { className: "ms-3" },
+                                React.createElement("strong", null, "Artifacts:"),
+                                React.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => (React.createElement("li", { key: ai },
+                                    React.createElement("a", { href: `reports/${projectName}/${testName
+                                            .split(".")
+                                            .slice(0, -1)
+                                            .join(".")}/${runtime}/${artifact}`, target: "_blank", className: "text-white", rel: "noopener noreferrer" }, artifact.split("/").pop()))))))))))),
+                    given.thens.map((then, k) => (React.createElement("div", { key: `t-${k}`, className: `p-3 mb-2 ${then.error
+                            ? "bg-danger text-white"
+                            : "bg-success text-white"}` },
+                        React.createElement("div", { className: "d-flex justify-content-between align-items-start" },
+                            React.createElement("div", null,
+                                React.createElement("div", null,
+                                    React.createElement("strong", null, "Then:"),
+                                    " ",
+                                    then.name,
+                                    then.features && then.features.length > 0 && (React.createElement("div", { className: "mt-2" },
+                                        React.createElement("small", null, "Features:"),
+                                        React.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi) => (React.createElement("li", { key: fi }, feature.startsWith("http") ? (React.createElement("a", { href: feature, target: "_blank", rel: "noopener noreferrer" }, new URL(feature).hostname)) : (feature))))))),
+                                    then.error && React.createElement("pre", { className: "mt-2" }, then.error))),
+                            then.artifacts && then.artifacts.length > 0 && (React.createElement("div", { className: "ms-3" },
+                                React.createElement("strong", null, "Artifacts:"),
+                                React.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => (React.createElement("li", { key: ai },
+                                    React.createElement("a", { href: `reports/${projectName}/${testName
+                                            .split(".")
+                                            .slice(0, -1)
+                                            .join(".")}/${runtime}/${artifact}`, target: "_blank", className: "text-white", rel: "noopener noreferrer" }, artifact.split("/").pop()))))))))))))))),
+            (buildErrors.errors.length > 0 || buildErrors.warnings.length > 0) && (React.createElement("div", { className: "mb-4 card border-danger" },
+                React.createElement("div", { className: "card-header bg-danger text-white" },
+                    React.createElement("h4", null, "Build Errors and Warnings")),
+                React.createElement("div", { className: "card-body" },
+                    buildErrors.errors.length > 0 && (React.createElement(React.Fragment, null,
+                        React.createElement("h5", null, "Errors"),
+                        React.createElement("ul", null, buildErrors.errors.map((error, idx) => (React.createElement("li", { key: `build-error-${idx}` },
+                            React.createElement("strong", null, error.text),
+                            error.location && (React.createElement("div", null,
+                                "File: ",
+                                error.location.file,
+                                " Line: ",
+                                error.location.line,
+                                " Column: ",
+                                error.location.column)))))))),
+                    buildErrors.warnings.length > 0 && (React.createElement(React.Fragment, null,
+                        React.createElement("h5", null, "Warnings"),
+                        React.createElement("ul", null, buildErrors.warnings.map((warning, idx) => (React.createElement("li", { key: `build-warning-${idx}` },
+                            React.createElement("strong", null, warning.text),
+                            warning.location && (React.createElement("div", null,
+                                "File: ",
+                                warning.location.file,
+                                " Line: ",
+                                warning.location.line,
+                                " Column: ",
+                                warning.location.column)))))))))))));
     };
     console.log("Rendering TestPageView with logs:", {
         logKeys: Object.keys(logs),
@@ -326,7 +388,59 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
                         React.createElement("img", { src: selectedFile.content, alt: selectedFile.path, className: "img-fluid", style: { maxHeight: '300px' } }),
                         React.createElement("div", { className: "mt-2" },
                             React.createElement("a", { href: selectedFile.content, target: "_blank", rel: "noopener noreferrer", className: "btn btn-sm btn-outline-primary" }, "Open Full Size")))),
-                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith(".json")) && !selectedFile.path.endsWith("tests.json") && (React.createElement("pre", { className: "bg-light p-2 small" },
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith("build.json")) && (React.createElement("div", null,
+                        React.createElement("h5", null, "Build Information"),
+                        (() => {
+                            var _a, _b;
+                            try {
+                                const buildData = JSON.parse(selectedFile.content);
+                                return (React.createElement(React.Fragment, null,
+                                    ((_a = buildData.errors) === null || _a === void 0 ? void 0 : _a.length) > 0 && (React.createElement("div", { className: "mb-3" },
+                                        React.createElement("h6", { className: "text-danger" },
+                                            "Errors (",
+                                            buildData.errors.length,
+                                            ")"),
+                                        React.createElement("ul", { className: "list-unstyled" }, buildData.errors.map((error, index) => (React.createElement("li", { key: index, className: "mb-2 p-2 bg-light rounded" },
+                                            React.createElement("div", { className: "text-danger fw-bold" }, error.text),
+                                            error.location && (React.createElement("div", { className: "small text-muted" },
+                                                "File: ",
+                                                error.location.file,
+                                                "Line: ",
+                                                error.location.line,
+                                                "Column: ",
+                                                error.location.column)),
+                                            error.notes && error.notes.length > 0 && (React.createElement("div", { className: "small" },
+                                                "Notes:",
+                                                React.createElement("ul", null, error.notes.map((note, noteIndex) => (React.createElement("li", { key: noteIndex }, note.text)))))))))))),
+                                    ((_b = buildData.warnings) === null || _b === void 0 ? void 0 : _b.length) > 0 && (React.createElement("div", { className: "mb-3" },
+                                        React.createElement("h6", { className: "text-warning" },
+                                            "Warnings (",
+                                            buildData.warnings.length,
+                                            ")"),
+                                        React.createElement("ul", { className: "list-unstyled" }, buildData.warnings.map((warning, index) => (React.createElement("li", { key: index, className: "mb-2 p-2 bg-light rounded" },
+                                            React.createElement("div", { className: "text-warning fw-bold" }, warning.text),
+                                            warning.location && (React.createElement("div", { className: "small text-muted" },
+                                                "File: ",
+                                                warning.location.file,
+                                                "Line: ",
+                                                warning.location.line,
+                                                "Column: ",
+                                                warning.location.column)),
+                                            warning.notes && warning.notes.length > 0 && (React.createElement("div", { className: "small" },
+                                                "Notes:",
+                                                React.createElement("ul", null, warning.notes.map((note, noteIndex) => (React.createElement("li", { key: noteIndex }, note.text)))))))))))),
+                                    (!buildData.errors || buildData.errors.length === 0) &&
+                                        (!buildData.warnings || buildData.warnings.length === 0) && (React.createElement("div", { className: "alert alert-success" }, "No build errors or warnings"))));
+                            }
+                            catch (e) {
+                                return (React.createElement("div", { className: "alert alert-danger" },
+                                    "Error parsing build.json: ",
+                                    e.message));
+                            }
+                        })())),
+                    (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.endsWith(".json")) &&
+                        !selectedFile.path.endsWith("tests.json") &&
+                        !selectedFile.path.endsWith("build.json") && (React.createElement("pre", { className: "bg-light p-2 small" },
                         React.createElement("code", null, selectedFile.content))),
                     (selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path.includes("source_files")) && (React.createElement("div", null,
                         React.createElement("div", { className: "mb-2 small text-muted" },

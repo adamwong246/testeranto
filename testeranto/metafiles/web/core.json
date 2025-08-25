@@ -15044,7 +15044,7 @@
         "format": "esm"
       },
       "src/utils/logFiles.ts": {
-        "bytes": 1513,
+        "bytes": 1536,
         "imports": [
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -15519,7 +15519,7 @@
         "format": "esm"
       },
       "src/components/pure/TestPageView.tsx": {
-        "bytes": 36124,
+        "bytes": 43937,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -16286,10 +16286,10 @@
             "bytesInOutput": 1364
           },
           "src/components/pure/TestPageView.tsx": {
-            "bytesInOutput": 25867
+            "bytesInOutput": 32250
           },
           "src/utils/logFiles.ts": {
-            "bytesInOutput": 617
+            "bytesInOutput": 640
           },
           "node_modules/@monaco-editor/react/dist/index.mjs": {
             "bytesInOutput": 8908
@@ -16328,7 +16328,7 @@
             "bytesInOutput": 562
           }
         },
-        "bytes": 60629
+        "bytes": 67035
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
         "imports": [

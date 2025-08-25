@@ -1,0 +1,43 @@
+{
+  "errors": [
+    {
+      "id": "",
+      "location": {
+        "column": 48,
+        "file": "src/lib/pmProxy.test/mockPMBase.ts",
+        "length": 1,
+        "line": 19,
+        "lineText": "  protected trackCall(method: string, args: any {",
+        "namespace": "",
+        "suggestion": ")"
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Expected \")\" but found \"{\""
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 7,
+        "file": "src/lib/pmProxy.test/specification.ts",
+        "length": 1,
+        "line": 152,
+        "lineText": "      [],",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Unexpected \"]\""
+    }
+  ],
+  "warnings": [
+    {
+      "id": "different-path-case",
+      "location": null,
+      "notes": [],
+      "pluginName": "",
+      "text": "Use \"src/lib/TipoSkripto.test/Tiposkripto.ts\" instead of \"src/lib/TipoSkripto.test/TipoSkripto.ts\" to avoid issues with case-sensitive file systems"
+    }
+  ]
+}

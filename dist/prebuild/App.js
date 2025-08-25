@@ -27789,7 +27789,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     LINT_ERRORS: "lint_errors.txt",
     EXIT: "exit.log",
     MESSAGE: "message.txt",
-    PROMPT: "prompt.txt"
+    PROMPT: "prompt.txt",
+    BUILD: "build.json"
   };
   var RUNTIME_SPECIFIC_LOGS = {
     node: {
@@ -33973,9 +33974,39 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const [expandedSections, setExpandedSections] = (0, import_react81.useState)({
       standardLogs: true,
       runtimeLogs: true,
-      sourceFiles: true
+      sourceFiles: true,
+      buildErrors: true
     });
     const [isNavbarCollapsed, setIsNavbarCollapsed] = (0, import_react81.useState)(false);
+    const [buildErrors, setBuildErrors] = (0, import_react81.useState)({ errors: [], warnings: [] });
+    (0, import_react81.useEffect)(() => {
+      const metafile = logs.build_logs?.metafile;
+      if (!metafile) {
+        setBuildErrors({ errors: [], warnings: [] });
+        return;
+      }
+      const sourceFilesSet = /* @__PURE__ */ new Set();
+      Object.entries(metafile.outputs || {}).forEach(([outputPath, output]) => {
+        const normalizedTestName = testName.replace(/\\/g, "/");
+        const normalizedEntryPoint = output.entryPoint ? output.entryPoint.replace(/\\/g, "/") : "";
+        if (normalizedEntryPoint.includes(normalizedTestName)) {
+          Object.keys(output.inputs || {}).forEach((inputPath) => {
+            sourceFilesSet.add(inputPath.replace(/\\/g, "/"));
+          });
+        }
+      });
+      const filteredErrors = (logs.build_logs?.errors || []).filter((err) => {
+        if (!err.location || !err.location.file)
+          return false;
+        return sourceFilesSet.has(err.location.file.replace(/\\/g, "/"));
+      });
+      const filteredWarnings = (logs.build_logs?.warnings || []).filter((warn) => {
+        if (!warn.location || !warn.location.file)
+          return false;
+        return sourceFilesSet.has(warn.location.file.replace(/\\/g, "/"));
+      });
+      setBuildErrors({ errors: filteredErrors, warnings: filteredWarnings });
+    }, [logs, testName]);
     (0, import_react81.useEffect)(() => {
       if (typeof logs["message.txt"] === "string" && logs["message.txt"].trim()) {
         setCustomMessage(logs["message.txt"]);
@@ -34092,7 +34123,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           },
           artifact.split("/").pop()
         ))))))
-      ))))));
+      ))))), (buildErrors.errors.length > 0 || buildErrors.warnings.length > 0) && /* @__PURE__ */ import_react81.default.createElement("div", { className: "mb-4 card border-danger" }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "card-header bg-danger text-white" }, /* @__PURE__ */ import_react81.default.createElement("h4", null, "Build Errors and Warnings")), /* @__PURE__ */ import_react81.default.createElement("div", { className: "card-body" }, buildErrors.errors.length > 0 && /* @__PURE__ */ import_react81.default.createElement(import_react81.default.Fragment, null, /* @__PURE__ */ import_react81.default.createElement("h5", null, "Errors"), /* @__PURE__ */ import_react81.default.createElement("ul", null, buildErrors.errors.map((error, idx) => /* @__PURE__ */ import_react81.default.createElement("li", { key: `build-error-${idx}` }, /* @__PURE__ */ import_react81.default.createElement("strong", null, error.text), error.location && /* @__PURE__ */ import_react81.default.createElement("div", null, "File: ", error.location.file, " Line: ", error.location.line, " Column: ", error.location.column))))), buildErrors.warnings.length > 0 && /* @__PURE__ */ import_react81.default.createElement(import_react81.default.Fragment, null, /* @__PURE__ */ import_react81.default.createElement("h5", null, "Warnings"), /* @__PURE__ */ import_react81.default.createElement("ul", null, buildErrors.warnings.map((warning6, idx) => /* @__PURE__ */ import_react81.default.createElement("li", { key: `build-warning-${idx}` }, /* @__PURE__ */ import_react81.default.createElement("strong", null, warning6.text), warning6.location && /* @__PURE__ */ import_react81.default.createElement("div", null, "File: ", warning6.location.file, " Line: ", warning6.location.line, " Column: ", warning6.location.column))))))));
     };
     console.log("Rendering TestPageView with logs:", {
       logKeys: Object.keys(logs),
@@ -34353,7 +34384,14 @@ This file was not generated during the test run.`,
         className: "btn btn-sm btn-outline-primary"
       },
       "Open Full Size"
-    ))), selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && /* @__PURE__ */ import_react81.default.createElement("pre", { className: "bg-light p-2 small" }, /* @__PURE__ */ import_react81.default.createElement("code", null, selectedFile.content)), selectedFile?.path.includes("source_files") && /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("div", { className: "mb-2 small text-muted" }, /* @__PURE__ */ import_react81.default.createElement("i", { className: "bi bi-file-earmark-text me-1" }), selectedFile.path.split("/").pop()), /* @__PURE__ */ import_react81.default.createElement(
+    ))), selectedFile?.path.endsWith("build.json") && /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("h5", null, "Build Information"), (() => {
+      try {
+        const buildData = JSON.parse(selectedFile.content);
+        return /* @__PURE__ */ import_react81.default.createElement(import_react81.default.Fragment, null, buildData.errors?.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react81.default.createElement("h6", { className: "text-danger" }, "Errors (", buildData.errors.length, ")"), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "list-unstyled" }, buildData.errors.map((error, index2) => /* @__PURE__ */ import_react81.default.createElement("li", { key: index2, className: "mb-2 p-2 bg-light rounded" }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "text-danger fw-bold" }, error.text), error.location && /* @__PURE__ */ import_react81.default.createElement("div", { className: "small text-muted" }, "File: ", error.location.file, "Line: ", error.location.line, "Column: ", error.location.column), error.notes && error.notes.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react81.default.createElement("ul", null, error.notes.map((note, noteIndex) => /* @__PURE__ */ import_react81.default.createElement("li", { key: noteIndex }, note.text)))))))), buildData.warnings?.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react81.default.createElement("h6", { className: "text-warning" }, "Warnings (", buildData.warnings.length, ")"), /* @__PURE__ */ import_react81.default.createElement("ul", { className: "list-unstyled" }, buildData.warnings.map((warning6, index2) => /* @__PURE__ */ import_react81.default.createElement("li", { key: index2, className: "mb-2 p-2 bg-light rounded" }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "text-warning fw-bold" }, warning6.text), warning6.location && /* @__PURE__ */ import_react81.default.createElement("div", { className: "small text-muted" }, "File: ", warning6.location.file, "Line: ", warning6.location.line, "Column: ", warning6.location.column), warning6.notes && warning6.notes.length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react81.default.createElement("ul", null, warning6.notes.map((note, noteIndex) => /* @__PURE__ */ import_react81.default.createElement("li", { key: noteIndex }, note.text)))))))), (!buildData.errors || buildData.errors.length === 0) && (!buildData.warnings || buildData.warnings.length === 0) && /* @__PURE__ */ import_react81.default.createElement("div", { className: "alert alert-success" }, "No build errors or warnings"));
+      } catch (e) {
+        return /* @__PURE__ */ import_react81.default.createElement("div", { className: "alert alert-danger" }, "Error parsing build.json: ", e.message);
+      }
+    })()), selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && !selectedFile.path.endsWith("build.json") && /* @__PURE__ */ import_react81.default.createElement("pre", { className: "bg-light p-2 small" }, /* @__PURE__ */ import_react81.default.createElement("code", null, selectedFile.content)), selectedFile?.path.includes("source_files") && /* @__PURE__ */ import_react81.default.createElement("div", null, /* @__PURE__ */ import_react81.default.createElement("div", { className: "mb-2 small text-muted" }, /* @__PURE__ */ import_react81.default.createElement("i", { className: "bi bi-file-earmark-text me-1" }), selectedFile.path.split("/").pop()), /* @__PURE__ */ import_react81.default.createElement(
       Button_default2,
       {
         variant: "outline-primary",
@@ -34448,6 +34486,7 @@ This file was not generated during the test run.`,
           const receivedLogs = await testResponse.logs;
           console.log("Received logs:", Object.keys(receivedLogs));
           let sourceFiles = {};
+          let buildLogs = {};
           if (metafileRes.ok) {
             const metafile = await metafileRes.json();
             if (metafile?.metafile?.outputs) {
@@ -34457,7 +34496,8 @@ This file was not generated during the test run.`,
                 const normalizedTestPath = testPath.replace(/\./g, "_");
                 const testFileName = testPath.split("/").pop();
                 const testBaseName = testFileName?.split(".").slice(0, -1).join(".");
-                return output.entryPoint === testEntryPoint || outputPath.includes(normalizedTestPath) || testBaseName && outputPath.includes(testBaseName);
+                const normalizedOutputPath = outputPath.replace(/\//g, "_");
+                return output.entryPoint === testEntryPoint || outputPath.includes(normalizedTestPath) || normalizedOutputPath.includes(normalizedTestPath) || testBaseName && outputPath.includes(testBaseName);
               });
               matchingOutputs.forEach(([_2, output]) => {
                 Object.keys(output.inputs).forEach((inputPath) => {
@@ -34513,10 +34553,13 @@ This file was not generated during the test run.`,
                 });
               });
               sourceFiles = fileTree;
+              buildLogs = metafile;
             }
           }
           receivedLogs["source_files"] = sourceFiles;
+          receivedLogs["build_logs"] = buildLogs;
           console.log("Source files structure:", sourceFiles);
+          console.log("Build logs:", buildLogs);
           if (receivedLogs["tests.json"]) {
             console.log("tests.json content type:", typeof receivedLogs["tests.json"]);
             try {
@@ -34546,6 +34589,25 @@ This file was not generated during the test run.`,
             }
           } catch (err) {
             console.error("Failed to load summary:", err);
+          }
+          try {
+            const pathParts2 = testPath.split("/");
+            const fileName = pathParts2.pop();
+            const directoryPath = pathParts2.join("/");
+            const buildUrl = `/reports/${projectName}/${directoryPath}/${runtime}/build.json`;
+            console.log(`Fetching build.json from: ${buildUrl}`);
+            const buildResponse = await fetch(buildUrl);
+            if (buildResponse.ok) {
+              const buildData = await buildResponse.json();
+              console.log("Build data received:", buildData);
+              receivedLogs["build.json"] = buildData;
+            } else {
+              console.log("Build.json not found or not accessible, status:", buildResponse.status);
+              receivedLogs["build.json"] = { errors: [], warnings: [] };
+            }
+          } catch (err) {
+            console.log("No build.json found or error fetching it:", err);
+            receivedLogs["build.json"] = { errors: [], warnings: [] };
           }
         } catch (err) {
           setError(err instanceof Error ? err.message : "Unknown error");

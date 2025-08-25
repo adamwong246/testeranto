@@ -45,20 +45,24 @@ const specification = (Suite, Given, When, Then) => [
     }),
     Suite.Default("Content Preservation", {
         // Verify content is preserved
-        contentPreservationTest: Given.SomeBaseString(["Proxies should preserve file content"], [], [
-            Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt"),
+        contentPreservationTest: Given.SomeBaseString["Proxies should preserve file content"],
+        []: ,
+        [Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/test.txt"),
             Then.verifyContent("test content"),
-        ], "content preservation test"),
-        objectContentTest: Given.SomeBaseString(["Proxies should preserve object content"], [], [
-            Then.theButTheProxyReturns("screencast", "test/path/butThen/screen.png"),
-            Then.verifyContent({ quality: 80, fullPage: true }),
-        ], "object content test"),
+        ]: ,
+        "content preservation test": 
     }),
-    Suite.Default("Error Cases", {
-        invalidPathTest: Given.SomeBaseString(["Proxies should handle invalid paths"], [], [
-            Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/../invalid.txt"),
-        ], "invalid path test"),
-        undefinedInputTest: Given.SomeBaseString(["Proxies should handle undefined inputs"], [], [Then.theButTheProxyReturns("writeFileSync", undefined)], "undefined input test"),
-    }),
+    objectContentTest, Given.SomeBaseString(["Proxies should preserve object content"], [], [
+        Then.theButTheProxyReturns("screencast", "test/path/butThen/screen.png"),
+        Then.verifyContent({ quality: 80, fullPage: true }),
+    ], "object content test"),
 ];
 exports.specification = specification;
+Suite.Default("Error Cases", {
+    invalidPathTest: Given.SomeBaseString(["Proxies should handle invalid paths"], [], [
+        Then.theButTheProxyReturns("writeFileSync", "test/path/butThen/../invalid.txt"),
+    ], "invalid path test"),
+    undefinedInputTest: Given.SomeBaseString(["Proxies should handle undefined inputs"], [], [Then.theButTheProxyReturns("writeFileSync", undefined)], "undefined input test"),
+}),
+;
+;

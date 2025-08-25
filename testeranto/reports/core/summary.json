@@ -2,14 +2,14 @@
   "src/lib/BaseSuite.test/node.test.ts": {
     "typeErrors": 31,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": 1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/BaseSuite.test/node.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/pure.test.ts": {
     "typeErrors": 31,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/lib/BaseSuite.test/pure.test/prompt.txt",
     "failingFeatures": {}
   },
@@ -21,7 +21,7 @@
     "failingFeatures": {}
   },
   "src/components/pure/TestPageView.test/index.tsx": {
-    "typeErrors": 46,
+    "typeErrors": 52,
     "staticErrors": 2,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/components/pure/TestPageView.test/index/prompt.txt",
@@ -37,21 +37,21 @@
   "src/Pure.test.ts": {
     "typeErrors": 28,
     "staticErrors": 0,
-    "runTimeErrors": 0,
+    "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/Pure.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/pmProxy.test/index.ts": {
     "typeErrors": 21,
     "staticErrors": 2,
-    "runTimeErrors": -1,
+    "runTimeErrors": 1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/pmProxy.test/index/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/TipoSkripto.test/TipoSkripto.ts": {
     "typeErrors": 26,
     "staticErrors": 0,
-    "runTimeErrors": -1,
+    "runTimeErrors": 1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/TipoSkripto.test/TipoSkripto/prompt.txt",
     "failingFeatures": {}
   },
