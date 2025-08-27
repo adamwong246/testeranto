@@ -342,10 +342,10 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
                         react_1.default.createElement("i", { className: `bi bi-chevron-${expandedSections.standardLogs ? 'down' : 'right'} me-1` }),
                         react_1.default.createElement("span", null, "Standard Logs")),
                     expandedSections.standardLogs && (react_1.default.createElement("div", null, Object.values(logFiles_1.STANDARD_LOGS).map((logName) => {
-                        const logContent = logs[logName];
+                        const logContent = logs ? logs[logName] : undefined;
                         const exists = logContent !== undefined &&
                             ((typeof logContent === "string" && logContent.trim() !== "") ||
-                                (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                                (typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0));
                         return (react_1.default.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 1, isSelected: activeTab === logName, exists: exists, onClick: () => {
                                 if (exists) {
                                     setActiveTab(logName);
@@ -365,15 +365,16 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
                                 }
                             } }));
                     })))),
-                Object.values(logFiles_1.RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && (react_1.default.createElement("div", { className: "p-2" },
+                runtime && logFiles_1.RUNTIME_SPECIFIC_LOGS[runtime] &&
+                    Object.values(logFiles_1.RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && (react_1.default.createElement("div", { className: "p-2" },
                     react_1.default.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { runtimeLogs: !prev.runtimeLogs }))) },
                         react_1.default.createElement("i", { className: `bi bi-chevron-${expandedSections.runtimeLogs ? 'down' : 'right'} me-1` }),
                         react_1.default.createElement("span", null, "Runtime Logs")),
                     expandedSections.runtimeLogs && (react_1.default.createElement("div", null, Object.values(logFiles_1.RUNTIME_SPECIFIC_LOGS[runtime]).map((logName) => {
-                        const logContent = logs[logName];
+                        const logContent = logs ? logs[logName] : undefined;
                         const exists = logContent !== undefined &&
                             ((typeof logContent === "string" && logContent.trim() !== "") ||
-                                (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                                (typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0));
                         return (react_1.default.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 1, isSelected: activeTab === logName, exists: exists, onClick: () => {
                                 if (exists) {
                                     setActiveTab(logName);
@@ -393,7 +394,7 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
                                 }
                             } }));
                     }))))),
-                logs.source_files && (react_1.default.createElement("div", { className: "p-2" },
+                logs && logs.source_files && (react_1.default.createElement("div", { className: "p-2" },
                     react_1.default.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { sourceFiles: !prev.sourceFiles }))) },
                         react_1.default.createElement("i", { className: `bi bi-chevron-${expandedSections.sourceFiles ? 'down' : 'right'} me-1` }),
                         react_1.default.createElement("span", null, "Source Files")),

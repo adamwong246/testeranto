@@ -20,13 +20,28 @@ export const promptPather = (entryPoint, platform, projectName) => {
     return path.join("testeranto", "reports", projectName, entryPoint.split(".").slice(0, -1).join("."), platform, `prompt.txt`);
 };
 export const getRunnables = (tests, projectName, payload = {
+    pythonEntryPoints: {},
     nodeEntryPoints: {},
     nodeEntryPointSidecars: {},
     webEntryPoints: {},
     webEntryPointSidecars: {},
     pureEntryPoints: {},
     pureEntryPointSidecars: {},
+    golangEntryPoints: {},
+    golangEntryPointSidecars: {},
 }) => {
+    // Ensure all properties are properly initialized
+    const initializedPayload = {
+        pythonEntryPoints: payload.pythonEntryPoints || {},
+        nodeEntryPoints: payload.nodeEntryPoints || {},
+        nodeEntryPointSidecars: payload.nodeEntryPointSidecars || {},
+        webEntryPoints: payload.webEntryPoints || {},
+        webEntryPointSidecars: payload.webEntryPointSidecars || {},
+        pureEntryPoints: payload.pureEntryPoints || {},
+        pureEntryPointSidecars: payload.pureEntryPointSidecars || {},
+        golangEntryPoints: payload.golangEntryPoints || {},
+        golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
+    };
     return tests.reduce((pt, cv, cndx, cry) => {
         if (cv[1] === "node") {
             pt.nodeEntryPoints[cv[0]] = path.resolve(`./testeranto/bundles/node/${projectName}/${cv[0]
@@ -48,6 +63,10 @@ export const getRunnables = (tests, projectName, payload = {
                 .slice(0, -1)
                 .concat("mjs")
                 .join(".")}`);
+        }
+        else if (cv[1] === "golang") {
+            // For Go files, we'll use the original path since they're not compiled to JS
+            pt.golangEntryPoints[cv[0]] = path.resolve(cv[0]);
         }
         //////////////////////////////////////////////////////////
         cv[3]
@@ -77,6 +96,12 @@ export const getRunnables = (tests, projectName, payload = {
                 .concat("mjs")
                 .join(".")}`);
         });
+        cv[3]
+            .filter((t) => t[1] === "golang")
+            .forEach((t) => {
+            // For Go sidecars, use the original path
+            pt.golangEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
+        });
         return pt;
-    }, payload);
+    }, initializedPayload);
 };

@@ -92,7 +92,7 @@ export type TestGivenShape = Record<string, any>;
 export type TestWhenShape = Record<string, any>;
 export type TestThenShape = Record<string, any>;
 export type IPluginFactory = (register?: (entrypoint: string, sources: string[]) => any, entrypoints?: string[]) => Plugin;
-export type IRunTime = `node` | `web` | "pure" | `spawn`;
+export type IRunTime = `node` | `web` | "pure" | `golang`;
 export type ITestTypes = [string, IRunTime, {
     ports: number;
 }, ITestTypes[]];

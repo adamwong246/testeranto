@@ -1,4 +1,3 @@
-"use strict";
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // /* eslint-disable @typescript-eslint/no-unused-vars */
 // import ansiC from "ansi-colors";
@@ -6,6 +5,8 @@
 // import path from "path";
 // import readline from "readline";
 // import esbuild from "esbuild";
+import path from "path";
+import { getRunnables } from "./utils";
 // import { ITestconfig, IRunTime, ITestTypes, IBuiltConfig } from "./lib";
 // import { IProject } from "./Types";
 // import { getRunnables } from "./utils";
@@ -49,27 +50,7 @@
 //     };
 //     return Array.from(meta(config.tests, new Set()));
 //   };
-//   // const getSideCars = (runtime?: IRunTime): string[] => {
-//   //   return Array.from(
-//   //     new Set(
-//   //       config.tests
-//   //         .reduce((mm, t) => {
-//   //           mm = mm.concat(t[3]);
-//   //           return mm;
-//   //         }, [] as ITestTypes[])
-//   //         .filter((t) => {
-//   //           return t[1] === runtime;
-//   //         })
-//   //         .map((t) => {
-//   //           return t[0];
-//   //         })
-//   //     )
-//   //   );
-//   // };
-//   const config: IBuiltConfig = {
-//     ...rawConfig,
-//     buildDir: process.cwd() + "/testeranto/bundles/" + testName,
-//   };
+const config = Object.assign(Object.assign({}, rawConfig), { buildDir: process.cwd() + "/testeranto/bundles/" + testName });
 //   console.log(
 //     `Press 'q' to shutdown gracefully. Press 'x' to shutdown forcefully.`
 //   );
@@ -91,18 +72,32 @@
 //   let webDone: boolean = false;
 //   let importDone: boolean = false;
 //   let status: "build" | "built" = "build";
-//   const {
-//     nodeEntryPoints,
-//     nodeEntryPointSidecars,
-//     webEntryPoints,
-//     webEntryPointSidecars,
-//     pureEntryPoints,
-//     pureEntryPointSidecars,
-//   } = getRunnables(config.tests, testName);
-//   const onNodeDone = () => {
-//     nodeDone = true;
-//     onDone();
-//   };
+const { pythonEntryPoints, nodeEntryPoints, nodeEntryPointSidecars, webEntryPoints, webEntryPointSidecars, pureEntryPoints, pureEntryPointSidecars, golangEntryPoints, golangEntryPointSidecars, } = getRunnables(config.tests, testName);
+// Handle golang runtime using the entry points from getRunnables
+const golangFiles = [
+    ...Object.keys(golangEntryPoints),
+    ...Object.keys(golangEntryPointSidecars),
+];
+// Add golang to the list of runtimes
+let golangDone = false;
+// Define onDone first
+const onDone = async () => {
+    if (nodeDone && webDone && importDone && golangDone) {
+        status = "built";
+    }
+    if (nodeDone && webDone && importDone && golangDone && mode === "once") {
+        console.log(ansiC.inverse(`${testName} was built and the builder exited successfully.`));
+        process.exit();
+    }
+};
+const onGolangDone = () => {
+    golangDone = true;
+    onDone();
+};
+const onNodeDone = () => {
+    nodeDone = true;
+    onDone();
+};
 //   const onWebDone = () => {
 //     webDone = true;
 //     onDone();
@@ -111,6 +106,7 @@
 //     importDone = true;
 //     onDone();
 //   };
+// <<<<<<< HEAD
 //   const onDone = async () => {
 //     if (nodeDone && webDone && importDone) {
 //       status = "built";
@@ -124,6 +120,68 @@
 //       process.exit();
 //     }
 //   };
+// =======
+// Process golang entry points
+if (golangFiles.length > 0) {
+    console.log(`Processing ${golangFiles.length} Go files for runtime "golang"`);
+    // Get file sizes for inputs
+    const inputEntries = await Promise.all(golangFiles.map(async (file) => {
+        try {
+            // Use the appropriate source map to get the file path
+            const filePath = golangEntryPoints[file] || golangEntryPointSidecars[file];
+            const stats = await fs.promises.stat(filePath);
+            return [
+                file,
+                {
+                    bytes: stats.size,
+                    imports: [],
+                },
+            ];
+        }
+        catch (error) {
+            console.error(`Error getting file size for ${file}:`, error);
+            return [
+                file,
+                {
+                    bytes: 0,
+                    imports: [],
+                },
+            ];
+        }
+    }));
+    // Create a metafile for Go builds
+    const goMetafile = {
+        inputs: Object.fromEntries(inputEntries),
+        outputs: {
+            [`${config.buildDir}/golang/bin/${testName}`]: {
+                imports: [],
+                exports: [],
+                entryPoint: golangFiles[0], // Use the first .go file as entry point
+                inputs: Object.fromEntries(golangFiles.map((file) => [
+                    file,
+                    {
+                        bytesInOutput: 0, // This would be the actual size in the binary
+                    },
+                ])),
+                bytes: 0,
+            },
+        },
+    };
+    // Write the metafile
+    const metafilePath = `${config.buildDir}/golang.meta.json`;
+    await fs.promises.mkdir(path.dirname(metafilePath), { recursive: true });
+    await fs.promises.writeFile(metafilePath, JSON.stringify(goMetafile, null, 2));
+    // For actual Go compilation, you would invoke the Go compiler here
+    // For example:
+    // const { exec } = require('child_process');
+    // exec(`go build -o ${config.buildDir}/golang/bin/${testName} ${golangFiles.join(' ')}`);
+    onGolangDone();
+}
+else {
+    console.log('No Go files found for runtime "golang"');
+    onGolangDone();
+}
+// >>>>>>> golingvu
 //   fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
 //   Object.keys(bigConfig.projects).forEach((projectName) => {
 //     console.log(`testeranto/reports/${projectName}`);
@@ -163,18 +221,25 @@
 //       })
 //     )
 //   );
-//   // glob(`${process.cwd()}/testeranto/bundles/${testName}/chunk-*.mjs`, {
-//   //   ignore: "node_modules/**",
-//   // }).then((chunks) => {
-//   //   chunks.forEach((chunk) => {
-//   //     fs.unlinkSync(chunk);
-//   //   });
-//   // });
-//   const x: [IRunTime, string[]][] = [
-//     ["pure", Object.keys(pureEntryPoints)],
-//     ["node", Object.keys(nodeEntryPoints)],
-//     ["web", Object.keys(webEntryPoints)],
-//   ];
+// For golang, we'll use the filtered list
+const golangProcessingEntryPoints = {};
+const golangProcessingSidecars = {};
+golangFiles.forEach((file) => {
+    if (nodeEntryPoints[file] || webEntryPoints[file] || pureEntryPoints[file]) {
+        golangProcessingEntryPoints[file] = allEntryPoints[file];
+    }
+    if (nodeEntryPointSidecars[file] ||
+        webEntryPointSidecars[file] ||
+        pureEntryPointSidecars[file]) {
+        golangProcessingSidecars[file] = allEntryPoints[file];
+    }
+});
+const x = [
+    ["pure", Object.keys(pureEntryPoints)],
+    ["node", Object.keys(nodeEntryPoints)],
+    ["web", Object.keys(webEntryPoints)],
+    ["golang", Object.keys(golangProcessingEntryPoints)],
+];
 //   x.forEach(async ([runtime, keys]) => {
 //     keys.forEach(async (k) => {
 //       const folder = `testeranto/reports/${testName}/${k
@@ -184,28 +249,17 @@
 //       await fs.mkdirSync(folder, { recursive: true });
 //     });
 //   });
-//   [
-//     [pureEntryPoints, pureEntryPointSidecars, "pure"],
-//     [webEntryPoints, webEntryPointSidecars, "web"],
-//     [nodeEntryPoints, nodeEntryPointSidecars, "node"],
-//   ].forEach(
-//     ([eps, eps2, runtime]: [
-//       Record<string, string>,
-//       Record<string, string>,
-//       IRunTime
-//     ]) => {
-//       [...Object.keys(eps), ...Object.keys(eps2)].forEach((ep) => {
-//         const fp = path.resolve(
-//           `testeranto`,
-//           `reports`,
-//           testName,
-//           ep.split(".").slice(0, -1).join("."),
-//           runtime
-//         );
-//         fs.mkdirSync(fp, { recursive: true });
-//       });
-//     }
-//   );
+[
+    [pureEntryPoints, pureEntryPointSidecars, "pure"],
+    [webEntryPoints, webEntryPointSidecars, "web"],
+    [nodeEntryPoints, nodeEntryPointSidecars, "node"],
+    [golangProcessingEntryPoints, golangProcessingSidecars, "golang"],
+].forEach(([eps, eps2, runtime]) => {
+    [...Object.keys(eps), ...Object.keys(eps2)].forEach((ep) => {
+        const fp = path.resolve(`testeranto`, `reports`, testName, ep.split(".").slice(0, -1).join("."), runtime);
+        fs.mkdirSync(fp, { recursive: true });
+    });
+});
 //   await Promise.all([
 //     ...(
 //       [

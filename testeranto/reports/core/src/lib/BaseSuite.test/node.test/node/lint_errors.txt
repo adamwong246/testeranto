@@ -1,0 +1,6 @@
+dist/cjs-shim.js
+1:10 'createRequire' is defined but never used. (@typescript-eslint/no-unused-vars)
+7:37 '__filename' is not defined. (no-undef)
+
+src/lib/BaseGiven.ts
+186:9 Unsafe usage of ThrowStatement. (no-unsafe-finally)

@@ -177,7 +177,7 @@ export type IPluginFactory = (
   entrypoints?: string[]
 ) => Plugin;
 
-export type IRunTime = `node` | `web` | "pure" | `spawn`;
+export type IRunTime = `node` | `web` | "pure" | `golang`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 

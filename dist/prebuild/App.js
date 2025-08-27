@@ -34246,8 +34246,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       /* @__PURE__ */ import_react81.default.createElement("i", { className: `bi bi-chevron-${expandedSections.standardLogs ? "down" : "right"} me-1` }),
       /* @__PURE__ */ import_react81.default.createElement("span", null, "Standard Logs")
     ), expandedSections.standardLogs && /* @__PURE__ */ import_react81.default.createElement("div", null, Object.values(STANDARD_LOGS).map((logName) => {
-      const logContent = logs[logName];
-      const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && Object.keys(logContent).length > 0);
+      const logContent = logs ? logs[logName] : void 0;
+      const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0);
       return /* @__PURE__ */ import_react81.default.createElement(
         FileTreeItem,
         {
@@ -34277,7 +34277,7 @@ This file was not generated during the test run.`,
           }
         }
       );
-    }))), Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react81.default.createElement(
+    }))), runtime && RUNTIME_SPECIFIC_LOGS[runtime] && Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react81.default.createElement(
       "div",
       {
         className: "d-flex align-items-center text-muted mb-1",
@@ -34287,8 +34287,8 @@ This file was not generated during the test run.`,
       /* @__PURE__ */ import_react81.default.createElement("i", { className: `bi bi-chevron-${expandedSections.runtimeLogs ? "down" : "right"} me-1` }),
       /* @__PURE__ */ import_react81.default.createElement("span", null, "Runtime Logs")
     ), expandedSections.runtimeLogs && /* @__PURE__ */ import_react81.default.createElement("div", null, Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).map((logName) => {
-      const logContent = logs[logName];
-      const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && Object.keys(logContent).length > 0);
+      const logContent = logs ? logs[logName] : void 0;
+      const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0);
       return /* @__PURE__ */ import_react81.default.createElement(
         FileTreeItem,
         {
@@ -34318,7 +34318,7 @@ This file was not generated during the test run.`,
           }
         }
       );
-    }))), logs.source_files && /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react81.default.createElement(
+    }))), logs && logs.source_files && /* @__PURE__ */ import_react81.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react81.default.createElement(
       "div",
       {
         className: "d-flex align-items-center text-muted mb-1",

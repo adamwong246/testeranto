@@ -4,21 +4,6 @@
     {
       "id": "",
       "location": {
-        "column": 27,
-        "file": "src/Pure.test.ts",
-        "length": 31,
-        "line": 11,
-        "lineText": "import { MockPMBase } from \"./lib/pmProxy.test/mockPMBase\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.debug\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
         "column": 24,
         "file": "src/Pure.ts",
         "length": 22,
@@ -576,119 +561,21 @@
           }
         ],
         "format": "esm"
-      },
-      "src/lib/pmProxy.test/mockPMBase.ts": {
-        "bytes": 4372,
-        "imports": [
-          {
-            "path": "puppeteer-core",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../index",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../PM/base",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/Pure.test.ts": {
-        "bytes": 10227,
-        "imports": [
-          {
-            "path": "./CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/Pure.ts",
-            "kind": "import-statement",
-            "original": "./Pure"
-          },
-          {
-            "path": "src/lib/pmProxy.test/mockPMBase.ts",
-            "kind": "import-statement",
-            "original": "./lib/pmProxy.test/mockPMBase"
-          },
-          {
-            "path": "./lib/types",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
       }
     },
     "outputs": {
       "testeranto/bundles/pure/core/src/lib/BaseSuite.test/pure.test.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/pure/core/chunk-6OAL6SL4.mjs",
-            "kind": "import-statement"
-          }
-        ],
+        "imports": [],
         "exports": [
           "default"
         ],
         "entryPoint": "src/lib/BaseSuite.test/pure.test.ts",
         "inputs": {
-          "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 1480
-          },
-          "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 7643
-          },
-          "src/lib/BaseSuite.test/pure.test.ts": {
-            "bytesInOutput": 103
-          }
-        },
-        "bytes": 9578
-      },
-      "testeranto/bundles/pure/core/src/Pure.test.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/pure/core/chunk-6OAL6SL4.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/Pure.test.ts",
-        "inputs": {
-          "src/lib/pmProxy.test/mockPMBase.ts": {
-            "bytesInOutput": 3221
-          },
-          "src/Pure.test.ts": {
-            "bytesInOutput": 8006
-          }
-        },
-        "bytes": 11473
-      },
-      "testeranto/bundles/pure/core/chunk-6OAL6SL4.mjs": {
-        "imports": [],
-        "exports": [
-          "BaseGiven",
-          "BaseSuite",
-          "BaseThen",
-          "BaseWhen",
-          "Pure_default"
-        ],
-        "inputs": {
-          "src/lib/pmProxy.ts": {
-            "bytesInOutput": 6463
-          },
-          "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2449
-          },
           "src/lib/index.ts": {
             "bytesInOutput": 672
+          },
+          "src/lib/pmProxy.ts": {
+            "bytesInOutput": 6463
           },
           "src/lib/BaseGiven.ts": {
             "bytesInOutput": 2909
@@ -699,8 +586,11 @@
           "src/lib/BaseThen.ts": {
             "bytesInOutput": 1579
           },
+          "src/lib/BaseSuite.ts": {
+            "bytesInOutput": 2449
+          },
           "src/lib/Tiposkripto.ts": {
-            "bytesInOutput": 5297
+            "bytesInOutput": 5299
           },
           "src/PM/index.ts": {
             "bytesInOutput": 20
@@ -709,10 +599,19 @@
             "bytesInOutput": 2976
           },
           "src/Pure.ts": {
-            "bytesInOutput": 1064
+            "bytesInOutput": 1068
+          },
+          "src/lib/BaseSuite.test/mock.ts": {
+            "bytesInOutput": 1480
+          },
+          "src/lib/BaseSuite.test/test.ts": {
+            "bytesInOutput": 7643
+          },
+          "src/lib/BaseSuite.test/pure.test.ts": {
+            "bytesInOutput": 103
           }
         },
-        "bytes": 24943
+        "bytes": 34250
       }
     }
   }

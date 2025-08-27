@@ -1,4 +1,14 @@
 
+/add src/lib/index.ts
+/add src/lib/pmProxy.ts
+/add src/lib/BaseGiven.ts
+/add src/lib/BaseWhen.ts
+/add src/lib/BaseThen.ts
+/add src/lib/BaseSuite.ts
+/add src/lib/Tiposkripto.ts
+/add src/PM/index.ts
+/add src/PM/pure.ts
+/add src/Pure.ts
 /add src/lib/BaseSuite.test/mock.ts
 /add src/lib/BaseSuite.test/test.ts
 /add src/lib/BaseSuite.test/pure.test.ts

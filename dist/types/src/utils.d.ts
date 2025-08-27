@@ -6,10 +6,13 @@ export declare const lintPather: (entryPoint: string, platform: IRunTime, projec
 export declare const bddPather: (entryPoint: string, platform: IRunTime, projectName: string) => string;
 export declare const promptPather: (entryPoint: string, platform: IRunTime, projectName: string) => string;
 export declare const getRunnables: (tests: ITestTypes[], projectName: string, payload?: {
+    pythonEntryPoints: {};
     nodeEntryPoints: {};
     nodeEntryPointSidecars: {};
     webEntryPoints: {};
     webEntryPointSidecars: {};
     pureEntryPoints: {};
     pureEntryPointSidecars: {};
+    golangEntryPoints: {};
+    golangEntryPointSidecars: {};
 }) => IRunnables;

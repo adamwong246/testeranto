@@ -632,10 +632,10 @@ export const TestPageView = ({
             {expandedSections.standardLogs && (
               <div>
                 {Object.values(STANDARD_LOGS).map((logName) => {
-                  const logContent = logs[logName];
+                  const logContent = logs ? logs[logName] : undefined;
                   const exists = logContent !== undefined &&
                     ((typeof logContent === "string" && logContent.trim() !== "") ||
-                      (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                      (typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0));
 
                   return (
                     <FileTreeItem
@@ -670,7 +670,8 @@ export const TestPageView = ({
           </div>
 
           {/* Runtime Logs Section */}
-          {Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).length > 0 && (
+          {runtime && RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName] && 
+           Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).length > 0 && (
             <div className="p-2">
               <div
                 className="d-flex align-items-center text-muted mb-1"
@@ -683,10 +684,10 @@ export const TestPageView = ({
               {expandedSections.runtimeLogs && (
                 <div>
                   {Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).map((logName) => {
-                    const logContent = logs[logName];
+                    const logContent = logs ? logs[logName] : undefined;
                     const exists = logContent !== undefined &&
                       ((typeof logContent === "string" && logContent.trim() !== "") ||
-                        (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                        (typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0));
 
                     return (
                       <FileTreeItem
@@ -722,7 +723,7 @@ export const TestPageView = ({
           )}
 
           {/* Source Files Section */}
-          {logs.source_files && (
+          {logs && logs.source_files && (
             <div className="p-2">
               <div
                 className="d-flex align-items-center text-muted mb-1"

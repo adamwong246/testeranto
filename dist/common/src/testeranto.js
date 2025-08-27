@@ -60,7 +60,6 @@ if (mode !== "once" && mode !== "dev") {
 }
 const f = process.cwd() + "/" + "testeranto.config.ts";
 console.log("config file:", f);
-console.log("WTF!!!!");
 Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) => {
     const pckge = (await Promise.resolve(`${`${process.cwd()}/package.json`}`).then(s => __importStar(require(s)))).default;
     const bigConfig = module.default;
@@ -108,89 +107,20 @@ Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) 
         importDone = true;
         onDone();
     };
+    let pm = null;
     const onDone = async () => {
         if (nodeDone && webDone && importDone) {
             status = "built";
-            // Collate errors and warnings per test and write to build.log
-            try {
-                const runtimesList = ["node", "web", "pure"];
-                const testSourcesMap = {};
-                const testBuildLogs = {};
-                // Process each runtime's metafile to get build errors and warnings
-                for (const runtime of runtimesList) {
-                    const metafilePath = `${process.cwd()}/testeranto/metafiles/${runtime}/${testName}.json`;
-                    console.log(`Checking metafile path: ${metafilePath}`);
-                    if (!fs_1.default.existsSync(metafilePath)) {
-                        console.log(`Metafile does not exist for runtime ${runtime}`);
-                        continue;
-                    }
-                    const metafileData = JSON.parse(fs_1.default.readFileSync(metafilePath, "utf-8"));
-                    console.log(`Metafile data:`, JSON.stringify(metafileData, null, 2));
-                    // The metafile seems to have errors and warnings at the top level
-                    // Let's process them directly for each test
-                    if (Array.isArray(metafileData.errors)) {
-                        console.log(`Found ${metafileData.errors.length} errors in ${runtime} build`);
-                        // For now, let's associate all errors with their respective tests based on the test entry points
-                        // We'll create a build.json for each test in the config
-                        for (const test of config.tests) {
-                            const [entryPoint, testRuntime] = test;
-                            if (testRuntime !== runtime)
-                                continue;
-                            if (!testBuildLogs[entryPoint]) {
-                                testBuildLogs[entryPoint] = { errors: [], warnings: [] };
-                            }
-                            // Add all errors to this test's build log (this is a simple approach)
-                            // In a real implementation, we'd need to map errors to specific tests
-                            testBuildLogs[entryPoint].errors.push(...metafileData.errors);
-                        }
-                    }
-                    if (Array.isArray(metafileData.warnings)) {
-                        console.log(`Found ${metafileData.warnings.length} warnings in ${runtime} build`);
-                        for (const test of config.tests) {
-                            const [entryPoint, testRuntime] = test;
-                            if (testRuntime !== runtime)
-                                continue;
-                            if (!testBuildLogs[entryPoint]) {
-                                testBuildLogs[entryPoint] = { errors: [], warnings: [] };
-                            }
-                            testBuildLogs[entryPoint].warnings.push(...metafileData.warnings);
-                        }
-                    }
-                }
-                // Create build.json for each test in the configuration
-                console.log(`Number of tests in config: ${config.tests.length}`);
-                for (const test of config.tests) {
-                    const [entryPoint, runtime] = test;
-                    console.log(`Processing test: ${entryPoint} with runtime: ${runtime}`);
-                    // Get or create build info for this test
-                    if (!testBuildLogs[entryPoint]) {
-                        testBuildLogs[entryPoint] = { errors: [], warnings: [] };
-                    }
-                    const logs = testBuildLogs[entryPoint];
-                    // Write build.json directly to the path matching the test's folder structure
-                    const buildJsonDir = path_1.default.resolve(process.cwd(), "testeranto", "reports", testName, ...entryPoint.split("/").slice(0, -1), // Get directory path without filename
-                    runtime);
-                    console.log(`Target directory: ${buildJsonDir}`);
-                    try {
-                        fs_1.default.mkdirSync(buildJsonDir, { recursive: true });
-                        const buildJsonPath = path_1.default.join(buildJsonDir, "build.json");
-                        console.log(`Writing to: ${buildJsonPath}`);
-                        // Write the build info (errors and warnings)
-                        fs_1.default.writeFileSync(buildJsonPath, JSON.stringify(logs, null, 2), "utf-8");
-                        console.log(`Successfully wrote build.json for ${entryPoint}`);
-                    }
-                    catch (error) {
-                        console.error(`Error writing build.json for ${entryPoint}:`, error);
-                    }
-                }
-            }
-            catch (e) {
-                console.error("Failed to collate build logs:", e);
+            // Start the PM_Main to run the tests after build
+            if (!pm) {
+                const { PM_Main } = await Promise.resolve().then(() => __importStar(require("./PM/main")));
+                pm = new PM_Main(config, testName, mode);
+                await pm.start();
             }
         }
         if (nodeDone && webDone && importDone && mode === "once") {
             console.log(ansi_colors_1.default.inverse(`${testName} was built and the builder exited successfully.`));
-            process.exit();
+            // Let PM_Main handle the exit after tests are complete
         }
     };
     fs_1.default.writeFileSync(`${process.cwd()}/testeranto/projects.html`, (0, buildTemplates_1.AppHtml)());
@@ -287,14 +217,15 @@ Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) 
             });
         }),
     ]);
-    // Start the PM_Main to run the tests after build
-    const { PM_Main } = await Promise.resolve().then(() => __importStar(require("./PM/main")));
-    const pm = new PM_Main(config, testName, mode);
-    pm.start();
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {
             console.log("Testeranto is shutting down gracefully...");
-            pm.stop();
+            if (pm) {
+                pm.stop();
+            }
+            else {
+                process.exit();
+            }
         }
     });
 });

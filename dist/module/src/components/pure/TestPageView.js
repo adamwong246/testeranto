@@ -306,10 +306,10 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
                         React.createElement("i", { className: `bi bi-chevron-${expandedSections.standardLogs ? 'down' : 'right'} me-1` }),
                         React.createElement("span", null, "Standard Logs")),
                     expandedSections.standardLogs && (React.createElement("div", null, Object.values(STANDARD_LOGS).map((logName) => {
-                        const logContent = logs[logName];
+                        const logContent = logs ? logs[logName] : undefined;
                         const exists = logContent !== undefined &&
                             ((typeof logContent === "string" && logContent.trim() !== "") ||
-                                (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                                (typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0));
                         return (React.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 1, isSelected: activeTab === logName, exists: exists, onClick: () => {
                                 if (exists) {
                                     setActiveTab(logName);
@@ -329,15 +329,16 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
                                 }
                             } }));
                     })))),
-                Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && (React.createElement("div", { className: "p-2" },
+                runtime && RUNTIME_SPECIFIC_LOGS[runtime] &&
+                    Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && (React.createElement("div", { className: "p-2" },
                     React.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { runtimeLogs: !prev.runtimeLogs }))) },
                         React.createElement("i", { className: `bi bi-chevron-${expandedSections.runtimeLogs ? 'down' : 'right'} me-1` }),
                         React.createElement("span", null, "Runtime Logs")),
                     expandedSections.runtimeLogs && (React.createElement("div", null, Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).map((logName) => {
-                        const logContent = logs[logName];
+                        const logContent = logs ? logs[logName] : undefined;
                         const exists = logContent !== undefined &&
                             ((typeof logContent === "string" && logContent.trim() !== "") ||
-                                (typeof logContent === "object" && Object.keys(logContent).length > 0));
+                                (typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0));
                         return (React.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 1, isSelected: activeTab === logName, exists: exists, onClick: () => {
                                 if (exists) {
                                     setActiveTab(logName);
@@ -357,7 +358,7 @@ export const TestPageView = ({ projectName, testName, decodedTestPath, runtime, 
                                 }
                             } }));
                     }))))),
-                logs.source_files && (React.createElement("div", { className: "p-2" },
+                logs && logs.source_files && (React.createElement("div", { className: "p-2" },
                     React.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: 'pointer', fontSize: '0.875rem' }, onClick: () => setExpandedSections(prev => (Object.assign(Object.assign({}, prev), { sourceFiles: !prev.sourceFiles }))) },
                         React.createElement("i", { className: `bi bi-chevron-${expandedSections.sourceFiles ? 'down' : 'right'} me-1` }),
                         React.createElement("span", null, "Source Files")),

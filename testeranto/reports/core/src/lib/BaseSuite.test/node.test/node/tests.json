@@ -1,0 +1,29 @@
+{
+  "name": "BaseSuite Core Functionality Tests",
+  "givens": [
+    {
+      "key": "initialization",
+      "name": [
+        "BaseSuite should initialize with correct name and index"
+      ],
+      "whens": [
+        {
+          "name": "SuiteNameMatches: testSuite",
+          "error": false,
+          "artifacts": []
+        },
+        {
+          "name": "SuiteIndexMatches: 0",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "thens": [],
+      "error": null,
+      "features": [],
+      "artifacts": []
+    }
+  ],
+  "fails": 0,
+  "features": []
+}

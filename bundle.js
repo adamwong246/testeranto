@@ -4,8 +4,8 @@ import { sassPlugin } from 'esbuild-sass-plugin'
 await esbuild.build({
   outExtension: { '.js': '.mjs' },
   entryPoints: [
-    'src/build.ts',
-    'src/run.ts',
+    // 'src/build.ts',
+    // 'src/run.ts',
     'src/init-docs.ts',
     'src/ReportServer.ts',
     'src/esbuildConfigs/eslint-formatter-testeranto.ts',
