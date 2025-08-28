@@ -110,21 +110,24 @@ const TestPage = () => {
                         // Then collect all inputs from matching outputs
                         matchingOutputs.forEach(([_, output]) => {
                             Object.keys(output.inputs).forEach(inputPath => {
-                                // Check if this input is a TypeScript file and not in node_modules
-                                if ((inputPath.endsWith('.ts') || inputPath.endsWith('.tsx')) &&
+                                // Check if this input is a source file (TypeScript or Go) and not in node_modules
+                                if ((inputPath.endsWith('.ts') || inputPath.endsWith('.tsx') || inputPath.endsWith('.go')) &&
                                     !inputPath.includes('node_modules')) {
                                     // Get the full input details from metafile.inputs
                                     const inputDetails = metafile.metafile.inputs[inputPath];
                                     if (inputDetails) {
                                         tsSources.add(inputPath);
-                                        // Also include any imported TypeScript files
-                                        inputDetails.imports.forEach(imp => {
-                                            if ((imp.path.endsWith('.ts') || imp.path.endsWith('.tsx')) &&
-                                                !imp.path.includes('node_modules') &&
-                                                !imp.external) {
-                                                tsSources.add(imp.path);
-                                            }
-                                        });
+                                        // Also include any imported source files (for TypeScript)
+                                        // Go files don't have imports in the same way, so we'll only process for TypeScript
+                                        if (inputPath.endsWith('.ts') || inputPath.endsWith('.tsx')) {
+                                            inputDetails.imports.forEach(imp => {
+                                                if ((imp.path.endsWith('.ts') || imp.path.endsWith('.tsx')) &&
+                                                    !imp.path.includes('node_modules') &&
+                                                    !imp.external) {
+                                                    tsSources.add(imp.path);
+                                                }
+                                            });
+                                        }
                                     }
                                 }
                             });

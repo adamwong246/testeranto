@@ -34501,15 +34501,17 @@ This file was not generated during the test run.`,
               });
               matchingOutputs.forEach(([_2, output]) => {
                 Object.keys(output.inputs).forEach((inputPath) => {
-                  if ((inputPath.endsWith(".ts") || inputPath.endsWith(".tsx")) && !inputPath.includes("node_modules")) {
+                  if ((inputPath.endsWith(".ts") || inputPath.endsWith(".tsx") || inputPath.endsWith(".go")) && !inputPath.includes("node_modules")) {
                     const inputDetails = metafile.metafile.inputs[inputPath];
                     if (inputDetails) {
                       tsSources.add(inputPath);
-                      inputDetails.imports.forEach((imp) => {
-                        if ((imp.path.endsWith(".ts") || imp.path.endsWith(".tsx")) && !imp.path.includes("node_modules") && !imp.external) {
-                          tsSources.add(imp.path);
-                        }
-                      });
+                      if (inputPath.endsWith(".ts") || inputPath.endsWith(".tsx")) {
+                        inputDetails.imports.forEach((imp) => {
+                          if ((imp.path.endsWith(".ts") || imp.path.endsWith(".tsx")) && !imp.path.includes("node_modules") && !imp.external) {
+                            tsSources.add(imp.path);
+                          }
+                        });
+                      }
                     }
                   }
                 });

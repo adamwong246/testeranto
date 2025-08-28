@@ -55,6 +55,7 @@ import(f).then(async (module) => {
     let nodeDone = false;
     let webDone = false;
     let importDone = false;
+    let golangDone = false;
     let status = "build";
     const { nodeEntryPoints, nodeEntryPointSidecars, webEntryPoints, webEntryPointSidecars, pureEntryPoints, pureEntryPointSidecars, } = getRunnables(config.tests, testName);
     const onNodeDone = () => {
@@ -69,9 +70,19 @@ import(f).then(async (module) => {
         importDone = true;
         onDone();
     };
+    const onGolangDone = () => {
+        golangDone = true;
+        onDone();
+    };
     let pm = null;
     const onDone = async () => {
-        if (nodeDone && webDone && importDone) {
+        // Check if golang tests are present
+        const hasGolangTests = config.tests.some(test => test[1] === 'golang');
+        // If golang tests are present, wait for golangDone, otherwise ignore
+        const allDone = hasGolangTests
+            ? (nodeDone && webDone && importDone && golangDone)
+            : (nodeDone && webDone && importDone);
+        if (allDone) {
             status = "built";
             // Start the PM_Main to run the tests after build
             if (!pm) {
@@ -80,7 +91,7 @@ import(f).then(async (module) => {
                 await pm.start();
             }
         }
-        if (nodeDone && webDone && importDone && mode === "once") {
+        if (allDone && mode === "once") {
             console.log(ansiC.inverse(`${testName} was built and the builder exited successfully.`));
             // Let PM_Main handle the exit after tests are complete
         }
@@ -107,6 +118,19 @@ import(f).then(async (module) => {
         };
         return Array.from(meta(config.tests, new Set()));
     };
+    // Handle golang tests by generating their metafiles
+    const golangTests = config.tests.filter(test => test[1] === 'golang');
+    const hasGolangTests = golangTests.length > 0;
+    if (hasGolangTests) {
+        // Import and use the golang metafile utilities
+        const { generateGolangMetafile, writeGolangMetafile } = await import('./utils/golingvuMetafile');
+        // Get the entry points (first element of each test tuple)
+        const golangEntryPoints = golangTests.map(test => test[0]);
+        const metafile = await generateGolangMetafile(testName, golangEntryPoints);
+        writeGolangMetafile(testName, metafile);
+        // Mark golang as done after writing the metafile
+        onGolangDone();
+    }
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
         const sourceDir = sourceFileSplit.slice(0, -1);

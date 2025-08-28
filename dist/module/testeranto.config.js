@@ -20,9 +20,9 @@ const config = {
         core: {
             tests: [
                 ["src/golingvu/base_suite_test.go", "golang", { ports: 0 }, []],
-                // ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
-                // ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
-                // ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
+                ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
+                ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
+                ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
                 // [
                 //   "src/components/pure/TestPageView.test/index.tsx",
                 //   "web",
