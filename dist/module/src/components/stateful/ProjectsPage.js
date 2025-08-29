@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProjectsPageView } from '../pure/ProjectsPageView';
+import { summaryDotJson } from '../../utils/api';
 export const ProjectsPage = () => {
     const [projects, setProjects] = useState([]);
     const [summaries, setSummaries] = useState({});
@@ -43,7 +44,7 @@ export const ProjectsPage = () => {
                 const projectsData = await Promise.all(projectNames.map(async (name) => {
                     var _a, _b, _c, _d, _e, _f;
                     const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                        fetch(`/reports/${name}/summary.json`),
+                        fetch(summaryDotJson(name)),
                         fetch(`/metafiles/node/${name}.json`),
                         fetch(`/metafiles/web/${name}.json`),
                         fetch(`/metafiles/pure/${name}.json`),

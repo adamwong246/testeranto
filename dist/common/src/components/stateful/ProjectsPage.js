@@ -38,6 +38,7 @@ exports.ProjectsPage = void 0;
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const ProjectsPageView_1 = require("../pure/ProjectsPageView");
+const api_1 = require("../../utils/api");
 const ProjectsPage = () => {
     const [projects, setProjects] = (0, react_1.useState)([]);
     const [summaries, setSummaries] = (0, react_1.useState)({});
@@ -79,7 +80,7 @@ const ProjectsPage = () => {
                 const projectsData = await Promise.all(projectNames.map(async (name) => {
                     var _a, _b, _c, _d, _e, _f;
                     const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                        fetch(`/reports/${name}/summary.json`),
+                        fetch((0, api_1.summaryDotJson)(name)),
                         fetch(`/metafiles/node/${name}.json`),
                         fetch(`/metafiles/web/${name}.json`),
                         fetch(`/metafiles/pure/${name}.json`),

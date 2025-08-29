@@ -27877,6 +27877,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
   };
+  var summaryDotJson = (name) => {
+    return `/reports/${name}/summary.json`;
+  };
 
   // src/components/pure/TestPageView.tsx
   var import_react81 = __toESM(require_react(), 1);
@@ -34574,7 +34577,7 @@ This file was not generated during the test run.`,
           }
           setLogs(receivedLogs);
           try {
-            const summaryResponse = await fetch(`/reports/${projectName}/summary.json`);
+            const summaryResponse = await fetch(summaryDotJson(projectName));
             if (!summaryResponse.ok)
               throw new Error("Failed to fetch summary");
             const allSummaries = await summaryResponse.json();
@@ -34763,7 +34766,7 @@ This file was not generated during the test run.`,
       const fetchData = async () => {
         try {
           const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-            fetch(`/reports/${name}/summary.json`),
+            fetch(summaryDotJson(name)),
             fetch(`/metafiles/node/${name}.json`),
             fetch(`/metafiles/web/${name}.json`),
             fetch(`/metafiles/pure/${name}.json`),
@@ -34902,7 +34905,7 @@ This file was not generated during the test run.`,
           const projectsData = await Promise.all(
             projectNames.map(async (name) => {
               const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                fetch(`/reports/${name}/summary.json`),
+                fetch(summaryDotJson(name)),
                 fetch(`/metafiles/node/${name}.json`),
                 fetch(`/metafiles/web/${name}.json`),
                 fetch(`/metafiles/pure/${name}.json`),

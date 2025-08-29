@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DesignEditor } from '../../../design-editor/DesignEditor';
-import { fetchTestData } from '../../utils/api';
+import { fetchTestData, summaryDotJson } from '../../utils/api';
 
 import { TestPageView } from '../pure/TestPageView';
 
@@ -183,7 +183,7 @@ export const TestPage = () => {
         // setLintErrors(testResponse.lintErrors);
 
         try {
-          const summaryResponse = await fetch(`/reports/${projectName}/summary.json`);
+          const summaryResponse = await fetch(summaryDotJson(projectName));
           if (!summaryResponse.ok) throw new Error('Failed to fetch summary');
           const allSummaries = await summaryResponse.json();
           const testSummary = allSummaries[testPath];

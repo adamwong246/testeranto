@@ -39,6 +39,7 @@ exports.ProjectPage = void 0;
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const ProjectPageView_1 = require("../pure/ProjectPageView");
+const api_1 = require("../../utils/api");
 const ProjectPage = () => {
     const [summary, setSummary] = (0, react_1.useState)(null);
     const [nodeLogs, setNodeLogs] = (0, react_1.useState)(null);
@@ -68,7 +69,7 @@ const ProjectPage = () => {
         const fetchData = async () => {
             try {
                 const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-                    fetch(`/reports/${name}/summary.json`),
+                    fetch((0, api_1.summaryDotJson)(name)),
                     fetch(`/metafiles/node/${name}.json`),
                     fetch(`/metafiles/web/${name}.json`),
                     fetch(`/metafiles/pure/${name}.json`),

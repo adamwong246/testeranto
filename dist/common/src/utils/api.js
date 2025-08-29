@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchTestData = exports.fetchProjectData = void 0;
+exports.summaryDotJson = exports.fetchTestData = exports.fetchProjectData = void 0;
 const logFiles_1 = require("./logFiles");
 const fetchProjectData = async (projectName) => {
     const [summaryRes, configRes] = await Promise.all([
-        fetch(`reports/${projectName}/summary.json`),
-        fetch("reports/config.json"),
+        fetch((0, exports.summaryDotJson)(projectName)),
+        fetch("/reports/config.json"),
     ]);
     return {
         summary: (await summaryRes.json()),
@@ -27,7 +27,7 @@ const fetchTestData = async (projectName, filepath, runTime) => {
                 const response = await fetch(`${basePath}/${file}`);
                 if (!response.ok)
                     return null;
-                const content = file.endsWith('.json')
+                const content = file.endsWith(".json")
                     ? await response.json()
                     : await response.text();
                 return { file, content };
@@ -39,7 +39,7 @@ const fetchTestData = async (projectName, filepath, runTime) => {
         });
         // Wait for all requests and populate logs
         const logResults = await Promise.all(logRequests);
-        logResults.forEach(result => {
+        logResults.forEach((result) => {
             if (result) {
                 logs[result.file] = result.content;
             }
@@ -50,7 +50,7 @@ const fetchTestData = async (projectName, filepath, runTime) => {
                 try {
                     const response = await fetch(`${basePath}/${file}`);
                     if (response.ok) {
-                        logs[file] = file.endsWith('.json')
+                        logs[file] = file.endsWith(".json")
                             ? await response.json()
                             : await response.text();
                     }
@@ -68,12 +68,12 @@ const fetchTestData = async (projectName, filepath, runTime) => {
         if (Object.keys(logs).length === 0) {
             return {
                 logs: {},
-                error: "No test logs found. The test may not have run or the report files are missing."
+                error: "No test logs found. The test may not have run or the report files are missing.",
             };
         }
         return {
             logs,
-            error: null
+            error: null,
         };
     }
     catch (err) {
@@ -87,3 +87,7 @@ const fetchTestData = async (projectName, filepath, runTime) => {
     }
 };
 exports.fetchTestData = fetchTestData;
+const summaryDotJson = (name) => {
+    return `/reports/${name}/summary.json`;
+};
+exports.summaryDotJson = summaryDotJson;

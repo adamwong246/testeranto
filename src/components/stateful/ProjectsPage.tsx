@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProjectsPageView } from '../pure/ProjectsPageView';
 import { ISummary } from '../../Types';
+import { summaryDotJson } from '../../utils/api';
 
 export const ProjectsPage = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -50,7 +51,7 @@ export const ProjectsPage = () => {
         const projectsData = await Promise.all(
           projectNames.map(async (name) => {
             const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-              fetch(`/reports/${name}/summary.json`),
+              fetch(summaryDotJson(name)),
               fetch(`/metafiles/node/${name}.json`),
               fetch(`/metafiles/web/${name}.json`),
               fetch(`/metafiles/pure/${name}.json`),

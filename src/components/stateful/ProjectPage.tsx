@@ -6,6 +6,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import { ProjectPageView } from '../pure/ProjectPageView';
 import { ISummary } from '../../Types';
+import { summaryDotJson } from '../../utils/api';
 
 export const ProjectPage = () => {
   const [summary, setSummary] = useState<ISummary | null>(null);
@@ -38,7 +39,7 @@ export const ProjectPage = () => {
     const fetchData = async () => {
       try {
         const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
-          fetch(`/reports/${name}/summary.json`),
+          fetch(summaryDotJson(name)),
           fetch(`/metafiles/node/${name}.json`),
           fetch(`/metafiles/web/${name}.json`),
           fetch(`/metafiles/pure/${name}.json`),

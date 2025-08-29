@@ -201,7 +201,7 @@ const TestPage = () => {
                 // setTypeErrors(testResponse.typeErrors);
                 // setLintErrors(testResponse.lintErrors);
                 try {
-                    const summaryResponse = await fetch(`/reports/${projectName}/summary.json`);
+                    const summaryResponse = await fetch((0, api_1.summaryDotJson)(projectName));
                     if (!summaryResponse.ok)
                         throw new Error('Failed to fetch summary');
                     const allSummaries = await summaryResponse.json();

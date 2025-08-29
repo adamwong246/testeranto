@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ISummary, IBuiltConfig } from "../Types";
-import { 
-  getLogFilesForRuntime,
-  STANDARD_LOGS 
-} from "./logFiles";
+import { getLogFilesForRuntime, STANDARD_LOGS } from "./logFiles";
 
 export const fetchProjectData = async (projectName: string) => {
   const [summaryRes, configRes] = await Promise.all([
-    fetch(`reports/${projectName}/summary.json`),
-    fetch("reports/config.json"),
+    fetch(summaryDotJson(projectName)),
+    fetch("/reports/config.json"),
   ]);
 
   return {
@@ -39,11 +36,11 @@ export const fetchTestData = async (
       try {
         const response = await fetch(`${basePath}/${file}`);
         if (!response.ok) return null;
-        
-        const content = file.endsWith('.json') 
+
+        const content = file.endsWith(".json")
           ? await response.json()
           : await response.text();
-        
+
         return { file, content };
       } catch (err) {
         console.error(`Failed to fetch ${file}:`, err);
@@ -53,7 +50,7 @@ export const fetchTestData = async (
 
     // Wait for all requests and populate logs
     const logResults = await Promise.all(logRequests);
-    logResults.forEach(result => {
+    logResults.forEach((result) => {
       if (result) {
         logs[result.file] = result.content;
       }
@@ -65,7 +62,7 @@ export const fetchTestData = async (
         try {
           const response = await fetch(`${basePath}/${file}`);
           if (response.ok) {
-            logs[file] = file.endsWith('.json') 
+            logs[file] = file.endsWith(".json")
               ? await response.json()
               : await response.text();
           }
@@ -84,13 +81,14 @@ export const fetchTestData = async (
     if (Object.keys(logs).length === 0) {
       return {
         logs: {},
-        error: "No test logs found. The test may not have run or the report files are missing."
+        error:
+          "No test logs found. The test may not have run or the report files are missing.",
       };
     }
 
     return {
       logs,
-      error: null
+      error: null,
     };
   } catch (err) {
     return {
@@ -103,4 +101,8 @@ export const fetchTestData = async (
       }`,
     };
   }
+};
+
+export const summaryDotJson = (name: string): string => {
+  return `/reports/${name}/summary.json`;
 };

@@ -151,13 +151,14 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
             this.checkForShutdown();
         };
         this.writeBigBoard = () => {
+            // note: this path is different from the one used by front end
             const summaryPath = `./testeranto/reports/${this.name}/summary.json`;
             const summaryData = JSON.stringify(this.summary, null, 2);
             fs_1.default.writeFileSync(summaryPath, summaryData);
             // Broadcast the update
             this.broadcast({
-                type: 'summaryUpdate',
-                data: this.summary
+                type: "summaryUpdate",
+                data: this.summary,
             });
         };
         this.name = name;
