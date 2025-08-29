@@ -7,18 +7,7 @@ import { IRunnables, ITTestResourceConfiguration } from "../lib/index.js";
 import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 import { Sidecar } from "../lib/Sidecar.js";
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
-type LogStreams = {
-    closeAll: () => void;
-    writeExitCode: (code: number, error?: Error) => void;
-    stdout?: fs.WriteStream;
-    stderr?: fs.WriteStream;
-    info?: fs.WriteStream;
-    warn?: fs.WriteStream;
-    error?: fs.WriteStream;
-    debug?: fs.WriteStream;
-    exit: fs.WriteStream;
-};
-declare function createLogStreams(reportDest: string, runtime: IRunTime): LogStreams;
+import { createLogStreams } from "./utils.js";
 export declare class PM_Main extends PM_WithWebSocket {
     ports: Record<number, string>;
     queue: string[];
@@ -73,4 +62,3 @@ export declare class PM_Main extends PM_WithWebSocket {
     checkQueue(): void;
     checkForShutdown: () => void;
 }
-export {};

@@ -11,7 +11,7 @@ import fs, { watch } from "fs";
 import path from "path";
 import puppeteer, { ConsoleMessage } from "puppeteer-core";
 import ansiC from "ansi-colors";
-import crypto from "node:crypto";
+
 import { WebSocketServer } from "ws";
 import http from "http";
 import url from "url";
@@ -28,215 +28,22 @@ import { Sidecar } from "../lib/Sidecar.js";
 import { Queue } from "../utils/queue.js";
 
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
-
-type IOutputs = Record<
-  string,
-  {
-    entryPoint: string;
-    inputs: Record<string, string>;
-  }
->;
+import {
+  runtimeLogs,
+  fileHash,
+  createLogStreams,
+  IOutputs,
+  statusMessagePretty,
+  filesHash,
+  isValidUrl,
+  pollForFile,
+  writeFileAndCreateDir,
+} from "./utils.js";
 
 const changes: Record<string, string> = {};
 const fileHashes = {};
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
-
-type LogStreams = {
-  closeAll: () => void;
-  writeExitCode: (code: number, error?: Error) => void;
-  stdout?: fs.WriteStream;
-  stderr?: fs.WriteStream;
-  info?: fs.WriteStream;
-  warn?: fs.WriteStream;
-  error?: fs.WriteStream;
-  debug?: fs.WriteStream;
-  exit: fs.WriteStream;
-};
-
-function runtimeLogs(
-  runtime: IRunTime,
-  reportDest: string
-): Record<string, fs.WriteStream> {
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-
-  try {
-    if (!fs.existsSync(safeDest)) {
-      fs.mkdirSync(safeDest, { recursive: true });
-    }
-
-    if (runtime === "node") {
-      return {
-        stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    } else if (runtime === "web") {
-      return {
-        info: fs.createWriteStream(`${safeDest}/info.log`),
-        warn: fs.createWriteStream(`${safeDest}/warn.log`),
-        error: fs.createWriteStream(`${safeDest}/error.log`),
-        debug: fs.createWriteStream(`${safeDest}/debug.log`),
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    } else if (runtime === "pure") {
-      return {
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    } else if (runtime === "pitono") {
-      return {
-        stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs.createWriteStream(`${safeDest}/exit.log`),
-      };
-    } else {
-      throw `unknown runtime: ${runtime}`;
-    }
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-
-function createLogStreams(reportDest: string, runtime: IRunTime): LogStreams {
-  // Create directory if it doesn't exist
-  if (!fs.existsSync(reportDest)) {
-    fs.mkdirSync(reportDest, { recursive: true });
-  }
-
-  const streams = runtimeLogs(runtime, reportDest);
-
-  // const streams = {
-  //   exit: fs.createWriteStream(`${reportDest}/exit.log`),
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-
-  try {
-    if (!fs.existsSync(safeDest)) {
-      fs.mkdirSync(safeDest, { recursive: true });
-    }
-
-    const streams = runtimeLogs(runtime, safeDest);
-    // const streams = {
-    //   exit: fs.createWriteStream(`${safeDest}/exit.log`),
-    //   ...(runtime === "node" || runtime === "pure"
-    //     ? {
-    //         stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
-    //         stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
-    //       }
-    //     : {
-    //         info: fs.createWriteStream(`${safeDest}/info.log`),
-    //         warn: fs.createWriteStream(`${safeDest}/warn.log`),
-    //         error: fs.createWriteStream(`${safeDest}/error.log`),
-    //         debug: fs.createWriteStream(`${safeDest}/debug.log`),
-    //       }),
-    // };
-
-    return {
-      ...streams,
-      closeAll: () => {
-        Object.values(streams).forEach(
-          (stream) => !stream.closed && stream.close()
-        );
-      },
-      writeExitCode: (code: number, error?: Error) => {
-        if (error) {
-          streams.exit.write(`Error: ${error.message}\n`);
-          if (error.stack) {
-            streams.exit.write(`Stack Trace:\n${error.stack}\n`);
-          }
-        }
-        streams.exit.write(`${code}\n`);
-      },
-      exit: streams.exit,
-    };
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-
-async function fileHash(filePath, algorithm = "md5") {
-  return new Promise<string>((resolve, reject) => {
-    const hash = crypto.createHash(algorithm);
-    const fileStream = fs.createReadStream(filePath);
-
-    fileStream.on("data", (data) => {
-      hash.update(data);
-    });
-
-    fileStream.on("end", () => {
-      const fileHash = hash.digest("hex");
-      resolve(fileHash);
-    });
-
-    fileStream.on("error", (error) => {
-      reject(`Error reading file: ${error.message}`);
-    });
-  });
-}
-
-const statusMessagePretty = (
-  failures: number,
-  test: string,
-  runtime: IRunTime
-) => {
-  if (failures === 0) {
-    console.log(ansiC.green(ansiC.inverse(`${runtime} > ${test}`)));
-  } else if (failures > 0) {
-    console.log(
-      ansiC.red(
-        ansiC.inverse(
-          `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
-        )
-      )
-    );
-  } else {
-    console.log(
-      ansiC.red(ansiC.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
-    );
-  }
-};
-
-async function writeFileAndCreateDir(filePath, data) {
-  const dirPath = path.dirname(filePath);
-
-  try {
-    await fs.promises.mkdir(dirPath, { recursive: true });
-    await fs.writeFileSync(filePath, data);
-  } catch (error) {
-    console.error(`Error writing file: ${error}`);
-  }
-}
-
-const filesHash = async (files: string[], algorithm = "md5") => {
-  return new Promise<string>((resolve, reject) => {
-    resolve(
-      files.reduce(async (mm: Promise<string>, f) => {
-        return (await mm) + (await fileHash(f));
-      }, Promise.resolve(""))
-    );
-  });
-};
-
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-
-// Wait for file to exist, checks every 2 seconds by default
-async function pollForFile(path, timeout = 2000) {
-  const intervalObj = setInterval(function () {
-    const file = path;
-    const fileExists = fs.existsSync(file);
-    if (fileExists) {
-      clearInterval(intervalObj);
-    }
-  }, timeout);
-}
 
 export class PM_Main extends PM_WithWebSocket {
   ports: Record<number, string>;
@@ -324,19 +131,7 @@ export class PM_Main extends PM_WithWebSocket {
     const c = this.configs.tests.find(([v, r]) => {
       return v === name;
     }) as ITestTypes;
-
-    const s = c[3][n];
-
-    const r = s[1];
-    if (r === "node") {
-      return this.launchNodeSideCar(s);
-    } else if (r === "web") {
-      return this.launchWebSideCar(s);
-    } else if (r === "pure") {
-      return this.launchPureSideCar(s);
-    } else {
-      throw `unknown runtime ${r}`;
-    }
+    throw "not yet implemented";
   }
 
   mapping(): [string, (...a) => any][] {

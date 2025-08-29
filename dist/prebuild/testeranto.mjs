@@ -1095,6 +1095,125 @@ var init_PM_WithWebSocket = __esm({
   }
 });
 
+// src/PM/utils.ts
+import ansiC2 from "ansi-colors";
+import fs8 from "fs";
+import crypto from "node:crypto";
+function runtimeLogs(runtime, reportDest) {
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs8.existsSync(safeDest)) {
+      fs8.mkdirSync(safeDest, { recursive: true });
+    }
+    if (runtime === "node") {
+      return {
+        stdout: fs8.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs8.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "web") {
+      return {
+        info: fs8.createWriteStream(`${safeDest}/info.log`),
+        warn: fs8.createWriteStream(`${safeDest}/warn.log`),
+        error: fs8.createWriteStream(`${safeDest}/error.log`),
+        debug: fs8.createWriteStream(`${safeDest}/debug.log`),
+        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "pure") {
+      return {
+        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "pitono") {
+      return {
+        stdout: fs8.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs8.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else {
+      throw `unknown runtime: ${runtime}`;
+    }
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+function createLogStreams(reportDest, runtime) {
+  if (!fs8.existsSync(reportDest)) {
+    fs8.mkdirSync(reportDest, { recursive: true });
+  }
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs8.existsSync(safeDest)) {
+      fs8.mkdirSync(safeDest, { recursive: true });
+    }
+    const streams = runtimeLogs(runtime, safeDest);
+    return {
+      ...streams,
+      closeAll: () => {
+        Object.values(streams).forEach(
+          (stream) => !stream.closed && stream.close()
+        );
+      },
+      writeExitCode: (code, error) => {
+        if (error) {
+          streams.exit.write(`Error: ${error.message}
+`);
+          if (error.stack) {
+            streams.exit.write(`Stack Trace:
+${error.stack}
+`);
+          }
+        }
+        streams.exit.write(`${code}
+`);
+      },
+      exit: streams.exit
+    };
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+async function fileHash(filePath, algorithm = "md5") {
+  return new Promise((resolve, reject) => {
+    const hash = crypto.createHash(algorithm);
+    const fileStream = fs8.createReadStream(filePath);
+    fileStream.on("data", (data) => {
+      hash.update(data);
+    });
+    fileStream.on("end", () => {
+      const fileHash2 = hash.digest("hex");
+      resolve(fileHash2);
+    });
+    fileStream.on("error", (error) => {
+      reject(`Error reading file: ${error.message}`);
+    });
+  });
+}
+var statusMessagePretty;
+var init_utils2 = __esm({
+  "src/PM/utils.ts"() {
+    "use strict";
+    statusMessagePretty = (failures, test, runtime) => {
+      if (failures === 0) {
+        console.log(ansiC2.green(ansiC2.inverse(`${runtime} > ${test}`)));
+      } else if (failures > 0) {
+        console.log(
+          ansiC2.red(
+            ansiC2.inverse(
+              `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
+            )
+          )
+        );
+      } else {
+        console.log(
+          ansiC2.red(ansiC2.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
+        );
+      }
+    };
+  }
+});
+
 // src/PM/pitonoRunner.ts
 var pitonoRunner_exports = {};
 __export(pitonoRunner_exports, {
@@ -1102,7 +1221,7 @@ __export(pitonoRunner_exports, {
 });
 import { execSync } from "child_process";
 import path6 from "path";
-import fs8 from "fs";
+import fs9 from "fs";
 var PitonoRunner;
 var init_pitonoRunner = __esm({
   "src/PM/pitonoRunner.ts"() {
@@ -1116,21 +1235,21 @@ var init_pitonoRunner = __esm({
         const coreJsonPath = path6.join(process.cwd(), "testeranto", "pitono", this.testName, "core.json");
         const maxWaitTime = 1e4;
         const startTime = Date.now();
-        while (!fs8.existsSync(coreJsonPath) && Date.now() - startTime < maxWaitTime) {
+        while (!fs9.existsSync(coreJsonPath) && Date.now() - startTime < maxWaitTime) {
           await new Promise((resolve) => setTimeout(resolve, 100));
         }
-        if (!fs8.existsSync(coreJsonPath)) {
+        if (!fs9.existsSync(coreJsonPath)) {
           console.error(`Pitono core.json not found at: ${coreJsonPath} after waiting ${maxWaitTime}ms`);
           return;
         }
         try {
-          const coreData = JSON.parse(fs8.readFileSync(coreJsonPath, "utf-8"));
+          const coreData = JSON.parse(fs9.readFileSync(coreJsonPath, "utf-8"));
           const entryPoints = coreData.entryPoints;
           for (const entryPoint of entryPoints) {
             try {
               console.log(`Running pitono test: ${entryPoint}`);
               const absolutePath = path6.resolve(entryPoint);
-              if (!fs8.existsSync(absolutePath)) {
+              if (!fs9.existsSync(absolutePath)) {
                 console.error(`Pitono test file not found: ${absolutePath}`);
                 continue;
               }
@@ -1157,110 +1276,17 @@ __export(main_exports, {
 import { spawn as spawn2 } from "node:child_process";
 import ansiColors from "ansi-colors";
 import net from "net";
-import fs9, { watch } from "fs";
+import fs10, { watch } from "fs";
 import path7 from "path";
 import puppeteer from "puppeteer-core";
-import ansiC2 from "ansi-colors";
-import crypto from "node:crypto";
+import ansiC3 from "ansi-colors";
 import url2 from "url";
 import mime2 from "mime-types";
-function runtimeLogs(runtime, reportDest) {
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-  try {
-    if (!fs9.existsSync(safeDest)) {
-      fs9.mkdirSync(safeDest, { recursive: true });
-    }
-    if (runtime === "node") {
-      return {
-        stdout: fs9.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs9.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs9.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "web") {
-      return {
-        info: fs9.createWriteStream(`${safeDest}/info.log`),
-        warn: fs9.createWriteStream(`${safeDest}/warn.log`),
-        error: fs9.createWriteStream(`${safeDest}/error.log`),
-        debug: fs9.createWriteStream(`${safeDest}/debug.log`),
-        exit: fs9.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "pure") {
-      return {
-        exit: fs9.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "pitono") {
-      return {
-        stdout: fs9.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs9.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs9.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else {
-      throw `unknown runtime: ${runtime}`;
-    }
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-function createLogStreams(reportDest, runtime) {
-  if (!fs9.existsSync(reportDest)) {
-    fs9.mkdirSync(reportDest, { recursive: true });
-  }
-  const streams = runtimeLogs(runtime, reportDest);
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-  try {
-    if (!fs9.existsSync(safeDest)) {
-      fs9.mkdirSync(safeDest, { recursive: true });
-    }
-    const streams2 = runtimeLogs(runtime, safeDest);
-    return {
-      ...streams2,
-      closeAll: () => {
-        Object.values(streams2).forEach(
-          (stream) => !stream.closed && stream.close()
-        );
-      },
-      writeExitCode: (code, error) => {
-        if (error) {
-          streams2.exit.write(`Error: ${error.message}
-`);
-          if (error.stack) {
-            streams2.exit.write(`Stack Trace:
-${error.stack}
-`);
-          }
-        }
-        streams2.exit.write(`${code}
-`);
-      },
-      exit: streams2.exit
-    };
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-async function fileHash(filePath, algorithm = "md5") {
-  return new Promise((resolve, reject) => {
-    const hash = crypto.createHash(algorithm);
-    const fileStream = fs9.createReadStream(filePath);
-    fileStream.on("data", (data) => {
-      hash.update(data);
-    });
-    fileStream.on("end", () => {
-      const fileHash2 = hash.digest("hex");
-      resolve(fileHash2);
-    });
-    fileStream.on("error", (error) => {
-      reject(`Error reading file: ${error.message}`);
-    });
-  });
-}
 async function writeFileAndCreateDir(filePath, data) {
   const dirPath = path7.dirname(filePath);
   try {
-    await fs9.promises.mkdir(dirPath, { recursive: true });
-    await fs9.writeFileSync(filePath, data);
+    await fs10.promises.mkdir(dirPath, { recursive: true });
+    await fs10.writeFileSync(filePath, data);
   } catch (error) {
     console.error(`Error writing file: ${error}`);
   }
@@ -1276,40 +1302,24 @@ function isValidUrl(string) {
 async function pollForFile(path11, timeout = 2e3) {
   const intervalObj = setInterval(function() {
     const file = path11;
-    const fileExists = fs9.existsSync(file);
+    const fileExists = fs10.existsSync(file);
     if (fileExists) {
       clearInterval(intervalObj);
     }
   }, timeout);
 }
-var changes, fileHashes, files2, screenshots2, statusMessagePretty, filesHash, PM_Main;
+var changes, fileHashes, files2, screenshots2, filesHash, PM_Main;
 var init_main = __esm({
   async "src/PM/main.ts"() {
     "use strict";
     init_utils();
     init_queue();
     await init_PM_WithWebSocket();
+    init_utils2();
     changes = {};
     fileHashes = {};
     files2 = {};
     screenshots2 = {};
-    statusMessagePretty = (failures, test, runtime) => {
-      if (failures === 0) {
-        console.log(ansiC2.green(ansiC2.inverse(`${runtime} > ${test}`)));
-      } else if (failures > 0) {
-        console.log(
-          ansiC2.red(
-            ansiC2.inverse(
-              `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
-            )
-          )
-        );
-      } else {
-        console.log(
-          ansiC2.red(ansiC2.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
-        );
-      }
-    };
     filesHash = async (files3, algorithm = "md5") => {
       return new Promise((resolve, reject) => {
         resolve(
@@ -1339,11 +1349,11 @@ var init_main = __esm({
           return getRunnables(tests, testName2, payload);
         };
         this.launchPure = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`pure < ${src}`)));
+          console.log(ansiC3.green(ansiC3.inverse(`pure < ${src}`)));
           this.bddTestIsRunning(src);
           const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
-          if (!fs9.existsSync(reportDest)) {
-            fs9.mkdirSync(reportDest, { recursive: true });
+          if (!fs10.existsSync(reportDest)) {
+            fs10.mkdirSync(reportDest, { recursive: true });
           }
           const destFolder = dest.replace(".mjs", "");
           let argz2 = "";
@@ -1351,7 +1361,7 @@ var init_main = __esm({
             return t[0] === src;
           });
           if (!testConfig) {
-            console.log(ansiC2.inverse("missing test config! Exiting ungracefully!"));
+            console.log(ansiC3.inverse("missing test config! Exiting ungracefully!"));
             process.exit(-1);
           }
           const testConfigResource = testConfig[2];
@@ -1399,7 +1409,7 @@ var init_main = __esm({
                   this.bddTestIsNowDone(src, results.fails);
                 }).catch((e1) => {
                   console.log(
-                    ansiC2.red(`launchPure - ${src} errored with: ${e1.stack}`)
+                    ansiC3.red(`launchPure - ${src} errored with: ${e1.stack}`)
                   );
                   this.bddTestIsNowDone(src, -1);
                   statusMessagePretty(-1, src, "pure");
@@ -1420,8 +1430,8 @@ var init_main = __esm({
           } catch (e3) {
             logs.writeExitCode(-1, e3);
             console.log(
-              ansiC2.red(
-                ansiC2.inverse(
+              ansiC3.red(
+                ansiC3.inverse(
                   `${src} 1 errored with: ${e3}. Check logs for more info`
                 )
               )
@@ -1438,11 +1448,11 @@ var init_main = __esm({
           }
         };
         this.launchNode = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`node < ${src}`)));
+          console.log(ansiC3.green(ansiC3.inverse(`node < ${src}`)));
           this.bddTestIsRunning(src);
           const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
-          if (!fs9.existsSync(reportDest)) {
-            fs9.mkdirSync(reportDest, { recursive: true });
+          if (!fs10.existsSync(reportDest)) {
+            fs10.mkdirSync(reportDest, { recursive: true });
           }
           let testResources = "";
           const testConfig = this.configs.tests.find((t) => {
@@ -1450,7 +1460,7 @@ var init_main = __esm({
           });
           if (!testConfig) {
             console.log(
-              ansiC2.inverse(`missing test config! Exiting ungracefully for '${src}'`)
+              ansiC3.inverse(`missing test config! Exiting ungracefully for '${src}'`)
             );
             process.exit(-1);
           }
@@ -1483,7 +1493,7 @@ var init_main = __esm({
               });
             } else {
               console.log(
-                ansiC2.red(
+                ansiC3.red(
                   `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
                 )
               );
@@ -1602,8 +1612,8 @@ var init_main = __esm({
               console.log("error");
               haltReturns = true;
               console.log(
-                ansiC2.red(
-                  ansiC2.inverse(
+                ansiC3.red(
+                  ansiC3.inverse(
                     `${src} errored with: ${e.name}. Check error logs for more info`
                   )
                 )
@@ -1614,11 +1624,11 @@ var init_main = __esm({
           });
         };
         this.launchWeb = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`web < ${src}`)));
+          console.log(ansiC3.green(ansiC3.inverse(`web < ${src}`)));
           this.bddTestIsRunning(src);
           const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
-          if (!fs9.existsSync(reportDest)) {
-            fs9.mkdirSync(reportDest, { recursive: true });
+          if (!fs10.existsSync(reportDest)) {
+            fs10.mkdirSync(reportDest, { recursive: true });
           }
           const destFolder = dest.replace(".mjs", "");
           const webArgz = JSON.stringify({
@@ -1706,10 +1716,10 @@ import('${d}').then(async (x) => {
               statusMessagePretty(fails, src, "web");
               this.bddTestIsNowDone(src, fails);
             }).catch((e) => {
-              console.log(ansiC2.red(ansiC2.inverse(e.stack)));
+              console.log(ansiC3.red(ansiC3.inverse(e.stack)));
               console.log(
-                ansiC2.red(
-                  ansiC2.inverse(
+                ansiC3.red(
+                  ansiC3.inverse(
                     `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
                   )
                 )
@@ -1722,11 +1732,11 @@ import('${d}').then(async (x) => {
           });
         };
         this.launchPitono = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`pitono < ${src}`)));
+          console.log(ansiC3.green(ansiC3.inverse(`pitono < ${src}`)));
           this.bddTestIsRunning(src);
           const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
-          if (!fs9.existsSync(reportDest)) {
-            fs9.mkdirSync(reportDest, { recursive: true });
+          if (!fs10.existsSync(reportDest)) {
+            fs10.mkdirSync(reportDest, { recursive: true });
           }
           const logs = createLogStreams(reportDest, "node");
           try {
@@ -1738,8 +1748,8 @@ import('${d}').then(async (x) => {
           } catch (error) {
             logs.writeExitCode(-1, error);
             console.log(
-              ansiC2.red(
-                ansiC2.inverse(
+              ansiC3.red(
+                ansiC3.inverse(
                   `${src} errored with: ${error}. Check logs for more info`
                 )
               )
@@ -1760,18 +1770,18 @@ import('${d}').then(async (x) => {
             srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
           );
           const testReportPath = `${reportDest}/tests.json`;
-          if (!fs9.existsSync(testReportPath)) {
+          if (!fs10.existsSync(testReportPath)) {
             console.error(`tests.json not found at: ${testReportPath}`);
             return;
           }
-          const testReport = JSON.parse(fs9.readFileSync(testReportPath, "utf8"));
+          const testReport = JSON.parse(fs10.readFileSync(testReportPath, "utf8"));
           if (testReport.tests) {
             testReport.tests.forEach((test) => {
               test.fullPath = path7.resolve(process.cwd(), srcTest);
             });
           }
           testReport.fullPath = path7.resolve(process.cwd(), srcTest);
-          fs9.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
+          fs10.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
           testReport.features.reduce(async (mm, featureStringKey) => {
             const accum = await mm;
             const isUrl = isValidUrl(featureStringKey);
@@ -1790,14 +1800,14 @@ import('${d}').then(async (x) => {
                 accum.files.push(newPath);
               }
             } else {
-              await fs9.promises.mkdir(path7.dirname(featureDestination), {
+              await fs10.promises.mkdir(path7.dirname(featureDestination), {
                 recursive: true
               });
               accum.strings.push(featureStringKey);
             }
             return accum;
           }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
-            fs9.writeFileSync(
+            fs10.writeFileSync(
               `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
               files3.map((f2) => {
                 return `/read ${f2}`;
@@ -1814,14 +1824,14 @@ import('${d}').then(async (x) => {
         this.checkForShutdown = () => {
           this.checkQueue();
           console.log(
-            ansiC2.inverse(
+            ansiC3.inverse(
               `The following jobs are awaiting resources: ${JSON.stringify(
                 this.queue
               )}`
             )
           );
           console.log(
-            ansiC2.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
+            ansiC3.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
           );
           this.writeBigBoard();
           if (this.mode === "dev")
@@ -1829,25 +1839,25 @@ import('${d}').then(async (x) => {
           let inflight = false;
           Object.keys(this.summary).forEach((k) => {
             if (this.summary[k].prompt === "?") {
-              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} prompt ${k}`)));
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} prompt ${k}`)));
               inflight = true;
             }
           });
           Object.keys(this.summary).forEach((k) => {
             if (this.summary[k].runTimeErrors === "?") {
-              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} runTimeError ${k}`)));
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} runTimeError ${k}`)));
               inflight = true;
             }
           });
           Object.keys(this.summary).forEach((k) => {
             if (this.summary[k].staticErrors === "?") {
-              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} staticErrors ${k}`)));
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} staticErrors ${k}`)));
               inflight = true;
             }
           });
           Object.keys(this.summary).forEach((k) => {
             if (this.summary[k].typeErrors === "?") {
-              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} typeErrors ${k}`)));
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} typeErrors ${k}`)));
               inflight = true;
             }
           });
@@ -1857,7 +1867,7 @@ import('${d}').then(async (x) => {
               if (this.browser) {
                 this.browser.disconnect().then(() => {
                   console.log(
-                    ansiC2.inverse(`${this.name} has been tested. Goodbye.`)
+                    ansiC3.inverse(`${this.name} has been tested. Goodbye.`)
                   );
                   process.exit();
                 });
@@ -1876,7 +1886,7 @@ import('${d}').then(async (x) => {
         });
       }
       async stopSideCar(uid) {
-        console.log(ansiC2.green(ansiC2.inverse(`stopSideCar ${uid}`)));
+        console.log(ansiC3.green(ansiC3.inverse(`stopSideCar ${uid}`)));
         Object.entries(this.pureSidecars).forEach(async ([k, v]) => {
           if (Number(k) === uid) {
             await this.pureSidecars[Number(k)].stop();
@@ -1951,8 +1961,8 @@ import('${d}').then(async (x) => {
         this.mapping().forEach(async ([command, func]) => {
           globalThis[command] = func;
         });
-        if (!fs9.existsSync(`testeranto/reports/${this.name}`)) {
-          fs9.mkdirSync(`testeranto/reports/${this.name}`);
+        if (!fs10.existsSync(`testeranto/reports/${this.name}`)) {
+          fs10.mkdirSync(`testeranto/reports/${this.name}`);
         }
         const executablePath = "/opt/homebrew/bin/chromium";
         try {
@@ -2049,8 +2059,8 @@ import('${d}').then(async (x) => {
             if (runtime === "pitono") {
               metafile = `./testeranto/metafiles/python/core.json`;
               const metafileDir = path7.dirname(metafile);
-              if (!fs9.existsSync(metafileDir)) {
-                fs9.mkdirSync(metafileDir, { recursive: true });
+              if (!fs10.existsSync(metafileDir)) {
+                fs10.mkdirSync(metafileDir, { recursive: true });
               }
             } else {
               metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
@@ -2068,7 +2078,7 @@ import('${d}').then(async (x) => {
                     if (fileHashes[inputFile] !== hash) {
                       fileHashes[inputFile] = hash;
                       console.log(
-                        ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename}`))
+                        ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename}`))
                       );
                       this.launchers[inputFile]();
                     }
@@ -2081,15 +2091,15 @@ import('${d}').then(async (x) => {
             this.metafileOutputs(runtime);
             if (runtime === "pitono") {
               const checkFileExists = () => {
-                if (fs9.existsSync(metafile)) {
+                if (fs10.existsSync(metafile)) {
                   console.log(
-                    ansiC2.green(ansiC2.inverse(`Pitono metafile found: ${metafile}`))
+                    ansiC3.green(ansiC3.inverse(`Pitono metafile found: ${metafile}`))
                   );
                   watcher(
                     watch(metafile, async (e, filename) => {
                       console.log(
-                        ansiC2.yellow(
-                          ansiC2.inverse(`< ${e} ${filename} (${runtime})`)
+                        ansiC3.yellow(
+                          ansiC3.inverse(`< ${e} ${filename} (${runtime})`)
                         )
                       );
                       this.metafileOutputs(runtime);
@@ -2102,11 +2112,11 @@ import('${d}').then(async (x) => {
               };
               checkFileExists();
             } else {
-              if (fs9.existsSync(metafile)) {
+              if (fs10.existsSync(metafile)) {
                 watcher(
                   watch(metafile, async (e, filename) => {
                     console.log(
-                      ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename} (${runtime})`))
+                      ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename} (${runtime})`))
                     );
                     this.metafileOutputs(runtime);
                   })
@@ -2117,7 +2127,7 @@ import('${d}').then(async (x) => {
         );
       }
       async stop() {
-        console.log(ansiC2.inverse("Testeranto-Run is shutting down gracefully..."));
+        console.log(ansiC3.inverse("Testeranto-Run is shutting down gracefully..."));
         this.mode = "once";
         this.nodeMetafileWatcher.close();
         this.webMetafileWatcher.close();
@@ -2145,11 +2155,11 @@ import('${d}').then(async (x) => {
         } else {
           metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
         }
-        if (!fs9.existsSync(metafilePath)) {
+        if (!fs10.existsSync(metafilePath)) {
           if (platform === "pitono") {
             console.log(
-              ansiC2.yellow(
-                ansiC2.inverse(`Pitono metafile not found yet: ${metafilePath}`)
+              ansiC3.yellow(
+                ansiC3.inverse(`Pitono metafile not found yet: ${metafilePath}`)
               )
             );
           }
@@ -2157,7 +2167,7 @@ import('${d}').then(async (x) => {
         }
         let metafile;
         try {
-          const fileContent = fs9.readFileSync(metafilePath).toString();
+          const fileContent = fs10.readFileSync(metafilePath).toString();
           const parsedData = JSON.parse(fileContent);
           if (platform === "pitono") {
             metafile = parsedData.metafile || parsedData;
@@ -2166,7 +2176,7 @@ import('${d}').then(async (x) => {
           }
           if (!metafile) {
             console.log(
-              ansiC2.yellow(ansiC2.inverse(`No metafile found in ${metafilePath}`))
+              ansiC3.yellow(ansiC3.inverse(`No metafile found in ${metafilePath}`))
             );
             return;
           }
@@ -2181,7 +2191,7 @@ import('${d}').then(async (x) => {
             return false;
           }
           const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
-            if (!fs9.existsSync(i))
+            if (!fs10.existsSync(i))
               return false;
             if (i.startsWith("node_modules"))
               return false;
@@ -2190,8 +2200,8 @@ import('${d}').then(async (x) => {
             return true;
           });
           const f2 = `${k.split(".").slice(0, -1).join(".")}/`;
-          if (!fs9.existsSync(f2)) {
-            fs9.mkdirSync(f2);
+          if (!fs10.existsSync(f2)) {
+            fs10.mkdirSync(f2);
           }
           const entrypoint = outputs[k].entryPoint;
           if (entrypoint) {
@@ -2232,7 +2242,7 @@ import('${d}').then(async (x) => {
           ];
           let foundPath = null;
           for (const possiblePath of possiblePaths) {
-            if (fs9.existsSync(possiblePath)) {
+            if (fs10.existsSync(possiblePath)) {
               foundPath = possiblePath;
               break;
             }
@@ -2242,7 +2252,7 @@ import('${d}').then(async (x) => {
           } else {
             const indexPath = this.findIndexHtml();
             if (indexPath) {
-              fs9.readFile(indexPath, (err, data) => {
+              fs10.readFile(indexPath, (err, data) => {
                 if (err) {
                   res.writeHead(404, { "Content-Type": "text/plain" });
                   res.end("404 Not Found");
@@ -2259,12 +2269,12 @@ import('${d}').then(async (x) => {
             }
           }
         }
-        fs9.exists(filePath, (exists) => {
+        fs10.exists(filePath, (exists) => {
           if (!exists) {
             if (!pathname.includes(".") && pathname !== "/") {
               const indexPath = this.findIndexHtml();
               if (indexPath) {
-                fs9.readFile(indexPath, (err, data) => {
+                fs10.readFile(indexPath, (err, data) => {
                   if (err) {
                     res.writeHead(404, { "Content-Type": "text/plain" });
                     res.end("404 Not Found");
@@ -2291,7 +2301,7 @@ import('${d}').then(async (x) => {
             res.end("404 Not Found");
             return;
           }
-          fs9.readFile(filePath, (err, data) => {
+          fs10.readFile(filePath, (err, data) => {
             if (err) {
               res.writeHead(500, { "Content-Type": "text/plain" });
               res.end("500 Internal Server Error");
@@ -2311,7 +2321,7 @@ import('${d}').then(async (x) => {
           "./index.html"
         ];
         for (const path11 of possiblePaths) {
-          if (fs9.existsSync(path11)) {
+          if (fs10.existsSync(path11)) {
             return path11;
           }
         }
@@ -2328,7 +2338,7 @@ import('${d}').then(async (x) => {
       checkQueue() {
         const x = this.queue.pop();
         if (!x) {
-          ansiC2.inverse(`The following queue is empty`);
+          ansiC3.inverse(`The following queue is empty`);
           return;
         }
         const test = this.configs.tests.find((t) => t[0] === x);
@@ -2346,19 +2356,19 @@ __export(golingvuMetafile_exports, {
   generateGolangMetafile: () => generateGolangMetafile,
   writeGolangMetafile: () => writeGolangMetafile
 });
-import fs10 from "fs";
+import fs11 from "fs";
 import path8 from "path";
 async function generateGolangMetafile(testName2, entryPoints) {
   const outputs = {};
   for (const entryPoint of entryPoints) {
     try {
       const entryDir = path8.dirname(entryPoint);
-      const goFiles = fs10.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path8.join(entryDir, file));
+      const goFiles = fs11.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path8.join(entryDir, file));
       const inputs = {};
       let totalBytes = 0;
       for (const file of goFiles) {
         try {
-          const stats = fs10.statSync(file);
+          const stats = fs11.statSync(file);
           inputs[file] = { bytesInOutput: stats.size };
           totalBytes += stats.size;
         } catch {
@@ -2367,7 +2377,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
       }
       if (!inputs[entryPoint]) {
         try {
-          const entryStats = fs10.statSync(entryPoint);
+          const entryStats = fs11.statSync(entryPoint);
           inputs[entryPoint] = { bytesInOutput: entryStats.size };
           totalBytes += entryStats.size;
         } catch {
@@ -2390,7 +2400,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   for (const entryPoint of entryPoints) {
     try {
       const entryDir = path8.dirname(entryPoint);
-      const goFiles = fs10.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path8.join(entryDir, file));
+      const goFiles = fs11.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path8.join(entryDir, file));
       goFiles.forEach((file) => allGoFiles.add(file));
       allGoFiles.add(entryPoint);
     } catch (error) {
@@ -2399,7 +2409,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   }
   for (const filePath of Array.from(allGoFiles)) {
     try {
-      const stats = fs10.statSync(filePath);
+      const stats = fs11.statSync(filePath);
       allInputs[filePath] = {
         bytes: stats.size,
         imports: []
@@ -2436,9 +2446,9 @@ function writeGolangMetafile(testName2, metafile) {
     "metafiles",
     "golang"
   );
-  fs10.mkdirSync(metafileDir, { recursive: true });
+  fs11.mkdirSync(metafileDir, { recursive: true });
   const metafilePath = path8.join(metafileDir, `${testName2}.json`);
-  fs10.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs11.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
 }
 var init_golingvuMetafile = __esm({
   "src/utils/golingvuMetafile.ts"() {
@@ -2452,7 +2462,7 @@ __export(pitonoMetafile_exports, {
   generatePitonoMetafile: () => generatePitonoMetafile,
   writePitonoMetafile: () => writePitonoMetafile
 });
-import fs11 from "fs";
+import fs12 from "fs";
 import path9 from "path";
 import { execSync as execSync2 } from "child_process";
 async function generatePitonoMetafile(testName2, entryPoints) {
@@ -2465,10 +2475,10 @@ async function generatePitonoMetafile(testName2, entryPoints) {
 function writePitonoMetafile(testName2, metafile) {
   const metafilePath = path9.join(process.cwd(), "testeranto", "pitono", testName2, "metafile.json");
   const metafileDir = path9.dirname(metafilePath);
-  if (!fs11.existsSync(metafileDir)) {
-    fs11.mkdirSync(metafileDir, { recursive: true });
+  if (!fs12.existsSync(metafileDir)) {
+    fs12.mkdirSync(metafileDir, { recursive: true });
   }
-  fs11.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs12.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
   console.log(`Pitono metafile written to: ${metafilePath}`);
   try {
     const command = `pitono-core-generator ${testName2} ${metafile.entryPoints.join(" ")}`;
@@ -2495,7 +2505,7 @@ function writePitonoMetafile(testName2, metafile) {
           runtime: "pitono"
         };
         const coreFilePath = path9.join(process.cwd(), "testeranto", "pitono", testName2, "core.json");
-        fs11.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
+        fs12.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
         console.log(`Pitono core.json created manually as fallback`);
       } catch (manualError) {
         console.error(`Even manual creation failed: ${manualError}`);
@@ -2511,8 +2521,8 @@ var init_pitonoMetafile = __esm({
 
 // src/testeranto.ts
 init_utils();
-import ansiC3 from "ansi-colors";
-import fs12 from "fs";
+import ansiC4 from "ansi-colors";
+import fs13 from "fs";
 import path10 from "path";
 import readline from "readline";
 import esbuild from "esbuild";
@@ -2868,7 +2878,7 @@ import(f).then(async (module) => {
     console.error("no project found for", testName, "in testeranto.config.ts");
     process.exit(-1);
   }
-  fs12.writeFileSync(
+  fs13.writeFileSync(
     `${process.cwd()}/testeranto/projects.json`,
     JSON.stringify(Object.keys(bigConfig.projects), null, 2)
   );
@@ -2888,11 +2898,11 @@ import(f).then(async (module) => {
     ...rawConfig,
     buildDir: process.cwd() + "/testeranto/bundles/" + testName
   };
-  console.log(ansiC3.inverse("Press 'q' to initiate a graceful shutdown."));
-  console.log(ansiC3.inverse("Press 'x' to quit forcefully."));
+  console.log(ansiC4.inverse("Press 'q' to initiate a graceful shutdown."));
+  console.log(ansiC4.inverse("Press 'x' to quit forcefully."));
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "x") {
-      console.log(ansiC3.inverse("Shutting down forcefully..."));
+      console.log(ansiC4.inverse("Shutting down forcefully..."));
       process.exit(-1);
     }
   });
@@ -2945,19 +2955,19 @@ import(f).then(async (module) => {
     }
     if (allDone && mode === "once") {
       console.log(
-        ansiC3.inverse(
+        ansiC4.inverse(
           `${testName} was built and the builder exited successfully.`
         )
       );
     }
   };
-  fs12.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
+  fs13.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
   Object.keys(bigConfig.projects).forEach((projectName) => {
     console.log(`testeranto/reports/${projectName}`);
-    if (!fs12.existsSync(`testeranto/reports/${projectName}`)) {
-      fs12.mkdirSync(`testeranto/reports/${projectName}`);
+    if (!fs13.existsSync(`testeranto/reports/${projectName}`)) {
+      fs13.mkdirSync(`testeranto/reports/${projectName}`);
     }
-    fs12.writeFileSync(
+    fs13.writeFileSync(
       `testeranto/reports/${projectName}/config.json`,
       JSON.stringify(config, null, 2)
     );
@@ -2995,8 +3005,8 @@ import(f).then(async (module) => {
     const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
     const metafile = await generatePitonoMetafile2(testName, pitonoEntryPoints);
     const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
-    await fs12.promises.mkdir(pitonoMetafilePath, { recursive: true });
-    fs12.writeFileSync(
+    await fs13.promises.mkdir(pitonoMetafilePath, { recursive: true });
+    fs13.writeFileSync(
       `${pitonoMetafilePath}/core.json`,
       JSON.stringify(metafile, null, 2)
     );
@@ -3016,8 +3026,8 @@ import(f).then(async (module) => {
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
         const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-        return fs12.promises.mkdir(path10.dirname(htmlFilePath), { recursive: true }).then(
-          (x2) => fs12.writeFileSync(
+        return fs13.promises.mkdir(path10.dirname(htmlFilePath), { recursive: true }).then(
+          (x2) => fs13.writeFileSync(
             htmlFilePath,
             web_html_default(jsfilePath, htmlFilePath, cssFilePath)
           )
@@ -3033,7 +3043,7 @@ import(f).then(async (module) => {
   x.forEach(async ([runtime, keys]) => {
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
-      await fs12.mkdirSync(folder, { recursive: true });
+      await fs13.mkdirSync(folder, { recursive: true });
     });
   });
   [
@@ -3050,7 +3060,7 @@ import(f).then(async (module) => {
           ep.split(".").slice(0, -1).join("."),
           runtime
         );
-        fs12.mkdirSync(fp, { recursive: true });
+        fs13.mkdirSync(fp, { recursive: true });
       });
     }
   );
