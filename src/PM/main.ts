@@ -648,8 +648,12 @@ export class PM_Main extends PM_WithEslintAndTsc {
       );
     }
 
-    const { nodeEntryPoints, webEntryPoints, pureEntryPoints, pitonoEntryPoints } =
-      this.getRunnables(this.configs.tests, this.name);
+    const {
+      nodeEntryPoints,
+      webEntryPoints,
+      pureEntryPoints,
+      pitonoEntryPoints,
+    } = this.getRunnables(this.configs.tests, this.name);
 
     [
       [
@@ -747,7 +751,9 @@ export class PM_Main extends PM_WithEslintAndTsc {
               watcher(
                 watch(metafile, async (e, filename) => {
                   console.log(
-                    ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
+                    ansiC.yellow(
+                      ansiC.inverse(`< ${e} ${filename} (${runtime})`)
+                    )
                   );
                   this.metafileOutputs(runtime);
                 })
@@ -781,37 +787,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
     //   this.launchExternalTest(et, this.configs.externalTests[et]);
     // });
   }
-
-  // async launchExternalTest(
-  //   externalTestName: string,
-  //   externalTest: {
-  //     watch: string[];
-  //     exec: string;
-  //   }
-  // ) {
-  //   // fs.mkdirSync(`testeranto/externalTests/${externalTestName}`);
-  //   // exec(externalTest.exec, (error, stdout, stderr) => {
-  //   //   if (error) {
-  //   //     fs.writeFileSync(
-  //   //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
-  //   //       `${error.name}\n${error.message}\n${error.code}\n`
-  //   //     );
-  //   //   } else {
-  //   //     fs.writeFileSync(
-  //   //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
-  //   //       `0`
-  //   //     );
-  //   //   }
-  //   //   fs.writeFileSync(
-  //   //     `testeranto/externalTests/${externalTestName}/stdout.txt`,
-  //   //     stdout
-  //   //   );
-  //   //   fs.writeFileSync(
-  //   //     `testeranto/externalTests/${externalTestName}/stderr.txt`,
-  //   //     stderr
-  //   //   );
-  //   // });
-  // }
 
   async stop() {
     console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
@@ -867,17 +842,19 @@ export class PM_Main extends PM_WithEslintAndTsc {
     } else {
       metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
     }
-    
+
     // Check if the file exists
     if (!fs.existsSync(metafilePath)) {
       if (platform === "pitono") {
         console.log(
-          ansiC.yellow(ansiC.inverse(`Pitono metafile not found yet: ${metafilePath}`))
+          ansiC.yellow(
+            ansiC.inverse(`Pitono metafile not found yet: ${metafilePath}`)
+          )
         );
       }
       return;
     }
-    
+
     let metafile;
     try {
       const fileContent = fs.readFileSync(metafilePath).toString();
@@ -1335,409 +1312,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
     });
   };
 
-  launchWebSideCar = async (
-    testConfig: ITestTypes
-  ): Promise<[number, Page]> => {
-    const src = testConfig[0];
-    const dest = src.split(".").slice(0, -1).join(".");
-    // const d = dest + ".mjs";
-
-    const destFolder = dest.replace(".mjs", "");
-
-    console.log(ansiC.green(ansiC.inverse(`launchWebSideCar ${src}`)));
-
-    // const fileStreams2: fs.WriteStream[] = [];
-    // const doneFileStream2: Promise<any>[] = [];
-
-    const logs = createLogStreams(dest, "web");
-
-    return new Promise((res, rej) => {
-      this.browser
-        .newPage()
-        .then(async (page) => {
-          this.mapping().forEach(async ([command, func]) => {
-            page.exposeFunction(command, func);
-          });
-
-          const close = () => {
-            if (!files[src]) {
-              files[src] = new Set();
-            }
-            // files[src].add(filepath);
-
-            // fs.writeFileSync(
-            //   destFolder + "/manifest.json",
-            //   JSON.stringify(Array.from(files[src]))
-            // );
-
-            delete files[src];
-
-            Promise.all(screenshots[src] || []).then(() => {
-              delete screenshots[src];
-              page.close();
-            });
-          };
-
-          page.on("pageerror", (err: Error) => {
-            console.debug(`Error from ${src}: [${err.name}] `);
-            console.debug(`Error from ${src}: [${err.name}] `);
-            if (err.cause) {
-              console.debug(`Error from ${src} cause: [${err.cause}] `);
-            }
-            if (err.stack) {
-              console.debug(`Error from stack ${src}: [${err.stack}] `);
-            }
-            console.debug(`Error from message ${src}: [${err.message}] `);
-            this.bddTestIsNowDone(src, -1);
-            close();
-          });
-
-          page.on("console", (log: ConsoleMessage) => {
-            const msg = `${log.text()}\n${JSON.stringify(
-              log.location()
-            )}\n${JSON.stringify(log.stackTrace())}\n`;
-            switch (log.type()) {
-              case "info":
-                logs.info?.write(msg);
-                break;
-              case "warn":
-                logs.warn?.write(msg);
-                break;
-              case "error":
-                logs.error?.write(msg);
-                break;
-              case "debug":
-                logs.debug?.write(msg);
-                break;
-              default:
-                break;
-            }
-          });
-
-          await page.goto(`file://${`${destFolder}.html`}`, {});
-
-          const webArgz = JSON.stringify({
-            name: dest,
-            ports: [].toString(),
-            fs: dest,
-            browserWSEndpoint: this.browser.wsEndpoint(),
-          });
-
-          const d = `${dest}?cacheBust=${Date.now()}`;
-
-          const evaluation = `
-    import('${d}').then(async (x) => {
-
-      try {
-        return await (await x.default).receiveTestResourceConfig(${webArgz})
-      } catch (e) {
-        console.log("fail", e.toString())
-      }
-    })`;
-
-          await page
-            .evaluate(evaluation)
-            .then(async ({ fails, failed, features }: IFinalResults) => {
-              // this.receiveFeatures(features, destFolder, src, "web");
-              // this.receiveFeaturesV2(reportDest, src, "web");
-
-              statusMessagePretty(fails, src, "web");
-              this.bddTestIsNowDone(src, fails);
-            })
-            .catch((e) => {
-              console.log(
-                ansiC.red(
-                  ansiC.inverse(`launchWebSidecar - ${src} errored with: ${e}`)
-                )
-              );
-            })
-            .finally(() => {
-              this.bddTestIsNowDone(src, -1);
-              close();
-            });
-
-          return page;
-
-          // return page;
-        })
-        .then(async (page) => {
-          await page.goto(`file://${`${dest}.html`}`, {});
-
-          res([Math.random(), page]);
-        });
-    });
-  };
-
-  launchNodeSideCar = async (
-    sidecar: ITestTypes
-  ): Promise<[number, ITTestResourceConfiguration]> => {
-    const src = sidecar[0];
-    const dest =
-      process.cwd() + `/testeranto/bundles/node/${this.name}/${sidecar[0]}`;
-    const d = dest + ".mjs";
-    console.log(ansiC.green(ansiC.inverse(`launchNodeSideCar ${sidecar[0]}`)));
-
-    const destFolder = dest.replace(".ts", "");
-
-    const reportDest = `testeranto/reports/${this.name}/${src
-      .split(".")
-      .slice(0, -1)
-      .join(".")}/node`;
-
-    const argz: ITTestResourceConfiguration = {
-      name: sidecar[0],
-      ports: [],
-      fs: destFolder,
-      browserWSEndpoint: this.browser.wsEndpoint(),
-    };
-
-    const testReq: { ports: number } = sidecar[2];
-
-    const logs = createLogStreams(dest, "node");
-
-    const portsToUse: number[] = [];
-    if (testReq.ports === 0) {
-      // argz = {
-      //   name: sidecar[0],
-      //   ports: portsToUse,
-      //   fs: destFolder,
-      //   browserWSEndpoint: this.browser.wsEndpoint(),
-      // };
-    } else if (testReq.ports > 0) {
-      const openPorts = Object.entries(this.ports).filter(
-        ([portnumber, portopen]) => portopen === ""
-      );
-
-      if (openPorts.length >= testReq.ports) {
-        for (let i = 0; i < testReq.ports; i++) {
-          portsToUse.push(Number(openPorts[i][0])); // Convert string port to number
-
-          this.ports[openPorts[i][0]] = src; // port is now closed
-        }
-
-        argz.ports = portsToUse;
-
-        const builtfile = destFolder + ".mjs";
-
-        let haltReturns = false;
-
-        let buffer: Buffer<ArrayBufferLike> = new Buffer("");
-
-        const server = net.createServer((socket) => {
-          socket.on("data", (data) => {
-            buffer = Buffer.concat([buffer, data]);
-
-            const messages: string[][] = [];
-            for (let b = 0; b < buffer.length + 1; b++) {
-              const c = buffer.slice(0, b);
-              let d;
-              try {
-                d = JSON.parse(c.toString());
-
-                messages.push(d);
-                buffer = buffer.slice(b, buffer.length + 1);
-                b = 0;
-              } catch (e) {
-                // b++;
-              }
-            }
-
-            messages.forEach(async (payload) => {
-              this.mapping().forEach(async ([command, func]) => {
-                if (payload[0] === command) {
-                  const x = payload.slice(1, -1);
-                  const r = await this[command](...x);
-
-                  if (!haltReturns) {
-                    child.send(
-                      JSON.stringify({
-                        payload: r,
-                        key: payload[payload.length - 1],
-                      })
-                    );
-                  }
-                }
-              });
-            });
-          });
-        });
-
-        const child = spawn("node", [builtfile, JSON.stringify(argz)], {
-          stdio: ["pipe", "pipe", "pipe", "ipc"],
-          // silent: true
-        });
-
-        const p = "/tmp/tpipe" + Math.random();
-
-        server.listen(p, () => {
-          child.on("close", (code) => {
-            server.close();
-            haltReturns = true;
-          });
-          child.on("exit", (code) => {
-            haltReturns = true;
-
-            for (let i = 0; i <= portsToUse.length; i++) {
-              if (portsToUse[i]) {
-                this.ports[portsToUse[i]] = ""; //port is open again
-              }
-            }
-          });
-          child.on("error", (e) => {
-            if (fs.existsSync(p)) {
-              fs.rmSync(p);
-            }
-
-            haltReturns = true;
-
-            console.log(
-              ansiC.red(
-                ansiC.inverse(
-                  `launchNodeSideCar - ${src} errored with: ${e.name}. Check logs for more info`
-                )
-              )
-            );
-            logs.error?.write(e.toString() + "\n");
-            // this.bddTestIsNowDone(src, -1);
-            // statusMessagePretty(-1, src);
-          });
-        });
-
-        child.send({ path: p });
-
-        const r = Math.random();
-        this.nodeSidecars[r] = child;
-        return [r, argz];
-      } else {
-        console.log(
-          ansiC.red(
-            `cannot ${src} because there are no open ports. the job will be unqueued`
-          )
-        );
-
-        this.queue.push(sidecar[0]);
-        return [Math.random(), argz];
-      }
-    } else {
-      console.error("negative port makes no sense", sidecar[0]);
-      process.exit(-1);
-    }
-  };
-
-  stopPureSideCar = async (uid: number) => {
-    console.log(ansiC.green(ansiC.inverse(`stopPureSideCar ${uid}`)));
-    await this.sidecars[uid].shutdown();
-    return;
-  };
-
-  launchPureSideCar = async (
-    sidecar: ITestTypes
-  ): Promise<[number, ITTestResourceConfiguration]> => {
-    console.log(ansiC.green(ansiC.inverse(`launchPureSideCar ${sidecar[0]}`)));
-
-    const r = Math.random();
-
-    const dest =
-      process.cwd() + `/testeranto/bundles/pure/${this.name}/${sidecar[0]}`;
-    const builtfile = dest.split(".").slice(0, -1).concat("mjs").join(".");
-
-    const destFolder = dest.replace(".mjs", "");
-
-    let argz: ITTestResourceConfiguration;
-
-    const z = sidecar[2];
-    const testConfigResource: { ports: number } = sidecar[2];
-    const src = sidecar[0];
-
-    const portsToUse: number[] = [];
-    if (testConfigResource.ports === 0) {
-      argz = {
-        // scheduled: true,
-        name: src,
-        ports: portsToUse,
-        fs: destFolder,
-        browserWSEndpoint: this.browser.wsEndpoint(),
-      };
-    } else if (testConfigResource.ports > 0) {
-      const openPorts = Object.entries(this.ports).filter(
-        ([portnumber, portopen]) => portopen === ""
-      );
-      if (openPorts.length >= testConfigResource.ports) {
-        for (let i = 0; i < testConfigResource.ports; i++) {
-          portsToUse.push(Number(openPorts[i][0]));
-
-          this.ports[openPorts[i][0]] = src; // port is now claimed
-        }
-
-        argz = {
-          // scheduled: true,
-          name: src,
-          // ports: [3333],
-          ports: portsToUse,
-          fs: ".",
-          browserWSEndpoint: this.browser.wsEndpoint(),
-        };
-      } else {
-        this.queue.push(src);
-        // return;
-      }
-    } else {
-      console.error("negative port makes no sense", src);
-      process.exit(-1);
-    }
-
-    // const builtfile = dest + ".mjs";
-
-    await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-      if (!this.pureSidecars) this.pureSidecars = {};
-      this.pureSidecars[r] = module.default;
-      this.pureSidecars[r].start(argz);
-    });
-
-    return [r, argz];
-    // for (let i = 0; i <= portsToUse.length; i++) {
-    //   if (portsToUse[i]) {
-    //     this.ports[portsToUse[i]] = "true"; //port is open again
-    //   }
-    // }
-  };
-
-  launchPitono = async (src: string, dest: string) => {
-    console.log(ansiC.green(ansiC.inverse(`pitono < ${src}`)));
-    this.bddTestIsRunning(src);
-
-    const reportDest = `testeranto/reports/${this.name}/${src
-      .split(".")
-      .slice(0, -1)
-      .join(".")}/pitono`;
-    if (!fs.existsSync(reportDest)) {
-      fs.mkdirSync(reportDest, { recursive: true });
-    }
-
-    const logs = createLogStreams(reportDest, "node"); // Use node-style logs for pitono
-
-    try {
-      // Execute the Python test using the pitono runner
-      const { PitonoRunner } = await import('./pitonoRunner');
-      const runner = new PitonoRunner(this.configs, this.name);
-      await runner.run();
-      
-      this.bddTestIsNowDone(src, 0);
-      statusMessagePretty(0, src, "pitono");
-    } catch (error) {
-      logs.writeExitCode(-1, error);
-      console.log(
-        ansiC.red(
-          ansiC.inverse(
-            `${src} errored with: ${error}. Check logs for more info`
-          )
-        )
-      );
-      this.bddTestIsNowDone(src, -1);
-      statusMessagePretty(-1, src, "pitono");
-    }
-  };
-
   launchWeb = async (src: string, dest: string) => {
     console.log(ansiC.green(ansiC.inverse(`web < ${src}`)));
     this.bddTestIsRunning(src);
@@ -1880,6 +1454,46 @@ import('${d}').then(async (x) => {
 
         return page;
       });
+  };
+
+  launchPitono = async (src: string, dest: string) => {
+    console.log(ansiC.green(ansiC.inverse(`pitono < ${src}`)));
+    this.bddTestIsRunning(src);
+
+    const reportDest = `testeranto/reports/${this.name}/${src
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/pitono`;
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    const logs = createLogStreams(reportDest, "node"); // Use node-style logs for pitono
+
+    try {
+      // Execute the Python test using the pitono runner
+      const { PitonoRunner } = await import("./pitonoRunner");
+      const runner = new PitonoRunner(this.configs, this.name);
+      await runner.run();
+
+      this.bddTestIsNowDone(src, 0);
+      statusMessagePretty(0, src, "pitono");
+    } catch (error) {
+      logs.writeExitCode(-1, error);
+      console.log(
+        ansiC.red(
+          ansiC.inverse(
+            `${src} errored with: ${error}. Check logs for more info`
+          )
+        )
+      );
+      this.bddTestIsNowDone(src, -1);
+      statusMessagePretty(-1, src, "pitono");
+    }
+  };
+
+  launchGolingvu = async (src: string, dest: string) => {
+    throw "not yet implemented";
   };
 
   receiveFeaturesV2 = (

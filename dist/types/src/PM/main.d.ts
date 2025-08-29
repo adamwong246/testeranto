@@ -63,12 +63,9 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     metafileOutputs(platform: IRunTime): Promise<void>;
     launchPure: (src: string, dest: string) => Promise<(string | number)[] | undefined>;
     launchNode: (src: string, dest: string) => Promise<any[] | undefined>;
-    launchWebSideCar: (testConfig: ITestTypes) => Promise<[number, Page]>;
-    launchNodeSideCar: (sidecar: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
-    stopPureSideCar: (uid: number) => Promise<void>;
-    launchPureSideCar: (sidecar: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
-    launchPitono: (src: string, dest: string) => Promise<void>;
     launchWeb: (src: string, dest: string) => Promise<void>;
+    launchPitono: (src: string, dest: string) => Promise<void>;
+    launchGolingvu: (src: string, dest: string) => Promise<never>;
     receiveFeaturesV2: (reportDest: string, srcTest: string, platform: IRunTime) => void;
     requestHandler(req: http.IncomingMessage, res: http.ServerResponse): void;
     findIndexHtml(): string | null;

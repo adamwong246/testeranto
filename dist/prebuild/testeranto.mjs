@@ -1297,298 +1297,6 @@ var init_main = __esm({
             });
           });
         };
-        this.launchWebSideCar = async (testConfig) => {
-          const src = testConfig[0];
-          const dest = src.split(".").slice(0, -1).join(".");
-          const destFolder = dest.replace(".mjs", "");
-          console.log(ansiC2.green(ansiC2.inverse(`launchWebSideCar ${src}`)));
-          const logs = createLogStreams(dest, "web");
-          return new Promise((res, rej) => {
-            this.browser.newPage().then(async (page) => {
-              this.mapping().forEach(async ([command, func]) => {
-                page.exposeFunction(command, func);
-              });
-              const close = () => {
-                if (!files2[src]) {
-                  files2[src] = /* @__PURE__ */ new Set();
-                }
-                delete files2[src];
-                Promise.all(screenshots2[src] || []).then(() => {
-                  delete screenshots2[src];
-                  page.close();
-                });
-              };
-              page.on("pageerror", (err) => {
-                console.debug(`Error from ${src}: [${err.name}] `);
-                console.debug(`Error from ${src}: [${err.name}] `);
-                if (err.cause) {
-                  console.debug(`Error from ${src} cause: [${err.cause}] `);
-                }
-                if (err.stack) {
-                  console.debug(`Error from stack ${src}: [${err.stack}] `);
-                }
-                console.debug(`Error from message ${src}: [${err.message}] `);
-                this.bddTestIsNowDone(src, -1);
-                close();
-              });
-              page.on("console", (log) => {
-                const msg = `${log.text()}
-${JSON.stringify(
-                  log.location()
-                )}
-${JSON.stringify(log.stackTrace())}
-`;
-                switch (log.type()) {
-                  case "info":
-                    logs.info?.write(msg);
-                    break;
-                  case "warn":
-                    logs.warn?.write(msg);
-                    break;
-                  case "error":
-                    logs.error?.write(msg);
-                    break;
-                  case "debug":
-                    logs.debug?.write(msg);
-                    break;
-                  default:
-                    break;
-                }
-              });
-              await page.goto(`file://${`${destFolder}.html`}`, {});
-              const webArgz = JSON.stringify({
-                name: dest,
-                ports: [].toString(),
-                fs: dest,
-                browserWSEndpoint: this.browser.wsEndpoint()
-              });
-              const d = `${dest}?cacheBust=${Date.now()}`;
-              const evaluation = `
-    import('${d}').then(async (x) => {
-
-      try {
-        return await (await x.default).receiveTestResourceConfig(${webArgz})
-      } catch (e) {
-        console.log("fail", e.toString())
-      }
-    })`;
-              await page.evaluate(evaluation).then(async ({ fails, failed, features }) => {
-                statusMessagePretty(fails, src, "web");
-                this.bddTestIsNowDone(src, fails);
-              }).catch((e) => {
-                console.log(
-                  ansiC2.red(
-                    ansiC2.inverse(`launchWebSidecar - ${src} errored with: ${e}`)
-                  )
-                );
-              }).finally(() => {
-                this.bddTestIsNowDone(src, -1);
-                close();
-              });
-              return page;
-            }).then(async (page) => {
-              await page.goto(`file://${`${dest}.html`}`, {});
-              res([Math.random(), page]);
-            });
-          });
-        };
-        this.launchNodeSideCar = async (sidecar) => {
-          const src = sidecar[0];
-          const dest = process.cwd() + `/testeranto/bundles/node/${this.name}/${sidecar[0]}`;
-          const d = dest + ".mjs";
-          console.log(ansiC2.green(ansiC2.inverse(`launchNodeSideCar ${sidecar[0]}`)));
-          const destFolder = dest.replace(".ts", "");
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
-          const argz2 = {
-            name: sidecar[0],
-            ports: [],
-            fs: destFolder,
-            browserWSEndpoint: this.browser.wsEndpoint()
-          };
-          const testReq = sidecar[2];
-          const logs = createLogStreams(dest, "node");
-          const portsToUse = [];
-          if (testReq.ports === 0) {
-          } else if (testReq.ports > 0) {
-            const openPorts = Object.entries(this.ports).filter(
-              ([portnumber, portopen]) => portopen === ""
-            );
-            if (openPorts.length >= testReq.ports) {
-              for (let i = 0; i < testReq.ports; i++) {
-                portsToUse.push(Number(openPorts[i][0]));
-                this.ports[openPorts[i][0]] = src;
-              }
-              argz2.ports = portsToUse;
-              const builtfile = destFolder + ".mjs";
-              let haltReturns = false;
-              let buffer = new Buffer("");
-              const server = net.createServer((socket) => {
-                socket.on("data", (data) => {
-                  buffer = Buffer.concat([buffer, data]);
-                  const messages = [];
-                  for (let b = 0; b < buffer.length + 1; b++) {
-                    const c = buffer.slice(0, b);
-                    let d2;
-                    try {
-                      d2 = JSON.parse(c.toString());
-                      messages.push(d2);
-                      buffer = buffer.slice(b, buffer.length + 1);
-                      b = 0;
-                    } catch (e) {
-                    }
-                  }
-                  messages.forEach(async (payload) => {
-                    this.mapping().forEach(async ([command, func]) => {
-                      if (payload[0] === command) {
-                        const x = payload.slice(1, -1);
-                        const r2 = await this[command](...x);
-                        if (!haltReturns) {
-                          child.send(
-                            JSON.stringify({
-                              payload: r2,
-                              key: payload[payload.length - 1]
-                            })
-                          );
-                        }
-                      }
-                    });
-                  });
-                });
-              });
-              const child = spawn("node", [builtfile, JSON.stringify(argz2)], {
-                stdio: ["pipe", "pipe", "pipe", "ipc"]
-                // silent: true
-              });
-              const p = "/tmp/tpipe" + Math.random();
-              server.listen(p, () => {
-                child.on("close", (code) => {
-                  server.close();
-                  haltReturns = true;
-                });
-                child.on("exit", (code) => {
-                  haltReturns = true;
-                  for (let i = 0; i <= portsToUse.length; i++) {
-                    if (portsToUse[i]) {
-                      this.ports[portsToUse[i]] = "";
-                    }
-                  }
-                });
-                child.on("error", (e) => {
-                  if (fs8.existsSync(p)) {
-                    fs8.rmSync(p);
-                  }
-                  haltReturns = true;
-                  console.log(
-                    ansiC2.red(
-                      ansiC2.inverse(
-                        `launchNodeSideCar - ${src} errored with: ${e.name}. Check logs for more info`
-                      )
-                    )
-                  );
-                  logs.error?.write(e.toString() + "\n");
-                });
-              });
-              child.send({ path: p });
-              const r = Math.random();
-              this.nodeSidecars[r] = child;
-              return [r, argz2];
-            } else {
-              console.log(
-                ansiC2.red(
-                  `cannot ${src} because there are no open ports. the job will be unqueued`
-                )
-              );
-              this.queue.push(sidecar[0]);
-              return [Math.random(), argz2];
-            }
-          } else {
-            console.error("negative port makes no sense", sidecar[0]);
-            process.exit(-1);
-          }
-        };
-        this.stopPureSideCar = async (uid) => {
-          console.log(ansiC2.green(ansiC2.inverse(`stopPureSideCar ${uid}`)));
-          await this.sidecars[uid].shutdown();
-          return;
-        };
-        this.launchPureSideCar = async (sidecar) => {
-          console.log(ansiC2.green(ansiC2.inverse(`launchPureSideCar ${sidecar[0]}`)));
-          const r = Math.random();
-          const dest = process.cwd() + `/testeranto/bundles/pure/${this.name}/${sidecar[0]}`;
-          const builtfile = dest.split(".").slice(0, -1).concat("mjs").join(".");
-          const destFolder = dest.replace(".mjs", "");
-          let argz2;
-          const z = sidecar[2];
-          const testConfigResource = sidecar[2];
-          const src = sidecar[0];
-          const portsToUse = [];
-          if (testConfigResource.ports === 0) {
-            argz2 = {
-              // scheduled: true,
-              name: src,
-              ports: portsToUse,
-              fs: destFolder,
-              browserWSEndpoint: this.browser.wsEndpoint()
-            };
-          } else if (testConfigResource.ports > 0) {
-            const openPorts = Object.entries(this.ports).filter(
-              ([portnumber, portopen]) => portopen === ""
-            );
-            if (openPorts.length >= testConfigResource.ports) {
-              for (let i = 0; i < testConfigResource.ports; i++) {
-                portsToUse.push(Number(openPorts[i][0]));
-                this.ports[openPorts[i][0]] = src;
-              }
-              argz2 = {
-                // scheduled: true,
-                name: src,
-                // ports: [3333],
-                ports: portsToUse,
-                fs: ".",
-                browserWSEndpoint: this.browser.wsEndpoint()
-              };
-            } else {
-              this.queue.push(src);
-            }
-          } else {
-            console.error("negative port makes no sense", src);
-            process.exit(-1);
-          }
-          await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-            if (!this.pureSidecars)
-              this.pureSidecars = {};
-            this.pureSidecars[r] = module.default;
-            this.pureSidecars[r].start(argz2);
-          });
-          return [r, argz2];
-        };
-        this.launchPitono = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`pitono < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
-          if (!fs8.existsSync(reportDest)) {
-            fs8.mkdirSync(reportDest, { recursive: true });
-          }
-          const logs = createLogStreams(reportDest, "node");
-          try {
-            const { PitonoRunner: PitonoRunner2 } = await Promise.resolve().then(() => (init_pitonoRunner(), pitonoRunner_exports));
-            const runner = new PitonoRunner2(this.configs, this.name);
-            await runner.run();
-            this.bddTestIsNowDone(src, 0);
-            statusMessagePretty(0, src, "pitono");
-          } catch (error) {
-            logs.writeExitCode(-1, error);
-            console.log(
-              ansiC2.red(
-                ansiC2.inverse(
-                  `${src} errored with: ${error}. Check logs for more info`
-                )
-              )
-            );
-            this.bddTestIsNowDone(src, -1);
-            statusMessagePretty(-1, src, "pitono");
-          }
-        };
         this.launchWeb = async (src, dest) => {
           console.log(ansiC2.green(ansiC2.inverse(`web < ${src}`)));
           this.bddTestIsRunning(src);
@@ -1696,6 +1404,36 @@ import('${d}').then(async (x) => {
             });
             return page;
           });
+        };
+        this.launchPitono = async (src, dest) => {
+          console.log(ansiC2.green(ansiC2.inverse(`pitono < ${src}`)));
+          this.bddTestIsRunning(src);
+          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
+          if (!fs8.existsSync(reportDest)) {
+            fs8.mkdirSync(reportDest, { recursive: true });
+          }
+          const logs = createLogStreams(reportDest, "node");
+          try {
+            const { PitonoRunner: PitonoRunner2 } = await Promise.resolve().then(() => (init_pitonoRunner(), pitonoRunner_exports));
+            const runner = new PitonoRunner2(this.configs, this.name);
+            await runner.run();
+            this.bddTestIsNowDone(src, 0);
+            statusMessagePretty(0, src, "pitono");
+          } catch (error) {
+            logs.writeExitCode(-1, error);
+            console.log(
+              ansiC2.red(
+                ansiC2.inverse(
+                  `${src} errored with: ${error}. Check logs for more info`
+                )
+              )
+            );
+            this.bddTestIsNowDone(src, -1);
+            statusMessagePretty(-1, src, "pitono");
+          }
+        };
+        this.launchGolingvu = async (src, dest) => {
+          throw "not yet implemented";
         };
         this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
           const featureDestination = path7.resolve(
@@ -2129,7 +1867,12 @@ import('${d}').then(async (x) => {
             executablePath
           );
         }
-        const { nodeEntryPoints, webEntryPoints, pureEntryPoints, pitonoEntryPoints } = this.getRunnables(this.configs.tests, this.name);
+        const {
+          nodeEntryPoints,
+          webEntryPoints,
+          pureEntryPoints,
+          pitonoEntryPoints
+        } = this.getRunnables(this.configs.tests, this.name);
         [
           [
             nodeEntryPoints,
@@ -2208,7 +1951,9 @@ import('${d}').then(async (x) => {
                   watcher(
                     watch(metafile, async (e, filename) => {
                       console.log(
-                        ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename} (${runtime})`))
+                        ansiC2.yellow(
+                          ansiC2.inverse(`< ${e} ${filename} (${runtime})`)
+                        )
                       );
                       this.metafileOutputs(runtime);
                     })
@@ -2234,36 +1979,6 @@ import('${d}').then(async (x) => {
           }
         );
       }
-      // async launchExternalTest(
-      //   externalTestName: string,
-      //   externalTest: {
-      //     watch: string[];
-      //     exec: string;
-      //   }
-      // ) {
-      //   // fs.mkdirSync(`testeranto/externalTests/${externalTestName}`);
-      //   // exec(externalTest.exec, (error, stdout, stderr) => {
-      //   //   if (error) {
-      //   //     fs.writeFileSync(
-      //   //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
-      //   //       `${error.name}\n${error.message}\n${error.code}\n`
-      //   //     );
-      //   //   } else {
-      //   //     fs.writeFileSync(
-      //   //       `testeranto/externalTests/${externalTestName}/exitcode.txt`,
-      //   //       `0`
-      //   //     );
-      //   //   }
-      //   //   fs.writeFileSync(
-      //   //     `testeranto/externalTests/${externalTestName}/stdout.txt`,
-      //   //     stdout
-      //   //   );
-      //   //   fs.writeFileSync(
-      //   //     `testeranto/externalTests/${externalTestName}/stderr.txt`,
-      //   //     stderr
-      //   //   );
-      //   // });
-      // }
       async stop() {
         console.log(ansiC2.inverse("Testeranto-Run is shutting down gracefully..."));
         this.mode = "once";
@@ -2296,7 +2011,9 @@ import('${d}').then(async (x) => {
         if (!fs8.existsSync(metafilePath)) {
           if (platform === "pitono") {
             console.log(
-              ansiC2.yellow(ansiC2.inverse(`Pitono metafile not found yet: ${metafilePath}`))
+              ansiC2.yellow(
+                ansiC2.inverse(`Pitono metafile not found yet: ${metafilePath}`)
+              )
             );
           }
           return;
