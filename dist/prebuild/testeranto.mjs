@@ -195,10 +195,10 @@ var init_base = __esm({
       async newPage() {
         return (await this.browser.newPage()).mainFrame()._id;
       }
-      goto(p, url2) {
+      goto(p, url3) {
         return new Promise((res) => {
           this.doInPage(p, async (page) => {
-            await page?.goto(url2);
+            await page?.goto(url3);
             res({});
           });
         });
@@ -777,787 +777,25 @@ var init_PM_WithEslintAndTsc = __esm({
   }
 });
 
-// src/PM/pitonoRunner.ts
-var pitonoRunner_exports = {};
-__export(pitonoRunner_exports, {
-  PitonoRunner: () => PitonoRunner
-});
-import { execSync } from "child_process";
-import path6 from "path";
-import fs7 from "fs";
-var PitonoRunner;
-var init_pitonoRunner = __esm({
-  "src/PM/pitonoRunner.ts"() {
-    "use strict";
-    PitonoRunner = class {
-      constructor(config, testName2) {
-        this.config = config;
-        this.testName = testName2;
-      }
-      async run() {
-        const coreJsonPath = path6.join(process.cwd(), "testeranto", "pitono", this.testName, "core.json");
-        const maxWaitTime = 1e4;
-        const startTime = Date.now();
-        while (!fs7.existsSync(coreJsonPath) && Date.now() - startTime < maxWaitTime) {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        }
-        if (!fs7.existsSync(coreJsonPath)) {
-          console.error(`Pitono core.json not found at: ${coreJsonPath} after waiting ${maxWaitTime}ms`);
-          return;
-        }
-        try {
-          const coreData = JSON.parse(fs7.readFileSync(coreJsonPath, "utf-8"));
-          const entryPoints = coreData.entryPoints;
-          for (const entryPoint of entryPoints) {
-            try {
-              console.log(`Running pitono test: ${entryPoint}`);
-              const absolutePath = path6.resolve(entryPoint);
-              if (!fs7.existsSync(absolutePath)) {
-                console.error(`Pitono test file not found: ${absolutePath}`);
-                continue;
-              }
-              execSync(`python "${absolutePath}"`, { stdio: "inherit" });
-              console.log(`Pitono test completed: ${entryPoint}`);
-            } catch (error) {
-              console.error(`Pitono test failed: ${entryPoint}`, error);
-              throw error;
-            }
-          }
-        } catch (error) {
-          console.error(`Error reading or parsing core.json: ${error}`);
-        }
-      }
-    };
-  }
-});
-
-// src/PM/main.ts
-var main_exports = {};
-__export(main_exports, {
-  PM_Main: () => PM_Main
-});
+// src/PM/PM_WithWebSocket.ts
 import { spawn } from "node:child_process";
-import ansiColors from "ansi-colors";
-import net from "net";
-import fs8, { watch } from "fs";
-import path7 from "path";
-import puppeteer from "puppeteer-core";
-import ansiC2 from "ansi-colors";
-import crypto from "node:crypto";
-import { WebSocketServer } from "ws";
+import fs7 from "fs";
 import http from "http";
 import url from "url";
 import mime from "mime-types";
-function runtimeLogs(runtime, reportDest) {
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-  try {
-    if (!fs8.existsSync(safeDest)) {
-      fs8.mkdirSync(safeDest, { recursive: true });
-    }
-    if (runtime === "node") {
-      return {
-        stdout: fs8.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs8.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "web") {
-      return {
-        info: fs8.createWriteStream(`${safeDest}/info.log`),
-        warn: fs8.createWriteStream(`${safeDest}/warn.log`),
-        error: fs8.createWriteStream(`${safeDest}/error.log`),
-        debug: fs8.createWriteStream(`${safeDest}/debug.log`),
-        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "pure") {
-      return {
-        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "pitono") {
-      return {
-        stdout: fs8.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs8.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else {
-      throw `unknown runtime: ${runtime}`;
-    }
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-function createLogStreams(reportDest, runtime) {
-  if (!fs8.existsSync(reportDest)) {
-    fs8.mkdirSync(reportDest, { recursive: true });
-  }
-  const streams = runtimeLogs(runtime, reportDest);
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-  try {
-    if (!fs8.existsSync(safeDest)) {
-      fs8.mkdirSync(safeDest, { recursive: true });
-    }
-    const streams2 = runtimeLogs(runtime, safeDest);
-    return {
-      ...streams2,
-      closeAll: () => {
-        Object.values(streams2).forEach(
-          (stream) => !stream.closed && stream.close()
-        );
-      },
-      writeExitCode: (code, error) => {
-        if (error) {
-          streams2.exit.write(`Error: ${error.message}
-`);
-          if (error.stack) {
-            streams2.exit.write(`Stack Trace:
-${error.stack}
-`);
-          }
-        }
-        streams2.exit.write(`${code}
-`);
-      },
-      exit: streams2.exit
-    };
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-async function fileHash(filePath, algorithm = "md5") {
-  return new Promise((resolve, reject) => {
-    const hash = crypto.createHash(algorithm);
-    const fileStream = fs8.createReadStream(filePath);
-    fileStream.on("data", (data) => {
-      hash.update(data);
-    });
-    fileStream.on("end", () => {
-      const fileHash2 = hash.digest("hex");
-      resolve(fileHash2);
-    });
-    fileStream.on("error", (error) => {
-      reject(`Error reading file: ${error.message}`);
-    });
-  });
-}
-async function writeFileAndCreateDir(filePath, data) {
-  const dirPath = path7.dirname(filePath);
-  try {
-    await fs8.promises.mkdir(dirPath, { recursive: true });
-    await fs8.writeFileSync(filePath, data);
-  } catch (error) {
-    console.error(`Error writing file: ${error}`);
-  }
-}
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-async function pollForFile(path11, timeout = 2e3) {
-  const intervalObj = setInterval(function() {
-    const file = path11;
-    const fileExists = fs8.existsSync(file);
-    if (fileExists) {
-      clearInterval(intervalObj);
-    }
-  }, timeout);
-}
-var changes, fileHashes, files2, screenshots2, statusMessagePretty, filesHash, PM_Main;
-var init_main = __esm({
-  async "src/PM/main.ts"() {
+import { WebSocketServer } from "ws";
+var PM_WithWebSocket;
+var init_PM_WithWebSocket = __esm({
+  async "src/PM/PM_WithWebSocket.ts"() {
     "use strict";
-    init_utils();
-    init_queue();
     await init_PM_WithEslintAndTsc();
-    changes = {};
-    fileHashes = {};
-    files2 = {};
-    screenshots2 = {};
-    statusMessagePretty = (failures, test, runtime) => {
-      if (failures === 0) {
-        console.log(ansiC2.green(ansiC2.inverse(`${runtime} > ${test}`)));
-      } else if (failures > 0) {
-        console.log(
-          ansiC2.red(
-            ansiC2.inverse(
-              `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
-            )
-          )
-        );
-      } else {
-        console.log(
-          ansiC2.red(ansiC2.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
-        );
-      }
-    };
-    filesHash = async (files3, algorithm = "md5") => {
-      return new Promise((resolve, reject) => {
-        resolve(
-          files3.reduce(async (mm, f2) => {
-            return await mm + await fileHash(f2);
-          }, Promise.resolve(""))
-        );
-      });
-    };
-    PM_Main = class extends PM_WithEslintAndTsc {
+    PM_WithWebSocket = class extends PM_WithEslintAndTsc {
       constructor(configs, name, mode2) {
         super(configs, name, mode2);
-        this.logStreams = {};
-        this.sidecars = {};
         this.clients = /* @__PURE__ */ new Set();
         this.runningProcesses = /* @__PURE__ */ new Map();
         this.allProcesses = /* @__PURE__ */ new Map();
         this.processLogs = /* @__PURE__ */ new Map();
-        this.getRunnables = (tests, testName2, payload = {
-          nodeEntryPoints: {},
-          nodeEntryPointSidecars: {},
-          webEntryPoints: {},
-          webEntryPointSidecars: {},
-          pureEntryPoints: {},
-          pureEntryPointSidecars: {}
-        }) => {
-          return getRunnables(tests, testName2, payload);
-        };
-        this.launchPure = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`pure < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
-          if (!fs8.existsSync(reportDest)) {
-            fs8.mkdirSync(reportDest, { recursive: true });
-          }
-          const destFolder = dest.replace(".mjs", "");
-          let argz2 = "";
-          const testConfig = this.configs.tests.find((t) => {
-            return t[0] === src;
-          });
-          if (!testConfig) {
-            console.log(ansiC2.inverse("missing test config! Exiting ungracefully!"));
-            process.exit(-1);
-          }
-          const testConfigResource = testConfig[2];
-          const portsToUse = [];
-          if (testConfigResource.ports === 0) {
-            argz2 = JSON.stringify({
-              scheduled: true,
-              name: src,
-              ports: portsToUse,
-              fs: reportDest,
-              browserWSEndpoint: this.browser.wsEndpoint()
-            });
-          } else if (testConfigResource.ports > 0) {
-            const openPorts = Object.entries(this.ports).filter(
-              ([portnumber, status]) => status === ""
-            );
-            if (openPorts.length >= testConfigResource.ports) {
-              for (let i = 0; i < testConfigResource.ports; i++) {
-                portsToUse.push(openPorts[i][0]);
-                this.ports[openPorts[i][0]] = src;
-              }
-              argz2 = JSON.stringify({
-                scheduled: true,
-                name: src,
-                ports: portsToUse,
-                fs: destFolder,
-                browserWSEndpoint: this.browser.wsEndpoint()
-              });
-            } else {
-              this.queue.push(src);
-              return [Math.random(), argz2];
-            }
-          } else {
-            console.error("negative port makes no sense", src);
-            process.exit(-1);
-          }
-          const builtfile = dest;
-          const logs = createLogStreams(reportDest, "pure");
-          try {
-            await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-              const originalConsole = { ...console };
-              return module.default.then((defaultModule) => {
-                defaultModule.receiveTestResourceConfig(argz2).then(async (results) => {
-                  statusMessagePretty(results.fails, src, "pure");
-                  this.bddTestIsNowDone(src, results.fails);
-                }).catch((e1) => {
-                  console.log(
-                    ansiC2.red(`launchPure - ${src} errored with: ${e1.stack}`)
-                  );
-                  this.bddTestIsNowDone(src, -1);
-                  statusMessagePretty(-1, src, "pure");
-                });
-              }).catch((e2) => {
-                console.log(
-                  ansiColors.red(
-                    `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
-                  )
-                );
-                logs.exit.write(e2.stack);
-                logs.exit.write(-1);
-                this.bddTestIsNowDone(src, -1);
-                statusMessagePretty(-1, src, "pure");
-              }).finally((x) => {
-              });
-            });
-          } catch (e3) {
-            logs.writeExitCode(-1, e3);
-            console.log(
-              ansiC2.red(
-                ansiC2.inverse(
-                  `${src} 1 errored with: ${e3}. Check logs for more info`
-                )
-              )
-            );
-            logs.exit.write(e3.stack);
-            logs.exit.write("-1");
-            this.bddTestIsNowDone(src, -1);
-            statusMessagePretty(-1, src, "pure");
-          }
-          for (let i = 0; i <= portsToUse.length; i++) {
-            if (portsToUse[i]) {
-              this.ports[portsToUse[i]] = "";
-            }
-          }
-        };
-        this.launchNode = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`node < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
-          if (!fs8.existsSync(reportDest)) {
-            fs8.mkdirSync(reportDest, { recursive: true });
-          }
-          let testResources = "";
-          const testConfig = this.configs.tests.find((t) => {
-            return t[0] === src;
-          });
-          if (!testConfig) {
-            console.log(
-              ansiC2.inverse(`missing test config! Exiting ungracefully for '${src}'`)
-            );
-            process.exit(-1);
-          }
-          const testConfigResource = testConfig[2];
-          const portsToUse = [];
-          if (testConfigResource.ports === 0) {
-            const t = {
-              name: src,
-              // ports: portsToUse.map((v) => Number(v)),
-              ports: [],
-              fs: reportDest,
-              browserWSEndpoint: this.browser.wsEndpoint()
-            };
-            testResources = JSON.stringify(t);
-          } else if (testConfigResource.ports > 0) {
-            const openPorts = Object.entries(this.ports).filter(
-              ([portnumber, portopen]) => portopen === ""
-            );
-            if (openPorts.length >= testConfigResource.ports) {
-              for (let i = 0; i < testConfigResource.ports; i++) {
-                portsToUse.push(openPorts[i][0]);
-                this.ports[openPorts[i][0]] = src;
-              }
-              testResources = JSON.stringify({
-                scheduled: true,
-                name: src,
-                ports: portsToUse,
-                fs: reportDest,
-                browserWSEndpoint: this.browser.wsEndpoint()
-              });
-            } else {
-              console.log(
-                ansiC2.red(
-                  `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
-                )
-              );
-              this.queue.push(src);
-              return [Math.random(), argz];
-            }
-          } else {
-            console.error("negative port makes no sense", src);
-            process.exit(-1);
-          }
-          const builtfile = dest;
-          let haltReturns = false;
-          const ipcfile = "/tmp/tpipe_" + Math.random();
-          const child = spawn(
-            "node",
-            // "node",
-            [
-              // "--inspect-brk",
-              builtfile,
-              testResources,
-              ipcfile
-            ],
-            {
-              stdio: ["pipe", "pipe", "pipe", "ipc"]
-            }
-          );
-          let buffer = new Buffer("");
-          const server = net.createServer((socket) => {
-            const queue = new Queue();
-            socket.on("data", (data) => {
-              buffer = Buffer.concat([buffer, data]);
-              for (let b = 0; b < buffer.length + 1; b++) {
-                const c = buffer.slice(0, b);
-                let d;
-                try {
-                  d = JSON.parse(c.toString());
-                  queue.enqueue(d);
-                  buffer = buffer.slice(b, buffer.length + 1);
-                  b = 0;
-                } catch (e) {
-                }
-              }
-              while (queue.size() > 0) {
-                const message = queue.dequeue();
-                if (message) {
-                  this.mapping().forEach(async ([command, func]) => {
-                    if (message[0] === command) {
-                      const x = message.slice(1, -1);
-                      const r = await this[command](...x);
-                      if (!haltReturns) {
-                        child.send(
-                          JSON.stringify({
-                            payload: r,
-                            key: message[message.length - 1]
-                          })
-                        );
-                      }
-                    }
-                  });
-                }
-              }
-            });
-          });
-          const logs = createLogStreams(reportDest, "node");
-          server.listen(ipcfile, () => {
-            child.stdout?.on("data", (data) => {
-              logs.stdout?.write(data);
-            });
-            child.stderr?.on("data", (data) => {
-              logs.stderr?.write(data);
-            });
-            child.on("error", (err) => {
-            });
-            child.on("close", (code) => {
-              const exitCode = code === null ? -1 : code;
-              if (exitCode < 0) {
-                logs.writeExitCode(
-                  exitCode,
-                  new Error("Process crashed or was terminated")
-                );
-              } else {
-                logs.writeExitCode(exitCode);
-              }
-              logs.closeAll();
-              server.close();
-              if (!files2[src]) {
-                files2[src] = /* @__PURE__ */ new Set();
-              }
-              if (exitCode === 255) {
-                console.log(
-                  ansiColors.red(
-                    `node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/stderr.log for more info`
-                  )
-                );
-                this.bddTestIsNowDone(src, -1);
-                statusMessagePretty(-1, src, "node");
-                return;
-              } else if (exitCode === 0) {
-                this.bddTestIsNowDone(src, 0);
-                statusMessagePretty(0, src, "node");
-              } else {
-                this.bddTestIsNowDone(src, exitCode);
-                statusMessagePretty(exitCode, src, "node");
-              }
-              haltReturns = true;
-            });
-            child.on("exit", (code) => {
-              haltReturns = true;
-              for (let i = 0; i <= portsToUse.length; i++) {
-                if (portsToUse[i]) {
-                  this.ports[portsToUse[i]] = "";
-                }
-              }
-            });
-            child.on("error", (e) => {
-              console.log("error");
-              haltReturns = true;
-              console.log(
-                ansiC2.red(
-                  ansiC2.inverse(
-                    `${src} errored with: ${e.name}. Check error logs for more info`
-                  )
-                )
-              );
-              this.bddTestIsNowDone(src, -1);
-              statusMessagePretty(-1, src, "node");
-            });
-          });
-        };
-        this.launchWeb = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`web < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
-          if (!fs8.existsSync(reportDest)) {
-            fs8.mkdirSync(reportDest, { recursive: true });
-          }
-          const destFolder = dest.replace(".mjs", "");
-          const webArgz = JSON.stringify({
-            name: src,
-            ports: [].toString(),
-            fs: reportDest,
-            browserWSEndpoint: this.browser.wsEndpoint()
-          });
-          const d = `${dest}?cacheBust=${Date.now()}`;
-          const logs = createLogStreams(reportDest, "web");
-          this.browser.newPage().then((page) => {
-            page.on("console", (log) => {
-              const msg = `${log.text()}
-`;
-              switch (log.type()) {
-                case "info":
-                  logs.info?.write(msg);
-                  break;
-                case "warn":
-                  logs.warn?.write(msg);
-                  break;
-                case "error":
-                  logs.error?.write(msg);
-                  break;
-                case "debug":
-                  logs.debug?.write(msg);
-                  break;
-                default:
-                  break;
-              }
-            });
-            page.on("close", () => {
-              logs.writeExitCode(0);
-              logs.closeAll();
-              logs.closeAll();
-            });
-            this.mapping().forEach(async ([command, func]) => {
-              if (command === "page") {
-                page.exposeFunction(command, (x) => {
-                  if (x) {
-                    return func(x);
-                  } else {
-                    return func(page.mainFrame()._id);
-                  }
-                });
-              } else {
-                return page.exposeFunction(command, func);
-              }
-            });
-            return page;
-          }).then(async (page) => {
-            const close = () => {
-              if (!files2[src]) {
-                files2[src] = /* @__PURE__ */ new Set();
-              }
-              delete files2[src];
-              Promise.all(screenshots2[src] || []).then(() => {
-                delete screenshots2[src];
-                page.close();
-              });
-              return;
-            };
-            page.on("pageerror", (err) => {
-              logs.writeExitCode(-1, err);
-              console.log(
-                ansiColors.red(
-                  `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
-                )
-              );
-              this.bddTestIsNowDone(src, -1);
-              close();
-            });
-            await page.goto(`file://${`${destFolder}.html`}`, {});
-            await page.evaluate(
-              `
-import('${d}').then(async (x) => {
-  try {
-    return await (await x.default).receiveTestResourceConfig(${webArgz})
-  } catch (e) {
-    console.log("web run failure", e.toString())
-  }
-})
-`
-            ).then(async ({ fails, failed, features }) => {
-              statusMessagePretty(fails, src, "web");
-              this.bddTestIsNowDone(src, fails);
-            }).catch((e) => {
-              console.log(ansiC2.red(ansiC2.inverse(e.stack)));
-              console.log(
-                ansiC2.red(
-                  ansiC2.inverse(
-                    `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
-                  )
-                )
-              );
-              this.bddTestIsNowDone(src, -1);
-            }).finally(() => {
-              close();
-            });
-            return page;
-          });
-        };
-        this.launchPitono = async (src, dest) => {
-          console.log(ansiC2.green(ansiC2.inverse(`pitono < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
-          if (!fs8.existsSync(reportDest)) {
-            fs8.mkdirSync(reportDest, { recursive: true });
-          }
-          const logs = createLogStreams(reportDest, "node");
-          try {
-            const { PitonoRunner: PitonoRunner2 } = await Promise.resolve().then(() => (init_pitonoRunner(), pitonoRunner_exports));
-            const runner = new PitonoRunner2(this.configs, this.name);
-            await runner.run();
-            this.bddTestIsNowDone(src, 0);
-            statusMessagePretty(0, src, "pitono");
-          } catch (error) {
-            logs.writeExitCode(-1, error);
-            console.log(
-              ansiC2.red(
-                ansiC2.inverse(
-                  `${src} errored with: ${error}. Check logs for more info`
-                )
-              )
-            );
-            this.bddTestIsNowDone(src, -1);
-            statusMessagePretty(-1, src, "pitono");
-          }
-        };
-        this.launchGolingvu = async (src, dest) => {
-          throw "not yet implemented";
-        };
-        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
-          const featureDestination = path7.resolve(
-            process.cwd(),
-            "reports",
-            "features",
-            "strings",
-            srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
-          );
-          const testReportPath = `${reportDest}/tests.json`;
-          if (!fs8.existsSync(testReportPath)) {
-            console.error(`tests.json not found at: ${testReportPath}`);
-            return;
-          }
-          const testReport = JSON.parse(fs8.readFileSync(testReportPath, "utf8"));
-          if (testReport.tests) {
-            testReport.tests.forEach((test) => {
-              test.fullPath = path7.resolve(process.cwd(), srcTest);
-            });
-          }
-          testReport.fullPath = path7.resolve(process.cwd(), srcTest);
-          fs8.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
-          testReport.features.reduce(async (mm, featureStringKey) => {
-            const accum = await mm;
-            const isUrl = isValidUrl(featureStringKey);
-            if (isUrl) {
-              const u = new URL(featureStringKey);
-              if (u.protocol === "file:") {
-                const newPath = `${process.cwd()}/testeranto/features/internal/${path7.relative(
-                  process.cwd(),
-                  u.pathname
-                )}`;
-                accum.files.push(u.pathname);
-              } else if (u.protocol === "http:" || u.protocol === "https:") {
-                const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
-                const body = await this.configs.featureIngestor(featureStringKey);
-                writeFileAndCreateDir(newPath, body);
-                accum.files.push(newPath);
-              }
-            } else {
-              await fs8.promises.mkdir(path7.dirname(featureDestination), {
-                recursive: true
-              });
-              accum.strings.push(featureStringKey);
-            }
-            return accum;
-          }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
-            fs8.writeFileSync(
-              `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
-              files3.map((f2) => {
-                return `/read ${f2}`;
-              }).join("\n")
-            );
-          });
-          testReport.givens.forEach((g) => {
-            if (g.failed === true) {
-              this.summary[srcTest].failingFeatures[g.key] = g.features;
-            }
-          });
-          this.writeBigBoard();
-        };
-        this.checkForShutdown = () => {
-          this.checkQueue();
-          console.log(
-            ansiC2.inverse(
-              `The following jobs are awaiting resources: ${JSON.stringify(
-                this.queue
-              )}`
-            )
-          );
-          console.log(
-            ansiC2.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
-          );
-          this.writeBigBoard();
-          if (this.mode === "dev")
-            return;
-          let inflight = false;
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].prompt === "?") {
-              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} prompt ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].runTimeErrors === "?") {
-              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} runTimeError ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].staticErrors === "?") {
-              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} staticErrors ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].typeErrors === "?") {
-              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} typeErrors ${k}`)));
-              inflight = true;
-            }
-          });
-          this.writeBigBoard();
-          if (!inflight) {
-            if (this.browser) {
-              if (this.browser) {
-                this.browser.disconnect().then(() => {
-                  console.log(
-                    ansiC2.inverse(`${this.name} has been tested. Goodbye.`)
-                  );
-                  process.exit();
-                });
-              }
-            }
-          }
-        };
-        this.launchers = {};
-        this.ports = {};
-        this.queue = [];
-        this.nodeSidecars = {};
-        this.webSidecars = {};
-        this.pureSidecars = {};
-        this.configs.ports.forEach((element) => {
-          this.ports[element] = "";
-        });
         this.httpServer = http.createServer(this.requestHandler.bind(this));
         this.wss = new WebSocketServer({ server: this.httpServer });
         this.wss.on("connection", (ws) => {
@@ -1738,6 +976,905 @@ import('${d}').then(async (x) => {
           console.log(`HTTP server running on http://localhost:${httpPort}`);
         });
       }
+      requestHandler(req, res) {
+        const parsedUrl = url.parse(req.url || "/");
+        let pathname = parsedUrl.pathname || "/";
+        if (pathname === "/") {
+          pathname = "/index.html";
+        }
+        let filePath = pathname.substring(1);
+        if (filePath.startsWith("reports/")) {
+          filePath = `testeranto/${filePath}`;
+        } else if (filePath.startsWith("metafiles/")) {
+          filePath = `testeranto/${filePath}`;
+        } else if (filePath === "projects.json") {
+          filePath = `testeranto/${filePath}`;
+        } else {
+          const possiblePaths = [
+            `dist/${filePath}`,
+            `testeranto/dist/${filePath}`,
+            `../dist/${filePath}`,
+            `./${filePath}`
+          ];
+          let foundPath = null;
+          for (const possiblePath of possiblePaths) {
+            if (fs7.existsSync(possiblePath)) {
+              foundPath = possiblePath;
+              break;
+            }
+          }
+          if (foundPath) {
+            filePath = foundPath;
+          } else {
+            const indexPath = this.findIndexHtml();
+            if (indexPath) {
+              fs7.readFile(indexPath, (err, data) => {
+                if (err) {
+                  res.writeHead(404, { "Content-Type": "text/plain" });
+                  res.end("404 Not Found");
+                  return;
+                }
+                res.writeHead(200, { "Content-Type": "text/html" });
+                res.end(data);
+              });
+              return;
+            } else {
+              res.writeHead(404, { "Content-Type": "text/plain" });
+              res.end("404 Not Found");
+              return;
+            }
+          }
+        }
+        fs7.exists(filePath, (exists) => {
+          if (!exists) {
+            if (!pathname.includes(".") && pathname !== "/") {
+              const indexPath = this.findIndexHtml();
+              if (indexPath) {
+                fs7.readFile(indexPath, (err, data) => {
+                  if (err) {
+                    res.writeHead(404, { "Content-Type": "text/plain" });
+                    res.end("404 Not Found");
+                    return;
+                  }
+                  res.writeHead(200, { "Content-Type": "text/html" });
+                  res.end(data);
+                });
+                return;
+              } else {
+                res.writeHead(200, { "Content-Type": "text/html" });
+                res.end(`
+              <html>
+                <body>
+                  <h1>Testeranto is running</h1>
+                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
+                </body>
+              </html>
+            `);
+                return;
+              }
+            }
+            res.writeHead(404, { "Content-Type": "text/plain" });
+            res.end("404 Not Found");
+            return;
+          }
+          fs7.readFile(filePath, (err, data) => {
+            if (err) {
+              res.writeHead(500, { "Content-Type": "text/plain" });
+              res.end("500 Internal Server Error");
+              return;
+            }
+            const mimeType = mime.lookup(filePath) || "application/octet-stream";
+            res.writeHead(200, { "Content-Type": mimeType });
+            res.end(data);
+          });
+        });
+      }
+      findIndexHtml() {
+        const possiblePaths = [
+          "dist/index.html",
+          "testeranto/dist/index.html",
+          "../dist/index.html",
+          "./index.html"
+        ];
+        for (const path11 of possiblePaths) {
+          if (fs7.existsSync(path11)) {
+            return path11;
+          }
+        }
+        return null;
+      }
+      broadcast(message) {
+        const data = typeof message === "string" ? message : JSON.stringify(message);
+        this.clients.forEach((client) => {
+          if (client.readyState === 1) {
+            client.send(data);
+          }
+        });
+      }
+    };
+  }
+});
+
+// src/PM/pitonoRunner.ts
+var pitonoRunner_exports = {};
+__export(pitonoRunner_exports, {
+  PitonoRunner: () => PitonoRunner
+});
+import { execSync } from "child_process";
+import path6 from "path";
+import fs8 from "fs";
+var PitonoRunner;
+var init_pitonoRunner = __esm({
+  "src/PM/pitonoRunner.ts"() {
+    "use strict";
+    PitonoRunner = class {
+      constructor(config, testName2) {
+        this.config = config;
+        this.testName = testName2;
+      }
+      async run() {
+        const coreJsonPath = path6.join(process.cwd(), "testeranto", "pitono", this.testName, "core.json");
+        const maxWaitTime = 1e4;
+        const startTime = Date.now();
+        while (!fs8.existsSync(coreJsonPath) && Date.now() - startTime < maxWaitTime) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        if (!fs8.existsSync(coreJsonPath)) {
+          console.error(`Pitono core.json not found at: ${coreJsonPath} after waiting ${maxWaitTime}ms`);
+          return;
+        }
+        try {
+          const coreData = JSON.parse(fs8.readFileSync(coreJsonPath, "utf-8"));
+          const entryPoints = coreData.entryPoints;
+          for (const entryPoint of entryPoints) {
+            try {
+              console.log(`Running pitono test: ${entryPoint}`);
+              const absolutePath = path6.resolve(entryPoint);
+              if (!fs8.existsSync(absolutePath)) {
+                console.error(`Pitono test file not found: ${absolutePath}`);
+                continue;
+              }
+              execSync(`python "${absolutePath}"`, { stdio: "inherit" });
+              console.log(`Pitono test completed: ${entryPoint}`);
+            } catch (error) {
+              console.error(`Pitono test failed: ${entryPoint}`, error);
+              throw error;
+            }
+          }
+        } catch (error) {
+          console.error(`Error reading or parsing core.json: ${error}`);
+        }
+      }
+    };
+  }
+});
+
+// src/PM/main.ts
+var main_exports = {};
+__export(main_exports, {
+  PM_Main: () => PM_Main
+});
+import { spawn as spawn2 } from "node:child_process";
+import ansiColors from "ansi-colors";
+import net from "net";
+import fs9, { watch } from "fs";
+import path7 from "path";
+import puppeteer from "puppeteer-core";
+import ansiC2 from "ansi-colors";
+import crypto from "node:crypto";
+import url2 from "url";
+import mime2 from "mime-types";
+function runtimeLogs(runtime, reportDest) {
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs9.existsSync(safeDest)) {
+      fs9.mkdirSync(safeDest, { recursive: true });
+    }
+    if (runtime === "node") {
+      return {
+        stdout: fs9.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs9.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs9.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "web") {
+      return {
+        info: fs9.createWriteStream(`${safeDest}/info.log`),
+        warn: fs9.createWriteStream(`${safeDest}/warn.log`),
+        error: fs9.createWriteStream(`${safeDest}/error.log`),
+        debug: fs9.createWriteStream(`${safeDest}/debug.log`),
+        exit: fs9.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "pure") {
+      return {
+        exit: fs9.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "pitono") {
+      return {
+        stdout: fs9.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs9.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs9.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else {
+      throw `unknown runtime: ${runtime}`;
+    }
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+function createLogStreams(reportDest, runtime) {
+  if (!fs9.existsSync(reportDest)) {
+    fs9.mkdirSync(reportDest, { recursive: true });
+  }
+  const streams = runtimeLogs(runtime, reportDest);
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs9.existsSync(safeDest)) {
+      fs9.mkdirSync(safeDest, { recursive: true });
+    }
+    const streams2 = runtimeLogs(runtime, safeDest);
+    return {
+      ...streams2,
+      closeAll: () => {
+        Object.values(streams2).forEach(
+          (stream) => !stream.closed && stream.close()
+        );
+      },
+      writeExitCode: (code, error) => {
+        if (error) {
+          streams2.exit.write(`Error: ${error.message}
+`);
+          if (error.stack) {
+            streams2.exit.write(`Stack Trace:
+${error.stack}
+`);
+          }
+        }
+        streams2.exit.write(`${code}
+`);
+      },
+      exit: streams2.exit
+    };
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+async function fileHash(filePath, algorithm = "md5") {
+  return new Promise((resolve, reject) => {
+    const hash = crypto.createHash(algorithm);
+    const fileStream = fs9.createReadStream(filePath);
+    fileStream.on("data", (data) => {
+      hash.update(data);
+    });
+    fileStream.on("end", () => {
+      const fileHash2 = hash.digest("hex");
+      resolve(fileHash2);
+    });
+    fileStream.on("error", (error) => {
+      reject(`Error reading file: ${error.message}`);
+    });
+  });
+}
+async function writeFileAndCreateDir(filePath, data) {
+  const dirPath = path7.dirname(filePath);
+  try {
+    await fs9.promises.mkdir(dirPath, { recursive: true });
+    await fs9.writeFileSync(filePath, data);
+  } catch (error) {
+    console.error(`Error writing file: ${error}`);
+  }
+}
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+async function pollForFile(path11, timeout = 2e3) {
+  const intervalObj = setInterval(function() {
+    const file = path11;
+    const fileExists = fs9.existsSync(file);
+    if (fileExists) {
+      clearInterval(intervalObj);
+    }
+  }, timeout);
+}
+var changes, fileHashes, files2, screenshots2, statusMessagePretty, filesHash, PM_Main;
+var init_main = __esm({
+  async "src/PM/main.ts"() {
+    "use strict";
+    init_utils();
+    init_queue();
+    await init_PM_WithWebSocket();
+    changes = {};
+    fileHashes = {};
+    files2 = {};
+    screenshots2 = {};
+    statusMessagePretty = (failures, test, runtime) => {
+      if (failures === 0) {
+        console.log(ansiC2.green(ansiC2.inverse(`${runtime} > ${test}`)));
+      } else if (failures > 0) {
+        console.log(
+          ansiC2.red(
+            ansiC2.inverse(
+              `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
+            )
+          )
+        );
+      } else {
+        console.log(
+          ansiC2.red(ansiC2.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
+        );
+      }
+    };
+    filesHash = async (files3, algorithm = "md5") => {
+      return new Promise((resolve, reject) => {
+        resolve(
+          files3.reduce(async (mm, f2) => {
+            return await mm + await fileHash(f2);
+          }, Promise.resolve(""))
+        );
+      });
+    };
+    PM_Main = class extends PM_WithWebSocket {
+      constructor(configs, name, mode2) {
+        super(configs, name, mode2);
+        this.logStreams = {};
+        this.sidecars = {};
+        this.clients = /* @__PURE__ */ new Set();
+        this.runningProcesses = /* @__PURE__ */ new Map();
+        this.allProcesses = /* @__PURE__ */ new Map();
+        this.processLogs = /* @__PURE__ */ new Map();
+        this.getRunnables = (tests, testName2, payload = {
+          nodeEntryPoints: {},
+          nodeEntryPointSidecars: {},
+          webEntryPoints: {},
+          webEntryPointSidecars: {},
+          pureEntryPoints: {},
+          pureEntryPointSidecars: {}
+        }) => {
+          return getRunnables(tests, testName2, payload);
+        };
+        this.launchPure = async (src, dest) => {
+          console.log(ansiC2.green(ansiC2.inverse(`pure < ${src}`)));
+          this.bddTestIsRunning(src);
+          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
+          if (!fs9.existsSync(reportDest)) {
+            fs9.mkdirSync(reportDest, { recursive: true });
+          }
+          const destFolder = dest.replace(".mjs", "");
+          let argz2 = "";
+          const testConfig = this.configs.tests.find((t) => {
+            return t[0] === src;
+          });
+          if (!testConfig) {
+            console.log(ansiC2.inverse("missing test config! Exiting ungracefully!"));
+            process.exit(-1);
+          }
+          const testConfigResource = testConfig[2];
+          const portsToUse = [];
+          if (testConfigResource.ports === 0) {
+            argz2 = JSON.stringify({
+              scheduled: true,
+              name: src,
+              ports: portsToUse,
+              fs: reportDest,
+              browserWSEndpoint: this.browser.wsEndpoint()
+            });
+          } else if (testConfigResource.ports > 0) {
+            const openPorts = Object.entries(this.ports).filter(
+              ([portnumber, status]) => status === ""
+            );
+            if (openPorts.length >= testConfigResource.ports) {
+              for (let i = 0; i < testConfigResource.ports; i++) {
+                portsToUse.push(openPorts[i][0]);
+                this.ports[openPorts[i][0]] = src;
+              }
+              argz2 = JSON.stringify({
+                scheduled: true,
+                name: src,
+                ports: portsToUse,
+                fs: destFolder,
+                browserWSEndpoint: this.browser.wsEndpoint()
+              });
+            } else {
+              this.queue.push(src);
+              return [Math.random(), argz2];
+            }
+          } else {
+            console.error("negative port makes no sense", src);
+            process.exit(-1);
+          }
+          const builtfile = dest;
+          const logs = createLogStreams(reportDest, "pure");
+          try {
+            await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+              const originalConsole = { ...console };
+              return module.default.then((defaultModule) => {
+                defaultModule.receiveTestResourceConfig(argz2).then(async (results) => {
+                  statusMessagePretty(results.fails, src, "pure");
+                  this.bddTestIsNowDone(src, results.fails);
+                }).catch((e1) => {
+                  console.log(
+                    ansiC2.red(`launchPure - ${src} errored with: ${e1.stack}`)
+                  );
+                  this.bddTestIsNowDone(src, -1);
+                  statusMessagePretty(-1, src, "pure");
+                });
+              }).catch((e2) => {
+                console.log(
+                  ansiColors.red(
+                    `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
+                  )
+                );
+                logs.exit.write(e2.stack);
+                logs.exit.write(-1);
+                this.bddTestIsNowDone(src, -1);
+                statusMessagePretty(-1, src, "pure");
+              }).finally((x) => {
+              });
+            });
+          } catch (e3) {
+            logs.writeExitCode(-1, e3);
+            console.log(
+              ansiC2.red(
+                ansiC2.inverse(
+                  `${src} 1 errored with: ${e3}. Check logs for more info`
+                )
+              )
+            );
+            logs.exit.write(e3.stack);
+            logs.exit.write("-1");
+            this.bddTestIsNowDone(src, -1);
+            statusMessagePretty(-1, src, "pure");
+          }
+          for (let i = 0; i <= portsToUse.length; i++) {
+            if (portsToUse[i]) {
+              this.ports[portsToUse[i]] = "";
+            }
+          }
+        };
+        this.launchNode = async (src, dest) => {
+          console.log(ansiC2.green(ansiC2.inverse(`node < ${src}`)));
+          this.bddTestIsRunning(src);
+          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
+          if (!fs9.existsSync(reportDest)) {
+            fs9.mkdirSync(reportDest, { recursive: true });
+          }
+          let testResources = "";
+          const testConfig = this.configs.tests.find((t) => {
+            return t[0] === src;
+          });
+          if (!testConfig) {
+            console.log(
+              ansiC2.inverse(`missing test config! Exiting ungracefully for '${src}'`)
+            );
+            process.exit(-1);
+          }
+          const testConfigResource = testConfig[2];
+          const portsToUse = [];
+          if (testConfigResource.ports === 0) {
+            const t = {
+              name: src,
+              // ports: portsToUse.map((v) => Number(v)),
+              ports: [],
+              fs: reportDest,
+              browserWSEndpoint: this.browser.wsEndpoint()
+            };
+            testResources = JSON.stringify(t);
+          } else if (testConfigResource.ports > 0) {
+            const openPorts = Object.entries(this.ports).filter(
+              ([portnumber, portopen]) => portopen === ""
+            );
+            if (openPorts.length >= testConfigResource.ports) {
+              for (let i = 0; i < testConfigResource.ports; i++) {
+                portsToUse.push(openPorts[i][0]);
+                this.ports[openPorts[i][0]] = src;
+              }
+              testResources = JSON.stringify({
+                scheduled: true,
+                name: src,
+                ports: portsToUse,
+                fs: reportDest,
+                browserWSEndpoint: this.browser.wsEndpoint()
+              });
+            } else {
+              console.log(
+                ansiC2.red(
+                  `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
+                )
+              );
+              this.queue.push(src);
+              return [Math.random(), argz];
+            }
+          } else {
+            console.error("negative port makes no sense", src);
+            process.exit(-1);
+          }
+          const builtfile = dest;
+          let haltReturns = false;
+          const ipcfile = "/tmp/tpipe_" + Math.random();
+          const child = spawn2(
+            "node",
+            // "node",
+            [
+              // "--inspect-brk",
+              builtfile,
+              testResources,
+              ipcfile
+            ],
+            {
+              stdio: ["pipe", "pipe", "pipe", "ipc"]
+            }
+          );
+          let buffer = new Buffer("");
+          const server = net.createServer((socket) => {
+            const queue = new Queue();
+            socket.on("data", (data) => {
+              buffer = Buffer.concat([buffer, data]);
+              for (let b = 0; b < buffer.length + 1; b++) {
+                const c = buffer.slice(0, b);
+                let d;
+                try {
+                  d = JSON.parse(c.toString());
+                  queue.enqueue(d);
+                  buffer = buffer.slice(b, buffer.length + 1);
+                  b = 0;
+                } catch (e) {
+                }
+              }
+              while (queue.size() > 0) {
+                const message = queue.dequeue();
+                if (message) {
+                  this.mapping().forEach(async ([command, func]) => {
+                    if (message[0] === command) {
+                      const x = message.slice(1, -1);
+                      const r = await this[command](...x);
+                      if (!haltReturns) {
+                        child.send(
+                          JSON.stringify({
+                            payload: r,
+                            key: message[message.length - 1]
+                          })
+                        );
+                      }
+                    }
+                  });
+                }
+              }
+            });
+          });
+          const logs = createLogStreams(reportDest, "node");
+          server.listen(ipcfile, () => {
+            child.stdout?.on("data", (data) => {
+              logs.stdout?.write(data);
+            });
+            child.stderr?.on("data", (data) => {
+              logs.stderr?.write(data);
+            });
+            child.on("error", (err) => {
+            });
+            child.on("close", (code) => {
+              const exitCode = code === null ? -1 : code;
+              if (exitCode < 0) {
+                logs.writeExitCode(
+                  exitCode,
+                  new Error("Process crashed or was terminated")
+                );
+              } else {
+                logs.writeExitCode(exitCode);
+              }
+              logs.closeAll();
+              server.close();
+              if (!files2[src]) {
+                files2[src] = /* @__PURE__ */ new Set();
+              }
+              if (exitCode === 255) {
+                console.log(
+                  ansiColors.red(
+                    `node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/stderr.log for more info`
+                  )
+                );
+                this.bddTestIsNowDone(src, -1);
+                statusMessagePretty(-1, src, "node");
+                return;
+              } else if (exitCode === 0) {
+                this.bddTestIsNowDone(src, 0);
+                statusMessagePretty(0, src, "node");
+              } else {
+                this.bddTestIsNowDone(src, exitCode);
+                statusMessagePretty(exitCode, src, "node");
+              }
+              haltReturns = true;
+            });
+            child.on("exit", (code) => {
+              haltReturns = true;
+              for (let i = 0; i <= portsToUse.length; i++) {
+                if (portsToUse[i]) {
+                  this.ports[portsToUse[i]] = "";
+                }
+              }
+            });
+            child.on("error", (e) => {
+              console.log("error");
+              haltReturns = true;
+              console.log(
+                ansiC2.red(
+                  ansiC2.inverse(
+                    `${src} errored with: ${e.name}. Check error logs for more info`
+                  )
+                )
+              );
+              this.bddTestIsNowDone(src, -1);
+              statusMessagePretty(-1, src, "node");
+            });
+          });
+        };
+        this.launchWeb = async (src, dest) => {
+          console.log(ansiC2.green(ansiC2.inverse(`web < ${src}`)));
+          this.bddTestIsRunning(src);
+          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
+          if (!fs9.existsSync(reportDest)) {
+            fs9.mkdirSync(reportDest, { recursive: true });
+          }
+          const destFolder = dest.replace(".mjs", "");
+          const webArgz = JSON.stringify({
+            name: src,
+            ports: [].toString(),
+            fs: reportDest,
+            browserWSEndpoint: this.browser.wsEndpoint()
+          });
+          const d = `${dest}?cacheBust=${Date.now()}`;
+          const logs = createLogStreams(reportDest, "web");
+          this.browser.newPage().then((page) => {
+            page.on("console", (log) => {
+              const msg = `${log.text()}
+`;
+              switch (log.type()) {
+                case "info":
+                  logs.info?.write(msg);
+                  break;
+                case "warn":
+                  logs.warn?.write(msg);
+                  break;
+                case "error":
+                  logs.error?.write(msg);
+                  break;
+                case "debug":
+                  logs.debug?.write(msg);
+                  break;
+                default:
+                  break;
+              }
+            });
+            page.on("close", () => {
+              logs.writeExitCode(0);
+              logs.closeAll();
+              logs.closeAll();
+            });
+            this.mapping().forEach(async ([command, func]) => {
+              if (command === "page") {
+                page.exposeFunction(command, (x) => {
+                  if (x) {
+                    return func(x);
+                  } else {
+                    return func(page.mainFrame()._id);
+                  }
+                });
+              } else {
+                return page.exposeFunction(command, func);
+              }
+            });
+            return page;
+          }).then(async (page) => {
+            const close = () => {
+              if (!files2[src]) {
+                files2[src] = /* @__PURE__ */ new Set();
+              }
+              delete files2[src];
+              Promise.all(screenshots2[src] || []).then(() => {
+                delete screenshots2[src];
+                page.close();
+              });
+              return;
+            };
+            page.on("pageerror", (err) => {
+              logs.writeExitCode(-1, err);
+              console.log(
+                ansiColors.red(
+                  `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
+                )
+              );
+              this.bddTestIsNowDone(src, -1);
+              close();
+            });
+            await page.goto(`file://${`${destFolder}.html`}`, {});
+            await page.evaluate(
+              `
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`
+            ).then(async ({ fails, failed, features }) => {
+              statusMessagePretty(fails, src, "web");
+              this.bddTestIsNowDone(src, fails);
+            }).catch((e) => {
+              console.log(ansiC2.red(ansiC2.inverse(e.stack)));
+              console.log(
+                ansiC2.red(
+                  ansiC2.inverse(
+                    `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
+                  )
+                )
+              );
+              this.bddTestIsNowDone(src, -1);
+            }).finally(() => {
+              close();
+            });
+            return page;
+          });
+        };
+        this.launchPitono = async (src, dest) => {
+          console.log(ansiC2.green(ansiC2.inverse(`pitono < ${src}`)));
+          this.bddTestIsRunning(src);
+          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
+          if (!fs9.existsSync(reportDest)) {
+            fs9.mkdirSync(reportDest, { recursive: true });
+          }
+          const logs = createLogStreams(reportDest, "node");
+          try {
+            const { PitonoRunner: PitonoRunner2 } = await Promise.resolve().then(() => (init_pitonoRunner(), pitonoRunner_exports));
+            const runner = new PitonoRunner2(this.configs, this.name);
+            await runner.run();
+            this.bddTestIsNowDone(src, 0);
+            statusMessagePretty(0, src, "pitono");
+          } catch (error) {
+            logs.writeExitCode(-1, error);
+            console.log(
+              ansiC2.red(
+                ansiC2.inverse(
+                  `${src} errored with: ${error}. Check logs for more info`
+                )
+              )
+            );
+            this.bddTestIsNowDone(src, -1);
+            statusMessagePretty(-1, src, "pitono");
+          }
+        };
+        this.launchGolingvu = async (src, dest) => {
+          throw "not yet implemented";
+        };
+        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
+          const featureDestination = path7.resolve(
+            process.cwd(),
+            "reports",
+            "features",
+            "strings",
+            srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
+          );
+          const testReportPath = `${reportDest}/tests.json`;
+          if (!fs9.existsSync(testReportPath)) {
+            console.error(`tests.json not found at: ${testReportPath}`);
+            return;
+          }
+          const testReport = JSON.parse(fs9.readFileSync(testReportPath, "utf8"));
+          if (testReport.tests) {
+            testReport.tests.forEach((test) => {
+              test.fullPath = path7.resolve(process.cwd(), srcTest);
+            });
+          }
+          testReport.fullPath = path7.resolve(process.cwd(), srcTest);
+          fs9.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
+          testReport.features.reduce(async (mm, featureStringKey) => {
+            const accum = await mm;
+            const isUrl = isValidUrl(featureStringKey);
+            if (isUrl) {
+              const u = new URL(featureStringKey);
+              if (u.protocol === "file:") {
+                const newPath = `${process.cwd()}/testeranto/features/internal/${path7.relative(
+                  process.cwd(),
+                  u.pathname
+                )}`;
+                accum.files.push(u.pathname);
+              } else if (u.protocol === "http:" || u.protocol === "https:") {
+                const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
+                const body = await this.configs.featureIngestor(featureStringKey);
+                writeFileAndCreateDir(newPath, body);
+                accum.files.push(newPath);
+              }
+            } else {
+              await fs9.promises.mkdir(path7.dirname(featureDestination), {
+                recursive: true
+              });
+              accum.strings.push(featureStringKey);
+            }
+            return accum;
+          }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
+            fs9.writeFileSync(
+              `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
+              files3.map((f2) => {
+                return `/read ${f2}`;
+              }).join("\n")
+            );
+          });
+          testReport.givens.forEach((g) => {
+            if (g.failed === true) {
+              this.summary[srcTest].failingFeatures[g.key] = g.features;
+            }
+          });
+          this.writeBigBoard();
+        };
+        this.checkForShutdown = () => {
+          this.checkQueue();
+          console.log(
+            ansiC2.inverse(
+              `The following jobs are awaiting resources: ${JSON.stringify(
+                this.queue
+              )}`
+            )
+          );
+          console.log(
+            ansiC2.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
+          );
+          this.writeBigBoard();
+          if (this.mode === "dev")
+            return;
+          let inflight = false;
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].prompt === "?") {
+              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} prompt ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].runTimeErrors === "?") {
+              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} runTimeError ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].staticErrors === "?") {
+              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} staticErrors ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].typeErrors === "?") {
+              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} typeErrors ${k}`)));
+              inflight = true;
+            }
+          });
+          this.writeBigBoard();
+          if (!inflight) {
+            if (this.browser) {
+              if (this.browser) {
+                this.browser.disconnect().then(() => {
+                  console.log(
+                    ansiC2.inverse(`${this.name} has been tested. Goodbye.`)
+                  );
+                  process.exit();
+                });
+              }
+            }
+          }
+        };
+        this.launchers = {};
+        this.ports = {};
+        this.queue = [];
+        this.nodeSidecars = {};
+        this.webSidecars = {};
+        this.pureSidecars = {};
+        this.configs.ports.forEach((element) => {
+          this.ports[element] = "";
+        });
+      }
       async stopSideCar(uid) {
         console.log(ansiC2.green(ansiC2.inverse(`stopSideCar ${uid}`)));
         Object.entries(this.pureSidecars).forEach(async ([k, v]) => {
@@ -1814,8 +1951,8 @@ import('${d}').then(async (x) => {
         this.mapping().forEach(async ([command, func]) => {
           globalThis[command] = func;
         });
-        if (!fs8.existsSync(`testeranto/reports/${this.name}`)) {
-          fs8.mkdirSync(`testeranto/reports/${this.name}`);
+        if (!fs9.existsSync(`testeranto/reports/${this.name}`)) {
+          fs9.mkdirSync(`testeranto/reports/${this.name}`);
         }
         const executablePath = "/opt/homebrew/bin/chromium";
         try {
@@ -1912,8 +2049,8 @@ import('${d}').then(async (x) => {
             if (runtime === "pitono") {
               metafile = `./testeranto/metafiles/python/core.json`;
               const metafileDir = path7.dirname(metafile);
-              if (!fs8.existsSync(metafileDir)) {
-                fs8.mkdirSync(metafileDir, { recursive: true });
+              if (!fs9.existsSync(metafileDir)) {
+                fs9.mkdirSync(metafileDir, { recursive: true });
               }
             } else {
               metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
@@ -1944,7 +2081,7 @@ import('${d}').then(async (x) => {
             this.metafileOutputs(runtime);
             if (runtime === "pitono") {
               const checkFileExists = () => {
-                if (fs8.existsSync(metafile)) {
+                if (fs9.existsSync(metafile)) {
                   console.log(
                     ansiC2.green(ansiC2.inverse(`Pitono metafile found: ${metafile}`))
                   );
@@ -1965,7 +2102,7 @@ import('${d}').then(async (x) => {
               };
               checkFileExists();
             } else {
-              if (fs8.existsSync(metafile)) {
+              if (fs9.existsSync(metafile)) {
                 watcher(
                   watch(metafile, async (e, filename) => {
                     console.log(
@@ -2008,7 +2145,7 @@ import('${d}').then(async (x) => {
         } else {
           metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
         }
-        if (!fs8.existsSync(metafilePath)) {
+        if (!fs9.existsSync(metafilePath)) {
           if (platform === "pitono") {
             console.log(
               ansiC2.yellow(
@@ -2020,7 +2157,7 @@ import('${d}').then(async (x) => {
         }
         let metafile;
         try {
-          const fileContent = fs8.readFileSync(metafilePath).toString();
+          const fileContent = fs9.readFileSync(metafilePath).toString();
           const parsedData = JSON.parse(fileContent);
           if (platform === "pitono") {
             metafile = parsedData.metafile || parsedData;
@@ -2044,7 +2181,7 @@ import('${d}').then(async (x) => {
             return false;
           }
           const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
-            if (!fs8.existsSync(i))
+            if (!fs9.existsSync(i))
               return false;
             if (i.startsWith("node_modules"))
               return false;
@@ -2053,8 +2190,8 @@ import('${d}').then(async (x) => {
             return true;
           });
           const f2 = `${k.split(".").slice(0, -1).join(".")}/`;
-          if (!fs8.existsSync(f2)) {
-            fs8.mkdirSync(f2);
+          if (!fs9.existsSync(f2)) {
+            fs9.mkdirSync(f2);
           }
           const entrypoint = outputs[k].entryPoint;
           if (entrypoint) {
@@ -2074,7 +2211,7 @@ import('${d}').then(async (x) => {
         });
       }
       requestHandler(req, res) {
-        const parsedUrl = url.parse(req.url || "/");
+        const parsedUrl = url2.parse(req.url || "/");
         let pathname = parsedUrl.pathname || "/";
         if (pathname === "/") {
           pathname = "/index.html";
@@ -2095,7 +2232,7 @@ import('${d}').then(async (x) => {
           ];
           let foundPath = null;
           for (const possiblePath of possiblePaths) {
-            if (fs8.existsSync(possiblePath)) {
+            if (fs9.existsSync(possiblePath)) {
               foundPath = possiblePath;
               break;
             }
@@ -2105,7 +2242,7 @@ import('${d}').then(async (x) => {
           } else {
             const indexPath = this.findIndexHtml();
             if (indexPath) {
-              fs8.readFile(indexPath, (err, data) => {
+              fs9.readFile(indexPath, (err, data) => {
                 if (err) {
                   res.writeHead(404, { "Content-Type": "text/plain" });
                   res.end("404 Not Found");
@@ -2122,12 +2259,12 @@ import('${d}').then(async (x) => {
             }
           }
         }
-        fs8.exists(filePath, (exists) => {
+        fs9.exists(filePath, (exists) => {
           if (!exists) {
             if (!pathname.includes(".") && pathname !== "/") {
               const indexPath = this.findIndexHtml();
               if (indexPath) {
-                fs8.readFile(indexPath, (err, data) => {
+                fs9.readFile(indexPath, (err, data) => {
                   if (err) {
                     res.writeHead(404, { "Content-Type": "text/plain" });
                     res.end("404 Not Found");
@@ -2154,13 +2291,13 @@ import('${d}').then(async (x) => {
             res.end("404 Not Found");
             return;
           }
-          fs8.readFile(filePath, (err, data) => {
+          fs9.readFile(filePath, (err, data) => {
             if (err) {
               res.writeHead(500, { "Content-Type": "text/plain" });
               res.end("500 Internal Server Error");
               return;
             }
-            const mimeType = mime.lookup(filePath) || "application/octet-stream";
+            const mimeType = mime2.lookup(filePath) || "application/octet-stream";
             res.writeHead(200, { "Content-Type": mimeType });
             res.end(data);
           });
@@ -2174,7 +2311,7 @@ import('${d}').then(async (x) => {
           "./index.html"
         ];
         for (const path11 of possiblePaths) {
-          if (fs8.existsSync(path11)) {
+          if (fs9.existsSync(path11)) {
             return path11;
           }
         }
@@ -2209,19 +2346,19 @@ __export(golingvuMetafile_exports, {
   generateGolangMetafile: () => generateGolangMetafile,
   writeGolangMetafile: () => writeGolangMetafile
 });
-import fs9 from "fs";
+import fs10 from "fs";
 import path8 from "path";
 async function generateGolangMetafile(testName2, entryPoints) {
   const outputs = {};
   for (const entryPoint of entryPoints) {
     try {
       const entryDir = path8.dirname(entryPoint);
-      const goFiles = fs9.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path8.join(entryDir, file));
+      const goFiles = fs10.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path8.join(entryDir, file));
       const inputs = {};
       let totalBytes = 0;
       for (const file of goFiles) {
         try {
-          const stats = fs9.statSync(file);
+          const stats = fs10.statSync(file);
           inputs[file] = { bytesInOutput: stats.size };
           totalBytes += stats.size;
         } catch {
@@ -2230,7 +2367,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
       }
       if (!inputs[entryPoint]) {
         try {
-          const entryStats = fs9.statSync(entryPoint);
+          const entryStats = fs10.statSync(entryPoint);
           inputs[entryPoint] = { bytesInOutput: entryStats.size };
           totalBytes += entryStats.size;
         } catch {
@@ -2253,7 +2390,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   for (const entryPoint of entryPoints) {
     try {
       const entryDir = path8.dirname(entryPoint);
-      const goFiles = fs9.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path8.join(entryDir, file));
+      const goFiles = fs10.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path8.join(entryDir, file));
       goFiles.forEach((file) => allGoFiles.add(file));
       allGoFiles.add(entryPoint);
     } catch (error) {
@@ -2262,7 +2399,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   }
   for (const filePath of Array.from(allGoFiles)) {
     try {
-      const stats = fs9.statSync(filePath);
+      const stats = fs10.statSync(filePath);
       allInputs[filePath] = {
         bytes: stats.size,
         imports: []
@@ -2299,9 +2436,9 @@ function writeGolangMetafile(testName2, metafile) {
     "metafiles",
     "golang"
   );
-  fs9.mkdirSync(metafileDir, { recursive: true });
+  fs10.mkdirSync(metafileDir, { recursive: true });
   const metafilePath = path8.join(metafileDir, `${testName2}.json`);
-  fs9.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs10.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
 }
 var init_golingvuMetafile = __esm({
   "src/utils/golingvuMetafile.ts"() {
@@ -2315,7 +2452,7 @@ __export(pitonoMetafile_exports, {
   generatePitonoMetafile: () => generatePitonoMetafile,
   writePitonoMetafile: () => writePitonoMetafile
 });
-import fs10 from "fs";
+import fs11 from "fs";
 import path9 from "path";
 import { execSync as execSync2 } from "child_process";
 async function generatePitonoMetafile(testName2, entryPoints) {
@@ -2328,10 +2465,10 @@ async function generatePitonoMetafile(testName2, entryPoints) {
 function writePitonoMetafile(testName2, metafile) {
   const metafilePath = path9.join(process.cwd(), "testeranto", "pitono", testName2, "metafile.json");
   const metafileDir = path9.dirname(metafilePath);
-  if (!fs10.existsSync(metafileDir)) {
-    fs10.mkdirSync(metafileDir, { recursive: true });
+  if (!fs11.existsSync(metafileDir)) {
+    fs11.mkdirSync(metafileDir, { recursive: true });
   }
-  fs10.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs11.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
   console.log(`Pitono metafile written to: ${metafilePath}`);
   try {
     const command = `pitono-core-generator ${testName2} ${metafile.entryPoints.join(" ")}`;
@@ -2358,7 +2495,7 @@ function writePitonoMetafile(testName2, metafile) {
           runtime: "pitono"
         };
         const coreFilePath = path9.join(process.cwd(), "testeranto", "pitono", testName2, "core.json");
-        fs10.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
+        fs11.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
         console.log(`Pitono core.json created manually as fallback`);
       } catch (manualError) {
         console.error(`Even manual creation failed: ${manualError}`);
@@ -2375,7 +2512,7 @@ var init_pitonoMetafile = __esm({
 // src/testeranto.ts
 init_utils();
 import ansiC3 from "ansi-colors";
-import fs11 from "fs";
+import fs12 from "fs";
 import path10 from "path";
 import readline from "readline";
 import esbuild from "esbuild";
@@ -2731,7 +2868,7 @@ import(f).then(async (module) => {
     console.error("no project found for", testName, "in testeranto.config.ts");
     process.exit(-1);
   }
-  fs11.writeFileSync(
+  fs12.writeFileSync(
     `${process.cwd()}/testeranto/projects.json`,
     JSON.stringify(Object.keys(bigConfig.projects), null, 2)
   );
@@ -2814,13 +2951,13 @@ import(f).then(async (module) => {
       );
     }
   };
-  fs11.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
+  fs12.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
   Object.keys(bigConfig.projects).forEach((projectName) => {
     console.log(`testeranto/reports/${projectName}`);
-    if (!fs11.existsSync(`testeranto/reports/${projectName}`)) {
-      fs11.mkdirSync(`testeranto/reports/${projectName}`);
+    if (!fs12.existsSync(`testeranto/reports/${projectName}`)) {
+      fs12.mkdirSync(`testeranto/reports/${projectName}`);
     }
-    fs11.writeFileSync(
+    fs12.writeFileSync(
       `testeranto/reports/${projectName}/config.json`,
       JSON.stringify(config, null, 2)
     );
@@ -2858,8 +2995,8 @@ import(f).then(async (module) => {
     const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
     const metafile = await generatePitonoMetafile2(testName, pitonoEntryPoints);
     const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
-    await fs11.promises.mkdir(pitonoMetafilePath, { recursive: true });
-    fs11.writeFileSync(
+    await fs12.promises.mkdir(pitonoMetafilePath, { recursive: true });
+    fs12.writeFileSync(
       `${pitonoMetafilePath}/core.json`,
       JSON.stringify(metafile, null, 2)
     );
@@ -2879,8 +3016,8 @@ import(f).then(async (module) => {
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
         const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-        return fs11.promises.mkdir(path10.dirname(htmlFilePath), { recursive: true }).then(
-          (x2) => fs11.writeFileSync(
+        return fs12.promises.mkdir(path10.dirname(htmlFilePath), { recursive: true }).then(
+          (x2) => fs12.writeFileSync(
             htmlFilePath,
             web_html_default(jsfilePath, htmlFilePath, cssFilePath)
           )
@@ -2896,7 +3033,7 @@ import(f).then(async (module) => {
   x.forEach(async ([runtime, keys]) => {
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
-      await fs11.mkdirSync(folder, { recursive: true });
+      await fs12.mkdirSync(folder, { recursive: true });
     });
   });
   [
@@ -2913,7 +3050,7 @@ import(f).then(async (module) => {
           ep.split(".").slice(0, -1).join("."),
           runtime
         );
-        fs11.mkdirSync(fp, { recursive: true });
+        fs12.mkdirSync(fp, { recursive: true });
       });
     }
   );

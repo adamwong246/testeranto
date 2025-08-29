@@ -6,7 +6,7 @@ import http from "http";
 import { IRunnables, ITTestResourceConfiguration } from "../lib/index.js";
 import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 import { Sidecar } from "../lib/Sidecar.js";
-import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
+import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 type LogStreams = {
     closeAll: () => void;
     writeExitCode: (code: number, error?: Error) => void;
@@ -19,7 +19,7 @@ type LogStreams = {
     exit: fs.WriteStream;
 };
 declare function createLogStreams(reportDest: string, runtime: IRunTime): LogStreams;
-export declare class PM_Main extends PM_WithEslintAndTsc {
+export declare class PM_Main extends PM_WithWebSocket {
     ports: Record<number, string>;
     queue: string[];
     logStreams: Record<string, ReturnType<typeof createLogStreams>>;

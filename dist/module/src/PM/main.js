@@ -10,13 +10,11 @@ import path from "path";
 import puppeteer from "puppeteer-core";
 import ansiC from "ansi-colors";
 import crypto from "node:crypto";
-import { WebSocketServer } from "ws";
-import http from "http";
 import url from "url";
 import mime from "mime-types";
 import { getRunnables } from "../utils";
 import { Queue } from "../utils/queue.js";
-import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
+import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 const changes = {};
 const fileHashes = {};
 const files = {};
@@ -172,7 +170,7 @@ async function pollForFile(path, timeout = 2000) {
         }
     }, timeout);
 }
-export class PM_Main extends PM_WithEslintAndTsc {
+export class PM_Main extends PM_WithWebSocket {
     constructor(configs, name, mode) {
         super(configs, name, mode);
         this.logStreams = {};
@@ -780,196 +778,6 @@ import('${d}').then(async (x) => {
         this.pureSidecars = {};
         this.configs.ports.forEach((element) => {
             this.ports[element] = ""; // set ports as open
-        });
-        // Create HTTP server
-        this.httpServer = http.createServer(this.requestHandler.bind(this));
-        // Start WebSocket server attached to the HTTP server
-        this.wss = new WebSocketServer({ server: this.httpServer });
-        this.wss.on("connection", (ws) => {
-            this.clients.add(ws);
-            console.log("Client connected");
-            ws.on("message", (data) => {
-                var _a, _b;
-                try {
-                    const message = JSON.parse(data.toString());
-                    if (message.type === "executeCommand") {
-                        // Validate the command starts with 'aider'
-                        if (message.command && message.command.trim().startsWith("aider")) {
-                            console.log(`Executing command: ${message.command}`);
-                            // Execute the command
-                            const processId = Date.now().toString();
-                            const child = spawn(message.command, {
-                                shell: true,
-                                cwd: process.cwd(),
-                            });
-                            // Track the process in both maps
-                            this.runningProcesses.set(processId, child);
-                            this.allProcesses.set(processId, {
-                                child,
-                                status: "running",
-                                command: message.command,
-                                pid: child.pid,
-                                timestamp: new Date().toISOString(),
-                            });
-                            // Initialize logs for this process
-                            this.processLogs.set(processId, []);
-                            // Broadcast process started
-                            this.broadcast({
-                                type: "processStarted",
-                                processId,
-                                command: message.command,
-                                timestamp: new Date().toISOString(),
-                                logs: [],
-                            });
-                            // Capture stdout and stderr
-                            (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on("data", (data) => {
-                                const logData = data.toString();
-                                // Add to stored logs
-                                const logs = this.processLogs.get(processId) || [];
-                                logs.push(logData);
-                                this.processLogs.set(processId, logs);
-                                this.broadcast({
-                                    type: "processStdout",
-                                    processId,
-                                    data: logData,
-                                    timestamp: new Date().toISOString(),
-                                });
-                            });
-                            (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on("data", (data) => {
-                                const logData = data.toString();
-                                // Add to stored logs
-                                const logs = this.processLogs.get(processId) || [];
-                                logs.push(logData);
-                                this.processLogs.set(processId, logs);
-                                this.broadcast({
-                                    type: "processStderr",
-                                    processId,
-                                    data: logData,
-                                    timestamp: new Date().toISOString(),
-                                });
-                            });
-                            child.on("error", (error) => {
-                                console.error(`Failed to execute command: ${error}`);
-                                this.runningProcesses.delete(processId);
-                                // Update the process status to error
-                                const processInfo = this.allProcesses.get(processId);
-                                if (processInfo) {
-                                    this.allProcesses.set(processId, Object.assign(Object.assign({}, processInfo), { status: "error", error: error.message }));
-                                }
-                                this.broadcast({
-                                    type: "processError",
-                                    processId,
-                                    error: error.message,
-                                    timestamp: new Date().toISOString(),
-                                });
-                            });
-                            child.on("exit", (code) => {
-                                console.log(`Command exited with code ${code}`);
-                                // Remove from running processes but keep in allProcesses
-                                this.runningProcesses.delete(processId);
-                                // Update the process status to exited
-                                const processInfo = this.allProcesses.get(processId);
-                                if (processInfo) {
-                                    this.allProcesses.set(processId, Object.assign(Object.assign({}, processInfo), { status: "exited", exitCode: code }));
-                                }
-                                this.broadcast({
-                                    type: "processExited",
-                                    processId,
-                                    exitCode: code,
-                                    timestamp: new Date().toISOString(),
-                                });
-                            });
-                        }
-                        else {
-                            console.error('Invalid command: must start with "aider"');
-                        }
-                    }
-                    else if (message.type === "getRunningProcesses") {
-                        // Send list of all processes (both running and completed) with their full logs
-                        const processes = Array.from(this.allProcesses.entries()).map(([id, procInfo]) => ({
-                            processId: id,
-                            command: procInfo.command,
-                            pid: procInfo.pid,
-                            status: procInfo.status,
-                            exitCode: procInfo.exitCode,
-                            error: procInfo.error,
-                            timestamp: procInfo.timestamp,
-                            logs: this.processLogs.get(id) || [],
-                        }));
-                        ws.send(JSON.stringify({
-                            type: "runningProcesses",
-                            processes,
-                        }));
-                    }
-                    else if (message.type === "getProcess") {
-                        // Send specific process with full logs
-                        const processId = message.processId;
-                        const procInfo = this.allProcesses.get(processId);
-                        if (procInfo) {
-                            ws.send(JSON.stringify({
-                                type: "processData",
-                                processId,
-                                command: procInfo.command,
-                                pid: procInfo.pid,
-                                status: procInfo.status,
-                                exitCode: procInfo.exitCode,
-                                error: procInfo.error,
-                                timestamp: procInfo.timestamp,
-                                logs: this.processLogs.get(processId) || [],
-                            }));
-                        }
-                    }
-                    else if (message.type === "stdin") {
-                        // Handle stdin input for a process
-                        const processId = message.processId;
-                        const data = message.data;
-                        console.log("Received stdin for process", processId, ":", data);
-                        const childProcess = this.runningProcesses.get(processId);
-                        if (childProcess && childProcess.stdin) {
-                            console.log("Writing to process stdin");
-                            childProcess.stdin.write(data);
-                        }
-                        else {
-                            console.log("Cannot write to stdin - process not found or no stdin:", {
-                                processExists: !!childProcess,
-                                stdinExists: (childProcess === null || childProcess === void 0 ? void 0 : childProcess.stdin) ? true : false,
-                            });
-                        }
-                    }
-                    else if (message.type === "killProcess") {
-                        // Handle killing a process
-                        const processId = message.processId;
-                        console.log("Received killProcess for process", processId);
-                        const childProcess = this.runningProcesses.get(processId);
-                        if (childProcess) {
-                            console.log("Killing process");
-                            childProcess.kill("SIGTERM");
-                            // The process exit handler will update the status and broadcast the change
-                        }
-                        else {
-                            console.log("Cannot kill process - process not found:", {
-                                processExists: !!childProcess,
-                            });
-                        }
-                    }
-                }
-                catch (error) {
-                    console.error("Error handling WebSocket message:", error);
-                }
-            });
-            ws.on("close", () => {
-                this.clients.delete(ws);
-                console.log("Client disconnected");
-            });
-            ws.on("error", (error) => {
-                console.error("WebSocket error:", error);
-                this.clients.delete(ws);
-            });
-        });
-        // Start HTTP server
-        const httpPort = Number(process.env.HTTP_PORT) || 3000;
-        this.httpServer.listen(httpPort, () => {
-            console.log(`HTTP server running on http://localhost:${httpPort}`);
         });
     }
     async stopSideCar(uid) {
