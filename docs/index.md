@@ -35,7 +35,7 @@ async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
   testImplementation: ITestImplementation<I, O, M>,
-  testAdapter: Partial<ITestInterface<I>>,
+  testAdapter: Partial<ITestAdapter<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Testeranto<I, O, M>>
 ```
@@ -52,7 +52,7 @@ import Testeranto from "testeranto/src/Node"; // <- import the Node main functio
 
 import { implementation } from "./Rectangle.test.implementation";
 import { specification } from "./Rectangle.test.specification";
-import { interface } from "./Rectangle.test.interface";
+import { adapter } from "./Rectangle.test.adapter";
 
 // Note the type parameters I, O, and M: these will be important later
 export default Testeranto<
@@ -63,7 +63,7 @@ export default Testeranto<
     Rectangle.prototype, // <- the subject of the test.
     specification,
     implementation,
-    interface
+    adapter
 );
 ```
 
@@ -75,7 +75,7 @@ import Testeranto from "testeranto/src/Web"; // <- import the Web main function
 
 import { implementation } from "./Rectangle.test.implementation";
 import { specification } from "./Rectangle.test.specification";
-import { interface } from "./Rectangle.test.interface";
+import { adapter } from "./Rectangle.test.adapter";
 
 // Note the type parameters I, O, and M: these will be important later
 export default Testeranto<
@@ -86,7 +86,7 @@ export default Testeranto<
     Rectangle.prototype, // <- the subject of the test.
     specification,
     implementation,
-    interface
+    adapter
 );
 ```
 
@@ -98,7 +98,7 @@ import Testeranto from "testeranto/src/Pure"; // <- import the Pure main functio
 
 import { implementation } from "./Rectangle.test.implementation";
 import { specification } from "./Rectangle.test.specification";
-import { interface } from "./Rectangle.test.interface";
+import { adapter } from "./Rectangle.test.adapter";
 
 // Note the type parameters I, O, and M: these will be important later
 export default Testeranto<
@@ -109,7 +109,7 @@ export default Testeranto<
     Rectangle.prototype, // <- the subject of the test.
     specification,
     implementation,
-    interface
+    adapter
 );
 ```
 
@@ -230,18 +230,18 @@ export const implementation: ITestImplementation<
 };
 ```
 
-#### The Interface aka ITestInterface
+#### The Adapter aka ITestAdapter
 
-The test interface is code which is NOT business logic. The interface adapts your test subject so that the BDD hooks can be applied. The interface implements the traditional BDD steps "before all", "after all", "before each", "after each", etc
+The test adapter is code which is NOT business logic. The adapter adapts your test subject so that the BDD hooks can be applied. The adapter implements the traditional BDD steps "before all", "after all", "before each", "after each", etc
 
 ```ts
 import {
   Ibdd_in,
-  ITestInterface,
+  ITestAdapter,
 } from "testeranto/src/CoreTypes";
 
 //  Note the type parameter. This is important!
-export const testAdapter: ITestInterface<
+export const testAdapter: ITestAdapter<
   I extends Ibdd_in,
 > = {
   beforeEach: async (subject, i) => {
@@ -358,7 +358,7 @@ import {
   Ibdd_out,
   ITestImplementation,
   ITestSpecification,
-  ITestInterface,
+  ITestAdapter,
 } from "testeranto/src/CoreTypes";
 
 // The test subject
@@ -440,7 +440,7 @@ type M = {
   };
 };
 
-const testAdapter: ITestInterface<
+const testAdapter: ITestAdapter<
   I extends Ibdd_in,
 > = {
   beforeEach: async (subject, i) => {
