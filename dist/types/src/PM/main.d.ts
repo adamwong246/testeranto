@@ -1,10 +1,8 @@
 import { ChildProcess } from "node:child_process";
-import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
 import { WebSocketServer } from "ws";
 import http from "http";
 import { IBuiltConfig, IRunTime } from "../Types.js";
-import { Sidecar } from "../lib/Sidecar.js";
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 import { createLogStreams } from "./utils.js";
 export declare class PM_Main extends PM_WithWebSocket {
@@ -15,15 +13,12 @@ export declare class PM_Main extends PM_WithWebSocket {
     nodeMetafileWatcher: fs.FSWatcher;
     importMetafileWatcher: fs.FSWatcher;
     pitonoMetafileWatcher: fs.FSWatcher;
-    pureSidecars: Record<number, Sidecar>;
-    nodeSidecars: Record<number, ChildProcess>;
-    webSidecars: Record<number, Page>;
-    sidecars: Record<number, any>;
     launchers: Record<string, () => void>;
     wss: WebSocketServer;
     clients: Set<any>;
     httpServer: http.Server;
     runningProcesses: Map<string, ChildProcess>;
+    processLogs: Map<string, string[]>;
     allProcesses: Map<string, {
         child?: ChildProcess;
         status: "running" | "exited" | "error";
@@ -33,7 +28,6 @@ export declare class PM_Main extends PM_WithWebSocket {
         pid?: number;
         timestamp: string;
     }>;
-    processLogs: Map<string, string[]>;
     constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
     mapping(): [string, (...a: any[]) => any][];
     start(): Promise<void>;

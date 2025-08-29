@@ -9,7 +9,7 @@ import net from "net";
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs, { watch } from "fs";
 import path from "path";
-import puppeteer, { ConsoleMessage } from "puppeteer-core";
+import puppeteer, { ConsoleMessage, executablePath } from "puppeteer-core";
 import ansiC from "ansi-colors";
 import { WebSocketServer } from "ws";
 import http from "http";
@@ -33,6 +33,7 @@ import {
   isValidUrl,
   pollForFile,
   writeFileAndCreateDir,
+  puppeteerConfigs,
 } from "./utils.js";
 
 const changes: Record<string, string> = {};
@@ -44,20 +45,25 @@ export class PM_Main extends PM_WithWebSocket {
   ports: Record<number, string>;
   queue: string[];
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
+
   webMetafileWatcher: fs.FSWatcher;
   nodeMetafileWatcher: fs.FSWatcher;
   importMetafileWatcher: fs.FSWatcher;
   pitonoMetafileWatcher: fs.FSWatcher;
-  pureSidecars: Record<number, Sidecar>;
-  nodeSidecars: Record<number, ChildProcess>;
-  webSidecars: Record<number, Page>;
-  sidecars: Record<number, any> = {};
+
+  // pureSidecars: Record<number, Sidecar>;
+  // nodeSidecars: Record<number, ChildProcess>;
+  // webSidecars: Record<number, Page>;
+  // sidecars: Record<number, any> = {};
   launchers: Record<string, () => void>;
 
   wss: WebSocketServer;
   clients: Set<any> = new Set();
   httpServer: http.Server;
+
   runningProcesses: Map<string, ChildProcess> = new Map();
+  processLogs: Map<string, string[]> = new Map();
+
   allProcesses: Map<
     string,
     {
@@ -70,7 +76,6 @@ export class PM_Main extends PM_WithWebSocket {
       timestamp: string;
     }
   > = new Map();
-  processLogs: Map<string, string[]> = new Map();
 
   constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev") {
     super(configs, name, mode);
@@ -120,7 +125,6 @@ export class PM_Main extends PM_WithWebSocket {
   }
 
   async start() {
-    // set up the "pure" listeners
     this.mapping().forEach(async ([command, func]) => {
       globalThis[command] = func;
     });
@@ -129,50 +133,8 @@ export class PM_Main extends PM_WithWebSocket {
       fs.mkdirSync(`testeranto/reports/${this.name}`);
     }
 
-    const executablePath = "/opt/homebrew/bin/chromium";
-
     try {
-      this.browser = await puppeteer.launch({
-        slowMo: 1,
-        waitForInitialPage: false,
-        executablePath,
-        headless: true,
-        defaultViewport: null, // Disable default 800x600 viewport
-        dumpio: false,
-        devtools: false,
-
-        args: [
-          "--allow-file-access-from-files",
-          "--allow-insecure-localhost",
-          "--allow-running-insecure-content",
-          "--auto-open-devtools-for-tabs",
-          "--disable-dev-shm-usage",
-          "--disable-extensions",
-          "--disable-features=site-per-process",
-          "--disable-gpu",
-          "--disable-setuid-sandbox",
-          "--disable-site-isolation-trials",
-          "--disable-web-security",
-          "--no-first-run",
-          "--no-sandbox",
-          "--no-startup-window",
-          "--reduce-security-for-testing",
-          "--remote-allow-origins=*",
-          "--start-maximized",
-          "--unsafely-treat-insecure-origin-as-secure=*",
-          `--remote-debugging-port=3234`,
-          // "--disable-features=IsolateOrigins,site-per-process",
-          // "--disable-features=IsolateOrigins",
-          // "--disk-cache-dir=/dev/null",
-          // "--disk-cache-size=1",
-          // "--no-zygote",
-          // "--remote-allow-origins=ws://localhost:3234",
-          // "--single-process",
-          // "--start-maximized",
-          // "--unsafely-treat-insecure-origin-as-secure",
-          // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-        ],
-      });
+      this.browser = await puppeteer.launch(puppeteerConfigs);
     } catch (e) {
       console.error(e);
       console.error(
@@ -231,7 +193,7 @@ export class PM_Main extends PM_WithWebSocket {
         let metafile: string;
         if (runtime === "pitono") {
           metafile = `./testeranto/metafiles/python/core.json`;
-          // Ensure the directory exists before trying to watch
+
           const metafileDir = path.dirname(metafile);
           if (!fs.existsSync(metafileDir)) {
             fs.mkdirSync(metafileDir, { recursive: true });
@@ -247,8 +209,6 @@ export class PM_Main extends PM_WithWebSocket {
 
         Object.entries(eps).forEach(
           async ([inputFile, outputFile]: [string, string]) => {
-            // await pollForFile(outputFile);\
-
             this.launchers[inputFile] = () => launcher(inputFile, outputFile);
             this.launchers[inputFile]();
 
@@ -260,7 +220,6 @@ export class PM_Main extends PM_WithWebSocket {
                   console.log(
                     ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`))
                   );
-                  // launcher(inputFile, outputFile);
                   this.launchers[inputFile]();
                 }
               });
@@ -315,10 +274,6 @@ export class PM_Main extends PM_WithWebSocket {
         }
       }
     );
-
-    // Object.keys(this.configs.externalTests).forEach((et) => {
-    //   this.launchExternalTest(et, this.configs.externalTests[et]);
-    // });
   }
 
   async stop() {
@@ -331,25 +286,17 @@ export class PM_Main extends PM_WithWebSocket {
       this.pitonoMetafileWatcher.close();
     }
 
-    // Close any remaining log streams
     Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-
-    // Close WebSocket server
     this.wss.close(() => {
       console.log("WebSocket server closed");
     });
-
-    // Close all client connections
     this.clients.forEach((client) => {
       client.terminate();
     });
     this.clients.clear();
-
-    // Close HTTP server
     this.httpServer.close(() => {
       console.log("HTTP server closed");
     });
-
     this.checkForShutdown();
   }
 
@@ -504,61 +451,15 @@ export class PM_Main extends PM_WithWebSocket {
 
     const builtfile = dest;
 
-    // const webSideCares: Page[] = [];
-
-    // fs.writeFileSync(
-    //   `${reportDest}/stdlog.txt`,
-    //   "THIS FILE IS AUTO GENERATED. IT IS PURPOSEFULLY LEFT BLANK."
-    // );
-
-    // await Promise.all(
-    //   testConfig[3].map(async (sidecar) => {
-    //     if (sidecar[1] === "web") {
-    //       const s = await this.launchWebSideCar(
-    //         sidecar[0],
-    //         destinationOfRuntime(sidecar[0], "web", this.configs),
-    //         sidecar
-    //       );
-    //       webSideCares.push(s);
-    //       return s;
-    //     }
-
-    //     if (sidecar[1] === "node") {
-    //       return this.launchNodeSideCar(
-    //         sidecar[0],
-    //         destinationOfRuntime(sidecar[0], "node", this.configs),
-    //         sidecar
-    //       );
-    //     }
-    //   })
-    // );
-
     const logs = createLogStreams(reportDest, "pure");
 
     try {
       await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-        // Override console methods to redirect logs
-        // Only override stdout/stderr methods for pure runtime
-        const originalConsole = { ...console };
-
-        // console.log = (...args) => {
-        //   logs.stdout.write(args.join(" ") + "\n");
-        //   originalConsole.log(...args);
-        // };
-
-        // console.error = (...args) => {
-        //   logs.stderr.write(args.join(" ") + "\n");
-        //   originalConsole.error(...args);
-        // };
-
         return module.default
           .then((defaultModule) => {
             defaultModule
               .receiveTestResourceConfig(argz)
               .then(async (results: IFinalResults) => {
-                // this.receiveFeatures(results.features, destFolder, src, "pure");
-                // this.receiveFeaturesV2(reportDest, src, "pure");
-
                 statusMessagePretty(results.fails, src, "pure");
                 this.bddTestIsNowDone(src, results.fails);
               })
@@ -569,9 +470,6 @@ export class PM_Main extends PM_WithWebSocket {
                 this.bddTestIsNowDone(src, -1);
                 statusMessagePretty(-1, src, "pure");
               });
-            // .finally(() => {
-            //   // webSideCares.forEach((webSideCar) => webSideCar.close());
-            // });
           })
           .catch((e2) => {
             console.log(
@@ -584,14 +482,6 @@ export class PM_Main extends PM_WithWebSocket {
             logs.exit.write(-1);
             this.bddTestIsNowDone(src, -1);
             statusMessagePretty(-1, src, "pure");
-            // console.error(e);
-          })
-          .finally((x) => {
-            // const fileSet = files[src] || new Set();
-            // fs.writeFileSync(
-            //   reportDest + "/manifest.json",
-            //   JSON.stringify(Array.from(fileSet))
-            // );
           });
       });
     } catch (e3) {
@@ -612,7 +502,7 @@ export class PM_Main extends PM_WithWebSocket {
 
     for (let i = 0; i <= portsToUse.length; i++) {
       if (portsToUse[i]) {
-        this.ports[portsToUse[i]] = ""; //port is open again
+        this.ports[portsToUse[i]] = ""; // port is open again
       }
     }
   };
@@ -625,11 +515,10 @@ export class PM_Main extends PM_WithWebSocket {
       .split(".")
       .slice(0, -1)
       .join(".")}/node`;
+
     if (!fs.existsSync(reportDest)) {
       fs.mkdirSync(reportDest, { recursive: true });
     }
-
-    // const destFolder = dest.replace(".mjs", "");
 
     let testResources = "";
 
@@ -643,9 +532,11 @@ export class PM_Main extends PM_WithWebSocket {
       );
       process.exit(-1);
     }
+
     const testConfigResource = testConfig[2];
 
     const portsToUse: string[] = [];
+
     if (testConfigResource.ports === 0) {
       const t: ITTestResourceConfiguration = {
         name: src,
@@ -696,7 +587,6 @@ export class PM_Main extends PM_WithWebSocket {
     const ipcfile = "/tmp/tpipe_" + Math.random();
     const child = spawn(
       "node",
-      // "node",
       [
         // "--inspect-brk",
         builtfile,
@@ -905,12 +795,7 @@ export class PM_Main extends PM_WithWebSocket {
           if (!files[src]) {
             files[src] = new Set();
           }
-          // files[t].add(filepath);
 
-          // fs.writeFileSync(
-          //   destFolder + "/manifest.json",
-          //   JSON.stringify(Array.from(files[src]))
-          // );
           delete files[src];
 
           Promise.all(screenshots[src] || []).then(() => {
@@ -932,8 +817,6 @@ export class PM_Main extends PM_WithWebSocket {
           close();
         });
 
-        // page.on("console", (log: ConsoleMessage) => {});
-
         await page.goto(`file://${`${destFolder}.html`}`, {});
 
         await page
@@ -951,7 +834,6 @@ import('${d}').then(async (x) => {
           .then(async ({ fails, failed, features }: IFinalResults) => {
             statusMessagePretty(fails, src, "web");
             this.bddTestIsNowDone(src, fails);
-            // close();
           })
           .catch((e) => {
             console.log(ansiC.red(ansiC.inverse(e.stack)));
@@ -966,7 +848,6 @@ import('${d}').then(async (x) => {
             this.bddTestIsNowDone(src, -1);
           })
           .finally(() => {
-            // process.exit(-1);
             close();
           });
 
@@ -1027,7 +908,6 @@ import('${d}').then(async (x) => {
       srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
     );
 
-    // Read and parse the test report
     const testReportPath = `${reportDest}/tests.json`;
     if (!fs.existsSync(testReportPath)) {
       console.error(`tests.json not found at: ${testReportPath}`);
@@ -1065,24 +945,6 @@ import('${d}').then(async (x) => {
               u.pathname
             )}`;
 
-            // await fs.promises.mkdir(path.dirname(newPath), { recursive: true });
-
-            // try {
-            //   await fs.unlinkSync(newPath);
-            //   // console.log(`Removed existing link at ${newPath}`);
-            // } catch (error) {
-            //   if (error.code !== "ENOENT") {
-            //     // throw error;
-            //   }
-            // }
-
-            // fs.symlink(u.pathname, newPath, (err) => {
-            //   if (err) {
-            //     // console.error("Error creating symlink:", err);
-            //   } else {
-            //     // console.log("Symlink created successfully");
-            //   }
-            // });
             accum.files.push(u.pathname);
           } else if (u.protocol === "http:" || u.protocol === "https:") {
             const newPath = `${process.cwd()}/testeranto/features/external/${
@@ -1121,40 +983,32 @@ import('${d}').then(async (x) => {
         );
       });
 
-    // const f: Record<string, string> = {};
-
     testReport.givens.forEach((g) => {
       if (g.failed === true) {
         this.summary[srcTest].failingFeatures[g.key] = g.features;
       }
     });
 
-    // this.summary[srcTest].failingFeatures = f;
     this.writeBigBoard();
   };
 
+  // this method is so horrible. Don't drink and vibe-code kids
   requestHandler(req: http.IncomingMessage, res: http.ServerResponse) {
-    // Parse the URL
     const parsedUrl = url.parse(req.url || "/");
     let pathname = parsedUrl.pathname || "/";
 
-    // Handle root path
     if (pathname === "/") {
       pathname = "/index.html";
     }
 
-    // Remove leading slash
     let filePath = pathname.substring(1);
 
     // Determine which directory to serve from
     if (filePath.startsWith("reports/")) {
-      // Serve from reports directory
       filePath = `testeranto/${filePath}`;
     } else if (filePath.startsWith("metafiles/")) {
-      // Serve from metafiles directory
       filePath = `testeranto/${filePath}`;
     } else if (filePath === "projects.json") {
-      // Serve projects.json
       filePath = `testeranto/${filePath}`;
     } else {
       // For frontend assets, try multiple possible locations
@@ -1251,6 +1105,7 @@ import('${d}').then(async (x) => {
     });
   }
 
+  // this method is also horrible
   findIndexHtml(): string | null {
     const possiblePaths = [
       "dist/index.html",
@@ -1272,7 +1127,6 @@ import('${d}').then(async (x) => {
       typeof message === "string" ? message : JSON.stringify(message);
     this.clients.forEach((client) => {
       if (client.readyState === 1) {
-        // WebSocket.OPEN
         client.send(data);
       }
     });
@@ -1287,13 +1141,10 @@ import('${d}').then(async (x) => {
     const test = this.configs.tests.find((t) => t[0] === x);
     if (!test) throw `test is undefined ${x}`;
 
-    // const [src, runtime, ...xx]: [string, IRunTime, ...any] = test;
     this.launchers[test[0]]();
   }
 
   checkForShutdown = () => {
-    // console.log(ansiC.inverse(JSON.stringify(this.summary, null, 2)));
-
     this.checkQueue();
 
     console.log(

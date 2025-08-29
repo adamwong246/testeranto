@@ -12,6 +12,7 @@ export class PM_Base {
     constructor(configs) {
         this.configs = configs;
     }
+    // abstract launchSideCar(n: number, testName: string, projectName: string);
     customclose() {
         throw new Error("customclose not implemented.");
     }

@@ -23,3 +23,13 @@ export declare function writeFileAndCreateDir(filePath: any, data: any): Promise
 export declare const filesHash: (files: string[], algorithm?: string) => Promise<string>;
 export declare function isValidUrl(string: any): boolean;
 export declare function pollForFile(path: any, timeout?: number): Promise<void>;
+export declare const puppeteerConfigs: {
+    slowMo: number;
+    waitForInitialPage: boolean;
+    executablePath: string;
+    headless: boolean;
+    defaultViewport: null;
+    dumpio: boolean;
+    devtools: boolean;
+    args: string[];
+};

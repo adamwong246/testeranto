@@ -46,7 +46,7 @@ const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const net_1 = __importDefault(require("net"));
 const fs_1 = __importStar(require("fs"));
 const path_1 = __importDefault(require("path"));
-const puppeteer_core_1 = __importDefault(require("puppeteer-core"));
+const puppeteer_core_1 = __importStar(require("puppeteer-core"));
 const ansi_colors_2 = __importDefault(require("ansi-colors"));
 const url_1 = __importDefault(require("url"));
 const mime_types_1 = __importDefault(require("mime-types"));
@@ -62,11 +62,10 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
     constructor(configs, name, mode) {
         super(configs, name, mode);
         this.logStreams = {};
-        this.sidecars = {};
         this.clients = new Set();
         this.runningProcesses = new Map();
-        this.allProcesses = new Map();
         this.processLogs = new Map();
+        this.allProcesses = new Map();
         this.launchPure = async (src, dest) => {
             console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`pure < ${src}`)));
             this.bddTestIsRunning(src);
@@ -122,52 +121,14 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
                 process.exit(-1);
             }
             const builtfile = dest;
-            // const webSideCares: Page[] = [];
-            // fs.writeFileSync(
-            //   `${reportDest}/stdlog.txt`,
-            //   "THIS FILE IS AUTO GENERATED. IT IS PURPOSEFULLY LEFT BLANK."
-            // );
-            // await Promise.all(
-            //   testConfig[3].map(async (sidecar) => {
-            //     if (sidecar[1] === "web") {
-            //       const s = await this.launchWebSideCar(
-            //         sidecar[0],
-            //         destinationOfRuntime(sidecar[0], "web", this.configs),
-            //         sidecar
-            //       );
-            //       webSideCares.push(s);
-            //       return s;
-            //     }
-            //     if (sidecar[1] === "node") {
-            //       return this.launchNodeSideCar(
-            //         sidecar[0],
-            //         destinationOfRuntime(sidecar[0], "node", this.configs),
-            //         sidecar
-            //       );
-            //     }
-            //   })
-            // );
             const logs = (0, utils_js_1.createLogStreams)(reportDest, "pure");
             try {
                 await Promise.resolve(`${`${builtfile}?cacheBust=${Date.now()}`}`).then(s => __importStar(require(s))).then((module) => {
-                    // Override console methods to redirect logs
-                    // Only override stdout/stderr methods for pure runtime
-                    const originalConsole = Object.assign({}, console);
-                    // console.log = (...args) => {
-                    //   logs.stdout.write(args.join(" ") + "\n");
-                    //   originalConsole.log(...args);
-                    // };
-                    // console.error = (...args) => {
-                    //   logs.stderr.write(args.join(" ") + "\n");
-                    //   originalConsole.error(...args);
-                    // };
                     return module.default
                         .then((defaultModule) => {
                         defaultModule
                             .receiveTestResourceConfig(argz)
                             .then(async (results) => {
-                            // this.receiveFeatures(results.features, destFolder, src, "pure");
-                            // this.receiveFeaturesV2(reportDest, src, "pure");
                             (0, utils_js_1.statusMessagePretty)(results.fails, src, "pure");
                             this.bddTestIsNowDone(src, results.fails);
                         })
@@ -176,9 +137,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
                             this.bddTestIsNowDone(src, -1);
                             (0, utils_js_1.statusMessagePretty)(-1, src, "pure");
                         });
-                        // .finally(() => {
-                        //   // webSideCares.forEach((webSideCar) => webSideCar.close());
-                        // });
                     })
                         .catch((e2) => {
                         console.log(ansi_colors_1.default.red(`pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`));
@@ -186,14 +144,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
                         logs.exit.write(-1);
                         this.bddTestIsNowDone(src, -1);
                         (0, utils_js_1.statusMessagePretty)(-1, src, "pure");
-                        // console.error(e);
-                    })
-                        .finally((x) => {
-                        // const fileSet = files[src] || new Set();
-                        // fs.writeFileSync(
-                        //   reportDest + "/manifest.json",
-                        //   JSON.stringify(Array.from(fileSet))
-                        // );
                     });
                 });
             }
@@ -207,7 +157,7 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             }
             for (let i = 0; i <= portsToUse.length; i++) {
                 if (portsToUse[i]) {
-                    this.ports[portsToUse[i]] = ""; //port is open again
+                    this.ports[portsToUse[i]] = ""; // port is open again
                 }
             }
         };
@@ -221,7 +171,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             if (!fs_1.default.existsSync(reportDest)) {
                 fs_1.default.mkdirSync(reportDest, { recursive: true });
             }
-            // const destFolder = dest.replace(".mjs", "");
             let testResources = "";
             const testConfig = this.configs.tests.find((t) => {
                 return t[0] === src;
@@ -270,9 +219,7 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             const builtfile = dest;
             let haltReturns = false;
             const ipcfile = "/tmp/tpipe_" + Math.random();
-            const child = (0, node_child_process_1.spawn)("node", 
-            // "node",
-            [
+            const child = (0, node_child_process_1.spawn)("node", [
                 // "--inspect-brk",
                 builtfile,
                 testResources,
@@ -446,11 +393,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
                     if (!files[src]) {
                         files[src] = new Set();
                     }
-                    // files[t].add(filepath);
-                    // fs.writeFileSync(
-                    //   destFolder + "/manifest.json",
-                    //   JSON.stringify(Array.from(files[src]))
-                    // );
                     delete files[src];
                     Promise.all(screenshots[src] || []).then(() => {
                         delete screenshots[src];
@@ -464,7 +406,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
                     this.bddTestIsNowDone(src, -1);
                     close();
                 });
-                // page.on("console", (log: ConsoleMessage) => {});
                 await page.goto(`file://${`${destFolder}.html`}`, {});
                 await page
                     .evaluate(`
@@ -479,7 +420,6 @@ import('${d}').then(async (x) => {
                     .then(async ({ fails, failed, features }) => {
                     (0, utils_js_1.statusMessagePretty)(fails, src, "web");
                     this.bddTestIsNowDone(src, fails);
-                    // close();
                 })
                     .catch((e) => {
                     console.log(ansi_colors_2.default.red(ansi_colors_2.default.inverse(e.stack)));
@@ -487,7 +427,6 @@ import('${d}').then(async (x) => {
                     this.bddTestIsNowDone(src, -1);
                 })
                     .finally(() => {
-                    // process.exit(-1);
                     close();
                 });
                 return page;
@@ -524,7 +463,6 @@ import('${d}').then(async (x) => {
         };
         this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
             const featureDestination = path_1.default.resolve(process.cwd(), "reports", "features", "strings", srcTest.split(".").slice(0, -1).join(".") + ".features.txt");
-            // Read and parse the test report
             const testReportPath = `${reportDest}/tests.json`;
             if (!fs_1.default.existsSync(testReportPath)) {
                 console.error(`tests.json not found at: ${testReportPath}`);
@@ -550,22 +488,6 @@ import('${d}').then(async (x) => {
                     const u = new URL(featureStringKey);
                     if (u.protocol === "file:") {
                         const newPath = `${process.cwd()}/testeranto/features/internal/${path_1.default.relative(process.cwd(), u.pathname)}`;
-                        // await fs.promises.mkdir(path.dirname(newPath), { recursive: true });
-                        // try {
-                        //   await fs.unlinkSync(newPath);
-                        //   // console.log(`Removed existing link at ${newPath}`);
-                        // } catch (error) {
-                        //   if (error.code !== "ENOENT") {
-                        //     // throw error;
-                        //   }
-                        // }
-                        // fs.symlink(u.pathname, newPath, (err) => {
-                        //   if (err) {
-                        //     // console.error("Error creating symlink:", err);
-                        //   } else {
-                        //     // console.log("Symlink created successfully");
-                        //   }
-                        // });
                         accum.files.push(u.pathname);
                     }
                     else if (u.protocol === "http:" || u.protocol === "https:") {
@@ -594,17 +516,14 @@ import('${d}').then(async (x) => {
                 })
                     .join("\n"));
             });
-            // const f: Record<string, string> = {};
             testReport.givens.forEach((g) => {
                 if (g.failed === true) {
                     this.summary[srcTest].failingFeatures[g.key] = g.features;
                 }
             });
-            // this.summary[srcTest].failingFeatures = f;
             this.writeBigBoard();
         };
         this.checkForShutdown = () => {
-            // console.log(ansiC.inverse(JSON.stringify(this.summary, null, 2)));
             this.checkQueue();
             console.log(ansi_colors_2.default.inverse(`The following jobs are awaiting resources: ${JSON.stringify(this.queue)}`));
             console.log(ansi_colors_2.default.inverse(`The status of ports: ${JSON.stringify(this.ports)}`));
@@ -689,59 +608,18 @@ import('${d}').then(async (x) => {
         ];
     }
     async start() {
-        // set up the "pure" listeners
         this.mapping().forEach(async ([command, func]) => {
             globalThis[command] = func;
         });
         if (!fs_1.default.existsSync(`testeranto/reports/${this.name}`)) {
             fs_1.default.mkdirSync(`testeranto/reports/${this.name}`);
         }
-        const executablePath = "/opt/homebrew/bin/chromium";
         try {
-            this.browser = await puppeteer_core_1.default.launch({
-                slowMo: 1,
-                waitForInitialPage: false,
-                executablePath,
-                headless: true,
-                defaultViewport: null, // Disable default 800x600 viewport
-                dumpio: false,
-                devtools: false,
-                args: [
-                    "--allow-file-access-from-files",
-                    "--allow-insecure-localhost",
-                    "--allow-running-insecure-content",
-                    "--auto-open-devtools-for-tabs",
-                    "--disable-dev-shm-usage",
-                    "--disable-extensions",
-                    "--disable-features=site-per-process",
-                    "--disable-gpu",
-                    "--disable-setuid-sandbox",
-                    "--disable-site-isolation-trials",
-                    "--disable-web-security",
-                    "--no-first-run",
-                    "--no-sandbox",
-                    "--no-startup-window",
-                    "--reduce-security-for-testing",
-                    "--remote-allow-origins=*",
-                    "--start-maximized",
-                    "--unsafely-treat-insecure-origin-as-secure=*",
-                    `--remote-debugging-port=3234`,
-                    // "--disable-features=IsolateOrigins,site-per-process",
-                    // "--disable-features=IsolateOrigins",
-                    // "--disk-cache-dir=/dev/null",
-                    // "--disk-cache-size=1",
-                    // "--no-zygote",
-                    // "--remote-allow-origins=ws://localhost:3234",
-                    // "--single-process",
-                    // "--start-maximized",
-                    // "--unsafely-treat-insecure-origin-as-secure",
-                    // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-                ],
-            });
+            this.browser = await puppeteer_core_1.default.launch(utils_js_1.puppeteerConfigs);
         }
         catch (e) {
             console.error(e);
-            console.error("could not start chrome via puppeter. Check this path: ", executablePath);
+            console.error("could not start chrome via puppeter. Check this path: ", puppeteer_core_1.executablePath);
         }
         const { nodeEntryPoints, webEntryPoints, pureEntryPoints, pitonoEntryPoints, } = (0, utils_1.getRunnables)(this.configs.tests, this.name);
         [
@@ -781,7 +659,6 @@ import('${d}').then(async (x) => {
             let metafile;
             if (runtime === "pitono") {
                 metafile = `./testeranto/metafiles/python/core.json`;
-                // Ensure the directory exists before trying to watch
                 const metafileDir = path_1.default.dirname(metafile);
                 if (!fs_1.default.existsSync(metafileDir)) {
                     fs_1.default.mkdirSync(metafileDir, { recursive: true });
@@ -795,7 +672,6 @@ import('${d}').then(async (x) => {
                 await (0, utils_js_1.pollForFile)(metafile);
             }
             Object.entries(eps).forEach(async ([inputFile, outputFile]) => {
-                // await pollForFile(outputFile);\
                 this.launchers[inputFile] = () => launcher(inputFile, outputFile);
                 this.launchers[inputFile]();
                 try {
@@ -804,7 +680,6 @@ import('${d}').then(async (x) => {
                         if (fileHashes[inputFile] !== hash) {
                             fileHashes[inputFile] = hash;
                             console.log(ansi_colors_2.default.yellow(ansi_colors_2.default.inverse(`< ${e} ${filename}`)));
-                            // launcher(inputFile, outputFile);
                             this.launchers[inputFile]();
                         }
                     });
@@ -846,9 +721,6 @@ import('${d}').then(async (x) => {
                 }
             }
         });
-        // Object.keys(this.configs.externalTests).forEach((et) => {
-        //   this.launchExternalTest(et, this.configs.externalTests[et]);
-        // });
     }
     async stop() {
         console.log(ansi_colors_2.default.inverse("Testeranto-Run is shutting down gracefully..."));
@@ -859,18 +731,14 @@ import('${d}').then(async (x) => {
         if (this.pitonoMetafileWatcher) {
             this.pitonoMetafileWatcher.close();
         }
-        // Close any remaining log streams
         Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-        // Close WebSocket server
         this.wss.close(() => {
             console.log("WebSocket server closed");
         });
-        // Close all client connections
         this.clients.forEach((client) => {
             client.terminate();
         });
         this.clients.clear();
-        // Close HTTP server
         this.httpServer.close(() => {
             console.log("HTTP server closed");
         });
@@ -950,27 +818,22 @@ import('${d}').then(async (x) => {
             }
         });
     }
+    // this method is so horrible. Don't drink and vibe-code kids
     requestHandler(req, res) {
-        // Parse the URL
         const parsedUrl = url_1.default.parse(req.url || "/");
         let pathname = parsedUrl.pathname || "/";
-        // Handle root path
         if (pathname === "/") {
             pathname = "/index.html";
         }
-        // Remove leading slash
         let filePath = pathname.substring(1);
         // Determine which directory to serve from
         if (filePath.startsWith("reports/")) {
-            // Serve from reports directory
             filePath = `testeranto/${filePath}`;
         }
         else if (filePath.startsWith("metafiles/")) {
-            // Serve from metafiles directory
             filePath = `testeranto/${filePath}`;
         }
         else if (filePath === "projects.json") {
-            // Serve projects.json
             filePath = `testeranto/${filePath}`;
         }
         else {
@@ -1065,6 +928,7 @@ import('${d}').then(async (x) => {
             });
         });
     }
+    // this method is also horrible
     findIndexHtml() {
         const possiblePaths = [
             "dist/index.html",
@@ -1083,7 +947,6 @@ import('${d}').then(async (x) => {
         const data = typeof message === "string" ? message : JSON.stringify(message);
         this.clients.forEach((client) => {
             if (client.readyState === 1) {
-                // WebSocket.OPEN
                 client.send(data);
             }
         });
@@ -1097,7 +960,6 @@ import('${d}').then(async (x) => {
         const test = this.configs.tests.find((t) => t[0] === x);
         if (!test)
             throw `test is undefined ${x}`;
-        // const [src, runtime, ...xx]: [string, IRunTime, ...any] = test;
         this.launchers[test[0]]();
     }
 }

@@ -172,6 +172,7 @@ var init_base = __esm({
       constructor(configs) {
         this.configs = configs;
       }
+      // abstract launchSideCar(n: number, testName: string, projectName: string);
       customclose() {
         throw new Error("customclose not implemented.");
       }
@@ -1217,7 +1218,7 @@ async function pollForFile(path12, timeout = 2e3) {
     }
   }, timeout);
 }
-var statusMessagePretty, filesHash;
+var statusMessagePretty, filesHash, executablePath, puppeteerConfigs;
 var init_utils2 = __esm({
   "src/PM/utils.ts"() {
     "use strict";
@@ -1246,6 +1247,48 @@ var init_utils2 = __esm({
           }, Promise.resolve(""))
         );
       });
+    };
+    executablePath = "/opt/homebrew/bin/chromium";
+    puppeteerConfigs = {
+      slowMo: 1,
+      waitForInitialPage: false,
+      executablePath,
+      headless: true,
+      defaultViewport: null,
+      // Disable default 800x600 viewport
+      dumpio: false,
+      devtools: false,
+      args: [
+        "--allow-file-access-from-files",
+        "--allow-insecure-localhost",
+        "--allow-running-insecure-content",
+        "--auto-open-devtools-for-tabs",
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--disable-features=site-per-process",
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--disable-site-isolation-trials",
+        "--disable-web-security",
+        "--no-first-run",
+        "--no-sandbox",
+        "--no-startup-window",
+        "--reduce-security-for-testing",
+        "--remote-allow-origins=*",
+        "--start-maximized",
+        "--unsafely-treat-insecure-origin-as-secure=*",
+        `--remote-debugging-port=3234`
+        // "--disable-features=IsolateOrigins,site-per-process",
+        // "--disable-features=IsolateOrigins",
+        // "--disk-cache-dir=/dev/null",
+        // "--disk-cache-size=1",
+        // "--no-zygote",
+        // "--remote-allow-origins=ws://localhost:3234",
+        // "--single-process",
+        // "--start-maximized",
+        // "--unsafely-treat-insecure-origin-as-secure",
+        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
+      ]
     };
   }
 });
@@ -1314,7 +1357,7 @@ import ansiColors from "ansi-colors";
 import net from "net";
 import fs10, { watch } from "fs";
 import path8 from "path";
-import puppeteer from "puppeteer-core";
+import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
 import ansiC3 from "ansi-colors";
 import url2 from "url";
 import mime2 from "mime-types";
@@ -1334,11 +1377,10 @@ var init_main = __esm({
       constructor(configs, name, mode2) {
         super(configs, name, mode2);
         this.logStreams = {};
-        this.sidecars = {};
         this.clients = /* @__PURE__ */ new Set();
         this.runningProcesses = /* @__PURE__ */ new Map();
-        this.allProcesses = /* @__PURE__ */ new Map();
         this.processLogs = /* @__PURE__ */ new Map();
+        this.allProcesses = /* @__PURE__ */ new Map();
         this.launchPure = async (src, dest) => {
           console.log(ansiC3.green(ansiC3.inverse(`pure < ${src}`)));
           this.bddTestIsRunning(src);
@@ -1393,7 +1435,6 @@ var init_main = __esm({
           const logs = createLogStreams(reportDest, "pure");
           try {
             await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-              const originalConsole = { ...console };
               return module.default.then((defaultModule) => {
                 defaultModule.receiveTestResourceConfig(argz2).then(async (results) => {
                   statusMessagePretty(results.fails, src, "pure");
@@ -1415,7 +1456,6 @@ var init_main = __esm({
                 logs.exit.write(-1);
                 this.bddTestIsNowDone(src, -1);
                 statusMessagePretty(-1, src, "pure");
-              }).finally((x) => {
               });
             });
           } catch (e3) {
@@ -1500,7 +1540,6 @@ var init_main = __esm({
           const ipcfile = "/tmp/tpipe_" + Math.random();
           const child = spawn2(
             "node",
-            // "node",
             [
               // "--inspect-brk",
               builtfile,
@@ -1913,54 +1952,13 @@ import('${d}').then(async (x) => {
         if (!fs10.existsSync(`testeranto/reports/${this.name}`)) {
           fs10.mkdirSync(`testeranto/reports/${this.name}`);
         }
-        const executablePath = "/opt/homebrew/bin/chromium";
         try {
-          this.browser = await puppeteer.launch({
-            slowMo: 1,
-            waitForInitialPage: false,
-            executablePath,
-            headless: true,
-            defaultViewport: null,
-            // Disable default 800x600 viewport
-            dumpio: false,
-            devtools: false,
-            args: [
-              "--allow-file-access-from-files",
-              "--allow-insecure-localhost",
-              "--allow-running-insecure-content",
-              "--auto-open-devtools-for-tabs",
-              "--disable-dev-shm-usage",
-              "--disable-extensions",
-              "--disable-features=site-per-process",
-              "--disable-gpu",
-              "--disable-setuid-sandbox",
-              "--disable-site-isolation-trials",
-              "--disable-web-security",
-              "--no-first-run",
-              "--no-sandbox",
-              "--no-startup-window",
-              "--reduce-security-for-testing",
-              "--remote-allow-origins=*",
-              "--start-maximized",
-              "--unsafely-treat-insecure-origin-as-secure=*",
-              `--remote-debugging-port=3234`
-              // "--disable-features=IsolateOrigins,site-per-process",
-              // "--disable-features=IsolateOrigins",
-              // "--disk-cache-dir=/dev/null",
-              // "--disk-cache-size=1",
-              // "--no-zygote",
-              // "--remote-allow-origins=ws://localhost:3234",
-              // "--single-process",
-              // "--start-maximized",
-              // "--unsafely-treat-insecure-origin-as-secure",
-              // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-            ]
-          });
+          this.browser = await puppeteer.launch(puppeteerConfigs);
         } catch (e) {
           console.error(e);
           console.error(
             "could not start chrome via puppeter. Check this path: ",
-            executablePath
+            executablePath2
           );
         }
         const {
@@ -2169,6 +2167,7 @@ import('${d}').then(async (x) => {
           }
         });
       }
+      // this method is so horrible. Don't drink and vibe-code kids
       requestHandler(req, res) {
         const parsedUrl = url2.parse(req.url || "/");
         let pathname = parsedUrl.pathname || "/";
@@ -2262,6 +2261,7 @@ import('${d}').then(async (x) => {
           });
         });
       }
+      // this method is also horrible
       findIndexHtml() {
         const possiblePaths = [
           "dist/index.html",

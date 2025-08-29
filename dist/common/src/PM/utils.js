@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filesHash = exports.statusMessagePretty = void 0;
+exports.puppeteerConfigs = exports.filesHash = exports.statusMessagePretty = void 0;
 exports.runtimeLogs = runtimeLogs;
 exports.createLogStreams = createLogStreams;
 exports.fileHash = fileHash;
@@ -167,3 +167,44 @@ async function pollForFile(path, timeout = 2000) {
         }
     }, timeout);
 }
+const executablePath = "/opt/homebrew/bin/chromium";
+exports.puppeteerConfigs = {
+    slowMo: 1,
+    waitForInitialPage: false,
+    executablePath,
+    headless: true,
+    defaultViewport: null, // Disable default 800x600 viewport
+    dumpio: false,
+    devtools: false,
+    args: [
+        "--allow-file-access-from-files",
+        "--allow-insecure-localhost",
+        "--allow-running-insecure-content",
+        "--auto-open-devtools-for-tabs",
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--disable-features=site-per-process",
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--disable-site-isolation-trials",
+        "--disable-web-security",
+        "--no-first-run",
+        "--no-sandbox",
+        "--no-startup-window",
+        "--reduce-security-for-testing",
+        "--remote-allow-origins=*",
+        "--start-maximized",
+        "--unsafely-treat-insecure-origin-as-secure=*",
+        `--remote-debugging-port=3234`,
+        // "--disable-features=IsolateOrigins,site-per-process",
+        // "--disable-features=IsolateOrigins",
+        // "--disk-cache-dir=/dev/null",
+        // "--disk-cache-size=1",
+        // "--no-zygote",
+        // "--remote-allow-origins=ws://localhost:3234",
+        // "--single-process",
+        // "--start-maximized",
+        // "--unsafely-treat-insecure-origin-as-secure",
+        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
+    ],
+};
