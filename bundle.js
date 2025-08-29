@@ -7,9 +7,10 @@ await esbuild.build({
     // 'src/build.ts',
     // 'src/run.ts',
     'src/init-docs.ts',
-    'src/ReportServer.ts',
+    // 'src/ReportServer.ts',
     'src/esbuildConfigs/eslint-formatter-testeranto.ts',
-    'src/mothership/index.ts'
+    // 'src/mothership/index.ts',
+    'src/testeranto.ts'
   ],
   bundle: true,
   format: "esm",
