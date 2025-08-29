@@ -4,6 +4,17 @@ import path from "path";
 import { IBuiltConfig, IRunTime, ITestTypes } from "./Types";
 import { IRunnables } from "./lib";
 
+export const webEvaluator = (d, webArgz) => {
+  return `
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`;
+};
 export const destinationOfRuntime = (
   f: string,
   r: IRunTime,

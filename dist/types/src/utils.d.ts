@@ -1,5 +1,6 @@
 import { IBuiltConfig, IRunTime, ITestTypes } from "./Types";
 import { IRunnables } from "./lib";
+export declare const webEvaluator: (d: any, webArgz: any) => string;
 export declare const destinationOfRuntime: (f: string, r: IRunTime, configs: IBuiltConfig) => string;
 export declare const tscPather: (entryPoint: string, platform: IRunTime, projectName: string) => string;
 export declare const lintPather: (entryPoint: string, platform: IRunTime, projectName: string) => string;

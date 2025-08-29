@@ -408,15 +408,7 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
                 });
                 await page.goto(`file://${`${destFolder}.html`}`, {});
                 await page
-                    .evaluate(`
-import('${d}').then(async (x) => {
-  try {
-    return await (await x.default).receiveTestResourceConfig(${webArgz})
-  } catch (e) {
-    console.log("web run failure", e.toString())
-  }
-})
-`)
+                    .evaluate((0, utils_1.webEvaluator)(d, webArgz))
                     .then(async ({ fails, failed, features }) => {
                     (0, utils_js_1.statusMessagePretty)(fails, src, "web");
                     this.bddTestIsNowDone(src, fails);
@@ -570,9 +562,9 @@ import('${d}').then(async (x) => {
         this.launchers = {};
         this.ports = {};
         this.queue = [];
-        this.nodeSidecars = {};
-        this.webSidecars = {};
-        this.pureSidecars = {};
+        // this.nodeSidecars = {};
+        // this.webSidecars = {};
+        // this.pureSidecars = {};
         this.configs.ports.forEach((element) => {
             this.ports[element] = ""; // set ports as open
         });

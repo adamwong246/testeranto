@@ -11,7 +11,7 @@ import puppeteer, { executablePath } from "puppeteer-core";
 import ansiC from "ansi-colors";
 import url from "url";
 import mime from "mime-types";
-import { getRunnables } from "../utils";
+import { getRunnables, webEvaluator } from "../utils";
 import { Queue } from "../utils/queue.js";
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 import { fileHash, createLogStreams, statusMessagePretty, filesHash, isValidUrl, pollForFile, writeFileAndCreateDir, puppeteerConfigs, } from "./utils.js";
@@ -369,15 +369,7 @@ export class PM_Main extends PM_WithWebSocket {
                 });
                 await page.goto(`file://${`${destFolder}.html`}`, {});
                 await page
-                    .evaluate(`
-import('${d}').then(async (x) => {
-  try {
-    return await (await x.default).receiveTestResourceConfig(${webArgz})
-  } catch (e) {
-    console.log("web run failure", e.toString())
-  }
-})
-`)
+                    .evaluate(webEvaluator(d, webArgz))
                     .then(async ({ fails, failed, features }) => {
                     statusMessagePretty(fails, src, "web");
                     this.bddTestIsNowDone(src, fails);
@@ -531,9 +523,9 @@ import('${d}').then(async (x) => {
         this.launchers = {};
         this.ports = {};
         this.queue = [];
-        this.nodeSidecars = {};
-        this.webSidecars = {};
-        this.pureSidecars = {};
+        // this.nodeSidecars = {};
+        // this.webSidecars = {};
+        // this.pureSidecars = {};
         this.configs.ports.forEach((element) => {
             this.ports[element] = ""; // set ports as open
         });

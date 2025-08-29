@@ -1,5 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import path from "path";
+export const webEvaluator = (d, webArgz) => {
+    return `
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`;
+};
 export const destinationOfRuntime = (f, r, configs) => {
     return path
         .normalize(`${configs.buildDir}/${r}/${f}`)

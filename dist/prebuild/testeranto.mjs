@@ -11,10 +11,21 @@ var __export = (target, all) => {
 
 // src/utils.ts
 import path from "path";
-var tscPather, lintPather, promptPather, getRunnables;
+var webEvaluator, tscPather, lintPather, promptPather, getRunnables;
 var init_utils = __esm({
   "src/utils.ts"() {
     "use strict";
+    webEvaluator = (d, webArgz) => {
+      return `
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`;
+    };
     tscPather = (entryPoint, platform, projectName) => {
       return path.join(
         "testeranto",
@@ -1732,17 +1743,7 @@ var init_main = __esm({
               close();
             });
             await page.goto(`file://${`${destFolder}.html`}`, {});
-            await page.evaluate(
-              `
-import('${d}').then(async (x) => {
-  try {
-    return await (await x.default).receiveTestResourceConfig(${webArgz})
-  } catch (e) {
-    console.log("web run failure", e.toString())
-  }
-})
-`
-            ).then(async ({ fails, failed, features }) => {
+            await page.evaluate(webEvaluator(d, webArgz)).then(async ({ fails, failed, features }) => {
               statusMessagePretty(fails, src, "web");
               this.bddTestIsNowDone(src, fails);
             }).catch((e) => {
@@ -1908,9 +1909,6 @@ import('${d}').then(async (x) => {
         this.launchers = {};
         this.ports = {};
         this.queue = [];
-        this.nodeSidecars = {};
-        this.webSidecars = {};
-        this.pureSidecars = {};
         this.configs.ports.forEach((element) => {
           this.ports[element] = "";
         });

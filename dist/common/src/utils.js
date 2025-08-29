@@ -3,9 +3,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRunnables = exports.promptPather = exports.bddPather = exports.lintPather = exports.tscPather = exports.destinationOfRuntime = void 0;
+exports.getRunnables = exports.promptPather = exports.bddPather = exports.lintPather = exports.tscPather = exports.destinationOfRuntime = exports.webEvaluator = void 0;
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const path_1 = __importDefault(require("path"));
+const webEvaluator = (d, webArgz) => {
+    return `
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`;
+};
+exports.webEvaluator = webEvaluator;
 const destinationOfRuntime = (f, r, configs) => {
     return path_1.default
         .normalize(`${configs.buildDir}/${r}/${f}`)

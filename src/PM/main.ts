@@ -6,7 +6,6 @@
 import { ChildProcess, spawn } from "node:child_process";
 import ansiColors from "ansi-colors";
 import net from "net";
-import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs, { watch } from "fs";
 import path from "path";
 import puppeteer, { ConsoleMessage, executablePath } from "puppeteer-core";
@@ -17,14 +16,12 @@ import url from "url";
 import mime from "mime-types";
 
 import { IFinalResults, ITTestResourceConfiguration } from "../lib/index.js";
-import { getRunnables } from "../utils";
+import { getRunnables, webEvaluator } from "../utils";
 import { IBuiltConfig, IRunTime } from "../Types.js";
-import { Sidecar } from "../lib/Sidecar.js";
 import { Queue } from "../utils/queue.js";
 
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 import {
-  runtimeLogs,
   fileHash,
   createLogStreams,
   IOutputs,
@@ -84,9 +81,9 @@ export class PM_Main extends PM_WithWebSocket {
     this.ports = {};
     this.queue = [];
 
-    this.nodeSidecars = {};
-    this.webSidecars = {};
-    this.pureSidecars = {};
+    // this.nodeSidecars = {};
+    // this.webSidecars = {};
+    // this.pureSidecars = {};
 
     this.configs.ports.forEach((element) => {
       this.ports[element] = ""; // set ports as open
@@ -820,17 +817,7 @@ export class PM_Main extends PM_WithWebSocket {
         await page.goto(`file://${`${destFolder}.html`}`, {});
 
         await page
-          .evaluate(
-            `
-import('${d}').then(async (x) => {
-  try {
-    return await (await x.default).receiveTestResourceConfig(${webArgz})
-  } catch (e) {
-    console.log("web run failure", e.toString())
-  }
-})
-`
-          )
+          .evaluate(webEvaluator(d, webArgz))
           .then(async ({ fails, failed, features }: IFinalResults) => {
             statusMessagePretty(fails, src, "web");
             this.bddTestIsNowDone(src, fails);
