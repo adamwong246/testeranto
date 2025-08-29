@@ -24,7 +24,7 @@
         "imports": []
       },
       "src/golingvu/golingvu.go": {
-        "bytes": 5556,
+        "bytes": 6517,
         "imports": []
       },
       "src/golingvu/test_adapter.go": {
@@ -38,7 +38,7 @@
     },
     "outputs": {
       "testeranto/bundles/golang/core/src/golingvu/base_suite_test.go": {
-        "bytes": 18513,
+        "bytes": 19474,
         "inputs": {
           "src/golingvu/base_given.go": {
             "bytesInOutput": 2296
@@ -56,7 +56,7 @@
             "bytesInOutput": 646
           },
           "src/golingvu/golingvu.go": {
-            "bytesInOutput": 5556
+            "bytesInOutput": 6517
           },
           "src/golingvu/test_adapter.go": {
             "bytesInOutput": 1063

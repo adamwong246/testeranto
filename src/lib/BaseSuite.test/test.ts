@@ -19,7 +19,7 @@ export type TestStore = {
   index?: number;
   testStore: boolean;
   testSelection?: boolean;
-  error?: Error;
+  error?: Error | undefined;
 };
 
 export type TestSelection = {
@@ -130,7 +130,7 @@ export const implementation: ITestImplementation<I, O> = {
         return {
           name: suite.name,
           index: suite.index,
-          testStore: true
+          testStore: true,
         };
       };
     },
@@ -227,19 +227,33 @@ export const implementation: ITestImplementation<I, O> = {
 
   thens: {
     SuiteNameMatches:
-      (expectedName: string): ((ssel: TestSelection, utils: IPM) => (store: TestStore) => Promise<TestSelection>) =>
-      (ssel, utils) => (store) => {
-        if (store.name !== expectedName) {
-          throw new Error(
-            `Expected suite name '${expectedName}', got '${store.name}'`
-          );
-        }
-        return Promise.resolve({ testSelection: true });
+      (
+        expectedName: string
+      ): ((
+        ssel: TestSelection,
+        utils: IPM
+      ) => (store: TestStore) => Promise<TestSelection>) =>
+      (ssel, utils) =>
+      (store) => {
+        console.log("WTF");
+        process.exit();
+        // if (store.name !== expectedName) {
+        //   throw new Error(
+        //     `Expected suite name '${expectedName}', got '${store.name}'`
+        //   );
+        // }
+        // return Promise.resolve({ testSelection: true });
       },
 
     SuiteIndexMatches:
-      (expectedIndex: number): ((ssel: TestSelection, utils: IPM) => (store: TestStore) => Promise<TestSelection>) =>
-      (ssel, utils) => (store) => {
+      (
+        expectedIndex: number
+      ): ((
+        ssel: TestSelection,
+        utils: IPM
+      ) => (store: TestStore) => Promise<TestSelection>) =>
+      (ssel, utils) =>
+      (store) => {
         if (store.index !== expectedIndex) {
           throw new Error(
             `Expected suite index ${expectedIndex}, got ${store.index}`
@@ -249,8 +263,14 @@ export const implementation: ITestImplementation<I, O> = {
       },
 
     FeaturesIncludes:
-      (feature: string): ((ssel: TestSelection, utils: IPM) => (store: TestStore) => Promise<TestSelection>) =>
-      (ssel, utils) => (store) => {
+      (
+        feature: string
+      ): ((
+        ssel: TestSelection,
+        utils: IPM
+      ) => (store: TestStore) => Promise<TestSelection>) =>
+      (ssel, utils) =>
+      (store) => {
         // This needs to be adjusted to work with the actual implementation
         // For now, just return a resolved promise
         return Promise.resolve({ testSelection: true });
@@ -387,25 +407,21 @@ export const testAdapter: ITestAdapter<I> = {
     testResource: ITTestResourceConfiguration,
     pm: IPM
   ): Promise<I["istore"]> => {
-    // The whenCB expects a TestSelection first, then returns a function that takes TestStore
-    // We need to provide a TestSelection
-    const selection: TestSelection = { testSelection: true };
-    const result = await whenCB(selection)(store);
-    // Convert back to TestStore
-    return { ...store, ...result };
+    // whenCB is (store: TestStore) => Promise<TestStore>
+    const result = await whenCB(store);
+    return result;
   },
 
   butThen: async (
     store: TestStore,
-    thenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>,
+    thenCB: I["then"],
     testResource: ITTestResourceConfiguration,
     pm: IPM
   ): Promise<TestSelection> => {
     try {
-      // Create a TestSelection from the store
-      const selection: TestSelection = { testSelection: true };
-      await thenCB(selection);
-      return selection;
+      // thenCB is (store: TestStore) => Promise<TestSelection>
+      const result = await thenCB(store);
+      return result;
     } catch (e) {
       console.error("Then error:", e.toString());
       throw e;

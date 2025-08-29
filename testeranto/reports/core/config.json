@@ -17,6 +17,14 @@
       []
     ],
     [
+      "src/lib/TipoSkripto.test/TipoSkripto.ts",
+      "node",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
       "src/lib/BaseSuite.test/node.test.ts",
       "node",
       {
@@ -35,6 +43,22 @@
     [
       "src/lib/BaseSuite.test/web.test.ts",
       "web",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "src/components/pure/TestPageView.test/index.tsx",
+      "web",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "src/lib/pmProxy.test/index.ts",
+      "node",
       {
         "ports": 0
       },

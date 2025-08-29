@@ -21,13 +21,13 @@ export class MockGiven extends BaseGiven<I> {
       features,
       whens,
       thens,
-      async () => ({ testStore: true }), // givenCB
+      async () => ({ testStore: true, testSelection: false }), // givenCB
       {} // initialValues
     );
   }
 
   async givenThat(): Promise<TestStore> {
-    return { testStore: true };
+    return { testStore: true, testSelection: false };
   }
 
   uberCatcher(e: Error): void {
@@ -38,15 +38,14 @@ export class MockGiven extends BaseGiven<I> {
 export class MockWhen extends BaseWhen<I> {
   async andWhen(
     store: TestStore,
-    whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>,
+    whenCB: I["when"],
     testResource: any,
     pm: IPM
   ): Promise<TestStore> {
-    // Create a TestSelection from the store
-    const selection: TestSelection = { testSelection: true };
-    const result = await whenCB(selection)(store);
-    // Convert back to TestStore
-    return { ...store, ...result };
+    // The whenCB expects to be called with the store directly
+    // Since I["when"] is (store: TestStore) => Promise<TestStore>
+    const result = await whenCB(store);
+    return result;
   }
 
   addArtifact(path: string): void {
@@ -57,15 +56,14 @@ export class MockWhen extends BaseWhen<I> {
 export class MockThen extends BaseThen<I> {
   async butThen(
     store: TestStore,
-    thenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>,
+    thenCB: I["then"],
     testResourceConfiguration: any,
-    pm: IPM,
-    ...args: any[]
+    pm: IPM
   ): Promise<TestSelection> {
-    // Create a TestSelection from the store
-    const selection: TestSelection = { testSelection: true };
-    await thenCB(selection);
-    return selection;
+    // The thenCB expects to be called with the store directly
+    // Since I["then"] is (store: TestStore) => Promise<TestSelection>
+    const result = await thenCB(store);
+    return result;
   }
 }
 

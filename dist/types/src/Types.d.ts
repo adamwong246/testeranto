@@ -7,6 +7,7 @@ import { IGivens, BaseGiven } from "./lib/BaseGiven.js";
 import { BaseThen } from "./lib/BaseThen.js";
 import { BaseWhen } from "./lib/BaseWhen.js";
 export type ISummary = Record<string, {
+    runTimeTests: number | "?" | undefined;
     runTimeErrors: number | "?" | undefined;
     typeErrors: number | "?" | undefined;
     staticErrors: number | "?" | undefined;

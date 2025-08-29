@@ -9,12 +9,12 @@ const BaseThen_1 = require("../BaseThen");
 const BaseWhen_1 = require("../BaseWhen");
 class MockGiven extends BaseGiven_1.BaseGiven {
     constructor(name, features, whens, thens) {
-        super(name, features, whens, thens, async () => ({ testStore: true }), // givenCB
+        super(name, features, whens, thens, async () => ({ testStore: true, testSelection: false }), // givenCB
         {} // initialValues
         );
     }
     async givenThat() {
-        return { testStore: true };
+        return { testStore: true, testSelection: false };
     }
     uberCatcher(e) {
         console.error("Given error 2:", e);
@@ -23,11 +23,10 @@ class MockGiven extends BaseGiven_1.BaseGiven {
 exports.MockGiven = MockGiven;
 class MockWhen extends BaseWhen_1.BaseWhen {
     async andWhen(store, whenCB, testResource, pm) {
-        // Create a TestSelection from the store
-        const selection = { testSelection: true };
-        const result = await whenCB(selection)(store);
-        // Convert back to TestStore
-        return Object.assign(Object.assign({}, store), result);
+        // The whenCB expects to be called with the store directly
+        // Since I["when"] is (store: TestStore) => Promise<TestStore>
+        const result = await whenCB(store);
+        return result;
     }
     addArtifact(path) {
         // Mock implementation
@@ -35,11 +34,11 @@ class MockWhen extends BaseWhen_1.BaseWhen {
 }
 exports.MockWhen = MockWhen;
 class MockThen extends BaseThen_1.BaseThen {
-    async butThen(store, thenCB, testResourceConfiguration, pm, ...args) {
-        // Create a TestSelection from the store
-        const selection = { testSelection: true };
-        await thenCB(selection);
-        return selection;
+    async butThen(store, thenCB, testResourceConfiguration, pm) {
+        // The thenCB expects to be called with the store directly
+        // Since I["then"] is (store: TestStore) => Promise<TestSelection>
+        const result = await thenCB(store);
+        return result;
     }
 }
 exports.MockThen = MockThen;

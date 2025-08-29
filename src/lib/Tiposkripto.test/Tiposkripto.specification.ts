@@ -2,6 +2,7 @@ import { ITestSpecification } from "../../CoreTypes";
 
 import { I, O } from "./Tiposkripto.types";
 import { implementation } from "./Tiposkripto.implementation";
+import { ITestJob } from "..";
 
 export const specification: ITestSpecification<I, O> = (
   Suite,
@@ -18,12 +19,12 @@ export const specification: ITestSpecification<I, O> = (
         [Then.initializedProperly()]
       ),
       customInput: Given.WithCustomInput(
-        { custom: "input" },
+        ["Custom input test"],
         [],
         [Then.initializedProperly()]
       ),
       resourceRequirements: Given.WithResourceRequirements(
-        { ports: [3000, 3001] },
+        ["Resource requirements test"],
         [],
         [Then.resourceRequirementsSet()]
       ),
@@ -57,26 +58,29 @@ export const specification: ITestSpecification<I, O> = (
         ]
       ),
       interfaceConfiguration: Given.WithCustomAdapter(
+        ["Interface configuration test"],
+        [],
+        [Then.interfaceConfigured()],
         {
           assertThis: (x) => !!x,
           beforeEach: async (s, i) => i(),
-        },
-        [],
-        [Then.interfaceConfigured()]
+        }
       ),
     }),
 
     Suite.ExtendedSuite("Tiposkripto Advanced Features", {
       // Custom implementations
       customImplementation: Given.WithCustomImplementation(
-        implementation,
+        ["Custom implementation test"],
         [],
-        [Then.specsGenerated(), Then.jobsCreated()]
+        [Then.specsGenerated(), Then.jobsCreated()],
+        implementation
       ),
       customSpecification: Given.WithCustomSpecification(
-        specification,
+        ["Custom specification test"],
         [],
-        [Then.specsGenerated(), Then.jobsCreated()]
+        [Then.specsGenerated(), Then.jobsCreated()],
+        specification
       ),
 
       // Dynamic modification tests
@@ -103,6 +107,44 @@ export const specification: ITestSpecification<I, O> = (
         ["Should complete a full test run successfully"],
         [],
         [Then.testRunSuccessful()]
+      ),
+
+      // runTimeTests behavior
+      runTimeTestsCount: Given.Default(
+        ["Should correctly count the number of tests"],
+        [],
+        [Then.runTimeTestsCounted()]
+      ),
+      runTimeTestsOnError: Given.Default(
+        ["Should set runTimeTests to -1 on hard errors"],
+        [When.triggerError("test error")],
+        [Then.runTimeTestsSetToNegativeOne()]
+      ),
+      
+      // Specific test cases for runTimeTests behavior
+      runTimeTestsSingleSuiteFiveTests: Given.WithCustomInput(
+        ["Given a config that has 1 suite containing 5 GivenWhenThens"],
+        [],
+        [Then.runTimeTestsCountIs(5)],
+        { testCount: 5 }
+      ),
+      runTimeTestsSingleSuiteFiveTestsError: Given.WithCustomInput(
+        ["Given a config that has 1 suite containing 5 GivenWhenThens"],
+        [When.triggerError("hard error")],
+        [Then.runTimeTestsIsNegativeOne()],
+        { testCount: 5 }
+      ),
+      runTimeTestsTwoSuitesThreeTestsEach: Given.WithCustomInput(
+        ["Given a config that has 1 suite containing 3 GivenWhenThens and 1 suite containing 3 GivenWhenThens"],
+        [],
+        [Then.runTimeTestsCountIs(6)],
+        { testCount: 6 }
+      ),
+      runTimeTestsTwoSuitesThreeTestsEachError: Given.WithCustomInput(
+        ["Given a config that has 1 suite containing 3 GivenWhenThens and 1 suite containing 3 GivenWhenThens"],
+        [When.triggerError("hard error")],
+        [Then.runTimeTestsIsNegativeOne()],
+        { testCount: 6 }
       ),
     }),
   ];

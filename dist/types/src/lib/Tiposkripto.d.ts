@@ -13,6 +13,7 @@ export default abstract class Tiposkripto<I extends Ibdd_in_any = Ibdd_in_any, O
     testResourceRequirement: ITTestResourceRequest;
     artifacts: Promise<unknown>[];
     testJobs: ITestJob[];
+    private totalTests;
     testSpecification: ITestSpecification<I, O>;
     suitesOverrides: Record<keyof IExtenstions, any>;
     givenOverides: Record<keyof IExtenstions, any>;
@@ -31,5 +32,6 @@ export default abstract class Tiposkripto<I extends Ibdd_in_any = Ibdd_in_any, O
     When(): Record<keyof IExtenstions, (arg0: I["istore"], ...arg1: any) => BaseWhen<I>>;
     Then(): Record<keyof IExtenstions, (selection: I["iselection"], expectation: any) => BaseThen<I>>;
     getTestJobs(): ITestJob[];
+    private calculateTotalTests;
 }
 export {};

@@ -138,5 +138,7 @@ export type IFinalResults = {
   failed: boolean;
   fails: number;
   artifacts: Promise<unknown>[];
+  tests: number;
+  runTimeTests: number;
   // logPromise: Promise<unknown>;
 };

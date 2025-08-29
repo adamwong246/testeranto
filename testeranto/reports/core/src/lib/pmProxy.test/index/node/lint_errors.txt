@@ -1,0 +1,15 @@
+src/lib/pmProxy.test/implementation.ts
+4:10 'IProxy' is defined but never used. (@typescript-eslint/no-unused-vars)
+11:10 'createPathRewriter' is defined but never used. (@typescript-eslint/no-unused-vars)
+57:24 'expectedPath' is defined but never used. (@typescript-eslint/no-unused-vars)
+58:14 'store' is defined but never used. (@typescript-eslint/no-unused-vars)
+98:9 Unnecessary try/catch wrapper. (no-useless-catch)
+150:20 'store' is defined but never used. (@typescript-eslint/no-unused-vars)
+
+src/lib/pmProxy.test/index.ts
+11:33 The `{}` ("empty object") type allows any non-nullish value, including literals like `0` and `""`.
+- If that's what you want, disable this lint rule with an inline comment or configure the 'allowObjectTypes' rule option.
+- If you want a type meaning "any object", you probably want `object` instead.
+- If you want a type meaning "any value", you probably want `unknown` instead. (@typescript-eslint/no-empty-object-type)
+- undefined (fix)
+- undefined (fix)

@@ -150,7 +150,7 @@ export const ProcessManagerView: React.FC<ProcessManagerViewProps> = ({
       <Row className="g-0" style={{ height: "calc(100vh - 56px)" }}>
         {/* Left Column - Process List (Compact) */}
         <Col
-          sm={3}
+          sm={2}
           className="border-end"
           style={{
             height: "100%",
@@ -217,56 +217,74 @@ export const ProcessManagerView: React.FC<ProcessManagerViewProps> = ({
           </div>
         </Col>
 
-        {/* Middle Column - Selected process details */}
+        {/* Middle Column - Process Details (5 units) */}
         <Col
           sm={5}
-          className="border-end p-3"
-          style={{ height: "100%", overflow: "auto" }}
+          className="border-end p-3 d-flex flex-column"
+          style={{ height: "100%", overflow: "hidden" }}
         >
           {selectedProcess ? (
-            <div>
-              <div className="mb-3">
-                <strong>Command:</strong>
-                <code
-                  className="bg-light p-2 rounded d-block mt-1"
-                  style={{ fontSize: "0.8rem" }}
-                >
-                  {selectedProcess.command}
-                </code>
-              </div>
-
-              <div className="mb-2">
-                <strong>Status:</strong>
-                <div className="mt-1">{getStatusBadge(selectedProcess)}</div>
-              </div>
-
-              <div className="mb-2">
-                <strong>PID:</strong>
-                <div className="text-muted">{selectedProcess.pid || "N/A"}</div>
-              </div>
-
-              <div className="mb-2">
-                <strong>Started:</strong>
+            <div className="flex-grow-1 d-flex flex-column">
+              {/* Horizontal controls row */}
+              <div className="d-flex align-items-center gap-2 mb-3 flex-wrap">
+                {/* Status */}
+                <div>{getStatusBadge(selectedProcess)}</div>
+                
+                {/* PID */}
+                <div className="text-muted">
+                  {selectedProcess.pid || "N/A"}
+                </div>
+                
+                {/* Started time */}
                 <div className="text-muted">
                   {new Date(selectedProcess.timestamp).toLocaleString()}
                 </div>
-              </div>
-
-              {selectedProcess.exitCode !== undefined && (
-                <div className="mb-2">
-                  <strong>Exit Code:</strong>
-                  <div className="text-muted">{selectedProcess.exitCode}</div>
-                </div>
-              )}
-
-              {selectedProcess.error && (
-                <div className="mt-3">
-                  <strong className="text-danger">Error:</strong>
-                  <div className="text-danger small mt-1">
-                    {selectedProcess.error}
+                
+                {/* Stop button */}
+                {selectedProcess.status === "running" && onKillProcess && (
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => onKillProcess(selectedProcess.processId)}
+                    className="flex-grow-0 ms-auto"
+                  >
+                    ⏹️ Stop
+                  </Button>
+                )}
+                
+                {/* Exit code if applicable */}
+                {selectedProcess.exitCode !== undefined && (
+                  <div className="text-muted">
+                    {selectedProcess.exitCode}
                   </div>
-                </div>
+                )}
+              </div>
+              
+              {/* Error message if present */}
+              {selectedProcess.error && (
+                <Alert variant="danger" className="py-2 mb-3">
+                  {selectedProcess.error}
+                </Alert>
               )}
+              
+              {/* Command styled like terminal */}
+              <div>
+                <div className="mb-1 small text-muted">Command:</div>
+                <div
+                  className="bg-dark text-light p-2 rounded"
+                  style={{
+                    fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+                    fontSize: "14px",
+                    lineHeight: "1.4",
+                    overflow: "auto",
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-word",
+                    maxHeight: "200px" // Prevent it from expanding too much
+                  }}
+                >
+                  {selectedProcess.command}
+                </div>
+              </div>
             </div>
           ) : (
             <div className="text-center text-muted mt-5">
@@ -274,140 +292,117 @@ export const ProcessManagerView: React.FC<ProcessManagerViewProps> = ({
             </div>
           )}
         </Col>
-
-        {/* Right Column - Live logs with input */}
+        
+        {/* Right Column - Terminal (5 units) */}
         <Col
-          sm={4}
-          className="p-0"
+          sm={5}
+          className="p-3 d-flex flex-column"
           style={{ height: "100%", overflow: "hidden" }}
         >
           {selectedProcess ? (
-            <div className="d-flex flex-column h-100">
-              {/* <div className="d-flex justify-content-between align-items-center p-3 border-bottom bg-white">
-
-                <small className="text-muted">
-                  {processLogs.length} lines
-                </small>
-              </div> */}
-
-              {/* Scrollable log content */}
-              <div
-                ref={logsContainerRef}
-                className="bg-dark text-light flex-grow-1"
-                style={{
-                  overflowY: "auto",
-                  fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
-                  fontSize: "14px",
-                  lineHeight: "1.4",
-                  // padding: '1rem'
-                }}
-                onScroll={handleLogsScroll}
-              >
-                {processLogs.length > 0 ? (
-                  <pre
-                    className="mb-0"
-                    style={{
-                      whiteSpace: "pre-wrap",
-                      wordBreak: "break-word",
-                      backgroundColor: "transparent",
-                      border: "none",
-                      color: "inherit",
-                    }}
-                  >
-                    {processLogs.join("")}
-                  </pre>
-                ) : (
-                  <div className="text-muted text-center py-4">
-                    <i>No output yet</i>
-                  </div>
-                )}
-                {/* Auto-scroll indicator */}
-                {!autoScroll && (
-                  <div className="position-sticky bottom-0 d-flex justify-content-center mb-2">
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      onClick={() => {
-                        setAutoScroll(true);
-                        if (logsContainerRef.current) {
-                          logsContainerRef.current.scrollTop =
-                            logsContainerRef.current.scrollHeight;
-                        }
+            <>
+              {/* Terminal area - fills space and scrolls internally */}
+              <div className="flex-grow-1 d-flex flex-column" style={{ minHeight: 0 }}>
+                {/* Scrollable terminal content */}
+                <div
+                  ref={logsContainerRef}
+                  className="bg-dark text-light flex-grow-1"
+                  style={{
+                    overflowY: "auto",
+                    fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+                    fontSize: "14px",
+                    lineHeight: "1.4",
+                    padding: "0.5rem"
+                  }}
+                  onScroll={handleLogsScroll}
+                >
+                  {processLogs.length > 0 ? (
+                    <pre
+                      className="mb-0"
+                      style={{
+                        whiteSpace: "pre-wrap",
+                        wordBreak: "break-word",
+                        backgroundColor: "transparent",
+                        border: "none",
+                        color: "inherit",
                       }}
                     >
-                      Scroll to Bottom
-                    </Button>
-                  </div>
-                )}
-              </div>
-
-              {/* Input area and stop button for running processes */}
-              {selectedProcess.status === "running" && (
-                <div
-                  className="border-top bg-white p-3"
-                  style={{ flexShrink: 0 }}
-                >
-                  {/* Stop button */}
-                  {onKillProcess && (
-                    <div className="mb-3">
+                      {processLogs.join("")}
+                    </pre>
+                  ) : (
+                    <div className="text-muted text-center py-4">
+                      <i>No output yet</i>
+                    </div>
+                  )}
+                  {/* Auto-scroll indicator */}
+                  {!autoScroll && (
+                    <div className="position-sticky bottom-0 d-flex justify-content-center mb-2">
                       <Button
-                        variant="danger"
+                        variant="primary"
                         size="sm"
-                        onClick={() => onKillProcess(selectedProcess.processId)}
-                        className="w-100"
+                        onClick={() => {
+                          setAutoScroll(true);
+                          if (logsContainerRef.current) {
+                            logsContainerRef.current.scrollTop =
+                              logsContainerRef.current.scrollHeight;
+                          }
+                        }}
                       >
-                        ⏹️ Stop Process
+                        Scroll to Bottom
                       </Button>
                     </div>
                   )}
-
-                  {/* Input area */}
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Type input and press Enter..."
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          const target = e.target as HTMLInputElement;
-                          const inputValue = target.value;
+                </div>
+                
+                {/* Input area - fixed at the bottom */}
+                {selectedProcess.status === "running" && (
+                  <div className="border-top bg-white p-2 mt-2" style={{ flexShrink: 0 }}>
+                    <div className="input-group">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Type input and press Enter..."
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+                            const target = e.target as HTMLInputElement;
+                            const inputValue = target.value;
+                            if (inputValue.trim()) {
+                              handleInput(inputValue + "\n");
+                              target.value = "";
+                            }
+                          }
+                        }}
+                        autoFocus
+                      />
+                      <button
+                        className="btn btn-primary"
+                        type="button"
+                        onClick={() => {
+                          const input = document.querySelector(
+                            "input"
+                          ) as HTMLInputElement;
+                          const inputValue = input.value;
                           if (inputValue.trim()) {
                             handleInput(inputValue + "\n");
-                            target.value = "";
+                            input.value = "";
                           }
-                        }
-                      }}
-                      autoFocus
-                    />
-                    <button
-                      className="btn btn-primary"
-                      type="button"
-                      onClick={() => {
-                        const input = document.querySelector(
-                          "input"
-                        ) as HTMLInputElement;
-                        const inputValue = input.value;
-                        if (inputValue.trim()) {
-                          handleInput(inputValue + "\n");
-                          input.value = "";
-                        }
-                      }}
-                    >
-                      Send
-                    </button>
+                        }}
+                      >
+                        Send
+                      </button>
+                    </div>
                   </div>
-                  <small className="text-muted">
-                    💡 Press Enter to send input to the process
-                  </small>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            </>
           ) : (
-            <div className="p-3 text-center text-muted mt-5">
-              <i>Live logs will appear here when a process is selected</i>
+            <div className="text-center text-muted mt-5">
+              <i>Terminal will appear here when a process is selected</i>
             </div>
           )}
         </Col>
+
+
       </Row>
     </Container>
   );

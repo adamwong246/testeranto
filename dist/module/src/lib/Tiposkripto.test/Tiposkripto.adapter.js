@@ -5,20 +5,14 @@ export const testAdapter = {
     beforeAll: async (input, testResource, pm) => input,
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
         var _a;
-        try {
-            const result = await initializer();
-            if (!result) {
-                throw new Error("Initializer returned undefined");
-            }
-            if (!(result instanceof MockTiposkripto)) {
-                throw new Error(`Initializer returned ${(_a = result === null || result === void 0 ? void 0 : result.constructor) === null || _a === void 0 ? void 0 : _a.name}, expected MockTiposkripto`);
-            }
-            return result;
+        const result = await initializer();
+        if (!result) {
+            throw new Error("Initializer returned undefined");
         }
-        catch (e) {
-            console.error("[ERROR] BeforeEach failed:", e);
-            throw e;
+        if (!(result instanceof MockTiposkripto)) {
+            throw new Error(`Initializer returned ${(_a = result === null || result === void 0 ? void 0 : result.constructor) === null || _a === void 0 ? void 0 : _a.name}, expected MockTiposkripto`);
         }
+        return result;
     },
     andWhen: async (store, whenCB, testResource, utils) => {
         return whenCB(store, utils);

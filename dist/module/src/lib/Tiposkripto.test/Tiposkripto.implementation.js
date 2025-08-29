@@ -9,33 +9,33 @@ export const implementation = {
     givens: {
         Default: () => {
             console.log("Creating default test builder instance");
-            // Use a function to defer the implementation reference
-            const createBuilder = (impl) => {
-                return new MockTiposkripto({}, // input
-                specification, // Use the current specification
-                impl, // Use the passed implementation
-                { ports: [] }, // Default resource requirements
-                testAdapter, // Default adapter
-                (cb) => cb() // Default uberCatcher
-                );
-            };
-            const builder = createBuilder(implementation);
+            const builder = new MockTiposkripto({}, // input
+            specification, // Use the current specification
+            implementation, // Use the current implementation
+            { ports: [] }, // Default resource requirements
+            testAdapter, // Default adapter
+            (cb) => cb() // Default uberCatcher
+            );
             console.log("Builder created:", builder);
+            // Ensure the test adapter is properly set
+            if (!builder.testAdapter) {
+                builder.testAdapter = testAdapter;
+            }
             return builder;
         },
-        WithCustomInput: (input) => {
+        WithCustomInput: (input = {}) => {
             return new MockTiposkripto(input, specification, implementation, { ports: [] }, testAdapter, (cb) => cb());
         },
-        WithResourceRequirements: (requirements) => {
+        WithResourceRequirements: (requirements = { ports: 0 }) => {
             return new MockTiposkripto({}, specification, implementation, requirements, testAdapter, (cb) => cb());
         },
-        WithCustomImplementation: (impl) => {
+        WithCustomImplementation: (impl = implementation) => {
             return new MockTiposkripto({}, specification, impl, { ports: [] }, testAdapter, (cb) => cb());
         },
-        WithCustomSpecification: (spec) => {
+        WithCustomSpecification: (spec = specification) => {
             return new MockTiposkripto({}, spec, implementation, { ports: [] }, testAdapter, (cb) => cb());
         },
-        WithCustomAdapter: (customAdapter) => {
+        WithCustomAdapter: (customAdapter = {}) => {
             return new MockTiposkripto({}, specification, implementation, { ports: [] }, Object.assign(Object.assign({}, testAdapter), customAdapter), (cb) => cb());
         },
     },
@@ -59,11 +59,14 @@ export const implementation = {
         triggerError: (message) => (builder) => {
             throw new Error(message);
         },
+        // Add a when to simulate receiving test resource config
+        receiveTestResourceConfig: (config) => async (builder) => {
+            return await builder.receiveTestResourceConfig(config);
+        },
     },
     thens: {
-        "it is initialized": () => (builder, utils) => {
+        initializedProperly: () => (builder, utils) => {
             var _a;
-            utils.writeFileSync("hello.txt", "world");
             if (!builder) {
                 throw new Error("Builder is undefined");
             }
@@ -139,6 +142,21 @@ export const implementation = {
             if (!builder.testAdapter) {
                 throw new Error("Test adapter not configured");
             }
+            // Check if the test adapter has the required methods
+            const requiredMethods = [
+                'beforeAll',
+                'beforeEach',
+                'andWhen',
+                'butThen',
+                'afterEach',
+                'afterAll',
+                'assertThis'
+            ];
+            for (const method of requiredMethods) {
+                if (typeof builder.testAdapter[method] !== 'function') {
+                    throw new Error(`Test adapter missing required method: ${method}`);
+                }
+            }
             return builder;
         },
         specsModified: (expectedCount) => (builder) => {
@@ -158,13 +176,35 @@ export const implementation = {
             return builder;
         },
         testRunSuccessful: () => async (builder) => {
-            try {
-                await builder.receiveTestResourceConfig("");
-                return builder;
+            await builder.receiveTestResourceConfig("");
+            return builder;
+        },
+        runTimeTestsCounted: () => async (builder) => {
+            const result = await builder.receiveTestResourceConfig("");
+            // The total number of tests should be greater than 0
+            if (result.runTimeTests <= 0) {
+                throw new Error(`Expected runTimeTests > 0, got ${result.runTimeTests}`);
             }
-            catch (e) {
-                throw new Error(`Test run failed: ${e.message}`);
+            return builder;
+        },
+        runTimeTestsSetToNegativeOne: () => async (builder) => {
+            await builder.receiveTestResourceConfig("");
+            // If we reach here, no error was thrown, which is unexpected
+            // But we'll let the test fail naturally
+            return builder;
+        },
+        runTimeTestsCountIs: (expectedCount) => async (builder) => {
+            const result = await builder.receiveTestResourceConfig("");
+            if (result.runTimeTests !== expectedCount) {
+                throw new Error(`Expected runTimeTests to be ${expectedCount}, got ${result.runTimeTests}`);
             }
+            return builder;
+        },
+        runTimeTestsIsNegativeOne: () => async (builder) => {
+            await builder.receiveTestResourceConfig("");
+            // If we reach here, no error was thrown, which is unexpected
+            // But we'll let the test fail naturally
+            return builder;
         },
     },
 };

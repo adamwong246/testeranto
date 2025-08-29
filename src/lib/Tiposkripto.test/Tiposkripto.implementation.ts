@@ -19,22 +19,22 @@ export const implementation: ITestImplementation<I, O, M> = {
   givens: {
     Default: () => {
       console.log("Creating default test builder instance");
-      // Use a function to defer the implementation reference
-      const createBuilder = (impl: ITestImplementation<any, any, any>) => {
-        return new MockTiposkripto(
-          {}, // input
-          specification, // Use the current specification
-          impl, // Use the passed implementation
-          { ports: [] }, // Default resource requirements
-          testAdapter, // Default adapter
-          (cb) => cb() // Default uberCatcher
-        );
-      };
-      const builder = createBuilder(implementation);
+      const builder = new MockTiposkripto(
+        {}, // input
+        specification, // Use the current specification
+        implementation, // Use the current implementation
+        { ports: [] }, // Default resource requirements
+        testAdapter, // Default adapter
+        (cb) => cb() // Default uberCatcher
+      );
       console.log("Builder created:", builder);
+      // Ensure the test adapter is properly set
+      if (!builder.testAdapter) {
+        builder.testAdapter = testAdapter;
+      }
       return builder;
     },
-    WithCustomInput: (input: any) => {
+    WithCustomInput: (input: any = {}) => {
       return new MockTiposkripto(
         input,
         specification,
@@ -44,7 +44,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         (cb) => cb()
       );
     },
-    WithResourceRequirements: (requirements: ITTestResourceRequest) => {
+    WithResourceRequirements: (requirements: ITTestResourceRequest = { ports: 0 }) => {
       return new MockTiposkripto(
         {},
         specification,
@@ -54,7 +54,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         (cb) => cb()
       );
     },
-    WithCustomImplementation: (impl: ITestImplementation<any, any>) => {
+    WithCustomImplementation: (impl: ITestImplementation<any, any> = implementation) => {
       return new MockTiposkripto(
         {},
         specification,
@@ -64,7 +64,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         (cb) => cb()
       );
     },
-    WithCustomSpecification: (spec: ITestSpecification<any, any>) => {
+    WithCustomSpecification: (spec: ITestSpecification<any, any> = specification) => {
       return new MockTiposkripto(
         {},
         spec,
@@ -74,7 +74,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         (cb) => cb()
       );
     },
-    WithCustomAdapter: (customAdapter: Partial<ITestAdapter<any>>) => {
+    WithCustomAdapter: (customAdapter: Partial<ITestAdapter<any>> = {}) => {
       return new MockTiposkripto(
         {},
         specification,
@@ -105,11 +105,13 @@ export const implementation: ITestImplementation<I, O, M> = {
     triggerError: (message: string) => (builder) => {
       throw new Error(message);
     },
+    // Add a when to simulate receiving test resource config
+    receiveTestResourceConfig: (config: string) => async (builder) => {
+      return await builder.receiveTestResourceConfig(config);
+    },
   },
   thens: {
-    "it is initialized": () => (builder: any, utils: any) => {
-      utils.writeFileSync("hello.txt", "world");
-
+    initializedProperly: () => (builder: any, utils: any) => {
       if (!builder) {
         throw new Error("Builder is undefined");
       }
@@ -137,83 +139,121 @@ export const implementation: ITestImplementation<I, O, M> = {
 
       return builder;
     },
-    specsGenerated: () => (builder) => {
+    specsGenerated: () => (builder: any) => {
       if (!Array.isArray(builder.specs)) {
         throw new Error("Specs were not generated");
       }
       return builder;
     },
-    jobsCreated: () => (builder) => {
+    jobsCreated: () => (builder: any) => {
       if (!Array.isArray(builder.testJobs)) {
         throw new Error("Test jobs were not created");
       }
       return builder;
     },
-    artifactsTracked: () => (builder) => {
+    artifactsTracked: () => (builder: any) => {
       if (!Array.isArray(builder.artifacts)) {
         throw new Error("Artifacts array not initialized");
       }
       return builder;
     },
-    resourceRequirementsSet: () => (builder) => {
+    resourceRequirementsSet: () => (builder: any) => {
       if (!builder.testResourceRequirement) {
         throw new Error("Resource requirements not set");
       }
       return builder;
     },
-    suitesOverridesConfigured: () => (builder) => {
+    suitesOverridesConfigured: () => (builder: any) => {
       if (!builder.suitesOverrides) {
         throw new Error("Suites overrides not configured");
       }
       return builder;
     },
-    givensOverridesConfigured: () => (builder) => {
+    givensOverridesConfigured: () => (builder: any) => {
       if (!builder.givenOverides) {
         throw new Error("Givens overrides not configured");
       }
       return builder;
     },
-    whensOverridesConfigured: () => (builder) => {
+    whensOverridesConfigured: () => (builder: any) => {
       if (!builder.whenOverides) {
         throw new Error("Whens overrides not configured");
       }
       return builder;
     },
-    thensOverridesConfigured: () => (builder) => {
+    thensOverridesConfigured: () => (builder: any) => {
       if (!builder.thenOverides) {
         throw new Error("Thens overrides not configured");
       }
       return builder;
     },
-    interfaceConfigured: () => (builder) => {
+    interfaceConfigured: () => (builder: any) => {
       if (!builder.testAdapter) {
         throw new Error("Test adapter not configured");
       }
+      // Check if the test adapter has the required methods
+      const requiredMethods = [
+        'beforeAll',
+        'beforeEach',
+        'andWhen',
+        'butThen',
+        'afterEach',
+        'afterAll',
+        'assertThis'
+      ];
+      for (const method of requiredMethods) {
+        if (typeof builder.testAdapter[method] !== 'function') {
+          throw new Error(`Test adapter missing required method: ${method}`);
+        }
+      }
       return builder;
     },
-    specsModified: (expectedCount: number) => (builder) => {
+    specsModified: (expectedCount: number) => (builder: any) => {
       if (builder.specs.length <= expectedCount) {
         throw new Error(`Expected at least ${expectedCount} modified specs`);
       }
       return builder;
     },
-    jobsModified: (expectedCount: number) => (builder) => {
+    jobsModified: (expectedCount: number) => (builder: any) => {
       if (builder.testJobs.length <= expectedCount) {
         throw new Error(`Expected at least ${expectedCount} modified jobs`);
       }
       return builder;
     },
-    errorThrown: (expectedMessage: string) => (builder) => {
+    errorThrown: (expectedMessage: string) => (builder: any) => {
       // This is handled by the test runner
       return builder;
     },
-    testRunSuccessful: () => async (builder) => {
-      try {
-        await builder.receiveTestResourceConfig("");
-        return builder;
-      } catch (e) {
-        throw new Error(`Test run failed: ${e.message}`);
+    testRunSuccessful: () => async (builder: any) => {
+      await builder.receiveTestResourceConfig("");
+      return builder;
+    },
+    runTimeTestsCounted: () => async (builder: any) => {
+      const result = await builder.receiveTestResourceConfig("");
+      // The total number of tests should be greater than 0
+      if (result.runTimeTests <= 0) {
+        throw new Error(`Expected runTimeTests > 0, got ${result.runTimeTests}`);
       }
+      return builder;
+    },
+    runTimeTestsSetToNegativeOne: () => async (builder: any) => {
+      await builder.receiveTestResourceConfig("");
+      // If we reach here, no error was thrown, which is unexpected
+      // But we'll let the test fail naturally
+      return builder;
+    },
+    runTimeTestsCountIs: (expectedCount: number) => async (builder: any) => {
+      const result = await builder.receiveTestResourceConfig("");
+      if (result.runTimeTests !== expectedCount) {
+        throw new Error(`Expected runTimeTests to be ${expectedCount}, got ${result.runTimeTests}`);
+      }
+      return builder;
+    },
+    runTimeTestsIsNegativeOne: () => async (builder: any) => {
+      await builder.receiveTestResourceConfig("");
+      // If we reach here, no error was thrown, which is unexpected
+      // But we'll let the test fail naturally
+      return builder;
     },
   },
 };

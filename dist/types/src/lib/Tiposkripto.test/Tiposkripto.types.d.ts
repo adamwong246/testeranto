@@ -24,6 +24,7 @@ export type O = Ibdd_out<{
     modifySpecs: [modifier: (specs: any[]) => any[]];
     modifyJobs: [modifier: (jobs: ITestJob[]) => ITestJob[]];
     triggerError: [message: string];
+    receiveTestResourceConfig: [config: string];
 }, {
     initializedProperly: [];
     specsGenerated: [];
@@ -39,6 +40,10 @@ export type O = Ibdd_out<{
     jobsModified: [expectedCount: number];
     errorThrown: [expectedMessage: string];
     testRunSuccessful: [];
+    runTimeTestsCounted: [];
+    runTimeTestsSetToNegativeOne: [];
+    runTimeTestsCountIs: [expectedCount: number];
+    runTimeTestsIsNegativeOne: [];
 }>;
 export type M = {
     givens: {

@@ -5,7 +5,7 @@ export type TestStore = {
     index?: number;
     testStore: boolean;
     testSelection?: boolean;
-    error?: Error;
+    error?: Error | undefined;
 };
 export type TestSelection = {
     testSelection: boolean;

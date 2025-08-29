@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Row, Col, Badge, Button } from "react-bootstrap";
+import { Container, Row, Col, Badge, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 export const ProcessManagerView = ({ processes, onRefresh, onBack, loading, onKillProcess, }) => {
     const navigate = useNavigate();
@@ -98,7 +98,7 @@ export const ProcessManagerView = ({ processes, onRefresh, onBack, loading, onKi
     };
     return (React.createElement(Container, { fluid: true, className: "px-0 h-100" },
         React.createElement(Row, { className: "g-0", style: { height: "calc(100vh - 56px)" } },
-            React.createElement(Col, { sm: 3, className: "border-end", style: {
+            React.createElement(Col, { sm: 2, className: "border-end", style: {
                     height: "100%",
                     overflow: "auto",
                     backgroundColor: "#f8f9fa",
@@ -129,72 +129,70 @@ export const ProcessManagerView = ({ processes, onRefresh, onBack, loading, onKi
                     loading && processes.length === 0 && (React.createElement("div", { className: "p-2 text-center small" },
                         React.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" },
                             React.createElement("span", { className: "visually-hidden" }, "Loading...")))))),
-            React.createElement(Col, { sm: 5, className: "border-end p-3", style: { height: "100%", overflow: "auto" } }, selectedProcess ? (React.createElement("div", null,
-                React.createElement("div", { className: "mb-3" },
-                    React.createElement("strong", null, "Command:"),
-                    React.createElement("code", { className: "bg-light p-2 rounded d-block mt-1", style: { fontSize: "0.8rem" } }, selectedProcess.command)),
-                React.createElement("div", { className: "mb-2" },
-                    React.createElement("strong", null, "Status:"),
-                    React.createElement("div", { className: "mt-1" }, getStatusBadge(selectedProcess))),
-                React.createElement("div", { className: "mb-2" },
-                    React.createElement("strong", null, "PID:"),
-                    React.createElement("div", { className: "text-muted" }, selectedProcess.pid || "N/A")),
-                React.createElement("div", { className: "mb-2" },
-                    React.createElement("strong", null, "Started:"),
-                    React.createElement("div", { className: "text-muted" }, new Date(selectedProcess.timestamp).toLocaleString())),
-                selectedProcess.exitCode !== undefined && (React.createElement("div", { className: "mb-2" },
-                    React.createElement("strong", null, "Exit Code:"),
-                    React.createElement("div", { className: "text-muted" }, selectedProcess.exitCode))),
-                selectedProcess.error && (React.createElement("div", { className: "mt-3" },
-                    React.createElement("strong", { className: "text-danger" }, "Error:"),
-                    React.createElement("div", { className: "text-danger small mt-1" }, selectedProcess.error))))) : (React.createElement("div", { className: "text-center text-muted mt-5" },
-                React.createElement("i", null, "Select a process to view details")))),
-            React.createElement(Col, { sm: 4, className: "p-0", style: { height: "100%", overflow: "hidden" } }, selectedProcess ? (React.createElement("div", { className: "d-flex flex-column h-100" },
-                React.createElement("div", { ref: logsContainerRef, className: "bg-dark text-light flex-grow-1", style: {
-                        overflowY: "auto",
-                        fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
-                        fontSize: "14px",
-                        lineHeight: "1.4",
-                        // padding: '1rem'
-                    }, onScroll: handleLogsScroll },
-                    processLogs.length > 0 ? (React.createElement("pre", { className: "mb-0", style: {
+            React.createElement(Col, { sm: 5, className: "border-end p-3 d-flex flex-column", style: { height: "100%", overflow: "hidden" } }, selectedProcess ? (React.createElement("div", { className: "flex-grow-1 d-flex flex-column" },
+                React.createElement("div", { className: "d-flex align-items-center gap-2 mb-3 flex-wrap" },
+                    React.createElement("div", null, getStatusBadge(selectedProcess)),
+                    React.createElement("div", { className: "text-muted" }, selectedProcess.pid || "N/A"),
+                    React.createElement("div", { className: "text-muted" }, new Date(selectedProcess.timestamp).toLocaleString()),
+                    selectedProcess.status === "running" && onKillProcess && (React.createElement(Button, { variant: "danger", size: "sm", onClick: () => onKillProcess(selectedProcess.processId), className: "flex-grow-0 ms-auto" }, "\u23F9\uFE0F Stop")),
+                    selectedProcess.exitCode !== undefined && (React.createElement("div", { className: "text-muted" }, selectedProcess.exitCode))),
+                selectedProcess.error && (React.createElement(Alert, { variant: "danger", className: "py-2 mb-3" }, selectedProcess.error)),
+                React.createElement("div", null,
+                    React.createElement("div", { className: "mb-1 small text-muted" }, "Command:"),
+                    React.createElement("div", { className: "bg-dark text-light p-2 rounded", style: {
+                            fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+                            fontSize: "14px",
+                            lineHeight: "1.4",
+                            overflow: "auto",
                             whiteSpace: "pre-wrap",
                             wordBreak: "break-word",
-                            backgroundColor: "transparent",
-                            border: "none",
-                            color: "inherit",
-                        } }, processLogs.join(""))) : (React.createElement("div", { className: "text-muted text-center py-4" },
-                        React.createElement("i", null, "No output yet"))),
-                    !autoScroll && (React.createElement("div", { className: "position-sticky bottom-0 d-flex justify-content-center mb-2" },
-                        React.createElement(Button, { variant: "primary", size: "sm", onClick: () => {
-                                setAutoScroll(true);
-                                if (logsContainerRef.current) {
-                                    logsContainerRef.current.scrollTop =
-                                        logsContainerRef.current.scrollHeight;
-                                }
-                            } }, "Scroll to Bottom")))),
-                selectedProcess.status === "running" && (React.createElement("div", { className: "border-top bg-white p-3", style: { flexShrink: 0 } },
-                    onKillProcess && (React.createElement("div", { className: "mb-3" },
-                        React.createElement(Button, { variant: "danger", size: "sm", onClick: () => onKillProcess(selectedProcess.processId), className: "w-100" }, "\u23F9\uFE0F Stop Process"))),
-                    React.createElement("div", { className: "input-group" },
-                        React.createElement("input", { type: "text", className: "form-control", placeholder: "Type input and press Enter...", onKeyPress: (e) => {
-                                if (e.key === "Enter") {
-                                    const target = e.target;
-                                    const inputValue = target.value;
+                            maxHeight: "200px" // Prevent it from expanding too much
+                        } }, selectedProcess.command)))) : (React.createElement("div", { className: "text-center text-muted mt-5" },
+                React.createElement("i", null, "Select a process to view details")))),
+            React.createElement(Col, { sm: 5, className: "p-3 d-flex flex-column", style: { height: "100%", overflow: "hidden" } }, selectedProcess ? (React.createElement(React.Fragment, null,
+                React.createElement("div", { className: "flex-grow-1 d-flex flex-column", style: { minHeight: 0 } },
+                    React.createElement("div", { ref: logsContainerRef, className: "bg-dark text-light flex-grow-1", style: {
+                            overflowY: "auto",
+                            fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+                            fontSize: "14px",
+                            lineHeight: "1.4",
+                            padding: "0.5rem"
+                        }, onScroll: handleLogsScroll },
+                        processLogs.length > 0 ? (React.createElement("pre", { className: "mb-0", style: {
+                                whiteSpace: "pre-wrap",
+                                wordBreak: "break-word",
+                                backgroundColor: "transparent",
+                                border: "none",
+                                color: "inherit",
+                            } }, processLogs.join(""))) : (React.createElement("div", { className: "text-muted text-center py-4" },
+                            React.createElement("i", null, "No output yet"))),
+                        !autoScroll && (React.createElement("div", { className: "position-sticky bottom-0 d-flex justify-content-center mb-2" },
+                            React.createElement(Button, { variant: "primary", size: "sm", onClick: () => {
+                                    setAutoScroll(true);
+                                    if (logsContainerRef.current) {
+                                        logsContainerRef.current.scrollTop =
+                                            logsContainerRef.current.scrollHeight;
+                                    }
+                                } }, "Scroll to Bottom")))),
+                    selectedProcess.status === "running" && (React.createElement("div", { className: "border-top bg-white p-2 mt-2", style: { flexShrink: 0 } },
+                        React.createElement("div", { className: "input-group" },
+                            React.createElement("input", { type: "text", className: "form-control", placeholder: "Type input and press Enter...", onKeyPress: (e) => {
+                                    if (e.key === "Enter") {
+                                        const target = e.target;
+                                        const inputValue = target.value;
+                                        if (inputValue.trim()) {
+                                            handleInput(inputValue + "\n");
+                                            target.value = "";
+                                        }
+                                    }
+                                }, autoFocus: true }),
+                            React.createElement("button", { className: "btn btn-primary", type: "button", onClick: () => {
+                                    const input = document.querySelector("input");
+                                    const inputValue = input.value;
                                     if (inputValue.trim()) {
                                         handleInput(inputValue + "\n");
-                                        target.value = "";
+                                        input.value = "";
                                     }
-                                }
-                            }, autoFocus: true }),
-                        React.createElement("button", { className: "btn btn-primary", type: "button", onClick: () => {
-                                const input = document.querySelector("input");
-                                const inputValue = input.value;
-                                if (inputValue.trim()) {
-                                    handleInput(inputValue + "\n");
-                                    input.value = "";
-                                }
-                            } }, "Send")),
-                    React.createElement("small", { className: "text-muted" }, "\uD83D\uDCA1 Press Enter to send input to the process"))))) : (React.createElement("div", { className: "p-3 text-center text-muted mt-5" },
-                React.createElement("i", null, "Live logs will appear here when a process is selected")))))));
+                                } }, "Send"))))))) : (React.createElement("div", { className: "text-center text-muted mt-5" },
+                React.createElement("i", null, "Terminal will appear here when a process is selected")))))));
 };

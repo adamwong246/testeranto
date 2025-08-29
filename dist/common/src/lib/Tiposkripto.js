@@ -77,6 +77,10 @@ class Tiposkripto {
         this.testSpecification = testSpecification;
         // Generate specs
         this.specs = testSpecification(this.Suites(), this.Given(), this.When(), this.Then());
+        // Calculate total number of tests (sum of all Givens across all Suites)
+        // Each suite should have a 'givens' property that's a record of test names to BaseGiven instances
+        this.totalTests = this.calculateTotalTests();
+        console.log(`Total tests calculated: ${this.totalTests}`);
         // Create test jobs
         this.testJobs = this.specs.map((suite) => {
             const suiteRunner = (suite) => async (puppetMaster, tLog) => {
@@ -111,6 +115,8 @@ class Tiposkripto {
                             fails,
                             artifacts: this.artifacts || [],
                             features: suiteDone.features(),
+                            tests: 0, // Keep existing field
+                            runTimeTests: this.totalTests, // Add the total number of tests
                         };
                     }
                     catch (e) {
@@ -120,6 +126,8 @@ class Tiposkripto {
                             fails: -1,
                             artifacts: this.artifacts || [],
                             features: [],
+                            tests: 0, // Keep existing field
+                            runTimeTests: -1, // Set to -1 on hard error
                         };
                     }
                 },
@@ -144,6 +152,22 @@ class Tiposkripto {
     // Add a method to access test jobs which can be used by receiveTestResourceConfig
     getTestJobs() {
         return this.testJobs;
+    }
+    calculateTotalTests() {
+        let total = 0;
+        for (const suite of this.specs) {
+            if (suite && typeof suite === 'object') {
+                // Access the givens property which should be a record of test names to BaseGiven instances
+                // The givens property is typically on the suite instance
+                if ('givens' in suite) {
+                    const givens = suite.givens;
+                    if (givens && typeof givens === 'object') {
+                        total += Object.keys(givens).length;
+                    }
+                }
+            }
+        }
+        return total;
     }
 }
 exports.default = Tiposkripto;

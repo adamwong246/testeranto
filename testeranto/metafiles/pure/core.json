@@ -19,6 +19,21 @@
     {
       "id": "",
       "location": {
+        "column": 24,
+        "file": "src/Pure.ts",
+        "length": 22,
+        "line": 14,
+        "lineText": "import Tiposkripto from \"./lib/Tiposkripto.js\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
         "column": 23,
         "file": "src/lib/BaseSuite.test/pure.test.ts",
         "length": 12,
@@ -75,6 +90,21 @@
       "notes": [],
       "pluginName": "console-detector",
       "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 65,
+        "file": "src/lib/BaseSuite.test/pure.test.ts",
+        "length": 8,
+        "line": 6,
+        "lineText": "import { I, implementation, O, specification, testAdapter } from \"./test\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
     },
     {
       "id": "",
@@ -200,7 +230,7 @@
   "metafile": {
     "inputs": {
       "src/lib/index.ts": {
-        "bytes": 3757,
+        "bytes": 3798,
         "imports": [
           {
             "path": "../CoreTypes",
@@ -356,7 +386,7 @@
         "format": "esm"
       },
       "src/lib/Tiposkripto.ts": {
-        "bytes": 8977,
+        "bytes": 10088,
         "imports": [
           {
             "path": "stream",
@@ -475,7 +505,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 2409,
+        "bytes": 2332,
         "imports": [
           {
             "path": "src/lib/BaseGiven.ts",
@@ -511,7 +541,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12087,
+        "bytes": 12027,
         "imports": [
           {
             "path": "..",
@@ -590,7 +620,7 @@
             "bytesInOutput": 2449
           },
           "src/lib/Tiposkripto.ts": {
-            "bytesInOutput": 5299
+            "bytesInOutput": 6063
           },
           "src/PM/index.ts": {
             "bytesInOutput": 20
@@ -602,16 +632,16 @@
             "bytesInOutput": 1068
           },
           "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 1480
+            "bytesInOutput": 1401
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 7643
+            "bytesInOutput": 7364
           },
           "src/lib/BaseSuite.test/pure.test.ts": {
             "bytesInOutput": 103
           }
         },
-        "bytes": 34250
+        "bytes": 34656
       }
     }
   }

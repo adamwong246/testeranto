@@ -1,5 +1,14 @@
 package golingvu
 
+type IFinalResults struct {
+	Failed       bool
+	Fails        int
+	Artifacts    []interface{}
+	Features     []string
+	Tests        int
+	RunTimeTests int
+}
+
 
 // Golingvu is the main test runner class (Go implementation of Tiposkripto)
 type Golingvu struct {
@@ -13,6 +22,7 @@ type Golingvu struct {
 	ThenOverrides           map[string]interface{}
 	PuppetMaster            interface{}
 	Specs                   interface{}
+	totalTests              int
 	assertThis              func(t interface{}) interface{}
 }
 
@@ -129,6 +139,12 @@ func NewGolingvu(
 		gv.When(),
 		gv.Then(),
 	)
+	
+	// Calculate total number of tests (sum of all Givens across all Suites)
+	// This needs to be implemented based on the actual structure
+	// For now, we'll set a placeholder
+	gv.totalTests = 0
+	// Implementation to count Givens would go here
 
 	// Create test jobs (simplified)
 	// Note: This part needs to be adapted from TypeScript more carefully
@@ -139,8 +155,28 @@ func NewGolingvu(
 
 // ReceiveTestResourceConfig receives test resource configuration
 func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string) (IFinalResults, error) {
-	// Implement this method based on the TypeScript version
-	return IFinalResults{}, nil
+	// Try to run the tests and handle errors
+	// If there's a hard error, set runTimeTests to -1
+	// Placeholder implementation - in a real implementation, this would run the actual tests
+	// For now, we'll always succeed
+	result := IFinalResults{
+		Failed:       false,
+		Fails:        0,
+		Artifacts:    []interface{}{},
+		Features:     []string{},
+		Tests:        0,
+		RunTimeTests: gv.totalTests,
+	}
+	
+	// If we encounter a hard error, we can set RunTimeTests to -1
+	// For example:
+	// if hardError {
+	//     result.RunTimeTests = -1
+	//     result.Failed = true
+	//     result.Fails = -1
+	// }
+	
+	return result, nil
 }
 
 // Suites returns the suites overrides

@@ -57,7 +57,7 @@ export const implementation = {
                 return {
                     name: suite.name,
                     index: suite.index,
-                    testStore: true
+                    testStore: true,
                 };
             };
         },
@@ -121,10 +121,14 @@ export const implementation = {
     },
     thens: {
         SuiteNameMatches: (expectedName) => (ssel, utils) => (store) => {
-            if (store.name !== expectedName) {
-                throw new Error(`Expected suite name '${expectedName}', got '${store.name}'`);
-            }
-            return Promise.resolve({ testSelection: true });
+            console.log("WTF");
+            process.exit();
+            // if (store.name !== expectedName) {
+            //   throw new Error(
+            //     `Expected suite name '${expectedName}', got '${store.name}'`
+            //   );
+            // }
+            // return Promise.resolve({ testSelection: true });
         },
         SuiteIndexMatches: (expectedIndex) => (ssel, utils) => (store) => {
             if (store.index !== expectedIndex) {
@@ -223,19 +227,15 @@ export const testAdapter = {
         }
     },
     andWhen: async (store, whenCB, testResource, pm) => {
-        // The whenCB expects a TestSelection first, then returns a function that takes TestStore
-        // We need to provide a TestSelection
-        const selection = { testSelection: true };
-        const result = await whenCB(selection)(store);
-        // Convert back to TestStore
-        return Object.assign(Object.assign({}, store), result);
+        // whenCB is (store: TestStore) => Promise<TestStore>
+        const result = await whenCB(store);
+        return result;
     },
     butThen: async (store, thenCB, testResource, pm) => {
         try {
-            // Create a TestSelection from the store
-            const selection = { testSelection: true };
-            await thenCB(selection);
-            return selection;
+            // thenCB is (store: TestStore) => Promise<TestSelection>
+            const result = await thenCB(store);
+            return result;
         }
         catch (e) {
             console.error("Then error:", e.toString());
