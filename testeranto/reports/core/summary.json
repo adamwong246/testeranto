@@ -6,15 +6,24 @@
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/node.test.ts": {
-    "runTimeErrors": "?",
+    "typeErrors": 31,
+    "staticErrors": 2,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/BaseSuite.test/node.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/pure.test.ts": {
-    "runTimeErrors": "?",
+    "typeErrors": 31,
+    "staticErrors": 1,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/lib/BaseSuite.test/pure.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/web.test.ts": {
-    "runTimeErrors": "?",
+    "typeErrors": 31,
+    "staticErrors": 1,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/BaseSuite.test/web.test/prompt.txt",
     "failingFeatures": {}
   }
 }

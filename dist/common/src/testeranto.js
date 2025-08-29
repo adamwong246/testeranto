@@ -185,11 +185,15 @@ Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) 
     const hasPitonoTests = pitonoTests.length > 0;
     if (hasPitonoTests) {
         // Import and use the pitono metafile utilities
-        const { generatePitonoMetafile, writePitonoMetafile } = await Promise.resolve().then(() => __importStar(require('./utils/pitonoMetafile')));
+        const { generatePitonoMetafile } = await Promise.resolve().then(() => __importStar(require('./utils/pitonoMetafile')));
         // Get the entry points (first element of each test tuple)
         const pitonoEntryPoints = pitonoTests.map(test => test[0]);
         const metafile = await generatePitonoMetafile(testName, pitonoEntryPoints);
-        writePitonoMetafile(testName, metafile);
+        // Ensure the directory exists
+        const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
+        await fs_1.default.promises.mkdir(pitonoMetafilePath, { recursive: true });
+        // Write the metafile to the specified path
+        fs_1.default.writeFileSync(`${pitonoMetafilePath}/core.json`, JSON.stringify(metafile, null, 2));
         // Mark pitono as done after writing the metafile
         onPitonoDone();
     }

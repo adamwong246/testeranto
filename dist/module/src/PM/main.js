@@ -48,6 +48,13 @@ function runtimeLogs(runtime, reportDest) {
                 exit: fs.createWriteStream(`${safeDest}/exit.log`),
             };
         }
+        else if (runtime === "pitono") {
+            return {
+                stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
+                stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
+                exit: fs.createWriteStream(`${safeDest}/exit.log`),
+            };
+        }
         else {
             throw `unknown runtime: ${runtime}`;
         }
@@ -780,6 +787,32 @@ export class PM_Main extends PM_WithEslintAndTsc {
             //   }
             // }
         };
+        this.launchPitono = async (src, dest) => {
+            console.log(ansiC.green(ansiC.inverse(`pitono < ${src}`)));
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src
+                .split(".")
+                .slice(0, -1)
+                .join(".")}/pitono`;
+            if (!fs.existsSync(reportDest)) {
+                fs.mkdirSync(reportDest, { recursive: true });
+            }
+            const logs = createLogStreams(reportDest, "node"); // Use node-style logs for pitono
+            try {
+                // Execute the Python test using the pitono runner
+                const { PitonoRunner } = await import('./pitonoRunner');
+                const runner = new PitonoRunner(this.configs, this.name);
+                await runner.run();
+                this.bddTestIsNowDone(src, 0);
+                statusMessagePretty(0, src, "pitono");
+            }
+            catch (error) {
+                logs.writeExitCode(-1, error);
+                console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${error}. Check logs for more info`)));
+                this.bddTestIsNowDone(src, -1);
+                statusMessagePretty(-1, src, "pitono");
+            }
+        };
         this.launchWeb = async (src, dest) => {
             console.log(ansiC.green(ansiC.inverse(`web < ${src}`)));
             this.bddTestIsRunning(src);
@@ -1352,7 +1385,7 @@ import('${d}').then(async (x) => {
             console.error(e);
             console.error("could not start chrome via puppeter. Check this path: ", executablePath);
         }
-        const { nodeEntryPoints, webEntryPoints, pureEntryPoints } = this.getRunnables(this.configs.tests, this.name);
+        const { nodeEntryPoints, webEntryPoints, pureEntryPoints, pitonoEntryPoints } = this.getRunnables(this.configs.tests, this.name);
         [
             [
                 nodeEntryPoints,
@@ -1378,9 +1411,31 @@ import('${d}').then(async (x) => {
                     this.importMetafileWatcher = w;
                 },
             ],
+            [
+                pitonoEntryPoints,
+                this.launchPitono,
+                "pitono",
+                (w) => {
+                    this.pitonoMetafileWatcher = w;
+                },
+            ],
         ].forEach(async ([eps, launcher, runtime, watcher]) => {
-            const metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-            await pollForFile(metafile);
+            let metafile;
+            if (runtime === "pitono") {
+                metafile = `./testeranto/metafiles/python/core.json`;
+                // Ensure the directory exists before trying to watch
+                const metafileDir = path.dirname(metafile);
+                if (!fs.existsSync(metafileDir)) {
+                    fs.mkdirSync(metafileDir, { recursive: true });
+                }
+            }
+            else {
+                metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
+            }
+            // Only poll for file if it's not a pitono runtime
+            if (runtime !== "pitono") {
+                await pollForFile(metafile);
+            }
             Object.entries(eps).forEach(async ([inputFile, outputFile]) => {
                 // await pollForFile(outputFile);\
                 this.launchers[inputFile] = () => launcher(inputFile, outputFile);
@@ -1401,10 +1456,37 @@ import('${d}').then(async (x) => {
                 }
             });
             this.metafileOutputs(runtime);
-            watcher(watch(metafile, async (e, filename) => {
-                console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`)));
-                this.metafileOutputs(runtime);
-            }));
+            // For pitono, we need to wait for the file to be created
+            if (runtime === "pitono") {
+                // Use polling to wait for the file to exist
+                const checkFileExists = () => {
+                    if (fs.existsSync(metafile)) {
+                        console.log(ansiC.green(ansiC.inverse(`Pitono metafile found: ${metafile}`)));
+                        // Set up the watcher once the file exists
+                        watcher(watch(metafile, async (e, filename) => {
+                            console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`)));
+                            this.metafileOutputs(runtime);
+                        }));
+                        // Read the metafile immediately
+                        this.metafileOutputs(runtime);
+                    }
+                    else {
+                        // Check again after a delay
+                        setTimeout(checkFileExists, 1000);
+                    }
+                };
+                // Start checking for the file
+                checkFileExists();
+            }
+            else {
+                // For other runtimes, only set up watcher if the file exists
+                if (fs.existsSync(metafile)) {
+                    watcher(watch(metafile, async (e, filename) => {
+                        console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`)));
+                        this.metafileOutputs(runtime);
+                    }));
+                }
+            }
         });
         // Object.keys(this.configs.externalTests).forEach((et) => {
         //   this.launchExternalTest(et, this.configs.externalTests[et]);
@@ -1446,6 +1528,9 @@ import('${d}').then(async (x) => {
         this.nodeMetafileWatcher.close();
         this.webMetafileWatcher.close();
         this.importMetafileWatcher.close();
+        if (this.pitonoMetafileWatcher) {
+            this.pitonoMetafileWatcher.close();
+        }
         // Close any remaining log streams
         Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
         // Close WebSocket server
@@ -1464,11 +1549,41 @@ import('${d}').then(async (x) => {
         this.checkForShutdown();
     }
     async metafileOutputs(platform) {
-        const metafile = JSON.parse(fs
-            .readFileSync(`./testeranto/metafiles/${platform}/${this.name}.json`)
-            .toString()).metafile;
-        if (!metafile)
+        let metafilePath;
+        if (platform === "pitono") {
+            metafilePath = `./testeranto/metafiles/python/core.json`;
+        }
+        else {
+            metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
+        }
+        // Check if the file exists
+        if (!fs.existsSync(metafilePath)) {
+            if (platform === "pitono") {
+                console.log(ansiC.yellow(ansiC.inverse(`Pitono metafile not found yet: ${metafilePath}`)));
+            }
             return;
+        }
+        let metafile;
+        try {
+            const fileContent = fs.readFileSync(metafilePath).toString();
+            const parsedData = JSON.parse(fileContent);
+            // Handle different metafile structures
+            if (platform === "pitono") {
+                // Pitono metafile might be the entire content or have a different structure
+                metafile = parsedData.metafile || parsedData;
+            }
+            else {
+                metafile = parsedData.metafile;
+            }
+            if (!metafile) {
+                console.log(ansiC.yellow(ansiC.inverse(`No metafile found in ${metafilePath}`)));
+                return;
+            }
+        }
+        catch (error) {
+            console.error(`Error reading metafile at ${metafilePath}:`, error);
+            return;
+        }
         const outputs = metafile.outputs;
         Object.keys(outputs).forEach(async (k) => {
             const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;

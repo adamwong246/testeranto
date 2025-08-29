@@ -26,6 +26,7 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     webMetafileWatcher: fs.FSWatcher;
     nodeMetafileWatcher: fs.FSWatcher;
     importMetafileWatcher: fs.FSWatcher;
+    pitonoMetafileWatcher: fs.FSWatcher;
     pureSidecars: Record<number, Sidecar>;
     nodeSidecars: Record<number, ChildProcess>;
     webSidecars: Record<number, Page>;
@@ -66,6 +67,7 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     launchNodeSideCar: (sidecar: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
     stopPureSideCar: (uid: number) => Promise<void>;
     launchPureSideCar: (sidecar: ITestTypes) => Promise<[number, ITTestResourceConfiguration]>;
+    launchPitono: (src: string, dest: string) => Promise<void>;
     launchWeb: (src: string, dest: string) => Promise<void>;
     receiveFeaturesV2: (reportDest: string, srcTest: string, platform: IRunTime) => void;
     requestHandler(req: http.IncomingMessage, res: http.ServerResponse): void;

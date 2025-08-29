@@ -15,4 +15,6 @@ export declare const getRunnables: (tests: ITestTypes[], projectName: string, pa
     pureEntryPointSidecars: {};
     golangEntryPoints: {};
     golangEntryPointSidecars: {};
+    pitonoEntryPoints: {};
+    pitonoEntryPointSidecars: {};
 }) => IRunnables;
