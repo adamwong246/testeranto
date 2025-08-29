@@ -18,9 +18,6 @@ export class PM_Pure extends PM {
     throw new Error("pure.ts getInnerHtml not implemented");
   }
 
-  stopSideCar(uid: number): Promise<any> {
-    throw new Error("pure.ts stopSideCar not implemented");
-  }
   server: PuppetMasterServer;
   testResourceConfiguration: ITTestResourceConfiguration;
 
@@ -44,11 +41,6 @@ export class PM_Pure extends PM {
 
   async createWriteStream(filepath: string, testName: string): Promise<string> {
     throw new Error("pure.ts createWriteStream not implemented");
-    return "";
-  }
-
-  launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]> {
-    return globalThis["launchSideCar"](n, this.testResourceConfiguration.name);
   }
 
   pages() {
@@ -145,7 +137,6 @@ export class PM_Pure extends PM {
   writeFileSync() {
     return Promise.resolve(true);
   }
-  /////////////////////////////////////////////////////
 
   end(uid: number) {
     return globalThis["end"](uid);
@@ -168,9 +159,10 @@ export class PM_Pure extends PM {
     };
   }
 
-  // startPuppeteer(options?: any): any {
-  //   // return puppeteer.connect(options).then((b) => {
-  //   //   this.browser = b;
-  //   // });
+  // launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]> {
+  //   return globalThis["launchSideCar"](n, this.testResourceConfiguration.name);
+  // }
+  // stopSideCar(uid: number): Promise<any> {
+  //   throw new Error("pure.ts stopSideCar not implemented");
   // }
 }

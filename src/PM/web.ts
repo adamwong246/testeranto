@@ -38,14 +38,6 @@ export class PM_Web extends PM {
     throw new Error("Method not implemented.");
   }
 
-  stopSideCar(n: number): Promise<any> {
-    return window["stopSideCar"](n, this.testResourceConfiguration.name);
-  }
-
-  launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]> {
-    return window["launchSideCar"](n, this.testResourceConfiguration.name);
-  }
-
   waitForSelector(p: string, s: string): any {
     return window["waitForSelector"](p, s);
   }
@@ -179,4 +171,12 @@ export class PM_Web extends PM {
       );
     };
   }
+
+  // stopSideCar(n: number): Promise<any> {
+  //   return window["stopSideCar"](n, this.testResourceConfiguration.name);
+  // }
+
+  // launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]> {
+  //   return window["launchSideCar"](n, this.testResourceConfiguration.name);
+  // }
 }

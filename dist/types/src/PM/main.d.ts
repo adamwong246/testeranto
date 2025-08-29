@@ -3,8 +3,7 @@ import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
 import { WebSocketServer } from "ws";
 import http from "http";
-import { IRunnables } from "../lib/index.js";
-import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
+import { IBuiltConfig, IRunTime } from "../Types.js";
 import { Sidecar } from "../lib/Sidecar.js";
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 import { createLogStreams } from "./utils.js";
@@ -39,14 +38,6 @@ export declare class PM_Main extends PM_WithWebSocket {
     mapping(): [string, (...a: any[]) => any][];
     start(): Promise<void>;
     stop(): Promise<void>;
-    getRunnables: (tests: ITestTypes[], testName: string, payload?: {
-        nodeEntryPoints: {};
-        nodeEntryPointSidecars: {};
-        webEntryPoints: {};
-        webEntryPointSidecars: {};
-        pureEntryPoints: {};
-        pureEntryPointSidecars: {};
-    }) => IRunnables;
     metafileOutputs(platform: IRunTime): Promise<void>;
     launchPure: (src: string, dest: string) => Promise<(string | number)[] | undefined>;
     launchNode: (src: string, dest: string) => Promise<any[] | undefined>;

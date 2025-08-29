@@ -610,7 +610,7 @@
         "format": "esm"
       },
       "src/PM/index.ts": {
-        "bytes": 1856,
+        "bytes": 1880,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -646,7 +646,7 @@
         "format": "esm"
       },
       "src/PM/web.ts": {
-        "bytes": 4364,
+        "bytes": 4382,
         "imports": [
           {
             "path": "stream",
@@ -15808,7 +15808,7 @@
       "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-W34Z7JZ2.mjs",
+            "path": "testeranto/bundles/web/core/chunk-UORC6JOU.mjs",
             "kind": "import-statement"
           }
         ],
@@ -15832,7 +15832,7 @@
       "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-W34Z7JZ2.mjs",
+            "path": "testeranto/bundles/web/core/chunk-UORC6JOU.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16364,7 +16364,7 @@
         },
         "bytes": 1500383
       },
-      "testeranto/bundles/web/core/chunk-W34Z7JZ2.mjs": {
+      "testeranto/bundles/web/core/chunk-UORC6JOU.mjs": {
         "imports": [],
         "exports": [
           "BaseGiven",
@@ -16409,10 +16409,10 @@
             "bytesInOutput": 837
           },
           "src/PM/web.ts": {
-            "bytesInOutput": 3059
+            "bytesInOutput": 3155
           },
           "src/PM/index.ts": {
-            "bytesInOutput": 69
+            "bytesInOutput": 223
           },
           "src/lib/Tiposkripto.ts": {
             "bytesInOutput": 6112
@@ -16430,7 +16430,7 @@
             "bytesInOutput": 1628
           }
         },
-        "bytes": 98815
+        "bytes": 99065
       },
       "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf": {
         "imports": [],

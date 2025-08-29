@@ -10,7 +10,10 @@ export abstract class PM {
 
   abstract start(): Promise<void>;
   abstract stop(): Promise<void>;
-  abstract testArtiFactoryfileWriter(tLog: ITLog, callback: (promise: Promise<any>) => void): any;
+  abstract testArtiFactoryfileWriter(
+    tLog: ITLog,
+    callback: (promise: Promise<any>) => void
+  ): any;
 
   abstract $(selector: string, page: string): any;
   abstract click(selector: string): any;
@@ -39,8 +42,8 @@ export abstract class PM {
   abstract write(uid: number, contents: string): Promise<boolean>;
   abstract writeFileSync(f: string, c: string): Promise<boolean>;
 
-  abstract launchSideCar(
-    n: number
-  ): Promise<[number, ITTestResourceConfiguration]>;
-  abstract stopSideCar(n: number): Promise<any>;
+  // abstract launchSideCar(
+  //   n: number
+  // ): Promise<[number, ITTestResourceConfiguration]>;
+  // abstract stopSideCar(n: number): Promise<any>;
 }

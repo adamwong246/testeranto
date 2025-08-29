@@ -28,9 +28,7 @@ export abstract class PM_Base {
   constructor(configs: IBuiltConfig) {
     this.configs = configs;
   }
-
-  abstract launchSideCar(n: number, testName: string, projectName: string);
-
+  // abstract launchSideCar(n: number, testName: string, projectName: string);
   customclose() {
     throw new Error("customclose not implemented.");
   }

@@ -15,8 +15,6 @@ export declare class PM_Web extends PM {
     stop(): Promise<void>;
     getInnerHtml(selector: string, page: string): void;
     pages(): Promise<string[]>;
-    stopSideCar(n: number): Promise<any>;
-    launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]>;
     waitForSelector(p: string, s: string): any;
     screencast(opts: ScreencastOptions, page: string | Page): Promise<string>;
     screencastStop(recorder: string): any;

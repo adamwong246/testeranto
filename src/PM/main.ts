@@ -11,19 +11,14 @@ import fs, { watch } from "fs";
 import path from "path";
 import puppeteer, { ConsoleMessage } from "puppeteer-core";
 import ansiC from "ansi-colors";
-
 import { WebSocketServer } from "ws";
 import http from "http";
 import url from "url";
 import mime from "mime-types";
 
-import {
-  IFinalResults,
-  IRunnables,
-  ITTestResourceConfiguration,
-} from "../lib/index.js";
+import { IFinalResults, ITTestResourceConfiguration } from "../lib/index.js";
 import { getRunnables } from "../utils";
-import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
+import { IBuiltConfig, IRunTime } from "../Types.js";
 import { Sidecar } from "../lib/Sidecar.js";
 import { Queue } from "../utils/queue.js";
 
@@ -92,6 +87,7 @@ export class PM_Main extends PM_WithWebSocket {
       this.ports[element] = ""; // set ports as open
     });
   }
+
   mapping(): [string, (...a) => any][] {
     return [
       ["$", this.$],
@@ -190,7 +186,7 @@ export class PM_Main extends PM_WithWebSocket {
       webEntryPoints,
       pureEntryPoints,
       pitonoEntryPoints,
-    } = this.getRunnables(this.configs.tests, this.name);
+    } = getRunnables(this.configs.tests, this.name);
 
     [
       [
@@ -356,21 +352,6 @@ export class PM_Main extends PM_WithWebSocket {
 
     this.checkForShutdown();
   }
-
-  getRunnables = (
-    tests: ITestTypes[],
-    testName: string,
-    payload = {
-      nodeEntryPoints: {},
-      nodeEntryPointSidecars: {},
-      webEntryPoints: {},
-      webEntryPointSidecars: {},
-      pureEntryPoints: {},
-      pureEntryPointSidecars: {},
-    }
-  ): IRunnables => {
-    return getRunnables(tests, testName, payload);
-  };
 
   async metafileOutputs(platform: IRunTime) {
     let metafilePath: string;

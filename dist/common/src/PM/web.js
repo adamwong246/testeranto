@@ -19,12 +19,6 @@ class PM_Web extends _1.PM {
     pages() {
         throw new Error("Method not implemented.");
     }
-    stopSideCar(n) {
-        return window["stopSideCar"](n, this.testResourceConfiguration.name);
-    }
-    launchSideCar(n) {
-        return window["launchSideCar"](n, this.testResourceConfiguration.name);
-    }
     waitForSelector(p, s) {
         return window["waitForSelector"](p, s);
     }

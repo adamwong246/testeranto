@@ -10,8 +10,6 @@ export declare class PM_Node extends PM {
     start(): Promise<void>;
     stop(): Promise<void>;
     send<I>(command: string, ...argz: any[]): Promise<I>;
-    launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]>;
-    stopSideCar(n: number): Promise<any>;
     pages(): Promise<string[]>;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): Promise<unknown>;

@@ -61,7 +61,7 @@
   Type 'unknown' has no call signatures.
 /Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (206,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
 /Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (269,15): Expected 1 arguments, but got 3.
-/Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
+/Users/adam/Code/testeranto/src/PM/web.ts (51,12): Property 'mainFrame' does not exist on type 'string | Page'.
   Property 'mainFrame' does not exist on type 'string'.
 /Users/adam/Code/testeranto/src/Web.ts (43,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens

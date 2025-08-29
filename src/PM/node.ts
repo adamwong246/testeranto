@@ -59,24 +59,6 @@ export class PM_Node extends PM {
     });
   }
 
-  async launchSideCar(
-    n: number
-  ): Promise<[number, ITTestResourceConfiguration]> {
-    return this.send<[number, ITTestResourceConfiguration]>(
-      "launchSideCar",
-      n,
-      this.testResourceConfiguration.name
-    );
-  }
-
-  stopSideCar(n: number): Promise<any> {
-    return this.send<ITTestResourceConfiguration>(
-      "stopSideCar",
-      n,
-      this.testResourceConfiguration.name
-    );
-  }
-
   async pages() {
     return this.send<string[]>("pages", ...arguments);
   }
@@ -275,4 +257,22 @@ export class PM_Node extends PM {
     //   this.browser = b;
     // });
   }
+
+  // async launchSideCar(
+  //   n: number
+  // ): Promise<[number, ITTestResourceConfiguration]> {
+  //   return this.send<[number, ITTestResourceConfiguration]>(
+  //     "launchSideCar",
+  //     n,
+  //     this.testResourceConfiguration.name
+  //   );
+  // }
+
+  // stopSideCar(n: number): Promise<any> {
+  //   return this.send<ITTestResourceConfiguration>(
+  //     "stopSideCar",
+  //     n,
+  //     this.testResourceConfiguration.name
+  //   );
+  // }
 }

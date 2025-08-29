@@ -5,7 +5,6 @@ import { PM } from ".";
 type PuppetMasterServer = Record<string, Promise<any>>;
 export declare class PM_Pure extends PM {
     getInnerHtml(selector: string, page: string): Promise<string>;
-    stopSideCar(uid: number): Promise<any>;
     server: PuppetMasterServer;
     testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t: ITTestResourceConfiguration);
@@ -13,7 +12,6 @@ export declare class PM_Pure extends PM {
     start(): Promise<void>;
     stop(): Promise<void>;
     createWriteStream(filepath: string, testName: string): Promise<string>;
-    launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]>;
     pages(): any;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): string;

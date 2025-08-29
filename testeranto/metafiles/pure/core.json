@@ -432,7 +432,7 @@
         "format": "esm"
       },
       "src/PM/index.ts": {
-        "bytes": 1856,
+        "bytes": 1880,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -453,7 +453,7 @@
         "format": "esm"
       },
       "src/PM/pure.ts": {
-        "bytes": 4140,
+        "bytes": 3935,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -623,10 +623,10 @@
             "bytesInOutput": 6063
           },
           "src/PM/index.ts": {
-            "bytesInOutput": 20
+            "bytesInOutput": 174
           },
           "src/PM/pure.ts": {
-            "bytesInOutput": 2976
+            "bytesInOutput": 2850
           },
           "src/Pure.ts": {
             "bytesInOutput": 1068
@@ -641,7 +641,7 @@
             "bytesInOutput": 103
           }
         },
-        "bytes": 34656
+        "bytes": 34684
       }
     }
   }

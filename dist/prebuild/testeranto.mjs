@@ -1339,16 +1339,6 @@ var init_main = __esm({
         this.runningProcesses = /* @__PURE__ */ new Map();
         this.allProcesses = /* @__PURE__ */ new Map();
         this.processLogs = /* @__PURE__ */ new Map();
-        this.getRunnables = (tests, testName2, payload = {
-          nodeEntryPoints: {},
-          nodeEntryPointSidecars: {},
-          webEntryPoints: {},
-          webEntryPointSidecars: {},
-          pureEntryPoints: {},
-          pureEntryPointSidecars: {}
-        }) => {
-          return getRunnables(tests, testName2, payload);
-        };
         this.launchPure = async (src, dest) => {
           console.log(ansiC3.green(ansiC3.inverse(`pure < ${src}`)));
           this.bddTestIsRunning(src);
@@ -1978,7 +1968,7 @@ import('${d}').then(async (x) => {
           webEntryPoints,
           pureEntryPoints,
           pitonoEntryPoints
-        } = this.getRunnables(this.configs.tests, this.name);
+        } = getRunnables(this.configs.tests, this.name);
         [
           [
             nodeEntryPoints,

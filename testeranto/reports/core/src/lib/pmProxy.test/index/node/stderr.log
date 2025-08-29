@@ -1,66 +1,66 @@
 TypeError: addArtifact is not a function
-    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:71:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:18:34)
+    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:18:34)
     at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:174:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:824:39
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:830:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4514:12)
-    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:916:40)
-    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:805:17)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:694:24)
-    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:922:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:811:17)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:700:24)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
 TypeError: addArtifact is not a function
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:49:9
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:18:34)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:49:9
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:18:34)
     at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:181:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:824:39
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:830:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4514:12)
-    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:916:40)
-    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:805:17)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:694:24)
-    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:922:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:811:17)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:700:24)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
 TypeError: addArtifact is not a function
-    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:35:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:18:34)
+    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:35:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:18:34)
     at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:187:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:824:39
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:830:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4514:12)
-    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:916:40)
-    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:805:17)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:694:24)
-    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:922:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:811:17)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:700:24)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
 TypeError: addArtifact is not a function
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:79:9
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:18:34)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:79:9
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:18:34)
     at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:193:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:824:39
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:830:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4514:12)
-    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:916:40)
-    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:805:17)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:694:24)
-    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:922:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:811:17)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:700:24)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
 TypeError: addArtifact is not a function
-    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:71:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:18:34)
+    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:18:34)
     at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:174:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:824:39
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:830:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4514:12)
-    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:916:40)
-    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:805:17)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:694:24)
-    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:922:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:811:17)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:700:24)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
 TypeError: addArtifact is not a function
-    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:71:9)
-    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:18:34)
+    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:18:34)
     at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:174:54)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:824:39
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:830:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4514:12)
-    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:916:40)
-    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:805:17)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:694:24)
-    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:20)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:922:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:811:17)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:700:24)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21

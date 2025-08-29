@@ -38,12 +38,6 @@ export class PM_Node extends PM {
             this.client.write(JSON.stringify([command, ...argz, key]));
         });
     }
-    async launchSideCar(n) {
-        return this.send("launchSideCar", n, this.testResourceConfiguration.name);
-    }
-    stopSideCar(n) {
-        return this.send("stopSideCar", n, this.testResourceConfiguration.name);
-    }
     async pages() {
         return this.send("pages", ...arguments);
     }

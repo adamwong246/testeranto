@@ -84,7 +84,7 @@
         "format": "esm"
       },
       "src/PM/index.ts": {
-        "bytes": 1856,
+        "bytes": 1880,
         "imports": [
           {
             "path": "puppeteer-core",
@@ -110,7 +110,7 @@
         "format": "esm"
       },
       "src/PM/node.ts": {
-        "bytes": 7085,
+        "bytes": 7133,
         "imports": [
           {
             "path": "net",
@@ -831,7 +831,7 @@
       "testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-A4PONJKR.mjs",
+            "path": "testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -861,7 +861,7 @@
       "testeranto/bundles/node/core/src/lib/BaseSuite.test/node.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-A4PONJKR.mjs",
+            "path": "testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -885,7 +885,7 @@
       "testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-A4PONJKR.mjs",
+            "path": "testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -915,7 +915,7 @@
         },
         "bytes": 154723
       },
-      "testeranto/bundles/node/core/chunk-A4PONJKR.mjs": {
+      "testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs": {
         "imports": [
           {
             "path": "node:path",
@@ -967,10 +967,10 @@
             "bytesInOutput": 672
           },
           "src/PM/node.ts": {
-            "bytesInOutput": 5315
+            "bytesInOutput": 5517
           },
           "src/PM/index.ts": {
-            "bytesInOutput": 20
+            "bytesInOutput": 174
           },
           "src/lib/BaseGiven.ts": {
             "bytesInOutput": 2911
@@ -988,7 +988,7 @@
             "bytesInOutput": 1199
           }
         },
-        "bytes": 28570
+        "bytes": 28926
       }
     }
   }

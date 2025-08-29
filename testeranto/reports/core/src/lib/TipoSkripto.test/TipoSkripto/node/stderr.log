@@ -4,52 +4,52 @@ Error extracting features from specification: TypeError: Given.Default is not a 
     at new MockTiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:43:28)
     at Default (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:194:23)
     at Object.beforeEach (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:162:26)
-    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:874:34)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:680:31)
-    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:32)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:973:31)
+    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:880:34)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:686:31)
+    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:32)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:979:31)
 Error extracting features from specification: TypeError: Given.Default is not a function
     at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:433:29)
     at MockTiposkripto.extractFeaturesFromSpecification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:94:22)
     at new MockTiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:43:28)
     at WithCustomInput (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:215:14)
     at Object.beforeEach (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:162:26)
-    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:874:34)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:680:31)
-    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:32)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:973:31)
+    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:880:34)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:686:31)
+    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:32)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:979:31)
 Error extracting features from specification: TypeError: Given.Default is not a function
     at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:433:29)
     at MockTiposkripto.extractFeaturesFromSpecification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:94:22)
     at new MockTiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:43:28)
     at WithResourceRequirements (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:225:14)
     at Object.beforeEach (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:162:26)
-    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:874:34)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:680:31)
-    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:32)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:973:31)
+    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:880:34)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:686:31)
+    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:32)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:979:31)
 Error extracting features from specification: TypeError: Given.Default is not a function
     at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:433:29)
     at MockTiposkripto.extractFeaturesFromSpecification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:94:22)
     at new MockTiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:43:28)
     at Default (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:194:23)
     at Object.beforeEach (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:162:26)
-    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:874:34)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:680:31)
-    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:32)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:973:31)
+    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:880:34)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:686:31)
+    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:32)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:979:31)
 Error extracting features from specification: TypeError: Given.Default is not a function
     at specification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:433:29)
     at MockTiposkripto.extractFeaturesFromSpecification (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:94:22)
     at new MockTiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:43:28)
     at Default (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:194:23)
     at Object.beforeEach (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs:162:26)
-    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:874:34)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:680:31)
-    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:365:32)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:941:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-A4PONJKR.mjs:973:31)
+    at BaseGiven.givenThat (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:880:34)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:686:31)
+    at BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:32)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:979:31)

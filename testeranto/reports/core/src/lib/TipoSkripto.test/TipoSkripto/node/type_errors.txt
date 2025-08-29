@@ -67,5 +67,5 @@
 /Users/adam/Code/testeranto/src/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 /Users/adam/Code/testeranto/src/Node.ts (56,12): Cannot find name 'Testeranto'.
-/Users/adam/Code/testeranto/src/PM/web.ts (59,12): Property 'mainFrame' does not exist on type 'string | Page'.
+/Users/adam/Code/testeranto/src/PM/web.ts (51,12): Property 'mainFrame' does not exist on type 'string | Page'.
   Property 'mainFrame' does not exist on type 'string'.

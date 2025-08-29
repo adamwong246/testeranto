@@ -32,6 +32,4 @@ export declare abstract class PM {
     abstract waitForSelector(p: any, sel: string): any;
     abstract write(uid: number, contents: string): Promise<boolean>;
     abstract writeFileSync(f: string, c: string): Promise<boolean>;
-    abstract launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]>;
-    abstract stopSideCar(n: number): Promise<any>;
 }

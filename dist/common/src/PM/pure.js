@@ -9,9 +9,6 @@ class PM_Pure extends _1.PM {
     getInnerHtml(selector, page) {
         throw new Error("pure.ts getInnerHtml not implemented");
     }
-    stopSideCar(uid) {
-        throw new Error("pure.ts stopSideCar not implemented");
-    }
     constructor(t) {
         super();
         this.server = {};
@@ -28,10 +25,6 @@ class PM_Pure extends _1.PM {
     }
     async createWriteStream(filepath, testName) {
         throw new Error("pure.ts createWriteStream not implemented");
-        return "";
-    }
-    launchSideCar(n) {
-        return globalThis["launchSideCar"](n, this.testResourceConfiguration.name);
     }
     pages() {
         return globalThis["pages"]();
@@ -94,7 +87,6 @@ class PM_Pure extends _1.PM {
     writeFileSync() {
         return Promise.resolve(true);
     }
-    /////////////////////////////////////////////////////
     end(uid) {
         return globalThis["end"](uid);
     }

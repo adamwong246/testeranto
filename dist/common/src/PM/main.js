@@ -67,16 +67,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
         this.runningProcesses = new Map();
         this.allProcesses = new Map();
         this.processLogs = new Map();
-        this.getRunnables = (tests, testName, payload = {
-            nodeEntryPoints: {},
-            nodeEntryPointSidecars: {},
-            webEntryPoints: {},
-            webEntryPointSidecars: {},
-            pureEntryPoints: {},
-            pureEntryPointSidecars: {},
-        }) => {
-            return (0, utils_1.getRunnables)(tests, testName, payload);
-        };
         this.launchPure = async (src, dest) => {
             console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`pure < ${src}`)));
             this.bddTestIsRunning(src);
@@ -753,7 +743,7 @@ import('${d}').then(async (x) => {
             console.error(e);
             console.error("could not start chrome via puppeter. Check this path: ", executablePath);
         }
-        const { nodeEntryPoints, webEntryPoints, pureEntryPoints, pitonoEntryPoints, } = this.getRunnables(this.configs.tests, this.name);
+        const { nodeEntryPoints, webEntryPoints, pureEntryPoints, pitonoEntryPoints, } = (0, utils_1.getRunnables)(this.configs.tests, this.name);
         [
             [
                 nodeEntryPoints,
