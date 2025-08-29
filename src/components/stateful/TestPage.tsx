@@ -53,31 +53,31 @@ export const TestPage = () => {
           fetchTestData(projectName, testPath, runtime),
           fetch(`/metafiles/${runtime}/${projectName}.json`)
         ]);
-        
+
         console.log('Fetching test data for:', { projectName, testPath, runtime });
         const receivedLogs = await testResponse.logs;
         console.log('Received logs:', Object.keys(receivedLogs));
         let sourceFiles = {};
         let buildLogs = {};
-        
+
         if (metafileRes.ok) {
           const metafile = await metafileRes.json();
           if (metafile?.metafile?.outputs) {
             // Find input files only for this test's entry point
             const tsSources = new Set<string>();
             const testEntryPoint = `src/${testPath}`;
-              
+
             // First find all outputs that match this test
             const matchingOutputs = Object.entries(metafile.metafile.outputs)
               .filter(([outputPath, output]) => {
                 const normalizedTestPath = testPath.replace(/\./g, '_');
                 const testFileName = testPath.split('/').pop();
                 const testBaseName = testFileName?.split('.').slice(0, -1).join('.');
-                  
+
                 // Also check outputPath normalized for slashes replaced by underscores
                 const normalizedOutputPath = outputPath.replace(/\//g, '_');
-                  
-                return output.entryPoint === testEntryPoint || 
+
+                return output.entryPoint === testEntryPoint ||
                   outputPath.includes(normalizedTestPath) ||
                   normalizedOutputPath.includes(normalizedTestPath) ||
                   (testBaseName && outputPath.includes(testBaseName));
@@ -88,7 +88,7 @@ export const TestPage = () => {
               Object.keys(output.inputs).forEach(inputPath => {
                 // Check if this input is a source file (TypeScript or Go) and not in node_modules
                 if ((inputPath.endsWith('.ts') || inputPath.endsWith('.tsx') || inputPath.endsWith('.go')) &&
-                    !inputPath.includes('node_modules')) {
+                  !inputPath.includes('node_modules')) {
                   // Get the full input details from metafile.inputs
                   const inputDetails = metafile.metafile.inputs[inputPath];
                   if (inputDetails) {
@@ -98,8 +98,8 @@ export const TestPage = () => {
                     if (inputPath.endsWith('.ts') || inputPath.endsWith('.tsx')) {
                       inputDetails.imports.forEach(imp => {
                         if ((imp.path.endsWith('.ts') || imp.path.endsWith('.tsx')) &&
-                            !imp.path.includes('node_modules') &&
-                            !imp.external) {
+                          !imp.path.includes('node_modules') &&
+                          !imp.external) {
                           tsSources.add(imp.path);
                         }
                       });
@@ -108,14 +108,14 @@ export const TestPage = () => {
                 }
               });
             });
-              
+
             // Organize source files into directory tree structure
             const fileTree = {};
             const filesList = await Promise.all(
               Array.from(tsSources).map(async (filePath) => {
                 try {
-                  const fetchPath = filePath.startsWith('/') 
-                    ? filePath 
+                  const fetchPath = filePath.startsWith('/')
+                    ? filePath
                     : `/${filePath.replace(/^\.\//, '')}`;
                   const res = await fetch(fetchPath);
                   if (res.ok) {
@@ -134,10 +134,10 @@ export const TestPage = () => {
 
             filesList.forEach(file => {
               if (!file) return;
-                
+
               const parts = file.path.split('/');
               let currentLevel = fileTree;
-                
+
               parts.forEach((part, index) => {
                 if (!currentLevel[part]) {
                   if (index === parts.length - 1) {
@@ -163,7 +163,7 @@ export const TestPage = () => {
         receivedLogs['build_logs'] = buildLogs;
         console.log('Source files structure:', sourceFiles);
         console.log('Build logs:', buildLogs);
-        
+
         // Ensure tests.json is properly formatted
         if (receivedLogs['tests.json']) {
           console.log('tests.json content type:', typeof receivedLogs['tests.json']);
@@ -211,11 +211,11 @@ export const TestPage = () => {
           const pathParts = testPath.split('/');
           const fileName = pathParts.pop();
           const directoryPath = pathParts.join('/');
-          
+
           // Construct the path without the filename without extension
           const buildUrl = `/reports/${projectName}/${directoryPath}/${runtime}/build.json`;
           console.log(`Fetching build.json from: ${buildUrl}`);
-          
+
           const buildResponse = await fetch(buildUrl);
           if (buildResponse.ok) {
             const buildData = await buildResponse.json();
