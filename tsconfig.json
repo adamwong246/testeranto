@@ -41,7 +41,10 @@
     "isolatedModules": true,
     "declaration": true,
     "outDir": "dist",
-    "alwaysStrict": true
+    "alwaysStrict": true,
+    // Add these to support the process management features
+    "downlevelIteration": true,
+    "exactOptionalPropertyTypes": false
   },
   "include": [
     "./node_modules/testeranto/src/**/*.*ts",

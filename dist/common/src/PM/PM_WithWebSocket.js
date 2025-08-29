@@ -342,6 +342,63 @@ class PM_WithWebSocket extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
         }
         return null;
     }
+    // Add a method to track promise-based processes
+    addPromiseProcess(processId, promise, command, onResolve, onReject) {
+        // Track the promise in both maps
+        this.runningProcesses.set(processId, promise);
+        this.allProcesses.set(processId, {
+            promise,
+            status: "running",
+            command,
+            timestamp: new Date().toISOString(),
+            type: "promise",
+        });
+        // Initialize logs for this process
+        this.processLogs.set(processId, []);
+        // Broadcast process started
+        this.broadcast({
+            type: "processStarted",
+            processId,
+            command,
+            timestamp: new Date().toISOString(),
+            logs: [],
+        });
+        // Handle promise resolution
+        promise
+            .then((result) => {
+            this.runningProcesses.delete(processId);
+            // Update the process status to completed
+            const processInfo = this.allProcesses.get(processId);
+            if (processInfo) {
+                this.allProcesses.set(processId, Object.assign(Object.assign({}, processInfo), { status: "completed", exitCode: 0 }));
+            }
+            this.broadcast({
+                type: "processExited",
+                processId,
+                exitCode: 0,
+                timestamp: new Date().toISOString(),
+            });
+            if (onResolve)
+                onResolve(result);
+        })
+            .catch((error) => {
+            this.runningProcesses.delete(processId);
+            // Update the process status to error
+            const processInfo = this.allProcesses.get(processId);
+            if (processInfo) {
+                this.allProcesses.set(processId, Object.assign(Object.assign({}, processInfo), { status: "error", error: error.message }));
+            }
+            this.broadcast({
+                type: "processError",
+                processId,
+                error: error.message,
+                timestamp: new Date().toISOString(),
+            });
+            if (onReject)
+                onReject(error);
+        });
+        return processId;
+    }
     broadcast(message) {
         const data = typeof message === "string" ? message : JSON.stringify(message);
         this.clients.forEach((client) => {

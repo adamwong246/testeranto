@@ -610,79 +610,92 @@ var init_PM_WithEslintAndTsc = __esm({
           addableFiles,
           platform
         }) => {
-          console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-          try {
-            this.typeCheckIsRunning(entrypoint);
-          } catch (e) {
-            console.error("error in tscCheck");
-            console.error(e);
-            console.error(entrypoint);
-            console.error(JSON.stringify(this.summary, null, 2));
-            process.exit(-1);
-          }
-          const program = tsc.createProgramFromConfig({
-            basePath: process.cwd(),
-            // always required, used for relative paths
-            configFilePath: "tsconfig.json",
-            // config to inherit from (optional)
-            compilerOptions: {
-              outDir: tscPather(entrypoint, platform, this.name),
-              // declaration: true,
-              // skipLibCheck: true,
-              noEmit: true
-            },
-            include: addableFiles
-            //["src/**/*"],
-            // exclude: ["node_modules", "../testeranto"],
-            // exclude: ["**/*.test.ts", "**/*.spec.ts"],
-          });
-          const tscPath = tscPather(entrypoint, platform, this.name);
-          const allDiagnostics = program.getSemanticDiagnostics();
-          const results = [];
-          allDiagnostics.forEach((diagnostic) => {
-            if (diagnostic.file) {
-              const { line, character } = ts.getLineAndCharacterOfPosition(
-                diagnostic.file,
-                diagnostic.start
-              );
-              const message = ts.flattenDiagnosticMessageText(
-                diagnostic.messageText,
-                "\n"
-              );
-              results.push(
-                `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
-              );
-            } else {
-              results.push(
-                ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
-              );
+          const processId = `tsc-${entrypoint}-${Date.now()}`;
+          const command = `tsc check for ${entrypoint}`;
+          const tscPromise = (async () => {
+            console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
+            try {
+              this.typeCheckIsRunning(entrypoint);
+            } catch (e) {
+              console.error("error in tscCheck");
+              console.error(e);
+              console.error(entrypoint);
+              console.error(JSON.stringify(this.summary, null, 2));
+              process.exit(-1);
             }
-          });
-          fs6.writeFileSync(tscPath, results.join("\n"));
-          this.typeCheckIsNowDone(entrypoint, results.length);
+            const program = tsc.createProgramFromConfig({
+              basePath: process.cwd(),
+              configFilePath: "tsconfig.json",
+              compilerOptions: {
+                outDir: tscPather(entrypoint, platform, this.name),
+                noEmit: true
+              },
+              include: addableFiles
+            });
+            const tscPath = tscPather(entrypoint, platform, this.name);
+            const allDiagnostics = program.getSemanticDiagnostics();
+            const results = [];
+            allDiagnostics.forEach((diagnostic) => {
+              if (diagnostic.file) {
+                const { line, character } = ts.getLineAndCharacterOfPosition(
+                  diagnostic.file,
+                  diagnostic.start
+                );
+                const message = ts.flattenDiagnosticMessageText(
+                  diagnostic.messageText,
+                  "\n"
+                );
+                results.push(
+                  `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
+                );
+              } else {
+                results.push(
+                  ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+                );
+              }
+            });
+            fs6.writeFileSync(tscPath, results.join("\n"));
+            this.typeCheckIsNowDone(entrypoint, results.length);
+            return results.length;
+          })();
+          if (this.addPromiseProcess) {
+            this.addPromiseProcess(processId, tscPromise, command);
+          } else {
+            await tscPromise;
+          }
         };
         this.eslintCheck = async (entrypoint, platform, addableFiles) => {
-          console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
-          try {
-            this.lintIsRunning(entrypoint);
-          } catch (e) {
-            console.error("error in eslintCheck");
-            console.error(e);
-            console.error(entrypoint);
-            console.error(JSON.stringify(this.summary, null, 2));
-            process.exit(-1);
+          const processId = `eslint-${entrypoint}-${Date.now()}`;
+          const command = `eslint check for ${entrypoint}`;
+          const eslintPromise = (async () => {
+            console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
+            try {
+              this.lintIsRunning(entrypoint);
+            } catch (e) {
+              console.error("error in eslintCheck");
+              console.error(e);
+              console.error(entrypoint);
+              console.error(JSON.stringify(this.summary, null, 2));
+              process.exit(-1);
+            }
+            const filepath = lintPather(entrypoint, platform, this.name);
+            if (fs6.existsSync(filepath))
+              fs6.rmSync(filepath);
+            const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
+              return r.messages[0].ruleId !== null;
+            }).map((r) => {
+              delete r.source;
+              return r;
+            });
+            fs6.writeFileSync(filepath, await formatter.format(results));
+            this.lintIsNowDone(entrypoint, results.length);
+            return results.length;
+          })();
+          if (this.addPromiseProcess) {
+            this.addPromiseProcess(processId, eslintPromise, command);
+          } else {
+            await eslintPromise;
           }
-          const filepath = lintPather(entrypoint, platform, this.name);
-          if (fs6.existsSync(filepath))
-            fs6.rmSync(filepath);
-          const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
-            return r.messages[0].ruleId !== null;
-          }).map((r) => {
-            delete r.source;
-            return r;
-          });
-          fs6.writeFileSync(filepath, await formatter.format(results));
-          this.lintIsNowDone(entrypoint, results.length);
         };
         this.makePrompt = async (entryPoint, addableFiles, platform) => {
           await makePromptInternal(
@@ -1094,6 +1107,63 @@ var init_PM_WithWebSocket = __esm({
           }
         }
         return null;
+      }
+      // Add a method to track promise-based processes
+      addPromiseProcess(processId, promise, command, onResolve, onReject) {
+        this.runningProcesses.set(processId, promise);
+        this.allProcesses.set(processId, {
+          promise,
+          status: "running",
+          command,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          type: "promise"
+        });
+        this.processLogs.set(processId, []);
+        this.broadcast({
+          type: "processStarted",
+          processId,
+          command,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          logs: []
+        });
+        promise.then((result) => {
+          this.runningProcesses.delete(processId);
+          const processInfo = this.allProcesses.get(processId);
+          if (processInfo) {
+            this.allProcesses.set(processId, {
+              ...processInfo,
+              status: "completed",
+              exitCode: 0
+            });
+          }
+          this.broadcast({
+            type: "processExited",
+            processId,
+            exitCode: 0,
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          });
+          if (onResolve)
+            onResolve(result);
+        }).catch((error) => {
+          this.runningProcesses.delete(processId);
+          const processInfo = this.allProcesses.get(processId);
+          if (processInfo) {
+            this.allProcesses.set(processId, {
+              ...processInfo,
+              status: "error",
+              error: error.message
+            });
+          }
+          this.broadcast({
+            type: "processError",
+            processId,
+            error: error.message,
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          });
+          if (onReject)
+            onReject(error);
+        });
+        return processId;
       }
       broadcast(message) {
         const data = typeof message === "string" ? message : JSON.stringify(message);

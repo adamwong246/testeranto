@@ -50,59 +50,71 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     entrypoint: string;
     addableFiles: string[];
   }) => {
-    console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-    try {
-      this.typeCheckIsRunning(entrypoint);
-    } catch (e) {
-      console.error("error in tscCheck");
-      console.error(e);
-      console.error(entrypoint);
-      console.error(JSON.stringify(this.summary, null, 2));
-      process.exit(-1);
-    }
-
-    const program = tsc.createProgramFromConfig({
-      basePath: process.cwd(), // always required, used for relative paths
-      configFilePath: "tsconfig.json", // config to inherit from (optional)
-      compilerOptions: {
-        outDir: tscPather(entrypoint, platform, this.name),
-        // declaration: true,
-        // skipLibCheck: true,
-        noEmit: true,
-      },
-      include: addableFiles, //["src/**/*"],
-      // exclude: ["node_modules", "../testeranto"],
-      // exclude: ["**/*.test.ts", "**/*.spec.ts"],
-    });
-    const tscPath = tscPather(entrypoint, platform, this.name);
-
-    const allDiagnostics = program.getSemanticDiagnostics();
-
-    const results: string[] = [];
-    allDiagnostics.forEach((diagnostic) => {
-      if (diagnostic.file) {
-        const { line, character } = ts.getLineAndCharacterOfPosition(
-          diagnostic.file,
-          diagnostic.start!
-        );
-        const message = ts.flattenDiagnosticMessageText(
-          diagnostic.messageText,
-          "\n"
-        );
-        results.push(
-          `${diagnostic.file.fileName} (${line + 1},${
-            character + 1
-          }): ${message}`
-        );
-      } else {
-        results.push(
-          ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
-        );
+    // Generate a process ID
+    const processId = `tsc-${entrypoint}-${Date.now()}`;
+    const command = `tsc check for ${entrypoint}`;
+    
+    // Create the promise
+    const tscPromise = (async () => {
+      console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
+      try {
+        this.typeCheckIsRunning(entrypoint);
+      } catch (e) {
+        console.error("error in tscCheck");
+        console.error(e);
+        console.error(entrypoint);
+        console.error(JSON.stringify(this.summary, null, 2));
+        process.exit(-1);
       }
-    });
 
-    fs.writeFileSync(tscPath, results.join("\n"));
-    this.typeCheckIsNowDone(entrypoint, results.length);
+      const program = tsc.createProgramFromConfig({
+        basePath: process.cwd(),
+        configFilePath: "tsconfig.json",
+        compilerOptions: {
+          outDir: tscPather(entrypoint, platform, this.name),
+          noEmit: true,
+        },
+        include: addableFiles,
+      });
+      const tscPath = tscPather(entrypoint, platform, this.name);
+
+      const allDiagnostics = program.getSemanticDiagnostics();
+
+      const results: string[] = [];
+      allDiagnostics.forEach((diagnostic) => {
+        if (diagnostic.file) {
+          const { line, character } = ts.getLineAndCharacterOfPosition(
+            diagnostic.file,
+            diagnostic.start!
+          );
+          const message = ts.flattenDiagnosticMessageText(
+            diagnostic.messageText,
+            "\n"
+          );
+          results.push(
+            `${diagnostic.file.fileName} (${line + 1},${
+              character + 1
+            }): ${message}`
+          );
+        } else {
+          results.push(
+            ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+          );
+        }
+      });
+
+      fs.writeFileSync(tscPath, results.join("\n"));
+      this.typeCheckIsNowDone(entrypoint, results.length);
+      return results.length;
+    })();
+
+    // Add to process manager if available
+    if (this.addPromiseProcess) {
+      this.addPromiseProcess(processId, tscPromise, command);
+    } else {
+      // Fallback to just running the promise
+      await tscPromise;
+    }
   };
 
   eslintCheck = async (
@@ -110,32 +122,48 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     platform: IRunTime,
     addableFiles: string[]
   ) => {
-    console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
+    // Generate a process ID
+    const processId = `eslint-${entrypoint}-${Date.now()}`;
+    const command = `eslint check for ${entrypoint}`;
+    
+    // Create the promise
+    const eslintPromise = (async () => {
+      console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
 
-    try {
-      this.lintIsRunning(entrypoint);
-    } catch (e) {
-      console.error("error in eslintCheck");
-      console.error(e);
-      console.error(entrypoint);
-      console.error(JSON.stringify(this.summary, null, 2));
-      process.exit(-1);
+      try {
+        this.lintIsRunning(entrypoint);
+      } catch (e) {
+        console.error("error in eslintCheck");
+        console.error(e);
+        console.error(entrypoint);
+        console.error(JSON.stringify(this.summary, null, 2));
+        process.exit(-1);
+      }
+
+      const filepath = lintPather(entrypoint, platform, this.name);
+      if (fs.existsSync(filepath)) fs.rmSync(filepath);
+      const results = (await eslint.lintFiles(addableFiles))
+        .filter((r) => r.messages.length)
+        .filter((r) => {
+          return r.messages[0].ruleId !== null;
+        })
+        .map((r) => {
+          delete r.source;
+          return r;
+        });
+
+      fs.writeFileSync(filepath, await formatter.format(results));
+      this.lintIsNowDone(entrypoint, results.length);
+      return results.length;
+    })();
+
+    // Add to process manager if available
+    if (this.addPromiseProcess) {
+      this.addPromiseProcess(processId, eslintPromise, command);
+    } else {
+      // Fallback to just running the promise
+      await eslintPromise;
     }
-
-    const filepath = lintPather(entrypoint, platform, this.name);
-    if (fs.existsSync(filepath)) fs.rmSync(filepath);
-    const results = (await eslint.lintFiles(addableFiles))
-      .filter((r) => r.messages.length)
-      .filter((r) => {
-        return r.messages[0].ruleId !== null;
-      })
-      .map((r) => {
-        delete r.source;
-        return r;
-      });
-
-    fs.writeFileSync(filepath, await formatter.format(results));
-    this.lintIsNowDone(entrypoint, results.length);
   };
 
   makePrompt = async (

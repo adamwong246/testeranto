@@ -23,72 +23,98 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
         super(configs);
         this.summary = {};
         this.tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`tsc < ${entrypoint}`)));
-            try {
-                this.typeCheckIsRunning(entrypoint);
-            }
-            catch (e) {
-                console.error("error in tscCheck");
-                console.error(e);
-                console.error(entrypoint);
-                console.error(JSON.stringify(this.summary, null, 2));
-                process.exit(-1);
-            }
-            const program = tsc_prog_1.default.createProgramFromConfig({
-                basePath: process.cwd(), // always required, used for relative paths
-                configFilePath: "tsconfig.json", // config to inherit from (optional)
-                compilerOptions: {
-                    outDir: (0, utils_1.tscPather)(entrypoint, platform, this.name),
-                    // declaration: true,
-                    // skipLibCheck: true,
-                    noEmit: true,
-                },
-                include: addableFiles, //["src/**/*"],
-                // exclude: ["node_modules", "../testeranto"],
-                // exclude: ["**/*.test.ts", "**/*.spec.ts"],
-            });
-            const tscPath = (0, utils_1.tscPather)(entrypoint, platform, this.name);
-            const allDiagnostics = program.getSemanticDiagnostics();
-            const results = [];
-            allDiagnostics.forEach((diagnostic) => {
-                if (diagnostic.file) {
-                    const { line, character } = typescript_1.default.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
-                    const message = typescript_1.default.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
-                    results.push(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+            // Generate a process ID
+            const processId = `tsc-${entrypoint}-${Date.now()}`;
+            const command = `tsc check for ${entrypoint}`;
+            // Create the promise
+            const tscPromise = (async () => {
+                console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`tsc < ${entrypoint}`)));
+                try {
+                    this.typeCheckIsRunning(entrypoint);
                 }
-                else {
-                    results.push(typescript_1.default.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+                catch (e) {
+                    console.error("error in tscCheck");
+                    console.error(e);
+                    console.error(entrypoint);
+                    console.error(JSON.stringify(this.summary, null, 2));
+                    process.exit(-1);
                 }
-            });
-            fs_1.default.writeFileSync(tscPath, results.join("\n"));
-            this.typeCheckIsNowDone(entrypoint, results.length);
+                const program = tsc_prog_1.default.createProgramFromConfig({
+                    basePath: process.cwd(),
+                    configFilePath: "tsconfig.json",
+                    compilerOptions: {
+                        outDir: (0, utils_1.tscPather)(entrypoint, platform, this.name),
+                        noEmit: true,
+                    },
+                    include: addableFiles,
+                });
+                const tscPath = (0, utils_1.tscPather)(entrypoint, platform, this.name);
+                const allDiagnostics = program.getSemanticDiagnostics();
+                const results = [];
+                allDiagnostics.forEach((diagnostic) => {
+                    if (diagnostic.file) {
+                        const { line, character } = typescript_1.default.getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start);
+                        const message = typescript_1.default.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
+                        results.push(`${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+                    }
+                    else {
+                        results.push(typescript_1.default.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+                    }
+                });
+                fs_1.default.writeFileSync(tscPath, results.join("\n"));
+                this.typeCheckIsNowDone(entrypoint, results.length);
+                return results.length;
+            })();
+            // Add to process manager if available
+            if (this.addPromiseProcess) {
+                this.addPromiseProcess(processId, tscPromise, command);
+            }
+            else {
+                // Fallback to just running the promise
+                await tscPromise;
+            }
         };
         this.eslintCheck = async (entrypoint, platform, addableFiles) => {
-            console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`eslint < ${entrypoint}`)));
-            try {
-                this.lintIsRunning(entrypoint);
+            // Generate a process ID
+            const processId = `eslint-${entrypoint}-${Date.now()}`;
+            const command = `eslint check for ${entrypoint}`;
+            // Create the promise
+            const eslintPromise = (async () => {
+                console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`eslint < ${entrypoint}`)));
+                try {
+                    this.lintIsRunning(entrypoint);
+                }
+                catch (e) {
+                    console.error("error in eslintCheck");
+                    console.error(e);
+                    console.error(entrypoint);
+                    console.error(JSON.stringify(this.summary, null, 2));
+                    process.exit(-1);
+                }
+                const filepath = (0, utils_1.lintPather)(entrypoint, platform, this.name);
+                if (fs_1.default.existsSync(filepath))
+                    fs_1.default.rmSync(filepath);
+                const results = (await eslint.lintFiles(addableFiles))
+                    .filter((r) => r.messages.length)
+                    .filter((r) => {
+                    return r.messages[0].ruleId !== null;
+                })
+                    .map((r) => {
+                    delete r.source;
+                    return r;
+                });
+                fs_1.default.writeFileSync(filepath, await formatter.format(results));
+                this.lintIsNowDone(entrypoint, results.length);
+                return results.length;
+            })();
+            // Add to process manager if available
+            if (this.addPromiseProcess) {
+                this.addPromiseProcess(processId, eslintPromise, command);
             }
-            catch (e) {
-                console.error("error in eslintCheck");
-                console.error(e);
-                console.error(entrypoint);
-                console.error(JSON.stringify(this.summary, null, 2));
-                process.exit(-1);
+            else {
+                // Fallback to just running the promise
+                await eslintPromise;
             }
-            const filepath = (0, utils_1.lintPather)(entrypoint, platform, this.name);
-            if (fs_1.default.existsSync(filepath))
-                fs_1.default.rmSync(filepath);
-            const results = (await eslint.lintFiles(addableFiles))
-                .filter((r) => r.messages.length)
-                .filter((r) => {
-                return r.messages[0].ruleId !== null;
-            })
-                .map((r) => {
-                delete r.source;
-                return r;
-            });
-            fs_1.default.writeFileSync(filepath, await formatter.format(results));
-            this.lintIsNowDone(entrypoint, results.length);
         };
         this.makePrompt = async (entryPoint, addableFiles, platform) => {
             await (0, makePrompt_1.makePromptInternal)(this.summary, this.name, entryPoint, addableFiles, platform);

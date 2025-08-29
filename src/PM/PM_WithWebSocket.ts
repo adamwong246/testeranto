@@ -16,17 +16,19 @@ export abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
   wss: WebSocketServer;
   clients: Set<any> = new Set();
   httpServer: http.Server;
-  runningProcesses: Map<string, ChildProcess> = new Map();
+  runningProcesses: Map<string, ChildProcess | Promise<any>> = new Map();
   allProcesses: Map<
     string,
     {
       child?: ChildProcess;
-      status: "running" | "exited" | "error";
+      promise?: Promise<any>;
+      status: "running" | "exited" | "error" | "completed";
       exitCode?: number;
       error?: string;
       command: string;
       pid?: number;
       timestamp: string;
+      type: "process" | "promise";
     }
   > = new Map();
   processLogs: Map<string, string[]> = new Map();
@@ -383,6 +385,80 @@ export abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
       }
     }
     return null;
+  }
+
+  // Add a method to track promise-based processes
+  addPromiseProcess(
+    processId: string,
+    promise: Promise<any>,
+    command: string,
+    onResolve?: (result: any) => void,
+    onReject?: (error: any) => void
+  ) {
+    // Track the promise in both maps
+    this.runningProcesses.set(processId, promise);
+    this.allProcesses.set(processId, {
+      promise,
+      status: "running",
+      command,
+      timestamp: new Date().toISOString(),
+      type: "promise",
+    });
+
+    // Initialize logs for this process
+    this.processLogs.set(processId, []);
+
+    // Broadcast process started
+    this.broadcast({
+      type: "processStarted",
+      processId,
+      command,
+      timestamp: new Date().toISOString(),
+      logs: [],
+    });
+
+    // Handle promise resolution
+    promise
+      .then((result) => {
+        this.runningProcesses.delete(processId);
+        // Update the process status to completed
+        const processInfo = this.allProcesses.get(processId);
+        if (processInfo) {
+          this.allProcesses.set(processId, {
+            ...processInfo,
+            status: "completed",
+            exitCode: 0,
+          });
+        }
+        this.broadcast({
+          type: "processExited",
+          processId,
+          exitCode: 0,
+          timestamp: new Date().toISOString(),
+        });
+        if (onResolve) onResolve(result);
+      })
+      .catch((error) => {
+        this.runningProcesses.delete(processId);
+        // Update the process status to error
+        const processInfo = this.allProcesses.get(processId);
+        if (processInfo) {
+          this.allProcesses.set(processId, {
+            ...processInfo,
+            status: "error",
+            error: error.message,
+          });
+        }
+        this.broadcast({
+          type: "processError",
+          processId,
+          error: error.message,
+          timestamp: new Date().toISOString(),
+        });
+        if (onReject) onReject(error);
+      });
+
+    return processId;
   }
 
   broadcast(message: any) {

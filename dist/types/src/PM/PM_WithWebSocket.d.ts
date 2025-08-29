@@ -6,19 +6,22 @@ export declare abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
     wss: WebSocketServer;
     clients: Set<any>;
     httpServer: http.Server;
-    runningProcesses: Map<string, ChildProcess>;
+    runningProcesses: Map<string, ChildProcess | Promise<any>>;
     allProcesses: Map<string, {
         child?: ChildProcess;
-        status: "running" | "exited" | "error";
+        promise?: Promise<any>;
+        status: "running" | "exited" | "error" | "completed";
         exitCode?: number;
         error?: string;
         command: string;
         pid?: number;
         timestamp: string;
+        type: "process" | "promise";
     }>;
     processLogs: Map<string, string[]>;
     constructor(configs: any, name: string, mode: "once" | "dev");
     requestHandler(req: http.IncomingMessage, res: http.ServerResponse): void;
     findIndexHtml(): string | null;
+    addPromiseProcess(processId: string, promise: Promise<any>, command: string, onResolve?: (result: any) => void, onReject?: (error: any) => void): string;
     broadcast(message: any): void;
 }
