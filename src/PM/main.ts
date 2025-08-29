@@ -92,48 +92,6 @@ export class PM_Main extends PM_WithWebSocket {
       this.ports[element] = ""; // set ports as open
     });
   }
-
-  async stopSideCar(uid: number): Promise<any> {
-    console.log(ansiC.green(ansiC.inverse(`stopSideCar ${uid}`)));
-
-    Object.entries(this.pureSidecars).forEach(async ([k, v]) => {
-      if (Number(k) === uid) {
-        await this.pureSidecars[Number(k)].stop();
-        delete this.pureSidecars[Number(k)];
-      }
-    });
-
-    Object.entries(this.nodeSidecars).forEach(async ([k, v]) => {
-      if (Number(k) === uid) {
-        await this.nodeSidecars[Number(k)].send("stop");
-        delete this.nodeSidecars[Number(k)];
-      }
-    });
-
-    Object.entries(this.webSidecars).forEach(async ([k, v]) => {
-      if (Number(k) === uid) {
-        (await this.browser.pages()).forEach(async (p) => {
-          if (p.mainFrame()._id === k) {
-            await this.webSidecars[Number(k)].close();
-            delete this.webSidecars[Number(k)];
-          }
-        });
-      }
-    });
-
-    return;
-  }
-
-  async launchSideCar(
-    n: number,
-    name: string
-  ): Promise<[number, ITTestResourceConfiguration]> {
-    const c = this.configs.tests.find(([v, r]) => {
-      return v === name;
-    }) as ITestTypes;
-    throw "not yet implemented";
-  }
-
   mapping(): [string, (...a) => any][] {
     return [
       ["$", this.$],
@@ -150,14 +108,14 @@ export class PM_Main extends PM_WithWebSocket {
       // ["setValue", this.setValue],
       ["goto", this.goto.bind(this)],
       ["isDisabled", this.isDisabled],
-      ["launchSideCar", this.launchSideCar.bind(this)],
+      // ["launchSideCar", this.launchSideCar.bind(this)],
       ["mkdirSync", this.mkdirSync],
       ["newPage", this.newPage],
       ["page", this.page],
       ["pages", this.pages],
       ["screencast", this.screencast],
       ["screencastStop", this.screencastStop],
-      ["stopSideCar", this.stopSideCar.bind(this)],
+      // ["stopSideCar", this.stopSideCar.bind(this)],
       ["typeInto", this.typeInto],
       ["waitForSelector", this.waitForSelector],
       ["write", this.write],

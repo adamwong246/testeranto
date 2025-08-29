@@ -3,7 +3,7 @@ import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import fs from "fs";
 import { WebSocketServer } from "ws";
 import http from "http";
-import { IRunnables, ITTestResourceConfiguration } from "../lib/index.js";
+import { IRunnables } from "../lib/index.js";
 import { IBuiltConfig, IRunTime, ITestTypes } from "../Types.js";
 import { Sidecar } from "../lib/Sidecar.js";
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
@@ -36,8 +36,6 @@ export declare class PM_Main extends PM_WithWebSocket {
     }>;
     processLogs: Map<string, string[]>;
     constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
-    stopSideCar(uid: number): Promise<any>;
-    launchSideCar(n: number, name: string): Promise<[number, ITTestResourceConfiguration]>;
     mapping(): [string, (...a: any[]) => any][];
     start(): Promise<void>;
     stop(): Promise<void>;

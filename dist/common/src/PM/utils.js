@@ -3,11 +3,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.statusMessagePretty = void 0;
+exports.filesHash = exports.statusMessagePretty = void 0;
 exports.runtimeLogs = runtimeLogs;
 exports.createLogStreams = createLogStreams;
 exports.fileHash = fileHash;
+exports.writeFileAndCreateDir = writeFileAndCreateDir;
+exports.isValidUrl = isValidUrl;
+exports.pollForFile = pollForFile;
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const ansi_colors_1 = __importDefault(require("ansi-colors"));
+const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const node_crypto_1 = __importDefault(require("node:crypto"));
 function runtimeLogs(runtime, reportDest) {
@@ -125,3 +130,40 @@ const statusMessagePretty = (failures, test, runtime) => {
     }
 };
 exports.statusMessagePretty = statusMessagePretty;
+async function writeFileAndCreateDir(filePath, data) {
+    const dirPath = path_1.default.dirname(filePath);
+    try {
+        await fs_1.default.promises.mkdir(dirPath, { recursive: true });
+        await fs_1.default.writeFileSync(filePath, data);
+    }
+    catch (error) {
+        console.error(`Error writing file: ${error}`);
+    }
+}
+const filesHash = async (files, algorithm = "md5") => {
+    return new Promise((resolve, reject) => {
+        resolve(files.reduce(async (mm, f) => {
+            return (await mm) + (await fileHash(f));
+        }, Promise.resolve("")));
+    });
+};
+exports.filesHash = filesHash;
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    }
+    catch (err) {
+        return false;
+    }
+}
+// Wait for file to exist, checks every 2 seconds by default
+async function pollForFile(path, timeout = 2000) {
+    const intervalObj = setInterval(function () {
+        const file = path;
+        const fileExists = fs_1.default.existsSync(file);
+        if (fileExists) {
+            clearInterval(intervalObj);
+        }
+    }, timeout);
+}

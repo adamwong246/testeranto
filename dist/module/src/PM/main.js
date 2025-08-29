@@ -14,47 +14,11 @@ import mime from "mime-types";
 import { getRunnables } from "../utils";
 import { Queue } from "../utils/queue.js";
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
-import { fileHash, createLogStreams, statusMessagePretty, } from "./utils.js";
+import { fileHash, createLogStreams, statusMessagePretty, filesHash, isValidUrl, pollForFile, writeFileAndCreateDir, } from "./utils.js";
 const changes = {};
 const fileHashes = {};
 const files = {};
 const screenshots = {};
-async function writeFileAndCreateDir(filePath, data) {
-    const dirPath = path.dirname(filePath);
-    try {
-        await fs.promises.mkdir(dirPath, { recursive: true });
-        await fs.writeFileSync(filePath, data);
-    }
-    catch (error) {
-        console.error(`Error writing file: ${error}`);
-    }
-}
-const filesHash = async (files, algorithm = "md5") => {
-    return new Promise((resolve, reject) => {
-        resolve(files.reduce(async (mm, f) => {
-            return (await mm) + (await fileHash(f));
-        }, Promise.resolve("")));
-    });
-};
-function isValidUrl(string) {
-    try {
-        new URL(string);
-        return true;
-    }
-    catch (err) {
-        return false;
-    }
-}
-// Wait for file to exist, checks every 2 seconds by default
-async function pollForFile(path, timeout = 2000) {
-    const intervalObj = setInterval(function () {
-        const file = path;
-        const fileExists = fs.existsSync(file);
-        if (fileExists) {
-            clearInterval(intervalObj);
-        }
-    }, timeout);
-}
 export class PM_Main extends PM_WithWebSocket {
     constructor(configs, name, mode) {
         super(configs, name, mode);
@@ -665,51 +629,6 @@ import('${d}').then(async (x) => {
             this.ports[element] = ""; // set ports as open
         });
     }
-    async stopSideCar(uid) {
-        console.log(ansiC.green(ansiC.inverse(`stopSideCar ${uid}`)));
-        Object.entries(this.pureSidecars).forEach(async ([k, v]) => {
-            if (Number(k) === uid) {
-                await this.pureSidecars[Number(k)].stop();
-                delete this.pureSidecars[Number(k)];
-            }
-        });
-        Object.entries(this.nodeSidecars).forEach(async ([k, v]) => {
-            if (Number(k) === uid) {
-                await this.nodeSidecars[Number(k)].send("stop");
-                delete this.nodeSidecars[Number(k)];
-            }
-        });
-        Object.entries(this.webSidecars).forEach(async ([k, v]) => {
-            if (Number(k) === uid) {
-                (await this.browser.pages()).forEach(async (p) => {
-                    if (p.mainFrame()._id === k) {
-                        await this.webSidecars[Number(k)].close();
-                        delete this.webSidecars[Number(k)];
-                    }
-                });
-            }
-        });
-        return;
-    }
-    async launchSideCar(n, name) {
-        const c = this.configs.tests.find(([v, r]) => {
-            return v === name;
-        });
-        const s = c[3][n];
-        const r = s[1];
-        if (r === "node") {
-            return this.launchNodeSideCar(s);
-        }
-        else if (r === "web") {
-            return this.launchWebSideCar(s);
-        }
-        else if (r === "pure") {
-            return this.launchPureSideCar(s);
-        }
-        else {
-            throw `unknown runtime ${r}`;
-        }
-    }
     mapping() {
         return [
             ["$", this.$],
@@ -726,14 +645,14 @@ import('${d}').then(async (x) => {
             // ["setValue", this.setValue],
             ["goto", this.goto.bind(this)],
             ["isDisabled", this.isDisabled],
-            ["launchSideCar", this.launchSideCar.bind(this)],
+            // ["launchSideCar", this.launchSideCar.bind(this)],
             ["mkdirSync", this.mkdirSync],
             ["newPage", this.newPage],
             ["page", this.page],
             ["pages", this.pages],
             ["screencast", this.screencast],
             ["screencastStop", this.screencastStop],
-            ["stopSideCar", this.stopSideCar.bind(this)],
+            // ["stopSideCar", this.stopSideCar.bind(this)],
             ["typeInto", this.typeInto],
             ["waitForSelector", this.waitForSelector],
             ["write", this.write],

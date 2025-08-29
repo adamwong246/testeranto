@@ -19,3 +19,7 @@ export declare function runtimeLogs(runtime: IRunTime, reportDest: string): Reco
 export declare function createLogStreams(reportDest: string, runtime: IRunTime): LogStreams;
 export declare function fileHash(filePath: any, algorithm?: string): Promise<string>;
 export declare const statusMessagePretty: (failures: number, test: string, runtime: IRunTime) => void;
+export declare function writeFileAndCreateDir(filePath: any, data: any): Promise<void>;
+export declare const filesHash: (files: string[], algorithm?: string) => Promise<string>;
+export declare function isValidUrl(string: any): boolean;
+export declare function pollForFile(path: any, timeout?: number): Promise<void>;

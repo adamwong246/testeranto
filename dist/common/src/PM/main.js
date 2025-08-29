@@ -58,42 +58,6 @@ const changes = {};
 const fileHashes = {};
 const files = {};
 const screenshots = {};
-async function writeFileAndCreateDir(filePath, data) {
-    const dirPath = path_1.default.dirname(filePath);
-    try {
-        await fs_1.default.promises.mkdir(dirPath, { recursive: true });
-        await fs_1.default.writeFileSync(filePath, data);
-    }
-    catch (error) {
-        console.error(`Error writing file: ${error}`);
-    }
-}
-const filesHash = async (files, algorithm = "md5") => {
-    return new Promise((resolve, reject) => {
-        resolve(files.reduce(async (mm, f) => {
-            return (await mm) + (await (0, utils_js_1.fileHash)(f));
-        }, Promise.resolve("")));
-    });
-};
-function isValidUrl(string) {
-    try {
-        new URL(string);
-        return true;
-    }
-    catch (err) {
-        return false;
-    }
-}
-// Wait for file to exist, checks every 2 seconds by default
-async function pollForFile(path, timeout = 2000) {
-    const intervalObj = setInterval(function () {
-        const file = path;
-        const fileExists = fs_1.default.existsSync(file);
-        if (fileExists) {
-            clearInterval(intervalObj);
-        }
-    }, timeout);
-}
 class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
     constructor(configs, name, mode) {
         super(configs, name, mode);
@@ -591,7 +555,7 @@ import('${d}').then(async (x) => {
             testReport.features
                 .reduce(async (mm, featureStringKey) => {
                 const accum = await mm;
-                const isUrl = isValidUrl(featureStringKey);
+                const isUrl = (0, utils_js_1.isValidUrl)(featureStringKey);
                 if (isUrl) {
                     const u = new URL(featureStringKey);
                     if (u.protocol === "file:") {
@@ -617,7 +581,7 @@ import('${d}').then(async (x) => {
                     else if (u.protocol === "http:" || u.protocol === "https:") {
                         const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
                         const body = await this.configs.featureIngestor(featureStringKey);
-                        writeFileAndCreateDir(newPath, body);
+                        (0, utils_js_1.writeFileAndCreateDir)(newPath, body);
                         accum.files.push(newPath);
                     }
                 }
@@ -704,51 +668,6 @@ import('${d}').then(async (x) => {
             this.ports[element] = ""; // set ports as open
         });
     }
-    async stopSideCar(uid) {
-        console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`stopSideCar ${uid}`)));
-        Object.entries(this.pureSidecars).forEach(async ([k, v]) => {
-            if (Number(k) === uid) {
-                await this.pureSidecars[Number(k)].stop();
-                delete this.pureSidecars[Number(k)];
-            }
-        });
-        Object.entries(this.nodeSidecars).forEach(async ([k, v]) => {
-            if (Number(k) === uid) {
-                await this.nodeSidecars[Number(k)].send("stop");
-                delete this.nodeSidecars[Number(k)];
-            }
-        });
-        Object.entries(this.webSidecars).forEach(async ([k, v]) => {
-            if (Number(k) === uid) {
-                (await this.browser.pages()).forEach(async (p) => {
-                    if (p.mainFrame()._id === k) {
-                        await this.webSidecars[Number(k)].close();
-                        delete this.webSidecars[Number(k)];
-                    }
-                });
-            }
-        });
-        return;
-    }
-    async launchSideCar(n, name) {
-        const c = this.configs.tests.find(([v, r]) => {
-            return v === name;
-        });
-        const s = c[3][n];
-        const r = s[1];
-        if (r === "node") {
-            return this.launchNodeSideCar(s);
-        }
-        else if (r === "web") {
-            return this.launchWebSideCar(s);
-        }
-        else if (r === "pure") {
-            return this.launchPureSideCar(s);
-        }
-        else {
-            throw `unknown runtime ${r}`;
-        }
-    }
     mapping() {
         return [
             ["$", this.$],
@@ -765,14 +684,14 @@ import('${d}').then(async (x) => {
             // ["setValue", this.setValue],
             ["goto", this.goto.bind(this)],
             ["isDisabled", this.isDisabled],
-            ["launchSideCar", this.launchSideCar.bind(this)],
+            // ["launchSideCar", this.launchSideCar.bind(this)],
             ["mkdirSync", this.mkdirSync],
             ["newPage", this.newPage],
             ["page", this.page],
             ["pages", this.pages],
             ["screencast", this.screencast],
             ["screencastStop", this.screencastStop],
-            ["stopSideCar", this.stopSideCar.bind(this)],
+            // ["stopSideCar", this.stopSideCar.bind(this)],
             ["typeInto", this.typeInto],
             ["waitForSelector", this.waitForSelector],
             ["write", this.write],
@@ -883,7 +802,7 @@ import('${d}').then(async (x) => {
             }
             // Only poll for file if it's not a pitono runtime
             if (runtime !== "pitono") {
-                await pollForFile(metafile);
+                await (0, utils_js_1.pollForFile)(metafile);
             }
             Object.entries(eps).forEach(async ([inputFile, outputFile]) => {
                 // await pollForFile(outputFile);\
@@ -1024,7 +943,7 @@ import('${d}').then(async (x) => {
             }
             const entrypoint = outputs[k].entryPoint;
             if (entrypoint) {
-                const changeDigest = await filesHash(addableFiles);
+                const changeDigest = await (0, utils_js_1.filesHash)(addableFiles);
                 if (changeDigest === changes[entrypoint]) {
                     // skip
                 }

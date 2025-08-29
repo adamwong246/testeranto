@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import ansiC from "ansi-colors";
+import path from "path";
 import fs from "fs";
 import crypto from "node:crypto";
 export function runtimeLogs(runtime, reportDest) {
@@ -115,3 +117,39 @@ export const statusMessagePretty = (failures, test, runtime) => {
         console.log(ansiC.red(ansiC.inverse(`${runtime} > ${test} crashed (exit code: -1)`)));
     }
 };
+export async function writeFileAndCreateDir(filePath, data) {
+    const dirPath = path.dirname(filePath);
+    try {
+        await fs.promises.mkdir(dirPath, { recursive: true });
+        await fs.writeFileSync(filePath, data);
+    }
+    catch (error) {
+        console.error(`Error writing file: ${error}`);
+    }
+}
+export const filesHash = async (files, algorithm = "md5") => {
+    return new Promise((resolve, reject) => {
+        resolve(files.reduce(async (mm, f) => {
+            return (await mm) + (await fileHash(f));
+        }, Promise.resolve("")));
+    });
+};
+export function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    }
+    catch (err) {
+        return false;
+    }
+}
+// Wait for file to exist, checks every 2 seconds by default
+export async function pollForFile(path, timeout = 2000) {
+    const intervalObj = setInterval(function () {
+        const file = path;
+        const fileExists = fs.existsSync(file);
+        if (fileExists) {
+            clearInterval(intervalObj);
+        }
+    }, timeout);
+}
