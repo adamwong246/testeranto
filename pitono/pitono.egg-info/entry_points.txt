@@ -1,0 +1,2 @@
+[console_scripts]
+pitono-core-generator = core_generator:main

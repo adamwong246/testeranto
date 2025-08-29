@@ -19,6 +19,7 @@ const config = {
         // },
         core: {
             tests: [
+                ["example/test_example.py", "python", { ports: 0 }, []],
                 ["src/golingvu/base_suite_test.go", "golang", { ports: 0 }, []],
                 ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
                 ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],

@@ -94,6 +94,7 @@ Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) 
     let webDone = false;
     let importDone = false;
     let golangDone = false;
+    let pitonoDone = false;
     let status = "build";
     const { nodeEntryPoints, nodeEntryPointSidecars, webEntryPoints, webEntryPointSidecars, pureEntryPoints, pureEntryPointSidecars, } = (0, utils_1.getRunnables)(config.tests, testName);
     const onNodeDone = () => {
@@ -112,14 +113,19 @@ Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) 
         golangDone = true;
         onDone();
     };
+    const onPitonoDone = () => {
+        pitonoDone = true;
+        onDone();
+    };
     let pm = null;
     const onDone = async () => {
-        // Check if golang tests are present
+        // Check which test types are present
         const hasGolangTests = config.tests.some(test => test[1] === 'golang');
-        // If golang tests are present, wait for golangDone, otherwise ignore
-        const allDone = hasGolangTests
-            ? (nodeDone && webDone && importDone && golangDone)
-            : (nodeDone && webDone && importDone);
+        const hasPitonoTests = config.tests.some(test => test[1] === 'pitono');
+        // Wait for all relevant runtimes to be done
+        const allDone = nodeDone && webDone && importDone &&
+            (!hasGolangTests || golangDone) &&
+            (!hasPitonoTests || pitonoDone);
         if (allDone) {
             status = "built";
             // Start the PM_Main to run the tests after build
@@ -156,6 +162,11 @@ Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) 
         };
         return Array.from(meta(config.tests, new Set()));
     };
+    // Also handle pitono endpoints for HTML generation if needed
+    [...getSecondaryEndpointsPoints("pitono")].forEach(async (sourceFilePath) => {
+        // You might want to generate specific files for pitono tests here
+        console.log(`Pitono test found: ${sourceFilePath}`);
+    });
     // Handle golang tests by generating their metafiles
     const golangTests = config.tests.filter(test => test[1] === 'golang');
     const hasGolangTests = golangTests.length > 0;
@@ -168,6 +179,19 @@ Promise.resolve(`${f}`).then(s => __importStar(require(s))).then(async (module) 
         writeGolangMetafile(testName, metafile);
         // Mark golang as done after writing the metafile
         onGolangDone();
+    }
+    // Handle pitono (Python) tests by generating their metafiles
+    const pitonoTests = config.tests.filter(test => test[1] === 'pitono');
+    const hasPitonoTests = pitonoTests.length > 0;
+    if (hasPitonoTests) {
+        // Import and use the pitono metafile utilities
+        const { generatePitonoMetafile, writePitonoMetafile } = await Promise.resolve().then(() => __importStar(require('./utils/pitonoMetafile')));
+        // Get the entry points (first element of each test tuple)
+        const pitonoEntryPoints = pitonoTests.map(test => test[0]);
+        const metafile = await generatePitonoMetafile(testName, pitonoEntryPoints);
+        writePitonoMetafile(testName, metafile);
+        // Mark pitono as done after writing the metafile
+        onPitonoDone();
     }
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");

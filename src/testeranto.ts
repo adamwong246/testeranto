@@ -81,6 +81,7 @@ import(f).then(async (module) => {
   let webDone: boolean = false;
   let importDone: boolean = false;
   let golangDone: boolean = false;
+  let pitonoDone: boolean = false;
 
   let status: "build" | "built" = "build";
 
@@ -113,15 +114,22 @@ import(f).then(async (module) => {
     onDone();
   };
 
+  const onPitonoDone = () => {
+    pitonoDone = true;
+    onDone();
+  };
+
   let pm: PM_Main | null = null;
   const onDone = async () => {
-    // Check if golang tests are present
+    // Check which test types are present
     const hasGolangTests = config.tests.some(test => test[1] === 'golang');
+    const hasPitonoTests = config.tests.some(test => test[1] === 'pitono');
     
-    // If golang tests are present, wait for golangDone, otherwise ignore
-    const allDone = hasGolangTests 
-      ? (nodeDone && webDone && importDone && golangDone)
-      : (nodeDone && webDone && importDone);
+    // Wait for all relevant runtimes to be done
+    const allDone = 
+      nodeDone && webDone && importDone && 
+      (!hasGolangTests || golangDone) && 
+      (!hasPitonoTests || pitonoDone);
       
     if (allDone) {
       status = "built";
@@ -172,6 +180,12 @@ import(f).then(async (module) => {
     return Array.from(meta(config.tests, new Set()));
   };
 
+  // Also handle pitono endpoints for HTML generation if needed
+  [...getSecondaryEndpointsPoints("pitono")].forEach(async (sourceFilePath) => {
+    // You might want to generate specific files for pitono tests here
+    console.log(`Pitono test found: ${sourceFilePath}`);
+  });
+
   // Handle golang tests by generating their metafiles
   const golangTests = config.tests.filter(test => test[1] === 'golang');
   const hasGolangTests = golangTests.length > 0;
@@ -184,6 +198,30 @@ import(f).then(async (module) => {
     writeGolangMetafile(testName, metafile);
     // Mark golang as done after writing the metafile
     onGolangDone();
+  }
+
+  // Handle pitono (Python) tests by generating their metafiles
+  const pitonoTests = config.tests.filter(test => test[1] === 'pitono');
+  const hasPitonoTests = pitonoTests.length > 0;
+  if (hasPitonoTests) {
+    // Import and use the pitono metafile utilities
+    const { generatePitonoMetafile } = await import('./utils/pitonoMetafile');
+    // Get the entry points (first element of each test tuple)
+    const pitonoEntryPoints = pitonoTests.map(test => test[0]);
+    const metafile = await generatePitonoMetafile(testName, pitonoEntryPoints);
+    
+    // Ensure the directory exists
+    const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
+    await fs.promises.mkdir(pitonoMetafilePath, { recursive: true });
+    
+    // Write the metafile to the specified path
+    fs.writeFileSync(
+      `${pitonoMetafilePath}/core.json`,
+      JSON.stringify(metafile, null, 2)
+    );
+    
+    // Mark pitono as done after writing the metafile
+    onPitonoDone();
   }
 
   Promise.resolve(

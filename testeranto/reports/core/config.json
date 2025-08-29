@@ -1,6 +1,14 @@
 {
   "tests": [
     [
+      "example/test_example.py",
+      "python",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
       "src/golingvu/base_suite_test.go",
       "golang",
       {

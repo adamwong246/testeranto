@@ -1,0 +1,7 @@
+pyproject.toml
+setup.py
+pitono.egg-info/PKG-INFO
+pitono.egg-info/SOURCES.txt
+pitono.egg-info/dependency_links.txt
+pitono.egg-info/entry_points.txt
+pitono.egg-info/top_level.txt
