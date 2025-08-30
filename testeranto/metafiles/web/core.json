@@ -1512,7 +1512,7 @@
         ],
         "format": "esm"
       },
-      "node_modules/cookie/dist/index.js": {
+      "node_modules/react-router/node_modules/cookie/dist/index.js": {
         "bytes": 8340,
         "imports": [
           {
@@ -1573,7 +1573,7 @@
             "original": "react"
           },
           {
-            "path": "node_modules/cookie/dist/index.js",
+            "path": "node_modules/react-router/node_modules/cookie/dist/index.js",
             "kind": "import-statement",
             "original": "cookie"
           },
