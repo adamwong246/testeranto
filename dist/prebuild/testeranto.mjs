@@ -434,389 +434,21 @@ var init_base = __esm({
   }
 });
 
-// src/utils/logFiles.ts
-function getLogFilesForRuntime(runtime) {
-  const { standard, runtimeSpecific } = getRuntimeLogs(runtime);
-  return [...standard, ...runtimeSpecific];
-}
-var LOG_FILES, STANDARD_LOGS, RUNTIME_SPECIFIC_LOGS, ALL_LOGS, getRuntimeLogs;
-var init_logFiles = __esm({
-  "src/utils/logFiles.ts"() {
-    "use strict";
-    LOG_FILES = {
-      TESTS: "tests.json",
-      TYPE_ERRORS: "type_errors.txt",
-      LINT_ERRORS: "lint_errors.txt",
-      EXIT: "exit.log",
-      MESSAGE: "message.txt",
-      PROMPT: "prompt.txt",
-      STDOUT: "stdout.log",
-      STDERR: "stderr.log",
-      INFO: "info.log",
-      ERROR: "error.log",
-      WARN: "warn.log",
-      DEBUG: "debug.log"
-    };
-    STANDARD_LOGS = {
-      TESTS: "tests.json",
-      TYPE_ERRORS: "type_errors.txt",
-      LINT_ERRORS: "lint_errors.txt",
-      EXIT: "exit.log",
-      MESSAGE: "message.txt",
-      PROMPT: "prompt.txt",
-      BUILD: "build.json"
-    };
-    RUNTIME_SPECIFIC_LOGS = {
-      node: {
-        STDOUT: "stdout.log",
-        STDERR: "stderr.log"
-      },
-      web: {
-        INFO: "info.log",
-        ERROR: "error.log",
-        WARN: "warn.log",
-        DEBUG: "debug.log"
-      },
-      pure: {}
-      // No runtime-specific logs for pure
-    };
-    ALL_LOGS = {
-      ...STANDARD_LOGS,
-      ...Object.values(RUNTIME_SPECIFIC_LOGS).reduce((acc, logs) => ({ ...acc, ...logs }), {})
-    };
-    getRuntimeLogs = (runtime) => {
-      return {
-        standard: Object.values(STANDARD_LOGS),
-        runtimeSpecific: Object.values(RUNTIME_SPECIFIC_LOGS[runtime])
-      };
-    };
-  }
-});
-
-// src/utils/makePrompt.ts
-import fs5 from "fs";
-import path5 from "path";
-var makePrompt, makePromptInternal;
-var init_makePrompt = __esm({
-  "src/utils/makePrompt.ts"() {
-    "use strict";
-    init_utils();
-    init_logFiles();
-    init_logFiles();
-    makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
-      summary[entryPoint].prompt = "?";
-      const promptPath = promptPather(entryPoint, runtime, name);
-      const testDir = path5.join(
-        "testeranto",
-        "reports",
-        name,
-        entryPoint.split(".").slice(0, -1).join("."),
-        runtime
-      );
-      if (!fs5.existsSync(testDir)) {
-        fs5.mkdirSync(testDir, { recursive: true });
-      }
-      const testPaths = path5.join(testDir, LOG_FILES.TESTS);
-      const lintPath = path5.join(testDir, LOG_FILES.LINT_ERRORS);
-      const typePath = path5.join(testDir, LOG_FILES.TYPE_ERRORS);
-      const messagePath = path5.join(testDir, LOG_FILES.MESSAGE);
-      try {
-        await Promise.all([
-          fs5.promises.writeFile(
-            promptPath,
-            `
-${addableFiles.map((x) => {
-              return `/add ${x}`;
-            }).join("\n")}
-
-/read node_modules/testeranto/docs/index.md
-/read node_modules/testeranto/docs/style.md
-/read node_modules/testeranto/docs/testing.ai.txt
-/read node_modules/testeranto/src/CoreTypes.ts
-
-/read ${testPaths}
-/read ${typePath}
-/read ${lintPath}
-
-/read ${getLogFilesForRuntime(runtime).map((p) => `${testDir}/${p}`).join(" ")}
-`
-          ),
-          fs5.promises.writeFile(
-            messagePath,
-            `
-There are 3 types of test reports.
-1) bdd (highest priority)
-2) type checker
-3) static analysis (lowest priority)
-
-"tests.json" is the detailed result of the bdd tests.
-if these files do not exist, then something has gone badly wrong and needs to be addressed.
-
-"type_errors.txt" is the result of the type checker.
-if this file does not exist, then type check passed without errors;
-
-"lint_errors.txt" is the result of the static analysis.
-if this file does not exist, then static analysis passed without errors;
-
-BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns.
-Do not add error throwing/catching to the tests themselves.
-`
-          )
-        ]);
-      } catch (e) {
-        console.error(`Failed to write prompt files at ${testDir}`);
-        console.error(e);
-        throw e;
-      }
-      summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${name}/reports/${runtime}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
-    };
-    makePromptInternal = (summary, name, entryPoint, addableFiles, runTime) => {
-      if (runTime === "node") {
-        return makePrompt(summary, name, entryPoint, addableFiles, "node");
-      }
-      if (runTime === "web") {
-        return makePrompt(summary, name, entryPoint, addableFiles, "web");
-      }
-      if (runTime === "pure") {
-        return makePrompt(summary, name, entryPoint, addableFiles, "pure");
-      }
-    };
-  }
-});
-
-// src/PM/PM_WithEslintAndTsc.ts
-import ts from "typescript";
-import fs6 from "fs";
-import ansiC from "ansi-colors";
-import { ESLint } from "eslint";
-import tsc from "tsc-prog";
-var eslint, formatter, PM_WithEslintAndTsc;
-var init_PM_WithEslintAndTsc = __esm({
-  async "src/PM/PM_WithEslintAndTsc.ts"() {
-    "use strict";
-    init_utils();
-    init_base();
-    init_makePrompt();
-    eslint = new ESLint();
-    formatter = await eslint.loadFormatter(
-      "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
-    );
-    PM_WithEslintAndTsc = class extends PM_Base {
-      constructor(configs, name, mode2) {
-        super(configs);
-        this.summary = {};
-        this.tscCheck = async ({
-          entrypoint,
-          addableFiles,
-          platform
-        }) => {
-          const processId = `tsc-${entrypoint}-${Date.now()}`;
-          const command = `tsc check for ${entrypoint}`;
-          const tscPromise = (async () => {
-            console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
-            try {
-              this.typeCheckIsRunning(entrypoint);
-            } catch (e) {
-              console.error("error in tscCheck");
-              console.error(e);
-              console.error(entrypoint);
-              console.error(JSON.stringify(this.summary, null, 2));
-              process.exit(-1);
-            }
-            const program = tsc.createProgramFromConfig({
-              basePath: process.cwd(),
-              configFilePath: "tsconfig.json",
-              compilerOptions: {
-                outDir: tscPather(entrypoint, platform, this.name),
-                noEmit: true
-              },
-              include: addableFiles
-            });
-            const tscPath = tscPather(entrypoint, platform, this.name);
-            const allDiagnostics = program.getSemanticDiagnostics();
-            const results = [];
-            allDiagnostics.forEach((diagnostic) => {
-              if (diagnostic.file) {
-                const { line, character } = ts.getLineAndCharacterOfPosition(
-                  diagnostic.file,
-                  diagnostic.start
-                );
-                const message = ts.flattenDiagnosticMessageText(
-                  diagnostic.messageText,
-                  "\n"
-                );
-                results.push(
-                  `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
-                );
-              } else {
-                results.push(
-                  ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
-                );
-              }
-            });
-            fs6.writeFileSync(tscPath, results.join("\n"));
-            this.typeCheckIsNowDone(entrypoint, results.length);
-            return results.length;
-          })();
-          if (this.addPromiseProcess) {
-            this.addPromiseProcess(processId, tscPromise, command);
-          } else {
-            await tscPromise;
-          }
-        };
-        this.eslintCheck = async (entrypoint, platform, addableFiles) => {
-          const processId = `eslint-${entrypoint}-${Date.now()}`;
-          const command = `eslint check for ${entrypoint}`;
-          const eslintPromise = (async () => {
-            console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
-            try {
-              this.lintIsRunning(entrypoint);
-            } catch (e) {
-              console.error("error in eslintCheck");
-              console.error(e);
-              console.error(entrypoint);
-              console.error(JSON.stringify(this.summary, null, 2));
-              process.exit(-1);
-            }
-            const filepath = lintPather(entrypoint, platform, this.name);
-            if (fs6.existsSync(filepath))
-              fs6.rmSync(filepath);
-            const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
-              return r.messages[0].ruleId !== null;
-            }).map((r) => {
-              delete r.source;
-              return r;
-            });
-            fs6.writeFileSync(filepath, await formatter.format(results));
-            this.lintIsNowDone(entrypoint, results.length);
-            return results.length;
-          })();
-          if (this.addPromiseProcess) {
-            this.addPromiseProcess(processId, eslintPromise, command);
-          } else {
-            await eslintPromise;
-          }
-        };
-        this.makePrompt = async (entryPoint, addableFiles, platform) => {
-          await makePromptInternal(
-            this.summary,
-            this.name,
-            entryPoint,
-            addableFiles,
-            platform
-          );
-          this.checkForShutdown();
-        };
-        this.typeCheckIsRunning = (src) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
-          this.summary[src].typeErrors = "?";
-        };
-        this.typeCheckIsNowDone = (src, failures) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
-          if (failures === 0) {
-            console.log(ansiC.green(ansiC.inverse(`tsc > ${src}`)));
-          } else {
-            console.log(
-              ansiC.red(ansiC.inverse(`tsc > ${src} failed ${failures} times`))
-            );
-          }
-          this.summary[src].typeErrors = failures;
-          this.writeBigBoard();
-          this.checkForShutdown();
-        };
-        this.lintIsRunning = (src) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
-          this.summary[src].staticErrors = "?";
-          this.writeBigBoard();
-        };
-        this.lintIsNowDone = (src, failures) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
-          if (failures === 0) {
-            console.log(ansiC.green(ansiC.inverse(`eslint > ${src}`)));
-          } else {
-            console.log(
-              ansiC.red(ansiC.inverse(`eslint > ${src} failed ${failures} times`))
-            );
-          }
-          this.summary[src].staticErrors = failures;
-          this.writeBigBoard();
-          this.checkForShutdown();
-        };
-        this.bddTestIsRunning = (src) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
-          this.summary[src].runTimeErrors = "?";
-          this.writeBigBoard();
-        };
-        this.bddTestIsNowDone = (src, failures) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
-          this.summary[src].runTimeErrors = failures;
-          this.writeBigBoard();
-          this.checkForShutdown();
-        };
-        this.writeBigBoard = () => {
-          const summaryPath = `./testeranto/reports/${this.name}/summary.json`;
-          const summaryData = JSON.stringify(this.summary, null, 2);
-          fs6.writeFileSync(summaryPath, summaryData);
-          this.broadcast({
-            type: "summaryUpdate",
-            data: this.summary
-          });
-        };
-        this.name = name;
-        this.mode = mode2;
-        this.summary = {};
-        this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
-          this.ensureSummaryEntry(t);
-          sidecars.forEach(([sidecarName]) => {
-            this.ensureSummaryEntry(sidecarName, true);
-          });
-        });
-      }
-      ensureSummaryEntry(src, isSidecar = false) {
-        if (!this.summary[src]) {
-          this.summary[src] = {
-            typeErrors: void 0,
-            staticErrors: void 0,
-            runTimeErrors: void 0,
-            prompt: void 0,
-            failingFeatures: {}
-          };
-          if (isSidecar) {
-          }
-        }
-        return this.summary[src];
-      }
-    };
-  }
-});
-
 // src/PM/PM_WithWebSocket.ts
 import { spawn } from "node:child_process";
-import fs7 from "fs";
+import fs5 from "fs";
 import http from "http";
 import url from "url";
 import mime from "mime-types";
 import { WebSocketServer } from "ws";
 var PM_WithWebSocket;
 var init_PM_WithWebSocket = __esm({
-  async "src/PM/PM_WithWebSocket.ts"() {
+  "src/PM/PM_WithWebSocket.ts"() {
     "use strict";
-    await init_PM_WithEslintAndTsc();
-    PM_WithWebSocket = class extends PM_WithEslintAndTsc {
-      constructor(configs, name, mode2) {
-        super(configs, name, mode2);
+    init_base();
+    PM_WithWebSocket = class extends PM_Base {
+      constructor(configs) {
+        super(configs);
         this.clients = /* @__PURE__ */ new Set();
         this.runningProcesses = /* @__PURE__ */ new Map();
         this.allProcesses = /* @__PURE__ */ new Map();
@@ -1023,7 +655,7 @@ var init_PM_WithWebSocket = __esm({
           ];
           let foundPath = null;
           for (const possiblePath of possiblePaths) {
-            if (fs7.existsSync(possiblePath)) {
+            if (fs5.existsSync(possiblePath)) {
               foundPath = possiblePath;
               break;
             }
@@ -1033,7 +665,7 @@ var init_PM_WithWebSocket = __esm({
           } else {
             const indexPath = this.findIndexHtml();
             if (indexPath) {
-              fs7.readFile(indexPath, (err, data) => {
+              fs5.readFile(indexPath, (err, data) => {
                 if (err) {
                   res.writeHead(404, { "Content-Type": "text/plain" });
                   res.end("404 Not Found");
@@ -1050,12 +682,12 @@ var init_PM_WithWebSocket = __esm({
             }
           }
         }
-        fs7.exists(filePath, (exists) => {
+        fs5.exists(filePath, (exists) => {
           if (!exists) {
             if (!pathname.includes(".") && pathname !== "/") {
               const indexPath = this.findIndexHtml();
               if (indexPath) {
-                fs7.readFile(indexPath, (err, data) => {
+                fs5.readFile(indexPath, (err, data) => {
                   if (err) {
                     res.writeHead(404, { "Content-Type": "text/plain" });
                     res.end("404 Not Found");
@@ -1082,7 +714,7 @@ var init_PM_WithWebSocket = __esm({
             res.end("404 Not Found");
             return;
           }
-          fs7.readFile(filePath, (err, data) => {
+          fs5.readFile(filePath, (err, data) => {
             if (err) {
               res.writeHead(500, { "Content-Type": "text/plain" });
               res.end("500 Internal Server Error");
@@ -1102,7 +734,7 @@ var init_PM_WithWebSocket = __esm({
           "./index.html"
         ];
         for (const path12 of possiblePaths) {
-          if (fs7.existsSync(path12)) {
+          if (fs5.existsSync(path12)) {
             return path12;
           }
         }
@@ -1119,12 +751,16 @@ var init_PM_WithWebSocket = __esm({
           type: "promise"
         });
         this.processLogs.set(processId, []);
+        const startMessage = `Starting: ${command}`;
+        const logs = this.processLogs.get(processId) || [];
+        logs.push(startMessage);
+        this.processLogs.set(processId, logs);
         this.broadcast({
           type: "processStarted",
           processId,
           command,
           timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          logs: []
+          logs: [startMessage]
         });
         promise.then((result) => {
           this.runningProcesses.delete(processId);
@@ -1136,11 +772,16 @@ var init_PM_WithWebSocket = __esm({
               exitCode: 0
             });
           }
+          const successMessage = `Completed successfully with result: ${JSON.stringify(result)}`;
+          const currentLogs = this.processLogs.get(processId) || [];
+          currentLogs.push(successMessage);
+          this.processLogs.set(processId, currentLogs);
           this.broadcast({
             type: "processExited",
             processId,
             exitCode: 0,
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+            timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+            logs: [successMessage]
           });
           if (onResolve)
             onResolve(result);
@@ -1154,11 +795,16 @@ var init_PM_WithWebSocket = __esm({
               error: error.message
             });
           }
+          const errorMessage = `Failed with error: ${error.message}`;
+          const currentLogs = this.processLogs.get(processId) || [];
+          currentLogs.push(errorMessage);
+          this.processLogs.set(processId, currentLogs);
           this.broadcast({
             type: "processError",
             processId,
             error: error.message,
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+            timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+            logs: [errorMessage]
           });
           if (onReject)
             onReject(error);
@@ -1172,6 +818,364 @@ var init_PM_WithWebSocket = __esm({
             client.send(data);
           }
         });
+      }
+    };
+  }
+});
+
+// src/utils/logFiles.ts
+function getLogFilesForRuntime(runtime) {
+  const { standard, runtimeSpecific } = getRuntimeLogs(runtime);
+  return [...standard, ...runtimeSpecific];
+}
+var LOG_FILES, STANDARD_LOGS, RUNTIME_SPECIFIC_LOGS, ALL_LOGS, getRuntimeLogs;
+var init_logFiles = __esm({
+  "src/utils/logFiles.ts"() {
+    "use strict";
+    LOG_FILES = {
+      TESTS: "tests.json",
+      TYPE_ERRORS: "type_errors.txt",
+      LINT_ERRORS: "lint_errors.txt",
+      EXIT: "exit.log",
+      MESSAGE: "message.txt",
+      PROMPT: "prompt.txt",
+      STDOUT: "stdout.log",
+      STDERR: "stderr.log",
+      INFO: "info.log",
+      ERROR: "error.log",
+      WARN: "warn.log",
+      DEBUG: "debug.log"
+    };
+    STANDARD_LOGS = {
+      TESTS: "tests.json",
+      TYPE_ERRORS: "type_errors.txt",
+      LINT_ERRORS: "lint_errors.txt",
+      EXIT: "exit.log",
+      MESSAGE: "message.txt",
+      PROMPT: "prompt.txt",
+      BUILD: "build.json"
+    };
+    RUNTIME_SPECIFIC_LOGS = {
+      node: {
+        STDOUT: "stdout.log",
+        STDERR: "stderr.log"
+      },
+      web: {
+        INFO: "info.log",
+        ERROR: "error.log",
+        WARN: "warn.log",
+        DEBUG: "debug.log"
+      },
+      pure: {}
+      // No runtime-specific logs for pure
+    };
+    ALL_LOGS = {
+      ...STANDARD_LOGS,
+      ...Object.values(RUNTIME_SPECIFIC_LOGS).reduce((acc, logs) => ({ ...acc, ...logs }), {})
+    };
+    getRuntimeLogs = (runtime) => {
+      return {
+        standard: Object.values(STANDARD_LOGS),
+        runtimeSpecific: Object.values(RUNTIME_SPECIFIC_LOGS[runtime])
+      };
+    };
+  }
+});
+
+// src/utils/makePrompt.ts
+import fs6 from "fs";
+import path5 from "path";
+var makePrompt, makePromptInternal;
+var init_makePrompt = __esm({
+  "src/utils/makePrompt.ts"() {
+    "use strict";
+    init_utils();
+    init_logFiles();
+    init_logFiles();
+    makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
+      summary[entryPoint].prompt = "?";
+      const promptPath = promptPather(entryPoint, runtime, name);
+      const testDir = path5.join(
+        "testeranto",
+        "reports",
+        name,
+        entryPoint.split(".").slice(0, -1).join("."),
+        runtime
+      );
+      if (!fs6.existsSync(testDir)) {
+        fs6.mkdirSync(testDir, { recursive: true });
+      }
+      const testPaths = path5.join(testDir, LOG_FILES.TESTS);
+      const lintPath = path5.join(testDir, LOG_FILES.LINT_ERRORS);
+      const typePath = path5.join(testDir, LOG_FILES.TYPE_ERRORS);
+      const messagePath = path5.join(testDir, LOG_FILES.MESSAGE);
+      try {
+        await Promise.all([
+          fs6.promises.writeFile(
+            promptPath,
+            `
+${addableFiles.map((x) => {
+              return `/add ${x}`;
+            }).join("\n")}
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read ${testPaths}
+/read ${typePath}
+/read ${lintPath}
+
+/read ${getLogFilesForRuntime(runtime).map((p) => `${testDir}/${p}`).join(" ")}
+`
+          ),
+          fs6.promises.writeFile(
+            messagePath,
+            `
+There are 3 types of test reports.
+1) bdd (highest priority)
+2) type checker
+3) static analysis (lowest priority)
+
+"tests.json" is the detailed result of the bdd tests.
+if these files do not exist, then something has gone badly wrong and needs to be addressed.
+
+"type_errors.txt" is the result of the type checker.
+if this file does not exist, then type check passed without errors;
+
+"lint_errors.txt" is the result of the static analysis.
+if this file does not exist, then static analysis passed without errors;
+
+BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns.
+Do not add error throwing/catching to the tests themselves.
+`
+          )
+        ]);
+      } catch (e) {
+        console.error(`Failed to write prompt files at ${testDir}`);
+        console.error(e);
+        throw e;
+      }
+      summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${name}/reports/${runtime}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
+    };
+    makePromptInternal = (summary, name, entryPoint, addableFiles, runTime) => {
+      if (runTime === "node") {
+        return makePrompt(summary, name, entryPoint, addableFiles, "node");
+      }
+      if (runTime === "web") {
+        return makePrompt(summary, name, entryPoint, addableFiles, "web");
+      }
+      if (runTime === "pure") {
+        return makePrompt(summary, name, entryPoint, addableFiles, "pure");
+      }
+    };
+  }
+});
+
+// src/PM/PM_WithEslintAndTsc.ts
+import ts from "typescript";
+import fs7 from "fs";
+import ansiC from "ansi-colors";
+import { ESLint } from "eslint";
+import tsc from "tsc-prog";
+var eslint, formatter, PM_WithEslintAndTsc;
+var init_PM_WithEslintAndTsc = __esm({
+  async "src/PM/PM_WithEslintAndTsc.ts"() {
+    "use strict";
+    init_utils();
+    init_PM_WithWebSocket();
+    init_makePrompt();
+    eslint = new ESLint();
+    formatter = await eslint.loadFormatter(
+      "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
+    );
+    PM_WithEslintAndTsc = class extends PM_WithWebSocket {
+      constructor(configs, name, mode2) {
+        super(configs);
+        this.summary = {};
+        this.tscCheck = async ({
+          entrypoint,
+          addableFiles,
+          platform
+        }) => {
+          const processId = `tsc-${entrypoint}-${Date.now()}`;
+          const command = `tsc check for ${entrypoint}`;
+          const tscPromise = (async () => {
+            try {
+              this.typeCheckIsRunning(entrypoint);
+            } catch (e) {
+              throw new Error(`Error in tscCheck: ${e.message}`);
+            }
+            const program = tsc.createProgramFromConfig({
+              basePath: process.cwd(),
+              configFilePath: "tsconfig.json",
+              compilerOptions: {
+                outDir: tscPather(entrypoint, platform, this.name),
+                noEmit: true
+              },
+              include: addableFiles
+            });
+            const tscPath = tscPather(entrypoint, platform, this.name);
+            const allDiagnostics = program.getSemanticDiagnostics();
+            const results = [];
+            allDiagnostics.forEach((diagnostic) => {
+              if (diagnostic.file) {
+                const { line, character } = ts.getLineAndCharacterOfPosition(
+                  diagnostic.file,
+                  diagnostic.start
+                );
+                const message = ts.flattenDiagnosticMessageText(
+                  diagnostic.messageText,
+                  "\n"
+                );
+                results.push(
+                  `${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`
+                );
+              } else {
+                results.push(
+                  ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+                );
+              }
+            });
+            fs7.writeFileSync(tscPath, results.join("\n"));
+            this.typeCheckIsNowDone(entrypoint, results.length);
+            return results.length;
+          })();
+          if (this.addPromiseProcess) {
+            this.addPromiseProcess(processId, tscPromise, command);
+          } else {
+            await tscPromise;
+          }
+        };
+        this.eslintCheck = async (entrypoint, platform, addableFiles) => {
+          const processId = `eslint-${entrypoint}-${Date.now()}`;
+          const command = `eslint check for ${entrypoint}`;
+          const eslintPromise = (async () => {
+            try {
+              this.lintIsRunning(entrypoint);
+            } catch (e) {
+              throw new Error(`Error in eslintCheck: ${e.message}`);
+            }
+            const filepath = lintPather(entrypoint, platform, this.name);
+            if (fs7.existsSync(filepath))
+              fs7.rmSync(filepath);
+            const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
+              return r.messages[0].ruleId !== null;
+            }).map((r) => {
+              delete r.source;
+              return r;
+            });
+            fs7.writeFileSync(filepath, await formatter.format(results));
+            this.lintIsNowDone(entrypoint, results.length);
+            return results.length;
+          })();
+          if (this.addPromiseProcess) {
+            this.addPromiseProcess(processId, eslintPromise, command);
+          } else {
+            await eslintPromise;
+          }
+        };
+        this.makePrompt = async (entryPoint, addableFiles, platform) => {
+          await makePromptInternal(
+            this.summary,
+            this.name,
+            entryPoint,
+            addableFiles,
+            platform
+          );
+          this.checkForShutdown();
+        };
+        this.typeCheckIsRunning = (src) => {
+          if (!this.summary[src]) {
+            throw `this.summary[${src}] is undefined`;
+          }
+          this.summary[src].typeErrors = "?";
+        };
+        this.typeCheckIsNowDone = (src, failures) => {
+          if (!this.summary[src]) {
+            throw `this.summary[${src}] is undefined`;
+          }
+          if (failures === 0) {
+            console.log(ansiC.green(ansiC.inverse(`tsc > ${src}`)));
+          } else {
+            console.log(
+              ansiC.red(ansiC.inverse(`tsc > ${src} failed ${failures} times`))
+            );
+          }
+          this.summary[src].typeErrors = failures;
+          this.writeBigBoard();
+          this.checkForShutdown();
+        };
+        this.lintIsRunning = (src) => {
+          if (!this.summary[src]) {
+            throw `this.summary[${src}] is undefined`;
+          }
+          this.summary[src].staticErrors = "?";
+          this.writeBigBoard();
+        };
+        this.lintIsNowDone = (src, failures) => {
+          if (!this.summary[src]) {
+            throw `this.summary[${src}] is undefined`;
+          }
+          if (failures === 0) {
+            console.log(ansiC.green(ansiC.inverse(`eslint > ${src}`)));
+          } else {
+            console.log(
+              ansiC.red(ansiC.inverse(`eslint > ${src} failed ${failures} times`))
+            );
+          }
+          this.summary[src].staticErrors = failures;
+          this.writeBigBoard();
+          this.checkForShutdown();
+        };
+        this.bddTestIsRunning = (src) => {
+          if (!this.summary[src]) {
+            throw `this.summary[${src}] is undefined`;
+          }
+          this.summary[src].runTimeErrors = "?";
+          this.writeBigBoard();
+        };
+        this.bddTestIsNowDone = (src, failures) => {
+          if (!this.summary[src]) {
+            throw `this.summary[${src}] is undefined`;
+          }
+          this.summary[src].runTimeErrors = failures;
+          this.writeBigBoard();
+          this.checkForShutdown();
+        };
+        this.writeBigBoard = () => {
+          const summaryPath = `./testeranto/reports/${this.name}/summary.json`;
+          const summaryData = JSON.stringify(this.summary, null, 2);
+          fs7.writeFileSync(summaryPath, summaryData);
+          this.broadcast({
+            type: "summaryUpdate",
+            data: this.summary
+          });
+        };
+        this.name = name;
+        this.mode = mode2;
+        this.summary = {};
+        this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
+          this.ensureSummaryEntry(t);
+          sidecars.forEach(([sidecarName]) => {
+            this.ensureSummaryEntry(sidecarName, true);
+          });
+        });
+      }
+      ensureSummaryEntry(src, isSidecar = false) {
+        if (!this.summary[src]) {
+          this.summary[src] = {
+            typeErrors: void 0,
+            staticErrors: void 0,
+            runTimeErrors: void 0,
+            prompt: void 0,
+            failingFeatures: {}
+          };
+          if (isSidecar) {
+          }
+        }
+        return this.summary[src];
       }
     };
   }
@@ -1448,13 +1452,13 @@ var init_main = __esm({
     "use strict";
     init_utils();
     init_queue();
-    await init_PM_WithWebSocket();
+    await init_PM_WithEslintAndTsc();
     init_utils2();
     changes = {};
     fileHashes = {};
     files2 = {};
     screenshots2 = {};
-    PM_Main = class extends PM_WithWebSocket {
+    PM_Main = class extends PM_WithEslintAndTsc {
       constructor(configs, name, mode2) {
         super(configs, name, mode2);
         this.logStreams = {};
@@ -1466,7 +1470,6 @@ var init_main = __esm({
           const processId = `pure-${src}-${Date.now()}`;
           const command = `pure test: ${src}`;
           const purePromise = (async () => {
-            console.log(ansiC3.green(ansiC3.inverse(`pure < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
             if (!fs10.existsSync(reportDest)) {
@@ -1478,7 +1481,9 @@ var init_main = __esm({
               return t[0] === src;
             });
             if (!testConfig) {
-              console.log(ansiC3.inverse("missing test config! Exiting ungracefully!"));
+              console.log(
+                ansiC3.inverse("missing test config! Exiting ungracefully!")
+              );
               process.exit(-1);
             }
             const testConfigResource = testConfig[2];
@@ -1566,7 +1571,6 @@ var init_main = __esm({
           const processId = `node-${src}-${Date.now()}`;
           const command = `node test: ${src}`;
           const nodePromise = (async () => {
-            console.log(ansiC3.green(ansiC3.inverse(`node < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
             if (!fs10.existsSync(reportDest)) {
@@ -1578,7 +1582,9 @@ var init_main = __esm({
             });
             if (!testConfig) {
               console.log(
-                ansiC3.inverse(`missing test config! Exiting ungracefully for '${src}'`)
+                ansiC3.inverse(
+                  `missing test config! Exiting ungracefully for '${src}'`
+                )
               );
               process.exit(-1);
             }
@@ -1624,17 +1630,9 @@ var init_main = __esm({
             const builtfile = dest;
             let haltReturns = false;
             const ipcfile = "/tmp/tpipe_" + Math.random();
-            const child = spawn2(
-              "node",
-              [
-                builtfile,
-                testResources,
-                ipcfile
-              ],
-              {
-                stdio: ["pipe", "pipe", "pipe", "ipc"]
-              }
-            );
+            const child = spawn2("node", [builtfile, testResources, ipcfile], {
+              stdio: ["pipe", "pipe", "pipe", "ipc"]
+            });
             let buffer = new Buffer("");
             const server = net.createServer((socket) => {
               const queue = new Queue();
@@ -1742,7 +1740,6 @@ var init_main = __esm({
           const processId = `web-${src}-${Date.now()}`;
           const command = `web test: ${src}`;
           const webPromise = (async () => {
-            console.log(ansiC3.green(ansiC3.inverse(`web < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
             if (!fs10.existsSync(reportDest)) {
@@ -1849,7 +1846,6 @@ var init_main = __esm({
           const processId = `pitono-${src}-${Date.now()}`;
           const command = `pitono test: ${src}`;
           const pitonoPromise = (async () => {
-            console.log(ansiC3.green(ansiC3.inverse(`pitono < ${src}`)));
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
             if (!fs10.existsSync(reportDest)) {

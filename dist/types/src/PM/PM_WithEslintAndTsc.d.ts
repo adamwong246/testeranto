@@ -1,6 +1,6 @@
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
-import { PM_Base } from "./base.js";
-export declare abstract class PM_WithEslintAndTsc extends PM_Base {
+import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
+export declare abstract class PM_WithEslintAndTsc extends PM_WithWebSocket {
     name: string;
     mode: "once" | "dev";
     summary: ISummary;

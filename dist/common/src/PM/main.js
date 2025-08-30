@@ -52,13 +52,13 @@ const url_1 = __importDefault(require("url"));
 const mime_types_1 = __importDefault(require("mime-types"));
 const utils_1 = require("../utils");
 const queue_js_1 = require("../utils/queue.js");
-const PM_WithWebSocket_js_1 = require("./PM_WithWebSocket.js");
+const PM_WithEslintAndTsc_js_1 = require("./PM_WithEslintAndTsc.js");
 const utils_js_1 = require("./utils.js");
 const changes = {};
 const fileHashes = {};
 const files = {};
 const screenshots = {};
-class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
+class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     constructor(configs, name, mode) {
         super(configs, name, mode);
         this.logStreams = {};
@@ -71,7 +71,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             const command = `pure test: ${src}`;
             // Create the promise
             const purePromise = (async () => {
-                console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`pure < ${src}`)));
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
@@ -173,7 +172,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             const command = `node test: ${src}`;
             // Create the promise
             const nodePromise = (async () => {
-                console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`node < ${src}`)));
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
@@ -229,11 +227,7 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
                 const builtfile = dest;
                 let haltReturns = false;
                 const ipcfile = "/tmp/tpipe_" + Math.random();
-                const child = (0, node_child_process_1.spawn)("node", [
-                    builtfile,
-                    testResources,
-                    ipcfile,
-                ], {
+                const child = (0, node_child_process_1.spawn)("node", [builtfile, testResources, ipcfile], {
                     stdio: ["pipe", "pipe", "pipe", "ipc"],
                 });
                 let buffer = new Buffer("");
@@ -339,7 +333,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             const command = `web test: ${src}`;
             // Create the promise
             const webPromise = (async () => {
-                console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`web < ${src}`)));
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
@@ -451,7 +444,6 @@ class PM_Main extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             const command = `pitono test: ${src}`;
             // Create the promise
             const pitonoPromise = (async () => {
-                console.log(ansi_colors_2.default.green(ansi_colors_2.default.inverse(`pitono < ${src}`)));
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")

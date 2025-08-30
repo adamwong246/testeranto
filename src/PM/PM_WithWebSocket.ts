@@ -10,9 +10,9 @@ import url from "url";
 import mime from "mime-types";
 import { WebSocketServer } from "ws";
 
-import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
+import { PM_Base } from "./base.js";
 
-export abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
+export abstract class PM_WithWebSocket extends PM_Base {
   wss: WebSocketServer;
   clients: Set<any> = new Set();
   httpServer: http.Server;
@@ -33,8 +33,8 @@ export abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
   > = new Map();
   processLogs: Map<string, string[]> = new Map();
 
-  constructor(configs: any, name: string, mode: "once" | "dev") {
-    super(configs, name, mode);
+  constructor(configs: any) {
+    super(configs);
 
     // Create HTTP server
     this.httpServer = http.createServer(this.requestHandler.bind(this));
@@ -408,13 +408,19 @@ export abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
     // Initialize logs for this process
     this.processLogs.set(processId, []);
 
+    // Add log entry for process start
+    const startMessage = `Starting: ${command}`;
+    const logs = this.processLogs.get(processId) || [];
+    logs.push(startMessage);
+    this.processLogs.set(processId, logs);
+
     // Broadcast process started
     this.broadcast({
       type: "processStarted",
       processId,
       command,
       timestamp: new Date().toISOString(),
-      logs: [],
+      logs: [startMessage],
     });
 
     // Handle promise resolution
@@ -430,11 +436,19 @@ export abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
             exitCode: 0,
           });
         }
+        
+        // Add log entry for process completion
+        const successMessage = `Completed successfully with result: ${JSON.stringify(result)}`;
+        const currentLogs = this.processLogs.get(processId) || [];
+        currentLogs.push(successMessage);
+        this.processLogs.set(processId, currentLogs);
+        
         this.broadcast({
           type: "processExited",
           processId,
           exitCode: 0,
           timestamp: new Date().toISOString(),
+          logs: [successMessage],
         });
         if (onResolve) onResolve(result);
       })
@@ -449,11 +463,19 @@ export abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
             error: error.message,
           });
         }
+        
+        // Add log entry for process error
+        const errorMessage = `Failed with error: ${error.message}`;
+        const currentLogs = this.processLogs.get(processId) || [];
+        currentLogs.push(errorMessage);
+        this.processLogs.set(processId, currentLogs);
+        
         this.broadcast({
           type: "processError",
           processId,
           error: error.message,
           timestamp: new Date().toISOString(),
+          logs: [errorMessage],
         });
         if (onReject) onReject(error);
       });

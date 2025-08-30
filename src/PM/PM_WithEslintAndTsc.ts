@@ -12,7 +12,7 @@ import tsc from "tsc-prog";
 import { lintPather, tscPather } from "../utils";
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
 
-import { PM_Base } from "./base.js";
+import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 import { makePromptInternal } from "../utils/makePrompt";
 
 const eslint = new ESLint();
@@ -20,7 +20,7 @@ const formatter = await eslint.loadFormatter(
   "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
 );
 
-export abstract class PM_WithEslintAndTsc extends PM_Base {
+export abstract class PM_WithEslintAndTsc extends PM_WithWebSocket {
   name: string;
   mode: "once" | "dev";
   summary: ISummary = {};
@@ -50,21 +50,15 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     entrypoint: string;
     addableFiles: string[];
   }) => {
-    // Generate a process ID
     const processId = `tsc-${entrypoint}-${Date.now()}`;
     const command = `tsc check for ${entrypoint}`;
-    
-    // Create the promise
+
     const tscPromise = (async () => {
-      console.log(ansiC.green(ansiC.inverse(`tsc < ${entrypoint}`)));
       try {
         this.typeCheckIsRunning(entrypoint);
       } catch (e) {
-        console.error("error in tscCheck");
-        console.error(e);
-        console.error(entrypoint);
-        console.error(JSON.stringify(this.summary, null, 2));
-        process.exit(-1);
+        // Log error through process manager
+        throw new Error(`Error in tscCheck: ${e.message}`);
       }
 
       const program = tsc.createProgramFromConfig({
@@ -122,22 +116,14 @@ export abstract class PM_WithEslintAndTsc extends PM_Base {
     platform: IRunTime,
     addableFiles: string[]
   ) => {
-    // Generate a process ID
     const processId = `eslint-${entrypoint}-${Date.now()}`;
     const command = `eslint check for ${entrypoint}`;
-    
-    // Create the promise
-    const eslintPromise = (async () => {
-      console.log(ansiC.green(ansiC.inverse(`eslint < ${entrypoint}`)));
 
+    const eslintPromise = (async () => {
       try {
         this.lintIsRunning(entrypoint);
       } catch (e) {
-        console.error("error in eslintCheck");
-        console.error(e);
-        console.error(entrypoint);
-        console.error(JSON.stringify(this.summary, null, 2));
-        process.exit(-1);
+        throw new Error(`Error in eslintCheck: ${e.message}`);
       }
 
       const filepath = lintPather(entrypoint, platform, this.name);

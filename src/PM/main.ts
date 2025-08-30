@@ -20,7 +20,7 @@ import { getRunnables, webEvaluator } from "../utils";
 import { IBuiltConfig, IRunTime } from "../Types.js";
 import { Queue } from "../utils/queue.js";
 
-import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
+import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
 import {
   fileHash,
   createLogStreams,
@@ -38,7 +38,7 @@ const fileHashes = {};
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-export class PM_Main extends PM_WithWebSocket {
+export class PM_Main extends PM_WithEslintAndTsc {
   ports: Record<number, string>;
   queue: string[];
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
@@ -385,10 +385,9 @@ export class PM_Main extends PM_WithWebSocket {
   launchPure = async (src: string, dest: string) => {
     const processId = `pure-${src}-${Date.now()}`;
     const command = `pure test: ${src}`;
-    
+
     // Create the promise
     const purePromise = (async () => {
-      console.log(ansiC.green(ansiC.inverse(`pure < ${src}`)));
       this.bddTestIsRunning(src);
 
       const reportDest = `testeranto/reports/${this.name}/${src
@@ -409,7 +408,9 @@ export class PM_Main extends PM_WithWebSocket {
       });
 
       if (!testConfig) {
-        console.log(ansiC.inverse("missing test config! Exiting ungracefully!"));
+        console.log(
+          ansiC.inverse("missing test config! Exiting ungracefully!")
+        );
         process.exit(-1);
       }
       const testConfigResource = testConfig[2];
@@ -512,10 +513,9 @@ export class PM_Main extends PM_WithWebSocket {
   launchNode = async (src: string, dest: string) => {
     const processId = `node-${src}-${Date.now()}`;
     const command = `node test: ${src}`;
-    
+
     // Create the promise
     const nodePromise = (async () => {
-      console.log(ansiC.green(ansiC.inverse(`node < ${src}`)));
       this.bddTestIsRunning(src);
 
       const reportDest = `testeranto/reports/${this.name}/${src
@@ -535,7 +535,9 @@ export class PM_Main extends PM_WithWebSocket {
 
       if (!testConfig) {
         console.log(
-          ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`)
+          ansiC.inverse(
+            `missing test config! Exiting ungracefully for '${src}'`
+          )
         );
         process.exit(-1);
       }
@@ -591,17 +593,9 @@ export class PM_Main extends PM_WithWebSocket {
       let haltReturns = false;
 
       const ipcfile = "/tmp/tpipe_" + Math.random();
-      const child = spawn(
-        "node",
-        [
-          builtfile,
-          testResources,
-          ipcfile,
-        ],
-        {
-          stdio: ["pipe", "pipe", "pipe", "ipc"],
-        }
-      );
+      const child = spawn("node", [builtfile, testResources, ipcfile], {
+        stdio: ["pipe", "pipe", "pipe", "ipc"],
+      });
 
       let buffer: Buffer<ArrayBufferLike> = new Buffer("");
 
@@ -661,7 +655,7 @@ export class PM_Main extends PM_WithWebSocket {
           child.stderr?.on("data", (data) => {
             logs.stderr?.write(data);
           });
-          
+
           child.on("close", (code) => {
             const exitCode = code === null ? -1 : code;
             if (exitCode < 0) {
@@ -696,7 +690,7 @@ export class PM_Main extends PM_WithWebSocket {
 
             haltReturns = true;
           });
-          
+
           child.on("error", (e) => {
             console.log("error");
             haltReturns = true;
@@ -728,10 +722,9 @@ export class PM_Main extends PM_WithWebSocket {
   launchWeb = async (src: string, dest: string) => {
     const processId = `web-${src}-${Date.now()}`;
     const command = `web test: ${src}`;
-    
+
     // Create the promise
     const webPromise = (async () => {
-      console.log(ansiC.green(ansiC.inverse(`web < ${src}`)));
       this.bddTestIsRunning(src);
 
       const reportDest = `testeranto/reports/${this.name}/${src
@@ -784,7 +777,7 @@ export class PM_Main extends PM_WithWebSocket {
               logs.writeExitCode(0);
               logs.closeAll();
             });
-            
+
             this.mapping().forEach(async ([command, func]) => {
               if (command === "page") {
                 page.exposeFunction(command, (x?) => {
@@ -865,10 +858,9 @@ export class PM_Main extends PM_WithWebSocket {
   launchPitono = async (src: string, dest: string) => {
     const processId = `pitono-${src}-${Date.now()}`;
     const command = `pitono test: ${src}`;
-    
+
     // Create the promise
     const pitonoPromise = (async () => {
-      console.log(ansiC.green(ansiC.inverse(`pitono < ${src}`)));
       this.bddTestIsRunning(src);
 
       const reportDest = `testeranto/reports/${this.name}/${src

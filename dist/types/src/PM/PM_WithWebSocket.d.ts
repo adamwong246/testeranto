@@ -1,8 +1,8 @@
 import { ChildProcess } from "node:child_process";
 import http from "http";
 import { WebSocketServer } from "ws";
-import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
-export declare abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
+import { PM_Base } from "./base.js";
+export declare abstract class PM_WithWebSocket extends PM_Base {
     wss: WebSocketServer;
     clients: Set<any>;
     httpServer: http.Server;
@@ -19,7 +19,7 @@ export declare abstract class PM_WithWebSocket extends PM_WithEslintAndTsc {
         type: "process" | "promise";
     }>;
     processLogs: Map<string, string[]>;
-    constructor(configs: any, name: string, mode: "once" | "dev");
+    constructor(configs: any);
     requestHandler(req: http.IncomingMessage, res: http.ServerResponse): void;
     findIndexHtml(): string | null;
     addPromiseProcess(processId: string, promise: Promise<any>, command: string, onResolve?: (result: any) => void, onReject?: (error: any) => void): string;

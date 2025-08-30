@@ -14,30 +14,24 @@ const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const eslint_1 = require("eslint");
 const tsc_prog_1 = __importDefault(require("tsc-prog"));
 const utils_1 = require("../utils");
-const base_js_1 = require("./base.js");
+const PM_WithWebSocket_js_1 = require("./PM_WithWebSocket.js");
 const makePrompt_1 = require("../utils/makePrompt");
 const eslint = new eslint_1.ESLint();
 const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs");
-class PM_WithEslintAndTsc extends base_js_1.PM_Base {
+class PM_WithEslintAndTsc extends PM_WithWebSocket_js_1.PM_WithWebSocket {
     constructor(configs, name, mode) {
         super(configs);
         this.summary = {};
         this.tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
-            // Generate a process ID
             const processId = `tsc-${entrypoint}-${Date.now()}`;
             const command = `tsc check for ${entrypoint}`;
-            // Create the promise
             const tscPromise = (async () => {
-                console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`tsc < ${entrypoint}`)));
                 try {
                     this.typeCheckIsRunning(entrypoint);
                 }
                 catch (e) {
-                    console.error("error in tscCheck");
-                    console.error(e);
-                    console.error(entrypoint);
-                    console.error(JSON.stringify(this.summary, null, 2));
-                    process.exit(-1);
+                    // Log error through process manager
+                    throw new Error(`Error in tscCheck: ${e.message}`);
                 }
                 const program = tsc_prog_1.default.createProgramFromConfig({
                     basePath: process.cwd(),
@@ -75,21 +69,14 @@ class PM_WithEslintAndTsc extends base_js_1.PM_Base {
             }
         };
         this.eslintCheck = async (entrypoint, platform, addableFiles) => {
-            // Generate a process ID
             const processId = `eslint-${entrypoint}-${Date.now()}`;
             const command = `eslint check for ${entrypoint}`;
-            // Create the promise
             const eslintPromise = (async () => {
-                console.log(ansi_colors_1.default.green(ansi_colors_1.default.inverse(`eslint < ${entrypoint}`)));
                 try {
                     this.lintIsRunning(entrypoint);
                 }
                 catch (e) {
-                    console.error("error in eslintCheck");
-                    console.error(e);
-                    console.error(entrypoint);
-                    console.error(JSON.stringify(this.summary, null, 2));
-                    process.exit(-1);
+                    throw new Error(`Error in eslintCheck: ${e.message}`);
                 }
                 const filepath = (0, utils_1.lintPather)(entrypoint, platform, this.name);
                 if (fs_1.default.existsSync(filepath))

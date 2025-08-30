@@ -3,9 +3,9 @@ import fs from "fs";
 import { WebSocketServer } from "ws";
 import http from "http";
 import { IBuiltConfig, IRunTime } from "../Types.js";
-import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
+import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
 import { createLogStreams } from "./utils.js";
-export declare class PM_Main extends PM_WithWebSocket {
+export declare class PM_Main extends PM_WithEslintAndTsc {
     ports: Record<number, string>;
     queue: string[];
     logStreams: Record<string, ReturnType<typeof createLogStreams>>;

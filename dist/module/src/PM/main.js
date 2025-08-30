@@ -13,13 +13,13 @@ import url from "url";
 import mime from "mime-types";
 import { getRunnables, webEvaluator } from "../utils";
 import { Queue } from "../utils/queue.js";
-import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
+import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
 import { fileHash, createLogStreams, statusMessagePretty, filesHash, isValidUrl, pollForFile, writeFileAndCreateDir, puppeteerConfigs, } from "./utils.js";
 const changes = {};
 const fileHashes = {};
 const files = {};
 const screenshots = {};
-export class PM_Main extends PM_WithWebSocket {
+export class PM_Main extends PM_WithEslintAndTsc {
     constructor(configs, name, mode) {
         super(configs, name, mode);
         this.logStreams = {};
@@ -32,7 +32,6 @@ export class PM_Main extends PM_WithWebSocket {
             const command = `pure test: ${src}`;
             // Create the promise
             const purePromise = (async () => {
-                console.log(ansiC.green(ansiC.inverse(`pure < ${src}`)));
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
@@ -134,7 +133,6 @@ export class PM_Main extends PM_WithWebSocket {
             const command = `node test: ${src}`;
             // Create the promise
             const nodePromise = (async () => {
-                console.log(ansiC.green(ansiC.inverse(`node < ${src}`)));
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
@@ -190,11 +188,7 @@ export class PM_Main extends PM_WithWebSocket {
                 const builtfile = dest;
                 let haltReturns = false;
                 const ipcfile = "/tmp/tpipe_" + Math.random();
-                const child = spawn("node", [
-                    builtfile,
-                    testResources,
-                    ipcfile,
-                ], {
+                const child = spawn("node", [builtfile, testResources, ipcfile], {
                     stdio: ["pipe", "pipe", "pipe", "ipc"],
                 });
                 let buffer = new Buffer("");
@@ -300,7 +294,6 @@ export class PM_Main extends PM_WithWebSocket {
             const command = `web test: ${src}`;
             // Create the promise
             const webPromise = (async () => {
-                console.log(ansiC.green(ansiC.inverse(`web < ${src}`)));
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
@@ -412,7 +405,6 @@ export class PM_Main extends PM_WithWebSocket {
             const command = `pitono test: ${src}`;
             // Create the promise
             const pitonoPromise = (async () => {
-                console.log(ansiC.green(ansiC.inverse(`pitono < ${src}`)));
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
