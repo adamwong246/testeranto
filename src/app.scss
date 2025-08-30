@@ -1,169 +1,168 @@
 @use "./style.scss";
 
-:root {
-  --bs-heading-color: rgba(0, 0, 0, 0.9);
-  --bs-modal-color: rgba(0, 0, 0, 0.9);
-  --frosted-bg: rgba(255, 255, 255, 0.2);
-  --frosted-border: rgba(255, 255, 255, 0.3);
-  --frosted-text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.3),
-    1px 1px 0 rgba(0, 0, 0, 0.3);
-  --frosted-inset-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
-}
+// :root {
+//   --bs-heading-color: rgba(0, 0, 0, 0.9);
+//   --bs-modal-color: rgba(0, 0, 0, 0.9);
+//   --frosted-bg: rgba(255, 255, 255, 0.2);
+//   --frosted-border: rgba(255, 255, 255, 0.3);
+//   --frosted-text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.3),
+//     1px 1px 0 rgba(0, 0, 0, 0.3);
+//   --frosted-inset-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+// }
 
-[data-bs-theme="dark"] {
-  --bs-heading-color: rgba(255, 255, 255, 0.9);
-  --bs-modal-color: rgba(255, 255, 255, 0.9);
-  --frosted-bg: rgba(0, 0, 0, 0.2);
-  --frosted-border: rgba(0, 0, 0, 0.3);
-  --frosted-text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.3),
-    1px 1px 0 rgba(0, 0, 0, 0.3);
-  --frosted-inset-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-}
+// [data-bs-theme="dark"] {
+//   --bs-heading-color: rgba(255, 255, 255, 0.9);
+//   --bs-modal-color: rgba(255, 255, 255, 0.9);
+//   --frosted-bg: rgba(0, 0, 0, 0.2);
+//   --frosted-border: rgba(0, 0, 0, 0.3);
+//   --frosted-text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.3),
+//     1px 1px 0 rgba(0, 0, 0, 0.3);
+//   --frosted-inset-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+// }
 
-pre,
-code,
-.modal-content,
-.accordion-button,
-.theme-card {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  max-width: 80ch;
-  overflow-x: auto;
-  display: block;
-  padding: 1rem;
-  border-radius: 8px;
-  font-family: monospace;
-  line-height: 1.4;
-  color: var(--bs-modal-color);
-  background-color: var(--frosted-bg);
-  backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid var(--frosted-border);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), var(--frosted-inset-shadow);
-  isolation: isolate;
-  // text-shadow:
-  //   0 1px 3px rgba(0,0,0,0.8),
-  //   0 0 10px rgba(0,0,0,0.6),
-  //   0 0 20px rgba(0,0,0,0.3),
-  //   0 0 40px rgba(0,0,0,0.1);
-}
+// pre,
+// code,
+// .modal-content,
+// .accordion-button,
+// .theme-card {
+//   white-space: pre-wrap;
+//   word-wrap: break-word;
+//   max-width: 80ch;
+//   overflow-x: auto;
+//   display: block;
+//   padding: 1rem;
+//   border-radius: 8px;
+//   font-family: monospace;
+//   line-height: 1.4;
+//   color: var(--bs-modal-color);
+//   background-color: var(--frosted-bg);
+//   backdrop-filter: blur(16px) saturate(180%);
+//   border: 1px solid var(--frosted-border);
+//   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), var(--frosted-inset-shadow);
+//   isolation: isolate;
+//   // text-shadow:
+//   //   0 1px 3px rgba(0,0,0,0.8),
+//   //   0 0 10px rgba(0,0,0,0.6),
+//   //   0 0 20px rgba(0,0,0,0.3),
+//   //   0 0 40px rgba(0,0,0,0.1);
+// }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--light-text);
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  backdrop-filter: var(--text-panel-blur);
-  background-color: var(--text-panel-bg);
-  border-radius: 8px;
-  text-shadow: var(--text-shadow-heavy);
-  box-shadow: var(--panel-border), 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 0.5rem 0;
-}
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+//   color: var(--light-text);
+//   display: inline-block;
+//   padding: 0.5rem 1rem;
+//   backdrop-filter: var(--text-panel-blur);
+//   background-color: var(--text-panel-bg);
+//   border-radius: 8px;
+//   text-shadow: var(--text-shadow-heavy);
+//   box-shadow: var(--panel-border), 0 4px 6px rgba(0, 0, 0, 0.1);
+//   margin: 0.5rem 0;
+// }
 
-p,
-.lead {
-  color: var(--light-text);
-  text-shadow: var(--text-shadow-light);
-  backdrop-filter: var(--text-panel-blur);
-  background-color: var(--text-panel-bg);
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: var(--panel-border);
-  margin: 1rem 0;
-}
+// p,
+// .lead {
+//   color: var(--light-text);
+//   text-shadow: var(--text-shadow-light);
+//   backdrop-filter: var(--text-panel-blur);
+//   background-color: var(--text-panel-bg);
+//   padding: 1rem;
+//   border-radius: 8px;
+//   box-shadow: var(--panel-border);
+//   margin: 1rem 0;
+// }
 
-.modal-content {
-  --bs-modal-color: var(--bs-heading-color);
-  background-color: var(--frosted-bg);
-  backdrop-filter: blur(24px) saturate(200%);
-  border: 1px solid var(--frosted-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), var(--frosted-inset-shadow);
-}
+// .modal-content {
+//   --bs-modal-color: var(--bs-heading-color);
+//   background-color: var(--frosted-bg);
+//   backdrop-filter: blur(24px) saturate(200%);
+//   border: 1px solid var(--frosted-border);
+//   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), var(--frosted-inset-shadow);
+// }
 
+// .theme-card {
+//   cursor: pointer;
+//   transition: all 0.2s ease;
+//   height: 100%;
+//   background-color: rgba(255, 255, 255, 0.1);
+//   backdrop-filter: blur(8px);
+//   border: 1px solid rgba(255, 255, 255, 0.1);
+//   overflow: hidden;
 
-.theme-card {
-  cursor: pointer;
-  transition: all 0.2s ease;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
+//   &:hover {
+//     transform: translateY(-5px);
+//     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+//     backdrop-filter: blur(12px);
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(12px);
+//     &::before {
+//       opacity: 0.1;
+//     }
+//   }
 
-    &::before {
-      opacity: 0.1;
-    }
-  }
+//   &.border-primary {
+//     box-shadow: 0 0 0 2px var(--primary);
+//     background-color: rgba(var(--primary-rgb), 0.2);
+//   }
 
-  &.border-primary {
-    box-shadow: 0 0 0 2px var(--primary);
-    background-color: rgba(var(--primary-rgb), 0.2);
-  }
+//   &::before {
+//     content: "";
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background: radial-gradient(
+//       circle at center,
+//       rgba(255, 255, 255, 0.3) 0%,
+//       transparent 70%
+//     );
+//     opacity: 0;
+//     transition: opacity 0.3s ease;
+//   }
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-      circle at center,
-      rgba(255, 255, 255, 0.3) 0%,
-      transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
+//   .card-body {
+//     position: relative;
+//     z-index: 1;
+//   }
+// }
 
-  .card-body {
-    position: relative;
-    z-index: 1;
-  }
-}
+// .accordion-button {
+//   font-weight: 500;
+//   background-color: rgba(255, 255, 255, 0.1);
+//   backdrop-filter: blur(8px);
+//   border: 1px solid rgba(255, 255, 255, 0.1);
 
-.accordion-button {
-  font-weight: 500;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+//   &:not(.collapsed) {
+//     background-color: rgba(var(--primary-rgb), 0.2);
+//     color: var(--dark);
+//     backdrop-filter: blur(12px);
+//   }
+// }
 
-  &:not(.collapsed) {
-    background-color: rgba(var(--primary-rgb), 0.2);
-    color: var(--dark);
-    backdrop-filter: blur(12px);
-  }
-}
+// .modal-content {
+//   border-radius: 12px;
+//   overflow: hidden;
+//   background-color: rgba(255, 255, 255, 0.08);
+//   backdrop-filter: blur(24px) saturate(200%);
+//   border: 1px solid rgba(255, 255, 255, 0.25);
+//   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+//     inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+//   isolation: isolate;
+// }
 
-.modal-content {
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(24px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-  isolation: isolate;
-}
+// @keyframes spin {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
+// }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.gear-icon {
-  transition: transform 0.3s ease;
-}
+// .gear-icon {
+//   transition: transform 0.3s ease;
+// }
