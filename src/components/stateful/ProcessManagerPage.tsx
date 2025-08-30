@@ -5,7 +5,7 @@ import { useWebSocket } from '../../App';
 
 export const ProcessManagerPage: React.FC = () => {
   const [processes, setProcesses] = useState<Process[]>([]);
-  const ws = useWebSocket();
+  const { ws } = useWebSocket();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 

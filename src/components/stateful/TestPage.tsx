@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DesignEditor } from '../../../design-editor/DesignEditor';
 import { fetchTestData, summaryDotJson } from '../../utils/api';
+import { useWebSocket } from '../../App';
 
 import { TestPageView } from '../pure/TestPageView';
 
@@ -11,6 +12,7 @@ export const TestPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [route, setRoute] = useState('results');
+  const { isConnected } = useWebSocket();
 
   // Sync route with hash changes
   useEffect(() => {
@@ -51,12 +53,12 @@ export const TestPage = () => {
       try {
         const [testResponse, metafileRes] = await Promise.all([
           fetchTestData(projectName, testPath, runtime),
-          fetch(`/metafiles/${runtime}/${projectName}.json`)
+          fetch(`metafiles/${runtime}/${projectName}.json`)
         ]);
 
-        console.log('Fetching test data for:', { projectName, testPath, runtime });
+        // console.log('Fetching test data for:', { projectName, testPath, runtime });
         const receivedLogs = await testResponse.logs;
-        console.log('Received logs:', Object.keys(receivedLogs));
+        // console.log('Received logs:', Object.keys(receivedLogs));
         let sourceFiles = {};
         let buildLogs = {};
 
@@ -259,6 +261,7 @@ export const TestPage = () => {
         logs={logs}
         testsExist={testsExist}
         errorCounts={errorCounts}
+        isWebSocketConnected={isConnected}
       />
     </>
   );

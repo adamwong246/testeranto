@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { Container, Nav } from 'react-bootstrap';
+import { Container, Nav, Badge } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useWebSocket } from '../../App';
 
 type AppFrameProps = {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ type AppFrameProps = {
 export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(true);
+  const { isConnected } = useWebSocket();
 
   return (
     <div className="d-flex min-vh-100" style={{ backgroundColor: '#f8f9fa' }}>
@@ -92,12 +94,20 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           <Nav.Link
             as={NavLink}
             to="/processes"
-            className={`${location.pathname.startsWith('/processes') ? 'active' : ''} text-truncate d-flex align-items-center`}
-            style={{ width: '100%' }}
-            title="Process Manager"
+            className={`${location.pathname.startsWith('/processes') ? 'active' : ''} text-truncate d-flex align-items-center ${!isConnected ? 'text-muted pe-none' : ''}`}
+            style={{ width: '100%', opacity: isConnected ? 1 : 0.6 }}
+            title={isConnected ? "Process Manager" : "Process Manager (WebSocket not connected)"}
+            onClick={(e) => {
+              if (!isConnected) {
+                e.preventDefault();
+              }
+            }}
           >
             <span className="me-2">📊</span>
             {isExpanded && 'Process Manager'}
+            {!isConnected && isExpanded && (
+              <span className="ms-1">🔴</span>
+            )}
           </Nav.Link>
 
           {/* <Nav.Link
@@ -112,6 +122,24 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           </Nav.Link> */}
         </Nav>
 
+        {/* WebSocket Status Indicator */}
+        <div className="p-2 border-top d-flex align-items-center justify-content-center">
+          {isExpanded ? (
+            <div className="d-flex align-items-center">
+              <Badge bg={isConnected ? 'success' : 'secondary'} className="me-2">
+                {isConnected ? '🟢' : '🔴'}
+              </Badge>
+              <small className="text-muted">
+                {isConnected ? 'Dev mode' : 'Static mode'}
+              </small>
+            </div>
+          ) : (
+            <Badge bg={isConnected ? 'success' : 'secondary'}>
+              {isConnected ? '🟢' : '🔴'}
+            </Badge>
+          )}
+        </div>
+        
         <div className="p-3 border-top text-center mt-auto">
           {isExpanded ? (
             <small className="text-muted">

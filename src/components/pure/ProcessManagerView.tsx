@@ -33,7 +33,7 @@ export const ProcessManagerView: React.FC<ProcessManagerViewProps> = ({
   const navigate = useNavigate();
   const [selectedProcess, setSelectedProcess] = useState<Process | null>(null);
   // Use the centralized WebSocket from App context
-  const ws = useWebSocket();
+  const { ws } = useWebSocket();
   const [processLogs, setProcessLogs] = useState<string[]>([]);
   const [autoScroll, setAutoScroll] = useState(true);
   const logsContainerRef = useRef<HTMLDivElement>(null);

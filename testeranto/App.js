@@ -33962,7 +33962,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     runtime,
     testsExist,
     errorCounts,
-    logs
+    logs,
+    isWebSocketConnected
   }) => {
     const navigate = useNavigate();
     const [showAiderModal, setShowAiderModal] = (0, import_react81.useState)(false);
@@ -34146,9 +34147,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             variant: "info",
             onClick: () => setShowAiderModal(true),
             className: "ms-2",
-            title: "AI Assistant"
+            title: isWebSocketConnected ? "AI Assistant" : "AI Assistant (WebSocket not connected)",
+            disabled: !isWebSocketConnected
           },
-          "\u{1F916}"
+          "\u{1F916}",
+          !isWebSocketConnected && /* @__PURE__ */ import_react81.default.createElement("span", { className: "ms-1" }, "\u{1F534}")
         )
       }
     ), /* @__PURE__ */ import_react81.default.createElement(Modal_default2, { show: showAiderModal, onHide: () => setShowAiderModal(false), size: "lg", onShow: () => setMessageOption("default") }, /* @__PURE__ */ import_react81.default.createElement(Modal_default2.Header, { closeButton: true }, /* @__PURE__ */ import_react81.default.createElement(Modal_default2.Title, null, "Aider")), /* @__PURE__ */ import_react81.default.createElement(Modal_default2.Body, null, /* @__PURE__ */ import_react81.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react81.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react81.default.createElement(
@@ -34439,6 +34442,7 @@ This file was not generated during the test run.`,
     const navigate = useNavigate();
     const location2 = useLocation();
     const [route, setRoute] = (0, import_react83.useState)("results");
+    const { isConnected } = useWebSocket();
     (0, import_react83.useEffect)(() => {
       const hash = location2.hash.replace("#", "");
       if (hash && ["results", "logs", "types", "lint", "coverage"].includes(hash)) {
@@ -34471,11 +34475,9 @@ This file was not generated during the test run.`,
         try {
           const [testResponse, metafileRes] = await Promise.all([
             fetchTestData(projectName, testPath, runtime),
-            fetch(`/metafiles/${runtime}/${projectName}.json`)
+            fetch(`metafiles/${runtime}/${projectName}.json`)
           ]);
-          console.log("Fetching test data for:", { projectName, testPath, runtime });
           const receivedLogs = await testResponse.logs;
-          console.log("Received logs:", Object.keys(receivedLogs));
           let sourceFiles = {};
           let buildLogs = {};
           if (metafileRes.ok) {
@@ -34625,7 +34627,8 @@ This file was not generated during the test run.`,
         runtime,
         logs,
         testsExist,
-        errorCounts
+        errorCounts,
+        isWebSocketConnected: isConnected
       }
     ));
   };
@@ -34901,7 +34904,7 @@ This file was not generated during the test run.`,
     const [error, setError] = (0, import_react89.useState)(null);
     const [configs, setConfigs] = (0, import_react89.useState)({});
     const navigate = useNavigate();
-    const ws = useWebSocket();
+    const { ws } = useWebSocket();
     (0, import_react89.useEffect)(() => {
       if (!ws)
         return;
@@ -34979,6 +34982,7 @@ This file was not generated during the test run.`,
   var AppFrame = ({ children, title, rightContent }) => {
     const location2 = useLocation();
     const [isExpanded, setIsExpanded] = (0, import_react90.useState)(true);
+    const { isConnected } = useWebSocket();
     return /* @__PURE__ */ import_react90.default.createElement("div", { className: "d-flex min-vh-100", style: { backgroundColor: "#f8f9fa" } }, /* @__PURE__ */ import_react90.default.createElement(
       "div",
       {
@@ -35022,13 +35026,20 @@ This file was not generated during the test run.`,
         {
           as: NavLink,
           to: "/processes",
-          className: `${location2.pathname.startsWith("/processes") ? "active" : ""} text-truncate d-flex align-items-center`,
-          style: { width: "100%" },
-          title: "Process Manager"
+          className: `${location2.pathname.startsWith("/processes") ? "active" : ""} text-truncate d-flex align-items-center ${!isConnected ? "text-muted pe-none" : ""}`,
+          style: { width: "100%", opacity: isConnected ? 1 : 0.6 },
+          title: isConnected ? "Process Manager" : "Process Manager (WebSocket not connected)",
+          onClick: (e) => {
+            if (!isConnected) {
+              e.preventDefault();
+            }
+          }
         },
         /* @__PURE__ */ import_react90.default.createElement("span", { className: "me-2" }, "\u{1F4CA}"),
-        isExpanded && "Process Manager"
+        isExpanded && "Process Manager",
+        !isConnected && isExpanded && /* @__PURE__ */ import_react90.default.createElement("span", { className: "ms-1" }, "\u{1F534}")
       )),
+      /* @__PURE__ */ import_react90.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, isExpanded ? /* @__PURE__ */ import_react90.default.createElement("div", { className: "d-flex align-items-center" }, /* @__PURE__ */ import_react90.default.createElement(Badge_default, { bg: isConnected ? "success" : "secondary", className: "me-2" }, isConnected ? "\u{1F7E2}" : "\u{1F534}"), /* @__PURE__ */ import_react90.default.createElement("small", { className: "text-muted" }, isConnected ? "Dev mode" : "Static mode")) : /* @__PURE__ */ import_react90.default.createElement(Badge_default, { bg: isConnected ? "success" : "secondary" }, isConnected ? "\u{1F7E2}" : "\u{1F534}")),
       /* @__PURE__ */ import_react90.default.createElement("div", { className: "p-3 border-top text-center mt-auto" }, isExpanded ? /* @__PURE__ */ import_react90.default.createElement("small", { className: "text-muted" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react90.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")) : /* @__PURE__ */ import_react90.default.createElement("small", { className: "text-muted" }, "\u2764\uFE0F"))
     ), /* @__PURE__ */ import_react90.default.createElement("div", { className: "flex-grow-1 d-flex flex-column" }, /* @__PURE__ */ import_react90.default.createElement("main", { className: "flex-grow-1 p-4", style: { overflow: "auto" } }, /* @__PURE__ */ import_react90.default.createElement(Container_default, { fluid: true, className: "h-100" }, children))));
   };
@@ -36421,7 +36432,7 @@ This file was not generated during the test run.`,
   }) => {
     const navigate = useNavigate();
     const [selectedProcess, setSelectedProcess] = (0, import_react98.useState)(null);
-    const ws = useWebSocket();
+    const { ws } = useWebSocket();
     const [processLogs, setProcessLogs] = (0, import_react98.useState)([]);
     const [autoScroll, setAutoScroll] = (0, import_react98.useState)(true);
     const logsContainerRef = (0, import_react98.useRef)(null);
@@ -36666,7 +36677,7 @@ This file was not generated during the test run.`,
   // src/components/stateful/ProcessManagerPage.tsx
   var ProcessManagerPage = () => {
     const [processes, setProcesses] = (0, import_react99.useState)([]);
-    const ws = useWebSocket();
+    const { ws } = useWebSocket();
     const [loading, setLoading] = (0, import_react99.useState)(false);
     const navigate = useNavigate();
     (0, import_react99.useEffect)(() => {
@@ -37042,12 +37053,16 @@ This file was not generated during the test run.`,
   };
 
   // src/App.tsx
-  var WebSocketContext = (0, import_react103.createContext)(null);
+  var WebSocketContext = (0, import_react103.createContext)({
+    ws: null,
+    isConnected: false
+  });
   var useWebSocket = () => {
     return (0, import_react103.useContext)(WebSocketContext);
   };
   var App = () => {
     const [ws, setWs] = (0, import_react103.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react103.useState)(false);
     (0, import_react103.useEffect)(() => {
       const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const wsUrl = `${wsProtocol}//${window.location.host}`;
@@ -37055,19 +37070,22 @@ This file was not generated during the test run.`,
       websocket.onopen = () => {
         console.log("WebSocket connected");
         setWs(websocket);
+        setIsConnected(true);
       };
       websocket.onclose = () => {
         console.log("WebSocket disconnected");
         setWs(null);
+        setIsConnected(false);
       };
       websocket.onerror = (error) => {
         console.error("WebSocket error:", error);
+        setIsConnected(false);
       };
       return () => {
         websocket.close();
       };
     }, []);
-    return /* @__PURE__ */ import_react103.default.createElement(WebSocketContext.Provider, { value: ws }, /* @__PURE__ */ import_react103.default.createElement(HashRouter, null, /* @__PURE__ */ import_react103.default.createElement(AppFrame, null, /* @__PURE__ */ import_react103.default.createElement(Routes, null, /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react103.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react103.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react103.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react103.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react103.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react103.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react103.default.createElement(TextEditorPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/processes", element: /* @__PURE__ */ import_react103.default.createElement(ProcessManagerPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react103.default.createElement(SingleProcessPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react103.default.createElement(SettingsPage, null) })))));
+    return /* @__PURE__ */ import_react103.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react103.default.createElement(HashRouter, null, /* @__PURE__ */ import_react103.default.createElement(AppFrame, null, /* @__PURE__ */ import_react103.default.createElement(Routes, null, /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react103.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react103.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react103.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react103.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react103.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react103.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react103.default.createElement(TextEditorPage, null) }), isConnected ? /* @__PURE__ */ import_react103.default.createElement(import_react103.default.Fragment, null, /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/processes", element: /* @__PURE__ */ import_react103.default.createElement(ProcessManagerPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react103.default.createElement(SingleProcessPage, null) })) : null, /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react103.default.createElement(SettingsPage, null) })))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");

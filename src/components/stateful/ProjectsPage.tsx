@@ -15,7 +15,7 @@ export const ProjectsPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [configs, setConfigs] = useState<Record<string, object>>({});
   const navigate = useNavigate();
-  const ws = useWebSocket();
+  const { ws } = useWebSocket();
 
   useEffect(() => {
     if (!ws) return;

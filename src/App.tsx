@@ -13,8 +13,16 @@ import { ProcessManagerPage } from './components/stateful/ProcessManagerPage';
 import { SingleProcessPage } from './components/stateful/SingleProcessPage';
 import { SettingsPage } from './components/stateful/SettingsPage';
 
+interface WebSocketContextType {
+  ws: WebSocket | null;
+  isConnected: boolean;
+}
+
 // Create a context for the WebSocket
-const WebSocketContext = createContext<WebSocket | null>(null);
+const WebSocketContext = createContext<WebSocketContextType>({
+  ws: null,
+  isConnected: false,
+});
 
 export const useWebSocket = () => {
   return useContext(WebSocketContext);
@@ -22,6 +30,7 @@ export const useWebSocket = () => {
 
 export const App = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -31,15 +40,18 @@ export const App = () => {
     websocket.onopen = () => {
       console.log('WebSocket connected');
       setWs(websocket);
+      setIsConnected(true);
     };
     
     websocket.onclose = () => {
       console.log('WebSocket disconnected');
       setWs(null);
+      setIsConnected(false);
     };
     
     websocket.onerror = (error) => {
       console.error('WebSocket error:', error);
+      setIsConnected(false);
     };
 
     return () => {
@@ -48,7 +60,7 @@ export const App = () => {
   }, []);
 
   return (
-    <WebSocketContext.Provider value={ws}>
+    <WebSocketContext.Provider value={{ ws, isConnected }}>
       <Router>
         <AppFrame>
           <Routes>
@@ -59,8 +71,13 @@ export const App = () => {
             <Route path="/features-reporter" element={<FeaturesReporter />} />
             <Route path="/design-editor" element={<DesignEditorPage />} />
             <Route path="/text-editor" element={<TextEditorPage />} />
-            <Route path="/processes" element={<ProcessManagerPage />} />
-            <Route path="/processes/:processId" element={<SingleProcessPage />} />
+            {/* Conditionally render process-related routes only if WebSocket is connected */}
+            {isConnected ? (
+              <>
+                <Route path="/processes" element={<ProcessManagerPage />} />
+                <Route path="/processes/:processId" element={<SingleProcessPage />} />
+              </>
+            ) : null}
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </AppFrame>

@@ -48,6 +48,7 @@ type TestPageViewProps = {
     typeErrors: number;
     staticErrors: number;
   };
+  isWebSocketConnected: boolean;
 };
 
 const FileTree = ({ data, onSelect, level = 0, selectedSourcePath }) => {
@@ -113,6 +114,7 @@ export const TestPageView = ({
   testsExist,
   errorCounts,
   logs,
+  isWebSocketConnected,
 }: TestPageViewProps) => {
   const navigate = useNavigate();
   const [showAiderModal, setShowAiderModal] = useState(false);
@@ -478,9 +480,13 @@ export const TestPageView = ({
             variant="info"
             onClick={() => setShowAiderModal(true)}
             className="ms-2"
-            title="AI Assistant"
+            title={isWebSocketConnected ? "AI Assistant" : "AI Assistant (WebSocket not connected)"}
+            disabled={!isWebSocketConnected}
           >
             🤖
+            {!isWebSocketConnected && (
+              <span className="ms-1">🔴</span>
+            )}
           </Button>
         }
       />
