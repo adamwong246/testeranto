@@ -61,7 +61,7 @@ class PM_WithEslintAndTsc extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             })();
             // Add to process manager if available
             if (this.addPromiseProcess) {
-                this.addPromiseProcess(processId, tscPromise, command);
+                this.addPromiseProcess(processId, tscPromise, command, "build-time", entrypoint);
             }
             else {
                 // Fallback to just running the promise
@@ -96,7 +96,7 @@ class PM_WithEslintAndTsc extends PM_WithWebSocket_js_1.PM_WithWebSocket {
             })();
             // Add to process manager if available
             if (this.addPromiseProcess) {
-                this.addPromiseProcess(processId, eslintPromise, command);
+                this.addPromiseProcess(processId, eslintPromise, command, "build-time", entrypoint);
             }
             else {
                 // Fallback to just running the promise

@@ -475,7 +475,9 @@ var init_PM_WithWebSocket = __esm({
                     status: "running",
                     command: message.command,
                     pid: child.pid,
-                    timestamp: (/* @__PURE__ */ new Date()).toISOString()
+                    timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                    type: "process",
+                    category: "aider"
                   });
                   this.processLogs.set(processId, []);
                   this.broadcast({
@@ -558,6 +560,9 @@ var init_PM_WithWebSocket = __esm({
                     exitCode: procInfo.exitCode,
                     error: procInfo.error,
                     timestamp: procInfo.timestamp,
+                    category: procInfo.category,
+                    testName: procInfo.testName,
+                    platform: procInfo.platform,
                     logs: this.processLogs.get(id) || []
                   })
                 );
@@ -581,6 +586,9 @@ var init_PM_WithWebSocket = __esm({
                       exitCode: procInfo.exitCode,
                       error: procInfo.error,
                       timestamp: procInfo.timestamp,
+                      category: procInfo.category,
+                      testName: procInfo.testName,
+                      platform: procInfo.platform,
                       logs: this.processLogs.get(processId) || []
                     })
                   );
@@ -741,14 +749,17 @@ var init_PM_WithWebSocket = __esm({
         return null;
       }
       // Add a method to track promise-based processes
-      addPromiseProcess(processId, promise, command, onResolve, onReject) {
+      addPromiseProcess(processId, promise, command, category = "other", testName2, platform, onResolve, onReject) {
         this.runningProcesses.set(processId, promise);
         this.allProcesses.set(processId, {
           promise,
           status: "running",
           command,
           timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          type: "promise"
+          type: "promise",
+          category,
+          testName: testName2,
+          platform
         });
         this.processLogs.set(processId, []);
         const startMessage = `Starting: ${command}`;
@@ -818,6 +829,37 @@ var init_PM_WithWebSocket = __esm({
             client.send(data);
           }
         });
+      }
+      // Helper methods to get processes by category
+      getProcessesByCategory(category) {
+        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.category === category).map(([id, procInfo]) => ({
+          processId: id,
+          ...procInfo,
+          logs: this.processLogs.get(id) || []
+        }));
+      }
+      getBDDTestProcesses() {
+        return this.getProcessesByCategory("bdd-test");
+      }
+      getBuildTimeProcesses() {
+        return this.getProcessesByCategory("build-time");
+      }
+      getAiderProcesses() {
+        return this.getProcessesByCategory("aider");
+      }
+      getProcessesByTestName(testName2) {
+        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.testName === testName2).map(([id, procInfo]) => ({
+          processId: id,
+          ...procInfo,
+          logs: this.processLogs.get(id) || []
+        }));
+      }
+      getProcessesByPlatform(platform) {
+        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.platform === platform).map(([id, procInfo]) => ({
+          processId: id,
+          ...procInfo,
+          logs: this.processLogs.get(id) || []
+        }));
       }
     };
   }
@@ -1043,7 +1085,7 @@ var init_PM_WithEslintAndTsc = __esm({
             return results.length;
           })();
           if (this.addPromiseProcess) {
-            this.addPromiseProcess(processId, tscPromise, command);
+            this.addPromiseProcess(processId, tscPromise, command, "build-time", entrypoint);
           } else {
             await tscPromise;
           }
@@ -1071,7 +1113,7 @@ var init_PM_WithEslintAndTsc = __esm({
             return results.length;
           })();
           if (this.addPromiseProcess) {
-            this.addPromiseProcess(processId, eslintPromise, command);
+            this.addPromiseProcess(processId, eslintPromise, command, "build-time", entrypoint);
           } else {
             await eslintPromise;
           }
@@ -1565,7 +1607,7 @@ var init_main = __esm({
               }
             }
           })();
-          this.addPromiseProcess(processId, purePromise, command);
+          this.addPromiseProcess(processId, purePromise, command, "bdd-test", src, "pure");
         };
         this.launchNode = async (src, dest) => {
           const processId = `node-${src}-${Date.now()}`;
@@ -1734,7 +1776,7 @@ var init_main = __esm({
               }
             });
           })();
-          this.addPromiseProcess(processId, nodePromise, command);
+          this.addPromiseProcess(processId, nodePromise, command, "bdd-test", src, "node");
         };
         this.launchWeb = async (src, dest) => {
           const processId = `web-${src}-${Date.now()}`;
@@ -1840,7 +1882,7 @@ var init_main = __esm({
               });
             });
           })();
-          this.addPromiseProcess(processId, webPromise, command);
+          this.addPromiseProcess(processId, webPromise, command, "bdd-test", src, "web");
         };
         this.launchPitono = async (src, dest) => {
           const processId = `pitono-${src}-${Date.now()}`;
@@ -1872,7 +1914,7 @@ var init_main = __esm({
               throw error;
             }
           })();
-          this.addPromiseProcess(processId, pitonoPromise, command);
+          this.addPromiseProcess(processId, pitonoPromise, command, "bdd-test", src, "pitono");
         };
         this.launchGolingvu = async (src, dest) => {
           throw "not yet implemented";

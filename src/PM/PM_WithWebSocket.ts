@@ -29,6 +29,9 @@ export abstract class PM_WithWebSocket extends PM_Base {
       pid?: number;
       timestamp: string;
       type: "process" | "promise";
+      category: "aider" | "bdd-test" | "build-time" | "other";
+      testName?: string;
+      platform?: "node" | "web" | "pure" | "pitono" | "golang";
     }
   > = new Map();
   processLogs: Map<string, string[]> = new Map();
@@ -68,6 +71,8 @@ export abstract class PM_WithWebSocket extends PM_Base {
                 command: message.command,
                 pid: child.pid,
                 timestamp: new Date().toISOString(),
+                type: "process",
+                category: "aider",
               });
 
               // Initialize logs for this process
@@ -167,6 +172,9 @@ export abstract class PM_WithWebSocket extends PM_Base {
                 exitCode: procInfo.exitCode,
                 error: procInfo.error,
                 timestamp: procInfo.timestamp,
+                category: procInfo.category,
+                testName: procInfo.testName,
+                platform: procInfo.platform,
                 logs: this.processLogs.get(id) || [],
               })
             );
@@ -191,6 +199,9 @@ export abstract class PM_WithWebSocket extends PM_Base {
                   exitCode: procInfo.exitCode,
                   error: procInfo.error,
                   timestamp: procInfo.timestamp,
+                  category: procInfo.category,
+                  testName: procInfo.testName,
+                  platform: procInfo.platform,
                   logs: this.processLogs.get(processId) || [],
                 })
               );
@@ -392,6 +403,9 @@ export abstract class PM_WithWebSocket extends PM_Base {
     processId: string,
     promise: Promise<any>,
     command: string,
+    category: "aider" | "bdd-test" | "build-time" | "other" = "other",
+    testName?: string,
+    platform?: "node" | "web" | "pure" | "pitono" | "golang",
     onResolve?: (result: any) => void,
     onReject?: (error: any) => void
   ) {
@@ -403,6 +417,9 @@ export abstract class PM_WithWebSocket extends PM_Base {
       command,
       timestamp: new Date().toISOString(),
       type: "promise",
+      category,
+      testName,
+      platform,
     });
 
     // Initialize logs for this process
@@ -492,5 +509,48 @@ export abstract class PM_WithWebSocket extends PM_Base {
         client.send(data);
       }
     });
+  }
+
+  // Helper methods to get processes by category
+  getProcessesByCategory(category: "aider" | "bdd-test" | "build-time" | "other") {
+    return Array.from(this.allProcesses.entries())
+      .filter(([id, procInfo]) => procInfo.category === category)
+      .map(([id, procInfo]) => ({
+        processId: id,
+        ...procInfo,
+        logs: this.processLogs.get(id) || []
+      }));
+  }
+
+  getBDDTestProcesses() {
+    return this.getProcessesByCategory("bdd-test");
+  }
+
+  getBuildTimeProcesses() {
+    return this.getProcessesByCategory("build-time");
+  }
+
+  getAiderProcesses() {
+    return this.getProcessesByCategory("aider");
+  }
+
+  getProcessesByTestName(testName: string) {
+    return Array.from(this.allProcesses.entries())
+      .filter(([id, procInfo]) => procInfo.testName === testName)
+      .map(([id, procInfo]) => ({
+        processId: id,
+        ...procInfo,
+        logs: this.processLogs.get(id) || []
+      }));
+  }
+
+  getProcessesByPlatform(platform: "node" | "web" | "pure" | "pitono" | "golang") {
+    return Array.from(this.allProcesses.entries())
+      .filter(([id, procInfo]) => procInfo.platform === platform)
+      .map(([id, procInfo]) => ({
+        processId: id,
+        ...procInfo,
+        logs: this.processLogs.get(id) || []
+      }));
   }
 }

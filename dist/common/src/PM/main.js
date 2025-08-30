@@ -165,7 +165,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 }
             })();
             // Add to process manager
-            this.addPromiseProcess(processId, purePromise, command);
+            this.addPromiseProcess(processId, purePromise, command, "bdd-test", src, "pure");
         };
         this.launchNode = async (src, dest) => {
             const processId = `node-${src}-${Date.now()}`;
@@ -326,7 +326,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 });
             })();
             // Add to process manager
-            this.addPromiseProcess(processId, nodePromise, command);
+            this.addPromiseProcess(processId, nodePromise, command, "bdd-test", src, "node");
         };
         this.launchWeb = async (src, dest) => {
             const processId = `web-${src}-${Date.now()}`;
@@ -437,7 +437,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 });
             })();
             // Add to process manager
-            this.addPromiseProcess(processId, webPromise, command);
+            this.addPromiseProcess(processId, webPromise, command, "bdd-test", src, "web");
         };
         this.launchPitono = async (src, dest) => {
             const processId = `pitono-${src}-${Date.now()}`;
@@ -470,7 +470,7 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 }
             })();
             // Add to process manager
-            this.addPromiseProcess(processId, pitonoPromise, command);
+            this.addPromiseProcess(processId, pitonoPromise, command, "bdd-test", src, "pitono");
         };
         this.launchGolingvu = async (src, dest) => {
             throw "not yet implemented";

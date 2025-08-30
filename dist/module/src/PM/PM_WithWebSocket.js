@@ -45,6 +45,8 @@ export class PM_WithWebSocket extends PM_Base {
                                 command: message.command,
                                 pid: child.pid,
                                 timestamp: new Date().toISOString(),
+                                type: "process",
+                                category: "aider",
                             });
                             // Initialize logs for this process
                             this.processLogs.set(processId, []);
@@ -129,6 +131,9 @@ export class PM_WithWebSocket extends PM_Base {
                             exitCode: procInfo.exitCode,
                             error: procInfo.error,
                             timestamp: procInfo.timestamp,
+                            category: procInfo.category,
+                            testName: procInfo.testName,
+                            platform: procInfo.platform,
                             logs: this.processLogs.get(id) || [],
                         }));
                         ws.send(JSON.stringify({
@@ -150,6 +155,9 @@ export class PM_WithWebSocket extends PM_Base {
                                 exitCode: procInfo.exitCode,
                                 error: procInfo.error,
                                 timestamp: procInfo.timestamp,
+                                category: procInfo.category,
+                                testName: procInfo.testName,
+                                platform: procInfo.platform,
                                 logs: this.processLogs.get(processId) || [],
                             }));
                         }
@@ -337,7 +345,7 @@ export class PM_WithWebSocket extends PM_Base {
         return null;
     }
     // Add a method to track promise-based processes
-    addPromiseProcess(processId, promise, command, onResolve, onReject) {
+    addPromiseProcess(processId, promise, command, category = "other", testName, platform, onResolve, onReject) {
         // Track the promise in both maps
         this.runningProcesses.set(processId, promise);
         this.allProcesses.set(processId, {
@@ -346,6 +354,9 @@ export class PM_WithWebSocket extends PM_Base {
             command,
             timestamp: new Date().toISOString(),
             type: "promise",
+            category,
+            testName,
+            platform,
         });
         // Initialize logs for this process
         this.processLogs.set(processId, []);
@@ -418,5 +429,30 @@ export class PM_WithWebSocket extends PM_Base {
                 client.send(data);
             }
         });
+    }
+    // Helper methods to get processes by category
+    getProcessesByCategory(category) {
+        return Array.from(this.allProcesses.entries())
+            .filter(([id, procInfo]) => procInfo.category === category)
+            .map(([id, procInfo]) => (Object.assign(Object.assign({ processId: id }, procInfo), { logs: this.processLogs.get(id) || [] })));
+    }
+    getBDDTestProcesses() {
+        return this.getProcessesByCategory("bdd-test");
+    }
+    getBuildTimeProcesses() {
+        return this.getProcessesByCategory("build-time");
+    }
+    getAiderProcesses() {
+        return this.getProcessesByCategory("aider");
+    }
+    getProcessesByTestName(testName) {
+        return Array.from(this.allProcesses.entries())
+            .filter(([id, procInfo]) => procInfo.testName === testName)
+            .map(([id, procInfo]) => (Object.assign(Object.assign({ processId: id }, procInfo), { logs: this.processLogs.get(id) || [] })));
+    }
+    getProcessesByPlatform(platform) {
+        return Array.from(this.allProcesses.entries())
+            .filter(([id, procInfo]) => procInfo.platform === platform)
+            .map(([id, procInfo]) => (Object.assign(Object.assign({ processId: id }, procInfo), { logs: this.processLogs.get(id) || [] })));
     }
 }

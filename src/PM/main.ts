@@ -507,7 +507,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
     })();
 
     // Add to process manager
-    this.addPromiseProcess(processId, purePromise, command);
+    this.addPromiseProcess(processId, purePromise, command, "bdd-test", src, "pure");
   };
 
   launchNode = async (src: string, dest: string) => {
@@ -716,7 +716,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
     })();
 
     // Add to process manager
-    this.addPromiseProcess(processId, nodePromise, command);
+    this.addPromiseProcess(processId, nodePromise, command, "bdd-test", src, "node");
   };
 
   launchWeb = async (src: string, dest: string) => {
@@ -852,7 +852,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
     })();
 
     // Add to process manager
-    this.addPromiseProcess(processId, webPromise, command);
+    this.addPromiseProcess(processId, webPromise, command, "bdd-test", src, "web");
   };
 
   launchPitono = async (src: string, dest: string) => {
@@ -897,7 +897,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
     })();
 
     // Add to process manager
-    this.addPromiseProcess(processId, pitonoPromise, command);
+    this.addPromiseProcess(processId, pitonoPromise, command, "bdd-test", src, "pitono");
   };
 
   launchGolingvu = async (src: string, dest: string) => {
