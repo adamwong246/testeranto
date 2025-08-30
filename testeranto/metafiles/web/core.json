@@ -356,38 +356,6 @@
     {
       "detail": {
         "deprecation": true,
-        "stack": "bootstrap/scss/bootstrap.scss 7:9    @import\ntesteranto-stilo/src/style.scss 1:9  @import\nsrc/style.scss 2:9                   @use\n- 1:1                                root stylesheet\n"
-      },
-      "id": "",
-      "location": {
-        "column": 8,
-        "file": "node_modules/bootstrap/scss/bootstrap.scss",
-        "length": 0,
-        "line": 6,
-        "lineText": "\"functions\"",
-        "namespace": "file",
-        "suggestion": ""
-      },
-      "notes": [
-        {
-          "location": {
-            "column": 7,
-            "file": "src/components/pure/ProjectPageView.tsx",
-            "length": 18,
-            "line": 9,
-            "lineText": "import \"./../../App.scss\";",
-            "namespace": "",
-            "suggestion": ""
-          },
-          "text": "The plugin \"sass-plugin\" was triggered by this import"
-        }
-      ],
-      "pluginName": "sass-plugin",
-      "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
-    },
-    {
-      "detail": {
-        "deprecation": true,
         "stack": "testeranto-stilo/src/style.scss 1:9  @import\nsrc/style.scss 2:9                   @use\n- 1:1                                root stylesheet\n"
       },
       "id": "",
@@ -450,6 +418,38 @@
       "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
     },
     {
+      "detail": {
+        "deprecation": true,
+        "stack": "- 2:9  root stylesheet\n"
+      },
+      "id": "",
+      "location": {
+        "column": 8,
+        "file": "src/App.scss",
+        "length": 0,
+        "line": 1,
+        "lineText": "\"testeranto-stilo/src/gradients.scss\"",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 7,
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
+            "namespace": "",
+            "suggestion": ""
+          },
+          "text": "The plugin \"sass-plugin\" was triggered by this import"
+        }
+      ],
+      "pluginName": "sass-plugin",
+      "text": "Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.\n\nMore info and automated migrator: https://sass-lang.com/d/import"
+    },
+    {
       "id": "different-path-case",
       "location": {
         "column": 7,
@@ -477,7 +477,7 @@
       },
       "notes": [],
       "pluginName": "sass-plugin",
-      "text": "sass warning: 235 repetitive deprecation warnings omitted.\nRun in verbose mode to see all warnings."
+      "text": "sass warning: 236 repetitive deprecation warnings omitted.\nRun in verbose mode to see all warnings."
     },
     {
       "detail": {
@@ -15186,7 +15186,7 @@
         "imports": []
       },
       "src/App.scss": {
-        "bytes": 277990,
+        "bytes": 280770,
         "imports": [
           {
             "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
@@ -16491,10 +16491,10 @@
         ],
         "inputs": {
           "src/App.scss": {
-            "bytesInOutput": 276411
+            "bytesInOutput": 279146
           }
         },
-        "bytes": 276627
+        "bytes": 279362
       }
     }
   }

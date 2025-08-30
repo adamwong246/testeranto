@@ -11,11 +11,16 @@ import { DesignEditorPage } from './components/DesignEditorPage';
 import { TextEditorPage } from './components/stateful/TextEditorPage';
 import { ProcessManagerPage } from './components/stateful/ProcessManagerPage';
 import { SingleProcessPage } from './components/stateful/SingleProcessPage';
-import { SettingsPage } from './components/stateful/SettingsPage';
+import { Settings } from './components/pure/Settings';
 
 interface WebSocketContextType {
   ws: WebSocket | null;
   isConnected: boolean;
+}
+
+interface TutorialModeContextType {
+  tutorialMode: boolean;
+  setTutorialMode: (mode: boolean) => void;
 }
 
 // Create a context for the WebSocket
@@ -24,15 +29,32 @@ const WebSocketContext = createContext<WebSocketContextType>({
   isConnected: false,
 });
 
+// Create a context for tutorial mode
+const TutorialModeContext = createContext<TutorialModeContextType>({
+  tutorialMode: false,
+  setTutorialMode: () => {},
+});
+
 export const useWebSocket = () => {
   return useContext(WebSocketContext);
+};
+
+export const useTutorialMode = () => {
+  return useContext(TutorialModeContext);
 };
 
 export const App = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [tutorialMode, setTutorialMode] = useState(false);
 
   useEffect(() => {
+    // Load tutorial mode from localStorage
+    const savedTutorialMode = localStorage.getItem('tutorialMode');
+    if (savedTutorialMode) {
+      setTutorialMode(savedTutorialMode === 'true');
+    }
+
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${wsProtocol}//${window.location.host}`;
     const websocket = new WebSocket(wsUrl);
@@ -61,27 +83,29 @@ export const App = () => {
 
   return (
     <WebSocketContext.Provider value={{ ws, isConnected }}>
-      <Router>
-        <AppFrame>
-          <Routes>
-            <Route path="/" element={<ProjectsPage />} />
-            <Route path="/projects/:projectName" element={<ProjectPage />} />
-            <Route path="/projects/:projectName/tests/*" element={<TestPage />} />
-            <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
-            <Route path="/features-reporter" element={<FeaturesReporter />} />
-            <Route path="/design-editor" element={<DesignEditorPage />} />
-            <Route path="/text-editor" element={<TextEditorPage />} />
-            {/* Conditionally render process-related routes only if WebSocket is connected */}
-            {isConnected ? (
-              <>
-                <Route path="/processes" element={<ProcessManagerPage />} />
-                <Route path="/processes/:processId" element={<SingleProcessPage />} />
-              </>
-            ) : null}
-            <Route path="/settings" element={<SettingsPage />} />
-          </Routes>
-        </AppFrame>
-      </Router>
+      <TutorialModeContext.Provider value={{ tutorialMode, setTutorialMode }}>
+        <Router>
+          <AppFrame>
+            <Routes>
+              <Route path="/" element={<ProjectsPage />} />
+              <Route path="/projects/:projectName" element={<ProjectPage />} />
+              <Route path="/projects/:projectName/tests/*" element={<TestPage />} />
+              <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
+              <Route path="/features-reporter" element={<FeaturesReporter />} />
+              <Route path="/design-editor" element={<DesignEditorPage />} />
+              <Route path="/text-editor" element={<TextEditorPage />} />
+              {/* Conditionally render process-related routes only if WebSocket is connected */}
+              {isConnected ? (
+                <>
+                  <Route path="/processes" element={<ProcessManagerPage />} />
+                  <Route path="/processes/:processId" element={<SingleProcessPage />} />
+                </>
+              ) : null}
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </AppFrame>
+        </Router>
+      </TutorialModeContext.Provider>
     </WebSocketContext.Provider>
   );
 };
