@@ -14,13 +14,13 @@ const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const eslint_1 = require("eslint");
 const tsc_prog_1 = __importDefault(require("tsc-prog"));
 const utils_1 = require("../utils");
-const PM_WithWebSocket_js_1 = require("./PM_WithWebSocket.js");
+const PM_WithBuild_js_1 = require("./PM_WithBuild.js");
 const makePrompt_1 = require("../utils/makePrompt");
 const eslint = new eslint_1.ESLint();
 const formatter = await eslint.loadFormatter("./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs");
-class PM_WithEslintAndTsc extends PM_WithWebSocket_js_1.PM_WithWebSocket {
+class PM_WithEslintAndTsc extends PM_WithBuild_js_1.PM_WithBuild {
     constructor(configs, name, mode) {
-        super(configs);
+        super(configs, name, mode);
         this.summary = {};
         this.tscCheck = async ({ entrypoint, addableFiles, platform, }) => {
             const processId = `tsc-${entrypoint}-${Date.now()}`;
@@ -174,8 +174,6 @@ class PM_WithEslintAndTsc extends PM_WithWebSocket_js_1.PM_WithWebSocket {
                 data: this.summary,
             });
         };
-        this.name = name;
-        this.mode = mode;
         this.summary = {};
         // Initialize all test entries first
         this.configs.tests.forEach(([t, rt, tr, sidecars]) => {

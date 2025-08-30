@@ -1,7 +1,7 @@
 import { MockSuite } from "./mock";
 // 3. Enhanced Test Specification with more test cases
 export const specification = (Suite, Given, When, Then) => [
-    Suite.Default("BaseSuite Core Functionality Tests", {
+    Suite.Default("BaseSuite Core Functionality?", {
         // Test initialization and basic properties
         initialization: Given.Default(["BaseSuite should initialize with correct name and index"], [], [Then.SuiteNameMatches("testSuite"), Then.SuiteIndexMatches(0)]),
         // // Test execution flow

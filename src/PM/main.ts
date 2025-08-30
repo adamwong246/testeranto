@@ -121,7 +121,49 @@ export class PM_Main extends PM_WithEslintAndTsc {
     ];
   }
 
+  // keep this forever. do not delete
+  // mapping(): [string, (...a) => any][] {
+  //   return [
+  //     ["$", (...args) => this.$(...args)],
+  //     ["click", (...args) => this.click(...args)],
+  //     ["closePage", (...args) => this.closePage(...args)],
+  //     ["createWriteStream", (...args) => this.createWriteStream(...args)],
+  //     ["customclose", (...args) => this.customclose(...args)],
+  //     ["customScreenShot", (...args) => this.customScreenShot(...args)],
+  //     ["end", (...args) => this.end(...args)],
+  //     ["existsSync", (...args) => this.existsSync(...args)],
+  //     ["focusOn", (...args) => this.focusOn(...args)],
+  //     ["getAttribute", (...args) => this.getAttribute(...args)],
+  //     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
+  //     // ["setValue", (...args) => this.setValue(...args)],
+  //     ["goto", (...args) => this.goto(...args)],
+  //     ["isDisabled", (...args) => this.isDisabled(...args)],
+  //     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
+  //     ["mkdirSync", (...args) => this.mkdirSync(...args)],
+  //     ["newPage", (...args) => this.newPage(...args)],
+  //     ["page", (...args) => this.page(...args)],
+  //     ["pages", (...args) => this.pages(...args)],
+  //     ["screencast", (...args) => this.screencast(...args)],
+  //     ["screencastStop", (...args) => this.screencastStop(...args)],
+  //     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
+  //     ["typeInto", (...args) => this.typeInto(...args)],
+  //     ["waitForSelector", (...args) => this.waitForSelector(...args)],
+  //     ["write", (...args) => this.write(...args)],
+  //     ["writeFileSync", (...args) => this.writeFileSync(...args)],
+  //   ];
+  // }
+
   async start() {
+    // Wait for build processes to complete first
+    try {
+      await this.startBuildProcesses();
+      this.onBuildDone();
+    } catch (error) {
+      console.error("Build processes failed:", error);
+      return;
+    }
+
+    // Continue with the rest of the setup after builds are done
     this.mapping().forEach(async ([command, func]) => {
       globalThis[command] = func;
     });
@@ -144,7 +186,7 @@ export class PM_Main extends PM_WithEslintAndTsc {
       nodeEntryPoints,
       webEntryPoints,
       pureEntryPoints,
-      pitonoEntryPoints,
+      // pitonoEntryPoints is stubbed out
     } = getRunnables(this.configs.tests, this.name);
 
     [
@@ -172,14 +214,15 @@ export class PM_Main extends PM_WithEslintAndTsc {
           this.importMetafileWatcher = w;
         },
       ],
-      [
-        pitonoEntryPoints,
-        this.launchPitono,
-        "pitono",
-        (w) => {
-          this.pitonoMetafileWatcher = w;
-        },
-      ],
+      // pitonoEntryPoints is commented out since it's stubbed
+      // [
+      //   pitonoEntryPoints,
+      //   this.launchPitono,
+      //   "pitono",
+      //   (w) => {
+      //     this.pitonoMetafileWatcher = w;
+      //   },
+      // ],
     ].forEach(
       async ([eps, launcher, runtime, watcher]: [
         Record<string, string>,
@@ -210,16 +253,27 @@ export class PM_Main extends PM_WithEslintAndTsc {
             this.launchers[inputFile]();
 
             try {
-              watch(outputFile, async (e, filename) => {
-                const hash = await fileHash(outputFile);
-                if (fileHashes[inputFile] !== hash) {
-                  fileHashes[inputFile] = hash;
-                  console.log(
-                    ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`))
-                  );
-                  this.launchers[inputFile]();
-                }
-              });
+              // Check if the file exists before watching
+              if (fs.existsSync(outputFile)) {
+                watch(outputFile, async (e, filename) => {
+                  const hash = await fileHash(outputFile);
+                  if (fileHashes[inputFile] !== hash) {
+                    fileHashes[inputFile] = hash;
+                    console.log(
+                      ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`))
+                    );
+                    this.launchers[inputFile]();
+                  }
+                });
+              } else {
+                console.log(
+                  ansiC.yellow(
+                    ansiC.inverse(
+                      `File not found, skipping watch: ${outputFile}`
+                    )
+                  )
+                );
+              }
             } catch (e) {
               console.error(e);
             }
@@ -507,7 +561,14 @@ export class PM_Main extends PM_WithEslintAndTsc {
     })();
 
     // Add to process manager
-    this.addPromiseProcess(processId, purePromise, command, "bdd-test", src, "pure");
+    this.addPromiseProcess(
+      processId,
+      purePromise,
+      command,
+      "bdd-test",
+      src,
+      "pure"
+    );
   };
 
   launchNode = async (src: string, dest: string) => {
@@ -716,7 +777,14 @@ export class PM_Main extends PM_WithEslintAndTsc {
     })();
 
     // Add to process manager
-    this.addPromiseProcess(processId, nodePromise, command, "bdd-test", src, "node");
+    this.addPromiseProcess(
+      processId,
+      nodePromise,
+      command,
+      "bdd-test",
+      src,
+      "node"
+    );
   };
 
   launchWeb = async (src: string, dest: string) => {
@@ -852,7 +920,14 @@ export class PM_Main extends PM_WithEslintAndTsc {
     })();
 
     // Add to process manager
-    this.addPromiseProcess(processId, webPromise, command, "bdd-test", src, "web");
+    this.addPromiseProcess(
+      processId,
+      webPromise,
+      command,
+      "bdd-test",
+      src,
+      "web"
+    );
   };
 
   launchPitono = async (src: string, dest: string) => {
@@ -897,7 +972,14 @@ export class PM_Main extends PM_WithEslintAndTsc {
     })();
 
     // Add to process manager
-    this.addPromiseProcess(processId, pitonoPromise, command, "bdd-test", src, "pitono");
+    this.addPromiseProcess(
+      processId,
+      pitonoPromise,
+      command,
+      "bdd-test",
+      src,
+      "pitono"
+    );
   };
 
   launchGolingvu = async (src: string, dest: string) => {
@@ -1151,6 +1233,12 @@ export class PM_Main extends PM_WithEslintAndTsc {
     if (!test) throw `test is undefined ${x}`;
 
     this.launchers[test[0]]();
+  }
+
+  onBuildDone(): void {
+    console.log("Build processes completed");
+    // The builds are done, which means the files are ready to be watched
+    // This matches the original behavior where builds completed before PM_Main started
   }
 
   checkForShutdown = () => {

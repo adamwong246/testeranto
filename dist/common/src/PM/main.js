@@ -621,7 +621,48 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             ["writeFileSync", this.writeFileSync],
         ];
     }
+    // keep this forever. do not delete
+    // mapping(): [string, (...a) => any][] {
+    //   return [
+    //     ["$", (...args) => this.$(...args)],
+    //     ["click", (...args) => this.click(...args)],
+    //     ["closePage", (...args) => this.closePage(...args)],
+    //     ["createWriteStream", (...args) => this.createWriteStream(...args)],
+    //     ["customclose", (...args) => this.customclose(...args)],
+    //     ["customScreenShot", (...args) => this.customScreenShot(...args)],
+    //     ["end", (...args) => this.end(...args)],
+    //     ["existsSync", (...args) => this.existsSync(...args)],
+    //     ["focusOn", (...args) => this.focusOn(...args)],
+    //     ["getAttribute", (...args) => this.getAttribute(...args)],
+    //     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
+    //     // ["setValue", (...args) => this.setValue(...args)],
+    //     ["goto", (...args) => this.goto(...args)],
+    //     ["isDisabled", (...args) => this.isDisabled(...args)],
+    //     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
+    //     ["mkdirSync", (...args) => this.mkdirSync(...args)],
+    //     ["newPage", (...args) => this.newPage(...args)],
+    //     ["page", (...args) => this.page(...args)],
+    //     ["pages", (...args) => this.pages(...args)],
+    //     ["screencast", (...args) => this.screencast(...args)],
+    //     ["screencastStop", (...args) => this.screencastStop(...args)],
+    //     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
+    //     ["typeInto", (...args) => this.typeInto(...args)],
+    //     ["waitForSelector", (...args) => this.waitForSelector(...args)],
+    //     ["write", (...args) => this.write(...args)],
+    //     ["writeFileSync", (...args) => this.writeFileSync(...args)],
+    //   ];
+    // }
     async start() {
+        // Wait for build processes to complete first
+        try {
+            await this.startBuildProcesses();
+            this.onBuildDone();
+        }
+        catch (error) {
+            console.error("Build processes failed:", error);
+            return;
+        }
+        // Continue with the rest of the setup after builds are done
         this.mapping().forEach(async ([command, func]) => {
             globalThis[command] = func;
         });
@@ -635,7 +676,9 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
             console.error(e);
             console.error("could not start chrome via puppeter. Check this path: ", puppeteer_core_1.executablePath);
         }
-        const { nodeEntryPoints, webEntryPoints, pureEntryPoints, pitonoEntryPoints, } = (0, utils_1.getRunnables)(this.configs.tests, this.name);
+        const { nodeEntryPoints, webEntryPoints, pureEntryPoints,
+        // pitonoEntryPoints is stubbed out
+         } = (0, utils_1.getRunnables)(this.configs.tests, this.name);
         [
             [
                 nodeEntryPoints,
@@ -661,14 +704,15 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                     this.importMetafileWatcher = w;
                 },
             ],
-            [
-                pitonoEntryPoints,
-                this.launchPitono,
-                "pitono",
-                (w) => {
-                    this.pitonoMetafileWatcher = w;
-                },
-            ],
+            // pitonoEntryPoints is commented out since it's stubbed
+            // [
+            //   pitonoEntryPoints,
+            //   this.launchPitono,
+            //   "pitono",
+            //   (w) => {
+            //     this.pitonoMetafileWatcher = w;
+            //   },
+            // ],
         ].forEach(async ([eps, launcher, runtime, watcher]) => {
             let metafile;
             if (runtime === "pitono") {
@@ -689,14 +733,20 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                 this.launchers[inputFile] = () => launcher(inputFile, outputFile);
                 this.launchers[inputFile]();
                 try {
-                    (0, fs_1.watch)(outputFile, async (e, filename) => {
-                        const hash = await (0, utils_js_1.fileHash)(outputFile);
-                        if (fileHashes[inputFile] !== hash) {
-                            fileHashes[inputFile] = hash;
-                            console.log(ansi_colors_2.default.yellow(ansi_colors_2.default.inverse(`< ${e} ${filename}`)));
-                            this.launchers[inputFile]();
-                        }
-                    });
+                    // Check if the file exists before watching
+                    if (fs_1.default.existsSync(outputFile)) {
+                        (0, fs_1.watch)(outputFile, async (e, filename) => {
+                            const hash = await (0, utils_js_1.fileHash)(outputFile);
+                            if (fileHashes[inputFile] !== hash) {
+                                fileHashes[inputFile] = hash;
+                                console.log(ansi_colors_2.default.yellow(ansi_colors_2.default.inverse(`< ${e} ${filename}`)));
+                                this.launchers[inputFile]();
+                            }
+                        });
+                    }
+                    else {
+                        console.log(ansi_colors_2.default.yellow(ansi_colors_2.default.inverse(`File not found, skipping watch: ${outputFile}`)));
+                    }
                 }
                 catch (e) {
                     console.error(e);
@@ -975,6 +1025,11 @@ class PM_Main extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
         if (!test)
             throw `test is undefined ${x}`;
         this.launchers[test[0]]();
+    }
+    onBuildDone() {
+        console.log("Build processes completed");
+        // The builds are done, which means the files are ready to be watched
+        // This matches the original behavior where builds completed before PM_Main started
     }
 }
 exports.PM_Main = PM_Main;

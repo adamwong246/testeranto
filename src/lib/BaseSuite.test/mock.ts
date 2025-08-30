@@ -38,13 +38,16 @@ export class MockGiven extends BaseGiven<I> {
 export class MockWhen extends BaseWhen<I> {
   async andWhen(
     store: TestStore,
-    whenCB: I["when"],
+    whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>,
     testResource: any,
     pm: IPM
   ): Promise<TestStore> {
-    // The whenCB expects to be called with the store directly
-    // Since I["when"] is (store: TestStore) => Promise<TestStore>
-    const result = await whenCB(store);
+    // Create a TestSelection from the store
+    const selection: TestSelection = { testSelection: store.testStore };
+    // Call whenCB with the selection to get the function
+    const whenFunction = whenCB(selection);
+    // Execute the function with the store
+    const result = await whenFunction(store);
     return result;
   }
 
@@ -56,14 +59,15 @@ export class MockWhen extends BaseWhen<I> {
 export class MockThen extends BaseThen<I> {
   async butThen(
     store: TestStore,
-    thenCB: I["then"],
+    thenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>,
     testResourceConfiguration: any,
     pm: IPM
   ): Promise<TestSelection> {
-    // The thenCB expects to be called with the store directly
-    // Since I["then"] is (store: TestStore) => Promise<TestSelection>
-    const result = await thenCB(store);
-    return result;
+    // Create a TestSelection from the store
+    const selection: TestSelection = { testSelection: store.testStore };
+    // Call thenCB with the selection
+    await thenCB(selection);
+    return selection;
   }
 }
 

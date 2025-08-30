@@ -490,7 +490,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 2332,
+        "bytes": 2583,
         "imports": [
           {
             "path": "src/lib/BaseGiven.ts",
@@ -526,7 +526,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12181,
+        "bytes": 12722,
         "imports": [
           {
             "path": "..",
@@ -539,9 +539,9 @@
             "external": true
           },
           {
-            "path": "../BaseSuite",
+            "path": "src/lib/BaseSuite.ts",
             "kind": "import-statement",
-            "external": true
+            "original": "../BaseSuite"
           },
           {
             "path": "../types",
@@ -617,16 +617,16 @@
             "bytesInOutput": 1068
           },
           "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 1401
+            "bytesInOutput": 1559
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 6616
+            "bytesInOutput": 6449
           },
           "src/lib/BaseSuite.test/pure.test.ts": {
             "bytesInOutput": 103
           }
         },
-        "bytes": 33936
+        "bytes": 33927
       }
     }
   }

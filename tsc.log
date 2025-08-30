@@ -268,9 +268,9 @@ src/lib/BaseSuite.test/test.ts(185,11): error TS2322: Type '() => void' is not a
 src/lib/BaseSuite.test/test.ts(190,11): error TS2345: Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
 src/lib/BaseSuite.test/test.ts(204,13): error TS2345: Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
 src/lib/BaseSuite.test/test.ts(277,5): error TS2353: Object literal may only specify known properties, and 'FeatureCountMatches' does not exist in type 'TestThenImplementation<I, O>'.
-src/lib/BaseSuite.test/test.ts(406,22): error TS2339: Property 'index' does not exist on type '() => Promise<TestStore>'.
-src/lib/BaseSuite.test/test.ts(409,19): error TS2339: Property 'store' does not exist on type '() => Promise<TestStore>'.
-src/lib/BaseSuite.test/test.ts(444,3): error TS2322: Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
+src/lib/BaseSuite.test/test.ts(414,22): error TS2339: Property 'index' does not exist on type '() => Promise<TestStore>'.
+src/lib/BaseSuite.test/test.ts(417,19): error TS2339: Property 'store' does not exist on type '() => Promise<TestStore>'.
+src/lib/BaseSuite.test/test.ts(452,3): error TS2322: Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
   Type 'TestStore' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
 src/lib/BaseThen.ts(76,41): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
 src/lib/index.ts(42,12): error TS2349: This expression is not callable.
@@ -411,18 +411,17 @@ src/PM/__tests__/webSidecar.testeranto.ts(118,40): error TS2304: Cannot find nam
 src/PM/main.ts(64,3): error TS2416: Property 'allProcesses' in type 'PM_Main' is not assignable to the same property in base type 'PM_WithEslintAndTsc'.
   Type 'Map<string, { child?: ChildProcess | undefined; status: "error" | "running" | "exited"; exitCode?: number | undefined; error?: string | undefined; command: string; pid?: number | undefined; timestamp: string; }>' is not assignable to type 'Map<string, { child?: ChildProcess | undefined; promise?: Promise<any> | undefined; status: "error" | "running" | "exited" | "completed"; exitCode?: number | undefined; ... 7 more ...; platform?: "node" | ... 4 more ... | undefined; }>'.
     Type '{ child?: ChildProcess | undefined; status: "error" | "running" | "exited"; exitCode?: number | undefined; error?: string | undefined; command: string; pid?: number | undefined; timestamp: string; }' is missing the following properties from type '{ child?: ChildProcess | undefined; promise?: Promise<any> | undefined; status: "error" | "running" | "exited" | "completed"; exitCode?: number | undefined; ... 7 more ...; platform?: "node" | ... 4 more ... | undefined; }': type, category
-src/PM/main.ts(147,7): error TS2339: Property 'pitonoEntryPoints' does not exist on type 'IRunnables'.
-src/PM/main.ts(191,13): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
-src/PM/main.ts(203,13): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
-src/PM/main.ts(232,13): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
-src/PM/main.ts(302,9): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
-src/PM/main.ts(310,11): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
-src/PM/main.ts(325,11): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
-src/PM/main.ts(883,37): error TS2345: Argument of type '"pitono"' is not assignable to parameter of type 'IRunTime'.
-src/PM/main.ts(894,38): error TS2345: Argument of type '"pitono"' is not assignable to parameter of type 'IRunTime'.
-src/PM/main.ts(997,9): error TS2532: Object is possibly 'undefined'.
-src/PM/main.ts(1036,11): error TS2322: Type 'string' is not assignable to type 'null'.
-src/PM/PM_WithEslintAndTsc.ts(172,7): error TS2741: Property 'runTimeTests' is missing in type '{ typeErrors: undefined; staticErrors: undefined; runTimeErrors: undefined; prompt: undefined; failingFeatures: {}; }' but required in type '{ runTimeTests: number | "?" | undefined; runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'.
+src/PM/main.ts(234,13): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
+src/PM/main.ts(246,13): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
+src/PM/main.ts(286,13): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
+src/PM/main.ts(356,9): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
+src/PM/main.ts(364,11): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
+src/PM/main.ts(379,11): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
+src/PM/main.ts(958,37): error TS2345: Argument of type '"pitono"' is not assignable to parameter of type 'IRunTime'.
+src/PM/main.ts(969,38): error TS2345: Argument of type '"pitono"' is not assignable to parameter of type 'IRunTime'.
+src/PM/main.ts(1079,9): error TS2532: Object is possibly 'undefined'.
+src/PM/main.ts(1118,11): error TS2322: Type 'string' is not assignable to type 'null'.
+src/PM/PM_WithEslintAndTsc.ts(180,7): error TS2741: Property 'runTimeTests' is missing in type '{ typeErrors: undefined; staticErrors: undefined; runTimeErrors: undefined; prompt: undefined; failingFeatures: {}; }' but required in type '{ runTimeTests: number | "?" | undefined; runTimeErrors: number | "?" | undefined; typeErrors: number | "?" | undefined; staticErrors: number | "?" | undefined; prompt: string | undefined; failingFeatures: object | undefined; }'.
 src/PM/PM_WithWebSocket.ts(166,21): error TS2322: Type 'number | null' is not assignable to type 'number | undefined'.
   Type 'null' is not assignable to type 'number | undefined'.
 src/PM/PM_WithWebSocket.ts(234,46): error TS2339: Property 'stdin' does not exist on type 'Promise<any> | ChildProcess'.
@@ -510,9 +509,8 @@ src/ReportServer.test.ts/index.ts(190,3): error TS2345: Argument of type '(port:
 src/ReportServer.ts(8,20): error TS2345: Argument of type 'string | 3000' is not assignable to parameter of type 'number'.
   Type 'string' is not assignable to type 'number'.
 src/ReportServerLib.ts(111,33): error TS2339: Property 'status' does not exist on type 'Error'.
-src/testeranto.ts(126,54): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
-src/testeranto.ts(184,35): error TS2345: Argument of type '"pitono"' is not assignable to parameter of type 'IRunTime | undefined'.
-src/testeranto.ts(204,51): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
+src/testeranto.ts(112,35): error TS2345: Argument of type '"pitono"' is not assignable to parameter of type 'IRunTime | undefined'.
+src/testeranto.ts(134,53): error TS2367: This comparison appears to be unintentional because the types 'IRunTime' and '"pitono"' have no overlap.
 src/utils.ts(148,10): error TS2339: Property 'golangEntryPoints' does not exist on type 'IRunnables'.
 src/utils.ts(149,16): error TS2367: This comparison appears to be unintentional because the types '"python"' and '"pitono"' have no overlap.
 src/utils.ts(151,10): error TS2551: Property 'pitonoEntryPoints' does not exist on type 'IRunnables'. Did you mean 'nodeEntryPoints'?

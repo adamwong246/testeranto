@@ -1,8 +1,6 @@
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
-import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
-export declare abstract class PM_WithEslintAndTsc extends PM_WithWebSocket {
-    name: string;
-    mode: "once" | "dev";
+import { PM_WithBuild } from "./PM_WithBuild.js";
+export declare abstract class PM_WithEslintAndTsc extends PM_WithBuild {
     summary: ISummary;
     constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
     tscCheck: ({ entrypoint, addableFiles, platform, }: {

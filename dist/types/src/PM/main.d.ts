@@ -43,5 +43,6 @@ export declare class PM_Main extends PM_WithEslintAndTsc {
     findIndexHtml(): string | null;
     broadcast(message: any): void;
     checkQueue(): void;
+    onBuildDone(): void;
     checkForShutdown: () => void;
 }

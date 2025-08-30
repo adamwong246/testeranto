@@ -167,6 +167,343 @@ var init_queue = __esm({
   }
 });
 
+// src/esbuildConfigs/index.ts
+var esbuildConfigs_default;
+var init_esbuildConfigs = __esm({
+  "src/esbuildConfigs/index.ts"() {
+    "use strict";
+    esbuildConfigs_default = (config) => {
+      return {
+        // packages: "external",
+        target: "esnext",
+        format: "esm",
+        splitting: true,
+        outExtension: { ".js": ".mjs" },
+        outbase: ".",
+        jsx: "transform",
+        bundle: true,
+        minify: config.minify === true,
+        write: true,
+        loader: {
+          ".js": "jsx",
+          ".png": "binary",
+          ".jpg": "binary"
+        }
+      };
+    };
+  }
+});
+
+// src/esbuildConfigs/inputFilesPlugin.ts
+import fs from "fs";
+var otherInputs, register, inputFilesPlugin_default;
+var init_inputFilesPlugin = __esm({
+  "src/esbuildConfigs/inputFilesPlugin.ts"() {
+    "use strict";
+    otherInputs = {};
+    register = (entrypoint, sources) => {
+      if (!otherInputs[entrypoint]) {
+        otherInputs[entrypoint] = /* @__PURE__ */ new Set();
+      }
+      sources.forEach((s) => otherInputs[entrypoint].add(s));
+    };
+    inputFilesPlugin_default = (platform, testName2) => {
+      const f2 = `testeranto/metafiles/${platform}/${testName2}.json`;
+      if (!fs.existsSync(`testeranto/metafiles/${platform}`)) {
+        fs.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
+      }
+      return {
+        register,
+        inputFilesPluginFactory: {
+          name: "metafileWriter",
+          setup(build) {
+            build.onEnd((result) => {
+              fs.writeFileSync(f2, JSON.stringify(result, null, 2));
+            });
+          }
+        }
+      };
+    };
+  }
+});
+
+// src/esbuildConfigs/featuresPlugin.ts
+import path2 from "path";
+var featuresPlugin_default;
+var init_featuresPlugin = __esm({
+  "src/esbuildConfigs/featuresPlugin.ts"() {
+    "use strict";
+    featuresPlugin_default = {
+      name: "feature-markdown",
+      setup(build) {
+        build.onResolve({ filter: /\.md$/ }, (args) => {
+          if (args.resolveDir === "")
+            return;
+          return {
+            path: path2.isAbsolute(args.path) ? args.path : path2.join(args.resolveDir, args.path),
+            namespace: "feature-markdown"
+          };
+        });
+        build.onLoad(
+          { filter: /.*/, namespace: "feature-markdown" },
+          async (args) => {
+            return {
+              contents: `file://${args.path}`,
+              loader: "text"
+              // contents: JSON.stringify({ path: args.path }),
+              // loader: "json",
+              // contents: JSON.stringify({
+              //   // html: markdownHTML,
+              //   raw: markdownContent,
+              //   filename: args.path, //path.basename(args.path),
+              // }),
+              // loader: "json",
+            };
+          }
+        );
+      }
+    };
+  }
+});
+
+// src/esbuildConfigs/rebuildPlugin.ts
+import fs2 from "fs";
+var rebuildPlugin_default;
+var init_rebuildPlugin = __esm({
+  "src/esbuildConfigs/rebuildPlugin.ts"() {
+    "use strict";
+    rebuildPlugin_default = (r) => {
+      return {
+        name: "rebuild-notify",
+        setup: (build) => {
+          build.onEnd((result) => {
+            console.log(`${r} > build ended with ${result.errors.length} errors`);
+            if (result.errors.length > 0) {
+              fs2.writeFileSync(
+                `./testeranto/reports${r}_build_errors`,
+                JSON.stringify(result, null, 2)
+              );
+            }
+          });
+        }
+      };
+    };
+  }
+});
+
+// src/esbuildConfigs/node.ts
+var node_default;
+var init_node = __esm({
+  "src/esbuildConfigs/node.ts"() {
+    "use strict";
+    init_esbuildConfigs();
+    init_inputFilesPlugin();
+    init_featuresPlugin();
+    init_rebuildPlugin();
+    node_default = (config, entryPoints, testName2) => {
+      const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
+        "node",
+        testName2
+      );
+      return {
+        ...esbuildConfigs_default(config),
+        splitting: true,
+        outdir: `testeranto/bundles/node/${testName2}/`,
+        inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
+        metafile: true,
+        supported: {
+          "dynamic-import": true
+        },
+        define: {
+          "process.env.FLUENTFFMPEG_COV": "0"
+        },
+        absWorkingDir: process.cwd(),
+        banner: {
+          js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+        },
+        platform: "node",
+        external: ["react", ...config.externals],
+        entryPoints: [...entryPoints],
+        plugins: [
+          featuresPlugin_default,
+          inputFilesPluginFactory,
+          rebuildPlugin_default("node"),
+          ...config.nodePlugins.map((p) => p(register2, entryPoints)) || []
+        ]
+      };
+    };
+  }
+});
+
+// src/esbuildConfigs/web.ts
+import { polyfillNode } from "esbuild-plugin-polyfill-node";
+import path3 from "path";
+var web_default;
+var init_web = __esm({
+  "src/esbuildConfigs/web.ts"() {
+    "use strict";
+    init_esbuildConfigs();
+    init_inputFilesPlugin();
+    init_featuresPlugin();
+    init_rebuildPlugin();
+    web_default = (config, entryPoints, testName2) => {
+      const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
+        "web",
+        testName2
+      );
+      return {
+        ...esbuildConfigs_default(config),
+        treeShaking: true,
+        outdir: `testeranto/bundles/web/${testName2}`,
+        alias: {
+          react: path3.resolve("./node_modules/react")
+        },
+        metafile: true,
+        external: [
+          "path",
+          "fs",
+          "stream",
+          "http",
+          "constants",
+          "net",
+          "assert",
+          "tls",
+          "os",
+          "child_process",
+          "readline",
+          "zlib",
+          "crypto",
+          "https",
+          "util",
+          "process",
+          "dns"
+        ],
+        platform: "browser",
+        entryPoints: [...entryPoints],
+        loader: config.webLoaders,
+        plugins: [
+          featuresPlugin_default,
+          inputFilesPluginFactory,
+          polyfillNode({
+            // You might need to configure specific Node.js modules you want to polyfill
+            // Example:
+            // modules: {
+            //   'util': true,
+            //   'fs': false,
+            // }
+          }),
+          rebuildPlugin_default("web"),
+          ...(config.webPlugins || []).map((p) => p(register2, entryPoints)) || []
+        ]
+      };
+    };
+  }
+});
+
+// src/esbuildConfigs/consoleDetectorPlugin.ts
+import fs3 from "fs";
+var consoleDetectorPlugin;
+var init_consoleDetectorPlugin = __esm({
+  "src/esbuildConfigs/consoleDetectorPlugin.ts"() {
+    "use strict";
+    consoleDetectorPlugin = {
+      name: "console-detector",
+      setup(build) {
+        build.onLoad({ filter: /\.(js|ts)$/ }, async (args) => {
+          const contents = await fs3.promises.readFile(args.path, "utf8");
+          const consolePattern = /console\.(log|error|warn|info|debug|trace|dir|dirxml|table|group|groupEnd|clear|count|countReset|assert|profile|profileEnd|time|timeLog|timeEnd|timeStamp|context|memory)/g;
+          const matches = contents.match(consolePattern);
+          if (matches) {
+            const uniqueMethods = [...new Set(matches)];
+            return {
+              warnings: uniqueMethods.map((method) => ({
+                text: `call of "${method}" was detected, which is not supported in the pure runtime.`
+                // location: {
+                //   file: args.path,
+                //   line:
+                //     contents
+                //       .split("\n")
+                //       .findIndex((line) => line.includes(method)) + 1,
+                //   column: 0,
+                // },
+              }))
+            };
+          }
+          return null;
+        });
+        build.onEnd((buildResult) => {
+          if (buildResult.warnings.find((br) => br.pluginName === "console-detector"))
+            console.warn(
+              `Warning: An unsupported method call was detected in a source file used to build for the pure runtime. It is possible that this method call is in a comment block. If you really want to use this function, change this test to the "node" runtime.`
+            );
+        });
+      }
+    };
+  }
+});
+
+// src/esbuildConfigs/pure.ts
+import { isBuiltin } from "node:module";
+var pure_default;
+var init_pure = __esm({
+  "src/esbuildConfigs/pure.ts"() {
+    "use strict";
+    init_esbuildConfigs();
+    init_inputFilesPlugin();
+    init_featuresPlugin();
+    init_consoleDetectorPlugin();
+    init_rebuildPlugin();
+    pure_default = (config, entryPoints, testName2) => {
+      const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
+        "pure",
+        testName2
+      );
+      return {
+        ...esbuildConfigs_default(config),
+        drop: [],
+        splitting: true,
+        outdir: `testeranto/bundles/pure/${testName2}/`,
+        // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
+        metafile: true,
+        supported: {
+          "dynamic-import": true
+        },
+        define: {
+          "process.env.FLUENTFFMPEG_COV": "0"
+        },
+        absWorkingDir: process.cwd(),
+        banner: {
+          js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
+        },
+        platform: "node",
+        external: ["react", ...config.externals],
+        entryPoints: [...entryPoints],
+        plugins: [
+          featuresPlugin_default,
+          inputFilesPluginFactory,
+          consoleDetectorPlugin,
+          // nativeImportDetectorPlugin,
+          {
+            name: "native-node-import-filter",
+            setup(build) {
+              build.onResolve({ filter: /fs/ }, (args) => {
+                if (isBuiltin(args.path)) {
+                  throw new Error(
+                    `You attempted to import a node module "${args.path}" into a "pure" test, which is not allowed. If you really want to use this package, convert this test from "pure" to "node"`
+                  );
+                }
+                return { path: args.path };
+              });
+            }
+          },
+          rebuildPlugin_default("pure"),
+          ...(config.nodePlugins || []).map((p) => p(register2, entryPoints)) || []
+        ]
+      };
+    };
+  }
+});
+
 // src/PM/base.ts
 import fs4 from "fs";
 import path4 from "path";
@@ -894,6 +1231,138 @@ var init_PM_WithWebSocket = __esm({
   }
 });
 
+// src/PM/PM_WithBuild.ts
+import esbuild from "esbuild";
+var PM_WithBuild;
+var init_PM_WithBuild = __esm({
+  "src/PM/PM_WithBuild.ts"() {
+    "use strict";
+    init_node();
+    init_web();
+    init_pure();
+    init_utils();
+    init_PM_WithWebSocket();
+    PM_WithBuild = class extends PM_WithWebSocket {
+      constructor(configs, name, mode2) {
+        super(configs);
+        this.currentBuildResolve = null;
+        this.currentBuildReject = null;
+        this.configs = configs;
+        this.name = name;
+        this.mode = mode2;
+      }
+      async startBuildProcesses() {
+        const { nodeEntryPoints, webEntryPoints, pureEntryPoints } = getRunnables(
+          this.configs.tests,
+          this.name
+        );
+        console.log(`Starting build processes for ${this.name}...`);
+        console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
+        console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
+        console.log(`  Pure entry points: ${Object.keys(pureEntryPoints).length}`);
+        await Promise.all([
+          this.startBuildProcess(node_default, nodeEntryPoints, "node"),
+          this.startBuildProcess(web_default, webEntryPoints, "web"),
+          this.startBuildProcess(pure_default, pureEntryPoints, "pure")
+        ]);
+      }
+      async startBuildProcess(configer, entryPoints, runtime) {
+        const entryPointKeys = Object.keys(entryPoints);
+        if (entryPointKeys.length === 0)
+          return;
+        const self = this;
+        const buildProcessTrackerPlugin = {
+          name: "build-process-tracker",
+          setup(build) {
+            build.onStart(() => {
+              const processId = `build-${runtime}-${Date.now()}`;
+              const command = `esbuild ${runtime} for ${self.name}`;
+              const buildPromise = new Promise((resolve, reject) => {
+                self.currentBuildResolve = resolve;
+                self.currentBuildReject = reject;
+              });
+              if (self.addPromiseProcess) {
+                self.addPromiseProcess(
+                  processId,
+                  buildPromise,
+                  command,
+                  "build-time",
+                  self.name,
+                  runtime
+                );
+              }
+              console.log(`Starting ${runtime} build for ${entryPointKeys.length} entry points`);
+              if (self.broadcast) {
+                self.broadcast({
+                  type: "buildEvent",
+                  event: "start",
+                  runtime,
+                  timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                  entryPoints: entryPointKeys.length,
+                  processId
+                });
+              }
+            });
+            build.onEnd((result) => {
+              const event = {
+                type: "buildEvent",
+                event: result.errors.length > 0 ? "error" : "success",
+                runtime,
+                timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                errors: result.errors.length,
+                warnings: result.warnings.length
+              };
+              if (result.errors.length > 0) {
+                console.error(`Build ${runtime} failed with ${result.errors.length} errors`);
+                if (self.currentBuildReject) {
+                  self.currentBuildReject(new Error(`Build failed with ${result.errors.length} errors`));
+                }
+              } else {
+                console.log(`Build ${runtime} completed successfully`);
+                if (self.currentBuildResolve) {
+                  self.currentBuildResolve();
+                }
+              }
+              if (self.broadcast) {
+                self.broadcast(event);
+              }
+              self.currentBuildResolve = null;
+              self.currentBuildReject = null;
+            });
+          }
+        };
+        const baseConfig = configer(this.configs, entryPointKeys, this.name);
+        const configWithPlugin = {
+          ...baseConfig,
+          plugins: [...baseConfig.plugins || [], buildProcessTrackerPlugin]
+        };
+        try {
+          const ctx = await esbuild.context(configWithPlugin);
+          if (this.mode === "dev") {
+            await ctx.watch();
+          } else {
+            const result = await ctx.rebuild();
+            await ctx.dispose();
+          }
+        } catch (error) {
+          console.error(`Failed to start ${runtime} build context:`, error);
+          if (this.broadcast) {
+            this.broadcast({
+              type: "buildEvent",
+              event: "error",
+              runtime,
+              timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+              errors: 1,
+              warnings: 0,
+              message: error.message
+            });
+          }
+        }
+      }
+    };
+  }
+});
+
 // src/utils/logFiles.ts
 function getLogFilesForRuntime(runtime) {
   const { standard, runtimeSpecific } = getRuntimeLogs(runtime);
@@ -1055,15 +1524,15 @@ var init_PM_WithEslintAndTsc = __esm({
   async "src/PM/PM_WithEslintAndTsc.ts"() {
     "use strict";
     init_utils();
-    init_PM_WithWebSocket();
+    init_PM_WithBuild();
     init_makePrompt();
     eslint = new ESLint();
     formatter = await eslint.loadFormatter(
       "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
     );
-    PM_WithEslintAndTsc = class extends PM_WithWebSocket {
+    PM_WithEslintAndTsc = class extends PM_WithBuild {
       constructor(configs, name, mode2) {
-        super(configs);
+        super(configs, name, mode2);
         this.summary = {};
         this.tscCheck = async ({
           entrypoint,
@@ -1114,7 +1583,13 @@ var init_PM_WithEslintAndTsc = __esm({
             return results.length;
           })();
           if (this.addPromiseProcess) {
-            this.addPromiseProcess(processId, tscPromise, command, "build-time", entrypoint);
+            this.addPromiseProcess(
+              processId,
+              tscPromise,
+              command,
+              "build-time",
+              entrypoint
+            );
           } else {
             await tscPromise;
           }
@@ -1142,7 +1617,13 @@ var init_PM_WithEslintAndTsc = __esm({
             return results.length;
           })();
           if (this.addPromiseProcess) {
-            this.addPromiseProcess(processId, eslintPromise, command, "build-time", entrypoint);
+            this.addPromiseProcess(
+              processId,
+              eslintPromise,
+              command,
+              "build-time",
+              entrypoint
+            );
           } else {
             await eslintPromise;
           }
@@ -1224,8 +1705,6 @@ var init_PM_WithEslintAndTsc = __esm({
             data: this.summary
           });
         };
-        this.name = name;
-        this.mode = mode2;
         this.summary = {};
         this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
           this.ensureSummaryEntry(t);
@@ -1636,7 +2115,14 @@ var init_main = __esm({
               }
             }
           })();
-          this.addPromiseProcess(processId, purePromise, command, "bdd-test", src, "pure");
+          this.addPromiseProcess(
+            processId,
+            purePromise,
+            command,
+            "bdd-test",
+            src,
+            "pure"
+          );
         };
         this.launchNode = async (src, dest) => {
           const processId = `node-${src}-${Date.now()}`;
@@ -1805,7 +2291,14 @@ var init_main = __esm({
               }
             });
           })();
-          this.addPromiseProcess(processId, nodePromise, command, "bdd-test", src, "node");
+          this.addPromiseProcess(
+            processId,
+            nodePromise,
+            command,
+            "bdd-test",
+            src,
+            "node"
+          );
         };
         this.launchWeb = async (src, dest) => {
           const processId = `web-${src}-${Date.now()}`;
@@ -1911,7 +2404,14 @@ var init_main = __esm({
               });
             });
           })();
-          this.addPromiseProcess(processId, webPromise, command, "bdd-test", src, "web");
+          this.addPromiseProcess(
+            processId,
+            webPromise,
+            command,
+            "bdd-test",
+            src,
+            "web"
+          );
         };
         this.launchPitono = async (src, dest) => {
           const processId = `pitono-${src}-${Date.now()}`;
@@ -1943,7 +2443,14 @@ var init_main = __esm({
               throw error;
             }
           })();
-          this.addPromiseProcess(processId, pitonoPromise, command, "bdd-test", src, "pitono");
+          this.addPromiseProcess(
+            processId,
+            pitonoPromise,
+            command,
+            "bdd-test",
+            src,
+            "pitono"
+          );
         };
         this.launchGolingvu = async (src, dest) => {
           throw "not yet implemented";
@@ -2099,7 +2606,45 @@ var init_main = __esm({
           ["writeFileSync", this.writeFileSync]
         ];
       }
+      // keep this forever. do not delete
+      // mapping(): [string, (...a) => any][] {
+      //   return [
+      //     ["$", (...args) => this.$(...args)],
+      //     ["click", (...args) => this.click(...args)],
+      //     ["closePage", (...args) => this.closePage(...args)],
+      //     ["createWriteStream", (...args) => this.createWriteStream(...args)],
+      //     ["customclose", (...args) => this.customclose(...args)],
+      //     ["customScreenShot", (...args) => this.customScreenShot(...args)],
+      //     ["end", (...args) => this.end(...args)],
+      //     ["existsSync", (...args) => this.existsSync(...args)],
+      //     ["focusOn", (...args) => this.focusOn(...args)],
+      //     ["getAttribute", (...args) => this.getAttribute(...args)],
+      //     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
+      //     // ["setValue", (...args) => this.setValue(...args)],
+      //     ["goto", (...args) => this.goto(...args)],
+      //     ["isDisabled", (...args) => this.isDisabled(...args)],
+      //     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
+      //     ["mkdirSync", (...args) => this.mkdirSync(...args)],
+      //     ["newPage", (...args) => this.newPage(...args)],
+      //     ["page", (...args) => this.page(...args)],
+      //     ["pages", (...args) => this.pages(...args)],
+      //     ["screencast", (...args) => this.screencast(...args)],
+      //     ["screencastStop", (...args) => this.screencastStop(...args)],
+      //     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
+      //     ["typeInto", (...args) => this.typeInto(...args)],
+      //     ["waitForSelector", (...args) => this.waitForSelector(...args)],
+      //     ["write", (...args) => this.write(...args)],
+      //     ["writeFileSync", (...args) => this.writeFileSync(...args)],
+      //   ];
+      // }
       async start() {
+        try {
+          await this.startBuildProcesses();
+          this.onBuildDone();
+        } catch (error) {
+          console.error("Build processes failed:", error);
+          return;
+        }
         this.mapping().forEach(async ([command, func]) => {
           globalThis[command] = func;
         });
@@ -2118,8 +2663,8 @@ var init_main = __esm({
         const {
           nodeEntryPoints,
           webEntryPoints,
-          pureEntryPoints,
-          pitonoEntryPoints
+          pureEntryPoints
+          // pitonoEntryPoints is stubbed out
         } = getRunnables(this.configs.tests, this.name);
         [
           [
@@ -2145,15 +2690,16 @@ var init_main = __esm({
             (w) => {
               this.importMetafileWatcher = w;
             }
-          ],
-          [
-            pitonoEntryPoints,
-            this.launchPitono,
-            "pitono",
-            (w) => {
-              this.pitonoMetafileWatcher = w;
-            }
           ]
+          // pitonoEntryPoints is commented out since it's stubbed
+          // [
+          //   pitonoEntryPoints,
+          //   this.launchPitono,
+          //   "pitono",
+          //   (w) => {
+          //     this.pitonoMetafileWatcher = w;
+          //   },
+          // ],
         ].forEach(
           async ([eps, launcher, runtime, watcher]) => {
             let metafile;
@@ -2174,16 +2720,26 @@ var init_main = __esm({
                 this.launchers[inputFile] = () => launcher(inputFile, outputFile);
                 this.launchers[inputFile]();
                 try {
-                  watch(outputFile, async (e, filename) => {
-                    const hash = await fileHash(outputFile);
-                    if (fileHashes[inputFile] !== hash) {
-                      fileHashes[inputFile] = hash;
-                      console.log(
-                        ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename}`))
-                      );
-                      this.launchers[inputFile]();
-                    }
-                  });
+                  if (fs10.existsSync(outputFile)) {
+                    watch(outputFile, async (e, filename) => {
+                      const hash = await fileHash(outputFile);
+                      if (fileHashes[inputFile] !== hash) {
+                        fileHashes[inputFile] = hash;
+                        console.log(
+                          ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename}`))
+                        );
+                        this.launchers[inputFile]();
+                      }
+                    });
+                  } else {
+                    console.log(
+                      ansiC3.yellow(
+                        ansiC3.inverse(
+                          `File not found, skipping watch: ${outputFile}`
+                        )
+                      )
+                    );
+                  }
                 } catch (e) {
                   console.error(e);
                 }
@@ -2449,6 +3005,9 @@ var init_main = __esm({
           throw `test is undefined ${x}`;
         this.launchers[test[0]]();
       }
+      onBuildDone() {
+        console.log("Build processes completed");
+      }
     };
   }
 });
@@ -2628,7 +3187,6 @@ import ansiC4 from "ansi-colors";
 import fs13 from "fs";
 import path11 from "path";
 import readline from "readline";
-import esbuild from "esbuild";
 
 // src/utils/buildTemplates.ts
 var getBaseHtml = (title) => `
@@ -2664,284 +3222,6 @@ var AppHtml = () => `
 </body>
 </html>
 `;
-
-// src/esbuildConfigs/index.ts
-var esbuildConfigs_default = (config) => {
-  return {
-    // packages: "external",
-    target: "esnext",
-    format: "esm",
-    splitting: true,
-    outExtension: { ".js": ".mjs" },
-    outbase: ".",
-    jsx: "transform",
-    bundle: true,
-    minify: config.minify === true,
-    write: true,
-    loader: {
-      ".js": "jsx",
-      ".png": "binary",
-      ".jpg": "binary"
-    }
-  };
-};
-
-// src/esbuildConfigs/inputFilesPlugin.ts
-import fs from "fs";
-var otherInputs = {};
-var register = (entrypoint, sources) => {
-  if (!otherInputs[entrypoint]) {
-    otherInputs[entrypoint] = /* @__PURE__ */ new Set();
-  }
-  sources.forEach((s) => otherInputs[entrypoint].add(s));
-};
-var inputFilesPlugin_default = (platform, testName2) => {
-  const f2 = `testeranto/metafiles/${platform}/${testName2}.json`;
-  if (!fs.existsSync(`testeranto/metafiles/${platform}`)) {
-    fs.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
-  }
-  return {
-    register,
-    inputFilesPluginFactory: {
-      name: "metafileWriter",
-      setup(build) {
-        build.onEnd((result) => {
-          fs.writeFileSync(f2, JSON.stringify(result, null, 2));
-        });
-      }
-    }
-  };
-};
-
-// src/esbuildConfigs/featuresPlugin.ts
-import path2 from "path";
-var featuresPlugin_default = {
-  name: "feature-markdown",
-  setup(build) {
-    build.onResolve({ filter: /\.md$/ }, (args) => {
-      if (args.resolveDir === "")
-        return;
-      return {
-        path: path2.isAbsolute(args.path) ? args.path : path2.join(args.resolveDir, args.path),
-        namespace: "feature-markdown"
-      };
-    });
-    build.onLoad(
-      { filter: /.*/, namespace: "feature-markdown" },
-      async (args) => {
-        return {
-          contents: `file://${args.path}`,
-          loader: "text"
-          // contents: JSON.stringify({ path: args.path }),
-          // loader: "json",
-          // contents: JSON.stringify({
-          //   // html: markdownHTML,
-          //   raw: markdownContent,
-          //   filename: args.path, //path.basename(args.path),
-          // }),
-          // loader: "json",
-        };
-      }
-    );
-  }
-};
-
-// src/esbuildConfigs/rebuildPlugin.ts
-import fs2 from "fs";
-var rebuildPlugin_default = (r) => {
-  return {
-    name: "rebuild-notify",
-    setup: (build) => {
-      build.onEnd((result) => {
-        console.log(`${r} > build ended with ${result.errors.length} errors`);
-        if (result.errors.length > 0) {
-          fs2.writeFileSync(
-            `./testeranto/reports${r}_build_errors`,
-            JSON.stringify(result, null, 2)
-          );
-        }
-      });
-    }
-  };
-};
-
-// src/esbuildConfigs/node.ts
-var node_default = (config, entryPoints, testName2) => {
-  const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
-    "node",
-    testName2
-  );
-  return {
-    ...esbuildConfigs_default(config),
-    splitting: true,
-    outdir: `testeranto/bundles/node/${testName2}/`,
-    inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
-    metafile: true,
-    supported: {
-      "dynamic-import": true
-    },
-    define: {
-      "process.env.FLUENTFFMPEG_COV": "0"
-    },
-    absWorkingDir: process.cwd(),
-    banner: {
-      js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
-    },
-    platform: "node",
-    external: ["react", ...config.externals],
-    entryPoints: [...entryPoints],
-    plugins: [
-      featuresPlugin_default,
-      inputFilesPluginFactory,
-      rebuildPlugin_default("node"),
-      ...config.nodePlugins.map((p) => p(register2, entryPoints)) || []
-    ]
-  };
-};
-
-// src/esbuildConfigs/web.ts
-import { polyfillNode } from "esbuild-plugin-polyfill-node";
-import path3 from "path";
-var web_default = (config, entryPoints, testName2) => {
-  const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
-    "web",
-    testName2
-  );
-  return {
-    ...esbuildConfigs_default(config),
-    treeShaking: true,
-    outdir: `testeranto/bundles/web/${testName2}`,
-    alias: {
-      react: path3.resolve("./node_modules/react")
-    },
-    metafile: true,
-    external: [
-      "path",
-      "fs",
-      "stream",
-      "http",
-      "constants",
-      "net",
-      "assert",
-      "tls",
-      "os",
-      "child_process",
-      "readline",
-      "zlib",
-      "crypto",
-      "https",
-      "util",
-      "process",
-      "dns"
-    ],
-    platform: "browser",
-    entryPoints: [...entryPoints],
-    loader: config.webLoaders,
-    plugins: [
-      featuresPlugin_default,
-      inputFilesPluginFactory,
-      polyfillNode({
-        // You might need to configure specific Node.js modules you want to polyfill
-        // Example:
-        // modules: {
-        //   'util': true,
-        //   'fs': false,
-        // }
-      }),
-      rebuildPlugin_default("web"),
-      ...(config.webPlugins || []).map((p) => p(register2, entryPoints)) || []
-    ]
-  };
-};
-
-// src/esbuildConfigs/pure.ts
-import { isBuiltin } from "node:module";
-
-// src/esbuildConfigs/consoleDetectorPlugin.ts
-import fs3 from "fs";
-var consoleDetectorPlugin = {
-  name: "console-detector",
-  setup(build) {
-    build.onLoad({ filter: /\.(js|ts)$/ }, async (args) => {
-      const contents = await fs3.promises.readFile(args.path, "utf8");
-      const consolePattern = /console\.(log|error|warn|info|debug|trace|dir|dirxml|table|group|groupEnd|clear|count|countReset|assert|profile|profileEnd|time|timeLog|timeEnd|timeStamp|context|memory)/g;
-      const matches = contents.match(consolePattern);
-      if (matches) {
-        const uniqueMethods = [...new Set(matches)];
-        return {
-          warnings: uniqueMethods.map((method) => ({
-            text: `call of "${method}" was detected, which is not supported in the pure runtime.`
-            // location: {
-            //   file: args.path,
-            //   line:
-            //     contents
-            //       .split("\n")
-            //       .findIndex((line) => line.includes(method)) + 1,
-            //   column: 0,
-            // },
-          }))
-        };
-      }
-      return null;
-    });
-    build.onEnd((buildResult) => {
-      if (buildResult.warnings.find((br) => br.pluginName === "console-detector"))
-        console.warn(
-          `Warning: An unsupported method call was detected in a source file used to build for the pure runtime. It is possible that this method call is in a comment block. If you really want to use this function, change this test to the "node" runtime.`
-        );
-    });
-  }
-};
-
-// src/esbuildConfigs/pure.ts
-var pure_default = (config, entryPoints, testName2) => {
-  const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
-    "pure",
-    testName2
-  );
-  return {
-    ...esbuildConfigs_default(config),
-    drop: [],
-    splitting: true,
-    outdir: `testeranto/bundles/pure/${testName2}/`,
-    // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
-    metafile: true,
-    supported: {
-      "dynamic-import": true
-    },
-    define: {
-      "process.env.FLUENTFFMPEG_COV": "0"
-    },
-    absWorkingDir: process.cwd(),
-    banner: {
-      js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`
-    },
-    platform: "node",
-    external: ["react", ...config.externals],
-    entryPoints: [...entryPoints],
-    plugins: [
-      featuresPlugin_default,
-      inputFilesPluginFactory,
-      consoleDetectorPlugin,
-      // nativeImportDetectorPlugin,
-      {
-        name: "native-node-import-filter",
-        setup(build) {
-          build.onResolve({ filter: /fs/ }, (args) => {
-            if (isBuiltin(args.path)) {
-              throw new Error(
-                `You attempted to import a node module "${args.path}" into a "pure" test, which is not allowed. If you really want to use this package, convert this test from "pure" to "node"`
-              );
-            }
-            return { path: args.path };
-          });
-        }
-      },
-      rebuildPlugin_default("pure"),
-      ...(config.nodePlugins || []).map((p) => p(register2, entryPoints)) || []
-    ]
-  };
-};
 
 // src/web.html.ts
 var web_html_default = (jsfilePath, htmlFilePath, cssfilePath) => `
@@ -3009,61 +3289,10 @@ import(f).then(async (module) => {
       process.exit(-1);
     }
   });
-  let nodeDone = false;
-  let webDone = false;
-  let importDone = false;
-  let golangDone = false;
-  let pitonoDone = false;
-  let status = "build";
-  const {
-    nodeEntryPoints,
-    nodeEntryPointSidecars,
-    webEntryPoints,
-    webEntryPointSidecars,
-    pureEntryPoints,
-    pureEntryPointSidecars
-  } = getRunnables(config.tests, testName);
-  const onNodeDone = () => {
-    nodeDone = true;
-    onDone();
-  };
-  const onWebDone = () => {
-    webDone = true;
-    onDone();
-  };
-  const onImportDone = () => {
-    importDone = true;
-    onDone();
-  };
-  const onGolangDone = () => {
-    golangDone = true;
-    onDone();
-  };
-  const onPitonoDone = () => {
-    pitonoDone = true;
-    onDone();
-  };
   let pm = null;
-  const onDone = async () => {
-    const hasGolangTests2 = config.tests.some((test) => test[1] === "golang");
-    const hasPitonoTests2 = config.tests.some((test) => test[1] === "pitono");
-    const allDone = nodeDone && webDone && importDone && (!hasGolangTests2 || golangDone) && (!hasPitonoTests2 || pitonoDone);
-    if (allDone) {
-      status = "built";
-      if (!pm) {
-        const { PM_Main: PM_Main2 } = await init_main().then(() => main_exports);
-        pm = new PM_Main2(config, testName, mode);
-        await pm.start();
-      }
-    }
-    if (allDone && mode === "once") {
-      console.log(
-        ansiC4.inverse(
-          `${testName} was built and the builder exited successfully.`
-        )
-      );
-    }
-  };
+  const { PM_Main: PM_Main2 } = await init_main().then(() => main_exports);
+  pm = new PM_Main2(config, testName, mode);
+  await pm.start();
   fs13.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
   Object.keys(bigConfig.projects).forEach((projectName) => {
     console.log(`testeranto/reports/${projectName}`);
@@ -3099,7 +3328,6 @@ import(f).then(async (module) => {
     const golangEntryPoints = golangTests.map((test) => test[0]);
     const metafile = await generateGolangMetafile2(testName, golangEntryPoints);
     writeGolangMetafile2(testName, metafile);
-    onGolangDone();
   }
   const pitonoTests = config.tests.filter((test) => test[1] === "pitono");
   const hasPitonoTests = pitonoTests.length > 0;
@@ -3113,7 +3341,6 @@ import(f).then(async (module) => {
       `${pitonoMetafilePath}/core.json`,
       JSON.stringify(metafile, null, 2)
     );
-    onPitonoDone();
   }
   Promise.resolve(
     Promise.all(
@@ -3138,6 +3365,14 @@ import(f).then(async (module) => {
       })
     )
   );
+  const {
+    nodeEntryPoints,
+    nodeEntryPointSidecars,
+    webEntryPoints,
+    webEntryPointSidecars,
+    pureEntryPoints,
+    pureEntryPointSidecars
+  } = getRunnables(config.tests, testName);
   const x = [
     ["pure", Object.keys(pureEntryPoints)],
     ["node", Object.keys(nodeEntryPoints)],
@@ -3167,42 +3402,6 @@ import(f).then(async (module) => {
       });
     }
   );
-  await Promise.all([
-    ...[
-      [
-        pure_default,
-        pureEntryPoints,
-        pureEntryPointSidecars,
-        onImportDone
-      ],
-      [
-        node_default,
-        nodeEntryPoints,
-        nodeEntryPointSidecars,
-        onNodeDone
-      ],
-      [web_default, webEntryPoints, webEntryPointSidecars, onWebDone]
-    ].map(([configer, entryPoints, sidecars, done]) => {
-      esbuild.context(
-        configer(
-          config,
-          [...Object.keys(entryPoints), ...Object.keys(sidecars)],
-          testName
-        )
-      ).then(async (ctx) => {
-        if (mode === "dev") {
-          await ctx.watch().then((v) => {
-            done();
-          });
-        } else {
-          ctx.rebuild().then((v) => {
-            done();
-          });
-        }
-        return ctx;
-      });
-    })
-  ]);
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {
       console.log("Testeranto is shutting down gracefully...");

@@ -4,12 +4,8 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import esbuild from "esbuild";
 import { getRunnables } from "./utils";
 import { AppHtml } from "./utils/buildTemplates";
-import esbuildNodeConfiger from "./esbuildConfigs/node";
-import esbuildWebConfiger from "./esbuildConfigs/web";
-import esbuildImportConfiger from "./esbuildConfigs/pure";
 import webHtmlFrame from "./web.html";
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -52,56 +48,11 @@ import(f).then(async (module) => {
             process.exit(-1);
         }
     });
-    let nodeDone = false;
-    let webDone = false;
-    let importDone = false;
-    let golangDone = false;
-    let pitonoDone = false;
-    let status = "build";
-    const { nodeEntryPoints, nodeEntryPointSidecars, webEntryPoints, webEntryPointSidecars, pureEntryPoints, pureEntryPointSidecars, } = getRunnables(config.tests, testName);
-    const onNodeDone = () => {
-        nodeDone = true;
-        onDone();
-    };
-    const onWebDone = () => {
-        webDone = true;
-        onDone();
-    };
-    const onImportDone = () => {
-        importDone = true;
-        onDone();
-    };
-    const onGolangDone = () => {
-        golangDone = true;
-        onDone();
-    };
-    const onPitonoDone = () => {
-        pitonoDone = true;
-        onDone();
-    };
     let pm = null;
-    const onDone = async () => {
-        // Check which test types are present
-        const hasGolangTests = config.tests.some(test => test[1] === 'golang');
-        const hasPitonoTests = config.tests.some(test => test[1] === 'pitono');
-        // Wait for all relevant runtimes to be done
-        const allDone = nodeDone && webDone && importDone &&
-            (!hasGolangTests || golangDone) &&
-            (!hasPitonoTests || pitonoDone);
-        if (allDone) {
-            status = "built";
-            // Start the PM_Main to run the tests after build
-            if (!pm) {
-                const { PM_Main } = await import("./PM/main");
-                pm = new PM_Main(config, testName, mode);
-                await pm.start();
-            }
-        }
-        if (allDone && mode === "once") {
-            console.log(ansiC.inverse(`${testName} was built and the builder exited successfully.`));
-            // Let PM_Main handle the exit after tests are complete
-        }
-    };
+    // Start PM_Main immediately - it will handle the build processes internally
+    const { PM_Main } = await import("./PM/main");
+    pm = new PM_Main(config, testName, mode);
+    await pm.start();
     fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
     Object.keys(bigConfig.projects).forEach((projectName) => {
         console.log(`testeranto/reports/${projectName}`);
@@ -130,26 +81,26 @@ import(f).then(async (module) => {
         console.log(`Pitono test found: ${sourceFilePath}`);
     });
     // Handle golang tests by generating their metafiles
-    const golangTests = config.tests.filter(test => test[1] === 'golang');
+    const golangTests = config.tests.filter((test) => test[1] === "golang");
     const hasGolangTests = golangTests.length > 0;
     if (hasGolangTests) {
         // Import and use the golang metafile utilities
-        const { generateGolangMetafile, writeGolangMetafile } = await import('./utils/golingvuMetafile');
+        const { generateGolangMetafile, writeGolangMetafile } = await import("./utils/golingvuMetafile");
         // Get the entry points (first element of each test tuple)
-        const golangEntryPoints = golangTests.map(test => test[0]);
+        const golangEntryPoints = golangTests.map((test) => test[0]);
         const metafile = await generateGolangMetafile(testName, golangEntryPoints);
         writeGolangMetafile(testName, metafile);
         // Mark golang as done after writing the metafile
-        onGolangDone();
+        // onGolangDone();
     }
     // Handle pitono (Python) tests by generating their metafiles
-    const pitonoTests = config.tests.filter(test => test[1] === 'pitono');
+    const pitonoTests = config.tests.filter((test) => test[1] === "pitono");
     const hasPitonoTests = pitonoTests.length > 0;
     if (hasPitonoTests) {
         // Import and use the pitono metafile utilities
-        const { generatePitonoMetafile } = await import('./utils/pitonoMetafile');
+        const { generatePitonoMetafile } = await import("./utils/pitonoMetafile");
         // Get the entry points (first element of each test tuple)
-        const pitonoEntryPoints = pitonoTests.map(test => test[0]);
+        const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
         const metafile = await generatePitonoMetafile(testName, pitonoEntryPoints);
         // Ensure the directory exists
         const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
@@ -157,7 +108,7 @@ import(f).then(async (module) => {
         // Write the metafile to the specified path
         fs.writeFileSync(`${pitonoMetafilePath}/core.json`, JSON.stringify(metafile, null, 2));
         // Mark pitono as done after writing the metafile
-        onPitonoDone();
+        // onPitonoDone();
     }
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
@@ -174,6 +125,7 @@ import(f).then(async (module) => {
             .mkdir(path.dirname(htmlFilePath), { recursive: true })
             .then((x) => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)));
     })));
+    const { nodeEntryPoints, nodeEntryPointSidecars, webEntryPoints, webEntryPointSidecars, pureEntryPoints, pureEntryPointSidecars, } = getRunnables(config.tests, testName);
     const x = [
         ["pure", Object.keys(pureEntryPoints)],
         ["node", Object.keys(nodeEntryPoints)],
@@ -198,39 +150,6 @@ import(f).then(async (module) => {
             fs.mkdirSync(fp, { recursive: true });
         });
     });
-    await Promise.all([
-        ...[
-            [
-                esbuildImportConfiger,
-                pureEntryPoints,
-                pureEntryPointSidecars,
-                onImportDone,
-            ],
-            [
-                esbuildNodeConfiger,
-                nodeEntryPoints,
-                nodeEntryPointSidecars,
-                onNodeDone,
-            ],
-            [esbuildWebConfiger, webEntryPoints, webEntryPointSidecars, onWebDone],
-        ].map(([configer, entryPoints, sidecars, done]) => {
-            esbuild
-                .context(configer(config, [...Object.keys(entryPoints), ...Object.keys(sidecars)], testName))
-                .then(async (ctx) => {
-                if (mode === "dev") {
-                    await ctx.watch().then((v) => {
-                        done();
-                    });
-                }
-                else {
-                    ctx.rebuild().then((v) => {
-                        done();
-                    });
-                }
-                return ctx;
-            });
-        }),
-    ]);
     process.stdin.on("keypress", (str, key) => {
         if (key.name === "q") {
             console.log("Testeranto is shutting down gracefully...");

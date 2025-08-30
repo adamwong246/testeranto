@@ -12,7 +12,7 @@ import tsc from "tsc-prog";
 import { lintPather, tscPather } from "../utils";
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
 
-import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
+import { PM_WithBuild } from "./PM_WithBuild.js";
 import { makePromptInternal } from "../utils/makePrompt";
 
 const eslint = new ESLint();
@@ -20,16 +20,12 @@ const formatter = await eslint.loadFormatter(
   "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
 );
 
-export abstract class PM_WithEslintAndTsc extends PM_WithWebSocket {
-  name: string;
-  mode: "once" | "dev";
+export abstract class PM_WithEslintAndTsc extends PM_WithBuild {
   summary: ISummary = {};
 
   constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev") {
-    super(configs);
+    super(configs, name, mode);
 
-    this.name = name;
-    this.mode = mode;
     this.summary = {};
 
     // Initialize all test entries first
@@ -104,7 +100,13 @@ export abstract class PM_WithEslintAndTsc extends PM_WithWebSocket {
 
     // Add to process manager if available
     if (this.addPromiseProcess) {
-      this.addPromiseProcess(processId, tscPromise, command, "build-time", entrypoint);
+      this.addPromiseProcess(
+        processId,
+        tscPromise,
+        command,
+        "build-time",
+        entrypoint
+      );
     } else {
       // Fallback to just running the promise
       await tscPromise;
@@ -145,7 +147,13 @@ export abstract class PM_WithEslintAndTsc extends PM_WithWebSocket {
 
     // Add to process manager if available
     if (this.addPromiseProcess) {
-      this.addPromiseProcess(processId, eslintPromise, command, "build-time", entrypoint);
+      this.addPromiseProcess(
+        processId,
+        eslintPromise,
+        command,
+        "build-time",
+        entrypoint
+      );
     } else {
       // Fallback to just running the promise
       await eslintPromise;

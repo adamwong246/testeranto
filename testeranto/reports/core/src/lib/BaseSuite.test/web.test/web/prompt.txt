@@ -1,7 +1,17 @@
 
-/add src/lib/BaseSuite.test/web.test.ts
-/add src/lib/BaseSuite.test/test.ts
+/add src/PM/index.ts
+/add src/PM/web.ts
+/add src/lib/index.ts
+/add src/lib/pmProxy.ts
+/add src/lib/BaseGiven.ts
+/add src/lib/BaseWhen.ts
+/add src/lib/BaseThen.ts
+/add src/lib/BaseSuite.ts
+/add src/lib/Tiposkripto.ts
+/add src/Web.ts
 /add src/lib/BaseSuite.test/mock.ts
+/add src/lib/BaseSuite.test/test.ts
+/add src/lib/BaseSuite.test/web.test.ts
 
 /read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md
