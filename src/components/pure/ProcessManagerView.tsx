@@ -161,7 +161,7 @@ export const ProcessManagerView: React.FC<ProcessManagerViewProps> = ({
         >
 
           <div className="p-1">
-            {processes.map((process) => (
+            {[...processes].reverse().map((process) => (
               <div
                 key={process.processId}
                 className={`p-2 mb-1 rounded ${selectedProcess?.processId === process.processId

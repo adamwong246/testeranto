@@ -36523,7 +36523,7 @@ This file was not generated during the test run.`,
           backgroundColor: "#f8f9fa"
         }
       },
-      /* @__PURE__ */ import_react98.default.createElement("div", { className: "p-1" }, processes.map((process2) => /* @__PURE__ */ import_react98.default.createElement(
+      /* @__PURE__ */ import_react98.default.createElement("div", { className: "p-1" }, [...processes].reverse().map((process2) => /* @__PURE__ */ import_react98.default.createElement(
         "div",
         {
           key: process2.processId,
