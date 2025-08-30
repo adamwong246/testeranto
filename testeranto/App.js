@@ -1109,7 +1109,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create2, deps);
           }
-          function useCallback21(callback, deps) {
+          function useCallback20(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
@@ -1875,7 +1875,7 @@
           exports.memo = memo2;
           exports.startTransition = startTransition3;
           exports.unstable_act = act;
-          exports.useCallback = useCallback21;
+          exports.useCallback = useCallback20;
           exports.useContext = useContext24;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
@@ -27878,7 +27878,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   };
   var summaryDotJson = (name) => {
-    return `/reports/${name}/summary.json`;
+    return `reports/${name}/summary.json`;
   };
 
   // src/components/pure/TestPageView.tsx
@@ -34806,10 +34806,10 @@ This file was not generated during the test run.`,
         try {
           const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
             fetch(summaryDotJson(name)),
-            fetch(`/metafiles/node/${name}.json`),
-            fetch(`/metafiles/web/${name}.json`),
-            fetch(`/metafiles/pure/${name}.json`),
-            fetch(`/reports/${name}/config.json`)
+            fetch(`metafiles/node/${name}.json`),
+            fetch(`metafiles/web/${name}.json`),
+            fetch(`metafiles/pure/${name}.json`),
+            fetch(`reports/${name}/config.json`)
           ]);
           const [summaryData, nodeData, webData, pureData, configData] = await Promise.all([
             summaryRes.ok ? summaryRes.json() : {},
@@ -34939,16 +34939,16 @@ This file was not generated during the test run.`,
     (0, import_react89.useEffect)(() => {
       const fetchProjects = async () => {
         try {
-          const projectsRes = await fetch(`/projects.json`);
+          const projectsRes = await fetch(`projects.json`);
           const projectNames = await projectsRes.json();
           const projectsData = await Promise.all(
             projectNames.map(async (name) => {
               const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
                 fetch(summaryDotJson(name)),
-                fetch(`/metafiles/node/${name}.json`),
-                fetch(`/metafiles/web/${name}.json`),
-                fetch(`/metafiles/pure/${name}.json`),
-                fetch(`/reports/${name}/config.json`)
+                fetch(`metafiles/node/${name}.json`),
+                fetch(`metafiles/web/${name}.json`),
+                fetch(`metafiles/pure/${name}.json`),
+                fetch(`reports/${name}/config.json`)
               ]);
               const [summary, nodeData, webData, pureData, configData] = await Promise.all([
                 summaryRes.json(),
@@ -35111,7 +35111,7 @@ This file was not generated during the test run.`,
     (0, import_react92.useEffect)(() => {
       const fetchProjects = async () => {
         try {
-          const response = await fetch("/projects.json");
+          const response = await fetch("projects.json");
           if (!response.ok)
             throw new Error("Failed to fetch projects");
           const projectNames = await response.json();

@@ -34,6 +34,7 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FeaturesReporter = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const react_1 = __importStar(require("react"));
 const FeaturesReporterView_1 = require("../pure/FeaturesReporterView");
 const features_1 = require("../../types/features");
@@ -42,7 +43,7 @@ const FeaturesReporter = () => {
     (0, react_1.useEffect)(() => {
         const fetchProjects = async () => {
             try {
-                const response = await fetch('/projects.json');
+                const response = await fetch('projects.json');
                 if (!response.ok)
                     throw new Error('Failed to fetch projects');
                 const projectNames = await response.json();

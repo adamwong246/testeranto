@@ -83,5 +83,5 @@ export const fetchTestData = async (projectName, filepath, runTime) => {
     }
 };
 export const summaryDotJson = (name) => {
-    return `/reports/${name}/summary.json`;
+    return `reports/${name}/summary.json`;
 };

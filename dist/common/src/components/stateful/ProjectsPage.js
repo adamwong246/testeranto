@@ -1,4 +1,6 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -34,7 +36,6 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProjectsPage = void 0;
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const ProjectsPageView_1 = require("../pure/ProjectsPageView");
@@ -75,16 +76,16 @@ const ProjectsPage = () => {
     (0, react_1.useEffect)(() => {
         const fetchProjects = async () => {
             try {
-                const projectsRes = await fetch(`/projects.json`);
+                const projectsRes = await fetch(`projects.json`);
                 const projectNames = await projectsRes.json();
                 const projectsData = await Promise.all(projectNames.map(async (name) => {
                     var _a, _b, _c, _d, _e, _f;
                     const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
                         fetch((0, api_1.summaryDotJson)(name)),
-                        fetch(`/metafiles/node/${name}.json`),
-                        fetch(`/metafiles/web/${name}.json`),
-                        fetch(`/metafiles/pure/${name}.json`),
-                        fetch(`/reports/${name}/config.json`),
+                        fetch(`metafiles/node/${name}.json`),
+                        fetch(`metafiles/web/${name}.json`),
+                        fetch(`metafiles/pure/${name}.json`),
+                        fetch(`reports/${name}/config.json`),
                     ]);
                     const [summary, nodeData, webData, pureData, configData] = await Promise.all([
                         summaryRes.json(),

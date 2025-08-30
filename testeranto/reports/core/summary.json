@@ -1,23 +1,59 @@
 {
+  "example/test_example.py": {
+    "failingFeatures": {}
+  },
+  "src/golingvu/base_suite_test.go": {
+    "failingFeatures": {}
+  },
+  "src/lib/TipoSkripto.test/TipoSkripto.ts": {
+    "typeErrors": 43,
+    "staticErrors": 0,
+    "runTimeErrors": -1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/TipoSkripto.test/TipoSkripto/prompt.txt",
+    "failingFeatures": {}
+  },
   "src/lib/BaseSuite.test/node.test.ts": {
     "typeErrors": 32,
-    "staticErrors": 2,
+    "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/BaseSuite.test/node.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/pure.test.ts": {
     "typeErrors": 33,
-    "staticErrors": 1,
+    "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/lib/BaseSuite.test/pure.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/web.test.ts": {
-    "typeErrors": 32,
-    "staticErrors": 1,
     "runTimeErrors": 0,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/BaseSuite.test/web.test/prompt.txt",
+    "failingFeatures": {}
+  },
+  "src/components/pure/TestPageView.test/index.tsx": {
+    "runTimeErrors": 0,
+    "failingFeatures": {}
+  },
+  "src/components/pure/ProjectPageView.test/index.tsx": {
+    "runTimeErrors": 0,
+    "failingFeatures": {}
+  },
+  "src/Pure.test.ts": {
+    "typeErrors": 29,
+    "staticErrors": 0,
+    "runTimeErrors": 0,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/Pure.test/prompt.txt",
+    "failingFeatures": {}
+  },
+  "src/lib/pmProxy.test/index.ts": {
+    "typeErrors": 21,
+    "staticErrors": 2,
+    "runTimeErrors": -1,
+    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/pmProxy.test/index/prompt.txt",
+    "failingFeatures": {}
+  },
+  "src/components/pure/FeaturesReporterView.test/index.tsx": {
+    "runTimeErrors": 0,
     "failingFeatures": {}
   }
 }

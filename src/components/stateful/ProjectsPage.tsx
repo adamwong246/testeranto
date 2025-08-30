@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState, useCallback } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProjectsPageView } from '../pure/ProjectsPageView';
 import { ISummary } from '../../Types';
@@ -45,17 +47,17 @@ export const ProjectsPage = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const projectsRes = await fetch(`/projects.json`);
+        const projectsRes = await fetch(`projects.json`);
         const projectNames = await projectsRes.json();
 
         const projectsData = await Promise.all(
           projectNames.map(async (name) => {
             const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
               fetch(summaryDotJson(name)),
-              fetch(`/metafiles/node/${name}.json`),
-              fetch(`/metafiles/web/${name}.json`),
-              fetch(`/metafiles/pure/${name}.json`),
-              fetch(`/reports/${name}/config.json`),
+              fetch(`metafiles/node/${name}.json`),
+              fetch(`metafiles/web/${name}.json`),
+              fetch(`metafiles/pure/${name}.json`),
+              fetch(`reports/${name}/config.json`),
             ]);
 
             const [summary, nodeData, webData, pureData, configData] = await Promise.all([

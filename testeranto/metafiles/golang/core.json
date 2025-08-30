@@ -1,0 +1,72 @@
+{
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "src/golingvu/base_given.go": {
+        "bytes": 2296,
+        "imports": []
+      },
+      "src/golingvu/base_suite.go": {
+        "bytes": 1231,
+        "imports": []
+      },
+      "src/golingvu/base_suite_test.go": {
+        "bytes": 4477,
+        "imports": []
+      },
+      "src/golingvu/base_then.go": {
+        "bytes": 646,
+        "imports": []
+      },
+      "src/golingvu/base_when.go": {
+        "bytes": 646,
+        "imports": []
+      },
+      "src/golingvu/golingvu.go": {
+        "bytes": 6517,
+        "imports": []
+      },
+      "src/golingvu/test_adapter.go": {
+        "bytes": 1063,
+        "imports": []
+      },
+      "src/golingvu/types.go": {
+        "bytes": 2598,
+        "imports": []
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/golang/core/src/golingvu/base_suite_test.go": {
+        "bytes": 19474,
+        "inputs": {
+          "src/golingvu/base_given.go": {
+            "bytesInOutput": 2296
+          },
+          "src/golingvu/base_suite.go": {
+            "bytesInOutput": 1231
+          },
+          "src/golingvu/base_suite_test.go": {
+            "bytesInOutput": 4477
+          },
+          "src/golingvu/base_then.go": {
+            "bytesInOutput": 646
+          },
+          "src/golingvu/base_when.go": {
+            "bytesInOutput": 646
+          },
+          "src/golingvu/golingvu.go": {
+            "bytesInOutput": 6517
+          },
+          "src/golingvu/test_adapter.go": {
+            "bytesInOutput": 1063
+          },
+          "src/golingvu/types.go": {
+            "bytesInOutput": 2598
+          }
+        },
+        "entryPoint": "src/golingvu/base_suite_test.go"
+      }
+    }
+  }
+}

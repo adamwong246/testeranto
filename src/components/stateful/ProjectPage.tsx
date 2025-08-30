@@ -40,10 +40,10 @@ export const ProjectPage = () => {
       try {
         const [summaryRes, nodeRes, webRes, pureRes, configRes] = await Promise.all([
           fetch(summaryDotJson(name)),
-          fetch(`/metafiles/node/${name}.json`),
-          fetch(`/metafiles/web/${name}.json`),
-          fetch(`/metafiles/pure/${name}.json`),
-          fetch(`/reports/${name}/config.json`)
+          fetch(`metafiles/node/${name}.json`),
+          fetch(`metafiles/web/${name}.json`),
+          fetch(`metafiles/pure/${name}.json`),
+          fetch(`reports/${name}/config.json`)
         ]);
 
         const [summaryData, nodeData, webData, pureData, configData] = await Promise.all([

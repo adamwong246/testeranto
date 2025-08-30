@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, ListGroup, Badge } from 'react-bootstrap';
 
@@ -44,14 +45,14 @@ export const ProcessManager: React.FC<ProcessManagerProps> = ({ show, onHide, ws
             status: 'running'
           }]);
         } else if (data.type === 'processExited') {
-          setProcesses(prev => prev.map(p => 
-            p.processId === data.processId 
+          setProcesses(prev => prev.map(p =>
+            p.processId === data.processId
               ? { ...p, status: 'exited', exitCode: data.exitCode }
               : p
           ));
         } else if (data.type === 'processError') {
-          setProcesses(prev => prev.map(p => 
-            p.processId === data.processId 
+          setProcesses(prev => prev.map(p =>
+            p.processId === data.processId
               ? { ...p, status: 'error', error: data.error }
               : p
           ));
@@ -90,7 +91,7 @@ export const ProcessManager: React.FC<ProcessManagerProps> = ({ show, onHide, ws
               <div className="ms-2 me-auto">
                 <div className="fw-bold">{process.command}</div>
                 <small className="text-muted">
-                  PID: {process.pid || 'N/A'} | 
+                  PID: {process.pid || 'N/A'} |
                   Started: {new Date(process.timestamp).toLocaleString()}
                 </small>
                 {process.error && (

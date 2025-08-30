@@ -1,15 +1,4 @@
 
-/add dist/cjs-shim.js
-/add src/lib/index.ts
-/add src/PM/node.ts
-/add src/PM/index.ts
-/add src/lib/pmProxy.ts
-/add src/lib/BaseGiven.ts
-/add src/lib/BaseWhen.ts
-/add src/lib/BaseThen.ts
-/add src/lib/BaseSuite.ts
-/add src/lib/Tiposkripto.ts
-/add src/Node.ts
 /add src/lib/BaseSuite.test/mock.ts
 /add src/lib/BaseSuite.test/test.ts
 /add src/lib/BaseSuite.test/node.test.ts

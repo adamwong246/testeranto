@@ -183,10 +183,10 @@ src/components/pure/TestPageView.tsx(1178,11): error TS2322: Type '{ testName: s
   Property 'className' does not exist on type 'IntrinsicAttributes & TestStatusBadgeProps'.
 src/components/stateful/FileTree.tsx(2,10): error TS2459: Module '"./TextEditorPage"' declares 'FileType' locally, but it is not exported.
 src/components/stateful/FileTree.tsx(53,12): error TS18046: 'dirFiles' is of type 'unknown'.
-src/components/stateful/ProjectsPage.tsx(96,7): error TS2322: Type 'Record<string, ISummary>' is not assignable to type 'TestSummary'.
+src/components/stateful/ProjectsPage.tsx(98,7): error TS2322: Type 'Record<string, ISummary>' is not assignable to type 'TestSummary'.
   'string' index signatures are incompatible.
     Type 'ISummary' has no properties in common with type '{ testsExist?: boolean | undefined; runTimeErrors?: number | undefined; typeErrors?: number | undefined; staticErrors?: number | undefined; }'.
-src/components/stateful/ProjectsPage.tsx(97,7): error TS2322: Type 'Record<string, object>' is not assignable to type 'ProjectConfig'.
+src/components/stateful/ProjectsPage.tsx(99,7): error TS2322: Type 'Record<string, object>' is not assignable to type 'ProjectConfig'.
   'string' index signatures are incompatible.
     Property 'tests' is missing in type '{}' but required in type '{ tests: [string, string][]; }'.
 src/components/stateful/SingleProcessPage.tsx(4,35): error TS2306: File '/Users/adam/Code/testeranto/src/components/pure/SingleProcessView.tsx' is not a module.
@@ -221,39 +221,32 @@ src/lib/abstractBase.test/MockGiven.ts(30,20): error TS2349: This expression is 
   Type 'unknown' has no call signatures.
 src/lib/abstractBase.test/types.ts(13,17): error TS2707: Generic type 'Ibdd_out' requires between 0 and 4 type arguments.
 src/lib/BaseSuite.test/mock.ts(39,9): error TS2416: Property 'andWhen' in type 'MockWhen' is not assignable to the same property in base type 'BaseWhen<I>'.
-  Type '(store: TestStore, whenCB: (store: TestStore) => Promise<TestStore>, testResource: any, pm: IPM) => Promise<TestStore>' is not assignable to type '(store: TestStore, whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>, testResource: any, pm: IPM) => Promise<...>'.
-    Types of parameters 'whenCB' and 'whenCB' are incompatible.
-      Types of parameters 'x' and 'store' are incompatible.
-        Type 'TestStore' is not assignable to type 'TestSelection'.
-          Types of property 'testSelection' are incompatible.
-            Type 'boolean | undefined' is not assignable to type 'boolean'.
-              Type 'undefined' is not assignable to type 'boolean'.
-src/lib/BaseSuite.test/mock.ts(57,9): error TS2416: Property 'butThen' in type 'MockThen' is not assignable to the same property in base type 'BaseThen<I>'.
-  Type '(store: TestStore, thenCB: (store: TestStore) => Promise<TestSelection>, testResourceConfiguration: any, pm: IPM) => Promise<...>' is not assignable to type '(store: TestStore, thenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>, testResourceConfiguration: ITTestResourceConfiguration, pm: IPM) => Promise<...>'.
-    Types of parameters 'thenCB' and 'thenCB' are incompatible.
+  Types of parameters 'whenCB' and 'whenCB' are incompatible.
+    Type '(s: TestSelection) => Promise<BaseSuite<any, any>>' is not assignable to type '(store: TestStore) => Promise<TestSelection>'.
       Types of parameters 's' and 'store' are incompatible.
         Type 'TestStore' is not assignable to type 'TestSelection'.
           Types of property 'testSelection' are incompatible.
             Type 'boolean | undefined' is not assignable to type 'boolean'.
               Type 'undefined' is not assignable to type 'boolean'.
-src/lib/BaseSuite.test/mock.ts(82,11): error TS2322: Type 'MockWhen' is not assignable to type 'BaseWhen<I>'.
+src/lib/BaseSuite.test/mock.ts(51,5): error TS2741: Property 'testStore' is missing in type 'TestSelection' but required in type 'TestStore'.
+src/lib/BaseSuite.test/mock.ts(86,11): error TS2322: Type 'MockWhen' is not assignable to type 'BaseWhen<I>'.
   Types of property 'andWhen' are incompatible.
-    Type '(store: TestStore, whenCB: (store: TestStore) => Promise<TestStore>, testResource: any, pm: IPM) => Promise<TestStore>' is not assignable to type '(store: TestStore, whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>, testResource: any, pm: IPM) => Promise<...>'.
-      Types of parameters 'whenCB' and 'whenCB' are incompatible.
-        Types of parameters 'x' and 'store' are incompatible.
+    Types of parameters 'whenCB' and 'whenCB' are incompatible.
+      Type '(s: TestSelection) => Promise<BaseSuite<any, any>>' is not assignable to type '(store: TestStore) => Promise<TestSelection>'.
+        Types of parameters 's' and 'store' are incompatible.
           Type 'TestStore' is not assignable to type 'TestSelection'.
             Types of property 'testSelection' are incompatible.
               Type 'boolean | undefined' is not assignable to type 'boolean'.
                 Type 'undefined' is not assignable to type 'boolean'.
-src/lib/BaseSuite.test/mock.ts(83,13): error TS2322: Type 'Promise<{ testSelection: boolean; }>' is not assignable to type '(store: TestStore) => Promise<TestSelection>'.
-  Type 'Promise<{ testSelection: boolean; }>' provides no match for the signature '(store: TestStore): Promise<TestSelection>'.
-src/lib/BaseSuite.test/mock.ts(88,29): error TS2511: Cannot create an instance of an abstract class.
+src/lib/BaseSuite.test/mock.ts(87,13): error TS2322: Type 'Promise<{ testSelection: boolean; }>' is not assignable to type '(s: TestSelection) => Promise<BaseSuite<any, any>>'.
+  Type 'Promise<{ testSelection: boolean; }>' provides no match for the signature '(s: TestSelection): Promise<BaseSuite<any, any>>'.
+src/lib/BaseSuite.test/mock.ts(92,29): error TS2511: Cannot create an instance of an abstract class.
 src/lib/BaseSuite.test/test.ts(143,30): error TS2345: Argument of type 'Promise<unknown>' is not assignable to parameter of type 'string'.
 src/lib/BaseSuite.test/test.ts(150,15): error TS2339: Property 'specs' does not exist on type 'MockSuite'.
 src/lib/BaseSuite.test/test.ts(150,38): error TS2339: Property 'specs' does not exist on type 'MockSuite'.
 src/lib/BaseSuite.test/test.ts(157,15): error TS2339: Property 'testJobs' does not exist on type 'MockSuite'.
 src/lib/BaseSuite.test/test.ts(157,41): error TS2339: Property 'testJobs' does not exist on type 'MockSuite'.
-src/lib/BaseSuite.test/test.ts(163,7): error TS2322: Type '(suite: MockSuite) => Promise<MockSuite>' is not assignable to type '(zel: TestSelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(store: TestStore) => Promise<TestStore>>'.
+src/lib/BaseSuite.test/test.ts(163,7): error TS2322: Type '(suite: MockSuite) => Promise<MockSuite>' is not assignable to type '(zel: TestSelection, tr: ITTestResourceConfiguration, utils: PM) => Promise<(x: TestSelection) => (store: TestStore) => Promise<...>>'.
   Types of parameters 'suite' and 'zel' are incompatible.
     Type 'TestSelection' is missing the following properties from type 'MockSuite': name, givens, store, testResourceConfiguration, and 11 more.
 src/lib/BaseSuite.test/test.ts(182,11): error TS2322: Type '() => void' is not assignable to type '((tLog: ITLog, callback: (p: Promise<void>) => void) => (fPath: string, value: string | Buffer<ArrayBufferLike> | PassThrough) => void) | ((tLog: ITLog, callback: (promise: Promise<...>) => void) => (fPath: string, value: any) => void) | ((tLog: ITLog, callback: (Promise: any) => void) => (fPath: any, value: string ...'.
@@ -267,10 +260,24 @@ src/lib/BaseSuite.test/test.ts(185,11): error TS2322: Type '() => void' is not a
     Type 'void' is not assignable to type 'string'.
 src/lib/BaseSuite.test/test.ts(190,11): error TS2345: Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
 src/lib/BaseSuite.test/test.ts(204,13): error TS2345: Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
-src/lib/BaseSuite.test/test.ts(277,5): error TS2353: Object literal may only specify known properties, and 'FeatureCountMatches' does not exist in type 'TestThenImplementation<I, O>'.
-src/lib/BaseSuite.test/test.ts(414,22): error TS2339: Property 'index' does not exist on type '() => Promise<TestStore>'.
-src/lib/BaseSuite.test/test.ts(417,19): error TS2339: Property 'store' does not exist on type '() => Promise<TestStore>'.
-src/lib/BaseSuite.test/test.ts(452,3): error TS2322: Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
+src/lib/BaseSuite.test/test.ts(229,5): error TS2322: Type '(expectedName: string) => ((ssel: TestSelection, utils: IPM) => Promise<BaseSuite<any, any>>)' is not assignable to type '(It_0: string) => (ssel: TestSelection, utils: PM) => (s: TestSelection) => Promise<BaseSuite<any, any>>'.
+  Call signature return types '(ssel: TestSelection, utils: IPM) => Promise<BaseSuite<any, any>>' and '(ssel: TestSelection, utils: PM) => (s: TestSelection) => Promise<BaseSuite<any, any>>' are incompatible.
+    Type 'Promise<BaseSuite<any, any>>' is not assignable to type '(s: TestSelection) => Promise<BaseSuite<any, any>>'.
+      Type 'Promise<BaseSuite<any, any>>' provides no match for the signature '(s: TestSelection): Promise<BaseSuite<any, any>>'.
+src/lib/BaseSuite.test/test.ts(239,32): error TS2511: Cannot create an instance of an abstract class.
+src/lib/BaseSuite.test/test.ts(242,5): error TS2322: Type '(expectedIndex: number) => ((ssel: TestSelection, utils: IPM) => Promise<BaseSuite<any, any>>)' is not assignable to type '(It_0: number) => (ssel: TestSelection, utils: PM) => (s: TestSelection) => Promise<BaseSuite<any, any>>'.
+  Call signature return types '(ssel: TestSelection, utils: IPM) => Promise<BaseSuite<any, any>>' and '(ssel: TestSelection, utils: PM) => (s: TestSelection) => Promise<BaseSuite<any, any>>' are incompatible.
+    Type 'Promise<BaseSuite<any, any>>' is not assignable to type '(s: TestSelection) => Promise<BaseSuite<any, any>>'.
+      Type 'Promise<BaseSuite<any, any>>' provides no match for the signature '(s: TestSelection): Promise<BaseSuite<any, any>>'.
+src/lib/BaseSuite.test/test.ts(252,32): error TS2511: Cannot create an instance of an abstract class.
+src/lib/BaseSuite.test/test.ts(255,5): error TS2322: Type '(feature: string) => ((ssel: TestSelection, utils: IPM) => (store: TestStore) => Promise<TestSelection>)' is not assignable to type '(feature: string) => (ssel: TestSelection, utils: PM) => (s: TestSelection) => Promise<BaseSuite<any, any>>'.
+  Call signature return types '(ssel: TestSelection, utils: IPM) => (store: TestStore) => Promise<TestSelection>' and '(ssel: TestSelection, utils: PM) => (s: TestSelection) => Promise<BaseSuite<any, any>>' are incompatible.
+    Type '(store: TestStore) => Promise<TestSelection>' is not assignable to type '(s: TestSelection) => Promise<BaseSuite<any, any>>'.
+      Types of parameters 'store' and 's' are incompatible.
+        Property 'testStore' is missing in type 'TestSelection' but required in type 'TestStore'.
+src/lib/BaseSuite.test/test.ts(406,22): error TS2339: Property 'index' does not exist on type '() => Promise<TestStore>'.
+src/lib/BaseSuite.test/test.ts(409,19): error TS2339: Property 'store' does not exist on type '() => Promise<TestStore>'.
+src/lib/BaseSuite.test/test.ts(450,3): error TS2322: Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
   Type 'TestStore' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
 src/lib/BaseThen.ts(76,41): error TS2556: A spread argument must either have a tuple type or be passed to a rest parameter.
 src/lib/index.ts(42,12): error TS2349: This expression is not callable.

@@ -15,8 +15,8 @@ export type I = Ibdd_in<typeof BaseSuite, BaseSuite<any, any>, // isubject
 TestStore, // istore
 TestSelection, // iselection
 () => Promise<TestStore>, // given
-(store: TestStore) => Promise<TestStore>, // when
-(store: TestStore) => Promise<TestSelection>>;
+(x: TestSelection) => (store: TestStore) => Promise<TestSelection>, // when
+(s: TestSelection) => Promise<BaseSuite<any, any>>>;
 export type O = Ibdd_out<{
     Default: [string];
 }, {

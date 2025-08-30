@@ -10,11 +10,11 @@ export declare class MockGiven extends BaseGiven<I> {
     uberCatcher(e: Error): void;
 }
 export declare class MockWhen extends BaseWhen<I> {
-    andWhen(store: TestStore, whenCB: I["when"], testResource: any, pm: IPM): Promise<TestStore>;
+    andWhen(store: TestStore, whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>, testResource: any, pm: IPM): Promise<TestStore>;
     addArtifact(path: string): void;
 }
 export declare class MockThen extends BaseThen<I> {
-    butThen(store: TestStore, thenCB: I["then"], testResourceConfiguration: any, pm: IPM): Promise<TestSelection>;
+    butThen(store: TestStore, thenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>, testResourceConfiguration: any, pm: IPM): Promise<TestSelection>;
 }
 export declare class MockSuite extends BaseSuite<I, O> {
     constructor(name: string, index: number);

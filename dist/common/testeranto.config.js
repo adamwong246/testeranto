@@ -21,32 +21,32 @@ const config = {
         // },
         core: {
             tests: [
-                // ["example/test_example.py", "python", { ports: 0 }, []],
-                // ["src/golingvu/base_suite_test.go", "golang", { ports: 0 }, []],
-                // ["src/lib/TipoSkripto.test/TipoSkripto.ts", "node", { ports: 0 }, []],
+                ["example/test_example.py", "python", { ports: 0 }, []],
+                ["src/golingvu/base_suite_test.go", "golang", { ports: 0 }, []],
+                ["src/lib/TipoSkripto.test/TipoSkripto.ts", "node", { ports: 0 }, []],
                 ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
                 ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
                 ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
-                // [
-                //   "src/components/pure/TestPageView.test/index.tsx",
-                //   "web",
-                //   { ports: 0 },
-                //   [],
-                // ],
-                // [
-                //   "src/components/pure/ProjectPageView.test/index.tsx",
-                //   "web",
-                //   { ports: 0 },
-                //   [],
-                // ],
-                // ["src/Pure.test.ts", "pure", { ports: 0 }, []],
-                // ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
-                // [
-                //   "src/components/pure/FeaturesReporterView.test/index.tsx",
-                //   "web",
-                //   { ports: 0 },
-                //   [],
-                // ],
+                [
+                    "src/components/pure/TestPageView.test/index.tsx",
+                    "web",
+                    { ports: 0 },
+                    [],
+                ],
+                [
+                    "src/components/pure/ProjectPageView.test/index.tsx",
+                    "web",
+                    { ports: 0 },
+                    [],
+                ],
+                ["src/Pure.test.ts", "pure", { ports: 0 }, []],
+                ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
+                [
+                    "src/components/pure/FeaturesReporterView.test/index.tsx",
+                    "web",
+                    { ports: 0 },
+                    [],
+                ],
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // broken
                 // [

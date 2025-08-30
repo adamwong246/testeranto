@@ -104,5 +104,5 @@ export const fetchTestData = async (
 };
 
 export const summaryDotJson = (name: string): string => {
-  return `/reports/${name}/summary.json`;
+  return `reports/${name}/summary.json`;
 };

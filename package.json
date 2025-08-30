@@ -134,7 +134,8 @@
     "t-report": "tsx dist/prebuild/ReportServer.mjs",
     "compile-docs": "node scripts/compile-docs.js",
     "prepublish": "self-import",
-    "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt"
+    "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt",
+    "static-serve": "python3 -m http.server 8000"
   },
   "peerDependencies": {
     "@types/react": "18.2.0",

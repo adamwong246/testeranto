@@ -88,6 +88,6 @@ const fetchTestData = async (projectName, filepath, runTime) => {
 };
 exports.fetchTestData = fetchTestData;
 const summaryDotJson = (name) => {
-    return `/reports/${name}/summary.json`;
+    return `reports/${name}/summary.json`;
 };
 exports.summaryDotJson = summaryDotJson;

@@ -1,0 +1,20 @@
+TypeError: addArtifact is not a function
+    at path3 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:71:9)
+    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:18:34)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:174:54)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:830:39
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:4515:12)
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:922:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:811:17)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:700:24)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:365:20)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:947:21
+TypeError: (this.thens || []).map is not a function
+    at BaseGiven.toObj (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:661:33)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:333:71
+    at Array.map (<anonymous>)
+    at BaseSuite.toObj (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:333:45)
+    at Object.toObj (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:972:24)
+    at Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:983:35)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:1063:12)
+    at async testeranto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-MJTSYIAQ.mjs:1081:19)
