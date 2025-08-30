@@ -584,7 +584,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12027,
+        "bytes": 12181,
         "imports": [
           {
             "path": "..",
@@ -874,13 +874,13 @@
             "bytesInOutput": 1401
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 7364
+            "bytesInOutput": 6616
           },
           "src/lib/BaseSuite.test/node.test.ts": {
             "bytesInOutput": 103
           }
         },
-        "bytes": 9220
+        "bytes": 8472
       },
       "testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs": {
         "imports": [

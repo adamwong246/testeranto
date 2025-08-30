@@ -1463,401 +1463,420 @@ var init_main = __esm({
         this.processLogs = /* @__PURE__ */ new Map();
         this.allProcesses = /* @__PURE__ */ new Map();
         this.launchPure = async (src, dest) => {
-          console.log(ansiC3.green(ansiC3.inverse(`pure < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
-          if (!fs10.existsSync(reportDest)) {
-            fs10.mkdirSync(reportDest, { recursive: true });
-          }
-          const destFolder = dest.replace(".mjs", "");
-          let argz2 = "";
-          const testConfig = this.configs.tests.find((t) => {
-            return t[0] === src;
-          });
-          if (!testConfig) {
-            console.log(ansiC3.inverse("missing test config! Exiting ungracefully!"));
-            process.exit(-1);
-          }
-          const testConfigResource = testConfig[2];
-          const portsToUse = [];
-          if (testConfigResource.ports === 0) {
-            argz2 = JSON.stringify({
-              scheduled: true,
-              name: src,
-              ports: portsToUse,
-              fs: reportDest,
-              browserWSEndpoint: this.browser.wsEndpoint()
-            });
-          } else if (testConfigResource.ports > 0) {
-            const openPorts = Object.entries(this.ports).filter(
-              ([portnumber, status]) => status === ""
-            );
-            if (openPorts.length >= testConfigResource.ports) {
-              for (let i = 0; i < testConfigResource.ports; i++) {
-                portsToUse.push(openPorts[i][0]);
-                this.ports[openPorts[i][0]] = src;
-              }
-              argz2 = JSON.stringify({
-                scheduled: true,
-                name: src,
-                ports: portsToUse,
-                fs: destFolder,
-                browserWSEndpoint: this.browser.wsEndpoint()
-              });
-            } else {
-              this.queue.push(src);
-              return [Math.random(), argz2];
+          const processId = `pure-${src}-${Date.now()}`;
+          const command = `pure test: ${src}`;
+          const purePromise = (async () => {
+            console.log(ansiC3.green(ansiC3.inverse(`pure < ${src}`)));
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
+            if (!fs10.existsSync(reportDest)) {
+              fs10.mkdirSync(reportDest, { recursive: true });
             }
-          } else {
-            console.error("negative port makes no sense", src);
-            process.exit(-1);
-          }
-          const builtfile = dest;
-          const logs = createLogStreams(reportDest, "pure");
-          try {
-            await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-              return module.default.then((defaultModule) => {
-                defaultModule.receiveTestResourceConfig(argz2).then(async (results) => {
-                  statusMessagePretty(results.fails, src, "pure");
-                  this.bddTestIsNowDone(src, results.fails);
-                }).catch((e1) => {
-                  console.log(
-                    ansiC3.red(`launchPure - ${src} errored with: ${e1.stack}`)
-                  );
-                  this.bddTestIsNowDone(src, -1);
-                  statusMessagePretty(-1, src, "pure");
-                });
-              }).catch((e2) => {
-                console.log(
-                  ansiColors.red(
-                    `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
-                  )
-                );
-                logs.exit.write(e2.stack);
-                logs.exit.write(-1);
-                this.bddTestIsNowDone(src, -1);
-                statusMessagePretty(-1, src, "pure");
-              });
+            const destFolder = dest.replace(".mjs", "");
+            let argz = "";
+            const testConfig = this.configs.tests.find((t) => {
+              return t[0] === src;
             });
-          } catch (e3) {
-            logs.writeExitCode(-1, e3);
-            console.log(
-              ansiC3.red(
-                ansiC3.inverse(
-                  `${src} 1 errored with: ${e3}. Check logs for more info`
-                )
-              )
-            );
-            logs.exit.write(e3.stack);
-            logs.exit.write("-1");
-            this.bddTestIsNowDone(src, -1);
-            statusMessagePretty(-1, src, "pure");
-          }
-          for (let i = 0; i <= portsToUse.length; i++) {
-            if (portsToUse[i]) {
-              this.ports[portsToUse[i]] = "";
+            if (!testConfig) {
+              console.log(ansiC3.inverse("missing test config! Exiting ungracefully!"));
+              process.exit(-1);
             }
-          }
-        };
-        this.launchNode = async (src, dest) => {
-          console.log(ansiC3.green(ansiC3.inverse(`node < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
-          if (!fs10.existsSync(reportDest)) {
-            fs10.mkdirSync(reportDest, { recursive: true });
-          }
-          let testResources = "";
-          const testConfig = this.configs.tests.find((t) => {
-            return t[0] === src;
-          });
-          if (!testConfig) {
-            console.log(
-              ansiC3.inverse(`missing test config! Exiting ungracefully for '${src}'`)
-            );
-            process.exit(-1);
-          }
-          const testConfigResource = testConfig[2];
-          const portsToUse = [];
-          if (testConfigResource.ports === 0) {
-            const t = {
-              name: src,
-              // ports: portsToUse.map((v) => Number(v)),
-              ports: [],
-              fs: reportDest,
-              browserWSEndpoint: this.browser.wsEndpoint()
-            };
-            testResources = JSON.stringify(t);
-          } else if (testConfigResource.ports > 0) {
-            const openPorts = Object.entries(this.ports).filter(
-              ([portnumber, portopen]) => portopen === ""
-            );
-            if (openPorts.length >= testConfigResource.ports) {
-              for (let i = 0; i < testConfigResource.ports; i++) {
-                portsToUse.push(openPorts[i][0]);
-                this.ports[openPorts[i][0]] = src;
-              }
-              testResources = JSON.stringify({
+            const testConfigResource = testConfig[2];
+            const portsToUse = [];
+            if (testConfigResource.ports === 0) {
+              argz = JSON.stringify({
                 scheduled: true,
                 name: src,
                 ports: portsToUse,
                 fs: reportDest,
                 browserWSEndpoint: this.browser.wsEndpoint()
               });
+            } else if (testConfigResource.ports > 0) {
+              const openPorts = Object.entries(this.ports).filter(
+                ([portnumber, status]) => status === ""
+              );
+              if (openPorts.length >= testConfigResource.ports) {
+                for (let i = 0; i < testConfigResource.ports; i++) {
+                  portsToUse.push(openPorts[i][0]);
+                  this.ports[openPorts[i][0]] = src;
+                }
+                argz = JSON.stringify({
+                  scheduled: true,
+                  name: src,
+                  ports: portsToUse,
+                  fs: destFolder,
+                  browserWSEndpoint: this.browser.wsEndpoint()
+                });
+              } else {
+                this.queue.push(src);
+                return [Math.random(), argz];
+              }
             } else {
+              console.error("negative port makes no sense", src);
+              process.exit(-1);
+            }
+            const builtfile = dest;
+            const logs = createLogStreams(reportDest, "pure");
+            try {
+              await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+                return module.default.then((defaultModule) => {
+                  return defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
+                    statusMessagePretty(results.fails, src, "pure");
+                    this.bddTestIsNowDone(src, results.fails);
+                    return results.fails;
+                  });
+                }).catch((e2) => {
+                  console.log(
+                    ansiColors.red(
+                      `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
+                    )
+                  );
+                  logs.exit.write(e2.stack);
+                  logs.exit.write(-1);
+                  this.bddTestIsNowDone(src, -1);
+                  statusMessagePretty(-1, src, "pure");
+                  throw e2;
+                });
+              });
+            } catch (e3) {
+              logs.writeExitCode(-1, e3);
               console.log(
                 ansiC3.red(
-                  `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
+                  ansiC3.inverse(
+                    `${src} 1 errored with: ${e3}. Check logs for more info`
+                  )
                 )
               );
-              this.queue.push(src);
-              return [Math.random(), argz];
-            }
-          } else {
-            console.error("negative port makes no sense", src);
-            process.exit(-1);
-          }
-          const builtfile = dest;
-          let haltReturns = false;
-          const ipcfile = "/tmp/tpipe_" + Math.random();
-          const child = spawn2(
-            "node",
-            [
-              // "--inspect-brk",
-              builtfile,
-              testResources,
-              ipcfile
-            ],
-            {
-              stdio: ["pipe", "pipe", "pipe", "ipc"]
-            }
-          );
-          let buffer = new Buffer("");
-          const server = net.createServer((socket) => {
-            const queue = new Queue();
-            socket.on("data", (data) => {
-              buffer = Buffer.concat([buffer, data]);
-              for (let b = 0; b < buffer.length + 1; b++) {
-                const c = buffer.slice(0, b);
-                let d;
-                try {
-                  d = JSON.parse(c.toString());
-                  queue.enqueue(d);
-                  buffer = buffer.slice(b, buffer.length + 1);
-                  b = 0;
-                } catch (e) {
+              logs.exit.write(e3.stack);
+              logs.exit.write("-1");
+              this.bddTestIsNowDone(src, -1);
+              statusMessagePretty(-1, src, "pure");
+              throw e3;
+            } finally {
+              for (let i = 0; i <= portsToUse.length; i++) {
+                if (portsToUse[i]) {
+                  this.ports[portsToUse[i]] = "";
                 }
               }
-              while (queue.size() > 0) {
-                const message = queue.dequeue();
-                if (message) {
-                  this.mapping().forEach(async ([command, func]) => {
-                    if (message[0] === command) {
-                      const x = message.slice(1, -1);
-                      const r = await this[command](...x);
-                      if (!haltReturns) {
-                        child.send(
-                          JSON.stringify({
-                            payload: r,
-                            key: message[message.length - 1]
-                          })
-                        );
-                      }
-                    }
-                  });
+            }
+          })();
+          this.addPromiseProcess(processId, purePromise, command);
+        };
+        this.launchNode = async (src, dest) => {
+          const processId = `node-${src}-${Date.now()}`;
+          const command = `node test: ${src}`;
+          const nodePromise = (async () => {
+            console.log(ansiC3.green(ansiC3.inverse(`node < ${src}`)));
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
+            if (!fs10.existsSync(reportDest)) {
+              fs10.mkdirSync(reportDest, { recursive: true });
+            }
+            let testResources = "";
+            const testConfig = this.configs.tests.find((t) => {
+              return t[0] === src;
+            });
+            if (!testConfig) {
+              console.log(
+                ansiC3.inverse(`missing test config! Exiting ungracefully for '${src}'`)
+              );
+              process.exit(-1);
+            }
+            const testConfigResource = testConfig[2];
+            const portsToUse = [];
+            if (testConfigResource.ports === 0) {
+              const t = {
+                name: src,
+                ports: [],
+                fs: reportDest,
+                browserWSEndpoint: this.browser.wsEndpoint()
+              };
+              testResources = JSON.stringify(t);
+            } else if (testConfigResource.ports > 0) {
+              const openPorts = Object.entries(this.ports).filter(
+                ([portnumber, portopen]) => portopen === ""
+              );
+              if (openPorts.length >= testConfigResource.ports) {
+                for (let i = 0; i < testConfigResource.ports; i++) {
+                  portsToUse.push(openPorts[i][0]);
+                  this.ports[openPorts[i][0]] = src;
                 }
-              }
-            });
-          });
-          const logs = createLogStreams(reportDest, "node");
-          server.listen(ipcfile, () => {
-            child.stdout?.on("data", (data) => {
-              logs.stdout?.write(data);
-            });
-            child.stderr?.on("data", (data) => {
-              logs.stderr?.write(data);
-            });
-            child.on("error", (err) => {
-            });
-            child.on("close", (code) => {
-              const exitCode = code === null ? -1 : code;
-              if (exitCode < 0) {
-                logs.writeExitCode(
-                  exitCode,
-                  new Error("Process crashed or was terminated")
-                );
+                testResources = JSON.stringify({
+                  scheduled: true,
+                  name: src,
+                  ports: portsToUse,
+                  fs: reportDest,
+                  browserWSEndpoint: this.browser.wsEndpoint()
+                });
               } else {
-                logs.writeExitCode(exitCode);
-              }
-              logs.closeAll();
-              server.close();
-              if (!files2[src]) {
-                files2[src] = /* @__PURE__ */ new Set();
-              }
-              if (exitCode === 255) {
                 console.log(
-                  ansiColors.red(
-                    `node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/stderr.log for more info`
+                  ansiC3.red(
+                    `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
                   )
                 );
-                this.bddTestIsNowDone(src, -1);
-                statusMessagePretty(-1, src, "node");
-                return;
-              } else if (exitCode === 0) {
-                this.bddTestIsNowDone(src, 0);
-                statusMessagePretty(0, src, "node");
-              } else {
-                this.bddTestIsNowDone(src, exitCode);
-                statusMessagePretty(exitCode, src, "node");
+                this.queue.push(src);
+                return [Math.random(), testResources];
               }
-              haltReturns = true;
+            } else {
+              console.error("negative port makes no sense", src);
+              process.exit(-1);
+            }
+            const builtfile = dest;
+            let haltReturns = false;
+            const ipcfile = "/tmp/tpipe_" + Math.random();
+            const child = spawn2(
+              "node",
+              [
+                builtfile,
+                testResources,
+                ipcfile
+              ],
+              {
+                stdio: ["pipe", "pipe", "pipe", "ipc"]
+              }
+            );
+            let buffer = new Buffer("");
+            const server = net.createServer((socket) => {
+              const queue = new Queue();
+              socket.on("data", (data) => {
+                buffer = Buffer.concat([buffer, data]);
+                for (let b = 0; b < buffer.length + 1; b++) {
+                  const c = buffer.slice(0, b);
+                  let d;
+                  try {
+                    d = JSON.parse(c.toString());
+                    queue.enqueue(d);
+                    buffer = buffer.slice(b, buffer.length + 1);
+                    b = 0;
+                  } catch (e) {
+                  }
+                }
+                while (queue.size() > 0) {
+                  const message = queue.dequeue();
+                  if (message) {
+                    this.mapping().forEach(async ([command2, func]) => {
+                      if (message[0] === command2) {
+                        const x = message.slice(1, -1);
+                        const r = await this[command2](...x);
+                        if (!haltReturns) {
+                          child.send(
+                            JSON.stringify({
+                              payload: r,
+                              key: message[message.length - 1]
+                            })
+                          );
+                        }
+                      }
+                    });
+                  }
+                }
+              });
             });
-            child.on("exit", (code) => {
-              haltReturns = true;
+            const logs = createLogStreams(reportDest, "node");
+            return new Promise((resolve, reject) => {
+              server.listen(ipcfile, () => {
+                child.stdout?.on("data", (data) => {
+                  logs.stdout?.write(data);
+                });
+                child.stderr?.on("data", (data) => {
+                  logs.stderr?.write(data);
+                });
+                child.on("close", (code) => {
+                  const exitCode = code === null ? -1 : code;
+                  if (exitCode < 0) {
+                    logs.writeExitCode(
+                      exitCode,
+                      new Error("Process crashed or was terminated")
+                    );
+                  } else {
+                    logs.writeExitCode(exitCode);
+                  }
+                  logs.closeAll();
+                  server.close();
+                  if (exitCode === 255) {
+                    console.log(
+                      ansiColors.red(
+                        `node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/stderr.log for more info`
+                      )
+                    );
+                    this.bddTestIsNowDone(src, -1);
+                    statusMessagePretty(-1, src, "node");
+                    reject(new Error(`Process exited with code ${exitCode}`));
+                  } else if (exitCode === 0) {
+                    this.bddTestIsNowDone(src, 0);
+                    statusMessagePretty(0, src, "node");
+                    resolve();
+                  } else {
+                    this.bddTestIsNowDone(src, exitCode);
+                    statusMessagePretty(exitCode, src, "node");
+                    reject(new Error(`Process exited with code ${exitCode}`));
+                  }
+                  haltReturns = true;
+                });
+                child.on("error", (e) => {
+                  console.log("error");
+                  haltReturns = true;
+                  console.log(
+                    ansiC3.red(
+                      ansiC3.inverse(
+                        `${src} errored with: ${e.name}. Check error logs for more info`
+                      )
+                    )
+                  );
+                  this.bddTestIsNowDone(src, -1);
+                  statusMessagePretty(-1, src, "node");
+                  reject(e);
+                });
+              });
+            }).finally(() => {
               for (let i = 0; i <= portsToUse.length; i++) {
                 if (portsToUse[i]) {
                   this.ports[portsToUse[i]] = "";
                 }
               }
             });
-            child.on("error", (e) => {
-              console.log("error");
-              haltReturns = true;
-              console.log(
-                ansiC3.red(
-                  ansiC3.inverse(
-                    `${src} errored with: ${e.name}. Check error logs for more info`
-                  )
-                )
-              );
-              this.bddTestIsNowDone(src, -1);
-              statusMessagePretty(-1, src, "node");
-            });
-          });
+          })();
+          this.addPromiseProcess(processId, nodePromise, command);
         };
         this.launchWeb = async (src, dest) => {
-          console.log(ansiC3.green(ansiC3.inverse(`web < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
-          if (!fs10.existsSync(reportDest)) {
-            fs10.mkdirSync(reportDest, { recursive: true });
-          }
-          const destFolder = dest.replace(".mjs", "");
-          const webArgz = JSON.stringify({
-            name: src,
-            ports: [].toString(),
-            fs: reportDest,
-            browserWSEndpoint: this.browser.wsEndpoint()
-          });
-          const d = `${dest}?cacheBust=${Date.now()}`;
-          const logs = createLogStreams(reportDest, "web");
-          this.browser.newPage().then((page) => {
-            page.on("console", (log) => {
-              const msg = `${log.text()}
+          const processId = `web-${src}-${Date.now()}`;
+          const command = `web test: ${src}`;
+          const webPromise = (async () => {
+            console.log(ansiC3.green(ansiC3.inverse(`web < ${src}`)));
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
+            if (!fs10.existsSync(reportDest)) {
+              fs10.mkdirSync(reportDest, { recursive: true });
+            }
+            const destFolder = dest.replace(".mjs", "");
+            const webArgz = JSON.stringify({
+              name: src,
+              ports: [].toString(),
+              fs: reportDest,
+              browserWSEndpoint: this.browser.wsEndpoint()
+            });
+            const d = `${dest}?cacheBust=${Date.now()}`;
+            const logs = createLogStreams(reportDest, "web");
+            return new Promise((resolve, reject) => {
+              this.browser.newPage().then((page) => {
+                page.on("console", (log) => {
+                  const msg = `${log.text()}
 `;
-              switch (log.type()) {
-                case "info":
-                  logs.info?.write(msg);
-                  break;
-                case "warn":
-                  logs.warn?.write(msg);
-                  break;
-                case "error":
-                  logs.error?.write(msg);
-                  break;
-                case "debug":
-                  logs.debug?.write(msg);
-                  break;
-                default:
-                  break;
-              }
-            });
-            page.on("close", () => {
-              logs.writeExitCode(0);
-              logs.closeAll();
-              logs.closeAll();
-            });
-            this.mapping().forEach(async ([command, func]) => {
-              if (command === "page") {
-                page.exposeFunction(command, (x) => {
-                  if (x) {
-                    return func(x);
-                  } else {
-                    return func(page.mainFrame()._id);
+                  switch (log.type()) {
+                    case "info":
+                      logs.info?.write(msg);
+                      break;
+                    case "warn":
+                      logs.warn?.write(msg);
+                      break;
+                    case "error":
+                      logs.error?.write(msg);
+                      break;
+                    case "debug":
+                      logs.debug?.write(msg);
+                      break;
+                    default:
+                      break;
                   }
                 });
-              } else {
-                return page.exposeFunction(command, func);
-              }
-            });
-            return page;
-          }).then(async (page) => {
-            const close = () => {
-              if (!files2[src]) {
-                files2[src] = /* @__PURE__ */ new Set();
-              }
-              delete files2[src];
-              Promise.all(screenshots2[src] || []).then(() => {
-                delete screenshots2[src];
-                page.close();
+                page.on("close", () => {
+                  logs.writeExitCode(0);
+                  logs.closeAll();
+                });
+                this.mapping().forEach(async ([command2, func]) => {
+                  if (command2 === "page") {
+                    page.exposeFunction(command2, (x) => {
+                      if (x) {
+                        return func(x);
+                      } else {
+                        return func(page.mainFrame()._id);
+                      }
+                    });
+                  } else {
+                    return page.exposeFunction(command2, func);
+                  }
+                });
+                return page;
+              }).then(async (page) => {
+                const close = () => {
+                  if (!files2[src]) {
+                    files2[src] = /* @__PURE__ */ new Set();
+                  }
+                  delete files2[src];
+                  Promise.all(screenshots2[src] || []).then(() => {
+                    delete screenshots2[src];
+                    page.close();
+                  });
+                };
+                page.on("pageerror", (err) => {
+                  logs.writeExitCode(-1, err);
+                  console.log(
+                    ansiColors.red(
+                      `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
+                    )
+                  );
+                  this.bddTestIsNowDone(src, -1);
+                  close();
+                  reject(err);
+                });
+                await page.goto(`file://${`${destFolder}.html`}`, {});
+                await page.evaluate(webEvaluator(d, webArgz)).then(async ({ fails, failed, features }) => {
+                  statusMessagePretty(fails, src, "web");
+                  this.bddTestIsNowDone(src, fails);
+                  resolve();
+                }).catch((e) => {
+                  console.log(ansiC3.red(ansiC3.inverse(e.stack)));
+                  console.log(
+                    ansiC3.red(
+                      ansiC3.inverse(
+                        `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
+                      )
+                    )
+                  );
+                  this.bddTestIsNowDone(src, -1);
+                  reject(e);
+                }).finally(() => {
+                  close();
+                });
+              }).catch((error) => {
+                reject(error);
               });
-              return;
-            };
-            page.on("pageerror", (err) => {
-              logs.writeExitCode(-1, err);
-              console.log(
-                ansiColors.red(
-                  `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
-                )
-              );
-              this.bddTestIsNowDone(src, -1);
-              close();
             });
-            await page.goto(`file://${`${destFolder}.html`}`, {});
-            await page.evaluate(webEvaluator(d, webArgz)).then(async ({ fails, failed, features }) => {
-              statusMessagePretty(fails, src, "web");
-              this.bddTestIsNowDone(src, fails);
-            }).catch((e) => {
-              console.log(ansiC3.red(ansiC3.inverse(e.stack)));
+          })();
+          this.addPromiseProcess(processId, webPromise, command);
+        };
+        this.launchPitono = async (src, dest) => {
+          const processId = `pitono-${src}-${Date.now()}`;
+          const command = `pitono test: ${src}`;
+          const pitonoPromise = (async () => {
+            console.log(ansiC3.green(ansiC3.inverse(`pitono < ${src}`)));
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
+            if (!fs10.existsSync(reportDest)) {
+              fs10.mkdirSync(reportDest, { recursive: true });
+            }
+            const logs = createLogStreams(reportDest, "node");
+            try {
+              const { PitonoRunner: PitonoRunner2 } = await Promise.resolve().then(() => (init_pitonoRunner(), pitonoRunner_exports));
+              const runner = new PitonoRunner2(this.configs, this.name);
+              await runner.run();
+              this.bddTestIsNowDone(src, 0);
+              statusMessagePretty(0, src, "pitono");
+            } catch (error) {
+              logs.writeExitCode(-1, error);
               console.log(
                 ansiC3.red(
                   ansiC3.inverse(
-                    `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
+                    `${src} errored with: ${error}. Check logs for more info`
                   )
                 )
               );
               this.bddTestIsNowDone(src, -1);
-            }).finally(() => {
-              close();
-            });
-            return page;
-          });
-        };
-        this.launchPitono = async (src, dest) => {
-          console.log(ansiC3.green(ansiC3.inverse(`pitono < ${src}`)));
-          this.bddTestIsRunning(src);
-          const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
-          if (!fs10.existsSync(reportDest)) {
-            fs10.mkdirSync(reportDest, { recursive: true });
-          }
-          const logs = createLogStreams(reportDest, "node");
-          try {
-            const { PitonoRunner: PitonoRunner2 } = await Promise.resolve().then(() => (init_pitonoRunner(), pitonoRunner_exports));
-            const runner = new PitonoRunner2(this.configs, this.name);
-            await runner.run();
-            this.bddTestIsNowDone(src, 0);
-            statusMessagePretty(0, src, "pitono");
-          } catch (error) {
-            logs.writeExitCode(-1, error);
-            console.log(
-              ansiC3.red(
-                ansiC3.inverse(
-                  `${src} errored with: ${error}. Check logs for more info`
-                )
-              )
-            );
-            this.bddTestIsNowDone(src, -1);
-            statusMessagePretty(-1, src, "pitono");
-          }
+              statusMessagePretty(-1, src, "pitono");
+              throw error;
+            }
+          })();
+          this.addPromiseProcess(processId, pitonoPromise, command);
         };
         this.launchGolingvu = async (src, dest) => {
           throw "not yet implemented";

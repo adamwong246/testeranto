@@ -169,21 +169,6 @@
     {
       "id": "",
       "location": {
-        "column": 65,
-        "file": "src/lib/BaseSuite.test/pure.test.ts",
-        "length": 8,
-        "line": 6,
-        "lineText": "import { I, implementation, O, specification, testAdapter } from \"./test\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
         "column": 26,
         "file": "src/lib/BaseSuite.test/test.ts",
         "length": 8,
@@ -541,7 +526,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12027,
+        "bytes": 12181,
         "imports": [
           {
             "path": "..",
@@ -635,13 +620,13 @@
             "bytesInOutput": 1401
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 7364
+            "bytesInOutput": 6616
           },
           "src/lib/BaseSuite.test/pure.test.ts": {
             "bytesInOutput": 103
           }
         },
-        "bytes": 34684
+        "bytes": 33936
       }
     }
   }

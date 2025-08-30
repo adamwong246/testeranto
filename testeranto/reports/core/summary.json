@@ -13,21 +13,21 @@
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/node.test.ts": {
-    "typeErrors": 30,
+    "typeErrors": 28,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/BaseSuite.test/node.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/pure.test.ts": {
-    "typeErrors": 31,
+    "typeErrors": 29,
     "staticErrors": 1,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/lib/BaseSuite.test/pure.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/BaseSuite.test/web.test.ts": {
-    "typeErrors": 30,
+    "typeErrors": 28,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/web/src/lib/BaseSuite.test/web.test/prompt.txt",

@@ -33,8 +33,8 @@ export declare class PM_Main extends PM_WithWebSocket {
     start(): Promise<void>;
     stop(): Promise<void>;
     metafileOutputs(platform: IRunTime): Promise<void>;
-    launchPure: (src: string, dest: string) => Promise<(string | number)[] | undefined>;
-    launchNode: (src: string, dest: string) => Promise<any[] | undefined>;
+    launchPure: (src: string, dest: string) => Promise<void>;
+    launchNode: (src: string, dest: string) => Promise<void>;
     launchWeb: (src: string, dest: string) => Promise<void>;
     launchPitono: (src: string, dest: string) => Promise<void>;
     launchGolingvu: (src: string, dest: string) => Promise<never>;

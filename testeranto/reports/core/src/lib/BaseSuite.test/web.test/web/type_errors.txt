@@ -45,14 +45,10 @@
     Type 'void' is not assignable to type 'string'.
 /Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (190,11): Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
 /Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (204,13): Argument of type 'null' is not assignable to parameter of type 'typeof BaseSuite'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (291,58): Type '(suite: MockSuite) => MockSuite' is not assignable to type '(ssel: TestSelection, utils: PM) => (store: TestStore) => Promise<TestSelection>'.
-  Types of parameters 'suite' and 'ssel' are incompatible.
-    Type 'TestSelection' is missing the following properties from type 'MockSuite': name, givens, store, testResourceConfiguration, and 11 more.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (343,19): Property 'specs' does not exist on type 'MockSuite'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (352,19): Property 'testJobs' does not exist on type 'MockSuite'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (393,22): Property 'index' does not exist on type '() => Promise<TestStore>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (396,19): Property 'store' does not exist on type '() => Promise<TestStore>'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (431,3): Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (277,5): Object literal may only specify known properties, and 'FeatureCountMatches' does not exist in type 'TestThenImplementation<I, O>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (406,22): Property 'index' does not exist on type '() => Promise<TestStore>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (409,19): Property 'store' does not exist on type '() => Promise<TestStore>'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.test/test.ts (444,3): Type '(store: I["istore"]) => I["istore"]' is not assignable to type '(store: TestStore, key: string, pm: IPM) => Promise<unknown>'.
   Type 'TestStore' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
 /Users/adam/Code/testeranto/src/lib/BaseThen.ts (76,41): A spread argument must either have a tuple type or be passed to a rest parameter.
 /Users/adam/Code/testeranto/src/lib/index.ts (42,12): This expression is not callable.

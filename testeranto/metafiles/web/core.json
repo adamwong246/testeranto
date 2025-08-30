@@ -1091,7 +1091,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12027,
+        "bytes": 12181,
         "imports": [
           {
             "path": "..",
@@ -15808,7 +15808,7 @@
       "testeranto/bundles/web/core/src/lib/BaseSuite.test/web.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-UORC6JOU.mjs",
+            "path": "testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -15821,18 +15821,18 @@
             "bytesInOutput": 148
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 7419
+            "bytesInOutput": 6663
           },
           "src/lib/BaseSuite.test/mock.ts": {
             "bytesInOutput": 1448
           }
         },
-        "bytes": 9417
+        "bytes": 8642
       },
       "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-UORC6JOU.mjs",
+            "path": "testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs",
             "kind": "import-statement"
           }
         ],
@@ -16364,7 +16364,7 @@
         },
         "bytes": 1500383
       },
-      "testeranto/bundles/web/core/chunk-UORC6JOU.mjs": {
+      "testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs": {
         "imports": [],
         "exports": [
           "BaseGiven",
@@ -16377,8 +16377,7 @@
           "__toESM",
           "init_buffer",
           "init_dirname",
-          "init_process",
-          "process_exports"
+          "init_process"
         ],
         "inputs": {
           "node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js": {
@@ -16394,13 +16393,13 @@
             "bytesInOutput": 124
           },
           "node_modules/@jspm/core/nodelibs/browser/process.js": {
-            "bytesInOutput": 9699
+            "bytesInOutput": 1767
           },
           "node_modules/esbuild-plugin-polyfill-node/polyfills/process.js": {
             "bytesInOutput": 127
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 2500
+            "bytesInOutput": 2498
           },
           "src/lib/pmProxy.ts": {
             "bytesInOutput": 6512
@@ -16415,13 +16414,13 @@
             "bytesInOutput": 223
           },
           "src/lib/Tiposkripto.ts": {
-            "bytesInOutput": 6112
+            "bytesInOutput": 6110
           },
           "src/lib/index.ts": {
             "bytesInOutput": 721
           },
           "src/lib/BaseGiven.ts": {
-            "bytesInOutput": 2960
+            "bytesInOutput": 2958
           },
           "src/lib/BaseWhen.ts": {
             "bytesInOutput": 1174
@@ -16430,7 +16429,7 @@
             "bytesInOutput": 1628
           }
         },
-        "bytes": 99065
+        "bytes": 90980
       },
       "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf": {
         "imports": [],
