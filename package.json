@@ -135,7 +135,9 @@
     "compile-docs": "node scripts/compile-docs.js",
     "prepublish": "self-import",
     "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt",
-    "static-serve": "python3 -m http.server 8000"
+    "static-serve": "python3 -m http.server 8000",
+    "buildV2": "node bundle.js",
+    "devV2": "rm -rf testeranto; yarn buildV2; yarn t-init;  cp ./dist/prebuild/App.* testeranto; yarn testeranto core dev"
   },
   "peerDependencies": {
     "@types/react": "18.2.0",

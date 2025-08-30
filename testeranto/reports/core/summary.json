@@ -30,14 +30,6 @@
     "runTimeErrors": 0,
     "failingFeatures": {}
   },
-  "src/components/pure/TestPageView.test/index.tsx": {
-    "runTimeErrors": 0,
-    "failingFeatures": {}
-  },
-  "src/components/pure/ProjectPageView.test/index.tsx": {
-    "runTimeErrors": 0,
-    "failingFeatures": {}
-  },
   "src/Pure.test.ts": {
     "typeErrors": 29,
     "staticErrors": 0,
@@ -50,6 +42,10 @@
     "staticErrors": 2,
     "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/pmProxy.test/index/prompt.txt",
+    "failingFeatures": {}
+  },
+  "src/components/pure/ProjectPageView.test/index.tsx": {
+    "runTimeErrors": 0,
     "failingFeatures": {}
   },
   "src/components/pure/FeaturesReporterView.test/index.tsx": {

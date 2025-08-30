@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProjectsPageView } from '../pure/ProjectsPageView';
 import { ISummary } from '../../Types';
 import { summaryDotJson } from '../../utils/api';
+import { useWebSocket } from '../../App';
 
 export const ProjectsPage = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -14,16 +15,12 @@ export const ProjectsPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [configs, setConfigs] = useState<Record<string, object>>({});
   const navigate = useNavigate();
-  const [ws, setWs] = useState<WebSocket | null>(null);
+  const ws = useWebSocket();
 
   useEffect(() => {
-    // Connect to WebSocket on the same host and port as the HTTP server
-    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${wsProtocol}//${window.location.host}`;
-    const websocket = new WebSocket(wsUrl);
-    setWs(websocket);
+    if (!ws) return;
 
-    websocket.onmessage = (event) => {
+    const handleMessage = (event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data);
         if (data.type === 'summaryUpdate') {
@@ -35,14 +32,12 @@ export const ProjectsPage = () => {
       }
     };
 
-    websocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
+    ws.addEventListener('message', handleMessage);
 
     return () => {
-      websocket.close();
+      ws.removeEventListener('message', handleMessage);
     };
-  }, []);
+  }, [ws]);
 
   useEffect(() => {
     const fetchProjects = async () => {

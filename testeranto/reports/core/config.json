@@ -49,22 +49,6 @@
       []
     ],
     [
-      "src/components/pure/TestPageView.test/index.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
-      "src/components/pure/ProjectPageView.test/index.tsx",
-      "web",
-      {
-        "ports": 0
-      },
-      []
-    ],
-    [
       "src/Pure.test.ts",
       "pure",
       {
@@ -75,6 +59,14 @@
     [
       "src/lib/pmProxy.test/index.ts",
       "node",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "src/components/pure/ProjectPageView.test/index.tsx",
+      "web",
       {
         "ports": 0
       },

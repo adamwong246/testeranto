@@ -20,10 +20,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -52,10 +52,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -84,10 +84,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -116,10 +116,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -148,10 +148,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -180,10 +180,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -212,10 +212,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -244,10 +244,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -276,10 +276,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -308,10 +308,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -340,10 +340,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -372,10 +372,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -404,10 +404,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -436,10 +436,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -465,28 +465,13 @@
       "text": "Use \"src/app.scss\" instead of \"src/App.scss\" to avoid issues with case-sensitive file systems"
     },
     {
-      "id": "different-path-case",
-      "location": {
-        "column": 7,
-        "file": "src/components/pure/TestPageView.test/index.tsx",
-        "length": 21,
-        "line": 8,
-        "lineText": "import \"./../../../App.scss\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "",
-      "text": "Use \"src/app.scss\" instead of \"src/App.scss\" to avoid issues with case-sensitive file systems"
-    },
-    {
       "id": "",
       "location": {
         "column": 7,
-        "file": "src/components/pure/TestPageView.test/index.tsx",
-        "length": 21,
-        "line": 8,
-        "lineText": "import \"./../../../App.scss\";",
+        "file": "src/components/pure/ProjectPageView.tsx",
+        "length": 18,
+        "line": 9,
+        "lineText": "import \"./../../App.scss\";",
         "namespace": "",
         "suggestion": ""
       },
@@ -513,10 +498,10 @@
         {
           "location": {
             "column": 7,
-            "file": "src/components/pure/TestPageView.test/index.tsx",
-            "length": 21,
-            "line": 8,
-            "lineText": "import \"./../../../App.scss\";",
+            "file": "src/components/pure/ProjectPageView.tsx",
+            "length": 18,
+            "line": 9,
+            "lineText": "import \"./../../App.scss\";",
             "namespace": "",
             "suggestion": ""
           },
@@ -1187,83 +1172,6 @@
         ],
         "format": "esm"
       },
-      "node_modules/testeranto-react/src/react-dom/jsx/dynamic.ts": {
-        "bytes": 1418,
-        "imports": [
-          {
-            "path": "react",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "testeranto/src/CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "testeranto/src/lib",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": ".",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/testeranto-react/src/react-dom/jsx/web.ts": {
-        "bytes": 708,
-        "imports": [
-          {
-            "path": "src/Web.ts",
-            "kind": "import-statement",
-            "original": "testeranto/src/Web"
-          },
-          {
-            "path": "testeranto/src/CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/testeranto-react/src/react-dom/jsx/dynamic.ts",
-            "kind": "import-statement",
-            "original": "./dynamic.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
       "node_modules/react/cjs/react.development.js": {
         "bytes": 87574,
         "imports": [
@@ -1310,6 +1218,223 @@
           }
         ],
         "format": "cjs"
+      },
+      "node_modules/scheduler/cjs/scheduler.development.js": {
+        "bytes": 17497,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/scheduler/index.js": {
+        "bytes": 198,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/scheduler/cjs/scheduler.development.js",
+            "kind": "require-call",
+            "original": "./cjs/scheduler.development.js"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-dom/cjs/react-dom.development.js": {
+        "bytes": 1026501,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "require-call",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/scheduler/index.js",
+            "kind": "require-call",
+            "original": "scheduler"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-dom/index.js": {
+        "bytes": 1363,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react-dom/cjs/react-dom.development.js",
+            "kind": "require-call",
+            "original": "./cjs/react-dom.development.js"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/react-dom/client.js": {
+        "bytes": 619,
+        "imports": [
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/react-dom/index.js",
+            "kind": "require-call",
+            "original": "react-dom"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
+        "bytes": 3622,
+        "imports": [
+          {
+            "path": "node_modules/react/index.js",
+            "kind": "import-statement",
+            "original": "react"
+          },
+          {
+            "path": "node_modules/react-dom/client.js",
+            "kind": "import-statement",
+            "original": "react-dom/client"
+          },
+          {
+            "path": "testeranto/src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/testeranto-react/src/react-dom/component/web.ts": {
+        "bytes": 3563,
+        "imports": [
+          {
+            "path": "src/Web.ts",
+            "kind": "import-statement",
+            "original": "testeranto/src/Web"
+          },
+          {
+            "path": "testeranto/src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/testeranto-react/src/react-dom/component/dynamic.ts",
+            "kind": "import-statement",
+            "original": "./dynamic.js"
+          },
+          {
+            "path": "react-dom/client",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../mocks/mockReactComponent.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "chai",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
       },
       "node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs": {
         "bytes": 330766,
@@ -1425,110 +1550,6 @@
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
             "kind": "import-statement",
             "external": true
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/scheduler/cjs/scheduler.development.js": {
-        "bytes": 17497,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/scheduler/index.js": {
-        "bytes": 198,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/scheduler/cjs/scheduler.development.js",
-            "kind": "require-call",
-            "original": "./cjs/scheduler.development.js"
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/react-dom/cjs/react-dom.development.js": {
-        "bytes": 1026501,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "require-call",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/scheduler/index.js",
-            "kind": "require-call",
-            "original": "scheduler"
-          }
-        ],
-        "format": "cjs"
-      },
-      "node_modules/react-dom/index.js": {
-        "bytes": 1363,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/react-dom/cjs/react-dom.development.js",
-            "kind": "require-call",
-            "original": "./cjs/react-dom.development.js"
           }
         ],
         "format": "cjs"
@@ -1728,49 +1749,13 @@
         ],
         "format": "esm"
       },
-      "node_modules/react-dom/client.js": {
-        "bytes": 619,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/react-dom/index.js",
-            "kind": "require-call",
-            "original": "react-dom"
-          }
-        ],
-        "format": "cjs"
-      },
-      "src/components/pure/TestPageView.test/implementation.ts": {
-        "bytes": 5904,
+      "src/components/pure/ProjectPageView.test/implementation.tsx": {
+        "bytes": 6141,
         "imports": [
           {
             "path": "node_modules/chai/index.js",
             "kind": "import-statement",
             "original": "chai"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-dom/client.js",
-            "kind": "import-statement",
-            "original": "react-dom/client"
           },
           {
             "path": "../../../CoreTypes",
@@ -1779,11 +1764,6 @@
           },
           {
             "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../../lib",
             "kind": "import-statement",
             "external": true
           },
@@ -1805,8 +1785,8 @@
         ],
         "format": "esm"
       },
-      "src/components/pure/TestPageView.test/specification.ts": {
-        "bytes": 1658,
+      "src/components/pure/ProjectPageView.test/specification.ts": {
+        "bytes": 1280,
         "imports": [
           {
             "path": "../../../CoreTypes",
@@ -15043,395 +15023,85 @@
         ],
         "format": "esm"
       },
-      "src/utils/logFiles.ts": {
-        "bytes": 1536,
+      "src/components/TestStatusBadge.tsx": {
+        "bytes": 1613,
         "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js": {
-        "bytes": 4188,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/state-local/lib/es/state-local.js": {
-        "bytes": 5549,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/config/index.js": {
-        "bytes": 124,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/utils/curry.js": {
-        "bytes": 546,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/utils/isObject.js": {
-        "bytes": 108,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/validators/index.js": {
-        "bytes": 1514,
-        "imports": [
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/utils/curry.js",
-            "kind": "import-statement",
-            "original": "../utils/curry.js"
-          },
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/utils/isObject.js",
-            "kind": "import-statement",
-            "original": "../utils/isObject.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/utils/compose.js": {
-        "bytes": 297,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js": {
-        "bytes": 414,
-        "imports": [
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js",
-            "kind": "import-statement",
-            "original": "../_virtual/_rollupPluginBabelHelpers.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js": {
-        "bytes": 643,
-        "imports": [
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/loader/index.js": {
-        "bytes": 4360,
-        "imports": [
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js",
-            "kind": "import-statement",
-            "original": "../_virtual/_rollupPluginBabelHelpers.js"
-          },
-          {
-            "path": "node_modules/state-local/lib/es/state-local.js",
-            "kind": "import-statement",
-            "original": "state-local"
-          },
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/config/index.js",
-            "kind": "import-statement",
-            "original": "../config/index.js"
-          },
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/validators/index.js",
-            "kind": "import-statement",
-            "original": "../validators/index.js"
-          },
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/utils/compose.js",
-            "kind": "import-statement",
-            "original": "../utils/compose.js"
-          },
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js",
-            "kind": "import-statement",
-            "original": "../utils/deepMerge.js"
-          },
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js",
-            "kind": "import-statement",
-            "original": "../utils/makeCancelable.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/loader/lib/es/index.js": {
-        "bytes": 85,
-        "imports": [
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/loader/index.js",
-            "kind": "import-statement",
-            "original": "./loader/index.js"
-          },
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/loader/index.js",
-            "kind": "import-statement",
-            "original": "./loader/index.js"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/@monaco-editor/react/dist/index.mjs": {
-        "bytes": 6528,
-        "imports": [
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/index.js",
-            "kind": "import-statement",
-            "original": "@monaco-editor/loader"
-          },
           {
             "path": "node_modules/react/index.js",
             "kind": "import-statement",
             "original": "react"
           },
           {
-            "path": "node_modules/react/index.js",
+            "path": "node_modules/react-bootstrap/esm/index.js",
             "kind": "import-statement",
-            "original": "react"
+            "original": "react-bootstrap"
           },
           {
-            "path": "node_modules/@monaco-editor/loader/lib/es/index.js",
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
             "kind": "import-statement",
-            "original": "@monaco-editor/loader"
+            "external": true
           },
           {
-            "path": "node_modules/react/index.js",
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
             "kind": "import-statement",
-            "original": "react"
+            "external": true
           },
           {
-            "path": "node_modules/react/index.js",
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
             "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/TestTable.tsx": {
+        "bytes": 2405,
+        "imports": [
           {
             "path": "node_modules/react/index.js",
             "kind": "import-statement",
             "original": "react"
           },
           {
+            "path": "node_modules/react-bootstrap/esm/index.js",
+            "kind": "import-statement",
+            "original": "react-bootstrap"
+          },
+          {
+            "path": "src/components/TestStatusBadge.tsx",
+            "kind": "import-statement",
+            "original": "../TestStatusBadge"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/components/pure/BuildLogViewer.tsx": {
+        "bytes": 7154,
+        "imports": [
+          {
             "path": "node_modules/react/index.js",
             "kind": "import-statement",
             "original": "react"
           },
           {
-            "path": "node_modules/@monaco-editor/loader/lib/es/index.js",
+            "path": "node_modules/react-bootstrap/esm/index.js",
             "kind": "import-statement",
-            "original": "@monaco-editor/loader"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/@monaco-editor/loader/lib/es/index.js",
-            "kind": "import-statement",
-            "original": "@monaco-editor/loader"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
+            "original": "react-bootstrap"
           },
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -15468,98 +15138,6 @@
             "path": "node_modules/react-router-dom/dist/index.mjs",
             "kind": "import-statement",
             "original": "react-router-dom"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/TestStatusBadge.tsx": {
-        "bytes": 1613,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-bootstrap/esm/index.js",
-            "kind": "import-statement",
-            "original": "react-bootstrap"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/TestPageView.tsx": {
-        "bytes": 44101,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-bootstrap/esm/index.js",
-            "kind": "import-statement",
-            "original": "react-bootstrap"
-          },
-          {
-            "path": "node_modules/react-router-dom/dist/index.mjs",
-            "kind": "import-statement",
-            "original": "react-router-dom"
-          },
-          {
-            "path": "src/utils/logFiles.ts",
-            "kind": "import-statement",
-            "original": "../../utils/logFiles"
-          },
-          {
-            "path": "node_modules/react-bootstrap/esm/index.js",
-            "kind": "import-statement",
-            "original": "react-bootstrap"
-          },
-          {
-            "path": "node_modules/@monaco-editor/react/dist/index.mjs",
-            "kind": "import-statement",
-            "original": "@monaco-editor/react"
-          },
-          {
-            "path": "src/components/pure/NavBar.tsx",
-            "kind": "import-statement",
-            "original": "./NavBar"
-          },
-          {
-            "path": "src/components/TestStatusBadge.tsx",
-            "kind": "import-statement",
-            "original": "../TestStatusBadge"
           },
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -15761,283 +15339,6 @@
             "original": "../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf"
           }
         ]
-      },
-      "src/components/pure/TestPageView.test/index.tsx": {
-        "bytes": 520,
-        "imports": [
-          {
-            "path": "node_modules/testeranto-react/src/react-dom/jsx/web.ts",
-            "kind": "import-statement",
-            "original": "testeranto-react/src/react-dom/jsx/web"
-          },
-          {
-            "path": "node_modules/react-router-dom/dist/index.mjs",
-            "kind": "import-statement",
-            "original": "react-router-dom"
-          },
-          {
-            "path": "src/components/pure/TestPageView.test/implementation.ts",
-            "kind": "import-statement",
-            "original": "./implementation"
-          },
-          {
-            "path": "src/components/pure/TestPageView.test/specification.ts",
-            "kind": "import-statement",
-            "original": "./specification"
-          },
-          {
-            "path": "src/components/pure/TestPageView.tsx",
-            "kind": "import-statement",
-            "original": "../TestPageView"
-          },
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "src/App.scss",
-            "kind": "import-statement",
-            "original": "./../../../App.scss"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
-        "bytes": 3622,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-dom/client.js",
-            "kind": "import-statement",
-            "original": "react-dom/client"
-          },
-          {
-            "path": "testeranto/src/CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "node_modules/testeranto-react/src/react-dom/component/web.ts": {
-        "bytes": 3563,
-        "imports": [
-          {
-            "path": "src/Web.ts",
-            "kind": "import-statement",
-            "original": "testeranto/src/Web"
-          },
-          {
-            "path": "testeranto/src/CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "node_modules/testeranto-react/src/react-dom/component/dynamic.ts",
-            "kind": "import-statement",
-            "original": "./dynamic.js"
-          },
-          {
-            "path": "react-dom/client",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "../../mocks/mockReactComponent.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "chai",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/ProjectPageView.test/implementation.tsx": {
-        "bytes": 6141,
-        "imports": [
-          {
-            "path": "node_modules/chai/index.js",
-            "kind": "import-statement",
-            "original": "chai"
-          },
-          {
-            "path": "../../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/ProjectPageView.test/specification.ts": {
-        "bytes": 1280,
-        "imports": [
-          {
-            "path": "../../../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/TestTable.tsx": {
-        "bytes": 2405,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-bootstrap/esm/index.js",
-            "kind": "import-statement",
-            "original": "react-bootstrap"
-          },
-          {
-            "path": "src/components/TestStatusBadge.tsx",
-            "kind": "import-statement",
-            "original": "../TestStatusBadge"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
-      },
-      "src/components/pure/BuildLogViewer.tsx": {
-        "bytes": 7154,
-        "imports": [
-          {
-            "path": "node_modules/react/index.js",
-            "kind": "import-statement",
-            "original": "react"
-          },
-          {
-            "path": "node_modules/react-bootstrap/esm/index.js",
-            "kind": "import-statement",
-            "original": "react-bootstrap"
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/buffer.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/process.js",
-            "kind": "import-statement",
-            "external": true
-          }
-        ],
-        "format": "esm"
       },
       "src/components/pure/ProjectPageView.tsx": {
         "bytes": 4982,
@@ -16321,99 +15622,10 @@
         },
         "bytes": 8633
       },
-      "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-JAGQ3LXJ.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-7XCSWEIO.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "default"
-        ],
-        "entryPoint": "src/components/pure/TestPageView.test/index.tsx",
-        "cssBundle": "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.css",
-        "inputs": {
-          "src/components/pure/TestPageView.test/index.tsx": {
-            "bytesInOutput": 390
-          },
-          "node_modules/testeranto-react/src/react-dom/jsx/web.ts": {
-            "bytesInOutput": 255
-          },
-          "node_modules/testeranto-react/src/react-dom/jsx/dynamic.ts": {
-            "bytesInOutput": 1012
-          },
-          "src/components/pure/TestPageView.test/implementation.ts": {
-            "bytesInOutput": 4379
-          },
-          "src/components/pure/TestPageView.test/specification.ts": {
-            "bytesInOutput": 1364
-          },
-          "src/components/pure/TestPageView.tsx": {
-            "bytesInOutput": 32381
-          },
-          "src/utils/logFiles.ts": {
-            "bytesInOutput": 640
-          },
-          "node_modules/@monaco-editor/react/dist/index.mjs": {
-            "bytesInOutput": 8908
-          },
-          "node_modules/@monaco-editor/loader/lib/es/index.js": {
-            "bytesInOutput": 47
-          },
-          "node_modules/@monaco-editor/loader/lib/es/loader/index.js": {
-            "bytesInOutput": 2934
-          },
-          "node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js": {
-            "bytesInOutput": 3852
-          },
-          "node_modules/state-local/lib/es/state-local.js": {
-            "bytesInOutput": 5601
-          },
-          "node_modules/@monaco-editor/loader/lib/es/config/index.js": {
-            "bytesInOutput": 176
-          },
-          "node_modules/@monaco-editor/loader/lib/es/validators/index.js": {
-            "bytesInOutput": 1251
-          },
-          "node_modules/@monaco-editor/loader/lib/es/utils/curry.js": {
-            "bytesInOutput": 595
-          },
-          "node_modules/@monaco-editor/loader/lib/es/utils/isObject.js": {
-            "bytesInOutput": 164
-          },
-          "node_modules/@monaco-editor/loader/lib/es/utils/compose.js": {
-            "bytesInOutput": 350
-          },
-          "node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js": {
-            "bytesInOutput": 375
-          },
-          "node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js": {
-            "bytesInOutput": 562
-          }
-        },
-        "bytes": 67166
-      },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-JAGQ3LXJ.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-BOANK7RL.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-7XCSWEIO.mjs",
+            "path": "testeranto/bundles/web/core/chunk-AZZHJNSU.mjs",
             "kind": "import-statement"
           },
           {
@@ -16426,57 +15638,6 @@
         ],
         "entryPoint": "src/components/pure/ProjectPageView.test/index.tsx",
         "cssBundle": "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css",
-        "inputs": {
-          "src/components/pure/ProjectPageView.test/index.tsx": {
-            "bytesInOutput": 404
-          },
-          "src/components/pure/ProjectPageView.test/implementation.tsx": {
-            "bytesInOutput": 5647
-          },
-          "src/components/pure/ProjectPageView.test/specification.ts": {
-            "bytesInOutput": 1187
-          },
-          "src/components/pure/ProjectPageView.tsx": {
-            "bytesInOutput": 5200
-          },
-          "src/components/pure/TestTable.tsx": {
-            "bytesInOutput": 2661
-          },
-          "src/components/pure/BuildLogViewer.tsx": {
-            "bytesInOutput": 7746
-          }
-        },
-        "bytes": 23809
-      },
-      "testeranto/bundles/web/core/chunk-JAGQ3LXJ.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-7XCSWEIO.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "Alert_default",
-          "Badge_default",
-          "Button_default",
-          "Card_default",
-          "Col_default",
-          "Container_default",
-          "ListGroup_default",
-          "Modal_default",
-          "NavBar",
-          "Nav_default",
-          "Row_default",
-          "Tab_default",
-          "Table_default",
-          "TestStatusBadge",
-          "ToastContainer_default",
-          "Toast_default"
-        ],
         "inputs": {
           "node_modules/classnames/index.js": {
             "bytesInOutput": 1801
@@ -16517,11 +15678,20 @@
           "node_modules/warning/warning.js": {
             "bytesInOutput": 1395
           },
-          "src/App.scss": {
-            "bytesInOutput": 0
+          "src/components/pure/ProjectPageView.test/index.tsx": {
+            "bytesInOutput": 407
           },
-          "node_modules/react-bootstrap/esm/Alert.js": {
-            "bytesInOutput": 1719
+          "src/components/pure/ProjectPageView.test/implementation.tsx": {
+            "bytesInOutput": 5647
+          },
+          "src/components/pure/ProjectPageView.test/specification.ts": {
+            "bytesInOutput": 1187
+          },
+          "src/components/pure/ProjectPageView.tsx": {
+            "bytesInOutput": 5243
+          },
+          "node_modules/react-bootstrap/esm/index.js": {
+            "bytesInOutput": 47
           },
           "node_modules/uncontrollable/lib/esm/index.js": {
             "bytesInOutput": 47
@@ -16550,41 +15720,122 @@
           "node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js": {
             "bytesInOutput": 1085
           },
+          "node_modules/react-bootstrap/esm/ThemeProvider.js": {
+            "bytesInOutput": 976
+          },
+          "node_modules/react-bootstrap/esm/Collapse.js": {
+            "bytesInOutput": 3236
+          },
+          "node_modules/dom-helpers/esm/css.js": {
+            "bytesInOutput": 770
+          },
+          "node_modules/dom-helpers/esm/getComputedStyle.js": {
+            "bytesInOutput": 164
+          },
+          "node_modules/dom-helpers/esm/ownerWindow.js": {
+            "bytesInOutput": 154
+          },
+          "node_modules/dom-helpers/esm/ownerDocument.js": {
+            "bytesInOutput": 129
+          },
+          "node_modules/dom-helpers/esm/hyphenateStyle.js": {
+            "bytesInOutput": 166
+          },
+          "node_modules/dom-helpers/esm/hyphenate.js": {
+            "bytesInOutput": 157
+          },
+          "node_modules/dom-helpers/esm/isTransform.js": {
+            "bytesInOutput": 239
+          },
+          "node_modules/react-transition-group/esm/Transition.js": {
+            "bytesInOutput": 15011
+          },
+          "node_modules/react-transition-group/esm/config.js": {
+            "bytesInOutput": 91
+          },
+          "node_modules/react-transition-group/esm/utils/PropTypes.js": {
+            "bytesInOutput": 973
+          },
+          "node_modules/react-transition-group/esm/TransitionGroupContext.js": {
+            "bytesInOutput": 173
+          },
+          "node_modules/react-transition-group/esm/utils/reflow.js": {
+            "bytesInOutput": 123
+          },
+          "node_modules/@restart/ui/esm/utils.js": {
+            "bytesInOutput": 552
+          },
+          "node_modules/react-bootstrap/esm/transitionEndListener.js": {
+            "bytesInOutput": 548
+          },
+          "node_modules/dom-helpers/esm/transitionEnd.js": {
+            "bytesInOutput": 1003
+          },
+          "node_modules/dom-helpers/esm/listen.js": {
+            "bytesInOutput": 289
+          },
+          "node_modules/dom-helpers/esm/addEventListener.js": {
+            "bytesInOutput": 1123
+          },
+          "node_modules/dom-helpers/esm/canUseDOM.js": {
+            "bytesInOutput": 158
+          },
+          "node_modules/dom-helpers/esm/removeEventListener.js": {
+            "bytesInOutput": 406
+          },
+          "node_modules/dom-helpers/esm/triggerEvent.js": {
+            "bytesInOutput": 376
+          },
+          "node_modules/react-bootstrap/esm/createChainedFunction.js": {
+            "bytesInOutput": 511
+          },
+          "node_modules/react-bootstrap/esm/triggerBrowserReflow.js": {
+            "bytesInOutput": 108
+          },
+          "node_modules/react-bootstrap/esm/TransitionWrapper.js": {
+            "bytesInOutput": 2094
+          },
+          "node_modules/@restart/hooks/esm/useMergedRefs.js": {
+            "bytesInOutput": 529
+          },
+          "node_modules/react-bootstrap/esm/safeFindDOMNode.js": {
+            "bytesInOutput": 353
+          },
+          "node_modules/react-bootstrap/esm/Alert.js": {
+            "bytesInOutput": 1719
+          },
           "node_modules/@restart/hooks/esm/useEventCallback.js": {
-            "bytesInOutput": 291
+            "bytesInOutput": 293
           },
           "node_modules/@restart/hooks/esm/useCommittedRef.js": {
             "bytesInOutput": 317
-          },
-          "node_modules/react-bootstrap/esm/ThemeProvider.js": {
-            "bytesInOutput": 1093
           },
           "node_modules/react-bootstrap/esm/AlertHeading.js": {
             "bytesInOutput": 761
           },
           "node_modules/react-bootstrap/esm/divWithClassName.js": {
-            "bytesInOutput": 496
+            "bytesInOutput": 498
           },
           "node_modules/react-bootstrap/esm/AlertLink.js": {
-            "bytesInOutput": 647
+            "bytesInOutput": 649
           },
           "node_modules/@restart/ui/esm/Anchor.js": {
-            "bytesInOutput": 1269
+            "bytesInOutput": 1271
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/index.js": {
             "bytesInOutput": 47
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCallbackRef.js": {
-            "bytesInOutput": 93
+            "bytesInOutput": 94
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCommittedRef.js": {
-            "bytesInOutput": 320
+            "bytesInOutput": 323
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js": {
-            "bytesInOutput": 293
+            "bytesInOutput": 295
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventListener.js": {
-            "bytesInOutput": 93
+            "bytesInOutput": 94
           },
           "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useGlobalListener.js": {
             "bytesInOutput": 94
@@ -16617,274 +15868,31 @@
             "bytesInOutput": 402
           },
           "node_modules/@restart/ui/esm/Button.js": {
-            "bytesInOutput": 2341
+            "bytesInOutput": 2343
           },
           "node_modules/react-bootstrap/esm/Fade.js": {
             "bytesInOutput": 1293
           },
-          "node_modules/react-transition-group/esm/Transition.js": {
-            "bytesInOutput": 15016
-          },
-          "node_modules/react-transition-group/esm/config.js": {
-            "bytesInOutput": 91
-          },
-          "node_modules/react-transition-group/esm/utils/PropTypes.js": {
-            "bytesInOutput": 973
-          },
-          "node_modules/react-transition-group/esm/TransitionGroupContext.js": {
-            "bytesInOutput": 175
-          },
-          "node_modules/react-transition-group/esm/utils/reflow.js": {
-            "bytesInOutput": 123
-          },
-          "node_modules/@restart/ui/esm/utils.js": {
-            "bytesInOutput": 554
-          },
-          "node_modules/react-bootstrap/esm/transitionEndListener.js": {
-            "bytesInOutput": 548
-          },
-          "node_modules/dom-helpers/esm/css.js": {
-            "bytesInOutput": 770
-          },
-          "node_modules/dom-helpers/esm/getComputedStyle.js": {
-            "bytesInOutput": 164
-          },
-          "node_modules/dom-helpers/esm/ownerWindow.js": {
-            "bytesInOutput": 154
-          },
-          "node_modules/dom-helpers/esm/ownerDocument.js": {
-            "bytesInOutput": 129
-          },
-          "node_modules/dom-helpers/esm/hyphenateStyle.js": {
-            "bytesInOutput": 166
-          },
-          "node_modules/dom-helpers/esm/hyphenate.js": {
-            "bytesInOutput": 157
-          },
-          "node_modules/dom-helpers/esm/isTransform.js": {
-            "bytesInOutput": 239
-          },
-          "node_modules/dom-helpers/esm/transitionEnd.js": {
-            "bytesInOutput": 1003
-          },
-          "node_modules/dom-helpers/esm/listen.js": {
-            "bytesInOutput": 289
-          },
-          "node_modules/dom-helpers/esm/addEventListener.js": {
-            "bytesInOutput": 1123
-          },
-          "node_modules/dom-helpers/esm/canUseDOM.js": {
-            "bytesInOutput": 158
-          },
-          "node_modules/dom-helpers/esm/removeEventListener.js": {
-            "bytesInOutput": 406
-          },
-          "node_modules/dom-helpers/esm/triggerEvent.js": {
-            "bytesInOutput": 376
-          },
-          "node_modules/react-bootstrap/esm/triggerBrowserReflow.js": {
-            "bytesInOutput": 108
-          },
-          "node_modules/react-bootstrap/esm/TransitionWrapper.js": {
-            "bytesInOutput": 2105
-          },
-          "node_modules/@restart/hooks/esm/useMergedRefs.js": {
-            "bytesInOutput": 531
-          },
-          "node_modules/react-bootstrap/esm/safeFindDOMNode.js": {
-            "bytesInOutput": 353
-          },
           "node_modules/react-bootstrap/esm/CloseButton.js": {
-            "bytesInOutput": 1186
+            "bytesInOutput": 1188
           },
           "node_modules/react-bootstrap/esm/Badge.js": {
             "bytesInOutput": 728
-          },
-          "node_modules/react-bootstrap/esm/Button.js": {
-            "bytesInOutput": 980
-          },
-          "node_modules/react-bootstrap/esm/Col.js": {
-            "bytesInOutput": 1888
-          },
-          "node_modules/react-bootstrap/esm/Container.js": {
-            "bytesInOutput": 920
-          },
-          "node_modules/react-bootstrap/esm/Modal.js": {
-            "bytesInOutput": 7020
-          },
-          "node_modules/dom-helpers/esm/scrollbarSize.js": {
-            "bytesInOutput": 590
-          },
-          "node_modules/@restart/hooks/esm/useCallbackRef.js": {
-            "bytesInOutput": 170
-          },
-          "node_modules/@restart/hooks/esm/useWillUnmount.js": {
-            "bytesInOutput": 235
-          },
-          "node_modules/@restart/hooks/esm/useUpdatedRef.js": {
-            "bytesInOutput": 229
-          },
-          "node_modules/@restart/ui/esm/Modal.js": {
-            "bytesInOutput": 7735
-          },
-          "node_modules/dom-helpers/esm/activeElement.js": {
-            "bytesInOutput": 294
-          },
-          "node_modules/dom-helpers/esm/contains.js": {
-            "bytesInOutput": 267
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js": {
-            "bytesInOutput": 237
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js": {
-            "bytesInOutput": 230
-          },
-          "node_modules/@restart/ui/esm/ModalManager.js": {
-            "bytesInOutput": 2413
-          },
-          "node_modules/@restart/ui/esm/DataKey.js": {
-            "bytesInOutput": 264
-          },
-          "node_modules/@restart/ui/esm/getScrollbarWidth.js": {
-            "bytesInOutput": 239
-          },
-          "node_modules/@restart/ui/esm/useWaitForDOMRef.js": {
-            "bytesInOutput": 1130
-          },
-          "node_modules/@restart/ui/esm/useWindow.js": {
-            "bytesInOutput": 310
-          },
-          "node_modules/@restart/ui/esm/ImperativeTransition.js": {
-            "bytesInOutput": 2354
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js": {
-            "bytesInOutput": 539
-          },
-          "node_modules/@restart/ui/esm/NoopTransition.js": {
-            "bytesInOutput": 913
-          },
-          "node_modules/@restart/ui/esm/RTGTransition.js": {
-            "bytesInOutput": 809
-          },
-          "node_modules/@restart/ui/esm/useRTGTransitionProps.js": {
-            "bytesInOutput": 2333
-          },
-          "node_modules/react-bootstrap/esm/BootstrapModalManager.js": {
-            "bytesInOutput": 2250
-          },
-          "node_modules/dom-helpers/esm/addClass.js": {
-            "bytesInOutput": 424
-          },
-          "node_modules/dom-helpers/esm/hasClass.js": {
-            "bytesInOutput": 290
-          },
-          "node_modules/dom-helpers/esm/querySelectorAll.js": {
-            "bytesInOutput": 216
-          },
-          "node_modules/dom-helpers/esm/removeClass.js": {
-            "bytesInOutput": 614
-          },
-          "node_modules/react-bootstrap/esm/ModalBody.js": {
-            "bytesInOutput": 644
-          },
-          "node_modules/react-bootstrap/esm/ModalContext.js": {
-            "bytesInOutput": 222
-          },
-          "node_modules/react-bootstrap/esm/ModalDialog.js": {
-            "bytesInOutput": 1210
-          },
-          "node_modules/react-bootstrap/esm/ModalFooter.js": {
-            "bytesInOutput": 656
-          },
-          "node_modules/react-bootstrap/esm/ModalHeader.js": {
-            "bytesInOutput": 729
-          },
-          "node_modules/react-bootstrap/esm/AbstractModalHeader.js": {
-            "bytesInOutput": 1055
-          },
-          "node_modules/react-bootstrap/esm/ModalTitle.js": {
-            "bytesInOutput": 712
-          },
-          "node_modules/react-bootstrap/esm/Nav.js": {
-            "bytesInOutput": 1750
-          },
-          "node_modules/@restart/ui/esm/Nav.js": {
-            "bytesInOutput": 4089
-          },
-          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js": {
-            "bytesInOutput": 229
-          },
-          "node_modules/@restart/ui/esm/NavContext.js": {
-            "bytesInOutput": 225
-          },
-          "node_modules/@restart/ui/esm/SelectableContext.js": {
-            "bytesInOutput": 334
-          },
-          "node_modules/@restart/ui/esm/TabContext.js": {
-            "bytesInOutput": 186
-          },
-          "node_modules/@restart/ui/esm/NavItem.js": {
-            "bytesInOutput": 2538
-          },
-          "node_modules/react-bootstrap/esm/NavbarContext.js": {
-            "bytesInOutput": 236
-          },
-          "node_modules/react-bootstrap/esm/CardHeaderContext.js": {
-            "bytesInOutput": 247
-          },
-          "node_modules/react-bootstrap/esm/NavItem.js": {
-            "bytesInOutput": 636
-          },
-          "node_modules/react-bootstrap/esm/NavLink.js": {
-            "bytesInOutput": 903
-          },
-          "node_modules/react-bootstrap/esm/Row.js": {
-            "bytesInOutput": 1392
-          },
-          "node_modules/react-bootstrap/esm/Toast.js": {
-            "bytesInOutput": 2246
-          },
-          "node_modules/@restart/hooks/esm/useTimeout.js": {
-            "bytesInOutput": 996
-          },
-          "node_modules/@restart/hooks/esm/useMounted.js": {
-            "bytesInOutput": 407
-          },
-          "node_modules/react-bootstrap/esm/ToastFade.js": {
-            "bytesInOutput": 480
-          },
-          "node_modules/react-bootstrap/esm/ToastHeader.js": {
-            "bytesInOutput": 1245
-          },
-          "node_modules/react-bootstrap/esm/ToastContext.js": {
-            "bytesInOutput": 223
-          },
-          "node_modules/react-bootstrap/esm/ToastBody.js": {
-            "bytesInOutput": 644
-          },
-          "node_modules/react-bootstrap/esm/ToastContainer.js": {
-            "bytesInOutput": 1389
-          },
-          "node_modules/react-bootstrap/esm/index.js": {
-            "bytesInOutput": 47
-          },
-          "node_modules/react-bootstrap/esm/Collapse.js": {
-            "bytesInOutput": 3250
-          },
-          "node_modules/react-bootstrap/esm/createChainedFunction.js": {
-            "bytesInOutput": 511
           },
           "node_modules/react-bootstrap/esm/Card.js": {
             "bytesInOutput": 1299
           },
           "node_modules/react-bootstrap/esm/CardBody.js": {
-            "bytesInOutput": 638
+            "bytesInOutput": 636
           },
           "node_modules/react-bootstrap/esm/CardFooter.js": {
             "bytesInOutput": 650
           },
           "node_modules/react-bootstrap/esm/CardHeader.js": {
             "bytesInOutput": 1101
+          },
+          "node_modules/react-bootstrap/esm/CardHeaderContext.js": {
+            "bytesInOutput": 244
           },
           "node_modules/react-bootstrap/esm/CardImg.js": {
             "bytesInOutput": 868
@@ -16904,8 +15912,23 @@
           "node_modules/react-bootstrap/esm/CardTitle.js": {
             "bytesInOutput": 704
           },
+          "node_modules/react-bootstrap/esm/Col.js": {
+            "bytesInOutput": 1891
+          },
+          "node_modules/react-bootstrap/esm/Container.js": {
+            "bytesInOutput": 920
+          },
+          "node_modules/dom-helpers/esm/querySelectorAll.js": {
+            "bytesInOutput": 216
+          },
           "node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js": {
             "bytesInOutput": 775
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js": {
+            "bytesInOutput": 229
+          },
+          "node_modules/dom-helpers/esm/contains.js": {
+            "bytesInOutput": 267
           },
           "node_modules/@restart/ui/esm/ssr.js": {
             "bytesInOutput": 47
@@ -16916,14 +15939,101 @@
           "node_modules/@react-aria/ssr/dist/SSRProvider.mjs": {
             "bytesInOutput": 3970
           },
+          "node_modules/@restart/ui/esm/SelectableContext.js": {
+            "bytesInOutput": 334
+          },
+          "node_modules/@restart/ui/esm/NavContext.js": {
+            "bytesInOutput": 225
+          },
+          "node_modules/@restart/ui/esm/DataKey.js": {
+            "bytesInOutput": 264
+          },
+          "node_modules/@restart/ui/esm/useWindow.js": {
+            "bytesInOutput": 310
+          },
           "node_modules/@restart/hooks/esm/useIsomorphicEffect.js": {
             "bytesInOutput": 407
+          },
+          "node_modules/react-bootstrap/esm/NavbarContext.js": {
+            "bytesInOutput": 239
           },
           "node_modules/react-bootstrap/esm/ListGroup.js": {
             "bytesInOutput": 1500
           },
+          "node_modules/@restart/ui/esm/Nav.js": {
+            "bytesInOutput": 4089
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js": {
+            "bytesInOutput": 539
+          },
+          "node_modules/@restart/ui/esm/TabContext.js": {
+            "bytesInOutput": 186
+          },
+          "node_modules/@restart/ui/esm/NavItem.js": {
+            "bytesInOutput": 2538
+          },
           "node_modules/react-bootstrap/esm/ListGroupItem.js": {
             "bytesInOutput": 1555
+          },
+          "node_modules/@restart/ui/esm/Modal.js": {
+            "bytesInOutput": 7734
+          },
+          "node_modules/dom-helpers/esm/activeElement.js": {
+            "bytesInOutput": 294
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js": {
+            "bytesInOutput": 235
+          },
+          "node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js": {
+            "bytesInOutput": 229
+          },
+          "node_modules/@restart/ui/esm/ModalManager.js": {
+            "bytesInOutput": 2413
+          },
+          "node_modules/@restart/ui/esm/getScrollbarWidth.js": {
+            "bytesInOutput": 239
+          },
+          "node_modules/@restart/ui/esm/useWaitForDOMRef.js": {
+            "bytesInOutput": 1130
+          },
+          "node_modules/@restart/ui/esm/ImperativeTransition.js": {
+            "bytesInOutput": 2354
+          },
+          "node_modules/@restart/ui/esm/NoopTransition.js": {
+            "bytesInOutput": 913
+          },
+          "node_modules/@restart/ui/esm/RTGTransition.js": {
+            "bytesInOutput": 809
+          },
+          "node_modules/@restart/ui/esm/useRTGTransitionProps.js": {
+            "bytesInOutput": 2333
+          },
+          "node_modules/react-bootstrap/esm/BootstrapModalManager.js": {
+            "bytesInOutput": 2250
+          },
+          "node_modules/dom-helpers/esm/addClass.js": {
+            "bytesInOutput": 424
+          },
+          "node_modules/dom-helpers/esm/hasClass.js": {
+            "bytesInOutput": 290
+          },
+          "node_modules/dom-helpers/esm/removeClass.js": {
+            "bytesInOutput": 614
+          },
+          "node_modules/react-bootstrap/esm/ModalContext.js": {
+            "bytesInOutput": 222
+          },
+          "node_modules/react-bootstrap/esm/AbstractModalHeader.js": {
+            "bytesInOutput": 1055
+          },
+          "node_modules/react-bootstrap/esm/Nav.js": {
+            "bytesInOutput": 1750
+          },
+          "node_modules/react-bootstrap/esm/NavItem.js": {
+            "bytesInOutput": 636
+          },
+          "node_modules/react-bootstrap/esm/NavLink.js": {
+            "bytesInOutput": 903
           },
           "node_modules/react-bootstrap/esm/Navbar.js": {
             "bytesInOutput": 2423
@@ -16941,7 +16051,7 @@
             "bytesInOutput": 842
           },
           "node_modules/react-bootstrap/esm/Offcanvas.js": {
-            "bytesInOutput": 4210
+            "bytesInOutput": 4206
           },
           "node_modules/@restart/hooks/esm/useBreakpoint.js": {
             "bytesInOutput": 1900
@@ -16963,6 +16073,9 @@
           },
           "node_modules/react-bootstrap/esm/NavbarText.js": {
             "bytesInOutput": 651
+          },
+          "node_modules/react-bootstrap/esm/Row.js": {
+            "bytesInOutput": 1392
           },
           "node_modules/react-bootstrap/esm/Tab.js": {
             "bytesInOutput": 1095
@@ -16986,25 +16099,30 @@
             "bytesInOutput": 1664
           },
           "node_modules/react-bootstrap/esm/Table.js": {
-            "bytesInOutput": 1397
+            "bytesInOutput": 1388
+          },
+          "src/components/pure/TestTable.tsx": {
+            "bytesInOutput": 2707
+          },
+          "src/components/TestStatusBadge.tsx": {
+            "bytesInOutput": 1074
+          },
+          "src/components/pure/BuildLogViewer.tsx": {
+            "bytesInOutput": 7818
           },
           "src/components/pure/NavBar.tsx": {
             "bytesInOutput": 2919
           },
-          "src/components/TestStatusBadge.tsx": {
-            "bytesInOutput": 1074
+          "src/App.scss": {
+            "bytesInOutput": 0
           }
         },
-        "bytes": 245362
+        "bytes": 246260
       },
       "testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/web/core/chunk-BOANK7RL.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-7XCSWEIO.mjs",
+            "path": "testeranto/bundles/web/core/chunk-AZZHJNSU.mjs",
             "kind": "import-statement"
           },
           {
@@ -17030,33 +16148,9 @@
             "bytesInOutput": 1093
           }
         },
-        "bytes": 5418
+        "bytes": 5369
       },
-      "testeranto/bundles/web/core/chunk-BOANK7RL.mjs": {
-        "imports": [
-          {
-            "path": "testeranto/bundles/web/core/chunk-7XCSWEIO.mjs",
-            "kind": "import-statement"
-          },
-          {
-            "path": "testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs",
-            "kind": "import-statement"
-          }
-        ],
-        "exports": [
-          "web_default"
-        ],
-        "inputs": {
-          "node_modules/testeranto-react/src/react-dom/component/web.ts": {
-            "bytesInOutput": 270
-          },
-          "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
-            "bytesInOutput": 2409
-          }
-        },
-        "bytes": 3091
-      },
-      "testeranto/bundles/web/core/chunk-7XCSWEIO.mjs": {
+      "testeranto/bundles/web/core/chunk-AZZHJNSU.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs",
@@ -17067,11 +16161,10 @@
           "Link",
           "MemoryRouter",
           "assert",
-          "require_client",
           "require_react",
           "require_react_dom",
           "useLocation",
-          "useNavigate"
+          "web_default"
         ],
         "inputs": {
           "node_modules/react/cjs/react.development.js": {
@@ -17095,8 +16188,14 @@
           "node_modules/react-dom/client.js": {
             "bytesInOutput": 837
           },
+          "node_modules/testeranto-react/src/react-dom/component/web.ts": {
+            "bytesInOutput": 270
+          },
+          "node_modules/testeranto-react/src/react-dom/component/dynamic.ts": {
+            "bytesInOutput": 2409
+          },
           "node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs": {
-            "bytesInOutput": 74709
+            "bytesInOutput": 74765
           },
           "node_modules/react-router/dist/development/index.mjs": {
             "bytesInOutput": 61
@@ -17105,7 +16204,7 @@
             "bytesInOutput": 133877
           }
         },
-        "bytes": 1221627
+        "bytes": 1224558
       },
       "testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs": {
         "imports": [],
@@ -17243,159 +16342,6 @@
           }
         },
         "bytes": 3521968
-      },
-      "testeranto/bundles/web/core/src/components/pure/TestPageView.test/index.css": {
-        "imports": [
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28134, 182.5, 254%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%28255, 255, 255, 0.25%29'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%285.2, 44, 101.2%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28109.8, 168, 253.8%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e",
-            "kind": "url-token",
-            "external": true
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Thin-YWDNVG6M.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Light-WKN65Y2C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Regular-DT6EKZ3S.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Medium-ZC4DWL7C.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Bold-R524Q5BH.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-ExtraBold-C6GRMYVT.ttf",
-            "kind": "url-token"
-          },
-          {
-            "path": "testeranto/bundles/web/core/MPLUSRounded1c-Black-O75GP5JI.ttf",
-            "kind": "url-token"
-          }
-        ],
-        "inputs": {
-          "src/App.scss": {
-            "bytesInOutput": 280075
-          }
-        },
-        "bytes": 280291
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.css": {
         "imports": [

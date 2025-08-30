@@ -99,7 +99,8 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             <span className="me-2">📊</span>
             {isExpanded && 'Process Manager'}
           </Nav.Link>
-          <Nav.Link
+
+          {/* <Nav.Link
             as={NavLink}
             to="/settings"
             className={`${location.pathname === '/settings' ? 'active' : ''} text-truncate d-flex align-items-center`}
@@ -108,7 +109,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           >
             <span className="me-2">⚙️</span>
             {isExpanded && 'Settings'}
-          </Nav.Link>
+          </Nav.Link> */}
         </Nav>
 
         <div className="p-3 border-top text-center mt-auto">

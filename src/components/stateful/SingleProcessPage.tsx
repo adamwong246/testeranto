@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { SingleProcessView } from "../pure/SingleProcessView";
 import { Process } from "../pure/ProcessManagerView";
+import { useWebSocket } from '../../App';
 
 export const SingleProcessPage: React.FC = () => {
   const [process, setProcess] = useState<Process | null>(null);
-  const [ws, setWs] = useState<WebSocket | null>(null);
+  const ws = useWebSocket();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { processId } = useParams<{ processId: string }>();
 
-  // Connect to WebSocket
+  // Handle WebSocket messages
   useEffect(() => {
-    const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${wsProtocol}//${window.location.host}`;
-    const websocket = new WebSocket(wsUrl);
-    setWs(websocket);
+    if (!ws) return;
 
     // Set a timeout to handle cases where we don't get a response
     const timeoutId = setTimeout(() => {
@@ -26,26 +23,6 @@ export const SingleProcessPage: React.FC = () => {
         setProcess(null);
       }
     }, 3000);
-
-    // Request specific process when connected
-    websocket.onopen = () => {
-      setLoading(true);
-      if (processId) {
-        websocket.send(
-          JSON.stringify({
-            type: "getProcess",
-            processId,
-          })
-        );
-      }
-    };
-
-    websocket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-      setLoading(false);
-      setProcess(null);
-      clearTimeout(timeoutId);
-    };
 
     const handleMessage = (event: MessageEvent) => {
       try {
@@ -104,14 +81,24 @@ export const SingleProcessPage: React.FC = () => {
       }
     };
 
-    websocket.addEventListener("message", handleMessage);
+    ws.addEventListener("message", handleMessage);
+
+    // Request specific process when connected
+    if (ws.readyState === WebSocket.OPEN && processId) {
+      setLoading(true);
+      ws.send(
+        JSON.stringify({
+          type: "getProcess",
+          processId,
+        })
+      );
+    }
 
     return () => {
-      websocket.removeEventListener("message", handleMessage);
-      websocket.close();
+      ws.removeEventListener("message", handleMessage);
       clearTimeout(timeoutId);
     };
-  }, [processId]);
+  }, [ws, processId]);
 
   // Try to find the process in the global state if WebSocket doesn't respond
   useEffect(() => {

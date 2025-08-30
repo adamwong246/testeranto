@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Badge, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useWebSocket } from '../../App';
 
 export interface Process {
   processId: string;
@@ -31,20 +32,18 @@ export const ProcessManagerView: React.FC<ProcessManagerViewProps> = ({
 }) => {
   const navigate = useNavigate();
   const [selectedProcess, setSelectedProcess] = useState<Process | null>(null);
-  const [ws, setWs] = useState<WebSocket | null>(null);
+  // Use the centralized WebSocket from App context
+  const ws = useWebSocket();
   const [processLogs, setProcessLogs] = useState<string[]>([]);
   const [autoScroll, setAutoScroll] = useState(true);
   const logsContainerRef = useRef<HTMLDivElement>(null);
   const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(false);
 
-  // Set up WebSocket connection
+  // Handle WebSocket messages for the selected process
   useEffect(() => {
-    const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${wsProtocol}//${window.location.host}`;
-    const websocket = new WebSocket(wsUrl);
-    setWs(websocket);
-
-    websocket.onmessage = (event) => {
+    if (!ws) return;
+    
+    const handleMessage = (event: MessageEvent) => {
       try {
         const data = JSON.parse(event.data);
         // Handle process data response
@@ -76,10 +75,12 @@ export const ProcessManagerView: React.FC<ProcessManagerViewProps> = ({
       }
     };
 
+    ws.addEventListener('message', handleMessage);
+    
     return () => {
-      websocket.close();
+      ws.removeEventListener('message', handleMessage);
     };
-  }, [selectedProcess]);
+  }, [ws, selectedProcess]);
 
   // Request process data when selected
   useEffect(() => {

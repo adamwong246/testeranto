@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ReactElement, useState, useMemo, useEffect } from "react";
+
+import React, { ReactElement, useState, useEffect } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useWebSocket } from '../../App';
 import {
   RuntimeName,
   STANDARD_LOGS,
@@ -121,7 +123,6 @@ export const TestPageView = ({
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastVariant, setToastVariant] = useState<'success' | 'danger'>('success');
-  const [ws, setWs] = useState<WebSocket | null>(null);
   const [expandedSections, setExpandedSections] = useState({
     standardLogs: true,
     runtimeLogs: true,
@@ -172,17 +173,8 @@ export const TestPageView = ({
     }
   }, [logs]);
 
-  // Set up WebSocket connection
-  useEffect(() => {
-    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${wsProtocol}//${window.location.host}`;
-    const websocket = new WebSocket(wsUrl);
-    setWs(websocket);
-
-    return () => {
-      websocket.close();
-    };
-  }, []);
+  // Use the centralized WebSocket from App context
+  const ws = useWebSocket();
   const [activeTab, setActiveTab] = React.useState("tests.json");
   const [selectedFile, setSelectedFile] = useState<{
     path: string;
@@ -571,9 +563,8 @@ export const TestPageView = ({
                   command += ` --message "${customMessage}"`;
                 }
 
-                // Send command to server via WebSocket
-                const ws = new WebSocket(`ws://${window.location.host}`);
-                ws.onopen = () => {
+                // Send command to server via the centralized WebSocket
+                if (ws && ws.readyState === WebSocket.OPEN) {
                   ws.send(JSON.stringify({
                     type: 'executeCommand',
                     command: command
@@ -582,19 +573,16 @@ export const TestPageView = ({
                   setToastVariant('success');
                   setShowToast(true);
                   setShowAiderModal(false);
-                  ws.close();
 
                   // Navigate to process manager page
                   setTimeout(() => {
                     navigate('/processes');
                   }, 1000);
-                };
-
-                ws.onerror = (error) => {
-                  setToastMessage('Failed to connect to server');
+                } else {
+                  setToastMessage('WebSocket connection not ready');
                   setToastVariant('danger');
                   setShowToast(true);
-                };
+                }
               } catch (err) {
                 console.error("WebSocket error:", err);
                 setToastMessage('Error preparing command');
@@ -670,57 +658,57 @@ export const TestPageView = ({
           </div>
 
           {/* Runtime Logs Section */}
-          {runtime && RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName] && 
-           Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).length > 0 && (
-            <div className="p-2">
-              <div
-                className="d-flex align-items-center text-muted mb-1"
-                style={{ cursor: 'pointer', fontSize: '0.875rem' }}
-                onClick={() => setExpandedSections(prev => ({ ...prev, runtimeLogs: !prev.runtimeLogs }))}
-              >
-                <i className={`bi bi-chevron-${expandedSections.runtimeLogs ? 'down' : 'right'} me-1`}></i>
-                <span>Runtime Logs</span>
-              </div>
-              {expandedSections.runtimeLogs && (
-                <div>
-                  {Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).map((logName) => {
-                    const logContent = logs ? logs[logName] : undefined;
-                    const exists = logContent !== undefined &&
-                      ((typeof logContent === "string" && logContent.trim() !== "") ||
-                        (typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0));
-
-                    return (
-                      <FileTreeItem
-                        key={logName}
-                        name={logName}
-                        isFile={true}
-                        level={1}
-                        isSelected={activeTab === logName}
-                        exists={exists}
-                        onClick={() => {
-                          if (exists) {
-                            setActiveTab(logName);
-                            setSelectedFile({
-                              path: logName,
-                              content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
-                              language: logName.endsWith(".json") ? "json" : "plaintext",
-                            });
-                          } else {
-                            setActiveTab(logName);
-                            setSelectedFile({
-                              path: logName,
-                              content: `// ${logName} not found or empty\nThis file was not generated during the test run.`,
-                              language: "plaintext",
-                            });
-                          }
-                        }}
-                      />
-                    );
-                  })}
+          {runtime && RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName] &&
+            Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).length > 0 && (
+              <div className="p-2">
+                <div
+                  className="d-flex align-items-center text-muted mb-1"
+                  style={{ cursor: 'pointer', fontSize: '0.875rem' }}
+                  onClick={() => setExpandedSections(prev => ({ ...prev, runtimeLogs: !prev.runtimeLogs }))}
+                >
+                  <i className={`bi bi-chevron-${expandedSections.runtimeLogs ? 'down' : 'right'} me-1`}></i>
+                  <span>Runtime Logs</span>
                 </div>
-              )}
-            </div>
-          )}
+                {expandedSections.runtimeLogs && (
+                  <div>
+                    {Object.values(RUNTIME_SPECIFIC_LOGS[runtime as RuntimeName]).map((logName) => {
+                      const logContent = logs ? logs[logName] : undefined;
+                      const exists = logContent !== undefined &&
+                        ((typeof logContent === "string" && logContent.trim() !== "") ||
+                          (typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0));
+
+                      return (
+                        <FileTreeItem
+                          key={logName}
+                          name={logName}
+                          isFile={true}
+                          level={1}
+                          isSelected={activeTab === logName}
+                          exists={exists}
+                          onClick={() => {
+                            if (exists) {
+                              setActiveTab(logName);
+                              setSelectedFile({
+                                path: logName,
+                                content: typeof logContent === "string" ? logContent : JSON.stringify(logContent, null, 2),
+                                language: logName.endsWith(".json") ? "json" : "plaintext",
+                              });
+                            } else {
+                              setActiveTab(logName);
+                              setSelectedFile({
+                                path: logName,
+                                content: `// ${logName} not found or empty\nThis file was not generated during the test run.`,
+                                language: "plaintext",
+                              });
+                            }
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
 
           {/* Source Files Section */}
           {logs && logs.source_files && (
@@ -823,8 +811,8 @@ export const TestPageView = ({
                                   <div className="text-danger fw-bold">{error.text}</div>
                                   {error.location && (
                                     <div className="small text-muted">
-                                      File: {error.location.file} 
-                                      Line: {error.location.line} 
+                                      File: {error.location.file}
+                                      Line: {error.location.line}
                                       Column: {error.location.column}
                                     </div>
                                   )}
@@ -852,8 +840,8 @@ export const TestPageView = ({
                                   <div className="text-warning fw-bold">{warning.text}</div>
                                   {warning.location && (
                                     <div className="small text-muted">
-                                      File: {warning.location.file} 
-                                      Line: {warning.location.line} 
+                                      File: {warning.location.file}
+                                      Line: {warning.location.line}
                                       Column: {warning.location.column}
                                     </div>
                                   )}
@@ -872,12 +860,12 @@ export const TestPageView = ({
                             </ul>
                           </div>
                         )}
-                        {(!buildData.errors || buildData.errors.length === 0) && 
-                         (!buildData.warnings || buildData.warnings.length === 0) && (
-                          <div className="alert alert-success">
-                            No build errors or warnings
-                          </div>
-                        )}
+                        {(!buildData.errors || buildData.errors.length === 0) &&
+                          (!buildData.warnings || buildData.warnings.length === 0) && (
+                            <div className="alert alert-success">
+                              No build errors or warnings
+                            </div>
+                          )}
                       </>
                     );
                   } catch (e) {
@@ -890,13 +878,13 @@ export const TestPageView = ({
                 })()}
               </div>
             )}
-            {selectedFile?.path.endsWith(".json") && 
-             !selectedFile.path.endsWith("tests.json") && 
-             !selectedFile.path.endsWith("build.json") && (
-              <pre className="bg-light p-2 small">
-                <code>{selectedFile.content}</code>
-              </pre>
-            )}
+            {selectedFile?.path.endsWith(".json") &&
+              !selectedFile.path.endsWith("tests.json") &&
+              !selectedFile.path.endsWith("build.json") && (
+                <pre className="bg-light p-2 small">
+                  <code>{selectedFile.content}</code>
+                </pre>
+              )}
             {selectedFile?.path.includes("source_files") && (
               <div>
                 <div className="mb-2 small text-muted">

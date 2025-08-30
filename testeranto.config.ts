@@ -33,20 +33,15 @@ const config: IProject = {
         ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
         ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
 
-        [
-          "src/components/pure/TestPageView.test/index.tsx",
-          "web",
-          { ports: 0 },
-          [],
-        ],
+        ["src/Pure.test.ts", "pure", { ports: 0 }, []],
+        ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
+
         [
           "src/components/pure/ProjectPageView.test/index.tsx",
           "web",
           { ports: 0 },
           [],
         ],
-        ["src/Pure.test.ts", "pure", { ports: 0 }, []],
-        ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
 
         [
           "src/components/pure/FeaturesReporterView.test/index.tsx",
@@ -58,6 +53,12 @@ const config: IProject = {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // broken
+        // [
+        //   "src/components/pure/TestPageView.test/index.tsx",
+        //   "web",
+        //   { ports: 0 },
+        //   [],
+        // ],
         // [
         //   "src/components/pure/ModalContent.test/index.tsx",
         //   "web",

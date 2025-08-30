@@ -1,26 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProcessManagerView, Process } from '../pure/ProcessManagerView';
-import { AppFrame } from '../pure/AppFrame';
+import { useWebSocket } from '../../App';
 
 export const ProcessManagerPage: React.FC = () => {
   const [processes, setProcesses] = useState<Process[]>([]);
-  const [ws, setWs] = useState<WebSocket | null>(null);
+  const ws = useWebSocket();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Connect to WebSocket
+  // Handle WebSocket messages
   useEffect(() => {
-    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${wsProtocol}//${window.location.host}`;
-    const websocket = new WebSocket(wsUrl);
-    setWs(websocket);
-
-    // Request current processes when connected
-    websocket.onopen = () => {
-      setLoading(true);
-      websocket.send(JSON.stringify({ type: 'getRunningProcesses' }));
-    };
+    if (!ws) return;
 
     const handleMessage = (event: MessageEvent) => {
       try {
@@ -67,13 +58,18 @@ export const ProcessManagerPage: React.FC = () => {
       }
     };
 
-    websocket.addEventListener('message', handleMessage);
+    ws.addEventListener('message', handleMessage);
+
+    // Request current processes when connected
+    if (ws.readyState === WebSocket.OPEN) {
+      setLoading(true);
+      ws.send(JSON.stringify({ type: 'getRunningProcesses' }));
+    }
 
     return () => {
-      websocket.removeEventListener('message', handleMessage);
-      websocket.close();
+      ws.removeEventListener('message', handleMessage);
     };
-  }, []);
+  }, [ws]);
 
   const handleRefresh = useCallback(() => {
     if (ws && ws.readyState === WebSocket.OPEN) {

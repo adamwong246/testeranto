@@ -785,7 +785,7 @@
             }
             return children;
           }
-          function createContext14(defaultValue) {
+          function createContext15(defaultValue) {
             var context3 = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1071,7 +1071,7 @@
             }
             return dispatcher;
           }
-          function useContext24(Context2) {
+          function useContext25(Context2) {
             var dispatcher = resolveDispatcher();
             {
               if (Context2._context !== void 0) {
@@ -1085,7 +1085,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState32(initialState) {
+          function useState34(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1093,11 +1093,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init2);
           }
-          function useRef27(initialValue) {
+          function useRef28(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect37(create2, deps) {
+          function useEffect39(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1113,7 +1113,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo20(create2, deps) {
+          function useMemo19(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create2, deps);
           }
@@ -1865,7 +1865,7 @@
           exports.Suspense = REACT_SUSPENSE_TYPE;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext14;
+          exports.createContext = createContext15;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -1876,18 +1876,18 @@
           exports.startTransition = startTransition3;
           exports.unstable_act = act;
           exports.useCallback = useCallback20;
-          exports.useContext = useContext24;
+          exports.useContext = useContext25;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect37;
+          exports.useEffect = useEffect39;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect6;
-          exports.useMemo = useMemo20;
+          exports.useMemo = useMemo19;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef27;
-          exports.useState = useState32;
+          exports.useRef = useRef28;
+          exports.useState = useState34;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2383,9 +2383,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React125 = require_react();
+          var React126 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React125.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React126.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3990,7 +3990,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React125.Children.forEach(props.children, function(child) {
+                  React126.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12437,7 +12437,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React125.Component().refs;
+          var emptyRefsObject = new React126.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23609,7 +23609,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React125 = require_react();
+          var React126 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23635,7 +23635,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React125.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React126.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -25399,7 +25399,7 @@
   });
 
   // src/App.tsx
-  var import_react102 = __toESM(require_react(), 1);
+  var import_react103 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -33973,7 +33973,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const [showToast, setShowToast] = (0, import_react81.useState)(false);
     const [toastMessage, setToastMessage] = (0, import_react81.useState)("");
     const [toastVariant, setToastVariant] = (0, import_react81.useState)("success");
-    const [ws, setWs] = (0, import_react81.useState)(null);
     const [expandedSections, setExpandedSections] = (0, import_react81.useState)({
       standardLogs: true,
       runtimeLogs: true,
@@ -34015,15 +34014,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         setCustomMessage(logs["message.txt"]);
       }
     }, [logs]);
-    (0, import_react81.useEffect)(() => {
-      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${wsProtocol}//${window.location.host}`;
-      const websocket = new WebSocket(wsUrl);
-      setWs(websocket);
-      return () => {
-        websocket.close();
-      };
-    }, []);
+    const ws = useWebSocket();
     const [activeTab, setActiveTab] = import_react81.default.useState("tests.json");
     const [selectedFile, setSelectedFile] = (0, import_react81.useState)(null);
     const [selectedSourcePath, setSelectedSourcePath] = (0, import_react81.useState)(
@@ -34206,9 +34197,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             } else {
               command += ` --message "${customMessage}"`;
             }
-            const ws2 = new WebSocket(`ws://${window.location.host}`);
-            ws2.onopen = () => {
-              ws2.send(JSON.stringify({
+            if (ws && ws.readyState === WebSocket.OPEN) {
+              ws.send(JSON.stringify({
                 type: "executeCommand",
                 command
               }));
@@ -34216,16 +34206,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               setToastVariant("success");
               setShowToast(true);
               setShowAiderModal(false);
-              ws2.close();
               setTimeout(() => {
                 navigate("/processes");
               }, 1e3);
-            };
-            ws2.onerror = (error) => {
-              setToastMessage("Failed to connect to server");
+            } else {
+              setToastMessage("WebSocket connection not ready");
               setToastVariant("danger");
               setShowToast(true);
-            };
+            }
           } catch (err) {
             console.error("WebSocket error:", err);
             setToastMessage("Error preparing command");
@@ -34913,13 +34901,11 @@ This file was not generated during the test run.`,
     const [error, setError] = (0, import_react89.useState)(null);
     const [configs, setConfigs] = (0, import_react89.useState)({});
     const navigate = useNavigate();
-    const [ws, setWs] = (0, import_react89.useState)(null);
+    const ws = useWebSocket();
     (0, import_react89.useEffect)(() => {
-      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${wsProtocol}//${window.location.host}`;
-      const websocket = new WebSocket(wsUrl);
-      setWs(websocket);
-      websocket.onmessage = (event) => {
+      if (!ws)
+        return;
+      const handleMessage = (event) => {
         try {
           const data2 = JSON.parse(event.data);
           if (data2.type === "summaryUpdate") {
@@ -34929,13 +34915,11 @@ This file was not generated during the test run.`,
           console.error("Error parsing WebSocket message:", error2);
         }
       };
-      websocket.onerror = (error2) => {
-        console.error("WebSocket error:", error2);
-      };
+      ws.addEventListener("message", handleMessage);
       return () => {
-        websocket.close();
+        ws.removeEventListener("message", handleMessage);
       };
-    }, []);
+    }, [ws]);
     (0, import_react89.useEffect)(() => {
       const fetchProjects = async () => {
         try {
@@ -35044,17 +35028,6 @@ This file was not generated during the test run.`,
         },
         /* @__PURE__ */ import_react90.default.createElement("span", { className: "me-2" }, "\u{1F4CA}"),
         isExpanded && "Process Manager"
-      ), /* @__PURE__ */ import_react90.default.createElement(
-        Nav_default2.Link,
-        {
-          as: NavLink,
-          to: "/settings",
-          className: `${location2.pathname === "/settings" ? "active" : ""} text-truncate d-flex align-items-center`,
-          style: { width: "100%" },
-          title: "Settings"
-        },
-        /* @__PURE__ */ import_react90.default.createElement("span", { className: "me-2" }, "\u2699\uFE0F"),
-        isExpanded && "Settings"
       )),
       /* @__PURE__ */ import_react90.default.createElement("div", { className: "p-3 border-top text-center mt-auto" }, isExpanded ? /* @__PURE__ */ import_react90.default.createElement("small", { className: "text-muted" }, "made with \u2764\uFE0F and ", /* @__PURE__ */ import_react90.default.createElement("a", { href: "https://www.npmjs.com/package/testeranto" }, "testeranto")) : /* @__PURE__ */ import_react90.default.createElement("small", { className: "text-muted" }, "\u2764\uFE0F"))
     ), /* @__PURE__ */ import_react90.default.createElement("div", { className: "flex-grow-1 d-flex flex-column" }, /* @__PURE__ */ import_react90.default.createElement("main", { className: "flex-grow-1 p-4", style: { overflow: "auto" } }, /* @__PURE__ */ import_react90.default.createElement(Container_default, { fluid: true, className: "h-100" }, children))));
@@ -36448,17 +36421,15 @@ This file was not generated during the test run.`,
   }) => {
     const navigate = useNavigate();
     const [selectedProcess, setSelectedProcess] = (0, import_react98.useState)(null);
-    const [ws, setWs] = (0, import_react98.useState)(null);
+    const ws = useWebSocket();
     const [processLogs, setProcessLogs] = (0, import_react98.useState)([]);
     const [autoScroll, setAutoScroll] = (0, import_react98.useState)(true);
     const logsContainerRef = (0, import_react98.useRef)(null);
     const [isNavbarCollapsed, setIsNavbarCollapsed] = (0, import_react98.useState)(false);
     (0, import_react98.useEffect)(() => {
-      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${wsProtocol}//${window.location.host}`;
-      const websocket = new WebSocket(wsUrl);
-      setWs(websocket);
-      websocket.onmessage = (event) => {
+      if (!ws)
+        return;
+      const handleMessage = (event) => {
         try {
           const data2 = JSON.parse(event.data);
           if (data2.type === "processData" && selectedProcess && data2.processId === selectedProcess.processId) {
@@ -36476,10 +36447,11 @@ This file was not generated during the test run.`,
           console.error("Error parsing WebSocket message:", error);
         }
       };
+      ws.addEventListener("message", handleMessage);
       return () => {
-        websocket.close();
+        ws.removeEventListener("message", handleMessage);
       };
-    }, [selectedProcess]);
+    }, [ws, selectedProcess]);
     (0, import_react98.useEffect)(() => {
       if (selectedProcess && ws && ws.readyState === WebSocket.OPEN) {
         ws.send(
@@ -36694,18 +36666,12 @@ This file was not generated during the test run.`,
   // src/components/stateful/ProcessManagerPage.tsx
   var ProcessManagerPage = () => {
     const [processes, setProcesses] = (0, import_react99.useState)([]);
-    const [ws, setWs] = (0, import_react99.useState)(null);
+    const ws = useWebSocket();
     const [loading, setLoading] = (0, import_react99.useState)(false);
     const navigate = useNavigate();
     (0, import_react99.useEffect)(() => {
-      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${wsProtocol}//${window.location.host}`;
-      const websocket = new WebSocket(wsUrl);
-      setWs(websocket);
-      websocket.onopen = () => {
-        setLoading(true);
-        websocket.send(JSON.stringify({ type: "getRunningProcesses" }));
-      };
+      if (!ws)
+        return;
       const handleMessage = (event) => {
         try {
           const data2 = JSON.parse(event.data);
@@ -36743,12 +36709,15 @@ This file was not generated during the test run.`,
           setLoading(false);
         }
       };
-      websocket.addEventListener("message", handleMessage);
+      ws.addEventListener("message", handleMessage);
+      if (ws.readyState === WebSocket.OPEN) {
+        setLoading(true);
+        ws.send(JSON.stringify({ type: "getRunningProcesses" }));
+      }
       return () => {
-        websocket.removeEventListener("message", handleMessage);
-        websocket.close();
+        ws.removeEventListener("message", handleMessage);
       };
-    }, []);
+    }, [ws]);
     const handleRefresh = (0, import_react99.useCallback)(() => {
       if (ws && ws.readyState === WebSocket.OPEN) {
         setLoading(true);
@@ -36782,41 +36751,144 @@ This file was not generated during the test run.`,
   };
 
   // src/components/stateful/SingleProcessPage.tsx
+  var import_react101 = __toESM(require_react(), 1);
+
+  // src/components/pure/SingleProcessView.tsx
   var import_react100 = __toESM(require_react(), 1);
+  var SingleProcessView = ({
+    process: process2,
+    onBack,
+    loading,
+    onKillProcess
+  }) => {
+    const terminalRef = (0, import_react100.useRef)(null);
+    const [inputEnabled, setInputEnabled] = (0, import_react100.useState)(false);
+    const ws = useWebSocket();
+    (0, import_react100.useEffect)(() => {
+      setInputEnabled(process2?.status === "running");
+    }, [process2?.status]);
+    const handleInput = (data2) => {
+      if (ws && ws.readyState === WebSocket.OPEN && process2?.status === "running") {
+        console.log("Sending stdin:", data2);
+        ws.send(JSON.stringify({
+          type: "stdin",
+          processId: process2.processId,
+          data: data2
+        }));
+      } else {
+        console.log("Cannot send stdin - conditions not met:", {
+          wsExists: !!ws,
+          wsReady: ws?.readyState,
+          processStatus: process2?.status
+        });
+      }
+    };
+    const getStatusBadge = (process3) => {
+      switch (process3.status) {
+        case "running":
+          return /* @__PURE__ */ import_react100.default.createElement(Badge_default, { bg: "success" }, "Running");
+        case "exited":
+          return /* @__PURE__ */ import_react100.default.createElement(Badge_default, { bg: "secondary" }, "Exited (", process3.exitCode, ")");
+        case "error":
+          return /* @__PURE__ */ import_react100.default.createElement(Badge_default, { bg: "danger" }, "Error");
+        default:
+          return /* @__PURE__ */ import_react100.default.createElement(Badge_default, { bg: "warning" }, "Unknown");
+      }
+    };
+    if (loading) {
+      return /* @__PURE__ */ import_react100.default.createElement("div", null, "Initializing terminal...");
+    }
+    if (!process2) {
+      return /* @__PURE__ */ import_react100.default.createElement(Alert_default, { variant: "warning" }, "Process not found or not running. The process may have completed.");
+    }
+    return /* @__PURE__ */ import_react100.default.createElement("div", { style: { height: "100%", display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react100.default.createElement("div", { style: { flex: 1, display: "flex", overflow: "hidden" } }, /* @__PURE__ */ import_react100.default.createElement(
+      "div",
+      {
+        className: "bg-light border-end",
+        style: {
+          width: "300px",
+          minWidth: "300px",
+          flexShrink: 0,
+          overflowY: "auto"
+        }
+      },
+      /* @__PURE__ */ import_react100.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react100.default.createElement("strong", null, "Command:"), /* @__PURE__ */ import_react100.default.createElement("code", { className: "bg-white p-2 rounded d-block mt-1", style: { fontSize: "0.8rem" } }, process2.command)), /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react100.default.createElement("strong", null, "Status:"), /* @__PURE__ */ import_react100.default.createElement("div", { className: "mt-1" }, getStatusBadge(process2))), /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react100.default.createElement("strong", null, "PID:"), /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-muted" }, process2.pid || "N/A")), /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react100.default.createElement("strong", null, "Started:"), /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-muted" }, new Date(process2.timestamp).toLocaleString())), process2.exitCode !== void 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-2" }, /* @__PURE__ */ import_react100.default.createElement("strong", null, "Exit Code:"), /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-muted" }, process2.exitCode)), process2.error && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react100.default.createElement("strong", { className: "text-danger" }, "Error:"), /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-danger small mt-1" }, process2.error)))
+    ), /* @__PURE__ */ import_react100.default.createElement("div", { style: { flex: 1, display: "flex", flexDirection: "column", minHeight: 0 } }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "d-flex justify-content-between align-items-center p-3 border-bottom bg-white", style: { flexShrink: 0 } }, /* @__PURE__ */ import_react100.default.createElement("small", { className: "text-muted" }, process2.logs?.length || 0, " lines")), /* @__PURE__ */ import_react100.default.createElement(
+      "div",
+      {
+        className: "bg-dark text-light flex-grow-1",
+        style: {
+          overflowY: "auto",
+          fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+          fontSize: "14px",
+          lineHeight: "1.4",
+          padding: "1rem"
+        },
+        ref: (el) => {
+          if (el) {
+            el.scrollTop = el.scrollHeight;
+          }
+        }
+      },
+      process2.logs && process2.logs.length > 0 ? /* @__PURE__ */ import_react100.default.createElement("pre", { className: "mb-0", style: {
+        whiteSpace: "pre-wrap",
+        wordBreak: "break-word",
+        backgroundColor: "transparent",
+        border: "none",
+        color: "inherit"
+      } }, process2.logs.join("")) : /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-muted text-center py-4" }, /* @__PURE__ */ import_react100.default.createElement("i", null, "No output yet"))
+    ))), inputEnabled && /* @__PURE__ */ import_react100.default.createElement("div", { className: "border-top bg-white p-3", style: { flexShrink: 0 } }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react100.default.createElement(
+      "input",
+      {
+        type: "text",
+        className: "form-control",
+        placeholder: "Type input and press Enter...",
+        onKeyPress: (e) => {
+          if (e.key === "Enter") {
+            const target = e.target;
+            const inputValue = target.value;
+            if (inputValue.trim()) {
+              handleInput(inputValue + "\n");
+              target.value = "";
+            }
+          }
+        },
+        autoFocus: true
+      }
+    ), /* @__PURE__ */ import_react100.default.createElement(
+      "button",
+      {
+        className: "btn btn-primary",
+        type: "button",
+        onClick: () => {
+          const input = document.querySelector("input");
+          const inputValue = input.value;
+          if (inputValue.trim()) {
+            handleInput(inputValue + "\n");
+            input.value = "";
+          }
+        }
+      },
+      "Send"
+    )), /* @__PURE__ */ import_react100.default.createElement("small", { className: "text-muted" }, "\u{1F4A1} Press Enter to send input to the process")), !inputEnabled && process2.status === "running" && /* @__PURE__ */ import_react100.default.createElement(Alert_default, { variant: "info", className: "m-3", style: { flexShrink: 0 } }, /* @__PURE__ */ import_react100.default.createElement(Alert_default.Heading, { className: "h6" }, "Input Disabled"), /* @__PURE__ */ import_react100.default.createElement("small", null, "Terminal input is temporarily unavailable. Try refreshing the page.")), process2.status !== "running" && /* @__PURE__ */ import_react100.default.createElement(Alert_default, { variant: "secondary", className: "m-3", style: { flexShrink: 0 } }, /* @__PURE__ */ import_react100.default.createElement(Alert_default.Heading, { className: "h6" }, "Read-only Mode"), /* @__PURE__ */ import_react100.default.createElement("small", null, "This process is no longer running. You can view the output logs but cannot send input.")));
+  };
+
+  // src/components/stateful/SingleProcessPage.tsx
   var SingleProcessPage = () => {
-    const [process2, setProcess] = (0, import_react100.useState)(null);
-    const [ws, setWs] = (0, import_react100.useState)(null);
-    const [loading, setLoading] = (0, import_react100.useState)(true);
+    const [process2, setProcess] = (0, import_react101.useState)(null);
+    const ws = useWebSocket();
+    const [loading, setLoading] = (0, import_react101.useState)(true);
     const navigate = useNavigate();
     const { processId } = useParams();
-    (0, import_react100.useEffect)(() => {
-      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${wsProtocol}//${window.location.host}`;
-      const websocket = new WebSocket(wsUrl);
-      setWs(websocket);
+    (0, import_react101.useEffect)(() => {
+      if (!ws)
+        return;
       const timeoutId = setTimeout(() => {
         if (loading) {
           setLoading(false);
           setProcess(null);
         }
       }, 3e3);
-      websocket.onopen = () => {
-        setLoading(true);
-        if (processId) {
-          websocket.send(
-            JSON.stringify({
-              type: "getProcess",
-              processId
-            })
-          );
-        }
-      };
-      websocket.onerror = (error) => {
-        console.error("WebSocket error:", error);
-        setLoading(false);
-        setProcess(null);
-        clearTimeout(timeoutId);
-      };
       const handleMessage = (event) => {
         try {
           const data2 = JSON.parse(event.data);
@@ -36858,19 +36930,27 @@ This file was not generated during the test run.`,
           clearTimeout(timeoutId);
         }
       };
-      websocket.addEventListener("message", handleMessage);
+      ws.addEventListener("message", handleMessage);
+      if (ws.readyState === WebSocket.OPEN && processId) {
+        setLoading(true);
+        ws.send(
+          JSON.stringify({
+            type: "getProcess",
+            processId
+          })
+        );
+      }
       return () => {
-        websocket.removeEventListener("message", handleMessage);
-        websocket.close();
+        ws.removeEventListener("message", handleMessage);
         clearTimeout(timeoutId);
       };
-    }, [processId]);
-    (0, import_react100.useEffect)(() => {
+    }, [ws, processId]);
+    (0, import_react101.useEffect)(() => {
     }, []);
-    const handleBack = (0, import_react100.useCallback)(() => {
+    const handleBack = (0, import_react101.useCallback)(() => {
       navigate("/processes");
     }, [navigate]);
-    const handleKillProcess = (0, import_react100.useCallback)(
+    const handleKillProcess = (0, import_react101.useCallback)(
       (processId2) => {
         if (ws && ws.readyState === WebSocket.OPEN) {
           console.log("Sending killProcess for:", processId2);
@@ -36889,8 +36969,8 @@ This file was not generated during the test run.`,
       },
       [ws]
     );
-    return /* @__PURE__ */ import_react100.default.createElement(
-      void 0,
+    return /* @__PURE__ */ import_react101.default.createElement(
+      SingleProcessView,
       {
         process: process2,
         onBack: handleBack,
@@ -36902,10 +36982,10 @@ This file was not generated during the test run.`,
   };
 
   // src/components/stateful/SettingsPage.tsx
-  var import_react101 = __toESM(require_react(), 1);
+  var import_react102 = __toESM(require_react(), 1);
   var SettingsPage = () => {
-    const [theme, setTheme] = (0, import_react101.useState)(localStorage.getItem("theme") || "system");
-    (0, import_react101.useEffect)(() => {
+    const [theme, setTheme] = (0, import_react102.useState)(localStorage.getItem("theme") || "system");
+    (0, import_react102.useEffect)(() => {
       let themeToApply = theme;
       if (theme === "system") {
         themeToApply = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
@@ -36922,7 +37002,7 @@ This file was not generated during the test run.`,
       }
       document.documentElement.setAttribute("data-bs-theme", themeToApply);
     };
-    return /* @__PURE__ */ import_react101.default.createElement(Container_default, null, /* @__PURE__ */ import_react101.default.createElement(Row_default, { className: "justify-content-center" }, /* @__PURE__ */ import_react101.default.createElement(Col_default, { lg: 8 }, /* @__PURE__ */ import_react101.default.createElement(Card_default, { className: "theme-card" }, /* @__PURE__ */ import_react101.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react101.default.createElement(Form_default, null, /* @__PURE__ */ import_react101.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react101.default.createElement(Form_default.Label, { className: "h6 mb-3" }, "Theme"), /* @__PURE__ */ import_react101.default.createElement("div", { className: "d-flex flex-wrap gap-3" }, /* @__PURE__ */ import_react101.default.createElement(
+    return /* @__PURE__ */ import_react102.default.createElement(Container_default, null, /* @__PURE__ */ import_react102.default.createElement(Row_default, { className: "justify-content-center" }, /* @__PURE__ */ import_react102.default.createElement(Col_default, { lg: 8 }, /* @__PURE__ */ import_react102.default.createElement(Card_default, { className: "theme-card" }, /* @__PURE__ */ import_react102.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react102.default.createElement(Form_default, null, /* @__PURE__ */ import_react102.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react102.default.createElement(Form_default.Label, { className: "h6 mb-3" }, "Theme"), /* @__PURE__ */ import_react102.default.createElement("div", { className: "d-flex flex-wrap gap-3" }, /* @__PURE__ */ import_react102.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -36934,7 +37014,7 @@ This file was not generated during the test run.`,
         onChange: handleThemeChange,
         className: "theme-option"
       }
-    ), /* @__PURE__ */ import_react101.default.createElement(
+    ), /* @__PURE__ */ import_react102.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -36946,7 +37026,7 @@ This file was not generated during the test run.`,
         onChange: handleThemeChange,
         className: "theme-option"
       }
-    ), /* @__PURE__ */ import_react101.default.createElement(
+    ), /* @__PURE__ */ import_react102.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -36962,8 +37042,32 @@ This file was not generated during the test run.`,
   };
 
   // src/App.tsx
+  var WebSocketContext = (0, import_react103.createContext)(null);
+  var useWebSocket = () => {
+    return (0, import_react103.useContext)(WebSocketContext);
+  };
   var App = () => {
-    return /* @__PURE__ */ import_react102.default.createElement(HashRouter, null, /* @__PURE__ */ import_react102.default.createElement(AppFrame, null, /* @__PURE__ */ import_react102.default.createElement(Routes, null, /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react102.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react102.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react102.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react102.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react102.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react102.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react102.default.createElement(TextEditorPage, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/processes", element: /* @__PURE__ */ import_react102.default.createElement(ProcessManagerPage, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react102.default.createElement(SingleProcessPage, null) }), /* @__PURE__ */ import_react102.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react102.default.createElement(SettingsPage, null) }))));
+    const [ws, setWs] = (0, import_react103.useState)(null);
+    (0, import_react103.useEffect)(() => {
+      const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const wsUrl = `${wsProtocol}//${window.location.host}`;
+      const websocket = new WebSocket(wsUrl);
+      websocket.onopen = () => {
+        console.log("WebSocket connected");
+        setWs(websocket);
+      };
+      websocket.onclose = () => {
+        console.log("WebSocket disconnected");
+        setWs(null);
+      };
+      websocket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+      return () => {
+        websocket.close();
+      };
+    }, []);
+    return /* @__PURE__ */ import_react103.default.createElement(WebSocketContext.Provider, { value: ws }, /* @__PURE__ */ import_react103.default.createElement(HashRouter, null, /* @__PURE__ */ import_react103.default.createElement(AppFrame, null, /* @__PURE__ */ import_react103.default.createElement(Routes, null, /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react103.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react103.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react103.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react103.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react103.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react103.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react103.default.createElement(TextEditorPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/processes", element: /* @__PURE__ */ import_react103.default.createElement(ProcessManagerPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react103.default.createElement(SingleProcessPage, null) }), /* @__PURE__ */ import_react103.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react103.default.createElement(SettingsPage, null) })))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -36971,9 +37075,9 @@ This file was not generated during the test run.`,
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react102.default.createElement(App));
+          root.render(import_react103.default.createElement(App));
         } else {
-          import_client.default.render(import_react102.default.createElement(App), rootElement);
+          import_client.default.render(import_react103.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -36985,7 +37089,7 @@ This file was not generated during the test run.`,
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react102.default;
+    window.React = import_react103.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);

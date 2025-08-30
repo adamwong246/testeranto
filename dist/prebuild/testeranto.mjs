@@ -3261,10 +3261,15 @@ import(f).then(async (module) => {
     console.error("no project found for", testName, "in testeranto.config.ts");
     process.exit(-1);
   }
-  fs13.writeFileSync(
-    `${process.cwd()}/testeranto/projects.json`,
-    JSON.stringify(Object.keys(bigConfig.projects), null, 2)
-  );
+  try {
+    fs13.writeFileSync(
+      `${process.cwd()}/testeranto/projects.json`,
+      JSON.stringify(Object.keys(bigConfig.projects), null, 2)
+    );
+  } catch (e) {
+    console.error("there was a problem");
+    console.error(e);
+  }
   const rawConfig = bigConfig.projects[testName];
   if (!rawConfig) {
     console.error(`Project "${testName}" does not exist in the configuration.`);

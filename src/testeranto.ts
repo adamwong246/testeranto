@@ -38,10 +38,15 @@ import(f).then(async (module) => {
     process.exit(-1);
   }
 
-  fs.writeFileSync(
-    `${process.cwd()}/testeranto/projects.json`,
-    JSON.stringify(Object.keys(bigConfig.projects), null, 2)
-  );
+  try {
+    fs.writeFileSync(
+      `${process.cwd()}/testeranto/projects.json`,
+      JSON.stringify(Object.keys(bigConfig.projects), null, 2)
+    );
+  } catch (e) {
+    console.error("there was a problem");
+    console.error(e);
+  }
 
   const rawConfig: ITestconfig = bigConfig.projects[testName];
 
