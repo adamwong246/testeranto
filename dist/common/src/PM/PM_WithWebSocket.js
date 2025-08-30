@@ -34,6 +34,7 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
                 try {
                     const message = JSON.parse(data.toString());
                     if (message.type === "executeCommand") {
+                        const executeMessage = message;
                         // Validate the command starts with 'aider'
                         if (message.command && message.command.trim().startsWith("aider")) {
                             console.log(`Executing command: ${message.command}`);
@@ -128,6 +129,7 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
                         }
                     }
                     else if (message.type === "getRunningProcesses") {
+                        const getRunningMessage = message;
                         // Send list of all processes (both running and completed) with their full logs
                         const processes = Array.from(this.allProcesses.entries()).map(([id, procInfo]) => ({
                             processId: id,
@@ -148,6 +150,7 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
                         }));
                     }
                     else if (message.type === "getProcess") {
+                        const getProcessMessage = message;
                         // Send specific process with full logs
                         const processId = message.processId;
                         const procInfo = this.allProcesses.get(processId);
@@ -169,6 +172,7 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
                         }
                     }
                     else if (message.type === "stdin") {
+                        const stdinMessage = message;
                         // Handle stdin input for a process
                         const processId = message.processId;
                         const data = message.data;
@@ -186,6 +190,7 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
                         }
                     }
                     else if (message.type === "killProcess") {
+                        const killProcessMessage = message;
                         // Handle killing a process
                         const processId = message.processId;
                         console.log("Received killProcess for process", processId);
@@ -440,7 +445,19 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
     getProcessesByCategory(category) {
         return Array.from(this.allProcesses.entries())
             .filter(([id, procInfo]) => procInfo.category === category)
-            .map(([id, procInfo]) => (Object.assign(Object.assign({ processId: id }, procInfo), { logs: this.processLogs.get(id) || [] })));
+            .map(([id, procInfo]) => ({
+            processId: id,
+            command: procInfo.command,
+            pid: procInfo.pid,
+            status: procInfo.status,
+            exitCode: procInfo.exitCode,
+            error: procInfo.error,
+            timestamp: procInfo.timestamp,
+            category: procInfo.category,
+            testName: procInfo.testName,
+            platform: procInfo.platform,
+            logs: this.processLogs.get(id) || []
+        }));
     }
     getBDDTestProcesses() {
         return this.getProcessesByCategory("bdd-test");
@@ -454,12 +471,36 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
     getProcessesByTestName(testName) {
         return Array.from(this.allProcesses.entries())
             .filter(([id, procInfo]) => procInfo.testName === testName)
-            .map(([id, procInfo]) => (Object.assign(Object.assign({ processId: id }, procInfo), { logs: this.processLogs.get(id) || [] })));
+            .map(([id, procInfo]) => ({
+            processId: id,
+            command: procInfo.command,
+            pid: procInfo.pid,
+            status: procInfo.status,
+            exitCode: procInfo.exitCode,
+            error: procInfo.error,
+            timestamp: procInfo.timestamp,
+            category: procInfo.category,
+            testName: procInfo.testName,
+            platform: procInfo.platform,
+            logs: this.processLogs.get(id) || []
+        }));
     }
     getProcessesByPlatform(platform) {
         return Array.from(this.allProcesses.entries())
             .filter(([id, procInfo]) => procInfo.platform === platform)
-            .map(([id, procInfo]) => (Object.assign(Object.assign({ processId: id }, procInfo), { logs: this.processLogs.get(id) || [] })));
+            .map(([id, procInfo]) => ({
+            processId: id,
+            command: procInfo.command,
+            pid: procInfo.pid,
+            status: procInfo.status,
+            exitCode: procInfo.exitCode,
+            error: procInfo.error,
+            timestamp: procInfo.timestamp,
+            category: procInfo.category,
+            testName: procInfo.testName,
+            platform: procInfo.platform,
+            logs: this.processLogs.get(id) || []
+        }));
     }
 }
 exports.PM_WithWebSocket = PM_WithWebSocket;
