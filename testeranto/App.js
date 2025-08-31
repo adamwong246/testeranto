@@ -6,8 +6,15 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __esm = (fn2, res) => function __init() {
+    return fn2 && (res = (0, fn2[__getOwnPropNames(fn2)[0]])(fn2 = 0)), res;
+  };
   var __commonJS = (cb, mod) => function __require() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
@@ -648,14 +655,14 @@
           function escapeUserProvidedKey(text) {
             return text.replace(userProvidedKeyEscapeRegex, "$&/");
           }
-          function getElementKey(element, index2) {
+          function getElementKey(element, index3) {
             if (typeof element === "object" && element !== null && element.key != null) {
               {
                 checkKeyStringCoercion(element.key);
               }
               return escape("" + element.key);
             }
-            return index2.toString(36);
+            return index3.toString(36);
           }
           function mapIntoArray(children, array, escapedPrefix, nameSoFar, callback) {
             var type = typeof children;
@@ -1085,7 +1092,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState37(initialState) {
+          function useState38(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1097,7 +1104,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect44(create2, deps) {
+          function useEffect45(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1879,7 +1886,7 @@
           exports.useContext = useContext26;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect44;
+          exports.useEffect = useEffect45;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1887,7 +1894,7 @@
           exports.useMemo = useMemo21;
           exports.useReducer = useReducer2;
           exports.useRef = useRef33;
-          exports.useState = useState37;
+          exports.useState = useState38;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -1925,9 +1932,9 @@
           var enableProfiling = false;
           var frameYieldMs = 5;
           function push(heap, node) {
-            var index2 = heap.length;
+            var index3 = heap.length;
             heap.push(node);
-            siftUp(heap, node, index2);
+            siftUp(heap, node, index3);
           }
           function peek(heap) {
             return heap.length === 0 ? null : heap[0];
@@ -1945,42 +1952,42 @@
             return first;
           }
           function siftUp(heap, node, i) {
-            var index2 = i;
-            while (index2 > 0) {
-              var parentIndex = index2 - 1 >>> 1;
+            var index3 = i;
+            while (index3 > 0) {
+              var parentIndex = index3 - 1 >>> 1;
               var parent = heap[parentIndex];
               if (compare(parent, node) > 0) {
                 heap[parentIndex] = node;
-                heap[index2] = parent;
-                index2 = parentIndex;
+                heap[index3] = parent;
+                index3 = parentIndex;
               } else {
                 return;
               }
             }
           }
           function siftDown(heap, node, i) {
-            var index2 = i;
+            var index3 = i;
             var length = heap.length;
             var halfLength = length >>> 1;
-            while (index2 < halfLength) {
-              var leftIndex = (index2 + 1) * 2 - 1;
+            while (index3 < halfLength) {
+              var leftIndex = (index3 + 1) * 2 - 1;
               var left2 = heap[leftIndex];
               var rightIndex = leftIndex + 1;
               var right2 = heap[rightIndex];
               if (compare(left2, node) < 0) {
                 if (rightIndex < length && compare(right2, left2) < 0) {
-                  heap[index2] = right2;
+                  heap[index3] = right2;
                   heap[rightIndex] = node;
-                  index2 = rightIndex;
+                  index3 = rightIndex;
                 } else {
-                  heap[index2] = left2;
+                  heap[index3] = left2;
                   heap[leftIndex] = node;
-                  index2 = leftIndex;
+                  index3 = leftIndex;
                 }
               } else if (rightIndex < length && compare(right2, node) < 0) {
-                heap[index2] = right2;
+                heap[index3] = right2;
                 heap[rightIndex] = node;
-                index2 = rightIndex;
+                index3 = rightIndex;
               } else {
                 return;
               }
@@ -6149,7 +6156,7 @@
             {
               var map = /* @__PURE__ */ new Map();
               var lane = 1;
-              for (var index3 = 0; index3 < TotalLanes; index3++) {
+              for (var index4 = 0; index4 < TotalLanes; index4++) {
                 var label = getLabelForLane(lane);
                 map.set(lane, label);
                 lane *= 2;
@@ -6652,9 +6659,9 @@
               var entanglements = root2.entanglements;
               var lanes = nextLanes & entangledLanes;
               while (lanes > 0) {
-                var index3 = pickArbitraryLaneIndex(lanes);
-                var lane = 1 << index3;
-                nextLanes |= entanglements[index3];
+                var index4 = pickArbitraryLaneIndex(lanes);
+                var lane = 1 << index4;
+                nextLanes |= entanglements[index4];
                 lanes &= ~lane;
               }
             }
@@ -6664,9 +6671,9 @@
             var eventTimes = root2.eventTimes;
             var mostRecentEventTime = NoTimestamp;
             while (lanes > 0) {
-              var index3 = pickArbitraryLaneIndex(lanes);
-              var lane = 1 << index3;
-              var eventTime = eventTimes[index3];
+              var index4 = pickArbitraryLaneIndex(lanes);
+              var lane = 1 << index4;
+              var eventTime = eventTimes[index4];
               if (eventTime > mostRecentEventTime) {
                 mostRecentEventTime = eventTime;
               }
@@ -6725,12 +6732,12 @@
             var expirationTimes = root2.expirationTimes;
             var lanes = pendingLanes;
             while (lanes > 0) {
-              var index3 = pickArbitraryLaneIndex(lanes);
-              var lane = 1 << index3;
-              var expirationTime = expirationTimes[index3];
+              var index4 = pickArbitraryLaneIndex(lanes);
+              var lane = 1 << index4;
+              var expirationTime = expirationTimes[index4];
               if (expirationTime === NoTimestamp) {
                 if ((lane & suspendedLanes) === NoLanes || (lane & pingedLanes) !== NoLanes) {
-                  expirationTimes[index3] = computeExpirationTime(lane, currentTime);
+                  expirationTimes[index4] = computeExpirationTime(lane, currentTime);
                 }
               } else if (expirationTime <= currentTime) {
                 root2.expiredLanes |= lane;
@@ -6840,8 +6847,8 @@
               root2.pingedLanes = NoLanes;
             }
             var eventTimes = root2.eventTimes;
-            var index3 = laneToIndex(updateLane);
-            eventTimes[index3] = eventTime;
+            var index4 = laneToIndex(updateLane);
+            eventTimes[index4] = eventTime;
           }
           function markRootSuspended(root2, suspendedLanes) {
             root2.suspendedLanes |= suspendedLanes;
@@ -6849,9 +6856,9 @@
             var expirationTimes = root2.expirationTimes;
             var lanes = suspendedLanes;
             while (lanes > 0) {
-              var index3 = pickArbitraryLaneIndex(lanes);
-              var lane = 1 << index3;
-              expirationTimes[index3] = NoTimestamp;
+              var index4 = pickArbitraryLaneIndex(lanes);
+              var lane = 1 << index4;
+              expirationTimes[index4] = NoTimestamp;
               lanes &= ~lane;
             }
           }
@@ -6871,11 +6878,11 @@
             var expirationTimes = root2.expirationTimes;
             var lanes = noLongerPendingLanes;
             while (lanes > 0) {
-              var index3 = pickArbitraryLaneIndex(lanes);
-              var lane = 1 << index3;
-              entanglements[index3] = NoLanes;
-              eventTimes[index3] = NoTimestamp;
-              expirationTimes[index3] = NoTimestamp;
+              var index4 = pickArbitraryLaneIndex(lanes);
+              var lane = 1 << index4;
+              entanglements[index4] = NoLanes;
+              eventTimes[index4] = NoTimestamp;
+              expirationTimes[index4] = NoTimestamp;
               lanes &= ~lane;
             }
           }
@@ -6884,14 +6891,14 @@
             var entanglements = root2.entanglements;
             var lanes = rootEntangledLanes;
             while (lanes) {
-              var index3 = pickArbitraryLaneIndex(lanes);
-              var lane = 1 << index3;
+              var index4 = pickArbitraryLaneIndex(lanes);
+              var lane = 1 << index4;
               if (
                 // Is this one of the newly entangled lanes?
                 lane & entangledLanes | // Is this lane transitively entangled with the newly entangled lanes?
-                entanglements[index3] & entangledLanes
+                entanglements[index4] & entangledLanes
               ) {
-                entanglements[index3] |= entangledLanes;
+                entanglements[index4] |= entangledLanes;
               }
               lanes &= ~lane;
             }
@@ -6947,9 +6954,9 @@
             }
             var pendingUpdatersLaneMap = root2.pendingUpdatersLaneMap;
             while (lanes > 0) {
-              var index3 = laneToIndex(lanes);
-              var lane = 1 << index3;
-              var updaters = pendingUpdatersLaneMap[index3];
+              var index4 = laneToIndex(lanes);
+              var lane = 1 << index4;
+              var updaters = pendingUpdatersLaneMap[index4];
               updaters.add(fiber);
               lanes &= ~lane;
             }
@@ -6961,9 +6968,9 @@
             var pendingUpdatersLaneMap = root2.pendingUpdatersLaneMap;
             var memoizedUpdaters = root2.memoizedUpdaters;
             while (lanes > 0) {
-              var index3 = laneToIndex(lanes);
-              var lane = 1 << index3;
-              var updaters = pendingUpdatersLaneMap[index3];
+              var index4 = laneToIndex(lanes);
+              var lane = 1 << index4;
+              var updaters = pendingUpdatersLaneMap[index4];
               if (updaters.size > 0) {
                 updaters.forEach(function(fiber) {
                   var alternate = fiber.alternate;
@@ -10810,36 +10817,36 @@
           {
             fiberStack = [];
           }
-          var index2 = -1;
+          var index3 = -1;
           function createCursor(defaultValue) {
             return {
               current: defaultValue
             };
           }
           function pop(cursor, fiber) {
-            if (index2 < 0) {
+            if (index3 < 0) {
               {
                 error("Unexpected pop.");
               }
               return;
             }
             {
-              if (fiber !== fiberStack[index2]) {
+              if (fiber !== fiberStack[index3]) {
                 error("Unexpected Fiber popped.");
               }
             }
-            cursor.current = valueStack[index2];
-            valueStack[index2] = null;
+            cursor.current = valueStack[index3];
+            valueStack[index3] = null;
             {
-              fiberStack[index2] = null;
+              fiberStack[index3] = null;
             }
-            index2--;
+            index3--;
           }
           function push(cursor, value, fiber) {
-            index2++;
-            valueStack[index2] = cursor.current;
+            index3++;
+            valueStack[index3] = cursor.current;
             {
-              fiberStack[index2] = fiber;
+              fiberStack[index3] = fiber;
             }
             cursor.current = value;
           }
@@ -11086,7 +11093,7 @@
             treeForkProvider = workInProgress2;
             treeForkCount = totalChildren;
           }
-          function pushTreeId(workInProgress2, totalChildren, index3) {
+          function pushTreeId(workInProgress2, totalChildren, index4) {
             warnIfNotHydrating();
             idStack[idStackIndex++] = treeContextId;
             idStack[idStackIndex++] = treeContextOverflow;
@@ -11096,7 +11103,7 @@
             var baseOverflow = treeContextOverflow;
             var baseLength = getBitLength(baseIdWithLeadingBit) - 1;
             var baseId = baseIdWithLeadingBit & ~(1 << baseLength);
-            var slot = index3 + 1;
+            var slot = index4 + 1;
             var length = getBitLength(totalChildren) + baseLength;
             if (length > 30) {
               var numberOfOverflowBits = baseLength - baseLength % 5;
@@ -17359,13 +17366,13 @@
               }
             }
           }
-          function validateSuspenseListNestedChild(childSlot, index3) {
+          function validateSuspenseListNestedChild(childSlot, index4) {
             {
               var isAnArray = isArray(childSlot);
               var isIterable = !isAnArray && typeof getIteratorFn(childSlot) === "function";
               if (isAnArray || isIterable) {
                 var type = isAnArray ? "array" : "iterable";
-                error("A nested %s was passed to row #%s in <SuspenseList />. Wrap it in an additional SuspenseList to configure its revealOrder: <SuspenseList revealOrder=...> ... <SuspenseList revealOrder=...>{%s}</SuspenseList> ... </SuspenseList>", type, index3, type);
+                error("A nested %s was passed to row #%s in <SuspenseList />. Wrap it in an additional SuspenseList to configure its revealOrder: <SuspenseList revealOrder=...> ... <SuspenseList revealOrder=...>{%s}</SuspenseList> ... </SuspenseList>", type, index4, type);
                 return false;
               }
             }
@@ -22783,10 +22790,10 @@
           var setErrorHandler = null;
           var setSuspenseHandler = null;
           {
-            var copyWithDeleteImpl = function(obj, path, index3) {
-              var key = path[index3];
+            var copyWithDeleteImpl = function(obj, path, index4) {
+              var key = path[index4];
               var updated = isArray(obj) ? obj.slice() : assign({}, obj);
-              if (index3 + 1 === path.length) {
+              if (index4 + 1 === path.length) {
                 if (isArray(updated)) {
                   updated.splice(key, 1);
                 } else {
@@ -22794,17 +22801,17 @@
                 }
                 return updated;
               }
-              updated[key] = copyWithDeleteImpl(obj[key], path, index3 + 1);
+              updated[key] = copyWithDeleteImpl(obj[key], path, index4 + 1);
               return updated;
             };
             var copyWithDelete = function(obj, path) {
               return copyWithDeleteImpl(obj, path, 0);
             };
-            var copyWithRenameImpl = function(obj, oldPath, newPath, index3) {
-              var oldKey = oldPath[index3];
+            var copyWithRenameImpl = function(obj, oldPath, newPath, index4) {
+              var oldKey = oldPath[index4];
               var updated = isArray(obj) ? obj.slice() : assign({}, obj);
-              if (index3 + 1 === oldPath.length) {
-                var newKey = newPath[index3];
+              if (index4 + 1 === oldPath.length) {
+                var newKey = newPath[index4];
                 updated[newKey] = updated[oldKey];
                 if (isArray(updated)) {
                   updated.splice(oldKey, 1);
@@ -22817,7 +22824,7 @@
                   obj[oldKey],
                   oldPath,
                   newPath,
-                  index3 + 1
+                  index4 + 1
                 );
               }
               return updated;
@@ -22836,13 +22843,13 @@
               }
               return copyWithRenameImpl(obj, oldPath, newPath, 0);
             };
-            var copyWithSetImpl = function(obj, path, index3, value) {
-              if (index3 >= path.length) {
+            var copyWithSetImpl = function(obj, path, index4, value) {
+              if (index4 >= path.length) {
                 return value;
               }
-              var key = path[index3];
+              var key = path[index4];
               var updated = isArray(obj) ? obj.slice() : assign({}, obj);
-              updated[key] = copyWithSetImpl(obj[key], path, index3 + 1, value);
+              updated[key] = copyWithSetImpl(obj[key], path, index4 + 1, value);
               return updated;
             };
             var copyWithSet = function(obj, path, value) {
@@ -34100,7 +34107,7 @@
           // Zero, one or several directories
           // should not use '*', or it will be replaced by the next replacer
           // Check if it is not the last `'/**'`
-          (_2, index2, str) => index2 + 6 < str.length ? "(?:\\/[^\\/]+)*" : "\\/.+"
+          (_2, index3, str) => index3 + 6 < str.length ? "(?:\\/[^\\/]+)*" : "\\/.+"
         ],
         // normal intermediate wildcards
         [
@@ -35017,7 +35024,7 @@
           if (buffer.length === 0) {
             throw new InternalError("Index file is empty (.git/index)");
           }
-          const index3 = new GitIndex();
+          const index4 = new GitIndex();
           const reader = new BufferCursor(buffer);
           const magic = reader.toString("utf8", 4);
           if (magic !== "DIRC") {
@@ -35073,10 +35080,10 @@
               }
             }
             entry.stages = [];
-            index3._addEntry(entry);
+            index4._addEntry(entry);
             i++;
           }
-          return index3;
+          return index4;
         }
         get unmergedPaths() {
           return [...this._unmergedPaths];
@@ -35230,8 +35237,8 @@
           fs.lstat(filepath),
           fs.read(filepath)
         ]);
-        const index3 = await GitIndex.from(rawIndexFile);
-        cache2.map.set(filepath, index3);
+        const index4 = await GitIndex.from(rawIndexFile);
+        cache2.map.set(filepath, index4);
         cache2.stats.set(filepath, stat);
       }
       async function isIndexStale(fs, filepath, cache2) {
@@ -35272,16 +35279,16 @@
             if (await isIndexStale(fs, filepath, theIndexCache)) {
               await updateCachedIndexFile(fs, filepath, theIndexCache);
             }
-            const index3 = theIndexCache.map.get(filepath);
-            unmergedPaths = index3.unmergedPaths;
+            const index4 = theIndexCache.map.get(filepath);
+            unmergedPaths = index4.unmergedPaths;
             if (unmergedPaths.length && !allowUnmerged)
               throw new UnmergedPathsError(unmergedPaths);
-            result = await closure(index3);
-            if (index3._dirty) {
-              const buffer = await index3.toObject();
+            result = await closure(index4);
+            if (index4._dirty) {
+              const buffer = await index4.toObject();
               await fs.write(filepath, buffer);
               theIndexCache.stats.set(filepath, await fs.lstat(filepath));
-              index3._dirty = false;
+              index4._dirty = false;
             }
           });
           return result;
@@ -35362,8 +35369,8 @@
         constructor({ fs, gitdir, cache: cache2 }) {
           this.treePromise = GitIndexManager.acquire(
             { fs, gitdir, cache: cache2 },
-            async function(index3) {
-              return flatFileListToDirectoryStructure(index3.entries);
+            async function(index4) {
+              return flatFileListToDirectoryStructure(index4.entries);
             }
           );
           const walker = this;
@@ -35758,8 +35765,8 @@
         };
       };
       var findLastIndex = (array, callback) => {
-        return array.reduce((lastIndex, item, index3) => {
-          return callback(item) ? index3 : lastIndex;
+        return array.reduce((lastIndex, item, index4) => {
+          return callback(item) ? index4 : lastIndex;
         }, -1);
       };
       var GitConfig = class {
@@ -36572,7 +36579,7 @@
           return reader.slice(byte);
         }
       }
-      function fromValue(value) {
+      function fromValue2(value) {
         let queue = [value];
         return {
           next() {
@@ -36587,7 +36594,7 @@
           }
         };
       }
-      function getIterator(iterable) {
+      function getIterator2(iterable) {
         if (iterable[Symbol.asyncIterator]) {
           return iterable[Symbol.asyncIterator]();
         }
@@ -36597,14 +36604,14 @@
         if (iterable.next) {
           return iterable;
         }
-        return fromValue(iterable);
+        return fromValue2(iterable);
       }
       var StreamReader = class {
         constructor(stream) {
           if (typeof Buffer === "undefined") {
             throw new Error("Missing Buffer dependency");
           }
-          this.stream = getIterator(stream);
+          this.stream = getIterator2(stream);
           this.buffer = null;
           this.cursor = 0;
           this.undoCursor = 0;
@@ -38118,8 +38125,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             const self2 = this;
             const { fs, gitdir, cache: cache2 } = this;
             let oid;
-            await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
-              const stage = index3.entriesMap.get(entry._fullpath);
+            await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
+              const stage = index4.entriesMap.get(entry._fullpath);
               const stats = await entry.stat();
               const config3 = await self2._getGitConfig(fs, gitdir);
               const filemode = await config3.get("core.filemode");
@@ -38133,7 +38140,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                     GitObject.wrap({ type: "blob", object: content })
                   );
                   if (stage && oid === stage.oid && (!filemode || stats.mode === stage.mode) && compareStats(stats, stage, filemode, trustino)) {
-                    index3.insert({
+                    index4.insert({
                       filepath: entry._fullpath,
                       stats,
                       oid
@@ -38610,8 +38617,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           const fs = new FileSystem(_fs);
           const trees = [TREE({ ref: commit2 }), WORKDIR(), STAGE()];
           let unmergedPaths = [];
-          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
-            unmergedPaths = index3.unmergedPaths;
+          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
+            unmergedPaths = index4.unmergedPaths;
           });
           const results = await _walk({
             fs,
@@ -38619,10 +38626,10 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             dir,
             gitdir,
             trees,
-            map: async function(path, [head, workdir, index3]) {
-              const staged = !await modified(workdir, index3);
+            map: async function(path, [head, workdir, index4]) {
+              const staged = !await modified(workdir, index4);
               const unmerged = unmergedPaths.includes(path);
-              const unmodified = !await modified(index3, head);
+              const unmodified = !await modified(index4, head);
               if (staged || unmerged) {
                 return head ? {
                   path,
@@ -38638,19 +38645,19 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                 throw new IndexResetError(path);
             }
           });
-          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
+          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
             for (const entry of results) {
               if (entry === false)
                 continue;
               if (!entry) {
                 await fs.rmdir(`${dir}/${entry.path}`, { recursive: true });
-                index3.delete({ filepath: entry.path });
+                index4.delete({ filepath: entry.path });
                 continue;
               }
               if (entry.type === "blob") {
                 const content = new TextDecoder().decode(entry.content);
                 await fs.write(`${dir}/${entry.path}`, content, { mode: entry.mode });
-                index3.insert({
+                index4.insert({
                   filepath: entry.path,
                   oid: entry.oid,
                   stage: 0
@@ -38798,7 +38805,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           assertParameter("gitdir", gitdir);
           assertParameter("filepath", filepath);
           const fs = new FileSystem(_fs);
-          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async (index3) => {
+          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async (index4) => {
             const config3 = await GitConfigManager.get({ fs, gitdir });
             const autocrlf = await config3.get("core.autocrlf");
             return addToIndex({
@@ -38806,7 +38813,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
               gitdir,
               fs,
               filepath,
-              index: index3,
+              index: index4,
               force,
               parallel,
               autocrlf
@@ -38822,7 +38829,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         gitdir,
         fs,
         filepath,
-        index: index3,
+        index: index4,
         force,
         parallel,
         autocrlf
@@ -38851,7 +38858,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                   gitdir,
                   fs,
                   filepath: [pathBrowserify.join(currentFilepath, child)],
-                  index: index3,
+                  index: index4,
                   force,
                   parallel,
                   autocrlf
@@ -38865,7 +38872,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                   gitdir,
                   fs,
                   filepath: [pathBrowserify.join(currentFilepath, child)],
-                  index: index3,
+                  index: index4,
                   force,
                   parallel,
                   autocrlf
@@ -38877,7 +38884,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             if (object === null)
               throw new NotFoundError(currentFilepath);
             const oid = await _writeObject({ fs, gitdir, type: "blob", object });
-            index3.insert({ filepath: currentFilepath, stats, oid });
+            index4.insert({ filepath: currentFilepath, stats, oid });
           }
         });
         const settledPromises = await Promise.allSettled(promises);
@@ -39043,8 +39050,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           throw new MissingNameError("committer");
         return GitIndexManager.acquire(
           { fs, gitdir, cache: cache2, allowUnmerged: false },
-          async function(index3) {
-            const inodes = flatFileListToDirectoryStructure(index3.entries);
+          async function(index4) {
+            const inodes = flatFileListToDirectoryStructure(index4.entries);
             const inode = inodes.get(".");
             if (!tree) {
               tree = await constructTree({ fs, gitdir, inode, dryRun });
@@ -39627,7 +39634,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           }
           let count = 0;
           const total = ops.length;
-          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
+          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
             await Promise.all(
               ops.filter(
                 ([method]) => method === "delete" || method === "delete-index"
@@ -39636,7 +39643,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                 if (method === "delete") {
                   await fs.rm(filepath);
                 }
-                index3.delete({ filepath: fullpath });
+                index4.delete({ filepath: fullpath });
                 if (onProgress) {
                   await onProgress({
                     phase: "Updating workdir",
@@ -39647,7 +39654,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
               })
             );
           });
-          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
+          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
             for (const [method, fullpath] of ops) {
               if (method === "rmdir" || method === "rmdir-index") {
                 const filepath = `${dir}/${fullpath}`;
@@ -39655,7 +39662,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                   if (method === "rmdir") {
                     await fs.rmdir(filepath);
                   }
-                  index3.delete({ filepath: fullpath });
+                  index4.delete({ filepath: fullpath });
                   if (onProgress) {
                     await onProgress({
                       phase: "Updating workdir",
@@ -39708,11 +39715,11 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             );
             await GitIndexManager.acquire(
               { fs, gitdir, cache: cache2, allowUnmerged: true },
-              async function(index3) {
+              async function(index4) {
                 await batchAllSettled(
                   "Update Index",
                   updateWorkingDirResults.map(
-                    ([fullpath, oid2, stats]) => () => updateIndex({ index: index3, fullpath, oid: oid2, stats })
+                    ([fullpath, oid2, stats]) => () => updateIndex({ index: index4, fullpath, oid: oid2, stats })
                   ),
                   onProgress,
                   batchSize
@@ -39722,7 +39729,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           } else {
             await GitIndexManager.acquire(
               { fs, gitdir, cache: cache2, allowUnmerged: true },
-              async function(index3) {
+              async function(index4) {
                 await Promise.all(
                   ops.filter(
                     ([method]) => method === "create" || method === "create-index" || method === "update" || method === "mkdir-index"
@@ -39760,7 +39767,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                       if (method === "mkdir-index") {
                         stats.mode = 57344;
                       }
-                      index3.insert({
+                      index4.insert({
                         filepath: fullpath,
                         stats,
                         oid: oid2
@@ -40045,9 +40052,9 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           }
         });
       }
-      async function updateIndex({ index: index3, fullpath, stats, oid }) {
+      async function updateIndex({ index: index4, fullpath, stats, oid }) {
         try {
-          index3.insert({
+          index4.insert({
             filepath: fullpath,
             stats,
             oid
@@ -40197,8 +40204,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
       function calculateBasicAuthHeader({ username = "", password = "" }) {
         return `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`;
       }
-      async function forAwait(iterable, cb) {
-        const iter = getIterator(iterable);
+      async function forAwait2(iterable, cb) {
+        const iter = getIterator2(iterable);
         while (true) {
           const { value, done } = await iter.next();
           if (value)
@@ -40209,10 +40216,10 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         if (iter.return)
           iter.return();
       }
-      async function collect(iterable) {
+      async function collect2(iterable) {
         let size2 = 0;
         const buffers = [];
-        await forAwait(iterable, (value) => {
+        await forAwait2(iterable, (value) => {
           buffers.push(value);
           size2 += value.byteLength;
         });
@@ -40367,7 +40374,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
       };
       var stringifyBody = async (res) => {
         try {
-          const data2 = Buffer.from(await collect(res.body));
+          const data2 = Buffer.from(await collect2(res.body));
           const response = data2.toString("utf8");
           const preview = response.length < 256 ? response : response.slice(0, 256) + "...";
           return { preview, response, data: data2 };
@@ -40753,7 +40760,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         const output = new FIFO();
         let tmp = "";
         (async () => {
-          await forAwait(input, (chunk) => {
+          await forAwait2(input, (chunk) => {
             chunk = chunk.toString("utf8");
             tmp += chunk;
             while (true) {
@@ -40893,7 +40900,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         let nak = false;
         let done = false;
         return new Promise((resolve, reject) => {
-          forAwait(packetlines, (data2) => {
+          forAwait2(packetlines, (data2) => {
             const line = data2.toString("utf8").trim();
             if (line.startsWith("shallow")) {
               const oid = line.slice(-41).trim();
@@ -41098,7 +41105,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           since,
           exclude
         });
-        const packbuffer = Buffer.from(await collect(packstream));
+        const packbuffer = Buffer.from(await collect2(packstream));
         const raw = await GitRemoteHTTP2.connect({
           http,
           onProgress,
@@ -41197,7 +41204,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         };
         if (onProgress || onMessage) {
           const lines = splitLines(response.progress);
-          forAwait(lines, async (line) => {
+          forAwait2(lines, async (line) => {
             if (onMessage)
               await onMessage(line);
             if (onProgress) {
@@ -41212,7 +41219,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             }
           });
         }
-        const packfile = Buffer.from(await collect(response.packfile));
+        const packfile = Buffer.from(await collect2(response.packfile));
         if (raw.body.error)
           throw raw.body.error;
         const packfileSha = packfile.slice(-20).toString("hex");
@@ -41670,13 +41677,13 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
       async function _findMergeBase({ fs, cache: cache2, gitdir, oids }) {
         const visits = {};
         const passes = oids.length;
-        let heads = oids.map((oid, index3) => ({ index: index3, oid }));
+        let heads = oids.map((oid, index4) => ({ index: index4, oid }));
         while (heads.length) {
           const result = /* @__PURE__ */ new Set();
-          for (const { oid, index: index3 } of heads) {
+          for (const { oid, index: index4 } of heads) {
             if (!visits[oid])
               visits[oid] = /* @__PURE__ */ new Set();
-            visits[oid].add(index3);
+            visits[oid].add(index4);
             if (visits[oid].size === passes) {
               result.add(oid);
             }
@@ -41685,14 +41692,14 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             return [...result];
           }
           const newheads = /* @__PURE__ */ new Map();
-          for (const { oid, index: index3 } of heads) {
+          for (const { oid, index: index4 } of heads) {
             try {
               const { object } = await _readObject({ fs, cache: cache2, gitdir, oid });
               const commit2 = GitCommit.from(object);
               const { parent } = commit2.parseHeaders();
               for (const oid2 of parent) {
-                if (!visits[oid2] || !visits[oid2].has(index3)) {
-                  newheads.set(oid2 + ":" + index3, { oid: oid2, index: index3 });
+                if (!visits[oid2] || !visits[oid2].has(index4)) {
+                  newheads.set(oid2 + ":" + index4, { oid: oid2, index: index4 });
                 }
               }
             } catch (err) {
@@ -41739,7 +41746,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         cache: cache2,
         dir,
         gitdir = pathBrowserify.join(dir, ".git"),
-        index: index3,
+        index: index4,
         ourOid,
         baseOid,
         theirOid,
@@ -41840,15 +41847,15 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                         }
                         const ourOid2 = await ours.oid();
                         const theirOid2 = await theirs.oid();
-                        index3.delete({ filepath });
+                        index4.delete({ filepath });
                         if (baseOid2) {
-                          index3.insert({ filepath, oid: baseOid2, stage: 1 });
+                          index4.insert({ filepath, oid: baseOid2, stage: 1 });
                         }
-                        index3.insert({ filepath, oid: ourOid2, stage: 2 });
-                        index3.insert({ filepath, oid: theirOid2, stage: 3 });
+                        index4.insert({ filepath, oid: ourOid2, stage: 2 });
+                        index4.insert({ filepath, oid: theirOid2, stage: 3 });
                       }
                     } else if (!abortOnConflict) {
-                      index3.insert({ filepath, oid: r.mergeResult.oid, stage: 0 });
+                      index4.insert({ filepath, oid: r.mergeResult.oid, stage: 0 });
                     }
                     return r.mergeResult;
                   });
@@ -41859,9 +41866,9 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                   if (!abortOnConflict) {
                     const baseOid2 = await base.oid();
                     const theirOid2 = await theirs.oid();
-                    index3.delete({ filepath });
-                    index3.insert({ filepath, oid: baseOid2, stage: 1 });
-                    index3.insert({ filepath, oid: theirOid2, stage: 3 });
+                    index4.delete({ filepath });
+                    index4.insert({ filepath, oid: baseOid2, stage: 1 });
+                    index4.insert({ filepath, oid: theirOid2, stage: 3 });
                   }
                   return {
                     mode: await theirs.mode(),
@@ -41876,9 +41883,9 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                   if (!abortOnConflict) {
                     const baseOid2 = await base.oid();
                     const ourOid2 = await ours.oid();
-                    index3.delete({ filepath });
-                    index3.insert({ filepath, oid: baseOid2, stage: 1 });
-                    index3.insert({ filepath, oid: ourOid2, stage: 2 });
+                    index4.delete({ filepath });
+                    index4.insert({ filepath, oid: baseOid2, stage: 1 });
+                    index4.insert({ filepath, oid: ourOid2, stage: 2 });
                   }
                   return {
                     mode: await ours.mode(),
@@ -42081,13 +42088,13 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           }
           const tree = await GitIndexManager.acquire(
             { fs, gitdir, cache: cache2, allowUnmerged: false },
-            async (index3) => {
+            async (index4) => {
               return mergeTree({
                 fs,
                 cache: cache2,
                 dir,
                 gitdir,
-                index: index3,
+                index: index4,
                 ourOid,
                 theirOid,
                 baseOid,
@@ -42786,8 +42793,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           });
           return filenames;
         } else {
-          return GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
-            return index3.entries.map((x) => x.path);
+          return GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
+            return index4.entries.map((x) => x.path);
           });
         }
       }
@@ -43358,7 +43365,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
       }
       async function _packObjects({ fs, cache: cache2, gitdir, oids, write: write2 }) {
         const buffers = await _pack({ fs, cache: cache2, gitdir, oids });
-        const packfile = Buffer.from(await collect(buffers));
+        const packfile = Buffer.from(await collect2(buffers));
         const packfileSha = packfile.slice(-20).toString("hex");
         const filename = `pack-${packfileSha}.pack`;
         if (write2) {
@@ -43783,7 +43790,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         const { packfile, progress } = await GitSideBand.demux(res.body);
         if (onMessage) {
           const lines = splitLines(progress);
-          forAwait(lines, async (line) => {
+          forAwait2(lines, async (line) => {
             await onMessage(line);
           });
         }
@@ -44124,8 +44131,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           assertParameter("filepath", filepath);
           await GitIndexManager.acquire(
             { fs: new FileSystem(_fs), gitdir, cache: cache2 },
-            async function(index3) {
-              index3.delete({ filepath });
+            async function(index4) {
+              index4.delete({ filepath });
             }
           );
         } catch (err) {
@@ -44350,10 +44357,10 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
               stats = await fs.lstat(pathBrowserify.join(dir, filepath));
             }
           }
-          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
-            index3.delete({ filepath });
+          await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
+            index4.delete({ filepath });
             if (oid) {
-              index3.insert({ filepath, stats, oid });
+              index4.insert({ filepath, stats, oid });
             }
           });
         } catch (err) {
@@ -44671,9 +44678,9 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             }
           }
         });
-        await GitIndexManager.acquire({ fs, gitdir, cache: {} }, async (index3) => {
+        await GitIndexManager.acquire({ fs, gitdir, cache: {} }, async (index4) => {
           stageUpdated.forEach(({ filepath, stats, oid }) => {
-            index3.insert({ filepath, stats, oid });
+            index4.insert({ filepath, stats, oid });
           });
         });
       }
@@ -45086,8 +45093,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           });
           const indexEntry = await GitIndexManager.acquire(
             { fs, gitdir, cache: cache2 },
-            async function(index3) {
-              for (const entry of index3) {
+            async function(index4) {
+              for (const entry of index4) {
                 if (entry.path === filepath)
                   return entry;
               }
@@ -45110,8 +45117,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
               });
               if (I && indexEntry.oid === workdirOid) {
                 if (stats.size !== -1) {
-                  GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
-                    index3.insert({ filepath, stats, oid: workdirOid });
+                  GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
+                    index4.insert({ filepath, stats, oid: workdirOid });
                   });
                 }
               }
@@ -45315,7 +45322,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           if (remove2) {
             return await GitIndexManager.acquire(
               { fs, gitdir, cache: cache2 },
-              async function(index3) {
+              async function(index4) {
                 if (!force) {
                   const fileStats2 = await fs.lstat(pathBrowserify.join(dir, filepath));
                   if (fileStats2) {
@@ -45325,8 +45332,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                     return;
                   }
                 }
-                if (index3.has({ filepath })) {
-                  index3.delete({
+                if (index4.has({ filepath })) {
+                  index4.delete({
                     filepath
                   });
                 }
@@ -45345,8 +45352,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
               throw new InvalidFilepathError("directory");
             }
           }
-          return await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index3) {
-            if (!add2 && !index3.has({ filepath })) {
+          return await GitIndexManager.acquire({ fs, gitdir, cache: cache2 }, async function(index4) {
+            if (!add2 && !index4.has({ filepath })) {
               throw new NotFoundError(
                 `file at "${filepath}" in index and "add" not set`
               );
@@ -45374,7 +45381,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
                 size: 0
               };
             }
-            index3.insert({
+            index4.insert({
               filepath,
               oid,
               stats
@@ -45592,7 +45599,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           throw err;
         }
       }
-      var index2 = {
+      var index3 = {
         Errors,
         STAGE,
         TREE,
@@ -45678,7 +45685,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
       exports.clone = clone;
       exports.commit = commit;
       exports.currentBranch = currentBranch;
-      exports.default = index2;
+      exports.default = index3;
       exports.deleteBranch = deleteBranch;
       exports.deleteRef = deleteRef;
       exports.deleteRemote = deleteRemote;
@@ -45738,8 +45745,118 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
     }
   });
 
+  // node_modules/isomorphic-git/http/web/index.js
+  var web_exports = {};
+  __export(web_exports, {
+    default: () => web_default,
+    request: () => request
+  });
+  function fromValue(value) {
+    let queue = [value];
+    return {
+      next() {
+        return Promise.resolve({ done: queue.length === 0, value: queue.pop() });
+      },
+      return() {
+        queue = [];
+        return {};
+      },
+      [Symbol.asyncIterator]() {
+        return this;
+      }
+    };
+  }
+  function getIterator(iterable) {
+    if (iterable[Symbol.asyncIterator]) {
+      return iterable[Symbol.asyncIterator]();
+    }
+    if (iterable[Symbol.iterator]) {
+      return iterable[Symbol.iterator]();
+    }
+    if (iterable.next) {
+      return iterable;
+    }
+    return fromValue(iterable);
+  }
+  async function forAwait(iterable, cb) {
+    const iter = getIterator(iterable);
+    while (true) {
+      const { value, done } = await iter.next();
+      if (value)
+        await cb(value);
+      if (done)
+        break;
+    }
+    if (iter.return)
+      iter.return();
+  }
+  async function collect(iterable) {
+    let size2 = 0;
+    const buffers = [];
+    await forAwait(iterable, (value) => {
+      buffers.push(value);
+      size2 += value.byteLength;
+    });
+    const result = new Uint8Array(size2);
+    let nextIndex = 0;
+    for (const buffer of buffers) {
+      result.set(buffer, nextIndex);
+      nextIndex += buffer.byteLength;
+    }
+    return result;
+  }
+  function fromStream(stream) {
+    if (stream[Symbol.asyncIterator])
+      return stream;
+    const reader = stream.getReader();
+    return {
+      next() {
+        return reader.read();
+      },
+      return() {
+        reader.releaseLock();
+        return {};
+      },
+      [Symbol.asyncIterator]() {
+        return this;
+      }
+    };
+  }
+  async function request({
+    onProgress,
+    url,
+    method = "GET",
+    headers = {},
+    body
+  }) {
+    if (body) {
+      body = await collect(body);
+    }
+    const res = await fetch(url, { method, headers, body });
+    const iter = res.body && res.body.getReader ? fromStream(res.body) : [new Uint8Array(await res.arrayBuffer())];
+    headers = {};
+    for (const [key, value] of res.headers.entries()) {
+      headers[key] = value;
+    }
+    return {
+      url: res.url,
+      method: res.method,
+      statusCode: res.status,
+      statusMessage: res.statusText,
+      body: iter,
+      headers
+    };
+  }
+  var index2, web_default;
+  var init_web = __esm({
+    "node_modules/isomorphic-git/http/web/index.js"() {
+      index2 = { request };
+      web_default = index2;
+    }
+  });
+
   // src/App.tsx
-  var import_react113 = __toESM(require_react(), 1);
+  var import_react114 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -45817,11 +45934,11 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
   function createKey() {
     return Math.random().toString(36).substring(2, 10);
   }
-  function getHistoryState(location2, index2) {
+  function getHistoryState(location2, index3) {
     return {
       usr: location2.state,
       key: location2.key,
-      idx: index2
+      idx: index3
     };
   }
   function createLocation(current, to, state = null, key) {
@@ -45874,10 +45991,10 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
     let globalHistory = window2.history;
     let action = "POP";
     let listener = null;
-    let index2 = getIndex();
-    if (index2 == null) {
-      index2 = 0;
-      globalHistory.replaceState({ ...globalHistory.state, idx: index2 }, "");
+    let index3 = getIndex();
+    if (index3 == null) {
+      index3 = 0;
+      globalHistory.replaceState({ ...globalHistory.state, idx: index3 }, "");
     }
     function getIndex() {
       let state = globalHistory.state || { idx: null };
@@ -45886,8 +46003,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
     function handlePop() {
       action = "POP";
       let nextIndex = getIndex();
-      let delta = nextIndex == null ? null : nextIndex - index2;
-      index2 = nextIndex;
+      let delta = nextIndex == null ? null : nextIndex - index3;
+      index3 = nextIndex;
       if (listener) {
         listener({ action, location: history.location, delta });
       }
@@ -45897,8 +46014,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
       let location2 = createLocation(history.location, to, state);
       if (validateLocation)
         validateLocation(location2, to);
-      index2 = getIndex() + 1;
-      let historyState = getHistoryState(location2, index2);
+      index3 = getIndex() + 1;
+      let historyState = getHistoryState(location2, index3);
       let url = history.createHref(location2);
       try {
         globalHistory.pushState(historyState, "", url);
@@ -45917,8 +46034,8 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
       let location2 = createLocation(history.location, to, state);
       if (validateLocation)
         validateLocation(location2, to);
-      index2 = getIndex();
-      let historyState = getHistoryState(location2, index2);
+      index3 = getIndex();
+      let historyState = getHistoryState(location2, index3);
       let url = history.createHref(location2);
       globalHistory.replaceState(historyState, "", url);
       if (v5Compat && listener) {
@@ -46015,11 +46132,11 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
     };
   }
   function flattenRoutes(routes, branches = [], parentsMeta = [], parentPath = "", _hasParentOptionalSegments = false) {
-    let flattenRoute = (route, index2, hasParentOptionalSegments = _hasParentOptionalSegments, relativePath) => {
+    let flattenRoute = (route, index3, hasParentOptionalSegments = _hasParentOptionalSegments, relativePath) => {
       let meta = {
         relativePath: relativePath === void 0 ? route.path || "" : relativePath,
         caseSensitive: route.caseSensitive === true,
-        childrenIndex: index2,
+        childrenIndex: index3,
         route
       };
       if (meta.relativePath.startsWith("/")) {
@@ -46058,12 +46175,12 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         routesMeta
       });
     };
-    routes.forEach((route, index2) => {
+    routes.forEach((route, index3) => {
       if (route.path === "" || !route.path?.includes("?")) {
-        flattenRoute(route, index2);
+        flattenRoute(route, index3);
       } else {
         for (let exploded of explodeOptionalSegments(route.path)) {
-          flattenRoute(route, index2, true, exploded);
+          flattenRoute(route, index3, true, exploded);
         }
       }
     });
@@ -46108,13 +46225,13 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
   var staticSegmentValue = 10;
   var splatPenalty = -2;
   var isSplat = (s) => s === "*";
-  function computeScore(path, index2) {
+  function computeScore(path, index3) {
     let segments = path.split("/");
     let initialScore = segments.length;
     if (segments.some(isSplat)) {
       initialScore += splatPenalty;
     }
-    if (index2) {
+    if (index3) {
       initialScore += indexRouteValue;
     }
     return segments.filter((s) => !isSplat(s)).reduce(
@@ -46195,12 +46312,12 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
     let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
     let captureGroups = match.slice(1);
     let params = compiledParams.reduce(
-      (memo2, { paramName, isOptional }, index2) => {
+      (memo2, { paramName, isOptional }, index3) => {
         if (paramName === "*") {
-          let splatValue = captureGroups[index2] || "";
+          let splatValue = captureGroups[index3] || "";
           pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
         }
-        const value = captureGroups[index2];
+        const value = captureGroups[index3];
         if (isOptional && !value) {
           memo2[paramName] = void 0;
         } else {
@@ -46299,7 +46416,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
   }
   function getPathContributingMatches(matches) {
     return matches.filter(
-      (match, index2) => index2 === 0 || match.route.path && match.route.path.length > 0
+      (match, index3) => index3 === 0 || match.route.path && match.route.path.length > 0
     );
   }
   function getResolveToMatches(matches) {
@@ -46739,7 +46856,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }
     return renderedMatches.reduceRight(
-      (outlet, match, index2) => {
+      (outlet, match, index3) => {
         let error;
         let shouldRenderHydrateFallback = false;
         let errorElement = null;
@@ -46748,7 +46865,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           error = errors && match.route.id ? errors[match.route.id] : void 0;
           errorElement = match.route.errorElement || defaultErrorElement;
           if (renderFallback) {
-            if (fallbackIndex < 0 && index2 === 0) {
+            if (fallbackIndex < 0 && index3 === 0) {
               warningOnce(
                 "route-fallback",
                 false,
@@ -46756,13 +46873,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               );
               shouldRenderHydrateFallback = true;
               hydrateFallbackElement = null;
-            } else if (fallbackIndex === index2) {
+            } else if (fallbackIndex === index3) {
               shouldRenderHydrateFallback = true;
               hydrateFallbackElement = match.route.hydrateFallbackElement || null;
             }
           }
         }
-        let matches2 = parentMatches.concat(renderedMatches.slice(0, index2 + 1));
+        let matches2 = parentMatches.concat(renderedMatches.slice(0, index3 + 1));
         let getChildren = () => {
           let children;
           if (error) {
@@ -46789,7 +46906,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
           );
         };
-        return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index2 === 0) ? /* @__PURE__ */ React2.createElement(
+        return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || index3 === 0) ? /* @__PURE__ */ React2.createElement(
           RenderErrorBoundary,
           {
             location: dataRouterState.location,
@@ -46985,11 +47102,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   function createRoutesFromChildren(children, parentPath = []) {
     let routes = [];
-    React3.Children.forEach(children, (element, index2) => {
+    React3.Children.forEach(children, (element, index3) => {
       if (!React3.isValidElement(element)) {
         return;
       }
-      let treePath = [...parentPath, index2];
+      let treePath = [...parentPath, index3];
       if (element.type === React3.Fragment) {
         routes.push.apply(
           routes,
@@ -47215,31 +47332,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     );
   }
   function getNewMatchesForLinks(page, nextMatches, currentMatches, manifest, location2, mode) {
-    let isNew = (match, index2) => {
-      if (!currentMatches[index2])
+    let isNew = (match, index3) => {
+      if (!currentMatches[index3])
         return true;
-      return match.route.id !== currentMatches[index2].route.id;
+      return match.route.id !== currentMatches[index3].route.id;
     };
-    let matchPathChanged = (match, index2) => {
+    let matchPathChanged = (match, index3) => {
       return (
         // param change, /users/123 -> /users/456
-        currentMatches[index2].pathname !== match.pathname || // splat param changed, which is not present in match.path
+        currentMatches[index3].pathname !== match.pathname || // splat param changed, which is not present in match.path
         // e.g. /files/images/avatar.jpg -> files/finances.xls
-        currentMatches[index2].route.path?.endsWith("*") && currentMatches[index2].params["*"] !== match.params["*"]
+        currentMatches[index3].route.path?.endsWith("*") && currentMatches[index3].params["*"] !== match.params["*"]
       );
     };
     if (mode === "assets") {
       return nextMatches.filter(
-        (match, index2) => isNew(match, index2) || matchPathChanged(match, index2)
+        (match, index3) => isNew(match, index3) || matchPathChanged(match, index3)
       );
     }
     if (mode === "data") {
-      return nextMatches.filter((match, index2) => {
+      return nextMatches.filter((match, index3) => {
         let manifestRoute = manifest.routes[match.route.id];
         if (!manifestRoute || !manifestRoute.hasLoader) {
           return false;
         }
-        if (isNew(match, index2) || matchPathChanged(match, index2)) {
+        if (isNew(match, index3) || matchPathChanged(match, index3)) {
           return true;
         }
         if (match.route.shouldRevalidate) {
@@ -51624,13 +51741,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           state.orderedModifiers.forEach(function(modifier) {
             return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
           });
-          for (var index2 = 0; index2 < state.orderedModifiers.length; index2++) {
+          for (var index3 = 0; index3 < state.orderedModifiers.length; index3++) {
             if (state.reset === true) {
               state.reset = false;
-              index2 = -1;
+              index3 = -1;
               continue;
             }
-            var _state$orderedModifie = state.orderedModifiers[index2], fn2 = _state$orderedModifie.fn, _state$orderedModifie2 = _state$orderedModifie.options, _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2, name = _state$orderedModifie.name;
+            var _state$orderedModifie = state.orderedModifiers[index3], fn2 = _state$orderedModifie.fn, _state$orderedModifie2 = _state$orderedModifie.options, _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2, name = _state$orderedModifie.name;
             if (typeof fn2 === "function") {
               state = fn2({
                 state,
@@ -52751,10 +52868,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       const activeChild = currentListNode.querySelector("[aria-selected=true]");
       if (!activeChild || activeChild !== document.activeElement)
         return null;
-      const index2 = items.indexOf(activeChild);
-      if (index2 === -1)
+      const index3 = items.indexOf(activeChild);
+      if (index3 === -1)
         return null;
-      let nextIndex = index2 + offset2;
+      let nextIndex = index3 + offset2;
       if (nextIndex >= items.length)
         nextIndex = 0;
       if (nextIndex < 0)
@@ -57085,7 +57202,7 @@ This file was not generated during the test run.`,
     ))), selectedFile?.path.endsWith("build.json") && /* @__PURE__ */ import_react89.default.createElement("div", null, /* @__PURE__ */ import_react89.default.createElement("h5", null, "Build Information"), (() => {
       try {
         const buildData = JSON.parse(selectedFile.content);
-        return /* @__PURE__ */ import_react89.default.createElement(import_react89.default.Fragment, null, buildData.errors?.length > 0 && /* @__PURE__ */ import_react89.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react89.default.createElement("h6", { className: "text-danger" }, "Errors (", buildData.errors.length, ")"), /* @__PURE__ */ import_react89.default.createElement("ul", { className: "list-unstyled" }, buildData.errors.map((error, index2) => /* @__PURE__ */ import_react89.default.createElement("li", { key: index2, className: "mb-2 p-2 bg-light rounded" }, /* @__PURE__ */ import_react89.default.createElement("div", { className: "text-danger fw-bold" }, error.text), error.location && /* @__PURE__ */ import_react89.default.createElement("div", { className: "small text-muted" }, "File: ", error.location.file, "Line: ", error.location.line, "Column: ", error.location.column), error.notes && error.notes.length > 0 && /* @__PURE__ */ import_react89.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react89.default.createElement("ul", null, error.notes.map((note, noteIndex) => /* @__PURE__ */ import_react89.default.createElement("li", { key: noteIndex }, note.text)))))))), buildData.warnings?.length > 0 && /* @__PURE__ */ import_react89.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react89.default.createElement("h6", { className: "text-warning" }, "Warnings (", buildData.warnings.length, ")"), /* @__PURE__ */ import_react89.default.createElement("ul", { className: "list-unstyled" }, buildData.warnings.map((warning8, index2) => /* @__PURE__ */ import_react89.default.createElement("li", { key: index2, className: "mb-2 p-2 bg-light rounded" }, /* @__PURE__ */ import_react89.default.createElement("div", { className: "text-warning fw-bold" }, warning8.text), warning8.location && /* @__PURE__ */ import_react89.default.createElement("div", { className: "small text-muted" }, "File: ", warning8.location.file, "Line: ", warning8.location.line, "Column: ", warning8.location.column), warning8.notes && warning8.notes.length > 0 && /* @__PURE__ */ import_react89.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react89.default.createElement("ul", null, warning8.notes.map((note, noteIndex) => /* @__PURE__ */ import_react89.default.createElement("li", { key: noteIndex }, note.text)))))))), (!buildData.errors || buildData.errors.length === 0) && (!buildData.warnings || buildData.warnings.length === 0) && /* @__PURE__ */ import_react89.default.createElement("div", { className: "alert alert-success" }, "No build errors or warnings"));
+        return /* @__PURE__ */ import_react89.default.createElement(import_react89.default.Fragment, null, buildData.errors?.length > 0 && /* @__PURE__ */ import_react89.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react89.default.createElement("h6", { className: "text-danger" }, "Errors (", buildData.errors.length, ")"), /* @__PURE__ */ import_react89.default.createElement("ul", { className: "list-unstyled" }, buildData.errors.map((error, index3) => /* @__PURE__ */ import_react89.default.createElement("li", { key: index3, className: "mb-2 p-2 bg-light rounded" }, /* @__PURE__ */ import_react89.default.createElement("div", { className: "text-danger fw-bold" }, error.text), error.location && /* @__PURE__ */ import_react89.default.createElement("div", { className: "small text-muted" }, "File: ", error.location.file, "Line: ", error.location.line, "Column: ", error.location.column), error.notes && error.notes.length > 0 && /* @__PURE__ */ import_react89.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react89.default.createElement("ul", null, error.notes.map((note, noteIndex) => /* @__PURE__ */ import_react89.default.createElement("li", { key: noteIndex }, note.text)))))))), buildData.warnings?.length > 0 && /* @__PURE__ */ import_react89.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react89.default.createElement("h6", { className: "text-warning" }, "Warnings (", buildData.warnings.length, ")"), /* @__PURE__ */ import_react89.default.createElement("ul", { className: "list-unstyled" }, buildData.warnings.map((warning8, index3) => /* @__PURE__ */ import_react89.default.createElement("li", { key: index3, className: "mb-2 p-2 bg-light rounded" }, /* @__PURE__ */ import_react89.default.createElement("div", { className: "text-warning fw-bold" }, warning8.text), warning8.location && /* @__PURE__ */ import_react89.default.createElement("div", { className: "small text-muted" }, "File: ", warning8.location.file, "Line: ", warning8.location.line, "Column: ", warning8.location.column), warning8.notes && warning8.notes.length > 0 && /* @__PURE__ */ import_react89.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react89.default.createElement("ul", null, warning8.notes.map((note, noteIndex) => /* @__PURE__ */ import_react89.default.createElement("li", { key: noteIndex }, note.text)))))))), (!buildData.errors || buildData.errors.length === 0) && (!buildData.warnings || buildData.warnings.length === 0) && /* @__PURE__ */ import_react89.default.createElement("div", { className: "alert alert-success" }, "No build errors or warnings"));
       } catch (e) {
         return /* @__PURE__ */ import_react89.default.createElement("div", { className: "alert alert-danger" }, "Error parsing build.json: ", e.message);
       }
@@ -57237,9 +57354,9 @@ This file was not generated during the test run.`,
                   return;
                 const parts = file.path.split("/");
                 let currentLevel = fileTree;
-                parts.forEach((part, index2) => {
+                parts.forEach((part, index3) => {
                   if (!currentLevel[part]) {
-                    if (index2 === parts.length - 1) {
+                    if (index3 === parts.length - 1) {
                       currentLevel[part] = {
                         __isFile: true,
                         content: file.content
@@ -58559,9 +58676,9 @@ This file was not generated during the test run.`,
     styleSheets.forEach((sheet) => {
       if ("cssRules" in sheet) {
         try {
-          toArray2(sheet.cssRules || []).forEach((item, index2) => {
+          toArray2(sheet.cssRules || []).forEach((item, index3) => {
             if (item.type === CSSRule.IMPORT_RULE) {
-              let importIndex = index2 + 1;
+              let importIndex = index3 + 1;
               const url = item.href;
               const deferred = fetchCSS(url).then((metadata) => embedFonts(metadata, options)).then((cssText) => parseCSS(cssText).forEach((rule) => {
                 try {
@@ -59860,10 +59977,10 @@ This file was not generated during the test run.`,
   };
 
   // src/components/stateful/GitIntegrationPage.tsx
-  var import_react112 = __toESM(require_react(), 1);
+  var import_react113 = __toESM(require_react(), 1);
 
   // src/components/pure/GitIntegrationView.tsx
-  var import_react111 = __toESM(require_react(), 1);
+  var import_react112 = __toESM(require_react(), 1);
 
   // src/services/FileService.ts
   var StaticFileService = class {
@@ -59915,6 +60032,73 @@ This file was not generated during the test run.`,
     }
   };
   var DevelopmentFileService = class {
+    constructor() {
+      this.ws = null;
+      this.changeCallbacks = [];
+      this.statusCallbacks = [];
+      this.branchCallbacks = [];
+      this.connectWebSocket();
+    }
+    connectWebSocket() {
+      try {
+        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+        const wsUrl = `${protocol}//${window.location.host}/api/git-ws`;
+        this.ws = new WebSocket(wsUrl);
+        this.ws.onopen = () => {
+          console.log("Git WebSocket connected");
+          this.ws?.send(JSON.stringify({ type: "get-initial-state" }));
+        };
+        this.ws.onmessage = (event) => {
+          try {
+            const data2 = JSON.parse(event.data);
+            switch (data2.type) {
+              case "changes":
+                this.changeCallbacks.forEach((callback) => callback(data2.changes));
+                break;
+              case "status":
+                this.statusCallbacks.forEach((callback) => callback(data2.status));
+                break;
+              case "branch":
+                this.branchCallbacks.forEach((callback) => callback(data2.branch));
+                break;
+              case "error":
+                console.error("Git WebSocket error:", data2.message);
+                break;
+            }
+          } catch (error) {
+            console.error("Error parsing WebSocket message:", error);
+          }
+        };
+        this.ws.onclose = () => {
+          console.log("Git WebSocket disconnected, attempting to reconnect...");
+          setTimeout(() => this.connectWebSocket(), 3e3);
+        };
+        this.ws.onerror = (error) => {
+          console.error("Git WebSocket error:", error);
+        };
+      } catch (error) {
+        console.error("Failed to connect Git WebSocket:", error);
+      }
+    }
+    // Subscribe to real-time changes
+    onChanges(callback) {
+      this.changeCallbacks.push(callback);
+      return () => {
+        this.changeCallbacks = this.changeCallbacks.filter((cb) => cb !== callback);
+      };
+    }
+    onStatusUpdate(callback) {
+      this.statusCallbacks.push(callback);
+      return () => {
+        this.statusCallbacks = this.statusCallbacks.filter((cb) => cb !== callback);
+      };
+    }
+    onBranchUpdate(callback) {
+      this.branchCallbacks.push(callback);
+      return () => {
+        this.branchCallbacks = this.branchCallbacks.filter((cb) => cb !== callback);
+      };
+    }
     async readFile(path) {
       const response = await fetch(
         `/api/files/read?path=${encodeURIComponent(path)}`
@@ -59945,6 +60129,7 @@ This file was not generated during the test run.`,
       });
       if (!response.ok)
         throw new Error(`Failed to write file: ${path}`);
+      this.ws?.send(JSON.stringify({ type: "file-changed", path }));
     }
     async createDirectory(path) {
       const response = await fetch("/api/files/mkdir", {
@@ -59954,6 +60139,7 @@ This file was not generated during the test run.`,
       });
       if (!response.ok)
         throw new Error(`Failed to create directory: ${path}`);
+      this.ws?.send(JSON.stringify({ type: "file-changed", path }));
     }
     async deleteFile(path) {
       const response = await fetch("/api/files/delete", {
@@ -59963,36 +60149,117 @@ This file was not generated during the test run.`,
       });
       if (!response.ok)
         throw new Error(`Failed to delete file: ${path}`);
+      this.ws?.send(JSON.stringify({ type: "file-changed", path }));
     }
-    async getFileStatus() {
-      return { status: "unchanged" };
+    async getFileStatus(path) {
+      const response = await fetch(
+        `/api/git/status?path=${encodeURIComponent(path)}`
+      );
+      if (!response.ok)
+        return { status: "unchanged" };
+      return await response.json();
     }
     async getChanges() {
-      return [];
+      const response = await fetch("/api/git/changes");
+      if (!response.ok)
+        return [];
+      return await response.json();
     }
-    async commitChanges() {
-      throw new Error("Git operations not implemented in development mode");
+    async commitChanges(message, description) {
+      const response = await fetch("/api/git/commit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, description })
+      });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Failed to commit changes: ${error}`);
+      }
+      this.ws?.send(JSON.stringify({ type: "refresh-status" }));
     }
     async pushChanges() {
-      throw new Error("Git operations not implemented in development mode");
+      const response = await fetch("/api/git/push", {
+        method: "POST"
+      });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Failed to push changes: ${error}`);
+      }
+      this.ws?.send(JSON.stringify({ type: "refresh-status" }));
     }
     async pullChanges() {
-      throw new Error("Git operations not implemented in development mode");
+      const response = await fetch("/api/git/pull", {
+        method: "POST"
+      });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Failed to pull changes: ${error}`);
+      }
+      this.ws?.send(JSON.stringify({ type: "refresh-status" }));
     }
     async getCurrentBranch() {
-      return "main";
+      const response = await fetch("/api/git/branch");
+      if (!response.ok)
+        return "main";
+      return await response.text();
     }
     async getRemoteStatus() {
-      return { ahead: 0, behind: 0 };
+      const response = await fetch("/api/git/remote-status");
+      if (!response.ok)
+        return { ahead: 0, behind: 0 };
+      return await response.json();
     }
   };
   var GitFileService = class {
+    constructor() {
+      this.git = null;
+      this.fs = null;
+      this.dir = "/testeranto-git";
+    }
+    async ensureGit() {
+      if (!this.git) {
+        this.git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
+        this.fs = await Promise.resolve().then(() => (init_web(), web_exports));
+      }
+    }
+    async ensureBufferPolyfill() {
+      if (typeof window !== "undefined" && !window.Buffer) {
+        const buffer = await Promise.resolve().then(() => __toESM(require_buffer(), 1));
+        window.Buffer = buffer.Buffer;
+      }
+    }
     async readFile(path) {
-      const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
-      return "";
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        const content = await this.git.readBlob({
+          fs: window.fs,
+          dir: this.dir,
+          oid: await this.git.resolveRef({ fs: window.fs, dir: this.dir, ref: "HEAD" }),
+          filepath: path
+        });
+        return new TextDecoder().decode(content.blob);
+      } catch (error) {
+        throw new Error(`Failed to read file: ${path}`);
+      }
     }
     async readDirectory(path) {
-      return [];
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        const files = await this.git.listFiles({
+          fs: window.fs,
+          dir: this.dir,
+          ref: "HEAD"
+        });
+        return files.map((name) => ({
+          name,
+          path: name,
+          type: name.includes(".") ? "file" : "directory"
+        }));
+      } catch (error) {
+        return [];
+      }
     }
     async exists(path) {
       try {
@@ -60003,34 +60270,142 @@ This file was not generated during the test run.`,
       }
     }
     async writeFile(path, content) {
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      console.log("Git mode write:", path);
     }
     async createDirectory(path) {
+      console.log("Git mode create directory:", path);
     }
     async deleteFile(path) {
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      console.log("Git mode delete:", path);
     }
     async getFileStatus(path) {
-      const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
-      return { status: "unchanged" };
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        const status = await this.git.status({
+          fs: window.fs,
+          dir: this.dir,
+          filepath: path
+        });
+        return { status };
+      } catch {
+        return { status: "unchanged" };
+      }
     }
     async getChanges() {
-      const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
-      return [];
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        const statusMatrix = await this.git.statusMatrix({
+          fs: window.fs,
+          dir: this.dir
+        });
+        return statusMatrix.map(([file, head, workdir, stage]) => {
+          let status = "unchanged";
+          if (head === 0 && workdir === 2)
+            status = "added";
+          else if (head === 1 && workdir === 0)
+            status = "deleted";
+          else if (workdir === 2)
+            status = "modified";
+          else if (head !== workdir)
+            status = "modified";
+          return { path: file, status };
+        }).filter((change) => change.status !== "unchanged");
+      } catch (error) {
+        console.warn("Failed to get changes:", error);
+        return [];
+      }
     }
     async commitChanges(message, description) {
-      const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        const changes = await this.getChanges();
+        for (const change of changes) {
+          if (change.status === "deleted") {
+            await this.git.remove({
+              fs: window.fs,
+              dir: this.dir,
+              filepath: change.path
+            });
+          } else {
+            await this.git.add({
+              fs: window.fs,
+              dir: this.dir,
+              filepath: change.path
+            });
+          }
+        }
+        await this.git.commit({
+          fs: window.fs,
+          dir: this.dir,
+          author: { name: "Testeranto User", email: "user@testeranto" },
+          message: description ? `${message}
+
+${description}` : message
+        });
+      } catch (error) {
+        throw new Error(`Failed to commit changes: ${error instanceof Error ? error.message : "Unknown error"}`);
+      }
     }
     async pushChanges() {
-      const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        await this.git.push({
+          fs: window.fs,
+          http: this.fs,
+          dir: this.dir,
+          remote: "origin",
+          ref: "main",
+          onAuth: () => ({ username: "token" })
+        });
+      } catch (error) {
+        throw new Error(`Failed to push changes: ${error instanceof Error ? error.message : "Unknown error"}`);
+      }
     }
     async pullChanges() {
-      const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        await this.git.pull({
+          fs: window.fs,
+          http: this.fs,
+          dir: this.dir,
+          remote: "origin",
+          ref: "main",
+          singleBranch: true,
+          onAuth: () => ({ username: "token" })
+        });
+      } catch (error) {
+        throw new Error(`Failed to pull changes: ${error instanceof Error ? error.message : "Unknown error"}`);
+      }
     }
     async getCurrentBranch() {
-      const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
-      return "main";
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        return await this.git.currentBranch({
+          fs: window.fs,
+          dir: this.dir
+        }) || "main";
+      } catch {
+        return "main";
+      }
     }
     async getRemoteStatus() {
-      return { ahead: 0, behind: 0 };
+      await this.ensureBufferPolyfill();
+      await this.ensureGit();
+      try {
+        return { ahead: 0, behind: 0 };
+      } catch {
+        return { ahead: 0, behind: 0 };
+      }
     }
   };
   var getFileService = (mode) => {
@@ -60046,45 +60421,116 @@ This file was not generated during the test run.`,
     }
   };
 
-  // src/components/pure/GitIntegrationView.tsx
-  var GitIntegrationView = () => {
+  // src/hooks/useGitMode.ts
+  var import_react111 = __toESM(require_react(), 1);
+  var useGitMode = () => {
     const { isConnected } = useWebSocket();
     const [mode, setMode] = (0, import_react111.useState)(isConnected ? "dev" : "static");
-    const [changes, setChanges] = (0, import_react111.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react111.useState)(true);
-    const [error, setError] = (0, import_react111.useState)(null);
-    const [commitSummary, setCommitSummary] = (0, import_react111.useState)("");
-    const [commitDescription, setCommitDescription] = (0, import_react111.useState)("");
-    const [remoteStatus, setRemoteStatus] = (0, import_react111.useState)({ ahead: 0, behind: 0 });
-    const [currentBranch, setCurrentBranch] = (0, import_react111.useState)("main");
-    const [isCommitting, setIsCommitting] = (0, import_react111.useState)(false);
-    const [isPushing, setIsPushing] = (0, import_react111.useState)(false);
-    const [isPulling, setIsPulling] = (0, import_react111.useState)(false);
-    const fileService = getFileService(mode);
     (0, import_react111.useEffect)(() => {
-      loadChanges();
-      loadGitStatus();
+      setMode(isConnected ? "dev" : "static");
+    }, [isConnected]);
+    return {
+      mode,
+      setMode,
+      isStatic: mode === "static",
+      isDev: mode === "dev",
+      isGit: mode === "git"
+    };
+  };
+
+  // src/components/pure/GitIntegrationView.tsx
+  var GitIntegrationView = () => {
+    const { mode, setMode, isStatic, isDev, isGit } = useGitMode();
+    const [changes, setChanges] = (0, import_react112.useState)([]);
+    const [isLoading, setIsLoading] = (0, import_react112.useState)(true);
+    const [error, setError] = (0, import_react112.useState)(null);
+    const [commitSummary, setCommitSummary] = (0, import_react112.useState)("");
+    const [commitDescription, setCommitDescription] = (0, import_react112.useState)("");
+    const [remoteStatus, setRemoteStatus] = (0, import_react112.useState)({ ahead: 0, behind: 0 });
+    const [currentBranch, setCurrentBranch] = (0, import_react112.useState)("main");
+    const [isCommitting, setIsCommitting] = (0, import_react112.useState)(false);
+    const [isPushing, setIsPushing] = (0, import_react112.useState)(false);
+    const [isPulling, setIsPulling] = (0, import_react112.useState)(false);
+    const [fileService, setFileService] = (0, import_react112.useState)(() => getFileService(mode));
+    (0, import_react112.useEffect)(() => {
+      const newFileService = getFileService(mode);
+      setFileService(newFileService);
     }, [mode]);
-    const loadChanges = async () => {
+    (0, import_react112.useEffect)(() => {
+      if (fileService && mode === "dev") {
+        const devFileService = fileService;
+        const unsubscribeChanges = devFileService.onChanges?.((newChanges) => {
+          setChanges(newChanges);
+        });
+        const unsubscribeStatus = devFileService.onStatusUpdate?.((newStatus) => {
+          setRemoteStatus(newStatus);
+        });
+        const unsubscribeBranch = devFileService.onBranchUpdate?.((newBranch) => {
+          setCurrentBranch(newBranch);
+        });
+        const loadData = async () => {
+          try {
+            setIsLoading(true);
+            await loadChanges();
+            await loadGitStatus();
+          } catch (err) {
+            console.warn("Failed to load data:", err);
+          } finally {
+            setIsLoading(false);
+          }
+        };
+        loadData();
+        return () => {
+          unsubscribeChanges?.();
+          unsubscribeStatus?.();
+          unsubscribeBranch?.();
+        };
+      } else if (fileService) {
+        const loadData = async () => {
+          try {
+            setIsLoading(true);
+            await loadChanges();
+            await loadGitStatus();
+          } catch (err) {
+            console.warn("Failed to load data:", err);
+          } finally {
+            setIsLoading(false);
+          }
+        };
+        loadData();
+      }
+    }, [fileService, mode]);
+    const loadChanges = async (event) => {
+      if (event) {
+        event.preventDefault();
+      }
       try {
         setIsLoading(true);
         setError(null);
         const changes2 = await fileService.getChanges();
         setChanges(changes2);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load changes");
+        const errorMessage = err instanceof Error ? err.message : "Failed to load changes";
+        console.error("Failed to load changes:", err);
+        setError(errorMessage);
       } finally {
         setIsLoading(false);
       }
     };
-    const loadGitStatus = async () => {
+    const loadGitStatus = async (event) => {
+      if (event) {
+        event.preventDefault();
+      }
       try {
+        setError(null);
         const branch = await fileService.getCurrentBranch();
         const status = await fileService.getRemoteStatus();
         setCurrentBranch(branch);
         setRemoteStatus(status);
       } catch (err) {
-        console.warn("Failed to load git status:", err);
+        const errorMessage = err instanceof Error ? err.message : "Failed to load git status";
+        console.error("Failed to load git status:", err);
+        setError(errorMessage);
       }
     };
     const handleSaveChanges = async () => {
@@ -60101,7 +60547,9 @@ This file was not generated during the test run.`,
         await loadChanges();
         await loadGitStatus();
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to commit changes");
+        const errorMessage = err instanceof Error ? err.message : "Failed to commit changes";
+        console.error("Failed to commit changes:", err);
+        setError(errorMessage);
       } finally {
         setIsCommitting(false);
       }
@@ -60122,7 +60570,9 @@ This file was not generated during the test run.`,
         await loadChanges();
         await loadGitStatus();
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to share changes");
+        const errorMessage = err instanceof Error ? err.message : "Failed to share changes";
+        console.error("Failed to share changes:", err);
+        setError(errorMessage);
       } finally {
         setIsCommitting(false);
         setIsPushing(false);
@@ -60136,7 +60586,9 @@ This file was not generated during the test run.`,
         await loadChanges();
         await loadGitStatus();
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to get updates");
+        const errorMessage = err instanceof Error ? err.message : "Failed to get updates";
+        console.error("Failed to get updates:", err);
+        setError(errorMessage);
       } finally {
         setIsPulling(false);
       }
@@ -60173,14 +60625,25 @@ This file was not generated during the test run.`,
         return "info";
       return "success";
     };
-    return /* @__PURE__ */ import_react111.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react111.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react111.default.createElement(Col_default, null, /* @__PURE__ */ import_react111.default.createElement("h2", null, "Git Integration"), /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: mode === "static" ? "secondary" : mode === "dev" ? "success" : "primary" }, mode.toUpperCase(), " MODE"), mode === "static" && /* @__PURE__ */ import_react111.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react111.default.createElement("small", null, "Static mode: Read-only access. Switch to Development mode for full Git functionality.")))), error && /* @__PURE__ */ import_react111.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, error), /* @__PURE__ */ import_react111.default.createElement(Row_default, null, /* @__PURE__ */ import_react111.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react111.default.createElement(Card_default, null, /* @__PURE__ */ import_react111.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react111.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react111.default.createElement(Button_default2, { variant: "outline-secondary", size: "sm", onClick: loadChanges, disabled: isLoading }, isLoading ? /* @__PURE__ */ import_react111.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB")), /* @__PURE__ */ import_react111.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react111.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react111.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react111.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react111.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react111.default.createElement("div", null, changes.map((change, index2) => /* @__PURE__ */ import_react111.default.createElement("div", { key: index2, className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react111.default.createElement(
+    return /* @__PURE__ */ import_react112.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react112.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react112.default.createElement(Col_default, null, /* @__PURE__ */ import_react112.default.createElement("h2", null, "Git Integration"), /* @__PURE__ */ import_react112.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: mode === "static" ? "secondary" : mode === "dev" ? "success" : "primary" }, mode.toUpperCase(), " MODE"), /* @__PURE__ */ import_react112.default.createElement(
+      "select",
+      {
+        className: "form-select form-select-sm",
+        style: { width: "auto" },
+        value: mode,
+        onChange: (e) => setMode(e.target.value)
+      },
+      /* @__PURE__ */ import_react112.default.createElement("option", { value: "static" }, "Static (Read-only)"),
+      /* @__PURE__ */ import_react112.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
+      /* @__PURE__ */ import_react112.default.createElement("option", { value: "git" }, "Git Remote")
+    )), mode === "static" && /* @__PURE__ */ import_react112.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react112.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react112.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react112.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react112.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, error), mode !== "static" && /* @__PURE__ */ import_react112.default.createElement(Row_default, null, /* @__PURE__ */ import_react112.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react112.default.createElement(Card_default, null, /* @__PURE__ */ import_react112.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react112.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react112.default.createElement(Button_default2, { variant: "outline-secondary", size: "sm", onClick: loadChanges, disabled: isLoading }, isLoading ? /* @__PURE__ */ import_react112.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB")), /* @__PURE__ */ import_react112.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react112.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react112.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react112.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react112.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react112.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react112.default.createElement("div", { key: index3, className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react112.default.createElement(
       Badge_default,
       {
         bg: getStatusBadgeVariant(change.status),
         className: "me-2"
       },
       change.status.charAt(0).toUpperCase() + change.status.slice(1)
-    ), /* @__PURE__ */ import_react111.default.createElement("span", { className: "small text-truncate" }, change.path))))))), /* @__PURE__ */ import_react111.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react111.default.createElement(Card_default, null, /* @__PURE__ */ import_react111.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react111.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react111.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react111.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react111.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react111.default.createElement(
+    ), /* @__PURE__ */ import_react112.default.createElement("span", { className: "small text-truncate" }, change.path))))))), /* @__PURE__ */ import_react112.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react112.default.createElement(Card_default, null, /* @__PURE__ */ import_react112.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react112.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react112.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react112.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react112.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react112.default.createElement(
       "input",
       {
         type: "text",
@@ -60191,7 +60654,7 @@ This file was not generated during the test run.`,
         onChange: (e) => setCommitSummary(e.target.value),
         disabled: mode === "static"
       }
-    ), /* @__PURE__ */ import_react111.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react111.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react111.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react111.default.createElement(
+    ), /* @__PURE__ */ import_react112.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react112.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react112.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react112.default.createElement(
       "textarea",
       {
         className: "form-control",
@@ -60202,69 +60665,81 @@ This file was not generated during the test run.`,
         onChange: (e) => setCommitDescription(e.target.value),
         disabled: mode === "static"
       }
-    )), /* @__PURE__ */ import_react111.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react111.default.createElement(
+    )), /* @__PURE__ */ import_react112.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react112.default.createElement(
       Button_default2,
       {
         variant: "primary",
         onClick: handleSaveChanges,
         disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
       },
-      isCommitting ? /* @__PURE__ */ import_react111.default.createElement(import_react111.default.Fragment, null, /* @__PURE__ */ import_react111.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Saving...") : "Save to Computer"
-    ), /* @__PURE__ */ import_react111.default.createElement(
+      isCommitting ? /* @__PURE__ */ import_react112.default.createElement(import_react112.default.Fragment, null, /* @__PURE__ */ import_react112.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Saving...") : "Save to Computer"
+    ), /* @__PURE__ */ import_react112.default.createElement(
       Button_default2,
       {
         variant: "success",
         onClick: handleShareChanges,
         disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
       },
-      isPushing ? /* @__PURE__ */ import_react111.default.createElement(import_react111.default.Fragment, null, /* @__PURE__ */ import_react111.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Sharing...") : "Save & Share"
-    ))))), /* @__PURE__ */ import_react111.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react111.default.createElement(Card_default, null, /* @__PURE__ */ import_react111.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react111.default.createElement("h5", null, "Sync with Remote")), /* @__PURE__ */ import_react111.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react111.default.createElement("div", { className: "text-center mb-3" }, /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: getSyncStatusVariant() }, getSyncStatusText()), /* @__PURE__ */ import_react111.default.createElement("div", { className: "small text-muted mt-1" }, "Branch: ", currentBranch)), /* @__PURE__ */ import_react111.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react111.default.createElement(
+      isPushing ? /* @__PURE__ */ import_react112.default.createElement(import_react112.default.Fragment, null, /* @__PURE__ */ import_react112.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Sharing...") : "Save & Share"
+    ))))), /* @__PURE__ */ import_react112.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react112.default.createElement(Card_default, null, /* @__PURE__ */ import_react112.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react112.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react112.default.createElement(Button_default2, { variant: "outline-secondary", size: "sm", onClick: (e) => loadGitStatus(e) }, "\u21BB")), /* @__PURE__ */ import_react112.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react112.default.createElement("div", { className: "text-center mb-3" }, /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: getSyncStatusVariant() }, getSyncStatusText()), /* @__PURE__ */ import_react112.default.createElement("div", { className: "small text-muted mt-1" }, "Branch: ", currentBranch)), /* @__PURE__ */ import_react112.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react112.default.createElement(
       Button_default2,
       {
         variant: "outline-primary",
         onClick: handleGetUpdates,
         disabled: mode === "static" || isPulling
       },
-      isPulling ? /* @__PURE__ */ import_react111.default.createElement(import_react111.default.Fragment, null, /* @__PURE__ */ import_react111.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Updating...") : "Get Updates"
-    ), /* @__PURE__ */ import_react111.default.createElement(
+      isPulling ? /* @__PURE__ */ import_react112.default.createElement(import_react112.default.Fragment, null, /* @__PURE__ */ import_react112.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Updating...") : "Get Updates"
+    ), /* @__PURE__ */ import_react112.default.createElement(
       Button_default2,
       {
         variant: "outline-success",
         disabled: mode === "static" || remoteStatus.ahead === 0,
-        onClick: () => fileService.pushChanges()
+        onClick: async (e) => {
+          e.preventDefault();
+          try {
+            setIsPushing(true);
+            setError(null);
+            await fileService.pushChanges();
+            await loadGitStatus();
+          } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : "Failed to push changes";
+            console.error("Failed to push changes:", err);
+            setError(errorMessage);
+          } finally {
+            setIsPushing(false);
+          }
+        }
       },
-      "Share Changes (",
-      remoteStatus.ahead,
-      ")"
-    )), /* @__PURE__ */ import_react111.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react111.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))))));
+      isPushing ? /* @__PURE__ */ import_react112.default.createElement(import_react112.default.Fragment, null, /* @__PURE__ */ import_react112.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Sharing...") : `Share Changes (${remoteStatus.ahead})`
+    )), /* @__PURE__ */ import_react112.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react112.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))))), mode === "static" && /* @__PURE__ */ import_react112.default.createElement(Row_default, null, /* @__PURE__ */ import_react112.default.createElement(Col_default, null, /* @__PURE__ */ import_react112.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react112.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react112.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
   };
 
   // src/components/stateful/GitIntegrationPage.tsx
   var GitIntegrationPage = () => {
-    return /* @__PURE__ */ import_react112.default.createElement(GitIntegrationView, null);
+    return /* @__PURE__ */ import_react113.default.createElement(GitIntegrationView, null);
   };
 
   // src/App.tsx
-  var WebSocketContext = (0, import_react113.createContext)({
+  var WebSocketContext = (0, import_react114.createContext)({
     ws: null,
     isConnected: false
   });
-  var TutorialModeContext = (0, import_react113.createContext)({
+  var TutorialModeContext = (0, import_react114.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
   var useWebSocket = () => {
-    return (0, import_react113.useContext)(WebSocketContext);
+    return (0, import_react114.useContext)(WebSocketContext);
   };
   var useTutorialMode = () => {
-    return (0, import_react113.useContext)(TutorialModeContext);
+    return (0, import_react114.useContext)(TutorialModeContext);
   };
   var App = () => {
-    const [ws, setWs] = (0, import_react113.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react113.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react113.useState)(false);
-    (0, import_react113.useEffect)(() => {
+    const [ws, setWs] = (0, import_react114.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react114.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react114.useState)(false);
+    (0, import_react114.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -60290,7 +60765,7 @@ This file was not generated during the test run.`,
         websocket.close();
       };
     }, []);
-    return /* @__PURE__ */ import_react113.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react113.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react113.default.createElement(HashRouter, null, /* @__PURE__ */ import_react113.default.createElement(AppFrame, null, /* @__PURE__ */ import_react113.default.createElement(Routes, null, /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react113.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react113.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react113.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react113.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react113.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react113.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react113.default.createElement(TextEditorPage, null) }), isConnected ? /* @__PURE__ */ import_react113.default.createElement(import_react113.default.Fragment, null, /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/processes", element: /* @__PURE__ */ import_react113.default.createElement(ProcessManagerPage, null) }), /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react113.default.createElement(SingleProcessPage, null) })) : null, /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react113.default.createElement(Settings, null) }), /* @__PURE__ */ import_react113.default.createElement(Route, { path: "/git", element: /* @__PURE__ */ import_react113.default.createElement(GitIntegrationPage, null) }))))));
+    return /* @__PURE__ */ import_react114.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react114.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react114.default.createElement(HashRouter, null, /* @__PURE__ */ import_react114.default.createElement(AppFrame, null, /* @__PURE__ */ import_react114.default.createElement(Routes, null, /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react114.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react114.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react114.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react114.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/features-reporter", element: /* @__PURE__ */ import_react114.default.createElement(FeaturesReporter, null) }), /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/design-editor", element: /* @__PURE__ */ import_react114.default.createElement(DesignEditorPage, null) }), /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/text-editor", element: /* @__PURE__ */ import_react114.default.createElement(TextEditorPage, null) }), isConnected ? /* @__PURE__ */ import_react114.default.createElement(import_react114.default.Fragment, null, /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/processes", element: /* @__PURE__ */ import_react114.default.createElement(ProcessManagerPage, null) }), /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react114.default.createElement(SingleProcessPage, null) })) : null, /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react114.default.createElement(Settings, null) }), /* @__PURE__ */ import_react114.default.createElement(Route, { path: "/git", element: /* @__PURE__ */ import_react114.default.createElement(GitIntegrationPage, null) }))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -60298,9 +60773,9 @@ This file was not generated during the test run.`,
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react113.default.createElement(App));
+          root.render(import_react114.default.createElement(App));
         } else {
-          import_client.default.render(import_react113.default.createElement(App), rootElement);
+          import_client.default.render(import_react114.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -60312,7 +60787,7 @@ This file was not generated during the test run.`,
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react113.default;
+    window.React = import_react114.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);
