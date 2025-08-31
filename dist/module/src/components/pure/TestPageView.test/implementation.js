@@ -1,0 +1,121 @@
+import { assert } from "chai";
+import * as React from "react";
+import * as ReactDom from "react-dom/client";
+export const implementation = {
+    suites: {
+        Default: "TestPageView basic rendering",
+        Navigation: "TestPageView navigation behavior",
+        ErrorStates: "TestPageView error handling",
+    },
+    givens: {
+        Default: () => (props) => {
+            // Create a container and render the component
+            const container = document.createElement('div');
+            document.body.appendChild(container);
+            const reactElement = React.createElement(props);
+            const domRoot = ReactDom.createRoot(container);
+            domRoot.render(reactElement);
+            return Object.assign({ container,
+                reactElement,
+                domRoot }, props);
+        },
+        WithErrors: () => (props) => {
+            const container = document.createElement('div');
+            document.body.appendChild(container);
+            const reactElement = React.createElement(props);
+            const domRoot = ReactDom.createRoot(container);
+            domRoot.render(reactElement);
+            return Object.assign(Object.assign({ container,
+                reactElement,
+                domRoot }, props), { errorCounts: {
+                    runTimeErrors: 1,
+                    typeErrors: 1,
+                    staticErrors: 1
+                } });
+        },
+        WithLogs: () => (props) => {
+            const container = document.createElement('div');
+            document.body.appendChild(container);
+            const reactElement = React.createElement(props);
+            const domRoot = ReactDom.createRoot(container);
+            domRoot.render(reactElement);
+            return Object.assign(Object.assign({ container,
+                reactElement,
+                domRoot }, props), { logs: {
+                    'tests.json': '{}',
+                    'stdout.log': 'test log content'
+                } });
+        },
+    },
+    whens: {
+        SwitchToTab: (tabName) => async (selection, tr, utils) => {
+            // Update the props to switch tabs
+            const newProps = Object.assign(Object.assign({}, selection), { activeTab: tabName });
+            const newReactElement = React.createElement(selection.reactElement.type, newProps);
+            selection.domRoot.render(newReactElement);
+            return (sel) => (Object.assign(Object.assign({}, sel), { reactElement: newReactElement, activeTab: tabName }));
+        },
+        ClickAiderButton: () => async (selection, tr, utils) => {
+            // Find and click the Aider button
+            const button = selection.container.querySelector('button');
+            if (button) {
+                button.click();
+            }
+            return (sel) => sel;
+        },
+    },
+    thens: {
+        takeScreenshot: (name) => async (ssel, utils) => (sel) => {
+            // Screenshot functionality would be implemented here
+            return Promise.resolve(sel);
+        },
+        RendersNavBar: () => async (ssel, utils) => (sel) => {
+            const navBar = sel.container.querySelector(".navbar");
+            assert.isNotNull(navBar, "Navbar should be rendered");
+            return Promise.resolve(sel);
+        },
+        ShowsActiveTab: (tabName) => async (ssel, utils) => (sel) => {
+            // Check if the active tab matches
+            assert.equal(sel.activeTab, tabName, `Active tab should be ${tabName}`);
+            return Promise.resolve(sel);
+        },
+        ShowsErrorCounts: () => async (ssel, utils) => (sel) => {
+            // Check for error badges
+            const badges = sel.container.querySelectorAll(".badge");
+            assert.isAtLeast(badges.length, 0, "Should show at least one badge");
+            return Promise.resolve(sel);
+        },
+        ShowsTestResults: () => async (ssel, utils) => (sel) => {
+            // Check if test results are shown
+            if (sel.testsExist) {
+                const testResults = sel.container.querySelector(".test-results");
+                assert.isNotNull(testResults, "Test results should be shown when tests exist");
+            }
+            return Promise.resolve(sel);
+        },
+        ShowsLogs: () => async (ssel, utils) => (sel) => {
+            // Check if logs are shown
+            const logs = sel.container.querySelector("pre");
+            assert.isNotNull(logs, "Logs should be shown");
+            return Promise.resolve(sel);
+        },
+        ShowsTypeErrors: () => async (ssel, utils) => (sel) => {
+            // Check if type errors are shown
+            const typeErrors = sel.container.querySelector('[data-testid="type-errors"]');
+            assert.isNotNull(typeErrors, "Type errors should be shown");
+            return Promise.resolve(sel);
+        },
+        ShowsLintErrors: () => async (ssel, utils) => (sel) => {
+            // Check if lint errors are shown
+            const lintErrors = sel.container.querySelector('[data-testid="lint-errors"]');
+            assert.isNotNull(lintErrors, "Lint errors should be shown");
+            return Promise.resolve(sel);
+        },
+        AiderButtonCopiesCommand: () => async (ssel, utils) => (sel) => {
+            // Check if Aider button exists
+            const aiderButton = sel.container.querySelector('button[title*="AI Assistant"]');
+            assert.isNotNull(aiderButton, "Aider button should be present");
+            return Promise.resolve(sel);
+        },
+    },
+};

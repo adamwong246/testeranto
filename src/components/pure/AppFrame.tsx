@@ -123,6 +123,29 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             )}
           </Nav.Link>
 
+          {/* Git Integration Link */}
+          <Nav.Link
+            as={NavLink}
+            to="/git"
+            className={`${location.pathname === '/git' ? 'active' : ''} d-flex align-items-center justify-content-center`}
+            style={{ height: '40px', width: '40px' }}
+          >
+            {tutorialMode ? (
+              <OverlayTrigger
+                placement="right"
+                overlay={
+                  <Tooltip id="git-tooltip">
+                    Git Integration
+                  </Tooltip>
+                }
+              >
+                <span>🐙</span>
+              </OverlayTrigger>
+            ) : (
+              <span>🐙</span>
+            )}
+          </Nav.Link>
+
           {/* Settings Link - Always clickable with hover, tutorial tooltip conditionally */}
           <Nav.Link
             as={NavLink}
@@ -152,7 +175,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           placement="right"
           overlay={
             <Tooltip id="status-tooltip">
-              {isConnected ? 'Dev mode' : 'Static mode. Some features are disabled.'}
+              {isConnected ? 'Dev mode - Full access' : 'Static mode - Read only'}
             </Tooltip>
           }
         >

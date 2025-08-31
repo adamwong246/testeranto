@@ -1,0 +1,34 @@
+import { Browser, Page, ScreenshotOptions } from "puppeteer-core";
+import { PassThrough } from "stream";
+import { ITLog } from "../lib/index.js";
+import { IBuiltConfig } from "../Types.js";
+export declare abstract class PM_Base {
+    browser: Browser;
+    configs: IBuiltConfig;
+    constructor(configs: IBuiltConfig);
+    customclose(): void;
+    waitForSelector(p: string, s: string): any;
+    closePage(p: any): any;
+    newPage(): Promise<string>;
+    goto(p: any, url: string): any;
+    $(selector: string, p: string): Promise<any>;
+    pages(): Promise<string[]>;
+    screencast(ssOpts: ScreenshotOptions, testName: string, page: Page): Promise<Uint8Array<ArrayBufferLike>>;
+    customScreenShot(ssOpts: ScreenshotOptions, testName: string, pageUid: any): Promise<Uint8Array<ArrayBufferLike>>;
+    end(uid: number): Promise<boolean>;
+    existsSync(destFolder: string): boolean;
+    mkdirSync(fp: string): Promise<string | false | undefined>;
+    writeFileSync(...x: any[]): Promise<boolean>;
+    createWriteStream(filepath: string, testName: string): Promise<number>;
+    testArtiFactoryfileWriter(tLog: ITLog, callback: (Promise: any) => void): (fPath: any, value: string | Buffer | PassThrough) => void;
+    write(uid: number, contents: string): Promise<boolean>;
+    page(p: any): string | undefined;
+    click(selector: string, page: Page): Promise<void>;
+    focusOn(selector: string, p: string): Promise<void>;
+    typeInto(value: string, p: string): Promise<void>;
+    getAttribute(selector: string, attribute: string, p: string): void;
+    getInnerHtml(selector: string, p: string): Promise<unknown>;
+    isDisabled(selector: string, p: string): void;
+    screencastStop(s: string): Promise<void>;
+    doInPage(p: string, cb: (p: Page) => unknown): Promise<void>;
+}

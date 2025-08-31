@@ -2,7 +2,7 @@
 
 ## Brings vibe coding to the real world
 
-Testeranto lets you vibe code large, real-world codebases by intelligently managing the AI context
+Testeranto lets you vibe code large, real-world polyglot codebases by intelligently managing the AI context
 
 #### 🚀 Join Our Beta Program! 🚀
 
@@ -28,6 +28,7 @@ We're launching a private beta for GitHub stargazers first, followed by a public
 ## What is testeranto?
 
 - Testeranto produces test results that can be fed to Aider.ai to automatically fix failing tests.
+- Testeranto supports TypeScript/Javascript, golang and python (with more planed)
 - Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you to wrap your code with a semantic interface that is based on TS type signatures.
 - Testeranto can run tests in the frontend, the backend, or both.
 - Testeranto can be used to test anything that can be bundled with esbuild.

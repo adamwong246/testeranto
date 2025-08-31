@@ -12,6 +12,7 @@ import { TextEditorPage } from './components/stateful/TextEditorPage';
 import { ProcessManagerPage } from './components/stateful/ProcessManagerPage';
 import { SingleProcessPage } from './components/stateful/SingleProcessPage';
 import { Settings } from './components/pure/Settings';
+import { GitIntegrationPage } from './components/stateful/GitIntegrationPage';
 
 interface WebSocketContextType {
   ws: WebSocket | null;
@@ -102,6 +103,7 @@ export const App = () => {
                 </>
               ) : null}
               <Route path="/settings" element={<Settings />} />
+              <Route path="/git" element={<GitIntegrationPage />} />
             </Routes>
           </AppFrame>
         </Router>
