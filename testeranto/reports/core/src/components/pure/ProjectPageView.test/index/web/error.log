@@ -1,7 +1,7 @@
 TypeError: Cannot read properties of undefined (reading 'path')
     at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2442:62)
     at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:1976:32)
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756629598885:2051:16)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756684612219:2051:16)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2741:28
     at async BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2833:22)
     at async BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2605:9)
@@ -12,7 +12,7 @@ TypeError: Cannot read properties of undefined (reading 'path')
 TypeError: Cannot read properties of undefined (reading 'path')
     at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2442:62)
     at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:1976:32)
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756629598885:2051:16)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs?cacheBust=1756684612219:2051:16)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2741:28
     at async BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2833:22)
     at async BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2605:9)
