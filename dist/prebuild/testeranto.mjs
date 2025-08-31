@@ -167,6 +167,203 @@ var init_queue = __esm({
   }
 });
 
+// src/PM/utils.ts
+import ansiC from "ansi-colors";
+import path2 from "path";
+import fs from "fs";
+import crypto from "node:crypto";
+function runtimeLogs(runtime, reportDest) {
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs.existsSync(safeDest)) {
+      fs.mkdirSync(safeDest, { recursive: true });
+    }
+    if (runtime === "node") {
+      return {
+        stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "web") {
+      return {
+        info: fs.createWriteStream(`${safeDest}/info.log`),
+        warn: fs.createWriteStream(`${safeDest}/warn.log`),
+        error: fs.createWriteStream(`${safeDest}/error.log`),
+        debug: fs.createWriteStream(`${safeDest}/debug.log`),
+        exit: fs.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "pure") {
+      return {
+        exit: fs.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "pitono") {
+      return {
+        stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else {
+      throw `unknown runtime: ${runtime}`;
+    }
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+function createLogStreams(reportDest, runtime) {
+  if (!fs.existsSync(reportDest)) {
+    fs.mkdirSync(reportDest, { recursive: true });
+  }
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs.existsSync(safeDest)) {
+      fs.mkdirSync(safeDest, { recursive: true });
+    }
+    const streams = runtimeLogs(runtime, safeDest);
+    return {
+      ...streams,
+      closeAll: () => {
+        Object.values(streams).forEach(
+          (stream) => !stream.closed && stream.close()
+        );
+      },
+      writeExitCode: (code, error) => {
+        if (error) {
+          streams.exit.write(`Error: ${error.message}
+`);
+          if (error.stack) {
+            streams.exit.write(`Stack Trace:
+${error.stack}
+`);
+          }
+        }
+        streams.exit.write(`${code}
+`);
+      },
+      exit: streams.exit
+    };
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+async function fileHash(filePath, algorithm = "md5") {
+  return new Promise((resolve, reject) => {
+    const hash = crypto.createHash(algorithm);
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.on("data", (data) => {
+      hash.update(data);
+    });
+    fileStream.on("end", () => {
+      const fileHash2 = hash.digest("hex");
+      resolve(fileHash2);
+    });
+    fileStream.on("error", (error) => {
+      reject(`Error reading file: ${error.message}`);
+    });
+  });
+}
+async function writeFileAndCreateDir(filePath, data) {
+  const dirPath = path2.dirname(filePath);
+  try {
+    await fs.promises.mkdir(dirPath, { recursive: true });
+    await fs.writeFileSync(filePath, data);
+  } catch (error) {
+    console.error(`Error writing file: ${error}`);
+  }
+}
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+async function pollForFile(path12, timeout = 2e3) {
+  const intervalObj = setInterval(function() {
+    const file = path12;
+    const fileExists = fs.existsSync(file);
+    if (fileExists) {
+      clearInterval(intervalObj);
+    }
+  }, timeout);
+}
+var statusMessagePretty, filesHash, executablePath, puppeteerConfigs;
+var init_utils2 = __esm({
+  "src/PM/utils.ts"() {
+    "use strict";
+    statusMessagePretty = (failures, test, runtime) => {
+      if (failures === 0) {
+        console.log(ansiC.green(ansiC.inverse(`${runtime} > ${test}`)));
+      } else if (failures > 0) {
+        console.log(
+          ansiC.red(
+            ansiC.inverse(
+              `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
+            )
+          )
+        );
+      } else {
+        console.log(
+          ansiC.red(ansiC.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
+        );
+      }
+    };
+    filesHash = async (files3, algorithm = "md5") => {
+      return new Promise((resolve, reject) => {
+        resolve(
+          files3.reduce(async (mm, f2) => {
+            return await mm + await fileHash(f2);
+          }, Promise.resolve(""))
+        );
+      });
+    };
+    executablePath = "/opt/homebrew/bin/chromium";
+    puppeteerConfigs = {
+      slowMo: 1,
+      waitForInitialPage: false,
+      executablePath,
+      headless: true,
+      defaultViewport: null,
+      // Disable default 800x600 viewport
+      dumpio: false,
+      devtools: false,
+      args: [
+        "--allow-file-access-from-files",
+        "--allow-insecure-localhost",
+        "--allow-running-insecure-content",
+        "--auto-open-devtools-for-tabs",
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--disable-features=site-per-process",
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--disable-site-isolation-trials",
+        "--disable-web-security",
+        "--no-first-run",
+        "--no-sandbox",
+        "--no-startup-window",
+        "--reduce-security-for-testing",
+        "--remote-allow-origins=*",
+        "--start-maximized",
+        "--unsafely-treat-insecure-origin-as-secure=*",
+        `--remote-debugging-port=3234`
+        // "--disable-features=IsolateOrigins,site-per-process",
+        // "--disable-features=IsolateOrigins",
+        // "--disk-cache-dir=/dev/null",
+        // "--disk-cache-size=1",
+        // "--no-zygote",
+        // "--remote-allow-origins=ws://localhost:3234",
+        // "--single-process",
+        // "--start-maximized",
+        // "--unsafely-treat-insecure-origin-as-secure",
+        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
+      ]
+    };
+  }
+});
+
 // src/esbuildConfigs/index.ts
 var esbuildConfigs_default;
 var init_esbuildConfigs = __esm({
@@ -195,7 +392,7 @@ var init_esbuildConfigs = __esm({
 });
 
 // src/esbuildConfigs/inputFilesPlugin.ts
-import fs from "fs";
+import fs2 from "fs";
 var otherInputs, register, inputFilesPlugin_default;
 var init_inputFilesPlugin = __esm({
   "src/esbuildConfigs/inputFilesPlugin.ts"() {
@@ -209,8 +406,8 @@ var init_inputFilesPlugin = __esm({
     };
     inputFilesPlugin_default = (platform, testName2) => {
       const f2 = `testeranto/metafiles/${platform}/${testName2}.json`;
-      if (!fs.existsSync(`testeranto/metafiles/${platform}`)) {
-        fs.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
+      if (!fs2.existsSync(`testeranto/metafiles/${platform}`)) {
+        fs2.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
       }
       return {
         register,
@@ -218,7 +415,7 @@ var init_inputFilesPlugin = __esm({
           name: "metafileWriter",
           setup(build) {
             build.onEnd((result) => {
-              fs.writeFileSync(f2, JSON.stringify(result, null, 2));
+              fs2.writeFileSync(f2, JSON.stringify(result, null, 2));
             });
           }
         }
@@ -228,7 +425,7 @@ var init_inputFilesPlugin = __esm({
 });
 
 // src/esbuildConfigs/featuresPlugin.ts
-import path2 from "path";
+import path3 from "path";
 var featuresPlugin_default;
 var init_featuresPlugin = __esm({
   "src/esbuildConfigs/featuresPlugin.ts"() {
@@ -240,7 +437,7 @@ var init_featuresPlugin = __esm({
           if (args.resolveDir === "")
             return;
           return {
-            path: path2.isAbsolute(args.path) ? args.path : path2.join(args.resolveDir, args.path),
+            path: path3.isAbsolute(args.path) ? args.path : path3.join(args.resolveDir, args.path),
             namespace: "feature-markdown"
           };
         });
@@ -267,7 +464,7 @@ var init_featuresPlugin = __esm({
 });
 
 // src/esbuildConfigs/rebuildPlugin.ts
-import fs2 from "fs";
+import fs3 from "fs";
 var rebuildPlugin_default;
 var init_rebuildPlugin = __esm({
   "src/esbuildConfigs/rebuildPlugin.ts"() {
@@ -279,7 +476,7 @@ var init_rebuildPlugin = __esm({
           build.onEnd((result) => {
             console.log(`${r} > build ended with ${result.errors.length} errors`);
             if (result.errors.length > 0) {
-              fs2.writeFileSync(
+              fs3.writeFileSync(
                 `./testeranto/reports${r}_build_errors`,
                 JSON.stringify(result, null, 2)
               );
@@ -337,7 +534,7 @@ var init_node = __esm({
 
 // src/esbuildConfigs/web.ts
 import { polyfillNode } from "esbuild-plugin-polyfill-node";
-import path3 from "path";
+import path4 from "path";
 var web_default;
 var init_web = __esm({
   "src/esbuildConfigs/web.ts"() {
@@ -356,7 +553,7 @@ var init_web = __esm({
         treeShaking: true,
         outdir: `testeranto/bundles/web/${testName2}`,
         alias: {
-          react: path3.resolve("./node_modules/react")
+          react: path4.resolve("./node_modules/react")
         },
         metafile: true,
         external: [
@@ -401,7 +598,7 @@ var init_web = __esm({
 });
 
 // src/esbuildConfigs/consoleDetectorPlugin.ts
-import fs3 from "fs";
+import fs4 from "fs";
 var consoleDetectorPlugin;
 var init_consoleDetectorPlugin = __esm({
   "src/esbuildConfigs/consoleDetectorPlugin.ts"() {
@@ -410,7 +607,7 @@ var init_consoleDetectorPlugin = __esm({
       name: "console-detector",
       setup(build) {
         build.onLoad({ filter: /\.(js|ts)$/ }, async (args) => {
-          const contents = await fs3.promises.readFile(args.path, "utf8");
+          const contents = await fs4.promises.readFile(args.path, "utf8");
           const consolePattern = /console\.(log|error|warn|info|debug|trace|dir|dirxml|table|group|groupEnd|clear|count|countReset|assert|profile|profileEnd|time|timeLog|timeEnd|timeStamp|context|memory)/g;
           const matches = contents.match(consolePattern);
           if (matches) {
@@ -505,8 +702,8 @@ var init_pure = __esm({
 });
 
 // src/PM/base.ts
-import fs4 from "fs";
-import path4 from "path";
+import fs5 from "fs";
+import path5 from "path";
 var fileStreams3, fPaths, files, recorders, screenshots, PM_Base;
 var init_base = __esm({
   "src/PM/base.ts"() {
@@ -520,6 +717,67 @@ var init_base = __esm({
       constructor(configs) {
         this.configs = configs;
       }
+      mapping() {
+        return [
+          ["$", this.$],
+          ["click", this.click],
+          ["closePage", this.closePage],
+          ["createWriteStream", this.createWriteStream],
+          ["customclose", this.customclose],
+          ["customScreenShot", this.customScreenShot.bind(this)],
+          ["end", this.end],
+          ["existsSync", this.existsSync],
+          ["focusOn", this.focusOn],
+          ["getAttribute", this.getAttribute],
+          ["getInnerHtml", this.getInnerHtml],
+          // ["setValue", this.setValue],
+          ["goto", this.goto.bind(this)],
+          ["isDisabled", this.isDisabled],
+          // ["launchSideCar", this.launchSideCar.bind(this)],
+          ["mkdirSync", this.mkdirSync],
+          ["newPage", this.newPage],
+          ["page", this.page],
+          ["pages", this.pages],
+          ["screencast", this.screencast],
+          ["screencastStop", this.screencastStop],
+          // ["stopSideCar", this.stopSideCar.bind(this)],
+          ["typeInto", this.typeInto],
+          ["waitForSelector", this.waitForSelector],
+          ["write", this.write],
+          ["writeFileSync", this.writeFileSync]
+        ];
+      }
+      // keep this forever. do not delete
+      // mapping(): [string, (...a) => any][] {
+      //   return [
+      //     ["$", (...args) => this.$(...args)],
+      //     ["click", (...args) => this.click(...args)],
+      //     ["closePage", (...args) => this.closePage(...args)],
+      //     ["createWriteStream", (...args) => this.createWriteStream(...args)],
+      //     ["customclose", (...args) => this.customclose(...args)],
+      //     ["customScreenShot", (...args) => this.customScreenShot(...args)],
+      //     ["end", (...args) => this.end(...args)],
+      //     ["existsSync", (...args) => this.existsSync(...args)],
+      //     ["focusOn", (...args) => this.focusOn(...args)],
+      //     ["getAttribute", (...args) => this.getAttribute(...args)],
+      //     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
+      //     // ["setValue", (...args) => this.setValue(...args)],
+      //     ["goto", (...args) => this.goto(...args)],
+      //     ["isDisabled", (...args) => this.isDisabled(...args)],
+      //     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
+      //     ["mkdirSync", (...args) => this.mkdirSync(...args)],
+      //     ["newPage", (...args) => this.newPage(...args)],
+      //     ["page", (...args) => this.page(...args)],
+      //     ["pages", (...args) => this.pages(...args)],
+      //     ["screencast", (...args) => this.screencast(...args)],
+      //     ["screencastStop", (...args) => this.screencastStop(...args)],
+      //     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
+      //     ["typeInto", (...args) => this.typeInto(...args)],
+      //     ["waitForSelector", (...args) => this.waitForSelector(...args)],
+      //     ["write", (...args) => this.write(...args)],
+      //     ["writeFileSync", (...args) => this.writeFileSync(...args)],
+      //   ];
+      // }
       // abstract launchSideCar(n: number, testName: string, projectName: string);
       customclose() {
         throw new Error("customclose not implemented.");
@@ -544,10 +802,10 @@ var init_base = __esm({
       async newPage() {
         return (await this.browser.newPage()).mainFrame()._id;
       }
-      goto(p, url3) {
+      goto(p, url4) {
         return new Promise((res) => {
           this.doInPage(p, async (page) => {
-            await page?.goto(url3);
+            await page?.goto(url4);
             res({});
           });
         });
@@ -568,8 +826,8 @@ var init_base = __esm({
       }
       async screencast(ssOpts, testName2, page) {
         const p = ssOpts.path;
-        const dir = path4.dirname(p);
-        fs4.mkdirSync(dir, {
+        const dir = path5.dirname(p);
+        fs5.mkdirSync(dir, {
           recursive: true
         });
         if (!files[testName2]) {
@@ -589,8 +847,8 @@ var init_base = __esm({
       }
       async customScreenShot(ssOpts, testName2, pageUid) {
         const p = ssOpts.path;
-        const dir = path4.dirname(p);
-        fs4.mkdirSync(dir, {
+        const dir = path5.dirname(p);
+        fs5.mkdirSync(dir, {
           recursive: true
         });
         if (!files[testName2]) {
@@ -616,11 +874,11 @@ var init_base = __esm({
         return true;
       }
       existsSync(destFolder) {
-        return fs4.existsSync(destFolder);
+        return fs5.existsSync(destFolder);
       }
       async mkdirSync(fp) {
-        if (!fs4.existsSync(fp)) {
-          return fs4.mkdirSync(fp, {
+        if (!fs5.existsSync(fp)) {
+          return fs5.mkdirSync(fp, {
             recursive: true
           });
         }
@@ -631,26 +889,26 @@ var init_base = __esm({
         const contents = x[1];
         const testName2 = x[2];
         return new Promise(async (res) => {
-          fs4.mkdirSync(path4.dirname(filepath), {
+          fs5.mkdirSync(path5.dirname(filepath), {
             recursive: true
           });
           if (!files[testName2]) {
             files[testName2] = /* @__PURE__ */ new Set();
           }
           files[testName2].add(filepath);
-          await fs4.writeFileSync(filepath, contents);
+          await fs5.writeFileSync(filepath, contents);
           res(true);
         });
       }
       async createWriteStream(filepath, testName2) {
         const folder = filepath.split("/").slice(0, -1).join("/");
         return new Promise((res) => {
-          if (!fs4.existsSync(folder)) {
-            return fs4.mkdirSync(folder, {
+          if (!fs5.existsSync(folder)) {
+            return fs5.mkdirSync(folder, {
               recursive: true
             });
           }
-          const f2 = fs4.createWriteStream(filepath);
+          const f2 = fs5.createWriteStream(filepath);
           fileStreams3.push(f2);
           if (!files[testName2]) {
             files[testName2] = /* @__PURE__ */ new Set();
@@ -664,15 +922,15 @@ var init_base = __esm({
           callback(
             new Promise((res, rej) => {
               tLog("testArtiFactory =>", fPath);
-              const cleanPath = path4.resolve(fPath);
+              const cleanPath = path5.resolve(fPath);
               fPaths.push(cleanPath.replace(process.cwd(), ``));
               const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-              fs4.mkdir(targetDir, { recursive: true }, async (error) => {
+              fs5.mkdir(targetDir, { recursive: true }, async (error) => {
                 if (error) {
                   console.error(`\u2757\uFE0FtestArtiFactory failed`, targetDir, error);
                 }
-                fs4.writeFileSync(
-                  path4.resolve(
+                fs5.writeFileSync(
+                  path5.resolve(
                     targetDir.split("/").slice(0, -1).join("/"),
                     "manifest"
                   ),
@@ -683,16 +941,16 @@ var init_base = __esm({
                   }
                 );
                 if (Buffer.isBuffer(value)) {
-                  fs4.writeFileSync(fPath, value, "binary");
+                  fs5.writeFileSync(fPath, value, "binary");
                   res();
                 } else if (`string` === typeof value) {
-                  fs4.writeFileSync(fPath, value.toString(), {
+                  fs5.writeFileSync(fPath, value.toString(), {
                     encoding: "utf-8"
                   });
                   res();
                 } else {
                   const pipeStream = value;
-                  const myFile = fs4.createWriteStream(fPath);
+                  const myFile = fs5.createWriteStream(fPath);
                   pipeStream.pipe(myFile);
                   pipeStream.on("close", () => {
                     myFile.close();
@@ -773,7 +1031,7 @@ var init_base = __esm({
 
 // src/PM/PM_WithWebSocket.ts
 import { spawn } from "node:child_process";
-import fs5 from "fs";
+import fs6 from "fs";
 import http from "http";
 import url from "url";
 import mime from "mime-types";
@@ -1005,7 +1263,7 @@ var init_PM_WithWebSocket = __esm({
           ];
           let foundPath = null;
           for (const possiblePath of possiblePaths) {
-            if (fs5.existsSync(possiblePath)) {
+            if (fs6.existsSync(possiblePath)) {
               foundPath = possiblePath;
               break;
             }
@@ -1015,7 +1273,7 @@ var init_PM_WithWebSocket = __esm({
           } else {
             const indexPath = this.findIndexHtml();
             if (indexPath) {
-              fs5.readFile(indexPath, (err, data) => {
+              fs6.readFile(indexPath, (err, data) => {
                 if (err) {
                   res.writeHead(404, { "Content-Type": "text/plain" });
                   res.end("404 Not Found");
@@ -1032,12 +1290,12 @@ var init_PM_WithWebSocket = __esm({
             }
           }
         }
-        fs5.exists(filePath, (exists) => {
+        fs6.exists(filePath, (exists) => {
           if (!exists) {
             if (!pathname.includes(".") && pathname !== "/") {
               const indexPath = this.findIndexHtml();
               if (indexPath) {
-                fs5.readFile(indexPath, (err, data) => {
+                fs6.readFile(indexPath, (err, data) => {
                   if (err) {
                     res.writeHead(404, { "Content-Type": "text/plain" });
                     res.end("404 Not Found");
@@ -1064,7 +1322,7 @@ var init_PM_WithWebSocket = __esm({
             res.end("404 Not Found");
             return;
           }
-          fs5.readFile(filePath, (err, data) => {
+          fs6.readFile(filePath, (err, data) => {
             if (err) {
               res.writeHead(500, { "Content-Type": "text/plain" });
               res.end("500 Internal Server Error");
@@ -1084,7 +1342,7 @@ var init_PM_WithWebSocket = __esm({
           "./index.html"
         ];
         for (const path12 of possiblePaths) {
-          if (fs5.existsSync(path12)) {
+          if (fs6.existsSync(path12)) {
             return path12;
           }
         }
@@ -1423,8 +1681,8 @@ var init_logFiles = __esm({
 });
 
 // src/utils/makePrompt.ts
-import fs6 from "fs";
-import path5 from "path";
+import fs7 from "fs";
+import path6 from "path";
 var makePrompt, makePromptInternal;
 var init_makePrompt = __esm({
   "src/utils/makePrompt.ts"() {
@@ -1435,23 +1693,23 @@ var init_makePrompt = __esm({
     makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
       summary[entryPoint].prompt = "?";
       const promptPath = promptPather(entryPoint, runtime, name);
-      const testDir = path5.join(
+      const testDir = path6.join(
         "testeranto",
         "reports",
         name,
         entryPoint.split(".").slice(0, -1).join("."),
         runtime
       );
-      if (!fs6.existsSync(testDir)) {
-        fs6.mkdirSync(testDir, { recursive: true });
+      if (!fs7.existsSync(testDir)) {
+        fs7.mkdirSync(testDir, { recursive: true });
       }
-      const testPaths = path5.join(testDir, LOG_FILES.TESTS);
-      const lintPath = path5.join(testDir, LOG_FILES.LINT_ERRORS);
-      const typePath = path5.join(testDir, LOG_FILES.TYPE_ERRORS);
-      const messagePath = path5.join(testDir, LOG_FILES.MESSAGE);
+      const testPaths = path6.join(testDir, LOG_FILES.TESTS);
+      const lintPath = path6.join(testDir, LOG_FILES.LINT_ERRORS);
+      const typePath = path6.join(testDir, LOG_FILES.TYPE_ERRORS);
+      const messagePath = path6.join(testDir, LOG_FILES.MESSAGE);
       try {
         await Promise.all([
-          fs6.promises.writeFile(
+          fs7.promises.writeFile(
             promptPath,
             `
 ${addableFiles.map((x) => {
@@ -1470,7 +1728,7 @@ ${addableFiles.map((x) => {
 /read ${getLogFilesForRuntime(runtime).map((p) => `${testDir}/${p}`).join(" ")}
 `
           ),
-          fs6.promises.writeFile(
+          fs7.promises.writeFile(
             messagePath,
             `
 There are 3 types of test reports.
@@ -1515,8 +1773,8 @@ Do not add error throwing/catching to the tests themselves.
 
 // src/PM/PM_WithEslintAndTsc.ts
 import ts from "typescript";
-import fs7 from "fs";
-import ansiC from "ansi-colors";
+import fs8 from "fs";
+import ansiC2 from "ansi-colors";
 import { ESLint } from "eslint";
 import tsc from "tsc-prog";
 var eslint, formatter, PM_WithEslintAndTsc;
@@ -1578,7 +1836,7 @@ var init_PM_WithEslintAndTsc = __esm({
                 );
               }
             });
-            fs7.writeFileSync(tscPath, results.join("\n"));
+            fs8.writeFileSync(tscPath, results.join("\n"));
             this.typeCheckIsNowDone(entrypoint, results.length);
             return results.length;
           })();
@@ -1604,15 +1862,15 @@ var init_PM_WithEslintAndTsc = __esm({
               throw new Error(`Error in eslintCheck: ${e.message}`);
             }
             const filepath = lintPather(entrypoint, platform, this.name);
-            if (fs7.existsSync(filepath))
-              fs7.rmSync(filepath);
+            if (fs8.existsSync(filepath))
+              fs8.rmSync(filepath);
             const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
               return r.messages[0].ruleId !== null;
             }).map((r) => {
               delete r.source;
               return r;
             });
-            fs7.writeFileSync(filepath, await formatter.format(results));
+            fs8.writeFileSync(filepath, await formatter.format(results));
             this.lintIsNowDone(entrypoint, results.length);
             return results.length;
           })();
@@ -1649,10 +1907,10 @@ var init_PM_WithEslintAndTsc = __esm({
             throw `this.summary[${src}] is undefined`;
           }
           if (failures === 0) {
-            console.log(ansiC.green(ansiC.inverse(`tsc > ${src}`)));
+            console.log(ansiC2.green(ansiC2.inverse(`tsc > ${src}`)));
           } else {
             console.log(
-              ansiC.red(ansiC.inverse(`tsc > ${src} failed ${failures} times`))
+              ansiC2.red(ansiC2.inverse(`tsc > ${src} failed ${failures} times`))
             );
           }
           this.summary[src].typeErrors = failures;
@@ -1671,10 +1929,10 @@ var init_PM_WithEslintAndTsc = __esm({
             throw `this.summary[${src}] is undefined`;
           }
           if (failures === 0) {
-            console.log(ansiC.green(ansiC.inverse(`eslint > ${src}`)));
+            console.log(ansiC2.green(ansiC2.inverse(`eslint > ${src}`)));
           } else {
             console.log(
-              ansiC.red(ansiC.inverse(`eslint > ${src} failed ${failures} times`))
+              ansiC2.red(ansiC2.inverse(`eslint > ${src} failed ${failures} times`))
             );
           }
           this.summary[src].staticErrors = failures;
@@ -1699,7 +1957,7 @@ var init_PM_WithEslintAndTsc = __esm({
         this.writeBigBoard = () => {
           const summaryPath = `./testeranto/reports/${this.name}/summary.json`;
           const summaryData = JSON.stringify(this.summary, null, 2);
-          fs7.writeFileSync(summaryPath, summaryData);
+          fs8.writeFileSync(summaryPath, summaryData);
           this.broadcast({
             type: "summaryUpdate",
             data: this.summary
@@ -1731,1166 +1989,23 @@ var init_PM_WithEslintAndTsc = __esm({
   }
 });
 
-// src/PM/utils.ts
-import ansiC2 from "ansi-colors";
-import path6 from "path";
-import fs8 from "fs";
-import crypto from "node:crypto";
-function runtimeLogs(runtime, reportDest) {
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-  try {
-    if (!fs8.existsSync(safeDest)) {
-      fs8.mkdirSync(safeDest, { recursive: true });
-    }
-    if (runtime === "node") {
-      return {
-        stdout: fs8.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs8.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "web") {
-      return {
-        info: fs8.createWriteStream(`${safeDest}/info.log`),
-        warn: fs8.createWriteStream(`${safeDest}/warn.log`),
-        error: fs8.createWriteStream(`${safeDest}/error.log`),
-        debug: fs8.createWriteStream(`${safeDest}/debug.log`),
-        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "pure") {
-      return {
-        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "pitono") {
-      return {
-        stdout: fs8.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs8.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs8.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else {
-      throw `unknown runtime: ${runtime}`;
-    }
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-function createLogStreams(reportDest, runtime) {
-  if (!fs8.existsSync(reportDest)) {
-    fs8.mkdirSync(reportDest, { recursive: true });
-  }
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-  try {
-    if (!fs8.existsSync(safeDest)) {
-      fs8.mkdirSync(safeDest, { recursive: true });
-    }
-    const streams = runtimeLogs(runtime, safeDest);
-    return {
-      ...streams,
-      closeAll: () => {
-        Object.values(streams).forEach(
-          (stream) => !stream.closed && stream.close()
-        );
-      },
-      writeExitCode: (code, error) => {
-        if (error) {
-          streams.exit.write(`Error: ${error.message}
-`);
-          if (error.stack) {
-            streams.exit.write(`Stack Trace:
-${error.stack}
-`);
-          }
-        }
-        streams.exit.write(`${code}
-`);
-      },
-      exit: streams.exit
-    };
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-async function fileHash(filePath, algorithm = "md5") {
-  return new Promise((resolve, reject) => {
-    const hash = crypto.createHash(algorithm);
-    const fileStream = fs8.createReadStream(filePath);
-    fileStream.on("data", (data) => {
-      hash.update(data);
-    });
-    fileStream.on("end", () => {
-      const fileHash2 = hash.digest("hex");
-      resolve(fileHash2);
-    });
-    fileStream.on("error", (error) => {
-      reject(`Error reading file: ${error.message}`);
-    });
-  });
-}
-async function writeFileAndCreateDir(filePath, data) {
-  const dirPath = path6.dirname(filePath);
-  try {
-    await fs8.promises.mkdir(dirPath, { recursive: true });
-    await fs8.writeFileSync(filePath, data);
-  } catch (error) {
-    console.error(`Error writing file: ${error}`);
-  }
-}
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-async function pollForFile(path12, timeout = 2e3) {
-  const intervalObj = setInterval(function() {
-    const file = path12;
-    const fileExists = fs8.existsSync(file);
-    if (fileExists) {
-      clearInterval(intervalObj);
-    }
-  }, timeout);
-}
-var statusMessagePretty, filesHash, executablePath, puppeteerConfigs;
-var init_utils2 = __esm({
-  "src/PM/utils.ts"() {
-    "use strict";
-    statusMessagePretty = (failures, test, runtime) => {
-      if (failures === 0) {
-        console.log(ansiC2.green(ansiC2.inverse(`${runtime} > ${test}`)));
-      } else if (failures > 0) {
-        console.log(
-          ansiC2.red(
-            ansiC2.inverse(
-              `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
-            )
-          )
-        );
-      } else {
-        console.log(
-          ansiC2.red(ansiC2.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
-        );
-      }
-    };
-    filesHash = async (files3, algorithm = "md5") => {
-      return new Promise((resolve, reject) => {
-        resolve(
-          files3.reduce(async (mm, f2) => {
-            return await mm + await fileHash(f2);
-          }, Promise.resolve(""))
-        );
-      });
-    };
-    executablePath = "/opt/homebrew/bin/chromium";
-    puppeteerConfigs = {
-      slowMo: 1,
-      waitForInitialPage: false,
-      executablePath,
-      headless: true,
-      defaultViewport: null,
-      // Disable default 800x600 viewport
-      dumpio: false,
-      devtools: false,
-      args: [
-        "--allow-file-access-from-files",
-        "--allow-insecure-localhost",
-        "--allow-running-insecure-content",
-        "--auto-open-devtools-for-tabs",
-        "--disable-dev-shm-usage",
-        "--disable-extensions",
-        "--disable-features=site-per-process",
-        "--disable-gpu",
-        "--disable-setuid-sandbox",
-        "--disable-site-isolation-trials",
-        "--disable-web-security",
-        "--no-first-run",
-        "--no-sandbox",
-        "--no-startup-window",
-        "--reduce-security-for-testing",
-        "--remote-allow-origins=*",
-        "--start-maximized",
-        "--unsafely-treat-insecure-origin-as-secure=*",
-        `--remote-debugging-port=3234`
-        // "--disable-features=IsolateOrigins,site-per-process",
-        // "--disable-features=IsolateOrigins",
-        // "--disk-cache-dir=/dev/null",
-        // "--disk-cache-size=1",
-        // "--no-zygote",
-        // "--remote-allow-origins=ws://localhost:3234",
-        // "--single-process",
-        // "--start-maximized",
-        // "--unsafely-treat-insecure-origin-as-secure",
-        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-      ]
-    };
-  }
-});
-
-// src/PM/pitonoRunner.ts
-var pitonoRunner_exports = {};
-__export(pitonoRunner_exports, {
-  PitonoRunner: () => PitonoRunner
-});
-import { execSync } from "child_process";
-import path7 from "path";
+// src/PM/PM_WithGit.ts
 import fs9 from "fs";
-var PitonoRunner;
-var init_pitonoRunner = __esm({
-  "src/PM/pitonoRunner.ts"() {
-    "use strict";
-    PitonoRunner = class {
-      constructor(config, testName2) {
-        this.config = config;
-        this.testName = testName2;
-      }
-      async run() {
-        const coreJsonPath = path7.join(process.cwd(), "testeranto", "pitono", this.testName, "core.json");
-        const maxWaitTime = 1e4;
-        const startTime = Date.now();
-        while (!fs9.existsSync(coreJsonPath) && Date.now() - startTime < maxWaitTime) {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-        }
-        if (!fs9.existsSync(coreJsonPath)) {
-          console.error(`Pitono core.json not found at: ${coreJsonPath} after waiting ${maxWaitTime}ms`);
-          return;
-        }
-        try {
-          const coreData = JSON.parse(fs9.readFileSync(coreJsonPath, "utf-8"));
-          const entryPoints = coreData.entryPoints;
-          for (const entryPoint of entryPoints) {
-            try {
-              console.log(`Running pitono test: ${entryPoint}`);
-              const absolutePath = path7.resolve(entryPoint);
-              if (!fs9.existsSync(absolutePath)) {
-                console.error(`Pitono test file not found: ${absolutePath}`);
-                continue;
-              }
-              execSync(`python "${absolutePath}"`, { stdio: "inherit" });
-              console.log(`Pitono test completed: ${entryPoint}`);
-            } catch (error) {
-              console.error(`Pitono test failed: ${entryPoint}`, error);
-              throw error;
-            }
-          }
-        } catch (error) {
-          console.error(`Error reading or parsing core.json: ${error}`);
-        }
-      }
-    };
-  }
-});
-
-// src/PM/main.ts
-var main_exports = {};
-__export(main_exports, {
-  PM_Main: () => PM_Main
-});
-import { spawn as spawn2 } from "node:child_process";
-import ansiColors from "ansi-colors";
-import net from "net";
-import fs10, { watch } from "fs";
-import path8 from "path";
-import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
-import ansiC3 from "ansi-colors";
-import { WebSocketServer as WebSocketServer2 } from "ws";
-import http2 from "http";
 import url2 from "url";
 import mime2 from "mime-types";
-var changes, fileHashes, files2, screenshots2, PM_Main;
-var init_main = __esm({
-  async "src/PM/main.ts"() {
+var PM_WithGit;
+var init_PM_WithGit = __esm({
+  async "src/PM/PM_WithGit.ts"() {
     "use strict";
-    init_utils();
-    init_queue();
     await init_PM_WithEslintAndTsc();
-    init_utils2();
-    changes = {};
-    fileHashes = {};
-    files2 = {};
-    screenshots2 = {};
-    PM_Main = class extends PM_WithEslintAndTsc {
+    PM_WithGit = class extends PM_WithEslintAndTsc {
       constructor(configs, name, mode2) {
         super(configs, name, mode2);
-        this.logStreams = {};
         this.clients = /* @__PURE__ */ new Set();
         this.runningProcesses = /* @__PURE__ */ new Map();
         this.processLogs = /* @__PURE__ */ new Map();
         this.gitWatchTimeout = null;
         this.gitWatcher = null;
-        this.allProcesses = /* @__PURE__ */ new Map();
-        this.launchPure = async (src, dest) => {
-          const processId = `pure-${src}-${Date.now()}`;
-          const command = `pure test: ${src}`;
-          const purePromise = (async () => {
-            this.bddTestIsRunning(src);
-            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
-            }
-            const destFolder = dest.replace(".mjs", "");
-            let argz = "";
-            const testConfig = this.configs.tests.find((t) => {
-              return t[0] === src;
-            });
-            if (!testConfig) {
-              console.log(
-                ansiC3.inverse("missing test config! Exiting ungracefully!")
-              );
-              process.exit(-1);
-            }
-            const testConfigResource = testConfig[2];
-            const portsToUse = [];
-            if (testConfigResource.ports === 0) {
-              argz = JSON.stringify({
-                scheduled: true,
-                name: src,
-                ports: portsToUse,
-                fs: reportDest,
-                browserWSEndpoint: this.browser.wsEndpoint()
-              });
-            } else if (testConfigResource.ports > 0) {
-              const openPorts = Object.entries(this.ports).filter(
-                ([portnumber, status]) => status === ""
-              );
-              if (openPorts.length >= testConfigResource.ports) {
-                for (let i = 0; i < testConfigResource.ports; i++) {
-                  portsToUse.push(openPorts[i][0]);
-                  this.ports[openPorts[i][0]] = src;
-                }
-                argz = JSON.stringify({
-                  scheduled: true,
-                  name: src,
-                  ports: portsToUse,
-                  fs: destFolder,
-                  browserWSEndpoint: this.browser.wsEndpoint()
-                });
-              } else {
-                this.queue.push(src);
-                return [Math.random(), argz];
-              }
-            } else {
-              console.error("negative port makes no sense", src);
-              process.exit(-1);
-            }
-            const builtfile = dest;
-            const logs = createLogStreams(reportDest, "pure");
-            try {
-              await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-                return module.default.then((defaultModule) => {
-                  return defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
-                    statusMessagePretty(results.fails, src, "pure");
-                    this.bddTestIsNowDone(src, results.fails);
-                    return results.fails;
-                  });
-                }).catch((e2) => {
-                  console.log(
-                    ansiColors.red(
-                      `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
-                    )
-                  );
-                  logs.exit.write(e2.stack);
-                  logs.exit.write(-1);
-                  this.bddTestIsNowDone(src, -1);
-                  statusMessagePretty(-1, src, "pure");
-                  throw e2;
-                });
-              });
-            } catch (e3) {
-              logs.writeExitCode(-1, e3);
-              console.log(
-                ansiC3.red(
-                  ansiC3.inverse(
-                    `${src} 1 errored with: ${e3}. Check logs for more info`
-                  )
-                )
-              );
-              logs.exit.write(e3.stack);
-              logs.exit.write("-1");
-              this.bddTestIsNowDone(src, -1);
-              statusMessagePretty(-1, src, "pure");
-              throw e3;
-            } finally {
-              for (let i = 0; i <= portsToUse.length; i++) {
-                if (portsToUse[i]) {
-                  this.ports[portsToUse[i]] = "";
-                }
-              }
-            }
-          })();
-          this.addPromiseProcess(
-            processId,
-            purePromise,
-            command,
-            "bdd-test",
-            src,
-            "pure"
-          );
-        };
-        this.launchNode = async (src, dest) => {
-          const processId = `node-${src}-${Date.now()}`;
-          const command = `node test: ${src}`;
-          const nodePromise = (async () => {
-            this.bddTestIsRunning(src);
-            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
-            }
-            let testResources = "";
-            const testConfig = this.configs.tests.find((t) => {
-              return t[0] === src;
-            });
-            if (!testConfig) {
-              console.log(
-                ansiC3.inverse(
-                  `missing test config! Exiting ungracefully for '${src}'`
-                )
-              );
-              process.exit(-1);
-            }
-            const testConfigResource = testConfig[2];
-            const portsToUse = [];
-            if (testConfigResource.ports === 0) {
-              const t = {
-                name: src,
-                ports: [],
-                fs: reportDest,
-                browserWSEndpoint: this.browser.wsEndpoint()
-              };
-              testResources = JSON.stringify(t);
-            } else if (testConfigResource.ports > 0) {
-              const openPorts = Object.entries(this.ports).filter(
-                ([portnumber, portopen]) => portopen === ""
-              );
-              if (openPorts.length >= testConfigResource.ports) {
-                for (let i = 0; i < testConfigResource.ports; i++) {
-                  portsToUse.push(openPorts[i][0]);
-                  this.ports[openPorts[i][0]] = src;
-                }
-                testResources = JSON.stringify({
-                  scheduled: true,
-                  name: src,
-                  ports: portsToUse,
-                  fs: reportDest,
-                  browserWSEndpoint: this.browser.wsEndpoint()
-                });
-              } else {
-                console.log(
-                  ansiC3.red(
-                    `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
-                  )
-                );
-                this.queue.push(src);
-                return [Math.random(), testResources];
-              }
-            } else {
-              console.error("negative port makes no sense", src);
-              process.exit(-1);
-            }
-            const builtfile = dest;
-            let haltReturns = false;
-            const ipcfile = "/tmp/tpipe_" + Math.random();
-            const child = spawn2("node", [builtfile, testResources, ipcfile], {
-              stdio: ["pipe", "pipe", "pipe", "ipc"]
-            });
-            let buffer = new Buffer("");
-            const server = net.createServer((socket) => {
-              const queue = new Queue();
-              socket.on("data", (data) => {
-                buffer = Buffer.concat([buffer, data]);
-                for (let b = 0; b < buffer.length + 1; b++) {
-                  const c = buffer.slice(0, b);
-                  let d;
-                  try {
-                    d = JSON.parse(c.toString());
-                    queue.enqueue(d);
-                    buffer = buffer.slice(b, buffer.length + 1);
-                    b = 0;
-                  } catch (e) {
-                  }
-                }
-                while (queue.size() > 0) {
-                  const message = queue.dequeue();
-                  if (message) {
-                    this.mapping().forEach(async ([command2, func]) => {
-                      if (message[0] === command2) {
-                        const x = message.slice(1, -1);
-                        const r = await this[command2](...x);
-                        if (!haltReturns) {
-                          child.send(
-                            JSON.stringify({
-                              payload: r,
-                              key: message[message.length - 1]
-                            })
-                          );
-                        }
-                      }
-                    });
-                  }
-                }
-              });
-            });
-            const logs = createLogStreams(reportDest, "node");
-            return new Promise((resolve, reject) => {
-              server.listen(ipcfile, () => {
-                child.stdout?.on("data", (data) => {
-                  logs.stdout?.write(data);
-                });
-                child.stderr?.on("data", (data) => {
-                  logs.stderr?.write(data);
-                });
-                child.on("close", (code) => {
-                  const exitCode = code === null ? -1 : code;
-                  if (exitCode < 0) {
-                    logs.writeExitCode(
-                      exitCode,
-                      new Error("Process crashed or was terminated")
-                    );
-                  } else {
-                    logs.writeExitCode(exitCode);
-                  }
-                  logs.closeAll();
-                  server.close();
-                  if (exitCode === 255) {
-                    console.log(
-                      ansiColors.red(
-                        `node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/stderr.log for more info`
-                      )
-                    );
-                    this.bddTestIsNowDone(src, -1);
-                    statusMessagePretty(-1, src, "node");
-                    reject(new Error(`Process exited with code ${exitCode}`));
-                  } else if (exitCode === 0) {
-                    this.bddTestIsNowDone(src, 0);
-                    statusMessagePretty(0, src, "node");
-                    resolve();
-                  } else {
-                    this.bddTestIsNowDone(src, exitCode);
-                    statusMessagePretty(exitCode, src, "node");
-                    reject(new Error(`Process exited with code ${exitCode}`));
-                  }
-                  haltReturns = true;
-                });
-                child.on("error", (e) => {
-                  console.log("error");
-                  haltReturns = true;
-                  console.log(
-                    ansiC3.red(
-                      ansiC3.inverse(
-                        `${src} errored with: ${e.name}. Check error logs for more info`
-                      )
-                    )
-                  );
-                  this.bddTestIsNowDone(src, -1);
-                  statusMessagePretty(-1, src, "node");
-                  reject(e);
-                });
-              });
-            }).finally(() => {
-              for (let i = 0; i <= portsToUse.length; i++) {
-                if (portsToUse[i]) {
-                  this.ports[portsToUse[i]] = "";
-                }
-              }
-            });
-          })();
-          this.addPromiseProcess(
-            processId,
-            nodePromise,
-            command,
-            "bdd-test",
-            src,
-            "node"
-          );
-        };
-        this.launchWeb = async (src, dest) => {
-          const processId = `web-${src}-${Date.now()}`;
-          const command = `web test: ${src}`;
-          const webPromise = (async () => {
-            this.bddTestIsRunning(src);
-            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
-            }
-            const destFolder = dest.replace(".mjs", "");
-            const webArgz = JSON.stringify({
-              name: src,
-              ports: [].toString(),
-              fs: reportDest,
-              browserWSEndpoint: this.browser.wsEndpoint()
-            });
-            const d = `${dest}?cacheBust=${Date.now()}`;
-            const logs = createLogStreams(reportDest, "web");
-            return new Promise((resolve, reject) => {
-              this.browser.newPage().then((page) => {
-                page.on("console", (log) => {
-                  const msg = `${log.text()}
-`;
-                  switch (log.type()) {
-                    case "info":
-                      logs.info?.write(msg);
-                      break;
-                    case "warn":
-                      logs.warn?.write(msg);
-                      break;
-                    case "error":
-                      logs.error?.write(msg);
-                      break;
-                    case "debug":
-                      logs.debug?.write(msg);
-                      break;
-                    default:
-                      break;
-                  }
-                });
-                page.on("close", () => {
-                  logs.writeExitCode(0);
-                  logs.closeAll();
-                });
-                this.mapping().forEach(async ([command2, func]) => {
-                  if (command2 === "page") {
-                    page.exposeFunction(command2, (x) => {
-                      if (x) {
-                        return func(x);
-                      } else {
-                        return func(page.mainFrame()._id);
-                      }
-                    });
-                  } else {
-                    return page.exposeFunction(command2, func);
-                  }
-                });
-                return page;
-              }).then(async (page) => {
-                const close = () => {
-                  if (!files2[src]) {
-                    files2[src] = /* @__PURE__ */ new Set();
-                  }
-                  delete files2[src];
-                  Promise.all(screenshots2[src] || []).then(() => {
-                    delete screenshots2[src];
-                    page.close();
-                  });
-                };
-                page.on("pageerror", (err) => {
-                  logs.writeExitCode(-1, err);
-                  console.log(
-                    ansiColors.red(
-                      `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
-                    )
-                  );
-                  this.bddTestIsNowDone(src, -1);
-                  close();
-                  reject(err);
-                });
-                await page.goto(`file://${`${destFolder}.html`}`, {});
-                await page.evaluate(webEvaluator(d, webArgz)).then(async ({ fails, failed, features }) => {
-                  statusMessagePretty(fails, src, "web");
-                  this.bddTestIsNowDone(src, fails);
-                  resolve();
-                }).catch((e) => {
-                  console.log(ansiC3.red(ansiC3.inverse(e.stack)));
-                  console.log(
-                    ansiC3.red(
-                      ansiC3.inverse(
-                        `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
-                      )
-                    )
-                  );
-                  this.bddTestIsNowDone(src, -1);
-                  reject(e);
-                }).finally(() => {
-                  close();
-                });
-              }).catch((error) => {
-                reject(error);
-              });
-            });
-          })();
-          this.addPromiseProcess(
-            processId,
-            webPromise,
-            command,
-            "bdd-test",
-            src,
-            "web"
-          );
-        };
-        this.launchPitono = async (src, dest) => {
-          const processId = `pitono-${src}-${Date.now()}`;
-          const command = `pitono test: ${src}`;
-          const pitonoPromise = (async () => {
-            this.bddTestIsRunning(src);
-            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
-            }
-            const logs = createLogStreams(reportDest, "node");
-            try {
-              const { PitonoRunner: PitonoRunner2 } = await Promise.resolve().then(() => (init_pitonoRunner(), pitonoRunner_exports));
-              const runner = new PitonoRunner2(this.configs, this.name);
-              await runner.run();
-              this.bddTestIsNowDone(src, 0);
-              statusMessagePretty(0, src, "pitono");
-            } catch (error) {
-              logs.writeExitCode(-1, error);
-              console.log(
-                ansiC3.red(
-                  ansiC3.inverse(
-                    `${src} errored with: ${error}. Check logs for more info`
-                  )
-                )
-              );
-              this.bddTestIsNowDone(src, -1);
-              statusMessagePretty(-1, src, "pitono");
-              throw error;
-            }
-          })();
-          this.addPromiseProcess(
-            processId,
-            pitonoPromise,
-            command,
-            "bdd-test",
-            src,
-            "pitono"
-          );
-        };
-        this.launchGolingvu = async (src, dest) => {
-          throw "not yet implemented";
-        };
-        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
-          const featureDestination = path8.resolve(
-            process.cwd(),
-            "reports",
-            "features",
-            "strings",
-            srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
-          );
-          const testReportPath = `${reportDest}/tests.json`;
-          if (!fs10.existsSync(testReportPath)) {
-            console.error(`tests.json not found at: ${testReportPath}`);
-            return;
-          }
-          const testReport = JSON.parse(fs10.readFileSync(testReportPath, "utf8"));
-          if (testReport.tests) {
-            testReport.tests.forEach((test) => {
-              test.fullPath = path8.resolve(process.cwd(), srcTest);
-            });
-          }
-          testReport.fullPath = path8.resolve(process.cwd(), srcTest);
-          fs10.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
-          testReport.features.reduce(async (mm, featureStringKey) => {
-            const accum = await mm;
-            const isUrl = isValidUrl(featureStringKey);
-            if (isUrl) {
-              const u = new URL(featureStringKey);
-              if (u.protocol === "file:") {
-                const newPath = `${process.cwd()}/testeranto/features/internal/${path8.relative(
-                  process.cwd(),
-                  u.pathname
-                )}`;
-                accum.files.push(u.pathname);
-              } else if (u.protocol === "http:" || u.protocol === "https:") {
-                const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
-                const body = await this.configs.featureIngestor(featureStringKey);
-                writeFileAndCreateDir(newPath, body);
-                accum.files.push(newPath);
-              }
-            } else {
-              await fs10.promises.mkdir(path8.dirname(featureDestination), {
-                recursive: true
-              });
-              accum.strings.push(featureStringKey);
-            }
-            return accum;
-          }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
-            fs10.writeFileSync(
-              `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
-              files3.map((f2) => {
-                return `/read ${f2}`;
-              }).join("\n")
-            );
-          });
-          testReport.givens.forEach((g) => {
-            if (g.failed === true) {
-              this.summary[srcTest].failingFeatures[g.key] = g.features;
-            }
-          });
-          this.writeBigBoard();
-        };
-        this.checkForShutdown = () => {
-          this.checkQueue();
-          console.log(
-            ansiC3.inverse(
-              `The following jobs are awaiting resources: ${JSON.stringify(
-                this.queue
-              )}`
-            )
-          );
-          console.log(
-            ansiC3.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
-          );
-          this.writeBigBoard();
-          if (this.mode === "dev")
-            return;
-          let inflight = false;
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].prompt === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} prompt ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].runTimeErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} runTimeError ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].staticErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} staticErrors ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].typeErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} typeErrors ${k}`)));
-              inflight = true;
-            }
-          });
-          this.writeBigBoard();
-          if (!inflight) {
-            if (this.browser) {
-              if (this.browser) {
-                this.browser.disconnect().then(() => {
-                  console.log(
-                    ansiC3.inverse(`${this.name} has been tested. Goodbye.`)
-                  );
-                  process.exit();
-                });
-              }
-            }
-          }
-        };
-        this.launchers = {};
-        this.ports = {};
-        this.queue = [];
-        this.setupWebSocketServer();
-        this.configs.ports.forEach((element) => {
-          this.ports[element] = "";
-        });
-      }
-      mapping() {
-        return [
-          ["$", this.$],
-          ["click", this.click],
-          ["closePage", this.closePage],
-          ["createWriteStream", this.createWriteStream],
-          ["customclose", this.customclose],
-          ["customScreenShot", this.customScreenShot.bind(this)],
-          ["end", this.end],
-          ["existsSync", this.existsSync],
-          ["focusOn", this.focusOn],
-          ["getAttribute", this.getAttribute],
-          ["getInnerHtml", this.getInnerHtml],
-          // ["setValue", this.setValue],
-          ["goto", this.goto.bind(this)],
-          ["isDisabled", this.isDisabled],
-          // ["launchSideCar", this.launchSideCar.bind(this)],
-          ["mkdirSync", this.mkdirSync],
-          ["newPage", this.newPage],
-          ["page", this.page],
-          ["pages", this.pages],
-          ["screencast", this.screencast],
-          ["screencastStop", this.screencastStop],
-          // ["stopSideCar", this.stopSideCar.bind(this)],
-          ["typeInto", this.typeInto],
-          ["waitForSelector", this.waitForSelector],
-          ["write", this.write],
-          ["writeFileSync", this.writeFileSync]
-        ];
-      }
-      // keep this forever. do not delete
-      // mapping(): [string, (...a) => any][] {
-      //   return [
-      //     ["$", (...args) => this.$(...args)],
-      //     ["click", (...args) => this.click(...args)],
-      //     ["closePage", (...args) => this.closePage(...args)],
-      //     ["createWriteStream", (...args) => this.createWriteStream(...args)],
-      //     ["customclose", (...args) => this.customclose(...args)],
-      //     ["customScreenShot", (...args) => this.customScreenShot(...args)],
-      //     ["end", (...args) => this.end(...args)],
-      //     ["existsSync", (...args) => this.existsSync(...args)],
-      //     ["focusOn", (...args) => this.focusOn(...args)],
-      //     ["getAttribute", (...args) => this.getAttribute(...args)],
-      //     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
-      //     // ["setValue", (...args) => this.setValue(...args)],
-      //     ["goto", (...args) => this.goto(...args)],
-      //     ["isDisabled", (...args) => this.isDisabled(...args)],
-      //     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
-      //     ["mkdirSync", (...args) => this.mkdirSync(...args)],
-      //     ["newPage", (...args) => this.newPage(...args)],
-      //     ["page", (...args) => this.page(...args)],
-      //     ["pages", (...args) => this.pages(...args)],
-      //     ["screencast", (...args) => this.screencast(...args)],
-      //     ["screencastStop", (...args) => this.screencastStop(...args)],
-      //     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
-      //     ["typeInto", (...args) => this.typeInto(...args)],
-      //     ["waitForSelector", (...args) => this.waitForSelector(...args)],
-      //     ["write", (...args) => this.write(...args)],
-      //     ["writeFileSync", (...args) => this.writeFileSync(...args)],
-      //   ];
-      // }
-      async start() {
-        try {
-          await this.startBuildProcesses();
-          this.onBuildDone();
-        } catch (error) {
-          console.error("Build processes failed:", error);
-          return;
-        }
-        this.mapping().forEach(async ([command, func]) => {
-          globalThis[command] = func;
-        });
-        if (!fs10.existsSync(`testeranto/reports/${this.name}`)) {
-          fs10.mkdirSync(`testeranto/reports/${this.name}`);
-        }
-        try {
-          this.browser = await puppeteer.launch(puppeteerConfigs);
-        } catch (e) {
-          console.error(e);
-          console.error(
-            "could not start chrome via puppeter. Check this path: ",
-            executablePath2
-          );
-        }
-        const {
-          nodeEntryPoints,
-          webEntryPoints,
-          pureEntryPoints
-          // pitonoEntryPoints is stubbed out
-        } = getRunnables(this.configs.tests, this.name);
-        [
-          [
-            nodeEntryPoints,
-            this.launchNode,
-            "node",
-            (w) => {
-              this.nodeMetafileWatcher = w;
-            }
-          ],
-          [
-            webEntryPoints,
-            this.launchWeb,
-            "web",
-            (w) => {
-              this.webMetafileWatcher = w;
-            }
-          ],
-          [
-            pureEntryPoints,
-            this.launchPure,
-            "pure",
-            (w) => {
-              this.importMetafileWatcher = w;
-            }
-          ]
-          // pitonoEntryPoints is commented out since it's stubbed
-          // [
-          //   pitonoEntryPoints,
-          //   this.launchPitono,
-          //   "pitono",
-          //   (w) => {
-          //     this.pitonoMetafileWatcher = w;
-          //   },
-          // ],
-        ].forEach(
-          async ([eps, launcher, runtime, watcher]) => {
-            let metafile;
-            if (runtime === "pitono") {
-              metafile = `./testeranto/metafiles/python/core.json`;
-              const metafileDir = path8.dirname(metafile);
-              if (!fs10.existsSync(metafileDir)) {
-                fs10.mkdirSync(metafileDir, { recursive: true });
-              }
-            } else {
-              metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-            }
-            if (runtime !== "pitono") {
-              await pollForFile(metafile);
-            }
-            Object.entries(eps).forEach(
-              async ([inputFile, outputFile]) => {
-                this.launchers[inputFile] = () => launcher(inputFile, outputFile);
-                this.launchers[inputFile]();
-                try {
-                  if (fs10.existsSync(outputFile)) {
-                    watch(outputFile, async (e, filename) => {
-                      const hash = await fileHash(outputFile);
-                      if (fileHashes[inputFile] !== hash) {
-                        fileHashes[inputFile] = hash;
-                        console.log(
-                          ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename}`))
-                        );
-                        this.launchers[inputFile]();
-                      }
-                    });
-                  } else {
-                    console.log(
-                      ansiC3.yellow(
-                        ansiC3.inverse(
-                          `File not found, skipping watch: ${outputFile}`
-                        )
-                      )
-                    );
-                  }
-                } catch (e) {
-                  console.error(e);
-                }
-              }
-            );
-            this.metafileOutputs(runtime);
-            if (runtime === "pitono") {
-              const checkFileExists = () => {
-                if (fs10.existsSync(metafile)) {
-                  console.log(
-                    ansiC3.green(ansiC3.inverse(`Pitono metafile found: ${metafile}`))
-                  );
-                  watcher(
-                    watch(metafile, async (e, filename) => {
-                      console.log(
-                        ansiC3.yellow(
-                          ansiC3.inverse(`< ${e} ${filename} (${runtime})`)
-                        )
-                      );
-                      this.metafileOutputs(runtime);
-                    })
-                  );
-                  this.metafileOutputs(runtime);
-                } else {
-                  setTimeout(checkFileExists, 1e3);
-                }
-              };
-              checkFileExists();
-            } else {
-              if (fs10.existsSync(metafile)) {
-                watcher(
-                  watch(metafile, async (e, filename) => {
-                    console.log(
-                      ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename} (${runtime})`))
-                    );
-                    this.metafileOutputs(runtime);
-                  })
-                );
-              }
-            }
-          }
-        );
-      }
-      async stop() {
-        console.log(ansiC3.inverse("Testeranto-Run is shutting down gracefully..."));
-        this.mode = "once";
-        this.nodeMetafileWatcher.close();
-        this.webMetafileWatcher.close();
-        this.importMetafileWatcher.close();
-        if (this.pitonoMetafileWatcher) {
-          this.pitonoMetafileWatcher.close();
-        }
-        if (this.gitWatcher) {
-          this.gitWatcher.close();
-        }
-        if (this.gitWatchTimeout) {
-          clearTimeout(this.gitWatchTimeout);
-        }
-        Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-        if (this.wss) {
-          this.wss.close(() => {
-            console.log("WebSocket server closed");
-          });
-        }
-        this.clients.forEach((client) => {
-          client.terminate();
-        });
-        this.clients.clear();
-        if (this.httpServer) {
-          this.httpServer.close(() => {
-            console.log("HTTP server closed");
-          });
-        }
-        this.checkForShutdown();
-      }
-      async metafileOutputs(platform) {
-        let metafilePath;
-        if (platform === "pitono") {
-          metafilePath = `./testeranto/metafiles/python/core.json`;
-        } else {
-          metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
-        }
-        if (!fs10.existsSync(metafilePath)) {
-          if (platform === "pitono") {
-            console.log(
-              ansiC3.yellow(
-                ansiC3.inverse(`Pitono metafile not found yet: ${metafilePath}`)
-              )
-            );
-          }
-          return;
-        }
-        let metafile;
-        try {
-          const fileContent = fs10.readFileSync(metafilePath).toString();
-          const parsedData = JSON.parse(fileContent);
-          if (platform === "pitono") {
-            metafile = parsedData.metafile || parsedData;
-          } else {
-            metafile = parsedData.metafile;
-          }
-          if (!metafile) {
-            console.log(
-              ansiC3.yellow(ansiC3.inverse(`No metafile found in ${metafilePath}`))
-            );
-            return;
-          }
-        } catch (error) {
-          console.error(`Error reading metafile at ${metafilePath}:`, error);
-          return;
-        }
-        const outputs = metafile.outputs;
-        Object.keys(outputs).forEach(async (k) => {
-          const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
-          if (!k.startsWith(pattern)) {
-            return false;
-          }
-          const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
-            if (!fs10.existsSync(i))
-              return false;
-            if (i.startsWith("node_modules"))
-              return false;
-            if (i.startsWith("./node_modules"))
-              return false;
-            return true;
-          });
-          const f2 = `${k.split(".").slice(0, -1).join(".")}/`;
-          if (!fs10.existsSync(f2)) {
-            fs10.mkdirSync(f2);
-          }
-          const entrypoint = outputs[k].entryPoint;
-          if (entrypoint) {
-            const changeDigest = await filesHash(addableFiles);
-            if (changeDigest === changes[entrypoint]) {
-            } else {
-              changes[entrypoint] = changeDigest;
-              this.tscCheck({
-                platform,
-                addableFiles,
-                entrypoint
-              });
-              this.eslintCheck(entrypoint, platform, addableFiles);
-              this.makePrompt(entrypoint, addableFiles, platform);
-            }
-          }
-        });
       }
       // this method is so horrible. Don't drink and vibe-code kids
       requestHandler(req, res) {
@@ -2919,7 +2034,7 @@ var init_main = __esm({
           ];
           let foundPath = null;
           for (const possiblePath of possiblePaths) {
-            if (fs10.existsSync(possiblePath)) {
+            if (fs9.existsSync(possiblePath)) {
               foundPath = possiblePath;
               break;
             }
@@ -2929,7 +2044,7 @@ var init_main = __esm({
           } else {
             const indexPath = this.findIndexHtml();
             if (indexPath) {
-              fs10.readFile(indexPath, (err, data) => {
+              fs9.readFile(indexPath, (err, data) => {
                 if (err) {
                   res.writeHead(404, { "Content-Type": "text/plain" });
                   res.end("404 Not Found");
@@ -2946,12 +2061,12 @@ var init_main = __esm({
             }
           }
         }
-        fs10.exists(filePath, (exists) => {
+        fs9.exists(filePath, (exists) => {
           if (!exists) {
             if (!pathname.includes(".") && pathname !== "/") {
               const indexPath = this.findIndexHtml();
               if (indexPath) {
-                fs10.readFile(indexPath, (err, data) => {
+                fs9.readFile(indexPath, (err, data) => {
                   if (err) {
                     res.writeHead(404, { "Content-Type": "text/plain" });
                     res.end("404 Not Found");
@@ -2978,7 +2093,7 @@ var init_main = __esm({
             res.end("404 Not Found");
             return;
           }
-          fs10.readFile(filePath, (err, data) => {
+          fs9.readFile(filePath, (err, data) => {
             if (err) {
               res.writeHead(500, { "Content-Type": "text/plain" });
               res.end("500 Internal Server Error");
@@ -3192,101 +2307,36 @@ ${description}` : message;
           );
         }
       }
-      findIndexHtml() {
-        const possiblePaths = [
-          "dist/index.html",
-          "testeranto/dist/index.html",
-          "../dist/index.html",
-          "./index.html"
-        ];
-        for (const path12 of possiblePaths) {
-          if (fs10.existsSync(path12)) {
-            return path12;
-          }
-        }
-        return null;
-      }
-      broadcast(message) {
-        const data = typeof message === "string" ? message : JSON.stringify(message);
-        this.clients.forEach((client) => {
-          if (client.readyState === 1) {
-            client.send(data);
-          }
-        });
-      }
-      // Add WebSocket message handler setup
-      setupWebSocketHandlers() {
-        this.wss.on("connection", (ws) => {
-          this.clients.add(ws);
-          ws.on("message", (data) => {
-            try {
-              const message = JSON.parse(data.toString());
-              this.handleWebSocketMessage(message, ws);
-            } catch (error) {
-              console.error("Error parsing WebSocket message:", error);
-            }
-          });
-          ws.on("close", () => {
-            this.clients.delete(ws);
-          });
-        });
-      }
-      handleWebSocketMessage(message, ws) {
-        switch (message.type) {
-          case "get-initial-state":
-            this.sendInitialState(ws);
-            break;
-          case "file-changed":
-            this.refreshGitStatus();
-            break;
-          case "refresh-status":
-            this.refreshGitStatus();
-            break;
-          default:
-            console.log("Unknown WebSocket message type:", message.type);
-        }
-      }
-      async sendInitialState(ws) {
-        try {
-          const changes2 = await this.getGitChanges();
-          const status = await this.getGitRemoteStatus();
-          const branch = await this.getCurrentGitBranch();
-          ws.send(JSON.stringify({ type: "changes", changes: changes2 }));
-          ws.send(JSON.stringify({ type: "status", status }));
-          ws.send(JSON.stringify({ type: "branch", branch }));
-        } catch (error) {
-          console.error("Error sending initial state:", error);
-          ws.send(
-            JSON.stringify({
-              type: "error",
-              message: "Failed to get Git status"
-            })
-          );
-        }
-      }
-      async refreshGitStatus() {
-        try {
-          const changes2 = await this.getGitChanges();
-          const status = await this.getGitRemoteStatus();
-          const branch = await this.getCurrentGitBranch();
-          this.broadcast({ type: "changes", changes: changes2 });
-          this.broadcast({ type: "status", status });
-          this.broadcast({ type: "branch", branch });
-        } catch (error) {
-          console.error("Error refreshing Git status:", error);
-        }
-      }
-      checkQueue() {
-        const x = this.queue.pop();
-        if (!x) {
-          ansiC3.inverse(`The following queue is empty`);
-          return;
-        }
-        const test = this.configs.tests.find((t) => t[0] === x);
-        if (!test)
-          throw `test is undefined ${x}`;
-        this.launchers[test[0]]();
-      }
+      // private async sendInitialState(ws: WebSocket) {
+      //   try {
+      //     const changes = await this.getGitChanges();
+      //     const status = await this.getGitRemoteStatus();
+      //     const branch = await this.getCurrentGitBranch();
+      //     ws.send(JSON.stringify({ type: "changes", changes }));
+      //     ws.send(JSON.stringify({ type: "status", status }));
+      //     ws.send(JSON.stringify({ type: "branch", branch }));
+      //   } catch (error) {
+      //     console.error("Error sending initial state:", error);
+      //     ws.send(
+      //       JSON.stringify({
+      //         type: "error",
+      //         message: "Failed to get Git status",
+      //       })
+      //     );
+      //   }
+      // }
+      // private async refreshGitStatus() {
+      //   try {
+      //     const changes = await this.getGitChanges();
+      //     const status = await this.getGitRemoteStatus();
+      //     const branch = await this.getCurrentGitBranch();
+      //     this.broadcast({ type: "changes", changes });
+      //     this.broadcast({ type: "status", status });
+      //     this.broadcast({ type: "branch", branch });
+      //   } catch (error) {
+      //     console.error("Error refreshing Git status:", error);
+      //   }
+      // }
       onBuildDone() {
         console.log("Build processes completed");
         this.startGitWatcher();
@@ -3420,6 +2470,1098 @@ ${description}` : message;
           return "main";
         }
       }
+    };
+  }
+});
+
+// src/PM/pitonoRunner.ts
+var pitonoRunner_exports = {};
+__export(pitonoRunner_exports, {
+  PitonoRunner: () => PitonoRunner
+});
+import { execSync } from "child_process";
+import path7 from "path";
+import fs10 from "fs";
+var PitonoRunner;
+var init_pitonoRunner = __esm({
+  "src/PM/pitonoRunner.ts"() {
+    "use strict";
+    PitonoRunner = class {
+      constructor(config, testName2) {
+        this.config = config;
+        this.testName = testName2;
+      }
+      async run() {
+        const coreJsonPath = path7.join(process.cwd(), "testeranto", "pitono", this.testName, "core.json");
+        const maxWaitTime = 1e4;
+        const startTime = Date.now();
+        while (!fs10.existsSync(coreJsonPath) && Date.now() - startTime < maxWaitTime) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        if (!fs10.existsSync(coreJsonPath)) {
+          console.error(`Pitono core.json not found at: ${coreJsonPath} after waiting ${maxWaitTime}ms`);
+          return;
+        }
+        try {
+          const coreData = JSON.parse(fs10.readFileSync(coreJsonPath, "utf-8"));
+          const entryPoints = coreData.entryPoints;
+          for (const entryPoint of entryPoints) {
+            try {
+              console.log(`Running pitono test: ${entryPoint}`);
+              const absolutePath = path7.resolve(entryPoint);
+              if (!fs10.existsSync(absolutePath)) {
+                console.error(`Pitono test file not found: ${absolutePath}`);
+                continue;
+              }
+              execSync(`python "${absolutePath}"`, { stdio: "inherit" });
+              console.log(`Pitono test completed: ${entryPoint}`);
+            } catch (error) {
+              console.error(`Pitono test failed: ${entryPoint}`, error);
+              throw error;
+            }
+          }
+        } catch (error) {
+          console.error(`Error reading or parsing core.json: ${error}`);
+        }
+      }
+    };
+  }
+});
+
+// src/PM/main.ts
+var main_exports = {};
+__export(main_exports, {
+  PM_Main: () => PM_Main
+});
+import { spawn as spawn2 } from "node:child_process";
+import ansiColors from "ansi-colors";
+import net from "net";
+import fs11, { watch as watch2 } from "fs";
+import path8 from "path";
+import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
+import ansiC3 from "ansi-colors";
+import { WebSocketServer as WebSocketServer2 } from "ws";
+import http2 from "http";
+import url3 from "url";
+import mime3 from "mime-types";
+var changes, fileHashes, files2, screenshots2, PM_Main;
+var init_main = __esm({
+  async "src/PM/main.ts"() {
+    "use strict";
+    init_utils();
+    init_queue();
+    init_utils2();
+    await init_PM_WithGit();
+    changes = {};
+    fileHashes = {};
+    files2 = {};
+    screenshots2 = {};
+    PM_Main = class extends PM_WithGit {
+      constructor(configs, name, mode2) {
+        super(configs, name, mode2);
+        this.logStreams = {};
+        this.clients = /* @__PURE__ */ new Set();
+        this.runningProcesses = /* @__PURE__ */ new Map();
+        this.processLogs = /* @__PURE__ */ new Map();
+        this.gitWatchTimeout = null;
+        this.gitWatcher = null;
+        this.allProcesses = /* @__PURE__ */ new Map();
+        this.launchPure = async (src, dest) => {
+          const processId = `pure-${src}-${Date.now()}`;
+          const command = `pure test: ${src}`;
+          const purePromise = (async () => {
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
+            }
+            const destFolder = dest.replace(".mjs", "");
+            let argz = "";
+            const testConfig = this.configs.tests.find((t) => {
+              return t[0] === src;
+            });
+            if (!testConfig) {
+              console.log(
+                ansiC3.inverse("missing test config! Exiting ungracefully!")
+              );
+              process.exit(-1);
+            }
+            const testConfigResource = testConfig[2];
+            const portsToUse = [];
+            if (testConfigResource.ports === 0) {
+              argz = JSON.stringify({
+                scheduled: true,
+                name: src,
+                ports: portsToUse,
+                fs: reportDest,
+                browserWSEndpoint: this.browser.wsEndpoint()
+              });
+            } else if (testConfigResource.ports > 0) {
+              const openPorts = Object.entries(this.ports).filter(
+                ([portnumber, status]) => status === ""
+              );
+              if (openPorts.length >= testConfigResource.ports) {
+                for (let i = 0; i < testConfigResource.ports; i++) {
+                  portsToUse.push(openPorts[i][0]);
+                  this.ports[openPorts[i][0]] = src;
+                }
+                argz = JSON.stringify({
+                  scheduled: true,
+                  name: src,
+                  ports: portsToUse,
+                  fs: destFolder,
+                  browserWSEndpoint: this.browser.wsEndpoint()
+                });
+              } else {
+                this.queue.push(src);
+                return [Math.random(), argz];
+              }
+            } else {
+              console.error("negative port makes no sense", src);
+              process.exit(-1);
+            }
+            const builtfile = dest;
+            const logs = createLogStreams(reportDest, "pure");
+            try {
+              await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+                return module.default.then((defaultModule) => {
+                  return defaultModule.receiveTestResourceConfig(argz).then(async (results) => {
+                    statusMessagePretty(results.fails, src, "pure");
+                    this.bddTestIsNowDone(src, results.fails);
+                    return results.fails;
+                  });
+                }).catch((e2) => {
+                  console.log(
+                    ansiColors.red(
+                      `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
+                    )
+                  );
+                  logs.exit.write(e2.stack);
+                  logs.exit.write(-1);
+                  this.bddTestIsNowDone(src, -1);
+                  statusMessagePretty(-1, src, "pure");
+                  throw e2;
+                });
+              });
+            } catch (e3) {
+              logs.writeExitCode(-1, e3);
+              console.log(
+                ansiC3.red(
+                  ansiC3.inverse(
+                    `${src} 1 errored with: ${e3}. Check logs for more info`
+                  )
+                )
+              );
+              logs.exit.write(e3.stack);
+              logs.exit.write("-1");
+              this.bddTestIsNowDone(src, -1);
+              statusMessagePretty(-1, src, "pure");
+              throw e3;
+            } finally {
+              for (let i = 0; i <= portsToUse.length; i++) {
+                if (portsToUse[i]) {
+                  this.ports[portsToUse[i]] = "";
+                }
+              }
+            }
+          })();
+          this.addPromiseProcess(
+            processId,
+            purePromise,
+            command,
+            "bdd-test",
+            src,
+            "pure"
+          );
+        };
+        this.launchNode = async (src, dest) => {
+          const processId = `node-${src}-${Date.now()}`;
+          const command = `node test: ${src}`;
+          const nodePromise = (async () => {
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
+            }
+            let testResources = "";
+            const testConfig = this.configs.tests.find((t) => {
+              return t[0] === src;
+            });
+            if (!testConfig) {
+              console.log(
+                ansiC3.inverse(
+                  `missing test config! Exiting ungracefully for '${src}'`
+                )
+              );
+              process.exit(-1);
+            }
+            const testConfigResource = testConfig[2];
+            const portsToUse = [];
+            if (testConfigResource.ports === 0) {
+              const t = {
+                name: src,
+                ports: [],
+                fs: reportDest,
+                browserWSEndpoint: this.browser.wsEndpoint()
+              };
+              testResources = JSON.stringify(t);
+            } else if (testConfigResource.ports > 0) {
+              const openPorts = Object.entries(this.ports).filter(
+                ([portnumber, portopen]) => portopen === ""
+              );
+              if (openPorts.length >= testConfigResource.ports) {
+                for (let i = 0; i < testConfigResource.ports; i++) {
+                  portsToUse.push(openPorts[i][0]);
+                  this.ports[openPorts[i][0]] = src;
+                }
+                testResources = JSON.stringify({
+                  scheduled: true,
+                  name: src,
+                  ports: portsToUse,
+                  fs: reportDest,
+                  browserWSEndpoint: this.browser.wsEndpoint()
+                });
+              } else {
+                console.log(
+                  ansiC3.red(
+                    `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
+                  )
+                );
+                this.queue.push(src);
+                return [Math.random(), testResources];
+              }
+            } else {
+              console.error("negative port makes no sense", src);
+              process.exit(-1);
+            }
+            const builtfile = dest;
+            let haltReturns = false;
+            const ipcfile = "/tmp/tpipe_" + Math.random();
+            const child = spawn2("node", [builtfile, testResources, ipcfile], {
+              stdio: ["pipe", "pipe", "pipe", "ipc"]
+            });
+            let buffer = new Buffer("");
+            const server = net.createServer((socket) => {
+              const queue = new Queue();
+              socket.on("data", (data) => {
+                buffer = Buffer.concat([buffer, data]);
+                for (let b = 0; b < buffer.length + 1; b++) {
+                  const c = buffer.slice(0, b);
+                  let d;
+                  try {
+                    d = JSON.parse(c.toString());
+                    queue.enqueue(d);
+                    buffer = buffer.slice(b, buffer.length + 1);
+                    b = 0;
+                  } catch (e) {
+                  }
+                }
+                while (queue.size() > 0) {
+                  const message = queue.dequeue();
+                  if (message) {
+                    this.mapping().forEach(async ([command2, func]) => {
+                      if (message[0] === command2) {
+                        const x = message.slice(1, -1);
+                        const r = await this[command2](...x);
+                        if (!haltReturns) {
+                          child.send(
+                            JSON.stringify({
+                              payload: r,
+                              key: message[message.length - 1]
+                            })
+                          );
+                        }
+                      }
+                    });
+                  }
+                }
+              });
+            });
+            const logs = createLogStreams(reportDest, "node");
+            return new Promise((resolve, reject) => {
+              server.listen(ipcfile, () => {
+                child.stdout?.on("data", (data) => {
+                  logs.stdout?.write(data);
+                });
+                child.stderr?.on("data", (data) => {
+                  logs.stderr?.write(data);
+                });
+                child.on("close", (code) => {
+                  const exitCode = code === null ? -1 : code;
+                  if (exitCode < 0) {
+                    logs.writeExitCode(
+                      exitCode,
+                      new Error("Process crashed or was terminated")
+                    );
+                  } else {
+                    logs.writeExitCode(exitCode);
+                  }
+                  logs.closeAll();
+                  server.close();
+                  if (exitCode === 255) {
+                    console.log(
+                      ansiColors.red(
+                        `node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/stderr.log for more info`
+                      )
+                    );
+                    this.bddTestIsNowDone(src, -1);
+                    statusMessagePretty(-1, src, "node");
+                    reject(new Error(`Process exited with code ${exitCode}`));
+                  } else if (exitCode === 0) {
+                    this.bddTestIsNowDone(src, 0);
+                    statusMessagePretty(0, src, "node");
+                    resolve();
+                  } else {
+                    this.bddTestIsNowDone(src, exitCode);
+                    statusMessagePretty(exitCode, src, "node");
+                    reject(new Error(`Process exited with code ${exitCode}`));
+                  }
+                  haltReturns = true;
+                });
+                child.on("error", (e) => {
+                  console.log("error");
+                  haltReturns = true;
+                  console.log(
+                    ansiC3.red(
+                      ansiC3.inverse(
+                        `${src} errored with: ${e.name}. Check error logs for more info`
+                      )
+                    )
+                  );
+                  this.bddTestIsNowDone(src, -1);
+                  statusMessagePretty(-1, src, "node");
+                  reject(e);
+                });
+              });
+            }).finally(() => {
+              for (let i = 0; i <= portsToUse.length; i++) {
+                if (portsToUse[i]) {
+                  this.ports[portsToUse[i]] = "";
+                }
+              }
+            });
+          })();
+          this.addPromiseProcess(
+            processId,
+            nodePromise,
+            command,
+            "bdd-test",
+            src,
+            "node"
+          );
+        };
+        this.launchWeb = async (src, dest) => {
+          const processId = `web-${src}-${Date.now()}`;
+          const command = `web test: ${src}`;
+          const webPromise = (async () => {
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
+            }
+            const destFolder = dest.replace(".mjs", "");
+            const webArgz = JSON.stringify({
+              name: src,
+              ports: [].toString(),
+              fs: reportDest,
+              browserWSEndpoint: this.browser.wsEndpoint()
+            });
+            const d = `${dest}?cacheBust=${Date.now()}`;
+            const logs = createLogStreams(reportDest, "web");
+            return new Promise((resolve, reject) => {
+              this.browser.newPage().then((page) => {
+                page.on("console", (log) => {
+                  const msg = `${log.text()}
+`;
+                  switch (log.type()) {
+                    case "info":
+                      logs.info?.write(msg);
+                      break;
+                    case "warn":
+                      logs.warn?.write(msg);
+                      break;
+                    case "error":
+                      logs.error?.write(msg);
+                      break;
+                    case "debug":
+                      logs.debug?.write(msg);
+                      break;
+                    default:
+                      break;
+                  }
+                });
+                page.on("close", () => {
+                  logs.writeExitCode(0);
+                  logs.closeAll();
+                });
+                this.mapping().forEach(async ([command2, func]) => {
+                  if (command2 === "page") {
+                    page.exposeFunction(command2, (x) => {
+                      if (x) {
+                        return func(x);
+                      } else {
+                        return func(page.mainFrame()._id);
+                      }
+                    });
+                  } else {
+                    return page.exposeFunction(command2, func);
+                  }
+                });
+                return page;
+              }).then(async (page) => {
+                const close = () => {
+                  if (!files2[src]) {
+                    files2[src] = /* @__PURE__ */ new Set();
+                  }
+                  delete files2[src];
+                  Promise.all(screenshots2[src] || []).then(() => {
+                    delete screenshots2[src];
+                    page.close();
+                  });
+                };
+                page.on("pageerror", (err) => {
+                  logs.writeExitCode(-1, err);
+                  console.log(
+                    ansiColors.red(
+                      `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
+                    )
+                  );
+                  this.bddTestIsNowDone(src, -1);
+                  close();
+                  reject(err);
+                });
+                await page.goto(`file://${`${destFolder}.html`}`, {});
+                await page.evaluate(webEvaluator(d, webArgz)).then(async ({ fails, failed, features }) => {
+                  statusMessagePretty(fails, src, "web");
+                  this.bddTestIsNowDone(src, fails);
+                  resolve();
+                }).catch((e) => {
+                  console.log(ansiC3.red(ansiC3.inverse(e.stack)));
+                  console.log(
+                    ansiC3.red(
+                      ansiC3.inverse(
+                        `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
+                      )
+                    )
+                  );
+                  this.bddTestIsNowDone(src, -1);
+                  reject(e);
+                }).finally(() => {
+                  close();
+                });
+              }).catch((error) => {
+                reject(error);
+              });
+            });
+          })();
+          this.addPromiseProcess(
+            processId,
+            webPromise,
+            command,
+            "bdd-test",
+            src,
+            "web"
+          );
+        };
+        this.launchPitono = async (src, dest) => {
+          const processId = `pitono-${src}-${Date.now()}`;
+          const command = `pitono test: ${src}`;
+          const pitonoPromise = (async () => {
+            this.bddTestIsRunning(src);
+            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pitono`;
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
+            }
+            const logs = createLogStreams(reportDest, "node");
+            try {
+              const { PitonoRunner: PitonoRunner2 } = await Promise.resolve().then(() => (init_pitonoRunner(), pitonoRunner_exports));
+              const runner = new PitonoRunner2(this.configs, this.name);
+              await runner.run();
+              this.bddTestIsNowDone(src, 0);
+              statusMessagePretty(0, src, "pitono");
+            } catch (error) {
+              logs.writeExitCode(-1, error);
+              console.log(
+                ansiC3.red(
+                  ansiC3.inverse(
+                    `${src} errored with: ${error}. Check logs for more info`
+                  )
+                )
+              );
+              this.bddTestIsNowDone(src, -1);
+              statusMessagePretty(-1, src, "pitono");
+              throw error;
+            }
+          })();
+          this.addPromiseProcess(
+            processId,
+            pitonoPromise,
+            command,
+            "bdd-test",
+            src,
+            "pitono"
+          );
+        };
+        this.launchGolingvu = async (src, dest) => {
+          throw "not yet implemented";
+        };
+        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
+          const featureDestination = path8.resolve(
+            process.cwd(),
+            "reports",
+            "features",
+            "strings",
+            srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
+          );
+          const testReportPath = `${reportDest}/tests.json`;
+          if (!fs11.existsSync(testReportPath)) {
+            console.error(`tests.json not found at: ${testReportPath}`);
+            return;
+          }
+          const testReport = JSON.parse(fs11.readFileSync(testReportPath, "utf8"));
+          if (testReport.tests) {
+            testReport.tests.forEach((test) => {
+              test.fullPath = path8.resolve(process.cwd(), srcTest);
+            });
+          }
+          testReport.fullPath = path8.resolve(process.cwd(), srcTest);
+          fs11.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
+          testReport.features.reduce(async (mm, featureStringKey) => {
+            const accum = await mm;
+            const isUrl = isValidUrl(featureStringKey);
+            if (isUrl) {
+              const u = new URL(featureStringKey);
+              if (u.protocol === "file:") {
+                const newPath = `${process.cwd()}/testeranto/features/internal/${path8.relative(
+                  process.cwd(),
+                  u.pathname
+                )}`;
+                accum.files.push(u.pathname);
+              } else if (u.protocol === "http:" || u.protocol === "https:") {
+                const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
+                const body = await this.configs.featureIngestor(featureStringKey);
+                writeFileAndCreateDir(newPath, body);
+                accum.files.push(newPath);
+              }
+            } else {
+              await fs11.promises.mkdir(path8.dirname(featureDestination), {
+                recursive: true
+              });
+              accum.strings.push(featureStringKey);
+            }
+            return accum;
+          }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
+            fs11.writeFileSync(
+              `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
+              files3.map((f2) => {
+                return `/read ${f2}`;
+              }).join("\n")
+            );
+          });
+          testReport.givens.forEach((g) => {
+            if (g.failed === true) {
+              this.summary[srcTest].failingFeatures[g.key] = g.features;
+            }
+          });
+          this.writeBigBoard();
+        };
+        this.checkForShutdown = () => {
+          this.checkQueue();
+          console.log(
+            ansiC3.inverse(
+              `The following jobs are awaiting resources: ${JSON.stringify(
+                this.queue
+              )}`
+            )
+          );
+          console.log(
+            ansiC3.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
+          );
+          this.writeBigBoard();
+          if (this.mode === "dev")
+            return;
+          let inflight = false;
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].prompt === "?") {
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} prompt ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].runTimeErrors === "?") {
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} runTimeError ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].staticErrors === "?") {
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} staticErrors ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].typeErrors === "?") {
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} typeErrors ${k}`)));
+              inflight = true;
+            }
+          });
+          this.writeBigBoard();
+          if (!inflight) {
+            if (this.browser) {
+              if (this.browser) {
+                this.browser.disconnect().then(() => {
+                  console.log(
+                    ansiC3.inverse(`${this.name} has been tested. Goodbye.`)
+                  );
+                  process.exit();
+                });
+              }
+            }
+          }
+        };
+        this.launchers = {};
+        this.ports = {};
+        this.queue = [];
+        this.setupWebSocketServer();
+        this.configs.ports.forEach((element) => {
+          this.ports[element] = "";
+        });
+      }
+      async start() {
+        try {
+          await this.startBuildProcesses();
+          this.onBuildDone();
+        } catch (error) {
+          console.error("Build processes failed:", error);
+          return;
+        }
+        this.mapping().forEach(async ([command, func]) => {
+          globalThis[command] = func;
+        });
+        if (!fs11.existsSync(`testeranto/reports/${this.name}`)) {
+          fs11.mkdirSync(`testeranto/reports/${this.name}`);
+        }
+        try {
+          this.browser = await puppeteer.launch(puppeteerConfigs);
+        } catch (e) {
+          console.error(e);
+          console.error(
+            "could not start chrome via puppeter. Check this path: ",
+            executablePath2
+          );
+        }
+        const {
+          nodeEntryPoints,
+          webEntryPoints,
+          pureEntryPoints
+          // pitonoEntryPoints is stubbed out
+        } = getRunnables(this.configs.tests, this.name);
+        [
+          [
+            nodeEntryPoints,
+            this.launchNode,
+            "node",
+            (w) => {
+              this.nodeMetafileWatcher = w;
+            }
+          ],
+          [
+            webEntryPoints,
+            this.launchWeb,
+            "web",
+            (w) => {
+              this.webMetafileWatcher = w;
+            }
+          ],
+          [
+            pureEntryPoints,
+            this.launchPure,
+            "pure",
+            (w) => {
+              this.importMetafileWatcher = w;
+            }
+          ]
+          // pitonoEntryPoints is commented out since it's stubbed
+          // [
+          //   pitonoEntryPoints,
+          //   this.launchPitono,
+          //   "pitono",
+          //   (w) => {
+          //     this.pitonoMetafileWatcher = w;
+          //   },
+          // ],
+        ].forEach(
+          async ([eps, launcher, runtime, watcher]) => {
+            let metafile;
+            if (runtime === "pitono") {
+              metafile = `./testeranto/metafiles/python/core.json`;
+              const metafileDir = path8.dirname(metafile);
+              if (!fs11.existsSync(metafileDir)) {
+                fs11.mkdirSync(metafileDir, { recursive: true });
+              }
+            } else {
+              metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
+            }
+            if (runtime !== "pitono") {
+              await pollForFile(metafile);
+            }
+            Object.entries(eps).forEach(
+              async ([inputFile, outputFile]) => {
+                this.launchers[inputFile] = () => launcher(inputFile, outputFile);
+                this.launchers[inputFile]();
+                try {
+                  if (fs11.existsSync(outputFile)) {
+                    watch2(outputFile, async (e, filename) => {
+                      const hash = await fileHash(outputFile);
+                      if (fileHashes[inputFile] !== hash) {
+                        fileHashes[inputFile] = hash;
+                        console.log(
+                          ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename}`))
+                        );
+                        this.launchers[inputFile]();
+                      }
+                    });
+                  } else {
+                    console.log(
+                      ansiC3.yellow(
+                        ansiC3.inverse(
+                          `File not found, skipping watch: ${outputFile}`
+                        )
+                      )
+                    );
+                  }
+                } catch (e) {
+                  console.error(e);
+                }
+              }
+            );
+            this.metafileOutputs(runtime);
+            if (runtime === "pitono") {
+              const checkFileExists = () => {
+                if (fs11.existsSync(metafile)) {
+                  console.log(
+                    ansiC3.green(ansiC3.inverse(`Pitono metafile found: ${metafile}`))
+                  );
+                  watcher(
+                    watch2(metafile, async (e, filename) => {
+                      console.log(
+                        ansiC3.yellow(
+                          ansiC3.inverse(`< ${e} ${filename} (${runtime})`)
+                        )
+                      );
+                      this.metafileOutputs(runtime);
+                    })
+                  );
+                  this.metafileOutputs(runtime);
+                } else {
+                  setTimeout(checkFileExists, 1e3);
+                }
+              };
+              checkFileExists();
+            } else {
+              if (fs11.existsSync(metafile)) {
+                watcher(
+                  watch2(metafile, async (e, filename) => {
+                    console.log(
+                      ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename} (${runtime})`))
+                    );
+                    this.metafileOutputs(runtime);
+                  })
+                );
+              }
+            }
+          }
+        );
+      }
+      async stop() {
+        console.log(ansiC3.inverse("Testeranto-Run is shutting down gracefully..."));
+        this.mode = "once";
+        this.nodeMetafileWatcher.close();
+        this.webMetafileWatcher.close();
+        this.importMetafileWatcher.close();
+        if (this.pitonoMetafileWatcher) {
+          this.pitonoMetafileWatcher.close();
+        }
+        if (this.gitWatcher) {
+          this.gitWatcher.close();
+        }
+        if (this.gitWatchTimeout) {
+          clearTimeout(this.gitWatchTimeout);
+        }
+        Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
+        if (this.wss) {
+          this.wss.close(() => {
+            console.log("WebSocket server closed");
+          });
+        }
+        this.clients.forEach((client) => {
+          client.terminate();
+        });
+        this.clients.clear();
+        if (this.httpServer) {
+          this.httpServer.close(() => {
+            console.log("HTTP server closed");
+          });
+        }
+        this.checkForShutdown();
+      }
+      async metafileOutputs(platform) {
+        let metafilePath;
+        if (platform === "pitono") {
+          metafilePath = `./testeranto/metafiles/python/core.json`;
+        } else {
+          metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
+        }
+        if (!fs11.existsSync(metafilePath)) {
+          if (platform === "pitono") {
+            console.log(
+              ansiC3.yellow(
+                ansiC3.inverse(`Pitono metafile not found yet: ${metafilePath}`)
+              )
+            );
+          }
+          return;
+        }
+        let metafile;
+        try {
+          const fileContent = fs11.readFileSync(metafilePath).toString();
+          const parsedData = JSON.parse(fileContent);
+          if (platform === "pitono") {
+            metafile = parsedData.metafile || parsedData;
+          } else {
+            metafile = parsedData.metafile;
+          }
+          if (!metafile) {
+            console.log(
+              ansiC3.yellow(ansiC3.inverse(`No metafile found in ${metafilePath}`))
+            );
+            return;
+          }
+        } catch (error) {
+          console.error(`Error reading metafile at ${metafilePath}:`, error);
+          return;
+        }
+        const outputs = metafile.outputs;
+        Object.keys(outputs).forEach(async (k) => {
+          const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
+          if (!k.startsWith(pattern)) {
+            return false;
+          }
+          const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
+            if (!fs11.existsSync(i))
+              return false;
+            if (i.startsWith("node_modules"))
+              return false;
+            if (i.startsWith("./node_modules"))
+              return false;
+            return true;
+          });
+          const f2 = `${k.split(".").slice(0, -1).join(".")}/`;
+          if (!fs11.existsSync(f2)) {
+            fs11.mkdirSync(f2);
+          }
+          const entrypoint = outputs[k].entryPoint;
+          if (entrypoint) {
+            const changeDigest = await filesHash(addableFiles);
+            if (changeDigest === changes[entrypoint]) {
+            } else {
+              changes[entrypoint] = changeDigest;
+              this.tscCheck({
+                platform,
+                addableFiles,
+                entrypoint
+              });
+              this.eslintCheck(entrypoint, platform, addableFiles);
+              this.makePrompt(entrypoint, addableFiles, platform);
+            }
+          }
+        });
+      }
+      // this method is so horrible. Don't drink and vibe-code kids
+      requestHandler(req, res) {
+        const parsedUrl = url3.parse(req.url || "/");
+        let pathname = parsedUrl.pathname || "/";
+        if (pathname?.startsWith("/api/git/")) {
+          this.handleGitApi(req, res);
+          return;
+        }
+        if (pathname === "/") {
+          pathname = "/index.html";
+        }
+        let filePath = pathname.substring(1);
+        if (filePath.startsWith("reports/")) {
+          filePath = `testeranto/${filePath}`;
+        } else if (filePath.startsWith("metafiles/")) {
+          filePath = `testeranto/${filePath}`;
+        } else if (filePath === "projects.json") {
+          filePath = `testeranto/${filePath}`;
+        } else {
+          const possiblePaths = [
+            `dist/${filePath}`,
+            `testeranto/dist/${filePath}`,
+            `../dist/${filePath}`,
+            `./${filePath}`
+          ];
+          let foundPath = null;
+          for (const possiblePath of possiblePaths) {
+            if (fs11.existsSync(possiblePath)) {
+              foundPath = possiblePath;
+              break;
+            }
+          }
+          if (foundPath) {
+            filePath = foundPath;
+          } else {
+            const indexPath = this.findIndexHtml();
+            if (indexPath) {
+              fs11.readFile(indexPath, (err, data) => {
+                if (err) {
+                  res.writeHead(404, { "Content-Type": "text/plain" });
+                  res.end("404 Not Found");
+                  return;
+                }
+                res.writeHead(200, { "Content-Type": "text/html" });
+                res.end(data);
+              });
+              return;
+            } else {
+              res.writeHead(404, { "Content-Type": "text/plain" });
+              res.end("404 Not Found");
+              return;
+            }
+          }
+        }
+        fs11.exists(filePath, (exists) => {
+          if (!exists) {
+            if (!pathname.includes(".") && pathname !== "/") {
+              const indexPath = this.findIndexHtml();
+              if (indexPath) {
+                fs11.readFile(indexPath, (err, data) => {
+                  if (err) {
+                    res.writeHead(404, { "Content-Type": "text/plain" });
+                    res.end("404 Not Found");
+                    return;
+                  }
+                  res.writeHead(200, { "Content-Type": "text/html" });
+                  res.end(data);
+                });
+                return;
+              } else {
+                res.writeHead(200, { "Content-Type": "text/html" });
+                res.end(`
+              <html>
+                <body>
+                  <h1>Testeranto is running</h1>
+                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
+                </body>
+              </html>
+            `);
+                return;
+              }
+            }
+            res.writeHead(404, { "Content-Type": "text/plain" });
+            res.end("404 Not Found");
+            return;
+          }
+          fs11.readFile(filePath, (err, data) => {
+            if (err) {
+              res.writeHead(500, { "Content-Type": "text/plain" });
+              res.end("500 Internal Server Error");
+              return;
+            }
+            const mimeType = mime3.lookup(filePath) || "application/octet-stream";
+            res.writeHead(200, { "Content-Type": mimeType });
+            res.end(data);
+          });
+        });
+      }
+      findIndexHtml() {
+        const possiblePaths = [
+          "dist/index.html",
+          "testeranto/dist/index.html",
+          "../dist/index.html",
+          "./index.html"
+        ];
+        for (const path12 of possiblePaths) {
+          if (fs11.existsSync(path12)) {
+            return path12;
+          }
+        }
+        return null;
+      }
+      broadcast(message) {
+        const data = typeof message === "string" ? message : JSON.stringify(message);
+        this.clients.forEach((client) => {
+          if (client.readyState === 1) {
+            client.send(data);
+          }
+        });
+      }
+      // Add WebSocket message handler setup
+      setupWebSocketHandlers() {
+        this.wss.on("connection", (ws) => {
+          this.clients.add(ws);
+          ws.on("message", (data) => {
+            try {
+              const message = JSON.parse(data.toString());
+              this.handleWebSocketMessage(message, ws);
+            } catch (error) {
+              console.error("Error parsing WebSocket message:", error);
+            }
+          });
+          ws.on("close", () => {
+            this.clients.delete(ws);
+          });
+        });
+      }
+      handleWebSocketMessage(message, ws) {
+        switch (message.type) {
+          case "get-initial-state":
+            this.sendInitialState(ws);
+            break;
+          case "file-changed":
+            this.refreshGitStatus();
+            break;
+          case "refresh-status":
+            this.refreshGitStatus();
+            break;
+          default:
+            console.log("Unknown WebSocket message type:", message.type);
+        }
+      }
+      async sendInitialState(ws) {
+        try {
+          const changes2 = await this.getGitChanges();
+          const status = await this.getGitRemoteStatus();
+          const branch = await this.getCurrentGitBranch();
+          ws.send(JSON.stringify({ type: "changes", changes: changes2 }));
+          ws.send(JSON.stringify({ type: "status", status }));
+          ws.send(JSON.stringify({ type: "branch", branch }));
+        } catch (error) {
+          console.error("Error sending initial state:", error);
+          ws.send(
+            JSON.stringify({
+              type: "error",
+              message: "Failed to get Git status"
+            })
+          );
+        }
+      }
+      checkQueue() {
+        const x = this.queue.pop();
+        if (!x) {
+          ansiC3.inverse(`The following queue is empty`);
+          return;
+        }
+        const test = this.configs.tests.find((t) => t[0] === x);
+        if (!test)
+          throw `test is undefined ${x}`;
+        this.launchers[test[0]]();
+      }
+      onBuildDone() {
+        console.log("Build processes completed");
+        this.startGitWatcher();
+      }
       setupWebSocketServer() {
         this.httpServer = http2.createServer(this.requestHandler.bind(this));
         this.wss = new WebSocketServer2({ server: this.httpServer });
@@ -3439,19 +3581,19 @@ __export(golingvuMetafile_exports, {
   generateGolangMetafile: () => generateGolangMetafile,
   writeGolangMetafile: () => writeGolangMetafile
 });
-import fs11 from "fs";
+import fs12 from "fs";
 import path9 from "path";
 async function generateGolangMetafile(testName2, entryPoints) {
   const outputs = {};
   for (const entryPoint of entryPoints) {
     try {
       const entryDir = path9.dirname(entryPoint);
-      const goFiles = fs11.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
+      const goFiles = fs12.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
       const inputs = {};
       let totalBytes = 0;
       for (const file of goFiles) {
         try {
-          const stats = fs11.statSync(file);
+          const stats = fs12.statSync(file);
           inputs[file] = { bytesInOutput: stats.size };
           totalBytes += stats.size;
         } catch {
@@ -3460,7 +3602,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
       }
       if (!inputs[entryPoint]) {
         try {
-          const entryStats = fs11.statSync(entryPoint);
+          const entryStats = fs12.statSync(entryPoint);
           inputs[entryPoint] = { bytesInOutput: entryStats.size };
           totalBytes += entryStats.size;
         } catch {
@@ -3483,7 +3625,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   for (const entryPoint of entryPoints) {
     try {
       const entryDir = path9.dirname(entryPoint);
-      const goFiles = fs11.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
+      const goFiles = fs12.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
       goFiles.forEach((file) => allGoFiles.add(file));
       allGoFiles.add(entryPoint);
     } catch (error) {
@@ -3492,7 +3634,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   }
   for (const filePath of Array.from(allGoFiles)) {
     try {
-      const stats = fs11.statSync(filePath);
+      const stats = fs12.statSync(filePath);
       allInputs[filePath] = {
         bytes: stats.size,
         imports: []
@@ -3529,9 +3671,9 @@ function writeGolangMetafile(testName2, metafile) {
     "metafiles",
     "golang"
   );
-  fs11.mkdirSync(metafileDir, { recursive: true });
+  fs12.mkdirSync(metafileDir, { recursive: true });
   const metafilePath = path9.join(metafileDir, `${testName2}.json`);
-  fs11.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs12.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
 }
 var init_golingvuMetafile = __esm({
   "src/utils/golingvuMetafile.ts"() {
@@ -3545,7 +3687,7 @@ __export(pitonoMetafile_exports, {
   generatePitonoMetafile: () => generatePitonoMetafile,
   writePitonoMetafile: () => writePitonoMetafile
 });
-import fs12 from "fs";
+import fs13 from "fs";
 import path10 from "path";
 import { execSync as execSync2 } from "child_process";
 async function generatePitonoMetafile(testName2, entryPoints) {
@@ -3558,10 +3700,10 @@ async function generatePitonoMetafile(testName2, entryPoints) {
 function writePitonoMetafile(testName2, metafile) {
   const metafilePath = path10.join(process.cwd(), "testeranto", "pitono", testName2, "metafile.json");
   const metafileDir = path10.dirname(metafilePath);
-  if (!fs12.existsSync(metafileDir)) {
-    fs12.mkdirSync(metafileDir, { recursive: true });
+  if (!fs13.existsSync(metafileDir)) {
+    fs13.mkdirSync(metafileDir, { recursive: true });
   }
-  fs12.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs13.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
   console.log(`Pitono metafile written to: ${metafilePath}`);
   try {
     const command = `pitono-core-generator ${testName2} ${metafile.entryPoints.join(" ")}`;
@@ -3588,7 +3730,7 @@ function writePitonoMetafile(testName2, metafile) {
           runtime: "pitono"
         };
         const coreFilePath = path10.join(process.cwd(), "testeranto", "pitono", testName2, "core.json");
-        fs12.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
+        fs13.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
         console.log(`Pitono core.json created manually as fallback`);
       } catch (manualError) {
         console.error(`Even manual creation failed: ${manualError}`);
@@ -3605,7 +3747,7 @@ var init_pitonoMetafile = __esm({
 // src/testeranto.ts
 init_utils();
 import ansiC4 from "ansi-colors";
-import fs13 from "fs";
+import fs14 from "fs";
 import path11 from "path";
 import readline from "readline";
 
@@ -3683,7 +3825,7 @@ import(f).then(async (module) => {
     process.exit(-1);
   }
   try {
-    fs13.writeFileSync(
+    fs14.writeFileSync(
       `${process.cwd()}/testeranto/projects.json`,
       JSON.stringify(Object.keys(bigConfig.projects), null, 2)
     );
@@ -3719,13 +3861,13 @@ import(f).then(async (module) => {
   const { PM_Main: PM_Main2 } = await init_main().then(() => main_exports);
   pm = new PM_Main2(config, testName, mode);
   await pm.start();
-  fs13.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
+  fs14.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
   Object.keys(bigConfig.projects).forEach((projectName) => {
     console.log(`testeranto/reports/${projectName}`);
-    if (!fs13.existsSync(`testeranto/reports/${projectName}`)) {
-      fs13.mkdirSync(`testeranto/reports/${projectName}`);
+    if (!fs14.existsSync(`testeranto/reports/${projectName}`)) {
+      fs14.mkdirSync(`testeranto/reports/${projectName}`);
     }
-    fs13.writeFileSync(
+    fs14.writeFileSync(
       `testeranto/reports/${projectName}/config.json`,
       JSON.stringify(config, null, 2)
     );
@@ -3762,8 +3904,8 @@ import(f).then(async (module) => {
     const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
     const metafile = await generatePitonoMetafile2(testName, pitonoEntryPoints);
     const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
-    await fs13.promises.mkdir(pitonoMetafilePath, { recursive: true });
-    fs13.writeFileSync(
+    await fs14.promises.mkdir(pitonoMetafilePath, { recursive: true });
+    fs14.writeFileSync(
       `${pitonoMetafilePath}/core.json`,
       JSON.stringify(metafile, null, 2)
     );
@@ -3782,8 +3924,8 @@ import(f).then(async (module) => {
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
         const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-        return fs13.promises.mkdir(path11.dirname(htmlFilePath), { recursive: true }).then(
-          (x2) => fs13.writeFileSync(
+        return fs14.promises.mkdir(path11.dirname(htmlFilePath), { recursive: true }).then(
+          (x2) => fs14.writeFileSync(
             htmlFilePath,
             web_html_default(jsfilePath, htmlFilePath, cssFilePath)
           )
@@ -3807,7 +3949,7 @@ import(f).then(async (module) => {
   x.forEach(async ([runtime, keys]) => {
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
-      await fs13.mkdirSync(folder, { recursive: true });
+      await fs14.mkdirSync(folder, { recursive: true });
     });
   });
   [
@@ -3824,7 +3966,7 @@ import(f).then(async (module) => {
           ep.split(".").slice(0, -1).join("."),
           runtime
         );
-        fs13.mkdirSync(fp, { recursive: true });
+        fs14.mkdirSync(fp, { recursive: true });
       });
     }
   );

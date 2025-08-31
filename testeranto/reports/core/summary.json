@@ -31,14 +31,14 @@
     "failingFeatures": {}
   },
   "src/Pure.test.ts": {
-    "typeErrors": 29,
+    "typeErrors": 30,
     "staticErrors": 0,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/pure/src/Pure.test/prompt.txt",
     "failingFeatures": {}
   },
   "src/lib/pmProxy.test/index.ts": {
-    "typeErrors": 21,
+    "typeErrors": 22,
     "staticErrors": 2,
     "runTimeErrors": -1,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/src/lib/pmProxy.test/index/prompt.txt",

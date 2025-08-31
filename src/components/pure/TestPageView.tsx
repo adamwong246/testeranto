@@ -14,6 +14,7 @@ import { Container, Row, Col, Nav, Button, Modal } from "react-bootstrap";
 import { Editor } from "@monaco-editor/react";
 import { NavBar } from "./NavBar";
 import { TestStatusBadge } from "../TestStatusBadge";
+import { FileTreeItem } from "./FileTreeItem";
 
 type TestData = {
   name: string;
@@ -176,7 +177,8 @@ export const TestPageView = ({
   }, [logs]);
 
   // Use the centralized WebSocket from App context
-  const ws = useWebSocket();
+  const wsContext = useWebSocket();
+  const ws = wsContext?.ws;
   const [activeTab, setActiveTab] = React.useState("tests.json");
   const [selectedFile, setSelectedFile] = useState<{
     path: string;
@@ -479,13 +481,18 @@ export const TestPageView = ({
           <Button
             variant="info"
             onClick={() => setShowAiderModal(true)}
-            className="ms-2"
+            className="ms-2 position-relative"
             title={isWebSocketConnected ? "AI Assistant" : "AI Assistant (WebSocket not connected)"}
             disabled={!isWebSocketConnected}
           >
             🤖
             {!isWebSocketConnected && (
-              <span className="ms-1">🔴</span>
+              <span
+                className="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
+                title="WebSocket disconnected"
+              >
+                <span className="visually-hidden">WebSocket disconnected</span>
+              </span>
             )}
           </Button>
         }
@@ -570,7 +577,7 @@ export const TestPageView = ({
                 }
 
                 // Send command to server via the centralized WebSocket
-                if (ws && ws.readyState === WebSocket.OPEN) {
+                if (isWebSocketConnected && ws) {
                   ws.send(JSON.stringify({
                     type: 'executeCommand',
                     command: command
@@ -934,51 +941,6 @@ export const TestPageView = ({
     </Container>
   );
 };
-// Simple file tree item component
-const FileTreeItem = ({
-  name,
-  isFile,
-  level,
-  isSelected,
-  exists = true,
-  onClick
-}: {
-  name: string;
-  isFile: boolean;
-  level: number;
-  isSelected: boolean;
-  exists?: boolean;
-  onClick: () => void;
-}) => {
-  const displayName = name
-    .replace(".json", "")
-    .replace(".txt", "")
-    .replace(".log", "")
-    .replace(/_/g, " ")
-    .replace(/^std/, "Standard ")
-    .replace(/^exit/, "Exit Code")
-    .split('/').pop();
-
-  return (
-    <div
-      className={`d-flex align-items-center py-1 ${isSelected ? 'text-primary fw-bold' : exists ? 'text-dark' : 'text-muted'}`}
-      style={{
-        paddingLeft: `${level * 16}px`,
-        cursor: exists ? 'pointer' : 'not-allowed',
-        fontSize: '0.875rem',
-        opacity: exists ? 1 : 0.6
-      }}
-      onClick={exists ? onClick : undefined}
-      title={exists ? undefined : "File not found or empty"}
-    >
-      <i className={`bi ${isFile ? (exists ? 'bi-file-earmark-text' : 'bi-file-earmark') : 'bi-folder'} me-1`}></i>
-      <span>{displayName}</span>
-      {!exists && (
-        <i className="bi bi-question-circle ms-1" title="File not found or empty"></i>
-      )}
-    </div>
-  );
-};
 
 const ArtifactTree = ({
   treeData,
@@ -1063,147 +1025,3 @@ const ArtifactTree = ({
   );
 };
 
-const buildArtifactTree = (testData: any) => {
-  const artifactPaths = new Set<string>();
-  testData.givens?.forEach((given: any) => {
-    given.artifacts?.forEach((artifact: string) => artifactPaths.add(artifact));
-    given.whens?.forEach((when: any) =>
-      when.artifacts?.forEach((artifact: string) => artifactPaths.add(artifact)));
-    given.thens?.forEach((then: any) =>
-      then.artifacts?.forEach((artifact: string) => artifactPaths.add(artifact)));
-  });
-
-  const sortedArtifacts = Array.from(artifactPaths).sort();
-
-  return sortedArtifacts.reduce((tree, artifactPath) => {
-    const parts = artifactPath.split('/');
-    let currentLevel = tree;
-
-    parts.forEach((part, i) => {
-      if (!currentLevel[part]) {
-        currentLevel[part] = i === parts.length - 1
-          ? { __isFile: true, path: artifactPath }
-          : {};
-      }
-      currentLevel = currentLevel[part];
-    });
-
-    return tree;
-  }, {} as Record<string, any>);
-};
-
-const LogNavItem = ({
-  logName,
-  logContent,
-  activeTab,
-  setActiveTab,
-  setSelectedFile,
-  errorCounts,
-  decodedTestPath,
-  testsExist,
-}: {
-  logName: string;
-  logContent: any;
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  setSelectedFile: (file: {
-    path: string;
-    content: string;
-    language?: string;
-  }) => void;
-  errorCounts: {
-    runTimeErrors: number;
-    typeErrors: number;
-    staticErrors: number;
-  };
-  decodedTestPath: string;
-  testsExist: boolean;
-}) => {
-  const displayName = logName
-    .replace(".json", "")
-    .replace(".txt", "")
-    .replace(".log", "")
-    .replace(/_/g, " ")
-    .replace(/^std/, "Standard ")
-    .replace(/^exit/, "Exit Code");
-
-  const logValue = typeof logContent === "string" ? logContent.trim() : "";
-  let statusIndicator: ReactElement<any, any> | null = null;
-
-  if (
-    logName === STANDARD_LOGS.TYPE_ERRORS &&
-    (errorCounts.typeErrors > 0 || (logValue && logValue !== "0"))
-  ) {
-    statusIndicator = (
-      <span className="ms-1">
-        ❌ {errorCounts.typeErrors || (logValue ? 1 : 0)}
-      </span>
-    );
-  } else if (
-    logName === STANDARD_LOGS.LINT_ERRORS &&
-    (errorCounts.staticErrors > 0 || (logValue && logValue !== "0"))
-  ) {
-    statusIndicator = (
-      <span className="ms-1">
-        ❌ {errorCounts.staticErrors || (logValue ? 1 : 0)}
-      </span>
-    );
-  } else if (
-    logName === RUNTIME_SPECIFIC_LOGS.node.STDERR &&
-    (errorCounts.runTimeErrors > 0 || (logValue && logValue !== "0"))
-  ) {
-    statusIndicator = (
-      <span className="ms-1">
-        ❌ {errorCounts.runTimeErrors || (logValue ? 1 : 0)}
-      </span>
-    );
-  } else if (logName === STANDARD_LOGS.EXIT && logValue !== "0") {
-    statusIndicator = <span className="ms-1">⚠️ {logValue}</span>;
-  } else if (logName === STANDARD_LOGS.TESTS && logValue) {
-    statusIndicator = (
-      <div className="ms-1">
-        <TestStatusBadge
-          testName={decodedTestPath}
-          testsExist={testsExist}
-          runTimeErrors={errorCounts.runTimeErrors}
-          typeErrors={errorCounts.typeErrors}
-          staticErrors={errorCounts.staticErrors}
-          variant="compact"
-          className="mt-1"
-        />
-      </div>
-    );
-  }
-
-  return (
-    <Nav.Item key={logName}>
-      <Nav.Link
-        eventKey={logName}
-        active={activeTab === logName}
-        onClick={() => {
-          setActiveTab(logName);
-          setSelectedFile({
-            path: logName,
-            content:
-              typeof logContent === "string"
-                ? logContent
-                : JSON.stringify(logContent, null, 2),
-            language: logName.endsWith(".json")
-              ? "json"
-              : logName.endsWith(".txt")
-                ? "plaintext"
-                : logName.endsWith(".log")
-                  ? "log"
-                  : "plaintext",
-          });
-        }}
-        className="d-flex flex-column align-items-start"
-      >
-        <div className="d-flex justify-content-between w-100">
-          <span className="text-capitalize">{displayName}</span>
-          {statusIndicator}
-        </div>
-      </Nav.Link>
-    </Nav.Item>
-  );
-};
