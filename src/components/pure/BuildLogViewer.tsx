@@ -109,7 +109,7 @@ export const BuildLogViewer: React.FC<BuildLogViewerProps> = ({ logs, runtime })
                           </small>
                         </div>
                         <div className="mt-1">
-                          <pre className="mb-0 p-2 bg-light rounded">
+                          <pre className="mb-0 p-2  rounded">
                             {JSON.stringify(warn)}
                           </pre>
                         </div>
@@ -145,7 +145,7 @@ export const BuildLogViewer: React.FC<BuildLogViewerProps> = ({ logs, runtime })
                           </small>
                         </div>
                         <div className="mt-1">
-                          <pre className="mb-0 p-2 bg-light rounded">
+                          <pre className="mb-0 p-2  rounded">
                             {JSON.stringify(err)}
                           </pre>
                         </div>

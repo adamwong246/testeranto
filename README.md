@@ -57,6 +57,30 @@ We're launching a private beta for GitHub stargazers first, followed by a public
 
 0. Install Aider and signup for a LLM service.
 
+### Server-Side Setup for GitHub OAuth
+
+For GitHub authentication to work properly, you need to set up the server-side token exchange:
+
+1. Add the following environment variables to your server:
+   ```
+   GITHUB_CLIENT_ID=your_github_oauth_client_id
+   GITHUB_CLIENT_SECRET=your_github_oauth_client_secret
+   ```
+
+2. The server will handle the OAuth token exchange at the `/api/auth/github/token` endpoint
+
+### GitHub Authentication Setup
+
+To enable Git operations with GitHub:
+
+1. Create a GitHub OAuth App at https://github.com/settings/developers
+2. Set the Authorization callback URL to: `http://localhost:3000/auth/github/callback`
+3. Copy the Client ID
+4. Update the `clientId` field in the `githubOAuth` section of `testeranto.config.ts`
+5. Restart the development server
+
+**Note**: The client secret is not needed for the frontend application as it will be handled by the server-side component for token exchange.
+
 1. Install testeranto:
 
 ```bash

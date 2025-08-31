@@ -327,6 +327,50 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
     }
   }
 
+  private async handleGitHubTokenExchange(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on("end", async () => {
+      try {
+        const { code } = JSON.parse(body);
+        
+        // Exchange code for access token
+        const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            client_id: process.env.GITHUB_CLIENT_ID,
+            client_secret: process.env.GITHUB_CLIENT_SECRET,
+            code,
+          }),
+        });
+
+        const tokenData = await tokenResponse.json();
+        
+        if (tokenData.error) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: tokenData.error_description }));
+          return;
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ access_token: tokenData.access_token }));
+      } catch (error) {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: "Failed to exchange token" }));
+      }
+    });
+  }
+
   private async handleGitRemoteStatus(
     req: http.IncomingMessage,
     res: http.ServerResponse

@@ -2217,6 +2217,40 @@ var init_PM_WithGit = __esm({
           res.end(JSON.stringify({ error: "Failed to get branch" }));
         }
       }
+      async handleGitHubTokenExchange(req, res) {
+        let body = "";
+        req.on("data", (chunk) => {
+          body += chunk.toString();
+        });
+        req.on("end", async () => {
+          try {
+            const { code } = JSON.parse(body);
+            const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
+              method: "POST",
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                client_id: process.env.GITHUB_CLIENT_ID,
+                client_secret: process.env.GITHUB_CLIENT_SECRET,
+                code
+              })
+            });
+            const tokenData = await tokenResponse.json();
+            if (tokenData.error) {
+              res.writeHead(400, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ error: tokenData.error_description }));
+              return;
+            }
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ access_token: tokenData.access_token }));
+          } catch (error) {
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Failed to exchange token" }));
+          }
+        });
+      }
       async handleGitRemoteStatus(req, res) {
         try {
           const status = await this.getGitRemoteStatus();
@@ -3385,6 +3419,38 @@ var init_main = __esm({
           this.handleGitApi(req, res);
           return;
         }
+        if (pathname === "/api/auth/github/token" && req.method === "POST") {
+          this.handleGitHubTokenExchange(req, res);
+          return;
+        }
+        if (pathname === "/auth/github/callback") {
+          const callbackHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Authentication - Testeranto</title>
+    <script>
+        // Extract the code from the URL and send it to the parent window
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+        
+        if (code) {
+            window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
+        } else if (error) {
+            window.opener.postMessage({ type: 'github-auth-error', error }, '*');
+        }
+        window.close();
+    </script>
+</head>
+<body>
+    <p>Completing authentication...</p>
+</body>
+</html>`;
+          res.writeHead(200, { "Content-Type": "text/html" });
+          res.end(callbackHtml);
+          return;
+        }
         if (pathname === "/") {
           pathname = "/index.html";
         }
@@ -3463,16 +3529,41 @@ var init_main = __esm({
             res.end("404 Not Found");
             return;
           }
-          fs11.readFile(filePath, (err, data) => {
-            if (err) {
-              res.writeHead(500, { "Content-Type": "text/plain" });
-              res.end("500 Internal Server Error");
-              return;
-            }
-            const mimeType = mime3.lookup(filePath) || "application/octet-stream";
-            res.writeHead(200, { "Content-Type": mimeType });
-            res.end(data);
-          });
+          if (filePath.endsWith(".html")) {
+            fs11.readFile(filePath, (err, data) => {
+              if (err) {
+                res.writeHead(500, { "Content-Type": "text/plain" });
+                res.end("500 Internal Server Error");
+                return;
+              }
+              let content = data.toString();
+              if (content.includes("</body>")) {
+                const configScript = `
+              <script>
+                window.testerantoConfig = ${JSON.stringify({
+                  githubOAuth: {
+                    clientId: process.env.GITHUB_CLIENT_ID
+                  }
+                })};
+              </script>
+            `;
+                content = content.replace("</body>", `${configScript}</body>`);
+              }
+              res.writeHead(200, { "Content-Type": "text/html" });
+              res.end(content);
+            });
+          } else {
+            fs11.readFile(filePath, (err, data) => {
+              if (err) {
+                res.writeHead(500, { "Content-Type": "text/plain" });
+                res.end("500 Internal Server Error");
+                return;
+              }
+              const mimeType = mime3.lookup(filePath) || "application/octet-stream";
+              res.writeHead(200, { "Content-Type": mimeType });
+              res.end(data);
+            });
+          }
         });
       }
       findIndexHtml() {
@@ -3805,6 +3896,14 @@ var web_html_default = (jsfilePath, htmlFilePath, cssfilePath) => `
 `;
 
 // src/testeranto.ts
+if (!process.env.GITHUB_CLIENT_ID) {
+  console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
+  process.exit(-1);
+}
+if (!process.env.GITHUB_CLIENT_SECRET) {
+  console.error(`env var "GITHUB_CLIENT_SECRET" needs to be set!`);
+  process.exit(-1);
+}
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
   process.stdin.setRawMode(true);

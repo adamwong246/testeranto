@@ -38,17 +38,18 @@ export class MockGiven extends BaseGiven<I> {
 export class MockWhen extends BaseWhen<I> {
   async andWhen(
     store: TestStore,
-    whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>,
+    whenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>,
     testResource: any,
     pm: IPM
   ): Promise<TestStore> {
     // Create a TestSelection from the store
-    const selection: TestSelection = { testSelection: store.testStore };
-    // Call whenCB with the selection to get the function
-    const whenFunction = whenCB(selection);
-    // Execute the function with the store
-    const result = await whenFunction(store);
-    return result;
+    const selection: TestSelection = { 
+      testSelection: store.testStore,
+      testStore: store.testStore
+    };
+    // Call whenCB with the selection
+    await whenCB(selection);
+    return store;
   }
 
   addArtifact(path: string): void {
@@ -64,7 +65,10 @@ export class MockThen extends BaseThen<I> {
     pm: IPM
   ): Promise<TestSelection> {
     // Create a TestSelection from the store
-    const selection: TestSelection = { testSelection: store.testStore };
+    const selection: TestSelection = { 
+      testSelection: store.testStore,
+      testStore: store.testStore
+    };
     // Call thenCB with the selection
     await thenCB(selection);
     return selection;

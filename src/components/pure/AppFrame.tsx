@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Container, Nav, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Nav, OverlayTrigger, Tooltip, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import { useWebSocket, useTutorialMode } from '../../App';
+import { useWebSocket, useTutorialMode, useAuth } from '../../App';
+import { UserProfile } from './UserProfile';
 
 type AppFrameProps = {
   children: React.ReactNode;
@@ -24,7 +25,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
     <div className="d-flex min-vh-100" >
       {/* Sidebar - Always 60px wide, full height */}
       <div
-        className="bg-light border-end d-flex flex-column"
+        className="border-end d-flex flex-column"
         style={{
           width: '60px',
           height: '100vh',
@@ -211,6 +212,16 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
 
       {/* Main Content */}
       <div className="flex-grow-1 d-flex flex-column" style={{ minHeight: '100vh' }}>
+        {/* Top Navigation Bar */}
+        <Navbar className="border-bottom">
+          <Container fluid>
+            <Navbar.Brand>{title || 'Testeranto'}</Navbar.Brand>
+            <Navbar.Collapse className="justify-content-end">
+              <UserProfile />
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+
         <main className="flex-grow-1 p-4" style={{ overflow: 'auto' }}>
           <Container fluid style={{ height: '100%' }}>
             {children}

@@ -820,7 +820,7 @@ export const TestPageView = ({
                             <h6 className="text-danger">Errors ({buildData.errors.length})</h6>
                             <ul className="list-unstyled">
                               {buildData.errors.map((error: any, index: number) => (
-                                <li key={index} className="mb-2 p-2 bg-light rounded">
+                                <li key={index} className="mb-2 p-2  rounded">
                                   <div className="text-danger fw-bold">{error.text}</div>
                                   {error.location && (
                                     <div className="small text-muted">
@@ -849,7 +849,7 @@ export const TestPageView = ({
                             <h6 className="text-warning">Warnings ({buildData.warnings.length})</h6>
                             <ul className="list-unstyled">
                               {buildData.warnings.map((warning: any, index: number) => (
-                                <li key={index} className="mb-2 p-2 bg-light rounded">
+                                <li key={index} className="mb-2 p-2  rounded">
                                   <div className="text-warning fw-bold">{warning.text}</div>
                                   {warning.location && (
                                     <div className="small text-muted">
@@ -894,7 +894,7 @@ export const TestPageView = ({
             {selectedFile?.path.endsWith(".json") &&
               !selectedFile.path.endsWith("tests.json") &&
               !selectedFile.path.endsWith("build.json") && (
-                <pre className="bg-light p-2 small">
+                <pre className=" p-2 small">
                   <code>{selectedFile.content}</code>
                 </pre>
               )}

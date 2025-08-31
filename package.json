@@ -140,7 +140,8 @@
     "devV2": "rm -rf testeranto; yarn buildV2; yarn t-init;  cp ./dist/prebuild/App.* testeranto; yarn testeranto core dev",
     "start": "react-app-rewired start",
     "build-react": "react-app-rewired build",
-    "test-react": "react-app-rewired test"
+    "test-react": "react-app-rewired test",
+    "setup-github-oauth": "echo 'Please visit https://github.com/settings/developers and create a new OAuth App. Set the Authorization callback URL to http://localhost:3000/auth/github/callback'"
   },
   "peerDependencies": {
     "@types/react": "18.2.0",

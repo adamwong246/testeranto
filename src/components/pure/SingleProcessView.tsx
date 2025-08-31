@@ -74,7 +74,7 @@ export const SingleProcessView: React.FC<SingleProcessViewProps> = ({
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
         {/* Fixed sidebar */}
         <div
-          className="bg-light border-end"
+          className=" border-end"
           style={{
             width: '300px',
             minWidth: '300px',

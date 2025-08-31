@@ -543,7 +543,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 2583,
+        "bytes": 2532,
         "imports": [
           {
             "path": "src/lib/BaseGiven.ts",
@@ -584,7 +584,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12722,
+        "bytes": 12717,
         "imports": [
           {
             "path": "..",
@@ -871,16 +871,16 @@
         "entryPoint": "src/lib/BaseSuite.test/node.test.ts",
         "inputs": {
           "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 1559
+            "bytesInOutput": 1585
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 6449
+            "bytesInOutput": 6502
           },
           "src/lib/BaseSuite.test/node.test.ts": {
             "bytesInOutput": 103
           }
         },
-        "bytes": 8463
+        "bytes": 8542
       },
       "testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs": {
         "imports": [

@@ -1051,6 +1051,42 @@ export class PM_Main extends PM_WithGit {
       return;
     }
 
+    if (pathname === "/api/auth/github/token" && req.method === "POST") {
+      this.handleGitHubTokenExchange(req, res);
+      return;
+    }
+
+    // Handle GitHub OAuth callback
+    if (pathname === "/auth/github/callback") {
+      // Serve the callback HTML page
+      const callbackHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Authentication - Testeranto</title>
+    <script>
+        // Extract the code from the URL and send it to the parent window
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+        
+        if (code) {
+            window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
+        } else if (error) {
+            window.opener.postMessage({ type: 'github-auth-error', error }, '*');
+        }
+        window.close();
+    </script>
+</head>
+<body>
+    <p>Completing authentication...</p>
+</body>
+</html>`;
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(callbackHtml);
+      return;
+    }
+
     if (pathname === "/") {
       pathname = "/index.html";
     }
@@ -1143,19 +1179,48 @@ export class PM_Main extends PM_WithGit {
         return;
       }
 
-      // Read and serve the file
-      fs.readFile(filePath, (err, data) => {
-        if (err) {
-          res.writeHead(500, { "Content-Type": "text/plain" });
-          res.end("500 Internal Server Error");
-          return;
-        }
+      // For HTML files, inject the configuration
+      if (filePath.endsWith(".html")) {
+        fs.readFile(filePath, (err, data) => {
+          if (err) {
+            res.writeHead(500, { "Content-Type": "text/plain" });
+            res.end("500 Internal Server Error");
+            return;
+          }
 
-        // Get MIME type
-        const mimeType = mime.lookup(filePath) || "application/octet-stream";
-        res.writeHead(200, { "Content-Type": mimeType });
-        res.end(data);
-      });
+          let content = data.toString();
+          // Inject the configuration script before the closing </body> tag
+          if (content.includes("</body>")) {
+            const configScript = `
+              <script>
+                window.testerantoConfig = ${JSON.stringify({
+                  githubOAuth: {
+                    clientId: process.env.GITHUB_CLIENT_ID,
+                  },
+                })};
+              </script>
+            `;
+            content = content.replace("</body>", `${configScript}</body>`);
+          }
+
+          res.writeHead(200, { "Content-Type": "text/html" });
+          res.end(content);
+        });
+      } else {
+        // Read and serve other files normally
+        fs.readFile(filePath, (err, data) => {
+          if (err) {
+            res.writeHead(500, { "Content-Type": "text/plain" });
+            res.end("500 Internal Server Error");
+            return;
+          }
+
+          // Get MIME type
+          const mimeType = mime.lookup(filePath) || "application/octet-stream";
+          res.writeHead(200, { "Content-Type": mimeType });
+          res.end(data);
+        });
+      }
     });
   }
 
