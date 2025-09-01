@@ -1092,7 +1092,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState39(initialState) {
+          function useState40(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1104,7 +1104,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect46(create2, deps) {
+          function useEffect47(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1886,7 +1886,7 @@
           exports.useContext = useContext25;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect46;
+          exports.useEffect = useEffect47;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1894,7 +1894,7 @@
           exports.useMemo = useMemo21;
           exports.useReducer = useReducer2;
           exports.useRef = useRef33;
-          exports.useState = useState39;
+          exports.useState = useState40;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -57917,10 +57917,19 @@ This file was not generated during the test run.`,
     const { isConnected } = useWebSocket();
     const { tutorialMode } = useTutorialMode();
     const { isAuthenticated, logout } = useAuth();
+    const [hasAnimated, setHasAnimated] = (0, import_react103.useState)(false);
+    (0, import_react103.useEffect)(() => {
+      if (!hasAnimated) {
+        const timer = setTimeout(() => {
+          setHasAnimated(true);
+        }, 4e3);
+        return () => clearTimeout(timer);
+      }
+    }, [hasAnimated]);
     return /* @__PURE__ */ import_react103.default.createElement("div", { className: "d-flex min-vh-100" }, /* @__PURE__ */ import_react103.default.createElement(
       "div",
       {
-        className: "border-end d-flex flex-column",
+        className: `border-end d-flex flex-column ${!hasAnimated ? "sidebar-attention" : ""}`,
         style: {
           flexBasis: "100px",
           flexGrow: "0",
@@ -57935,7 +57944,7 @@ This file was not generated during the test run.`,
         {
           as: NavLink,
           to: "/",
-          className: `${location2.pathname === "/" ? "active" : ""} d-flex align-items-center justify-content-center`
+          className: `${location2.pathname === "/" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}`
         },
         tutorialMode ? /* @__PURE__ */ import_react103.default.createElement(
           OverlayTrigger_default,
@@ -57950,7 +57959,7 @@ This file was not generated during the test run.`,
         {
           as: NavLink,
           to: "/projects",
-          className: `${location2.pathname === "/projects" ? "active" : ""} d-flex align-items-center justify-content-center`
+          className: `${location2.pathname === "/projects" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-2" : ""}`
         },
         tutorialMode ? /* @__PURE__ */ import_react103.default.createElement(
           OverlayTrigger_default,
@@ -57958,14 +57967,14 @@ This file was not generated during the test run.`,
             placement: "right",
             overlay: /* @__PURE__ */ import_react103.default.createElement(Tooltip_default, { id: "projects-tooltip" }, "Projects")
           },
-          /* @__PURE__ */ import_react103.default.createElement("span", null, "eddy")
-        ) : /* @__PURE__ */ import_react103.default.createElement("span", null, "eddy")
+          /* @__PURE__ */ import_react103.default.createElement("span", null, "testo")
+        ) : /* @__PURE__ */ import_react103.default.createElement("span", null, "testo")
       ), /* @__PURE__ */ import_react103.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/processes",
-          className: `${location2.pathname.startsWith("/processes") ? "active" : ""} d-flex align-items-center justify-content-center `,
+          className: `${location2.pathname.startsWith("/processes") ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-3" : ""}`,
           onClick: (e) => {
             if (!isConnected || !isAuthenticated) {
               e.preventDefault();
@@ -57985,7 +57994,7 @@ This file was not generated during the test run.`,
         {
           as: NavLink,
           to: "/git",
-          className: `${location2.pathname === "/git" ? "active" : ""} d-flex align-items-center justify-content-center ${!isAuthenticated ? "text-muted pe-none" : ""}`,
+          className: `${location2.pathname === "/git" ? "active" : ""} d-flex align-items-center justify-content-center ${!isAuthenticated ? "text-muted pe-none" : ""} ${!hasAnimated ? "navbar-attention-4" : ""}`,
           onClick: (e) => {
             if (!isAuthenticated) {
               e.preventDefault();
@@ -58005,7 +58014,7 @@ This file was not generated during the test run.`,
         {
           as: NavLink,
           to: "/settings",
-          className: `${location2.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center`
+          className: `${location2.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-5" : ""}`
         },
         tutorialMode ? /* @__PURE__ */ import_react103.default.createElement(
           OverlayTrigger_default,
@@ -61078,7 +61087,7 @@ ${description}` : message
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react121.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react121.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react121.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react121.default.createElement(HashRouter, null, /* @__PURE__ */ import_react121.default.createElement(AppFrame, null, /* @__PURE__ */ import_react121.default.createElement(Routes, null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-bottom p-3" }, /* @__PURE__ */ import_react121.default.createElement("h4", { className: "mb-0" }, "Chat with Helpo")), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
+    return /* @__PURE__ */ import_react121.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react121.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react121.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react121.default.createElement(HashRouter, null, /* @__PURE__ */ import_react121.default.createElement(AppFrame, null, /* @__PURE__ */ import_react121.default.createElement(Routes, null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
       "div",
       {
         className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
@@ -61107,7 +61116,7 @@ ${description}` : message
         placeholder: "Type your message...",
         disabled: true
       }
-    ), /* @__PURE__ */ import_react121.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send")))) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react121.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react121.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react121.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react121.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/auth/github/callback", element: /* @__PURE__ */ import_react121.default.createElement(AuthCallbackPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/features-reporter", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/design-editor", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/text-editor", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), isConnected ? /* @__PURE__ */ import_react121.default.createElement(import_react121.default.Fragment, null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/processes", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/processes/:processId", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) })) : null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react121.default.createElement(Settings, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-bottom p-3" }, /* @__PURE__ */ import_react121.default.createElement("h4", { className: "mb-0" }, "Chat with Helpo")), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
+    ), /* @__PURE__ */ import_react121.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send")))) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react121.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react121.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react121.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react121.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/auth/github/callback", element: /* @__PURE__ */ import_react121.default.createElement(AuthCallbackPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/features-reporter", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/design-editor", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/text-editor", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), isConnected ? /* @__PURE__ */ import_react121.default.createElement(import_react121.default.Fragment, null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/processes", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/processes/:processId", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) })) : null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react121.default.createElement(Settings, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
       "div",
       {
         className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",

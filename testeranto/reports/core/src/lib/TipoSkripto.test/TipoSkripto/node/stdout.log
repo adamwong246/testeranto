@@ -191,4 +191,104 @@ Builder created: MockTiposkripto {
       interfaceConfigured: [Function: interfaceConfigured],
       specsModified: [Function: specsModified],
       jobsModified: [Function: jobsModified],
-      errorThrown: [Fu
+      errorThrown: [Function: errorThrown],
+      testRunSuccessful: [Function: testRunSuccessful],
+      runTimeTestsCounted: [Function: runTimeTestsCounted],
+      runTimeTestsSetToNegativeOne: [Function: runTimeTestsSetToNegativeOne],
+      runTimeTestsCountIs: [Function: runTimeTestsCountIs],
+      runTimeTestsIsNegativeOne: [Function: runTimeTestsIsNegativeOne]
+    }
+  },
+  testAdapter: {
+    beforeAll: [AsyncFunction: beforeAll],
+    beforeEach: [AsyncFunction: beforeEach],
+    andWhen: [AsyncFunction: andWhen],
+    butThen: [AsyncFunction: butThen],
+    afterEach: [Function: afterEach],
+    afterAll: [Function: afterAll],
+    assertThis: [Function: assertThis]
+  }
+}
+Creating default test builder instance
+Total tests calculated: 20
+MockTiposkripto constructor called with input: {}
+Builder created: MockTiposkripto {
+  artifacts: [],
+  suitesOverrides: {
+    Default: 'Tiposkripto test suite',
+    ExtendedSuite: 'Extended Tiposkripto test suite'
+  },
+  givenOverides: {
+    Default: [Function: Default],
+    WithCustomInput: [Function: WithCustomInput],
+    WithResourceRequirements: [Function: WithResourceRequirements],
+    WithCustomImplementation: [Function: WithCustomImplementation],
+    WithCustomSpecification: [Function: WithCustomSpecification],
+    WithCustomAdapter: [Function: WithCustomAdapter]
+  },
+  whenOverides: {
+    addArtifact: [Function: addArtifact],
+    setTestJobs: [Function: setTestJobs],
+    modifySpecs: [Function: modifySpecs],
+    modifyJobs: [Function: modifyJobs],
+    triggerError: [Function: triggerError],
+    receiveTestResourceConfig: [Function: receiveTestResourceConfig]
+  },
+  thenOverides: {
+    initializedProperly: [Function: initializedProperly],
+    specsGenerated: [Function: specsGenerated],
+    jobsCreated: [Function: jobsCreated],
+    artifactsTracked: [Function: artifactsTracked],
+    resourceRequirementsSet: [Function: resourceRequirementsSet],
+    suitesOverridesConfigured: [Function: suitesOverridesConfigured],
+    givensOverridesConfigured: [Function: givensOverridesConfigured],
+    whensOverridesConfigured: [Function: whensOverridesConfigured],
+    thensOverridesConfigured: [Function: thensOverridesConfigured],
+    interfaceConfigured: [Function: interfaceConfigured],
+    specsModified: [Function: specsModified],
+    jobsModified: [Function: jobsModified],
+    errorThrown: [Function: errorThrown],
+    testRunSuccessful: [Function: testRunSuccessful],
+    runTimeTestsCounted: [Function: runTimeTestsCounted],
+    runTimeTestsSetToNegativeOne: [Function: runTimeTestsSetToNegativeOne],
+    runTimeTestsCountIs: [Function: runTimeTestsCountIs],
+    runTimeTestsIsNegativeOne: [Function: runTimeTestsIsNegativeOne]
+  },
+  testResourceRequirement: { ports: [] },
+  testSpecification: [Function: specification],
+  specs: [],
+  totalTests: 20,
+  testJobs: [],
+  features: [],
+  testImplementation: {
+    suites: {
+      Default: 'Tiposkripto test suite',
+      ExtendedSuite: 'Extended Tiposkripto test suite'
+    },
+    givens: {
+      Default: [Function: Default],
+      WithCustomInput: [Function: WithCustomInput],
+      WithResourceRequirements: [Function: WithResourceRequirements],
+      WithCustomImplementation: [Function: WithCustomImplementation],
+      WithCustomSpecification: [Function: WithCustomSpecification],
+      WithCustomAdapter: [Function: WithCustomAdapter]
+    },
+    whens: {
+      addArtifact: [Function: addArtifact],
+      setTestJobs: [Function: setTestJobs],
+      modifySpecs: [Function: modifySpecs],
+      modifyJobs: [Function: modifyJobs],
+      triggerError: [Function: triggerError],
+      receiveTestResourceConfig: [Function: receiveTestResourceConfig]
+    },
+    thens: {
+      initializedProperly: [Function: initializedProperly],
+      specsGenerated: [Function: specsGenerated],
+      jobsCreated: [Function: jobsCreated],
+      artifactsTracked: [Function: artifactsTracked],
+      resourceRequirementsSet: [Function: resourceRequirementsSet],
+      suitesOverridesConfigured: [Function: suitesOverridesConfigured],
+      givensOverridesConfigured: [Function: givensOverridesConfigured],
+      whensOverridesConfigured: [Function: whensOverridesConfigured],
+      thensOverridesConfigured: [Function: thensOverridesConfigured],
+      interfaceConfigured: [Function: interfaceConfigured],

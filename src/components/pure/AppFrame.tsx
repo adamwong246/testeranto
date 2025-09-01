@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Nav,
@@ -27,12 +27,23 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
   const { isConnected } = useWebSocket();
   const { tutorialMode } = useTutorialMode();
   const { isAuthenticated, logout } = useAuth();
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    // Only animate on the first load
+    if (!hasAnimated) {
+      const timer = setTimeout(() => {
+        setHasAnimated(true);
+      }, 4000); // Stop animation after all links have animated (1s + 1.8s = 2.8s, rounded up)
+      return () => clearTimeout(timer);
+    }
+  }, [hasAnimated]);
 
   return (
     <div className="d-flex min-vh-100">
       {/* Sidebar - Always 60px wide, full height */}
       <div
-        className="border-end d-flex flex-column"
+        className={`border-end d-flex flex-column ${!hasAnimated ? 'sidebar-attention' : ''}`}
         style={{
           flexBasis: "100px" /* Sets the initial fixed width */,
           flexGrow: "0" /* Prevents the item from growing */,
@@ -54,7 +65,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             as={NavLink}
             to="/"
             className={`${location.pathname === "/" ? "active" : ""
-              } d-flex align-items-center justify-content-center`}
+              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}`}
           >
             {tutorialMode ? (
               <OverlayTrigger
@@ -73,17 +84,17 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             as={NavLink}
             to="/projects"
             className={`${location.pathname === "/projects" ? "active" : ""
-              } d-flex align-items-center justify-content-center`}
+              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-2' : ''}`}
           >
             {tutorialMode ? (
               <OverlayTrigger
                 placement="right"
                 overlay={<Tooltip id="projects-tooltip">Projects</Tooltip>}
               >
-                <span>eddy</span>
+                <span>testo</span>
               </OverlayTrigger>
             ) : (
-              <span>eddy</span>
+              <span>testo</span>
             )}
           </Nav.Link>
 
@@ -91,7 +102,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           <Nav.Link
             as={NavLink}
             to="/processes"
-            className={`${location.pathname.startsWith('/processes') ? 'active' : ''} d-flex align-items-center justify-content-center `}
+            className={`${location.pathname.startsWith('/processes') ? 'active' : ''} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-3' : ''}`}
             // style={{
             //   height: '40px',
             //   width: '40px',
@@ -130,7 +141,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             to="/git"
             className={`${location.pathname === "/git" ? "active" : ""
               } d-flex align-items-center justify-content-center ${!isAuthenticated ? "text-muted pe-none" : ""
-              }`}
+              } ${!hasAnimated ? 'navbar-attention-4' : ''}`}
             // style={{
             //   height: '40px',
             //   width: '40px',
@@ -164,7 +175,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             as={NavLink}
             to="/settings"
             className={`${location.pathname === "/settings" ? "active" : ""
-              } d-flex align-items-center justify-content-center`}
+              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-5' : ''}`}
           // style={{ height: '40px', width: '40px' }}
           >
             {tutorialMode ? (
