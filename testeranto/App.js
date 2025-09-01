@@ -1092,7 +1092,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState39(initialState) {
+          function useState40(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1104,7 +1104,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect46(create2, deps) {
+          function useEffect47(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1886,7 +1886,7 @@
           exports.useContext = useContext25;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect46;
+          exports.useEffect = useEffect47;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
@@ -1894,7 +1894,7 @@
           exports.useMemo = useMemo21;
           exports.useReducer = useReducer2;
           exports.useRef = useRef33;
-          exports.useState = useState39;
+          exports.useState = useState40;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -60270,8 +60270,204 @@ Current environment analysis:
   // src/components/stateful/GitIntegrationPage.tsx
   var import_react119 = __toESM(require_react(), 1);
 
+  // src/hooks/useGitMode.ts
+  var import_react117 = __toESM(require_react(), 1);
+  var useGitMode = () => {
+    const { isConnected } = useWebSocket();
+    const [mode, setMode] = (0, import_react117.useState)(isConnected ? "dev" : "static");
+    (0, import_react117.useEffect)(() => {
+      setMode(isConnected ? "dev" : "static");
+    }, [isConnected]);
+    return {
+      mode,
+      setMode,
+      isStatic: mode === "static",
+      isDev: mode === "dev",
+      isGit: mode === "git"
+    };
+  };
+
   // src/components/pure/GitIntegrationView.tsx
   var import_react118 = __toESM(require_react(), 1);
+  var GitIntegrationView = ({
+    mode,
+    setMode,
+    fileService,
+    setChanges,
+    remoteStatus,
+    changes,
+    currentBranch,
+    setIsLoading,
+    isLoading,
+    setCurrentBranch,
+    setRemoteStatus,
+    setError,
+    loadChanges,
+    loadGitStatus,
+    error,
+    getStatusBadgeVariant,
+    commitSummary,
+    setCommitSummary,
+    commitDescription,
+    setCommitDescription,
+    handleSaveChanges,
+    isCommitting,
+    handleShareChanges,
+    getSyncStatusVariant,
+    handleGetUpdates,
+    isPulling,
+    isPushing,
+    setIsPushing,
+    getSyncStatusText
+  }) => {
+    return /* @__PURE__ */ import_react118.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react118.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react118.default.createElement(Col_default, null, /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react118.default.createElement(
+      Badge_default,
+      {
+        bg: mode === "static" ? "secondary" : mode === "dev" ? "success" : "primary"
+      },
+      mode.toUpperCase(),
+      " MODE"
+    ), /* @__PURE__ */ import_react118.default.createElement(
+      "select",
+      {
+        className: "form-select form-select-sm",
+        style: { width: "auto" },
+        value: mode,
+        onChange: (e) => setMode(e.target.value)
+      },
+      /* @__PURE__ */ import_react118.default.createElement("option", { value: "static" }, "Static (Read-only)"),
+      /* @__PURE__ */ import_react118.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
+      /* @__PURE__ */ import_react118.default.createElement("option", { value: "git" }, "Git Remote")
+    )), mode === "static" && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react118.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react118.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, error), mode !== "static" && /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-secondary",
+        size: "sm",
+        onClick: loadChanges,
+        disabled: isLoading
+      },
+      isLoading ? /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
+    )), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react118.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react118.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react118.default.createElement(
+      "div",
+      {
+        key: index3,
+        className: "d-flex align-items-center mb-2"
+      },
+      /* @__PURE__ */ import_react118.default.createElement(
+        Badge_default,
+        {
+          bg: getStatusBadgeVariant(change.status),
+          className: "me-2"
+        },
+        change.status.charAt(0).toUpperCase() + change.status.slice(1)
+      ),
+      /* @__PURE__ */ import_react118.default.createElement("span", { className: "small text-truncate" }, change.path)
+    )))))), /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react118.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react118.default.createElement(
+      "input",
+      {
+        type: "text",
+        className: "form-control",
+        id: "summary",
+        placeholder: "What did you change?",
+        value: commitSummary,
+        onChange: (e) => setCommitSummary(e.target.value),
+        disabled: mode === "static"
+      }
+    ), /* @__PURE__ */ import_react118.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react118.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react118.default.createElement(
+      "textarea",
+      {
+        className: "form-control",
+        id: "description",
+        rows: 3,
+        placeholder: "Why did you change it?",
+        value: commitDescription,
+        onChange: (e) => setCommitDescription(e.target.value),
+        disabled: mode === "static"
+      }
+    )), /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "primary",
+        onClick: handleSaveChanges,
+        disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
+      },
+      isCommitting ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(
+        Spinner_default,
+        {
+          animation: "border",
+          size: "sm",
+          className: "me-2"
+        }
+      ), "Saving...") : "Save to Computer"
+    ), /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "success",
+        onClick: handleShareChanges,
+        disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
+      },
+      isPushing ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(
+        Spinner_default,
+        {
+          animation: "border",
+          size: "sm",
+          className: "me-2"
+        }
+      ), "Sharing...") : "Save & Share"
+    ))))), /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-secondary",
+        size: "sm",
+        onClick: (e) => loadGitStatus(e)
+      },
+      "\u21BB"
+    )), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center mb-3" }, /* @__PURE__ */ import_react118.default.createElement(Badge_default, { bg: getSyncStatusVariant() }, getSyncStatusText()), /* @__PURE__ */ import_react118.default.createElement("div", { className: "small text-muted mt-1" }, "Branch: ", currentBranch)), /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-primary",
+        onClick: handleGetUpdates,
+        disabled: mode === "static" || isPulling
+      },
+      isPulling ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(
+        Spinner_default,
+        {
+          animation: "border",
+          size: "sm",
+          className: "me-2"
+        }
+      ), "Updating...") : "Get Updates"
+    ), /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-success",
+        disabled: mode === "static" || remoteStatus.ahead === 0,
+        onClick: async (e) => {
+          e.preventDefault();
+          try {
+            setIsPushing(true);
+            setError(null);
+            await fileService.pushChanges();
+            await loadGitStatus();
+          } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : "Failed to push changes";
+            console.error("Failed to push changes:", err);
+            setError(errorMessage);
+          } finally {
+            setIsPushing(false);
+          }
+        }
+      },
+      isPushing ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(
+        Spinner_default,
+        {
+          animation: "border",
+          size: "sm",
+          className: "me-2"
+        }
+      ), "Sharing...") : `Share Changes (${remoteStatus.ahead})`
+    )), /* @__PURE__ */ import_react118.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react118.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))))), mode === "static" && /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, null, /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react118.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
+  };
 
   // src/services/FileService.ts
   var StaticFileService = class {
@@ -60712,118 +60908,23 @@ ${description}` : message
     }
   };
 
-  // src/hooks/useGitMode.ts
-  var import_react117 = __toESM(require_react(), 1);
-  var useGitMode = () => {
-    const { isConnected } = useWebSocket();
-    const [mode, setMode] = (0, import_react117.useState)(isConnected ? "dev" : "static");
-    (0, import_react117.useEffect)(() => {
-      setMode(isConnected ? "dev" : "static");
-    }, [isConnected]);
-    return {
-      mode,
-      setMode,
-      isStatic: mode === "static",
-      isDev: mode === "dev",
-      isGit: mode === "git"
-    };
-  };
-
-  // src/components/pure/GitIntegrationView.tsx
-  var GitIntegrationView = () => {
+  // src/components/stateful/GitIntegrationPage.tsx
+  var GitIntegrationPage = () => {
+    const [isLoading, setIsLoading] = (0, import_react119.useState)(true);
     const { mode, setMode, isStatic, isDev, isGit } = useGitMode();
-    const [changes, setChanges] = (0, import_react118.useState)([]);
-    const [isLoading, setIsLoading] = (0, import_react118.useState)(true);
-    const [error, setError] = (0, import_react118.useState)(null);
-    const [commitSummary, setCommitSummary] = (0, import_react118.useState)("");
-    const [commitDescription, setCommitDescription] = (0, import_react118.useState)("");
-    const [remoteStatus, setRemoteStatus] = (0, import_react118.useState)({ ahead: 0, behind: 0 });
-    const [currentBranch, setCurrentBranch] = (0, import_react118.useState)("main");
-    const [isCommitting, setIsCommitting] = (0, import_react118.useState)(false);
-    const [isPushing, setIsPushing] = (0, import_react118.useState)(false);
-    const [isPulling, setIsPulling] = (0, import_react118.useState)(false);
-    const [fileService, setFileService] = (0, import_react118.useState)(() => getFileService(mode));
-    (0, import_react118.useEffect)(() => {
-      const newFileService = getFileService(mode);
-      setFileService(newFileService);
-    }, [mode]);
-    (0, import_react118.useEffect)(() => {
-      if (fileService && mode === "dev") {
-        const devFileService = fileService;
-        const unsubscribeChanges = devFileService.onChanges?.((newChanges) => {
-          setChanges(newChanges);
-        });
-        const unsubscribeStatus = devFileService.onStatusUpdate?.((newStatus) => {
-          setRemoteStatus(newStatus);
-        });
-        const unsubscribeBranch = devFileService.onBranchUpdate?.((newBranch) => {
-          setCurrentBranch(newBranch);
-        });
-        const loadData = async () => {
-          try {
-            setIsLoading(true);
-            await loadChanges();
-            await loadGitStatus();
-          } catch (err) {
-            console.warn("Failed to load data:", err);
-          } finally {
-            setIsLoading(false);
-          }
-        };
-        loadData();
-        return () => {
-          unsubscribeChanges?.();
-          unsubscribeStatus?.();
-          unsubscribeBranch?.();
-        };
-      } else if (fileService) {
-        const loadData = async () => {
-          try {
-            setIsLoading(true);
-            await loadChanges();
-            await loadGitStatus();
-          } catch (err) {
-            console.warn("Failed to load data:", err);
-          } finally {
-            setIsLoading(false);
-          }
-        };
-        loadData();
-      }
-    }, [fileService, mode]);
-    const loadChanges = async (event) => {
-      if (event) {
-        event.preventDefault();
-      }
-      try {
-        setIsLoading(true);
-        setError(null);
-        const changes2 = await fileService.getChanges();
-        setChanges(changes2);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to load changes";
-        console.error("Failed to load changes:", err);
-        setError(errorMessage);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    const loadGitStatus = async (event) => {
-      if (event) {
-        event.preventDefault();
-      }
-      try {
-        setError(null);
-        const branch = await fileService.getCurrentBranch();
-        const status = await fileService.getRemoteStatus();
-        setCurrentBranch(branch);
-        setRemoteStatus(status);
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Failed to load git status";
-        console.error("Failed to load git status:", err);
-        setError(errorMessage);
-      }
-    };
+    const [fileService, setFileService] = (0, import_react119.useState)(() => getFileService(mode));
+    const [changes, setChanges] = (0, import_react119.useState)([]);
+    const [remoteStatus, setRemoteStatus] = (0, import_react119.useState)({
+      ahead: 0,
+      behind: 0
+    });
+    const [currentBranch, setCurrentBranch] = (0, import_react119.useState)("main");
+    const [error, setError] = (0, import_react119.useState)(null);
+    const [commitSummary, setCommitSummary] = (0, import_react119.useState)("");
+    const [commitDescription, setCommitDescription] = (0, import_react119.useState)("");
+    const [isCommitting, setIsCommitting] = (0, import_react119.useState)(false);
+    const [isPushing, setIsPushing] = (0, import_react119.useState)(false);
+    const [isPulling, setIsPulling] = (0, import_react119.useState)(false);
     const handleSaveChanges = async () => {
       if (!commitSummary.trim()) {
         setError("Please provide a commit summary");
@@ -60916,98 +61017,127 @@ ${description}` : message
         return "info";
       return "success";
     };
-    return /* @__PURE__ */ import_react118.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react118.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react118.default.createElement(Col_default, null, /* @__PURE__ */ import_react118.default.createElement("h2", null, "Git Integration"), /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react118.default.createElement(Badge_default, { bg: mode === "static" ? "secondary" : mode === "dev" ? "success" : "primary" }, mode.toUpperCase(), " MODE"), /* @__PURE__ */ import_react118.default.createElement(
-      "select",
-      {
-        className: "form-select form-select-sm",
-        style: { width: "auto" },
-        value: mode,
-        onChange: (e) => setMode(e.target.value)
-      },
-      /* @__PURE__ */ import_react118.default.createElement("option", { value: "static" }, "Static (Read-only)"),
-      /* @__PURE__ */ import_react118.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
-      /* @__PURE__ */ import_react118.default.createElement("option", { value: "git" }, "Git Remote")
-    )), mode === "static" && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react118.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react118.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, error), mode !== "static" && /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react118.default.createElement(Button_default2, { variant: "outline-secondary", size: "sm", onClick: loadChanges, disabled: isLoading }, isLoading ? /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB")), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react118.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react118.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react118.default.createElement("div", { key: index3, className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react118.default.createElement(
-      Badge_default,
-      {
-        bg: getStatusBadgeVariant(change.status),
-        className: "me-2"
-      },
-      change.status.charAt(0).toUpperCase() + change.status.slice(1)
-    ), /* @__PURE__ */ import_react118.default.createElement("span", { className: "small text-truncate" }, change.path))))))), /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react118.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react118.default.createElement(
-      "input",
-      {
-        type: "text",
-        className: "form-control",
-        id: "summary",
-        placeholder: "What did you change?",
-        value: commitSummary,
-        onChange: (e) => setCommitSummary(e.target.value),
-        disabled: mode === "static"
+    const loadGitStatus = async (event) => {
+      if (event) {
+        event.preventDefault();
       }
-    ), /* @__PURE__ */ import_react118.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react118.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react118.default.createElement(
-      "textarea",
-      {
-        className: "form-control",
-        id: "description",
-        rows: 3,
-        placeholder: "Why did you change it?",
-        value: commitDescription,
-        onChange: (e) => setCommitDescription(e.target.value),
-        disabled: mode === "static"
+      try {
+        setError(null);
+        const branch = await fileService.getCurrentBranch();
+        const status = await fileService.getRemoteStatus();
+        setCurrentBranch(branch);
+        setRemoteStatus(status);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to load git status";
+        console.error("Failed to load git status:", err);
+        setError(errorMessage);
       }
-    )), /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react118.default.createElement(
-      Button_default2,
-      {
-        variant: "primary",
-        onClick: handleSaveChanges,
-        disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
-      },
-      isCommitting ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Saving...") : "Save to Computer"
-    ), /* @__PURE__ */ import_react118.default.createElement(
-      Button_default2,
-      {
-        variant: "success",
-        onClick: handleShareChanges,
-        disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
-      },
-      isPushing ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Sharing...") : "Save & Share"
-    ))))), /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react118.default.createElement(Button_default2, { variant: "outline-secondary", size: "sm", onClick: (e) => loadGitStatus(e) }, "\u21BB")), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center mb-3" }, /* @__PURE__ */ import_react118.default.createElement(Badge_default, { bg: getSyncStatusVariant() }, getSyncStatusText()), /* @__PURE__ */ import_react118.default.createElement("div", { className: "small text-muted mt-1" }, "Branch: ", currentBranch)), /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react118.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-primary",
-        onClick: handleGetUpdates,
-        disabled: mode === "static" || isPulling
-      },
-      isPulling ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Updating...") : "Get Updates"
-    ), /* @__PURE__ */ import_react118.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-success",
-        disabled: mode === "static" || remoteStatus.ahead === 0,
-        onClick: async (e) => {
-          e.preventDefault();
+    };
+    const loadChanges = async (event) => {
+      if (event) {
+        event.preventDefault();
+      }
+      try {
+        setIsLoading(true);
+        setError(null);
+        const changes2 = await fileService.getChanges();
+        setChanges(changes2);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Failed to load changes";
+        console.error("Failed to load changes:", err);
+        setError(errorMessage);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    (0, import_react119.useEffect)(() => {
+      const newFileService = getFileService(mode);
+      setFileService(newFileService);
+    }, [mode]);
+    (0, import_react119.useEffect)(() => {
+      if (fileService && mode === "dev") {
+        const devFileService = fileService;
+        const unsubscribeChanges = devFileService.onChanges?.(
+          (newChanges) => {
+            setChanges(newChanges);
+          }
+        );
+        const unsubscribeStatus = devFileService.onStatusUpdate?.(
+          (newStatus) => {
+            setRemoteStatus(newStatus);
+          }
+        );
+        const unsubscribeBranch = devFileService.onBranchUpdate?.(
+          (newBranch) => {
+            setCurrentBranch(newBranch);
+          }
+        );
+        const loadData = async () => {
           try {
-            setIsPushing(true);
-            setError(null);
-            await fileService.pushChanges();
+            setIsLoading(true);
+            await loadChanges();
             await loadGitStatus();
           } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : "Failed to push changes";
-            console.error("Failed to push changes:", err);
-            setError(errorMessage);
+            console.warn("Failed to load data:", err);
           } finally {
-            setIsPushing(false);
+            setIsLoading(false);
           }
-        }
-      },
-      isPushing ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border", size: "sm", className: "me-2" }), "Sharing...") : `Share Changes (${remoteStatus.ahead})`
-    )), /* @__PURE__ */ import_react118.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react118.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))))), mode === "static" && /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, null, /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react118.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
-  };
-
-  // src/components/stateful/GitIntegrationPage.tsx
-  var GitIntegrationPage = () => {
-    return /* @__PURE__ */ import_react119.default.createElement(GitIntegrationView, null);
+        };
+        loadData();
+        return () => {
+          unsubscribeChanges?.();
+          unsubscribeStatus?.();
+          unsubscribeBranch?.();
+        };
+      } else if (fileService) {
+        const loadData = async () => {
+          try {
+            setIsLoading(true);
+            await loadChanges();
+            await loadGitStatus();
+          } catch (err) {
+            console.warn("Failed to load data:", err);
+          } finally {
+            setIsLoading(false);
+          }
+        };
+        loadData();
+      }
+    }, [fileService, mode]);
+    return /* @__PURE__ */ import_react119.default.createElement(
+      GitIntegrationView,
+      {
+        mode,
+        setMode,
+        fileService,
+        setChanges,
+        remoteStatus,
+        changes,
+        currentBranch,
+        setIsLoading,
+        isLoading,
+        setCurrentBranch,
+        setRemoteStatus,
+        setError,
+        loadChanges,
+        loadGitStatus,
+        error,
+        getStatusBadgeVariant,
+        commitSummary,
+        setCommitSummary,
+        commitDescription,
+        setCommitDescription,
+        handleSaveChanges,
+        isCommitting,
+        handleShareChanges,
+        getSyncStatusVariant,
+        handleGetUpdates,
+        isPulling,
+        isPushing,
+        setIsPushing,
+        getSyncStatusText
+      }
+    );
   };
 
   // src/components/stateful/AuthCallbackPage.tsx
