@@ -213,14 +213,14 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
       {/* Main Content */}
       <div className="flex-grow-1 d-flex flex-column" style={{ minHeight: '100vh' }}>
         {/* Top Navigation Bar */}
-        <Navbar className="border-bottom">
+        {/* <Navbar className="border-bottom">
           <Container fluid>
             <Navbar.Brand>{title || 'Testeranto'}</Navbar.Brand>
             <Navbar.Collapse className="justify-content-end">
               <UserProfile />
             </Navbar.Collapse>
           </Container>
-        </Navbar>
+        </Navbar> */}
 
         <main className="flex-grow-1 p-4" style={{ overflow: 'auto' }}>
           <Container fluid style={{ height: '100%' }}>

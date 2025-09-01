@@ -49,6 +49,81 @@
     {
       "id": "",
       "location": {
+        "column": 26,
+        "file": "src/lib/BaseSuite.test/mock.ts",
+        "length": 14,
+        "line": 4,
+        "lineText": "import { BaseGiven } from \"../BaseGiven\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 25,
+        "file": "src/lib/BaseSuite.test/mock.ts",
+        "length": 13,
+        "line": 6,
+        "lineText": "import { BaseThen } from \"../BaseThen\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 25,
+        "file": "src/lib/BaseSuite.test/mock.ts",
+        "length": 13,
+        "line": 6,
+        "lineText": "import { BaseThen } from \"../BaseThen\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 25,
+        "file": "src/lib/BaseSuite.test/mock.ts",
+        "length": 13,
+        "line": 7,
+        "lineText": "import { BaseWhen } from \"../BaseWhen\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 25,
+        "file": "src/lib/BaseSuite.test/mock.ts",
+        "length": 13,
+        "line": 7,
+        "lineText": "import { BaseWhen } from \"../BaseWhen\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
         "column": 23,
         "file": "src/lib/BaseSuite.test/pure.test.ts",
         "length": 12,
@@ -144,81 +219,6 @@
         "length": 11,
         "line": 8,
         "lineText": "import { beforeAllProxy, afterAllProxy } from \"./pmProxy\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 35,
-        "file": "src/lib/Tiposkripto.ts",
-        "length": 13,
-        "line": 29,
-        "lineText": "import { BaseGiven, IGivens } from \"./BaseGiven\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 25,
-        "file": "src/lib/Tiposkripto.ts",
-        "length": 15,
-        "line": 30,
-        "lineText": "import { BaseWhen } from \"./BaseWhen.js\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 25,
-        "file": "src/lib/Tiposkripto.ts",
-        "length": 15,
-        "line": 30,
-        "lineText": "import { BaseWhen } from \"./BaseWhen.js\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 25,
-        "file": "src/lib/Tiposkripto.ts",
-        "length": 15,
-        "line": 31,
-        "lineText": "import { BaseThen } from \"./BaseThen.js\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 25,
-        "file": "src/lib/Tiposkripto.ts",
-        "length": 15,
-        "line": 31,
-        "lineText": "import { BaseThen } from \"./BaseThen.js\";",
         "namespace": "",
         "suggestion": ""
       },
