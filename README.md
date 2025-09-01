@@ -2,7 +2,7 @@
 
 ## Brings vibe coding to the real world
 
-Testeranto lets you vibe code large, real-world codebases by intelligently managing the AI context
+Testeranto lets you vibe code large, real-world polyglot codebases by intelligently managing the AI context
 
 #### 🚀 Join Our Beta Program! 🚀
 
@@ -28,6 +28,7 @@ We're launching a private beta for GitHub stargazers first, followed by a public
 ## What is testeranto?
 
 - Testeranto produces test results that can be fed to Aider.ai to automatically fix failing tests.
+- Testeranto supports TypeScript/Javascript, golang and python (with more planed)
 - Testeranto tests are specified in a strongly-typed gherkin-like syntax. Rather than testing your code directly, Testeranto requires you to wrap your code with a semantic interface that is based on TS type signatures.
 - Testeranto can run tests in the frontend, the backend, or both.
 - Testeranto can be used to test anything that can be bundled with esbuild.
@@ -55,6 +56,30 @@ We're launching a private beta for GitHub stargazers first, followed by a public
 ## Quick Start
 
 0. Install Aider and signup for a LLM service.
+
+### Server-Side Setup for GitHub OAuth
+
+For GitHub authentication to work properly, you need to set up the server-side token exchange:
+
+1. Add the following environment variables to your server:
+   ```
+   GITHUB_CLIENT_ID=your_github_oauth_client_id
+   GITHUB_CLIENT_SECRET=your_github_oauth_client_secret
+   ```
+
+2. The server will handle the OAuth token exchange at the `/api/auth/github/token` endpoint
+
+### GitHub Authentication Setup
+
+To enable Git operations with GitHub:
+
+1. Create a GitHub OAuth App at https://github.com/settings/developers
+2. Set the Authorization callback URL to: `http://localhost:3000/auth/github/callback`
+3. Copy the Client ID
+4. Update the `clientId` field in the `githubOAuth` section of `testeranto.config.ts`
+5. Restart the development server
+
+**Note**: The client secret is not needed for the frontend application as it will be handled by the server-side component for token exchange.
 
 1. Install testeranto:
 

@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Container, Nav, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Nav, OverlayTrigger, Tooltip, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import { useWebSocket, useTutorialMode } from '../../App';
+import { useWebSocket, useTutorialMode, useAuth } from '../../App';
+import { UserProfile } from './UserProfile';
 
 type AppFrameProps = {
   children: React.ReactNode;
@@ -19,12 +20,13 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
   const location = useLocation();
   const { isConnected } = useWebSocket();
   const { tutorialMode } = useTutorialMode();
+  const { isAuthenticated, logout } = useAuth();
 
   return (
     <div className="d-flex min-vh-100" >
       {/* Sidebar - Always 60px wide, full height */}
       <div
-        className="bg-light border-end d-flex flex-column"
+        className="border-end d-flex flex-column"
         style={{
           width: '60px',
           height: '100vh',
@@ -91,18 +93,18 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             )}
           </Nav.Link>
 
-          {/* Process Manager Link - Always clickable with hover, tutorial tooltip conditionally */}
+          {/* Process Manager Link - Darken if not authenticated or not connected */}
           <Nav.Link
             as={NavLink}
             to="/processes"
-            className={`${location.pathname.startsWith('/processes') ? 'active' : ''} d-flex align-items-center justify-content-center ${!isConnected ? 'text-muted pe-none' : ''}`}
+            className={`${location.pathname.startsWith('/processes') ? 'active' : ''} d-flex align-items-center justify-content-center ${!isConnected || !isAuthenticated ? 'text-muted pe-none' : ''}`}
             style={{
               height: '40px',
               width: '40px',
-              opacity: isConnected ? 1 : 0.6
+              opacity: isConnected && isAuthenticated ? 1 : 0.6
             }}
             onClick={(e) => {
-              if (!isConnected) {
+              if (!isConnected || !isAuthenticated) {
                 e.preventDefault();
               }
             }}
@@ -112,7 +114,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
                 placement="right"
                 overlay={
                   <Tooltip id="processes-tooltip">
-                    Processes
+                    Processes {!isAuthenticated ? '(Sign in required)' : !isConnected ? '(WebSocket disconnected)' : ''}
                   </Tooltip>
                 }
               >
@@ -123,7 +125,39 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             )}
           </Nav.Link>
 
-          {/* Settings Link - Always clickable with hover, tutorial tooltip conditionally */}
+          {/* Git Integration Link - Darken if not authenticated */}
+          <Nav.Link
+            as={NavLink}
+            to="/git"
+            className={`${location.pathname === '/git' ? 'active' : ''} d-flex align-items-center justify-content-center ${!isAuthenticated ? 'text-muted pe-none' : ''}`}
+            style={{
+              height: '40px',
+              width: '40px',
+              opacity: isAuthenticated ? 1 : 0.6
+            }}
+            onClick={(e) => {
+              if (!isAuthenticated) {
+                e.preventDefault();
+              }
+            }}
+          >
+            {tutorialMode ? (
+              <OverlayTrigger
+                placement="right"
+                overlay={
+                  <Tooltip id="git-tooltip">
+                    Git Integration {!isAuthenticated ? '(Sign in required)' : ''}
+                  </Tooltip>
+                }
+              >
+                <span>🐙</span>
+              </OverlayTrigger>
+            ) : (
+              <span>🐙</span>
+            )}
+          </Nav.Link>
+
+          {/* Settings Link - Always accessible */}
           <Nav.Link
             as={NavLink}
             to="/settings"
@@ -145,6 +179,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
               <span>⚙️</span>
             )}
           </Nav.Link>
+
         </Nav>
 
         {/* WebSocket Status Indicator - Always show normal tooltip */}
@@ -152,7 +187,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           placement="right"
           overlay={
             <Tooltip id="status-tooltip">
-              {isConnected ? 'Dev mode' : 'Static mode. Some features are disabled.'}
+              {isConnected ? 'Dev mode - Full access' : 'Static mode - Read only'}
             </Tooltip>
           }
         >
@@ -188,6 +223,16 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
 
       {/* Main Content */}
       <div className="flex-grow-1 d-flex flex-column" style={{ minHeight: '100vh' }}>
+        {/* Top Navigation Bar */}
+        {/* <Navbar className="border-bottom">
+          <Container fluid>
+            <Navbar.Brand>{title || 'Testeranto'}</Navbar.Brand>
+            <Navbar.Collapse className="justify-content-end">
+              <UserProfile />
+            </Navbar.Collapse>
+          </Container>
+        </Navbar> */}
+
         <main className="flex-grow-1 p-4" style={{ overflow: 'auto' }}>
           <Container fluid style={{ height: '100%' }}>
             {children}

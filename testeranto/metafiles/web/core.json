@@ -1040,7 +1040,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 2583,
+        "bytes": 2532,
         "imports": [
           {
             "path": "src/lib/BaseGiven.ts",
@@ -1091,7 +1091,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12722,
+        "bytes": 12717,
         "imports": [
           {
             "path": "..",
@@ -15091,7 +15091,7 @@
         "format": "esm"
       },
       "src/components/pure/BuildLogViewer.tsx": {
-        "bytes": 7154,
+        "bytes": 7138,
         "imports": [
           {
             "path": "node_modules/react/index.js",
@@ -15614,13 +15614,13 @@
             "bytesInOutput": 148
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 6496
+            "bytesInOutput": 6549
           },
           "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 1606
+            "bytesInOutput": 1632
           }
         },
-        "bytes": 8633
+        "bytes": 8712
       },
       "testeranto/bundles/web/core/src/components/pure/ProjectPageView.test/index.mjs": {
         "imports": [
@@ -16108,7 +16108,7 @@
             "bytesInOutput": 1074
           },
           "src/components/pure/BuildLogViewer.tsx": {
-            "bytesInOutput": 7818
+            "bytesInOutput": 7802
           },
           "src/components/pure/NavBar.tsx": {
             "bytesInOutput": 2919
@@ -16117,7 +16117,7 @@
             "bytesInOutput": 0
           }
         },
-        "bytes": 246260
+        "bytes": 246244
       },
       "testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs": {
         "imports": [

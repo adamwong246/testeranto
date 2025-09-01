@@ -6,6 +6,21 @@
       "location": {
         "column": 27,
         "file": "src/Pure.test.ts",
+        "length": 8,
+        "line": 10,
+        "lineText": "import PureTesteranto from \"./Pure\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 27,
+        "file": "src/Pure.test.ts",
         "length": 31,
         "line": 11,
         "lineText": "import { MockPMBase } from \"./lib/pmProxy.test/mockPMBase\";",
@@ -120,21 +135,6 @@
       "notes": [],
       "pluginName": "console-detector",
       "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 23,
-        "file": "src/lib/BaseSuite.test/pure.test.ts",
-        "length": 12,
-        "line": 2,
-        "lineText": "import Testeranto from \"../../Pure\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
     },
     {
       "id": "",
@@ -505,7 +505,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/mock.ts": {
-        "bytes": 2583,
+        "bytes": 2532,
         "imports": [
           {
             "path": "src/lib/BaseGiven.ts",
@@ -541,7 +541,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.test/test.ts": {
-        "bytes": 12722,
+        "bytes": 12717,
         "imports": [
           {
             "path": "..",
@@ -654,16 +654,16 @@
         "entryPoint": "src/lib/BaseSuite.test/pure.test.ts",
         "inputs": {
           "src/lib/BaseSuite.test/mock.ts": {
-            "bytesInOutput": 1559
+            "bytesInOutput": 1585
           },
           "src/lib/BaseSuite.test/test.ts": {
-            "bytesInOutput": 6449
+            "bytesInOutput": 6502
           },
           "src/lib/BaseSuite.test/pure.test.ts": {
             "bytesInOutput": 103
           }
         },
-        "bytes": 8463
+        "bytes": 8542
       },
       "testeranto/bundles/pure/core/src/Pure.test.mjs": {
         "imports": [

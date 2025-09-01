@@ -13,6 +13,16 @@ import { AppHtml } from "./utils/buildTemplates";
 import webHtmlFrame from "./web.html";
 import { PM_Main } from "./PM/main";
 
+if (!process.env.GITHUB_CLIENT_ID) {
+  console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
+  process.exit(-1);
+}
+
+if (!process.env.GITHUB_CLIENT_SECRET) {
+  console.error(`env var "GITHUB_CLIENT_SECRET" needs to be set!`);
+  process.exit(-1);
+}
+
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 

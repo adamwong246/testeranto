@@ -4,6 +4,10 @@ import { sassPlugin } from "esbuild-sass-plugin";
 // TODO- this config file is horrible. I need to redo how config files are handled.
 
 const config: IProject = {
+  // Add GitHub OAuth configuration
+  // githubOAuth: {
+  //   clientId: "Ov23li3JEcsRqW0zWCG7",
+  // },
   projects: {
     // staticSite: {
     //   tests: [["src/ReportServer.test.ts/index.ts", "node", { ports: 1 }, []]],

@@ -24,6 +24,7 @@ export type TestStore = {
 
 export type TestSelection = {
   testSelection: boolean;
+  testStore?: boolean;
   error?: boolean;
 };
 
@@ -232,8 +233,9 @@ export const implementation: ITestImplementation<I, O> = {
       ): ((
         ssel: TestSelection,
         utils: IPM
-      ) => Promise<BaseSuite<any, any>>) =>
-      async (ssel, utils) => {
+      ) => (s: TestSelection) => Promise<BaseSuite<any, any>>) =>
+      (ssel, utils) =>
+      async (s) => {
         // Since we can't access the store directly, we need to handle this differently
         // For now, just return a resolved promise with a mock suite
         return Promise.resolve(new BaseSuite("temp", 0, {} as any));
@@ -245,8 +247,9 @@ export const implementation: ITestImplementation<I, O> = {
       ): ((
         ssel: TestSelection,
         utils: IPM
-      ) => Promise<BaseSuite<any, any>>) =>
-      async (ssel, utils) => {
+      ) => (s: TestSelection) => Promise<BaseSuite<any, any>>) =>
+      (ssel, utils) =>
+      async (s) => {
         // Since we can't access the store directly, we need to handle this differently
         // For now, just return a resolved promise with a mock suite
         return Promise.resolve(new BaseSuite("temp", 0, {} as any));
@@ -258,12 +261,11 @@ export const implementation: ITestImplementation<I, O> = {
       ): ((
         ssel: TestSelection,
         utils: IPM
-      ) => (store: TestStore) => Promise<TestSelection>) =>
+      ) => (s: TestSelection) => Promise<BaseSuite<any, any>>) =>
       (ssel, utils) =>
-      (store) => {
-        // For now, just return a resolved promise
-        // The actual implementation would check if the feature is present
-        return Promise.resolve({ testSelection: true });
+      async (s) => {
+        // For now, just return a resolved promise with a mock suite
+        return Promise.resolve(new BaseSuite("temp", 0, {} as any));
       },
 
     FeatureCountMatches:
@@ -416,28 +418,32 @@ export const testAdapter: ITestAdapter<I> = {
 
   andWhen: async (
     store: I["istore"],
-    whenCB: (x: TestSelection) => (store: TestStore) => Promise<TestSelection>,
+    whenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>,
     testResource: ITTestResourceConfiguration,
     pm: IPM
   ): Promise<I["istore"]> => {
     // Create a TestSelection from the store
-    const selection: TestSelection = { testSelection: (store as TestStore).testStore };
-    // whenCB is (x: TestSelection) => (store: TestStore) => Promise<TestSelection>
-    const whenFunction = whenCB(selection);
-    // Execute the function with the store
-    const result = await whenFunction(store as TestStore);
-    return result as unknown as I["istore"];
+    const selection: TestSelection = { 
+      testSelection: (store as TestStore).testStore,
+      testStore: (store as TestStore).testStore
+    };
+    // Call whenCB with the selection
+    await whenCB(selection);
+    return store;
   },
 
   butThen: async (
-    store: TestStore,
+    store: I["istore"],
     thenCB: (s: TestSelection) => Promise<BaseSuite<any, any>>,
     testResource: ITTestResourceConfiguration,
     pm: IPM
-  ): Promise<TestSelection> => {
+  ): Promise<I["iselection"]> => {
     try {
       // Create a TestSelection from the store
-      const selection: TestSelection = { testSelection: store.testStore };
+      const selection: TestSelection = { 
+        testSelection: (store as TestStore).testStore,
+        testStore: (store as TestStore).testStore
+      };
       // thenCB is (s: TestSelection) => Promise<BaseSuite<any, any>>
       await thenCB(selection);
       return selection;

@@ -12,12 +12,6 @@ import { WebSocketServer } from "ws";
 
 import { PM_Base } from "./base.js";
 import {
-  ProcessInfo,
-  ProcessStatus,
-  ProcessType,
-  ProcessCategory,
-  ProcessPlatform,
-  ProcessData,
   WebSocketMessage,
   ExecuteCommandMessage,
   GetRunningProcessesMessage,
@@ -286,15 +280,25 @@ export abstract class PM_WithWebSocket extends PM_Base {
   requestHandler(req: http.IncomingMessage, res: http.ServerResponse) {
     // Parse the URL
     const parsedUrl = url.parse(req.url || "/");
-    let pathname = parsedUrl.pathname || "/";
+    const pathname = parsedUrl.pathname || "/";
+
+    // Handle health check endpoint
+    if (pathname === "/health") {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({ status: "ok", timestamp: new Date().toISOString() })
+      );
+      return;
+    }
 
     // Handle root path
-    if (pathname === "/") {
-      pathname = "/index.html";
+    let processedPathname = pathname;
+    if (processedPathname === "/") {
+      processedPathname = "/index.html";
     }
 
     // Remove leading slash
-    let filePath = pathname.substring(1);
+    let filePath = processedPathname.substring(1);
 
     // Determine which directory to serve from
     if (filePath.startsWith("reports/")) {
@@ -353,7 +357,7 @@ export abstract class PM_WithWebSocket extends PM_Base {
     fs.exists(filePath, (exists) => {
       if (!exists) {
         // For SPA routing, serve index.html if the path looks like a route
-        if (!pathname.includes(".") && pathname !== "/") {
+        if (!processedPathname.includes(".") && processedPathname !== "/") {
           const indexPath = this.findIndexHtml();
           if (indexPath) {
             fs.readFile(indexPath, (err, data) => {
@@ -393,10 +397,32 @@ export abstract class PM_WithWebSocket extends PM_Base {
           return;
         }
 
-        // Get MIME type
-        const mimeType = mime.lookup(filePath) || "application/octet-stream";
-        res.writeHead(200, { "Content-Type": mimeType });
-        res.end(data);
+        // For HTML files, inject the configuration
+        if (filePath.endsWith(".html")) {
+          let content = data.toString();
+          // Inject the configuration script before the closing </body> tag
+          if (content.includes("</body>")) {
+            const configScript = `
+              <script>
+                window.testerantoConfig = ${JSON.stringify({
+                  githubOAuth: {
+                    clientId: process.env.GITHUB_CLIENT_ID || "",
+                  },
+                  serverOrigin:
+                    process.env.SERVER_ORIGIN || "http://localhost:3000",
+                })};
+              </script>
+            `;
+            content = content.replace("</body>", `${configScript}</body>`);
+          }
+          res.writeHead(200, { "Content-Type": "text/html" });
+          res.end(content);
+        } else {
+          // Get MIME type for other files
+          const mimeType = mime.lookup(filePath) || "application/octet-stream";
+          res.writeHead(200, { "Content-Type": mimeType });
+          res.end(data);
+        }
       });
     });
   }
@@ -472,13 +498,15 @@ export abstract class PM_WithWebSocket extends PM_Base {
             exitCode: 0,
           });
         }
-        
+
         // Add log entry for process completion
-        const successMessage = `Completed successfully with result: ${JSON.stringify(result)}`;
+        const successMessage = `Completed successfully with result: ${JSON.stringify(
+          result
+        )}`;
         const currentLogs = this.processLogs.get(processId) || [];
         currentLogs.push(successMessage);
         this.processLogs.set(processId, currentLogs);
-        
+
         this.broadcast({
           type: "processExited",
           processId,
@@ -499,13 +527,13 @@ export abstract class PM_WithWebSocket extends PM_Base {
             error: error.message,
           });
         }
-        
+
         // Add log entry for process error
         const errorMessage = `Failed with error: ${error.message}`;
         const currentLogs = this.processLogs.get(processId) || [];
         currentLogs.push(errorMessage);
         this.processLogs.set(processId, currentLogs);
-        
+
         this.broadcast({
           type: "processError",
           processId,
@@ -531,7 +559,9 @@ export abstract class PM_WithWebSocket extends PM_Base {
   }
 
   // Helper methods to get processes by category
-  getProcessesByCategory(category: "aider" | "bdd-test" | "build-time" | "other") {
+  getProcessesByCategory(
+    category: "aider" | "bdd-test" | "build-time" | "other"
+  ) {
     return Array.from(this.allProcesses.entries())
       .filter(([id, procInfo]) => procInfo.category === category)
       .map(([id, procInfo]) => ({
@@ -545,7 +575,7 @@ export abstract class PM_WithWebSocket extends PM_Base {
         category: procInfo.category,
         testName: procInfo.testName,
         platform: procInfo.platform,
-        logs: this.processLogs.get(id) || []
+        logs: this.processLogs.get(id) || [],
       }));
   }
 
@@ -575,11 +605,13 @@ export abstract class PM_WithWebSocket extends PM_Base {
         category: procInfo.category,
         testName: procInfo.testName,
         platform: procInfo.platform,
-        logs: this.processLogs.get(id) || []
+        logs: this.processLogs.get(id) || [],
       }));
   }
 
-  getProcessesByPlatform(platform: "node" | "web" | "pure" | "pitono" | "golang") {
+  getProcessesByPlatform(
+    platform: "node" | "web" | "pure" | "pitono" | "golang"
+  ) {
     return Array.from(this.allProcesses.entries())
       .filter(([id, procInfo]) => procInfo.platform === platform)
       .map(([id, procInfo]) => ({
@@ -593,7 +625,7 @@ export abstract class PM_WithWebSocket extends PM_Base {
         category: procInfo.category,
         testName: procInfo.testName,
         platform: procInfo.platform,
-        logs: this.processLogs.get(id) || []
+        logs: this.processLogs.get(id) || [],
       }));
   }
 }

@@ -3,6 +3,8 @@
   Type 'unknown' has no call signatures.
 /Users/adam/Code/testeranto/src/lib/index.ts (50,12): This expression is not callable.
   Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/pmProxy.test/mockPMBase.ts (8,14): Class 'MockPMBase' incorrectly implements class 'PM_Base'. Did you mean to extend 'PM_Base' and inherit its members as a subclass?
+  Property 'mapping' is missing in type 'MockPMBase' but required in type 'PM_Base'.
 /Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (206,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
 /Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (269,15): Expected 1 arguments, but got 3.
 /Users/adam/Code/testeranto/src/PM/web.ts (51,12): Property 'mainFrame' does not exist on type 'string | Page'.
