@@ -1,18 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Form, Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { useTutorialMode, useAuth } from '../../App';
-import { GitHubLoginButton } from './GitHubLoginButton';
-import { githubAuthService } from '../../services/GitHubAuthService';
-import { DebugEnv } from './DebugEnv';
+import React, { useState, useEffect } from "react";
+import { Form, Container, Row, Col, Card, Button } from "react-bootstrap";
+import { useTutorialMode, useAuth } from "../../App";
+import { GitHubLoginButton } from "./GitHubLoginButton";
+import { githubAuthService } from "../../services/GitHubAuthService";
 
 export const Settings = () => {
-  const [theme, setTheme] = useState<'light' | 'dark' | 'auto'>('auto');
+  const [theme, setTheme] = useState<"light" | "dark" | "auto">("auto");
   const { tutorialMode, setTutorialMode } = useTutorialMode();
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     // Load saved theme from localStorage
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'auto' | null;
+    const savedTheme = localStorage.getItem("theme") as
+      | "light"
+      | "dark"
+      | "auto"
+      | null;
     if (savedTheme) {
       setTheme(savedTheme);
     }
@@ -22,34 +25,35 @@ export const Settings = () => {
     // Apply theme when it changes
     applyTheme(theme);
     // Save to localStorage
-    localStorage.setItem('theme', theme);
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const applyTheme = (selectedTheme: 'light' | 'dark' | 'auto') => {
+  const applyTheme = (selectedTheme: "light" | "dark" | "auto") => {
     const root = document.documentElement;
 
-    if (selectedTheme === 'auto') {
+    if (selectedTheme === "auto") {
       // Use system preference
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        root.setAttribute('data-bs-theme', 'dark');
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        root.setAttribute("data-bs-theme", "dark");
       } else {
-        root.setAttribute('data-bs-theme', 'light');
+        root.setAttribute("data-bs-theme", "light");
       }
     } else {
-      root.setAttribute('data-bs-theme', selectedTheme);
+      root.setAttribute("data-bs-theme", selectedTheme);
     }
   };
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTheme(event.target.value as 'light' | 'dark' | 'auto');
+    setTheme(event.target.value as "light" | "dark" | "auto");
   };
 
   const handleTutorialModeChange = () => {
     const newTutorialMode = !tutorialMode;
     setTutorialMode(newTutorialMode);
     // Save to localStorage
-    localStorage.setItem('tutorialMode', newTutorialMode.toString());
+    localStorage.setItem("tutorialMode", newTutorialMode.toString());
   };
+
 
   return (
     <Container>
@@ -69,7 +73,7 @@ export const Settings = () => {
                       name="theme"
                       value="light"
                       label="Light mode"
-                      checked={theme === 'light'}
+                      checked={theme === "light"}
                       onChange={handleThemeChange}
                     />
                     <Form.Check
@@ -78,7 +82,7 @@ export const Settings = () => {
                       name="theme"
                       value="dark"
                       label="Dark mode"
-                      checked={theme === 'dark'}
+                      checked={theme === "dark"}
                       onChange={handleThemeChange}
                     />
                     <Form.Check
@@ -87,7 +91,7 @@ export const Settings = () => {
                       name="theme"
                       value="auto"
                       label="Auto mode. Use system setting"
-                      checked={theme === 'auto'}
+                      checked={theme === "auto"}
                       onChange={handleThemeChange}
                     />
                   </div>
@@ -97,12 +101,15 @@ export const Settings = () => {
                   <Form.Check
                     type="switch"
                     id="tutorial-mode"
-                    label={tutorialMode ? "Tutorial Mode: ON" : "Tutorial Mode: OFF"}
+                    label={
+                      tutorialMode ? "Tutorial Mode: ON" : "Tutorial Mode: OFF"
+                    }
                     checked={tutorialMode}
                     onChange={handleTutorialModeChange}
                   />
                   <Form.Text className="text-muted">
-                    When enabled, helpful tooltips will appear throughout the app to guide you.
+                    When enabled, helpful tooltips will appear throughout the
+                    app to guide you.
                   </Form.Text>
                 </Form.Group>
               </Form>
@@ -122,10 +129,12 @@ export const Settings = () => {
               {githubAuthService.isConfigured() ? (
                 isAuthenticated ? (
                   <div>
-                    <p>Connected as: {user?.login}</p>
-                    <Button variant="outline-danger" onClick={logout}>
-                      Disconnect GitHub
-                    </Button>
+                    <p>Connected to GitHub</p>
+                    <div className="d-grid gap-2">
+                      <Button variant="danger" onClick={logout}>
+                        Sign Out from GitHub
+                      </Button>
+                    </div>
                   </div>
                 ) : (
                   <div>
@@ -149,9 +158,6 @@ export const Settings = () => {
           </Card>
         </Col>
       </Row>
-
-      {/* Environment Debug Info */}
-      {/* <DebugEnv /> */}
     </Container>
   );
 };

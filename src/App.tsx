@@ -6,6 +6,7 @@ import { TestPage } from './components/stateful/TestPage';
 import { ProjectPage } from './components/stateful/ProjectPage';
 import { ProjectsPage } from './components/stateful/ProjectsPage';
 import { AppFrame } from './components/pure/AppFrame';
+import { SignIn } from './components/pure/SignIn';
 import { FeaturesReporter } from './components/stateful/FeaturesReporter';
 import { DesignEditorPage } from './components/DesignEditorPage';
 import { TextEditorPage } from './components/stateful/TextEditorPage';
@@ -150,23 +151,30 @@ export const App = () => {
           <Router>
             <AppFrame>
               <Routes>
+                {/* Public routes */}
                 <Route path="/" element={<ProjectsPage />} />
                 <Route path="/projects/:projectName" element={<ProjectPage />} />
                 <Route path="/projects/:projectName/tests/*" element={<TestPage />} />
                 <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
-                <Route path="/features-reporter" element={<FeaturesReporter />} />
-                <Route path="/design-editor" element={<DesignEditorPage />} />
-                <Route path="/text-editor" element={<TextEditorPage />} />
+                <Route path="/signin" element={<SignIn />} />
                 <Route path="/auth/github/callback" element={<AuthCallbackPage />} />
+                
+                {/* Protected routes - handle authentication within components */}
+                <Route path="/features-reporter" element={isAuthenticated ? <FeaturesReporter /> : <SignIn />} />
+                <Route path="/design-editor" element={isAuthenticated ? <DesignEditorPage /> : <SignIn />} />
+                <Route path="/text-editor" element={isAuthenticated ? <TextEditorPage /> : <SignIn />} />
                 {/* Conditionally render process-related routes only if WebSocket is connected */}
                 {isConnected ? (
                   <>
-                    <Route path="/processes" element={<ProcessManagerPage />} />
-                    <Route path="/processes/:processId" element={<SingleProcessPage />} />
+                    <Route path="/processes" element={isAuthenticated ? <ProcessManagerPage /> : <SignIn />} />
+                    <Route path="/processes/:processId" element={isAuthenticated ? <SingleProcessPage /> : <SignIn />} />
                   </>
                 ) : null}
                 <Route path="/settings" element={<Settings />} />
-                <Route path="/git" element={<GitIntegrationPage />} />
+                <Route path="/git" element={isAuthenticated ? <GitIntegrationPage /> : <SignIn />} />
+                
+                {/* Catch all - redirect to home for logged out users */}
+                <Route path="*" element={<ProjectsPage />} />
               </Routes>
             </AppFrame>
           </Router>
