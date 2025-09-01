@@ -1116,7 +1116,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create2, deps);
           }
-          function useCallback24(callback, deps) {
+          function useCallback25(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
@@ -1882,7 +1882,7 @@
           exports.memo = memo2;
           exports.startTransition = startTransition3;
           exports.unstable_act = act;
-          exports.useCallback = useCallback24;
+          exports.useCallback = useCallback25;
           exports.useContext = useContext25;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
@@ -45856,7 +45856,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
   });
 
   // src/App.tsx
-  var import_react121 = __toESM(require_react(), 1);
+  var import_react122 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -60268,7 +60268,7 @@ Current environment analysis:
   };
 
   // src/components/stateful/GitIntegrationPage.tsx
-  var import_react119 = __toESM(require_react(), 1);
+  var import_react120 = __toESM(require_react(), 1);
 
   // src/hooks/useGitMode.ts
   var import_react117 = __toESM(require_react(), 1);
@@ -60320,6 +60320,39 @@ Current environment analysis:
     setIsPushing,
     getSyncStatusText
   }) => {
+    const [selectedFile, setSelectedFile] = (0, import_react118.useState)(null);
+    const [originalContent, setOriginalContent] = (0, import_react118.useState)("");
+    const [modifiedContent, setModifiedContent] = (0, import_react118.useState)("");
+    const [isDiffLoading, setIsDiffLoading] = (0, import_react118.useState)(false);
+    const loadFileDiff = (0, import_react118.useCallback)(async (filePath) => {
+      console.log("loadFileDiff - filePath:", filePath);
+      if (mode === "static")
+        return;
+      setIsDiffLoading(true);
+      try {
+        setSelectedFile(filePath);
+        try {
+          const currentContent = await fileService.readFile(filePath);
+          setModifiedContent(currentContent);
+        } catch (error2) {
+          console.error("Error reading file:", error2);
+          setModifiedContent("");
+          setError(`Cannot read file: ${filePath}. The development server may not be running or the file API endpoints may not be implemented. Check that the server is running and has the /api/files/read endpoint.`);
+        }
+        setOriginalContent("");
+      } catch (error2) {
+        console.error("Failed to load file diff:", error2);
+        setError("Failed to load file content for diff");
+      } finally {
+        setIsDiffLoading(false);
+      }
+    }, [fileService, mode, setError]);
+    (0, import_react118.useEffect)(() => {
+      if (changes.length > 0 && !selectedFile) {
+        console.log("First change path:", changes[0].path);
+        loadFileDiff(changes[0].path);
+      }
+    }, [changes, selectedFile, loadFileDiff]);
     return /* @__PURE__ */ import_react118.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react118.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react118.default.createElement(Col_default, null, /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react118.default.createElement(
       Badge_default,
       {
@@ -60338,83 +60371,7 @@ Current environment analysis:
       /* @__PURE__ */ import_react118.default.createElement("option", { value: "static" }, "Static (Read-only)"),
       /* @__PURE__ */ import_react118.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
       /* @__PURE__ */ import_react118.default.createElement("option", { value: "git" }, "Git Remote")
-    )), mode === "static" && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react118.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react118.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, error), mode !== "static" && /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react118.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-secondary",
-        size: "sm",
-        onClick: loadChanges,
-        disabled: isLoading
-      },
-      isLoading ? /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
-    )), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react118.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react118.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react118.default.createElement(
-      "div",
-      {
-        key: index3,
-        className: "d-flex align-items-center mb-2"
-      },
-      /* @__PURE__ */ import_react118.default.createElement(
-        Badge_default,
-        {
-          bg: getStatusBadgeVariant(change.status),
-          className: "me-2"
-        },
-        change.status.charAt(0).toUpperCase() + change.status.slice(1)
-      ),
-      /* @__PURE__ */ import_react118.default.createElement("span", { className: "small text-truncate" }, change.path)
-    )))))), /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react118.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react118.default.createElement(
-      "input",
-      {
-        type: "text",
-        className: "form-control",
-        id: "summary",
-        placeholder: "What did you change?",
-        value: commitSummary,
-        onChange: (e) => setCommitSummary(e.target.value),
-        disabled: mode === "static"
-      }
-    ), /* @__PURE__ */ import_react118.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react118.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react118.default.createElement(
-      "textarea",
-      {
-        className: "form-control",
-        id: "description",
-        rows: 3,
-        placeholder: "Why did you change it?",
-        value: commitDescription,
-        onChange: (e) => setCommitDescription(e.target.value),
-        disabled: mode === "static"
-      }
-    )), /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react118.default.createElement(
-      Button_default2,
-      {
-        variant: "primary",
-        onClick: handleSaveChanges,
-        disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
-      },
-      isCommitting ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(
-        Spinner_default,
-        {
-          animation: "border",
-          size: "sm",
-          className: "me-2"
-        }
-      ), "Saving...") : "Save to Computer"
-    ), /* @__PURE__ */ import_react118.default.createElement(
-      Button_default2,
-      {
-        variant: "success",
-        onClick: handleShareChanges,
-        disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
-      },
-      isPushing ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(
-        Spinner_default,
-        {
-          animation: "border",
-          size: "sm",
-          className: "me-2"
-        }
-      ), "Sharing...") : "Save & Share"
-    ))))), /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react118.default.createElement(
+    )), mode === "static" && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react118.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react118.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, /* @__PURE__ */ import_react118.default.createElement("div", null, error), /* @__PURE__ */ import_react118.default.createElement("small", { className: "text-muted" }, "Check the browser console for more details")), mode !== "static" && /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react118.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -60466,7 +60423,110 @@ Current environment analysis:
           className: "me-2"
         }
       ), "Sharing...") : `Share Changes (${remoteStatus.ahead})`
-    )), /* @__PURE__ */ import_react118.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react118.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))))), mode === "static" && /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, null, /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react118.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
+    )), /* @__PURE__ */ import_react118.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react118.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))), /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-secondary",
+        size: "sm",
+        onClick: loadChanges,
+        disabled: isLoading
+      },
+      isLoading ? /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
+    )), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react118.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react118.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react118.default.createElement(
+      "div",
+      {
+        key: index3,
+        className: `d-flex align-items-center mb-2 ${selectedFile === change.path ? "bg-light rounded p-1" : ""}`,
+        style: { cursor: "pointer" },
+        onClick: () => loadFileDiff(change.path)
+      },
+      /* @__PURE__ */ import_react118.default.createElement(
+        Badge_default,
+        {
+          bg: getStatusBadgeVariant(change.status),
+          className: "me-2"
+        },
+        change.status.charAt(0).toUpperCase() + change.status.slice(1)
+      ),
+      /* @__PURE__ */ import_react118.default.createElement("span", { className: "small text-truncate" }, change.path)
+    )))))), /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 8 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Changes Preview")), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, { style: { height: "400px" } }, isDiffLoading ? /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react118.default.createElement("div", null, "Loading diff...")) : selectedFile ? modifiedContent ? /* @__PURE__ */ import_react118.default.createElement(
+      de,
+      {
+        height: "100%",
+        language: "typescript",
+        original: originalContent,
+        modified: modifiedContent,
+        options: {
+          readOnly: true,
+          renderSideBySide: true,
+          minimap: { enabled: false },
+          scrollBeyondLastLine: false,
+          fontSize: 12,
+          lineNumbers: "on",
+          folding: true,
+          glyphMargin: false,
+          lineDecorationsWidth: 10,
+          lineNumbersMinChars: 3,
+          scrollbar: {
+            vertical: "auto",
+            horizontal: "auto"
+          },
+          renderLineHighlight: "all"
+        }
+      }
+    ) : /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center text-muted" }, /* @__PURE__ */ import_react118.default.createElement("p", null, "Could not load file content."), /* @__PURE__ */ import_react118.default.createElement("small", null, "Check that the development server is running and has file API endpoints implemented.")) : /* @__PURE__ */ import_react118.default.createElement("div", { className: "text-center text-muted" }, "Select a file to view changes"))), /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react118.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react118.default.createElement(
+      "input",
+      {
+        type: "text",
+        className: "form-control",
+        id: "summary",
+        placeholder: "What did you change?",
+        value: commitSummary,
+        onChange: (e) => setCommitSummary(e.target.value),
+        disabled: mode === "static"
+      }
+    ), /* @__PURE__ */ import_react118.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react118.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react118.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react118.default.createElement(
+      "textarea",
+      {
+        className: "form-control",
+        id: "description",
+        rows: 3,
+        placeholder: "Why did you change it?",
+        value: commitDescription,
+        onChange: (e) => setCommitDescription(e.target.value),
+        disabled: mode === "static"
+      }
+    )), /* @__PURE__ */ import_react118.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "primary",
+        onClick: handleSaveChanges,
+        disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
+      },
+      isCommitting ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(
+        Spinner_default,
+        {
+          animation: "border",
+          size: "sm",
+          className: "me-2"
+        }
+      ), "Saving...") : "Save to Computer"
+    ), /* @__PURE__ */ import_react118.default.createElement(
+      Button_default2,
+      {
+        variant: "success",
+        onClick: handleShareChanges,
+        disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
+      },
+      isPushing ? /* @__PURE__ */ import_react118.default.createElement(import_react118.default.Fragment, null, /* @__PURE__ */ import_react118.default.createElement(
+        Spinner_default,
+        {
+          animation: "border",
+          size: "sm",
+          className: "me-2"
+        }
+      ), "Sharing...") : "Save & Share"
+    )))))), mode === "static" && /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, null, /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react118.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
   };
 
   // src/services/FileService.ts
@@ -60587,12 +60647,68 @@ Current environment analysis:
       };
     }
     async readFile(path) {
-      const response = await fetch(
-        `/api/files/read?path=${encodeURIComponent(path)}`
-      );
-      if (!response.ok)
-        throw new Error(`Failed to read file: ${path}`);
-      return await response.text();
+      console.log("Reading file with path:", path);
+      const encodedPath = encodeURIComponent(path);
+      console.log("Encoded path:", encodedPath);
+      const url = `/api/files/read?path=${encodedPath}`;
+      console.log("Request URL:", url);
+      try {
+        const response = await fetch(url);
+        const responseClone = response.clone();
+        if (!response.ok) {
+          console.error(`Failed to read file: ${path}`, response.status, response.statusText);
+          if (response.status === 404) {
+            console.warn(`File not found via API, trying direct fetch: ${path}`);
+            try {
+              const directResponse = await fetch(path);
+              const directResponseClone = directResponse.clone();
+              if (directResponse.ok) {
+                return await directResponse.text();
+              } else {
+                console.error(`Direct fetch failed: ${directResponse.status} ${directResponse.statusText}`);
+                try {
+                  const errorText = await directResponseClone.text();
+                  console.error("Direct fetch error details:", errorText);
+                } catch {
+                }
+              }
+            } catch (directError) {
+              console.error("Direct fetch also failed:", directError);
+            }
+            console.warn("Trying static file server fallback");
+            try {
+              const staticResponse = await fetch(`/static/${path}`);
+              if (staticResponse.ok) {
+                return await staticResponse.text();
+              } else {
+                console.error(`Static file fetch failed: ${staticResponse.status} ${staticResponse.statusText}`);
+              }
+            } catch (staticError) {
+              console.error("Static file fetch also failed:", staticError);
+            }
+          }
+          let errorDetails = "";
+          try {
+            const errorData = await responseClone.json();
+            errorDetails = JSON.stringify(errorData);
+          } catch {
+            try {
+              errorDetails = await responseClone.text();
+            } catch {
+              errorDetails = "Could not read error details";
+            }
+          }
+          console.error("Error details:", errorDetails);
+          throw new Error(`Failed to read file: ${path} - ${response.status} ${response.statusText}`);
+        }
+        return await response.text();
+      } catch (error) {
+        console.error("Network error reading file:", error);
+        if (error instanceof TypeError && error.message.includes("body stream already read")) {
+          throw new Error(`Network error reading file: ${path} - Response body was already read (this is a bug)`);
+        }
+        throw new Error(`Network error reading file: ${path}`);
+      }
     }
     async readDirectory(path) {
       const response = await fetch(
@@ -60650,7 +60766,9 @@ Current environment analysis:
       const response = await fetch("/api/git/changes");
       if (!response.ok)
         return [];
-      return await response.json();
+      const changes = await response.json();
+      console.log("Raw changes from server:", JSON.stringify(changes, null, 2));
+      return changes;
     }
     async commitChanges(message, description) {
       const response = await fetch("/api/git/commit", {
@@ -60910,21 +61028,21 @@ ${description}` : message
 
   // src/components/stateful/GitIntegrationPage.tsx
   var GitIntegrationPage = () => {
-    const [isLoading, setIsLoading] = (0, import_react119.useState)(true);
+    const [isLoading, setIsLoading] = (0, import_react120.useState)(true);
     const { mode, setMode, isStatic, isDev, isGit } = useGitMode();
-    const [fileService, setFileService] = (0, import_react119.useState)(() => getFileService(mode));
-    const [changes, setChanges] = (0, import_react119.useState)([]);
-    const [remoteStatus, setRemoteStatus] = (0, import_react119.useState)({
+    const [fileService, setFileService] = (0, import_react120.useState)(() => getFileService(mode));
+    const [changes, setChanges] = (0, import_react120.useState)([]);
+    const [remoteStatus, setRemoteStatus] = (0, import_react120.useState)({
       ahead: 0,
       behind: 0
     });
-    const [currentBranch, setCurrentBranch] = (0, import_react119.useState)("main");
-    const [error, setError] = (0, import_react119.useState)(null);
-    const [commitSummary, setCommitSummary] = (0, import_react119.useState)("");
-    const [commitDescription, setCommitDescription] = (0, import_react119.useState)("");
-    const [isCommitting, setIsCommitting] = (0, import_react119.useState)(false);
-    const [isPushing, setIsPushing] = (0, import_react119.useState)(false);
-    const [isPulling, setIsPulling] = (0, import_react119.useState)(false);
+    const [currentBranch, setCurrentBranch] = (0, import_react120.useState)("main");
+    const [error, setError] = (0, import_react120.useState)(null);
+    const [commitSummary, setCommitSummary] = (0, import_react120.useState)("");
+    const [commitDescription, setCommitDescription] = (0, import_react120.useState)("");
+    const [isCommitting, setIsCommitting] = (0, import_react120.useState)(false);
+    const [isPushing, setIsPushing] = (0, import_react120.useState)(false);
+    const [isPulling, setIsPulling] = (0, import_react120.useState)(false);
     const handleSaveChanges = async () => {
       if (!commitSummary.trim()) {
         setError("Please provide a commit summary");
@@ -61050,11 +61168,11 @@ ${description}` : message
         setIsLoading(false);
       }
     };
-    (0, import_react119.useEffect)(() => {
+    (0, import_react120.useEffect)(() => {
       const newFileService = getFileService(mode);
       setFileService(newFileService);
     }, [mode]);
-    (0, import_react119.useEffect)(() => {
+    (0, import_react120.useEffect)(() => {
       if (fileService && mode === "dev") {
         const devFileService = fileService;
         const unsubscribeChanges = devFileService.onChanges?.(
@@ -61104,7 +61222,7 @@ ${description}` : message
         loadData();
       }
     }, [fileService, mode]);
-    return /* @__PURE__ */ import_react119.default.createElement(
+    return /* @__PURE__ */ import_react120.default.createElement(
       GitIntegrationView,
       {
         mode,
@@ -61141,24 +61259,24 @@ ${description}` : message
   };
 
   // src/components/stateful/AuthCallbackPage.tsx
-  var import_react120 = __toESM(require_react(), 1);
+  var import_react121 = __toESM(require_react(), 1);
   var AuthCallbackPage = () => {
-    (0, import_react120.useEffect)(() => {
+    (0, import_react121.useEffect)(() => {
     }, []);
-    return /* @__PURE__ */ import_react120.default.createElement(Container_default, { className: "d-flex justify-content-center align-items-center", style: { minHeight: "50vh" } }, /* @__PURE__ */ import_react120.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react120.default.createElement(Spinner_default, { animation: "border", role: "status", className: "mb-3" }, /* @__PURE__ */ import_react120.default.createElement("span", { className: "visually-hidden" }, "Authenticating...")), /* @__PURE__ */ import_react120.default.createElement("h4", null, "Completing GitHub authentication...")));
+    return /* @__PURE__ */ import_react121.default.createElement(Container_default, { className: "d-flex justify-content-center align-items-center", style: { minHeight: "50vh" } }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react121.default.createElement(Spinner_default, { animation: "border", role: "status", className: "mb-3" }, /* @__PURE__ */ import_react121.default.createElement("span", { className: "visually-hidden" }, "Authenticating...")), /* @__PURE__ */ import_react121.default.createElement("h4", null, "Completing GitHub authentication...")));
   };
 
   // src/App.tsx
-  var WebSocketContext = (0, import_react121.createContext)({
+  var WebSocketContext = (0, import_react122.createContext)({
     ws: null,
     isConnected: false
   });
-  var TutorialModeContext = (0, import_react121.createContext)({
+  var TutorialModeContext = (0, import_react122.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
-  var AuthContext = (0, import_react121.createContext)({
+  var AuthContext = (0, import_react122.createContext)({
     isAuthenticated: false,
     user: null,
     login: () => {
@@ -61167,21 +61285,21 @@ ${description}` : message
     }
   });
   var useWebSocket = () => {
-    return (0, import_react121.useContext)(WebSocketContext);
+    return (0, import_react122.useContext)(WebSocketContext);
   };
   var useTutorialMode = () => {
-    return (0, import_react121.useContext)(TutorialModeContext);
+    return (0, import_react122.useContext)(TutorialModeContext);
   };
   var useAuth = () => {
-    return (0, import_react121.useContext)(AuthContext);
+    return (0, import_react122.useContext)(AuthContext);
   };
   var App = () => {
-    const [ws, setWs] = (0, import_react121.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react121.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react121.useState)(false);
-    const [isAuthenticated, setIsAuthenticated] = (0, import_react121.useState)(githubAuthService.isAuthenticated);
-    const [user, setUser] = (0, import_react121.useState)(githubAuthService.userInfo);
-    (0, import_react121.useEffect)(() => {
+    const [ws, setWs] = (0, import_react122.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react122.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react122.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, import_react122.useState)(githubAuthService.isAuthenticated);
+    const [user, setUser] = (0, import_react122.useState)(githubAuthService.userInfo);
+    (0, import_react122.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -61238,7 +61356,7 @@ ${description}` : message
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react121.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react121.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react121.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react121.default.createElement(HashRouter, null, /* @__PURE__ */ import_react121.default.createElement(AppFrame, null, /* @__PURE__ */ import_react121.default.createElement(Routes, null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react121.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react121.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react121.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react121.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/auth/github/callback", element: /* @__PURE__ */ import_react121.default.createElement(AuthCallbackPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/features-reporter", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/design-editor", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/text-editor", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), isConnected ? /* @__PURE__ */ import_react121.default.createElement(import_react121.default.Fragment, null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/processes", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/processes/:processId", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) })) : null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react121.default.createElement(Settings, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react121.default.createElement(ProjectsPage, null) })))))));
+    return /* @__PURE__ */ import_react122.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react122.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react122.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react122.default.createElement(HashRouter, null, /* @__PURE__ */ import_react122.default.createElement(AppFrame, null, /* @__PURE__ */ import_react122.default.createElement(Routes, null, /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react122.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react122.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react122.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react122.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react122.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/auth/github/callback", element: /* @__PURE__ */ import_react122.default.createElement(AuthCallbackPage, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/features-reporter", element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/design-editor", element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/text-editor", element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null) }), isConnected ? /* @__PURE__ */ import_react122.default.createElement(import_react122.default.Fragment, null, /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/processes", element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/processes/:processId", element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null) })) : null, /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react122.default.createElement(Settings, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react122.default.createElement(ProjectsPage, null) })))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -61246,9 +61364,9 @@ ${description}` : message
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react121.default.createElement(App));
+          root.render(import_react122.default.createElement(App));
         } else {
-          import_client.default.render(import_react121.default.createElement(App), rootElement);
+          import_client.default.render(import_react122.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -61260,7 +61378,7 @@ ${description}` : message
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react121.default;
+    window.React = import_react122.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);

@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import fs from "fs";
 import url from "url";
 import http from "http";
 
@@ -479,43 +480,89 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
       const { exec } = await import("child_process");
 
       return new Promise((resolve, reject) => {
+        console.log("Current working directory:", process.cwd());
         exec(
-          "git status --porcelain",
+          "git status --porcelain=v1",
           { cwd: process.cwd() },
-          (error, stdout, stderr) => {
+          async (error, stdout, stderr) => {
+            if (stderr) {
+              console.error("Git stderr:", stderr);
+            }
             if (error) {
               console.error("Error getting git changes:", error);
               resolve([]);
               return;
             }
 
+            console.log("Raw git status output:", stdout);
             const changes: FileChange[] = [];
             const lines = stdout.trim().split("\n");
 
             for (const line of lines) {
+              console.log("Processing git status line:", JSON.stringify(line));
               if (!line.trim()) continue;
 
-              // Parse git status output (XY PATH)
-              const status = line.substring(0, 2).trim();
-              const path = line.substring(3).trim();
+              // Parse git status output using a more reliable approach
+              // The format is always: XY PATH (exactly two status characters, space, then path)
+              // Use a regex to match the pattern
+              const match = line.match(/^(.{2}) (.*)$/);
+              if (!match) {
+                console.warn("Could not parse git status line:", line);
+                continue;
+              }
+
+              const status = match[1];
+              let path = match[2];
+
+              // Handle renames which look like: R  ORIG_PATH -> NEW_PATH
+              // For renames, status will be 'R ' (note the space)
+              if (status === "R " && path.includes(" -> ")) {
+                const parts = path.split(" -> ");
+                path = parts[parts.length - 1];
+              }
+
+              // Trim whitespace from the path
+              path = path.trim();
 
               let fileStatus: FileChange["status"] = "unchanged";
 
-              if (status.startsWith("M")) {
+              // Check the first character of the status
+              const firstChar = status.charAt(0);
+              if (firstChar === "M" || firstChar === " ") {
                 fileStatus = "modified";
-              } else if (status.startsWith("A")) {
+              } else if (firstChar === "A") {
                 fileStatus = "added";
-              } else if (status.startsWith("D")) {
+              } else if (firstChar === "D") {
                 fileStatus = "deleted";
-              } else if (status.startsWith("U") || status.includes("U")) {
+              } else if (firstChar === "U") {
                 fileStatus = "conflicted";
-              } else if (status.startsWith("??")) {
+              } else if (status === "??") {
                 fileStatus = "added";
+              } else if (status === "R ") {
+                fileStatus = "modified"; // Treat renames as modifications
               }
 
               if (fileStatus !== "unchanged") {
-                changes.push({
+                console.log("Git change detected:", {
                   path,
+                  status,
+                  fileStatus,
+                });
+
+                // Verify the path exists to make sure it's correct
+
+                const fullPath = `${process.cwd()}/${path}`;
+                try {
+                  await fs.promises.access(fullPath);
+                  console.log("Path exists:", fullPath);
+                } catch (error) {
+                  console.warn("Path does not exist:", fullPath);
+                  // Let's still add it to changes, as it might be a deleted file
+                }
+
+                // Add the change
+                changes.push({
+                  path: path,
                   status: fileStatus,
                 });
               }

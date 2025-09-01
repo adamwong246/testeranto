@@ -187,11 +187,83 @@ class DevelopmentFileService implements FileService {
   }
 
   async readFile(path: string): Promise<string> {
-    const response = await fetch(
-      `/api/files/read?path=${encodeURIComponent(path)}`
-    );
-    if (!response.ok) throw new Error(`Failed to read file: ${path}`);
-    return await response.text();
+    console.log("Reading file with path:", path);
+    const encodedPath = encodeURIComponent(path);
+    console.log("Encoded path:", encodedPath);
+    const url = `/api/files/read?path=${encodedPath}`;
+    console.log("Request URL:", url);
+    
+    try {
+      const response = await fetch(url);
+      
+      // Clone the response to read it multiple times if needed
+      const responseClone = response.clone();
+      
+      if (!response.ok) {
+        console.error(`Failed to read file: ${path}`, response.status, response.statusText);
+          
+        // If we're in development mode and the file doesn't exist, try to read from a relative path
+        // This might help with some configuration issues
+        if (response.status === 404) {
+          console.warn(`File not found via API, trying direct fetch: ${path}`);
+          try {
+            const directResponse = await fetch(path);
+            // Clone the direct response to avoid the same issue
+            const directResponseClone = directResponse.clone();
+            if (directResponse.ok) {
+              return await directResponse.text();
+            } else {
+              console.error(`Direct fetch failed: ${directResponse.status} ${directResponse.statusText}`);
+              // Try to read error details from the cloned response
+              try {
+                const errorText = await directResponseClone.text();
+                console.error("Direct fetch error details:", errorText);
+              } catch {
+                // Ignore if we can't read error details
+              }
+            }
+          } catch (directError) {
+            console.error("Direct fetch also failed:", directError);
+          }
+          
+          // If both API and direct fetch failed, try to read from a server-side endpoint
+          // that serves static files from the project directory
+          console.warn("Trying static file server fallback");
+          try {
+            const staticResponse = await fetch(`/static/${path}`);
+            if (staticResponse.ok) {
+              return await staticResponse.text();
+            } else {
+              console.error(`Static file fetch failed: ${staticResponse.status} ${staticResponse.statusText}`);
+            }
+          } catch (staticError) {
+            console.error("Static file fetch also failed:", staticError);
+          }
+        }
+          
+        // Try to get more details from the response using the cloned response
+        let errorDetails = '';
+        try {
+          const errorData = await responseClone.json();
+          errorDetails = JSON.stringify(errorData);
+        } catch {
+          try {
+            errorDetails = await responseClone.text();
+          } catch {
+            errorDetails = 'Could not read error details';
+          }
+        }
+        console.error("Error details:", errorDetails);
+        throw new Error(`Failed to read file: ${path} - ${response.status} ${response.statusText}`);
+      }
+      return await response.text();
+    } catch (error) {
+      console.error("Network error reading file:", error);
+      if (error instanceof TypeError && error.message.includes('body stream already read')) {
+        throw new Error(`Network error reading file: ${path} - Response body was already read (this is a bug)`);
+      }
+      throw new Error(`Network error reading file: ${path}`);
+    }
   }
 
   async readDirectory(path: string): Promise<FileEntry[]> {
@@ -254,7 +326,9 @@ class DevelopmentFileService implements FileService {
   async getChanges(): Promise<FileChange[]> {
     const response = await fetch("/api/git/changes");
     if (!response.ok) return [];
-    return await response.json();
+    const changes = await response.json();
+    console.log("Raw changes from server:", JSON.stringify(changes, null, 2));
+    return changes;
   }
 
   async commitChanges(message: string, description?: string): Promise<void> {
