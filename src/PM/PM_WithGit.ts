@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import url from "url";
+import http from "http";
 
 import { IBuiltConfig } from "../Types.js";
 

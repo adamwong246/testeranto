@@ -91,7 +91,6 @@ export const getRunnables = (
   tests: ITestTypes[],
   projectName: string,
   payload = {
-    pythonEntryPoints: {},
     nodeEntryPoints: {},
     nodeEntryPointSidecars: {},
     webEntryPoints: {},
@@ -100,13 +99,12 @@ export const getRunnables = (
     pureEntryPointSidecars: {},
     golangEntryPoints: {},
     golangEntryPointSidecars: {},
-    pitonoEntryPoints: {},
-    pitonoEntryPointSidecars: {},
+    pythonEntryPoints: {},
+    pythonEntryPointSidecars: {},
   }
 ): IRunnables => {
   // Ensure all properties are properly initialized
   const initializedPayload = {
-    pythonEntryPoints: payload.pythonEntryPoints || {},
     nodeEntryPoints: payload.nodeEntryPoints || {},
     nodeEntryPointSidecars: payload.nodeEntryPointSidecars || {},
     webEntryPoints: payload.webEntryPoints || {},
@@ -115,8 +113,8 @@ export const getRunnables = (
     pureEntryPointSidecars: payload.pureEntryPointSidecars || {},
     golangEntryPoints: payload.golangEntryPoints || {},
     golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
-    pitonoEntryPoints: payload.pitonoEntryPoints || {},
-    pitonoEntryPointSidecars: payload.pitonoEntryPointSidecars || {},
+    pythonEntryPoints: payload.pythonEntryPoints || {},
+    pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {},
   };
   return tests.reduce((pt, cv, cndx, cry) => {
     if (cv[1] === "node") {
@@ -146,9 +144,9 @@ export const getRunnables = (
     } else if (cv[1] === "golang") {
       // For Go files, we'll use the original path since they're not compiled to JS
       pt.golangEntryPoints[cv[0]] = path.resolve(cv[0]);
-    } else if (cv[1] === "pitono") {
-      // For pitono files, use the original Python file path
-      pt.pitonoEntryPoints[cv[0]] = path.resolve(cv[0]);
+    } else if (cv[1] === "python") {
+      // For python files, use the original Python file path
+      pt.pythonEntryPoints[cv[0]] = path.resolve(cv[0]);
     }
 
     //////////////////////////////////////////////////////////
@@ -193,10 +191,10 @@ export const getRunnables = (
         pt.golangEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
       });
     cv[3]
-      .filter((t) => t[1] === "pitono")
+      .filter((t) => t[1] === "python")
       .forEach((t) => {
-        // For pitono sidecars, use the original Python file path
-        pt.pitonoEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
+        // For python sidecars, use the original Python file path
+        pt.pythonEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
       });
 
     return pt;

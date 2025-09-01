@@ -12,112 +12,15 @@ import ansiC from "ansi-colors";
 
 import { IFinalResults, ITTestResourceConfiguration } from "../lib/index.js";
 import { webEvaluator } from "../utils";
-import { IRunTime } from "../Types.js";
 import { Queue } from "../utils/queue.js";
 
-import {
-  createLogStreams,
-  IOutputs,
-  statusMessagePretty,
-  filesHash,
-} from "./utils.js";
+import { createLogStreams, statusMessagePretty } from "./utils.js";
 import { PM_WithProcesses } from "./PM_WithProcesses.js";
 
-const changes: Record<string, string> = {};
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
 export class PM_Main extends PM_WithProcesses {
-  webMetafileWatcher: fs.FSWatcher;
-  nodeMetafileWatcher: fs.FSWatcher;
-  importMetafileWatcher: fs.FSWatcher;
-  pitonoMetafileWatcher: fs.FSWatcher;
-
-  async metafileOutputs(platform: IRunTime) {
-    let metafilePath: string;
-    if (platform === "pitono") {
-      metafilePath = `./testeranto/metafiles/python/core.json`;
-    } else {
-      metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
-    }
-
-    // Check if the file exists
-    if (!fs.existsSync(metafilePath)) {
-      if (platform === "pitono") {
-        console.log(
-          ansiC.yellow(
-            ansiC.inverse(`Pitono metafile not found yet: ${metafilePath}`)
-          )
-        );
-      }
-      return;
-    }
-
-    let metafile;
-    try {
-      const fileContent = fs.readFileSync(metafilePath).toString();
-      const parsedData = JSON.parse(fileContent);
-      // Handle different metafile structures
-      if (platform === "pitono") {
-        // Pitono metafile might be the entire content or have a different structure
-        metafile = parsedData.metafile || parsedData;
-      } else {
-        metafile = parsedData.metafile;
-      }
-      if (!metafile) {
-        console.log(
-          ansiC.yellow(ansiC.inverse(`No metafile found in ${metafilePath}`))
-        );
-        return;
-      }
-    } catch (error) {
-      console.error(`Error reading metafile at ${metafilePath}:`, error);
-      return;
-    }
-
-    const outputs: IOutputs = metafile.outputs;
-
-    Object.keys(outputs).forEach(async (k) => {
-      const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
-      if (!k.startsWith(pattern)) {
-        return false;
-      }
-
-      const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
-        if (!fs.existsSync(i)) return false;
-        if (i.startsWith("node_modules")) return false;
-        if (i.startsWith("./node_modules")) return false;
-
-        return true;
-      });
-
-      const f = `${k.split(".").slice(0, -1).join(".")}/`;
-
-      if (!fs.existsSync(f)) {
-        fs.mkdirSync(f);
-      }
-
-      const entrypoint = outputs[k].entryPoint;
-
-      if (entrypoint) {
-        const changeDigest = await filesHash(addableFiles);
-
-        if (changeDigest === changes[entrypoint]) {
-          // skip
-        } else {
-          changes[entrypoint] = changeDigest;
-          this.tscCheck({
-            platform,
-            addableFiles,
-            entrypoint: entrypoint,
-          });
-          this.eslintCheck(entrypoint, platform, addableFiles);
-          this.makePrompt(entrypoint, addableFiles, platform);
-        }
-      }
-    });
-  }
-
   launchPure = async (src: string, dest: string) => {
     const processId = `pure-${src}-${Date.now()}`;
     const command = `pure test: ${src}`;
@@ -612,59 +515,335 @@ export class PM_Main extends PM_WithProcesses {
     );
   };
 
-  launchPitono = async (src: string, dest: string) => {
-    const processId = `pitono-${src}-${Date.now()}`;
-    const command = `pitono test: ${src}`;
+  launchPython = async (src: string, dest: string) => {
+    const processId = `python-${src}-${Date.now()}`;
+    const command = `python test: ${src}`;
 
-    // Create the promise
-    const pitonoPromise = (async () => {
+    const pythonPromise = (async () => {
       this.bddTestIsRunning(src);
 
       const reportDest = `testeranto/reports/${this.name}/${src
         .split(".")
         .slice(0, -1)
-        .join(".")}/pitono`;
+        .join(".")}/python`;
+
       if (!fs.existsSync(reportDest)) {
         fs.mkdirSync(reportDest, { recursive: true });
       }
 
-      const logs = createLogStreams(reportDest, "node");
+      let testResources = "";
 
-      try {
-        // Execute the Python test using the pitono runner
-        const { PitonoRunner } = await import("./pitonoRunner");
-        const runner = new PitonoRunner(this.configs, this.name);
-        await runner.run();
-
-        this.bddTestIsNowDone(src, 0);
-        statusMessagePretty(0, src, "pitono");
-      } catch (error) {
-        logs.writeExitCode(-1, error);
+      const testConfig = this.configs.tests.find((t) => t[0] === src);
+      if (!testConfig) {
         console.log(
-          ansiC.red(
-            ansiC.inverse(
-              `${src} errored with: ${error}. Check logs for more info`
-            )
+          ansiColors.inverse(
+            `missing test config! Exiting ungracefully for '${src}'`
           )
         );
-        this.bddTestIsNowDone(src, -1);
-        statusMessagePretty(-1, src, "pitono");
-        throw error;
+        process.exit(-1);
       }
+
+      const testConfigResource = testConfig[2];
+      const portsToUse: string[] = [];
+
+      if (testConfigResource.ports === 0) {
+        testResources = JSON.stringify({
+          scheduled: true,
+          name: src,
+          ports: portsToUse,
+          fs: reportDest,
+          browserWSEndpoint: this.browser.wsEndpoint(),
+        });
+      } else if (testConfigResource.ports > 0) {
+        const openPorts = Object.entries(this.ports).filter(
+          ([, status]) => status === ""
+        );
+
+        if (openPorts.length >= testConfigResource.ports) {
+          for (let i = 0; i < testConfigResource.ports; i++) {
+            portsToUse.push(openPorts[i][0]);
+            this.ports[openPorts[i][0]] = src;
+          }
+
+          testResources = JSON.stringify({
+            scheduled: true,
+            name: src,
+            ports: portsToUse,
+            fs: reportDest,
+            browserWSEndpoint: this.browser.wsEndpoint(),
+          });
+        } else {
+          console.log(
+            ansiColors.red(
+              `python: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
+            )
+          );
+          this.queue.push(src);
+          return;
+        }
+      } else {
+        console.error("negative port makes no sense", src);
+        process.exit(-1);
+      }
+
+      const logs = createLogStreams(reportDest, "python");
+
+      // For Python, we'll just run the script directly and pass test resources as an argument
+      // Python tests need to handle their own IPC if needed
+      const child = spawn("python3", [src, testResources], {
+        stdio: ["pipe", "pipe", "pipe"],
+      });
+
+      return new Promise<void>((resolve, reject) => {
+        child.stdout?.on("data", (data) => {
+          logs.stdout?.write(data);
+        });
+
+        child.stderr?.on("data", (data) => {
+          logs.stderr?.write(data);
+        });
+
+        child.on("close", (code) => {
+          const exitCode = code === null ? -1 : code;
+          if (exitCode < 0) {
+            logs.writeExitCode(
+              exitCode,
+              new Error("Process crashed or was terminated")
+            );
+          } else {
+            logs.writeExitCode(exitCode);
+          }
+          logs.closeAll();
+
+          if (exitCode === 0) {
+            this.bddTestIsNowDone(src, 0);
+            statusMessagePretty(0, src, "python");
+            resolve();
+          } else {
+            console.log(
+              ansiColors.red(
+                `python ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
+              )
+            );
+            this.bddTestIsNowDone(src, exitCode);
+            statusMessagePretty(exitCode, src, "python");
+            reject(new Error(`Process exited with code ${exitCode}`));
+          }
+        });
+
+        child.on("error", (e) => {
+          console.log(
+            ansiColors.red(
+              ansiColors.inverse(
+                `python: ${src} errored with: ${e.name}. Check error logs for more info`
+              )
+            )
+          );
+          this.bddTestIsNowDone(src, -1);
+          statusMessagePretty(-1, src, "python");
+          reject(e);
+        });
+      }).finally(() => {
+        portsToUse.forEach(port => {
+          this.ports[port] = "";
+        });
+      });
     })();
 
-    // Add to process manager
     this.addPromiseProcess(
       processId,
-      pitonoPromise,
+      pythonPromise,
       command,
       "bdd-test",
       src,
-      "pitono"
+      "python"
     );
   };
 
-  launchGolingvu = async (src: string, dest: string) => {
-    throw "not yet implemented";
+  launchGolang = async (src: string, dest: string) => {
+    const processId = `golang-${src}-${Date.now()}`;
+    const command = `golang test: ${src}`;
+
+    const golangPromise = (async () => {
+      this.bddTestIsRunning(src);
+
+      const reportDest = `testeranto/reports/${this.name}/${src
+        .split(".")
+        .slice(0, -1)
+        .join(".")}/golang`;
+
+      if (!fs.existsSync(reportDest)) {
+        fs.mkdirSync(reportDest, { recursive: true });
+      }
+
+      let testResources = "";
+
+      const testConfig = this.configs.tests.find((t) => t[0] === src);
+      if (!testConfig) {
+        console.log(
+          ansiColors.inverse(
+            `golang: missing test config! Exiting ungracefully for '${src}'`
+          )
+        );
+        process.exit(-1);
+      }
+
+      const testConfigResource = testConfig[2];
+      const portsToUse: string[] = [];
+
+      if (testConfigResource.ports === 0) {
+        testResources = JSON.stringify({
+          scheduled: true,
+          name: src,
+          ports: portsToUse,
+          fs: reportDest,
+          browserWSEndpoint: this.browser.wsEndpoint(),
+        });
+      } else if (testConfigResource.ports > 0) {
+        const openPorts = Object.entries(this.ports).filter(
+          ([, status]) => status === ""
+        );
+
+        if (openPorts.length >= testConfigResource.ports) {
+          for (let i = 0; i < testConfigResource.ports; i++) {
+            portsToUse.push(openPorts[i][0]);
+            this.ports[openPorts[i][0]] = src;
+          }
+
+          testResources = JSON.stringify({
+            scheduled: true,
+            name: src,
+            ports: portsToUse,
+            fs: reportDest,
+            browserWSEndpoint: this.browser.wsEndpoint(),
+          });
+        } else {
+          console.log(
+            ansiColors.red(
+              `golang: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
+            )
+          );
+          this.queue.push(src);
+          return;
+        }
+      } else {
+        console.error("negative port makes no sense", src);
+        process.exit(-1);
+      }
+
+      // Compile the Go test first
+      const buildDir = path.dirname(dest);
+      const binaryName = path.basename(dest, '.go');
+      const binaryPath = path.join(buildDir, binaryName);
+      
+      const logs = createLogStreams(reportDest, "golang");
+
+      // First, compile the Go program
+      const compileProcess = spawn("go", ["build", "-o", binaryPath, dest]);
+      
+      return new Promise<void>((resolve, reject) => {
+        compileProcess.stdout?.on("data", (data) => {
+          logs.stdout?.write(data);
+        });
+
+        compileProcess.stderr?.on("data", (data) => {
+          logs.stderr?.write(data);
+        });
+
+        compileProcess.on("close", (compileCode) => {
+          if (compileCode !== 0) {
+            console.log(
+              ansiColors.red(
+                `golang ! ${src} failed to compile. Check ${reportDest}/stderr.log for more info`
+              )
+            );
+            this.bddTestIsNowDone(src, compileCode || -1);
+            statusMessagePretty(compileCode || -1, src, "golang");
+            reject(new Error(`Compilation failed with code ${compileCode}`));
+            return;
+          }
+
+          // Now run the compiled binary
+          const child = spawn(binaryPath, [testResources], {
+            stdio: ["pipe", "pipe", "pipe"],
+          });
+
+          child.stdout?.on("data", (data) => {
+            logs.stdout?.write(data);
+          });
+
+          child.stderr?.on("data", (data) => {
+            logs.stderr?.write(data);
+          });
+
+          child.on("close", (code) => {
+            const exitCode = code === null ? -1 : code;
+            if (exitCode < 0) {
+              logs.writeExitCode(
+                exitCode,
+                new Error("Process crashed or was terminated")
+              );
+            } else {
+              logs.writeExitCode(exitCode);
+            }
+            logs.closeAll();
+
+            if (exitCode === 0) {
+              this.bddTestIsNowDone(src, 0);
+              statusMessagePretty(0, src, "golang");
+              resolve();
+            } else {
+              console.log(
+                ansiColors.red(
+                  `golang ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
+                )
+              );
+              this.bddTestIsNowDone(src, exitCode);
+              statusMessagePretty(exitCode, src, "golang");
+              reject(new Error(`Process exited with code ${exitCode}`));
+            }
+          });
+
+          child.on("error", (e) => {
+            console.log(
+              ansiColors.red(
+                ansiColors.inverse(
+                  `golang: ${src} errored with: ${e.name}. Check error logs for more info`
+                )
+              )
+            );
+            this.bddTestIsNowDone(src, -1);
+            statusMessagePretty(-1, src, "golang");
+            reject(e);
+          });
+        });
+
+        compileProcess.on("error", (e) => {
+          console.log(
+            ansiColors.red(
+              ansiColors.inverse(
+                `golang: ${src} compilation errored with: ${e.name}. Check error logs for more info`
+              )
+            )
+          );
+          this.bddTestIsNowDone(src, -1);
+          statusMessagePretty(-1, src, "golang");
+          reject(e);
+        });
+      }).finally(() => {
+        portsToUse.forEach(port => {
+          this.ports[port] = "";
+        });
+      });
+    })();
+
+    this.addPromiseProcess(
+      processId,
+      golangPromise,
+      command,
+      "bdd-test",
+      src,
+      "golang"
+    );
   };
 }

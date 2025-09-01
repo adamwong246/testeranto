@@ -230,7 +230,7 @@
   "metafile": {
     "inputs": {
       "src/lib/index.ts": {
-        "bytes": 3798,
+        "bytes": 3993,
         "imports": [
           {
             "path": "../CoreTypes",

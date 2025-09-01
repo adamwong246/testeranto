@@ -18,16 +18,31 @@ import {
   pollForFile,
   writeFileAndCreateDir,
   puppeteerConfigs,
+  filesHash,
+  IOutputs,
 } from "./utils.js";
+
 import { PM_WithGit } from "./PM_WithGit.js";
 
 const fileHashes = {};
+const changes: Record<string, string> = {};
 
-export class PM_WithProcesses extends PM_WithGit {
+export abstract class PM_WithProcesses extends PM_WithGit {
+  webMetafileWatcher: fs.FSWatcher;
+  nodeMetafileWatcher: fs.FSWatcher;
+  importMetafileWatcher: fs.FSWatcher;
+  pitonoMetafileWatcher: fs.FSWatcher;
+
   ports: Record<number, string>;
   queue: string[];
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
   launchers: Record<string, () => void>;
+
+  abstract launchNode(src: string, dest: string);
+  abstract launchWeb(src: string, dest: string);
+  abstract launchPure(src: string, dest: string);
+  abstract launchPython(src: string, dest: string);
+  abstract launchGolang(src: string, dest: string);
 
   constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev") {
     super(configs, name, mode);
@@ -36,12 +51,107 @@ export class PM_WithProcesses extends PM_WithGit {
     this.ports = {};
     this.queue = [];
 
-    // this.nodeSidecars = {};
-    // this.webSidecars = {};
-    // this.pureSidecars = {};
-
     this.configs.ports.forEach((element) => {
       this.ports[element] = ""; // set ports as open
+    });
+  }
+
+  async metafileOutputs(platform: IRunTime) {
+    let metafilePath: string;
+    if (platform === "python") {
+      metafilePath = `./testeranto/metafiles/python/core.json`;
+    } else {
+      metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
+    }
+
+    // Check if the file exists
+    if (!fs.existsSync(metafilePath)) {
+      if (platform === "python") {
+        console.log(
+          ansiC.yellow(
+            ansiC.inverse(`Pitono metafile not found yet: ${metafilePath}`)
+          )
+        );
+      }
+      return;
+    }
+
+    let metafile;
+    try {
+      const fileContent = fs.readFileSync(metafilePath).toString();
+      const parsedData = JSON.parse(fileContent);
+      // Handle different metafile structures
+      if (platform === "python") {
+        // Pitono metafile might be the entire content or have a different structure
+        metafile = parsedData.metafile || parsedData;
+      } else {
+        metafile = parsedData.metafile;
+      }
+      if (!metafile) {
+        console.log(
+          ansiC.yellow(ansiC.inverse(`No metafile found in ${metafilePath}`))
+        );
+        return;
+      }
+    } catch (error) {
+      console.error(`Error reading metafile at ${metafilePath}:`, error);
+      return;
+    }
+
+    const outputs: IOutputs | undefined = metafile.outputs;
+    
+    // Check if outputs exists and is an object
+    if (!outputs || typeof outputs !== 'object') {
+      console.log(
+        ansiC.yellow(ansiC.inverse(`No outputs found in metafile at ${metafilePath}`))
+      );
+      return;
+    }
+
+    Object.keys(outputs).forEach(async (k) => {
+      const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
+      if (!k.startsWith(pattern)) {
+        return;
+      }
+
+      const output = outputs[k];
+      // Check if the output entry exists and has inputs
+      if (!output || !output.inputs) {
+        return;
+      }
+
+      const addableFiles = Object.keys(output.inputs).filter((i) => {
+        if (!fs.existsSync(i)) return false;
+        if (i.startsWith("node_modules")) return false;
+        if (i.startsWith("./node_modules")) return false;
+
+        return true;
+      });
+
+      const f = `${k.split(".").slice(0, -1).join(".")}/`;
+
+      if (!fs.existsSync(f)) {
+        fs.mkdirSync(f, { recursive: true });
+      }
+
+      const entrypoint = output.entryPoint;
+
+      if (entrypoint) {
+        const changeDigest = await filesHash(addableFiles);
+
+        if (changeDigest === changes[entrypoint]) {
+          // skip
+        } else {
+          changes[entrypoint] = changeDigest;
+          this.tscCheck({
+            platform,
+            addableFiles,
+            entrypoint: entrypoint,
+          });
+          this.eslintCheck(entrypoint, platform, addableFiles);
+          this.makePrompt(entrypoint, addableFiles, platform);
+        }
+      }
     });
   }
 
@@ -78,7 +188,8 @@ export class PM_WithProcesses extends PM_WithGit {
       nodeEntryPoints,
       webEntryPoints,
       pureEntryPoints,
-      // pitonoEntryPoints is stubbed out
+      pythonEntryPoints,
+      golangEntryPoints,
     } = getRunnables(this.configs.tests, this.name);
 
     [
@@ -106,15 +217,22 @@ export class PM_WithProcesses extends PM_WithGit {
           this.importMetafileWatcher = w;
         },
       ],
-      // pitonoEntryPoints is commented out since it's stubbed
-      // [
-      //   pitonoEntryPoints,
-      //   this.launchPitono,
-      //   "pitono",
-      //   (w) => {
-      //     this.pitonoMetafileWatcher = w;
-      //   },
-      // ],
+      [
+        pythonEntryPoints,
+        this.launchPython,
+        "python",
+        (w) => {
+          this.pitonoMetafileWatcher = w;
+        },
+      ],
+      [
+        golangEntryPoints,
+        this.launchGolang,
+        "golang",
+        (w) => {
+          // You might want to handle golang metafile watching here
+        },
+      ],
     ].forEach(
       async ([eps, launcher, runtime, watcher]: [
         Record<string, string>,
@@ -123,7 +241,7 @@ export class PM_WithProcesses extends PM_WithGit {
         (f: fs.FSWatcher) => void
       ]) => {
         let metafile: string;
-        if (runtime === "pitono") {
+        if (runtime === "python") {
           metafile = `./testeranto/metafiles/python/core.json`;
 
           const metafileDir = path.dirname(metafile);
@@ -135,7 +253,7 @@ export class PM_WithProcesses extends PM_WithGit {
         }
 
         // Only poll for file if it's not a pitono runtime
-        if (runtime !== "pitono") {
+        if (runtime !== "python") {
           await pollForFile(metafile);
         }
 
@@ -175,7 +293,7 @@ export class PM_WithProcesses extends PM_WithGit {
         this.metafileOutputs(runtime);
 
         // For pitono, we need to wait for the file to be created
-        if (runtime === "pitono") {
+        if (runtime === "python") {
           // Use polling to wait for the file to exist
           const checkFileExists = () => {
             if (fs.existsSync(metafile)) {
@@ -257,6 +375,7 @@ export class PM_WithProcesses extends PM_WithGit {
     }
     this.checkForShutdown();
   }
+
   receiveFeaturesV2 = (
     reportDest: string,
     srcTest: string,
@@ -370,6 +489,18 @@ export class PM_WithProcesses extends PM_WithGit {
     return null;
   }
 
+  addToQueue(src: string, runtime: IRunTime) {
+    // Add the test to the queue
+    this.queue.push(src);
+    console.log(
+      ansiC.green(
+        ansiC.inverse(`Added ${src} (${runtime}) to the processing queue`)
+      )
+    );
+    // Try to process the queue
+    this.checkQueue();
+  }
+
   checkQueue() {
     const x = this.queue.pop();
     if (!x) {
@@ -379,7 +510,58 @@ export class PM_WithProcesses extends PM_WithGit {
     const test = this.configs.tests.find((t) => t[0] === x);
     if (!test) throw `test is undefined ${x}`;
 
-    this.launchers[test[0]]();
+    // Get the appropriate launcher based on the runtime type
+    const runtime = test[1];
+    
+    // Get the destination path from the runnables
+    const runnables = getRunnables(this.configs.tests, this.name);
+    let dest: string;
+    
+    switch (runtime) {
+      case "node":
+        dest = runnables.nodeEntryPoints[x];
+        if (dest) {
+          this.launchNode(x, dest);
+        } else {
+          console.error(`No destination found for node test: ${x}`);
+        }
+        break;
+      case "web":
+        dest = runnables.webEntryPoints[x];
+        if (dest) {
+          this.launchWeb(x, dest);
+        } else {
+          console.error(`No destination found for web test: ${x}`);
+        }
+        break;
+      case "pure":
+        dest = runnables.pureEntryPoints[x];
+        if (dest) {
+          this.launchPure(x, dest);
+        } else {
+          console.error(`No destination found for pure test: ${x}`);
+        }
+        break;
+      case "python":
+        dest = runnables.pythonEntryPoints[x];
+        if (dest) {
+          this.launchPython(x, dest);
+        } else {
+          console.error(`No destination found for python test: ${x}`);
+        }
+        break;
+      case "golang":
+        dest = runnables.golangEntryPoints[x];
+        if (dest) {
+          this.launchGolang(x, dest);
+        } else {
+          console.error(`No destination found for golang test: ${x}`);
+        }
+        break;
+      default:
+        console.error(`Unknown runtime: ${runtime} for test ${x}`);
+        break;
+    }
   }
 
   onBuildDone(): void {

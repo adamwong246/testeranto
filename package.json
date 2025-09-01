@@ -137,7 +137,7 @@
     "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt",
     "static-serve": "python3 -m http.server 8000",
     "buildV2": "node bundle.js",
-    "devV2": "rm -rf testeranto; yarn buildV2; yarn t-init;  cp ./dist/prebuild/App.* testeranto; yarn testeranto core dev",
+    "devV2": "clear; rm -rf testeranto; yarn buildV2; yarn t-init;  cp ./dist/prebuild/App.* testeranto; yarn testeranto core once",
     "start": "react-app-rewired start",
     "build-react": "react-app-rewired build",
     "test-react": "react-app-rewired test",

@@ -39,7 +39,7 @@ export abstract class PM_WithWebSocket extends PM_Base {
       type: "process" | "promise";
       category: "aider" | "bdd-test" | "build-time" | "other";
       testName?: string;
-      platform?: "node" | "web" | "pure" | "pitono" | "golang";
+      platform?: "node" | "web" | "pure" | "python" | "golang";
     }
   > = new Map();
   processLogs: Map<string, string[]> = new Map();
@@ -450,7 +450,7 @@ export abstract class PM_WithWebSocket extends PM_Base {
     command: string,
     category: "aider" | "bdd-test" | "build-time" | "other" = "other",
     testName?: string,
-    platform?: "node" | "web" | "pure" | "pitono" | "golang",
+    platform?: "node" | "web" | "pure" | "python" | "golang",
     onResolve?: (result: any) => void,
     onReject?: (error: any) => void
   ) {

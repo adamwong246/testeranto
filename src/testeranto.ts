@@ -124,7 +124,7 @@ import(f).then(async (module) => {
   };
 
   // Also handle pitono endpoints for HTML generation if needed
-  [...getSecondaryEndpointsPoints("pitono")].forEach(async (sourceFilePath) => {
+  [...getSecondaryEndpointsPoints("python")].forEach(async (sourceFilePath) => {
     // You might want to generate specific files for pitono tests here
     console.log(`Pitono test found: ${sourceFilePath}`);
   });
@@ -146,7 +146,7 @@ import(f).then(async (module) => {
   }
 
   // Handle pitono (Python) tests by generating their metafiles
-  const pitonoTests = config.tests.filter((test) => test[1] === "pitono");
+  const pitonoTests = config.tests.filter((test) => test[1] === "python");
   const hasPitonoTests = pitonoTests.length > 0;
   if (hasPitonoTests) {
     // Import and use the pitono metafile utilities
@@ -165,8 +165,19 @@ import(f).then(async (module) => {
       JSON.stringify(metafile, null, 2)
     );
 
-    // Mark pitono as done after writing the metafile
-    // onPitonoDone();
+    console.log(
+      ansiC.green(
+        ansiC.inverse(`Python metafile written to: ${pitonoMetafilePath}/core.json`)
+      )
+    );
+
+    // Add Python tests to the processing queue
+    pitonoEntryPoints.forEach((entryPoint) => {
+      if (pm) {
+        // For Python tests, the source file is the entry point itself
+        pm.addToQueue(entryPoint, "python");
+      }
+    });
   }
 
   Promise.resolve(
@@ -207,12 +218,15 @@ import(f).then(async (module) => {
     webEntryPointSidecars,
     pureEntryPoints,
     pureEntryPointSidecars,
+    pythonEntryPoints,
+    pythonEntryPointSidecars,
   } = getRunnables(config.tests, testName);
 
   const x: [IRunTime, string[]][] = [
     ["pure", Object.keys(pureEntryPoints)],
     ["node", Object.keys(nodeEntryPoints)],
     ["web", Object.keys(webEntryPoints)],
+    ["python", Object.keys(pythonEntryPoints)],
   ];
 
   x.forEach(async ([runtime, keys]) => {
@@ -230,6 +244,7 @@ import(f).then(async (module) => {
     [pureEntryPoints, pureEntryPointSidecars, "pure"],
     [webEntryPoints, webEntryPointSidecars, "web"],
     [nodeEntryPoints, nodeEntryPointSidecars, "node"],
+    [pythonEntryPoints, pythonEntryPointSidecars, "python"],
   ].forEach(
     ([eps, eps2, runtime]: [
       Record<string, string>,
