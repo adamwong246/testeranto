@@ -1,6 +1,6 @@
 Failed to load resource: net::ERR_FILE_NOT_FOUND
 AssertionError: Should show project names: expected +0 to be at least 1
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756761765174:73:14)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756762201870:73:14)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2741:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-AZZHJNSU.mjs:23593:14)
     at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2833:40)
@@ -11,7 +11,7 @@ AssertionError: Should show project names: expected +0 to be at least 1
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2890:31)
     at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2975:12)
 AssertionError: Should show file paths: expected +0 to be at least 1
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756761765174:78:14)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756762201870:78:14)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2741:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-AZZHJNSU.mjs:23593:14)
     at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2833:40)
@@ -22,7 +22,7 @@ AssertionError: Should show file paths: expected +0 to be at least 1
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2890:31)
     at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2975:12)
 AssertionError: Should show test names: expected +0 to be at least 1
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756761765174:83:14)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756762201870:83:14)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2741:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-AZZHJNSU.mjs:23593:14)
     at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2833:40)
@@ -33,7 +33,7 @@ AssertionError: Should show test names: expected +0 to be at least 1
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2890:31)
     at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2975:12)
 AssertionError: Should show status badges: expected +0 to be at least 1
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756761765174:88:14)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756762201870:88:14)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2741:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-AZZHJNSU.mjs:23593:14)
     at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2833:40)
@@ -46,7 +46,7 @@ AssertionError: Should show status badges: expected +0 to be at least 1
 TypeError: Cannot read properties of undefined (reading 'path')
     at PM_Web.customScreenShot (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2442:62)
     at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:1976:32)
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756761765174:98:16)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756762201870:98:16)
     at async file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2741:28
     at async BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2833:22)
     at async BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2605:9)
@@ -55,7 +55,7 @@ TypeError: Cannot read properties of undefined (reading 'path')
     at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2890:31)
     at async WebTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2975:12)
 AssertionError: Should show empty message: expected null to exist
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756761765174:93:14)
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/src/components/pure/FeaturesReporterView.test/index.mjs?cacheBust=1756762201870:93:14)
     at file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2741:39
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-AZZHJNSU.mjs:23593:14)
     at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/web/core/chunk-ME6I6FJZ.mjs:2833:40)

@@ -1,21 +1,23 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect, createContext, useContext } from "react";
 import ReactDom from "react-dom/client";
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
-import { TestPage } from './components/stateful/TestPage';
-import { ProjectPage } from './components/stateful/ProjectPage';
-import { ProjectsPage } from './components/stateful/ProjectsPage';
-import { AppFrame } from './components/pure/AppFrame';
-import { SignIn } from './components/pure/SignIn';
-import { FeaturesReporter } from './components/stateful/FeaturesReporter';
-import { DesignEditorPage } from './components/DesignEditorPage';
-import { TextEditorPage } from './components/stateful/TextEditorPage';
-import { ProcessManagerPage } from './components/stateful/ProcessManagerPage';
-import { SingleProcessPage } from './components/stateful/SingleProcessPage';
-import { Settings } from './components/pure/Settings';
-import { GitIntegrationPage } from './components/stateful/GitIntegrationPage';
-import { AuthCallbackPage } from './components/stateful/AuthCallbackPage';
-import { githubAuthService } from './services/GitHubAuthService';
+import { TestPage } from "./components/stateful/TestPage";
+import { ProjectPage } from "./components/stateful/ProjectPage";
+import { ProjectsPage } from "./components/stateful/ProjectsPage";
+import { AppFrame } from "./components/pure/AppFrame";
+import { SignIn } from "./components/pure/SignIn";
+import { FeaturesReporter } from "./components/stateful/FeaturesReporter";
+import { DesignEditorPage } from "./components/DesignEditorPage";
+import { TextEditorPage } from "./components/stateful/TextEditorPage";
+import { ProcessManagerPage } from "./components/stateful/ProcessManagerPage";
+import { SingleProcessPage } from "./components/stateful/SingleProcessPage";
+import { Settings } from "./components/pure/Settings";
+import { GitIntegrationPage } from "./components/stateful/GitIntegrationPage";
+import { AuthCallbackPage } from "./components/stateful/AuthCallbackPage";
+import { githubAuthService } from "./services/GitHubAuthService";
+import { Helpo } from "./Helpo";
 
 interface WebSocketContextType {
   ws: WebSocket | null;
@@ -70,14 +72,16 @@ export const App = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [tutorialMode, setTutorialMode] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(githubAuthService.isAuthenticated);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    githubAuthService.isAuthenticated
+  );
   const [user, setUser] = useState(githubAuthService.userInfo);
 
   useEffect(() => {
     // Load tutorial mode from localStorage
-    const savedTutorialMode = localStorage.getItem('tutorialMode');
+    const savedTutorialMode = localStorage.getItem("tutorialMode");
     if (savedTutorialMode) {
-      setTutorialMode(savedTutorialMode === 'true');
+      setTutorialMode(savedTutorialMode === "true");
     }
 
     // Listen for auth changes
@@ -86,53 +90,53 @@ export const App = () => {
       setUser(githubAuthService.userInfo);
     };
 
-    githubAuthService.on('authChange', handleAuthChange);
+    githubAuthService.on("authChange", handleAuthChange);
 
     // Handle GitHub OAuth callback from popup
     const handleMessage = async (event: MessageEvent) => {
-      if (event.data.type === 'github-auth-callback') {
+      if (event.data.type === "github-auth-callback") {
         const { code } = event.data;
         try {
           const success = await githubAuthService.handleCallback(code);
           if (success) {
-            console.log('GitHub authentication successful');
+            console.log("GitHub authentication successful");
           } else {
-            console.error('GitHub authentication failed');
+            console.error("GitHub authentication failed");
           }
         } catch (error) {
-          console.error('Error handling GitHub callback:', error);
+          console.error("Error handling GitHub callback:", error);
         }
-      } else if (event.data.type === 'github-auth-error') {
-        console.error('GitHub authentication error:', event.data.error);
+      } else if (event.data.type === "github-auth-error") {
+        console.error("GitHub authentication error:", event.data.error);
       }
     };
 
-    window.addEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
 
-    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const wsUrl = `${wsProtocol}//${window.location.host}`;
     const websocket = new WebSocket(wsUrl);
 
     websocket.onopen = () => {
-      console.log('WebSocket connected');
+      console.log("WebSocket connected");
       setWs(websocket);
       setIsConnected(true);
     };
 
     websocket.onclose = () => {
-      console.log('WebSocket disconnected');
+      console.log("WebSocket disconnected");
       setWs(null);
       setIsConnected(false);
     };
 
     websocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
+      console.error("WebSocket error:", error);
       setIsConnected(false);
     };
 
     return () => {
-      githubAuthService.off('authChange', handleAuthChange);
-      window.removeEventListener('message', handleMessage);
+      githubAuthService.off("authChange", handleAuthChange);
+      window.removeEventListener("message", handleMessage);
       websocket.close();
     };
   }, []);
@@ -152,184 +156,66 @@ export const App = () => {
             <AppFrame>
               <Routes>
                 {/* Public routes */}
-                <Route path="/" element={
-                  <div className="d-flex flex-column h-100">
-                    <div className="border-bottom p-3">
-                    </div>
-                    <div className="flex-grow-1 p-3" style={{ overflowY: 'auto' }}>
-                      {/* Chat messages */}
-                      <div className="d-flex mb-3">
-                        <div className="me-2">
-                          <div
-                            className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white"
-                            style={{ width: '40px', height: '40px' }}
-                          >
-                            🤖
-                          </div>
-                        </div>
-                        <div className="flex-grow-1">
-                          <div className="fw-bold">Helpo</div>
-                          <div className="bg-light p-3 rounded">
-                            <p>Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="d-flex mb-3 justify-content-end">
-                        <div className="flex-grow-1 me-2 text-end">
-                          <div className="fw-bold">You</div>
-                          <div className="bg-primary text-white p-3 rounded">
-                            <p>Can you show me how to format text with <strong>bold</strong> and <em>italic</em>?</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div
-                            className="rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white"
-                            style={{ width: '40px', height: '40px' }}
-                          >
-                            👤
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="d-flex mb-3">
-                        <div className="me-2">
-                          <div
-                            className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white"
-                            style={{ width: '40px', height: '40px' }}
-                          >
-                            🤖
-                          </div>
-                        </div>
-                        <div className="flex-grow-1">
-                          <div className="fw-bold">Helpo</div>
-                          <div className="bg-light p-3 rounded">
-                            <p>Sure! Here's an example:</p>
-                            <ul>
-                              <li>Use <code>&lt;strong&gt;</code> for <strong>bold text</strong></li>
-                              <li>Use <code>&lt;em&gt;</code> for <em>italic text</em></li>
-                              <li>You can even include lists and other HTML elements</li>
-                            </ul>
-                            <p>Let me know if you need help with anything else!</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="border-top p-3">
-                      <div className="input-group">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Type your message..."
-                          disabled
-                        />
-                        <button className="btn btn-primary" type="button" disabled>
-                          Send
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                } />
+                <Route path="/" element={<Helpo />} />
                 <Route path="/projects" element={<ProjectsPage />} />
-                <Route path="/projects/:projectName" element={<ProjectPage />} />
-                <Route path="/projects/:projectName/tests/*" element={<TestPage />} />
-                <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
+                <Route
+                  path="/projects/:projectName"
+                  element={<ProjectPage />}
+                />
+                <Route
+                  path="/projects/:projectName/tests/*"
+                  element={<TestPage />}
+                />
+                <Route
+                  path="/projects/:projectName#:tab"
+                  element={<ProjectPage />}
+                />
                 <Route path="/signin" element={<SignIn />} />
-                <Route path="/auth/github/callback" element={<AuthCallbackPage />} />
+                <Route
+                  path="/auth/github/callback"
+                  element={<AuthCallbackPage />}
+                />
 
                 {/* Protected routes - handle authentication within components */}
-                <Route path="/features-reporter" element={isAuthenticated ? <FeaturesReporter /> : <SignIn />} />
-                <Route path="/design-editor" element={isAuthenticated ? <DesignEditorPage /> : <SignIn />} />
-                <Route path="/text-editor" element={isAuthenticated ? <TextEditorPage /> : <SignIn />} />
+                <Route
+                  path="/features-reporter"
+                  element={isAuthenticated ? <FeaturesReporter /> : <SignIn />}
+                />
+                <Route
+                  path="/design-editor"
+                  element={isAuthenticated ? <DesignEditorPage /> : <SignIn />}
+                />
+                <Route
+                  path="/text-editor"
+                  element={isAuthenticated ? <TextEditorPage /> : <SignIn />}
+                />
                 {/* Conditionally render process-related routes only if WebSocket is connected */}
                 {isConnected ? (
                   <>
-                    <Route path="/processes" element={isAuthenticated ? <ProcessManagerPage /> : <SignIn />} />
-                    <Route path="/processes/:processId" element={isAuthenticated ? <SingleProcessPage /> : <SignIn />} />
+                    <Route
+                      path="/processes"
+                      element={
+                        isAuthenticated ? <ProcessManagerPage /> : <SignIn />
+                      }
+                    />
+                    <Route
+                      path="/processes/:processId"
+                      element={
+                        isAuthenticated ? <SingleProcessPage /> : <SignIn />
+                      }
+                    />
                   </>
                 ) : null}
                 <Route path="/settings" element={<Settings />} />
-                <Route path="/git" element={isAuthenticated ? <GitIntegrationPage /> : <SignIn />} />
+                <Route
+                  path="/git"
+                  element={
+                    isAuthenticated ? <GitIntegrationPage /> : <SignIn />
+                  }
+                />
 
                 {/* Catch all - redirect to help for logged out users */}
-                <Route path="*" element={
-                  <div className="d-flex flex-column h-100">
-                    <div className="border-bottom p-3">
-                    </div>
-                    <div className="flex-grow-1 p-3" style={{ overflowY: 'auto' }}>
-                      {/* Chat messages */}
-                      <div className="d-flex mb-3">
-                        <div className="me-2">
-                          <div
-                            className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white"
-                            style={{ width: '40px', height: '40px' }}
-                          >
-                            🤖
-                          </div>
-                        </div>
-                        <div className="flex-grow-1">
-                          <div className="fw-bold">Helpo</div>
-                          <div className="bg-light p-3 rounded">
-                            <p>Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="d-flex mb-3 justify-content-end">
-                        <div className="flex-grow-1 me-2 text-end">
-                          <div className="fw-bold">You</div>
-                          <div className="bg-primary text-white p-3 rounded">
-                            <p>Can you show me how to format text with <strong>bold</strong> and <em>italic</em>?</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div
-                            className="rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white"
-                            style={{ width: '40px', height: '40px' }}
-                          >
-                            👤
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="d-flex mb-3">
-                        <div className="me-2">
-                          <div
-                            className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white"
-                            style={{ width: '40px', height: '40px' }}
-                          >
-                            🤖
-                          </div>
-                        </div>
-                        <div className="flex-grow-1">
-                          <div className="fw-bold">Helpo</div>
-                          <div className="bg-light p-3 rounded">
-                            <p>Sure! Here's an example:</p>
-                            <ul>
-                              <li>Use <code>&lt;strong&gt;</code> for <strong>bold text</strong></li>
-                              <li>Use <code>&lt;em&gt;</code> for <em>italic text</em></li>
-                              <li>You can even include lists and other HTML elements</li>
-                            </ul>
-                            <p>Let me know if you need help with anything else!</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="border-top p-3">
-                      <div className="input-group">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Type your message..."
-                          disabled
-                        />
-                        <button className="btn btn-primary" type="button" disabled>
-                          Send
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                } />
+                <Route path="*" element={<Helpo />} />
               </Routes>
             </AppFrame>
           </Router>
@@ -341,7 +227,7 @@ export const App = () => {
 
 // Export App to global scope
 function initApp() {
-  const rootElement = document.getElementById('root');
+  const rootElement = document.getElementById("root");
   if (rootElement) {
     try {
       // Try to use React 18's createRoot if available
@@ -353,7 +239,7 @@ function initApp() {
         ReactDom.render(React.createElement(App), rootElement);
       }
     } catch (err) {
-      console.error('Error rendering app:', err);
+      console.error("Error rendering app:", err);
       // Retry if React isn't loaded yet
       setTimeout(initApp, 100);
     }
@@ -364,7 +250,7 @@ function initApp() {
 }
 
 // Export App to global scope
-if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+if (typeof window !== "undefined" && typeof document !== "undefined") {
   // @ts-ignore
   window.App = App;
   // @ts-ignore
@@ -373,8 +259,8 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   window.ReactDOM = ReactDom;
 
   // Initialize the app when the window is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initApp);
   } else {
     initApp();
   }

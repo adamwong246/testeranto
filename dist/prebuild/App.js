@@ -2390,9 +2390,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React143 = require_react();
+          var React144 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React143.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React144.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3997,7 +3997,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React143.Children.forEach(props.children, function(child) {
+                  React144.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12444,7 +12444,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React143.Component().refs;
+          var emptyRefsObject = new React144.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23616,7 +23616,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React143 = require_react();
+          var React144 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23642,7 +23642,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React143.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React144.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -45856,7 +45856,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
   });
 
   // src/App.tsx
-  var import_react121 = __toESM(require_react(), 1);
+  var import_react122 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -60997,17 +60997,50 @@ ${description}` : message
     return /* @__PURE__ */ import_react120.default.createElement(Container_default, { className: "d-flex justify-content-center align-items-center", style: { minHeight: "50vh" } }, /* @__PURE__ */ import_react120.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react120.default.createElement(Spinner_default, { animation: "border", role: "status", className: "mb-3" }, /* @__PURE__ */ import_react120.default.createElement("span", { className: "visually-hidden" }, "Authenticating...")), /* @__PURE__ */ import_react120.default.createElement("h4", null, "Completing GitHub authentication...")));
   };
 
+  // src/Helpo.tsx
+  var import_react121 = __toESM(require_react(), 1);
+  var Helpo = () => /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
+    "div",
+    {
+      className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
+      style: { width: "40px", height: "40px" }
+    },
+    "\u{1F916}"
+  )), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?")))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3 justify-content-end" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 me-2 text-end" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "You"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-primary text-white p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Can you show me how to format text with ", /* @__PURE__ */ import_react121.default.createElement("strong", null, "bold"), " and", " ", /* @__PURE__ */ import_react121.default.createElement("em", null, "italic"), "?"))), /* @__PURE__ */ import_react121.default.createElement("div", null, /* @__PURE__ */ import_react121.default.createElement(
+    "div",
+    {
+      className: "rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white",
+      style: { width: "40px", height: "40px" }
+    },
+    "\u{1F464}"
+  ))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
+    "div",
+    {
+      className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
+      style: { width: "40px", height: "40px" }
+    },
+    "\u{1F916}"
+  )), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Sure! Here's an example:"), /* @__PURE__ */ import_react121.default.createElement("ul", null, /* @__PURE__ */ import_react121.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react121.default.createElement("code", null, "<strong>"), " for ", /* @__PURE__ */ import_react121.default.createElement("strong", null, "bold text")), /* @__PURE__ */ import_react121.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react121.default.createElement("code", null, "<em>"), " for ", /* @__PURE__ */ import_react121.default.createElement("em", null, "italic text")), /* @__PURE__ */ import_react121.default.createElement("li", null, "You can even include lists and other HTML elements")), /* @__PURE__ */ import_react121.default.createElement("p", null, "Let me know if you need help with anything else!"))))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-top p-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react121.default.createElement(
+    "input",
+    {
+      type: "text",
+      className: "form-control",
+      placeholder: "Type your message...",
+      disabled: true
+    }
+  ), /* @__PURE__ */ import_react121.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send"))));
+
   // src/App.tsx
-  var WebSocketContext = (0, import_react121.createContext)({
+  var WebSocketContext = (0, import_react122.createContext)({
     ws: null,
     isConnected: false
   });
-  var TutorialModeContext = (0, import_react121.createContext)({
+  var TutorialModeContext = (0, import_react122.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
-  var AuthContext = (0, import_react121.createContext)({
+  var AuthContext = (0, import_react122.createContext)({
     isAuthenticated: false,
     user: null,
     login: () => {
@@ -61016,21 +61049,23 @@ ${description}` : message
     }
   });
   var useWebSocket = () => {
-    return (0, import_react121.useContext)(WebSocketContext);
+    return (0, import_react122.useContext)(WebSocketContext);
   };
   var useTutorialMode = () => {
-    return (0, import_react121.useContext)(TutorialModeContext);
+    return (0, import_react122.useContext)(TutorialModeContext);
   };
   var useAuth = () => {
-    return (0, import_react121.useContext)(AuthContext);
+    return (0, import_react122.useContext)(AuthContext);
   };
   var App = () => {
-    const [ws, setWs] = (0, import_react121.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react121.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react121.useState)(false);
-    const [isAuthenticated, setIsAuthenticated] = (0, import_react121.useState)(githubAuthService.isAuthenticated);
-    const [user, setUser] = (0, import_react121.useState)(githubAuthService.userInfo);
-    (0, import_react121.useEffect)(() => {
+    const [ws, setWs] = (0, import_react122.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react122.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react122.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, import_react122.useState)(
+      githubAuthService.isAuthenticated
+    );
+    const [user, setUser] = (0, import_react122.useState)(githubAuthService.userInfo);
+    (0, import_react122.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -61087,65 +61122,67 @@ ${description}` : message
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react121.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react121.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react121.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react121.default.createElement(HashRouter, null, /* @__PURE__ */ import_react121.default.createElement(AppFrame, null, /* @__PURE__ */ import_react121.default.createElement(Routes, null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
-      "div",
+    return /* @__PURE__ */ import_react122.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } }, /* @__PURE__ */ import_react122.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react122.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react122.default.createElement(HashRouter, null, /* @__PURE__ */ import_react122.default.createElement(AppFrame, null, /* @__PURE__ */ import_react122.default.createElement(Routes, null, /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react122.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react122.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
       {
-        className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
-        style: { width: "40px", height: "40px" }
-      },
-      "\u{1F916}"
-    )), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?")))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3 justify-content-end" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 me-2 text-end" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "You"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-primary text-white p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Can you show me how to format text with ", /* @__PURE__ */ import_react121.default.createElement("strong", null, "bold"), " and ", /* @__PURE__ */ import_react121.default.createElement("em", null, "italic"), "?"))), /* @__PURE__ */ import_react121.default.createElement("div", null, /* @__PURE__ */ import_react121.default.createElement(
-      "div",
-      {
-        className: "rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white",
-        style: { width: "40px", height: "40px" }
-      },
-      "\u{1F464}"
-    ))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
-      "div",
-      {
-        className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
-        style: { width: "40px", height: "40px" }
-      },
-      "\u{1F916}"
-    )), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Sure! Here's an example:"), /* @__PURE__ */ import_react121.default.createElement("ul", null, /* @__PURE__ */ import_react121.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react121.default.createElement("code", null, "<strong>"), " for ", /* @__PURE__ */ import_react121.default.createElement("strong", null, "bold text")), /* @__PURE__ */ import_react121.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react121.default.createElement("code", null, "<em>"), " for ", /* @__PURE__ */ import_react121.default.createElement("em", null, "italic text")), /* @__PURE__ */ import_react121.default.createElement("li", null, "You can even include lists and other HTML elements")), /* @__PURE__ */ import_react121.default.createElement("p", null, "Let me know if you need help with anything else!"))))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-top p-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react121.default.createElement(
-      "input",
-      {
-        type: "text",
-        className: "form-control",
-        placeholder: "Type your message...",
-        disabled: true
+        path: "/projects/:projectName",
+        element: /* @__PURE__ */ import_react122.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react121.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send")))) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react121.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react121.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react121.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react121.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/auth/github/callback", element: /* @__PURE__ */ import_react121.default.createElement(AuthCallbackPage, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/features-reporter", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/design-editor", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/text-editor", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), isConnected ? /* @__PURE__ */ import_react121.default.createElement(import_react121.default.Fragment, null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/processes", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/processes/:processId", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) })) : null, /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react121.default.createElement(Settings, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react121.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react121.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react121.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
-      "div",
+    ), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
       {
-        className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
-        style: { width: "40px", height: "40px" }
-      },
-      "\u{1F916}"
-    )), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?")))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3 justify-content-end" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1 me-2 text-end" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "You"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-primary text-white p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Can you show me how to format text with ", /* @__PURE__ */ import_react121.default.createElement("strong", null, "bold"), " and ", /* @__PURE__ */ import_react121.default.createElement("em", null, "italic"), "?"))), /* @__PURE__ */ import_react121.default.createElement("div", null, /* @__PURE__ */ import_react121.default.createElement(
-      "div",
-      {
-        className: "rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white",
-        style: { width: "40px", height: "40px" }
-      },
-      "\u{1F464}"
-    ))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
-      "div",
-      {
-        className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
-        style: { width: "40px", height: "40px" }
-      },
-      "\u{1F916}"
-    )), /* @__PURE__ */ import_react121.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react121.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react121.default.createElement("p", null, "Sure! Here's an example:"), /* @__PURE__ */ import_react121.default.createElement("ul", null, /* @__PURE__ */ import_react121.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react121.default.createElement("code", null, "<strong>"), " for ", /* @__PURE__ */ import_react121.default.createElement("strong", null, "bold text")), /* @__PURE__ */ import_react121.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react121.default.createElement("code", null, "<em>"), " for ", /* @__PURE__ */ import_react121.default.createElement("em", null, "italic text")), /* @__PURE__ */ import_react121.default.createElement("li", null, "You can even include lists and other HTML elements")), /* @__PURE__ */ import_react121.default.createElement("p", null, "Let me know if you need help with anything else!"))))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-top p-3" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react121.default.createElement(
-      "input",
-      {
-        type: "text",
-        className: "form-control",
-        placeholder: "Type your message...",
-        disabled: true
+        path: "/projects/:projectName/tests/*",
+        element: /* @__PURE__ */ import_react122.default.createElement(TestPage, null)
       }
-    ), /* @__PURE__ */ import_react121.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send")))) })))))));
+    ), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
+      {
+        path: "/projects/:projectName#:tab",
+        element: /* @__PURE__ */ import_react122.default.createElement(ProjectPage, null)
+      }
+    ), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react122.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
+      {
+        path: "/auth/github/callback",
+        element: /* @__PURE__ */ import_react122.default.createElement(AuthCallbackPage, null)
+      }
+    ), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
+      {
+        path: "/features-reporter",
+        element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null)
+      }
+    ), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
+      {
+        path: "/design-editor",
+        element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null)
+      }
+    ), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
+      {
+        path: "/text-editor",
+        element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null)
+      }
+    ), isConnected ? /* @__PURE__ */ import_react122.default.createElement(import_react122.default.Fragment, null, /* @__PURE__ */ import_react122.default.createElement(
+      Route,
+      {
+        path: "/processes",
+        element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null)
+      }
+    ), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
+      {
+        path: "/processes/:processId",
+        element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null)
+      }
+    )) : null, /* @__PURE__ */ import_react122.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react122.default.createElement(Settings, null) }), /* @__PURE__ */ import_react122.default.createElement(
+      Route,
+      {
+        path: "/git",
+        element: isAuthenticated ? /* @__PURE__ */ import_react122.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react122.default.createElement(SignIn, null)
+      }
+    ), /* @__PURE__ */ import_react122.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react122.default.createElement(Helpo, null) })))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -61153,9 +61190,9 @@ ${description}` : message
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react121.default.createElement(App));
+          root.render(import_react122.default.createElement(App));
         } else {
-          import_client.default.render(import_react121.default.createElement(App), rootElement);
+          import_client.default.render(import_react122.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -61167,7 +61204,7 @@ ${description}` : message
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react121.default;
+    window.React = import_react122.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);
