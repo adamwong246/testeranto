@@ -43,15 +43,15 @@ const WebSocketContext = createContext<WebSocketContextType>({
 // Create a context for tutorial mode
 const TutorialModeContext = createContext<TutorialModeContextType>({
   tutorialMode: false,
-  setTutorialMode: () => {},
+  setTutorialMode: () => { },
 });
 
 // Create a context for authentication
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   user: null,
-  login: () => {},
-  logout: () => {},
+  login: () => { },
+  logout: () => { },
 });
 
 export const useWebSocket = () => {
@@ -87,7 +87,7 @@ export const App = () => {
     };
 
     githubAuthService.on('authChange', handleAuthChange);
-    
+
     // Handle GitHub OAuth callback from popup
     const handleMessage = async (event: MessageEvent) => {
       if (event.data.type === 'github-auth-callback') {
@@ -108,23 +108,23 @@ export const App = () => {
     };
 
     window.addEventListener('message', handleMessage);
-    
+
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${wsProtocol}//${window.location.host}`;
     const websocket = new WebSocket(wsUrl);
-    
+
     websocket.onopen = () => {
       console.log('WebSocket connected');
       setWs(websocket);
       setIsConnected(true);
     };
-    
+
     websocket.onclose = () => {
       console.log('WebSocket disconnected');
       setWs(null);
       setIsConnected(false);
     };
-    
+
     websocket.onerror = (error) => {
       console.error('WebSocket error:', error);
       setIsConnected(false);
@@ -152,13 +152,91 @@ export const App = () => {
             <AppFrame>
               <Routes>
                 {/* Public routes */}
-                <Route path="/" element={<ProjectsPage />} />
+                <Route path="/" element={
+                  <div className="d-flex flex-column h-100">
+                    <div className="border-bottom p-3">
+                    </div>
+                    <div className="flex-grow-1 p-3" style={{ overflowY: 'auto' }}>
+                      {/* Chat messages */}
+                      <div className="d-flex mb-3">
+                        <div className="me-2">
+                          <div
+                            className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white"
+                            style={{ width: '40px', height: '40px' }}
+                          >
+                            🤖
+                          </div>
+                        </div>
+                        <div className="flex-grow-1">
+                          <div className="fw-bold">Helpo</div>
+                          <div className="bg-light p-3 rounded">
+                            <p>Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="d-flex mb-3 justify-content-end">
+                        <div className="flex-grow-1 me-2 text-end">
+                          <div className="fw-bold">You</div>
+                          <div className="bg-primary text-white p-3 rounded">
+                            <p>Can you show me how to format text with <strong>bold</strong> and <em>italic</em>?</p>
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            className="rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white"
+                            style={{ width: '40px', height: '40px' }}
+                          >
+                            👤
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="d-flex mb-3">
+                        <div className="me-2">
+                          <div
+                            className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white"
+                            style={{ width: '40px', height: '40px' }}
+                          >
+                            🤖
+                          </div>
+                        </div>
+                        <div className="flex-grow-1">
+                          <div className="fw-bold">Helpo</div>
+                          <div className="bg-light p-3 rounded">
+                            <p>Sure! Here's an example:</p>
+                            <ul>
+                              <li>Use <code>&lt;strong&gt;</code> for <strong>bold text</strong></li>
+                              <li>Use <code>&lt;em&gt;</code> for <em>italic text</em></li>
+                              <li>You can even include lists and other HTML elements</li>
+                            </ul>
+                            <p>Let me know if you need help with anything else!</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="border-top p-3">
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Type your message..."
+                          disabled
+                        />
+                        <button className="btn btn-primary" type="button" disabled>
+                          Send
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                } />
+                <Route path="/projects" element={<ProjectsPage />} />
                 <Route path="/projects/:projectName" element={<ProjectPage />} />
                 <Route path="/projects/:projectName/tests/*" element={<TestPage />} />
                 <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/auth/github/callback" element={<AuthCallbackPage />} />
-                
+
                 {/* Protected routes - handle authentication within components */}
                 <Route path="/features-reporter" element={isAuthenticated ? <FeaturesReporter /> : <SignIn />} />
                 <Route path="/design-editor" element={isAuthenticated ? <DesignEditorPage /> : <SignIn />} />
@@ -172,9 +250,86 @@ export const App = () => {
                 ) : null}
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/git" element={isAuthenticated ? <GitIntegrationPage /> : <SignIn />} />
-                
-                {/* Catch all - redirect to home for logged out users */}
-                <Route path="*" element={<ProjectsPage />} />
+
+                {/* Catch all - redirect to help for logged out users */}
+                <Route path="*" element={
+                  <div className="d-flex flex-column h-100">
+                    <div className="border-bottom p-3">
+                    </div>
+                    <div className="flex-grow-1 p-3" style={{ overflowY: 'auto' }}>
+                      {/* Chat messages */}
+                      <div className="d-flex mb-3">
+                        <div className="me-2">
+                          <div
+                            className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white"
+                            style={{ width: '40px', height: '40px' }}
+                          >
+                            🤖
+                          </div>
+                        </div>
+                        <div className="flex-grow-1">
+                          <div className="fw-bold">Helpo</div>
+                          <div className="bg-light p-3 rounded">
+                            <p>Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="d-flex mb-3 justify-content-end">
+                        <div className="flex-grow-1 me-2 text-end">
+                          <div className="fw-bold">You</div>
+                          <div className="bg-primary text-white p-3 rounded">
+                            <p>Can you show me how to format text with <strong>bold</strong> and <em>italic</em>?</p>
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            className="rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white"
+                            style={{ width: '40px', height: '40px' }}
+                          >
+                            👤
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="d-flex mb-3">
+                        <div className="me-2">
+                          <div
+                            className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white"
+                            style={{ width: '40px', height: '40px' }}
+                          >
+                            🤖
+                          </div>
+                        </div>
+                        <div className="flex-grow-1">
+                          <div className="fw-bold">Helpo</div>
+                          <div className="bg-light p-3 rounded">
+                            <p>Sure! Here's an example:</p>
+                            <ul>
+                              <li>Use <code>&lt;strong&gt;</code> for <strong>bold text</strong></li>
+                              <li>Use <code>&lt;em&gt;</code> for <em>italic text</em></li>
+                              <li>You can even include lists and other HTML elements</li>
+                            </ul>
+                            <p>Let me know if you need help with anything else!</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="border-top p-3">
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Type your message..."
+                          disabled
+                        />
+                        <button className="btn btn-primary" type="button" disabled>
+                          Send
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                } />
               </Routes>
             </AppFrame>
           </Router>
@@ -216,7 +371,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   window.React = React;
   // @ts-ignore
   window.ReactDOM = ReactDom;
-  
+
   // Initialize the app when the window is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);

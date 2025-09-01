@@ -188,4 +188,7 @@ Builder created: MockTiposkripto {
       givensOverridesConfigured: [Function: givensOverridesConfigured],
       whensOverridesConfigured: [Function: whensOverridesConfigured],
       thensOverridesConfigured: [Function: thensOverridesConfigured],
-      interfaceConfigured: [Funct
+      interfaceConfigured: [Function: interfaceConfigured],
+      specsModified: [Function: specsModified],
+      jobsModified: [Function: jobsModified],
+      errorThrown: [Fu

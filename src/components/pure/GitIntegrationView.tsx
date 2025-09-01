@@ -30,16 +30,16 @@ export const GitIntegrationView = () => {
   useEffect(() => {
     if (fileService && mode === 'dev') {
       const devFileService = fileService as any;
-      
+
       // Set up real-time updates for dev mode
       const unsubscribeChanges = devFileService.onChanges?.((newChanges: FileChange[]) => {
         setChanges(newChanges);
       });
-      
+
       const unsubscribeStatus = devFileService.onStatusUpdate?.((newStatus: RemoteStatus) => {
         setRemoteStatus(newStatus);
       });
-      
+
       const unsubscribeBranch = devFileService.onBranchUpdate?.((newBranch: string) => {
         setCurrentBranch(newBranch);
       });
@@ -86,7 +86,7 @@ export const GitIntegrationView = () => {
     if (event) {
       event.preventDefault();
     }
-    
+
     try {
       setIsLoading(true);
       setError(null);
@@ -106,7 +106,7 @@ export const GitIntegrationView = () => {
     if (event) {
       event.preventDefault();
     }
-    
+
     try {
       setError(null);
       const branch = await fileService.getCurrentBranch();
@@ -220,7 +220,6 @@ export const GitIntegrationView = () => {
     <Container fluid>
       <Row className="mb-4">
         <Col>
-          <h2>Git Integration</h2>
           <div className="d-flex align-items-center gap-2">
             <Badge bg={mode === 'static' ? 'secondary' : mode === 'dev' ? 'success' : 'primary'}>
               {mode.toUpperCase()} MODE
@@ -262,7 +261,7 @@ export const GitIntegrationView = () => {
               <Card.Header className="d-flex justify-content-between align-items-center">
                 <h5 className="mb-0">Changes</h5>
                 <Button variant="outline-secondary" size="sm" onClick={loadChanges} disabled={isLoading}>
-                  {isLoading ? <Spinner animation="border" size="sm" /> : '↻'} 
+                  {isLoading ? <Spinner animation="border" size="sm" /> : '↻'}
                 </Button>
               </Card.Header>
               <Card.Body style={{ maxHeight: '400px', overflowY: 'auto' }}>
@@ -424,14 +423,14 @@ export const GitIntegrationView = () => {
           </Col>
         </Row>
       )}
-      
+
       {mode === 'static' && (
         <Row>
           <Col>
             <Alert variant="info" className="text-center">
               <h5>Git Operations Not Available</h5>
               <p>
-                Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode 
+                Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode
                 to access version control features.
               </p>
             </Alert>
