@@ -802,10 +802,10 @@ var init_base = __esm({
       async newPage() {
         return (await this.browser.newPage()).mainFrame()._id;
       }
-      goto(p, url4) {
+      goto(p, url3) {
         return new Promise((res) => {
           this.doInPage(p, async (page) => {
-            await page?.goto(url4);
+            await page?.goto(url3);
             res({});
           });
         });
@@ -1243,11 +1243,19 @@ var init_PM_WithWebSocket = __esm({
       }
       requestHandler(req, res) {
         const parsedUrl = url.parse(req.url || "/");
-        let pathname = parsedUrl.pathname || "/";
-        if (pathname === "/") {
-          pathname = "/index.html";
+        const pathname = parsedUrl.pathname || "/";
+        if (pathname === "/health") {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(
+            JSON.stringify({ status: "ok", timestamp: (/* @__PURE__ */ new Date()).toISOString() })
+          );
+          return;
         }
-        let filePath = pathname.substring(1);
+        let processedPathname = pathname;
+        if (processedPathname === "/") {
+          processedPathname = "/index.html";
+        }
+        let filePath = processedPathname.substring(1);
         if (filePath.startsWith("reports/")) {
           filePath = `testeranto/${filePath}`;
         } else if (filePath.startsWith("metafiles/")) {
@@ -1292,7 +1300,7 @@ var init_PM_WithWebSocket = __esm({
         }
         fs6.exists(filePath, (exists) => {
           if (!exists) {
-            if (!pathname.includes(".") && pathname !== "/") {
+            if (!processedPathname.includes(".") && processedPathname !== "/") {
               const indexPath = this.findIndexHtml();
               if (indexPath) {
                 fs6.readFile(indexPath, (err, data) => {
@@ -1328,9 +1336,28 @@ var init_PM_WithWebSocket = __esm({
               res.end("500 Internal Server Error");
               return;
             }
-            const mimeType = mime.lookup(filePath) || "application/octet-stream";
-            res.writeHead(200, { "Content-Type": mimeType });
-            res.end(data);
+            if (filePath.endsWith(".html")) {
+              let content = data.toString();
+              if (content.includes("</body>")) {
+                const configScript = `
+              <script>
+                window.testerantoConfig = ${JSON.stringify({
+                  githubOAuth: {
+                    clientId: process.env.GITHUB_CLIENT_ID || ""
+                  },
+                  serverOrigin: process.env.SERVER_ORIGIN || "http://localhost:3000"
+                })};
+              </script>
+            `;
+                content = content.replace("</body>", `${configScript}</body>`);
+              }
+              res.writeHead(200, { "Content-Type": "text/html" });
+              res.end(content);
+            } else {
+              const mimeType = mime.lookup(filePath) || "application/octet-stream";
+              res.writeHead(200, { "Content-Type": mimeType });
+              res.end(data);
+            }
           });
         });
       }
@@ -1383,7 +1410,9 @@ var init_PM_WithWebSocket = __esm({
               exitCode: 0
             });
           }
-          const successMessage = `Completed successfully with result: ${JSON.stringify(result)}`;
+          const successMessage = `Completed successfully with result: ${JSON.stringify(
+            result
+          )}`;
           const currentLogs = this.processLogs.get(processId) || [];
           currentLogs.push(successMessage);
           this.processLogs.set(processId, currentLogs);
@@ -1990,9 +2019,7 @@ var init_PM_WithEslintAndTsc = __esm({
 });
 
 // src/PM/PM_WithGit.ts
-import fs9 from "fs";
 import url2 from "url";
-import mime2 from "mime-types";
 var PM_WithGit;
 var init_PM_WithGit = __esm({
   async "src/PM/PM_WithGit.ts"() {
@@ -2001,109 +2028,50 @@ var init_PM_WithGit = __esm({
     PM_WithGit = class extends PM_WithEslintAndTsc {
       constructor(configs, name, mode2) {
         super(configs, name, mode2);
-        this.clients = /* @__PURE__ */ new Set();
-        this.runningProcesses = /* @__PURE__ */ new Map();
-        this.processLogs = /* @__PURE__ */ new Map();
         this.gitWatchTimeout = null;
         this.gitWatcher = null;
       }
-      // this method is so horrible. Don't drink and vibe-code kids
+      // Override requestHandler to add Git-specific endpoints
       requestHandler(req, res) {
         const parsedUrl = url2.parse(req.url || "/");
-        let pathname = parsedUrl.pathname || "/";
+        const pathname = parsedUrl.pathname || "/";
         if (pathname?.startsWith("/api/git/")) {
           this.handleGitApi(req, res);
           return;
         }
-        if (pathname === "/") {
-          pathname = "/index.html";
+        if (pathname === "/api/auth/github/token" && req.method === "POST") {
+          this.handleGitHubTokenExchange(req, res);
+          return;
         }
-        let filePath = pathname.substring(1);
-        if (filePath.startsWith("reports/")) {
-          filePath = `testeranto/${filePath}`;
-        } else if (filePath.startsWith("metafiles/")) {
-          filePath = `testeranto/${filePath}`;
-        } else if (filePath === "projects.json") {
-          filePath = `testeranto/${filePath}`;
-        } else {
-          const possiblePaths = [
-            `dist/${filePath}`,
-            `testeranto/dist/${filePath}`,
-            `../dist/${filePath}`,
-            `./${filePath}`
-          ];
-          let foundPath = null;
-          for (const possiblePath of possiblePaths) {
-            if (fs9.existsSync(possiblePath)) {
-              foundPath = possiblePath;
-              break;
-            }
-          }
-          if (foundPath) {
-            filePath = foundPath;
-          } else {
-            const indexPath = this.findIndexHtml();
-            if (indexPath) {
-              fs9.readFile(indexPath, (err, data) => {
-                if (err) {
-                  res.writeHead(404, { "Content-Type": "text/plain" });
-                  res.end("404 Not Found");
-                  return;
-                }
-                res.writeHead(200, { "Content-Type": "text/html" });
-                res.end(data);
-              });
-              return;
-            } else {
-              res.writeHead(404, { "Content-Type": "text/plain" });
-              res.end("404 Not Found");
-              return;
-            }
-          }
+        if (pathname === "/auth/github/callback") {
+          const callbackHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Authentication - Testeranto</title>
+    <script>
+        // Extract the code from the URL and send it to the parent window
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+        
+        if (code) {
+            window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
+        } else if (error) {
+            window.opener.postMessage({ type: 'github-auth-error', error }, '*');
         }
-        fs9.exists(filePath, (exists) => {
-          if (!exists) {
-            if (!pathname.includes(".") && pathname !== "/") {
-              const indexPath = this.findIndexHtml();
-              if (indexPath) {
-                fs9.readFile(indexPath, (err, data) => {
-                  if (err) {
-                    res.writeHead(404, { "Content-Type": "text/plain" });
-                    res.end("404 Not Found");
-                    return;
-                  }
-                  res.writeHead(200, { "Content-Type": "text/html" });
-                  res.end(data);
-                });
-                return;
-              } else {
-                res.writeHead(200, { "Content-Type": "text/html" });
-                res.end(`
-              <html>
-                <body>
-                  <h1>Testeranto is running</h1>
-                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
-                </body>
-              </html>
-            `);
-                return;
-              }
-            }
-            res.writeHead(404, { "Content-Type": "text/plain" });
-            res.end("404 Not Found");
-            return;
-          }
-          fs9.readFile(filePath, (err, data) => {
-            if (err) {
-              res.writeHead(500, { "Content-Type": "text/plain" });
-              res.end("500 Internal Server Error");
-              return;
-            }
-            const mimeType = mime2.lookup(filePath) || "application/octet-stream";
-            res.writeHead(200, { "Content-Type": mimeType });
-            res.end(data);
-          });
-        });
+        window.close();
+    </script>
+</head>
+<body>
+    <p>Completing authentication...</p>
+</body>
+</html>`;
+          res.writeHead(200, { "Content-Type": "text/html" });
+          res.end(callbackHtml);
+          return;
+        }
+        super.requestHandler(req, res);
       }
       // this method is also horrible
       handleGitApi(req, res) {
@@ -2225,18 +2193,21 @@ var init_PM_WithGit = __esm({
         req.on("end", async () => {
           try {
             const { code } = JSON.parse(body);
-            const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
-              method: "POST",
-              headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                client_id: process.env.GITHUB_CLIENT_ID,
-                client_secret: process.env.GITHUB_CLIENT_SECRET,
-                code
-              })
-            });
+            const tokenResponse = await fetch(
+              "https://github.com/login/oauth/access_token",
+              {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  client_id: process.env.GITHUB_CLIENT_ID,
+                  client_secret: process.env.GITHUB_CLIENT_SECRET,
+                  code
+                })
+              }
+            );
             const tokenData = await tokenResponse.json();
             if (tokenData.error) {
               res.writeHead(400, { "Content-Type": "application/json" });
@@ -2508,13 +2479,362 @@ ${description}` : message;
   }
 });
 
+// src/PM/PM_WithProcesses.ts
+import fs9, { watch } from "fs";
+import path7 from "path";
+import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
+import ansiC3 from "ansi-colors";
+var fileHashes, PM_WithProcesses;
+var init_PM_WithProcesses = __esm({
+  async "src/PM/PM_WithProcesses.ts"() {
+    "use strict";
+    init_utils();
+    init_utils2();
+    await init_PM_WithGit();
+    fileHashes = {};
+    PM_WithProcesses = class extends PM_WithGit {
+      constructor(configs, name, mode2) {
+        super(configs, name, mode2);
+        this.logStreams = {};
+        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
+          const featureDestination = path7.resolve(
+            process.cwd(),
+            "reports",
+            "features",
+            "strings",
+            srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
+          );
+          const testReportPath = `${reportDest}/tests.json`;
+          if (!fs9.existsSync(testReportPath)) {
+            console.error(`tests.json not found at: ${testReportPath}`);
+            return;
+          }
+          const testReport = JSON.parse(fs9.readFileSync(testReportPath, "utf8"));
+          if (testReport.tests) {
+            testReport.tests.forEach((test) => {
+              test.fullPath = path7.resolve(process.cwd(), srcTest);
+            });
+          }
+          testReport.fullPath = path7.resolve(process.cwd(), srcTest);
+          fs9.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
+          testReport.features.reduce(async (mm, featureStringKey) => {
+            const accum = await mm;
+            const isUrl = isValidUrl(featureStringKey);
+            if (isUrl) {
+              const u = new URL(featureStringKey);
+              if (u.protocol === "file:") {
+                const newPath = `${process.cwd()}/testeranto/features/internal/${path7.relative(
+                  process.cwd(),
+                  u.pathname
+                )}`;
+                accum.files.push(u.pathname);
+              } else if (u.protocol === "http:" || u.protocol === "https:") {
+                const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
+                const body = await this.configs.featureIngestor(featureStringKey);
+                writeFileAndCreateDir(newPath, body);
+                accum.files.push(newPath);
+              }
+            } else {
+              await fs9.promises.mkdir(path7.dirname(featureDestination), {
+                recursive: true
+              });
+              accum.strings.push(featureStringKey);
+            }
+            return accum;
+          }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
+            fs9.writeFileSync(
+              `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
+              files3.map((f2) => {
+                return `/read ${f2}`;
+              }).join("\n")
+            );
+          });
+          testReport.givens.forEach((g) => {
+            if (g.failed === true) {
+              this.summary[srcTest].failingFeatures[g.key] = g.features;
+            }
+          });
+          this.writeBigBoard();
+        };
+        this.checkForShutdown = () => {
+          this.checkQueue();
+          console.log(
+            ansiC3.inverse(
+              `The following jobs are awaiting resources: ${JSON.stringify(
+                this.queue
+              )}`
+            )
+          );
+          console.log(
+            ansiC3.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
+          );
+          this.writeBigBoard();
+          if (this.mode === "dev")
+            return;
+          let inflight = false;
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].prompt === "?") {
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} prompt ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].runTimeErrors === "?") {
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} runTimeError ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].staticErrors === "?") {
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} staticErrors ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].typeErrors === "?") {
+              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} typeErrors ${k}`)));
+              inflight = true;
+            }
+          });
+          this.writeBigBoard();
+          if (!inflight) {
+            if (this.browser) {
+              if (this.browser) {
+                this.browser.disconnect().then(() => {
+                  console.log(
+                    ansiC3.inverse(`${this.name} has been tested. Goodbye.`)
+                  );
+                  process.exit();
+                });
+              }
+            }
+          }
+        };
+        this.launchers = {};
+        this.ports = {};
+        this.queue = [];
+        this.configs.ports.forEach((element) => {
+          this.ports[element] = "";
+        });
+      }
+      async start() {
+        try {
+          await this.startBuildProcesses();
+          this.onBuildDone();
+        } catch (error) {
+          console.error("Build processes failed:", error);
+          return;
+        }
+        this.mapping().forEach(async ([command, func]) => {
+          globalThis[command] = func;
+        });
+        if (!fs9.existsSync(`testeranto/reports/${this.name}`)) {
+          fs9.mkdirSync(`testeranto/reports/${this.name}`);
+        }
+        try {
+          this.browser = await puppeteer.launch(puppeteerConfigs);
+        } catch (e) {
+          console.error(e);
+          console.error(
+            "could not start chrome via puppeter. Check this path: ",
+            executablePath2
+          );
+        }
+        const {
+          nodeEntryPoints,
+          webEntryPoints,
+          pureEntryPoints
+          // pitonoEntryPoints is stubbed out
+        } = getRunnables(this.configs.tests, this.name);
+        [
+          [
+            nodeEntryPoints,
+            this.launchNode,
+            "node",
+            (w) => {
+              this.nodeMetafileWatcher = w;
+            }
+          ],
+          [
+            webEntryPoints,
+            this.launchWeb,
+            "web",
+            (w) => {
+              this.webMetafileWatcher = w;
+            }
+          ],
+          [
+            pureEntryPoints,
+            this.launchPure,
+            "pure",
+            (w) => {
+              this.importMetafileWatcher = w;
+            }
+          ]
+          // pitonoEntryPoints is commented out since it's stubbed
+          // [
+          //   pitonoEntryPoints,
+          //   this.launchPitono,
+          //   "pitono",
+          //   (w) => {
+          //     this.pitonoMetafileWatcher = w;
+          //   },
+          // ],
+        ].forEach(
+          async ([eps, launcher, runtime, watcher]) => {
+            let metafile;
+            if (runtime === "pitono") {
+              metafile = `./testeranto/metafiles/python/core.json`;
+              const metafileDir = path7.dirname(metafile);
+              if (!fs9.existsSync(metafileDir)) {
+                fs9.mkdirSync(metafileDir, { recursive: true });
+              }
+            } else {
+              metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
+            }
+            if (runtime !== "pitono") {
+              await pollForFile(metafile);
+            }
+            Object.entries(eps).forEach(
+              async ([inputFile, outputFile]) => {
+                this.launchers[inputFile] = () => launcher(inputFile, outputFile);
+                this.launchers[inputFile]();
+                try {
+                  if (fs9.existsSync(outputFile)) {
+                    watch(outputFile, async (e, filename) => {
+                      const hash = await fileHash(outputFile);
+                      if (fileHashes[inputFile] !== hash) {
+                        fileHashes[inputFile] = hash;
+                        console.log(
+                          ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename}`))
+                        );
+                        this.launchers[inputFile]();
+                      }
+                    });
+                  } else {
+                    console.log(
+                      ansiC3.yellow(
+                        ansiC3.inverse(
+                          `File not found, skipping watch: ${outputFile}`
+                        )
+                      )
+                    );
+                  }
+                } catch (e) {
+                  console.error(e);
+                }
+              }
+            );
+            this.metafileOutputs(runtime);
+            if (runtime === "pitono") {
+              const checkFileExists = () => {
+                if (fs9.existsSync(metafile)) {
+                  console.log(
+                    ansiC3.green(ansiC3.inverse(`Pitono metafile found: ${metafile}`))
+                  );
+                  watcher(
+                    watch(metafile, async (e, filename) => {
+                      console.log(
+                        ansiC3.yellow(
+                          ansiC3.inverse(`< ${e} ${filename} (${runtime})`)
+                        )
+                      );
+                      this.metafileOutputs(runtime);
+                    })
+                  );
+                  this.metafileOutputs(runtime);
+                } else {
+                  setTimeout(checkFileExists, 1e3);
+                }
+              };
+              checkFileExists();
+            } else {
+              if (fs9.existsSync(metafile)) {
+                watcher(
+                  watch(metafile, async (e, filename) => {
+                    console.log(
+                      ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename} (${runtime})`))
+                    );
+                    this.metafileOutputs(runtime);
+                  })
+                );
+              }
+            }
+          }
+        );
+      }
+      async stop() {
+        console.log(ansiC3.inverse("Testeranto-Run is shutting down gracefully..."));
+        this.mode = "once";
+        this.nodeMetafileWatcher.close();
+        this.webMetafileWatcher.close();
+        this.importMetafileWatcher.close();
+        if (this.pitonoMetafileWatcher) {
+          this.pitonoMetafileWatcher.close();
+        }
+        if (this.gitWatcher) {
+          this.gitWatcher.close();
+        }
+        if (this.gitWatchTimeout) {
+          clearTimeout(this.gitWatchTimeout);
+        }
+        Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
+        if (this.wss) {
+          this.wss.close(() => {
+            console.log("WebSocket server closed");
+          });
+        }
+        this.clients.forEach((client) => {
+          client.terminate();
+        });
+        this.clients.clear();
+        if (this.httpServer) {
+          this.httpServer.close(() => {
+            console.log("HTTP server closed");
+          });
+        }
+        this.checkForShutdown();
+      }
+      findIndexHtml() {
+        const possiblePaths = [
+          "dist/index.html",
+          "testeranto/dist/index.html",
+          "../dist/index.html",
+          "./index.html"
+        ];
+        for (const path12 of possiblePaths) {
+          if (fs9.existsSync(path12)) {
+            return path12;
+          }
+        }
+        return null;
+      }
+      checkQueue() {
+        const x = this.queue.pop();
+        if (!x) {
+          ansiC3.inverse(`The following queue is empty`);
+          return;
+        }
+        const test = this.configs.tests.find((t) => t[0] === x);
+        if (!test)
+          throw `test is undefined ${x}`;
+        this.launchers[test[0]]();
+      }
+      onBuildDone() {
+        console.log("Build processes completed");
+        this.startGitWatcher();
+      }
+    };
+  }
+});
+
 // src/PM/pitonoRunner.ts
 var pitonoRunner_exports = {};
 __export(pitonoRunner_exports, {
   PitonoRunner: () => PitonoRunner
 });
 import { execSync } from "child_process";
-import path7 from "path";
+import path8 from "path";
 import fs10 from "fs";
 var PitonoRunner;
 var init_pitonoRunner = __esm({
@@ -2526,7 +2846,7 @@ var init_pitonoRunner = __esm({
         this.testName = testName2;
       }
       async run() {
-        const coreJsonPath = path7.join(process.cwd(), "testeranto", "pitono", this.testName, "core.json");
+        const coreJsonPath = path8.join(process.cwd(), "testeranto", "pitono", this.testName, "core.json");
         const maxWaitTime = 1e4;
         const startTime = Date.now();
         while (!fs10.existsSync(coreJsonPath) && Date.now() - startTime < maxWaitTime) {
@@ -2542,7 +2862,7 @@ var init_pitonoRunner = __esm({
           for (const entryPoint of entryPoints) {
             try {
               console.log(`Running pitono test: ${entryPoint}`);
-              const absolutePath = path7.resolve(entryPoint);
+              const absolutePath = path8.resolve(entryPoint);
               if (!fs10.existsSync(absolutePath)) {
                 console.error(`Pitono test file not found: ${absolutePath}`);
                 continue;
@@ -2570,36 +2890,22 @@ __export(main_exports, {
 import { spawn as spawn2 } from "node:child_process";
 import ansiColors from "ansi-colors";
 import net from "net";
-import fs11, { watch as watch2 } from "fs";
-import path8 from "path";
-import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
-import ansiC3 from "ansi-colors";
-import { WebSocketServer as WebSocketServer2 } from "ws";
-import http2 from "http";
-import url3 from "url";
-import mime3 from "mime-types";
-var changes, fileHashes, files2, screenshots2, PM_Main;
+import fs11 from "fs";
+import ansiC4 from "ansi-colors";
+var changes, files2, screenshots2, PM_Main;
 var init_main = __esm({
   async "src/PM/main.ts"() {
     "use strict";
     init_utils();
     init_queue();
     init_utils2();
-    await init_PM_WithGit();
+    await init_PM_WithProcesses();
     changes = {};
-    fileHashes = {};
     files2 = {};
     screenshots2 = {};
-    PM_Main = class extends PM_WithGit {
-      constructor(configs, name, mode2) {
-        super(configs, name, mode2);
-        this.logStreams = {};
-        this.clients = /* @__PURE__ */ new Set();
-        this.runningProcesses = /* @__PURE__ */ new Map();
-        this.processLogs = /* @__PURE__ */ new Map();
-        this.gitWatchTimeout = null;
-        this.gitWatcher = null;
-        this.allProcesses = /* @__PURE__ */ new Map();
+    PM_Main = class extends PM_WithProcesses {
+      constructor() {
+        super(...arguments);
         this.launchPure = async (src, dest) => {
           const processId = `pure-${src}-${Date.now()}`;
           const command = `pure test: ${src}`;
@@ -2616,7 +2922,7 @@ var init_main = __esm({
             });
             if (!testConfig) {
               console.log(
-                ansiC3.inverse("missing test config! Exiting ungracefully!")
+                ansiC4.inverse("missing test config! Exiting ungracefully!")
               );
               process.exit(-1);
             }
@@ -2680,8 +2986,8 @@ var init_main = __esm({
             } catch (e3) {
               logs.writeExitCode(-1, e3);
               console.log(
-                ansiC3.red(
-                  ansiC3.inverse(
+                ansiC4.red(
+                  ansiC4.inverse(
                     `${src} 1 errored with: ${e3}. Check logs for more info`
                   )
                 )
@@ -2723,7 +3029,7 @@ var init_main = __esm({
             });
             if (!testConfig) {
               console.log(
-                ansiC3.inverse(
+                ansiC4.inverse(
                   `missing test config! Exiting ungracefully for '${src}'`
                 )
               );
@@ -2757,7 +3063,7 @@ var init_main = __esm({
                 });
               } else {
                 console.log(
-                  ansiC3.red(
+                  ansiC4.red(
                     `node: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again run a port is available`
                   )
                 );
@@ -2856,8 +3162,8 @@ var init_main = __esm({
                   console.log("error");
                   haltReturns = true;
                   console.log(
-                    ansiC3.red(
-                      ansiC3.inverse(
+                    ansiC4.red(
+                      ansiC4.inverse(
                         `${src} errored with: ${e.name}. Check error logs for more info`
                       )
                     )
@@ -2970,10 +3276,10 @@ var init_main = __esm({
                   this.bddTestIsNowDone(src, fails);
                   resolve();
                 }).catch((e) => {
-                  console.log(ansiC3.red(ansiC3.inverse(e.stack)));
+                  console.log(ansiC4.red(ansiC4.inverse(e.stack)));
                   console.log(
-                    ansiC3.red(
-                      ansiC3.inverse(
+                    ansiC4.red(
+                      ansiC4.inverse(
                         `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
                       )
                     )
@@ -3016,8 +3322,8 @@ var init_main = __esm({
             } catch (error) {
               logs.writeExitCode(-1, error);
               console.log(
-                ansiC3.red(
-                  ansiC3.inverse(
+                ansiC4.red(
+                  ansiC4.inverse(
                     `${src} errored with: ${error}. Check logs for more info`
                   )
                 )
@@ -3039,305 +3345,6 @@ var init_main = __esm({
         this.launchGolingvu = async (src, dest) => {
           throw "not yet implemented";
         };
-        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
-          const featureDestination = path8.resolve(
-            process.cwd(),
-            "reports",
-            "features",
-            "strings",
-            srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
-          );
-          const testReportPath = `${reportDest}/tests.json`;
-          if (!fs11.existsSync(testReportPath)) {
-            console.error(`tests.json not found at: ${testReportPath}`);
-            return;
-          }
-          const testReport = JSON.parse(fs11.readFileSync(testReportPath, "utf8"));
-          if (testReport.tests) {
-            testReport.tests.forEach((test) => {
-              test.fullPath = path8.resolve(process.cwd(), srcTest);
-            });
-          }
-          testReport.fullPath = path8.resolve(process.cwd(), srcTest);
-          fs11.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
-          testReport.features.reduce(async (mm, featureStringKey) => {
-            const accum = await mm;
-            const isUrl = isValidUrl(featureStringKey);
-            if (isUrl) {
-              const u = new URL(featureStringKey);
-              if (u.protocol === "file:") {
-                const newPath = `${process.cwd()}/testeranto/features/internal/${path8.relative(
-                  process.cwd(),
-                  u.pathname
-                )}`;
-                accum.files.push(u.pathname);
-              } else if (u.protocol === "http:" || u.protocol === "https:") {
-                const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
-                const body = await this.configs.featureIngestor(featureStringKey);
-                writeFileAndCreateDir(newPath, body);
-                accum.files.push(newPath);
-              }
-            } else {
-              await fs11.promises.mkdir(path8.dirname(featureDestination), {
-                recursive: true
-              });
-              accum.strings.push(featureStringKey);
-            }
-            return accum;
-          }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
-            fs11.writeFileSync(
-              `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
-              files3.map((f2) => {
-                return `/read ${f2}`;
-              }).join("\n")
-            );
-          });
-          testReport.givens.forEach((g) => {
-            if (g.failed === true) {
-              this.summary[srcTest].failingFeatures[g.key] = g.features;
-            }
-          });
-          this.writeBigBoard();
-        };
-        this.checkForShutdown = () => {
-          this.checkQueue();
-          console.log(
-            ansiC3.inverse(
-              `The following jobs are awaiting resources: ${JSON.stringify(
-                this.queue
-              )}`
-            )
-          );
-          console.log(
-            ansiC3.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
-          );
-          this.writeBigBoard();
-          if (this.mode === "dev")
-            return;
-          let inflight = false;
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].prompt === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} prompt ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].runTimeErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} runTimeError ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].staticErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} staticErrors ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].typeErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} typeErrors ${k}`)));
-              inflight = true;
-            }
-          });
-          this.writeBigBoard();
-          if (!inflight) {
-            if (this.browser) {
-              if (this.browser) {
-                this.browser.disconnect().then(() => {
-                  console.log(
-                    ansiC3.inverse(`${this.name} has been tested. Goodbye.`)
-                  );
-                  process.exit();
-                });
-              }
-            }
-          }
-        };
-        this.launchers = {};
-        this.ports = {};
-        this.queue = [];
-        this.setupWebSocketServer();
-        this.configs.ports.forEach((element) => {
-          this.ports[element] = "";
-        });
-      }
-      async start() {
-        try {
-          await this.startBuildProcesses();
-          this.onBuildDone();
-        } catch (error) {
-          console.error("Build processes failed:", error);
-          return;
-        }
-        this.mapping().forEach(async ([command, func]) => {
-          globalThis[command] = func;
-        });
-        if (!fs11.existsSync(`testeranto/reports/${this.name}`)) {
-          fs11.mkdirSync(`testeranto/reports/${this.name}`);
-        }
-        try {
-          this.browser = await puppeteer.launch(puppeteerConfigs);
-        } catch (e) {
-          console.error(e);
-          console.error(
-            "could not start chrome via puppeter. Check this path: ",
-            executablePath2
-          );
-        }
-        const {
-          nodeEntryPoints,
-          webEntryPoints,
-          pureEntryPoints
-          // pitonoEntryPoints is stubbed out
-        } = getRunnables(this.configs.tests, this.name);
-        [
-          [
-            nodeEntryPoints,
-            this.launchNode,
-            "node",
-            (w) => {
-              this.nodeMetafileWatcher = w;
-            }
-          ],
-          [
-            webEntryPoints,
-            this.launchWeb,
-            "web",
-            (w) => {
-              this.webMetafileWatcher = w;
-            }
-          ],
-          [
-            pureEntryPoints,
-            this.launchPure,
-            "pure",
-            (w) => {
-              this.importMetafileWatcher = w;
-            }
-          ]
-          // pitonoEntryPoints is commented out since it's stubbed
-          // [
-          //   pitonoEntryPoints,
-          //   this.launchPitono,
-          //   "pitono",
-          //   (w) => {
-          //     this.pitonoMetafileWatcher = w;
-          //   },
-          // ],
-        ].forEach(
-          async ([eps, launcher, runtime, watcher]) => {
-            let metafile;
-            if (runtime === "pitono") {
-              metafile = `./testeranto/metafiles/python/core.json`;
-              const metafileDir = path8.dirname(metafile);
-              if (!fs11.existsSync(metafileDir)) {
-                fs11.mkdirSync(metafileDir, { recursive: true });
-              }
-            } else {
-              metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-            }
-            if (runtime !== "pitono") {
-              await pollForFile(metafile);
-            }
-            Object.entries(eps).forEach(
-              async ([inputFile, outputFile]) => {
-                this.launchers[inputFile] = () => launcher(inputFile, outputFile);
-                this.launchers[inputFile]();
-                try {
-                  if (fs11.existsSync(outputFile)) {
-                    watch2(outputFile, async (e, filename) => {
-                      const hash = await fileHash(outputFile);
-                      if (fileHashes[inputFile] !== hash) {
-                        fileHashes[inputFile] = hash;
-                        console.log(
-                          ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename}`))
-                        );
-                        this.launchers[inputFile]();
-                      }
-                    });
-                  } else {
-                    console.log(
-                      ansiC3.yellow(
-                        ansiC3.inverse(
-                          `File not found, skipping watch: ${outputFile}`
-                        )
-                      )
-                    );
-                  }
-                } catch (e) {
-                  console.error(e);
-                }
-              }
-            );
-            this.metafileOutputs(runtime);
-            if (runtime === "pitono") {
-              const checkFileExists = () => {
-                if (fs11.existsSync(metafile)) {
-                  console.log(
-                    ansiC3.green(ansiC3.inverse(`Pitono metafile found: ${metafile}`))
-                  );
-                  watcher(
-                    watch2(metafile, async (e, filename) => {
-                      console.log(
-                        ansiC3.yellow(
-                          ansiC3.inverse(`< ${e} ${filename} (${runtime})`)
-                        )
-                      );
-                      this.metafileOutputs(runtime);
-                    })
-                  );
-                  this.metafileOutputs(runtime);
-                } else {
-                  setTimeout(checkFileExists, 1e3);
-                }
-              };
-              checkFileExists();
-            } else {
-              if (fs11.existsSync(metafile)) {
-                watcher(
-                  watch2(metafile, async (e, filename) => {
-                    console.log(
-                      ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename} (${runtime})`))
-                    );
-                    this.metafileOutputs(runtime);
-                  })
-                );
-              }
-            }
-          }
-        );
-      }
-      async stop() {
-        console.log(ansiC3.inverse("Testeranto-Run is shutting down gracefully..."));
-        this.mode = "once";
-        this.nodeMetafileWatcher.close();
-        this.webMetafileWatcher.close();
-        this.importMetafileWatcher.close();
-        if (this.pitonoMetafileWatcher) {
-          this.pitonoMetafileWatcher.close();
-        }
-        if (this.gitWatcher) {
-          this.gitWatcher.close();
-        }
-        if (this.gitWatchTimeout) {
-          clearTimeout(this.gitWatchTimeout);
-        }
-        Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-        if (this.wss) {
-          this.wss.close(() => {
-            console.log("WebSocket server closed");
-          });
-        }
-        this.clients.forEach((client) => {
-          client.terminate();
-        });
-        this.clients.clear();
-        if (this.httpServer) {
-          this.httpServer.close(() => {
-            console.log("HTTP server closed");
-          });
-        }
-        this.checkForShutdown();
       }
       async metafileOutputs(platform) {
         let metafilePath;
@@ -3349,8 +3356,8 @@ var init_main = __esm({
         if (!fs11.existsSync(metafilePath)) {
           if (platform === "pitono") {
             console.log(
-              ansiC3.yellow(
-                ansiC3.inverse(`Pitono metafile not found yet: ${metafilePath}`)
+              ansiC4.yellow(
+                ansiC4.inverse(`Pitono metafile not found yet: ${metafilePath}`)
               )
             );
           }
@@ -3367,7 +3374,7 @@ var init_main = __esm({
           }
           if (!metafile) {
             console.log(
-              ansiC3.yellow(ansiC3.inverse(`No metafile found in ${metafilePath}`))
+              ansiC4.yellow(ansiC4.inverse(`No metafile found in ${metafilePath}`))
             );
             return;
           }
@@ -3409,257 +3416,6 @@ var init_main = __esm({
               this.makePrompt(entrypoint, addableFiles, platform);
             }
           }
-        });
-      }
-      // this method is so horrible. Don't drink and vibe-code kids
-      requestHandler(req, res) {
-        const parsedUrl = url3.parse(req.url || "/");
-        let pathname = parsedUrl.pathname || "/";
-        if (pathname?.startsWith("/api/git/")) {
-          this.handleGitApi(req, res);
-          return;
-        }
-        if (pathname === "/api/auth/github/token" && req.method === "POST") {
-          this.handleGitHubTokenExchange(req, res);
-          return;
-        }
-        if (pathname === "/auth/github/callback") {
-          const callbackHtml = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>GitHub Authentication - Testeranto</title>
-    <script>
-        // Extract the code from the URL and send it to the parent window
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const error = urlParams.get('error');
-        
-        if (code) {
-            window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
-        } else if (error) {
-            window.opener.postMessage({ type: 'github-auth-error', error }, '*');
-        }
-        window.close();
-    </script>
-</head>
-<body>
-    <p>Completing authentication...</p>
-</body>
-</html>`;
-          res.writeHead(200, { "Content-Type": "text/html" });
-          res.end(callbackHtml);
-          return;
-        }
-        if (pathname === "/") {
-          pathname = "/index.html";
-        }
-        let filePath = pathname.substring(1);
-        if (filePath.startsWith("reports/")) {
-          filePath = `testeranto/${filePath}`;
-        } else if (filePath.startsWith("metafiles/")) {
-          filePath = `testeranto/${filePath}`;
-        } else if (filePath === "projects.json") {
-          filePath = `testeranto/${filePath}`;
-        } else {
-          const possiblePaths = [
-            `dist/${filePath}`,
-            `testeranto/dist/${filePath}`,
-            `../dist/${filePath}`,
-            `./${filePath}`
-          ];
-          let foundPath = null;
-          for (const possiblePath of possiblePaths) {
-            if (fs11.existsSync(possiblePath)) {
-              foundPath = possiblePath;
-              break;
-            }
-          }
-          if (foundPath) {
-            filePath = foundPath;
-          } else {
-            const indexPath = this.findIndexHtml();
-            if (indexPath) {
-              fs11.readFile(indexPath, (err, data) => {
-                if (err) {
-                  res.writeHead(404, { "Content-Type": "text/plain" });
-                  res.end("404 Not Found");
-                  return;
-                }
-                res.writeHead(200, { "Content-Type": "text/html" });
-                res.end(data);
-              });
-              return;
-            } else {
-              res.writeHead(404, { "Content-Type": "text/plain" });
-              res.end("404 Not Found");
-              return;
-            }
-          }
-        }
-        fs11.exists(filePath, (exists) => {
-          if (!exists) {
-            if (!pathname.includes(".") && pathname !== "/") {
-              const indexPath = this.findIndexHtml();
-              if (indexPath) {
-                fs11.readFile(indexPath, (err, data) => {
-                  if (err) {
-                    res.writeHead(404, { "Content-Type": "text/plain" });
-                    res.end("404 Not Found");
-                    return;
-                  }
-                  res.writeHead(200, { "Content-Type": "text/html" });
-                  res.end(data);
-                });
-                return;
-              } else {
-                res.writeHead(200, { "Content-Type": "text/html" });
-                res.end(`
-              <html>
-                <body>
-                  <h1>Testeranto is running</h1>
-                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
-                </body>
-              </html>
-            `);
-                return;
-              }
-            }
-            res.writeHead(404, { "Content-Type": "text/plain" });
-            res.end("404 Not Found");
-            return;
-          }
-          if (filePath.endsWith(".html")) {
-            fs11.readFile(filePath, (err, data) => {
-              if (err) {
-                res.writeHead(500, { "Content-Type": "text/plain" });
-                res.end("500 Internal Server Error");
-                return;
-              }
-              let content = data.toString();
-              if (content.includes("</body>")) {
-                const configScript = `
-              <script>
-                window.testerantoConfig = ${JSON.stringify({
-                  githubOAuth: {
-                    clientId: process.env.GITHUB_CLIENT_ID
-                  }
-                })};
-              </script>
-            `;
-                content = content.replace("</body>", `${configScript}</body>`);
-              }
-              res.writeHead(200, { "Content-Type": "text/html" });
-              res.end(content);
-            });
-          } else {
-            fs11.readFile(filePath, (err, data) => {
-              if (err) {
-                res.writeHead(500, { "Content-Type": "text/plain" });
-                res.end("500 Internal Server Error");
-                return;
-              }
-              const mimeType = mime3.lookup(filePath) || "application/octet-stream";
-              res.writeHead(200, { "Content-Type": mimeType });
-              res.end(data);
-            });
-          }
-        });
-      }
-      findIndexHtml() {
-        const possiblePaths = [
-          "dist/index.html",
-          "testeranto/dist/index.html",
-          "../dist/index.html",
-          "./index.html"
-        ];
-        for (const path12 of possiblePaths) {
-          if (fs11.existsSync(path12)) {
-            return path12;
-          }
-        }
-        return null;
-      }
-      broadcast(message) {
-        const data = typeof message === "string" ? message : JSON.stringify(message);
-        this.clients.forEach((client) => {
-          if (client.readyState === 1) {
-            client.send(data);
-          }
-        });
-      }
-      // Add WebSocket message handler setup
-      setupWebSocketHandlers() {
-        this.wss.on("connection", (ws) => {
-          this.clients.add(ws);
-          ws.on("message", (data) => {
-            try {
-              const message = JSON.parse(data.toString());
-              this.handleWebSocketMessage(message, ws);
-            } catch (error) {
-              console.error("Error parsing WebSocket message:", error);
-            }
-          });
-          ws.on("close", () => {
-            this.clients.delete(ws);
-          });
-        });
-      }
-      handleWebSocketMessage(message, ws) {
-        switch (message.type) {
-          case "get-initial-state":
-            this.sendInitialState(ws);
-            break;
-          case "file-changed":
-            this.refreshGitStatus();
-            break;
-          case "refresh-status":
-            this.refreshGitStatus();
-            break;
-          default:
-            console.log("Unknown WebSocket message type:", message.type);
-        }
-      }
-      async sendInitialState(ws) {
-        try {
-          const changes2 = await this.getGitChanges();
-          const status = await this.getGitRemoteStatus();
-          const branch = await this.getCurrentGitBranch();
-          ws.send(JSON.stringify({ type: "changes", changes: changes2 }));
-          ws.send(JSON.stringify({ type: "status", status }));
-          ws.send(JSON.stringify({ type: "branch", branch }));
-        } catch (error) {
-          console.error("Error sending initial state:", error);
-          ws.send(
-            JSON.stringify({
-              type: "error",
-              message: "Failed to get Git status"
-            })
-          );
-        }
-      }
-      checkQueue() {
-        const x = this.queue.pop();
-        if (!x) {
-          ansiC3.inverse(`The following queue is empty`);
-          return;
-        }
-        const test = this.configs.tests.find((t) => t[0] === x);
-        if (!test)
-          throw `test is undefined ${x}`;
-        this.launchers[test[0]]();
-      }
-      onBuildDone() {
-        console.log("Build processes completed");
-        this.startGitWatcher();
-      }
-      setupWebSocketServer() {
-        this.httpServer = http2.createServer(this.requestHandler.bind(this));
-        this.wss = new WebSocketServer2({ server: this.httpServer });
-        this.setupWebSocketHandlers();
-        const port = 3001;
-        this.httpServer.listen(port, () => {
-          console.log(`Git integration server running on port ${port}`);
         });
       }
     };
@@ -3837,7 +3593,7 @@ var init_pitonoMetafile = __esm({
 
 // src/testeranto.ts
 init_utils();
-import ansiC4 from "ansi-colors";
+import ansiC5 from "ansi-colors";
 import fs14 from "fs";
 import path11 from "path";
 import readline from "readline";
@@ -3948,11 +3704,11 @@ import(f).then(async (module) => {
     ...rawConfig,
     buildDir: process.cwd() + "/testeranto/bundles/" + testName
   };
-  console.log(ansiC4.inverse("Press 'q' to initiate a graceful shutdown."));
-  console.log(ansiC4.inverse("Press 'x' to quit forcefully."));
+  console.log(ansiC5.inverse("Press 'q' to initiate a graceful shutdown."));
+  console.log(ansiC5.inverse("Press 'x' to quit forcefully."));
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "x") {
-      console.log(ansiC4.inverse("Shutting down forcefully..."));
+      console.log(ansiC5.inverse("Shutting down forcefully..."));
       process.exit(-1);
     }
   });

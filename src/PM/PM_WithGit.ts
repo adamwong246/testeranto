@@ -3,57 +3,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ChildProcess, spawn } from "node:child_process";
-import ansiColors from "ansi-colors";
-import net from "net";
-import fs, { watch } from "fs";
-import path from "path";
-import puppeteer, { ConsoleMessage, executablePath } from "puppeteer-core";
-import ansiC from "ansi-colors";
-import { WebSocketServer } from "ws";
-import http from "http";
 import url from "url";
-import mime from "mime-types";
 
-import { IFinalResults, ITTestResourceConfiguration } from "../lib/index.js";
-import { getRunnables, webEvaluator } from "../utils";
-import { IBuiltConfig, IRunTime } from "../Types.js";
-import { Queue } from "../utils/queue.js";
+import { IBuiltConfig } from "../Types.js";
 
 import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
-import {
-  fileHash,
-  createLogStreams,
-  IOutputs,
-  statusMessagePretty,
-  filesHash,
-  isValidUrl,
-  pollForFile,
-  writeFileAndCreateDir,
-  puppeteerConfigs,
-} from "./utils.js";
 import {
   FileStatus,
   FileChange,
   RemoteStatus,
 } from "../services/FileService.js";
 
-const changes: Record<string, string> = {};
-const fileHashes = {};
-const files: Record<string, Set<string>> = {};
-const screenshots: Record<string, Promise<Uint8Array>[]> = {};
-
 export abstract class PM_WithGit extends PM_WithEslintAndTsc {
-  // pureSidecars: Record<number, Sidecar>;
-  // nodeSidecars: Record<number, ChildProcess>;
-  // webSidecars: Record<number, Page>;
-  // sidecars: Record<number, any> = {};
-  launchers: Record<string, () => void>;
-
-  clients: Set<any> = new Set();
-
-  runningProcesses: Map<string, ChildProcess> = new Map();
-  processLogs: Map<string, string[]> = new Map();
   gitWatchTimeout: NodeJS.Timeout | null = null;
   gitWatcher: any = null;
 
@@ -61,10 +22,10 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
     super(configs, name, mode);
   }
 
-  // this method is so horrible. Don't drink and vibe-code kids
+  // Override requestHandler to add Git-specific endpoints
   requestHandler(req: http.IncomingMessage, res: http.ServerResponse) {
     const parsedUrl = url.parse(req.url || "/");
-    let pathname = parsedUrl.pathname || "/";
+    const pathname = parsedUrl.pathname || "/";
 
     // Handle Git API endpoints
     if (pathname?.startsWith("/api/git/")) {
@@ -72,112 +33,44 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
       return;
     }
 
-    if (pathname === "/") {
-      pathname = "/index.html";
+    if (pathname === "/api/auth/github/token" && req.method === "POST") {
+      this.handleGitHubTokenExchange(req, res);
+      return;
     }
 
-    let filePath = pathname.substring(1);
-
-    // Determine which directory to serve from
-    if (filePath.startsWith("reports/")) {
-      filePath = `testeranto/${filePath}`;
-    } else if (filePath.startsWith("metafiles/")) {
-      filePath = `testeranto/${filePath}`;
-    } else if (filePath === "projects.json") {
-      filePath = `testeranto/${filePath}`;
-    } else {
-      // For frontend assets, try multiple possible locations
-      // First, try the dist directory
-      const possiblePaths = [
-        `dist/${filePath}`,
-        `testeranto/dist/${filePath}`,
-        `../dist/${filePath}`,
-        `./${filePath}`,
-      ];
-
-      // Find the first existing file
-      let foundPath = null;
-      for (const possiblePath of possiblePaths) {
-        if (fs.existsSync(possiblePath)) {
-          foundPath = possiblePath;
-          break;
+    // Handle GitHub OAuth callback
+    if (pathname === "/auth/github/callback") {
+      // Serve the callback HTML page
+      const callbackHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Authentication - Testeranto</title>
+    <script>
+        // Extract the code from the URL and send it to the parent window
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+        
+        if (code) {
+            window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
+        } else if (error) {
+            window.opener.postMessage({ type: 'github-auth-error', error }, '*');
         }
-      }
-
-      if (foundPath) {
-        filePath = foundPath;
-      } else {
-        // If no file found, serve index.html for SPA routing
-        const indexPath = this.findIndexHtml();
-        if (indexPath) {
-          fs.readFile(indexPath, (err, data) => {
-            if (err) {
-              res.writeHead(404, { "Content-Type": "text/plain" });
-              res.end("404 Not Found");
-              return;
-            }
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(data);
-          });
-          return;
-        } else {
-          res.writeHead(404, { "Content-Type": "text/plain" });
-          res.end("404 Not Found");
-          return;
-        }
-      }
+        window.close();
+    </script>
+</head>
+<body>
+    <p>Completing authentication...</p>
+</body>
+</html>`;
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(callbackHtml);
+      return;
     }
 
-    // Check if file exists
-    fs.exists(filePath, (exists) => {
-      if (!exists) {
-        // For SPA routing, serve index.html if the path looks like a route
-        if (!pathname.includes(".") && pathname !== "/") {
-          const indexPath = this.findIndexHtml();
-          if (indexPath) {
-            fs.readFile(indexPath, (err, data) => {
-              if (err) {
-                res.writeHead(404, { "Content-Type": "text/plain" });
-                res.end("404 Not Found");
-                return;
-              }
-              res.writeHead(200, { "Content-Type": "text/html" });
-              res.end(data);
-            });
-            return;
-          } else {
-            // Serve a simple message if index.html is not found
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(`
-              <html>
-                <body>
-                  <h1>Testeranto is running</h1>
-                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
-                </body>
-              </html>
-            `);
-            return;
-          }
-        }
-        res.writeHead(404, { "Content-Type": "text/plain" });
-        res.end("404 Not Found");
-        return;
-      }
-
-      // Read and serve the file
-      fs.readFile(filePath, (err, data) => {
-        if (err) {
-          res.writeHead(500, { "Content-Type": "text/plain" });
-          res.end("500 Internal Server Error");
-          return;
-        }
-
-        // Get MIME type
-        const mimeType = mime.lookup(filePath) || "application/octet-stream";
-        res.writeHead(200, { "Content-Type": mimeType });
-        res.end(data);
-      });
-    });
+    // Call the parent class's requestHandler for all other requests
+    super.requestHandler(req, res);
   }
 
   // this method is also horrible
@@ -339,23 +232,26 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
     req.on("end", async () => {
       try {
         const { code } = JSON.parse(body);
-        
+
         // Exchange code for access token
-        const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            client_id: process.env.GITHUB_CLIENT_ID,
-            client_secret: process.env.GITHUB_CLIENT_SECRET,
-            code,
-          }),
-        });
+        const tokenResponse = await fetch(
+          "https://github.com/login/oauth/access_token",
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              client_id: process.env.GITHUB_CLIENT_ID,
+              client_secret: process.env.GITHUB_CLIENT_SECRET,
+              code,
+            }),
+          }
+        );
 
         const tokenData = await tokenResponse.json();
-        
+
         if (tokenData.error) {
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: tokenData.error_description }));
@@ -530,7 +426,7 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
     this.startGitWatcher();
   }
 
-  private async startGitWatcher() {
+  async startGitWatcher() {
     console.log("Starting Git watcher for real-time updates");
 
     // Watch for file system changes in the current directory
