@@ -194,7 +194,7 @@ function runtimeLogs(runtime, reportDest) {
       return {
         exit: fs.createWriteStream(`${safeDest}/exit.log`)
       };
-    } else if (runtime === "pitono") {
+    } else if (runtime === "python") {
       return {
         stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
         stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
@@ -883,6 +883,7 @@ var init_base = __esm({
         return false;
       }
       async writeFileSync(...x) {
+        console.log("writeFileSync", x);
         const filepath = x[0];
         const contents = x[1];
         const testName2 = x[2];
@@ -3451,58 +3452,114 @@ var init_main = __esm({
               process.exit(-1);
             }
             const logs = createLogStreams(reportDest, "python");
-            const child = spawn2("python3", [src, testResources], {
-              stdio: ["pipe", "pipe", "pipe"]
+            const venvPython = `./venv/bin/python3`;
+            const pythonCommand = fs10.existsSync(venvPython) ? venvPython : "python3";
+            const ipcfile = "/tmp/tpipe_python_" + Math.random();
+            const child = spawn2(pythonCommand, [src, testResources, ipcfile], {
+              stdio: ["pipe", "pipe", "pipe", "ipc"]
+            });
+            let buffer = Buffer.from("");
+            let haltReturns = false;
+            const server = net.createServer((socket) => {
+              const queue = new Queue();
+              socket.on("data", (data) => {
+                buffer = Buffer.concat([buffer, data]);
+                for (let b = 0; b < buffer.length + 1; b++) {
+                  const c = buffer.slice(0, b);
+                  try {
+                    const d = JSON.parse(c.toString());
+                    queue.enqueue(d);
+                    buffer = buffer.slice(b);
+                    b = 0;
+                  } catch (e) {
+                  }
+                }
+                while (queue.size() > 0) {
+                  const message = queue.dequeue();
+                  if (message) {
+                    this.mapping().forEach(async ([command2, func]) => {
+                      if (message[0] === command2) {
+                        const args = message.slice(1, -1);
+                        try {
+                          const result = await this[command2](...args);
+                          if (!haltReturns) {
+                            socket.write(JSON.stringify({
+                              payload: result,
+                              key: message[message.length - 1]
+                            }));
+                          }
+                        } catch (error) {
+                          console.error(`Error handling command ${command2}:`, error);
+                        }
+                      }
+                    });
+                  }
+                }
+              });
             });
             return new Promise((resolve, reject) => {
-              child.stdout?.on("data", (data) => {
-                logs.stdout?.write(data);
-              });
-              child.stderr?.on("data", (data) => {
-                logs.stderr?.write(data);
-              });
-              child.on("close", (code) => {
-                const exitCode = code === null ? -1 : code;
-                if (exitCode < 0) {
-                  logs.writeExitCode(
-                    exitCode,
-                    new Error("Process crashed or was terminated")
-                  );
-                } else {
-                  logs.writeExitCode(exitCode);
-                }
-                logs.closeAll();
-                if (exitCode === 0) {
-                  this.bddTestIsNowDone(src, 0);
-                  statusMessagePretty(0, src, "python");
-                  resolve();
-                } else {
+              server.listen(ipcfile, () => {
+                child.stdout?.on("data", (data) => {
+                  logs.stdout?.write(data);
+                });
+                child.stderr?.on("data", (data) => {
+                  logs.stderr?.write(data);
+                });
+                child.on("close", (code) => {
+                  const exitCode = code === null ? -1 : code;
+                  if (exitCode < 0) {
+                    logs.writeExitCode(
+                      exitCode,
+                      new Error("Process crashed or was terminated")
+                    );
+                  } else {
+                    logs.writeExitCode(exitCode);
+                  }
+                  logs.closeAll();
+                  server.close();
+                  if (exitCode === 0) {
+                    this.bddTestIsNowDone(src, 0);
+                    statusMessagePretty(0, src, "python");
+                    resolve();
+                  } else {
+                    console.log(
+                      ansiColors.red(
+                        `python ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
+                      )
+                    );
+                    this.bddTestIsNowDone(src, exitCode);
+                    statusMessagePretty(exitCode, src, "python");
+                    reject(new Error(`Process exited with code ${exitCode}`));
+                  }
+                  haltReturns = true;
+                });
+                child.on("error", (e) => {
                   console.log(
                     ansiColors.red(
-                      `python ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
+                      ansiColors.inverse(
+                        `python: ${src} errored with: ${e.name}. Check error logs for more info`
+                      )
                     )
                   );
-                  this.bddTestIsNowDone(src, exitCode);
-                  statusMessagePretty(exitCode, src, "python");
-                  reject(new Error(`Process exited with code ${exitCode}`));
-                }
+                  this.bddTestIsNowDone(src, -1);
+                  statusMessagePretty(-1, src, "python");
+                  server.close();
+                  haltReturns = true;
+                  reject(e);
+                });
               });
-              child.on("error", (e) => {
-                console.log(
-                  ansiColors.red(
-                    ansiColors.inverse(
-                      `python: ${src} errored with: ${e.name}. Check error logs for more info`
-                    )
-                  )
-                );
-                this.bddTestIsNowDone(src, -1);
-                statusMessagePretty(-1, src, "python");
+              server.on("error", (e) => {
+                console.error("Server error:", e);
                 reject(e);
               });
             }).finally(() => {
               portsToUse.forEach((port) => {
                 this.ports[port] = "";
               });
+              try {
+                server.close();
+              } catch (e) {
+              }
             });
           })();
           this.addPromiseProcess(
@@ -3597,7 +3654,7 @@ var init_main = __esm({
                   return;
                 }
                 const child = spawn2(binaryPath, [testResources], {
-                  stdio: ["pipe", "pipe", "pipe"]
+                  stdio: ["pipe", "pipe", "pipe", "ipc"]
                 });
                 child.stdout?.on("data", (data) => {
                   logs.stdout?.write(data);
@@ -3906,14 +3963,6 @@ var web_html_default = (jsfilePath, htmlFilePath, cssfilePath) => `
 `;
 
 // src/testeranto.ts
-if (!process.env.GITHUB_CLIENT_ID) {
-  console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
-  process.exit(-1);
-}
-if (!process.env.GITHUB_CLIENT_SECRET) {
-  console.error(`env var "GITHUB_CLIENT_SECRET" needs to be set!`);
-  process.exit(-1);
-}
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
   process.stdin.setRawMode(true);
@@ -4020,7 +4069,9 @@ import(f).then(async (module) => {
     );
     console.log(
       ansiC5.green(
-        ansiC5.inverse(`Python metafile written to: ${pitonoMetafilePath}/core.json`)
+        ansiC5.inverse(
+          `Python metafile written to: ${pitonoMetafilePath}/core.json`
+        )
       )
     );
     pitonoEntryPoints.forEach((entryPoint) => {

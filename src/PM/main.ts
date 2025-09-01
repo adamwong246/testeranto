@@ -588,65 +588,136 @@ export class PM_Main extends PM_WithProcesses {
 
       const logs = createLogStreams(reportDest, "python");
 
-      // For Python, we'll just run the script directly and pass test resources as an argument
-      // Python tests need to handle their own IPC if needed
-      const child = spawn("python3", [src, testResources], {
-        stdio: ["pipe", "pipe", "pipe"],
+      // For Python, use the virtual environment's Python interpreter
+      // Look for a venv directory in the project root
+      const venvPython = `./venv/bin/python3`;
+
+      // Check if the virtual environment exists, fall back to system python3
+      const pythonCommand = fs.existsSync(venvPython) ? venvPython : "python3";
+
+      // Create IPC file for communication with Python process
+      const ipcfile = "/tmp/tpipe_python_" + Math.random();
+      const child = spawn(pythonCommand, [src, testResources, ipcfile], {
+        stdio: ["pipe", "pipe", "pipe", "ipc"],
+      });
+
+      let buffer: Buffer = Buffer.from("");
+      let haltReturns = false;
+
+      const server = net.createServer((socket) => {
+        const queue = new Queue<string[]>();
+
+        socket.on("data", (data) => {
+          buffer = Buffer.concat([buffer, data]);
+
+          // Process the buffer to find complete JSON messages
+          for (let b = 0; b < buffer.length + 1; b++) {
+            const c = buffer.slice(0, b);
+            try {
+              const d = JSON.parse(c.toString());
+              queue.enqueue(d);
+              buffer = buffer.slice(b);
+              b = 0;
+            } catch (e) {
+              // Continue processing
+            }
+          }
+
+          // Process messages from the queue
+          while (queue.size() > 0) {
+            const message = queue.dequeue();
+            if (message) {
+              // Handle commands from Python process
+              this.mapping().forEach(async ([command, func]) => {
+                if (message[0] === command) {
+                  const args = message.slice(1, -1);
+                  try {
+                    const result = await (this as any)[command](...args);
+                    if (!haltReturns) {
+                      socket.write(JSON.stringify({
+                        payload: result,
+                        key: message[message.length - 1]
+                      }));
+                    }
+                  } catch (error) {
+                    console.error(`Error handling command ${command}:`, error);
+                  }
+                }
+              });
+            }
+          }
+        });
       });
 
       return new Promise<void>((resolve, reject) => {
-        child.stdout?.on("data", (data) => {
-          logs.stdout?.write(data);
-        });
+        server.listen(ipcfile, () => {
+          child.stdout?.on("data", (data) => {
+            logs.stdout?.write(data);
+          });
 
-        child.stderr?.on("data", (data) => {
-          logs.stderr?.write(data);
-        });
+          child.stderr?.on("data", (data) => {
+            logs.stderr?.write(data);
+          });
 
-        child.on("close", (code) => {
-          const exitCode = code === null ? -1 : code;
-          if (exitCode < 0) {
-            logs.writeExitCode(
-              exitCode,
-              new Error("Process crashed or was terminated")
-            );
-          } else {
-            logs.writeExitCode(exitCode);
-          }
-          logs.closeAll();
+          child.on("close", (code) => {
+            const exitCode = code === null ? -1 : code;
+            if (exitCode < 0) {
+              logs.writeExitCode(
+                exitCode,
+                new Error("Process crashed or was terminated")
+              );
+            } else {
+              logs.writeExitCode(exitCode);
+            }
+            logs.closeAll();
+            server.close();
 
-          if (exitCode === 0) {
-            this.bddTestIsNowDone(src, 0);
-            statusMessagePretty(0, src, "python");
-            resolve();
-          } else {
+            if (exitCode === 0) {
+              this.bddTestIsNowDone(src, 0);
+              statusMessagePretty(0, src, "python");
+              resolve();
+            } else {
+              console.log(
+                ansiColors.red(
+                  `python ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
+                )
+              );
+              this.bddTestIsNowDone(src, exitCode);
+              statusMessagePretty(exitCode, src, "python");
+              reject(new Error(`Process exited with code ${exitCode}`));
+            }
+            haltReturns = true;
+          });
+
+          child.on("error", (e) => {
             console.log(
               ansiColors.red(
-                `python ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
+                ansiColors.inverse(
+                  `python: ${src} errored with: ${e.name}. Check error logs for more info`
+                )
               )
             );
-            this.bddTestIsNowDone(src, exitCode);
-            statusMessagePretty(exitCode, src, "python");
-            reject(new Error(`Process exited with code ${exitCode}`));
-          }
+            this.bddTestIsNowDone(src, -1);
+            statusMessagePretty(-1, src, "python");
+            server.close();
+            haltReturns = true;
+            reject(e);
+          });
         });
 
-        child.on("error", (e) => {
-          console.log(
-            ansiColors.red(
-              ansiColors.inverse(
-                `python: ${src} errored with: ${e.name}. Check error logs for more info`
-              )
-            )
-          );
-          this.bddTestIsNowDone(src, -1);
-          statusMessagePretty(-1, src, "python");
+        server.on("error", (e) => {
+          console.error("Server error:", e);
           reject(e);
         });
       }).finally(() => {
-        portsToUse.forEach(port => {
+        portsToUse.forEach((port) => {
           this.ports[port] = "";
         });
+        try {
+          server.close();
+        } catch (e) {
+          // Ignore
+        }
       });
     })();
 
@@ -733,14 +804,14 @@ export class PM_Main extends PM_WithProcesses {
 
       // Compile the Go test first
       const buildDir = path.dirname(dest);
-      const binaryName = path.basename(dest, '.go');
+      const binaryName = path.basename(dest, ".go");
       const binaryPath = path.join(buildDir, binaryName);
-      
+
       const logs = createLogStreams(reportDest, "golang");
 
       // First, compile the Go program
       const compileProcess = spawn("go", ["build", "-o", binaryPath, dest]);
-      
+
       return new Promise<void>((resolve, reject) => {
         compileProcess.stdout?.on("data", (data) => {
           logs.stdout?.write(data);
@@ -765,7 +836,7 @@ export class PM_Main extends PM_WithProcesses {
 
           // Now run the compiled binary
           const child = spawn(binaryPath, [testResources], {
-            stdio: ["pipe", "pipe", "pipe"],
+            stdio: ["pipe", "pipe", "pipe", "ipc"],
           });
 
           child.stdout?.on("data", (data) => {
@@ -831,7 +902,7 @@ export class PM_Main extends PM_WithProcesses {
           reject(e);
         });
       }).finally(() => {
-        portsToUse.forEach(port => {
+        portsToUse.forEach((port) => {
           this.ports[port] = "";
         });
       });

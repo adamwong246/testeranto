@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
 import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
@@ -13,15 +14,15 @@ import { AppHtml } from "./utils/buildTemplates";
 import webHtmlFrame from "./web.html";
 import { PM_Main } from "./PM/main";
 
-if (!process.env.GITHUB_CLIENT_ID) {
-  console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
-  process.exit(-1);
-}
+// if (!process.env.GITHUB_CLIENT_ID) {
+//   console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
+//   process.exit(-1);
+// }
 
-if (!process.env.GITHUB_CLIENT_SECRET) {
-  console.error(`env var "GITHUB_CLIENT_SECRET" needs to be set!`);
-  process.exit(-1);
-}
+// if (!process.env.GITHUB_CLIENT_SECRET) {
+//   console.error(`env var "GITHUB_CLIENT_SECRET" needs to be set!`);
+//   process.exit(-1);
+// }
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -167,7 +168,9 @@ import(f).then(async (module) => {
 
     console.log(
       ansiC.green(
-        ansiC.inverse(`Python metafile written to: ${pitonoMetafilePath}/core.json`)
+        ansiC.inverse(
+          `Python metafile written to: ${pitonoMetafilePath}/core.json`
+        )
       )
     );
 
