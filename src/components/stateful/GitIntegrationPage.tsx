@@ -176,16 +176,31 @@ export const GitIntegrationPage = () => {
   useEffect(() => {
     const newFileService = getFileService(mode);
     setFileService(newFileService);
-    // We can't call loadChanges and loadGitStatus here directly because they use fileService state
-    // Instead, we'll set up a separate effect to trigger when fileService changes
-  }, [mode]);
+    
+    // Load data when mode changes
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        const changes = await newFileService.getChanges();
+        setChanges(changes);
+        
+        const branch = await newFileService.getCurrentBranch();
+        const status = await newFileService.getRemoteStatus();
+        setCurrentBranch(branch);
+        setRemoteStatus(status);
+      } catch (err) {
+        console.warn("Failed to load data:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  // Add a new effect to load data when fileService changes
-  useEffect(() => {
-    if (fileService && mode === "dev") {
-      const devFileService = fileService as any;
+    loadData();
 
-      // Set up real-time updates for dev mode
+    // Set up real-time updates for dev mode
+    if (mode === "dev") {
+      const devFileService = newFileService as any;
+      
       const unsubscribeChanges = devFileService.onChanges?.(
         (newChanges: FileChange[]) => {
           setChanges(newChanges);
@@ -204,42 +219,13 @@ export const GitIntegrationPage = () => {
         }
       );
 
-      const loadData = async () => {
-        try {
-          setIsLoading(true);
-          await loadChanges();
-          await loadGitStatus();
-        } catch (err) {
-          console.warn("Failed to load data:", err);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      loadData();
-
       return () => {
         unsubscribeChanges?.();
         unsubscribeStatus?.();
         unsubscribeBranch?.();
       };
-    } else if (fileService) {
-      // For non-dev modes, just load data once
-      const loadData = async () => {
-        try {
-          setIsLoading(true);
-          await loadChanges();
-          await loadGitStatus();
-        } catch (err) {
-          console.warn("Failed to load data:", err);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      loadData();
     }
-  }, [fileService, mode]);
+  }, [mode]);
 
   return (
     <GitIntegrationView

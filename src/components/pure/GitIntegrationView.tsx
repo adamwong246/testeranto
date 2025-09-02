@@ -11,6 +11,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { Editor } from "@monaco-editor/react";
+import { getFileService, FileChange, RemoteStatus } from "../../services/FileService";
 
 export const GitIntegrationView = ({
   mode,
@@ -49,29 +50,34 @@ export const GitIntegrationView = ({
   const [isDiffLoading, setIsDiffLoading] = useState(false);
 
   // Load diff when a file is selected
-  const loadFileDiff = useCallback(async (filePath: string) => {
-    console.log("loadFileDiff - filePath:", filePath);
-    if (mode === "static") return;
+  const loadFileDiff = useCallback(
+    async (filePath: string) => {
+      console.log("loadFileDiff - filePath:", filePath);
+      if (mode === "static") return;
 
-    setIsDiffLoading(true);
-    try {
-      setSelectedFile(filePath);
+      setIsDiffLoading(true);
       try {
-        const currentContent = await fileService.readFile(filePath);
-        setModifiedContent(currentContent);
+        setSelectedFile(filePath);
+        try {
+          const currentContent = await fileService.readFile(filePath);
+          setModifiedContent(currentContent);
+        } catch (error) {
+          console.error("Error reading file:", error);
+          setModifiedContent("");
+          setError(
+            `Cannot read file: ${filePath}. The development server may not be running or the file API endpoints may not be implemented. Check that the server is running and has the /api/files/read endpoint.`
+          );
+        }
+        setOriginalContent("");
       } catch (error) {
-        console.error("Error reading file:", error);
-        setModifiedContent("");
-        setError(`Cannot read file: ${filePath}. The development server may not be running or the file API endpoints may not be implemented. Check that the server is running and has the /api/files/read endpoint.`);
+        console.error("Failed to load file diff:", error);
+        setError("Failed to load file content for diff");
+      } finally {
+        setIsDiffLoading(false);
       }
-      setOriginalContent("");
-    } catch (error) {
-      console.error("Failed to load file diff:", error);
-      setError("Failed to load file content for diff");
-    } finally {
-      setIsDiffLoading(false);
-    }
-  }, [fileService, mode, setError]);
+    },
+    [fileService, mode, setError]
+  );
 
   // Auto-select first file when changes load
   useEffect(() => {
@@ -80,6 +86,150 @@ export const GitIntegrationView = ({
       loadFileDiff(changes[0].path);
     }
   }, [changes, selectedFile, loadFileDiff]);
+
+  // const loadChanges = async (event?: React.MouseEvent) => {
+  //   // Prevent default behavior if event exists
+  //   if (event) {
+  //     event.preventDefault();
+  //   }
+
+  //   try {
+  //     setIsLoading(true);
+  //     setError(null);
+  //     const changes = await fileService.getChanges();
+  //     setChanges(changes);
+  //   } catch (err) {
+  //     const errorMessage =
+  //       err instanceof Error ? err.message : "Failed to load changes";
+  //     console.error("Failed to load changes:", err);
+  //     setError(errorMessage);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // const loadGitStatus = async (event?: React.MouseEvent) => {
+  //   // Prevent default behavior if event exists
+  //   if (event) {
+  //     event.preventDefault();
+  //   }
+
+  //   try {
+  //     setError(null);
+  //     const branch = await fileService.getCurrentBranch();
+  //     const status = await fileService.getRemoteStatus();
+  //     setCurrentBranch(branch);
+  //     setRemoteStatus(status);
+  //   } catch (err) {
+  //     const errorMessage =
+  //       err instanceof Error ? err.message : "Failed to load git status";
+  //     console.error("Failed to load git status:", err);
+  //     setError(errorMessage);
+  //   }
+  // };
+
+  // const handleSaveChanges = async () => {
+  //   if (!commitSummary.trim()) {
+  //     setError("Please provide a commit summary");
+  //     return;
+  //   }
+
+  //   try {
+  //     setIsCommitting(true);
+  //     setError(null);
+  //     await fileService.commitChanges(commitSummary, commitDescription);
+  //     setCommitSummary("");
+  //     setCommitDescription("");
+  //     await loadChanges();
+  //     await loadGitStatus();
+  //   } catch (err) {
+  //     const errorMessage =
+  //       err instanceof Error ? err.message : "Failed to commit changes";
+  //     console.error("Failed to commit changes:", err);
+  //     setError(errorMessage);
+  //   } finally {
+  //     setIsCommitting(false);
+  //   }
+  // };
+
+  // const handleShareChanges = async () => {
+  //   if (!commitSummary.trim()) {
+  //     setError("Please provide a commit summary");
+  //     return;
+  //   }
+
+  //   try {
+  //     setIsCommitting(true);
+  //     setIsPushing(true);
+  //     setError(null);
+  //     await fileService.commitChanges(commitSummary, commitDescription);
+  //     await fileService.pushChanges();
+  //     setCommitSummary("");
+  //     setCommitDescription("");
+  //     await loadChanges();
+  //     await loadGitStatus();
+  //   } catch (err) {
+  //     const errorMessage =
+  //       err instanceof Error ? err.message : "Failed to share changes";
+  //     console.error("Failed to share changes:", err);
+  //     setError(errorMessage);
+  //   } finally {
+  //     setIsCommitting(false);
+  //     setIsPushing(false);
+  //   }
+  // };
+
+  // const handleGetUpdates = async () => {
+  //   try {
+  //     setIsPulling(true);
+  //     setError(null);
+  //     await fileService.pullChanges();
+  //     await loadChanges();
+  //     await loadGitStatus();
+  //   } catch (err) {
+  //     const errorMessage =
+  //       err instanceof Error ? err.message : "Failed to get updates";
+  //     console.error("Failed to get updates:", err);
+  //     setError(errorMessage);
+  //   } finally {
+  //     setIsPulling(false);
+  //   }
+  // };
+
+  // const getStatusBadgeVariant = (status: string) => {
+  //   switch (status) {
+  //     case "modified":
+  //       return "warning";
+  //     case "added":
+  //       return "success";
+  //     case "deleted":
+  //       return "danger";
+  //     case "conflicted":
+  //       return "danger";
+  //     default:
+  //       return "secondary";
+  //   }
+  // };
+
+  // const getSyncStatusText = () => {
+  //   if (remoteStatus.ahead > 0 && remoteStatus.behind > 0) {
+  //     return `${remoteStatus.ahead} ahead, ${remoteStatus.behind} behind`;
+  //   } else if (remoteStatus.ahead > 0) {
+  //     return `${remoteStatus.ahead} ahead`;
+  //   } else if (remoteStatus.behind > 0) {
+  //     return `${remoteStatus.behind} behind`;
+  //   } else {
+  //     return "Up to date";
+  //   }
+  // };
+
+  // const getSyncStatusVariant = () => {
+  //   if (remoteStatus.behind > 0) return "warning";
+  //   if (remoteStatus.ahead > 0) return "info";
+  //   return "success";
+  // };
+
+  // if (error) console.error(error);
 
   return (
     <Container fluid>
@@ -142,8 +292,145 @@ export const GitIntegrationView = ({
         <Row>
           {/* Left Column - 1/3 width */}
           <Col md={4}>
-            {/* Sync with Remote at the top */}
-            <Card className="mb-3">
+            <Card>
+              <Card.Header className="d-flex justify-content-between align-items-center">
+                <h5 className="mb-0">Changes</h5>
+                <Button
+                  variant="outline-secondary"
+                  size="sm"
+                  onClick={loadChanges}
+                  disabled={isLoading}
+                >
+                  {isLoading ? <Spinner animation="border" size="sm" /> : "↻"}
+                </Button>
+              </Card.Header>
+              <Card.Body style={{ maxHeight: "400px", overflowY: "auto" }}>
+                {isLoading ? (
+                  <div className="text-center">
+                    <Spinner animation="border" />
+                    <div>Loading changes...</div>
+                  </div>
+                ) : changes.length === 0 ? (
+                  <div className="text-center text-muted">
+                    No changes detected
+                  </div>
+                ) : (
+                  <div>
+                    {changes.map((change, index) => (
+                      <div
+                        key={index}
+                        className="d-flex align-items-center mb-2"
+                      >
+                        <Badge
+                          bg={getStatusBadgeVariant(change.status)}
+                          className="me-2"
+                        >
+                          {change.status.charAt(0).toUpperCase() +
+                            change.status.slice(1)}
+                        </Badge>
+                        <span className="small text-truncate">
+                          {change.path}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col md={4}>
+            <Card>
+              <Card.Header>
+                <h5>Commit Changes</h5>
+              </Card.Header>
+              <Card.Body>
+                <div className="mb-3">
+                  <label htmlFor="summary" className="form-label">
+                    Summary *
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="summary"
+                    placeholder="What did you change?"
+                    value={commitSummary}
+                    onChange={(e) => setCommitSummary(e.target.value)}
+                    disabled={mode === "static"}
+                  />
+                  <div className="form-text">
+                    {commitSummary.length}/72 characters
+                  </div>
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="description" className="form-label">
+                    Description
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="description"
+                    rows={3}
+                    placeholder="Why did you change it?"
+                    value={commitDescription}
+                    onChange={(e) => setCommitDescription(e.target.value)}
+                    disabled={mode === "static"}
+                  />
+                </div>
+                <div className="d-grid gap-2">
+                  <Button
+                    variant="primary"
+                    onClick={handleSaveChanges}
+                    disabled={
+                      mode === "static" ||
+                      isCommitting ||
+                      changes.length === 0 ||
+                      !commitSummary.trim()
+                    }
+                  >
+                    {isCommitting ? (
+                      <>
+                        <Spinner
+                          animation="border"
+                          size="sm"
+                          className="me-2"
+                        />
+                        Saving...
+                      </>
+                    ) : (
+                      "Save to Computer"
+                    )}
+                  </Button>
+                  <Button
+                    variant="success"
+                    onClick={handleShareChanges}
+                    disabled={
+                      mode === "static" ||
+                      isCommitting ||
+                      isPushing ||
+                      changes.length === 0 ||
+                      !commitSummary.trim()
+                    }
+                  >
+                    {isPushing ? (
+                      <>
+                        <Spinner
+                          animation="border"
+                          size="sm"
+                          className="me-2"
+                        />
+                        Sharing...
+                      </>
+                    ) : (
+                      "Save & Share"
+                    )}
+                  </Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+
+          <Col md={4}>
+            <Card>
               <Card.Header className="d-flex justify-content-between align-items-center">
                 <h5 className="mb-0">Sync with Remote</h5>
                 <Button
@@ -225,7 +512,7 @@ export const GitIntegrationView = ({
                 </div>
               </Card.Body>
             </Card>
-            
+
             {/* Changes below Sync with Remote */}
             <Card>
               <Card.Header className="d-flex justify-content-between align-items-center">
@@ -254,8 +541,11 @@ export const GitIntegrationView = ({
                     {changes.map((change, index) => (
                       <div
                         key={index}
-                        className={`d-flex align-items-center mb-2 ${selectedFile === change.path ? 'bg-light rounded p-1' : ''}`}
-                        style={{ cursor: 'pointer' }}
+                        className={`d-flex align-items-center mb-2 ${selectedFile === change.path
+                          ? "bg-light rounded p-1"
+                          : ""
+                          }`}
+                        style={{ cursor: "pointer" }}
                         onClick={() => loadFileDiff(change.path)}
                       >
                         <Badge
@@ -283,7 +573,7 @@ export const GitIntegrationView = ({
               <Card.Header>
                 <h5>Changes Preview</h5>
               </Card.Header>
-              <Card.Body style={{ height: '400px' }}>
+              <Card.Body style={{ height: "400px" }}>
                 {isDiffLoading ? (
                   <div className="text-center">
                     <Spinner animation="border" />
@@ -302,22 +592,25 @@ export const GitIntegrationView = ({
                         minimap: { enabled: false },
                         scrollBeyondLastLine: false,
                         fontSize: 12,
-                        lineNumbers: 'on',
+                        lineNumbers: "on",
                         folding: true,
                         glyphMargin: false,
                         lineDecorationsWidth: 10,
                         lineNumbersMinChars: 3,
                         scrollbar: {
-                          vertical: 'auto',
-                          horizontal: 'auto'
+                          vertical: "auto",
+                          horizontal: "auto",
                         },
-                        renderLineHighlight: 'all',
+                        renderLineHighlight: "all",
                       }}
                     />
                   ) : (
                     <div className="text-center text-muted">
                       <p>Could not load file content.</p>
-                      <small>Check that the development server is running and has file API endpoints implemented.</small>
+                      <small>
+                        Check that the development server is running and has
+                        file API endpoints implemented.
+                      </small>
                     </div>
                   )
                 ) : (
@@ -327,7 +620,7 @@ export const GitIntegrationView = ({
                 )}
               </Card.Body>
             </Card>
-            
+
             {/* Commit Changes below Changes Preview */}
             <Card>
               <Card.Header>

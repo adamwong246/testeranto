@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import ReactDom from "react-dom/client";
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 import { TestPage } from './components/stateful/TestPage';
 import { ProjectPage } from './components/stateful/ProjectPage';
@@ -20,6 +20,7 @@ import { githubAuthService } from './services/GitHubAuthService';
 import { SVGEditorPage } from './components/stateful/SVGEditorPage';
 import { DratoPage } from './components/stateful/DratoPage';
 import { GrafeoPage } from './components/stateful/GrafeoPage';
+import { Helpo } from './Helpo';
 
 interface WebSocketContextType {
   ws: WebSocket | null;
@@ -74,14 +75,16 @@ export const App = () => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [tutorialMode, setTutorialMode] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(githubAuthService.isAuthenticated);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    githubAuthService.isAuthenticated
+  );
   const [user, setUser] = useState(githubAuthService.userInfo);
 
   useEffect(() => {
     // Load tutorial mode from localStorage
-    const savedTutorialMode = localStorage.getItem('tutorialMode');
+    const savedTutorialMode = localStorage.getItem("tutorialMode");
     if (savedTutorialMode) {
-      setTutorialMode(savedTutorialMode === 'true');
+      setTutorialMode(savedTutorialMode === "true");
     }
 
     // Listen for auth changes
@@ -94,20 +97,20 @@ export const App = () => {
 
     // Handle GitHub OAuth callback from popup
     const handleMessage = async (event: MessageEvent) => {
-      if (event.data.type === 'github-auth-callback') {
+      if (event.data.type === "github-auth-callback") {
         const { code } = event.data;
         try {
           const success = await githubAuthService.handleCallback(code);
           if (success) {
-            console.log('GitHub authentication successful');
+            console.log("GitHub authentication successful");
           } else {
-            console.error('GitHub authentication failed');
+            console.error("GitHub authentication failed");
           }
         } catch (error) {
-          console.error('Error handling GitHub callback:', error);
+          console.error("Error handling GitHub callback:", error);
         }
-      } else if (event.data.type === 'github-auth-error') {
-        console.error('GitHub authentication error:', event.data.error);
+      } else if (event.data.type === "github-auth-error") {
+        console.error("GitHub authentication error:", event.data.error);
       }
     };
 
@@ -118,25 +121,25 @@ export const App = () => {
     const websocket = new WebSocket(wsUrl);
 
     websocket.onopen = () => {
-      console.log('WebSocket connected');
+      console.log("WebSocket connected");
       setWs(websocket);
       setIsConnected(true);
     };
 
     websocket.onclose = () => {
-      console.log('WebSocket disconnected');
+      console.log("WebSocket disconnected");
       setWs(null);
       setIsConnected(false);
     };
 
     websocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
+      console.error("WebSocket error:", error);
       setIsConnected(false);
     };
 
     return () => {
-      githubAuthService.off('authChange', handleAuthChange);
-      window.removeEventListener('message', handleMessage);
+      githubAuthService.off("authChange", handleAuthChange);
+      window.removeEventListener("message", handleMessage);
       websocket.close();
     };
   }, []);
@@ -156,22 +159,54 @@ export const App = () => {
             <AppFrame>
               <Routes>
                 {/* Public routes */}
-                <Route path="/" element={<ProjectsPage />} />
-                <Route path="/projects/:projectName" element={<ProjectPage />} />
-                <Route path="/projects/:projectName/tests/*" element={<TestPage />} />
-                <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
+                <Route path="/" element={<Helpo />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                <Route
+                  path="/projects/:projectName"
+                  element={<ProjectPage />}
+                />
+                <Route
+                  path="/projects/:projectName/tests/*"
+                  element={<TestPage />}
+                />
+                <Route
+                  path="/projects/:projectName#:tab"
+                  element={<ProjectPage />}
+                />
                 <Route path="/signin" element={<SignIn />} />
-                <Route path="/auth/github/callback" element={<AuthCallbackPage />} />
+                <Route
+                  path="/auth/github/callback"
+                  element={<AuthCallbackPage />}
+                />
 
                 {/* Protected routes - handle authentication within components */}
-                <Route path="/features-reporter" element={isAuthenticated ? <FeaturesReporter /> : <SignIn />} />
-                <Route path="/design-editor" element={isAuthenticated ? <DesignEditorPage /> : <SignIn />} />
-                <Route path="/text-editor" element={isAuthenticated ? <TextEditorPage /> : <SignIn />} />
+                <Route
+                  path="/features-reporter"
+                  element={isAuthenticated ? <FeaturesReporter /> : <SignIn />}
+                />
+                <Route
+                  path="/design-editor"
+                  element={isAuthenticated ? <DesignEditorPage /> : <SignIn />}
+                />
+                <Route
+                  path="/text-editor"
+                  element={isAuthenticated ? <TextEditorPage /> : <SignIn />}
+                />
                 {/* Conditionally render process-related routes only if WebSocket is connected */}
                 {isConnected ? (
                   <>
-                    <Route path="/processes" element={isAuthenticated ? <ProcessManagerPage /> : <SignIn />} />
-                    <Route path="/processes/:processId" element={isAuthenticated ? <SingleProcessPage /> : <SignIn />} />
+                    <Route
+                      path="/processes"
+                      element={
+                        isAuthenticated ? <ProcessManagerPage /> : <SignIn />
+                      }
+                    />
+                    <Route
+                      path="/processes/:processId"
+                      element={
+                        isAuthenticated ? <SingleProcessPage /> : <SignIn />
+                      }
+                    />
                   </>
                 ) : null}
                 <Route path="/settings" element={<Settings />} />
@@ -179,9 +214,7 @@ export const App = () => {
                 <Route path="/svg-editor" element={isAuthenticated ? <SVGEditorPage /> : <SignIn />} />
                 <Route path="/drato" element={isAuthenticated ? <DratoPage /> : <SignIn />} />
                 <Route path="/grafeo" element={isAuthenticated ? <GrafeoPage /> : <SignIn />} />
-
-                {/* Catch all - redirect to home for logged out users */}
-                <Route path="*" element={<ProjectsPage />} />
+                <Route path="*" element={<Helpo />} />
               </Routes>
             </AppFrame>
           </Router>
@@ -193,7 +226,7 @@ export const App = () => {
 
 // Export App to global scope
 function initApp() {
-  const rootElement = document.getElementById('root');
+  const rootElement = document.getElementById("root");
   if (rootElement) {
     try {
       // Try to use React 18's createRoot if available
@@ -205,7 +238,7 @@ function initApp() {
         ReactDom.render(React.createElement(App), rootElement);
       }
     } catch (err) {
-      console.error('Error rendering app:', err);
+      console.error("Error rendering app:", err);
       // Retry if React isn't loaded yet
       setTimeout(initApp, 100);
     }
@@ -216,7 +249,7 @@ function initApp() {
 }
 
 // Export App to global scope
-if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+if (typeof window !== "undefined" && typeof document !== "undefined") {
   // @ts-ignore
   window.App = App;
   // @ts-ignore
@@ -225,8 +258,8 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   window.ReactDOM = ReactDom;
 
   // Initialize the app when the window is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initApp);
   } else {
     initApp();
   }

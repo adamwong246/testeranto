@@ -1,17 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
-import { Container, Nav, OverlayTrigger, Tooltip, Navbar } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  Nav,
+  OverlayTrigger,
+  Tooltip,
+  Navbar,
+} from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-import { useWebSocket, useTutorialMode, useAuth } from '../../App';
-import { UserProfile } from './UserProfile';
+import { useWebSocket, useTutorialMode, useAuth } from "../../App";
+import { UserProfile } from "./UserProfile";
 
 type AppFrameProps = {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  'data-testid'?: string;
+  "data-testid"?: string;
   title?: string;
   rightContent?: React.ReactNode;
 };
@@ -21,75 +27,74 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
   const { isConnected } = useWebSocket();
   const { tutorialMode } = useTutorialMode();
   const { isAuthenticated, logout } = useAuth();
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    // Only animate on the first load
+    if (!hasAnimated) {
+      const timer = setTimeout(() => {
+        setHasAnimated(true);
+      }, 4000); // Stop animation after all links have animated (1s + 1.8s = 2.8s, rounded up)
+      return () => clearTimeout(timer);
+    }
+  }, [hasAnimated]);
 
   return (
-    <div className="d-flex min-vh-100" >
+    <div className="d-flex min-vh-100">
       {/* Sidebar - Always 60px wide, full height */}
       <div
-        className="border-end d-flex flex-column"
+        className={`border-end d-flex flex-column ${!hasAnimated ? 'sidebar-attention' : ''}`}
         style={{
-          width: '60px',
-          height: '100vh',
-          position: 'sticky',
-          top: 0
+          flexBasis: "100px" /* Sets the initial fixed width */,
+          flexGrow: "0" /* Prevents the item from growing */,
+          flexShrink: "0",
+
+          height: "100vh",
+          position: "sticky",
+          top: 0,
         }}
       >
-        {/* Logo - Not clickable */}
-        {tutorialMode ? (
-          <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="logo-tooltip">
-                Welcome to Testeranto!
-              </Tooltip>
-            }
-          >
-            <div className="p-3 border-bottom d-flex align-items-center justify-content-center">
-              <img
-                src="/logo.svg"
-                alt="Testeranto Logo"
-                style={{
-                  width: '40px',
-                  height: '40px'
-                }}
-              />
-            </div>
-          </OverlayTrigger>
-        ) : (
-          <div className="p-3 border-bottom d-flex align-items-center justify-content-center">
-            <img
-              src="/logo.svg"
-              alt="Testeranto Logo"
-              style={{
-                width: '40px',
-                height: '40px'
-              }}
-            />
-          </div>
-        )}
 
         {/* Navigation */}
         <Nav variant="pills" className="flex-column p-2 flex-grow-1">
-          {/* Projects Link - Always clickable with hover, tutorial tooltip conditionally */}
+
+
+
+          {/* Help Link - Always accessible */}
           <Nav.Link
             as={NavLink}
             to="/"
-            className={`${location.pathname === '/' ? 'active' : ''} d-flex align-items-center justify-content-center`}
-            style={{ height: '40px', width: '40px' }}
+            className={`${location.pathname === "/" ? "active" : ""
+              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}`}
           >
             {tutorialMode ? (
               <OverlayTrigger
                 placement="right"
-                overlay={
-                  <Tooltip id="projects-tooltip">
-                    Projects
-                  </Tooltip>
-                }
+                overlay={<Tooltip id="help-tooltip">Chat with Helpo, the helpful robot.</Tooltip>}
               >
-                <span>📁</span>
+                <span>helpo</span>
               </OverlayTrigger>
             ) : (
-              <span>📁</span>
+              <span>helpo</span>
+            )}
+          </Nav.Link>
+
+          {/* Projects Link - Always clickable with hover, tutorial tooltip conditionally */}
+          <Nav.Link
+            as={NavLink}
+            to="/projects"
+            className={`${location.pathname === "/projects" ? "active" : ""
+              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-2' : ''}`}
+          >
+            {tutorialMode ? (
+              <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip id="projects-tooltip">Projects</Tooltip>}
+              >
+                <span>testo</span>
+              </OverlayTrigger>
+            ) : (
+              <span>testo</span>
             )}
           </Nav.Link>
 
@@ -97,12 +102,12 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           <Nav.Link
             as={NavLink}
             to="/processes"
-            className={`${location.pathname.startsWith('/processes') ? 'active' : ''} d-flex align-items-center justify-content-center ${!isConnected || !isAuthenticated ? 'text-muted pe-none' : ''}`}
-            style={{
-              height: '40px',
-              width: '40px',
-              opacity: isConnected && isAuthenticated ? 1 : 0.6
-            }}
+            className={`${location.pathname.startsWith('/processes') ? 'active' : ''} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-3' : ''}`}
+            // style={{
+            //   height: '40px',
+            //   width: '40px',
+            //   opacity: isConnected && isAuthenticated ? 1 : 0.6
+            // }}
             onClick={(e) => {
               if (!isConnected || !isAuthenticated) {
                 e.preventDefault();
@@ -114,14 +119,19 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
                 placement="right"
                 overlay={
                   <Tooltip id="processes-tooltip">
-                    Processes {!isAuthenticated ? '(Sign in required)' : !isConnected ? '(WebSocket disconnected)' : ''}
+                    Processes{" "}
+                    {!isAuthenticated
+                      ? "(Sign in required)"
+                      : !isConnected
+                        ? "(WebSocket disconnected)"
+                        : ""}
                   </Tooltip>
                 }
               >
-                <span>📊</span>
+                <span>proĉo</span>
               </OverlayTrigger>
             ) : (
-              <span>📊</span>
+              <span>proĉo</span>
             )}
           </Nav.Link>
 
@@ -129,12 +139,14 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           <Nav.Link
             as={NavLink}
             to="/git"
-            className={`${location.pathname === '/git' ? 'active' : ''} d-flex align-items-center justify-content-center ${!isAuthenticated ? 'text-muted pe-none' : ''}`}
-            style={{
-              height: '40px',
-              width: '40px',
-              opacity: isAuthenticated ? 1 : 0.6
-            }}
+            className={`${location.pathname === "/git" ? "active" : ""
+              } d-flex align-items-center justify-content-center ${!isAuthenticated ? "text-muted pe-none" : ""
+              } ${!hasAnimated ? 'navbar-attention-4' : ''}`}
+            // style={{
+            //   height: '40px',
+            //   width: '40px',
+            //   opacity: isAuthenticated ? 1 : 0.6
+            // }}
             onClick={(e) => {
               if (!isAuthenticated) {
                 e.preventDefault();
@@ -146,32 +158,23 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
                 placement="right"
                 overlay={
                   <Tooltip id="git-tooltip">
-                    Git Integration {!isAuthenticated ? '(Sign in required)' : ''}
+                    Git Integration{" "}
+                    {!isAuthenticated ? "(Sign in required)" : ""}
                   </Tooltip>
                 }
               >
-                <span>🐙</span>
+                <span>arbo</span>
               </OverlayTrigger>
             ) : (
-              <span>🐙</span>
+              <span>arbo</span>
             )}
           </Nav.Link>
 
 
-          <Nav.Link
+          {/* <Nav.Link
             as={NavLink}
             to="/design-editor"
             className={`${location.pathname === '/design-editor' ? 'active' : ''} d-flex align-items-center justify-content-center`}
-            style={{
-              height: '40px',
-              width: '40px',
-              opacity: isAuthenticated ? 1 : 0.6
-            }}
-            onClick={(e) => {
-              if (!isAuthenticated) {
-                e.preventDefault();
-              }
-            }}
           >
             {tutorialMode ? (
               <OverlayTrigger
@@ -186,23 +189,13 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             ) : (
               <span>kanvaso</span>
             )}
-          </Nav.Link>
+          </Nav.Link> */}
 
 
           <Nav.Link
             as={NavLink}
             to="/svg-editor"
-            className={`${location.pathname === '/svg-editor' ? 'active' : ''} d-flex align-items-center justify-content-center `}
-            style={{
-              height: '40px',
-              width: '40px',
-              opacity: isAuthenticated ? 1 : 0.6
-            }}
-            onClick={(e) => {
-              if (!isAuthenticated) {
-                e.preventDefault();
-              }
-            }}
+            className={`${location.pathname === '/svg-editor' ? 'active' : ''} d-flex align-items-center justify-content-center`}
           >
             {tutorialMode ? (
               <OverlayTrigger
@@ -222,17 +215,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           <Nav.Link
             as={NavLink}
             to="/drato"
-            className={`${location.pathname === '/drato' ? 'active' : ''} d-flex align-items-center justify-content-center `}
-            style={{
-              height: '40px',
-              width: '40px',
-              opacity: isAuthenticated ? 1 : 0.6
-            }}
-            onClick={(e) => {
-              if (!isAuthenticated) {
-                e.preventDefault();
-              }
-            }}
+            className={`${location.pathname === '/drato' ? 'active' : ''} d-flex align-items-center justify-content-center`}
           >
             {tutorialMode ? (
               <OverlayTrigger
@@ -252,17 +235,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           <Nav.Link
             as={NavLink}
             to="/grafeo"
-            className={`${location.pathname === '/grafeo' ? 'active' : ''} d-flex align-items-center justify-content-center `}
-            style={{
-              height: '40px',
-              width: '40px',
-              opacity: isAuthenticated ? 1 : 0.6
-            }}
-            onClick={(e) => {
-              if (!isAuthenticated) {
-                e.preventDefault();
-              }
-            }}
+            className={`${location.pathname === '/grafeo' ? 'active' : ''} d-flex align-items-center justify-content-center`}
           >
             {tutorialMode ? (
               <OverlayTrigger
@@ -284,25 +257,21 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           <Nav.Link
             as={NavLink}
             to="/settings"
-            className={`${location.pathname === '/settings' ? 'active' : ''} d-flex align-items-center justify-content-center`}
-            style={{ height: '40px', width: '40px' }}
+            className={`${location.pathname === "/settings" ? "active" : ""
+              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-5' : ''}`}
+          // style={{ height: '40px', width: '40px' }}
           >
             {tutorialMode ? (
               <OverlayTrigger
                 placement="right"
-                overlay={
-                  <Tooltip id="settings-tooltip">
-                    Settings
-                  </Tooltip>
-                }
+                overlay={<Tooltip id="settings-tooltip">Settings</Tooltip>}
               >
-                <span>⚙️</span>
+                <span>konto</span>
               </OverlayTrigger>
             ) : (
-              <span>⚙️</span>
+              <span>konto</span>
             )}
           </Nav.Link>
-
         </Nav>
 
         {/* WebSocket Status Indicator - Always show normal tooltip */}
@@ -310,42 +279,35 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           placement="right"
           overlay={
             <Tooltip id="status-tooltip">
-              {isConnected ? 'Dev mode - Full access' : 'Static mode - Read only'}
+              {isConnected
+                ? "Dev mode - Full access"
+                : "Static mode - Read only"}
             </Tooltip>
           }
         >
           <div className="p-2 border-top d-flex align-items-center justify-content-center">
             <span
               className={`badge rounded-circle d-flex align-items-center justify-content-center`}
-              style={{
-                backgroundColor: isConnected ? '#198754' : '#6c757d',
-                width: '20px',
-                height: '20px',
-                fontSize: '12px'
-              }}
+            // style={{
+            //   backgroundColor: isConnected ? '#198754' : '#6c757d',
+            //   width: '20px',
+            //   height: '20px',
+            //   fontSize: '12px'
+            // }}
             >
-              {isConnected ? '🟢' : '🔴'}
+              {isConnected ? "🟢" : "🔴"}
             </span>
           </div>
         </OverlayTrigger>
 
-        {/* Footer - Always show normal tooltip */}
-        <OverlayTrigger
-          placement="right"
-          overlay={
-            <Tooltip id="footer-tooltip">
-              made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a>
-            </Tooltip>
-          }
-        >
-          <div className="p-3 border-top text-center mt-auto">
-            <span className="text-muted">❤️</span>
-          </div>
-        </OverlayTrigger>
+        {/* <p>made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a></p> */}
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow-1 d-flex flex-column" style={{ minHeight: '100vh' }}>
+      <div
+        className="flex-grow-1 d-flex flex-column"
+        style={{ minHeight: "100vh" }}
+      >
         {/* Top Navigation Bar */}
         {/* <Navbar className="border-bottom">
           <Container fluid>
@@ -356,8 +318,8 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           </Container>
         </Navbar> */}
 
-        <main className="flex-grow-1 p-4" style={{ overflow: 'auto' }}>
-          <Container fluid style={{ height: '100%' }}>
+        <main className="flex-grow-1 p-4" style={{ overflow: "auto" }}>
+          <Container fluid style={{ height: "100%" }}>
             {children}
           </Container>
         </main>
