@@ -8,6 +8,36 @@
   "type": "module",
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
+  "repository": "git@github.com:adamwong246/testeranto.git",
+  "homepage": "https://github.com/adamwong246/testeranto",
+  "author": "adam wong <adamwong246@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
+    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
+    "dev": "sh prebuild.sh;  cp ./src/cjs-shim.js ./dist/cjs-shim.js; sh postBuild.sh; tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch  ",
+    "bundle": "node bundle.js",
+    "build-module": "tsc -p tsconfig.module.json",
+    "build-common": "tsc -p tsconfig.common.json",
+    "build-types": "tsc -p tsconfig.types.json",
+    "type-check": "yarn tsc --noEmit > tsc.log",
+    "type-fix": "aider --model deepseek/deepseek-chat --load type-fix.txt",
+    "t-build": "tsx src/build.ts",
+    "t-run": "tsx src/run.ts",
+    "testeranto": "tsx src/testeranto.ts",
+    "t-init": "tsx dist/prebuild/init-docs.mjs",
+    "t-report": "tsx dist/prebuild/ReportServer.mjs",
+    "compile-docs": "node scripts/compile-docs.js",
+    "prepublish": "self-import",
+    "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt",
+    "static-serve": "python3 -m http.server 8000",
+    "buildV2": "node bundle.js",
+    "devV2": "clear; rm -rf testeranto; yarn buildV2; yarn t-init;  cp ./dist/prebuild/App.* testeranto; yarn testeranto core dev",
+    "start": "react-app-rewired start",
+    "build-react": "react-app-rewired build",
+    "test-react": "react-app-rewired test",
+    "setup-github-oauth": "echo 'Please visit https://github.com/settings/developers and create a new OAuth App. Set the Authorization callback URL to http://localhost:3000/auth/github/callback'"
+  },
   "exports": {
     "./Puppeteer": {
       "import": "./dist/prebuild/Puppeteer.mjs",
@@ -107,42 +137,6 @@
     },
     "./src/**/*": "./src/**/*.ts"
   },
-  "repository": "git@github.com:adamwong246/testeranto.git",
-  "homepage": "https://github.com/adamwong246/testeranto",
-  "author": "adam wong <adamwong246@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "typescript",
-    "test",
-    "cucumber",
-    "ATDD"
-  ],
-  "scripts": {
-    "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
-    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
-    "dev": "sh prebuild.sh;  cp ./src/cjs-shim.js ./dist/cjs-shim.js; sh postBuild.sh; tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch  ",
-    "bundle": "node bundle.js",
-    "build-module": "tsc -p tsconfig.module.json",
-    "build-common": "tsc -p tsconfig.common.json",
-    "build-types": "tsc -p tsconfig.types.json",
-    "type-check": "yarn tsc --noEmit > tsc.log",
-    "type-fix": "aider --model deepseek/deepseek-chat --load type-fix.txt",
-    "t-build": "tsx src/build.ts",
-    "t-run": "tsx src/run.ts",
-    "testeranto": "tsx src/testeranto.ts",
-    "t-init": "tsx dist/prebuild/init-docs.mjs",
-    "t-report": "tsx dist/prebuild/ReportServer.mjs",
-    "compile-docs": "node scripts/compile-docs.js",
-    "prepublish": "self-import",
-    "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt",
-    "static-serve": "python3 -m http.server 8000",
-    "buildV2": "node bundle.js",
-    "devV2": "clear; rm -rf testeranto; yarn buildV2; yarn t-init;  cp ./dist/prebuild/App.* testeranto; yarn testeranto core dev",
-    "start": "react-app-rewired start",
-    "build-react": "react-app-rewired build",
-    "test-react": "react-app-rewired test",
-    "setup-github-oauth": "echo 'Please visit https://github.com/settings/developers and create a new OAuth App. Set the Authorization callback URL to http://localhost:3000/auth/github/callback'"
-  },
   "peerDependencies": {
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
@@ -153,9 +147,6 @@
     "ts-node": "^10.9.1",
     "typescript": "4.8.2",
     "typescript-eslint": "^8.29.0"
-  },
-  "dependenciesPurpose": {
-    "express": "Used in unfinished feature 'mothership'"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
@@ -252,5 +243,11 @@
     "xterm": "^5.3.0",
     "xterm-addon-fit": "^0.8.0",
     "xterm-react": "^1.0.0"
-  }
+  },
+  "keywords": [
+    "typescript",
+    "test",
+    "cucumber",
+    "ATDD"
+  ]
 }

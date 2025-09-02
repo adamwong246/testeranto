@@ -1,12 +1,4 @@
 {
-  "example/test_example.py": {
-    "runTimeErrors": "?",
-    "failingFeatures": {}
-  },
-  "src/golingvu/base_suite_test.go": {
-    "runTimeErrors": "?",
-    "failingFeatures": {}
-  },
   "src/lib/TipoSkripto.test/TipoSkripto.ts": {
     "typeErrors": 43,
     "staticErrors": 0,

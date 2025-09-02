@@ -1,7 +1,0 @@
-{
-  "testName": "core",
-  "entryPoints": [
-    "example/test_example.py"
-  ],
-  "timestamp": 1756825704665
-}

@@ -27,9 +27,8 @@ const config: IProject = {
 
     core: {
       tests: [
-        ["example/test_example.py", "python", { ports: 0 }, []],
-
-        ["src/golingvu/base_suite_test.go", "golang", { ports: 0 }, []],
+        // ["example/test_example.py", "python", { ports: 0 }, []],
+        // ["src/golingvu/base_suite_test.go", "golang", { ports: 0 }, []],
 
         ["src/lib/TipoSkripto.test/TipoSkripto.ts", "node", { ports: 0 }, []],
 

@@ -2017,6 +2017,7 @@ var init_PM_WithEslintAndTsc = __esm({
 });
 
 // src/PM/PM_WithGit.ts
+import fs9 from "fs";
 import url2 from "url";
 var PM_WithGit;
 var init_PM_WithGit = __esm({
@@ -2385,35 +2386,66 @@ ${description}` : message;
         try {
           const { exec } = await import("child_process");
           return new Promise((resolve, reject) => {
+            console.log("Current working directory:", process.cwd());
             exec(
-              "git status --porcelain",
+              "git status --porcelain=v1",
               { cwd: process.cwd() },
-              (error, stdout, stderr) => {
+              async (error, stdout, stderr) => {
+                if (stderr) {
+                  console.error("Git stderr:", stderr);
+                }
                 if (error) {
                   console.error("Error getting git changes:", error);
                   resolve([]);
                   return;
                 }
+                console.log("Raw git status output:", stdout);
                 const changes2 = [];
                 const lines = stdout.trim().split("\n");
                 for (const line of lines) {
+                  console.log("Processing git status line:", JSON.stringify(line));
                   if (!line.trim())
                     continue;
-                  const status = line.substring(0, 2).trim();
-                  const path12 = line.substring(3).trim();
+                  const match = line.match(/^(.{2}) (.*)$/);
+                  if (!match) {
+                    console.warn("Could not parse git status line:", line);
+                    continue;
+                  }
+                  const status = match[1];
+                  let path12 = match[2];
+                  if (status === "R " && path12.includes(" -> ")) {
+                    const parts = path12.split(" -> ");
+                    path12 = parts[parts.length - 1];
+                  }
+                  path12 = path12.trim();
                   let fileStatus = "unchanged";
-                  if (status.startsWith("M")) {
+                  const firstChar = status.charAt(0);
+                  if (firstChar === "M" || firstChar === " ") {
                     fileStatus = "modified";
-                  } else if (status.startsWith("A")) {
+                  } else if (firstChar === "A") {
                     fileStatus = "added";
-                  } else if (status.startsWith("D")) {
+                  } else if (firstChar === "D") {
                     fileStatus = "deleted";
-                  } else if (status.startsWith("U") || status.includes("U")) {
+                  } else if (firstChar === "U") {
                     fileStatus = "conflicted";
-                  } else if (status.startsWith("??")) {
+                  } else if (status === "??") {
                     fileStatus = "added";
+                  } else if (status === "R ") {
+                    fileStatus = "modified";
                   }
                   if (fileStatus !== "unchanged") {
+                    console.log("Git change detected:", {
+                      path: path12,
+                      status,
+                      fileStatus
+                    });
+                    const fullPath = `${process.cwd()}/${path12}`;
+                    try {
+                      await fs9.promises.access(fullPath);
+                      console.log("Path exists:", fullPath);
+                    } catch (error2) {
+                      console.warn("Path does not exist:", fullPath);
+                    }
                     changes2.push({
                       path: path12,
                       status: fileStatus
@@ -2478,7 +2510,7 @@ ${description}` : message;
 });
 
 // src/PM/PM_WithProcesses.ts
-import fs9, { watch } from "fs";
+import fs10, { watch } from "fs";
 import path8 from "path";
 import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
 import ansiC3 from "ansi-colors";
@@ -2504,18 +2536,18 @@ var init_PM_WithProcesses = __esm({
             srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
           );
           const testReportPath = `${reportDest}/tests.json`;
-          if (!fs9.existsSync(testReportPath)) {
+          if (!fs10.existsSync(testReportPath)) {
             console.error(`tests.json not found at: ${testReportPath}`);
             return;
           }
-          const testReport = JSON.parse(fs9.readFileSync(testReportPath, "utf8"));
+          const testReport = JSON.parse(fs10.readFileSync(testReportPath, "utf8"));
           if (testReport.tests) {
             testReport.tests.forEach((test) => {
               test.fullPath = path8.resolve(process.cwd(), srcTest);
             });
           }
           testReport.fullPath = path8.resolve(process.cwd(), srcTest);
-          fs9.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
+          fs10.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
           testReport.features.reduce(async (mm, featureStringKey) => {
             const accum = await mm;
             const isUrl = isValidUrl(featureStringKey);
@@ -2534,14 +2566,14 @@ var init_PM_WithProcesses = __esm({
                 accum.files.push(newPath);
               }
             } else {
-              await fs9.promises.mkdir(path8.dirname(featureDestination), {
+              await fs10.promises.mkdir(path8.dirname(featureDestination), {
                 recursive: true
               });
               accum.strings.push(featureStringKey);
             }
             return accum;
           }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
-            fs9.writeFileSync(
+            fs10.writeFileSync(
               `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
               files3.map((f2) => {
                 return `/read ${f2}`;
@@ -2623,7 +2655,7 @@ var init_PM_WithProcesses = __esm({
         } else {
           metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
         }
-        if (!fs9.existsSync(metafilePath)) {
+        if (!fs10.existsSync(metafilePath)) {
           if (platform === "python") {
             console.log(
               ansiC3.yellow(
@@ -2635,7 +2667,7 @@ var init_PM_WithProcesses = __esm({
         }
         let metafile;
         try {
-          const fileContent = fs9.readFileSync(metafilePath).toString();
+          const fileContent = fs10.readFileSync(metafilePath).toString();
           const parsedData = JSON.parse(fileContent);
           if (platform === "python") {
             metafile = parsedData.metafile || parsedData;
@@ -2669,7 +2701,7 @@ var init_PM_WithProcesses = __esm({
             return;
           }
           const addableFiles = Object.keys(output.inputs).filter((i) => {
-            if (!fs9.existsSync(i))
+            if (!fs10.existsSync(i))
               return false;
             if (i.startsWith("node_modules"))
               return false;
@@ -2678,8 +2710,8 @@ var init_PM_WithProcesses = __esm({
             return true;
           });
           const f2 = `${k.split(".").slice(0, -1).join(".")}/`;
-          if (!fs9.existsSync(f2)) {
-            fs9.mkdirSync(f2, { recursive: true });
+          if (!fs10.existsSync(f2)) {
+            fs10.mkdirSync(f2, { recursive: true });
           }
           const entrypoint = output.entryPoint;
           if (entrypoint) {
@@ -2709,8 +2741,8 @@ var init_PM_WithProcesses = __esm({
         this.mapping().forEach(async ([command, func]) => {
           globalThis[command] = func;
         });
-        if (!fs9.existsSync(`testeranto/reports/${this.name}`)) {
-          fs9.mkdirSync(`testeranto/reports/${this.name}`);
+        if (!fs10.existsSync(`testeranto/reports/${this.name}`)) {
+          fs10.mkdirSync(`testeranto/reports/${this.name}`);
         }
         try {
           this.browser = await puppeteer.launch(puppeteerConfigs);
@@ -2774,8 +2806,8 @@ var init_PM_WithProcesses = __esm({
             if (runtime === "python") {
               metafile = `./testeranto/metafiles/python/core.json`;
               const metafileDir = path8.dirname(metafile);
-              if (!fs9.existsSync(metafileDir)) {
-                fs9.mkdirSync(metafileDir, { recursive: true });
+              if (!fs10.existsSync(metafileDir)) {
+                fs10.mkdirSync(metafileDir, { recursive: true });
               }
             } else {
               metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
@@ -2788,7 +2820,7 @@ var init_PM_WithProcesses = __esm({
                 this.launchers[inputFile] = () => launcher(inputFile, outputFile);
                 this.launchers[inputFile]();
                 try {
-                  if (fs9.existsSync(outputFile)) {
+                  if (fs10.existsSync(outputFile)) {
                     watch(outputFile, async (e, filename) => {
                       const hash = await fileHash(outputFile);
                       if (fileHashes[inputFile] !== hash) {
@@ -2816,7 +2848,7 @@ var init_PM_WithProcesses = __esm({
             this.metafileOutputs(runtime);
             if (runtime === "python") {
               const checkFileExists = () => {
-                if (fs9.existsSync(metafile)) {
+                if (fs10.existsSync(metafile)) {
                   console.log(
                     ansiC3.green(ansiC3.inverse(`Pitono metafile found: ${metafile}`))
                   );
@@ -2837,7 +2869,7 @@ var init_PM_WithProcesses = __esm({
               };
               checkFileExists();
             } else {
-              if (fs9.existsSync(metafile)) {
+              if (fs10.existsSync(metafile)) {
                 watcher(
                   watch(metafile, async (e, filename) => {
                     console.log(
@@ -2891,7 +2923,7 @@ var init_PM_WithProcesses = __esm({
           "./index.html"
         ];
         for (const path12 of possiblePaths) {
-          if (fs9.existsSync(path12)) {
+          if (fs10.existsSync(path12)) {
             return path12;
           }
         }
@@ -2980,7 +3012,7 @@ __export(main_exports, {
 import { spawn as spawn2 } from "node:child_process";
 import ansiColors from "ansi-colors";
 import net from "net";
-import fs10 from "fs";
+import fs11 from "fs";
 import ansiC4 from "ansi-colors";
 var files2, screenshots2, PM_Main;
 var init_main = __esm({
@@ -3001,8 +3033,8 @@ var init_main = __esm({
           const purePromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
             }
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
@@ -3109,8 +3141,8 @@ var init_main = __esm({
           const nodePromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
             }
             let testResources = "";
             const testConfig = this.configs.tests.find((t) => {
@@ -3285,8 +3317,8 @@ var init_main = __esm({
           const webPromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
             }
             const destFolder = dest.replace(".mjs", "");
             const webArgz = JSON.stringify({
@@ -3398,8 +3430,8 @@ var init_main = __esm({
           const pythonPromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/python`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
             }
             let testResources = "";
             const testConfig = this.configs.tests.find((t) => t[0] === src);
@@ -3520,8 +3552,8 @@ var init_main = __esm({
           const golangPromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/golang`;
-            if (!fs10.existsSync(reportDest)) {
-              fs10.mkdirSync(reportDest, { recursive: true });
+            if (!fs11.existsSync(reportDest)) {
+              fs11.mkdirSync(reportDest, { recursive: true });
             }
             let testResources = "";
             const testConfig = this.configs.tests.find((t) => t[0] === src);
@@ -3682,19 +3714,19 @@ __export(golingvuMetafile_exports, {
   generateGolangMetafile: () => generateGolangMetafile,
   writeGolangMetafile: () => writeGolangMetafile
 });
-import fs11 from "fs";
+import fs12 from "fs";
 import path9 from "path";
 async function generateGolangMetafile(testName2, entryPoints) {
   const outputs = {};
   for (const entryPoint of entryPoints) {
     try {
       const entryDir = path9.dirname(entryPoint);
-      const goFiles = fs11.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
+      const goFiles = fs12.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
       const inputs = {};
       let totalBytes = 0;
       for (const file of goFiles) {
         try {
-          const stats = fs11.statSync(file);
+          const stats = fs12.statSync(file);
           inputs[file] = { bytesInOutput: stats.size };
           totalBytes += stats.size;
         } catch {
@@ -3703,7 +3735,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
       }
       if (!inputs[entryPoint]) {
         try {
-          const entryStats = fs11.statSync(entryPoint);
+          const entryStats = fs12.statSync(entryPoint);
           inputs[entryPoint] = { bytesInOutput: entryStats.size };
           totalBytes += entryStats.size;
         } catch {
@@ -3726,7 +3758,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   for (const entryPoint of entryPoints) {
     try {
       const entryDir = path9.dirname(entryPoint);
-      const goFiles = fs11.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
+      const goFiles = fs12.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
       goFiles.forEach((file) => allGoFiles.add(file));
       allGoFiles.add(entryPoint);
     } catch (error) {
@@ -3735,7 +3767,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   }
   for (const filePath of Array.from(allGoFiles)) {
     try {
-      const stats = fs11.statSync(filePath);
+      const stats = fs12.statSync(filePath);
       allInputs[filePath] = {
         bytes: stats.size,
         imports: []
@@ -3772,9 +3804,9 @@ function writeGolangMetafile(testName2, metafile) {
     "metafiles",
     "golang"
   );
-  fs11.mkdirSync(metafileDir, { recursive: true });
+  fs12.mkdirSync(metafileDir, { recursive: true });
   const metafilePath = path9.join(metafileDir, `${testName2}.json`);
-  fs11.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs12.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
 }
 var init_golingvuMetafile = __esm({
   "src/utils/golingvuMetafile.ts"() {
@@ -3788,7 +3820,7 @@ __export(pitonoMetafile_exports, {
   generatePitonoMetafile: () => generatePitonoMetafile,
   writePitonoMetafile: () => writePitonoMetafile
 });
-import fs12 from "fs";
+import fs13 from "fs";
 import path10 from "path";
 import { execSync } from "child_process";
 async function generatePitonoMetafile(testName2, entryPoints) {
@@ -3801,10 +3833,10 @@ async function generatePitonoMetafile(testName2, entryPoints) {
 function writePitonoMetafile(testName2, metafile) {
   const metafilePath = path10.join(process.cwd(), "testeranto", "pitono", testName2, "metafile.json");
   const metafileDir = path10.dirname(metafilePath);
-  if (!fs12.existsSync(metafileDir)) {
-    fs12.mkdirSync(metafileDir, { recursive: true });
+  if (!fs13.existsSync(metafileDir)) {
+    fs13.mkdirSync(metafileDir, { recursive: true });
   }
-  fs12.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs13.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
   console.log(`Pitono metafile written to: ${metafilePath}`);
   try {
     const command = `pitono-core-generator ${testName2} ${metafile.entryPoints.join(" ")}`;
@@ -3831,7 +3863,7 @@ function writePitonoMetafile(testName2, metafile) {
           runtime: "pitono"
         };
         const coreFilePath = path10.join(process.cwd(), "testeranto", "pitono", testName2, "core.json");
-        fs12.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
+        fs13.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
         console.log(`Pitono core.json created manually as fallback`);
       } catch (manualError) {
         console.error(`Even manual creation failed: ${manualError}`);
@@ -3848,7 +3880,7 @@ var init_pitonoMetafile = __esm({
 // src/testeranto.ts
 init_utils();
 import ansiC5 from "ansi-colors";
-import fs13 from "fs";
+import fs14 from "fs";
 import path11 from "path";
 import readline from "readline";
 
@@ -3934,7 +3966,7 @@ import(f).then(async (module) => {
     process.exit(-1);
   }
   try {
-    fs13.writeFileSync(
+    fs14.writeFileSync(
       `${process.cwd()}/testeranto/projects.json`,
       JSON.stringify(Object.keys(bigConfig.projects), null, 2)
     );
@@ -3970,13 +4002,13 @@ import(f).then(async (module) => {
   const { PM_Main: PM_Main2 } = await init_main().then(() => main_exports);
   pm = new PM_Main2(config, testName, mode);
   await pm.start();
-  fs13.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
+  fs14.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
   Object.keys(bigConfig.projects).forEach((projectName) => {
     console.log(`testeranto/reports/${projectName}`);
-    if (!fs13.existsSync(`testeranto/reports/${projectName}`)) {
-      fs13.mkdirSync(`testeranto/reports/${projectName}`);
+    if (!fs14.existsSync(`testeranto/reports/${projectName}`)) {
+      fs14.mkdirSync(`testeranto/reports/${projectName}`);
     }
-    fs13.writeFileSync(
+    fs14.writeFileSync(
       `testeranto/reports/${projectName}/config.json`,
       JSON.stringify(config, null, 2)
     );
@@ -4013,8 +4045,8 @@ import(f).then(async (module) => {
     const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
     const metafile = await generatePitonoMetafile2(testName, pitonoEntryPoints);
     const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
-    await fs13.promises.mkdir(pitonoMetafilePath, { recursive: true });
-    fs13.writeFileSync(
+    await fs14.promises.mkdir(pitonoMetafilePath, { recursive: true });
+    fs14.writeFileSync(
       `${pitonoMetafilePath}/core.json`,
       JSON.stringify(metafile, null, 2)
     );
@@ -4043,8 +4075,8 @@ import(f).then(async (module) => {
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
         const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-        return fs13.promises.mkdir(path11.dirname(htmlFilePath), { recursive: true }).then(
-          (x2) => fs13.writeFileSync(
+        return fs14.promises.mkdir(path11.dirname(htmlFilePath), { recursive: true }).then(
+          (x2) => fs14.writeFileSync(
             htmlFilePath,
             web_html_default(jsfilePath, htmlFilePath, cssFilePath)
           )
@@ -4071,7 +4103,7 @@ import(f).then(async (module) => {
   x.forEach(async ([runtime, keys]) => {
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
-      await fs13.mkdirSync(folder, { recursive: true });
+      await fs14.mkdirSync(folder, { recursive: true });
     });
   });
   [
@@ -4089,7 +4121,7 @@ import(f).then(async (module) => {
           ep.split(".").slice(0, -1).join("."),
           runtime
         );
-        fs13.mkdirSync(fp, { recursive: true });
+        fs14.mkdirSync(fp, { recursive: true });
       });
     }
   );
