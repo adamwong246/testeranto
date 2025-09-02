@@ -157,6 +157,38 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             )}
           </Nav.Link>
 
+          {/* SVG Editor Link - Darken if not authenticated */}
+          <Nav.Link
+            as={NavLink}
+            to="/svg-editor"
+            className={`${location.pathname === '/svg-editor' ? 'active' : ''} d-flex align-items-center justify-content-center ${!isAuthenticated ? 'text-muted pe-none' : ''}`}
+            style={{
+              height: '40px',
+              width: '40px',
+              opacity: isAuthenticated ? 1 : 0.6
+            }}
+            onClick={(e) => {
+              if (!isAuthenticated) {
+                e.preventDefault();
+              }
+            }}
+          >
+            {tutorialMode ? (
+              <OverlayTrigger
+                placement="right"
+                overlay={
+                  <Tooltip id="svg-editor-tooltip">
+                    SVG Editor {!isAuthenticated ? '(Sign in required)' : ''}
+                  </Tooltip>
+                }
+              >
+                <span>🎨</span>
+              </OverlayTrigger>
+            ) : (
+              <span>🎨</span>
+            )}
+          </Nav.Link>
+
           {/* Settings Link - Always accessible */}
           <Nav.Link
             as={NavLink}
