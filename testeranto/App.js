@@ -1092,7 +1092,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState44(initialState) {
+          function useState49(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1100,11 +1100,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init2);
           }
-          function useRef36(initialValue) {
+          function useRef38(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect50(create2, deps) {
+          function useEffect51(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1116,7 +1116,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create2, deps);
           }
-          function useCallback30(callback, deps) {
+          function useCallback34(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
@@ -1882,19 +1882,19 @@
           exports.memo = memo2;
           exports.startTransition = startTransition3;
           exports.unstable_act = act;
-          exports.useCallback = useCallback30;
+          exports.useCallback = useCallback34;
           exports.useContext = useContext32;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect50;
+          exports.useEffect = useEffect51;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect6;
           exports.useMemo = useMemo23;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef36;
-          exports.useState = useState44;
+          exports.useRef = useRef38;
+          exports.useState = useState49;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2390,9 +2390,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React168 = require_react();
+          var React173 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React168.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React173.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3997,7 +3997,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React168.Children.forEach(props.children, function(child) {
+                  React173.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12444,7 +12444,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React168.Component().refs;
+          var emptyRefsObject = new React173.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23616,7 +23616,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React168 = require_react();
+          var React173 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23642,7 +23642,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React168.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React173.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -45856,7 +45856,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
   });
 
   // src/App.tsx
-  var import_react140 = __toESM(require_react(), 1);
+  var import_react145 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -58875,6 +58875,56 @@ This file was not generated during the test run.`,
         Nav_default2.Link,
         {
           as: NavLink,
+          to: "/drato",
+          className: `${location2.pathname === "/drato" ? "active" : ""} d-flex align-items-center justify-content-center `,
+          style: {
+            height: "40px",
+            width: "40px",
+            opacity: isAuthenticated ? 1 : 0.6
+          },
+          onClick: (e3) => {
+            if (!isAuthenticated) {
+              e3.preventDefault();
+            }
+          }
+        },
+        tutorialMode ? /* @__PURE__ */ import_react111.default.createElement(
+          OverlayTrigger_default,
+          {
+            placement: "right",
+            overlay: /* @__PURE__ */ import_react111.default.createElement(Tooltip_default, { id: "drato-tooltip" }, "Bootstrap wireframing tool")
+          },
+          /* @__PURE__ */ import_react111.default.createElement("span", null, "drato")
+        ) : /* @__PURE__ */ import_react111.default.createElement("span", null, "drato")
+      ), /* @__PURE__ */ import_react111.default.createElement(
+        Nav_default2.Link,
+        {
+          as: NavLink,
+          to: "/grafeo",
+          className: `${location2.pathname === "/grafeo" ? "active" : ""} d-flex align-items-center justify-content-center `,
+          style: {
+            height: "40px",
+            width: "40px",
+            opacity: isAuthenticated ? 1 : 0.6
+          },
+          onClick: (e3) => {
+            if (!isAuthenticated) {
+              e3.preventDefault();
+            }
+          }
+        },
+        tutorialMode ? /* @__PURE__ */ import_react111.default.createElement(
+          OverlayTrigger_default,
+          {
+            placement: "right",
+            overlay: /* @__PURE__ */ import_react111.default.createElement(Tooltip_default, { id: "grafeo-tooltip" }, "GraphML editor")
+          },
+          /* @__PURE__ */ import_react111.default.createElement("span", null, "grafeo")
+        ) : /* @__PURE__ */ import_react111.default.createElement("span", null, "grafeo")
+      ), /* @__PURE__ */ import_react111.default.createElement(
+        Nav_default2.Link,
+        {
+          as: NavLink,
           to: "/settings",
           className: `${location2.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center`,
           style: { height: "40px", width: "40px" }
@@ -68734,76 +68784,365 @@ ${description}` : message
   };
 
   // src/components/stateful/SVGEditorPage.tsx
-  var import_react139 = __toESM(require_react(), 1);
+  var import_react142 = __toESM(require_react(), 1);
 
-  // src/components/stateful/SVGEditor/SVGTree.tsx
+  // src/components/stateful/SVGEditor/SVGAttributesEditor.tsx
   var import_react130 = __toESM(require_react(), 1);
-  var SVGTree = ({
+  var SVGAttributesEditor = ({
+    node,
+    onUpdateAttributes,
+    onUpdateTextContent
+  }) => {
+    const [attributes, setAttributes] = (0, import_react130.useState)(node.attributes);
+    const [textContent, setTextContent] = (0, import_react130.useState)("");
+    (0, import_react130.useEffect)(() => {
+      setAttributes(node.attributes);
+    }, [node.id]);
+    const handleAttributeChange = (key, value) => {
+      const newAttributes = { ...attributes, [key]: value };
+      setAttributes(newAttributes);
+      onUpdateAttributes(newAttributes);
+    };
+    return /* @__PURE__ */ import_react130.default.createElement("div", null, (node.type === "text" || node.type === "tspan") && /* @__PURE__ */ import_react130.default.createElement(Form_default.Group, { className: "mb-3" }, /* @__PURE__ */ import_react130.default.createElement(Form_default.Label, null, "Text Content"), /* @__PURE__ */ import_react130.default.createElement(
+      Form_default.Control,
+      {
+        type: "text",
+        value: node.attributes["text-content"] || "",
+        onChange: (e3) => {
+          handleAttributeChange("text-content", e3.target.value);
+          if (onUpdateTextContent) {
+            onUpdateTextContent(e3.target.value);
+          }
+        }
+      }
+    )), Object.entries(attributes).filter(([key]) => key !== "text-content").map(([key, value]) => /* @__PURE__ */ import_react130.default.createElement(Form_default.Group, { key, className: "mb-2" }, /* @__PURE__ */ import_react130.default.createElement(Form_default.Label, null, key), /* @__PURE__ */ import_react130.default.createElement(
+      Form_default.Control,
+      {
+        type: "text",
+        value,
+        onChange: (e3) => handleAttributeChange(key, e3.target.value)
+      }
+    ))), /* @__PURE__ */ import_react130.default.createElement(Form_default.Group, null, /* @__PURE__ */ import_react130.default.createElement(Form_default.Label, null, "Add New Attribute"), /* @__PURE__ */ import_react130.default.createElement(
+      Form_default.Control,
+      {
+        type: "text",
+        placeholder: "attribute=value",
+        onKeyPress: (e3) => {
+          if (e3.key === "Enter") {
+            const target = e3.target;
+            const [key, value] = target.value.split("=");
+            if (key && value) {
+              handleAttributeChange(key.trim(), value.trim());
+              target.value = "";
+            }
+          }
+        }
+      }
+    )));
+  };
+
+  // src/components/stateful/SVGEditor/SVGElementForm.tsx
+  var import_react135 = __toESM(require_react(), 1);
+
+  // src/components/stateful/SVGEditor/CircleForm.tsx
+  var import_react132 = __toESM(require_react(), 1);
+
+  // src/components/stateful/SVGEditor/SVGAttributeField.tsx
+  var import_react131 = __toESM(require_react(), 1);
+  var SVGAttributeField = ({
+    label,
+    value,
+    onChange,
+    type = "text"
+  }) => {
+    return /* @__PURE__ */ import_react131.default.createElement("div", { style: { marginBottom: "8px" } }, /* @__PURE__ */ import_react131.default.createElement("label", { style: { display: "block", marginBottom: "4px" } }, label, ":"), /* @__PURE__ */ import_react131.default.createElement(
+      "input",
+      {
+        type,
+        value: value || "",
+        onChange: (e3) => onChange(e3.target.value),
+        style: { width: "100%" }
+      }
+    ));
+  };
+
+  // src/components/stateful/SVGEditor/CircleForm.tsx
+  var CircleForm = ({ attributes, onChange }) => {
+    const handleChange = (key, value) => {
+      onChange({ ...attributes, [key]: value });
+    };
+    return /* @__PURE__ */ import_react132.default.createElement("div", null, /* @__PURE__ */ import_react132.default.createElement("h3", null, "Circle Attributes"), /* @__PURE__ */ import_react132.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Center X",
+        value: attributes.cx,
+        onChange: (value) => handleChange("cx", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react132.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Center Y",
+        value: attributes.cy,
+        onChange: (value) => handleChange("cy", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react132.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Radius",
+        value: attributes.r,
+        onChange: (value) => handleChange("r", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react132.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Fill Color",
+        value: attributes.fill,
+        onChange: (value) => handleChange("fill", value),
+        type: "color"
+      }
+    ), /* @__PURE__ */ import_react132.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Stroke Color",
+        value: attributes.stroke,
+        onChange: (value) => handleChange("stroke", value),
+        type: "color"
+      }
+    ), /* @__PURE__ */ import_react132.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Stroke Width",
+        value: attributes.strokeWidth,
+        onChange: (value) => handleChange("strokeWidth", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react132.default.createElement(
+      SVGAttributeField,
+      {
+        label: "ID",
+        value: attributes.id,
+        onChange: (value) => handleChange("id", value),
+        type: "text"
+      }
+    ), /* @__PURE__ */ import_react132.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Class Name",
+        value: attributes.className,
+        onChange: (value) => handleChange("className", value),
+        type: "text"
+      }
+    ));
+  };
+
+  // src/components/stateful/SVGEditor/RectForm.tsx
+  var import_react133 = __toESM(require_react(), 1);
+  var RectForm = ({ attributes, onChange }) => {
+    const handleChange = (key, value) => {
+      onChange({ ...attributes, [key]: value });
+    };
+    return /* @__PURE__ */ import_react133.default.createElement("div", null, /* @__PURE__ */ import_react133.default.createElement("h3", null, "Rectangle Attributes"), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "X Position",
+        value: attributes.x,
+        onChange: (value) => handleChange("x", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Y Position",
+        value: attributes.y,
+        onChange: (value) => handleChange("y", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Width",
+        value: attributes.width,
+        onChange: (value) => handleChange("width", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Height",
+        value: attributes.height,
+        onChange: (value) => handleChange("height", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "RX (Corner Radius X)",
+        value: attributes.rx,
+        onChange: (value) => handleChange("rx", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "RY (Corner Radius Y)",
+        value: attributes.ry,
+        onChange: (value) => handleChange("ry", value),
+        type: "number"
+      }
+    ), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Fill Color",
+        value: attributes.fill,
+        onChange: (value) => handleChange("fill", value),
+        type: "color"
+      }
+    ), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Stroke Color",
+        value: attributes.stroke,
+        onChange: (value) => handleChange("stroke", value),
+        type: "color"
+      }
+    ), /* @__PURE__ */ import_react133.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Stroke Width",
+        value: attributes.strokeWidth,
+        onChange: (value) => handleChange("strokeWidth", value),
+        type: "number"
+      }
+    ));
+  };
+
+  // src/components/stateful/SVGEditor/GroupForm.tsx
+  var import_react134 = __toESM(require_react(), 1);
+  var GroupForm = ({ attributes, onChange }) => {
+    const handleChange = (key, value) => {
+      onChange({ ...attributes, [key]: value });
+    };
+    return /* @__PURE__ */ import_react134.default.createElement("div", null, /* @__PURE__ */ import_react134.default.createElement("h3", null, "Group Attributes"), /* @__PURE__ */ import_react134.default.createElement(
+      SVGAttributeField,
+      {
+        label: "ID",
+        value: attributes.id,
+        onChange: (value) => handleChange("id", value),
+        type: "text"
+      }
+    ), /* @__PURE__ */ import_react134.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Class Name",
+        value: attributes.className,
+        onChange: (value) => handleChange("className", value),
+        type: "text"
+      }
+    ), /* @__PURE__ */ import_react134.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Transform",
+        value: attributes.transform,
+        onChange: (value) => handleChange("transform", value),
+        type: "text"
+      }
+    ), /* @__PURE__ */ import_react134.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Fill Color",
+        value: attributes.fill,
+        onChange: (value) => handleChange("fill", value),
+        type: "color"
+      }
+    ), /* @__PURE__ */ import_react134.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Stroke Color",
+        value: attributes.stroke,
+        onChange: (value) => handleChange("stroke", value),
+        type: "color"
+      }
+    ), /* @__PURE__ */ import_react134.default.createElement(
+      SVGAttributeField,
+      {
+        label: "Stroke Width",
+        value: attributes.strokeWidth,
+        onChange: (value) => handleChange("strokeWidth", value),
+        type: "number"
+      }
+    ));
+  };
+
+  // src/components/stateful/SVGEditor/SVGElementForm.tsx
+  var SVGElementForm = ({
+    elementType,
+    attributes,
+    onChange
+  }) => {
+    switch (elementType) {
+      case "circle":
+        return /* @__PURE__ */ import_react135.default.createElement(
+          CircleForm,
+          {
+            attributes,
+            onChange
+          }
+        );
+      case "rect":
+        return /* @__PURE__ */ import_react135.default.createElement(
+          RectForm,
+          {
+            attributes,
+            onChange
+          }
+        );
+      case "g":
+        return /* @__PURE__ */ import_react135.default.createElement(
+          GroupForm,
+          {
+            attributes,
+            onChange
+          }
+        );
+      default:
+        return /* @__PURE__ */ import_react135.default.createElement("div", null, "Select an element type");
+    }
+  };
+
+  // src/components/stateful/GenericXMLEditorPage.tsx
+  var import_react140 = __toESM(require_react(), 1);
+
+  // src/components/stateful/GenericXMLEditor/GenericTree.tsx
+  var import_react136 = __toESM(require_react(), 1);
+  var GenericTree = ({
     node,
     selectedNodeId,
     onSelectNode,
     onAddNode,
     onRemoveNode,
     onToggleVisibility,
-    onMoveNode,
     hiddenNodes,
-    dragInfo,
-    onDragStart,
-    onDragEnd
+    nodeTypes
   }) => {
     const isSelected = node.id === selectedNodeId;
     const isHidden = hiddenNodes.has(node.id);
-    const [isDragOver, setIsDragOver] = (0, import_react130.useState)(false);
-    const handleDragStart = (e3, nodeId) => {
-      e3.dataTransfer.setData("text/plain", nodeId);
-      onDragStart(nodeId);
-    };
-    const handleDragOver = (e3) => {
-      e3.preventDefault();
-      setIsDragOver(true);
-      e3.dataTransfer.dropEffect = "move";
-    };
-    const handleDragLeave = (e3) => {
-      e3.preventDefault();
-      setIsDragOver(false);
-    };
-    const handleDrop = (e3, targetNodeId) => {
-      e3.preventDefault();
-      setIsDragOver(false);
-      const draggedNodeId = e3.dataTransfer.getData("text/plain");
-      if (draggedNodeId && draggedNodeId !== targetNodeId) {
-        onMoveNode(draggedNodeId, targetNodeId, node.children.length);
-      }
-      onDragEnd();
-    };
-    const handleDropBefore = (e3, targetNodeId, index3) => {
-      e3.preventDefault();
-      e3.stopPropagation();
-      const draggedNodeId = e3.dataTransfer.getData("text/plain");
-      if (draggedNodeId && draggedNodeId !== targetNodeId) {
-      }
-      onDragEnd();
-    };
-    return /* @__PURE__ */ import_react130.default.createElement(
+    return /* @__PURE__ */ import_react136.default.createElement(
       "li",
       {
-        style: { listStyle: "none", marginLeft: "0", paddingLeft: "10px" },
-        onDragOver: handleDragOver,
-        onDragLeave: handleDragLeave,
-        onDrop: (e3) => handleDrop(e3, node.id)
+        style: { listStyle: "none", marginLeft: "0", paddingLeft: "10px" }
       },
-      /* @__PURE__ */ import_react130.default.createElement(
+      /* @__PURE__ */ import_react136.default.createElement(
         "div",
         {
-          className: `d-flex justify-content-between align-items-center p-1 ${isSelected ? "bg-primary text-white rounded" : ""} ${isDragOver ? "bg-info" : ""}`,
+          className: `d-flex justify-content-between align-items-center p-1 ${isSelected ? "bg-primary text-white rounded" : ""}`,
           onClick: () => onSelectNode(node.id),
-          style: { cursor: "pointer" },
-          draggable: true,
-          onDragStart: (e3) => handleDragStart(e3, node.id),
-          onDragEnd
+          style: { cursor: "pointer" }
         },
-        /* @__PURE__ */ import_react130.default.createElement("span", { className: "flex-grow-1" }, node.type, " (", node.id, ")"),
-        node.type !== "svg" && /* @__PURE__ */ import_react130.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react130.default.createElement(
+        /* @__PURE__ */ import_react136.default.createElement("span", { className: "flex-grow-1" }, node.type, " (", node.id, ")"),
+        node.type !== "root" && /* @__PURE__ */ import_react136.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react136.default.createElement(
           Button_default2,
           {
             variant: "outline-secondary",
@@ -68814,7 +69153,7 @@ ${description}` : message
             title: isHidden ? "Show node" : "Hide node"
           },
           isHidden ? "\u{1F441}\uFE0F\u200D\u{1F5E8}\uFE0F" : "\u{1F441}\uFE0F"
-        ), /* @__PURE__ */ import_react130.default.createElement(
+        ), /* @__PURE__ */ import_react136.default.createElement(
           Button_default2,
           {
             variant: "outline-danger",
@@ -68827,8 +69166,8 @@ ${description}` : message
           "\xD7"
         ))
       ),
-      node.children.length > 0 && /* @__PURE__ */ import_react130.default.createElement("ul", { style: { marginLeft: "20px", paddingLeft: "0" } }, node.children.map((child, index3) => /* @__PURE__ */ import_react130.default.createElement(
-        SVGTree,
+      node.children.length > 0 && /* @__PURE__ */ import_react136.default.createElement("ul", { style: { marginLeft: "20px", paddingLeft: "0" } }, node.children.map((child) => /* @__PURE__ */ import_react136.default.createElement(
+        GenericTree,
         {
           key: child.id,
           node: child,
@@ -68837,25 +69176,607 @@ ${description}` : message
           onAddNode,
           onRemoveNode,
           onToggleVisibility,
-          onMoveNode,
           hiddenNodes,
-          dragInfo,
-          onDragStart,
-          onDragEnd
+          nodeTypes
         }
       ))),
-      isSelected && /* @__PURE__ */ import_react130.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react130.default.createElement(Dropdown_default2, null, /* @__PURE__ */ import_react130.default.createElement(Dropdown_default2.Toggle, { size: "sm", variant: "outline-success", id: "dropdown-add-node" }, "Add Element"), /* @__PURE__ */ import_react130.default.createElement(Dropdown_default2.Menu, null, /* @__PURE__ */ import_react130.default.createElement(Dropdown_default2.Item, { onClick: () => onAddNode(node.id, "rect") }, "Rectangle"), /* @__PURE__ */ import_react130.default.createElement(Dropdown_default2.Item, { onClick: () => onAddNode(node.id, "circle") }, "Circle"), /* @__PURE__ */ import_react130.default.createElement(Dropdown_default2.Item, { onClick: () => onAddNode(node.id, "path") }, "Path"), /* @__PURE__ */ import_react130.default.createElement(Dropdown_default2.Item, { onClick: () => onAddNode(node.id, "text") }, "Text"), /* @__PURE__ */ import_react130.default.createElement(Dropdown_default2.Item, { onClick: () => onAddNode(node.id, "g") }, "Group"))))
+      isSelected && /* @__PURE__ */ import_react136.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react136.default.createElement(Dropdown_default2, null, /* @__PURE__ */ import_react136.default.createElement(Dropdown_default2.Toggle, { size: "sm", variant: "outline-success", id: "dropdown-add-node" }, "Add Element"), /* @__PURE__ */ import_react136.default.createElement(Dropdown_default2.Menu, null, nodeTypes.map(({ label, type }) => /* @__PURE__ */ import_react136.default.createElement(
+        Dropdown_default2.Item,
+        {
+          key: type,
+          onClick: () => onAddNode(node.id, type)
+        },
+        label
+      )))))
     );
   };
 
+  // src/components/stateful/GenericXMLEditor/GenericPreview.tsx
+  var import_react137 = __toESM(require_react(), 1);
+  var GenericPreview = ({
+    xmlTree: xmlTree2,
+    selectedNodeId,
+    hiddenNodes,
+    renderPreview
+  }) => {
+    const [scale, setScale] = (0, import_react137.useState)(1);
+    const [position, setPosition] = (0, import_react137.useState)({ x: 0, y: 0 });
+    const [isPanning, setIsPanning] = (0, import_react137.useState)(false);
+    const [startPanPoint, setStartPanPoint] = (0, import_react137.useState)({ x: 0, y: 0 });
+    const previewRef = (0, import_react137.useRef)(null);
+    const renderNode = (node) => {
+      if (hiddenNodes.has(node.id)) {
+        return null;
+      }
+      const isSelected = selectedNodeId === node.id;
+      const eventHandlers = {};
+      const children = node.children.map(renderNode).filter((child) => child !== null);
+      return renderPreview(node, isSelected, eventHandlers);
+    };
+    const handleMouseDown = (0, import_react137.useCallback)((e3) => {
+      if (e3.button === 1 || e3.button === 0 && e3.altKey) {
+        e3.preventDefault();
+        setIsPanning(true);
+        setStartPanPoint({ x: e3.clientX - position.x, y: e3.clientY - position.y });
+      }
+    }, [position]);
+    const handleMouseMove = (0, import_react137.useCallback)((e3) => {
+      if (isPanning) {
+        setPosition({
+          x: e3.clientX - startPanPoint.x,
+          y: e3.clientY - startPanPoint.y
+        });
+      }
+    }, [isPanning, startPanPoint]);
+    const handleMouseUp = (0, import_react137.useCallback)(() => {
+      setIsPanning(false);
+    }, []);
+    const handleWheel = (0, import_react137.useCallback)((e3) => {
+      e3.preventDefault();
+      const delta = -e3.deltaY * 0.01;
+      setScale((prevScale) => Math.max(0.1, Math.min(5, prevScale + delta)));
+    }, []);
+    const resetView = (0, import_react137.useCallback)(() => {
+      setScale(1);
+      setPosition({ x: 0, y: 0 });
+    }, []);
+    const isSVG = xmlTree2.type === "svg";
+    if (isSVG) {
+      return /* @__PURE__ */ import_react137.default.createElement(
+        "div",
+        {
+          className: "border rounded p-3 d-flex justify-content-center align-items-center position-relative",
+          style: { height: "400px", overflow: "hidden" },
+          ref: previewRef,
+          onMouseDown: handleMouseDown,
+          onMouseMove: handleMouseMove,
+          onMouseUp: handleMouseUp,
+          onMouseLeave: handleMouseUp,
+          onWheel: handleWheel
+        },
+        /* @__PURE__ */ import_react137.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react137.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react137.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setScale((s2) => Math.min(5, s2 + 0.1)) }, "+"), /* @__PURE__ */ import_react137.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setScale((s2) => Math.max(0.1, s2 - 0.1)) }, "-"), /* @__PURE__ */ import_react137.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
+        /* @__PURE__ */ import_react137.default.createElement("div", { style: {
+          cursor: isPanning ? "grabbing" : scale !== 1 ? "grab" : "default",
+          transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+          transformOrigin: "center center",
+          transition: isPanning ? "none" : "transform 0.1s ease"
+        } }, /* @__PURE__ */ import_react137.default.createElement("svg", { ...xmlTree2.attributes, style: { background: "#f8f9fa" } }, xmlTree2.children.map(renderNode)))
+      );
+    }
+    return /* @__PURE__ */ import_react137.default.createElement(
+      "div",
+      {
+        className: "border rounded p-3 position-relative",
+        style: { height: "400px", overflow: "hidden" },
+        ref: previewRef,
+        onMouseDown: handleMouseDown,
+        onMouseMove: handleMouseMove,
+        onMouseUp: handleMouseUp,
+        onMouseLeave: handleMouseUp,
+        onWheel: handleWheel
+      },
+      /* @__PURE__ */ import_react137.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react137.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react137.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setScale((s2) => Math.min(5, s2 + 0.1)) }, "+"), /* @__PURE__ */ import_react137.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setScale((s2) => Math.max(0.1, s2 - 0.1)) }, "-"), /* @__PURE__ */ import_react137.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
+      /* @__PURE__ */ import_react137.default.createElement("div", { style: {
+        cursor: isPanning ? "grabbing" : scale !== 1 ? "grab" : "default",
+        transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+        transformOrigin: "0 0",
+        transition: isPanning ? "none" : "transform 0.1s ease",
+        height: "100%"
+      } }, xmlTree2.children.map(renderNode))
+    );
+  };
+
+  // src/components/stateful/GenericXMLEditor/GenericTextEditor.tsx
+  var import_react138 = __toESM(require_react(), 1);
+  var nodeToXML = (node, depth = 0) => {
+    const indent = "  ".repeat(depth);
+    const attributes = Object.entries(node.attributes).map(([key, value]) => ` ${key}="${value}"`).join("");
+    if (node.children.length === 0) {
+      return `${indent}<${node.type}${attributes} />`;
+    } else {
+      const children = node.children.map((child) => nodeToXML(child, depth + 1)).join("\n");
+      return `${indent}<${node.type}${attributes}>
+${children}
+${indent}</${node.type}>`;
+    }
+  };
+  var GenericTextEditor = ({
+    xmlTree: xmlTree2,
+    onUpdateTree
+  }) => {
+    const [xmlContent, setXmlContent] = (0, import_react138.useState)("");
+    const [error, setError] = (0, import_react138.useState)(null);
+    (0, import_react138.useEffect)(() => {
+      try {
+        if (xmlTree2.type === "svg") {
+          const content = nodeToXML(xmlTree2, 0);
+          setXmlContent(content);
+        } else {
+          const content = xmlTree2.children.map((child) => nodeToXML(child, 0)).join("\n");
+          setXmlContent(content);
+        }
+        setError(null);
+      } catch (err) {
+        setError("Error generating XML");
+      }
+    }, [xmlTree2]);
+    const handleXmlChange = (e3) => {
+      const newContent = e3.currentTarget.textContent || "";
+      setXmlContent(newContent);
+      setError(null);
+    };
+    const applyChanges = () => {
+      try {
+        setError("XML parsing not implemented yet");
+      } catch (err) {
+        setError("Error parsing XML: " + (err instanceof Error ? err.message : String(err)));
+      }
+    };
+    return /* @__PURE__ */ import_react138.default.createElement("div", { className: "h-100 d-flex flex-column align-items-center" }, /* @__PURE__ */ import_react138.default.createElement("div", { style: { width: "80ch", maxWidth: "100%" } }, /* @__PURE__ */ import_react138.default.createElement(
+      "div",
+      {
+        contentEditable: true,
+        onInput: handleXmlChange,
+        style: {
+          width: "80ch",
+          background: "#f8f9fa",
+          padding: "1rem",
+          borderRadius: "0.25rem",
+          overflow: "auto",
+          minHeight: "400px",
+          fontFamily: "monospace",
+          whiteSpace: "pre-wrap",
+          wordBreak: "break-word",
+          lineHeight: "1.4",
+          outline: "none"
+        },
+        suppressContentEditableWarning: true
+      },
+      xmlContent
+    ), error && /* @__PURE__ */ import_react138.default.createElement(Alert_default, { variant: "danger", className: "mt-2" }, error), /* @__PURE__ */ import_react138.default.createElement(
+      Button_default2,
+      {
+        variant: "primary",
+        onClick: applyChanges,
+        className: "mt-2",
+        disabled: !!error
+      },
+      "Apply Changes"
+    )));
+  };
+
+  // src/components/stateful/GenericXMLEditor/Drawer.tsx
+  var import_react139 = __toESM(require_react(), 1);
+  var Drawer = ({
+    position,
+    isOpen,
+    zIndex,
+    onBringToFront,
+    title,
+    children
+  }) => {
+    const [size2, setSize] = (0, import_react139.useState)(position === "bottom" ? 200 : 300);
+    const [isResizing, setIsResizing] = (0, import_react139.useState)(false);
+    const [dragStart, setDragStart] = (0, import_react139.useState)({ x: 0, y: 0, size: 0 });
+    const drawerRef = (0, import_react139.useRef)(null);
+    const handleMouseDown = (e3) => {
+      setIsResizing(true);
+      setDragStart({
+        x: e3.clientX,
+        y: e3.clientY,
+        size: size2
+      });
+      onBringToFront();
+      e3.preventDefault();
+    };
+    (0, import_react139.useEffect)(() => {
+      const handleMouseMove = (e3) => {
+        if (!isResizing)
+          return;
+        switch (position) {
+          case "left":
+            setSize(Math.max(40, Math.min(window.innerWidth - 100, dragStart.size + (e3.clientX - dragStart.x))));
+            break;
+          case "right":
+            setSize(Math.max(40, Math.min(window.innerWidth - 100, dragStart.size - (e3.clientX - dragStart.x))));
+            break;
+          case "bottom":
+            setSize(Math.max(40, Math.min(window.innerHeight - 100, dragStart.size - (e3.clientY - dragStart.y))));
+            break;
+        }
+      };
+      const handleMouseUp = () => {
+        setIsResizing(false);
+      };
+      if (isResizing) {
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
+        document.body.style.cursor = position === "bottom" ? "ns-resize" : "ew-resize";
+        document.body.style.userSelect = "none";
+      }
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+        document.body.style.cursor = "";
+        document.body.style.userSelect = "";
+      };
+    }, [isResizing, dragStart, position]);
+    const getPositionStyles = () => {
+      switch (position) {
+        case "left":
+          return {
+            top: 0,
+            left: 0,
+            height: "100%",
+            width: `${size2}px`,
+            transform: "none"
+          };
+        case "right":
+          return {
+            top: 0,
+            right: 0,
+            height: "100%",
+            width: `${size2}px`,
+            transform: "none"
+          };
+        case "bottom":
+          return {
+            bottom: 0,
+            left: 0,
+            width: "100%",
+            height: `${size2}px`,
+            transform: "none"
+          };
+        default:
+          return {};
+      }
+    };
+    const getDragEdgeStyle = () => {
+      switch (position) {
+        case "left":
+          return {
+            right: "0",
+            top: "0",
+            height: "100%",
+            width: "8px",
+            cursor: "ew-resize"
+          };
+        case "right":
+          return {
+            left: "0",
+            top: "0",
+            height: "100%",
+            width: "8px",
+            cursor: "ew-resize"
+          };
+        case "bottom":
+          return {
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "8px",
+            cursor: "ns-resize"
+          };
+        default:
+          return {};
+      }
+    };
+    return /* @__PURE__ */ import_react139.default.createElement(
+      "div",
+      {
+        ref: drawerRef,
+        className: `position-absolute bg-light border ${isResizing ? "user-select-none" : ""}`,
+        style: {
+          ...getPositionStyles(),
+          zIndex,
+          transition: isResizing ? "none" : "all 0.3s ease",
+          overflow: "hidden"
+        }
+      },
+      /* @__PURE__ */ import_react139.default.createElement(
+        "div",
+        {
+          className: "d-flex justify-content-between align-items-center p-2 border-bottom bg-white",
+          onMouseDown: () => onBringToFront(),
+          style: { cursor: "move" }
+        },
+        /* @__PURE__ */ import_react139.default.createElement("span", null, title)
+      ),
+      /* @__PURE__ */ import_react139.default.createElement("div", { className: "h-100", style: { overflow: "auto" } }, children),
+      /* @__PURE__ */ import_react139.default.createElement(
+        "div",
+        {
+          style: {
+            position: "absolute",
+            ...getDragEdgeStyle(),
+            backgroundColor: "rgba(0, 0, 0, 0.2)"
+          },
+          onMouseDown: handleMouseDown,
+          className: "drag-edge"
+        }
+      )
+    );
+  };
+
+  // src/components/stateful/GenericXMLEditorPage.tsx
+  var GenericXMLEditorPage = ({
+    initialTree,
+    renderPreview,
+    attributeEditor,
+    nodeTypes,
+    onAddNode
+  }) => {
+    const [xmlTree2, setXmlTree] = (0, import_react140.useState)(initialTree);
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react140.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react140.useState)("preview");
+    const [history, setHistory] = (0, import_react140.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react140.useState)(0);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react140.useState)(/* @__PURE__ */ new Set());
+    const [drawerStates, setDrawerStates] = (0, import_react140.useState)({
+      left: { isOpen: true, zIndex: 1 },
+      right: { isOpen: true, zIndex: 1 },
+      bottom: { isOpen: true, zIndex: 1 }
+    });
+    const [activeDrawer, setActiveDrawer] = (0, import_react140.useState)(null);
+    const findNode = (0, import_react140.useCallback)((node, id) => {
+      if (node.id === id)
+        return node;
+      for (const child of node.children) {
+        const found = findNode(child, id);
+        if (found)
+          return found;
+      }
+      return null;
+    }, []);
+    const updateTree = (0, import_react140.useCallback)(
+      (newTree) => {
+        setXmlTree(newTree);
+        setHistory((prevHistory) => {
+          const newHistory = prevHistory.slice(0, historyIndex + 1);
+          newHistory.push(newTree);
+          return newHistory;
+        });
+        setHistoryIndex((prevIndex) => prevIndex + 1);
+      },
+      [historyIndex]
+    );
+    const updateNodeAttributes = (0, import_react140.useCallback)(
+      (nodeId, attributes) => {
+        setXmlTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const node = findNode(newTree, nodeId);
+          if (node) {
+            node.attributes = { ...node.attributes, ...attributes };
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [findNode, updateTree]
+    );
+    const updateNodeTextContent = (0, import_react140.useCallback)(
+      (nodeId, textContent) => {
+        setXmlTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const node = findNode(newTree, nodeId);
+          if (node) {
+            node.textContent = textContent;
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [findNode, updateTree]
+    );
+    const toggleNodeVisibility = (0, import_react140.useCallback)((nodeId) => {
+      setHiddenNodes((prev) => {
+        const newHidden = new Set(prev);
+        if (newHidden.has(nodeId)) {
+          newHidden.delete(nodeId);
+        } else {
+          newHidden.add(nodeId);
+        }
+        return newHidden;
+      });
+    }, []);
+    const handleAddChildNode = (0, import_react140.useCallback)(
+      (parentId, nodeType) => {
+        setXmlTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const parent = findNode(newTree, parentId);
+          if (parent) {
+            const newNode = onAddNode(parentId, nodeType);
+            parent.children = [...parent.children, newNode];
+            setSelectedNodeId(newNode.id);
+            updateTree(newTree);
+          }
+          return newTree;
+        });
+      },
+      [findNode, updateTree, onAddNode]
+    );
+    const removeNode = (0, import_react140.useCallback)(
+      (nodeId) => {
+        setXmlTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const removeFromParent = (node, targetId) => {
+            for (let i2 = 0; i2 < node.children.length; i2++) {
+              if (node.children[i2].id === targetId) {
+                node.children.splice(i2, 1);
+                return true;
+              }
+              if (removeFromParent(node.children[i2], targetId)) {
+                return true;
+              }
+            }
+            return false;
+          };
+          removeFromParent(newTree, nodeId);
+          if (selectedNodeId === nodeId) {
+            setSelectedNodeId(null);
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [selectedNodeId, updateTree]
+    );
+    const handleUndo = (0, import_react140.useCallback)(() => {
+      if (historyIndex > 0) {
+        setHistoryIndex((prevIndex) => prevIndex - 1);
+        setXmlTree(history[historyIndex - 1]);
+      }
+    }, [history, historyIndex]);
+    const handleRedo = (0, import_react140.useCallback)(() => {
+      if (historyIndex < history.length - 1) {
+        setHistoryIndex((prevIndex) => prevIndex + 1);
+        setXmlTree(history[historyIndex + 1]);
+      }
+    }, [history, historyIndex]);
+    const bringToFront = (0, import_react140.useCallback)((drawer) => {
+      const maxZIndex = Math.max(
+        drawerStates.left.zIndex,
+        drawerStates.right.zIndex,
+        drawerStates.bottom.zIndex
+      );
+      setDrawerStates((prev) => {
+        const newStates = { ...prev };
+        Object.keys(newStates).forEach((key) => {
+          if (key === drawer) {
+            newStates[key].zIndex = maxZIndex + 1;
+          } else {
+            newStates[key].zIndex = Math.max(1, newStates[key].zIndex - 1);
+          }
+        });
+        return newStates;
+      });
+      setActiveDrawer(drawer);
+    }, [drawerStates]);
+    const selectedNode = selectedNodeId ? findNode(xmlTree2, selectedNodeId) : null;
+    return /* @__PURE__ */ import_react140.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react140.default.createElement("div", { className: "border-bottom p-2 bg-light" }, /* @__PURE__ */ import_react140.default.createElement("div", { className: "d-flex justify-content-center align-items-center" }, /* @__PURE__ */ import_react140.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react140.default.createElement(
+      Button_default2,
+      {
+        variant: activeTab === "preview" ? "primary" : "outline-secondary",
+        onClick: () => setActiveTab("preview")
+      },
+      "Preview"
+    ), /* @__PURE__ */ import_react140.default.createElement(
+      Button_default2,
+      {
+        variant: activeTab === "text" ? "primary" : "outline-secondary",
+        onClick: () => setActiveTab("text")
+      },
+      "Text Mode"
+    )), /* @__PURE__ */ import_react140.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react140.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-secondary",
+        onClick: handleUndo,
+        disabled: historyIndex === 0
+      },
+      "Undo"
+    ), /* @__PURE__ */ import_react140.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-secondary",
+        onClick: handleRedo,
+        disabled: historyIndex === history.length - 1
+      },
+      "Redo"
+    )))), /* @__PURE__ */ import_react140.default.createElement("div", { className: "position-relative flex-grow-1" }, activeTab === "preview" ? /* @__PURE__ */ import_react140.default.createElement(import_react140.default.Fragment, null, /* @__PURE__ */ import_react140.default.createElement("div", { className: "position-absolute w-100 h-100 p-3" }, /* @__PURE__ */ import_react140.default.createElement(
+      GenericPreview,
+      {
+        xmlTree: xmlTree2,
+        selectedNodeId,
+        hiddenNodes,
+        renderPreview
+      }
+    )), /* @__PURE__ */ import_react140.default.createElement(
+      Drawer,
+      {
+        position: "left",
+        isOpen: true,
+        zIndex: drawerStates.left.zIndex,
+        onBringToFront: () => bringToFront("left"),
+        title: "Tree View"
+      },
+      /* @__PURE__ */ import_react140.default.createElement("ul", { style: { paddingLeft: "0", marginBottom: "0" } }, /* @__PURE__ */ import_react140.default.createElement(
+        GenericTree,
+        {
+          node: xmlTree2,
+          selectedNodeId,
+          onSelectNode: setSelectedNodeId,
+          onAddNode: handleAddChildNode,
+          onRemoveNode: removeNode,
+          onToggleVisibility: toggleNodeVisibility,
+          hiddenNodes,
+          nodeTypes
+        }
+      ))
+    ), /* @__PURE__ */ import_react140.default.createElement(
+      Drawer,
+      {
+        position: "right",
+        isOpen: true,
+        zIndex: drawerStates.right.zIndex,
+        onBringToFront: () => bringToFront("right"),
+        title: "Attributes"
+      },
+      selectedNode ? /* @__PURE__ */ import_react140.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react140.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react140.default.createElement("strong", null, "Node: ", selectedNode.type)), /* @__PURE__ */ import_react140.default.createElement(Card_default.Body, null, attributeEditor(
+        selectedNode,
+        (attrs) => updateNodeAttributes(selectedNode.id, attrs),
+        (text) => updateNodeTextContent(selectedNode.id, text)
+      ))) : /* @__PURE__ */ import_react140.default.createElement(Card_default, null, /* @__PURE__ */ import_react140.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react140.default.createElement("p", { className: "text-muted" }, "Select a node to edit its properties")))
+    ), /* @__PURE__ */ import_react140.default.createElement(
+      Drawer,
+      {
+        position: "bottom",
+        isOpen: true,
+        zIndex: drawerStates.bottom.zIndex,
+        onBringToFront: () => bringToFront("bottom"),
+        title: "Navigation Help"
+      },
+      /* @__PURE__ */ import_react140.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react140.default.createElement("h4", null, "Pan & Zoom Controls"), /* @__PURE__ */ import_react140.default.createElement("p", null, /* @__PURE__ */ import_react140.default.createElement("strong", null, "Zoom:"), " Use mouse wheel or +/- buttons"), /* @__PURE__ */ import_react140.default.createElement("p", null, /* @__PURE__ */ import_react140.default.createElement("strong", null, "Pan:"), " Middle mouse button or Alt + Left click and drag"), /* @__PURE__ */ import_react140.default.createElement("p", null, /* @__PURE__ */ import_react140.default.createElement("strong", null, "Reset:"), " Click the Reset button to return to default view"), /* @__PURE__ */ import_react140.default.createElement("p", { className: "text-muted" }, "Note: These controls work across all editors (SVG, Bootstrap, GraphML)"))
+    )) : (
+      /* Text Mode - Full screen text editor, no drawers */
+      /* @__PURE__ */ import_react140.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-3" }, /* @__PURE__ */ import_react140.default.createElement(
+        GenericTextEditor,
+        {
+          xmlTree: xmlTree2,
+          onUpdateTree: setXmlTree
+        }
+      ))
+    )));
+  };
+
   // src/components/stateful/SVGEditor/SVGPreview.tsx
-  var import_react131 = __toESM(require_react(), 1);
+  var import_react141 = __toESM(require_react(), 1);
   var renderGrid = (width, height) => {
     const gridSize = 20;
     const lines = [];
     for (let y2 = 0; y2 <= height; y2 += gridSize) {
       lines.push(
-        /* @__PURE__ */ import_react131.default.createElement(
+        /* @__PURE__ */ import_react141.default.createElement(
           "line",
           {
             key: `h-${y2}`,
@@ -68871,7 +69792,7 @@ ${description}` : message
     }
     for (let x2 = 0; x2 <= width; x2 += gridSize) {
       lines.push(
-        /* @__PURE__ */ import_react131.default.createElement(
+        /* @__PURE__ */ import_react141.default.createElement(
           "line",
           {
             key: `v-${x2}`,
@@ -68895,11 +69816,11 @@ ${description}` : message
     onNodeInteraction,
     hiddenNodes
   }) => {
-    const svgRef = (0, import_react131.useRef)(null);
-    const [isInteracting, setIsInteracting] = (0, import_react131.useState)(false);
-    const [startPoint, setStartPoint] = (0, import_react131.useState)({ x: 0, y: 0 });
-    const [originalAttributes, setOriginalAttributes] = (0, import_react131.useState)({});
-    const getSVGPoint = (0, import_react131.useCallback)((clientX, clientY) => {
+    const svgRef = (0, import_react141.useRef)(null);
+    const [isInteracting, setIsInteracting] = (0, import_react141.useState)(false);
+    const [startPoint, setStartPoint] = (0, import_react141.useState)({ x: 0, y: 0 });
+    const [originalAttributes, setOriginalAttributes] = (0, import_react141.useState)({});
+    const getSVGPoint = (0, import_react141.useCallback)((clientX, clientY) => {
       if (svgRef.current) {
         const pt2 = svgRef.current.createSVGPoint();
         pt2.x = clientX;
@@ -68908,7 +69829,7 @@ ${description}` : message
       }
       return { x: 0, y: 0 };
     }, []);
-    const handleMouseDown = (0, import_react131.useCallback)((e3, node) => {
+    const handleMouseDown = (0, import_react141.useCallback)((e3, node) => {
       if (editMode !== "none" && selectedNodeId === node.id) {
         e3.preventDefault();
         setIsInteracting(true);
@@ -68916,7 +69837,7 @@ ${description}` : message
         setOriginalAttributes({ ...node.attributes });
       }
     }, [editMode, selectedNodeId]);
-    const handleMouseMove = (0, import_react131.useCallback)((e3, node) => {
+    const handleMouseMove = (0, import_react141.useCallback)((e3, node) => {
       if (isInteracting && editMode !== "none" && selectedNodeId === node.id) {
         e3.preventDefault();
         const currentPoint = getSVGPoint(e3.clientX, e3.clientY);
@@ -68960,10 +69881,10 @@ ${description}` : message
         onNodeInteraction(node.id, updates);
       }
     }, [isInteracting, editMode, selectedNodeId, startPoint, originalAttributes, getSVGPoint, onNodeInteraction]);
-    const handleMouseUp = (0, import_react131.useCallback)(() => {
+    const handleMouseUp = (0, import_react141.useCallback)(() => {
       setIsInteracting(false);
     }, []);
-    const renderSVGNode = (0, import_react131.useCallback)((node) => {
+    const renderSVGNode = (0, import_react141.useCallback)((node) => {
       if (hiddenNodes.has(node.id)) {
         return null;
       }
@@ -68978,19 +69899,20 @@ ${description}` : message
       };
       const visibleChildren = children.map(renderSVGNode).filter((child) => child !== null);
       if (type === "text" || type === "tspan") {
-        const textContent = attributes["data-text-content"] || "";
-        return import_react131.default.createElement(
+        const textContent = attributes["text-content"] || "";
+        const { "text-content": _3, ...filteredAttributes } = attributes;
+        return import_react141.default.createElement(
           type,
           {
             key: node.id,
-            ...attributes,
+            ...filteredAttributes,
             ...eventHandlers
           },
           textContent,
           ...visibleChildren
         );
       }
-      return import_react131.default.createElement(
+      return import_react141.default.createElement(
         type,
         {
           key: node.id,
@@ -69014,7 +69936,7 @@ ${description}` : message
     };
     const width = parseInt(svgTree.attributes.width || "400");
     const height = parseInt(svgTree.attributes.height || "400");
-    return /* @__PURE__ */ import_react131.default.createElement(
+    return /* @__PURE__ */ import_react141.default.createElement(
       "div",
       {
         className: "border rounded p-3 d-flex justify-content-center align-items-center",
@@ -69022,7 +69944,7 @@ ${description}` : message
         onMouseUp: handleMouseUp,
         onMouseLeave: handleMouseUp
       },
-      /* @__PURE__ */ import_react131.default.createElement(
+      /* @__PURE__ */ import_react141.default.createElement(
         "svg",
         {
           ref: svgRef,
@@ -69040,417 +69962,6 @@ ${description}` : message
     );
   };
 
-  // src/components/stateful/SVGEditor/SVGAttributesEditor.tsx
-  var import_react132 = __toESM(require_react(), 1);
-  var SVGAttributesEditor = ({
-    node,
-    onUpdateAttributes,
-    onUpdateTextContent
-  }) => {
-    const [attributes, setAttributes] = (0, import_react132.useState)(node.attributes);
-    const [textContent, setTextContent] = (0, import_react132.useState)("");
-    (0, import_react132.useEffect)(() => {
-      setAttributes(node.attributes);
-    }, [node.id]);
-    const handleAttributeChange = (key, value) => {
-      const newAttributes = { ...attributes, [key]: value };
-      setAttributes(newAttributes);
-      onUpdateAttributes(newAttributes);
-    };
-    return /* @__PURE__ */ import_react132.default.createElement("div", null, Object.entries(attributes).map(([key, value]) => /* @__PURE__ */ import_react132.default.createElement(Form_default.Group, { key, className: "mb-2" }, /* @__PURE__ */ import_react132.default.createElement(Form_default.Label, null, key), /* @__PURE__ */ import_react132.default.createElement(
-      Form_default.Control,
-      {
-        type: "text",
-        value,
-        onChange: (e3) => handleAttributeChange(key, e3.target.value)
-      }
-    ))), /* @__PURE__ */ import_react132.default.createElement(Form_default.Group, null, /* @__PURE__ */ import_react132.default.createElement(Form_default.Label, null, "Add New Attribute"), /* @__PURE__ */ import_react132.default.createElement(
-      Form_default.Control,
-      {
-        type: "text",
-        placeholder: "attribute=value",
-        onKeyPress: (e3) => {
-          if (e3.key === "Enter") {
-            const target = e3.target;
-            const [key, value] = target.value.split("=");
-            if (key && value) {
-              handleAttributeChange(key.trim(), value.trim());
-              target.value = "";
-            }
-          }
-        }
-      }
-    )));
-  };
-
-  // src/components/stateful/SVGEditor/SVGTextEditor.tsx
-  var import_react133 = __toESM(require_react(), 1);
-  var nodeToXML = (node, depth = 0) => {
-    const indent = "  ".repeat(depth);
-    const attributes = Object.entries(node.attributes).map(([key, value]) => ` ${key}="${value}"`).join("");
-    if (node.children.length === 0) {
-      return `${indent}<${node.type}${attributes} />`;
-    } else {
-      const children = node.children.map((child) => nodeToXML(child, depth + 1)).join("\n");
-      return `${indent}<${node.type}${attributes}>
-${children}
-${indent}</${node.type}>`;
-    }
-  };
-  var SVGTextEditor = ({
-    svgTree,
-    onUpdateTree
-  }) => {
-    const [xmlContent, setXmlContent] = (0, import_react133.useState)("");
-    const [error, setError] = (0, import_react133.useState)(null);
-    (0, import_react133.useEffect)(() => {
-      try {
-        const content = svgTree.children.map((child) => nodeToXML(child, 0)).join("\n");
-        setXmlContent(content);
-        setError(null);
-      } catch (err) {
-        setError("Error generating XML");
-      }
-    }, [svgTree]);
-    const handleXmlChange = (e3) => {
-      const newContent = e3.target.value;
-      setXmlContent(newContent);
-      setError(null);
-    };
-    const applyChanges = () => {
-      try {
-        const wrappedXml = `<svg>${xmlContent}</svg>`;
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(wrappedXml, "text/xml");
-        const parseError = doc.querySelector("parsererror");
-        if (parseError) {
-          throw new Error("Invalid XML structure");
-        }
-        const newSvgTree = {
-          ...svgTree,
-          children: []
-        };
-        const parseElement = (element) => {
-          const attributes = {};
-          for (let i2 = 0; i2 < element.attributes.length; i2++) {
-            const attr = element.attributes[i2];
-            attributes[attr.name] = attr.value;
-          }
-          const children = [];
-          for (let i2 = 0; i2 < element.children.length; i2++) {
-            const child = element.children[i2];
-            children.push(parseElement(child));
-          }
-          return {
-            id: `${element.nodeName}-${Date.now()}`,
-            type: element.nodeName,
-            attributes,
-            children
-          };
-        };
-        for (let i2 = 0; i2 < doc.documentElement.children.length; i2++) {
-          const child = doc.documentElement.children[i2];
-          newSvgTree.children.push(parseElement(child));
-        }
-        onUpdateTree(newSvgTree);
-        setError(null);
-      } catch (err) {
-        setError("Error parsing XML: " + (err instanceof Error ? err.message : String(err)));
-      }
-    };
-    return /* @__PURE__ */ import_react133.default.createElement("div", { className: "h-100 d-flex flex-column" }, /* @__PURE__ */ import_react133.default.createElement(
-      Form_default.Control,
-      {
-        as: "textarea",
-        value: xmlContent,
-        onChange: handleXmlChange,
-        className: "flex-grow-1 font-monospace",
-        style: { minHeight: "300px" },
-        placeholder: "Edit SVG content as XML..."
-      }
-    ), error && /* @__PURE__ */ import_react133.default.createElement(Alert_default, { variant: "danger", className: "mt-2" }, error), /* @__PURE__ */ import_react133.default.createElement(
-      Button_default2,
-      {
-        variant: "primary",
-        onClick: applyChanges,
-        className: "mt-2",
-        disabled: !!error
-      },
-      "Apply Changes"
-    ));
-  };
-
-  // src/components/stateful/SVGEditor/SVGElementForm.tsx
-  var import_react138 = __toESM(require_react(), 1);
-
-  // src/components/stateful/SVGEditor/CircleForm.tsx
-  var import_react135 = __toESM(require_react(), 1);
-
-  // src/components/stateful/SVGEditor/SVGAttributeField.tsx
-  var import_react134 = __toESM(require_react(), 1);
-  var SVGAttributeField = ({
-    label,
-    value,
-    onChange,
-    type = "text"
-  }) => {
-    return /* @__PURE__ */ import_react134.default.createElement("div", { style: { marginBottom: "8px" } }, /* @__PURE__ */ import_react134.default.createElement("label", { style: { display: "block", marginBottom: "4px" } }, label, ":"), /* @__PURE__ */ import_react134.default.createElement(
-      "input",
-      {
-        type,
-        value: value || "",
-        onChange: (e3) => onChange(e3.target.value),
-        style: { width: "100%" }
-      }
-    ));
-  };
-
-  // src/components/stateful/SVGEditor/CircleForm.tsx
-  var CircleForm = ({ attributes, onChange }) => {
-    const handleChange = (key, value) => {
-      onChange({ ...attributes, [key]: value });
-    };
-    return /* @__PURE__ */ import_react135.default.createElement("div", null, /* @__PURE__ */ import_react135.default.createElement("h3", null, "Circle Attributes"), /* @__PURE__ */ import_react135.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Center X",
-        value: attributes.cx,
-        onChange: (value) => handleChange("cx", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react135.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Center Y",
-        value: attributes.cy,
-        onChange: (value) => handleChange("cy", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react135.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Radius",
-        value: attributes.r,
-        onChange: (value) => handleChange("r", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react135.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Fill Color",
-        value: attributes.fill,
-        onChange: (value) => handleChange("fill", value),
-        type: "color"
-      }
-    ), /* @__PURE__ */ import_react135.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Stroke Color",
-        value: attributes.stroke,
-        onChange: (value) => handleChange("stroke", value),
-        type: "color"
-      }
-    ), /* @__PURE__ */ import_react135.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Stroke Width",
-        value: attributes.strokeWidth,
-        onChange: (value) => handleChange("strokeWidth", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react135.default.createElement(
-      SVGAttributeField,
-      {
-        label: "ID",
-        value: attributes.id,
-        onChange: (value) => handleChange("id", value),
-        type: "text"
-      }
-    ), /* @__PURE__ */ import_react135.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Class Name",
-        value: attributes.className,
-        onChange: (value) => handleChange("className", value),
-        type: "text"
-      }
-    ));
-  };
-
-  // src/components/stateful/SVGEditor/RectForm.tsx
-  var import_react136 = __toESM(require_react(), 1);
-  var RectForm = ({ attributes, onChange }) => {
-    const handleChange = (key, value) => {
-      onChange({ ...attributes, [key]: value });
-    };
-    return /* @__PURE__ */ import_react136.default.createElement("div", null, /* @__PURE__ */ import_react136.default.createElement("h3", null, "Rectangle Attributes"), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "X Position",
-        value: attributes.x,
-        onChange: (value) => handleChange("x", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Y Position",
-        value: attributes.y,
-        onChange: (value) => handleChange("y", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Width",
-        value: attributes.width,
-        onChange: (value) => handleChange("width", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Height",
-        value: attributes.height,
-        onChange: (value) => handleChange("height", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "RX (Corner Radius X)",
-        value: attributes.rx,
-        onChange: (value) => handleChange("rx", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "RY (Corner Radius Y)",
-        value: attributes.ry,
-        onChange: (value) => handleChange("ry", value),
-        type: "number"
-      }
-    ), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Fill Color",
-        value: attributes.fill,
-        onChange: (value) => handleChange("fill", value),
-        type: "color"
-      }
-    ), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Stroke Color",
-        value: attributes.stroke,
-        onChange: (value) => handleChange("stroke", value),
-        type: "color"
-      }
-    ), /* @__PURE__ */ import_react136.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Stroke Width",
-        value: attributes.strokeWidth,
-        onChange: (value) => handleChange("strokeWidth", value),
-        type: "number"
-      }
-    ));
-  };
-
-  // src/components/stateful/SVGEditor/GroupForm.tsx
-  var import_react137 = __toESM(require_react(), 1);
-  var GroupForm = ({ attributes, onChange }) => {
-    const handleChange = (key, value) => {
-      onChange({ ...attributes, [key]: value });
-    };
-    return /* @__PURE__ */ import_react137.default.createElement("div", null, /* @__PURE__ */ import_react137.default.createElement("h3", null, "Group Attributes"), /* @__PURE__ */ import_react137.default.createElement(
-      SVGAttributeField,
-      {
-        label: "ID",
-        value: attributes.id,
-        onChange: (value) => handleChange("id", value),
-        type: "text"
-      }
-    ), /* @__PURE__ */ import_react137.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Class Name",
-        value: attributes.className,
-        onChange: (value) => handleChange("className", value),
-        type: "text"
-      }
-    ), /* @__PURE__ */ import_react137.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Transform",
-        value: attributes.transform,
-        onChange: (value) => handleChange("transform", value),
-        type: "text"
-      }
-    ), /* @__PURE__ */ import_react137.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Fill Color",
-        value: attributes.fill,
-        onChange: (value) => handleChange("fill", value),
-        type: "color"
-      }
-    ), /* @__PURE__ */ import_react137.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Stroke Color",
-        value: attributes.stroke,
-        onChange: (value) => handleChange("stroke", value),
-        type: "color"
-      }
-    ), /* @__PURE__ */ import_react137.default.createElement(
-      SVGAttributeField,
-      {
-        label: "Stroke Width",
-        value: attributes.strokeWidth,
-        onChange: (value) => handleChange("strokeWidth", value),
-        type: "number"
-      }
-    ));
-  };
-
-  // src/components/stateful/SVGEditor/SVGElementForm.tsx
-  var SVGElementForm = ({
-    elementType,
-    attributes,
-    onChange
-  }) => {
-    switch (elementType) {
-      case "circle":
-        return /* @__PURE__ */ import_react138.default.createElement(
-          CircleForm,
-          {
-            attributes,
-            onChange
-          }
-        );
-      case "rect":
-        return /* @__PURE__ */ import_react138.default.createElement(
-          RectForm,
-          {
-            attributes,
-            onChange
-          }
-        );
-      case "g":
-        return /* @__PURE__ */ import_react138.default.createElement(
-          GroupForm,
-          {
-            attributes,
-            onChange
-          }
-        );
-      default:
-        return /* @__PURE__ */ import_react138.default.createElement("div", null, "Select an element type");
-    }
-  };
-
   // src/components/stateful/SVGEditorPage.tsx
   var SVGEditorPage = () => {
     const initialTree = {
@@ -69462,22 +69973,37 @@ ${indent}</${node.type}>`;
         viewBox: "0 0 400 400",
         xmlns: "http://www.w3.org/2000/svg"
       },
-      children: []
+      children: [
+        {
+          id: "rect-1",
+          type: "rect",
+          attributes: {
+            x: "50",
+            y: "50",
+            width: "100",
+            height: "100",
+            fill: "blue",
+            stroke: "black",
+            "stroke-width": "2"
+          },
+          children: []
+        }
+      ]
     };
-    const [svgTree, setSvgTree] = (0, import_react139.useState)(initialTree);
-    const [selectedNodeId, setSelectedNodeId] = (0, import_react139.useState)(null);
-    const [activeTab, setActiveTab] = (0, import_react139.useState)("preview");
-    const [history, setHistory] = (0, import_react139.useState)([initialTree]);
-    const [historyIndex, setHistoryIndex] = (0, import_react139.useState)(0);
-    const [editMode, setEditMode] = (0, import_react139.useState)("none");
-    const [showGrid, setShowGrid] = (0, import_react139.useState)(false);
-    const [snapToGrid, setSnapToGrid] = (0, import_react139.useState)(false);
-    const [hiddenNodes, setHiddenNodes] = (0, import_react139.useState)(/* @__PURE__ */ new Set());
-    const [dragInfo, setDragInfo] = (0, import_react139.useState)({
+    const [svgTree, setSvgTree] = (0, import_react142.useState)(initialTree);
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react142.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react142.useState)("preview");
+    const [history, setHistory] = (0, import_react142.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react142.useState)(0);
+    const [editMode, setEditMode] = (0, import_react142.useState)("none");
+    const [showGrid, setShowGrid] = (0, import_react142.useState)(false);
+    const [snapToGrid, setSnapToGrid] = (0, import_react142.useState)(false);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react142.useState)(/* @__PURE__ */ new Set());
+    const [dragInfo, setDragInfo] = (0, import_react142.useState)({
       isDragging: false,
       nodeId: null
     });
-    const findNode = (0, import_react139.useCallback)((node, id) => {
+    const findNode = (0, import_react142.useCallback)((node, id) => {
       if (node.id === id)
         return node;
       for (const child of node.children) {
@@ -69487,7 +70013,7 @@ ${indent}</${node.type}>`;
       }
       return null;
     }, []);
-    const updateTree = (0, import_react139.useCallback)(
+    const updateTree = (0, import_react142.useCallback)(
       (newTree) => {
         setSvgTree(newTree);
         setHistory((prevHistory) => {
@@ -69499,7 +70025,7 @@ ${indent}</${node.type}>`;
       },
       [historyIndex]
     );
-    const updateNodeAttributes = (0, import_react139.useCallback)(
+    const updateNodeAttributes = (0, import_react142.useCallback)(
       (nodeId, attributes) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -69513,7 +70039,7 @@ ${indent}</${node.type}>`;
       },
       [findNode, updateTree]
     );
-    const updateNodeTextContent = (0, import_react139.useCallback)(
+    const updateNodeTextContent = (0, import_react142.useCallback)(
       (nodeId, textContent) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -69527,7 +70053,7 @@ ${indent}</${node.type}>`;
       },
       [findNode, updateTree]
     );
-    const toggleNodeVisibility = (0, import_react139.useCallback)((nodeId) => {
+    const toggleNodeVisibility = (0, import_react142.useCallback)((nodeId) => {
       setHiddenNodes((prev) => {
         const newHidden = new Set(prev);
         if (newHidden.has(nodeId)) {
@@ -69538,13 +70064,13 @@ ${indent}</${node.type}>`;
         return newHidden;
       });
     }, []);
-    const handleDragStart = (0, import_react139.useCallback)((nodeId) => {
+    const handleDragStart = (0, import_react142.useCallback)((nodeId) => {
       setDragInfo({ isDragging: true, nodeId });
     }, []);
-    const handleDragEnd = (0, import_react139.useCallback)(() => {
+    const handleDragEnd = (0, import_react142.useCallback)(() => {
       setDragInfo({ isDragging: false, nodeId: null });
     }, []);
-    const moveNode = (0, import_react139.useCallback)(
+    const moveNode = (0, import_react142.useCallback)(
       (nodeId, newParentId, index3) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -69593,7 +70119,7 @@ ${indent}</${node.type}>`;
       },
       [updateTree]
     );
-    const addChildNode = (0, import_react139.useCallback)(
+    const addChildNode = (0, import_react142.useCallback)(
       (parentId, nodeType) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -69661,7 +70187,7 @@ ${indent}</${node.type}>`;
       },
       [findNode, updateTree]
     );
-    const removeNode = (0, import_react139.useCallback)(
+    const removeNode = (0, import_react142.useCallback)(
       (nodeId) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -69687,150 +70213,1030 @@ ${indent}</${node.type}>`;
       },
       [selectedNodeId, updateTree]
     );
-    const handleUndo = (0, import_react139.useCallback)(() => {
+    const handleUndo = (0, import_react142.useCallback)(() => {
       if (historyIndex > 0) {
         setHistoryIndex((prevIndex) => prevIndex - 1);
         setSvgTree(history[historyIndex - 1]);
       }
     }, [history, historyIndex]);
-    const handleRedo = (0, import_react139.useCallback)(() => {
+    const handleRedo = (0, import_react142.useCallback)(() => {
       if (historyIndex < history.length - 1) {
         setHistoryIndex((prevIndex) => prevIndex + 1);
         setSvgTree(history[historyIndex + 1]);
       }
     }, [history, historyIndex]);
-    const handleMove = (0, import_react139.useCallback)(() => {
+    const handleMove = (0, import_react142.useCallback)(() => {
       console.log("Move functionality to be implemented");
     }, []);
     const isMoveMode = editMode === "move";
     const isScaleMode = editMode === "scale";
     const isRotateMode = editMode === "rotate";
     const selectedNode = selectedNodeId ? findNode(svgTree, selectedNodeId) : null;
-    return /* @__PURE__ */ import_react139.default.createElement(Container_default, { fluid: true, className: "h-100" }, /* @__PURE__ */ import_react139.default.createElement(Row_default, { className: "h-100" }, /* @__PURE__ */ import_react139.default.createElement(Col_default, { md: 3, className: "border-end p-3" }, /* @__PURE__ */ import_react139.default.createElement("ul", { style: { paddingLeft: "0", marginBottom: "0" } }, /* @__PURE__ */ import_react139.default.createElement(
-      SVGTree,
-      {
-        node: svgTree,
-        selectedNodeId,
-        onSelectNode: setSelectedNodeId,
-        onAddNode: addChildNode,
-        onRemoveNode: removeNode,
-        onToggleVisibility: toggleNodeVisibility,
-        onMoveNode: moveNode,
-        hiddenNodes,
-        dragInfo,
-        onDragStart: handleDragStart,
-        onDragEnd: handleDragEnd
+    const svgNodeTypes = [
+      { label: "Rectangle", type: "rect" },
+      { label: "Circle", type: "circle" },
+      { label: "Path", type: "path" },
+      { label: "Text", type: "text" },
+      { label: "Group", type: "g" }
+    ];
+    const createSVGNode = (parentId, nodeType) => {
+      let defaultAttributes = {};
+      switch (nodeType) {
+        case "rect":
+          defaultAttributes = {
+            x: "50",
+            y: "50",
+            width: "100",
+            height: "100",
+            fill: "blue",
+            stroke: "black",
+            "stroke-width": "2"
+          };
+          break;
+        case "circle":
+          defaultAttributes = {
+            cx: "100",
+            cy: "100",
+            r: "50",
+            fill: "red",
+            stroke: "black",
+            "stroke-width": "2"
+          };
+          break;
+        case "path":
+          defaultAttributes = {
+            d: "M50 50 L150 150",
+            stroke: "green",
+            "stroke-width": "3",
+            fill: "none"
+          };
+          break;
+        case "text":
+          defaultAttributes = {
+            x: "50",
+            y: "50",
+            fill: "black",
+            "font-size": "16"
+          };
+          break;
+        case "g":
+          defaultAttributes = {
+            transform: "translate(0,0)"
+          };
+          break;
+        default:
+          defaultAttributes = {};
       }
-    ))), /* @__PURE__ */ import_react139.default.createElement(Col_default, { md: 6, className: "border-end p-3" }, /* @__PURE__ */ import_react139.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-3" }, /* @__PURE__ */ import_react139.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react139.default.createElement(
-      Button_default2,
-      {
-        variant: activeTab === "preview" ? "primary" : "outline-secondary",
-        onClick: () => setActiveTab("preview")
-      },
-      "Render Mode"
-    ), /* @__PURE__ */ import_react139.default.createElement(
-      Button_default2,
-      {
-        variant: activeTab === "text" ? "primary" : "outline-secondary",
-        onClick: () => setActiveTab("text")
-      },
-      "Text Mode"
-    ))), activeTab === "preview" ? /* @__PURE__ */ import_react139.default.createElement(import_react139.default.Fragment, null, /* @__PURE__ */ import_react139.default.createElement("div", { className: "d-flex flex-wrap mb-3 gap-2 align-items-center" }, /* @__PURE__ */ import_react139.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react139.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-secondary",
-        onClick: handleUndo,
-        disabled: historyIndex === 0
-      },
-      "Undo"
-    ), /* @__PURE__ */ import_react139.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-secondary",
-        onClick: handleRedo,
-        disabled: historyIndex === history.length - 1
-      },
-      "Redo"
-    )), /* @__PURE__ */ import_react139.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react139.default.createElement(
-      Button_default2,
-      {
-        variant: isMoveMode ? "primary" : "outline-primary",
-        onClick: () => setEditMode(isMoveMode ? "none" : "move")
-      },
-      "Move"
-    ), /* @__PURE__ */ import_react139.default.createElement(
-      Button_default2,
-      {
-        variant: isScaleMode ? "info" : "outline-info",
-        onClick: () => setEditMode(isScaleMode ? "none" : "scale")
-      },
-      "Scale"
-    ), /* @__PURE__ */ import_react139.default.createElement(
-      Button_default2,
-      {
-        variant: isRotateMode ? "info" : "outline-info",
-        onClick: () => setEditMode(isRotateMode ? "none" : "rotate")
-      },
-      "Rotate"
-    )), /* @__PURE__ */ import_react139.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react139.default.createElement(
-      Form_default.Check,
-      {
-        type: "switch",
-        id: "grid-toggle",
-        label: "Grid",
-        checked: showGrid,
-        onChange: (e3) => setShowGrid(e3.target.checked)
+      return {
+        id: `${nodeType}-${Date.now()}`,
+        type: nodeType,
+        attributes: defaultAttributes,
+        children: []
+      };
+    };
+    const renderSVGPreview = (node, isSelected, eventHandlers) => {
+      const { type, attributes, children, textContent } = node;
+      const style2 = isSelected ? { outline: "2px dashed blue" } : {};
+      const childElements = children.map(
+        (child) => renderSVGPreview(child, selectedNodeId === child.id, {})
+      );
+      if (type === "text" || type === "tspan") {
+        return import_react142.default.createElement(
+          type,
+          {
+            key: node.id,
+            ...attributes,
+            ...eventHandlers,
+            style: style2
+          },
+          textContent,
+          ...childElements
+        );
       }
-    )), /* @__PURE__ */ import_react139.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react139.default.createElement(
-      Form_default.Check,
-      {
-        type: "switch",
-        id: "snap-toggle",
-        label: "Snap",
-        checked: snapToGrid,
-        onChange: (e3) => setSnapToGrid(e3.target.checked),
-        disabled: !showGrid
-      }
-    ))), /* @__PURE__ */ import_react139.default.createElement(
-      SVGPreview,
-      {
-        svgTree,
-        editMode,
-        showGrid,
-        selectedNodeId,
-        onNodeInteraction: (nodeId, updates) => {
-          updateNodeAttributes(nodeId, updates);
+      const elementType = type.toLowerCase();
+      return import_react142.default.createElement(
+        elementType,
+        {
+          key: node.id,
+          ...attributes,
+          ...eventHandlers,
+          style: style2
         },
-        hiddenNodes
+        childElements
+      );
+    };
+    const renderSVGAttributeEditor = (node, onUpdateAttributes, onUpdateTextContent) => {
+      if (["circle", "rect", "g"].includes(node.type)) {
+        return /* @__PURE__ */ import_react142.default.createElement(
+          SVGElementForm,
+          {
+            elementType: node.type,
+            attributes: node.attributes,
+            onChange: onUpdateAttributes
+          }
+        );
+      } else {
+        return /* @__PURE__ */ import_react142.default.createElement(
+          SVGAttributesEditor,
+          {
+            node,
+            onUpdateAttributes,
+            onUpdateTextContent
+          }
+        );
       }
-    )) : /* @__PURE__ */ import_react139.default.createElement(SVGTextEditor, { svgTree, onUpdateTree: setSvgTree })), /* @__PURE__ */ import_react139.default.createElement(Col_default, { md: 3, className: "p-3" }, selectedNode ? /* @__PURE__ */ import_react139.default.createElement(import_react139.default.Fragment, null, /* @__PURE__ */ import_react139.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react139.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react139.default.createElement("strong", null, "Node: ", selectedNode.type)), /* @__PURE__ */ import_react139.default.createElement(Card_default.Body, null, ["circle", "rect", "g"].includes(selectedNode.type) ? /* @__PURE__ */ import_react139.default.createElement(
-      SVGElementForm,
+    };
+    const SvgCustomPreview = () => {
+      const svgTree2 = {
+        id: xmlTree.id,
+        type: xmlTree.type,
+        attributes: xmlTree.attributes,
+        children: xmlTree.children
+      };
+      return /* @__PURE__ */ import_react142.default.createElement(
+        SVGPreview,
+        {
+          svgTree: svgTree2,
+          editMode,
+          showGrid,
+          selectedNodeId,
+          onNodeInteraction: (nodeId, updates) => {
+            updateNodeAttributes(nodeId, updates);
+          },
+          hiddenNodes
+        }
+      );
+    };
+    const renderSVGPreviewWithControls = (node, isSelected, eventHandlers) => {
+      return renderSVGPreview(node, isSelected, eventHandlers);
+    };
+    return /* @__PURE__ */ import_react142.default.createElement(
+      GenericXMLEditorPage,
       {
-        elementType: selectedNode.type,
-        attributes: selectedNode.attributes,
-        onChange: (attrs) => updateNodeAttributes(selectedNode.id, attrs)
+        initialTree,
+        renderPreview: renderSVGPreviewWithControls,
+        attributeEditor: renderSVGAttributeEditor,
+        nodeTypes: svgNodeTypes,
+        onAddNode: createSVGNode
       }
-    ) : /* @__PURE__ */ import_react139.default.createElement(
-      SVGAttributesEditor,
+    );
+  };
+
+  // src/components/stateful/DratoPage.tsx
+  var import_react143 = __toESM(require_react(), 1);
+  var DratoPage = () => {
+    const initialTree = {
+      id: "root",
+      type: "Container",
+      attributes: {
+        fluid: "true"
+      },
+      children: []
+    };
+    const [bootstrapTree, setBootstrapTree] = (0, import_react143.useState)(initialTree);
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react143.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react143.useState)("preview");
+    const [history, setHistory] = (0, import_react143.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react143.useState)(0);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react143.useState)(/* @__PURE__ */ new Set());
+    const findNode = (0, import_react143.useCallback)((node, id) => {
+      if (node.id === id)
+        return node;
+      for (const child of node.children) {
+        const found = findNode(child, id);
+        if (found)
+          return found;
+      }
+      return null;
+    }, []);
+    const updateTree = (0, import_react143.useCallback)(
+      (newTree) => {
+        setBootstrapTree(newTree);
+        setHistory((prevHistory) => {
+          const newHistory = prevHistory.slice(0, historyIndex + 1);
+          newHistory.push(newTree);
+          return newHistory;
+        });
+        setHistoryIndex((prevIndex) => prevIndex + 1);
+      },
+      [historyIndex]
+    );
+    const updateNodeAttributes = (0, import_react143.useCallback)(
+      (nodeId, attributes) => {
+        setBootstrapTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const node = findNode(newTree, nodeId);
+          if (node) {
+            node.attributes = { ...node.attributes, ...attributes };
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [findNode, updateTree]
+    );
+    const updateNodeTextContent = (0, import_react143.useCallback)(
+      (nodeId, textContent) => {
+        setBootstrapTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const node = findNode(newTree, nodeId);
+          if (node) {
+            node.textContent = textContent;
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [findNode, updateTree]
+    );
+    const toggleNodeVisibility = (0, import_react143.useCallback)((nodeId) => {
+      setHiddenNodes((prev) => {
+        const newHidden = new Set(prev);
+        if (newHidden.has(nodeId)) {
+          newHidden.delete(nodeId);
+        } else {
+          newHidden.add(nodeId);
+        }
+        return newHidden;
+      });
+    }, []);
+    const addChildNode = (0, import_react143.useCallback)(
+      (parentId, nodeType) => {
+        setBootstrapTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const parent = findNode(newTree, parentId);
+          if (parent) {
+            let defaultAttributes = {};
+            switch (nodeType) {
+              case "Container":
+                defaultAttributes = { fluid: "true" };
+                break;
+              case "Row":
+                defaultAttributes = {};
+                break;
+              case "Col":
+                defaultAttributes = { xs: "12" };
+                break;
+              case "Button":
+                defaultAttributes = { variant: "primary" };
+                break;
+              case "Card":
+                defaultAttributes = {};
+                break;
+              default:
+                defaultAttributes = {};
+            }
+            const newNode = {
+              id: `${nodeType}-${Date.now()}`,
+              type: nodeType,
+              attributes: defaultAttributes,
+              children: []
+            };
+            parent.children = [...parent.children, newNode];
+            setSelectedNodeId(newNode.id);
+            updateTree(newTree);
+          }
+          return newTree;
+        });
+      },
+      [findNode, updateTree]
+    );
+    const removeNode = (0, import_react143.useCallback)(
+      (nodeId) => {
+        setBootstrapTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const removeFromParent = (node, targetId) => {
+            for (let i2 = 0; i2 < node.children.length; i2++) {
+              if (node.children[i2].id === targetId) {
+                node.children.splice(i2, 1);
+                return true;
+              }
+              if (removeFromParent(node.children[i2], targetId)) {
+                return true;
+              }
+            }
+            return false;
+          };
+          removeFromParent(newTree, nodeId);
+          if (selectedNodeId === nodeId) {
+            setSelectedNodeId(null);
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [selectedNodeId, updateTree]
+    );
+    const handleUndo = (0, import_react143.useCallback)(() => {
+      if (historyIndex > 0) {
+        setHistoryIndex((prevIndex) => prevIndex - 1);
+        setBootstrapTree(history[historyIndex - 1]);
+      }
+    }, [history, historyIndex]);
+    const handleRedo = (0, import_react143.useCallback)(() => {
+      if (historyIndex < history.length - 1) {
+        setHistoryIndex((prevIndex) => prevIndex + 1);
+        setBootstrapTree(history[historyIndex + 1]);
+      }
+    }, [history, historyIndex]);
+    const selectedNode = selectedNodeId ? findNode(bootstrapTree, selectedNodeId) : null;
+    const bootstrapNodeTypes = [
+      { label: "Container", type: "Container" },
+      { label: "Row", type: "Row" },
+      { label: "Column", type: "Col" },
+      { label: "Button", type: "Button" },
+      { label: "Card", type: "Card" },
+      { label: "Text", type: "Text" }
+    ];
+    const createBootstrapNode = (parentId, nodeType) => {
+      let defaultAttributes = {};
+      switch (nodeType) {
+        case "Container":
+          defaultAttributes = { fluid: "true" };
+          break;
+        case "Row":
+          defaultAttributes = {};
+          break;
+        case "Col":
+          defaultAttributes = { xs: "12" };
+          break;
+        case "Button":
+          defaultAttributes = { variant: "primary" };
+          break;
+        case "Card":
+          defaultAttributes = {};
+          break;
+        case "Text":
+          defaultAttributes = { class: "" };
+          break;
+        default:
+          defaultAttributes = {};
+      }
+      return {
+        id: `${nodeType}-${Date.now()}`,
+        type: nodeType,
+        attributes: defaultAttributes,
+        children: []
+      };
+    };
+    const renderBootstrapPreview = (node, isSelected, eventHandlers) => {
+      const { type, attributes, children, textContent } = node;
+      const style2 = isSelected ? { outline: "2px dashed blue" } : {};
+      const childElements = children.map(
+        (child) => renderBootstrapPreview(child, selectedNodeId === child.id, {})
+      );
+      switch (type) {
+        case "Container":
+          return /* @__PURE__ */ import_react143.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: `container${attributes.fluid === "true" ? "-fluid" : ""}`,
+              style: style2,
+              ...eventHandlers
+            },
+            childElements,
+            textContent
+          );
+        case "Row":
+          return /* @__PURE__ */ import_react143.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: "row",
+              style: style2,
+              ...eventHandlers
+            },
+            childElements,
+            textContent
+          );
+        case "Col":
+          const colClasses = Object.entries(attributes).filter(([key]) => ["xs", "sm", "md", "lg", "xl", "xxl"].includes(key)).map(([breakpoint, size2]) => `col-${breakpoint}-${size2}`).join(" ");
+          return /* @__PURE__ */ import_react143.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: colClasses || "col",
+              style: style2,
+              ...eventHandlers
+            },
+            childElements,
+            textContent
+          );
+        case "Button":
+          return /* @__PURE__ */ import_react143.default.createElement(
+            "button",
+            {
+              key: node.id,
+              className: `btn btn-${attributes.variant || "primary"}`,
+              style: style2,
+              ...eventHandlers
+            },
+            textContent || "Button"
+          );
+        case "Card":
+          return /* @__PURE__ */ import_react143.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: "card",
+              style: style2,
+              ...eventHandlers
+            },
+            /* @__PURE__ */ import_react143.default.createElement("div", { className: "card-body" }, childElements, textContent)
+          );
+        case "Text":
+          return /* @__PURE__ */ import_react143.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: attributes.class || "",
+              style: style2,
+              ...eventHandlers
+            },
+            textContent,
+            childElements
+          );
+        default:
+          return /* @__PURE__ */ import_react143.default.createElement("div", { key: node.id, style: style2, ...eventHandlers }, type, " element", childElements, textContent);
+      }
+    };
+    const renderBootstrapAttributeEditor = (node, onUpdateAttributes, onUpdateTextContent) => {
+      const handleAttributeChange = (key, value) => {
+        const newAttributes = { ...node.attributes, [key]: value };
+        onUpdateAttributes(newAttributes);
+      };
+      const handleTextChange = (e3) => {
+        onUpdateTextContent(e3.target.value);
+      };
+      return /* @__PURE__ */ import_react143.default.createElement("div", null, (node.type === "Button" || node.type === "Card" || node.type === "Text") && /* @__PURE__ */ import_react143.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react143.default.createElement("label", { className: "form-label" }, "Text Content"), /* @__PURE__ */ import_react143.default.createElement(
+        "input",
+        {
+          type: "text",
+          className: "form-control",
+          value: node.textContent || "",
+          onChange: handleTextChange
+        }
+      )), node.type === "Container" && /* @__PURE__ */ import_react143.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react143.default.createElement("label", { className: "form-label" }, "Fluid"), /* @__PURE__ */ import_react143.default.createElement(
+        "select",
+        {
+          className: "form-select",
+          value: node.attributes.fluid || "false",
+          onChange: (e3) => handleAttributeChange("fluid", e3.target.value)
+        },
+        /* @__PURE__ */ import_react143.default.createElement("option", { value: "true" }, "True"),
+        /* @__PURE__ */ import_react143.default.createElement("option", { value: "false" }, "False")
+      )), node.type === "Col" && /* @__PURE__ */ import_react143.default.createElement("div", null, ["xs", "sm", "md", "lg", "xl", "xxl"].map((breakpoint) => /* @__PURE__ */ import_react143.default.createElement("div", { key: breakpoint, className: "mb-2" }, /* @__PURE__ */ import_react143.default.createElement("label", { className: "form-label" }, breakpoint.toUpperCase()), /* @__PURE__ */ import_react143.default.createElement(
+        "input",
+        {
+          type: "text",
+          className: "form-control",
+          value: node.attributes[breakpoint] || "",
+          onChange: (e3) => handleAttributeChange(breakpoint, e3.target.value),
+          placeholder: "1-12"
+        }
+      )))), node.type === "Button" && /* @__PURE__ */ import_react143.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react143.default.createElement("label", { className: "form-label" }, "Variant"), /* @__PURE__ */ import_react143.default.createElement(
+        "select",
+        {
+          className: "form-select",
+          value: node.attributes.variant || "primary",
+          onChange: (e3) => handleAttributeChange("variant", e3.target.value)
+        },
+        ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"].map((variant) => /* @__PURE__ */ import_react143.default.createElement("option", { key: variant, value: variant }, variant))
+      )), node.type === "Text" && /* @__PURE__ */ import_react143.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react143.default.createElement("label", { className: "form-label" }, "CSS Classes"), /* @__PURE__ */ import_react143.default.createElement(
+        "input",
+        {
+          type: "text",
+          className: "form-control",
+          value: node.attributes.class || "",
+          onChange: (e3) => handleAttributeChange("class", e3.target.value),
+          placeholder: "e.g., text-primary fs-4"
+        }
+      )), /* @__PURE__ */ import_react143.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react143.default.createElement("label", { className: "form-label" }, "Other Attributes"), Object.entries(node.attributes).filter(([key]) => !["fluid", "variant"].includes(key) && !["xs", "sm", "md", "lg", "xl", "xxl"].includes(key)).map(([key, value]) => /* @__PURE__ */ import_react143.default.createElement("div", { key, className: "input-group mb-2" }, /* @__PURE__ */ import_react143.default.createElement("span", { className: "input-group-text" }, key), /* @__PURE__ */ import_react143.default.createElement(
+        "input",
+        {
+          type: "text",
+          className: "form-control",
+          value,
+          onChange: (e3) => handleAttributeChange(key, e3.target.value)
+        }
+      )))));
+    };
+    return /* @__PURE__ */ import_react143.default.createElement(
+      GenericXMLEditorPage,
       {
-        node: selectedNode,
-        onUpdateAttributes: (attrs) => updateNodeAttributes(selectedNode.id, attrs),
-        onUpdateTextContent: (text) => updateNodeTextContent(selectedNode.id, text)
+        initialTree,
+        renderPreview: renderBootstrapPreview,
+        attributeEditor: renderBootstrapAttributeEditor,
+        nodeTypes: bootstrapNodeTypes,
+        onAddNode: createBootstrapNode
       }
-    )))) : /* @__PURE__ */ import_react139.default.createElement(Card_default, null, /* @__PURE__ */ import_react139.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react139.default.createElement("p", { className: "text-muted" }, "Select a node to edit its properties"))))));
+    );
+  };
+
+  // src/components/stateful/GrafeoPage.tsx
+  var import_react144 = __toESM(require_react(), 1);
+  var GrafeoPage = () => {
+    const initialTree = {
+      id: "root",
+      type: "graphml",
+      attributes: {
+        xmlns: "http://graphml.graphdrawing.org/xmlns"
+      },
+      children: [
+        {
+          id: "graph-1",
+          type: "graph",
+          attributes: {
+            id: "G",
+            edgedefault: "undirected"
+          },
+          children: [
+            // Sample nodes
+            {
+              id: "node-1",
+              type: "node",
+              attributes: { id: "n1" },
+              children: [
+                {
+                  id: "data-1",
+                  type: "data",
+                  attributes: { key: "d0" },
+                  children: [],
+                  textContent: "Node 1"
+                }
+              ]
+            },
+            {
+              id: "node-2",
+              type: "node",
+              attributes: { id: "n2" },
+              children: [
+                {
+                  id: "data-2",
+                  type: "data",
+                  attributes: { key: "d0" },
+                  children: [],
+                  textContent: "Node 2"
+                }
+              ]
+            },
+            {
+              id: "node-3",
+              type: "node",
+              attributes: { id: "n3" },
+              children: [
+                {
+                  id: "data-3",
+                  type: "data",
+                  attributes: { key: "d0" },
+                  children: [],
+                  textContent: "Node 3"
+                }
+              ]
+            },
+            // Sample edges
+            {
+              id: "edge-1",
+              type: "edge",
+              attributes: { source: "n1", target: "n2" },
+              children: [
+                {
+                  id: "data-4",
+                  type: "data",
+                  attributes: { key: "d1" },
+                  children: [],
+                  textContent: "Edge from 1 to 2"
+                }
+              ]
+            },
+            {
+              id: "edge-2",
+              type: "edge",
+              attributes: { source: "n2", target: "n3" },
+              children: [
+                {
+                  id: "data-5",
+                  type: "data",
+                  attributes: { key: "d1" },
+                  children: [],
+                  textContent: "Edge from 2 to 3"
+                }
+              ]
+            },
+            {
+              id: "edge-3",
+              type: "edge",
+              attributes: { source: "n3", target: "n1" },
+              children: [
+                {
+                  id: "data-6",
+                  type: "data",
+                  attributes: { key: "d1" },
+                  children: [],
+                  textContent: "Edge from 3 to 1"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+    const [graphmlTree, setGraphmlTree] = (0, import_react144.useState)(initialTree);
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react144.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react144.useState)("preview");
+    const [history, setHistory] = (0, import_react144.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react144.useState)(0);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react144.useState)(/* @__PURE__ */ new Set());
+    const findNode = (0, import_react144.useCallback)((node, id) => {
+      if (node.id === id)
+        return node;
+      for (const child of node.children) {
+        const found = findNode(child, id);
+        if (found)
+          return found;
+      }
+      return null;
+    }, []);
+    const updateTree = (0, import_react144.useCallback)(
+      (newTree) => {
+        setGraphmlTree(newTree);
+        setHistory((prevHistory) => {
+          const newHistory = prevHistory.slice(0, historyIndex + 1);
+          newHistory.push(newTree);
+          return newHistory;
+        });
+        setHistoryIndex((prevIndex) => prevIndex + 1);
+      },
+      [historyIndex]
+    );
+    const updateNodeAttributes = (0, import_react144.useCallback)(
+      (nodeId, attributes) => {
+        setGraphmlTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const node = findNode(newTree, nodeId);
+          if (node) {
+            node.attributes = { ...node.attributes, ...attributes };
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [findNode, updateTree]
+    );
+    const updateNodeTextContent = (0, import_react144.useCallback)(
+      (nodeId, textContent) => {
+        setGraphmlTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const node = findNode(newTree, nodeId);
+          if (node) {
+            node.textContent = textContent;
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [findNode, updateTree]
+    );
+    const toggleNodeVisibility = (0, import_react144.useCallback)((nodeId) => {
+      setHiddenNodes((prev) => {
+        const newHidden = new Set(prev);
+        if (newHidden.has(nodeId)) {
+          newHidden.delete(nodeId);
+        } else {
+          newHidden.add(nodeId);
+        }
+        return newHidden;
+      });
+    }, []);
+    const addChildNode = (0, import_react144.useCallback)(
+      (parentId, nodeType) => {
+        setGraphmlTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const parent = findNode(newTree, parentId);
+          if (parent) {
+            let defaultAttributes = {};
+            switch (nodeType) {
+              case "node":
+                defaultAttributes = { id: `n${Date.now()}` };
+                break;
+              case "edge":
+                defaultAttributes = { source: "", target: "" };
+                break;
+              case "data":
+                defaultAttributes = { key: "" };
+                break;
+              case "key":
+                defaultAttributes = { id: "", for: "node", "attr.name": "", "attr.type": "string" };
+                break;
+              default:
+                defaultAttributes = {};
+            }
+            const newNode = {
+              id: `${nodeType}-${Date.now()}`,
+              type: nodeType,
+              attributes: defaultAttributes,
+              children: []
+            };
+            parent.children = [...parent.children, newNode];
+            setSelectedNodeId(newNode.id);
+            updateTree(newTree);
+          }
+          return newTree;
+        });
+      },
+      [findNode, updateTree]
+    );
+    const removeNode = (0, import_react144.useCallback)(
+      (nodeId) => {
+        setGraphmlTree((prevTree) => {
+          const newTree = JSON.parse(JSON.stringify(prevTree));
+          const removeFromParent = (node, targetId) => {
+            for (let i2 = 0; i2 < node.children.length; i2++) {
+              if (node.children[i2].id === targetId) {
+                node.children.splice(i2, 1);
+                return true;
+              }
+              if (removeFromParent(node.children[i2], targetId)) {
+                return true;
+              }
+            }
+            return false;
+          };
+          removeFromParent(newTree, nodeId);
+          if (selectedNodeId === nodeId) {
+            setSelectedNodeId(null);
+          }
+          updateTree(newTree);
+          return newTree;
+        });
+      },
+      [selectedNodeId, updateTree]
+    );
+    const selectedNode = selectedNodeId ? findNode(graphmlTree, selectedNodeId) : null;
+    const graphmlNodeTypes = [
+      { label: "Node", type: "node" },
+      { label: "Edge", type: "edge" },
+      { label: "Key", type: "key" },
+      { label: "Data", type: "data" }
+    ];
+    const createGraphMLNode = (parentId, nodeType) => {
+      let defaultAttributes = {};
+      switch (nodeType) {
+        case "node":
+          defaultAttributes = { id: `n${Date.now()}` };
+          break;
+        case "edge":
+          defaultAttributes = { source: "", target: "" };
+          break;
+        case "data":
+          defaultAttributes = { key: "" };
+          break;
+        case "key":
+          defaultAttributes = { id: "", for: "node", "attr.name": "", "attr.type": "string" };
+          break;
+        default:
+          defaultAttributes = {};
+      }
+      return {
+        id: `${nodeType}-${Date.now()}`,
+        type: nodeType,
+        attributes: defaultAttributes,
+        children: []
+      };
+    };
+    const renderGraphMLPreview = (node, isSelected, eventHandlers) => {
+      const { type, attributes, children, textContent } = node;
+      const style2 = isSelected ? { outline: "2px dashed blue" } : {};
+      const childElements = children.map(
+        (child) => renderGraphMLPreview(child, selectedNodeId === child.id, {})
+      );
+      switch (type) {
+        case "node":
+          return /* @__PURE__ */ import_react144.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: "border rounded p-2 m-1 d-inline-block",
+              style: { ...style2, background: "#f0f8ff" },
+              ...eventHandlers
+            },
+            "Node: ",
+            attributes.id,
+            childElements
+          );
+        case "edge":
+          return /* @__PURE__ */ import_react144.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: "border-top pt-1 m-1",
+              style: style2,
+              ...eventHandlers
+            },
+            "Edge: ",
+            attributes.source,
+            " \u2192 ",
+            attributes.target,
+            childElements
+          );
+        case "key":
+          return /* @__PURE__ */ import_react144.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: "border rounded p-1 m-1 small",
+              style: { ...style2, background: "#fff0f0" },
+              ...eventHandlers
+            },
+            "Key: ",
+            attributes.id,
+            " (",
+            attributes.for,
+            ")",
+            childElements
+          );
+        case "data":
+          return /* @__PURE__ */ import_react144.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: "border rounded p-1 m-1 small",
+              style: { ...style2, background: "#f0fff0" },
+              ...eventHandlers
+            },
+            "Data: ",
+            attributes.key,
+            " = ",
+            textContent,
+            childElements
+          );
+        case "graph":
+          return /* @__PURE__ */ import_react144.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: "border rounded p-3 m-2",
+              style: { ...style2, background: "#f8f9fa" },
+              ...eventHandlers
+            },
+            "Graph: ",
+            attributes.id,
+            childElements
+          );
+        case "graphml":
+          return /* @__PURE__ */ import_react144.default.createElement(
+            "div",
+            {
+              key: node.id,
+              className: "p-3",
+              style: style2,
+              ...eventHandlers
+            },
+            childElements
+          );
+        default:
+          return /* @__PURE__ */ import_react144.default.createElement("div", { key: node.id, style: style2, ...eventHandlers }, type, " element", childElements, textContent);
+      }
+    };
+    const renderGraphMLAttributeEditor = (node, onUpdateAttributes, onUpdateTextContent) => {
+      const handleAttributeChange = (key, value) => {
+        const newAttributes = { ...node.attributes, [key]: value };
+        onUpdateAttributes(newAttributes);
+      };
+      const handleTextChange = (e3) => {
+        onUpdateTextContent(e3.target.value);
+      };
+      return /* @__PURE__ */ import_react144.default.createElement("div", null, node.type === "data" && /* @__PURE__ */ import_react144.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react144.default.createElement("label", { className: "form-label" }, "Value"), /* @__PURE__ */ import_react144.default.createElement(
+        "input",
+        {
+          type: "text",
+          className: "form-control",
+          value: node.textContent || "",
+          onChange: handleTextChange
+        }
+      )), Object.entries(node.attributes).map(([key, value]) => /* @__PURE__ */ import_react144.default.createElement("div", { key, className: "mb-2" }, /* @__PURE__ */ import_react144.default.createElement("label", { className: "form-label" }, key), /* @__PURE__ */ import_react144.default.createElement(
+        "input",
+        {
+          type: "text",
+          className: "form-control",
+          value,
+          onChange: (e3) => handleAttributeChange(key, e3.target.value)
+        }
+      ))));
+    };
+    const GraphMLPreview = ({ xmlTree: xmlTree2 }) => {
+      const findGraph = (node) => {
+        if (node.type === "graph")
+          return node;
+        for (const child of node.children) {
+          const found = findGraph(child);
+          if (found)
+            return found;
+        }
+        return null;
+      };
+      const graph = findGraph(xmlTree2);
+      if (!graph) {
+        return /* @__PURE__ */ import_react144.default.createElement("div", null, "No graph found");
+      }
+      const nodes = graph.children.filter((child) => child.type === "node");
+      const edges = graph.children.filter((child) => child.type === "edge");
+      const radius = 150;
+      const centerX = 200;
+      const centerY = 200;
+      return /* @__PURE__ */ import_react144.default.createElement(
+        "div",
+        {
+          className: "border rounded p-3 d-flex justify-content-center align-items-center",
+          style: { height: "400px", background: "#f8f9fa" }
+        },
+        /* @__PURE__ */ import_react144.default.createElement("svg", { width: "400", height: "400", style: { background: "white" } }, edges.map((edge) => {
+          const sourceId = edge.attributes.source;
+          const targetId = edge.attributes.target;
+          const sourceNode = nodes.find((n2) => n2.attributes.id === sourceId);
+          const targetNode = nodes.find((n2) => n2.attributes.id === targetId);
+          if (!sourceNode || !targetNode)
+            return null;
+          const sourceIndex = nodes.findIndex((n2) => n2.attributes.id === sourceId);
+          const targetIndex = nodes.findIndex((n2) => n2.attributes.id === targetId);
+          const sourceAngle = 2 * Math.PI * sourceIndex / nodes.length;
+          const targetAngle = 2 * Math.PI * targetIndex / nodes.length;
+          const sourceX = centerX + radius * Math.cos(sourceAngle);
+          const sourceY = centerY + radius * Math.sin(sourceAngle);
+          const targetX = centerX + radius * Math.cos(targetAngle);
+          const targetY = centerY + radius * Math.sin(targetAngle);
+          return /* @__PURE__ */ import_react144.default.createElement(
+            "line",
+            {
+              key: edge.id,
+              x1: sourceX,
+              y1: sourceY,
+              x2: targetX,
+              y2: targetY,
+              stroke: "#666",
+              strokeWidth: "2"
+            }
+          );
+        }), nodes.map((node, index3) => {
+          const angle = 2 * Math.PI * index3 / nodes.length;
+          const x2 = centerX + radius * Math.cos(angle);
+          const y2 = centerY + radius * Math.sin(angle);
+          const isSelected = selectedNodeId === node.id;
+          return /* @__PURE__ */ import_react144.default.createElement("g", { key: node.id }, /* @__PURE__ */ import_react144.default.createElement(
+            "circle",
+            {
+              cx: x2,
+              cy: y2,
+              r: "20",
+              fill: isSelected ? "#007bff" : "#6c757d",
+              stroke: isSelected ? "#0056b3" : "#495057",
+              strokeWidth: "2",
+              style: { cursor: "pointer" },
+              onClick: () => setSelectedNodeId(node.id)
+            }
+          ), /* @__PURE__ */ import_react144.default.createElement(
+            "text",
+            {
+              x: x2,
+              y: y2,
+              textAnchor: "middle",
+              dy: ".3em",
+              fill: "white",
+              fontSize: "12",
+              style: { pointerEvents: "none" }
+            },
+            node.attributes.id
+          ));
+        }))
+      );
+    };
+    const renderGraphMLPreviewWithGraph = (node, isSelected, eventHandlers) => {
+      return /* @__PURE__ */ import_react144.default.createElement(GraphMLPreview, { xmlTree: graphmlTree });
+    };
+    return /* @__PURE__ */ import_react144.default.createElement(
+      GenericXMLEditorPage,
+      {
+        initialTree,
+        renderPreview: renderGraphMLPreviewWithGraph,
+        attributeEditor: renderGraphMLAttributeEditor,
+        nodeTypes: graphmlNodeTypes,
+        onAddNode: createGraphMLNode
+      }
+    );
   };
 
   // src/App.tsx
-  var WebSocketContext = (0, import_react140.createContext)({
+  var WebSocketContext = (0, import_react145.createContext)({
     ws: null,
     isConnected: false
   });
-  var TutorialModeContext = (0, import_react140.createContext)({
+  var TutorialModeContext = (0, import_react145.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
-  var AuthContext = (0, import_react140.createContext)({
+  var AuthContext = (0, import_react145.createContext)({
     isAuthenticated: false,
     user: null,
     login: () => {
@@ -69839,21 +71245,21 @@ ${indent}</${node.type}>`;
     }
   });
   var useWebSocket = () => {
-    return (0, import_react140.useContext)(WebSocketContext);
+    return (0, import_react145.useContext)(WebSocketContext);
   };
   var useTutorialMode = () => {
-    return (0, import_react140.useContext)(TutorialModeContext);
+    return (0, import_react145.useContext)(TutorialModeContext);
   };
   var useAuth = () => {
-    return (0, import_react140.useContext)(AuthContext);
+    return (0, import_react145.useContext)(AuthContext);
   };
   var App = () => {
-    const [ws2, setWs] = (0, import_react140.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react140.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react140.useState)(false);
-    const [isAuthenticated, setIsAuthenticated] = (0, import_react140.useState)(githubAuthService.isAuthenticated);
-    const [user, setUser] = (0, import_react140.useState)(githubAuthService.userInfo);
-    (0, import_react140.useEffect)(() => {
+    const [ws2, setWs] = (0, import_react145.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react145.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react145.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, import_react145.useState)(githubAuthService.isAuthenticated);
+    const [user, setUser] = (0, import_react145.useState)(githubAuthService.userInfo);
+    (0, import_react145.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -69910,7 +71316,7 @@ ${indent}</${node.type}>`;
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react140.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected } }, /* @__PURE__ */ import_react140.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react140.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react140.default.createElement(HashRouter, null, /* @__PURE__ */ import_react140.default.createElement(AppFrame, null, /* @__PURE__ */ import_react140.default.createElement(Routes, null, /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react140.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react140.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react140.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react140.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react140.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/auth/github/callback", element: /* @__PURE__ */ import_react140.default.createElement(AuthCallbackPage, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/features-reporter", element: isAuthenticated ? /* @__PURE__ */ import_react140.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react140.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/design-editor", element: isAuthenticated ? /* @__PURE__ */ import_react140.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react140.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/text-editor", element: isAuthenticated ? /* @__PURE__ */ import_react140.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react140.default.createElement(SignIn, null) }), isConnected ? /* @__PURE__ */ import_react140.default.createElement(import_react140.default.Fragment, null, /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/processes", element: isAuthenticated ? /* @__PURE__ */ import_react140.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react140.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/processes/:processId", element: isAuthenticated ? /* @__PURE__ */ import_react140.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react140.default.createElement(SignIn, null) })) : null, /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react140.default.createElement(Settings, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react140.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react140.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react140.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react140.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react140.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react140.default.createElement(ProjectsPage, null) })))))));
+    return /* @__PURE__ */ import_react145.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected } }, /* @__PURE__ */ import_react145.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react145.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react145.default.createElement(HashRouter, null, /* @__PURE__ */ import_react145.default.createElement(AppFrame, null, /* @__PURE__ */ import_react145.default.createElement(Routes, null, /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react145.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/projects/:projectName", element: /* @__PURE__ */ import_react145.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/projects/:projectName/tests/*", element: /* @__PURE__ */ import_react145.default.createElement(TestPage, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/projects/:projectName#:tab", element: /* @__PURE__ */ import_react145.default.createElement(ProjectPage, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/auth/github/callback", element: /* @__PURE__ */ import_react145.default.createElement(AuthCallbackPage, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/features-reporter", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/design-editor", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/text-editor", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), isConnected ? /* @__PURE__ */ import_react145.default.createElement(import_react145.default.Fragment, null, /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/processes", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/processes/:processId", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) })) : null, /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react145.default.createElement(Settings, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react145.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react145.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react145.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react145.default.createElement(ProjectsPage, null) })))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -69918,9 +71324,9 @@ ${indent}</${node.type}>`;
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react140.default.createElement(App));
+          root.render(import_react145.default.createElement(App));
         } else {
-          import_client.default.render(import_react140.default.createElement(App), rootElement);
+          import_client.default.render(import_react145.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -69932,7 +71338,7 @@ ${indent}</${node.type}>`;
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react140.default;
+    window.React = import_react145.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);

@@ -38,18 +38,36 @@ export const SVGAttributesEditor: React.FC<SVGAttributesEditorProps> = ({
 
   return (
     <div>
-
-
-      {Object.entries(attributes).map(([key, value]) => (
-        <Form.Group key={key} className="mb-2">
-          <Form.Label>{key}</Form.Label>
+      {/* Text content editor for text and tspan elements */}
+      {(node.type === 'text' || node.type === 'tspan') && (
+        <Form.Group className="mb-3">
+          <Form.Label>Text Content</Form.Label>
           <Form.Control
             type="text"
-            value={value}
-            onChange={(e) => handleAttributeChange(key, e.target.value)}
+            value={node.attributes['text-content'] || ''}
+            onChange={(e) => {
+              handleAttributeChange('text-content', e.target.value);
+              // Also update the actual text content if needed
+              if (onUpdateTextContent) {
+                onUpdateTextContent(e.target.value);
+              }
+            }}
           />
         </Form.Group>
-      ))}
+      )}
+
+      {Object.entries(attributes)
+        .filter(([key]) => key !== 'text-content')
+        .map(([key, value]) => (
+          <Form.Group key={key} className="mb-2">
+            <Form.Label>{key}</Form.Label>
+            <Form.Control
+              type="text"
+              value={value}
+              onChange={(e) => handleAttributeChange(key, e.target.value)}
+            />
+          </Form.Group>
+        ))}
       {/* Add new attribute */}
       <Form.Group>
         <Form.Label>Add New Attribute</Form.Label>

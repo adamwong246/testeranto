@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import ReactDom from "react-dom/client";
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
@@ -17,6 +18,8 @@ import { GitIntegrationPage } from './components/stateful/GitIntegrationPage';
 import { AuthCallbackPage } from './components/stateful/AuthCallbackPage';
 import { githubAuthService } from './services/GitHubAuthService';
 import { SVGEditorPage } from './components/stateful/SVGEditorPage';
+import { DratoPage } from './components/stateful/DratoPage';
+import { GrafeoPage } from './components/stateful/GrafeoPage';
 
 interface WebSocketContextType {
   ws: WebSocket | null;
@@ -44,15 +47,15 @@ const WebSocketContext = createContext<WebSocketContextType>({
 // Create a context for tutorial mode
 const TutorialModeContext = createContext<TutorialModeContextType>({
   tutorialMode: false,
-  setTutorialMode: () => {},
+  setTutorialMode: () => { },
 });
 
 // Create a context for authentication
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   user: null,
-  login: () => {},
-  logout: () => {},
+  login: () => { },
+  logout: () => { },
 });
 
 export const useWebSocket = () => {
@@ -88,7 +91,7 @@ export const App = () => {
     };
 
     githubAuthService.on('authChange', handleAuthChange);
-    
+
     // Handle GitHub OAuth callback from popup
     const handleMessage = async (event: MessageEvent) => {
       if (event.data.type === 'github-auth-callback') {
@@ -109,23 +112,23 @@ export const App = () => {
     };
 
     window.addEventListener('message', handleMessage);
-    
+
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${wsProtocol}//${window.location.host}`;
     const websocket = new WebSocket(wsUrl);
-    
+
     websocket.onopen = () => {
       console.log('WebSocket connected');
       setWs(websocket);
       setIsConnected(true);
     };
-    
+
     websocket.onclose = () => {
       console.log('WebSocket disconnected');
       setWs(null);
       setIsConnected(false);
     };
-    
+
     websocket.onerror = (error) => {
       console.error('WebSocket error:', error);
       setIsConnected(false);
@@ -159,7 +162,7 @@ export const App = () => {
                 <Route path="/projects/:projectName#:tab" element={<ProjectPage />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/auth/github/callback" element={<AuthCallbackPage />} />
-                
+
                 {/* Protected routes - handle authentication within components */}
                 <Route path="/features-reporter" element={isAuthenticated ? <FeaturesReporter /> : <SignIn />} />
                 <Route path="/design-editor" element={isAuthenticated ? <DesignEditorPage /> : <SignIn />} />
@@ -174,7 +177,9 @@ export const App = () => {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/git" element={isAuthenticated ? <GitIntegrationPage /> : <SignIn />} />
                 <Route path="/svg-editor" element={isAuthenticated ? <SVGEditorPage /> : <SignIn />} />
-                
+                <Route path="/drato" element={isAuthenticated ? <DratoPage /> : <SignIn />} />
+                <Route path="/grafeo" element={isAuthenticated ? <GrafeoPage /> : <SignIn />} />
+
                 {/* Catch all - redirect to home for logged out users */}
                 <Route path="*" element={<ProjectsPage />} />
               </Routes>
@@ -218,7 +223,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
   window.React = React;
   // @ts-ignore
   window.ReactDOM = ReactDom;
-  
+
   // Initialize the app when the window is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);

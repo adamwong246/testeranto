@@ -163,12 +163,14 @@ export const SVGPreview: React.FC<SVGPreviewProps> = ({
     
     // For text elements, use the text content
     if (type === 'text' || type === 'tspan') {
-      const textContent = attributes['data-text-content'] || '';
+      const textContent = attributes['text-content'] || '';
+      // Filter out the text-content attribute to prevent it from being added as an SVG attribute
+      const { 'text-content': _, ...filteredAttributes } = attributes;
       return React.createElement(
         type,
         {
           key: node.id,
-          ...attributes,
+          ...filteredAttributes,
           ...eventHandlers
         },
         textContent,

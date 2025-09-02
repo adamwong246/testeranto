@@ -1,18 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useCallback } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Form,
-  Button,
-  ButtonGroup,
-} from "react-bootstrap";
-import { SVGTree } from "./SVGEditor/SVGTree";
-import { SVGPreview } from "./SVGEditor/SVGPreview";
 import { SVGAttributesEditor } from "./SVGEditor/SVGAttributesEditor";
-import { SVGTextEditor } from "./SVGEditor/SVGTextEditor";
 import { SVGElementForm } from "./SVGEditor/SVGElementForm";
+import { XMLNode, GenericXMLEditorPage } from "./GenericXMLEditorPage";
+import { SVGPreview } from "./SVGEditor/SVGPreview";
 
 export interface SVGNode {
   id: string;
@@ -22,7 +14,7 @@ export interface SVGNode {
 }
 
 export const SVGEditorPage = () => {
-  const initialTree: SVGNode = {
+  const initialTree: XMLNode = {
     id: "root",
     type: "svg",
     attributes: {
@@ -31,7 +23,22 @@ export const SVGEditorPage = () => {
       viewBox: "0 0 400 400",
       xmlns: "http://www.w3.org/2000/svg",
     },
-    children: [],
+    children: [
+      {
+        id: "rect-1",
+        type: "rect",
+        attributes: {
+          x: "50",
+          y: "50",
+          width: "100",
+          height: "100",
+          fill: "blue",
+          stroke: "black",
+          "stroke-width": "2",
+        },
+        children: [],
+      }
+    ],
   };
 
   const [svgTree, setSvgTree] = useState<SVGNode>(initialTree);
@@ -331,173 +338,180 @@ export const SVGEditorPage = () => {
     ? findNode(svgTree, selectedNodeId)
     : null;
 
+  // Define node types for SVG
+  const svgNodeTypes = [
+    { label: 'Rectangle', type: 'rect' },
+    { label: 'Circle', type: 'circle' },
+    { label: 'Path', type: 'path' },
+    { label: 'Text', type: 'text' },
+    { label: 'Group', type: 'g' }
+  ];
+
+  // Function to create new SVG nodes
+  const createSVGNode = (parentId: string, nodeType: string): XMLNode => {
+    // Default attributes based on node type
+    let defaultAttributes: Record<string, string> = {};
+    switch (nodeType) {
+      case "rect":
+        defaultAttributes = {
+          x: "50",
+          y: "50",
+          width: "100",
+          height: "100",
+          fill: "blue",
+          stroke: "black",
+          "stroke-width": "2",
+        };
+        break;
+      case "circle":
+        defaultAttributes = {
+          cx: "100",
+          cy: "100",
+          r: "50",
+          fill: "red",
+          stroke: "black",
+          "stroke-width": "2",
+        };
+        break;
+      case "path":
+        defaultAttributes = {
+          d: "M50 50 L150 150",
+          stroke: "green",
+          "stroke-width": "3",
+          fill: "none",
+        };
+        break;
+      case "text":
+        defaultAttributes = {
+          x: "50",
+          y: "50",
+          fill: "black",
+          "font-size": "16",
+        };
+        break;
+      case "g":
+        defaultAttributes = {
+          transform: "translate(0,0)",
+        };
+        break;
+      default:
+        defaultAttributes = {};
+    }
+
+    return {
+      id: `${nodeType}-${Date.now()}`,
+      type: nodeType,
+      attributes: defaultAttributes,
+      children: [],
+    };
+  };
+
+  // Render preview for SVG
+  const renderSVGPreview = (node: XMLNode, isSelected: boolean, eventHandlers: any) => {
+    const { type, attributes, children, textContent } = node;
+    const style = isSelected ? { outline: '2px dashed blue' } : {};
+    
+    // Convert children to React elements
+    const childElements = children.map(child => 
+      renderSVGPreview(child, selectedNodeId === child.id, {})
+    );
+    
+    // Handle text content for text elements
+    if (type === 'text' || type === 'tspan') {
+      return React.createElement(
+        type,
+        {
+          key: node.id,
+          ...attributes,
+          ...eventHandlers,
+          style
+        },
+        textContent,
+        ...childElements
+      );
+    }
+    
+    // For other SVG elements
+    // Note: React.createElement expects the type to be a string for HTML/SVG elements
+    // Make sure the type is always lowercase
+    const elementType = type.toLowerCase();
+    return React.createElement(
+      elementType,
+      {
+        key: node.id,
+        ...attributes,
+        ...eventHandlers,
+        style
+      },
+      childElements
+    );
+  };
+
+  // Attribute editor for SVG
+  const renderSVGAttributeEditor = (node: XMLNode, onUpdateAttributes: (attrs: Record<string, string>) => void, onUpdateTextContent: (text: string) => void) => {
+    // Use SVGElementForm for supported types, fallback to SVGAttributesEditor
+    if (["circle", "rect", "g"].includes(node.type)) {
+      return (
+        <SVGElementForm
+          elementType={node.type as "circle" | "rect" | "g"}
+          attributes={node.attributes}
+          onChange={onUpdateAttributes}
+        />
+      );
+    } else {
+      return (
+        <SVGAttributesEditor
+          node={node}
+          onUpdateAttributes={onUpdateAttributes}
+          onUpdateTextContent={onUpdateTextContent}
+        />
+      );
+    }
+  };
+
+
+  // Custom SVG preview that uses the original SVGPreview component
+  const SvgCustomPreview: React.FC = () => {
+    // Convert XMLNode to SVGNode
+    const svgTree: SVGNode = {
+      id: xmlTree.id,
+      type: xmlTree.type,
+      attributes: xmlTree.attributes,
+      children: xmlTree.children as SVGNode[]
+    };
+
+    return (
+      <SVGPreview
+        svgTree={svgTree}
+        editMode={editMode}
+        showGrid={showGrid}
+        selectedNodeId={selectedNodeId}
+        onNodeInteraction={(nodeId, updates) => {
+          // Update node attributes based on interaction
+          updateNodeAttributes(nodeId, updates);
+        }}
+        hiddenNodes={hiddenNodes}
+      />
+    );
+  };
+
+  // Modify renderSVGPreview to use our custom preview
+  const renderSVGPreviewWithControls = (node: XMLNode, isSelected: boolean, eventHandlers: any) => {
+    // For the generic preview, we'll still use the basic rendering
+    // The SVG-specific interactions are handled by SVGPreview component
+    return renderSVGPreview(node, isSelected, eventHandlers);
+  };
+
+  // For the SVG editor, we'll need to create a custom implementation
+  // that properly integrates the SVGPreview component
+  // Let's use the GenericXMLEditorPage but override the preview when in SVG mode
   return (
-    <Container fluid className="h-100">
-      <Row className="h-100">
-        {/* Tree View */}
-        <Col md={3} className="border-end p-3">
-          <ul style={{ paddingLeft: '0', marginBottom: '0' }}>
-            <SVGTree
-              node={svgTree}
-              selectedNodeId={selectedNodeId}
-              onSelectNode={setSelectedNodeId}
-              onAddNode={addChildNode}
-              onRemoveNode={removeNode}
-              onToggleVisibility={toggleNodeVisibility}
-              onMoveNode={moveNode}
-              hiddenNodes={hiddenNodes}
-              dragInfo={dragInfo}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-            />
-          </ul>
-        </Col>
-
-        {/* Preview/Text Editor Area */}
-        <Col md={6} className="border-end p-3">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            {/* <h5 className="mb-0">Editor</h5> */}
-            <ButtonGroup size="sm">
-              <Button
-                variant={
-                  activeTab === "preview" ? "primary" : "outline-secondary"
-                }
-                onClick={() => setActiveTab("preview")}
-              >
-                Render Mode
-              </Button>
-              <Button
-                variant={activeTab === "text" ? "primary" : "outline-secondary"}
-                onClick={() => setActiveTab("text")}
-              >
-                Text Mode
-              </Button>
-            </ButtonGroup>
-          </div>
-          {/* Controls */}
-
-          {activeTab === "preview" ? (
-            <>
-              <div className="d-flex flex-wrap mb-3 gap-2 align-items-center">
-                <ButtonGroup size="sm">
-                  <Button
-                    variant="outline-secondary"
-                    onClick={handleUndo}
-                    disabled={historyIndex === 0}
-                  >
-                    Undo
-                  </Button>
-                  <Button
-                    variant="outline-secondary"
-                    onClick={handleRedo}
-                    disabled={historyIndex === history.length - 1}
-                  >
-                    Redo
-                  </Button>
-                </ButtonGroup>
-                <ButtonGroup size="sm">
-                  <Button
-                    variant={isMoveMode ? "primary" : "outline-primary"}
-                    onClick={() => setEditMode(isMoveMode ? "none" : "move")}
-                  >
-                    Move
-                  </Button>
-                  <Button
-                    variant={isScaleMode ? "info" : "outline-info"}
-                    onClick={() => setEditMode(isScaleMode ? "none" : "scale")}
-                  >
-                    Scale
-                  </Button>
-                  <Button
-                    variant={isRotateMode ? "info" : "outline-info"}
-                    onClick={() =>
-                      setEditMode(isRotateMode ? "none" : "rotate")
-                    }
-                  >
-                    Rotate
-                  </Button>
-                </ButtonGroup>
-                <ButtonGroup size="sm">
-                  <Form.Check
-                    type="switch"
-                    id="grid-toggle"
-                    label="Grid"
-                    checked={showGrid}
-                    onChange={(e) => setShowGrid(e.target.checked)}
-                  />
-                </ButtonGroup>
-                <ButtonGroup size="sm">
-                  <Form.Check
-                    type="switch"
-                    id="snap-toggle"
-                    label="Snap"
-                    checked={snapToGrid}
-                    onChange={(e) => setSnapToGrid(e.target.checked)}
-                    disabled={!showGrid}
-                  />
-                </ButtonGroup>
-              </div>
-
-              <SVGPreview
-                svgTree={svgTree}
-                editMode={editMode}
-                showGrid={showGrid}
-                selectedNodeId={selectedNodeId}
-                onNodeInteraction={(nodeId, updates) => {
-                  // Update the node attributes based on the interaction
-                  updateNodeAttributes(nodeId, updates);
-                }}
-                hiddenNodes={hiddenNodes}
-              />
-            </>
-          ) : (
-            <SVGTextEditor svgTree={svgTree} onUpdateTree={setSvgTree} />
-          )}
-        </Col>
-
-        {/* Editor Controls and Attributes */}
-        <Col md={3} className="p-3">
-          {selectedNode ? (
-            <>
-              <Card className="mb-3">
-                <Card.Header>
-                  <strong>Node: {selectedNode.type}</strong>
-                </Card.Header>
-                <Card.Body>
-                  {/* Use SVGElementForm for supported types, fallback to SVGAttributesEditor */}
-                  {["circle", "rect", "g"].includes(selectedNode.type) ? (
-                    <SVGElementForm
-                      elementType={selectedNode.type as "circle" | "rect" | "g"}
-                      attributes={selectedNode.attributes}
-                      onChange={(attrs) =>
-                        updateNodeAttributes(selectedNode.id, attrs)
-                      }
-                    />
-                  ) : (
-                    <SVGAttributesEditor
-                      node={selectedNode}
-                      onUpdateAttributes={(attrs) =>
-                        updateNodeAttributes(selectedNode.id, attrs)
-                      }
-                      onUpdateTextContent={(text) =>
-                        updateNodeTextContent(selectedNode.id, text)
-                      }
-                    />
-                  )}
-                </Card.Body>
-              </Card>
-            </>
-          ) : (
-            <Card>
-              <Card.Body>
-                <p className="text-muted">
-                  Select a node to edit its properties
-                </p>
-              </Card.Body>
-            </Card>
-          )}
-        </Col>
-      </Row>
-    </Container>
+    <GenericXMLEditorPage
+      initialTree={initialTree}
+      renderPreview={renderSVGPreviewWithControls}
+      attributeEditor={renderSVGAttributeEditor}
+      nodeTypes={svgNodeTypes}
+      onAddNode={createSVGNode}
+    />
   );
 };
