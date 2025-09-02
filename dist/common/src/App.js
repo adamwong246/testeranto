@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.App = exports.useTutorialMode = exports.useWebSocket = void 0;
+exports.App = exports.useAuth = exports.useTutorialMode = exports.useWebSocket = void 0;
 const react_1 = __importStar(require("react"));
 const client_1 = __importDefault(require("react-dom/client"));
 const react_router_dom_1 = require("react-router-dom");
@@ -44,6 +44,7 @@ const TestPage_1 = require("./components/stateful/TestPage");
 const ProjectPage_1 = require("./components/stateful/ProjectPage");
 const ProjectsPage_1 = require("./components/stateful/ProjectsPage");
 const AppFrame_1 = require("./components/pure/AppFrame");
+const SignIn_1 = require("./components/pure/SignIn");
 const FeaturesReporter_1 = require("./components/stateful/FeaturesReporter");
 const DesignEditorPage_1 = require("./components/DesignEditorPage");
 const TextEditorPage_1 = require("./components/stateful/TextEditorPage");
@@ -51,6 +52,8 @@ const ProcessManagerPage_1 = require("./components/stateful/ProcessManagerPage")
 const SingleProcessPage_1 = require("./components/stateful/SingleProcessPage");
 const Settings_1 = require("./components/pure/Settings");
 const GitIntegrationPage_1 = require("./components/stateful/GitIntegrationPage");
+const AuthCallbackPage_1 = require("./components/stateful/AuthCallbackPage");
+const GitHubAuthService_1 = require("./services/GitHubAuthService");
 // Create a context for the WebSocket
 const WebSocketContext = (0, react_1.createContext)({
     ws: null,
@@ -61,6 +64,13 @@ const TutorialModeContext = (0, react_1.createContext)({
     tutorialMode: false,
     setTutorialMode: () => { },
 });
+// Create a context for authentication
+const AuthContext = (0, react_1.createContext)({
+    isAuthenticated: false,
+    user: null,
+    login: () => { },
+    logout: () => { },
+});
 const useWebSocket = () => {
     return (0, react_1.useContext)(WebSocketContext);
 };
@@ -69,16 +79,50 @@ const useTutorialMode = () => {
     return (0, react_1.useContext)(TutorialModeContext);
 };
 exports.useTutorialMode = useTutorialMode;
+const useAuth = () => {
+    return (0, react_1.useContext)(AuthContext);
+};
+exports.useAuth = useAuth;
 const App = () => {
     const [ws, setWs] = (0, react_1.useState)(null);
     const [isConnected, setIsConnected] = (0, react_1.useState)(false);
     const [tutorialMode, setTutorialMode] = (0, react_1.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, react_1.useState)(GitHubAuthService_1.githubAuthService.isAuthenticated);
+    const [user, setUser] = (0, react_1.useState)(GitHubAuthService_1.githubAuthService.userInfo);
     (0, react_1.useEffect)(() => {
         // Load tutorial mode from localStorage
         const savedTutorialMode = localStorage.getItem('tutorialMode');
         if (savedTutorialMode) {
             setTutorialMode(savedTutorialMode === 'true');
         }
+        // Listen for auth changes
+        const handleAuthChange = (authenticated) => {
+            setIsAuthenticated(authenticated);
+            setUser(GitHubAuthService_1.githubAuthService.userInfo);
+        };
+        GitHubAuthService_1.githubAuthService.on('authChange', handleAuthChange);
+        // Handle GitHub OAuth callback from popup
+        const handleMessage = async (event) => {
+            if (event.data.type === 'github-auth-callback') {
+                const { code } = event.data;
+                try {
+                    const success = await GitHubAuthService_1.githubAuthService.handleCallback(code);
+                    if (success) {
+                        console.log('GitHub authentication successful');
+                    }
+                    else {
+                        console.error('GitHub authentication failed');
+                    }
+                }
+                catch (error) {
+                    console.error('Error handling GitHub callback:', error);
+                }
+            }
+            else if (event.data.type === 'github-auth-error') {
+                console.error('GitHub authentication error:', event.data.error);
+            }
+        };
+        window.addEventListener('message', handleMessage);
         const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const wsUrl = `${wsProtocol}//${window.location.host}`;
         const websocket = new WebSocket(wsUrl);
@@ -97,26 +141,38 @@ const App = () => {
             setIsConnected(false);
         };
         return () => {
+            GitHubAuthService_1.githubAuthService.off('authChange', handleAuthChange);
+            window.removeEventListener('message', handleMessage);
             websocket.close();
         };
     }, []);
+    const authContextValue = {
+        isAuthenticated,
+        user,
+        login: () => GitHubAuthService_1.githubAuthService.initiateLogin(),
+        logout: () => GitHubAuthService_1.githubAuthService.logout(),
+    };
     return (react_1.default.createElement(WebSocketContext.Provider, { value: { ws, isConnected } },
         react_1.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } },
-            react_1.default.createElement(react_router_dom_1.HashRouter, null,
-                react_1.default.createElement(AppFrame_1.AppFrame, null,
-                    react_1.default.createElement(react_router_dom_1.Routes, null,
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/", element: react_1.default.createElement(ProjectsPage_1.ProjectsPage, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName", element: react_1.default.createElement(ProjectPage_1.ProjectPage, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName/tests/*", element: react_1.default.createElement(TestPage_1.TestPage, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName#:tab", element: react_1.default.createElement(ProjectPage_1.ProjectPage, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/features-reporter", element: react_1.default.createElement(FeaturesReporter_1.FeaturesReporter, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/design-editor", element: react_1.default.createElement(DesignEditorPage_1.DesignEditorPage, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/text-editor", element: react_1.default.createElement(TextEditorPage_1.TextEditorPage, null) }),
-                        isConnected ? (react_1.default.createElement(react_1.default.Fragment, null,
-                            react_1.default.createElement(react_router_dom_1.Route, { path: "/processes", element: react_1.default.createElement(ProcessManagerPage_1.ProcessManagerPage, null) }),
-                            react_1.default.createElement(react_router_dom_1.Route, { path: "/processes/:processId", element: react_1.default.createElement(SingleProcessPage_1.SingleProcessPage, null) }))) : null,
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/settings", element: react_1.default.createElement(Settings_1.Settings, null) }),
-                        react_1.default.createElement(react_router_dom_1.Route, { path: "/git", element: react_1.default.createElement(GitIntegrationPage_1.GitIntegrationPage, null) })))))));
+            react_1.default.createElement(AuthContext.Provider, { value: authContextValue },
+                react_1.default.createElement(react_router_dom_1.HashRouter, null,
+                    react_1.default.createElement(AppFrame_1.AppFrame, null,
+                        react_1.default.createElement(react_router_dom_1.Routes, null,
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/", element: react_1.default.createElement(ProjectsPage_1.ProjectsPage, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName", element: react_1.default.createElement(ProjectPage_1.ProjectPage, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName/tests/*", element: react_1.default.createElement(TestPage_1.TestPage, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName#:tab", element: react_1.default.createElement(ProjectPage_1.ProjectPage, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/signin", element: react_1.default.createElement(SignIn_1.SignIn, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/auth/github/callback", element: react_1.default.createElement(AuthCallbackPage_1.AuthCallbackPage, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/features-reporter", element: isAuthenticated ? react_1.default.createElement(FeaturesReporter_1.FeaturesReporter, null) : react_1.default.createElement(SignIn_1.SignIn, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/design-editor", element: isAuthenticated ? react_1.default.createElement(DesignEditorPage_1.DesignEditorPage, null) : react_1.default.createElement(SignIn_1.SignIn, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/text-editor", element: isAuthenticated ? react_1.default.createElement(TextEditorPage_1.TextEditorPage, null) : react_1.default.createElement(SignIn_1.SignIn, null) }),
+                            isConnected ? (react_1.default.createElement(react_1.default.Fragment, null,
+                                react_1.default.createElement(react_router_dom_1.Route, { path: "/processes", element: isAuthenticated ? react_1.default.createElement(ProcessManagerPage_1.ProcessManagerPage, null) : react_1.default.createElement(SignIn_1.SignIn, null) }),
+                                react_1.default.createElement(react_router_dom_1.Route, { path: "/processes/:processId", element: isAuthenticated ? react_1.default.createElement(SingleProcessPage_1.SingleProcessPage, null) : react_1.default.createElement(SignIn_1.SignIn, null) }))) : null,
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/settings", element: react_1.default.createElement(Settings_1.Settings, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/git", element: isAuthenticated ? react_1.default.createElement(GitIntegrationPage_1.GitIntegrationPage, null) : react_1.default.createElement(SignIn_1.SignIn, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "*", element: react_1.default.createElement(ProjectsPage_1.ProjectsPage, null) }))))))));
 };
 exports.App = App;
 // Export App to global scope

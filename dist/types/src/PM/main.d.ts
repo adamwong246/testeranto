@@ -1,48 +1,8 @@
-import { ChildProcess } from "node:child_process";
-import fs from "fs";
-import { WebSocketServer } from "ws";
-import http from "http";
-import { IBuiltConfig, IRunTime } from "../Types.js";
-import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
-import { createLogStreams } from "./utils.js";
-export declare class PM_Main extends PM_WithEslintAndTsc {
-    ports: Record<number, string>;
-    queue: string[];
-    logStreams: Record<string, ReturnType<typeof createLogStreams>>;
-    webMetafileWatcher: fs.FSWatcher;
-    nodeMetafileWatcher: fs.FSWatcher;
-    importMetafileWatcher: fs.FSWatcher;
-    pitonoMetafileWatcher: fs.FSWatcher;
-    launchers: Record<string, () => void>;
-    wss: WebSocketServer;
-    clients: Set<any>;
-    httpServer: http.Server;
-    runningProcesses: Map<string, ChildProcess>;
-    processLogs: Map<string, string[]>;
-    allProcesses: Map<string, {
-        child?: ChildProcess;
-        status: "running" | "exited" | "error";
-        exitCode?: number;
-        error?: string;
-        command: string;
-        pid?: number;
-        timestamp: string;
-    }>;
-    constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev");
-    mapping(): [string, (...a: any[]) => any][];
-    start(): Promise<void>;
-    stop(): Promise<void>;
-    metafileOutputs(platform: IRunTime): Promise<void>;
+import { PM_WithProcesses } from "./PM_WithProcesses.js";
+export declare class PM_Main extends PM_WithProcesses {
     launchPure: (src: string, dest: string) => Promise<void>;
     launchNode: (src: string, dest: string) => Promise<void>;
     launchWeb: (src: string, dest: string) => Promise<void>;
-    launchPitono: (src: string, dest: string) => Promise<void>;
-    launchGolingvu: (src: string, dest: string) => Promise<never>;
-    receiveFeaturesV2: (reportDest: string, srcTest: string, platform: IRunTime) => void;
-    requestHandler(req: http.IncomingMessage, res: http.ServerResponse): void;
-    findIndexHtml(): string | null;
-    broadcast(message: any): void;
-    checkQueue(): void;
-    onBuildDone(): void;
-    checkForShutdown: () => void;
+    launchPython: (src: string, dest: string) => Promise<void>;
+    launchGolang: (src: string, dest: string) => Promise<void>;
 }

@@ -55,6 +55,77 @@ class StaticFileService {
 }
 // Development Mode Service (Full filesystem access via server)
 class DevelopmentFileService {
+    constructor() {
+        this.ws = null;
+        this.changeCallbacks = [];
+        this.statusCallbacks = [];
+        this.branchCallbacks = [];
+        this.connectWebSocket();
+    }
+    connectWebSocket() {
+        try {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/api/git-ws`;
+            this.ws = new WebSocket(wsUrl);
+            this.ws.onopen = () => {
+                var _a;
+                console.log('Git WebSocket connected');
+                // Request initial state
+                (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ type: 'get-initial-state' }));
+            };
+            this.ws.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    switch (data.type) {
+                        case 'changes':
+                            this.changeCallbacks.forEach(callback => callback(data.changes));
+                            break;
+                        case 'status':
+                            this.statusCallbacks.forEach(callback => callback(data.status));
+                            break;
+                        case 'branch':
+                            this.branchCallbacks.forEach(callback => callback(data.branch));
+                            break;
+                        case 'error':
+                            console.error('Git WebSocket error:', data.message);
+                            break;
+                    }
+                }
+                catch (error) {
+                    console.error('Error parsing WebSocket message:', error);
+                }
+            };
+            this.ws.onclose = () => {
+                console.log('Git WebSocket disconnected, attempting to reconnect...');
+                setTimeout(() => this.connectWebSocket(), 3000);
+            };
+            this.ws.onerror = (error) => {
+                console.error('Git WebSocket error:', error);
+            };
+        }
+        catch (error) {
+            console.error('Failed to connect Git WebSocket:', error);
+        }
+    }
+    // Subscribe to real-time changes
+    onChanges(callback) {
+        this.changeCallbacks.push(callback);
+        return () => {
+            this.changeCallbacks = this.changeCallbacks.filter(cb => cb !== callback);
+        };
+    }
+    onStatusUpdate(callback) {
+        this.statusCallbacks.push(callback);
+        return () => {
+            this.statusCallbacks = this.statusCallbacks.filter(cb => cb !== callback);
+        };
+    }
+    onBranchUpdate(callback) {
+        this.branchCallbacks.push(callback);
+        return () => {
+            this.branchCallbacks = this.branchCallbacks.filter(cb => cb !== callback);
+        };
+    }
     async readFile(path) {
         const response = await fetch(`/api/files/read?path=${encodeURIComponent(path)}`);
         if (!response.ok)
@@ -72,6 +143,7 @@ class DevelopmentFileService {
         return response.ok;
     }
     async writeFile(path, content) {
+        var _a;
         const response = await fetch("/api/files/write", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -79,8 +151,11 @@ class DevelopmentFileService {
         });
         if (!response.ok)
             throw new Error(`Failed to write file: ${path}`);
+        // Notify server to update git status
+        (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ type: 'file-changed', path }));
     }
     async createDirectory(path) {
+        var _a;
         const response = await fetch("/api/files/mkdir", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -88,8 +163,10 @@ class DevelopmentFileService {
         });
         if (!response.ok)
             throw new Error(`Failed to create directory: ${path}`);
+        (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ type: 'file-changed', path }));
     }
     async deleteFile(path) {
+        var _a;
         const response = await fetch("/api/files/delete", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -97,52 +174,122 @@ class DevelopmentFileService {
         });
         if (!response.ok)
             throw new Error(`Failed to delete file: ${path}`);
+        (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ type: 'file-changed', path }));
     }
-    async getFileStatus() {
-        // This would need server-side implementation
-        return { status: "unchanged" };
+    async getFileStatus(path) {
+        const response = await fetch(`/api/git/status?path=${encodeURIComponent(path)}`);
+        if (!response.ok)
+            return { status: "unchanged" };
+        return await response.json();
     }
     async getChanges() {
-        // This would need server-side implementation
-        return [];
+        const response = await fetch("/api/git/changes");
+        if (!response.ok)
+            return [];
+        return await response.json();
     }
-    async commitChanges() {
-        throw new Error("Git operations not implemented in development mode");
+    async commitChanges(message, description) {
+        var _a;
+        const response = await fetch("/api/git/commit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message, description }),
+        });
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Failed to commit changes: ${error}`);
+        }
+        // Request updated status after commit
+        (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ type: 'refresh-status' }));
     }
     async pushChanges() {
-        throw new Error("Git operations not implemented in development mode");
+        var _a;
+        const response = await fetch("/api/git/push", {
+            method: "POST",
+        });
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Failed to push changes: ${error}`);
+        }
+        (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ type: 'refresh-status' }));
     }
     async pullChanges() {
-        throw new Error("Git operations not implemented in development mode");
+        var _a;
+        const response = await fetch("/api/git/pull", {
+            method: "POST",
+        });
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Failed to pull changes: ${error}`);
+        }
+        (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ type: 'refresh-status' }));
     }
     async getCurrentBranch() {
-        return "main";
+        const response = await fetch("/api/git/branch");
+        if (!response.ok)
+            return "main";
+        return await response.text();
     }
     async getRemoteStatus() {
-        return { ahead: 0, behind: 0 };
+        const response = await fetch("/api/git/remote-status");
+        if (!response.ok)
+            return { ahead: 0, behind: 0 };
+        return await response.json();
     }
 }
 // Git Mode Service (isomorphic-git based)
 class GitFileService {
+    constructor() {
+        this.git = null;
+        this.fs = null;
+        this.dir = '/testeranto-git';
+    }
+    async ensureGit() {
+        if (!this.git) {
+            this.git = await import("isomorphic-git");
+            this.fs = await import("isomorphic-git/http/web");
+        }
+    }
     async ensureBufferPolyfill() {
-        // Ensure buffer is available in the global scope
         if (typeof window !== 'undefined' && !window.Buffer) {
-            // Use dynamic import to avoid issues during build
             const buffer = await import('buffer');
             window.Buffer = buffer.Buffer;
         }
     }
     async readFile(path) {
         await this.ensureBufferPolyfill();
-        // Use isomorphic-git to read files
-        const git = await import("isomorphic-git");
-        // This would need proper implementation with IndexedDB
-        return "";
+        await this.ensureGit();
+        try {
+            const content = await this.git.readBlob({
+                fs: window.fs,
+                dir: this.dir,
+                oid: await this.git.resolveRef({ fs: window.fs, dir: this.dir, ref: 'HEAD' }),
+                filepath: path,
+            });
+            return new TextDecoder().decode(content.blob);
+        }
+        catch (error) {
+            throw new Error(`Failed to read file: ${path}`);
+        }
     }
     async readDirectory(path) {
         await this.ensureBufferPolyfill();
-        // Use isomorphic-git to list files
-        return [];
+        await this.ensureGit();
+        try {
+            const files = await this.git.listFiles({
+                fs: window.fs,
+                dir: this.dir,
+                ref: 'HEAD',
+            });
+            return files.map(name => ({
+                name,
+                path: name,
+                type: name.includes('.') ? 'file' : 'directory',
+            }));
+        }
+        catch (error) {
+            return [];
+        }
     }
     async exists(path) {
         try {
@@ -155,54 +302,155 @@ class GitFileService {
     }
     async writeFile(path, content) {
         await this.ensureBufferPolyfill();
-        // In Git mode, files are written to IndexedDB
-        // This would need proper implementation
+        await this.ensureGit();
+        // In Git mode, files are written to the virtual file system
+        // This would need proper implementation with IndexedDB or similar
+        console.log('Git mode write:', path);
     }
     async createDirectory(path) {
-        await this.ensureBufferPolyfill();
-        // Directories are virtual in IndexedDB
+        // Directories are created automatically when writing files
+        console.log('Git mode create directory:', path);
     }
     async deleteFile(path) {
         await this.ensureBufferPolyfill();
-        // Delete from IndexedDB
+        await this.ensureGit();
+        // Mark file for deletion in next commit
+        console.log('Git mode delete:', path);
     }
     async getFileStatus(path) {
         await this.ensureBufferPolyfill();
-        const git = await import("isomorphic-git");
-        // This would need proper implementation
-        return { status: "unchanged" };
+        await this.ensureGit();
+        try {
+            const status = await this.git.status({
+                fs: window.fs,
+                dir: this.dir,
+                filepath: path,
+            });
+            return { status: status };
+        }
+        catch (_a) {
+            return { status: 'unchanged' };
+        }
     }
     async getChanges() {
         await this.ensureBufferPolyfill();
-        const git = await import("isomorphic-git");
-        // This would need proper implementation
-        return [];
+        await this.ensureGit();
+        try {
+            const statusMatrix = await this.git.statusMatrix({
+                fs: window.fs,
+                dir: this.dir,
+            });
+            return statusMatrix.map(([file, head, workdir, stage]) => {
+                let status = 'unchanged';
+                if (head === 0 && workdir === 2)
+                    status = 'added';
+                else if (head === 1 && workdir === 0)
+                    status = 'deleted';
+                else if (workdir === 2)
+                    status = 'modified';
+                else if (head !== workdir)
+                    status = 'modified';
+                return { path: file, status };
+            }).filter(change => change.status !== 'unchanged');
+        }
+        catch (error) {
+            console.warn('Failed to get changes:', error);
+            return [];
+        }
     }
     async commitChanges(message, description) {
         await this.ensureBufferPolyfill();
-        const git = await import("isomorphic-git");
-        // This would need proper implementation
+        await this.ensureGit();
+        try {
+            // Stage all changes
+            const changes = await this.getChanges();
+            for (const change of changes) {
+                if (change.status === 'deleted') {
+                    await this.git.remove({
+                        fs: window.fs,
+                        dir: this.dir,
+                        filepath: change.path,
+                    });
+                }
+                else {
+                    await this.git.add({
+                        fs: window.fs,
+                        dir: this.dir,
+                        filepath: change.path,
+                    });
+                }
+            }
+            // Commit
+            await this.git.commit({
+                fs: window.fs,
+                dir: this.dir,
+                author: { name: 'Testeranto User', email: 'user@testeranto' },
+                message: description ? `${message}\n\n${description}` : message,
+            });
+        }
+        catch (error) {
+            throw new Error(`Failed to commit changes: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
     }
     async pushChanges() {
         await this.ensureBufferPolyfill();
-        const git = await import("isomorphic-git");
-        // This would need proper implementation
+        await this.ensureGit();
+        try {
+            await this.git.push({
+                fs: window.fs,
+                http: this.fs,
+                dir: this.dir,
+                remote: 'origin',
+                ref: 'main',
+                onAuth: () => ({ username: 'token' }),
+            });
+        }
+        catch (error) {
+            throw new Error(`Failed to push changes: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
     }
     async pullChanges() {
         await this.ensureBufferPolyfill();
-        const git = await import("isomorphic-git");
-        // This would need proper implementation
+        await this.ensureGit();
+        try {
+            await this.git.pull({
+                fs: window.fs,
+                http: this.fs,
+                dir: this.dir,
+                remote: 'origin',
+                ref: 'main',
+                singleBranch: true,
+                onAuth: () => ({ username: 'token' }),
+            });
+        }
+        catch (error) {
+            throw new Error(`Failed to pull changes: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
     }
     async getCurrentBranch() {
         await this.ensureBufferPolyfill();
-        const git = await import("isomorphic-git");
-        // This would need proper implementation
-        return "main";
+        await this.ensureGit();
+        try {
+            return await this.git.currentBranch({
+                fs: window.fs,
+                dir: this.dir,
+            }) || 'main';
+        }
+        catch (_a) {
+            return 'main';
+        }
     }
     async getRemoteStatus() {
         await this.ensureBufferPolyfill();
-        // This would need proper implementation
-        return { ahead: 0, behind: 0 };
+        await this.ensureGit();
+        try {
+            // For now, return mock data
+            // In a real implementation, we'd compare local and remote branches
+            return { ahead: 0, behind: 0 };
+        }
+        catch (_a) {
+            return { ahead: 0, behind: 0 };
+        }
     }
 }
 // Factory function to get the appropriate FileService based on mode

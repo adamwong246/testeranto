@@ -7,6 +7,14 @@ import readline from "readline";
 import { getRunnables } from "./utils";
 import { AppHtml } from "./utils/buildTemplates";
 import webHtmlFrame from "./web.html";
+if (!process.env.GITHUB_CLIENT_ID) {
+    console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
+    process.exit(-1);
+}
+if (!process.env.GITHUB_CLIENT_SECRET) {
+    console.error(`env var "GITHUB_CLIENT_SECRET" needs to be set!`);
+    process.exit(-1);
+}
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
     process.stdin.setRawMode(true);
@@ -82,7 +90,7 @@ import(f).then(async (module) => {
         return Array.from(meta(config.tests, new Set()));
     };
     // Also handle pitono endpoints for HTML generation if needed
-    [...getSecondaryEndpointsPoints("pitono")].forEach(async (sourceFilePath) => {
+    [...getSecondaryEndpointsPoints("python")].forEach(async (sourceFilePath) => {
         // You might want to generate specific files for pitono tests here
         console.log(`Pitono test found: ${sourceFilePath}`);
     });
@@ -100,7 +108,7 @@ import(f).then(async (module) => {
         // onGolangDone();
     }
     // Handle pitono (Python) tests by generating their metafiles
-    const pitonoTests = config.tests.filter((test) => test[1] === "pitono");
+    const pitonoTests = config.tests.filter((test) => test[1] === "python");
     const hasPitonoTests = pitonoTests.length > 0;
     if (hasPitonoTests) {
         // Import and use the pitono metafile utilities
@@ -113,8 +121,14 @@ import(f).then(async (module) => {
         await fs.promises.mkdir(pitonoMetafilePath, { recursive: true });
         // Write the metafile to the specified path
         fs.writeFileSync(`${pitonoMetafilePath}/core.json`, JSON.stringify(metafile, null, 2));
-        // Mark pitono as done after writing the metafile
-        // onPitonoDone();
+        console.log(ansiC.green(ansiC.inverse(`Python metafile written to: ${pitonoMetafilePath}/core.json`)));
+        // Add Python tests to the processing queue
+        pitonoEntryPoints.forEach((entryPoint) => {
+            if (pm) {
+                // For Python tests, the source file is the entry point itself
+                pm.addToQueue(entryPoint, "python");
+            }
+        });
     }
     Promise.resolve(Promise.all([...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
         const sourceFileSplit = sourceFilePath.split("/");
@@ -131,11 +145,12 @@ import(f).then(async (module) => {
             .mkdir(path.dirname(htmlFilePath), { recursive: true })
             .then((x) => fs.writeFileSync(htmlFilePath, webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)));
     })));
-    const { nodeEntryPoints, nodeEntryPointSidecars, webEntryPoints, webEntryPointSidecars, pureEntryPoints, pureEntryPointSidecars, } = getRunnables(config.tests, testName);
+    const { nodeEntryPoints, nodeEntryPointSidecars, webEntryPoints, webEntryPointSidecars, pureEntryPoints, pureEntryPointSidecars, pythonEntryPoints, pythonEntryPointSidecars, } = getRunnables(config.tests, testName);
     const x = [
         ["pure", Object.keys(pureEntryPoints)],
         ["node", Object.keys(nodeEntryPoints)],
         ["web", Object.keys(webEntryPoints)],
+        ["python", Object.keys(pythonEntryPoints)],
     ];
     x.forEach(async ([runtime, keys]) => {
         keys.forEach(async (k) => {
@@ -150,6 +165,7 @@ import(f).then(async (module) => {
         [pureEntryPoints, pureEntryPointSidecars, "pure"],
         [webEntryPoints, webEntryPointSidecars, "web"],
         [nodeEntryPoints, nodeEntryPointSidecars, "node"],
+        [pythonEntryPoints, pythonEntryPointSidecars, "python"],
     ].forEach(([eps, eps2, runtime]) => {
         [...Object.keys(eps), ...Object.keys(eps2)].forEach((ep) => {
             const fp = path.resolve(`testeranto`, `reports`, testName, ep.split(".").slice(0, -1).join("."), runtime);

@@ -5,28 +5,17 @@
 import { spawn } from "node:child_process";
 import ansiColors from "ansi-colors";
 import net from "net";
-import fs, { watch } from "fs";
-import path from "path";
-import puppeteer, { executablePath } from "puppeteer-core";
+import fs from "fs";
 import ansiC from "ansi-colors";
-import url from "url";
-import mime from "mime-types";
-import { getRunnables, webEvaluator } from "../utils";
+import { webEvaluator } from "../utils";
 import { Queue } from "../utils/queue.js";
-import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
-import { fileHash, createLogStreams, statusMessagePretty, filesHash, isValidUrl, pollForFile, writeFileAndCreateDir, puppeteerConfigs, } from "./utils.js";
-const changes = {};
-const fileHashes = {};
+import { createLogStreams, statusMessagePretty } from "./utils.js";
+import { PM_WithProcesses } from "./PM_WithProcesses.js";
 const files = {};
 const screenshots = {};
-export class PM_Main extends PM_WithEslintAndTsc {
-    constructor(configs, name, mode) {
-        super(configs, name, mode);
-        this.logStreams = {};
-        this.clients = new Set();
-        this.runningProcesses = new Map();
-        this.processLogs = new Map();
-        this.allProcesses = new Map();
+export class PM_Main extends PM_WithProcesses {
+    constructor() {
+        super(...arguments);
         this.launchPure = async (src, dest) => {
             const processId = `pure-${src}-${Date.now()}`;
             const command = `pure test: ${src}`;
@@ -400,596 +389,244 @@ export class PM_Main extends PM_WithEslintAndTsc {
             // Add to process manager
             this.addPromiseProcess(processId, webPromise, command, "bdd-test", src, "web");
         };
-        this.launchPitono = async (src, dest) => {
-            const processId = `pitono-${src}-${Date.now()}`;
-            const command = `pitono test: ${src}`;
-            // Create the promise
-            const pitonoPromise = (async () => {
+        this.launchPython = async (src, dest) => {
+            const processId = `python-${src}-${Date.now()}`;
+            const command = `python test: ${src}`;
+            const pythonPromise = (async () => {
                 this.bddTestIsRunning(src);
                 const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
                     .slice(0, -1)
-                    .join(".")}/pitono`;
+                    .join(".")}/python`;
                 if (!fs.existsSync(reportDest)) {
                     fs.mkdirSync(reportDest, { recursive: true });
                 }
-                const logs = createLogStreams(reportDest, "node");
-                try {
-                    // Execute the Python test using the pitono runner
-                    const { PitonoRunner } = await import("./pitonoRunner");
-                    const runner = new PitonoRunner(this.configs, this.name);
-                    await runner.run();
-                    this.bddTestIsNowDone(src, 0);
-                    statusMessagePretty(0, src, "pitono");
+                let testResources = "";
+                const testConfig = this.configs.tests.find((t) => t[0] === src);
+                if (!testConfig) {
+                    console.log(ansiColors.inverse(`missing test config! Exiting ungracefully for '${src}'`));
+                    process.exit(-1);
                 }
-                catch (error) {
-                    logs.writeExitCode(-1, error);
-                    console.log(ansiC.red(ansiC.inverse(`${src} errored with: ${error}. Check logs for more info`)));
-                    this.bddTestIsNowDone(src, -1);
-                    statusMessagePretty(-1, src, "pitono");
-                    throw error;
+                const testConfigResource = testConfig[2];
+                const portsToUse = [];
+                if (testConfigResource.ports === 0) {
+                    testResources = JSON.stringify({
+                        scheduled: true,
+                        name: src,
+                        ports: portsToUse,
+                        fs: reportDest,
+                        browserWSEndpoint: this.browser.wsEndpoint(),
+                    });
                 }
-            })();
-            // Add to process manager
-            this.addPromiseProcess(processId, pitonoPromise, command, "bdd-test", src, "pitono");
-        };
-        this.launchGolingvu = async (src, dest) => {
-            throw "not yet implemented";
-        };
-        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
-            const featureDestination = path.resolve(process.cwd(), "reports", "features", "strings", srcTest.split(".").slice(0, -1).join(".") + ".features.txt");
-            const testReportPath = `${reportDest}/tests.json`;
-            if (!fs.existsSync(testReportPath)) {
-                console.error(`tests.json not found at: ${testReportPath}`);
-                return;
-            }
-            const testReport = JSON.parse(fs.readFileSync(testReportPath, "utf8"));
-            // Add full path information to each test
-            if (testReport.tests) {
-                testReport.tests.forEach((test) => {
-                    // Add the full path to each test
-                    test.fullPath = path.resolve(process.cwd(), srcTest);
-                });
-            }
-            // Add full path to the report itself
-            testReport.fullPath = path.resolve(process.cwd(), srcTest);
-            // Write the modified report back
-            fs.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
-            testReport.features
-                .reduce(async (mm, featureStringKey) => {
-                const accum = await mm;
-                const isUrl = isValidUrl(featureStringKey);
-                if (isUrl) {
-                    const u = new URL(featureStringKey);
-                    if (u.protocol === "file:") {
-                        const newPath = `${process.cwd()}/testeranto/features/internal/${path.relative(process.cwd(), u.pathname)}`;
-                        accum.files.push(u.pathname);
+                else if (testConfigResource.ports > 0) {
+                    const openPorts = Object.entries(this.ports).filter(([, status]) => status === "");
+                    if (openPorts.length >= testConfigResource.ports) {
+                        for (let i = 0; i < testConfigResource.ports; i++) {
+                            portsToUse.push(openPorts[i][0]);
+                            this.ports[openPorts[i][0]] = src;
+                        }
+                        testResources = JSON.stringify({
+                            scheduled: true,
+                            name: src,
+                            ports: portsToUse,
+                            fs: reportDest,
+                            browserWSEndpoint: this.browser.wsEndpoint(),
+                        });
                     }
-                    else if (u.protocol === "http:" || u.protocol === "https:") {
-                        const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
-                        const body = await this.configs.featureIngestor(featureStringKey);
-                        writeFileAndCreateDir(newPath, body);
-                        accum.files.push(newPath);
+                    else {
+                        console.log(ansiColors.red(`python: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`));
+                        this.queue.push(src);
+                        return;
                     }
                 }
                 else {
-                    await fs.promises.mkdir(path.dirname(featureDestination), {
-                        recursive: true,
-                    });
-                    accum.strings.push(featureStringKey);
+                    console.error("negative port makes no sense", src);
+                    process.exit(-1);
                 }
-                return accum;
-            }, Promise.resolve({ files: [], strings: [] }))
-                .then(({ files, strings }) => {
-                // Markdown files must be referenced in the prompt but string style features are already present in the tests.json file
-                fs.writeFileSync(`testeranto/reports/${this.name}/${srcTest
+                const logs = createLogStreams(reportDest, "python");
+                // For Python, we'll just run the script directly and pass test resources as an argument
+                // Python tests need to handle their own IPC if needed
+                const child = spawn("python3", [src, testResources], {
+                    stdio: ["pipe", "pipe", "pipe"],
+                });
+                return new Promise((resolve, reject) => {
+                    var _a, _b;
+                    (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on("data", (data) => {
+                        var _a;
+                        (_a = logs.stdout) === null || _a === void 0 ? void 0 : _a.write(data);
+                    });
+                    (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on("data", (data) => {
+                        var _a;
+                        (_a = logs.stderr) === null || _a === void 0 ? void 0 : _a.write(data);
+                    });
+                    child.on("close", (code) => {
+                        const exitCode = code === null ? -1 : code;
+                        if (exitCode < 0) {
+                            logs.writeExitCode(exitCode, new Error("Process crashed or was terminated"));
+                        }
+                        else {
+                            logs.writeExitCode(exitCode);
+                        }
+                        logs.closeAll();
+                        if (exitCode === 0) {
+                            this.bddTestIsNowDone(src, 0);
+                            statusMessagePretty(0, src, "python");
+                            resolve();
+                        }
+                        else {
+                            console.log(ansiColors.red(`python ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`));
+                            this.bddTestIsNowDone(src, exitCode);
+                            statusMessagePretty(exitCode, src, "python");
+                            reject(new Error(`Process exited with code ${exitCode}`));
+                        }
+                    });
+                    child.on("error", (e) => {
+                        console.log(ansiColors.red(ansiColors.inverse(`python: ${src} errored with: ${e.name}. Check error logs for more info`)));
+                        this.bddTestIsNowDone(src, -1);
+                        statusMessagePretty(-1, src, "python");
+                        reject(e);
+                    });
+                }).finally(() => {
+                    portsToUse.forEach(port => {
+                        this.ports[port] = "";
+                    });
+                });
+            })();
+            this.addPromiseProcess(processId, pythonPromise, command, "bdd-test", src, "python");
+        };
+        this.launchGolang = async (src, dest) => {
+            const processId = `golang-${src}-${Date.now()}`;
+            const command = `golang test: ${src}`;
+            const golangPromise = (async () => {
+                this.bddTestIsRunning(src);
+                const reportDest = `testeranto/reports/${this.name}/${src
                     .split(".")
                     .slice(0, -1)
-                    .join(".")}/${platform}/featurePrompt.txt`, files
-                    .map((f) => {
-                    return `/read ${f}`;
-                })
-                    .join("\n"));
-            });
-            testReport.givens.forEach((g) => {
-                if (g.failed === true) {
-                    this.summary[srcTest].failingFeatures[g.key] = g.features;
+                    .join(".")}/golang`;
+                if (!fs.existsSync(reportDest)) {
+                    fs.mkdirSync(reportDest, { recursive: true });
                 }
-            });
-            this.writeBigBoard();
-        };
-        this.checkForShutdown = () => {
-            this.checkQueue();
-            console.log(ansiC.inverse(`The following jobs are awaiting resources: ${JSON.stringify(this.queue)}`));
-            console.log(ansiC.inverse(`The status of ports: ${JSON.stringify(this.ports)}`));
-            this.writeBigBoard();
-            if (this.mode === "dev")
-                return;
-            let inflight = false;
-            Object.keys(this.summary).forEach((k) => {
-                if (this.summary[k].prompt === "?") {
-                    console.log(ansiC.blue(ansiC.inverse(`🕕 prompt ${k}`)));
-                    inflight = true;
+                let testResources = "";
+                const testConfig = this.configs.tests.find((t) => t[0] === src);
+                if (!testConfig) {
+                    console.log(ansiColors.inverse(`golang: missing test config! Exiting ungracefully for '${src}'`));
+                    process.exit(-1);
                 }
-            });
-            Object.keys(this.summary).forEach((k) => {
-                if (this.summary[k].runTimeErrors === "?") {
-                    console.log(ansiC.blue(ansiC.inverse(`🕕 runTimeError ${k}`)));
-                    inflight = true;
+                const testConfigResource = testConfig[2];
+                const portsToUse = [];
+                if (testConfigResource.ports === 0) {
+                    testResources = JSON.stringify({
+                        scheduled: true,
+                        name: src,
+                        ports: portsToUse,
+                        fs: reportDest,
+                        browserWSEndpoint: this.browser.wsEndpoint(),
+                    });
                 }
-            });
-            Object.keys(this.summary).forEach((k) => {
-                if (this.summary[k].staticErrors === "?") {
-                    console.log(ansiC.blue(ansiC.inverse(`🕕 staticErrors ${k}`)));
-                    inflight = true;
-                }
-            });
-            Object.keys(this.summary).forEach((k) => {
-                if (this.summary[k].typeErrors === "?") {
-                    console.log(ansiC.blue(ansiC.inverse(`🕕 typeErrors ${k}`)));
-                    inflight = true;
-                }
-            });
-            this.writeBigBoard();
-            if (!inflight) {
-                if (this.browser) {
-                    if (this.browser) {
-                        this.browser.disconnect().then(() => {
-                            console.log(ansiC.inverse(`${this.name} has been tested. Goodbye.`));
-                            process.exit();
-                        });
-                    }
-                }
-            }
-        };
-        this.launchers = {};
-        this.ports = {};
-        this.queue = [];
-        // this.nodeSidecars = {};
-        // this.webSidecars = {};
-        // this.pureSidecars = {};
-        this.configs.ports.forEach((element) => {
-            this.ports[element] = ""; // set ports as open
-        });
-    }
-    mapping() {
-        return [
-            ["$", this.$],
-            ["click", this.click],
-            ["closePage", this.closePage],
-            ["createWriteStream", this.createWriteStream],
-            ["customclose", this.customclose],
-            ["customScreenShot", this.customScreenShot.bind(this)],
-            ["end", this.end],
-            ["existsSync", this.existsSync],
-            ["focusOn", this.focusOn],
-            ["getAttribute", this.getAttribute],
-            ["getInnerHtml", this.getInnerHtml],
-            // ["setValue", this.setValue],
-            ["goto", this.goto.bind(this)],
-            ["isDisabled", this.isDisabled],
-            // ["launchSideCar", this.launchSideCar.bind(this)],
-            ["mkdirSync", this.mkdirSync],
-            ["newPage", this.newPage],
-            ["page", this.page],
-            ["pages", this.pages],
-            ["screencast", this.screencast],
-            ["screencastStop", this.screencastStop],
-            // ["stopSideCar", this.stopSideCar.bind(this)],
-            ["typeInto", this.typeInto],
-            ["waitForSelector", this.waitForSelector],
-            ["write", this.write],
-            ["writeFileSync", this.writeFileSync],
-        ];
-    }
-    // keep this forever. do not delete
-    // mapping(): [string, (...a) => any][] {
-    //   return [
-    //     ["$", (...args) => this.$(...args)],
-    //     ["click", (...args) => this.click(...args)],
-    //     ["closePage", (...args) => this.closePage(...args)],
-    //     ["createWriteStream", (...args) => this.createWriteStream(...args)],
-    //     ["customclose", (...args) => this.customclose(...args)],
-    //     ["customScreenShot", (...args) => this.customScreenShot(...args)],
-    //     ["end", (...args) => this.end(...args)],
-    //     ["existsSync", (...args) => this.existsSync(...args)],
-    //     ["focusOn", (...args) => this.focusOn(...args)],
-    //     ["getAttribute", (...args) => this.getAttribute(...args)],
-    //     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
-    //     // ["setValue", (...args) => this.setValue(...args)],
-    //     ["goto", (...args) => this.goto(...args)],
-    //     ["isDisabled", (...args) => this.isDisabled(...args)],
-    //     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
-    //     ["mkdirSync", (...args) => this.mkdirSync(...args)],
-    //     ["newPage", (...args) => this.newPage(...args)],
-    //     ["page", (...args) => this.page(...args)],
-    //     ["pages", (...args) => this.pages(...args)],
-    //     ["screencast", (...args) => this.screencast(...args)],
-    //     ["screencastStop", (...args) => this.screencastStop(...args)],
-    //     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
-    //     ["typeInto", (...args) => this.typeInto(...args)],
-    //     ["waitForSelector", (...args) => this.waitForSelector(...args)],
-    //     ["write", (...args) => this.write(...args)],
-    //     ["writeFileSync", (...args) => this.writeFileSync(...args)],
-    //   ];
-    // }
-    async start() {
-        // Wait for build processes to complete first
-        try {
-            await this.startBuildProcesses();
-            this.onBuildDone();
-        }
-        catch (error) {
-            console.error("Build processes failed:", error);
-            return;
-        }
-        // Continue with the rest of the setup after builds are done
-        this.mapping().forEach(async ([command, func]) => {
-            globalThis[command] = func;
-        });
-        if (!fs.existsSync(`testeranto/reports/${this.name}`)) {
-            fs.mkdirSync(`testeranto/reports/${this.name}`);
-        }
-        try {
-            this.browser = await puppeteer.launch(puppeteerConfigs);
-        }
-        catch (e) {
-            console.error(e);
-            console.error("could not start chrome via puppeter. Check this path: ", executablePath);
-        }
-        const { nodeEntryPoints, webEntryPoints, pureEntryPoints,
-        // pitonoEntryPoints is stubbed out
-         } = getRunnables(this.configs.tests, this.name);
-        [
-            [
-                nodeEntryPoints,
-                this.launchNode,
-                "node",
-                (w) => {
-                    this.nodeMetafileWatcher = w;
-                },
-            ],
-            [
-                webEntryPoints,
-                this.launchWeb,
-                "web",
-                (w) => {
-                    this.webMetafileWatcher = w;
-                },
-            ],
-            [
-                pureEntryPoints,
-                this.launchPure,
-                "pure",
-                (w) => {
-                    this.importMetafileWatcher = w;
-                },
-            ],
-            // pitonoEntryPoints is commented out since it's stubbed
-            // [
-            //   pitonoEntryPoints,
-            //   this.launchPitono,
-            //   "pitono",
-            //   (w) => {
-            //     this.pitonoMetafileWatcher = w;
-            //   },
-            // ],
-        ].forEach(async ([eps, launcher, runtime, watcher]) => {
-            let metafile;
-            if (runtime === "pitono") {
-                metafile = `./testeranto/metafiles/python/core.json`;
-                const metafileDir = path.dirname(metafile);
-                if (!fs.existsSync(metafileDir)) {
-                    fs.mkdirSync(metafileDir, { recursive: true });
-                }
-            }
-            else {
-                metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-            }
-            // Only poll for file if it's not a pitono runtime
-            if (runtime !== "pitono") {
-                await pollForFile(metafile);
-            }
-            Object.entries(eps).forEach(async ([inputFile, outputFile]) => {
-                this.launchers[inputFile] = () => launcher(inputFile, outputFile);
-                this.launchers[inputFile]();
-                try {
-                    // Check if the file exists before watching
-                    if (fs.existsSync(outputFile)) {
-                        watch(outputFile, async (e, filename) => {
-                            const hash = await fileHash(outputFile);
-                            if (fileHashes[inputFile] !== hash) {
-                                fileHashes[inputFile] = hash;
-                                console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`)));
-                                this.launchers[inputFile]();
-                            }
+                else if (testConfigResource.ports > 0) {
+                    const openPorts = Object.entries(this.ports).filter(([, status]) => status === "");
+                    if (openPorts.length >= testConfigResource.ports) {
+                        for (let i = 0; i < testConfigResource.ports; i++) {
+                            portsToUse.push(openPorts[i][0]);
+                            this.ports[openPorts[i][0]] = src;
+                        }
+                        testResources = JSON.stringify({
+                            scheduled: true,
+                            name: src,
+                            ports: portsToUse,
+                            fs: reportDest,
+                            browserWSEndpoint: this.browser.wsEndpoint(),
                         });
                     }
                     else {
-                        console.log(ansiC.yellow(ansiC.inverse(`File not found, skipping watch: ${outputFile}`)));
+                        console.log(ansiColors.red(`golang: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`));
+                        this.queue.push(src);
+                        return;
                     }
-                }
-                catch (e) {
-                    console.error(e);
-                }
-            });
-            this.metafileOutputs(runtime);
-            // For pitono, we need to wait for the file to be created
-            if (runtime === "pitono") {
-                // Use polling to wait for the file to exist
-                const checkFileExists = () => {
-                    if (fs.existsSync(metafile)) {
-                        console.log(ansiC.green(ansiC.inverse(`Pitono metafile found: ${metafile}`)));
-                        // Set up the watcher once the file exists
-                        watcher(watch(metafile, async (e, filename) => {
-                            console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`)));
-                            this.metafileOutputs(runtime);
-                        }));
-                        // Read the metafile immediately
-                        this.metafileOutputs(runtime);
-                    }
-                    else {
-                        // Check again after a delay
-                        setTimeout(checkFileExists, 1000);
-                    }
-                };
-                // Start checking for the file
-                checkFileExists();
-            }
-            else {
-                // For other runtimes, only set up watcher if the file exists
-                if (fs.existsSync(metafile)) {
-                    watcher(watch(metafile, async (e, filename) => {
-                        console.log(ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`)));
-                        this.metafileOutputs(runtime);
-                    }));
-                }
-            }
-        });
-    }
-    async stop() {
-        console.log(ansiC.inverse("Testeranto-Run is shutting down gracefully..."));
-        this.mode = "once";
-        this.nodeMetafileWatcher.close();
-        this.webMetafileWatcher.close();
-        this.importMetafileWatcher.close();
-        if (this.pitonoMetafileWatcher) {
-            this.pitonoMetafileWatcher.close();
-        }
-        Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-        this.wss.close(() => {
-            console.log("WebSocket server closed");
-        });
-        this.clients.forEach((client) => {
-            client.terminate();
-        });
-        this.clients.clear();
-        this.httpServer.close(() => {
-            console.log("HTTP server closed");
-        });
-        this.checkForShutdown();
-    }
-    async metafileOutputs(platform) {
-        let metafilePath;
-        if (platform === "pitono") {
-            metafilePath = `./testeranto/metafiles/python/core.json`;
-        }
-        else {
-            metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
-        }
-        // Check if the file exists
-        if (!fs.existsSync(metafilePath)) {
-            if (platform === "pitono") {
-                console.log(ansiC.yellow(ansiC.inverse(`Pitono metafile not found yet: ${metafilePath}`)));
-            }
-            return;
-        }
-        let metafile;
-        try {
-            const fileContent = fs.readFileSync(metafilePath).toString();
-            const parsedData = JSON.parse(fileContent);
-            // Handle different metafile structures
-            if (platform === "pitono") {
-                // Pitono metafile might be the entire content or have a different structure
-                metafile = parsedData.metafile || parsedData;
-            }
-            else {
-                metafile = parsedData.metafile;
-            }
-            if (!metafile) {
-                console.log(ansiC.yellow(ansiC.inverse(`No metafile found in ${metafilePath}`)));
-                return;
-            }
-        }
-        catch (error) {
-            console.error(`Error reading metafile at ${metafilePath}:`, error);
-            return;
-        }
-        const outputs = metafile.outputs;
-        Object.keys(outputs).forEach(async (k) => {
-            const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
-            if (!k.startsWith(pattern)) {
-                return false;
-            }
-            const addableFiles = Object.keys(outputs[k].inputs).filter((i) => {
-                if (!fs.existsSync(i))
-                    return false;
-                if (i.startsWith("node_modules"))
-                    return false;
-                if (i.startsWith("./node_modules"))
-                    return false;
-                return true;
-            });
-            const f = `${k.split(".").slice(0, -1).join(".")}/`;
-            if (!fs.existsSync(f)) {
-                fs.mkdirSync(f);
-            }
-            const entrypoint = outputs[k].entryPoint;
-            if (entrypoint) {
-                const changeDigest = await filesHash(addableFiles);
-                if (changeDigest === changes[entrypoint]) {
-                    // skip
                 }
                 else {
-                    changes[entrypoint] = changeDigest;
-                    this.tscCheck({
-                        platform,
-                        addableFiles,
-                        entrypoint: entrypoint,
+                    console.error("negative port makes no sense", src);
+                    process.exit(-1);
+                }
+                // Compile the Go test first
+                const buildDir = path.dirname(dest);
+                const binaryName = path.basename(dest, '.go');
+                const binaryPath = path.join(buildDir, binaryName);
+                const logs = createLogStreams(reportDest, "golang");
+                // First, compile the Go program
+                const compileProcess = spawn("go", ["build", "-o", binaryPath, dest]);
+                return new Promise((resolve, reject) => {
+                    var _a, _b;
+                    (_a = compileProcess.stdout) === null || _a === void 0 ? void 0 : _a.on("data", (data) => {
+                        var _a;
+                        (_a = logs.stdout) === null || _a === void 0 ? void 0 : _a.write(data);
                     });
-                    this.eslintCheck(entrypoint, platform, addableFiles);
-                    this.makePrompt(entrypoint, addableFiles, platform);
-                }
-            }
-        });
-    }
-    // this method is so horrible. Don't drink and vibe-code kids
-    requestHandler(req, res) {
-        const parsedUrl = url.parse(req.url || "/");
-        let pathname = parsedUrl.pathname || "/";
-        if (pathname === "/") {
-            pathname = "/index.html";
-        }
-        let filePath = pathname.substring(1);
-        // Determine which directory to serve from
-        if (filePath.startsWith("reports/")) {
-            filePath = `testeranto/${filePath}`;
-        }
-        else if (filePath.startsWith("metafiles/")) {
-            filePath = `testeranto/${filePath}`;
-        }
-        else if (filePath === "projects.json") {
-            filePath = `testeranto/${filePath}`;
-        }
-        else {
-            // For frontend assets, try multiple possible locations
-            // First, try the dist directory
-            const possiblePaths = [
-                `dist/${filePath}`,
-                `testeranto/dist/${filePath}`,
-                `../dist/${filePath}`,
-                `./${filePath}`,
-            ];
-            // Find the first existing file
-            let foundPath = null;
-            for (const possiblePath of possiblePaths) {
-                if (fs.existsSync(possiblePath)) {
-                    foundPath = possiblePath;
-                    break;
-                }
-            }
-            if (foundPath) {
-                filePath = foundPath;
-            }
-            else {
-                // If no file found, serve index.html for SPA routing
-                const indexPath = this.findIndexHtml();
-                if (indexPath) {
-                    fs.readFile(indexPath, (err, data) => {
-                        if (err) {
-                            res.writeHead(404, { "Content-Type": "text/plain" });
-                            res.end("404 Not Found");
+                    (_b = compileProcess.stderr) === null || _b === void 0 ? void 0 : _b.on("data", (data) => {
+                        var _a;
+                        (_a = logs.stderr) === null || _a === void 0 ? void 0 : _a.write(data);
+                    });
+                    compileProcess.on("close", (compileCode) => {
+                        var _a, _b;
+                        if (compileCode !== 0) {
+                            console.log(ansiColors.red(`golang ! ${src} failed to compile. Check ${reportDest}/stderr.log for more info`));
+                            this.bddTestIsNowDone(src, compileCode || -1);
+                            statusMessagePretty(compileCode || -1, src, "golang");
+                            reject(new Error(`Compilation failed with code ${compileCode}`));
                             return;
                         }
-                        res.writeHead(200, { "Content-Type": "text/html" });
-                        res.end(data);
-                    });
-                    return;
-                }
-                else {
-                    res.writeHead(404, { "Content-Type": "text/plain" });
-                    res.end("404 Not Found");
-                    return;
-                }
-            }
-        }
-        // Check if file exists
-        fs.exists(filePath, (exists) => {
-            if (!exists) {
-                // For SPA routing, serve index.html if the path looks like a route
-                if (!pathname.includes(".") && pathname !== "/") {
-                    const indexPath = this.findIndexHtml();
-                    if (indexPath) {
-                        fs.readFile(indexPath, (err, data) => {
-                            if (err) {
-                                res.writeHead(404, { "Content-Type": "text/plain" });
-                                res.end("404 Not Found");
-                                return;
-                            }
-                            res.writeHead(200, { "Content-Type": "text/html" });
-                            res.end(data);
+                        // Now run the compiled binary
+                        const child = spawn(binaryPath, [testResources], {
+                            stdio: ["pipe", "pipe", "pipe"],
                         });
-                        return;
-                    }
-                    else {
-                        // Serve a simple message if index.html is not found
-                        res.writeHead(200, { "Content-Type": "text/html" });
-                        res.end(`
-              <html>
-                <body>
-                  <h1>Testeranto is running</h1>
-                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
-                </body>
-              </html>
-            `);
-                        return;
-                    }
-                }
-                res.writeHead(404, { "Content-Type": "text/plain" });
-                res.end("404 Not Found");
-                return;
-            }
-            // Read and serve the file
-            fs.readFile(filePath, (err, data) => {
-                if (err) {
-                    res.writeHead(500, { "Content-Type": "text/plain" });
-                    res.end("500 Internal Server Error");
-                    return;
-                }
-                // Get MIME type
-                const mimeType = mime.lookup(filePath) || "application/octet-stream";
-                res.writeHead(200, { "Content-Type": mimeType });
-                res.end(data);
-            });
-        });
-    }
-    // this method is also horrible
-    findIndexHtml() {
-        const possiblePaths = [
-            "dist/index.html",
-            "testeranto/dist/index.html",
-            "../dist/index.html",
-            "./index.html",
-        ];
-        for (const path of possiblePaths) {
-            if (fs.existsSync(path)) {
-                return path;
-            }
-        }
-        return null;
-    }
-    broadcast(message) {
-        const data = typeof message === "string" ? message : JSON.stringify(message);
-        this.clients.forEach((client) => {
-            if (client.readyState === 1) {
-                client.send(data);
-            }
-        });
-    }
-    checkQueue() {
-        const x = this.queue.pop();
-        if (!x) {
-            ansiC.inverse(`The following queue is empty`);
-            return;
-        }
-        const test = this.configs.tests.find((t) => t[0] === x);
-        if (!test)
-            throw `test is undefined ${x}`;
-        this.launchers[test[0]]();
-    }
-    onBuildDone() {
-        console.log("Build processes completed");
-        // The builds are done, which means the files are ready to be watched
-        // This matches the original behavior where builds completed before PM_Main started
+                        (_a = child.stdout) === null || _a === void 0 ? void 0 : _a.on("data", (data) => {
+                            var _a;
+                            (_a = logs.stdout) === null || _a === void 0 ? void 0 : _a.write(data);
+                        });
+                        (_b = child.stderr) === null || _b === void 0 ? void 0 : _b.on("data", (data) => {
+                            var _a;
+                            (_a = logs.stderr) === null || _a === void 0 ? void 0 : _a.write(data);
+                        });
+                        child.on("close", (code) => {
+                            const exitCode = code === null ? -1 : code;
+                            if (exitCode < 0) {
+                                logs.writeExitCode(exitCode, new Error("Process crashed or was terminated"));
+                            }
+                            else {
+                                logs.writeExitCode(exitCode);
+                            }
+                            logs.closeAll();
+                            if (exitCode === 0) {
+                                this.bddTestIsNowDone(src, 0);
+                                statusMessagePretty(0, src, "golang");
+                                resolve();
+                            }
+                            else {
+                                console.log(ansiColors.red(`golang ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`));
+                                this.bddTestIsNowDone(src, exitCode);
+                                statusMessagePretty(exitCode, src, "golang");
+                                reject(new Error(`Process exited with code ${exitCode}`));
+                            }
+                        });
+                        child.on("error", (e) => {
+                            console.log(ansiColors.red(ansiColors.inverse(`golang: ${src} errored with: ${e.name}. Check error logs for more info`)));
+                            this.bddTestIsNowDone(src, -1);
+                            statusMessagePretty(-1, src, "golang");
+                            reject(e);
+                        });
+                    });
+                    compileProcess.on("error", (e) => {
+                        console.log(ansiColors.red(ansiColors.inverse(`golang: ${src} compilation errored with: ${e.name}. Check error logs for more info`)));
+                        this.bddTestIsNowDone(src, -1);
+                        statusMessagePretty(-1, src, "golang");
+                        reject(e);
+                    });
+                }).finally(() => {
+                    portsToUse.forEach(port => {
+                        this.ports[port] = "";
+                    });
+                });
+            })();
+            this.addPromiseProcess(processId, golangPromise, command, "bdd-test", src, "golang");
+        };
     }
 }

@@ -20,12 +20,13 @@ export class MockGiven extends BaseGiven {
 export class MockWhen extends BaseWhen {
     async andWhen(store, whenCB, testResource, pm) {
         // Create a TestSelection from the store
-        const selection = { testSelection: store.testStore };
-        // Call whenCB with the selection to get the function
-        const whenFunction = whenCB(selection);
-        // Execute the function with the store
-        const result = await whenFunction(store);
-        return result;
+        const selection = {
+            testSelection: store.testStore,
+            testStore: store.testStore
+        };
+        // Call whenCB with the selection
+        await whenCB(selection);
+        return store;
     }
     addArtifact(path) {
         // Mock implementation
@@ -34,7 +35,10 @@ export class MockWhen extends BaseWhen {
 export class MockThen extends BaseThen {
     async butThen(store, thenCB, testResourceConfiguration, pm) {
         // Create a TestSelection from the store
-        const selection = { testSelection: store.testStore };
+        const selection = {
+            testSelection: store.testStore,
+            testStore: store.testStore
+        };
         // Call thenCB with the selection
         await thenCB(selection);
         return selection;

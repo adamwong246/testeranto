@@ -38,10 +38,9 @@ exports.GitIntegrationView = void 0;
 const react_1 = __importStar(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
 const FileService_1 = require("../../services/FileService");
-const App_1 = require("../../App");
+const useGitMode_1 = require("../../hooks/useGitMode");
 const GitIntegrationView = () => {
-    const { isConnected } = (0, App_1.useWebSocket)();
-    const [mode, setMode] = (0, react_1.useState)(isConnected ? 'dev' : 'static');
+    const { mode, setMode, isStatic, isDev, isGit } = (0, useGitMode_1.useGitMode)();
     const [changes, setChanges] = (0, react_1.useState)([]);
     const [isLoading, setIsLoading] = (0, react_1.useState)(true);
     const [error, setError] = (0, react_1.useState)(null);
@@ -52,12 +51,71 @@ const GitIntegrationView = () => {
     const [isCommitting, setIsCommitting] = (0, react_1.useState)(false);
     const [isPushing, setIsPushing] = (0, react_1.useState)(false);
     const [isPulling, setIsPulling] = (0, react_1.useState)(false);
-    const fileService = (0, FileService_1.getFileService)(mode);
+    const [fileService, setFileService] = (0, react_1.useState)(() => (0, FileService_1.getFileService)(mode));
     (0, react_1.useEffect)(() => {
-        loadChanges();
-        loadGitStatus();
+        const newFileService = (0, FileService_1.getFileService)(mode);
+        setFileService(newFileService);
+        // We can't call loadChanges and loadGitStatus here directly because they use fileService state
+        // Instead, we'll set up a separate effect to trigger when fileService changes
     }, [mode]);
-    const loadChanges = async () => {
+    // Add a new effect to load data when fileService changes
+    (0, react_1.useEffect)(() => {
+        var _a, _b, _c;
+        if (fileService && mode === 'dev') {
+            const devFileService = fileService;
+            // Set up real-time updates for dev mode
+            const unsubscribeChanges = (_a = devFileService.onChanges) === null || _a === void 0 ? void 0 : _a.call(devFileService, (newChanges) => {
+                setChanges(newChanges);
+            });
+            const unsubscribeStatus = (_b = devFileService.onStatusUpdate) === null || _b === void 0 ? void 0 : _b.call(devFileService, (newStatus) => {
+                setRemoteStatus(newStatus);
+            });
+            const unsubscribeBranch = (_c = devFileService.onBranchUpdate) === null || _c === void 0 ? void 0 : _c.call(devFileService, (newBranch) => {
+                setCurrentBranch(newBranch);
+            });
+            const loadData = async () => {
+                try {
+                    setIsLoading(true);
+                    await loadChanges();
+                    await loadGitStatus();
+                }
+                catch (err) {
+                    console.warn('Failed to load data:', err);
+                }
+                finally {
+                    setIsLoading(false);
+                }
+            };
+            loadData();
+            return () => {
+                unsubscribeChanges === null || unsubscribeChanges === void 0 ? void 0 : unsubscribeChanges();
+                unsubscribeStatus === null || unsubscribeStatus === void 0 ? void 0 : unsubscribeStatus();
+                unsubscribeBranch === null || unsubscribeBranch === void 0 ? void 0 : unsubscribeBranch();
+            };
+        }
+        else if (fileService) {
+            // For non-dev modes, just load data once
+            const loadData = async () => {
+                try {
+                    setIsLoading(true);
+                    await loadChanges();
+                    await loadGitStatus();
+                }
+                catch (err) {
+                    console.warn('Failed to load data:', err);
+                }
+                finally {
+                    setIsLoading(false);
+                }
+            };
+            loadData();
+        }
+    }, [fileService, mode]);
+    const loadChanges = async (event) => {
+        // Prevent default behavior if event exists
+        if (event) {
+            event.preventDefault();
+        }
         try {
             setIsLoading(true);
             setError(null);
@@ -65,21 +123,30 @@ const GitIntegrationView = () => {
             setChanges(changes);
         }
         catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to load changes');
+            const errorMessage = err instanceof Error ? err.message : 'Failed to load changes';
+            console.error('Failed to load changes:', err);
+            setError(errorMessage);
         }
         finally {
             setIsLoading(false);
         }
     };
-    const loadGitStatus = async () => {
+    const loadGitStatus = async (event) => {
+        // Prevent default behavior if event exists
+        if (event) {
+            event.preventDefault();
+        }
         try {
+            setError(null);
             const branch = await fileService.getCurrentBranch();
             const status = await fileService.getRemoteStatus();
             setCurrentBranch(branch);
             setRemoteStatus(status);
         }
         catch (err) {
-            console.warn('Failed to load git status:', err);
+            const errorMessage = err instanceof Error ? err.message : 'Failed to load git status';
+            console.error('Failed to load git status:', err);
+            setError(errorMessage);
         }
     };
     const handleSaveChanges = async () => {
@@ -97,7 +164,9 @@ const GitIntegrationView = () => {
             await loadGitStatus();
         }
         catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to commit changes');
+            const errorMessage = err instanceof Error ? err.message : 'Failed to commit changes';
+            console.error('Failed to commit changes:', err);
+            setError(errorMessage);
         }
         finally {
             setIsCommitting(false);
@@ -120,7 +189,9 @@ const GitIntegrationView = () => {
             await loadGitStatus();
         }
         catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to share changes');
+            const errorMessage = err instanceof Error ? err.message : 'Failed to share changes';
+            console.error('Failed to share changes:', err);
+            setError(errorMessage);
         }
         finally {
             setIsCommitting(false);
@@ -136,7 +207,9 @@ const GitIntegrationView = () => {
             await loadGitStatus();
         }
         catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to get updates');
+            const errorMessage = err instanceof Error ? err.message : 'Failed to get updates';
+            console.error('Failed to get updates:', err);
+            setError(errorMessage);
         }
         finally {
             setIsPulling(false);
@@ -172,17 +245,25 @@ const GitIntegrationView = () => {
             return 'info';
         return 'success';
     };
+    // if (error) console.error(error);
     return (react_1.default.createElement(react_bootstrap_1.Container, { fluid: true },
         react_1.default.createElement(react_bootstrap_1.Row, { className: "mb-4" },
             react_1.default.createElement(react_bootstrap_1.Col, null,
                 react_1.default.createElement("h2", null, "Git Integration"),
-                react_1.default.createElement(react_bootstrap_1.Badge, { bg: mode === 'static' ? 'secondary' : mode === 'dev' ? 'success' : 'primary' },
-                    mode.toUpperCase(),
-                    " MODE"),
+                react_1.default.createElement("div", { className: "d-flex align-items-center gap-2" },
+                    react_1.default.createElement(react_bootstrap_1.Badge, { bg: mode === 'static' ? 'secondary' : mode === 'dev' ? 'success' : 'primary' },
+                        mode.toUpperCase(),
+                        " MODE"),
+                    react_1.default.createElement("select", { className: "form-select form-select-sm", style: { width: 'auto' }, value: mode, onChange: (e) => setMode(e.target.value) },
+                        react_1.default.createElement("option", { value: "static" }, "Static (Read-only)"),
+                        react_1.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
+                        react_1.default.createElement("option", { value: "git" }, "Git Remote"))),
                 mode === 'static' && (react_1.default.createElement(react_bootstrap_1.Alert, { variant: "info", className: "mt-2" },
-                    react_1.default.createElement("small", null, "Static mode: Read-only access. Switch to Development mode for full Git functionality."))))),
+                    react_1.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode."))),
+                mode === 'git' && (react_1.default.createElement(react_bootstrap_1.Alert, { variant: "warning", className: "mt-2" },
+                    react_1.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited."))))),
         error && (react_1.default.createElement(react_bootstrap_1.Alert, { variant: "danger", onClose: () => setError(null), dismissible: true }, error)),
-        react_1.default.createElement(react_bootstrap_1.Row, null,
+        mode !== 'static' && (react_1.default.createElement(react_bootstrap_1.Row, null,
             react_1.default.createElement(react_bootstrap_1.Col, { md: 4 },
                 react_1.default.createElement(react_bootstrap_1.Card, null,
                     react_1.default.createElement(react_bootstrap_1.Card.Header, { className: "d-flex justify-content-between align-items-center" },
@@ -216,8 +297,9 @@ const GitIntegrationView = () => {
                                 "Sharing...")) : ('Save & Share')))))),
             react_1.default.createElement(react_bootstrap_1.Col, { md: 4 },
                 react_1.default.createElement(react_bootstrap_1.Card, null,
-                    react_1.default.createElement(react_bootstrap_1.Card.Header, null,
-                        react_1.default.createElement("h5", null, "Sync with Remote")),
+                    react_1.default.createElement(react_bootstrap_1.Card.Header, { className: "d-flex justify-content-between align-items-center" },
+                        react_1.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"),
+                        react_1.default.createElement(react_bootstrap_1.Button, { variant: "outline-secondary", size: "sm", onClick: (e) => loadGitStatus(e) }, "\u21BB")),
                     react_1.default.createElement(react_bootstrap_1.Card.Body, null,
                         react_1.default.createElement("div", { className: "text-center mb-3" },
                             react_1.default.createElement(react_bootstrap_1.Badge, { bg: getSyncStatusVariant() }, getSyncStatusText()),
@@ -228,13 +310,33 @@ const GitIntegrationView = () => {
                             react_1.default.createElement(react_bootstrap_1.Button, { variant: "outline-primary", onClick: handleGetUpdates, disabled: mode === 'static' || isPulling }, isPulling ? (react_1.default.createElement(react_1.default.Fragment, null,
                                 react_1.default.createElement(react_bootstrap_1.Spinner, { animation: "border", size: "sm", className: "me-2" }),
                                 "Updating...")) : ('Get Updates')),
-                            react_1.default.createElement(react_bootstrap_1.Button, { variant: "outline-success", disabled: mode === 'static' || remoteStatus.ahead === 0, onClick: () => fileService.pushChanges() },
-                                "Share Changes (",
-                                remoteStatus.ahead,
-                                ")")),
+                            react_1.default.createElement(react_bootstrap_1.Button, { variant: "outline-success", disabled: mode === 'static' || remoteStatus.ahead === 0, onClick: async (e) => {
+                                    e.preventDefault();
+                                    try {
+                                        setIsPushing(true);
+                                        setError(null);
+                                        await fileService.pushChanges();
+                                        await loadGitStatus();
+                                    }
+                                    catch (err) {
+                                        const errorMessage = err instanceof Error ? err.message : 'Failed to push changes';
+                                        console.error('Failed to push changes:', err);
+                                        setError(errorMessage);
+                                    }
+                                    finally {
+                                        setIsPushing(false);
+                                    }
+                                } }, isPushing ? (react_1.default.createElement(react_1.default.Fragment, null,
+                                react_1.default.createElement(react_bootstrap_1.Spinner, { animation: "border", size: "sm", className: "me-2" }),
+                                "Sharing...")) : (`Share Changes (${remoteStatus.ahead})`))),
                         react_1.default.createElement("div", { className: "mt-3" },
                             react_1.default.createElement("small", { className: "text-muted" },
                                 "Connected to: origin/",
-                                currentBranch))))))));
+                                currentBranch))))))),
+        mode === 'static' && (react_1.default.createElement(react_bootstrap_1.Row, null,
+            react_1.default.createElement(react_bootstrap_1.Col, null,
+                react_1.default.createElement(react_bootstrap_1.Alert, { variant: "info", className: "text-center" },
+                    react_1.default.createElement("h5", null, "Git Operations Not Available"),
+                    react_1.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))))));
 };
 exports.GitIntegrationView = GitIntegrationView;

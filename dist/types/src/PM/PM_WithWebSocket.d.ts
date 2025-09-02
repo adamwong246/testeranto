@@ -19,13 +19,13 @@ export declare abstract class PM_WithWebSocket extends PM_Base {
         type: "process" | "promise";
         category: "aider" | "bdd-test" | "build-time" | "other";
         testName?: string;
-        platform?: "node" | "web" | "pure" | "pitono" | "golang";
+        platform?: "node" | "web" | "pure" | "python" | "golang";
     }>;
     processLogs: Map<string, string[]>;
     constructor(configs: any);
     requestHandler(req: http.IncomingMessage, res: http.ServerResponse): void;
     findIndexHtml(): string | null;
-    addPromiseProcess(processId: string, promise: Promise<any>, command: string, category?: "aider" | "bdd-test" | "build-time" | "other", testName?: string, platform?: "node" | "web" | "pure" | "pitono" | "golang", onResolve?: (result: any) => void, onReject?: (error: any) => void): string;
+    addPromiseProcess(processId: string, promise: Promise<any>, command: string, category?: "aider" | "bdd-test" | "build-time" | "other", testName?: string, platform?: "node" | "web" | "pure" | "python" | "golang", onResolve?: (result: any) => void, onReject?: (error: any) => void): string;
     broadcast(message: any): void;
     getProcessesByCategory(category: "aider" | "bdd-test" | "build-time" | "other"): {
         processId: string;
@@ -37,7 +37,7 @@ export declare abstract class PM_WithWebSocket extends PM_Base {
         timestamp: string;
         category: "aider" | "bdd-test" | "build-time" | "other";
         testName: string | undefined;
-        platform: "node" | "web" | "pure" | "golang" | "pitono" | undefined;
+        platform: "node" | "web" | "pure" | "golang" | "python" | undefined;
         logs: string[];
     }[];
     getBDDTestProcesses(): {
@@ -50,7 +50,7 @@ export declare abstract class PM_WithWebSocket extends PM_Base {
         timestamp: string;
         category: "aider" | "bdd-test" | "build-time" | "other";
         testName: string | undefined;
-        platform: "node" | "web" | "pure" | "golang" | "pitono" | undefined;
+        platform: "node" | "web" | "pure" | "golang" | "python" | undefined;
         logs: string[];
     }[];
     getBuildTimeProcesses(): {
@@ -63,7 +63,7 @@ export declare abstract class PM_WithWebSocket extends PM_Base {
         timestamp: string;
         category: "aider" | "bdd-test" | "build-time" | "other";
         testName: string | undefined;
-        platform: "node" | "web" | "pure" | "golang" | "pitono" | undefined;
+        platform: "node" | "web" | "pure" | "golang" | "python" | undefined;
         logs: string[];
     }[];
     getAiderProcesses(): {
@@ -76,7 +76,7 @@ export declare abstract class PM_WithWebSocket extends PM_Base {
         timestamp: string;
         category: "aider" | "bdd-test" | "build-time" | "other";
         testName: string | undefined;
-        platform: "node" | "web" | "pure" | "golang" | "pitono" | undefined;
+        platform: "node" | "web" | "pure" | "golang" | "python" | undefined;
         logs: string[];
     }[];
     getProcessesByTestName(testName: string): {
@@ -89,7 +89,7 @@ export declare abstract class PM_WithWebSocket extends PM_Base {
         timestamp: string;
         category: "aider" | "bdd-test" | "build-time" | "other";
         testName: string | undefined;
-        platform: "node" | "web" | "pure" | "golang" | "pitono" | undefined;
+        platform: "node" | "web" | "pure" | "golang" | "python" | undefined;
         logs: string[];
     }[];
     getProcessesByPlatform(platform: "node" | "web" | "pure" | "pitono" | "golang"): {
@@ -102,7 +102,7 @@ export declare abstract class PM_WithWebSocket extends PM_Base {
         timestamp: string;
         category: "aider" | "bdd-test" | "build-time" | "other";
         testName: string | undefined;
-        platform: "node" | "web" | "pure" | "golang" | "pitono" | undefined;
+        platform: "node" | "web" | "pure" | "golang" | "python" | undefined;
         logs: string[];
     }[];
 }

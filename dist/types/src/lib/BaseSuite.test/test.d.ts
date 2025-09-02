@@ -9,6 +9,7 @@ export type TestStore = {
 };
 export type TestSelection = {
     testSelection: boolean;
+    testStore?: boolean;
     error?: boolean;
 };
 export type I = Ibdd_in<typeof BaseSuite, BaseSuite<any, any>, // isubject

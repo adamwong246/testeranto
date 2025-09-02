@@ -18,6 +18,67 @@ class PM_Base {
     constructor(configs) {
         this.configs = configs;
     }
+    mapping() {
+        return [
+            ["$", this.$],
+            ["click", this.click],
+            ["closePage", this.closePage],
+            ["createWriteStream", this.createWriteStream],
+            ["customclose", this.customclose],
+            ["customScreenShot", this.customScreenShot.bind(this)],
+            ["end", this.end],
+            ["existsSync", this.existsSync],
+            ["focusOn", this.focusOn],
+            ["getAttribute", this.getAttribute],
+            ["getInnerHtml", this.getInnerHtml],
+            // ["setValue", this.setValue],
+            ["goto", this.goto.bind(this)],
+            ["isDisabled", this.isDisabled],
+            // ["launchSideCar", this.launchSideCar.bind(this)],
+            ["mkdirSync", this.mkdirSync],
+            ["newPage", this.newPage],
+            ["page", this.page],
+            ["pages", this.pages],
+            ["screencast", this.screencast],
+            ["screencastStop", this.screencastStop],
+            // ["stopSideCar", this.stopSideCar.bind(this)],
+            ["typeInto", this.typeInto],
+            ["waitForSelector", this.waitForSelector],
+            ["write", this.write],
+            ["writeFileSync", this.writeFileSync],
+        ];
+    }
+    // keep this forever. do not delete
+    // mapping(): [string, (...a) => any][] {
+    //   return [
+    //     ["$", (...args) => this.$(...args)],
+    //     ["click", (...args) => this.click(...args)],
+    //     ["closePage", (...args) => this.closePage(...args)],
+    //     ["createWriteStream", (...args) => this.createWriteStream(...args)],
+    //     ["customclose", (...args) => this.customclose(...args)],
+    //     ["customScreenShot", (...args) => this.customScreenShot(...args)],
+    //     ["end", (...args) => this.end(...args)],
+    //     ["existsSync", (...args) => this.existsSync(...args)],
+    //     ["focusOn", (...args) => this.focusOn(...args)],
+    //     ["getAttribute", (...args) => this.getAttribute(...args)],
+    //     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
+    //     // ["setValue", (...args) => this.setValue(...args)],
+    //     ["goto", (...args) => this.goto(...args)],
+    //     ["isDisabled", (...args) => this.isDisabled(...args)],
+    //     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
+    //     ["mkdirSync", (...args) => this.mkdirSync(...args)],
+    //     ["newPage", (...args) => this.newPage(...args)],
+    //     ["page", (...args) => this.page(...args)],
+    //     ["pages", (...args) => this.pages(...args)],
+    //     ["screencast", (...args) => this.screencast(...args)],
+    //     ["screencastStop", (...args) => this.screencastStop(...args)],
+    //     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
+    //     ["typeInto", (...args) => this.typeInto(...args)],
+    //     ["waitForSelector", (...args) => this.waitForSelector(...args)],
+    //     ["write", (...args) => this.write(...args)],
+    //     ["writeFileSync", (...args) => this.writeFileSync(...args)],
+    //   ];
+    // }
     // abstract launchSideCar(n: number, testName: string, projectName: string);
     customclose() {
         throw new Error("customclose not implemented.");

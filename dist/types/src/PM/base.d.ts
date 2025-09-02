@@ -6,6 +6,7 @@ export declare abstract class PM_Base {
     browser: Browser;
     configs: IBuiltConfig;
     constructor(configs: IBuiltConfig);
+    mapping(): [string, (...a: any[]) => any][];
     customclose(): void;
     waitForSelector(p: string, s: string): any;
     closePage(p: any): any;

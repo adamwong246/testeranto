@@ -125,20 +125,19 @@ exports.implementation = {
         },
     },
     thens: {
-        SuiteNameMatches: (expectedName) => async (ssel, utils) => {
+        SuiteNameMatches: (expectedName) => (ssel, utils) => async (s) => {
             // Since we can't access the store directly, we need to handle this differently
             // For now, just return a resolved promise with a mock suite
             return Promise.resolve(new BaseSuite_1.BaseSuite("temp", 0, {}));
         },
-        SuiteIndexMatches: (expectedIndex) => async (ssel, utils) => {
+        SuiteIndexMatches: (expectedIndex) => (ssel, utils) => async (s) => {
             // Since we can't access the store directly, we need to handle this differently
             // For now, just return a resolved promise with a mock suite
             return Promise.resolve(new BaseSuite_1.BaseSuite("temp", 0, {}));
         },
-        FeaturesIncludes: (feature) => (ssel, utils) => (store) => {
-            // For now, just return a resolved promise
-            // The actual implementation would check if the feature is present
-            return Promise.resolve({ testSelection: true });
+        FeaturesIncludes: (feature) => (ssel, utils) => async (s) => {
+            // For now, just return a resolved promise with a mock suite
+            return Promise.resolve(new BaseSuite_1.BaseSuite("temp", 0, {}));
         },
         FeatureCountMatches: (expectedCount) => (ssel, utils) => (store) => {
             // For now, just return a resolved promise
@@ -199,17 +198,21 @@ exports.testAdapter = {
     },
     andWhen: async (store, whenCB, testResource, pm) => {
         // Create a TestSelection from the store
-        const selection = { testSelection: store.testStore };
-        // whenCB is (x: TestSelection) => (store: TestStore) => Promise<TestSelection>
-        const whenFunction = whenCB(selection);
-        // Execute the function with the store
-        const result = await whenFunction(store);
-        return result;
+        const selection = {
+            testSelection: store.testStore,
+            testStore: store.testStore
+        };
+        // Call whenCB with the selection
+        await whenCB(selection);
+        return store;
     },
     butThen: async (store, thenCB, testResource, pm) => {
         try {
             // Create a TestSelection from the store
-            const selection = { testSelection: store.testStore };
+            const selection = {
+                testSelection: store.testStore,
+                testStore: store.testStore
+            };
             // thenCB is (s: TestSelection) => Promise<BaseSuite<any, any>>
             await thenCB(selection);
             return selection;

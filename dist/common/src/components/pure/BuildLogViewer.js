@@ -79,7 +79,7 @@ const BuildLogViewer = ({ logs, runtime }) => {
                                         ((_b = warn.location) === null || _b === void 0 ? void 0 : _b.line) && `:${warn.location.line}`),
                                     react_1.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : '')),
                                 react_1.default.createElement("div", { className: "mt-1" },
-                                    react_1.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(warn)))));
+                                    react_1.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(warn)))));
                         }))))) : (react_1.default.createElement(react_bootstrap_1.Alert, { variant: "info" }, "No warnings found"))),
                 react_1.default.createElement(react_bootstrap_1.Tab.Pane, { eventKey: "errors" }, hasErrors ? (react_1.default.createElement(react_bootstrap_1.Card, { className: "border-danger" },
                     react_1.default.createElement(react_bootstrap_1.Card.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" },
@@ -98,7 +98,7 @@ const BuildLogViewer = ({ logs, runtime }) => {
                                         ((_b = err.location) === null || _b === void 0 ? void 0 : _b.line) && `:${err.location.line}`),
                                     react_1.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : '')),
                                 react_1.default.createElement("div", { className: "mt-1" },
-                                    react_1.default.createElement("pre", { className: "mb-0 p-2 bg-light rounded" }, JSON.stringify(err)))));
+                                    react_1.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(err)))));
                         }))))) : (react_1.default.createElement(react_bootstrap_1.Alert, { variant: "success" },
                     react_1.default.createElement("h5", null, "No Errors Found"),
                     react_1.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))))));

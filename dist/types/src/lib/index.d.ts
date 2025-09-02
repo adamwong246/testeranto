@@ -58,6 +58,10 @@ export type IRunnables = {
     webEntryPointSidecars: Record<string, string>;
     pureEntryPoints: Record<string, string>;
     pureEntryPointSidecars: Record<string, string>;
+    pythonEntryPoints: Record<string, string>;
+    pythonEntryPointSidecars: Record<string, string>;
+    golangEntryPoints: Record<string, string>;
+    golangEntryPointSidecars: Record<string, string>;
 };
 export type IFinalResults = {
     features: string[];

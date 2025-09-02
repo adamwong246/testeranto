@@ -12,6 +12,10 @@ export interface FileChange extends FileStatus {
     path: string;
     diff?: string;
 }
+export interface RemoteStatus {
+    ahead: number;
+    behind: number;
+}
 export interface FileService {
     readFile(path: string): Promise<string>;
     readDirectory(path: string): Promise<FileEntry[]>;
@@ -25,9 +29,6 @@ export interface FileService {
     pushChanges(): Promise<void>;
     pullChanges(): Promise<void>;
     getCurrentBranch(): Promise<string>;
-    getRemoteStatus(): Promise<{
-        ahead: number;
-        behind: number;
-    }>;
+    getRemoteStatus(): Promise<RemoteStatus>;
 }
 export declare const getFileService: (mode: "static" | "dev" | "git") => FileService;

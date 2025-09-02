@@ -223,13 +223,20 @@ export class PM_WithWebSocket extends PM_Base {
     requestHandler(req, res) {
         // Parse the URL
         const parsedUrl = url.parse(req.url || "/");
-        let pathname = parsedUrl.pathname || "/";
+        const pathname = parsedUrl.pathname || "/";
+        // Handle health check endpoint
+        if (pathname === "/health") {
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ status: "ok", timestamp: new Date().toISOString() }));
+            return;
+        }
         // Handle root path
-        if (pathname === "/") {
-            pathname = "/index.html";
+        let processedPathname = pathname;
+        if (processedPathname === "/") {
+            processedPathname = "/index.html";
         }
         // Remove leading slash
-        let filePath = pathname.substring(1);
+        let filePath = processedPathname.substring(1);
         // Determine which directory to serve from
         if (filePath.startsWith("reports/")) {
             // Serve from reports directory
@@ -289,7 +296,7 @@ export class PM_WithWebSocket extends PM_Base {
         fs.exists(filePath, (exists) => {
             if (!exists) {
                 // For SPA routing, serve index.html if the path looks like a route
-                if (!pathname.includes(".") && pathname !== "/") {
+                if (!processedPathname.includes(".") && processedPathname !== "/") {
                     const indexPath = this.findIndexHtml();
                     if (indexPath) {
                         fs.readFile(indexPath, (err, data) => {
@@ -328,10 +335,32 @@ export class PM_WithWebSocket extends PM_Base {
                     res.end("500 Internal Server Error");
                     return;
                 }
-                // Get MIME type
-                const mimeType = mime.lookup(filePath) || "application/octet-stream";
-                res.writeHead(200, { "Content-Type": mimeType });
-                res.end(data);
+                // For HTML files, inject the configuration
+                if (filePath.endsWith(".html")) {
+                    let content = data.toString();
+                    // Inject the configuration script before the closing </body> tag
+                    if (content.includes("</body>")) {
+                        const configScript = `
+              <script>
+                window.testerantoConfig = ${JSON.stringify({
+                            githubOAuth: {
+                                clientId: process.env.GITHUB_CLIENT_ID || "",
+                            },
+                            serverOrigin: process.env.SERVER_ORIGIN || "http://localhost:3000",
+                        })};
+              </script>
+            `;
+                        content = content.replace("</body>", `${configScript}</body>`);
+                    }
+                    res.writeHead(200, { "Content-Type": "text/html" });
+                    res.end(content);
+                }
+                else {
+                    // Get MIME type for other files
+                    const mimeType = mime.lookup(filePath) || "application/octet-stream";
+                    res.writeHead(200, { "Content-Type": mimeType });
+                    res.end(data);
+                }
             });
         });
     }
@@ -450,7 +479,7 @@ export class PM_WithWebSocket extends PM_Base {
             category: procInfo.category,
             testName: procInfo.testName,
             platform: procInfo.platform,
-            logs: this.processLogs.get(id) || []
+            logs: this.processLogs.get(id) || [],
         }));
     }
     getBDDTestProcesses() {
@@ -476,7 +505,7 @@ export class PM_WithWebSocket extends PM_Base {
             category: procInfo.category,
             testName: procInfo.testName,
             platform: procInfo.platform,
-            logs: this.processLogs.get(id) || []
+            logs: this.processLogs.get(id) || [],
         }));
     }
     getProcessesByPlatform(platform) {
@@ -493,7 +522,7 @@ export class PM_WithWebSocket extends PM_Base {
             category: procInfo.category,
             testName: procInfo.testName,
             platform: procInfo.platform,
-            logs: this.processLogs.get(id) || []
+            logs: this.processLogs.get(id) || [],
         }));
     }
 }

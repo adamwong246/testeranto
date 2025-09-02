@@ -87,7 +87,7 @@ const SingleProcessView = ({ process, onBack, loading, onKillProcess, }) => {
     }
     return (react_1.default.createElement("div", { style: { height: '100%', display: 'flex', flexDirection: 'column' } },
         react_1.default.createElement("div", { style: { flex: 1, display: 'flex', overflow: 'hidden' } },
-            react_1.default.createElement("div", { className: "bg-light border-end", style: {
+            react_1.default.createElement("div", { className: " border-end", style: {
                     width: '300px',
                     minWidth: '300px',
                     flexShrink: 0,

@@ -51,7 +51,7 @@ export const SingleProcessView = ({ process, onBack, loading, onKillProcess, }) 
     }
     return (React.createElement("div", { style: { height: '100%', display: 'flex', flexDirection: 'column' } },
         React.createElement("div", { style: { flex: 1, display: 'flex', overflow: 'hidden' } },
-            React.createElement("div", { className: "bg-light border-end", style: {
+            React.createElement("div", { className: " border-end", style: {
                     width: '300px',
                     minWidth: '300px',
                     flexShrink: 0,
