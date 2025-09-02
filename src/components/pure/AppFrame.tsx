@@ -176,16 +176,46 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             {tutorialMode ? (
               <OverlayTrigger
                 placement="right"
-                overlay={
-                  <Tooltip id="design-editor-tooltip">
-                    Canvas editor
-                  </Tooltip>
+                overlay={<Tooltip id="design-editor-tooltip">
+                  Canvas editor
+                </Tooltip>
                 }
               >
                 <span>kanvaso</span>
               </OverlayTrigger>
             ) : (
               <span>kanvaso</span>
+            )}
+          </Nav.Link>
+
+
+          <Nav.Link
+            as={NavLink}
+            to="/svg-editor"
+            className={`${location.pathname === '/svg-editor' ? 'active' : ''} d-flex align-items-center justify-content-center `}
+            style={{
+              height: '40px',
+              width: '40px',
+              opacity: isAuthenticated ? 1 : 0.6
+            }}
+            onClick={(e) => {
+              if (!isAuthenticated) {
+                e.preventDefault();
+              }
+            }}
+          >
+            {tutorialMode ? (
+              <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip id="svg-editor-tooltip">
+                  svg editor
+                </Tooltip>
+                }
+              >
+                <span>vektoro</span>
+              </OverlayTrigger>
+            ) : (
+              <span>vektoro</span>
             )}
           </Nav.Link>
 

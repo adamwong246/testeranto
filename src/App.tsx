@@ -16,6 +16,7 @@ import { Settings } from './components/pure/Settings';
 import { GitIntegrationPage } from './components/stateful/GitIntegrationPage';
 import { AuthCallbackPage } from './components/stateful/AuthCallbackPage';
 import { githubAuthService } from './services/GitHubAuthService';
+import { SVGEditorPage } from './components/stateful/SVGEditorPage';
 
 interface WebSocketContextType {
   ws: WebSocket | null;
@@ -172,6 +173,7 @@ export const App = () => {
                 ) : null}
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/git" element={isAuthenticated ? <GitIntegrationPage /> : <SignIn />} />
+                <Route path="/svg-editor" element={isAuthenticated ? <SVGEditorPage /> : <SignIn />} />
                 
                 {/* Catch all - redirect to home for logged out users */}
                 <Route path="*" element={<ProjectsPage />} />

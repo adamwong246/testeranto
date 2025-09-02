@@ -1,0 +1,21 @@
+
+/add src/components/pure/ProjectPageView.test/index.tsx
+/add src/components/pure/ProjectPageView.test/implementation.tsx
+/add src/components/pure/ProjectPageView.test/specification.ts
+/add src/components/pure/ProjectPageView.tsx
+/add src/components/pure/TestTable.tsx
+/add src/components/TestStatusBadge.tsx
+/add src/components/pure/BuildLogViewer.tsx
+/add src/components/pure/NavBar.tsx
+/add src/App.scss
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/tests.json
+/read testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/type_errors.txt
+/read testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/lint_errors.txt
+
+/read testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/tests.json testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/type_errors.txt testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/lint_errors.txt testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/exit.log testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/message.txt testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/prompt.txt testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/build.json testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/info.log testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/error.log testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/warn.log testeranto/reports/core/src/components/pure/ProjectPageView.test/index/web/debug.log
