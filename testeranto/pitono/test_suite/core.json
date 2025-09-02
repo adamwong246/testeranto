@@ -1,0 +1,83 @@
+{
+  "testName": "test_suite",
+  "entryPoints": [
+    "example/test1.py",
+    "example/test2.py"
+  ],
+  "outputs": {
+    "/Users/adam/Code/testeranto/example/test1.py": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "example/test1.py",
+      "inputs": {
+        "example/test1.py": {
+          "bytes": 1024,
+          "imports": []
+        },
+        "example/test2.py": {
+          "bytes": 1024,
+          "imports": []
+        }
+      },
+      "bytes": 2048
+    },
+    "/Users/adam/Code/testeranto/example/test2.py": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "example/test2.py",
+      "inputs": {
+        "example/test1.py": {
+          "bytes": 1024,
+          "imports": []
+        },
+        "example/test2.py": {
+          "bytes": 1024,
+          "imports": []
+        }
+      },
+      "bytes": 2048
+    }
+  },
+  "metafile": {
+    "inputs": {
+      "/Users/adam/Code/testeranto/example/test1.py": {
+        "bytes": 1024,
+        "imports": []
+      },
+      "/Users/adam/Code/testeranto/example/test2.py": {
+        "bytes": 1024,
+        "imports": []
+      }
+    },
+    "outputs": {
+      "/Users/adam/Code/testeranto/example/test1.py": {
+        "bytes": 2048,
+        "inputs": {
+          "example/test1.py": {
+            "bytesInOutput": 1024
+          },
+          "example/test2.py": {
+            "bytesInOutput": 1024
+          }
+        },
+        "exports": [],
+        "entryPoint": "example/test1.py"
+      },
+      "/Users/adam/Code/testeranto/example/test2.py": {
+        "bytes": 2048,
+        "inputs": {
+          "example/test1.py": {
+            "bytesInOutput": 1024
+          },
+          "example/test2.py": {
+            "bytesInOutput": 1024
+          }
+        },
+        "exports": [],
+        "entryPoint": "example/test2.py"
+      }
+    }
+  },
+  "timestamp": 1756845405521,
+  "runtime": "pitono"
+}

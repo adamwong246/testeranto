@@ -1,4 +1,0 @@
-wtf
-Total tests calculated: 1
-[DEBUG] butThenProxy writeFileSync: fp="test.txt" (type: string), contents="content" (type: string), testName="test" (type: string)
-[DEBUG] Generated path: "test/path/butThen/test.txt"

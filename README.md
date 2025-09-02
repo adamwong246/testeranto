@@ -233,3 +233,26 @@ Test a react component. You can choose from a variety of types (jsx functions, c
 ## Sidecars (COMING SOON)
 
 Alongside your test, you can include a number of "sidecars" - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.
+# Testeranto
+
+A multi-language testing framework.
+
+## Python Setup
+
+Python tests require a virtual environment to be set up:
+
+1. Navigate to the project root
+2. Create a virtual environment:
+   ```bash
+   python3 -m venv venv
+   ```
+3. Activate the virtual environment:
+   ```bash
+   source venv/bin/activate
+   ```
+4. Install the pitono package:
+   ```bash
+   pip install -e ./src/pitono
+   ```
+
+Make sure to activate the virtual environment before running tests.

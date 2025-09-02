@@ -1,7 +1,22 @@
 import asyncio
-from pitono import Pitono, SimpleTestAdapter
-from pitono.types import ITestSpecification, ITestImplementation, ITTestResourceRequest
-from pitono.core_generator import PitonoCoreGenerator
+import sys
+import os
+
+# Add the src directory to Python path to find the pitono package
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+try:
+    from pitono import Pitono, SimpleTestAdapter
+    from pitono.types import ITestSpecification, ITestImplementation, ITTestResourceRequest
+    from pitono.core_generator import PitonoCoreGenerator
+except ImportError as e:
+    print(f"Import error: {e}")
+    print("Current Python path:")
+    for path in sys.path:
+        print(f"  {path}")
+    print("Please make sure to activate the virtual environment and install the pitono package")
+    print("Run: python3 -m venv venv && source venv/bin/activate && pip install -e ./src/pitono")
+    raise
 
 # Define a simple test specification
 def test_specification(suites, givens, whens, thens):
@@ -54,10 +69,9 @@ def test_core_generator():
 
 # Let's test running a simple suite
 async def test_suite():
-    from pitono.base_suite import BaseSuite
-    from pitono.base_given import BaseGiven
-    from pitono.base_when import BaseWhen
-    from pitono.base_then import BaseThen
+    print("mark1")
+    # These are now imported from the main pitono module
+    from pitono import BaseSuite, BaseGiven, BaseWhen, BaseThen
     
     # Create a simple then implementation
     class SimpleThen(BaseThen):
@@ -97,6 +111,7 @@ async def test_suite():
         None
     )
     print(f"Suite result: {result.to_obj()}")
+    pm
 
 if __name__ == "__main__":
     # Test core generator

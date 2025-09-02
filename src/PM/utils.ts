@@ -55,7 +55,7 @@ export function runtimeLogs(
       return {
         exit: fs.createWriteStream(`${safeDest}/exit.log`),
       };
-    } else if (runtime === "pitono") {
+    } else if (runtime === "python") {
       return {
         stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
         stderr: fs.createWriteStream(`${safeDest}/stderr.log`),

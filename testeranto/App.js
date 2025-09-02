@@ -58812,21 +58812,6 @@ This file was not generated during the test run.`,
         Nav_default2.Link,
         {
           as: NavLink,
-          to: "/design-editor",
-          className: `${location2.pathname === "/design-editor" ? "active" : ""} d-flex align-items-center justify-content-center`
-        },
-        tutorialMode ? /* @__PURE__ */ import_react111.default.createElement(
-          OverlayTrigger_default,
-          {
-            placement: "right",
-            overlay: /* @__PURE__ */ import_react111.default.createElement(Tooltip_default, { id: "design-editor-tooltip" }, "Canvas editor")
-          },
-          /* @__PURE__ */ import_react111.default.createElement("span", null, "kanvaso")
-        ) : /* @__PURE__ */ import_react111.default.createElement("span", null, "kanvaso")
-      ), /* @__PURE__ */ import_react111.default.createElement(
-        Nav_default2.Link,
-        {
-          as: NavLink,
           to: "/svg-editor",
           className: `${location2.pathname === "/svg-editor" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
