@@ -1,0 +1,23 @@
+{
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "example/base_suite_test.go": {
+        "bytes": 4477,
+        "imports": []
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/golang/core/example/base_suite_test.go": {
+        "bytes": 4477,
+        "inputs": {
+          "example/base_suite_test.go": {
+            "bytesInOutput": 4477
+          }
+        },
+        "entryPoint": "example/base_suite_test.go"
+      }
+    }
+  }
+}

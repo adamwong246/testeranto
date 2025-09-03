@@ -29,6 +29,17 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
   const { isAuthenticated, logout } = useAuth();
   const [hasAnimated, setHasAnimated] = useState(false);
 
+  // Add CSS for the brand logo animation
+  const brandLogoStyle = `
+    .brand-logo:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+    }
+    .brand-logo:active {
+      transform: scale(0.95);
+    }
+  `;
+
   useEffect(() => {
     // Only animate on the first load
     if (!hasAnimated) {
@@ -41,6 +52,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
 
   return (
     <div className="d-flex min-vh-100">
+      <style>{brandLogoStyle}</style>
       {/* Sidebar - Always 60px wide, full height */}
       <div
         className={`border-end d-flex flex-column ${!hasAnimated ? 'sidebar-attention' : ''}`}
@@ -252,6 +264,26 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             )}
           </Nav.Link>
 
+          <Nav.Link
+            as={NavLink}
+            to="/skribo"
+            className={`${location.pathname === '/skribo' ? 'active' : ''} d-flex align-items-center justify-content-center`}
+          >
+            {tutorialMode ? (
+              <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip id="skribo-tooltip">
+                  Code editor
+                </Tooltip>
+                }
+              >
+                <span>skribo</span>
+              </OverlayTrigger>
+            ) : (
+              <span>skribo</span>
+            )}
+          </Nav.Link>
+
 
           {/* Settings Link - Always accessible */}
           <Nav.Link
@@ -300,7 +332,34 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           </div>
         </OverlayTrigger>
 
-        {/* <p>made with ❤️ and <a href="https://www.npmjs.com/package/testeranto">testeranto</a></p> */}
+        {/* Brand Logo */}
+        <div className="p-2 border-top d-flex align-items-center justify-content-center">
+          <a
+            href="https://github.com/adamwong246/testeranto"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="brand-logo"
+            style={{
+              display: 'block',
+              transition: 'transform 0.3s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            <img
+              src="https://www.testeranto.com/logo.svg"
+              alt="Testeranto Logo"
+              style={{
+                height: '64px',
+                width: '64px',
+              }}
+            />
+          </a>
+        </div>
       </div>
 
       {/* Main Content */}
@@ -323,6 +382,46 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             {children}
           </Container>
         </main>
+      </div>
+      
+      {/* Floating Button */}
+      <div
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 1000,
+        }}
+      >
+        <a
+          href="https://github.com/adamwong246/testeranto"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="brand-logo"
+          style={{
+            display: 'block',
+            transition: 'transform 0.3s ease',
+            backgroundColor: 'white',
+            borderRadius: '50%',
+            padding: '8px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+        >
+          <img
+            src="https://www.testeranto.com/logo.svg"
+            alt="Testeranto Logo"
+            style={{
+              height: '40px',
+              width: '40px',
+            }}
+          />
+        </a>
       </div>
     </div>
   );

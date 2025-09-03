@@ -60,7 +60,11 @@ export abstract class PM_WithWebSocket extends PM_Base {
       ws.on("message", (data) => {
         try {
           const message: WebSocketMessage = JSON.parse(data.toString());
-          if (message.type === "executeCommand") {
+          
+          // Handle file operations via WebSocket
+          if (message.type === "listDirectory") {
+            this.handleWebSocketListDirectory(ws, message);
+          } else if (message.type === "executeCommand") {
             const executeMessage = message as ExecuteCommandMessage;
             // Validate the command starts with 'aider'
             if (message.command && message.command.trim().startsWith("aider")) {
@@ -279,8 +283,14 @@ export abstract class PM_WithWebSocket extends PM_Base {
 
   requestHandler(req: http.IncomingMessage, res: http.ServerResponse) {
     // Parse the URL
-    const parsedUrl = url.parse(req.url || "/");
+    const parsedUrl = url.parse(req.url || "/", true);
     const pathname = parsedUrl.pathname || "/";
+
+    // Handle file system API endpoints
+    if (pathname?.startsWith("/api/files/")) {
+      this.handleFilesApi(req, res);
+      return;
+    }
 
     // Handle health check endpoint
     if (pathname === "/health") {
@@ -427,6 +437,145 @@ export abstract class PM_WithWebSocket extends PM_Base {
     });
   }
 
+  private handleFilesApi(req: http.IncomingMessage, res: http.ServerResponse) {
+    const parsedUrl = url.parse(req.url || "/", true);
+    const pathname = parsedUrl.pathname || "/";
+    const query = parsedUrl.query || {};
+
+    // Set CORS headers
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req.method === "OPTIONS") {
+      res.writeHead(200);
+      res.end();
+      return;
+    }
+
+    try {
+      if (pathname === "/api/files/list" && req.method === "GET") {
+        this.handleListDirectory(req, res, query);
+      } else if (pathname === "/api/files/read" && req.method === "GET") {
+        this.handleReadFile(req, res, query);
+      } else if (pathname === "/api/files/exists" && req.method === "GET") {
+        this.handleFileExists(req, res, query);
+      } else {
+        res.writeHead(404, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: "Not found" }));
+      }
+    } catch (error) {
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Internal server error" }));
+    }
+  }
+
+  private async handleListDirectory(req: http.IncomingMessage, res: http.ServerResponse, query: any) {
+    const path = query.path as string;
+    if (!path) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Path parameter required" }));
+      return;
+    }
+
+    try {
+      // Resolve the path relative to the current working directory
+      const fullPath = this.resolvePath(path);
+      const items = await this.listDirectory(fullPath);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(items));
+    } catch (error) {
+      console.error('Error listing directory:', error);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Failed to list directory" }));
+    }
+  }
+
+  private async handleReadFile(req: http.IncomingMessage, res: http.ServerResponse, query: any) {
+    const path = query.path as string;
+    if (!path) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Path parameter required" }));
+      return;
+    }
+
+    try {
+      const fullPath = this.resolvePath(path);
+      const content = await fs.promises.readFile(fullPath, 'utf-8');
+      res.writeHead(200, { "Content-Type": "text/plain" });
+      res.end(content);
+    } catch (error) {
+      console.error('Error reading file:', error);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Failed to read file" }));
+    }
+  }
+
+  private async handleFileExists(req: http.IncomingMessage, res: http.ServerResponse, query: any) {
+    const path = query.path as string;
+    if (!path) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Path parameter required" }));
+      return;
+    }
+
+    try {
+      const fullPath = this.resolvePath(path);
+      const exists = fs.existsSync(fullPath);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ exists }));
+    } catch (error) {
+      console.error('Error checking file existence:', error);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Failed to check file existence" }));
+    }
+  }
+
+  private resolvePath(requestedPath: string): string {
+    // Security: Prevent directory traversal attacks
+    // Normalize the path and ensure it doesn't go outside the current working directory
+    const normalizedPath = requestedPath
+      .replace(/\.\./g, '') // Remove any '..' sequences
+      .replace(/^\//, '') // Remove leading slash
+      .replace(/\/+/g, '/'); // Collapse multiple slashes
+    
+    return `${process.cwd()}/${normalizedPath}`;
+  }
+
+  private async listDirectory(dirPath: string): Promise<any[]> {
+    try {
+      const items = await fs.promises.readdir(dirPath, { withFileTypes: true });
+      const result: any[] = [];
+      
+      for (const item of items) {
+        // Skip hidden files and directories
+        if (item.name.startsWith('.')) continue;
+        
+        const fullPath = `${dirPath}/${item.name}`;
+        const relativePath = fullPath.replace(process.cwd(), '').replace(/^\//, '');
+        
+        if (item.isDirectory()) {
+          result.push({
+            name: item.name,
+            type: 'folder',
+            path: '/' + relativePath
+          });
+        } else if (item.isFile()) {
+          result.push({
+            name: item.name,
+            type: 'file',
+            path: '/' + relativePath
+          });
+        }
+      }
+      
+      return result;
+    } catch (error) {
+      console.error('Error listing directory:', error);
+      throw error;
+    }
+  }
+
   findIndexHtml(): string | null {
     const possiblePaths = [
       "dist/index.html",
@@ -545,6 +694,34 @@ export abstract class PM_WithWebSocket extends PM_Base {
       });
 
     return processId;
+  }
+
+  private async handleWebSocketListDirectory(ws: WebSocket, message: any) {
+    try {
+      const path = message.path;
+      if (!path) {
+        ws.send(JSON.stringify({
+          type: 'error',
+          message: 'Path parameter required'
+        }));
+        return;
+      }
+
+      const fullPath = this.resolvePath(path);
+      const items = await this.listDirectory(fullPath);
+      
+      ws.send(JSON.stringify({
+        type: 'directoryListing',
+        path: path,
+        items: items
+      }));
+    } catch (error) {
+      console.error('Error handling WebSocket directory listing:', error);
+      ws.send(JSON.stringify({
+        type: 'error',
+        message: 'Failed to list directory'
+      }));
+    }
   }
 
   broadcast(message: any) {

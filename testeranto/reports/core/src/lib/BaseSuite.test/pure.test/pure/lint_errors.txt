@@ -1,0 +1,2 @@
+src/lib/BaseGiven.ts
+186:9 Unsafe usage of ThrowStatement. (no-unsafe-finally)

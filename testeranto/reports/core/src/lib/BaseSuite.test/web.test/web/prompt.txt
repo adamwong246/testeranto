@@ -1,0 +1,25 @@
+
+/add src/PM/index.ts
+/add src/PM/web.ts
+/add src/lib/index.ts
+/add src/lib/pmProxy.ts
+/add src/lib/BaseGiven.ts
+/add src/lib/BaseWhen.ts
+/add src/lib/BaseThen.ts
+/add src/lib/BaseSuite.ts
+/add src/lib/Tiposkripto.ts
+/add src/Web.ts
+/add src/lib/BaseSuite.test/mock.ts
+/add src/lib/BaseSuite.test/test.ts
+/add src/lib/BaseSuite.test/web.test.ts
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/tests.json
+/read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/type_errors.txt
+/read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/lint_errors.txt
+
+/read testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/tests.json testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/type_errors.txt testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/lint_errors.txt testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/exit.log testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/message.txt testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/prompt.txt testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/build.json testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/info.log testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/error.log testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/warn.log testeranto/reports/core/src/lib/BaseSuite.test/web.test/web/debug.log

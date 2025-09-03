@@ -1055,7 +1055,9 @@ var init_PM_WithWebSocket = __esm({
           ws.on("message", (data) => {
             try {
               const message = JSON.parse(data.toString());
-              if (message.type === "executeCommand") {
+              if (message.type === "listDirectory") {
+                this.handleWebSocketListDirectory(ws, message);
+              } else if (message.type === "executeCommand") {
                 const executeMessage = message;
                 if (message.command && message.command.trim().startsWith("aider")) {
                   console.log(`Executing command: ${message.command}`);
@@ -1241,8 +1243,12 @@ var init_PM_WithWebSocket = __esm({
         });
       }
       requestHandler(req, res) {
-        const parsedUrl = url.parse(req.url || "/");
+        const parsedUrl = url.parse(req.url || "/", true);
         const pathname = parsedUrl.pathname || "/";
+        if (pathname?.startsWith("/api/files/")) {
+          this.handleFilesApi(req, res);
+          return;
+        }
         if (pathname === "/health") {
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(
@@ -1360,6 +1366,121 @@ var init_PM_WithWebSocket = __esm({
           });
         });
       }
+      handleFilesApi(req, res) {
+        const parsedUrl = url.parse(req.url || "/", true);
+        const pathname = parsedUrl.pathname || "/";
+        const query = parsedUrl.query || {};
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        if (req.method === "OPTIONS") {
+          res.writeHead(200);
+          res.end();
+          return;
+        }
+        try {
+          if (pathname === "/api/files/list" && req.method === "GET") {
+            this.handleListDirectory(req, res, query);
+          } else if (pathname === "/api/files/read" && req.method === "GET") {
+            this.handleReadFile(req, res, query);
+          } else if (pathname === "/api/files/exists" && req.method === "GET") {
+            this.handleFileExists(req, res, query);
+          } else {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Not found" }));
+          }
+        } catch (error) {
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: "Internal server error" }));
+        }
+      }
+      async handleListDirectory(req, res, query) {
+        const path12 = query.path;
+        if (!path12) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: "Path parameter required" }));
+          return;
+        }
+        try {
+          const fullPath = this.resolvePath(path12);
+          const items = await this.listDirectory(fullPath);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(items));
+        } catch (error) {
+          console.error("Error listing directory:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: "Failed to list directory" }));
+        }
+      }
+      async handleReadFile(req, res, query) {
+        const path12 = query.path;
+        if (!path12) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: "Path parameter required" }));
+          return;
+        }
+        try {
+          const fullPath = this.resolvePath(path12);
+          const content = await fs6.promises.readFile(fullPath, "utf-8");
+          res.writeHead(200, { "Content-Type": "text/plain" });
+          res.end(content);
+        } catch (error) {
+          console.error("Error reading file:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: "Failed to read file" }));
+        }
+      }
+      async handleFileExists(req, res, query) {
+        const path12 = query.path;
+        if (!path12) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: "Path parameter required" }));
+          return;
+        }
+        try {
+          const fullPath = this.resolvePath(path12);
+          const exists = fs6.existsSync(fullPath);
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ exists }));
+        } catch (error) {
+          console.error("Error checking file existence:", error);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: "Failed to check file existence" }));
+        }
+      }
+      resolvePath(requestedPath) {
+        const normalizedPath = requestedPath.replace(/\.\./g, "").replace(/^\//, "").replace(/\/+/g, "/");
+        return `${process.cwd()}/${normalizedPath}`;
+      }
+      async listDirectory(dirPath) {
+        try {
+          const items = await fs6.promises.readdir(dirPath, { withFileTypes: true });
+          const result = [];
+          for (const item of items) {
+            if (item.name.startsWith("."))
+              continue;
+            const fullPath = `${dirPath}/${item.name}`;
+            const relativePath = fullPath.replace(process.cwd(), "").replace(/^\//, "");
+            if (item.isDirectory()) {
+              result.push({
+                name: item.name,
+                type: "folder",
+                path: "/" + relativePath
+              });
+            } else if (item.isFile()) {
+              result.push({
+                name: item.name,
+                type: "file",
+                path: "/" + relativePath
+              });
+            }
+          }
+          return result;
+        } catch (error) {
+          console.error("Error listing directory:", error);
+          throw error;
+        }
+      }
       findIndexHtml() {
         const possiblePaths = [
           "dist/index.html",
@@ -1449,6 +1570,31 @@ var init_PM_WithWebSocket = __esm({
             onReject(error);
         });
         return processId;
+      }
+      async handleWebSocketListDirectory(ws, message) {
+        try {
+          const path12 = message.path;
+          if (!path12) {
+            ws.send(JSON.stringify({
+              type: "error",
+              message: "Path parameter required"
+            }));
+            return;
+          }
+          const fullPath = this.resolvePath(path12);
+          const items = await this.listDirectory(fullPath);
+          ws.send(JSON.stringify({
+            type: "directoryListing",
+            path: path12,
+            items
+          }));
+        } catch (error) {
+          console.error("Error handling WebSocket directory listing:", error);
+          ws.send(JSON.stringify({
+            type: "error",
+            message: "Failed to list directory"
+          }));
+        }
       }
       broadcast(message) {
         const data = typeof message === "string" ? message : JSON.stringify(message);

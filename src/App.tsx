@@ -20,6 +20,7 @@ import { githubAuthService } from './services/GitHubAuthService';
 import { SVGEditorPage } from './components/stateful/SVGEditorPage';
 import { DratoPage } from './components/stateful/DratoPage';
 import { GrafeoPage } from './components/stateful/GrafeoPage';
+import { SkriboPage } from './components/stateful/SkriboPage';
 import { Helpo } from './Helpo';
 
 interface WebSocketContextType {
@@ -214,6 +215,7 @@ export const App = () => {
                 <Route path="/svg-editor" element={isAuthenticated ? <SVGEditorPage /> : <SignIn />} />
                 <Route path="/drato" element={isAuthenticated ? <DratoPage /> : <SignIn />} />
                 <Route path="/grafeo" element={isAuthenticated ? <GrafeoPage /> : <SignIn />} />
+                <Route path="/skribo" element={isAuthenticated ? <SkriboPage /> : <SignIn />} />
                 <Route path="*" element={<Helpo />} />
               </Routes>
             </AppFrame>

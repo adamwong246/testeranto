@@ -1,0 +1,552 @@
+{
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "dist/cjs-shim.js": {
+        "bytes": 502,
+        "imports": [
+          {
+            "path": "node:module",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:path",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:url",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/index.ts": {
+        "bytes": 3993,
+        "imports": [
+          {
+            "path": "../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/node",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/pure",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../PM/web",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseGiven",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/PM/index.ts": {
+        "bytes": 1880,
+        "imports": [
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core/lib/esm/puppeteer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/PM/node.ts": {
+        "bytes": 7133,
+        "imports": [
+          {
+            "path": "net",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/PM/index.ts",
+            "kind": "import-statement",
+            "original": "."
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/pmProxy.ts": {
+        "bytes": 8407,
+        "imports": [
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseGiven.ts": {
+        "bytes": 5117,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          },
+          {
+            "path": "./BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseWhen.ts": {
+        "bytes": 2535,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseThen.ts": {
+        "bytes": 3339,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.ts": {
+        "bytes": 4530,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseGiven",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy"
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/Tiposkripto.ts": {
+        "bytes": 10088,
+        "imports": [
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "type-fest",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
+            "path": "src/lib/BaseGiven.ts",
+            "kind": "import-statement",
+            "original": "./BaseGiven"
+          },
+          {
+            "path": "src/lib/BaseWhen.ts",
+            "kind": "import-statement",
+            "original": "./BaseWhen.js"
+          },
+          {
+            "path": "src/lib/BaseThen.ts",
+            "kind": "import-statement",
+            "original": "./BaseThen.js"
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "./BaseSuite"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/Node.ts": {
+        "bytes": 2131,
+        "imports": [
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./lib/index.js"
+          },
+          {
+            "path": "src/PM/node.ts",
+            "kind": "import-statement",
+            "original": "./PM/node.js"
+          },
+          {
+            "path": "./CoreTypes.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/Tiposkripto.ts",
+            "kind": "import-statement",
+            "original": "./lib/Tiposkripto.js"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.test/mock.ts": {
+        "bytes": 2532,
+        "imports": [
+          {
+            "path": "src/lib/BaseGiven.ts",
+            "kind": "import-statement",
+            "original": "../BaseGiven"
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "../BaseSuite"
+          },
+          {
+            "path": "src/lib/BaseThen.ts",
+            "kind": "import-statement",
+            "original": "../BaseThen"
+          },
+          {
+            "path": "src/lib/BaseWhen.ts",
+            "kind": "import-statement",
+            "original": "../BaseWhen"
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./test",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.test/test.ts": {
+        "bytes": 12717,
+        "imports": [
+          {
+            "path": "..",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "../BaseSuite"
+          },
+          {
+            "path": "../types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/BaseSuite.test/mock.ts",
+            "kind": "import-statement",
+            "original": "./mock"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.test/node.test.ts": {
+        "bytes": 320,
+        "imports": [
+          {
+            "path": "src/Node.ts",
+            "kind": "import-statement",
+            "original": "../../Node"
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "../BaseSuite"
+          },
+          {
+            "path": "src/lib/BaseSuite.test/test.ts",
+            "kind": "import-statement",
+            "original": "./test"
+          },
+          {
+            "path": "/Users/adam/Code/testeranto/dist/cjs-shim.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/node/core/src/lib/BaseSuite.test/node.test.mjs": {
+        "imports": [
+          {
+            "path": "node:path",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node:url",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "net",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "src/lib/BaseSuite.test/node.test.ts",
+        "inputs": {
+          "dist/cjs-shim.js": {
+            "bytesInOutput": 167
+          },
+          "src/lib/index.ts": {
+            "bytesInOutput": 672
+          },
+          "src/PM/node.ts": {
+            "bytesInOutput": 5517
+          },
+          "src/PM/index.ts": {
+            "bytesInOutput": 174
+          },
+          "src/lib/pmProxy.ts": {
+            "bytesInOutput": 6590
+          },
+          "src/lib/BaseGiven.ts": {
+            "bytesInOutput": 2911
+          },
+          "src/lib/BaseWhen.ts": {
+            "bytesInOutput": 1127
+          },
+          "src/lib/BaseThen.ts": {
+            "bytesInOutput": 1581
+          },
+          "src/lib/BaseSuite.ts": {
+            "bytesInOutput": 2451
+          },
+          "src/lib/Tiposkripto.ts": {
+            "bytesInOutput": 6063
+          },
+          "src/Node.ts": {
+            "bytesInOutput": 1203
+          },
+          "src/lib/BaseSuite.test/mock.ts": {
+            "bytesInOutput": 1586
+          },
+          "src/lib/BaseSuite.test/test.ts": {
+            "bytesInOutput": 6502
+          },
+          "src/lib/BaseSuite.test/node.test.ts": {
+            "bytesInOutput": 103
+          }
+        },
+        "bytes": 37151
+      }
+    }
+  }
+}

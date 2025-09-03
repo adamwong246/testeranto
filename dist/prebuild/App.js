@@ -6,10 +6,17 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
+    get: (a2, b2) => (typeof require !== "undefined" ? require : a2)[b2]
+  }) : x2)(function(x2) {
+    if (typeof require !== "undefined")
+      return require.apply(this, arguments);
+    throw new Error('Dynamic require of "' + x2 + '" is not supported');
+  });
   var __esm = (fn3, res) => function __init() {
     return fn3 && (res = (0, fn3[__getOwnPropNames(fn3)[0]])(fn3 = 0)), res;
   };
-  var __commonJS = (cb, mod) => function __require() {
+  var __commonJS = (cb, mod) => function __require2() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
   var __export = (target, all) => {
@@ -1092,7 +1099,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState50(initialState) {
+          function useState51(initialState) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState);
           }
@@ -1100,11 +1107,11 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useReducer(reducer, initialArg, init2);
           }
-          function useRef38(initialValue) {
+          function useRef39(initialValue) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect52(create2, deps) {
+          function useEffect53(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1886,15 +1893,15 @@
           exports.useContext = useContext32;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect52;
+          exports.useEffect = useEffect53;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
           exports.useLayoutEffect = useLayoutEffect6;
           exports.useMemo = useMemo23;
           exports.useReducer = useReducer2;
-          exports.useRef = useRef38;
-          exports.useState = useState50;
+          exports.useRef = useRef39;
+          exports.useState = useState51;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2390,9 +2397,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React174 = require_react();
+          var React175 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React174.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React175.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3997,7 +4004,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React174.Children.forEach(props.children, function(child) {
+                  React175.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12444,7 +12451,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React174.Component().refs;
+          var emptyRefsObject = new React175.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23616,7 +23623,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React174 = require_react();
+          var React175 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23642,7 +23649,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React174.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React175.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -45855,8 +45862,565 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
     }
   });
 
+  // src/services/FileService.ts
+  var FileService_exports = {};
+  __export(FileService_exports, {
+    getFileService: () => getFileService
+  });
+  var StaticFileService, DevelopmentFileService, GitFileService, getFileService;
+  var init_FileService = __esm({
+    "src/services/FileService.ts"() {
+      "use strict";
+      StaticFileService = class {
+        async readFile(path) {
+          const response = await fetch(path);
+          if (!response.ok)
+            throw new Error(`Failed to read file: ${path}`);
+          return await response.text();
+        }
+        async readDirectory(path) {
+          return [];
+        }
+        async exists(path) {
+          try {
+            const response = await fetch(path, { method: "HEAD" });
+            return response.ok;
+          } catch {
+            return false;
+          }
+        }
+        // Write operations are no-ops in static mode
+        async writeFile() {
+        }
+        async createDirectory() {
+        }
+        async deleteFile() {
+        }
+        // Git operations are not available in static mode
+        async getFileStatus() {
+          return { status: "unchanged" };
+        }
+        async getChanges() {
+          return [];
+        }
+        async commitChanges() {
+          throw new Error("Commit not available in static mode");
+        }
+        async pushChanges() {
+          throw new Error("Push not available in static mode");
+        }
+        async pullChanges() {
+          throw new Error("Pull not available in static mode");
+        }
+        async getCurrentBranch() {
+          return "main";
+        }
+        async getRemoteStatus() {
+          return { ahead: 0, behind: 0 };
+        }
+      };
+      DevelopmentFileService = class {
+        constructor() {
+          this.ws = null;
+          this.changeCallbacks = [];
+          this.statusCallbacks = [];
+          this.branchCallbacks = [];
+          this.connectWebSocket();
+        }
+        connectWebSocket() {
+          try {
+            const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+            const wsUrl = `${protocol}//${window.location.host}/api/git-ws`;
+            this.ws = new WebSocket(wsUrl);
+            this.ws.onopen = () => {
+              console.log("Git WebSocket connected");
+              this.ws?.send(JSON.stringify({ type: "get-initial-state" }));
+            };
+            this.ws.onmessage = (event) => {
+              try {
+                const data2 = JSON.parse(event.data);
+                switch (data2.type) {
+                  case "changes":
+                    this.changeCallbacks.forEach((callback) => callback(data2.changes));
+                    break;
+                  case "status":
+                    this.statusCallbacks.forEach((callback) => callback(data2.status));
+                    break;
+                  case "branch":
+                    this.branchCallbacks.forEach((callback) => callback(data2.branch));
+                    break;
+                  case "error":
+                    console.error("Git WebSocket error:", data2.message);
+                    break;
+                }
+              } catch (error) {
+                console.error("Error parsing WebSocket message:", error);
+              }
+            };
+            this.ws.onclose = () => {
+              console.log("Git WebSocket disconnected, attempting to reconnect...");
+              setTimeout(() => this.connectWebSocket(), 3e3);
+            };
+            this.ws.onerror = (error) => {
+              console.error("Git WebSocket error:", error);
+            };
+          } catch (error) {
+            console.error("Failed to connect Git WebSocket:", error);
+          }
+        }
+        // Subscribe to real-time changes
+        onChanges(callback) {
+          this.changeCallbacks.push(callback);
+          return () => {
+            this.changeCallbacks = this.changeCallbacks.filter((cb) => cb !== callback);
+          };
+        }
+        onStatusUpdate(callback) {
+          this.statusCallbacks.push(callback);
+          return () => {
+            this.statusCallbacks = this.statusCallbacks.filter((cb) => cb !== callback);
+          };
+        }
+        onBranchUpdate(callback) {
+          this.branchCallbacks.push(callback);
+          return () => {
+            this.branchCallbacks = this.branchCallbacks.filter((cb) => cb !== callback);
+          };
+        }
+        async readFile(path) {
+          console.log("Reading file with path:", path);
+          const encodedPath = encodeURIComponent(path);
+          console.log("Encoded path:", encodedPath);
+          const url = `/api/files/read?path=${encodedPath}`;
+          console.log("Request URL:", url);
+          try {
+            const response = await fetch(url);
+            const responseClone = response.clone();
+            if (!response.ok) {
+              console.error(`Failed to read file: ${path}`, response.status, response.statusText);
+              if (response.status === 404) {
+                console.warn(`File not found via API, trying direct fetch: ${path}`);
+                try {
+                  const directResponse = await fetch(path);
+                  const directResponseClone = directResponse.clone();
+                  if (directResponse.ok) {
+                    return await directResponse.text();
+                  } else {
+                    console.error(`Direct fetch failed: ${directResponse.status} ${directResponse.statusText}`);
+                    try {
+                      const errorText = await directResponseClone.text();
+                      console.error("Direct fetch error details:", errorText);
+                    } catch {
+                    }
+                  }
+                } catch (directError) {
+                  console.error("Direct fetch also failed:", directError);
+                }
+                console.warn("Trying static file server fallback");
+                try {
+                  const staticResponse = await fetch(`/static/${path}`);
+                  if (staticResponse.ok) {
+                    return await staticResponse.text();
+                  } else {
+                    console.error(`Static file fetch failed: ${staticResponse.status} ${staticResponse.statusText}`);
+                  }
+                } catch (staticError) {
+                  console.error("Static file fetch also failed:", staticError);
+                }
+              }
+              let errorDetails = "";
+              try {
+                const errorData = await responseClone.json();
+                errorDetails = JSON.stringify(errorData);
+              } catch {
+                try {
+                  errorDetails = await responseClone.text();
+                } catch {
+                  errorDetails = "Could not read error details";
+                }
+              }
+              console.error("Error details:", errorDetails);
+              throw new Error(`Failed to read file: ${path} - ${response.status} ${response.statusText}`);
+            }
+            return await response.text();
+          } catch (error) {
+            console.error("Network error reading file:", error);
+            if (error instanceof TypeError && error.message.includes("body stream already read")) {
+              throw new Error(`Network error reading file: ${path} - Response body was already read (this is a bug)`);
+            }
+            throw new Error(`Network error reading file: ${path}`);
+          }
+        }
+        async readDirectory(path) {
+          try {
+            const response = await fetch(
+              `/api/files/list?path=${encodeURIComponent(path)}`
+            );
+            if (response.ok) {
+              return await response.json();
+            } else {
+              console.warn(`API endpoint failed (${response.status}), trying WebSocket fallback`);
+              return await this.readDirectoryViaWebSocket(path);
+            }
+          } catch (error) {
+            console.warn("API endpoint unavailable, trying WebSocket fallback:", error);
+            return await this.readDirectoryViaWebSocket(path);
+          }
+        }
+        async readDirectoryViaWebSocket(path) {
+          return new Promise((resolve, reject) => {
+            const timeout2 = setTimeout(() => {
+              reject(new Error("WebSocket directory listing timeout"));
+            }, 5e3);
+            const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+            const wsUrl = `${protocol}//${window.location.host}/api/files-ws`;
+            const ws2 = new WebSocket(wsUrl);
+            ws2.onopen = () => {
+              ws2.send(JSON.stringify({
+                type: "listDirectory",
+                path
+              }));
+            };
+            ws2.onmessage = (event) => {
+              try {
+                const data2 = JSON.parse(event.data);
+                if (data2.type === "directoryListing") {
+                  clearTimeout(timeout2);
+                  ws2.close();
+                  resolve(data2.items);
+                } else if (data2.type === "error") {
+                  clearTimeout(timeout2);
+                  ws2.close();
+                  reject(new Error(data2.message));
+                }
+              } catch (error) {
+                clearTimeout(timeout2);
+                ws2.close();
+                reject(error);
+              }
+            };
+            ws2.onerror = (error) => {
+              clearTimeout(timeout2);
+              ws2.close();
+              reject(new Error("WebSocket connection failed"));
+            };
+            ws2.onclose = () => {
+              clearTimeout(timeout2);
+            };
+          });
+        }
+        async exists(path) {
+          const response = await fetch(
+            `/api/files/exists?path=${encodeURIComponent(path)}`
+          );
+          return response.ok;
+        }
+        async writeFile(path, content) {
+          const response = await fetch("/api/files/write", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path, content })
+          });
+          if (!response.ok)
+            throw new Error(`Failed to write file: ${path}`);
+          this.ws?.send(JSON.stringify({ type: "file-changed", path }));
+        }
+        async createDirectory(path) {
+          const response = await fetch("/api/files/mkdir", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path })
+          });
+          if (!response.ok)
+            throw new Error(`Failed to create directory: ${path}`);
+          this.ws?.send(JSON.stringify({ type: "file-changed", path }));
+        }
+        async deleteFile(path) {
+          const response = await fetch("/api/files/delete", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path })
+          });
+          if (!response.ok)
+            throw new Error(`Failed to delete file: ${path}`);
+          this.ws?.send(JSON.stringify({ type: "file-changed", path }));
+        }
+        async getFileStatus(path) {
+          const response = await fetch(
+            `/api/git/status?path=${encodeURIComponent(path)}`
+          );
+          if (!response.ok)
+            return { status: "unchanged" };
+          return await response.json();
+        }
+        async getChanges() {
+          const response = await fetch("/api/git/changes");
+          if (!response.ok)
+            return [];
+          const changes = await response.json();
+          console.log("Raw changes from server:", JSON.stringify(changes, null, 2));
+          return changes;
+        }
+        async commitChanges(message, description) {
+          const response = await fetch("/api/git/commit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message, description })
+          });
+          if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Failed to commit changes: ${error}`);
+          }
+          this.ws?.send(JSON.stringify({ type: "refresh-status" }));
+        }
+        async pushChanges() {
+          const response = await fetch("/api/git/push", {
+            method: "POST"
+          });
+          if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Failed to push changes: ${error}`);
+          }
+          this.ws?.send(JSON.stringify({ type: "refresh-status" }));
+        }
+        async pullChanges() {
+          const response = await fetch("/api/git/pull", {
+            method: "POST"
+          });
+          if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Failed to pull changes: ${error}`);
+          }
+          this.ws?.send(JSON.stringify({ type: "refresh-status" }));
+        }
+        async getCurrentBranch() {
+          const response = await fetch("/api/git/branch");
+          if (!response.ok)
+            return "main";
+          return await response.text();
+        }
+        async getRemoteStatus() {
+          const response = await fetch("/api/git/remote-status");
+          if (!response.ok)
+            return { ahead: 0, behind: 0 };
+          return await response.json();
+        }
+      };
+      GitFileService = class {
+        constructor() {
+          this.git = null;
+          this.fs = null;
+          this.dir = "/testeranto-git";
+        }
+        async ensureGit() {
+          if (!this.git) {
+            this.git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
+            this.fs = await Promise.resolve().then(() => (init_web(), web_exports));
+          }
+        }
+        async ensureBufferPolyfill() {
+          if (typeof window !== "undefined" && !window.Buffer) {
+            const buffer = await Promise.resolve().then(() => __toESM(require_buffer(), 1));
+            window.Buffer = buffer.Buffer;
+          }
+        }
+        async readFile(path) {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            const content = await this.git.readBlob({
+              fs: window.fs,
+              dir: this.dir,
+              oid: await this.git.resolveRef({ fs: window.fs, dir: this.dir, ref: "HEAD" }),
+              filepath: path
+            });
+            return new TextDecoder().decode(content.blob);
+          } catch (error) {
+            throw new Error(`Failed to read file: ${path}`);
+          }
+        }
+        async readDirectory(path) {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            const files = await this.git.listFiles({
+              fs: window.fs,
+              dir: this.dir,
+              ref: "HEAD"
+            });
+            return files.map((name) => ({
+              name,
+              path: name,
+              type: name.includes(".") ? "file" : "directory"
+            }));
+          } catch (error) {
+            return [];
+          }
+        }
+        async exists(path) {
+          try {
+            await this.readFile(path);
+            return true;
+          } catch {
+            return false;
+          }
+        }
+        async writeFile(path, content) {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          console.log("Git mode write:", path);
+        }
+        async createDirectory(path) {
+          console.log("Git mode create directory:", path);
+        }
+        async deleteFile(path) {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          console.log("Git mode delete:", path);
+        }
+        async getFileStatus(path) {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            const status = await this.git.status({
+              fs: window.fs,
+              dir: this.dir,
+              filepath: path
+            });
+            return { status };
+          } catch {
+            return { status: "unchanged" };
+          }
+        }
+        async getChanges() {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            const statusMatrix = await this.git.statusMatrix({
+              fs: window.fs,
+              dir: this.dir
+            });
+            return statusMatrix.map(([file, head, workdir, stage]) => {
+              let status = "unchanged";
+              if (head === 0 && workdir === 2)
+                status = "added";
+              else if (head === 1 && workdir === 0)
+                status = "deleted";
+              else if (workdir === 2)
+                status = "modified";
+              else if (head !== workdir)
+                status = "modified";
+              return { path: file, status };
+            }).filter((change) => change.status !== "unchanged");
+          } catch (error) {
+            console.warn("Failed to get changes:", error);
+            return [];
+          }
+        }
+        async commitChanges(message, description) {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            const changes = await this.getChanges();
+            for (const change of changes) {
+              if (change.status === "deleted") {
+                await this.git.remove({
+                  fs: window.fs,
+                  dir: this.dir,
+                  filepath: change.path
+                });
+              } else {
+                await this.git.add({
+                  fs: window.fs,
+                  dir: this.dir,
+                  filepath: change.path
+                });
+              }
+            }
+            await this.git.commit({
+              fs: window.fs,
+              dir: this.dir,
+              author: { name: "Testeranto User", email: "user@testeranto" },
+              message: description ? `${message}
+
+${description}` : message
+            });
+          } catch (error) {
+            throw new Error(`Failed to commit changes: ${error instanceof Error ? error.message : "Unknown error"}`);
+          }
+        }
+        async pushChanges() {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            await this.git.push({
+              fs: window.fs,
+              http: this.fs,
+              dir: this.dir,
+              remote: "origin",
+              ref: "main",
+              onAuth: () => ({ username: "token" })
+            });
+          } catch (error) {
+            throw new Error(`Failed to push changes: ${error instanceof Error ? error.message : "Unknown error"}`);
+          }
+        }
+        async pullChanges() {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            await this.git.pull({
+              fs: window.fs,
+              http: this.fs,
+              dir: this.dir,
+              remote: "origin",
+              ref: "main",
+              singleBranch: true,
+              onAuth: () => ({ username: "token" })
+            });
+          } catch (error) {
+            throw new Error(`Failed to pull changes: ${error instanceof Error ? error.message : "Unknown error"}`);
+          }
+        }
+        async getCurrentBranch() {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            return await this.git.currentBranch({
+              fs: window.fs,
+              dir: this.dir
+            }) || "main";
+          } catch {
+            return "main";
+          }
+        }
+        async getRemoteStatus() {
+          await this.ensureBufferPolyfill();
+          await this.ensureGit();
+          try {
+            return { ahead: 0, behind: 0 };
+          } catch {
+            return { ahead: 0, behind: 0 };
+          }
+        }
+      };
+      getFileService = (mode) => {
+        switch (mode) {
+          case "static":
+            return new StaticFileService();
+          case "dev":
+            return new DevelopmentFileService();
+          case "git":
+            return new GitFileService();
+          default:
+            return new StaticFileService();
+        }
+      };
+    }
+  });
+
   // src/App.tsx
-  var import_react146 = __toESM(require_react(), 1);
+  var import_react148 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -57432,6 +57996,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   var fe = Ve;
   var de = (0, import_react92.memo)(fe);
+  var Ft = de;
 
   // src/components/pure/NavBar.tsx
   var import_react95 = __toESM(require_react(), 1);
@@ -58717,6 +59282,15 @@ This file was not generated during the test run.`,
     const { tutorialMode } = useTutorialMode();
     const { isAuthenticated, logout } = useAuth();
     const [hasAnimated, setHasAnimated] = (0, import_react111.useState)(false);
+    const brandLogoStyle = `
+    .brand-logo:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+    }
+    .brand-logo:active {
+      transform: scale(0.95);
+    }
+  `;
     (0, import_react111.useEffect)(() => {
       if (!hasAnimated) {
         const timer = setTimeout(() => {
@@ -58725,7 +59299,7 @@ This file was not generated during the test run.`,
         return () => clearTimeout(timer);
       }
     }, [hasAnimated]);
-    return /* @__PURE__ */ import_react111.default.createElement("div", { className: "d-flex min-vh-100" }, /* @__PURE__ */ import_react111.default.createElement(
+    return /* @__PURE__ */ import_react111.default.createElement("div", { className: "d-flex min-vh-100" }, /* @__PURE__ */ import_react111.default.createElement("style", null, brandLogoStyle), /* @__PURE__ */ import_react111.default.createElement(
       "div",
       {
         className: `border-end d-flex flex-column ${!hasAnimated ? "sidebar-attention" : ""}`,
@@ -58857,6 +59431,21 @@ This file was not generated during the test run.`,
         Nav_default2.Link,
         {
           as: NavLink,
+          to: "/skribo",
+          className: `${location2.pathname === "/skribo" ? "active" : ""} d-flex align-items-center justify-content-center`
+        },
+        tutorialMode ? /* @__PURE__ */ import_react111.default.createElement(
+          OverlayTrigger_default,
+          {
+            placement: "right",
+            overlay: /* @__PURE__ */ import_react111.default.createElement(Tooltip_default, { id: "skribo-tooltip" }, "Code editor")
+          },
+          /* @__PURE__ */ import_react111.default.createElement("span", null, "skribo")
+        ) : /* @__PURE__ */ import_react111.default.createElement("span", null, "skribo")
+      ), /* @__PURE__ */ import_react111.default.createElement(
+        Nav_default2.Link,
+        {
+          as: NavLink,
           to: "/settings",
           className: `${location2.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-5" : ""}`
         },
@@ -58882,7 +59471,37 @@ This file was not generated during the test run.`,
           },
           isConnected ? "\u{1F7E2}" : "\u{1F534}"
         ))
-      )
+      ),
+      /* @__PURE__ */ import_react111.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react111.default.createElement(
+        "a",
+        {
+          href: "https://github.com/adamwong246/testeranto",
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "brand-logo",
+          style: {
+            display: "block",
+            transition: "transform 0.3s ease"
+          },
+          onMouseEnter: (e3) => {
+            e3.currentTarget.style.transform = "scale(1.1)";
+          },
+          onMouseLeave: (e3) => {
+            e3.currentTarget.style.transform = "scale(1)";
+          }
+        },
+        /* @__PURE__ */ import_react111.default.createElement(
+          "img",
+          {
+            src: "https://www.testeranto.com/logo.svg",
+            alt: "Testeranto Logo",
+            style: {
+              height: "64px",
+              width: "64px"
+            }
+          }
+        )
+      ))
     ), /* @__PURE__ */ import_react111.default.createElement(
       "div",
       {
@@ -58890,6 +59509,50 @@ This file was not generated during the test run.`,
         style: { minHeight: "100vh" }
       },
       /* @__PURE__ */ import_react111.default.createElement("main", { className: "flex-grow-1 p-4", style: { overflow: "auto" } }, /* @__PURE__ */ import_react111.default.createElement(Container_default, { fluid: true, style: { height: "100%" } }, children))
+    ), /* @__PURE__ */ import_react111.default.createElement(
+      "div",
+      {
+        style: {
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          zIndex: 1e3
+        }
+      },
+      /* @__PURE__ */ import_react111.default.createElement(
+        "a",
+        {
+          href: "https://github.com/adamwong246/testeranto",
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "brand-logo",
+          style: {
+            display: "block",
+            transition: "transform 0.3s ease",
+            backgroundColor: "white",
+            borderRadius: "50%",
+            padding: "8px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+          },
+          onMouseEnter: (e3) => {
+            e3.currentTarget.style.transform = "scale(1.1)";
+          },
+          onMouseLeave: (e3) => {
+            e3.currentTarget.style.transform = "scale(1)";
+          }
+        },
+        /* @__PURE__ */ import_react111.default.createElement(
+          "img",
+          {
+            src: "https://www.testeranto.com/logo.svg",
+            alt: "Testeranto Logo",
+            style: {
+              height: "40px",
+              width: "40px"
+            }
+          }
+        )
+      )
     ));
   };
 
@@ -59818,10 +60481,10 @@ Current environment analysis:
   };
   var At = (t2) => Math.tan(xt(t2));
   var jt = (t2) => [1, 0, At(t2), 1, 0, 0];
-  var Ft = (t2) => [1, At(t2), 0, 1, 0, 0];
+  var Ft2 = (t2) => [1, At(t2), 0, 1, 0, 0];
   var Lt = (t2) => {
     let { scaleX: e3 = 1, scaleY: s2 = 1, flipX: i2 = false, flipY: r2 = false, skewX: n2 = 0, skewY: o2 = 0 } = t2, a2 = Et(i2 ? -e3 : e3, r2 ? -s2 : s2);
-    return n2 && (a2 = Tt(a2, jt(n2), true)), o2 && (a2 = Tt(a2, Ft(o2), true)), a2;
+    return n2 && (a2 = Tt(a2, jt(n2), true)), o2 && (a2 = Tt(a2, Ft2(o2), true)), a2;
   };
   var Rt = (t2) => {
     const { translateX: e3 = 0, translateY: s2 = 0, angle: i2 = 0 } = t2;
@@ -62102,7 +62765,7 @@ Current environment analysis:
           i2 = jt(a2);
           break;
         case q:
-          i2 = Ft(a2);
+          i2 = Ft2(a2);
           break;
         case "matrix":
           i2 = [a2, h3, c2, l3, u2, d2];
@@ -62852,7 +63515,7 @@ Current environment analysis:
     var e3;
     const s2 = vt(t2);
     return null === (e3 = s2.getContext("2d")) || void 0 === e3 || e3.drawImage(t2, 0, 0), s2;
-  }, cos: rt, createCanvasElement: pt, createImage: mt, createRotateMatrix: Pt, createScaleMatrix: Et, createSkewXMatrix: jt, createSkewYMatrix: Ft, createTranslateMatrix: Mt, createVector: ps, crossProduct: Cs, degreesToRadians: xt, dotProduct: bs, ease: Rs, enlivenObjectEnlivables: Xt, enlivenObjects: Bt, findScaleToCover: Ur, findScaleToFit: Nr, getBoundsOfCurve: tn, getOrthonormalVector: xs, getPathSegmentsInfo: fn2, getPointOnPath: pn, getPointer: re2, getRandomInt: wn, getRegularPolygonPath: (t2, e3) => {
+  }, cos: rt, createCanvasElement: pt, createImage: mt, createRotateMatrix: Pt, createScaleMatrix: Et, createSkewXMatrix: jt, createSkewYMatrix: Ft2, createTranslateMatrix: Mt, createVector: ps, crossProduct: Cs, degreesToRadians: xt, dotProduct: bs, ease: Rs, enlivenObjectEnlivables: Xt, enlivenObjects: Bt, findScaleToCover: Ur, findScaleToFit: Nr, getBoundsOfCurve: tn, getOrthonormalVector: xs, getPathSegmentsInfo: fn2, getPointOnPath: pn, getPointer: re2, getRandomInt: wn, getRegularPolygonPath: (t2, e3) => {
     const s2 = 2 * Math.PI / t2;
     let i2 = -b;
     t2 % 2 == 0 && (i2 += s2 / 2);
@@ -68051,504 +68714,8 @@ Current environment analysis:
     )))))), mode === "static" && /* @__PURE__ */ import_react126.default.createElement(Row_default, null, /* @__PURE__ */ import_react126.default.createElement(Col_default, null, /* @__PURE__ */ import_react126.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react126.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react126.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
   };
 
-  // src/services/FileService.ts
-  var StaticFileService = class {
-    async readFile(path) {
-      const response = await fetch(path);
-      if (!response.ok)
-        throw new Error(`Failed to read file: ${path}`);
-      return await response.text();
-    }
-    async readDirectory(path) {
-      return [];
-    }
-    async exists(path) {
-      try {
-        const response = await fetch(path, { method: "HEAD" });
-        return response.ok;
-      } catch {
-        return false;
-      }
-    }
-    // Write operations are no-ops in static mode
-    async writeFile() {
-    }
-    async createDirectory() {
-    }
-    async deleteFile() {
-    }
-    // Git operations are not available in static mode
-    async getFileStatus() {
-      return { status: "unchanged" };
-    }
-    async getChanges() {
-      return [];
-    }
-    async commitChanges() {
-      throw new Error("Commit not available in static mode");
-    }
-    async pushChanges() {
-      throw new Error("Push not available in static mode");
-    }
-    async pullChanges() {
-      throw new Error("Pull not available in static mode");
-    }
-    async getCurrentBranch() {
-      return "main";
-    }
-    async getRemoteStatus() {
-      return { ahead: 0, behind: 0 };
-    }
-  };
-  var DevelopmentFileService = class {
-    constructor() {
-      this.ws = null;
-      this.changeCallbacks = [];
-      this.statusCallbacks = [];
-      this.branchCallbacks = [];
-      this.connectWebSocket();
-    }
-    connectWebSocket() {
-      try {
-        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-        const wsUrl = `${protocol}//${window.location.host}/api/git-ws`;
-        this.ws = new WebSocket(wsUrl);
-        this.ws.onopen = () => {
-          console.log("Git WebSocket connected");
-          this.ws?.send(JSON.stringify({ type: "get-initial-state" }));
-        };
-        this.ws.onmessage = (event) => {
-          try {
-            const data2 = JSON.parse(event.data);
-            switch (data2.type) {
-              case "changes":
-                this.changeCallbacks.forEach((callback) => callback(data2.changes));
-                break;
-              case "status":
-                this.statusCallbacks.forEach((callback) => callback(data2.status));
-                break;
-              case "branch":
-                this.branchCallbacks.forEach((callback) => callback(data2.branch));
-                break;
-              case "error":
-                console.error("Git WebSocket error:", data2.message);
-                break;
-            }
-          } catch (error) {
-            console.error("Error parsing WebSocket message:", error);
-          }
-        };
-        this.ws.onclose = () => {
-          console.log("Git WebSocket disconnected, attempting to reconnect...");
-          setTimeout(() => this.connectWebSocket(), 3e3);
-        };
-        this.ws.onerror = (error) => {
-          console.error("Git WebSocket error:", error);
-        };
-      } catch (error) {
-        console.error("Failed to connect Git WebSocket:", error);
-      }
-    }
-    // Subscribe to real-time changes
-    onChanges(callback) {
-      this.changeCallbacks.push(callback);
-      return () => {
-        this.changeCallbacks = this.changeCallbacks.filter((cb) => cb !== callback);
-      };
-    }
-    onStatusUpdate(callback) {
-      this.statusCallbacks.push(callback);
-      return () => {
-        this.statusCallbacks = this.statusCallbacks.filter((cb) => cb !== callback);
-      };
-    }
-    onBranchUpdate(callback) {
-      this.branchCallbacks.push(callback);
-      return () => {
-        this.branchCallbacks = this.branchCallbacks.filter((cb) => cb !== callback);
-      };
-    }
-    async readFile(path) {
-      console.log("Reading file with path:", path);
-      const encodedPath = encodeURIComponent(path);
-      console.log("Encoded path:", encodedPath);
-      const url = `/api/files/read?path=${encodedPath}`;
-      console.log("Request URL:", url);
-      try {
-        const response = await fetch(url);
-        const responseClone = response.clone();
-        if (!response.ok) {
-          console.error(`Failed to read file: ${path}`, response.status, response.statusText);
-          if (response.status === 404) {
-            console.warn(`File not found via API, trying direct fetch: ${path}`);
-            try {
-              const directResponse = await fetch(path);
-              const directResponseClone = directResponse.clone();
-              if (directResponse.ok) {
-                return await directResponse.text();
-              } else {
-                console.error(`Direct fetch failed: ${directResponse.status} ${directResponse.statusText}`);
-                try {
-                  const errorText = await directResponseClone.text();
-                  console.error("Direct fetch error details:", errorText);
-                } catch {
-                }
-              }
-            } catch (directError) {
-              console.error("Direct fetch also failed:", directError);
-            }
-            console.warn("Trying static file server fallback");
-            try {
-              const staticResponse = await fetch(`/static/${path}`);
-              if (staticResponse.ok) {
-                return await staticResponse.text();
-              } else {
-                console.error(`Static file fetch failed: ${staticResponse.status} ${staticResponse.statusText}`);
-              }
-            } catch (staticError) {
-              console.error("Static file fetch also failed:", staticError);
-            }
-          }
-          let errorDetails = "";
-          try {
-            const errorData = await responseClone.json();
-            errorDetails = JSON.stringify(errorData);
-          } catch {
-            try {
-              errorDetails = await responseClone.text();
-            } catch {
-              errorDetails = "Could not read error details";
-            }
-          }
-          console.error("Error details:", errorDetails);
-          throw new Error(`Failed to read file: ${path} - ${response.status} ${response.statusText}`);
-        }
-        return await response.text();
-      } catch (error) {
-        console.error("Network error reading file:", error);
-        if (error instanceof TypeError && error.message.includes("body stream already read")) {
-          throw new Error(`Network error reading file: ${path} - Response body was already read (this is a bug)`);
-        }
-        throw new Error(`Network error reading file: ${path}`);
-      }
-    }
-    async readDirectory(path) {
-      const response = await fetch(
-        `/api/files/list?path=${encodeURIComponent(path)}`
-      );
-      if (!response.ok)
-        throw new Error(`Failed to list directory: ${path}`);
-      return await response.json();
-    }
-    async exists(path) {
-      const response = await fetch(
-        `/api/files/exists?path=${encodeURIComponent(path)}`
-      );
-      return response.ok;
-    }
-    async writeFile(path, content) {
-      const response = await fetch("/api/files/write", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path, content })
-      });
-      if (!response.ok)
-        throw new Error(`Failed to write file: ${path}`);
-      this.ws?.send(JSON.stringify({ type: "file-changed", path }));
-    }
-    async createDirectory(path) {
-      const response = await fetch("/api/files/mkdir", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path })
-      });
-      if (!response.ok)
-        throw new Error(`Failed to create directory: ${path}`);
-      this.ws?.send(JSON.stringify({ type: "file-changed", path }));
-    }
-    async deleteFile(path) {
-      const response = await fetch("/api/files/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ path })
-      });
-      if (!response.ok)
-        throw new Error(`Failed to delete file: ${path}`);
-      this.ws?.send(JSON.stringify({ type: "file-changed", path }));
-    }
-    async getFileStatus(path) {
-      const response = await fetch(
-        `/api/git/status?path=${encodeURIComponent(path)}`
-      );
-      if (!response.ok)
-        return { status: "unchanged" };
-      return await response.json();
-    }
-    async getChanges() {
-      const response = await fetch("/api/git/changes");
-      if (!response.ok)
-        return [];
-      const changes = await response.json();
-      console.log("Raw changes from server:", JSON.stringify(changes, null, 2));
-      return changes;
-    }
-    async commitChanges(message, description) {
-      const response = await fetch("/api/git/commit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, description })
-      });
-      if (!response.ok) {
-        const error = await response.text();
-        throw new Error(`Failed to commit changes: ${error}`);
-      }
-      this.ws?.send(JSON.stringify({ type: "refresh-status" }));
-    }
-    async pushChanges() {
-      const response = await fetch("/api/git/push", {
-        method: "POST"
-      });
-      if (!response.ok) {
-        const error = await response.text();
-        throw new Error(`Failed to push changes: ${error}`);
-      }
-      this.ws?.send(JSON.stringify({ type: "refresh-status" }));
-    }
-    async pullChanges() {
-      const response = await fetch("/api/git/pull", {
-        method: "POST"
-      });
-      if (!response.ok) {
-        const error = await response.text();
-        throw new Error(`Failed to pull changes: ${error}`);
-      }
-      this.ws?.send(JSON.stringify({ type: "refresh-status" }));
-    }
-    async getCurrentBranch() {
-      const response = await fetch("/api/git/branch");
-      if (!response.ok)
-        return "main";
-      return await response.text();
-    }
-    async getRemoteStatus() {
-      const response = await fetch("/api/git/remote-status");
-      if (!response.ok)
-        return { ahead: 0, behind: 0 };
-      return await response.json();
-    }
-  };
-  var GitFileService = class {
-    constructor() {
-      this.git = null;
-      this.fs = null;
-      this.dir = "/testeranto-git";
-    }
-    async ensureGit() {
-      if (!this.git) {
-        this.git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
-        this.fs = await Promise.resolve().then(() => (init_web(), web_exports));
-      }
-    }
-    async ensureBufferPolyfill() {
-      if (typeof window !== "undefined" && !window.Buffer) {
-        const buffer = await Promise.resolve().then(() => __toESM(require_buffer(), 1));
-        window.Buffer = buffer.Buffer;
-      }
-    }
-    async readFile(path) {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        const content = await this.git.readBlob({
-          fs: window.fs,
-          dir: this.dir,
-          oid: await this.git.resolveRef({ fs: window.fs, dir: this.dir, ref: "HEAD" }),
-          filepath: path
-        });
-        return new TextDecoder().decode(content.blob);
-      } catch (error) {
-        throw new Error(`Failed to read file: ${path}`);
-      }
-    }
-    async readDirectory(path) {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        const files = await this.git.listFiles({
-          fs: window.fs,
-          dir: this.dir,
-          ref: "HEAD"
-        });
-        return files.map((name) => ({
-          name,
-          path: name,
-          type: name.includes(".") ? "file" : "directory"
-        }));
-      } catch (error) {
-        return [];
-      }
-    }
-    async exists(path) {
-      try {
-        await this.readFile(path);
-        return true;
-      } catch {
-        return false;
-      }
-    }
-    async writeFile(path, content) {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      console.log("Git mode write:", path);
-    }
-    async createDirectory(path) {
-      console.log("Git mode create directory:", path);
-    }
-    async deleteFile(path) {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      console.log("Git mode delete:", path);
-    }
-    async getFileStatus(path) {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        const status = await this.git.status({
-          fs: window.fs,
-          dir: this.dir,
-          filepath: path
-        });
-        return { status };
-      } catch {
-        return { status: "unchanged" };
-      }
-    }
-    async getChanges() {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        const statusMatrix = await this.git.statusMatrix({
-          fs: window.fs,
-          dir: this.dir
-        });
-        return statusMatrix.map(([file, head, workdir, stage]) => {
-          let status = "unchanged";
-          if (head === 0 && workdir === 2)
-            status = "added";
-          else if (head === 1 && workdir === 0)
-            status = "deleted";
-          else if (workdir === 2)
-            status = "modified";
-          else if (head !== workdir)
-            status = "modified";
-          return { path: file, status };
-        }).filter((change) => change.status !== "unchanged");
-      } catch (error) {
-        console.warn("Failed to get changes:", error);
-        return [];
-      }
-    }
-    async commitChanges(message, description) {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        const changes = await this.getChanges();
-        for (const change of changes) {
-          if (change.status === "deleted") {
-            await this.git.remove({
-              fs: window.fs,
-              dir: this.dir,
-              filepath: change.path
-            });
-          } else {
-            await this.git.add({
-              fs: window.fs,
-              dir: this.dir,
-              filepath: change.path
-            });
-          }
-        }
-        await this.git.commit({
-          fs: window.fs,
-          dir: this.dir,
-          author: { name: "Testeranto User", email: "user@testeranto" },
-          message: description ? `${message}
-
-${description}` : message
-        });
-      } catch (error) {
-        throw new Error(`Failed to commit changes: ${error instanceof Error ? error.message : "Unknown error"}`);
-      }
-    }
-    async pushChanges() {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        await this.git.push({
-          fs: window.fs,
-          http: this.fs,
-          dir: this.dir,
-          remote: "origin",
-          ref: "main",
-          onAuth: () => ({ username: "token" })
-        });
-      } catch (error) {
-        throw new Error(`Failed to push changes: ${error instanceof Error ? error.message : "Unknown error"}`);
-      }
-    }
-    async pullChanges() {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        await this.git.pull({
-          fs: window.fs,
-          http: this.fs,
-          dir: this.dir,
-          remote: "origin",
-          ref: "main",
-          singleBranch: true,
-          onAuth: () => ({ username: "token" })
-        });
-      } catch (error) {
-        throw new Error(`Failed to pull changes: ${error instanceof Error ? error.message : "Unknown error"}`);
-      }
-    }
-    async getCurrentBranch() {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        return await this.git.currentBranch({
-          fs: window.fs,
-          dir: this.dir
-        }) || "main";
-      } catch {
-        return "main";
-      }
-    }
-    async getRemoteStatus() {
-      await this.ensureBufferPolyfill();
-      await this.ensureGit();
-      try {
-        return { ahead: 0, behind: 0 };
-      } catch {
-        return { ahead: 0, behind: 0 };
-      }
-    }
-  };
-  var getFileService = (mode) => {
-    switch (mode) {
-      case "static":
-        return new StaticFileService();
-      case "dev":
-        return new DevelopmentFileService();
-      case "git":
-        return new GitFileService();
-      default:
-        return new StaticFileService();
-    }
-  };
-
   // src/components/stateful/GitIntegrationPage.tsx
+  init_FileService();
   var GitIntegrationPage = () => {
     const [isLoading, setIsLoading] = (0, import_react128.useState)(true);
     const { mode, setMode, isStatic, isDev, isGit } = useGitMode();
@@ -71220,30 +71387,683 @@ ${indent}</${node.type}>`;
     );
   };
 
-  // src/Helpo.tsx
+  // src/components/stateful/SkriboPage.tsx
   var import_react145 = __toESM(require_react(), 1);
-  var Helpo = () => /* @__PURE__ */ import_react145.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react145.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react145.default.createElement(
+  var SkriboPage = () => {
+    const [code, setCode] = (0, import_react145.useState)('// Write your code here\nfunction hello() {\n  console.log("Hello, world!");\n}');
+    const [language, setLanguage] = (0, import_react145.useState)("javascript");
+    const [fileTreeWidth, setFileTreeWidth] = (0, import_react145.useState)(250);
+    const [editorWidth, setEditorWidth] = (0, import_react145.useState)(600);
+    const [previewWidth, setPreviewWidth] = (0, import_react145.useState)(400);
+    const [isResizing, setIsResizing] = (0, import_react145.useState)(false);
+    const [resizeType, setResizeType] = (0, import_react145.useState)(null);
+    const [isLoading, setIsLoading] = (0, import_react145.useState)(false);
+    const [currentPath, setCurrentPath] = (0, import_react145.useState)("");
+    const [fileTree, setFileTree] = (0, import_react145.useState)([]);
+    const [canUndo, setCanUndo] = (0, import_react145.useState)(false);
+    const [canRedo, setCanRedo] = (0, import_react145.useState)(false);
+    const containerRef = (0, import_react145.useRef)(null);
+    const [xmlTree2, setXmlTree] = (0, import_react145.useState)({
+      id: "root",
+      type: "svg",
+      attributes: { width: "100", height: "100" },
+      children: [
+        {
+          id: "rect1",
+          type: "rect",
+          attributes: { x: "10", y: "10", width: "80", height: "80", fill: "red" },
+          children: []
+        }
+      ]
+    });
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react145.useState)(null);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react145.useState)(/* @__PURE__ */ new Set());
+    const findNode = (node, id) => {
+      if (node.id === id)
+        return node;
+      for (const child of node.children) {
+        const found = findNode(child, id);
+        if (found)
+          return found;
+      }
+      return null;
+    };
+    const selectedNode = selectedNodeId ? findNode(xmlTree2, selectedNodeId) : null;
+    const handleUpdateNode = (nodeId, attributes) => {
+      const updateNode = (node) => {
+        if (node.id === nodeId) {
+          return { ...node, attributes };
+        }
+        return {
+          ...node,
+          children: node.children.map(updateNode)
+        };
+      };
+      setXmlTree(updateNode(xmlTree2));
+    };
+    const handleEditorChange = (value) => {
+      setCode(value || "");
+    };
+    const handleEditorDidMount = (editor, monaco) => {
+      const editorContainer = editor.getDomNode();
+      if (editorContainer) {
+        editorContainer.addEventListener("wheel", (event) => {
+          if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+            event.preventDefault();
+            if (containerRef.current) {
+              containerRef.current.scrollLeft += event.deltaX;
+            }
+          }
+        }, { passive: false });
+      }
+    };
+    const handleUndo = () => {
+      console.log("Undo");
+    };
+    const handleRedo = () => {
+      console.log("Redo");
+    };
+    const startResizing = (type) => {
+      setIsResizing(true);
+      setResizeType(type);
+    };
+    (0, import_react145.useEffect)(() => {
+      const loadFileTree = async () => {
+        setIsLoading(true);
+        try {
+          const isDevelopment = true;
+          if (isDevelopment) {
+            try {
+              const { getFileService: getFileService2 } = await Promise.resolve().then(() => (init_FileService(), FileService_exports));
+              const fileService = getFileService2("dev");
+              const rootContent = await fileService.readDirectory("/");
+              const processedTree = await processDirectoryContent("/", rootContent, fileService);
+              setFileTree(processedTree);
+            } catch (fileServiceError) {
+              console.warn("FileService directory listing not available, trying API:", fileServiceError);
+              try {
+                const response = await fetch("/api/files/tree");
+                if (response.ok) {
+                  const tree = await response.json();
+                  setFileTree(tree);
+                } else {
+                  throw new Error(`API returned ${response.status}`);
+                }
+              } catch (apiError) {
+                console.warn("API endpoint not available, trying direct file system access:", apiError);
+                await loadFileTreeFromFileSystem();
+              }
+            }
+          } else {
+            await loadFileTreeFromGit();
+          }
+        } catch (error) {
+          console.error("Failed to load file tree:", error);
+          setFileTree(getSampleFileTree());
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      const processDirectoryContent = async (currentPath2, items, fileService) => {
+        const result = [];
+        for (const item of items) {
+          if (item.type === "folder") {
+            try {
+              const children = await fileService.readDirectory(item.path);
+              const processedChildren = await processDirectoryContent(item.path, children, fileService);
+              result.push({
+                name: item.name,
+                type: "folder",
+                path: item.path,
+                children: processedChildren
+              });
+            } catch (error) {
+              console.warn(`Failed to read directory ${item.path}:`, error);
+              result.push({
+                name: item.name,
+                type: "folder",
+                path: item.path,
+                children: []
+              });
+            }
+          } else {
+            result.push({
+              name: item.name,
+              type: "file",
+              path: item.path
+            });
+          }
+        }
+        return result;
+      };
+      const loadFileTreeFromFileSystem = async () => {
+        try {
+          const fs2 = await import("fs");
+          const path = await import("path");
+          const readDirRecursive = async (dirPath, basePath = "") => {
+            const items = [];
+            const fullPath = path.join(dirPath, basePath);
+            try {
+              const entries = await fs2.promises.readdir(fullPath, { withFileTypes: true });
+              for (const entry of entries) {
+                if (entry.name.startsWith("."))
+                  continue;
+                const relativePath = path.join(basePath, entry.name);
+                if (entry.isDirectory()) {
+                  const children = await readDirRecursive(dirPath, relativePath);
+                  items.push({
+                    name: entry.name,
+                    type: "folder",
+                    path: "/" + relativePath,
+                    children
+                  });
+                } else if (entry.isFile()) {
+                  items.push({
+                    name: entry.name,
+                    type: "file",
+                    path: "/" + relativePath
+                  });
+                }
+              }
+            } catch (error) {
+              console.warn(`Failed to read directory ${fullPath}:`, error);
+            }
+            return items;
+          };
+          const tree = await readDirRecursive(process.cwd());
+          setFileTree(tree);
+        } catch (error) {
+          console.error("Failed to load file tree from file system:", error);
+          throw error;
+        }
+      };
+      const loadFileTreeFromGit = async () => {
+        try {
+          const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
+          const fs2 = await import("fs");
+          const files = await git.listFiles({
+            fs: fs2,
+            dir: process.cwd(),
+            ref: "HEAD"
+          });
+          const tree = buildFileTree(files);
+          setFileTree(tree);
+        } catch (error) {
+          console.error("Failed to load file tree from git:", error);
+          await loadFileTreeFromFileSystem();
+        }
+      };
+      const buildFileTree = (files) => {
+        const root = {};
+        files.forEach((filePath) => {
+          if (filePath.startsWith(".git/"))
+            return;
+          const parts = filePath.split("/");
+          let current = root;
+          for (let i2 = 0; i2 < parts.length; i2++) {
+            const part = parts[i2];
+            const isFile = i2 === parts.length - 1;
+            if (!current[part]) {
+              if (isFile) {
+                current[part] = {
+                  name: part,
+                  type: "file",
+                  path: "/" + filePath
+                };
+              } else {
+                current[part] = {
+                  name: part,
+                  type: "folder",
+                  path: "/" + parts.slice(0, i2 + 1).join("/"),
+                  children: {}
+                };
+              }
+            }
+            if (!isFile) {
+              current = current[part].children;
+            }
+          }
+        });
+        const convertToArray = (obj) => {
+          return Object.values(obj).map((item) => {
+            if (item.type === "folder") {
+              return {
+                ...item,
+                children: convertToArray(item.children)
+              };
+            }
+            return item;
+          });
+        };
+        return convertToArray(root);
+      };
+      const getSampleFileTree = () => {
+        return [
+          {
+            name: "src",
+            type: "folder",
+            path: "/src",
+            children: [
+              { name: "index.js", type: "file", path: "/src/index.js" },
+              { name: "app.js", type: "file", path: "/src/app.js" },
+              {
+                name: "components",
+                type: "folder",
+                path: "/src/components",
+                children: [
+                  { name: "Button.js", type: "file", path: "/src/components/Button.js" },
+                  { name: "Header.js", type: "file", path: "/src/components/Header.js" }
+                ]
+              }
+            ]
+          },
+          { name: "package.json", type: "file", path: "/package.json" },
+          { name: "README.md", type: "file", path: "/README.md" }
+        ];
+      };
+      loadFileTree();
+    }, []);
+    (0, import_react145.useEffect)(() => {
+      const handleMouseMove = (e3) => {
+        if (!isResizing || !containerRef.current)
+          return;
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const relativeX = e3.clientX - containerRect.left;
+        if (resizeType === "fileTree") {
+          const newWidth = Math.max(200, Math.min(relativeX, 800));
+          setFileTreeWidth(newWidth);
+        } else if (resizeType === "editor") {
+          const newWidth = Math.max(200, Math.min(relativeX - fileTreeWidth, 800));
+          setEditorWidth(newWidth);
+        } else if (resizeType === "editor") {
+          const newWidth = Math.max(200, Math.min(relativeX - fileTreeWidth, 800));
+          setEditorWidth(newWidth);
+        } else if (resizeType === "preview") {
+          const newWidth = Math.max(200, Math.min(relativeX - fileTreeWidth - editorWidth, 800));
+          setPreviewWidth(newWidth);
+        }
+      };
+      const handleMouseUp = () => {
+        setIsResizing(false);
+        setResizeType(null);
+      };
+      if (isResizing) {
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+      }
+      return () => {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
+    }, [isResizing, resizeType, fileTreeWidth, editorWidth]);
+    const loadFileContent = async (filePath) => {
+      try {
+        setIsLoading(true);
+        const isDevelopment = true;
+        if (isDevelopment) {
+          try {
+            const { getFileService: getFileService2 } = await Promise.resolve().then(() => (init_FileService(), FileService_exports));
+            const fileService = getFileService2("dev");
+            const content = await fileService.readFile(filePath);
+            setCode(content);
+            setCurrentPath(filePath);
+          } catch (fileServiceError) {
+            console.warn("FileService not available, trying API endpoint:", fileServiceError);
+            try {
+              const encodedPath = encodeURIComponent(filePath);
+              const response = await fetch(`/api/files/read?path=${encodedPath}`);
+              if (response.ok) {
+                const content = await response.text();
+                setCode(content);
+                setCurrentPath(filePath);
+              } else {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+            } catch (apiError) {
+              console.warn("API endpoint not available, trying direct file system access:", apiError);
+              await loadFileContentFromFileSystem(filePath);
+            }
+          }
+        } else {
+          await loadFileContentFromGit(filePath);
+        }
+        updateLanguageFromFilePath(filePath);
+      } catch (error) {
+        console.error("Failed to load file:", error);
+        setCode(`// Error loading file: ${filePath}
+// ${error instanceof Error ? error.message : "Unknown error"}`);
+        setCurrentPath(filePath);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    const loadFileContentFromFileSystem = async (filePath) => {
+      try {
+        const fs2 = await import("fs");
+        const path = await import("path");
+        const cleanPath = filePath.startsWith("/") ? filePath.slice(1) : filePath;
+        const fullPath = path.join(process.cwd(), cleanPath);
+        const content = await fs2.promises.readFile(fullPath, "utf-8");
+        setCode(content);
+        setCurrentPath(filePath);
+      } catch (error) {
+        console.error("Direct file system load failed:", error);
+        throw error;
+      }
+    };
+    const loadFileContentDirect = async (filePath) => {
+      try {
+        let fetchPath = filePath;
+        if (fetchPath.startsWith("/")) {
+          fetchPath = fetchPath.slice(1);
+        }
+        const cacheBuster = `?cb=${Date.now()}`;
+        const response = await fetch(fetchPath + cacheBuster);
+        if (response.ok) {
+          const content = await response.text();
+          setCode(content);
+          setCurrentPath(filePath);
+        } else {
+          throw new Error(`File not found (${response.status})`);
+        }
+      } catch (error) {
+        console.error("Direct file load failed:", error);
+        setCode(`// File: ${filePath}
+// ${error instanceof Error ? error.message : "Content not available"}
+
+// Add your code here`);
+        setCurrentPath(filePath);
+      }
+    };
+    const loadFileContentFromGit = async (filePath) => {
+      try {
+        const git = await Promise.resolve().then(() => __toESM(require_isomorphic_git(), 1));
+        const fs2 = await import("fs");
+        const gitPath = filePath.startsWith("/") ? filePath.slice(1) : filePath;
+        const content = await git.readBlob({
+          fs: fs2,
+          dir: process.cwd(),
+          // Current working directory (where the git repo is)
+          oid: "HEAD",
+          // Read from the latest commit
+          filepath: gitPath
+        });
+        const text = new TextDecoder().decode(content.blob);
+        setCode(text);
+        setCurrentPath(filePath);
+      } catch (error) {
+        console.error("Failed to load file from git:", error);
+        await loadFileContentDirect(filePath);
+      }
+    };
+    const updateLanguageFromFilePath = (filePath) => {
+      const extension = filePath.split(".").pop()?.toLowerCase();
+      const languageMap = {
+        "js": "javascript",
+        "jsx": "javascript",
+        "ts": "typescript",
+        "tsx": "typescript",
+        "py": "python",
+        "html": "html",
+        "css": "css",
+        "scss": "scss",
+        "sass": "sass",
+        "json": "json",
+        "md": "markdown",
+        "xml": "xml",
+        "svg": "xml",
+        "go": "go",
+        "java": "java",
+        "cpp": "cpp",
+        "c": "c",
+        "cs": "csharp",
+        "php": "php",
+        "rb": "ruby",
+        "rs": "rust",
+        "sh": "shell",
+        "bash": "shell",
+        "bat": "bat",
+        "ps1": "powershell",
+        "sql": "sql",
+        "yaml": "yaml",
+        "yml": "yaml",
+        "toml": "toml",
+        "ini": "ini",
+        "cfg": "ini",
+        "conf": "ini"
+      };
+      setLanguage(languageMap[extension || ""] || "plaintext");
+    };
+    const renderFileTree = (items) => {
+      return /* @__PURE__ */ import_react145.default.createElement("ul", { style: { listStyle: "none", paddingLeft: "0" } }, items.map((item, index3) => /* @__PURE__ */ import_react145.default.createElement("li", { key: index3, style: { marginBottom: "0.25rem" } }, /* @__PURE__ */ import_react145.default.createElement(
+        "div",
+        {
+          className: "d-flex align-items-center",
+          style: { cursor: item.type === "file" ? "pointer" : "default" },
+          onClick: () => {
+            if (item.type === "file") {
+              loadFileContent(item.path);
+            }
+          }
+        },
+        /* @__PURE__ */ import_react145.default.createElement("span", { className: "me-1" }, item.type === "folder" ? "\u{1F4C1} " : "\u{1F4C4} "),
+        /* @__PURE__ */ import_react145.default.createElement("span", { className: "small" }, item.name)
+      ), item.type === "folder" && item.children && /* @__PURE__ */ import_react145.default.createElement("div", { style: { marginLeft: "1rem" } }, renderFileTree(item.children)))));
+    };
+    return /* @__PURE__ */ import_react145.default.createElement("div", { style: { height: "100%", width: "100%", overflow: "hidden" } }, /* @__PURE__ */ import_react145.default.createElement(
+      "div",
+      {
+        ref: containerRef,
+        style: {
+          height: "100%",
+          display: "flex",
+          flexDirection: "row",
+          cursor: isResizing ? "col-resize" : "default",
+          userSelect: isResizing ? "none" : "auto",
+          width: "100%"
+          // Ensure it fits within the parent container
+        },
+        onMouseMove: (e3) => e3.preventDefault()
+      },
+      /* @__PURE__ */ import_react145.default.createElement(
+        "div",
+        {
+          style: {
+            width: `${fileTreeWidth}px`,
+            minWidth: "200px",
+            // Minimum width
+            maxWidth: "800px",
+            // Maximum width
+            borderRight: "1px solid #ccc",
+            padding: "1rem",
+            overflow: "auto",
+            backgroundColor: "#f8f9fa",
+            flexShrink: 0
+            // Prevent shrinking
+          }
+        },
+        /* @__PURE__ */ import_react145.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react145.default.createElement("h6", null, "Files"), /* @__PURE__ */ import_react145.default.createElement(
+          "button",
+          {
+            className: "btn btn-sm btn-outline-secondary",
+            onClick: () => window.location.reload(),
+            title: "Refresh"
+          },
+          "\u21BB"
+        )),
+        isLoading ? /* @__PURE__ */ import_react145.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" }, /* @__PURE__ */ import_react145.default.createElement("span", { className: "visually-hidden" }, "Loading..."))) : /* @__PURE__ */ import_react145.default.createElement(import_react145.default.Fragment, null, currentPath && /* @__PURE__ */ import_react145.default.createElement("div", { className: "small text-muted mb-2" }, "Current: ", currentPath), renderFileTree(fileTree))
+      ),
+      /* @__PURE__ */ import_react145.default.createElement(
+        "div",
+        {
+          style: {
+            width: "5px",
+            backgroundColor: isResizing && resizeType === "fileTree" ? "#007bff" : "#ccc",
+            cursor: "col-resize",
+            marginLeft: "-2px",
+            marginRight: "-2px",
+            zIndex: 1,
+            flexShrink: 0
+          },
+          onMouseDown: () => startResizing("fileTree")
+        }
+      ),
+      /* @__PURE__ */ import_react145.default.createElement(
+        "div",
+        {
+          style: {
+            width: `${editorWidth}px`,
+            minWidth: "200px",
+            // Minimum width
+            maxWidth: "800px",
+            // Maximum width
+            display: "flex",
+            flexDirection: "column",
+            flexShrink: 0
+          }
+        },
+        /* @__PURE__ */ import_react145.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2 p-2" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "btn-group", role: "group" }, /* @__PURE__ */ import_react145.default.createElement(
+          "button",
+          {
+            type: "button",
+            className: "btn btn-sm btn-outline-secondary",
+            onClick: handleUndo,
+            disabled: !canUndo,
+            title: "Undo"
+          },
+          "\u21B6"
+        ), /* @__PURE__ */ import_react145.default.createElement(
+          "button",
+          {
+            type: "button",
+            className: "btn btn-sm btn-outline-secondary",
+            onClick: handleRedo,
+            disabled: !canRedo,
+            title: "Redo"
+          },
+          "\u21B7"
+        )), /* @__PURE__ */ import_react145.default.createElement(
+          "select",
+          {
+            className: "form-select form-select-sm",
+            style: { width: "120px" },
+            value: language,
+            onChange: (e3) => setLanguage(e3.target.value)
+          },
+          /* @__PURE__ */ import_react145.default.createElement("option", { value: "javascript" }, "JavaScript"),
+          /* @__PURE__ */ import_react145.default.createElement("option", { value: "typescript" }, "TypeScript"),
+          /* @__PURE__ */ import_react145.default.createElement("option", { value: "python" }, "Python"),
+          /* @__PURE__ */ import_react145.default.createElement("option", { value: "html" }, "HTML"),
+          /* @__PURE__ */ import_react145.default.createElement("option", { value: "css" }, "CSS"),
+          /* @__PURE__ */ import_react145.default.createElement("option", { value: "json" }, "JSON"),
+          /* @__PURE__ */ import_react145.default.createElement("option", { value: "markdown" }, "Markdown"),
+          /* @__PURE__ */ import_react145.default.createElement("option", { value: "xml" }, "XML")
+        )),
+        /* @__PURE__ */ import_react145.default.createElement("div", { style: { flex: 1, border: "1px solid #ccc", borderRadius: "4px", overflow: "hidden" } }, /* @__PURE__ */ import_react145.default.createElement(
+          Ft,
+          {
+            height: "100%",
+            defaultLanguage: "javascript",
+            language,
+            value: code,
+            onChange: handleEditorChange,
+            onMount: handleEditorDidMount,
+            theme: "vs-dark",
+            options: {
+              fontSize: 14,
+              minimap: { enabled: true },
+              scrollBeyondLastLine: false,
+              automaticLayout: true,
+              tabSize: 2,
+              wordWrap: "on",
+              scrollbar: {
+                horizontal: "visible",
+                horizontalScrollbarSize: 12
+              }
+            }
+          }
+        ))
+      ),
+      /* @__PURE__ */ import_react145.default.createElement(
+        "div",
+        {
+          style: {
+            width: "5px",
+            backgroundColor: isResizing && resizeType === "editor" ? "#007bff" : "#ccc",
+            cursor: "col-resize",
+            marginLeft: "-2px",
+            marginRight: "-2px",
+            zIndex: 1,
+            flexShrink: 0
+          },
+          onMouseDown: () => startResizing("editor")
+        }
+      ),
+      /* @__PURE__ */ import_react145.default.createElement(
+        "div",
+        {
+          style: {
+            width: `${previewWidth}px`,
+            minWidth: "200px",
+            maxWidth: "800px",
+            padding: "1rem",
+            overflow: "auto",
+            backgroundColor: "#f8f9fa",
+            flexShrink: 0
+          }
+        },
+        /* @__PURE__ */ import_react145.default.createElement("h5", null, "Preview"),
+        /* @__PURE__ */ import_react145.default.createElement(
+          GenericPreview,
+          {
+            xmlTree: xmlTree2,
+            selectedNodeId,
+            hiddenNodes,
+            renderPreview: (node, isSelected, eventHandlers) => {
+              if (node.type === "rect") {
+                return /* @__PURE__ */ import_react145.default.createElement(
+                  "rect",
+                  {
+                    key: node.id,
+                    ...node.attributes,
+                    stroke: isSelected ? "blue" : "none",
+                    strokeWidth: isSelected ? "2" : "0",
+                    ...eventHandlers
+                  }
+                );
+              }
+              return null;
+            }
+          }
+        )
+      )
+    ));
+  };
+
+  // src/Helpo.tsx
+  var import_react147 = __toESM(require_react(), 1);
+  var Helpo = () => /* @__PURE__ */ import_react147.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react147.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react147.default.createElement(
     "div",
     {
       className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
       style: { width: "40px", height: "40px" }
     },
     "\u{1F916}"
-  )), /* @__PURE__ */ import_react145.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react145.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react145.default.createElement("p", null, "Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?")))), /* @__PURE__ */ import_react145.default.createElement("div", { className: "d-flex mb-3 justify-content-end" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "flex-grow-1 me-2 text-end" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "fw-bold" }, "You"), /* @__PURE__ */ import_react145.default.createElement("div", { className: "bg-primary text-white p-3 rounded" }, /* @__PURE__ */ import_react145.default.createElement("p", null, "Can you show me how to format text with ", /* @__PURE__ */ import_react145.default.createElement("strong", null, "bold"), " and", " ", /* @__PURE__ */ import_react145.default.createElement("em", null, "italic"), "?"))), /* @__PURE__ */ import_react145.default.createElement("div", null, /* @__PURE__ */ import_react145.default.createElement(
+  )), /* @__PURE__ */ import_react147.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react147.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react147.default.createElement("p", null, "Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?")))), /* @__PURE__ */ import_react147.default.createElement("div", { className: "d-flex mb-3 justify-content-end" }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "flex-grow-1 me-2 text-end" }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "fw-bold" }, "You"), /* @__PURE__ */ import_react147.default.createElement("div", { className: "bg-primary text-white p-3 rounded" }, /* @__PURE__ */ import_react147.default.createElement("p", null, "Can you show me how to format text with ", /* @__PURE__ */ import_react147.default.createElement("strong", null, "bold"), " and", " ", /* @__PURE__ */ import_react147.default.createElement("em", null, "italic"), "?"))), /* @__PURE__ */ import_react147.default.createElement("div", null, /* @__PURE__ */ import_react147.default.createElement(
     "div",
     {
       className: "rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white",
       style: { width: "40px", height: "40px" }
     },
     "\u{1F464}"
-  ))), /* @__PURE__ */ import_react145.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react145.default.createElement(
+  ))), /* @__PURE__ */ import_react147.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react147.default.createElement(
     "div",
     {
       className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
       style: { width: "40px", height: "40px" }
     },
     "\u{1F916}"
-  )), /* @__PURE__ */ import_react145.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react145.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react145.default.createElement("p", null, "Sure! Here's an example:"), /* @__PURE__ */ import_react145.default.createElement("ul", null, /* @__PURE__ */ import_react145.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react145.default.createElement("code", null, "<strong>"), " for ", /* @__PURE__ */ import_react145.default.createElement("strong", null, "bold text")), /* @__PURE__ */ import_react145.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react145.default.createElement("code", null, "<em>"), " for ", /* @__PURE__ */ import_react145.default.createElement("em", null, "italic text")), /* @__PURE__ */ import_react145.default.createElement("li", null, "You can even include lists and other HTML elements")), /* @__PURE__ */ import_react145.default.createElement("p", null, "Let me know if you need help with anything else!"))))), /* @__PURE__ */ import_react145.default.createElement("div", { className: "border-top p-3" }, /* @__PURE__ */ import_react145.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react145.default.createElement(
+  )), /* @__PURE__ */ import_react147.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react147.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react147.default.createElement("p", null, "Sure! Here's an example:"), /* @__PURE__ */ import_react147.default.createElement("ul", null, /* @__PURE__ */ import_react147.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react147.default.createElement("code", null, "<strong>"), " for ", /* @__PURE__ */ import_react147.default.createElement("strong", null, "bold text")), /* @__PURE__ */ import_react147.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react147.default.createElement("code", null, "<em>"), " for ", /* @__PURE__ */ import_react147.default.createElement("em", null, "italic text")), /* @__PURE__ */ import_react147.default.createElement("li", null, "You can even include lists and other HTML elements")), /* @__PURE__ */ import_react147.default.createElement("p", null, "Let me know if you need help with anything else!"))))), /* @__PURE__ */ import_react147.default.createElement("div", { className: "border-top p-3" }, /* @__PURE__ */ import_react147.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react147.default.createElement(
     "input",
     {
       type: "text",
@@ -71251,19 +72071,19 @@ ${indent}</${node.type}>`;
       placeholder: "Type your message...",
       disabled: true
     }
-  ), /* @__PURE__ */ import_react145.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send"))));
+  ), /* @__PURE__ */ import_react147.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send"))));
 
   // src/App.tsx
-  var WebSocketContext = (0, import_react146.createContext)({
+  var WebSocketContext = (0, import_react148.createContext)({
     ws: null,
     isConnected: false
   });
-  var TutorialModeContext = (0, import_react146.createContext)({
+  var TutorialModeContext = (0, import_react148.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
-  var AuthContext = (0, import_react146.createContext)({
+  var AuthContext = (0, import_react148.createContext)({
     isAuthenticated: false,
     user: null,
     login: () => {
@@ -71272,23 +72092,23 @@ ${indent}</${node.type}>`;
     }
   });
   var useWebSocket = () => {
-    return (0, import_react146.useContext)(WebSocketContext);
+    return (0, import_react148.useContext)(WebSocketContext);
   };
   var useTutorialMode = () => {
-    return (0, import_react146.useContext)(TutorialModeContext);
+    return (0, import_react148.useContext)(TutorialModeContext);
   };
   var useAuth = () => {
-    return (0, import_react146.useContext)(AuthContext);
+    return (0, import_react148.useContext)(AuthContext);
   };
   var App = () => {
-    const [ws2, setWs] = (0, import_react146.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react146.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react146.useState)(false);
-    const [isAuthenticated, setIsAuthenticated] = (0, import_react146.useState)(
+    const [ws2, setWs] = (0, import_react148.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react148.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react148.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, import_react148.useState)(
       githubAuthService.isAuthenticated
     );
-    const [user, setUser] = (0, import_react146.useState)(githubAuthService.userInfo);
-    (0, import_react146.useEffect)(() => {
+    const [user, setUser] = (0, import_react148.useState)(githubAuthService.userInfo);
+    (0, import_react148.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -71345,61 +72165,61 @@ ${indent}</${node.type}>`;
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react146.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected } }, /* @__PURE__ */ import_react146.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react146.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react146.default.createElement(HashRouter, null, /* @__PURE__ */ import_react146.default.createElement(AppFrame, null, /* @__PURE__ */ import_react146.default.createElement(Routes, null, /* @__PURE__ */ import_react146.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react146.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react146.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react146.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react146.default.createElement(
+    return /* @__PURE__ */ import_react148.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected } }, /* @__PURE__ */ import_react148.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react148.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react148.default.createElement(HashRouter, null, /* @__PURE__ */ import_react148.default.createElement(AppFrame, null, /* @__PURE__ */ import_react148.default.createElement(Routes, null, /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react148.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react148.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/projects/:projectName",
-        element: /* @__PURE__ */ import_react146.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react148.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react146.default.createElement(
+    ), /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/projects/:projectName/tests/*",
-        element: /* @__PURE__ */ import_react146.default.createElement(TestPage, null)
+        element: /* @__PURE__ */ import_react148.default.createElement(TestPage, null)
       }
-    ), /* @__PURE__ */ import_react146.default.createElement(
+    ), /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/projects/:projectName#:tab",
-        element: /* @__PURE__ */ import_react146.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react148.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react146.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react146.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react146.default.createElement(
+    ), /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react148.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/auth/github/callback",
-        element: /* @__PURE__ */ import_react146.default.createElement(AuthCallbackPage, null)
+        element: /* @__PURE__ */ import_react148.default.createElement(AuthCallbackPage, null)
       }
-    ), /* @__PURE__ */ import_react146.default.createElement(
+    ), /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/features-reporter",
-        element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react146.default.createElement(
+    ), /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/design-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react146.default.createElement(
+    ), /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/text-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null)
       }
-    ), isConnected ? /* @__PURE__ */ import_react146.default.createElement(import_react146.default.Fragment, null, /* @__PURE__ */ import_react146.default.createElement(
+    ), isConnected ? /* @__PURE__ */ import_react148.default.createElement(import_react148.default.Fragment, null, /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/processes",
-        element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react146.default.createElement(
+    ), /* @__PURE__ */ import_react148.default.createElement(
       Route,
       {
         path: "/processes/:processId",
-        element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(SingleProcessPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null)
       }
-    )) : null, /* @__PURE__ */ import_react146.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react146.default.createElement(Settings, null) }), /* @__PURE__ */ import_react146.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react146.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react146.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react146.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react146.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react146.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react146.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react146.default.createElement(Helpo, null) })))))));
+    )) : null, /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react148.default.createElement(Settings, null) }), /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react148.default.createElement(Route, { path: "/skribo", element: isAuthenticated ? /* @__PURE__ */ import_react148.default.createElement(SkriboPage, null) : /* @__PURE__ */ import_react148.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react148.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react148.default.createElement(Helpo, null) })))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -71407,9 +72227,9 @@ ${indent}</${node.type}>`;
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react146.default.createElement(App));
+          root.render(import_react148.default.createElement(App));
         } else {
-          import_client.default.render(import_react146.default.createElement(App), rootElement);
+          import_client.default.render(import_react148.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -71421,7 +72241,7 @@ ${indent}</${node.type}>`;
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react146.default;
+    window.React = import_react148.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);

@@ -267,11 +267,72 @@ class DevelopmentFileService implements FileService {
   }
 
   async readDirectory(path: string): Promise<FileEntry[]> {
-    const response = await fetch(
-      `/api/files/list?path=${encodeURIComponent(path)}`
-    );
-    if (!response.ok) throw new Error(`Failed to list directory: ${path}`);
-    return await response.json();
+    try {
+      // Try to use the API endpoint first
+      const response = await fetch(
+        `/api/files/list?path=${encodeURIComponent(path)}`
+      );
+      if (response.ok) {
+        return await response.json();
+      } else {
+        // If API endpoint fails, try to use WebSocket fallback
+        console.warn(`API endpoint failed (${response.status}), trying WebSocket fallback`);
+        return await this.readDirectoryViaWebSocket(path);
+      }
+    } catch (error) {
+      console.warn('API endpoint unavailable, trying WebSocket fallback:', error);
+      return await this.readDirectoryViaWebSocket(path);
+    }
+  }
+
+  private async readDirectoryViaWebSocket(path: string): Promise<FileEntry[]> {
+    return new Promise((resolve, reject) => {
+      // Set up a timeout
+      const timeout = setTimeout(() => {
+        reject(new Error('WebSocket directory listing timeout'));
+      }, 5000);
+
+      // Create a temporary WebSocket connection for this request
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${protocol}//${window.location.host}/api/files-ws`;
+      const ws = new WebSocket(wsUrl);
+      
+      ws.onopen = () => {
+        ws.send(JSON.stringify({
+          type: 'listDirectory',
+          path: path
+        }));
+      };
+      
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === 'directoryListing') {
+            clearTimeout(timeout);
+            ws.close();
+            resolve(data.items);
+          } else if (data.type === 'error') {
+            clearTimeout(timeout);
+            ws.close();
+            reject(new Error(data.message));
+          }
+        } catch (error) {
+          clearTimeout(timeout);
+          ws.close();
+          reject(error);
+        }
+      };
+      
+      ws.onerror = (error) => {
+        clearTimeout(timeout);
+        ws.close();
+        reject(new Error('WebSocket connection failed'));
+      };
+      
+      ws.onclose = () => {
+        clearTimeout(timeout);
+      };
+    });
   }
 
   async exists(path: string): Promise<boolean> {
