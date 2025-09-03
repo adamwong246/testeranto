@@ -383,46 +383,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           </Container>
         </main>
       </div>
-      
-      {/* Floating Button */}
-      <div
-        style={{
-          position: 'fixed',
-          bottom: '20px',
-          right: '20px',
-          zIndex: 1000,
-        }}
-      >
-        <a
-          href="https://github.com/adamwong246/testeranto"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="brand-logo"
-          style={{
-            display: 'block',
-            transition: 'transform 0.3s ease',
-            backgroundColor: 'white',
-            borderRadius: '50%',
-            padding: '8px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-          }}
-        >
-          <img
-            src="https://www.testeranto.com/logo.svg"
-            alt="Testeranto Logo"
-            style={{
-              height: '40px',
-              width: '40px',
-            }}
-          />
-        </a>
-      </div>
+
     </div>
   );
 };
