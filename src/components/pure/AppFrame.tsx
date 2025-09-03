@@ -28,6 +28,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
   const { tutorialMode } = useTutorialMode();
   const { isAuthenticated, logout } = useAuth();
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isHelpoActive, setIsHelpoActive] = useState(false);
 
   // Add CSS for the brand logo animation
   const brandLogoStyle = `
@@ -70,13 +71,11 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
         {/* Navigation */}
         <Nav variant="pills" className="flex-column p-2 flex-grow-1">
 
-
-
           {/* Help Link - Always accessible */}
           <Nav.Link
             as={NavLink}
-            to="/"
-            className={`${location.pathname === "/" ? "active" : ""
+            to="/helpo"
+            className={`${location.pathname === "/helpo" ? "active" : ""
               } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}`}
           >
             {tutorialMode ? (
@@ -290,7 +289,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             as={NavLink}
             to="/settings"
             className={`${location.pathname === "/settings" ? "active" : ""
-              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-5' : ''}`}
+              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-6' : ''}`}
           // style={{ height: '40px', width: '40px' }}
           >
             {tutorialMode ? (
@@ -334,11 +333,9 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
 
         {/* Brand Logo */}
         <div className="p-2 border-top d-flex align-items-center justify-content-center">
-          <a
-            href="https://github.com/adamwong246/testeranto"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="brand-logo"
+          <button
+            onClick={() => setIsHelpoActive(!isHelpoActive)}
+            className="brand-logo btn p-0 border-0 bg-transparent"
             style={{
               display: 'block',
               transition: 'transform 0.3s ease',
@@ -358,28 +355,124 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
                 width: '64px',
               }}
             />
-          </a>
+          </button>
+        </div>
+      </div>
+
+      {/* Helpo Drawer */}
+      <div
+        className={`gradient-typed-bdd-dsl d-flex flex-column border-end ${isHelpoActive ? 'active' : 'inactive'}`}
+        style={{
+          width: isHelpoActive ? '380px' : '0px',
+          transition: 'width 0.3s ease',
+          overflow: 'hidden',
+          flexShrink: 0,
+          height: '100vh',
+        }}
+      >
+        {/* Helpo content - Chat thread */}
+        <div style={{
+          width: '380px',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+          {/* Chat messages - Aligned to bottom */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1rem' }}>
+            <div style={{ marginBottom: '1rem' }}>
+              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
+                <strong>Helpo:</strong> Hello! How can I help you today?
+              </div>
+              <div style={{ textAlign: 'right', marginBottom: '0.5rem' }}>
+                <strong>You:</strong> I need help with testing.
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
+                <strong>Helpo:</strong> Sure! I can help with that. What specifically are you working on?
+              </div>
+              <div style={{ textAlign: 'right', marginBottom: '0.5rem' }}>
+                <strong>You:</strong> I want to create a new test project.
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
+                <strong>Helpo:</strong> Great! Click on "testo" in the sidebar to manage your test projects.
+              </div>
+              <div style={{ textAlign: 'right', marginBottom: '0.5rem' }}>
+                <strong>You:</strong> Thanks!
+              </div>
+              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
+                <strong>Helpo:</strong> You're welcome! Let me know if you need anything else.
+              </div>
+            </div>
+          </div>
+          {/* Input area - Transparent and greyscale */}
+          <div style={{
+            padding: '1rem', 
+            borderTop: '1px solid rgba(128, 128, 128, 0.3)',
+          }}>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Type your message..."
+                disabled
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  border: '1px solid rgba(128, 128, 128, 0.3)',
+                  color: '#333',
+                  backdropFilter: 'blur(10px)',
+                }}
+              />
+              <button 
+                className="btn" 
+                type="button" 
+                disabled
+                style={{
+                  backgroundColor: 'rgba(128, 128, 128, 0.3)',
+                  border: '1px solid rgba(128, 128, 128, 0.3)',
+                  color: '#666',
+                }}
+              >
+                Send
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Main Content */}
       <div
-        className="flex-grow-1 d-flex flex-column"
-        style={{ minHeight: "100vh" }}
+        className="d-flex flex-column"
+        style={{
+          minHeight: "100vh",
+          minWidth: "0", // Allows the content to shrink below its initial size
+          flex: "1 1 auto", // Take up remaining space
+          overflow: "auto", // Enable scrolling
+        }}
       >
-        {/* Top Navigation Bar */}
-        {/* <Navbar className="border-bottom">
-          <Container fluid>
-            <Navbar.Brand>{title || 'Testeranto'}</Navbar.Brand>
-            <Navbar.Collapse className="justify-content-end">
-              <UserProfile />
-            </Navbar.Collapse>
-          </Container>
-        </Navbar> */}
-
-        <main className="flex-grow-1 p-4" style={{ overflow: "auto" }}>
-          <Container fluid style={{ height: "100%" }}>
-            {children}
+        <main className="flex-grow-1 p-4" style={{
+          minWidth: "fit-content", // Allow the content to be as wide as needed
+          width: "100%",
+        }}>
+          <Container fluid style={{
+            height: "100%",
+            minWidth: "fit-content", // Prevent the container from constraining width
+          }}>
+            {location.pathname === "/helpo" ? (
+              <div>
+                <h1>Helpo Documentation</h1>
+                <p>Welcome to the Helpo documentation. Here you can find information about using Testeranto.</p>
+                <h2>Getting Started</h2>
+                <p>Start by creating a project and writing your first test cases.</p>
+                <h2>Features</h2>
+                <ul>
+                  <li>Test automation</li>
+                  <li>Process management</li>
+                  <li>Git integration</li>
+                  <li>And much more...</li>
+                </ul>
+              </div>
+            ) : (
+              children
+            )}
           </Container>
         </main>
       </div>

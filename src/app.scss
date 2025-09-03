@@ -78,6 +78,12 @@
   border-radius: 8px;
 }
 
+.navbar-attention-6 {
+  animation: pronounced-pulse 1s ease-in-out 1.2s;
+  animation-iteration-count: 1;
+  border-radius: 8px;
+}
+
 // For the sidebar container - More pronounced
 // .sidebar-attention {
 //   animation: pronounced-pulse 2s ease-in-out;
@@ -85,3 +91,31 @@
 //   border-right: 3px solid #3b82f6 !important;
 //   border-radius: 0 12px 12px 0;
 // }
+
+// Gradient animation for helpo drawer
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// Helpo drawer styles
+.helpo-drawer {
+  z-index: 1000; // Same as main content
+  transition: width 0.3s ease;
+}
+
+// Ensure proper z-indexing
+.sidebar {
+  z-index: 1010; // Higher than helpo
+}
+
+.main-content {
+  z-index: 1000; // Same as helpo
+}

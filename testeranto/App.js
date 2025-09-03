@@ -59282,6 +59282,7 @@ This file was not generated during the test run.`,
     const { tutorialMode } = useTutorialMode();
     const { isAuthenticated, logout } = useAuth();
     const [hasAnimated, setHasAnimated] = (0, import_react111.useState)(false);
+    const [isHelpoActive, setIsHelpoActive] = (0, import_react111.useState)(false);
     const brandLogoStyle = `
     .brand-logo:hover {
       transform: scale(1.1);
@@ -59316,8 +59317,8 @@ This file was not generated during the test run.`,
         Nav_default2.Link,
         {
           as: NavLink,
-          to: "/",
-          className: `${location2.pathname === "/" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}`
+          to: "/helpo",
+          className: `${location2.pathname === "/helpo" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}`
         },
         tutorialMode ? /* @__PURE__ */ import_react111.default.createElement(
           OverlayTrigger_default,
@@ -59447,7 +59448,7 @@ This file was not generated during the test run.`,
         {
           as: NavLink,
           to: "/settings",
-          className: `${location2.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-5" : ""}`
+          className: `${location2.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-6" : ""}`
         },
         tutorialMode ? /* @__PURE__ */ import_react111.default.createElement(
           OverlayTrigger_default,
@@ -59473,12 +59474,10 @@ This file was not generated during the test run.`,
         ))
       ),
       /* @__PURE__ */ import_react111.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react111.default.createElement(
-        "a",
+        "button",
         {
-          href: "https://github.com/adamwong246/testeranto",
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "brand-logo",
+          onClick: () => setIsHelpoActive(!isHelpoActive),
+          className: "brand-logo btn p-0 border-0 bg-transparent",
           style: {
             display: "block",
             transition: "transform 0.3s ease"
@@ -59505,54 +59504,74 @@ This file was not generated during the test run.`,
     ), /* @__PURE__ */ import_react111.default.createElement(
       "div",
       {
-        className: "flex-grow-1 d-flex flex-column",
-        style: { minHeight: "100vh" }
+        className: `gradient-typed-bdd-dsl d-flex flex-column border-end ${isHelpoActive ? "active" : "inactive"}`,
+        style: {
+          width: isHelpoActive ? "380px" : "0px",
+          transition: "width 0.3s ease",
+          overflow: "hidden",
+          flexShrink: 0,
+          height: "100vh"
+        }
       },
-      /* @__PURE__ */ import_react111.default.createElement("main", { className: "flex-grow-1 p-4", style: { overflow: "auto" } }, /* @__PURE__ */ import_react111.default.createElement(Container_default, { fluid: true, style: { height: "100%" } }, children))
+      /* @__PURE__ */ import_react111.default.createElement("div", { style: {
+        width: "380px",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column"
+      } }, /* @__PURE__ */ import_react111.default.createElement("div", { style: { flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "1rem" } }, /* @__PURE__ */ import_react111.default.createElement("div", { style: { marginBottom: "1rem" } }, /* @__PURE__ */ import_react111.default.createElement("div", { style: { textAlign: "left", marginBottom: "0.5rem" } }, /* @__PURE__ */ import_react111.default.createElement("strong", null, "Helpo:"), " Hello! How can I help you today?"), /* @__PURE__ */ import_react111.default.createElement("div", { style: { textAlign: "right", marginBottom: "0.5rem" } }, /* @__PURE__ */ import_react111.default.createElement("strong", null, "You:"), " I need help with testing."), /* @__PURE__ */ import_react111.default.createElement("div", { style: { textAlign: "left", marginBottom: "0.5rem" } }, /* @__PURE__ */ import_react111.default.createElement("strong", null, "Helpo:"), " Sure! I can help with that. What specifically are you working on?"), /* @__PURE__ */ import_react111.default.createElement("div", { style: { textAlign: "right", marginBottom: "0.5rem" } }, /* @__PURE__ */ import_react111.default.createElement("strong", null, "You:"), " I want to create a new test project."), /* @__PURE__ */ import_react111.default.createElement("div", { style: { textAlign: "left", marginBottom: "0.5rem" } }, /* @__PURE__ */ import_react111.default.createElement("strong", null, "Helpo:"), ' Great! Click on "testo" in the sidebar to manage your test projects.'), /* @__PURE__ */ import_react111.default.createElement("div", { style: { textAlign: "right", marginBottom: "0.5rem" } }, /* @__PURE__ */ import_react111.default.createElement("strong", null, "You:"), " Thanks!"), /* @__PURE__ */ import_react111.default.createElement("div", { style: { textAlign: "left", marginBottom: "0.5rem" } }, /* @__PURE__ */ import_react111.default.createElement("strong", null, "Helpo:"), " You're welcome! Let me know if you need anything else."))), /* @__PURE__ */ import_react111.default.createElement("div", { style: {
+        padding: "1rem",
+        borderTop: "1px solid rgba(128, 128, 128, 0.3)"
+      } }, /* @__PURE__ */ import_react111.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react111.default.createElement(
+        "input",
+        {
+          type: "text",
+          className: "form-control",
+          placeholder: "Type your message...",
+          disabled: true,
+          style: {
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            border: "1px solid rgba(128, 128, 128, 0.3)",
+            color: "#333",
+            backdropFilter: "blur(10px)"
+          }
+        }
+      ), /* @__PURE__ */ import_react111.default.createElement(
+        "button",
+        {
+          className: "btn",
+          type: "button",
+          disabled: true,
+          style: {
+            backgroundColor: "rgba(128, 128, 128, 0.3)",
+            border: "1px solid rgba(128, 128, 128, 0.3)",
+            color: "#666"
+          }
+        },
+        "Send"
+      ))))
     ), /* @__PURE__ */ import_react111.default.createElement(
       "div",
       {
+        className: "d-flex flex-column",
         style: {
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          zIndex: 1e3
+          minHeight: "100vh",
+          minWidth: "0",
+          // Allows the content to shrink below its initial size
+          flex: "1 1 auto",
+          // Take up remaining space
+          overflow: "auto"
+          // Enable scrolling
         }
       },
-      /* @__PURE__ */ import_react111.default.createElement(
-        "a",
-        {
-          href: "https://github.com/adamwong246/testeranto",
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "brand-logo",
-          style: {
-            display: "block",
-            transition: "transform 0.3s ease",
-            backgroundColor: "white",
-            borderRadius: "50%",
-            padding: "8px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
-          },
-          onMouseEnter: (e3) => {
-            e3.currentTarget.style.transform = "scale(1.1)";
-          },
-          onMouseLeave: (e3) => {
-            e3.currentTarget.style.transform = "scale(1)";
-          }
-        },
-        /* @__PURE__ */ import_react111.default.createElement(
-          "img",
-          {
-            src: "https://www.testeranto.com/logo.svg",
-            alt: "Testeranto Logo",
-            style: {
-              height: "40px",
-              width: "40px"
-            }
-          }
-        )
-      )
+      /* @__PURE__ */ import_react111.default.createElement("main", { className: "flex-grow-1 p-4", style: {
+        minWidth: "fit-content",
+        // Allow the content to be as wide as needed
+        width: "100%"
+      } }, /* @__PURE__ */ import_react111.default.createElement(Container_default, { fluid: true, style: {
+        height: "100%",
+        minWidth: "fit-content"
+        // Prevent the container from constraining width
+      } }, location2.pathname === "/helpo" ? /* @__PURE__ */ import_react111.default.createElement("div", null, /* @__PURE__ */ import_react111.default.createElement("h1", null, "Helpo Documentation"), /* @__PURE__ */ import_react111.default.createElement("p", null, "Welcome to the Helpo documentation. Here you can find information about using Testeranto."), /* @__PURE__ */ import_react111.default.createElement("h2", null, "Getting Started"), /* @__PURE__ */ import_react111.default.createElement("p", null, "Start by creating a project and writing your first test cases."), /* @__PURE__ */ import_react111.default.createElement("h2", null, "Features"), /* @__PURE__ */ import_react111.default.createElement("ul", null, /* @__PURE__ */ import_react111.default.createElement("li", null, "Test automation"), /* @__PURE__ */ import_react111.default.createElement("li", null, "Process management"), /* @__PURE__ */ import_react111.default.createElement("li", null, "Git integration"), /* @__PURE__ */ import_react111.default.createElement("li", null, "And much more..."))) : children))
     ));
   };
 
