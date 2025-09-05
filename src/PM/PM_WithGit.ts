@@ -543,18 +543,18 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
               }
 
               if (fileStatus !== "unchanged") {
-                console.log("Git change detected:", {
-                  path,
-                  status,
-                  fileStatus,
-                });
+                // console.log("Git change detected:", {
+                //   path,
+                //   status,
+                //   fileStatus,
+                // });
 
                 // Verify the path exists to make sure it's correct
 
                 const fullPath = `${process.cwd()}/${path}`;
                 try {
                   await fs.promises.access(fullPath);
-                  console.log("Path exists:", fullPath);
+                  // console.log("Path exists:", fullPath);
                 } catch (error) {
                   console.warn("Path does not exist:", fullPath);
                   // Let's still add it to changes, as it might be a deleted file

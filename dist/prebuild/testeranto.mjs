@@ -278,9 +278,9 @@ function isValidUrl(string) {
     return false;
   }
 }
-async function pollForFile(path12, timeout = 2e3) {
+async function pollForFile(path13, timeout = 2e3) {
   const intervalObj = setInterval(function() {
-    const file = path12;
+    const file = path13;
     const fileExists = fs.existsSync(file);
     if (fileExists) {
       clearInterval(intervalObj);
@@ -1055,6 +1055,15 @@ var init_PM_WithWebSocket = __esm({
           ws.on("message", (data) => {
             try {
               const message = JSON.parse(data.toString());
+              if (message.type === "chatMessage") {
+                console.log(`Received chat message: ${message.content}`);
+                if (this.handleChatMessage) {
+                  this.handleChatMessage(message.content);
+                } else {
+                  console.log("PM_WithHelpo not available - message not processed");
+                }
+                return;
+              }
               if (message.type === "listDirectory") {
                 this.handleWebSocketListDirectory(ws, message);
               } else if (message.type === "executeCommand") {
@@ -1221,6 +1230,21 @@ var init_PM_WithWebSocket = __esm({
                 } else {
                   console.log("Cannot kill process - process not found:", {
                     processExists: !!childProcess
+                  });
+                }
+              } else if (message.type === "getChatHistory") {
+                if (this.getChatHistory) {
+                  this.getChatHistory().then((history) => {
+                    ws.send(JSON.stringify({
+                      type: "chatHistory",
+                      messages: history
+                    }));
+                  }).catch((error) => {
+                    console.error("Error getting chat history:", error);
+                    ws.send(JSON.stringify({
+                      type: "error",
+                      message: "Failed to get chat history"
+                    }));
                   });
                 }
               }
@@ -1395,14 +1419,14 @@ var init_PM_WithWebSocket = __esm({
         }
       }
       async handleListDirectory(req, res, query) {
-        const path12 = query.path;
-        if (!path12) {
+        const path13 = query.path;
+        if (!path13) {
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "Path parameter required" }));
           return;
         }
         try {
-          const fullPath = this.resolvePath(path12);
+          const fullPath = this.resolvePath(path13);
           const items = await this.listDirectory(fullPath);
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify(items));
@@ -1413,14 +1437,14 @@ var init_PM_WithWebSocket = __esm({
         }
       }
       async handleReadFile(req, res, query) {
-        const path12 = query.path;
-        if (!path12) {
+        const path13 = query.path;
+        if (!path13) {
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "Path parameter required" }));
           return;
         }
         try {
-          const fullPath = this.resolvePath(path12);
+          const fullPath = this.resolvePath(path13);
           const content = await fs6.promises.readFile(fullPath, "utf-8");
           res.writeHead(200, { "Content-Type": "text/plain" });
           res.end(content);
@@ -1431,14 +1455,14 @@ var init_PM_WithWebSocket = __esm({
         }
       }
       async handleFileExists(req, res, query) {
-        const path12 = query.path;
-        if (!path12) {
+        const path13 = query.path;
+        if (!path13) {
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "Path parameter required" }));
           return;
         }
         try {
-          const fullPath = this.resolvePath(path12);
+          const fullPath = this.resolvePath(path13);
           const exists = fs6.existsSync(fullPath);
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ exists }));
@@ -1488,9 +1512,9 @@ var init_PM_WithWebSocket = __esm({
           "../dist/index.html",
           "./index.html"
         ];
-        for (const path12 of possiblePaths) {
-          if (fs6.existsSync(path12)) {
-            return path12;
+        for (const path13 of possiblePaths) {
+          if (fs6.existsSync(path13)) {
+            return path13;
           }
         }
         return null;
@@ -1573,19 +1597,19 @@ var init_PM_WithWebSocket = __esm({
       }
       async handleWebSocketListDirectory(ws, message) {
         try {
-          const path12 = message.path;
-          if (!path12) {
+          const path13 = message.path;
+          if (!path13) {
             ws.send(JSON.stringify({
               type: "error",
               message: "Path parameter required"
             }));
             return;
           }
-          const fullPath = this.resolvePath(path12);
+          const fullPath = this.resolvePath(path13);
           const items = await this.listDirectory(fullPath);
           ws.send(JSON.stringify({
             type: "directoryListing",
-            path: path12,
+            path: path13,
             items
           }));
         } catch (error) {
@@ -2269,14 +2293,14 @@ var init_PM_WithGit = __esm({
         const parsedUrl = url2.parse(req.url || "/");
         const query = parsedUrl.query || "";
         const params = new URLSearchParams(query);
-        const path12 = params.get("path");
-        if (!path12) {
+        const path13 = params.get("path");
+        if (!path13) {
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "Path parameter required" }));
           return;
         }
         try {
-          const status = await this.getGitFileStatus(path12);
+          const status = await this.getGitFileStatus(path13);
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify(status));
         } catch (error) {
@@ -2378,10 +2402,10 @@ var init_PM_WithGit = __esm({
           res.end(JSON.stringify({ error: "Failed to get remote status" }));
         }
       }
-      async getGitFileStatus(path12) {
+      async getGitFileStatus(path13) {
         try {
           const changes2 = await this.getGitChanges();
-          const fileChange = changes2.find((change) => change.path === path12);
+          const fileChange = changes2.find((change) => change.path === path13);
           if (fileChange) {
             return { status: fileChange.status };
           }
@@ -2559,12 +2583,12 @@ ${description}` : message;
                     continue;
                   }
                   const status = match[1];
-                  let path12 = match[2];
-                  if (status === "R " && path12.includes(" -> ")) {
-                    const parts = path12.split(" -> ");
-                    path12 = parts[parts.length - 1];
+                  let path13 = match[2];
+                  if (status === "R " && path13.includes(" -> ")) {
+                    const parts = path13.split(" -> ");
+                    path13 = parts[parts.length - 1];
                   }
-                  path12 = path12.trim();
+                  path13 = path13.trim();
                   let fileStatus = "unchanged";
                   const firstChar = status.charAt(0);
                   if (firstChar === "M" || firstChar === " ") {
@@ -2581,20 +2605,14 @@ ${description}` : message;
                     fileStatus = "modified";
                   }
                   if (fileStatus !== "unchanged") {
-                    console.log("Git change detected:", {
-                      path: path12,
-                      status,
-                      fileStatus
-                    });
-                    const fullPath = `${process.cwd()}/${path12}`;
+                    const fullPath = `${process.cwd()}/${path13}`;
                     try {
                       await fs9.promises.access(fullPath);
-                      console.log("Path exists:", fullPath);
                     } catch (error2) {
                       console.warn("Path does not exist:", fullPath);
                     }
                     changes2.push({
-                      path: path12,
+                      path: path13,
                       status: fileStatus
                     });
                   }
@@ -3069,9 +3087,9 @@ var init_PM_WithProcesses = __esm({
           "../dist/index.html",
           "./index.html"
         ];
-        for (const path12 of possiblePaths) {
-          if (fs10.existsSync(path12)) {
-            return path12;
+        for (const path13 of possiblePaths) {
+          if (fs10.existsSync(path13)) {
+            return path13;
           }
         }
         return null;
@@ -3151,15 +3169,261 @@ var init_PM_WithProcesses = __esm({
   }
 });
 
+// src/PM/PM_WithHelpo.ts
+import { spawnSync } from "node:child_process";
+import pty from "node-pty";
+import fs11 from "fs";
+import path9 from "path";
+import ansiColors from "ansi-colors";
+var PM_WithHelpo;
+var init_PM_WithHelpo = __esm({
+  async "src/PM/PM_WithHelpo.ts"() {
+    "use strict";
+    await init_PM_WithProcesses();
+    PM_WithHelpo = class extends PM_WithProcesses {
+      constructor(configs, name, mode2) {
+        super(configs, name, mode2);
+        this.aiderProcess = null;
+        this.MAX_HISTORY_SIZE = 10 * 1024;
+        // 10KB
+        this.isAiderAtPrompt = false;
+        this.chatHistoryPath = path9.join(
+          process.cwd(),
+          "testeranto",
+          "helpo_chat_history.json"
+        );
+        this.initializeChatHistory();
+        this.startAiderProcess();
+      }
+      initializeChatHistory() {
+        fs11.writeFileSync(this.chatHistoryPath, JSON.stringify([]));
+        const messagePath = path9.join(
+          process.cwd(),
+          "testeranto",
+          "helpo_chat_message.txt"
+        );
+        const messageDir = path9.dirname(messagePath);
+        if (!fs11.existsSync(messageDir)) {
+          fs11.mkdirSync(messageDir, { recursive: true });
+        }
+        fs11.writeFileSync(messagePath, "");
+      }
+      startAiderProcess() {
+        const promptPath = path9.join(process.cwd(), "src", "helpo", "prompt.txt");
+        try {
+          const whichAider = spawnSync("which", ["aider"]);
+          if (whichAider.status !== 0) {
+            console.error(
+              "aider command not found. Please install aider: pip install aider-chat"
+            );
+            return;
+          }
+          const ptyProcess = pty.spawn(
+            "aider",
+            ["--no-auto-commits", "--load", promptPath, "--edit-format", "ask"],
+            {
+              name: "xterm-color",
+              cols: 80,
+              rows: 30,
+              cwd: process.cwd(),
+              env: {
+                ...process.env,
+                TERM: "xterm-color",
+                FORCE_COLOR: "0",
+                NO_COLOR: "1",
+                PYTHONUNBUFFERED: "1"
+              }
+            }
+          );
+          const aiderProcess = ptyProcess;
+          this.aiderProcess = ptyProcess;
+          ptyProcess.onData((data) => {
+            const output = data.toString();
+            const cleanOutput = output.replace(/\x1B\[[0-9;]*[a-zA-Z]/g, "");
+            console.log(ansiColors.cyan(`\u{1F916}: ${cleanOutput}`));
+            if (cleanOutput.includes("ask>")) {
+              this.isAiderAtPrompt = true;
+              console.log("Aider is at prompt");
+            }
+            if (cleanOutput.includes("PROCESS_CHAT_HISTORY_AND_RESPOND")) {
+              console.log("Aider received our command");
+            }
+          });
+          ptyProcess.onExit(({ exitCode, signal }) => {
+            console.log(
+              `aider process exited with code ${exitCode}, signal ${signal}`
+            );
+            this.aiderProcess = null;
+            if (exitCode !== 0) {
+              console.log("Restarting aider process...");
+              setTimeout(() => this.startAiderProcess(), 1e3);
+            }
+          });
+          const messagePath = path9.join(
+            process.cwd(),
+            "testeranto",
+            "helpo_chat_message.txt"
+          );
+          if (!fs11.existsSync(messagePath)) {
+            fs11.writeFileSync(messagePath, "");
+          }
+          const watcher = fs11.watch(messagePath, (eventType, filename) => {
+            console.log(`File ${filename} event: ${eventType}`);
+            if (eventType === "change") {
+              setTimeout(() => {
+                fs11.readFile(messagePath, "utf8", (err, data) => {
+                  if (err) {
+                    if (err.code === "ENOENT") {
+                      return;
+                    }
+                    console.error("Error reading message file:", err);
+                    return;
+                  }
+                  console.log(`Message file content: "${data}"`);
+                  const trimmedData = data.trim();
+                  if (trimmedData.length > 0) {
+                    this.processAiderResponse(trimmedData);
+                    fs11.writeFileSync(messagePath, "");
+                  } else {
+                    console.log("Ignoring empty message file change");
+                  }
+                });
+              }, 100);
+            }
+          });
+          aiderProcess.on("exit", () => {
+            watcher.close();
+          });
+        } catch (e) {
+          console.error("Error starting aider process:", e);
+        }
+      }
+      async processAiderResponse(response) {
+        const cleanResponse = response.trim();
+        if (!cleanResponse) {
+          return;
+        }
+        const assistantMessage = {
+          type: "assistant",
+          content: cleanResponse,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        };
+        await this.addToChatHistory(assistantMessage);
+        const history = await this.getChatHistory();
+        this.broadcast({
+          type: "chatHistory",
+          messages: history
+        });
+        await this.trimChatHistory();
+      }
+      restartAiderProcess() {
+        if (this.aiderProcess) {
+          this.aiderProcess.kill();
+        }
+        this.startAiderProcess();
+      }
+      isAiderAvailable() {
+        try {
+          const whichAider = spawnSync("which", ["aider"]);
+          return whichAider.status === 0;
+        } catch (error) {
+          return false;
+        }
+      }
+      async addToChatHistory(message) {
+        const history = await this.getChatHistory();
+        history.push(message);
+        fs11.writeFileSync(this.chatHistoryPath, JSON.stringify(history, null, 2));
+        console.log(
+          `Added message to chat history: ${message.content.substring(0, 50)}...`
+        );
+      }
+      async trimChatHistory() {
+        const history = await this.getChatHistory();
+        let currentSize = Buffer.from(JSON.stringify(history)).length;
+        while (currentSize > this.MAX_HISTORY_SIZE && history.length > 0) {
+          history.shift();
+          currentSize = Buffer.from(JSON.stringify(history)).length;
+        }
+        fs11.writeFileSync(this.chatHistoryPath, JSON.stringify(history, null, 2));
+      }
+      async getChatHistory() {
+        try {
+          const data = fs11.readFileSync(this.chatHistoryPath, "utf-8");
+          return JSON.parse(data);
+        } catch (error) {
+          return [];
+        }
+      }
+      async handleChatMessage(userMessage) {
+        const userChatMessage = {
+          type: "user",
+          content: userMessage,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        };
+        await this.addToChatHistory(userChatMessage);
+        const history = await this.getChatHistory();
+        this.broadcast({
+          type: "chatHistory",
+          messages: history
+        });
+        console.log(`User message recorded: ${userMessage}`);
+        if (!this.aiderProcess) {
+          console.log(
+            "Aider process is not available - message recorded but not processed"
+          );
+          return;
+        }
+        setTimeout(() => {
+          try {
+            if (this.aiderProcess) {
+              const messagePath = path9.join(
+                process.cwd(),
+                "testeranto",
+                "helpo_chat_message.txt"
+              );
+              fs11.writeFileSync(messagePath, "");
+              const ptyProcess = this.aiderProcess;
+              ptyProcess.write(
+                "PROCESS_CHAT_HISTORY_AND_RESPOND: Read the chat history and write your response ONLY to testeranto/helpo_chat_message.txt. Do NOT print to stdout.\n"
+              );
+            } else {
+              console.log("Aider process is not available");
+            }
+          } catch (error) {
+            console.error("Error writing to aider process:", error);
+          }
+        }, 100);
+      }
+      // Override WebSocket message handling to include chat messages
+      setupWebSocketHandlers() {
+      }
+      // This method should be called when a WebSocket message is received
+      handleWebSocketMessage(ws, message) {
+        try {
+          const parsedMessage = JSON.parse(message.toString());
+          if (parsedMessage.type === "chatMessage") {
+            this.handleChatMessage(parsedMessage.content);
+          } else {
+            super.handleWebSocketMessage?.(ws, message);
+          }
+        } catch (error) {
+          console.error("Error handling WebSocket message:", error);
+        }
+      }
+    };
+  }
+});
+
 // src/PM/main.ts
 var main_exports = {};
 __export(main_exports, {
   PM_Main: () => PM_Main
 });
-import { spawn as spawn2 } from "node:child_process";
-import ansiColors from "ansi-colors";
+import { spawn as spawn3 } from "node:child_process";
+import ansiColors2 from "ansi-colors";
 import net from "net";
-import fs11 from "fs";
+import fs12 from "fs";
 import ansiC4 from "ansi-colors";
 var files2, screenshots2, PM_Main;
 var init_main = __esm({
@@ -3168,10 +3432,10 @@ var init_main = __esm({
     init_utils();
     init_queue();
     init_utils2();
-    await init_PM_WithProcesses();
+    await init_PM_WithHelpo();
     files2 = {};
     screenshots2 = {};
-    PM_Main = class extends PM_WithProcesses {
+    PM_Main = class extends PM_WithHelpo {
       constructor() {
         super(...arguments);
         this.launchPure = async (src, dest) => {
@@ -3180,8 +3444,8 @@ var init_main = __esm({
           const purePromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
-            if (!fs11.existsSync(reportDest)) {
-              fs11.mkdirSync(reportDest, { recursive: true });
+            if (!fs12.existsSync(reportDest)) {
+              fs12.mkdirSync(reportDest, { recursive: true });
             }
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
@@ -3240,7 +3504,7 @@ var init_main = __esm({
                   });
                 }).catch((e2) => {
                   console.log(
-                    ansiColors.red(
+                    ansiColors2.red(
                       `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
                     )
                   );
@@ -3288,8 +3552,8 @@ var init_main = __esm({
           const nodePromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/node`;
-            if (!fs11.existsSync(reportDest)) {
-              fs11.mkdirSync(reportDest, { recursive: true });
+            if (!fs12.existsSync(reportDest)) {
+              fs12.mkdirSync(reportDest, { recursive: true });
             }
             let testResources = "";
             const testConfig = this.configs.tests.find((t) => {
@@ -3345,7 +3609,7 @@ var init_main = __esm({
             const builtfile = dest;
             let haltReturns = false;
             const ipcfile = "/tmp/tpipe_" + Math.random();
-            const child = spawn2("node", [builtfile, testResources, ipcfile], {
+            const child = spawn3("node", [builtfile, testResources, ipcfile], {
               stdio: ["pipe", "pipe", "pipe", "ipc"]
             });
             let buffer = new Buffer("");
@@ -3408,7 +3672,7 @@ var init_main = __esm({
                   server.close();
                   if (exitCode === 255) {
                     console.log(
-                      ansiColors.red(
+                      ansiColors2.red(
                         `node ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/stderr.log for more info`
                       )
                     );
@@ -3464,8 +3728,8 @@ var init_main = __esm({
           const webPromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
-            if (!fs11.existsSync(reportDest)) {
-              fs11.mkdirSync(reportDest, { recursive: true });
+            if (!fs12.existsSync(reportDest)) {
+              fs12.mkdirSync(reportDest, { recursive: true });
             }
             const destFolder = dest.replace(".mjs", "");
             const webArgz = JSON.stringify({
@@ -3530,7 +3794,7 @@ var init_main = __esm({
                 page.on("pageerror", (err) => {
                   logs.writeExitCode(-1, err);
                   console.log(
-                    ansiColors.red(
+                    ansiColors2.red(
                       `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
                     )
                   );
@@ -3577,14 +3841,14 @@ var init_main = __esm({
           const pythonPromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/python`;
-            if (!fs11.existsSync(reportDest)) {
-              fs11.mkdirSync(reportDest, { recursive: true });
+            if (!fs12.existsSync(reportDest)) {
+              fs12.mkdirSync(reportDest, { recursive: true });
             }
             let testResources = "";
             const testConfig = this.configs.tests.find((t) => t[0] === src);
             if (!testConfig) {
               console.log(
-                ansiColors.inverse(
+                ansiColors2.inverse(
                   `missing test config! Exiting ungracefully for '${src}'`
                 )
               );
@@ -3618,7 +3882,7 @@ var init_main = __esm({
                 });
               } else {
                 console.log(
-                  ansiColors.red(
+                  ansiColors2.red(
                     `python: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
                   )
                 );
@@ -3631,9 +3895,9 @@ var init_main = __esm({
             }
             const logs = createLogStreams(reportDest, "python");
             const venvPython = `./venv/bin/python3`;
-            const pythonCommand = fs11.existsSync(venvPython) ? venvPython : "python3";
+            const pythonCommand = fs12.existsSync(venvPython) ? venvPython : "python3";
             const ipcfile = "/tmp/tpipe_python_" + Math.random();
-            const child = spawn2(pythonCommand, [src, testResources, ipcfile], {
+            const child = spawn3(pythonCommand, [src, testResources, ipcfile], {
               stdio: ["pipe", "pipe", "pipe", "ipc"]
             });
             let buffer = Buffer.from("");
@@ -3701,7 +3965,7 @@ var init_main = __esm({
                     resolve();
                   } else {
                     console.log(
-                      ansiColors.red(
+                      ansiColors2.red(
                         `python ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
                       )
                     );
@@ -3713,8 +3977,8 @@ var init_main = __esm({
                 });
                 child.on("error", (e) => {
                   console.log(
-                    ansiColors.red(
-                      ansiColors.inverse(
+                    ansiColors2.red(
+                      ansiColors2.inverse(
                         `python: ${src} errored with: ${e.name}. Check error logs for more info`
                       )
                     )
@@ -3755,14 +4019,14 @@ var init_main = __esm({
           const golangPromise = (async () => {
             this.bddTestIsRunning(src);
             const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/golang`;
-            if (!fs11.existsSync(reportDest)) {
-              fs11.mkdirSync(reportDest, { recursive: true });
+            if (!fs12.existsSync(reportDest)) {
+              fs12.mkdirSync(reportDest, { recursive: true });
             }
             let testResources = "";
             const testConfig = this.configs.tests.find((t) => t[0] === src);
             if (!testConfig) {
               console.log(
-                ansiColors.inverse(
+                ansiColors2.inverse(
                   `golang: missing test config! Exiting ungracefully for '${src}'`
                 )
               );
@@ -3796,7 +4060,7 @@ var init_main = __esm({
                 });
               } else {
                 console.log(
-                  ansiColors.red(
+                  ansiColors2.red(
                     `golang: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
                   )
                 );
@@ -3811,7 +4075,7 @@ var init_main = __esm({
             const binaryName = path.basename(dest, ".go");
             const binaryPath = path.join(buildDir, binaryName);
             const logs = createLogStreams(reportDest, "golang");
-            const compileProcess = spawn2("go", ["build", "-o", binaryPath, dest]);
+            const compileProcess = spawn3("go", ["build", "-o", binaryPath, dest]);
             return new Promise((resolve, reject) => {
               compileProcess.stdout?.on("data", (data) => {
                 logs.stdout?.write(data);
@@ -3822,7 +4086,7 @@ var init_main = __esm({
               compileProcess.on("close", (compileCode) => {
                 if (compileCode !== 0) {
                   console.log(
-                    ansiColors.red(
+                    ansiColors2.red(
                       `golang ! ${src} failed to compile. Check ${reportDest}/stderr.log for more info`
                     )
                   );
@@ -3831,7 +4095,7 @@ var init_main = __esm({
                   reject(new Error(`Compilation failed with code ${compileCode}`));
                   return;
                 }
-                const child = spawn2(binaryPath, [testResources], {
+                const child = spawn3(binaryPath, [testResources], {
                   stdio: ["pipe", "pipe", "pipe", "ipc"]
                 });
                 child.stdout?.on("data", (data) => {
@@ -3857,7 +4121,7 @@ var init_main = __esm({
                     resolve();
                   } else {
                     console.log(
-                      ansiColors.red(
+                      ansiColors2.red(
                         `golang ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
                       )
                     );
@@ -3868,8 +4132,8 @@ var init_main = __esm({
                 });
                 child.on("error", (e) => {
                   console.log(
-                    ansiColors.red(
-                      ansiColors.inverse(
+                    ansiColors2.red(
+                      ansiColors2.inverse(
                         `golang: ${src} errored with: ${e.name}. Check error logs for more info`
                       )
                     )
@@ -3881,8 +4145,8 @@ var init_main = __esm({
               });
               compileProcess.on("error", (e) => {
                 console.log(
-                  ansiColors.red(
-                    ansiColors.inverse(
+                  ansiColors2.red(
+                    ansiColors2.inverse(
                       `golang: ${src} compilation errored with: ${e.name}. Check error logs for more info`
                     )
                   )
@@ -3917,19 +4181,19 @@ __export(golingvuMetafile_exports, {
   generateGolangMetafile: () => generateGolangMetafile,
   writeGolangMetafile: () => writeGolangMetafile
 });
-import fs12 from "fs";
-import path9 from "path";
+import fs13 from "fs";
+import path10 from "path";
 async function generateGolangMetafile(testName2, entryPoints) {
   const outputs = {};
   for (const entryPoint of entryPoints) {
     try {
-      const entryDir = path9.dirname(entryPoint);
-      const goFiles = fs12.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
+      const entryDir = path10.dirname(entryPoint);
+      const goFiles = fs13.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path10.join(entryDir, file));
       const inputs = {};
       let totalBytes = 0;
       for (const file of goFiles) {
         try {
-          const stats = fs12.statSync(file);
+          const stats = fs13.statSync(file);
           inputs[file] = { bytesInOutput: stats.size };
           totalBytes += stats.size;
         } catch {
@@ -3938,7 +4202,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
       }
       if (!inputs[entryPoint]) {
         try {
-          const entryStats = fs12.statSync(entryPoint);
+          const entryStats = fs13.statSync(entryPoint);
           inputs[entryPoint] = { bytesInOutput: entryStats.size };
           totalBytes += entryStats.size;
         } catch {
@@ -3960,8 +4224,8 @@ async function generateGolangMetafile(testName2, entryPoints) {
   const allGoFiles = /* @__PURE__ */ new Set();
   for (const entryPoint of entryPoints) {
     try {
-      const entryDir = path9.dirname(entryPoint);
-      const goFiles = fs12.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path9.join(entryDir, file));
+      const entryDir = path10.dirname(entryPoint);
+      const goFiles = fs13.readdirSync(entryDir).filter((file) => file.endsWith(".go")).map((file) => path10.join(entryDir, file));
       goFiles.forEach((file) => allGoFiles.add(file));
       allGoFiles.add(entryPoint);
     } catch (error) {
@@ -3970,7 +4234,7 @@ async function generateGolangMetafile(testName2, entryPoints) {
   }
   for (const filePath of Array.from(allGoFiles)) {
     try {
-      const stats = fs12.statSync(filePath);
+      const stats = fs13.statSync(filePath);
       allInputs[filePath] = {
         bytes: stats.size,
         imports: []
@@ -4001,15 +4265,15 @@ async function generateGolangMetafile(testName2, entryPoints) {
   };
 }
 function writeGolangMetafile(testName2, metafile) {
-  const metafileDir = path9.join(
+  const metafileDir = path10.join(
     process.cwd(),
     "testeranto",
     "metafiles",
     "golang"
   );
-  fs12.mkdirSync(metafileDir, { recursive: true });
-  const metafilePath = path9.join(metafileDir, `${testName2}.json`);
-  fs12.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs13.mkdirSync(metafileDir, { recursive: true });
+  const metafilePath = path10.join(metafileDir, `${testName2}.json`);
+  fs13.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
 }
 var init_golingvuMetafile = __esm({
   "src/utils/golingvuMetafile.ts"() {
@@ -4023,8 +4287,8 @@ __export(pitonoMetafile_exports, {
   generatePitonoMetafile: () => generatePitonoMetafile,
   writePitonoMetafile: () => writePitonoMetafile
 });
-import fs13 from "fs";
-import path10 from "path";
+import fs14 from "fs";
+import path11 from "path";
 import { execSync } from "child_process";
 async function generatePitonoMetafile(testName2, entryPoints) {
   return {
@@ -4034,12 +4298,12 @@ async function generatePitonoMetafile(testName2, entryPoints) {
   };
 }
 function writePitonoMetafile(testName2, metafile) {
-  const metafilePath = path10.join(process.cwd(), "testeranto", "pitono", testName2, "metafile.json");
-  const metafileDir = path10.dirname(metafilePath);
-  if (!fs13.existsSync(metafileDir)) {
-    fs13.mkdirSync(metafileDir, { recursive: true });
+  const metafilePath = path11.join(process.cwd(), "testeranto", "pitono", testName2, "metafile.json");
+  const metafileDir = path11.dirname(metafilePath);
+  if (!fs14.existsSync(metafileDir)) {
+    fs14.mkdirSync(metafileDir, { recursive: true });
   }
-  fs13.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+  fs14.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
   console.log(`Pitono metafile written to: ${metafilePath}`);
   try {
     const command = `pitono-core-generator ${testName2} ${metafile.entryPoints.join(" ")}`;
@@ -4065,8 +4329,8 @@ function writePitonoMetafile(testName2, metafile) {
           timestamp: Date.now(),
           runtime: "pitono"
         };
-        const coreFilePath = path10.join(process.cwd(), "testeranto", "pitono", testName2, "core.json");
-        fs13.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
+        const coreFilePath = path11.join(process.cwd(), "testeranto", "pitono", testName2, "core.json");
+        fs14.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
         console.log(`Pitono core.json created manually as fallback`);
       } catch (manualError) {
         console.error(`Even manual creation failed: ${manualError}`);
@@ -4083,8 +4347,8 @@ var init_pitonoMetafile = __esm({
 // src/testeranto.ts
 init_utils();
 import ansiC5 from "ansi-colors";
-import fs14 from "fs";
-import path11 from "path";
+import fs15 from "fs";
+import path12 from "path";
 import readline from "readline";
 
 // src/utils/buildTemplates.ts
@@ -4161,7 +4425,7 @@ import(f).then(async (module) => {
     process.exit(-1);
   }
   try {
-    fs14.writeFileSync(
+    fs15.writeFileSync(
       `${process.cwd()}/testeranto/projects.json`,
       JSON.stringify(Object.keys(bigConfig.projects), null, 2)
     );
@@ -4197,13 +4461,13 @@ import(f).then(async (module) => {
   const { PM_Main: PM_Main2 } = await init_main().then(() => main_exports);
   pm = new PM_Main2(config, testName, mode);
   await pm.start();
-  fs14.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
+  fs15.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
   Object.keys(bigConfig.projects).forEach((projectName) => {
     console.log(`testeranto/reports/${projectName}`);
-    if (!fs14.existsSync(`testeranto/reports/${projectName}`)) {
-      fs14.mkdirSync(`testeranto/reports/${projectName}`);
+    if (!fs15.existsSync(`testeranto/reports/${projectName}`)) {
+      fs15.mkdirSync(`testeranto/reports/${projectName}`);
     }
-    fs14.writeFileSync(
+    fs15.writeFileSync(
       `testeranto/reports/${projectName}/config.json`,
       JSON.stringify(config, null, 2)
     );
@@ -4240,8 +4504,8 @@ import(f).then(async (module) => {
     const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
     const metafile = await generatePitonoMetafile2(testName, pitonoEntryPoints);
     const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
-    await fs14.promises.mkdir(pitonoMetafilePath, { recursive: true });
-    fs14.writeFileSync(
+    await fs15.promises.mkdir(pitonoMetafilePath, { recursive: true });
+    fs15.writeFileSync(
       `${pitonoMetafilePath}/core.json`,
       JSON.stringify(metafile, null, 2)
     );
@@ -4265,15 +4529,15 @@ import(f).then(async (module) => {
         const sourceDir = sourceFileSplit.slice(0, -1);
         const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
         const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-        const htmlFilePath = path11.normalize(
+        const htmlFilePath = path12.normalize(
           `${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join(
             "/"
           )}/${sourceFileNameMinusJs}.html`
         );
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
         const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-        return fs14.promises.mkdir(path11.dirname(htmlFilePath), { recursive: true }).then(
-          (x2) => fs14.writeFileSync(
+        return fs15.promises.mkdir(path12.dirname(htmlFilePath), { recursive: true }).then(
+          (x2) => fs15.writeFileSync(
             htmlFilePath,
             web_html_default(jsfilePath, htmlFilePath, cssFilePath)
           )
@@ -4300,7 +4564,7 @@ import(f).then(async (module) => {
   x.forEach(async ([runtime, keys]) => {
     keys.forEach(async (k) => {
       const folder = `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`;
-      await fs14.mkdirSync(folder, { recursive: true });
+      await fs15.mkdirSync(folder, { recursive: true });
     });
   });
   [
@@ -4311,14 +4575,14 @@ import(f).then(async (module) => {
   ].forEach(
     ([eps, eps2, runtime]) => {
       [...Object.keys(eps), ...Object.keys(eps2)].forEach((ep) => {
-        const fp = path11.resolve(
+        const fp = path12.resolve(
           `testeranto`,
           `reports`,
           testName,
           ep.split(".").slice(0, -1).join("."),
           runtime
         );
-        fs14.mkdirSync(fp, { recursive: true });
+        fs15.mkdirSync(fp, { recursive: true });
       });
     }
   );

@@ -61,6 +61,20 @@ export abstract class PM_WithWebSocket extends PM_Base {
         try {
           const message: WebSocketMessage = JSON.parse(data.toString());
           
+          // Handle chat messages first
+          if (message.type === "chatMessage") {
+            // Always record the message, even if aider is not available
+            console.log(`Received chat message: ${message.content}`);
+            
+            // Pass to PM_WithHelpo if available
+            if ((this as any).handleChatMessage) {
+              (this as any).handleChatMessage(message.content);
+            } else {
+              console.log("PM_WithHelpo not available - message not processed");
+            }
+            return;
+          }
+          
           // Handle file operations via WebSocket
           if (message.type === "listDirectory") {
             this.handleWebSocketListDirectory(ws, message);
@@ -255,6 +269,23 @@ export abstract class PM_WithWebSocket extends PM_Base {
             } else {
               console.log("Cannot kill process - process not found:", {
                 processExists: !!childProcess,
+              });
+            }
+          } else if (message.type === "getChatHistory") {
+            // Handle request for chat history
+            // Pass to PM_WithHelpo if available
+            if ((this as any).getChatHistory) {
+              (this as any).getChatHistory().then((history: any) => {
+                ws.send(JSON.stringify({
+                  type: "chatHistory",
+                  messages: history
+                }));
+              }).catch((error: any) => {
+                console.error("Error getting chat history:", error);
+                ws.send(JSON.stringify({
+                  type: "error",
+                  message: "Failed to get chat history"
+                }));
               });
             }
           }

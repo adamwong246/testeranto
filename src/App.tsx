@@ -26,6 +26,7 @@ import { Helpo } from './Helpo';
 interface WebSocketContextType {
   ws: WebSocket | null;
   isConnected: boolean;
+  sendMessage: (message: any) => void;
 }
 
 interface TutorialModeContextType {
@@ -145,6 +146,15 @@ export const App = () => {
     };
   }, []);
 
+  // Add sendMessage function
+  const sendMessage = (message: any) => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify(message));
+    } else {
+      console.error('WebSocket is not connected');
+    }
+  };
+
   const authContextValue = {
     isAuthenticated,
     user,
@@ -153,7 +163,7 @@ export const App = () => {
   };
 
   return (
-    <WebSocketContext.Provider value={{ ws, isConnected }}>
+    <WebSocketContext.Provider value={{ ws, isConnected, sendMessage }}>
       <TutorialModeContext.Provider value={{ tutorialMode, setTutorialMode }}>
         <AuthContext.Provider value={authContextValue}>
           <Router>

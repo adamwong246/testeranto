@@ -15,12 +15,12 @@ import { webEvaluator } from "../utils";
 import { Queue } from "../utils/queue.js";
 
 import { createLogStreams, statusMessagePretty } from "./utils.js";
-import { PM_WithProcesses } from "./PM_WithProcesses.js";
+import { PM_WithHelpo } from "./PM_WithHelpo.js";
 
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-export class PM_Main extends PM_WithProcesses {
+export class PM_Main extends PM_WithHelpo {
   launchPure = async (src: string, dest: string) => {
     const processId = `pure-${src}-${Date.now()}`;
     const command = `pure test: ${src}`;

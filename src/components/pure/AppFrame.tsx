@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 
 import { useWebSocket, useTutorialMode, useAuth } from "../../App";
 import { UserProfile } from "./UserProfile";
+import { HelpoChatDrawer } from "./HelpoChatDrawer";
 
 type AppFrameProps = {
   children: React.ReactNode;
@@ -360,83 +361,10 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
       </div>
 
       {/* Helpo Drawer */}
-      <div
-        className={`gradient-typed-bdd-dsl d-flex flex-column border-end ${isHelpoActive ? 'active' : 'inactive'}`}
-        style={{
-          width: isHelpoActive ? '380px' : '0px',
-          transition: 'width 0.3s ease',
-          overflow: 'hidden',
-          flexShrink: 0,
-          height: '100vh',
-        }}
-      >
-        {/* Helpo content - Chat thread */}
-        <div style={{
-          width: '380px',
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
-          {/* Chat messages - Aligned to bottom */}
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1rem' }}>
-            <div style={{ marginBottom: '1rem' }}>
-              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
-                <strong>Helpo:</strong> Hello! How can I help you today?
-              </div>
-              <div style={{ textAlign: 'right', marginBottom: '0.5rem' }}>
-                <strong>You:</strong> I need help with testing.
-              </div>
-              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
-                <strong>Helpo:</strong> Sure! I can help with that. What specifically are you working on?
-              </div>
-              <div style={{ textAlign: 'right', marginBottom: '0.5rem' }}>
-                <strong>You:</strong> I want to create a new test project.
-              </div>
-              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
-                <strong>Helpo:</strong> Great! Click on "testo" in the sidebar to manage your test projects.
-              </div>
-              <div style={{ textAlign: 'right', marginBottom: '0.5rem' }}>
-                <strong>You:</strong> Thanks!
-              </div>
-              <div style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
-                <strong>Helpo:</strong> You're welcome! Let me know if you need anything else.
-              </div>
-            </div>
-          </div>
-          {/* Input area - Transparent and greyscale */}
-          <div style={{
-            padding: '1rem', 
-            borderTop: '1px solid rgba(128, 128, 128, 0.3)',
-          }}>
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Type your message..."
-                disabled
-                style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  border: '1px solid rgba(128, 128, 128, 0.3)',
-                  color: '#333',
-                  backdropFilter: 'blur(10px)',
-                }}
-              />
-              <button 
-                className="btn" 
-                type="button" 
-                disabled
-                style={{
-                  backgroundColor: 'rgba(128, 128, 128, 0.3)',
-                  border: '1px solid rgba(128, 128, 128, 0.3)',
-                  color: '#666',
-                }}
-              >
-                Send
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <HelpoChatDrawer 
+        isActive={isHelpoActive} 
+        onToggle={() => setIsHelpoActive(!isHelpoActive)}
+      />
 
       {/* Main Content */}
       <div
