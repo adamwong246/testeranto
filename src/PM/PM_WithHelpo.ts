@@ -74,126 +74,114 @@ export abstract class PM_WithHelpo extends PM_WithProcesses {
   }
 
   private startAiderProcess() {
-    const promptPath = path.join(process.cwd(), "src", "helpo", "prompt.txt");
-
-    try {
-      // Check if aider is available using spawnSync
-      const whichAider = spawnSync("which", ["aider"]);
-      if (whichAider.status !== 0) {
-        console.error(
-          "aider command not found. Please install aider: pip install aider-chat"
-        );
-        // Don't retry - just log the error and return
-        return;
-      }
-
-      // Use node-pty to spawn aider in a pseudoterminal to avoid "not a terminal" warnings
-      const ptyProcess = pty.spawn(
-        "aider",
-        ["--no-auto-commits", "--load", promptPath, "--edit-format", "ask"],
-        {
-          name: "xterm-color",
-          cols: 80,
-          rows: 30,
-          cwd: process.cwd(),
-          env: {
-            ...process.env,
-            TERM: "xterm-color",
-            FORCE_COLOR: "0",
-            NO_COLOR: "1",
-            PYTHONUNBUFFERED: "1",
-          },
-        }
-      );
-
-      // Store the pty process
-      const aiderProcess = ptyProcess as unknown as ChildProcess;
-
-      // Store the pty process
-      this.aiderProcess = ptyProcess as unknown as ChildProcess;
-
-      // Handle data from the pty process
-      ptyProcess.onData((data) => {
-        const output = data.toString();
-        // Clean the output by removing ANSI escape codes
-        const cleanOutput = output.replace(/\x1B\[[0-9;]*[a-zA-Z]/g, "");
-        console.log(ansiColors.cyan(`🤖: ${cleanOutput}`));
-        
-        // Check if the output indicates we're at the prompt
-        if (cleanOutput.includes('ask>')) {
-          this.isAiderAtPrompt = true;
-          console.log('Aider is at prompt');
-        }
-        
-        // Check if the output contains our command
-        if (cleanOutput.includes('PROCESS_CHAT_HISTORY_AND_RESPOND')) {
-          console.log('Aider received our command');
-        }
-      });
-
-      // Handle process exit
-      ptyProcess.onExit(({ exitCode, signal }) => {
-        console.log(
-          `aider process exited with code ${exitCode}, signal ${signal}`
-        );
-        this.aiderProcess = null;
-        // Restart the process if it exits unexpectedly
-        if (exitCode !== 0) {
-          console.log("Restarting aider process...");
-          setTimeout(() => this.startAiderProcess(), 1000);
-        }
-      });
-
-      // Set up file watching for the message file
-      const messagePath = path.join(
-        process.cwd(),
-        "testeranto",
-        "helpo_chat_message.txt"
-      );
-      
-      // Ensure the message file exists
-      if (!fs.existsSync(messagePath)) {
-        fs.writeFileSync(messagePath, "");
-      }
-
-      // Watch for changes to the message file
-      const watcher = fs.watch(messagePath, (eventType, filename) => {
-        console.log(`File ${filename} event: ${eventType}`);
-        if (eventType === 'change') {
-          // Add a small delay to ensure the file is fully written
-          setTimeout(() => {
-            fs.readFile(messagePath, 'utf8', (err, data) => {
-              if (err) {
-                // If the file doesn't exist, that's fine
-                if (err.code === 'ENOENT') {
-                  return;
-                }
-                console.error('Error reading message file:', err);
-                return;
-              }
-              console.log(`Message file content: "${data}"`);
-              // Only process non-empty content
-              const trimmedData = data.trim();
-              if (trimmedData.length > 0) {
-                this.processAiderResponse(trimmedData);
-                // Clear the file
-                fs.writeFileSync(messagePath, "");
-              } else {
-                console.log('Ignoring empty message file change');
-              }
-            });
-          }, 100);
-        }
-      });
-
-      // Clean up watcher when process exits
-      aiderProcess.on('exit', () => {
-        watcher.close();
-      });
-    } catch (e) {
-      console.error("Error starting aider process:", e);
-      // Don't exit, just log the error
-    }
+    // const promptPath = path.join(process.cwd(), "src", "helpo", "prompt.txt");
+    // try {
+    //   // Check if aider is available using spawnSync
+    //   const whichAider = spawnSync("which", ["aider"]);
+    //   if (whichAider.status !== 0) {
+    //     console.error(
+    //       "aider command not found. Please install aider: pip install aider-chat"
+    //     );
+    //     // Don't retry - just log the error and return
+    //     return;
+    //   }
+    //   // Use node-pty to spawn aider in a pseudoterminal to avoid "not a terminal" warnings
+    //   const ptyProcess = pty.spawn(
+    //     "aider",
+    //     ["--no-auto-commits", "--load", promptPath, "--edit-format", "ask"],
+    //     {
+    //       name: "xterm-color",
+    //       cols: 80,
+    //       rows: 30,
+    //       cwd: process.cwd(),
+    //       env: {
+    //         ...process.env,
+    //         TERM: "xterm-color",
+    //         FORCE_COLOR: "0",
+    //         NO_COLOR: "1",
+    //         PYTHONUNBUFFERED: "1",
+    //       },
+    //     }
+    //   );
+    //   // Store the pty process
+    //   const aiderProcess = ptyProcess as unknown as ChildProcess;
+    //   // Store the pty process
+    //   this.aiderProcess = ptyProcess as unknown as ChildProcess;
+    //   // Handle data from the pty process
+    //   ptyProcess.onData((data) => {
+    //     const output = data.toString();
+    //     // Clean the output by removing ANSI escape codes
+    //     const cleanOutput = output.replace(/\x1B\[[0-9;]*[a-zA-Z]/g, "");
+    //     console.log(ansiColors.cyan(`🤖: ${cleanOutput}`));
+    //     // Check if the output indicates we're at the prompt
+    //     if (cleanOutput.includes('ask>')) {
+    //       this.isAiderAtPrompt = true;
+    //       console.log('Aider is at prompt');
+    //     }
+    //     // Check if the output contains our command
+    //     if (cleanOutput.includes('PROCESS_CHAT_HISTORY_AND_RESPOND')) {
+    //       console.log('Aider received our command');
+    //     }
+    //   });
+    //   // Handle process exit
+    //   ptyProcess.onExit(({ exitCode, signal }) => {
+    //     console.log(
+    //       `aider process exited with code ${exitCode}, signal ${signal}`
+    //     );
+    //     this.aiderProcess = null;
+    //     // Restart the process if it exits unexpectedly
+    //     if (exitCode !== 0) {
+    //       console.log("Restarting aider process...");
+    //       setTimeout(() => this.startAiderProcess(), 1000);
+    //     }
+    //   });
+    //   // Set up file watching for the message file
+    //   const messagePath = path.join(
+    //     process.cwd(),
+    //     "testeranto",
+    //     "helpo_chat_message.txt"
+    //   );
+    //   // Ensure the message file exists
+    //   if (!fs.existsSync(messagePath)) {
+    //     fs.writeFileSync(messagePath, "");
+    //   }
+    //   // Watch for changes to the message file
+    //   const watcher = fs.watch(messagePath, (eventType, filename) => {
+    //     console.log(`File ${filename} event: ${eventType}`);
+    //     if (eventType === 'change') {
+    //       // Add a small delay to ensure the file is fully written
+    //       setTimeout(() => {
+    //         fs.readFile(messagePath, 'utf8', (err, data) => {
+    //           if (err) {
+    //             // If the file doesn't exist, that's fine
+    //             if (err.code === 'ENOENT') {
+    //               return;
+    //             }
+    //             console.error('Error reading message file:', err);
+    //             return;
+    //           }
+    //           console.log(`Message file content: "${data}"`);
+    //           // Only process non-empty content
+    //           const trimmedData = data.trim();
+    //           if (trimmedData.length > 0) {
+    //             this.processAiderResponse(trimmedData);
+    //             // Clear the file
+    //             fs.writeFileSync(messagePath, "");
+    //           } else {
+    //             console.log('Ignoring empty message file change');
+    //           }
+    //         });
+    //       }, 100);
+    //     }
+    //   });
+    //   // Clean up watcher when process exits
+    //   aiderProcess.on('exit', () => {
+    //     watcher.close();
+    //   });
+    // } catch (e) {
+    //   console.error("Error starting aider process:", e);
+    //   // Don't exit, just log the error
+    // }
   }
 
   private async processAiderResponse(response: string) {
@@ -312,7 +300,7 @@ export abstract class PM_WithHelpo extends PM_WithProcesses {
             "helpo_chat_message.txt"
           );
           fs.writeFileSync(messagePath, "");
-          
+
           // For pty processes, we can write directly
           // Cast to any to access the write method
           const ptyProcess = this.aiderProcess as any;

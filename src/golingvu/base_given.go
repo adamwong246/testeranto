@@ -1,5 +1,7 @@
 package golingvu
 
+import "fmt"
+
 // BaseGiven represents a base Given condition
 type BaseGiven struct {
 	Name           string
@@ -47,11 +49,21 @@ func (bg *BaseGiven) BeforeAll(store interface{}) interface{} {
 
 // ToObj converts the instance to a map for serialization
 func (bg *BaseGiven) ToObj() map[string]interface{} {
+	whenObjs := make([]map[string]interface{}, len(bg.Whens))
+	for i, w := range bg.Whens {
+		whenObjs[i] = w.ToObj()
+	}
+	
+	thenObjs := make([]map[string]interface{}, len(bg.Thens))
+	for i, t := range bg.Thens {
+		thenObjs[i] = t.ToObj()
+	}
+	
 	return map[string]interface{}{
 		"key":      bg.Key,
 		"name":     bg.Name,
-		"whens":    bg.Whens,
-		"thens":    bg.Thens,
+		"whens":    whenObjs,
+		"thens":    thenObjs,
 		"error":    bg.Error,
 		"failed":   bg.Failed,
 		"features": bg.Features,
@@ -73,4 +85,79 @@ func (bg *BaseGiven) AfterEach(store interface{}, key string, artifactory, pm in
 // UberCatcher handles errors
 func (bg *BaseGiven) UberCatcher(e error) {
 	bg.Error = e
+}
+
+// Give executes the given condition
+func (bg *BaseGiven) Give(
+	subject interface{},
+	key string,
+	testResourceConfiguration ITTestResourceConfiguration,
+	tester func(interface{}) bool,
+	artifactory func(string, interface{}),
+	tLog func(...string),
+	pm interface{},
+	suiteNdx int,
+) (interface{}, error) {
+	bg.Key = key
+	tLog("\n " + bg.Key)
+	tLog("\n Given: " + bg.Name)
+
+	// Setup
+	store, err := bg.GivenThat(
+		subject,
+		testResourceConfiguration,
+		artifactory,
+		bg.GivenCB,
+		bg.InitialValues,
+		pm,
+	)
+	if err != nil {
+		bg.Failed = true
+		bg.Error = err
+		return nil, err
+	}
+	bg.Store = store
+
+	// Process Whens
+	for whenNdx, when := range bg.Whens {
+		_, err := when.Test(
+			bg.Store,
+			testResourceConfiguration,
+			tLog,
+			pm,
+			fmt.Sprintf("suite-%d/given-%s/when/%d", suiteNdx, key, whenNdx),
+		)
+		if err != nil {
+			bg.Failed = true
+			bg.Error = err
+			return nil, err
+		}
+	}
+
+	// Process Thens
+	for thenNdx, then := range bg.Thens {
+		result, err := then.Test(
+			bg.Store,
+			testResourceConfiguration,
+			tLog,
+			pm,
+			fmt.Sprintf("suite-%d/given-%s/then-%d", suiteNdx, key, thenNdx),
+		)
+		if err != nil {
+			bg.Failed = true
+			bg.Error = err
+			return nil, err
+		}
+		tester(result)
+	}
+
+	// Cleanup
+	_, err = bg.AfterEach(bg.Store, bg.Key, artifactory, pm)
+	if err != nil {
+		bg.Failed = true
+		bg.Error = err
+		return nil, err
+	}
+
+	return bg.Store, nil
 }

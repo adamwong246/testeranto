@@ -1,16 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, Button, ListGroup, Badge } from 'react-bootstrap';
-
-interface Process {
-  processId: string;
-  command: string;
-  pid?: number;
-  status?: 'running' | 'exited' | 'error';
-  exitCode?: number;
-  error?: string;
-  timestamp: string;
-}
+import { Process } from './ProcessManagerViewTypes';
 
 interface ProcessManagerProps {
   show: boolean;
@@ -20,6 +10,38 @@ interface ProcessManagerProps {
 
 export const ProcessManager: React.FC<ProcessManagerProps> = ({ show, onHide, ws }) => {
   const [processes, setProcesses] = useState<Process[]>([]);
+
+  // Handle WebSocket messages
+  const handleMessage = useCallback((event: MessageEvent) => {
+    try {
+      const data = JSON.parse(event.data);
+      if (data.type === 'runningProcesses') {
+        setProcesses(data.processes.map((p: any) => ({
+          ...p,
+          status: 'running'
+        })));
+      } else if (data.type === 'processStarted') {
+        setProcesses(prev => [...prev, {
+          ...data,
+          status: 'running'
+        }]);
+      } else if (data.type === 'processExited') {
+        setProcesses(prev => prev.map(p =>
+          p.processId === data.processId
+            ? { ...p, status: 'exited', exitCode: data.exitCode }
+            : p
+        ));
+      } else if (data.type === 'processError') {
+        setProcesses(prev => prev.map(p =>
+          p.processId === data.processId
+            ? { ...p, status: 'error', error: data.error }
+            : p
+        ));
+      }
+    } catch (error) {
+      console.error('Error parsing process message:', error);
+    }
+  }, []);
 
   useEffect(() => {
     if (show && ws) {
@@ -31,42 +53,11 @@ export const ProcessManager: React.FC<ProcessManagerProps> = ({ show, onHide, ws
   useEffect(() => {
     if (!ws) return;
 
-    const handleMessage = (event: MessageEvent) => {
-      try {
-        const data = JSON.parse(event.data);
-        if (data.type === 'runningProcesses') {
-          setProcesses(data.processes.map((p: any) => ({
-            ...p,
-            status: 'running'
-          })));
-        } else if (data.type === 'processStarted') {
-          setProcesses(prev => [...prev, {
-            ...data,
-            status: 'running'
-          }]);
-        } else if (data.type === 'processExited') {
-          setProcesses(prev => prev.map(p =>
-            p.processId === data.processId
-              ? { ...p, status: 'exited', exitCode: data.exitCode }
-              : p
-          ));
-        } else if (data.type === 'processError') {
-          setProcesses(prev => prev.map(p =>
-            p.processId === data.processId
-              ? { ...p, status: 'error', error: data.error }
-              : p
-          ));
-        }
-      } catch (error) {
-        console.error('Error parsing process message:', error);
-      }
-    };
-
     ws.addEventListener('message', handleMessage);
     return () => ws.removeEventListener('message', handleMessage);
-  }, [ws]);
+  }, [ws, handleMessage]);
 
-  const getStatusBadge = (process: Process) => {
+  const getStatusBadge = useCallback((process: Process) => {
     switch (process.status) {
       case 'running':
         return <Badge bg="success">Running</Badge>;
@@ -77,7 +68,7 @@ export const ProcessManager: React.FC<ProcessManagerProps> = ({ show, onHide, ws
       default:
         return <Badge bg="warning">Unknown</Badge>;
     }
-  };
+  }, []);
 
   return (
     <Modal show={show} onHide={onHide} size="lg">

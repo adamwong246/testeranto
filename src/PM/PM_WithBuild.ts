@@ -9,6 +9,8 @@ import { getRunnables } from "../utils.js";
 
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 
+import golingvuBuild from "./golingvuBuild";
+
 export abstract class PM_WithBuild extends PM_WithWebSocket {
   configs: IBuiltConfig;
   name: string;
@@ -59,12 +61,12 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
 
     // Create a custom plugin to track build processes
     const buildProcessTrackerPlugin = {
-      name: 'build-process-tracker',
+      name: "build-process-tracker",
       setup(build) {
         build.onStart(() => {
           const processId = `build-${runtime}-${Date.now()}`;
           const command = `esbuild ${runtime} for ${self.name}`;
-          
+
           // Create a promise that will resolve when the build completes
           const buildPromise = new Promise<void>((resolve, reject) => {
             // Store resolve and reject functions to call them in onEnd
@@ -84,7 +86,9 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
             );
           }
 
-          console.log(`Starting ${runtime} build for ${entryPointKeys.length} entry points`);
+          console.log(
+            `Starting ${runtime} build for ${entryPointKeys.length} entry points`
+          );
           // Broadcast build start event
           if (self.broadcast) {
             self.broadcast({
@@ -93,11 +97,11 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
               runtime,
               timestamp: new Date().toISOString(),
               entryPoints: entryPointKeys.length,
-              processId
+              processId,
             });
           }
         });
-        
+
         build.onEnd((result) => {
           const event = {
             type: "buildEvent",
@@ -105,13 +109,17 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
             runtime,
             timestamp: new Date().toISOString(),
             errors: result.errors.length,
-            warnings: result.warnings.length
+            warnings: result.warnings.length,
           };
-          
+
           if (result.errors.length > 0) {
-            console.error(`Build ${runtime} failed with ${result.errors.length} errors`);
+            console.error(
+              `Build ${runtime} failed with ${result.errors.length} errors`
+            );
             if (self.currentBuildReject) {
-              self.currentBuildReject(new Error(`Build failed with ${result.errors.length} errors`));
+              self.currentBuildReject(
+                new Error(`Build failed with ${result.errors.length} errors`)
+              );
             }
           } else {
             console.log(`Build ${runtime} completed successfully`);
@@ -119,7 +127,7 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
               self.currentBuildResolve();
             }
           }
-          
+
           // Broadcast build result event
           if (self.broadcast) {
             self.broadcast(event);
@@ -129,14 +137,14 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
           self.currentBuildResolve = null;
           self.currentBuildReject = null;
         });
-      }
+      },
     };
 
     // Get the base config and add our tracking plugin
     const baseConfig = configer(this.configs, entryPointKeys, this.name);
     const configWithPlugin = {
       ...baseConfig,
-      plugins: [...(baseConfig.plugins || []), buildProcessTrackerPlugin]
+      plugins: [...(baseConfig.plugins || []), buildProcessTrackerPlugin],
     };
 
     try {
@@ -161,7 +169,7 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
           timestamp: new Date().toISOString(),
           errors: 1,
           warnings: 0,
-          message: error.message
+          message: error.message,
         });
       }
     }

@@ -1,16 +1,36 @@
 Traceback (most recent call last):
-  File "/Users/adam/Code/testeranto/example/test_example.py", line 121, in <module>
-    asyncio.run(test_suite())
-    ~~~~~~~~~~~^^^^^^^^^^^^^^
-  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
-    return runner.run(main)
-           ~~~~~~~~~~^^^^^^
-  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
-    return self._loop.run_until_complete(task)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
-  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
-    return future.result()
-           ~~~~~~~~~~~~~^^
-  File "/Users/adam/Code/testeranto/example/test_example.py", line 114, in test_suite
-    pm
-NameError: name 'pm' is not defined
+  File "/Users/adam/Code/testeranto/example/test_example.py", line 150, in <module>
+    pitono = Pitono(
+        input_val=None,
+    ...<4 lines>...
+        uber_catcher=uber_catcher
+    )
+  File "/Users/adam/Code/testeranto/example/../src/pitono/__init__.py", line 38, in Pitono
+    instance = PitonoClass(
+        test_subject,
+    ...<4 lines>...
+        uber_catcher or (lambda x: None)  # uber_catcher placeholder
+    )
+  File "/Users/adam/Code/testeranto/example/../src/pitono/__init__.py", line 139, in __init__
+    raise e
+  File "/Users/adam/Code/testeranto/example/../src/pitono/__init__.py", line 122, in __init__
+    self.specs = test_specification(
+                 ~~~~~~~~~~~~~~~~~~^
+        self.test_implementation.suites,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        {}  # checks - pass an empty dict for now
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/adam/Code/testeranto/example/test_example.py", line 45, in test_specification
+    Suite(
+    ~~~~~^
+        "Testing Rectangle functionality",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<17 lines>...
+        []
+        ^^
+    )
+    ^
+TypeError: 'dict' object is not callable

@@ -61,6 +61,12 @@ export function runtimeLogs(
         stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
         exit: fs.createWriteStream(`${safeDest}/exit.log`),
       };
+    } else if (runtime === "golang") {
+      return {
+        stdout: fs.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs.createWriteStream(`${safeDest}/exit.log`),
+      };
     } else {
       throw `unknown runtime: ${runtime}`;
     }

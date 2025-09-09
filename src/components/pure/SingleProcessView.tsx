@@ -1,231 +1,140 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Container, Badge, Button, Alert } from 'react-bootstrap';
-import { Process } from './ProcessManagerView';
-import { useWebSocket } from '../../App';
+// import React, { useEffect, useState, useCallback, useMemo } from 'react';
+// import { Badge, Alert } from 'react-bootstrap';
+// import { Process } from './ProcessManagerView';
+// import { useWebSocket } from '../../App';
+// import { ProcessSidebar } from './ProcessSidebar';
+// import { ProcessLogs } from './ProcessLogs';
+// import { ProcessInput } from './ProcessInput';
 
-interface SingleProcessViewProps {
-  process: Process | null;
-  onBack: () => void;
-  loading: boolean;
-  onKillProcess?: (processId: string) => void;
-}
+// interface SingleProcessViewProps {
+//   process: Process | null;
+//   onBack: () => void;
+//   loading: boolean;
+//   onKillProcess?: (processId: string) => void;
+// }
 
-export const SingleProcessView: React.FC<SingleProcessViewProps> = ({
-  process,
-  onBack,
-  loading,
-  onKillProcess,
-}) => {
-  const terminalRef = useRef<HTMLDivElement>(null);
-  const [inputEnabled, setInputEnabled] = useState(false);
-  const ws = useWebSocket();
+// export const SingleProcessView: React.FC<SingleProcessViewProps> = ({
+//   process,
+//   loading,
+// }) => {
+//   const ws = useWebSocket();
+//   const [inputValue, setInputValue] = useState('');
+  
+//   // Memoized derived state
+//   const isRunning = useMemo(() => process?.status === 'running', [process?.status]);
+//   const webSocketStatus = useMemo(() => {
+//     const currentWs = ws?.ws;
+//     if (!currentWs) return 'disconnected';
+//     switch (currentWs.readyState) {
+//       case WebSocket.CONNECTING: return 'connecting';
+//       case WebSocket.OPEN: return 'connected';
+//       case WebSocket.CLOSING: return 'closing';
+//       case WebSocket.CLOSED: return 'disconnected';
+//       default: return 'unknown';
+//     }
+//   }, [ws?.ws?.readyState]);
 
-  // Update input enabled status
-  useEffect(() => {
-    setInputEnabled(process?.status === 'running');
-  }, [process?.status]);
+//   // Handle user input
+//   const handleInput = useCallback((data: string) => {
+//     const currentWs = ws?.ws;
+    
+//     console.log('handleInput called with:', {
+//       data,
+//       hasWs: !!currentWs,
+//       wsReadyState: currentWs?.readyState,
+//       processId: process?.processId,
+//       processStatus: process?.status
+//     });
+    
+//     if (currentWs && currentWs.readyState === WebSocket.OPEN && process?.status === 'running') {
+//       console.log('Sending stdin:', data);
+//       const message = JSON.stringify({
+//         type: 'stdin',
+//         processId: process.processId,
+//         data: data
+//       });
+//       console.log('Sending message:', message);
+//       currentWs.send(message);
+//     } else {
+//       console.log('Cannot send stdin - conditions not met:', {
+//         wsExists: !!currentWs,
+//         wsReadyState: currentWs?.readyState,
+//         processStatus: process?.status,
+//         processId: process?.processId
+//       });
+//     }
+//   }, [ws?.ws, process?.processId, process?.status]);
 
-  // Handle user input
-  const handleInput = (data: string) => {
-    if (ws && ws.readyState === WebSocket.OPEN && process?.status === 'running') {
-      console.log('Sending stdin:', data);
-      ws.send(JSON.stringify({
-        type: 'stdin',
-        processId: process.processId,
-        data: data
-      }));
-    } else {
-      console.log('Cannot send stdin - conditions not met:', {
-        wsExists: !!ws,
-        wsReady: ws?.readyState,
-        processStatus: process?.status
-      });
-    }
-  };
-  const getStatusBadge = (process: Process) => {
-    switch (process.status) {
-      case 'running':
-        return <Badge bg="success">Running</Badge>;
-      case 'exited':
-        return <Badge bg="secondary">Exited ({process.exitCode})</Badge>;
-      case 'error':
-        return <Badge bg="danger">Error</Badge>;
-      default:
-        return <Badge bg="warning">Unknown</Badge>;
-    }
-  };
+//   const handleInputSubmit = useCallback(() => {
+//     console.log('handleInputSubmit called, inputValue:', inputValue);
+//     if (inputValue.trim()) {
+//       console.log('Submitting input:', inputValue);
+//       handleInput(inputValue + '\n');
+//       setInputValue('');
+//     } else {
+//       console.log('Input value is empty or whitespace only');
+//     }
+//   }, [inputValue, handleInput]);
 
-  if (loading) {
-    return <div>Initializing terminal...</div>;
-  }
+//   const handleKeyPress = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+//     console.log('Key pressed:', e.key);
+//     if (e.key === 'Enter') {
+//       console.log('Enter key detected, calling handleInputSubmit');
+//       handleInputSubmit();
+//       e.preventDefault();
+//     }
+//   }, [handleInputSubmit]);
 
-  if (!process) {
-    return (
-      <Alert variant="warning">
-        Process not found or not running. The process may have completed.
-      </Alert>
-    );
-  }
+//   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+//     console.log('Input changed:', e.target.value);
+//     setInputValue(e.target.value);
+//   }, []);
 
-  return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+//   // Render loading state
+//   if (loading) {
+//     return <div>Initializing terminal...</div>;
+//   }
 
-      {/* Main content area */}
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-        {/* Fixed sidebar */}
-        <div
-          className=" border-end"
-          style={{
-            width: '300px',
-            minWidth: '300px',
-            flexShrink: 0,
-            overflowY: 'auto'
-          }}
-        >
-          <div className="p-3">
+//   // Render process not found state
+//   if (!process) {
+//     return (
+//       <Alert variant="warning">
+//         Process not found or not running. The process may have completed.
+//       </Alert>
+//     );
+//   }
 
+//   return (
+//     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+//       {/* Main content area */}
+//       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+//         {/* Sidebar */}
+//         <ProcessSidebar process={process} webSocketStatus={webSocketStatus} />
+        
+//         {/* Logs area */}
+//         <ProcessLogs logs={process.logs} />
+//       </div>
 
-            <div className="mb-3">
-              <strong>Command:</strong>
-              <code className="bg-white p-2 rounded d-block mt-1" style={{ fontSize: '0.8rem' }}>
-                {process.command}
-              </code>
-            </div>
+//       {/* Input area */}
+//       {isRunning && (
+//         <ProcessInput
+//           inputValue={inputValue}
+//           webSocketStatus={webSocketStatus}
+//           onInputChange={handleInputChange}
+//           onKeyPress={handleKeyPress}
+//           onSubmit={handleInputSubmit}
+//         />
+//       )}
 
-            <div className="mb-2">
-              <strong>Status:</strong>
-              <div className="mt-1">{getStatusBadge(process)}</div>
-            </div>
-
-            <div className="mb-2">
-              <strong>PID:</strong>
-              <div className="text-muted">{process.pid || 'N/A'}</div>
-            </div>
-
-            <div className="mb-2">
-              <strong>Started:</strong>
-              <div className="text-muted">{new Date(process.timestamp).toLocaleString()}</div>
-            </div>
-
-            {process.exitCode !== undefined && (
-              <div className="mb-2">
-                <strong>Exit Code:</strong>
-                <div className="text-muted">{process.exitCode}</div>
-              </div>
-            )}
-
-            {process.error && (
-              <div className="mt-3">
-                <strong className="text-danger">Error:</strong>
-                <div className="text-danger small mt-1">{process.error}</div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Scrollable logs area */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-          {/* Log header */}
-          <div className="d-flex justify-content-between align-items-center p-3 border-bottom bg-white" style={{ flexShrink: 0 }}>
-
-            <small className="text-muted">
-              {process.logs?.length || 0} lines
-            </small>
-          </div>
-
-          {/* Scrollable log content */}
-          <div
-            className="bg-dark text-light flex-grow-1"
-            style={{
-              overflowY: 'auto',
-              fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
-              fontSize: '14px',
-              lineHeight: '1.4',
-              padding: '1rem'
-            }}
-            ref={(el) => {
-              // Auto-scroll to bottom when logs update
-              if (el) {
-                el.scrollTop = el.scrollHeight;
-              }
-            }}
-          >
-            {process.logs && process.logs.length > 0 ? (
-              <pre className="mb-0" style={{
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-                backgroundColor: 'transparent',
-                border: 'none',
-                color: 'inherit'
-              }}>
-                {process.logs.join('')}
-              </pre>
-            ) : (
-              <div className="text-muted text-center py-4">
-                <i>No output yet</i>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Fixed input at the bottom */}
-      {inputEnabled && (
-        <div className="border-top bg-white p-3" style={{ flexShrink: 0 }}>
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Type input and press Enter..."
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  const target = e.target as HTMLInputElement;
-                  const inputValue = target.value;
-                  if (inputValue.trim()) {
-                    handleInput(inputValue + '\n');
-                    target.value = '';
-                  }
-                }
-              }}
-              autoFocus
-            />
-            <button
-              className="btn btn-primary"
-              type="button"
-              onClick={() => {
-                const input = document.querySelector('input') as HTMLInputElement;
-                const inputValue = input.value;
-                if (inputValue.trim()) {
-                  handleInput(inputValue + '\n');
-                  input.value = '';
-                }
-              }}
-            >
-              Send
-            </button>
-          </div>
-          <small className="text-muted">
-            💡 Press Enter to send input to the process
-          </small>
-        </div>
-      )}
-
-      {/* Status alerts - fixed positioning */}
-      {!inputEnabled && process.status === 'running' && (
-        <Alert variant="info" className="m-3" style={{ flexShrink: 0 }}>
-          <Alert.Heading className="h6">Input Disabled</Alert.Heading>
-          <small>Terminal input is temporarily unavailable. Try refreshing the page.</small>
-        </Alert>
-      )}
-
-      {process.status !== 'running' && (
-        <Alert variant="secondary" className="m-3" style={{ flexShrink: 0 }}>
-          <Alert.Heading className="h6">Read-only Mode</Alert.Heading>
-          <small>
-            This process is no longer running. You can view the output logs but cannot send input.
-          </small>
-        </Alert>
-      )}
-    </div>
-  );
-};
+//       {/* Status alerts */}
+//       {!isRunning && (
+//         <Alert variant="secondary" className="m-3" style={{ flexShrink: 0 }}>
+//           <Alert.Heading className="h6">Read-only Mode</Alert.Heading>
+//           <small>
+//             This process is no longer running. You can view the output logs but cannot send input.
+//           </small>
+//         </Alert>
+//       )}
+//     </div>
+//   );
+// };

@@ -70,17 +70,3 @@ var DefaultTestResourceRequirement = ITTestResourceRequirement{
 	Fs:    "./",
 }
 
-// IFinalResults represents the final results of a test run
-type IFinalResults struct {
-	Failed    bool
-	Fails     int
-	Artifacts []interface{}
-	Features  []string
-}
-
-// ITestJob represents a test job
-type ITestJob interface {
-	ToObj() map[string]interface{}
-	Runner(pm interface{}, tLog func(...string)) (interface{}, error)
-	ReceiveTestResourceConfig(pm interface{}) (IFinalResults, error)
-}

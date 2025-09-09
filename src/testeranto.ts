@@ -3,16 +3,16 @@
 
 import ansiC from "ansi-colors";
 import fs from "fs";
-import path from "path";
 import readline from "readline";
 
-import { ITestconfig, IRunTime, ITestTypes, IBuiltConfig } from "./lib";
+import { ITestconfig, IRunTime, IBuiltConfig } from "./lib";
 import { IProject } from "./Types";
 import { getRunnables } from "./utils";
 import { AppHtml } from "./utils/buildTemplates";
 
-import webHtmlFrame from "./web.html";
 import { PM_Main } from "./PM/main";
+import { PitonoBuild } from "./PM/pitonoBuild";
+const { GolingvuBuild } = await import("./PM/golingvuBuild");
 
 // if (!process.env.GITHUB_CLIENT_ID) {
 //   console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
@@ -35,11 +35,9 @@ if (mode !== "once" && mode !== "dev") {
   process.exit(-1);
 }
 
-const f = process.cwd() + "/" + "testeranto.config.ts";
+const configFilePath = process.cwd() + "/" + "testeranto.config.ts";
 
-console.log("config file:", f);
-
-import(f).then(async (module) => {
+import(configFilePath).then(async (module) => {
   const pckge = (await import(`${process.cwd()}/package.json`)).default;
   const bigConfig: IProject = module.default;
 
@@ -68,7 +66,7 @@ import(f).then(async (module) => {
   }
 
   if (!rawConfig.tests) {
-    console.error(testName, "appears to have no tests: ", f);
+    console.error(testName, "appears to have no tests: ", configFilePath);
     console.error(`here is the config:`);
     console.log(JSON.stringify(rawConfig));
     process.exit(-1);
@@ -98,7 +96,7 @@ import(f).then(async (module) => {
   fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
 
   Object.keys(bigConfig.projects).forEach((projectName) => {
-    console.log(`testeranto/reports/${projectName}`);
+    // console.log(`testeranto/reports/${projectName}`);
     if (!fs.existsSync(`testeranto/reports/${projectName}`)) {
       fs.mkdirSync(`testeranto/reports/${projectName}`);
     }
@@ -109,110 +107,57 @@ import(f).then(async (module) => {
     );
   });
 
-  const getSecondaryEndpointsPoints = (runtime?: IRunTime): string[] => {
-    const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
-      ts.forEach((t) => {
-        if (t[1] === runtime) {
-          st.add(t[0]);
-        }
-        if (Array.isArray(t[3])) {
-          meta(t[3], st);
-        }
-      });
-      return st;
-    };
-    return Array.from(meta(config.tests, new Set()));
-  };
+  // const getSecondaryEndpointsPoints = (runtime?: IRunTime): string[] => {
+  //   const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
+  //     ts.forEach((t) => {
+  //       if (t[1] === runtime) {
+  //         st.add(t[0]);
+  //       }
+  //       if (Array.isArray(t[3])) {
+  //         meta(t[3], st);
+  //       }
+  //     });
+  //     return st;
+  //   };
+  //   return Array.from(meta(config.tests, new Set()));
+  // };
 
   // Also handle pitono endpoints for HTML generation if needed
-  [...getSecondaryEndpointsPoints("python")].forEach(async (sourceFilePath) => {
-    // You might want to generate specific files for pitono tests here
-    console.log(`Pitono test found: ${sourceFilePath}`);
-  });
+  // [...getSecondaryEndpointsPoints("python")].forEach(async (sourceFilePath) => {
+  //   // You might want to generate specific files for pitono tests here
+  //   console.log(`Pitono test found: ${sourceFilePath}`);
+  // });
 
-  // Handle golang tests by generating their metafiles
-  const golangTests = config.tests.filter((test) => test[1] === "golang");
-  const hasGolangTests = golangTests.length > 0;
-  if (hasGolangTests) {
-    // Import and use the golang metafile utilities
-    const { generateGolangMetafile, writeGolangMetafile } = await import(
-      "./utils/golingvuMetafile"
-    );
-    // Get the entry points (first element of each test tuple)
-    const golangEntryPoints = golangTests.map((test) => test[0]);
-    const metafile = await generateGolangMetafile(testName, golangEntryPoints);
-    writeGolangMetafile(testName, metafile);
-    // Mark golang as done after writing the metafile
-    // onGolangDone();
-  }
+  // Promise.resolve(
+  //   Promise.all(
+  //     [...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
+  //       const sourceFileSplit = sourceFilePath.split("/");
+  //       const sourceDir = sourceFileSplit.slice(0, -1);
+  //       const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+  //       const sourceFileNameMinusJs = sourceFileName
+  //         .split(".")
+  //         .slice(0, -1)
+  //         .join(".");
 
-  // Handle pitono (Python) tests by generating their metafiles
-  const pitonoTests = config.tests.filter((test) => test[1] === "python");
-  const hasPitonoTests = pitonoTests.length > 0;
-  if (hasPitonoTests) {
-    // Import and use the pitono metafile utilities
-    const { generatePitonoMetafile } = await import("./utils/pitonoMetafile");
-    // Get the entry points (first element of each test tuple)
-    const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
-    const metafile = await generatePitonoMetafile(testName, pitonoEntryPoints);
+  //       const htmlFilePath = path.normalize(
+  //         `${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join(
+  //           "/"
+  //         )}/${sourceFileNameMinusJs}.html`
+  //       );
+  //       const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+  //       const cssFilePath = `./${sourceFileNameMinusJs}.css`;
 
-    // Ensure the directory exists
-    const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
-    await fs.promises.mkdir(pitonoMetafilePath, { recursive: true });
-
-    // Write the metafile to the specified path
-    fs.writeFileSync(
-      `${pitonoMetafilePath}/core.json`,
-      JSON.stringify(metafile, null, 2)
-    );
-
-    console.log(
-      ansiC.green(
-        ansiC.inverse(
-          `Python metafile written to: ${pitonoMetafilePath}/core.json`
-        )
-      )
-    );
-
-    // Add Python tests to the processing queue
-    pitonoEntryPoints.forEach((entryPoint) => {
-      if (pm) {
-        // For Python tests, the source file is the entry point itself
-        pm.addToQueue(entryPoint, "python");
-      }
-    });
-  }
-
-  Promise.resolve(
-    Promise.all(
-      [...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
-        const sourceFileSplit = sourceFilePath.split("/");
-        const sourceDir = sourceFileSplit.slice(0, -1);
-        const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-        const sourceFileNameMinusJs = sourceFileName
-          .split(".")
-          .slice(0, -1)
-          .join(".");
-
-        const htmlFilePath = path.normalize(
-          `${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join(
-            "/"
-          )}/${sourceFileNameMinusJs}.html`
-        );
-        const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-        const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-
-        return fs.promises
-          .mkdir(path.dirname(htmlFilePath), { recursive: true })
-          .then((x) =>
-            fs.writeFileSync(
-              htmlFilePath,
-              webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
-            )
-          );
-      })
-    )
-  );
+  //       return fs.promises
+  //         .mkdir(path.dirname(htmlFilePath), { recursive: true })
+  //         .then((x) =>
+  //           fs.writeFileSync(
+  //             htmlFilePath,
+  //             webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
+  //           )
+  //         );
+  //     })
+  //   )
+  // );
 
   const {
     nodeEntryPoints,
@@ -223,49 +168,82 @@ import(f).then(async (module) => {
     pureEntryPointSidecars,
     pythonEntryPoints,
     pythonEntryPointSidecars,
+    golangEntryPoints,
+    golangEntryPointSidecars,
   } = getRunnables(config.tests, testName);
 
-  const x: [IRunTime, string[]][] = [
+  // Handle golang tests using GolingvuBuild
+  const golangTests = config.tests.filter((test) => test[1] === "golang");
+  const hasGolangTests = golangTests.length > 0;
+  if (hasGolangTests) {
+    const golingvuBuild = new GolingvuBuild(config, testName);
+    const golangEntryPoints = await golingvuBuild.build();
+    golingvuBuild.onBundleChange(() => {
+      // console.log("Golang bundle changed, re-adding tests to queue");
+      Object.keys(golangEntryPoints).forEach((entryPoint) => {
+        if (pm) {
+          pm.addToQueue(entryPoint, "golang");
+        }
+      });
+    });
+  }
+
+  // Handle pitono (Python) tests by generating their metafiles
+  const pitonoTests = config.tests.filter((test) => test[1] === "python");
+  const hasPitonoTests = pitonoTests.length > 0;
+
+  if (hasPitonoTests) {
+    const pitonoBuild = new PitonoBuild(config, testName);
+    const pitonoEntryPoints = await pitonoBuild.build();
+    pitonoBuild.onBundleChange(() => {
+      Object.keys(pitonoEntryPoints).forEach((entryPoint) => {
+        if (pm) {
+          pm.addToQueue(entryPoint, "python");
+        }
+      });
+    });
+
+    // const { generatePitonoMetafile } = await import("./utils/pitonoMetafile");
+    // Get the entry points (first element of each test tuple)
+    // const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
+    // const metafile = await generatePitonoMetafile(testName, pitonoEntryPoints);
+
+    // const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
+    // await fs.promises.mkdir(pitonoMetafilePath, { recursive: true });
+
+    // fs.writeFileSync(
+    //   `${pitonoMetafilePath}/core.json`,
+    //   JSON.stringify(metafile, null, 2)
+    // );
+
+    // // Add Python tests to the processing queue
+    // Object.keys(pythonEntryPoints).forEach((entryPoint) => {
+    //   if (pm) {
+    //     pm.addToQueue(entryPoint, "python");
+    //   }
+    // });
+  }
+
+  // create the necessary folders and add tests to queue
+  [
     ["pure", Object.keys(pureEntryPoints)],
     ["node", Object.keys(nodeEntryPoints)],
     ["web", Object.keys(webEntryPoints)],
     ["python", Object.keys(pythonEntryPoints)],
-  ];
-
-  x.forEach(async ([runtime, keys]) => {
+    ["golang", Object.keys(golangEntryPoints)],
+  ].forEach(async ([runtime, keys]: [IRunTime, string[]]) => {
     keys.forEach(async (k) => {
-      const folder = `testeranto/reports/${testName}/${k
-        .split(".")
-        .slice(0, -1)
-        .join(".")}/${runtime}`;
+      fs.mkdirSync(
+        `testeranto/reports/${testName}/${k
+          .split(".")
+          .slice(0, -1)
+          .join(".")}/${runtime}`,
+        { recursive: true }
+      );
 
-      await fs.mkdirSync(folder, { recursive: true });
+      pm.addToQueue(k, runtime);
     });
   });
-
-  [
-    [pureEntryPoints, pureEntryPointSidecars, "pure"],
-    [webEntryPoints, webEntryPointSidecars, "web"],
-    [nodeEntryPoints, nodeEntryPointSidecars, "node"],
-    [pythonEntryPoints, pythonEntryPointSidecars, "python"],
-  ].forEach(
-    ([eps, eps2, runtime]: [
-      Record<string, string>,
-      Record<string, string>,
-      IRunTime
-    ]) => {
-      [...Object.keys(eps), ...Object.keys(eps2)].forEach((ep) => {
-        const fp = path.resolve(
-          `testeranto`,
-          `reports`,
-          testName,
-          ep.split(".").slice(0, -1).join("."),
-          runtime
-        );
-        fs.mkdirSync(fp, { recursive: true });
-      });
-    }
-  );
 
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {

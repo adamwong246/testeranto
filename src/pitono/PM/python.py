@@ -1,82 +1,78 @@
 import socket
 import json
 import random
+import struct
 from typing import Any, List, Dict, Optional
 from ..types import ITTestResourceConfiguration
 
 class PM_Python:
     def __init__(self, t: ITTestResourceConfiguration, ipc_file: str):
         self.test_resource_configuration = t
-        print(f"DEBUG: Creating PM_Python with config: {t}")
-        print(f"DEBUG: IPC file: {ipc_file}")
         self.client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         try:
-            print(f"DEBUG: Attempting to connect to {ipc_file}")
             self.client.connect(ipc_file)
-            print(f"DEBUG: Connected to IPC file: {ipc_file}")
+            # Set a timeout to prevent blocking forever
+            self.client.settimeout(30.0)
         except Exception as e:
-            print(f"DEBUG: Failed to connect to IPC file {ipc_file}: {e}")
-            import traceback
-            traceback.print_exc()
             raise e
     
     def start(self) -> None:
         raise Exception("DEPRECATED")
     
     def stop(self) -> None:
-        raise Exception("stop not implemented.")
+        try:
+            self.client.close()
+        except:
+            pass
     
-    def send(self, command: str, *argz) -> Any:
+    def send(self, command: str, *args) -> Any:
+        # Generate a unique key for this request
         key = str(random.random())
         # Create the message array with command, arguments, and key
         message = [command]
-        message.extend(argz)
+        message.extend(args)
         message.append(key)
+        
+        # Convert to JSON and encode
         data = json.dumps(message).encode('utf-8')
-        print(f"DEBUG: Sending command '{command}' with key {key}")
-        print(f"DEBUG: Message: {message}")
-        try:
-            self.client.send(data)
-            print(f"DEBUG: Data sent successfully")
-        except Exception as send_error:
-            print(f"DEBUG: Error sending data: {send_error}")
-            raise send_error
+        
+        # Send the length of the data first (as 4-byte big-endian)
+        length = struct.pack('>I', len(data))
+        self.client.sendall(length)
+        # Send the actual data
+        self.client.sendall(data)
         
         # Wait for response
-        buffer = b""
-        while True:
-            try:
-                chunk = self.client.recv(4096)
-                if not chunk:
-                    print("DEBUG: No chunk received, breaking")
-                    break
-                print(f"DEBUG: Received chunk: {chunk}")
-                buffer += chunk
-                try:
-                    # Try to parse the buffer as JSON
-                    response_str = buffer.decode('utf-8')
-                    print(f"DEBUG: Response string: {response_str}")
-                    x = json.loads(response_str)
-                    print(f"DEBUG: Parsed JSON: {x}")
-                    if x.get('key') == key:
-                        print(f"DEBUG: Key matched! Returning payload: {x.get('payload')}")
-                        return x.get('payload')
-                    else:
-                        print(f"DEBUG: Key mismatch. Expected: {key}, Got: {x.get('key')}")
-                    # If the key doesn't match, keep reading
-                except json.JSONDecodeError as json_error:
-                    # Incomplete JSON, continue reading
-                    print(f"DEBUG: JSON decode error: {json_error}, buffer: {buffer}")
-                    continue
-                except UnicodeDecodeError as unicode_error:
-                    # Handle encoding issues
-                    print(f"DEBUG: Unicode decode error: {unicode_error}")
-                    continue
-            except Exception as recv_error:
-                print(f"DEBUG: Error receiving data: {recv_error}")
-                raise recv_error
+        # First read the length
+        length_data = self._recv_all(4)
+        if not length_data:
+            raise Exception("No response length received")
+        response_length = struct.unpack('>I', length_data)[0]
         
-        raise Exception("No valid response received")
+        # Read the response data
+        response_data = self._recv_all(response_length)
+        if not response_data:
+            raise Exception("No response data received")
+        
+        # Parse the response
+        try:
+            response = json.loads(response_data.decode('utf-8'))
+            # Check if the response key matches our request key
+            if response.get('key') == key:
+                return response.get('payload')
+            else:
+                raise Exception(f"Key mismatch in response. Expected: {key}, Got: {response.get('key')}")
+        except json.JSONDecodeError:
+            raise Exception("Invalid JSON response")
+    
+    def _recv_all(self, length: int) -> bytes:
+        data = b''
+        while len(data) < length:
+            chunk = self.client.recv(length - len(data))
+            if not chunk:
+                break
+            data += chunk
+        return data
     
     async def pages(self) -> List[str]:
         return self.send("pages")
@@ -152,16 +148,10 @@ class PM_Python:
     
     def write_file_sync(self, filepath: str, contents: str) -> bool:
         full_path = f"{self.test_resource_configuration.fs}/{filepath}"
-        print(f"DEBUG: Attempting to write to: {full_path}")
-        print(f"DEBUG: Test resource config: {self.test_resource_configuration}")
         try:
             result = self.send("writeFileSync", full_path, contents, self.test_resource_configuration.name)
-            print(f"DEBUG: Write result: {result}")
             return result
         except Exception as e:
-            print(f"DEBUG: Error in write_file_sync: {e}")
-            import traceback
-            traceback.print_exc()
             raise e
     
     async def create_write_stream(self, filepath: str) -> str:

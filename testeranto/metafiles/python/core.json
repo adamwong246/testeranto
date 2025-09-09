@@ -1,7 +1,34 @@
 {
-  "testName": "core",
-  "entryPoints": [
-    "example/test_example.py"
-  ],
-  "timestamp": 1756933483872
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "example/test_example.py": {
+        "bytes": 6452,
+        "imports": [
+          "asyncio",
+          "sys",
+          "os"
+        ]
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/python/core/test_example.py": {
+        "imports": [
+          "asyncio",
+          "sys",
+          "os"
+        ],
+        "exports": [],
+        "entryPoint": "example/test_example.py",
+        "inputs": {
+          "example/test_example.py": {
+            "bytesInOutput": 6452
+          }
+        },
+        "bytes": 6452,
+        "signature": "mfcteuim"
+      }
+    }
+  }
 }

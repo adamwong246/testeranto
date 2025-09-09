@@ -480,26 +480,26 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
       const { exec } = await import("child_process");
 
       return new Promise((resolve, reject) => {
-        console.log("Current working directory:", process.cwd());
+        // console.log("Current working directory:", process.cwd());
         exec(
           "git status --porcelain=v1",
           { cwd: process.cwd() },
           async (error, stdout, stderr) => {
             if (stderr) {
-              console.error("Git stderr:", stderr);
+              // console.error("Git stderr:", stderr);
             }
             if (error) {
-              console.error("Error getting git changes:", error);
+              // console.error("Error getting git changes:", error);
               resolve([]);
               return;
             }
 
-            console.log("Raw git status output:", stdout);
+            // console.log("Raw git status output:", stdout);
             const changes: FileChange[] = [];
             const lines = stdout.trim().split("\n");
 
             for (const line of lines) {
-              console.log("Processing git status line:", JSON.stringify(line));
+              // console.log("Processing git status line:", JSON.stringify(line));
               if (!line.trim()) continue;
 
               // Parse git status output using a more reliable approach
@@ -507,7 +507,7 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
               // Use a regex to match the pattern
               const match = line.match(/^(.{2}) (.*)$/);
               if (!match) {
-                console.warn("Could not parse git status line:", line);
+                // console.warn("Could not parse git status line:", line);
                 continue;
               }
 
@@ -556,7 +556,7 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
                   await fs.promises.access(fullPath);
                   // console.log("Path exists:", fullPath);
                 } catch (error) {
-                  console.warn("Path does not exist:", fullPath);
+                  // console.warn("Path does not exist:", fullPath);
                   // Let's still add it to changes, as it might be a deleted file
                 }
 
@@ -573,7 +573,7 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
         );
       });
     } catch (error) {
-      console.error("Failed to get git changes:", error);
+      // console.error("Failed to get git changes:", error);
       return [];
     }
   }

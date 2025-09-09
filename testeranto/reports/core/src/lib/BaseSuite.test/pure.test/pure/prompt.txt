@@ -1,18 +1,3 @@
-
-/add src/lib/index.ts
-/add src/lib/pmProxy.ts
-/add src/lib/BaseGiven.ts
-/add src/lib/BaseWhen.ts
-/add src/lib/BaseThen.ts
-/add src/lib/BaseSuite.ts
-/add src/lib/Tiposkripto.ts
-/add src/PM/index.ts
-/add src/PM/pure.ts
-/add src/Pure.ts
-/add src/lib/BaseSuite.test/mock.ts
-/add src/lib/BaseSuite.test/test.ts
-/add src/lib/BaseSuite.test/pure.test.ts
-
 /read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md
 /read node_modules/testeranto/docs/testing.ai.txt
@@ -22,4 +7,7 @@
 /read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/type_errors.txt
 /read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/lint_errors.txt
 
-/read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/tests.json testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/type_errors.txt testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/lint_errors.txt testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/exit.log testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/message.txt testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/prompt.txt testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/build.json
+/read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/stdout.log
+/read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/stderr.log
+/read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/exit.log
+/read testeranto/reports/core/src/lib/BaseSuite.test/pure.test/pure/message.txt

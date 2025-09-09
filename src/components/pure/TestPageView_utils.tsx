@@ -35,6 +35,8 @@ export const getLanguage = (path: string) => {
       return "json";
     case "md":
       return "markdown";
+    case "py":
+      return "python";
     default:
       return "plaintext";
   }

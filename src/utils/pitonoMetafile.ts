@@ -1,68 +1,196 @@
-import fs from 'fs';
-import path from 'path';
-import { execSync } from 'child_process';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import fs from "fs";
+import path from "path";
 
 export interface PitonoMetafile {
-    testName: string;
-    entryPoints: string[];
-    timestamp: number;
+  errors: any[];
+  warnings: any[];
+  metafile: {
+    inputs: Record<
+      string,
+      {
+        bytes: number;
+        imports: any[];
+      }
+    >;
+    outputs: Record<
+      string,
+      {
+        imports: any[];
+        exports: any[];
+        entryPoint: string;
+        inputs: Record<
+          string,
+          {
+            bytesInOutput: number;
+          }
+        >;
+        bytes: number;
+        signature: string;
+      }
+    >;
+  };
 }
 
-export async function generatePitonoMetafile(testName: string, entryPoints: string[]): Promise<PitonoMetafile> {
-    return {
-        testName,
-        entryPoints,
-        timestamp: Date.now()
-    };
-}
+export async function generatePitonoMetafile(
+  testName: string,
+  entryPoints: string[]
+): Promise<PitonoMetafile> {
+  const inputs: Record<string, any> = {};
+  const outputs: Record<string, any> = {};
 
-export function writePitonoMetafile(testName: string, metafile: PitonoMetafile): void {
-    const metafilePath = path.join(process.cwd(), 'testeranto', 'pitono', testName, 'metafile.json');
-    const metafileDir = path.dirname(metafilePath);
-    
-    // Ensure directory exists
-    if (!fs.existsSync(metafileDir)) {
-        fs.mkdirSync(metafileDir, { recursive: true });
+  // Generate a unique signature based on the current timestamp
+  const signature = Date.now().toString(36);
+
+  // Process each entry point
+  for (const entryPoint of entryPoints) {
+    // Check if the entry point exists
+    if (!fs.existsSync(entryPoint)) {
+      console.warn(`Entry point ${entryPoint} does not exist`);
+      continue;
     }
-    
-    // Write the metafile
-    fs.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
-    console.log(`Pitono metafile written to: ${metafilePath}`);
-    
-    // Generate core.json using the Python script
+
+    const bytes = fs.statSync(entryPoint).size;
+
+    // Parse Python file to find imports
+    const imports: string[] = [];
     try {
-        // First try using the installed command
-        const command = `pitono-core-generator ${testName} ${metafile.entryPoints.join(' ')}`;
-        execSync(command, { stdio: 'inherit' });
-        console.log(`Pitono core.json generated successfully for ${testName}`);
+      const content = fs.readFileSync(entryPoint, "utf-8");
+      // Simple regex to find import statements
+      const importRegex = /^(?:import|from)\s+(\w+)/gm;
+      let match;
+
+      while ((match = importRegex.exec(content)) !== null) {
+        imports.push(match[1].trim());
+      }
     } catch (error) {
-        console.error(`Failed to generate Pitono core.json with installed command: ${error}`);
-        // Fallback to direct Python execution
-        try {
-            const pythonCommand = `python ${process.cwd()}/pitono/core_generator.py ${testName} ${metafile.entryPoints.join(' ')}`;
-            execSync(pythonCommand, { stdio: 'inherit' });
-            console.log(`Pitono core.json generated successfully using direct Python execution`);
-        } catch (fallbackError) {
-            console.error(`Direct Python execution also failed: ${fallbackError}`);
-            // Last resort: create the core.json manually
-            try {
-                const coreData = {
-                    testName: testName,
-                    entryPoints: metafile.entryPoints,
-                    outputs: {},
-                    metafile: {
-                        inputs: {},
-                        outputs: {}
-                    },
-                    timestamp: Date.now(),
-                    runtime: "pitono"
-                };
-                const coreFilePath = path.join(process.cwd(), 'testeranto', 'pitono', testName, 'core.json');
-                fs.writeFileSync(coreFilePath, JSON.stringify(coreData, null, 2));
-                console.log(`Pitono core.json created manually as fallback`);
-            } catch (manualError) {
-                console.error(`Even manual creation failed: ${manualError}`);
-            }
-        }
+      console.warn(`Could not parse imports for ${entryPoint}:`, error);
     }
+
+    // Add to inputs
+    inputs[entryPoint] = {
+      bytes,
+      imports,
+    };
+
+    // Generate a consistent output path
+    const entryPointName = path.basename(entryPoint, ".py");
+    const outputKey = `testeranto/bundles/python/${testName}/${entryPointName}.py`;
+    outputs[outputKey] = {
+      imports,
+      exports: [],
+      entryPoint,
+      inputs: {
+        [entryPoint]: {
+          bytesInOutput: bytes,
+        },
+      },
+      bytes,
+      signature,
+    };
+  }
+
+  // If no valid entry points were found, add a placeholder
+  if (Object.keys(inputs).length === 0) {
+    inputs["placeholder.py"] = {
+      bytes: 0,
+      imports: [],
+    };
+    outputs["testeranto/bundles/python/placeholder"] = {
+      imports: [],
+      exports: [],
+      entryPoint: "placeholder.py",
+      inputs: {
+        "placeholder.py": {
+          bytesInOutput: 0,
+        },
+      },
+      bytes: 0,
+      signature: "placeholder",
+    };
+  }
+
+  return {
+    errors: [],
+    warnings: [],
+    metafile: {
+      inputs,
+      outputs,
+    },
+  };
+}
+
+export function writePitonoMetafile(
+  testName: string,
+  metafile: PitonoMetafile
+): void {
+  const metafilePath = path.join(
+    process.cwd(),
+    "testeranto",
+    "metafiles",
+    "python",
+    "core.json"
+  );
+  const metafileDir = path.dirname(metafilePath);
+
+  // Ensure directory exists
+  if (!fs.existsSync(metafileDir)) {
+    fs.mkdirSync(metafileDir, { recursive: true });
+  }
+
+  // Write the metafile
+  fs.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+
+  // Generate the output Python files
+  const outputDir = path.join(
+    process.cwd(),
+    "testeranto",
+    "bundles",
+    "python",
+    testName
+  );
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+
+  // Create each output file
+  for (const [outputPath, outputInfo] of Object.entries(
+    metafile.metafile.outputs
+  )) {
+    const fullOutputPath = path.join(process.cwd(), outputPath);
+    const outputDirPath = path.dirname(fullOutputPath);
+
+    if (!fs.existsSync(outputDirPath)) {
+      fs.mkdirSync(outputDirPath, { recursive: true });
+    }
+
+    const entryPoint = (outputInfo as any).entryPoint;
+    const signature = (outputInfo as any).signature;
+    const content = `# This file is auto-generated by testeranto
+# Signature: ${signature}
+# It runs tests from: ${entryPoint}
+
+import os
+import sys
+
+# Add the original entry point to the path
+sys.path.insert(0, os.path.dirname(os.path.abspath("${entryPoint}")))
+
+# Import and run the tests
+try:
+    # Import the module
+    module_name = os.path.basename("${entryPoint}").replace('.py', '')
+    module = __import__(module_name)
+    
+    # Run the tests if there's a main block
+    if hasattr(module, 'main'):
+        module.main()
+    else:
+        print(f"No main function found in {module_name}")
+except Exception as e:
+    print(f"Error running tests from ${entryPoint}: {e}")
+    sys.exit(1)
+`;
+    fs.writeFileSync(fullOutputPath, content);
+  }
 }

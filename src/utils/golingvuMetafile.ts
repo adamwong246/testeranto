@@ -1,165 +1,201 @@
-import { execSync } from "child_process";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
 
-export interface GolingvuBuildResult {
+export interface GolingvuMetafile {
   errors: any[];
   warnings: any[];
-  metafile?: {
-    inputs: Record<string, {
-      bytes: number;
-      imports: any[];
-    }>;
-    outputs: Record<
+  metafile: {
+    inputs: Record<
       string,
       {
         bytes: number;
-        inputs: Record<string, { bytesInOutput: number }>;
+        imports: any[];
+      }
+    >;
+    outputs: Record<
+      string,
+      {
+        imports: any[];
+        exports: any[];
         entryPoint: string;
+        inputs: Record<
+          string,
+          {
+            bytesInOutput: number;
+          }
+        >;
+        bytes: number;
       }
     >;
   };
 }
 
-export async function generateGolangMetafile(testName: string, entryPoints: string[]): Promise<GolingvuBuildResult> {
-  const outputs: Record<
-    string,
-    {
-      entryPoint: string;
-      inputs: Record<string, { bytesInOutput: number }>;
-      bytes: number;
-    }
-  > = {};
+export async function generateGolingvuMetafile(
+  testName: string,
+  entryPoints: string[]
+): Promise<GolingvuMetafile> {
+  const inputs: Record<string, any> = {};
+  const outputs: Record<string, any> = {};
 
-  // Process each Go entry point
+  // Generate a unique signature based on the current timestamp
+  const signature = Date.now().toString(36);
+
+  // Process each entry point
   for (const entryPoint of entryPoints) {
+    // Check if the entry point exists
+    if (!fs.existsSync(entryPoint)) {
+      console.warn(`Entry point ${entryPoint} does not exist`);
+      continue;
+    }
+
+    const bytes = fs.statSync(entryPoint).size;
+
+    // Parse Go file to find imports
+    const imports: string[] = [];
     try {
-      // Get the package directory to find all Go files in the same package
-      const entryDir = path.dirname(entryPoint);
-      
-      // Find all .go files in the same directory
-      const goFiles = fs.readdirSync(entryDir)
-        .filter(file => file.endsWith('.go'))
-        .map(file => path.join(entryDir, file));
-      
-      // Create inputs record
-      const inputs: Record<string, { bytesInOutput: number }> = {};
-      let totalBytes = 0;
-      
-      for (const file of goFiles) {
-        try {
-          const stats = fs.statSync(file);
-          inputs[file] = { bytesInOutput: stats.size };
-          totalBytes += stats.size;
-        } catch {
-          inputs[file] = { bytesInOutput: 0 };
-        }
-      }
-      
-      // Add the entry point itself if not already included
-      if (!inputs[entryPoint]) {
-        try {
-          const entryStats = fs.statSync(entryPoint);
-          inputs[entryPoint] = { bytesInOutput: entryStats.size };
-          totalBytes += entryStats.size;
-        } catch {
-          inputs[entryPoint] = { bytesInOutput: 0 };
+      const content = fs.readFileSync(entryPoint, "utf-8");
+      // Simple regex to find import statements
+      const importRegex = /import\s+(?:(?:\("([^"]*)"\))|(?:"([^"]*)"))/g;
+      let match;
+
+      while ((match = importRegex.exec(content)) !== null) {
+        // match[1] is for multi-line imports in parentheses, match[2] is for single imports
+        const importPath = match[1] || match[2];
+        if (importPath) {
+          imports.push(importPath.trim());
         }
       }
 
-      // The output path should match the Node.js structure - use a path in testeranto/bundles
-      // For Go, we don't have actual bundled outputs, so we'll use a placeholder
-      const outputPath = `testeranto/bundles/golang/${testName}/${entryPoint}`;
-      outputs[outputPath] = {
-        entryPoint: entryPoint, // Use the source file path, not the bundle path
-        inputs,
-        bytes: totalBytes
-      };
+      // Also look for single-line imports without parentheses
+      const singleImportRegex = /import\s+"([^"]+)"/g;
+      while ((match = singleImportRegex.exec(content)) !== null) {
+        imports.push(match[1].trim());
+      }
     } catch (error) {
-      console.error(`Error processing Go entry point ${entryPoint}:`, error);
+      console.warn(`Could not parse imports for ${entryPoint}:`, error);
     }
-  }
 
-  // Create inputs record for the metafile - include all Go files
-  const allInputs: Record<string, {
-    bytes: number;
-    imports: any[];
-  }> = {};
-  
-  // Collect all unique Go files from all entry points
-  const allGoFiles = new Set<string>();
-  
-  for (const entryPoint of entryPoints) {
-    try {
-      const entryDir = path.dirname(entryPoint);
-      
-      // Find all .go files in the same directory
-      const goFiles = fs.readdirSync(entryDir)
-        .filter(file => file.endsWith('.go'))
-        .map(file => path.join(entryDir, file));
-      
-      goFiles.forEach(file => allGoFiles.add(file));
-      
-      // Add the entry point itself
-      allGoFiles.add(entryPoint);
-    } catch (error) {
-      console.error(`Error processing Go entry point ${entryPoint} for source files:`, error);
-    }
-  }
+    // Add to inputs
+    inputs[entryPoint] = {
+      bytes,
+      imports,
+    };
 
-  // Add all Go files to inputs
-  for (const filePath of Array.from(allGoFiles)) {
-    try {
-      const stats = fs.statSync(filePath);
-      allInputs[filePath] = { 
-        bytes: stats.size,
-        imports: [] // Go files don't have imports like JS
-      };
-    } catch {
-      allInputs[filePath] = { 
-        bytes: 0,
-        imports: []
-      };
-    }
-  }
-  
-  // Reformat outputs to match esbuild structure
-  const esbuildOutputs: Record<string, {
-    bytes: number;
-    inputs: Record<string, { bytesInOutput: number }>;
-    entryPoint: string;
-  }> = {};
-  for (const [outputPath, output] of Object.entries(outputs)) {
-    esbuildOutputs[outputPath] = {
-      bytes: output.bytes,
-      inputs: output.inputs,
-      entryPoint: output.entryPoint
+    // Generate a consistent output path
+    const entryPointName = path.basename(entryPoint, ".go");
+    const outputKey = `testeranto/bundles/golang/${testName}/${entryPointName}.go`;
+    outputs[outputKey] = {
+      imports,
+      exports: [], // Go doesn't have exports in the same way as JS
+      entryPoint,
+      inputs: {
+        [entryPoint]: {
+          bytesInOutput: bytes,
+        },
+      },
+      bytes,
+      signature, // Store the signature for later use - always include this
     };
   }
-  
+
+  // If no valid entry points were found, add a placeholder to prevent empty metafile
+  if (Object.keys(inputs).length === 0) {
+    inputs["placeholder.go"] = {
+      bytes: 0,
+      imports: [],
+    };
+    outputs["testeranto/bundles/golang/placeholder"] = {
+      imports: [],
+      exports: [],
+      entryPoint: "placeholder.go",
+      inputs: {
+        "placeholder.go": {
+          bytesInOutput: 0,
+        },
+      },
+      bytes: 0,
+    };
+  }
+
   return {
     errors: [],
     warnings: [],
     metafile: {
-      inputs: allInputs,
-      outputs: esbuildOutputs
-    }
+      inputs,
+      outputs,
+    },
   };
 }
 
-
-export function writeGolangMetafile(
+export function writeGolingvuMetafile(
   testName: string,
-  metafile: GolingvuBuildResult
+  metafile: GolingvuMetafile
 ): void {
-  const metafileDir = path.join(
+  const metafilePath = path.join(
     process.cwd(),
     "testeranto",
     "metafiles",
-    "golang"
+    "golang",
+    "core.json"
   );
-  fs.mkdirSync(metafileDir, { recursive: true });
+  const metafileDir = path.dirname(metafilePath);
 
-  const metafilePath = path.join(metafileDir, `${testName}.json`);
+  // Ensure directory exists
+  if (!fs.existsSync(metafileDir)) {
+    fs.mkdirSync(metafileDir, { recursive: true });
+  }
+
+  // Write the metafile
   fs.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
+
+  // Generate the output Go files
+  const outputDir = path.join(
+    process.cwd(),
+    "testeranto",
+    "bundles",
+    "golang",
+    testName
+  );
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+
+  // Create each output file
+  for (const [outputPath, outputInfo] of Object.entries(
+    metafile.metafile.outputs
+  )) {
+    const fullOutputPath = path.join(process.cwd(), outputPath);
+    const outputDirPath = path.dirname(fullOutputPath);
+
+    if (!fs.existsSync(outputDirPath)) {
+      fs.mkdirSync(outputDirPath, { recursive: true });
+    }
+
+    // For Go, we can create a simple wrapper that imports and runs the test
+    // Include the signature in a comment
+    const entryPoint = (outputInfo as any).entryPoint;
+    const signature = (outputInfo as any).signature;
+    const content = `package main
+
+import (
+    "fmt"
+    "os"
+    "testing"
+)
+
+// This file is auto-generated by testeranto
+// Signature: ${signature}
+// It runs tests from: ${entryPoint}
+
+func TestMain(m *testing.M) {
+    fmt.Println("Running tests from ${entryPoint}")
+    exitCode := m.Run()
+    os.Exit(exitCode)
+}
+`;
+    fs.writeFileSync(fullOutputPath, content);
+  }
+
+  // console.log(`Golang metafile and output files written for ${testName}`);
 }

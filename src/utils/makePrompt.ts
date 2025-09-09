@@ -6,6 +6,7 @@ import { promptPather } from "../utils";
 import { IRunTime, ISummary } from "../Types";
 import { getLogFilesForRuntime } from "./logFiles";
 import { LOG_FILES } from "./logFiles";
+import ansiColors from "ansi-colors";
 
 const makePrompt = async (
   summary: ISummary,
@@ -59,7 +60,7 @@ ${addableFiles
 
 /read ${getLogFilesForRuntime(runtime)
           .map((p) => `${testDir}/${p}`)
-          .join(" ")}
+          .join("\n/read ")}
 `
       ),
       fs.promises.writeFile(
@@ -135,6 +136,9 @@ export const makePromptInternal = (
   addableFiles: string[],
   runTime: IRunTime
 ) => {
+  console.log(
+    ansiColors.bgGreenBright(`makePromptInternal: ${name}, ${runTime}`)
+  );
   if (runTime === "node") {
     return makePrompt(summary, name, entryPoint, addableFiles, "node");
   }
@@ -146,4 +150,14 @@ export const makePromptInternal = (
   if (runTime === "pure") {
     return makePrompt(summary, name, entryPoint, addableFiles, "pure");
   }
+
+  if (runTime === "golang") {
+    return makePrompt(summary, name, entryPoint, addableFiles, "golang");
+  }
+
+  if (runTime === "python") {
+    return makePrompt(summary, name, entryPoint, addableFiles, "python");
+  }
+
+  throw `unknown runTime: ${runTime}`;
 };

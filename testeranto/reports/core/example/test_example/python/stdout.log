@@ -1,9 +1,0 @@
-Pitono initialized successfully!
-Pitono core.json written to: testeranto/pitono/test_suite/core.json
-Core generator test completed!
-mark1
-LOG: 
- test_given
-LOG: 
- Given: test given
-Suite result: {'name': 'test suite', 'givens': [{'key': 'test_given', 'name': 'test given', 'whens': [{'name': 'test when', 'error': None, 'artifacts': []}], 'thens': [{'name': 'test then', 'error': False, 'artifacts': []}], 'error': None, 'failed': False, 'features': ['test feature'], 'artifacts': []}], 'fails': 0, 'failed': False, 'features': ['test feature']}

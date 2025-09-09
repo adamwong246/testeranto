@@ -32,6 +32,7 @@ export abstract class PM_WithProcesses extends PM_WithGit {
   nodeMetafileWatcher: fs.FSWatcher;
   importMetafileWatcher: fs.FSWatcher;
   pitonoMetafileWatcher: fs.FSWatcher;
+  golangMetafileWatcher: fs.FSWatcher;
 
   ports: Record<number, string>;
   queue: string[];
@@ -56,24 +57,24 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     });
   }
 
+  bddTestIsRunning(src: string) {
+    this.summary[src] = {
+      prompt: "?",
+      runTimeErrors: "?",
+      staticErrors: "?",
+      typeErrors: "?",
+      failingFeatures: {},
+    };
+  }
+
   async metafileOutputs(platform: IRunTime) {
+    console.log("mark3", platform);
+
     let metafilePath: string;
     if (platform === "python") {
       metafilePath = `./testeranto/metafiles/python/core.json`;
     } else {
       metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
-    }
-
-    // Check if the file exists
-    if (!fs.existsSync(metafilePath)) {
-      if (platform === "python") {
-        console.log(
-          ansiC.yellow(
-            ansiC.inverse(`Pitono metafile not found yet: ${metafilePath}`)
-          )
-        );
-      }
-      return;
     }
 
     let metafile;
@@ -99,14 +100,18 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     }
 
     const outputs: IOutputs | undefined = metafile.outputs;
-    
+
     // Check if outputs exists and is an object
-    if (!outputs || typeof outputs !== 'object') {
-      console.log(
-        ansiC.yellow(ansiC.inverse(`No outputs found in metafile at ${metafilePath}`))
-      );
-      return;
-    }
+    // if (!outputs || typeof outputs !== "object") {
+    //   console.log(
+    //     ansiC.yellow(
+    //       ansiC.inverse(`No outputs found in metafile at ${metafilePath}`)
+    //     )
+    //   );
+    //   return;
+    // }
+
+    console.log("mark335", platform);
 
     Object.keys(outputs).forEach(async (k) => {
       const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
@@ -136,6 +141,8 @@ export abstract class PM_WithProcesses extends PM_WithGit {
 
       const entrypoint = output.entryPoint;
 
+      console.log("mark334", platform, entrypoint);
+
       if (entrypoint) {
         const changeDigest = await filesHash(addableFiles);
 
@@ -143,16 +150,135 @@ export abstract class PM_WithProcesses extends PM_WithGit {
           // skip
         } else {
           changes[entrypoint] = changeDigest;
-          this.tscCheck({
-            platform,
-            addableFiles,
-            entrypoint: entrypoint,
-          });
-          this.eslintCheck(entrypoint, platform, addableFiles);
-          this.makePrompt(entrypoint, addableFiles, platform);
+
+          console.log("mark333", platform);
+
+          // Run appropriate static analysis based on platform
+          if (
+            platform === "node" ||
+            platform === "web" ||
+            platform === "pure"
+          ) {
+            this.tscCheck({
+              platform,
+              addableFiles,
+              entrypoint: entrypoint,
+            });
+            this.eslintCheck(entrypoint, platform, addableFiles);
+          } else if (platform === "python") {
+            this.pythonLintCheck(entrypoint, addableFiles);
+            this.pythonTypeCheck(entrypoint, addableFiles);
+          }
+
+          this.makePrompt(entrypoint, addableFiles, "golang");
         }
       }
     });
+  }
+
+  async pythonLintCheck(entrypoint: string, addableFiles: string[]) {
+    const reportDest = `testeranto/reports/${this.name}/${entrypoint
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/python`;
+
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    const lintErrorsPath = `${reportDest}/lint_errors.txt`;
+
+    try {
+      // Use flake8 for Python linting
+      const { spawn } = await import("child_process");
+      const child = spawn("flake8", [entrypoint, "--max-line-length=88"], {
+        stdio: ["pipe", "pipe", "pipe"],
+      });
+
+      let stderr = "";
+      child.stderr.on("data", (data) => {
+        stderr += data.toString();
+      });
+
+      let stdout = "";
+      child.stdout.on("data", (data) => {
+        stdout += data.toString();
+      });
+
+      return new Promise<void>((resolve) => {
+        child.on("close", (code) => {
+          const output = stdout + stderr;
+          if (output.trim()) {
+            fs.writeFileSync(lintErrorsPath, output);
+            this.summary[entrypoint].staticErrors = output.split("\n").length;
+          } else {
+            if (fs.existsSync(lintErrorsPath)) {
+              fs.unlinkSync(lintErrorsPath);
+            }
+            this.summary[entrypoint].staticErrors = 0;
+          }
+          resolve();
+        });
+      });
+    } catch (error) {
+      console.error(`Error running flake8 on ${entrypoint}:`, error);
+      fs.writeFileSync(
+        lintErrorsPath,
+        `Error running flake8: ${error.message}`
+      );
+      this.summary[entrypoint].staticErrors = -1;
+    }
+  }
+
+  async pythonTypeCheck(entrypoint: string, addableFiles: string[]) {
+    const reportDest = `testeranto/reports/${this.name}/${entrypoint
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/python`;
+
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    const typeErrorsPath = `${reportDest}/type_errors.txt`;
+
+    try {
+      // Use mypy for Python type checking
+      const { spawn } = await import("child_process");
+      const child = spawn("mypy", [entrypoint], {
+        stdio: ["pipe", "pipe", "pipe"],
+      });
+
+      let stderr = "";
+      child.stderr.on("data", (data) => {
+        stderr += data.toString();
+      });
+
+      let stdout = "";
+      child.stdout.on("data", (data) => {
+        stdout += data.toString();
+      });
+
+      return new Promise<void>((resolve) => {
+        child.on("close", (code) => {
+          const output = stdout + stderr;
+          if (output.trim()) {
+            fs.writeFileSync(typeErrorsPath, output);
+            this.summary[entrypoint].typeErrors = output.split("\n").length;
+          } else {
+            if (fs.existsSync(typeErrorsPath)) {
+              fs.unlinkSync(typeErrorsPath);
+            }
+            this.summary[entrypoint].typeErrors = 0;
+          }
+          resolve();
+        });
+      });
+    } catch (error) {
+      console.error(`Error running mypy on ${entrypoint}:`, error);
+      fs.writeFileSync(typeErrorsPath, `Error running mypy: ${error.message}`);
+      this.summary[entrypoint].typeErrors = -1;
+    }
   }
 
   async start() {
@@ -230,7 +356,7 @@ export abstract class PM_WithProcesses extends PM_WithGit {
         this.launchGolang,
         "golang",
         (w) => {
-          // You might want to handle golang metafile watching here
+          this.golangMetafileWatcher = w;
         },
       ],
     ].forEach(
@@ -240,99 +366,104 @@ export abstract class PM_WithProcesses extends PM_WithGit {
         IRunTime,
         (f: fs.FSWatcher) => void
       ]) => {
-        let metafile: string;
-        if (runtime === "python") {
-          metafile = `./testeranto/metafiles/python/core.json`;
+        // let metafile: string;
 
-          const metafileDir = path.dirname(metafile);
-          if (!fs.existsSync(metafileDir)) {
-            fs.mkdirSync(metafileDir, { recursive: true });
-          }
-        } else {
-          metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-        }
+        // if (runtime === "python") {
+        //   metafile = `./testeranto/metafiles/python/core.json`;
+
+        //   const metafileDir = path.dirname(metafile);
+        //   if (!fs.existsSync(metafileDir)) {
+        //     fs.mkdirSync(metafileDir, { recursive: true });
+        //   }
+        // } else {
+        //   metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
+        // }
+        const metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
+        await pollForFile(metafile);
+
+        console.log("metafile", metafile);
 
         // Only poll for file if it's not a pitono runtime
-        if (runtime !== "python") {
-          await pollForFile(metafile);
-        }
+        // if (runtime !== "python") {
+        //   await pollForFile(metafile);
+        // }
 
-        Object.entries(eps).forEach(
-          async ([inputFile, outputFile]: [string, string]) => {
-            this.launchers[inputFile] = () => launcher(inputFile, outputFile);
-            this.launchers[inputFile]();
+        // Object.entries(eps).forEach(
+        //   async ([inputFile, outputFile]: [string, string]) => {
+        //     this.launchers[inputFile] = () => launcher(inputFile, outputFile);
+        //     this.launchers[inputFile]();
 
-            try {
-              // Check if the file exists before watching
-              if (fs.existsSync(outputFile)) {
-                watch(outputFile, async (e, filename) => {
-                  const hash = await fileHash(outputFile);
-                  if (fileHashes[inputFile] !== hash) {
-                    fileHashes[inputFile] = hash;
-                    console.log(
-                      ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`))
-                    );
-                    this.launchers[inputFile]();
-                  }
-                });
-              } else {
-                console.log(
-                  ansiC.yellow(
-                    ansiC.inverse(
-                      `File not found, skipping watch: ${outputFile}`
-                    )
-                  )
-                );
-              }
-            } catch (e) {
-              console.error(e);
-            }
-          }
-        );
+        //     try {
+        //       // Check if the file exists before watching
+        //       if (fs.existsSync(outputFile)) {
+        //         watch(outputFile, async (e, filename) => {
+        //           const hash = await fileHash(outputFile);
+        //           if (fileHashes[inputFile] !== hash) {
+        //             fileHashes[inputFile] = hash;
+        //             console.log(
+        //               ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`))
+        //             );
+        //             this.launchers[inputFile]();
+        //           }
+        //         });
+        //       } else {
+        //         console.log(
+        //           ansiC.yellow(
+        //             ansiC.inverse(
+        //               `File not found, skipping watch: ${outputFile}`
+        //             )
+        //           )
+        //         );
+        //       }
+        //     } catch (e) {
+        //       console.error(e);
+        //     }
+        //   }
+        // );
 
-        this.metafileOutputs(runtime);
+        // this.metafileOutputs(runtime);
 
-        // For pitono, we need to wait for the file to be created
-        if (runtime === "python") {
-          // Use polling to wait for the file to exist
-          const checkFileExists = () => {
-            if (fs.existsSync(metafile)) {
-              console.log(
-                ansiC.green(ansiC.inverse(`Pitono metafile found: ${metafile}`))
-              );
-              // Set up the watcher once the file exists
-              watcher(
-                watch(metafile, async (e, filename) => {
-                  console.log(
-                    ansiC.yellow(
-                      ansiC.inverse(`< ${e} ${filename} (${runtime})`)
-                    )
-                  );
-                  this.metafileOutputs(runtime);
-                })
-              );
-              // Read the metafile immediately
-              this.metafileOutputs(runtime);
-            } else {
-              // Check again after a delay
-              setTimeout(checkFileExists, 1000);
-            }
-          };
-          // Start checking for the file
-          checkFileExists();
-        } else {
-          // For other runtimes, only set up watcher if the file exists
-          if (fs.existsSync(metafile)) {
-            watcher(
-              watch(metafile, async (e, filename) => {
-                console.log(
-                  ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
-                );
-                this.metafileOutputs(runtime);
-              })
-            );
-          }
-        }
+        // // For pitono, we need to wait for the file to be created
+        // if (runtime === "python") {
+        //   // Use polling to wait for the file to exist
+        //   const checkFileExists = () => {
+        //     if (fs.existsSync(metafile)) {
+        //       console.log(
+        //         ansiC.green(ansiC.inverse(`Pitono metafile found: ${metafile}`))
+        //       );
+        //       // Set up the watcher once the file exists
+        //       watcher(
+        //         watch(metafile, async (e, filename) => {
+        //           console.log(
+        //             ansiC.yellow(
+        //               ansiC.inverse(`< ${e} ${filename} (${runtime})`)
+        //             )
+        //           );
+        //           this.metafileOutputs(runtime);
+        //         })
+        //       );
+        //       // Read the metafile immediately
+        //       this.metafileOutputs(runtime);
+        //     } else {
+        //       // Check again after a delay
+        //       setTimeout(checkFileExists, 1000);
+        //     }
+        //   };
+        //   // Start checking for the file
+        //   checkFileExists();
+        // } else {
+        //   // For other runtimes, only set up watcher if the file exists
+        //   if (fs.existsSync(metafile)) {
+        //     watcher(
+        //       watch(metafile, async (e, filename) => {
+        //         console.log(
+        //           ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
+        //         );
+        //         this.metafileOutputs(runtime);
+        //       })
+        //     );
+        //   }
+        // }
       }
     );
   }
@@ -504,7 +635,7 @@ export abstract class PM_WithProcesses extends PM_WithGit {
   checkQueue() {
     const x = this.queue.pop();
     if (!x) {
-      ansiC.inverse(`The following queue is empty`);
+      console.log(ansiC.inverse(`The queue is empty`));
       return;
     }
     const test = this.configs.tests.find((t) => t[0] === x);
@@ -512,11 +643,11 @@ export abstract class PM_WithProcesses extends PM_WithGit {
 
     // Get the appropriate launcher based on the runtime type
     const runtime = test[1];
-    
+
     // Get the destination path from the runnables
     const runnables = getRunnables(this.configs.tests, this.name);
     let dest: string;
-    
+
     switch (runtime) {
       case "node":
         dest = runnables.nodeEntryPoints[x];

@@ -12,7 +12,8 @@ export const TestPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [route, setRoute] = useState('results');
-  const { isConnected } = useWebSocket();
+  const wsContext = useWebSocket();
+  const isConnected = wsContext?.isConnected || false;
 
   // Sync route with hash changes
   useEffect(() => {
@@ -89,7 +90,7 @@ export const TestPage = () => {
             matchingOutputs.forEach(([_, output]) => {
               Object.keys(output.inputs).forEach(inputPath => {
                 // Check if this input is a source file (TypeScript or Go) and not in node_modules
-                if ((inputPath.endsWith('.ts') || inputPath.endsWith('.tsx') || inputPath.endsWith('.go')) &&
+                if ((inputPath.endsWith('.ts') || inputPath.endsWith('.tsx') || inputPath.endsWith('.go') || inputPath.endsWith('.py')) &&
                   !inputPath.includes('node_modules')) {
                   // Get the full input details from metafile.inputs
                   const inputDetails = metafile.metafile.inputs[inputPath];

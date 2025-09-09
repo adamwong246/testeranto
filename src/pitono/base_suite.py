@@ -1,4 +1,4 @@
-from typing import Dict, List, Any, Callable
+from typing import Dict, List, Any, Callable, Optional
 
 class BaseSuite:
     def __init__(self, name: str, givens: Dict[str, Any]):
@@ -93,3 +93,44 @@ class BaseSuite:
             print(f"Error in after_all: {e}")
         
         return self
+    
+    # Add missing properties to match TypeScript
+    @property
+    def test_resource_configuration(self) -> Any:
+        return self._test_resource_configuration
+    
+    @test_resource_configuration.setter
+    def test_resource_configuration(self, value: Any):
+        self._test_resource_configuration = value
+    
+    @property
+    def index(self) -> int:
+        return self._index
+    
+    @index.setter
+    def index(self, value: int):
+        self._index = value
+    
+    @property
+    def failed(self) -> bool:
+        return self._failed
+    
+    @failed.setter
+    def failed(self, value: bool):
+        self._failed = value
+    
+    @property
+    def fails(self) -> int:
+        return self._fails
+    
+    @fails.setter
+    def fails(self, value: int):
+        self._fails = value
+    
+    @property
+    def artifacts(self) -> List[str]:
+        return self._artifacts
+    
+    @artifacts.setter
+    def artifacts(self, value: List[str]):
+        self._artifacts = value

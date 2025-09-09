@@ -1,4 +1,4 @@
-export type RuntimeName = 'node' | 'web' | 'pure';
+export type RuntimeName = 'node' | 'web' | 'pure' | 'python' | 'golang';
 
 export const LOG_FILES = {
   TESTS: 'tests.json',
@@ -36,7 +36,15 @@ export const RUNTIME_SPECIFIC_LOGS = {
     WARN: 'warn.log',
     DEBUG: 'debug.log'
   },
-  pure: {} // No runtime-specific logs for pure
+  pure: {}, // No runtime-specific logs for pure
+  python: {
+    STDOUT: 'stdout.log',
+    STDERR: 'stderr.log'
+  },
+  golang: {
+    STDOUT: 'stdout.log',
+    STDERR: 'stderr.log'
+  }
 } as const;
 
 export const ALL_LOGS = {

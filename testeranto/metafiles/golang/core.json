@@ -4,19 +4,22 @@
   "metafile": {
     "inputs": {
       "example/base_suite_test.go": {
-        "bytes": 4477,
+        "bytes": 1028,
         "imports": []
       }
     },
     "outputs": {
-      "testeranto/bundles/golang/core/example/base_suite_test.go": {
-        "bytes": 4477,
+      "testeranto/bundles/golang/core/base_suite_test.go": {
+        "imports": [],
+        "exports": [],
+        "entryPoint": "example/base_suite_test.go",
         "inputs": {
           "example/base_suite_test.go": {
-            "bytesInOutput": 4477
+            "bytesInOutput": 1028
           }
         },
-        "entryPoint": "example/base_suite_test.go"
+        "bytes": 1028,
+        "signature": "mfcteuik"
       }
     }
   }
