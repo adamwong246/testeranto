@@ -32,100 +32,242 @@ export interface PitonoMetafile {
   };
 }
 
-export async function generatePitonoMetafile(
-  testName: string,
-  entryPoints: string[]
-): Promise<PitonoMetafile> {
-  const inputs: Record<string, any> = {};
-  const outputs: Record<string, any> = {};
-
-  // Generate a unique signature based on the current timestamp
-  const signature = Date.now().toString(36);
-
-  // Process each entry point
-  for (const entryPoint of entryPoints) {
-    // Check if the entry point exists
-    if (!fs.existsSync(entryPoint)) {
-      console.warn(`Entry point ${entryPoint} does not exist`);
-      continue;
+function resolvePythonImport(importPath: string, currentFile: string): string | null {
+    // Handle relative imports
+    if (importPath.startsWith('.')) {
+        const currentDir = path.dirname(currentFile);
+        // For relative imports, we need to handle the dots properly
+        // Count the number of dots to determine how many levels to go up
+        let dotCount = 0;
+        let remainingPath = importPath;
+        while (remainingPath.startsWith('.')) {
+            dotCount++;
+            remainingPath = remainingPath.substring(1);
+        }
+        
+        // Remove any leading slash
+        if (remainingPath.startsWith('/')) {
+            remainingPath = remainingPath.substring(1);
+        }
+        
+        // Build the base path by going up the appropriate number of directories
+        let baseDir = currentDir;
+        for (let i = 1; i < dotCount; i++) {
+            baseDir = path.dirname(baseDir);
+        }
+        
+        // Handle the case where there's no remaining path (just dots)
+        if (remainingPath.length === 0) {
+            const initPath = path.join(baseDir, '__init__.py');
+            if (fs.existsSync(initPath)) {
+                return initPath;
+            }
+            return null;
+        }
+        
+        // Resolve the full path
+        const resolvedPath = path.join(baseDir, remainingPath);
+        
+        // Try different extensions
+        const extensions = ['.py', '/__init__.py'];
+        for (const ext of extensions) {
+            const potentialPath = resolvedPath + ext;
+            if (fs.existsSync(potentialPath)) {
+                return potentialPath;
+            }
+        }
+        
+        // Check if it's a directory with __init__.py
+        if (fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory()) {
+            const initPath = path.join(resolvedPath, '__init__.py');
+            if (fs.existsSync(initPath)) {
+                return initPath;
+            }
+        }
+        return null;
     }
+    
+    // Handle absolute imports by looking in the same directory and parent directories
+    // This is a simplification - Python's import system is more complex
+    const dirs = [
+        path.dirname(currentFile),
+        process.cwd(),
+        ...(process.env.PYTHONPATH ? process.env.PYTHONPATH.split(path.delimiter) : [])
+    ];
+    
+    for (const dir of dirs) {
+        const potentialPaths = [
+            path.join(dir, importPath + '.py'),
+            path.join(dir, importPath, '__init__.py'),
+            path.join(dir, importPath.replace(/\./g, '/') + '.py'),
+            path.join(dir, importPath.replace(/\./g, '/'), '__init__.py')
+        ];
+        
+        for (const potentialPath of potentialPaths) {
+            if (fs.existsSync(potentialPath)) {
+                return potentialPath;
+            }
+        }
+    }
+    
+    return null;
+}
 
-    const bytes = fs.statSync(entryPoint).size;
-
-    // Parse Python file to find imports
-    const imports: string[] = [];
+function parsePythonImports(filePath: string): {path: string, kind: string, external?: boolean, original?: string}[] {
     try {
-      const content = fs.readFileSync(entryPoint, "utf-8");
-      // Simple regex to find import statements
-      const importRegex = /^(?:import|from)\s+(\w+)/gm;
-      let match;
-
-      while ((match = importRegex.exec(content)) !== null) {
-        imports.push(match[1].trim());
-      }
+        const content = fs.readFileSync(filePath, 'utf-8');
+        const imports: {path: string, kind: string, external?: boolean, original?: string}[] = [];
+        
+        // Match import statements (including multiple imports)
+        const importRegex = /^import\s+([\w., ]+)/gm;
+        // Match from ... import statements
+        const fromImportRegex = /^from\s+([\w.]+)\s+import/gm;
+        
+        let match;
+        while ((match = importRegex.exec(content)) !== null) {
+            // Handle multiple imports in one line
+            const importPaths = match[1].split(',').map(p => p.trim());
+            for (const importPath of importPaths) {
+                // Try to resolve the import to see if it's external
+                const resolvedPath = resolvePythonImport(importPath, filePath);
+                imports.push({
+                    path: importPath,
+                    kind: 'import-statement',
+                    external: resolvedPath === null,
+                    original: importPath
+                });
+            }
+        }
+        
+        while ((match = fromImportRegex.exec(content)) !== null) {
+            const importPath = match[1];
+            // Try to resolve the import to see if it's external
+            const resolvedPath = resolvePythonImport(importPath, filePath);
+            imports.push({
+                path: importPath,
+                kind: 'import-statement',
+                external: resolvedPath === null,
+                original: importPath
+            });
+        }
+        
+        return imports;
     } catch (error) {
-      console.warn(`Could not parse imports for ${entryPoint}:`, error);
+        console.warn(`Could not parse imports for ${filePath}:`, error);
+        return [];
+    }
+}
+
+function collectDependencies(filePath: string, visited: Set<string> = new Set()): string[] {
+    if (visited.has(filePath)) return [];
+    visited.add(filePath);
+    
+    const dependencies: string[] = [filePath];
+    const imports = parsePythonImports(filePath);
+    
+    for (const imp of imports) {
+        if (!imp.external && imp.path) {
+            const resolvedPath = resolvePythonImport(imp.path, filePath);
+            if (resolvedPath && fs.existsSync(resolvedPath)) {
+                dependencies.push(...collectDependencies(resolvedPath, visited));
+            }
+        }
+    }
+    
+    return [...new Set(dependencies)];
+}
+
+export async function generatePitonoMetafile(
+    testName: string,
+    entryPoints: string[]
+): Promise<PitonoMetafile> {
+    const inputs: Record<string, any> = {};
+    const outputs: Record<string, any> = {};
+    const signature = Date.now().toString(36);
+
+    // Process each entry point
+    for (const entryPoint of entryPoints) {
+        if (!fs.existsSync(entryPoint)) {
+            console.warn(`Entry point ${entryPoint} does not exist`);
+            continue;
+        }
+
+        // Collect all dependencies recursively
+        const allDependencies = collectDependencies(entryPoint);
+        
+        // Process each dependency to add to inputs
+        for (const dep of allDependencies) {
+            if (!inputs[dep]) {
+                const bytes = fs.statSync(dep).size;
+                const imports = parsePythonImports(dep);
+                inputs[dep] = {
+                    bytes,
+                    imports,
+                };
+            }
+        }
+
+        // Generate output path
+        const entryPointName = path.basename(entryPoint, ".py");
+        const outputKey = `python/core/${entryPointName}.py`;
+        
+        // Calculate total bytes from all inputs
+        const inputBytes: Record<string, { bytesInOutput: number }> = {};
+        let totalBytes = 0;
+        for (const dep of allDependencies) {
+            const bytes = fs.statSync(dep).size;
+            inputBytes[dep] = { bytesInOutput: bytes };
+            totalBytes += bytes;
+        }
+        
+        outputs[outputKey] = {
+            imports: [],
+            exports: [],
+            entryPoint,
+            inputs: inputBytes,
+            bytes: totalBytes,
+            signature,
+        };
     }
 
-    // Add to inputs
-    inputs[entryPoint] = {
-      bytes,
-      imports,
-    };
+    // If no valid entry points were found, add a placeholder
+    if (Object.keys(inputs).length === 0) {
+        inputs["placeholder.py"] = {
+            bytes: 0,
+            imports: [],
+        };
+        outputs["testeranto/bundles/python/core/placeholder.py"] = {
+            imports: [],
+            exports: [],
+            entryPoint: "placeholder.py",
+            inputs: {
+                "placeholder.py": {
+                    bytesInOutput: 0,
+                },
+            },
+            bytes: 0,
+            signature: "placeholder",
+        };
+    }
 
-    // Generate a consistent output path
-    const entryPointName = path.basename(entryPoint, ".py");
-    const outputKey = `testeranto/bundles/python/${testName}/${entryPointName}.py`;
-    outputs[outputKey] = {
-      imports,
-      exports: [],
-      entryPoint,
-      inputs: {
-        [entryPoint]: {
-          bytesInOutput: bytes,
+    return {
+        errors: [],
+        warnings: [],
+        metafile: {
+            inputs,
+            outputs,
         },
-      },
-      bytes,
-      signature,
     };
-  }
-
-  // If no valid entry points were found, add a placeholder
-  if (Object.keys(inputs).length === 0) {
-    inputs["placeholder.py"] = {
-      bytes: 0,
-      imports: [],
-    };
-    outputs["testeranto/bundles/python/placeholder"] = {
-      imports: [],
-      exports: [],
-      entryPoint: "placeholder.py",
-      inputs: {
-        "placeholder.py": {
-          bytesInOutput: 0,
-        },
-      },
-      bytes: 0,
-      signature: "placeholder",
-    };
-  }
-
-  return {
-    errors: [],
-    warnings: [],
-    metafile: {
-      inputs,
-      outputs,
-    },
-  };
 }
 
 export function writePitonoMetafile(
   testName: string,
   metafile: PitonoMetafile
 ): void {
+  // Always use the project root for testeranto directories
+  const projectRoot = process.cwd();
   const metafilePath = path.join(
-    process.cwd(),
+    projectRoot,
     "testeranto",
     "metafiles",
     "python",
@@ -141,13 +283,13 @@ export function writePitonoMetafile(
   // Write the metafile
   fs.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
 
-  // Generate the output Python files
+  // Generate the output Python files in the core directory
   const outputDir = path.join(
-    process.cwd(),
+    projectRoot,
     "testeranto",
     "bundles",
     "python",
-    testName
+    "core"
   );
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
@@ -157,7 +299,9 @@ export function writePitonoMetafile(
   for (const [outputPath, outputInfo] of Object.entries(
     metafile.metafile.outputs
   )) {
-    const fullOutputPath = path.join(process.cwd(), outputPath);
+    // Use just the filename part of the output path
+    const fileName = path.basename(outputPath);
+    const fullOutputPath = path.join(outputDir, fileName);
     const outputDirPath = path.dirname(fullOutputPath);
 
     if (!fs.existsSync(outputDirPath)) {

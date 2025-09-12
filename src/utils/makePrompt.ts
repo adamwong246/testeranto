@@ -136,9 +136,6 @@ export const makePromptInternal = (
   addableFiles: string[],
   runTime: IRunTime
 ) => {
-  console.log(
-    ansiColors.bgGreenBright(`makePromptInternal: ${name}, ${runTime}`)
-  );
   if (runTime === "node") {
     return makePrompt(summary, name, entryPoint, addableFiles, "node");
   }

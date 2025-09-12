@@ -1,0 +1,27 @@
+
+/add src/components/pure/ModalContent.test/index.tsx
+/add src/components/pure/ModalContent.test/implementation.tsx
+/add src/components/pure/ModalContent.test/specification.ts
+/add src/components/pure/ModalContent.tsx
+/add src/components/pure/ThemeCard.tsx
+
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/tests.json
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/type_errors.txt
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/lint_errors.txt
+
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/tests.json
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/type_errors.txt
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/lint_errors.txt
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/exit.log
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/message.txt
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/prompt.txt
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/build.json
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/info.log
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/error.log
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/warn.log
+/read testeranto/reports/core/src/components/pure/ModalContent.test/index/web/debug.log

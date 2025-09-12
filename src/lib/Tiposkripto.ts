@@ -111,13 +111,25 @@ export default abstract class Tiposkripto<
     const classyGivens = Object.entries(testImplementation.givens).reduce(
       (a, [key, g]) => {
         a[key] = (
-          name: string,
+          // name: string,
           features: string[],
           whens: BaseWhen<I>[],
           thens: BaseThen<I>[],
           gcb: I["given"],
           initialValues: any
         ) => {
+          // Debug the parameters being passed - check if features contains when-like objects
+          // console.log(`[Tiposkripto] Creating Given ${key} with:`);
+          // console.log(`  name: ${name}`);
+          // console.log(`  features:`, features);
+          // console.log(`  whens:`, whens);
+          // console.log(`  thens:`, thens);
+
+          // Ensure parameters are arrays and create copies to avoid reference issues
+          const safeFeatures = Array.isArray(features) ? [...features] : [];
+          const safeWhens = Array.isArray(whens) ? [...whens] : [];
+          const safeThens = Array.isArray(thens) ? [...thens] : [];
+
           return new (class extends BaseGiven<I> {
             uberCatcher = uberCatcher;
 
@@ -147,10 +159,10 @@ export default abstract class Tiposkripto<
               return Promise.resolve(fullAdapter.afterEach(store, key, pm));
             }
           })(
-            name,
-            features,
-            whens,
-            thens,
+            // name,
+            safeFeatures,
+            safeWhens,
+            safeThens,
             testImplementation.givens[key],
             initialValues
           );
@@ -163,11 +175,13 @@ export default abstract class Tiposkripto<
     const classyWhens = Object.entries(testImplementation.whens).reduce(
       (a, [key, whEn]: [string, (...x: any[]) => any]) => {
         a[key] = (...payload: any[]) => {
-          return new (class extends BaseWhen<I> {
+          const whenInstance = new (class extends BaseWhen<I> {
             async andWhen(store, whenCB, testResource, pm) {
               return await fullAdapter.andWhen(store, whenCB, testResource, pm);
             }
           })(`${key}: ${payload && payload.toString()}`, whEn(...payload));
+          // console.log(`[Tiposkripto] Created When ${key}:`, whenInstance.name);
+          return whenInstance;
         };
         return a;
       },
@@ -177,7 +191,7 @@ export default abstract class Tiposkripto<
     const classyThens = Object.entries(testImplementation.thens).reduce(
       (a, [key, thEn]: [string, (...x: any[]) => any]) => {
         a[key] = (...args: any[]) => {
-          return new (class extends BaseThen<I> {
+          const thenInstance = new (class extends BaseThen<I> {
             async butThen(
               store: any,
               thenCB,
@@ -187,6 +201,8 @@ export default abstract class Tiposkripto<
               return await fullAdapter.butThen(store, thenCB, testResource, pm);
             }
           })(`${key}: ${args && args.toString()}`, thEn(...args));
+          // console.log(`[Tiposkripto] Created Then ${key}:`, thenInstance.name);
+          return thenInstance;
         };
         return a;
       },
@@ -209,10 +225,24 @@ export default abstract class Tiposkripto<
       this.Then()
     );
 
+    // Debug: log the structure of the first suite to see if whens are properly set up
+    // if (this.specs.length > 0 && this.specs[0]) {
+    //   const firstSuite = this.specs[0] as any;
+    //   if (firstSuite.givens) {
+    //     Object.entries(firstSuite.givens).forEach(([givenKey, given]) => {
+    //       console.log(`[DEBUG] Given "${givenKey}":`, {
+    //         name: given.name,
+    //         whens: given.whens ? given.whens.map((w) => w?.name) : [],
+    //         thens: given.thens ? given.thens.map((t) => t?.name) : [],
+    //       });
+    //     });
+    //   }
+    // }
+
     // Calculate total number of tests (sum of all Givens across all Suites)
     // Each suite should have a 'givens' property that's a record of test names to BaseGiven instances
     this.totalTests = this.calculateTotalTests();
-    console.log(`Total tests calculated: ${this.totalTests}`);
+    // console.log(`Total tests calculated: ${this.totalTests}`);
 
     // Create test jobs
     this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
@@ -336,12 +366,12 @@ export default abstract class Tiposkripto<
   private calculateTotalTests(): number {
     let total = 0;
     for (const suite of this.specs) {
-      if (suite && typeof suite === 'object') {
+      if (suite && typeof suite === "object") {
         // Access the givens property which should be a record of test names to BaseGiven instances
         // The givens property is typically on the suite instance
-        if ('givens' in suite) {
+        if ("givens" in suite) {
           const givens = (suite as any).givens;
-          if (givens && typeof givens === 'object') {
+          if (givens && typeof givens === "object") {
             total += Object.keys(givens).length;
           }
         }

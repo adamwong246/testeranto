@@ -1,0 +1,30 @@
+src/components/pure/BuildLogViewer.tsx
+5:9 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+100:47 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+136:44 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+
+src/components/pure/NavBar.tsx
+1:17 'useState' is defined but never used. (@typescript-eslint/no-unused-vars)
+1:27 'useEffect' is defined but never used. (@typescript-eslint/no-unused-vars)
+2:41 'Button' is defined but never used. (@typescript-eslint/no-unused-vars)
+33:9 'location' is assigned a value but never used. (@typescript-eslint/no-unused-vars)
+
+src/components/pure/ProjectPageView.test/implementation.tsx
+101:31 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+102:26 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+125:31 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)
+126:26 Unexpected any. Specify a different type. (@typescript-eslint/no-explicit-any)
+- undefined (fix)
+- undefined (fix)

@@ -1,7 +1,9 @@
-module example_test
+module example
 
 go 1.19
 
-replace testeranto/src/golingvu => ../src/golingvu
+replace github.com/adamwong246/testeranto => ../
 
-require testeranto/src/golingvu v0.0.0-00010101000000-000000000000
+replace github.com/adamwong246/testeranto/src/golingvu => ../src/golingvu
+
+require github.com/adamwong246/testeranto/src/golingvu v0.0.0-20250101000000-000000000000

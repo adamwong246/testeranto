@@ -1,2 +1,0 @@
-# command-line-arguments [command-line-arguments.test]
-./base_suite_test.go:25:21: undefined: golingvu.NewPM_Golang

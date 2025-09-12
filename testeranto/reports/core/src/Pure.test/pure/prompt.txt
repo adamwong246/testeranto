@@ -1,0 +1,13 @@
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/core/src/Pure.test/pure/tests.json
+/read testeranto/reports/core/src/Pure.test/pure/type_errors.txt
+/read testeranto/reports/core/src/Pure.test/pure/lint_errors.txt
+
+/read testeranto/reports/core/src/Pure.test/pure/stdout.log
+/read testeranto/reports/core/src/Pure.test/pure/stderr.log
+/read testeranto/reports/core/src/Pure.test/pure/exit.log
+/read testeranto/reports/core/src/Pure.test/pure/message.txt

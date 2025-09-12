@@ -26,6 +26,13 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
   }
 
   addArtifact(path: string) {
+    if (typeof path !== "string") {
+      throw new Error(
+        `[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(
+          path
+        )}`
+      );
+    }
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
   }
@@ -56,45 +63,34 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     // Ensure addArtifact is properly bound to 'this'
     const addArtifact = this.addArtifact.bind(this);
     const proxiedPm = butThenProxy(pm, filepath, addArtifact);
-    return this.butThen(
-      store,
-      async (s: I["iselection"]) => {
-        try {
-          if (typeof this.thenCB === "function") {
-            // Add debug logging to see what's being passed to thenCB
-
-            // Check if the thenCB is spreading the arguments incorrectly
-            // Wrap the proxy to see what's happening when writeFileSync is called
-            const wrappedPm = new Proxy(proxiedPm, {
-              get: (target, prop, receiver) => {
-                if (prop === "writeFileSync") {
-                  return (...args) => {
-                    console.log(
-                      `[DEBUG] writeFileSync called with args:`,
-                      args
-                    );
-                    return target[prop](...args);
-                  };
-                }
-                return target[prop];
-              },
-            });
-            const result = await this.thenCB(s, wrappedPm);
-
-            return result;
-          } else {
-            return this.thenCB;
+    
+    try {
+      return await this.butThen(
+        store,
+        async (s: I["iselection"]) => {
+          try {
+            if (typeof this.thenCB === "function") {
+              const result = await this.thenCB(s, proxiedPm);
+              return result;
+            } else {
+              return this.thenCB;
+            }
+          } catch (e) {
+            // Mark this then step as failed
+            this.error = true;
+            // Re-throw to be caught by the outer catch block
+            throw e;
           }
-        } catch (e) {
-          console.error(e.stack);
-        }
-      },
-      testResourceConfiguration,
-      proxiedPm
-    ).catch((e) => {
-      this.error = e.stack;
-      // throw e;
-    });
+        },
+        testResourceConfiguration,
+        proxiedPm
+      );
+    } catch (e) {
+      // Record the error and mark this then step as failed
+      this.error = true;
+      // Re-throw to propagate to the test runner
+      throw e;
+    }
   }
 }
 /**

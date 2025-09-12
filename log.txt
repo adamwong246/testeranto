@@ -1,0 +1,85 @@
+
+node > build ended with 0 errors
+Build node completed successfully
+Runnables for core:
+Node: {
+  "example/Calculator.test.ts": "/Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs"
+}
+Web: {}
+Pure: {}
+Python: {}
+Golang: {}
+Added example/Calculator.test.ts (node) to the processing queue
+ CHECK QUEUE (length: 1)
+node < example/Calculator.test.ts
+The queue is empty
+Found metafile for node ./testeranto/metafiles/node/core.json
+Node entry points: [ 'example/Calculator.test.ts' ]
+Web entry points: []
+Pure entry points: []
+Retrieving /Users/adam/Code/testeranto/tsconfig.json
+tsc > example/Calculator.test.ts failed 12 times
+ CHECK QUEUE (length: 0)
+The queue is empty
+The following jobs are awaiting resources: []
+The status of ports: {"3333":""}
+Looking for test with entrypoint: "example/Calculator.test.ts" in platform: "node"
+CRITICAL: Could not find match for entrypoint "/Users/adam/Code/testeranto/example/Calculator.test.ts" in platform "node"
+Available entry points:
+{
+  "example/Calculator.test.ts": "/Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs"
+}
+Let's check each entry point individually:
+  Test: "example/Calculator.test.ts" -> Entry point: "/Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs" -> Normalized: "/Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs"
+Could not find test for entrypoint: example/Calculator.test.ts (node)
+Entrypoint not found in any runnables. This suggests the metafile entrypoint doesn't match any test configuration.
+node ! example/Calculator.test.ts failed to execute. Check testeranto/reports/core/example/Calculator.test/node/stderr.log for more info
+ CHECK QUEUE (length: 0)
+The queue is empty
+The following jobs are awaiting resources: []
+The status of ports: {"3333":""}
+node > example/Calculator.test.ts failed 255 times (exit code: 255)
+ CHECK QUEUE (length: 0)
+The queue is empty
+The following jobs are awaiting resources: []
+The status of ports: {"3333":""}
+eslint > example/Calculator.test.ts failed 2 times
+ CHECK QUEUE (length: 0)
+The queue is empty
+The following jobs are awaiting resources: []
+The status of ports: {"3333":""}
+
+
+
+/////// here a source file is changed ////////////////
+
+node > build ended with 0 errors
+Build node completed successfully
+< change core.json (node)
+ CHECK QUEUE (length: 0)
+The queue is empty
+Retrieving /Users/adam/Code/testeranto/tsconfig.json
+tsc > example/Calculator.test.ts failed 12 times
+ CHECK QUEUE (length: 0)
+The queue is empty
+The following jobs are awaiting resources: []
+The status of ports: {"3333":""}
+Looking for test with entrypoint: "example/Calculator.test.ts" in platform: "node"
+CRITICAL: Could not find match for entrypoint "/Users/adam/Code/testeranto/example/Calculator.test.ts" in platform "node"
+Available entry points:
+{
+  "example/Calculator.test.ts": "/Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs"
+}
+Let's check each entry point individually:
+  Test: "example/Calculator.test.ts" -> Entry point: "/Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs" -> Normalized: "/Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs"
+Could not find test for entrypoint: example/Calculator.test.ts (node)
+Entrypoint not found in any runnables. This suggests the metafile entrypoint doesn't match any test configuration.
+ CHECK QUEUE (length: 0)
+The queue is empty
+The following jobs are awaiting resources: []
+The status of ports: {"3333":""}
+eslint > example/Calculator.test.ts failed 2 times
+ CHECK QUEUE (length: 0)
+The queue is empty
+The following jobs are awaiting resources: []
+The status of ports: {"3333":""}

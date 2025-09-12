@@ -3,31 +3,84 @@
   "warnings": [],
   "metafile": {
     "inputs": {
-      "example/test_example.py": {
-        "bytes": 6452,
+      "example/Calculator.pitono.test.py": {
+        "bytes": 1363,
         "imports": [
-          "asyncio",
-          "sys",
-          "os"
+          {
+            "path": "sys",
+            "kind": "import-statement",
+            "external": true,
+            "original": "sys"
+          },
+          {
+            "path": "os",
+            "kind": "import-statement",
+            "external": true,
+            "original": "os"
+          },
+          {
+            "path": "Calculator",
+            "kind": "import-statement",
+            "external": false,
+            "original": "Calculator"
+          }
+        ]
+      },
+      "example/Calculator.py": {
+        "bytes": 2690,
+        "imports": []
+      },
+      "example/test_example.py": {
+        "bytes": 5951,
+        "imports": [
+          {
+            "path": "asyncio",
+            "kind": "import-statement",
+            "external": true,
+            "original": "asyncio"
+          },
+          {
+            "path": "sys",
+            "kind": "import-statement",
+            "external": true,
+            "original": "sys"
+          },
+          {
+            "path": "os",
+            "kind": "import-statement",
+            "external": true,
+            "original": "os"
+          }
         ]
       }
     },
     "outputs": {
-      "testeranto/bundles/python/core/test_example.py": {
-        "imports": [
-          "asyncio",
-          "sys",
-          "os"
-        ],
+      "python/core/Calculator.pitono.test.py": {
+        "imports": [],
+        "exports": [],
+        "entryPoint": "example/Calculator.pitono.test.py",
+        "inputs": {
+          "example/Calculator.pitono.test.py": {
+            "bytesInOutput": 1363
+          },
+          "example/Calculator.py": {
+            "bytesInOutput": 2690
+          }
+        },
+        "bytes": 4053,
+        "signature": "mfg0b32x"
+      },
+      "python/core/test_example.py": {
+        "imports": [],
         "exports": [],
         "entryPoint": "example/test_example.py",
         "inputs": {
           "example/test_example.py": {
-            "bytesInOutput": 6452
+            "bytesInOutput": 5951
           }
         },
-        "bytes": 6452,
-        "signature": "mfcteuim"
+        "bytes": 5951,
+        "signature": "mfg0b32x"
       }
     }
   }

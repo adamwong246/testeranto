@@ -1,0 +1,166 @@
+{
+  "name": "Tiposkripto Core Functionality",
+  "givens": [
+    {
+      "key": "initialization",
+      "whens": [],
+      "thens": [
+        {
+          "name": "initializedProperly: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Tiposkripto should initialize with default values"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "customInput",
+      "whens": [],
+      "thens": [
+        {
+          "name": "initializedProperly: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Custom input test"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "resourceRequirements",
+      "whens": [],
+      "thens": [
+        {
+          "name": "resourceRequirementsSet: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Resource requirements test"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "specGeneration",
+      "whens": [],
+      "thens": [
+        {
+          "name": "specsGenerated: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should generate specs from test specification"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "jobCreation",
+      "whens": [],
+      "thens": [
+        {
+          "name": "jobsCreated: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should create test jobs from specs"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "artifactTracking",
+      "whens": [
+        {
+          "name": "addArtifact: [object Promise]",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "artifactsTracked: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should track artifacts"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "overridesConfiguration",
+      "whens": [],
+      "thens": [
+        {
+          "name": "suitesOverridesConfigured: ",
+          "error": false,
+          "artifacts": []
+        },
+        {
+          "name": "givensOverridesConfigured: ",
+          "error": false,
+          "artifacts": []
+        },
+        {
+          "name": "whensOverridesConfigured: ",
+          "error": false,
+          "artifacts": []
+        },
+        {
+          "name": "thensOverridesConfigured: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Should properly configure all overrides"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "interfaceConfiguration",
+      "whens": [],
+      "thens": [
+        {
+          "name": "interfaceConfigured: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "Interface configuration test"
+      ],
+      "artifacts": []
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "Tiposkripto should initialize with default values",
+    "Custom input test",
+    "Resource requirements test",
+    "Should generate specs from test specification",
+    "Should create test jobs from specs",
+    "Should track artifacts",
+    "Should properly configure all overrides",
+    "Interface configuration test"
+  ],
+  "artifacts": []
+}

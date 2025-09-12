@@ -21,7 +21,7 @@ import { BaseSuite } from "./BaseSuite";
 export type IGivens<I extends Ibdd_in_any> = Record<string, BaseGiven<I>>;
 
 export abstract class BaseGiven<I extends Ibdd_in_any> {
-  name: string;
+  // name: string;
   features: string[];
   whens: any[];
   thens: any[];
@@ -36,24 +36,52 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
   artifacts: string[] = [];
 
   addArtifact(path: string) {
+    if (typeof path !== "string") {
+      throw new Error(
+        `[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(
+          path
+        )}`
+      );
+    }
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
   }
 
   constructor(
-    name: string,
     features: string[],
     whens: any[],
     thens: any[],
     givenCB: I["given"],
     initialValues: any
   ) {
-    this.name = name;
-    this.features = features || [];
-    this.whens = whens || [];
-    this.thens = thens || [];
+    // Ensure features are always strings
+    // Ensure features are always strings and not objects
+    // If features contains objects, it's likely a parameter shift error
+    this.features = (Array.isArray(features) ? features : [])
+      .map((feature) => {
+        // If feature is a string, use it directly
+        if (typeof feature === "string") return feature;
+        // If feature is an object, this is an error - log it and return empty string
+        if (feature && typeof feature === "object") {
+          console.error(
+            `[ERROR] Found object in features array: ${
+              feature.name || JSON.stringify(feature)
+            }`
+          );
+          return ""; // Return empty string to avoid issues
+        }
+        // For any other case, convert to string
+        return String(feature);
+      })
+      .filter((f) => f !== null && f !== undefined && f !== "");
+
+    // Ensure whens and thens are always arrays
+    this.whens = Array.isArray(whens) ? whens : [];
+    this.thens = Array.isArray(thens) ? thens : [];
+
     this.givenCB = givenCB;
     this.initialValues = initialValues;
+    this.fails = 0; // Initialize fail count
   }
 
   beforeAll(store: I["istore"]) {
@@ -63,18 +91,17 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
   toObj() {
     return {
       key: this.key,
-      name: this.name,
+      // name: this.name,
       whens: (this.whens || []).map((w) => {
         if (w && w.toObj) return w.toObj();
-
-        console.error("w is not as expected!", JSON.stringify(w));
+        console.error("When step is not as expected!", JSON.stringify(w));
         return {};
       }),
-      thens: (this.thens || []).map((t) => t && t.toObj ? t.toObj() : {}),
+      thens: (this.thens || []).map((t) => (t && t.toObj ? t.toObj() : {})),
       error: this.error ? [this.error, this.error.stack] : null,
       failed: this.failed,
       features: this.features || [],
-      artifacts: this.artifacts || [],
+      artifacts: this.artifacts,
     };
   }
 
@@ -109,6 +136,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     suiteNdx: number
   ) {
     this.key = key;
+    this.fails = 0; // Initialize fail count for this given
 
     tLog(`\n ${this.key}`);
     tLog(`\n Given: ${this.name}`);
@@ -137,6 +165,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     } catch (e) {
       // console.error("Given failure: ", e.stack);
       this.failed = true;
+      this.fails++; // Increment fail count
       this.error = e.stack;
       // throw e;
     }
@@ -144,25 +173,93 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     try {
       // tLog(`\n Given this.store`, this.store);
 
-      for (const [whenNdx, whenStep] of this.whens.entries()) {
-        await whenStep.test(
-          this.store,
-          testResourceConfiguration,
-          tLog,
-          pm,
-          `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
-        );
+      // Process when steps
+      const whens = this.whens || [];
+      // console.log(`[BaseGiven.give] Number of when steps: ${whens.length}`);
+      if (whens.length > 0) {
+        // console.log(`[BaseGiven.give] When steps exist, let's process them`);
+        for (const [whenNdx, whenStep] of whens.entries()) {
+          // console.log(
+          //   `[BaseGiven.give] Processing when step ${whenNdx}:`,
+          //   whenStep?.name
+          // );
+          // console.log(`[BaseGiven.give] Store before when step:`, this.store);
+          // console.log(`[BaseGiven.give] When step instance:`, whenStep);
+
+          // Check if this is actually a then step that was incorrectly placed in whens
+          if (
+            whenStep &&
+            whenStep.name &&
+            whenStep.name.startsWith("result:")
+          ) {
+            // console.error(
+            //   `[BaseGiven.give] ERROR: Found then step "${whenStep.name}" in whens array!`
+            // );
+            // Move it to thens array
+            this.thens.push(whenStep);
+            // console.log(
+            //   `[BaseGiven.give] Moved "${whenStep.name}" from whens to thens`
+            // );
+            continue; // Skip processing as a when step
+          }
+
+          // Check if whenStep exists and whenStep.test is a function
+          if (whenStep && typeof whenStep.test === "function") {
+            try {
+              // Update the store with the result of the when step
+              this.store = await whenStep.test(
+                this.store,
+                testResourceConfiguration,
+                tLog,
+                pm,
+                `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
+              );
+              // console.log(
+              //   `[BaseGiven.give] Store after when step ${whenNdx}:`,
+              //   this.store
+              // );
+            } catch (e) {
+              // console.error(
+              //   `[BaseGiven.give] Error in when step ${whenNdx}:`,
+              //   e
+              // );
+              this.failed = true;
+              this.fails++; // Increment fail count
+              throw e;
+            }
+          } else {
+            // console.error(
+            //   `[BaseGiven.give] whenStep.test is not a function:`,
+            //   typeof whenStep?.test
+            // );
+            this.failed = true;
+            this.fails++; // Increment fail count
+            throw new Error(`When step ${whenNdx} does not have a test method`);
+          }
+        }
+      } else {
+        console.log(`[BaseGiven.give] No when steps to process`);
       }
 
+      // Process then steps
       for (const [thenNdx, thenStep] of this.thens.entries()) {
-        const t = await thenStep.test(
-          this.store,
-          testResourceConfiguration,
-          tLog,
-          pm,
-          `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
-        );
-        tester(t);
+        try {
+          const t = await thenStep.test(
+            this.store,
+            testResourceConfiguration,
+            tLog,
+            pm,
+            `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
+          );
+          // If the test doesn't throw, it passed
+          tester(t);
+        } catch (e) {
+          // Mark the given as failed if any then step fails
+          this.failed = true;
+          this.fails++; // Increment fail count
+          // Re-throw to propagate the error
+          throw e;
+        }
       }
     } catch (e) {
       this.error = e.stack;
@@ -182,7 +279,8 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
         // (proxiedPm as any).currentStep = this;
         await this.afterEach(this.store, this.key, givenArtifactory, proxiedPm);
       } catch (e) {
-        this.failed = e;
+        this.failed = true;
+        this.fails++; // Increment fail count
         throw e;
         // this.error = e.message;
       }

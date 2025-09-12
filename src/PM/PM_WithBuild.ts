@@ -9,7 +9,7 @@ import { getRunnables } from "../utils.js";
 
 import { PM_WithWebSocket } from "./PM_WithWebSocket.js";
 
-import golingvuBuild from "./golingvuBuild";
+// import golingvuBuild from "./golingvuBuild";
 
 export abstract class PM_WithBuild extends PM_WithWebSocket {
   configs: IBuiltConfig;
@@ -148,18 +148,21 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
     };
 
     try {
-      const ctx = await esbuild.context(configWithPlugin);
-
+      // Always build first, then watch if in dev mode
       if (this.mode === "dev") {
-        // In dev mode, start watching - each rebuild will be tracked as a separate process
+        const ctx = await esbuild.context(configWithPlugin);
+        // Build once and then watch
+        await ctx.rebuild();
         await ctx.watch();
       } else {
-        // In once mode, do a single build which will be tracked by the plugin
-        const result = await ctx.rebuild();
-        await ctx.dispose();
+        // In once mode, just build
+        const result = await esbuild.build(configWithPlugin);
+        if (result.errors.length === 0) {
+          console.log(`Successfully built ${runtime} bundle`);
+        }
       }
     } catch (error) {
-      console.error(`Failed to start ${runtime} build context:`, error);
+      console.error(`Failed to build ${runtime}:`, error);
       // Broadcast error event
       if (this.broadcast) {
         this.broadcast({
@@ -172,6 +175,7 @@ export abstract class PM_WithBuild extends PM_WithWebSocket {
           message: error.message,
         });
       }
+      throw error;
     }
   }
 

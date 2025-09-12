@@ -39,30 +39,16 @@ class Rectangle:
     def area(self):
         return self.width * self.height
 
-# Define test specification
+# Define test specification to match the TypeScript structure
 def test_specification(Suite, Given, When, Then, Check):
     return [
-        Suite(
-            "Testing Rectangle functionality",
-            {
-                "test_initial_dimensions": Given["Default"](
-                    ["A rectangle with initial dimensions"],
-                    [],
-                    [Then["get_width"](2), Then["get_height"](2)]
-                ),
-                "test_set_width": Given["Default"](
-                    ["Setting width of rectangle"],
-                    [When["set_width"](4)],
-                    [Then["get_width"](4)]
-                ),
-                "test_area": Given["Default"](
-                    ["Calculate area of rectangle"],
-                    [When["set_width"](3), When["set_height"](4)],
-                    [Then["area"](12)]
-                )
-            },
-            []
-        )
+        Suite.Default("BaseSuite Core Funct", {
+            "initialization": Given["Default"](
+                ["BaseSuite should initialize with correct name and index"],
+                [],
+                [Then["SuiteNameMatches"]("testSuite"), Then["SuiteIndexMatches"](0)]
+            ),
+        }, [])
     ]
 
 # Helper function for assertions
@@ -71,25 +57,23 @@ def _assert_equal(actual, expected):
         raise AssertionError(f"Expected {expected}, got {actual}")
     return True
 
-# Define test implementation
+# Define test implementation to match TypeScript
 test_implementation = ITestImplementation(
     suites={
-        "Default": "Testing Rectangle class"
+        "Default": "BaseSuite Comprehensive Test Suite"
     },
     givens={
-        "Default": lambda *args: Rectangle(2, 2)
+        "Default": lambda: lambda: {"testStore": True, "testSelection": False}
     },
     whens={
-        "set_width": lambda width: lambda rect, pm: (rect.set_width(width) or rect),
-        "set_height": lambda height: lambda rect, pm: (rect.set_height(height) or rect)
+        "SuiteNameMatches": lambda name: lambda store, pm: store,
+        "SuiteIndexMatches": lambda index: lambda store, pm: store
     },
     thens={
-        "get_width": lambda expected: lambda rect, pm: 
-            (_assert_equal(rect.get_width(), expected), rect)[1],
-        "get_height": lambda expected: lambda rect, pm: 
-            (_assert_equal(rect.get_height(), expected), rect)[1],
-        "area": lambda expected: lambda rect, pm: 
-            (_assert_equal(rect.area(), expected), rect)[1],
+        "SuiteNameMatches": lambda expected: lambda store, pm: 
+            (_assert_equal(store.get("name", ""), expected), store)[1],
+        "SuiteIndexMatches": lambda expected: lambda store, pm: 
+            (_assert_equal(store.get("index", -1), expected), store)[1],
     }
 )
 

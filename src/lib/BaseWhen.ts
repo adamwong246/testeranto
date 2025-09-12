@@ -16,6 +16,13 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   artifacts: string[] = [];
 
   addArtifact(path: string) {
+    if (typeof path !== "string") {
+      throw new Error(
+        `[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(
+          path
+        )}`
+      );
+    }
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
   }
@@ -38,7 +45,7 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
       error: this.error
         ? `${this.error.name}: ${this.error.message}\n${this.error.stack}`
         : null,
-      artifacts: this.artifacts || [],
+      artifacts: this.artifacts,
     };
     console.log(
       `[TOOBJ] Serializing ${this.constructor.name} with artifacts:`,
@@ -55,12 +62,12 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
     filepath: string
   ) {
     try {
-      // tLog(" When:", this.name);
       // Ensure addArtifact is properly bound to 'this'
       const addArtifact = this.addArtifact.bind(this);
       const proxiedPm = andWhenProxy(pm, filepath, addArtifact);
 
       // (proxiedPm as any).currentStep = this;
+
       const result = await this.andWhen(
         store,
         this.whenCB,

@@ -33,6 +33,9 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   artifacts: string[] = [];
 
   addArtifact(path: string) {
+    if (typeof path !== "string") {
+      throw new Error(`[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(path)}`);
+    }
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
   }
@@ -57,7 +60,17 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
         .filter((value, index, array) => {
           return array.indexOf(value) === index;
         });
-      return features || [];
+      // Convert all features to strings
+      const stringFeatures = features.map(feature => {
+        if (typeof feature === 'string') {
+          return feature;
+        } else if (feature && typeof feature === 'object') {
+          return feature.name || JSON.stringify(feature);
+        } else {
+          return String(feature);
+        }
+      });
+      return stringFeatures || [];
     } catch (e) {
       console.error("[ERROR] Failed to extract features:", JSON.stringify(e));
       return [];
@@ -65,7 +78,22 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
   }
 
   public toObj() {
-    const givens = Object.keys(this.givens).map((k) => this.givens[k].toObj());
+    const givens = Object.keys(this.givens).map((k) => {
+      const givenObj = this.givens[k].toObj();
+      // Ensure given features are strings
+      if (givenObj.features) {
+        givenObj.features = givenObj.features.map(feature => {
+          if (typeof feature === 'string') {
+            return feature;
+          } else if (feature && typeof feature === 'object') {
+            return feature.name || JSON.stringify(feature);
+          } else {
+            return String(feature);
+          }
+        });
+      }
+      return givenObj;
+    });
 
     return {
       name: this.name,
@@ -73,6 +101,7 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
       fails: this.fails,
       failed: this.failed,
       features: this.features(),
+      artifacts: this.artifacts ? this.artifacts.filter(art => typeof art === 'string') : [],
     };
   }
 
@@ -121,8 +150,8 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
 
     for (const [gKey, g] of Object.entries(this.givens)) {
       const giver = this.givens[gKey];
-      this.store = await giver
-        .give(
+      try {
+        this.store = await giver.give(
           subject,
           gKey,
           testResourceConfiguration,
@@ -131,12 +160,25 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
           tLog,
           pm,
           sNdx
-        )
-        .catch((e) => {
-          this.failed = true;
-          this.fails = this.fails + 1;
-          throw e;
-        });
+        );
+        // Add the number of failures from this given to the suite's total
+        this.fails += giver.fails || 0;
+      } catch (e) {
+        this.failed = true;
+        // Add 1 to fails for the caught error
+        this.fails += 1;
+        // Also add any failures from the given itself
+        if (giver.fails) {
+          this.fails += giver.fails;
+        }
+        console.error(`Error in given ${gKey}:`, e);
+        // Don't re-throw to continue with other givens
+      }
+    }
+
+    // Mark the suite as failed if there are any failures
+    if (this.fails > 0) {
+      this.failed = true;
     }
 
     try {

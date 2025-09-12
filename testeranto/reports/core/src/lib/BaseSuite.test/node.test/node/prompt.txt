@@ -1,3 +1,8 @@
+
+/add src/lib/BaseSuite.test/mock.ts
+/add src/lib/BaseSuite.test/test.ts
+/add src/lib/BaseSuite.test/node.test.ts
+
 /read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md
 /read node_modules/testeranto/docs/testing.ai.txt
@@ -7,7 +12,12 @@
 /read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/type_errors.txt
 /read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/lint_errors.txt
 
-/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/stdout.log
-/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/stderr.log
+/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/tests.json
+/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/type_errors.txt
+/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/lint_errors.txt
 /read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/exit.log
 /read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/message.txt
+/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/prompt.txt
+/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/build.json
+/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/stdout.log
+/read testeranto/reports/core/src/lib/BaseSuite.test/node.test/node/stderr.log

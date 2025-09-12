@@ -7,6 +7,19 @@ class BaseWhen:
         self.artifacts: List[str] = []
         self.error: Any = None
     
+    async def and_when(
+        self,
+        store: Any,
+        when_cb: Any,
+        test_resource: Any,
+        pm: Any
+    ) -> Any:
+        # Execute the when callback which should modify the store
+        # The when_cb is typically a function that takes the store and returns the modified store
+        if callable(when_cb):
+            return when_cb(store)
+        return store
+    
     def add_artifact(self, path: str) -> None:
         normalized_path = path.replace('\\', '/')
         self.artifacts.append(normalized_path)

@@ -10,7 +10,11 @@ import fs from "fs";
 import { ConsoleMessage } from "puppeteer-core";
 import ansiC from "ansi-colors";
 
-import { IFinalResults, ITTestResourceConfiguration, IRunTime } from "../lib/index.js";
+import {
+  IFinalResults,
+  ITTestResourceConfiguration,
+  IRunTime,
+} from "../lib/index.js";
 import { webEvaluator } from "../utils";
 import { Queue } from "../utils/queue.js";
 
@@ -22,7 +26,173 @@ const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
 export class PM_Main extends PM_WithHelpo {
+  private async setupTestEnvironment(
+    src: string,
+    runtime: IRunTime
+  ): Promise<{
+    reportDest: string;
+    testConfig: any;
+    testConfigResource: any;
+    portsToUse: string[];
+    testResources: string;
+  }> {
+    this.bddTestIsRunning(src);
+
+    const reportDest = `testeranto/reports/${this.name}/${src
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/${runtime}`;
+
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    const testConfig = this.configs.tests.find((t) => t[0] === src);
+    if (!testConfig) {
+      console.log(
+        ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`)
+      );
+      process.exit(-1);
+    }
+
+    const testConfigResource = testConfig[2];
+    const portsToUse: string[] = [];
+    let testResources = "";
+
+    if (testConfigResource.ports === 0) {
+      testResources = JSON.stringify({
+        name: src,
+        ports: [],
+        fs: reportDest,
+        browserWSEndpoint: this.browser.wsEndpoint(),
+      });
+    } else if (testConfigResource.ports > 0) {
+      const openPorts = Object.entries(this.ports).filter(
+        ([, status]) => status === ""
+      );
+
+      if (openPorts.length >= testConfigResource.ports) {
+        for (let i = 0; i < testConfigResource.ports; i++) {
+          portsToUse.push(openPorts[i][0]);
+          this.ports[openPorts[i][0]] = src;
+        }
+
+        testResources = JSON.stringify({
+          scheduled: true,
+          name: src,
+          ports: portsToUse,
+          fs: reportDest,
+          browserWSEndpoint: this.browser.wsEndpoint(),
+        });
+      } else {
+        console.log(
+          ansiC.red(
+            `${runtime}: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
+          )
+        );
+        this.queue.push(src);
+        throw new Error("No ports available");
+      }
+    } else {
+      console.error("negative port makes no sense", src);
+      process.exit(-1);
+    }
+
+    return {
+      reportDest,
+      testConfig,
+      testConfigResource,
+      portsToUse,
+      testResources,
+    };
+  }
+
+  private cleanupPorts(portsToUse: string[]) {
+    portsToUse.forEach((port) => {
+      this.ports[port] = "";
+    });
+  }
+
+  private createIpcServer(
+    onData: (data: Buffer) => void,
+    ipcfile: string
+  ): Promise<net.Server> {
+    return new Promise((resolve, reject) => {
+      const server = net.createServer((socket) => {
+        socket.on("data", onData);
+      });
+
+      server.listen(ipcfile, (err) => {
+        if (err) reject(err);
+        else resolve(server);
+      });
+
+      server.on("error", reject);
+    });
+  }
+
+  private handleChildProcess(
+    child: ChildProcess,
+    logs: LogStreams,
+    reportDest: string,
+    src: string,
+    runtime: IRunTime
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      child.stdout?.on("data", (data) => {
+        logs.stdout?.write(data);
+      });
+
+      child.stderr?.on("data", (data) => {
+        logs.stderr?.write(data);
+      });
+
+      child.on("close", (code) => {
+        const exitCode = code === null ? -1 : code;
+        if (exitCode < 0) {
+          logs.writeExitCode(
+            exitCode,
+            new Error("Process crashed or was terminated")
+          );
+        } else {
+          logs.writeExitCode(exitCode);
+        }
+        logs.closeAll();
+
+        if (exitCode === 0) {
+          this.bddTestIsNowDone(src, 0);
+          statusMessagePretty(0, src, runtime);
+          resolve();
+        } else {
+          console.log(
+            ansiColors.red(
+              `${runtime} ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
+            )
+          );
+          this.bddTestIsNowDone(src, exitCode);
+          statusMessagePretty(exitCode, src, runtime);
+          reject(new Error(`Process exited with code ${exitCode}`));
+        }
+      });
+
+      child.on("error", (e) => {
+        console.log(
+          ansiC.red(
+            ansiC.inverse(
+              `${src} errored with: ${e.name}. Check error logs for more info`
+            )
+          )
+        );
+        this.bddTestIsNowDone(src, -1);
+        statusMessagePretty(-1, src, runtime);
+        reject(e);
+      });
+    });
+  }
+
   launchPure = async (src: string, dest: string) => {
+    console.log(ansiC.green(ansiC.inverse(`pure < ${src}`)));
+
     const processId = `pure-${src}-${Date.now()}`;
     const command = `pure test: ${src}`;
 
@@ -103,6 +273,8 @@ export class PM_Main extends PM_WithHelpo {
               return defaultModule
                 .receiveTestResourceConfig(argz)
                 .then(async (results: IFinalResults) => {
+                  // Ensure the test results are properly processed
+                  // The receiveTestResourceConfig should handle creating tests.json
                   statusMessagePretty(results.fails, src, "pure");
                   this.bddTestIsNowDone(src, results.fails);
                   return results.fails;
@@ -115,6 +287,24 @@ export class PM_Main extends PM_WithHelpo {
                 )
               );
 
+              // Create a minimal tests.json even on failure
+              const testsJsonPath = `${reportDest}/tests.json`;
+              if (!fs.existsSync(testsJsonPath)) {
+                fs.writeFileSync(
+                  testsJsonPath,
+                  JSON.stringify(
+                    {
+                      tests: [],
+                      features: [],
+                      givens: [],
+                      fullPath: src,
+                    },
+                    null,
+                    2
+                  )
+                );
+              }
+
               logs.exit.write(e2.stack);
               logs.exit.write(-1);
               this.bddTestIsNowDone(src, -1);
@@ -123,6 +313,24 @@ export class PM_Main extends PM_WithHelpo {
             });
         });
       } catch (e3) {
+        // Create a minimal tests.json even on uncaught errors
+        const testsJsonPath = `${reportDest}/tests.json`;
+        if (!fs.existsSync(testsJsonPath)) {
+          fs.writeFileSync(
+            testsJsonPath,
+            JSON.stringify(
+              {
+                tests: [],
+                features: [],
+                givens: [],
+                fullPath: src,
+              },
+              null,
+              2
+            )
+          );
+        }
+
         logs.writeExitCode(-1, e3);
         console.log(
           ansiC.red(
@@ -140,7 +348,7 @@ export class PM_Main extends PM_WithHelpo {
       } finally {
         // Generate prompt files for Pure tests
         await this.generatePromptFiles(reportDest, src);
-        
+
         for (let i = 0; i <= portsToUse.length; i++) {
           if (portsToUse[i]) {
             this.ports[portsToUse[i]] = ""; // port is open again
@@ -160,183 +368,27 @@ export class PM_Main extends PM_WithHelpo {
     );
   };
 
-  private async setupTestEnvironment(
-    src: string, 
-    runtime: IRunTime
-  ): Promise<{
-    reportDest: string;
-    testConfig: any;
-    testConfigResource: any;
-    portsToUse: string[];
-    testResources: string;
-  }> {
-    this.bddTestIsRunning(src);
-
-    const reportDest = `testeranto/reports/${this.name}/${src
-      .split(".")
-      .slice(0, -1)
-      .join(".")}/${runtime}`;
-
-    if (!fs.existsSync(reportDest)) {
-      fs.mkdirSync(reportDest, { recursive: true });
-    }
-
-    const testConfig = this.configs.tests.find((t) => t[0] === src);
-    if (!testConfig) {
-      console.log(
-        ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`)
-      );
-      process.exit(-1);
-    }
-
-    const testConfigResource = testConfig[2];
-    const portsToUse: string[] = [];
-    let testResources = "";
-
-    if (testConfigResource.ports === 0) {
-      testResources = JSON.stringify({
-        name: src,
-        ports: [],
-        fs: reportDest,
-        browserWSEndpoint: this.browser.wsEndpoint(),
-      });
-    } else if (testConfigResource.ports > 0) {
-      const openPorts = Object.entries(this.ports).filter(
-        ([, status]) => status === ""
-      );
-
-      if (openPorts.length >= testConfigResource.ports) {
-        for (let i = 0; i < testConfigResource.ports; i++) {
-          portsToUse.push(openPorts[i][0]);
-          this.ports[openPorts[i][0]] = src;
-        }
-
-        testResources = JSON.stringify({
-          scheduled: true,
-          name: src,
-          ports: portsToUse,
-          fs: reportDest,
-          browserWSEndpoint: this.browser.wsEndpoint(),
-        });
-      } else {
-        console.log(
-          ansiC.red(
-            `${runtime}: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
-          )
-        );
-        this.queue.push(src);
-        throw new Error('No ports available');
-      }
-    } else {
-      console.error("negative port makes no sense", src);
-      process.exit(-1);
-    }
-
-    return { reportDest, testConfig, testConfigResource, portsToUse, testResources };
-  }
-
-  private cleanupPorts(portsToUse: string[]) {
-    portsToUse.forEach((port) => {
-      this.ports[port] = "";
-    });
-  }
-
-  private createIpcServer(
-    onData: (data: Buffer) => void,
-    ipcfile: string
-  ): Promise<net.Server> {
-    return new Promise((resolve, reject) => {
-      const server = net.createServer((socket) => {
-        socket.on('data', onData);
-      });
-      
-      server.listen(ipcfile, (err) => {
-        if (err) reject(err);
-        else resolve(server);
-      });
-      
-      server.on('error', reject);
-    });
-  }
-
-  private handleChildProcess(
-    child: ChildProcess,
-    logs: LogStreams,
-    reportDest: string,
-    src: string,
-    runtime: IRunTime
-  ): Promise<void> {
-    return new Promise((resolve, reject) => {
-      child.stdout?.on("data", (data) => {
-        logs.stdout?.write(data);
-      });
-
-      child.stderr?.on("data", (data) => {
-        logs.stderr?.write(data);
-      });
-
-      child.on("close", (code) => {
-        const exitCode = code === null ? -1 : code;
-        if (exitCode < 0) {
-          logs.writeExitCode(
-            exitCode,
-            new Error("Process crashed or was terminated")
-          );
-        } else {
-          logs.writeExitCode(exitCode);
-        }
-        logs.closeAll();
-
-        if (exitCode === 0) {
-          this.bddTestIsNowDone(src, 0);
-          statusMessagePretty(0, src, runtime);
-          resolve();
-        } else {
-          console.log(
-            ansiColors.red(
-              `${runtime} ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
-            )
-          );
-          this.bddTestIsNowDone(src, exitCode);
-          statusMessagePretty(exitCode, src, runtime);
-          reject(new Error(`Process exited with code ${exitCode}`));
-        }
-      });
-
-      child.on("error", (e) => {
-        console.log(
-          ansiC.red(
-            ansiC.inverse(
-              `${src} errored with: ${e.name}. Check error logs for more info`
-            )
-          )
-        );
-        this.bddTestIsNowDone(src, -1);
-        statusMessagePretty(-1, src, runtime);
-        reject(e);
-      });
-    });
-  }
-
   launchNode = async (src: string, dest: string) => {
+    console.log(ansiC.green(ansiC.inverse(`node < ${src}`)));
+
     const processId = `node-${src}-${Date.now()}`;
     const command = `node test: ${src}`;
 
     const nodePromise = (async () => {
       try {
-        const { reportDest, testResources, portsToUse } = 
+        const { reportDest, testResources, portsToUse } =
           await this.setupTestEnvironment(src, "node");
-        
+
         const builtfile = dest;
         const ipcfile = "/tmp/tpipe_" + Math.random();
         const logs = createLogStreams(reportDest, "node");
-        
+
         let buffer = Buffer.from("");
         const queue = new Queue<string[]>();
-        
+
         const onData = (data: Buffer) => {
           buffer = Buffer.concat([buffer, data]);
-          
+
           // Process complete JSON messages
           for (let b = 0; b < buffer.length + 1; b++) {
             const c = buffer.slice(0, b);
@@ -349,7 +401,7 @@ export class PM_Main extends PM_WithHelpo {
               // Continue processing
             }
           }
-          
+
           // Process messages
           while (queue.size() > 0) {
             const message = queue.dequeue();
@@ -373,15 +425,15 @@ export class PM_Main extends PM_WithHelpo {
             }
           }
         };
-        
+
         const server = await this.createIpcServer(onData, ipcfile);
         const child = spawn("node", [builtfile, testResources, ipcfile], {
           stdio: ["pipe", "pipe", "pipe", "ipc"],
         });
-        
+
         try {
           await this.handleChildProcess(child, logs, reportDest, src, "node");
-        
+
           // Generate prompt files for Node tests
           await this.generatePromptFiles(reportDest, src);
         } finally {
@@ -389,16 +441,25 @@ export class PM_Main extends PM_WithHelpo {
           this.cleanupPorts(portsToUse);
         }
       } catch (error) {
-        if (error.message !== 'No ports available') {
+        if (error.message !== "No ports available") {
           throw error;
         }
       }
     })();
 
-    this.addPromiseProcess(processId, nodePromise, command, "bdd-test", src, "node");
+    this.addPromiseProcess(
+      processId,
+      nodePromise,
+      command,
+      "bdd-test",
+      src,
+      "node"
+    );
   };
 
   launchWeb = async (src: string, dest: string) => {
+    console.log(ansiC.green(ansiC.inverse(`web < ${src}`)));
+
     const processId = `web-${src}-${Date.now()}`;
     const command = `web test: ${src}`;
 
@@ -517,6 +578,25 @@ export class PM_Main extends PM_WithHelpo {
                     )
                   )
                 );
+
+                // Create a minimal tests.json even on failure
+                const testsJsonPath = `${reportDest}/tests.json`;
+                if (!fs.existsSync(testsJsonPath)) {
+                  fs.writeFileSync(
+                    testsJsonPath,
+                    JSON.stringify(
+                      {
+                        tests: [],
+                        features: [],
+                        givens: [],
+                        fullPath: src,
+                      },
+                      null,
+                      2
+                    )
+                  );
+                }
+
                 this.bddTestIsNowDone(src, -1);
                 reject(e);
               })
@@ -544,32 +624,36 @@ export class PM_Main extends PM_WithHelpo {
   };
 
   launchPython = async (src: string, dest: string) => {
+    console.log(ansiC.green(ansiC.inverse(`python < ${src}`)));
+
     const processId = `python-${src}-${Date.now()}`;
     const command = `python test: ${src}`;
 
     const pythonPromise = (async () => {
       try {
-        const { reportDest, testResources, portsToUse } = 
+        const { reportDest, testResources, portsToUse } =
           await this.setupTestEnvironment(src, "python");
-        
+
         const logs = createLogStreams(reportDest, "python");
-        
+
         // Determine Python command
         const venvPython = `./venv/bin/python3`;
-        const pythonCommand = fs.existsSync(venvPython) ? venvPython : "python3";
-        
+        const pythonCommand = fs.existsSync(venvPython)
+          ? venvPython
+          : "python3";
+
         const ipcfile = "/tmp/tpipe_python_" + Math.random();
         const child = spawn(pythonCommand, [src, testResources, ipcfile], {
           stdio: ["pipe", "pipe", "pipe", "ipc"],
         });
-        
+
         // IPC server setup is similar to Node
         let buffer = Buffer.from("");
         const queue = new Queue<string[]>();
-        
+
         const onData = (data: Buffer) => {
           buffer = Buffer.concat([buffer, data]);
-          
+
           for (let b = 0; b < buffer.length + 1; b++) {
             const c = buffer.slice(0, b);
             try {
@@ -581,7 +665,7 @@ export class PM_Main extends PM_WithHelpo {
               // Continue processing
             }
           }
-          
+
           while (queue.size() > 0) {
             const message = queue.dequeue();
             if (message) {
@@ -604,12 +688,12 @@ export class PM_Main extends PM_WithHelpo {
             }
           }
         };
-        
+
         const server = await this.createIpcServer(onData, ipcfile);
-        
+
         try {
           await this.handleChildProcess(child, logs, reportDest, src, "python");
-        
+
           // Generate prompt files for Python tests
           await this.generatePromptFiles(reportDest, src);
         } finally {
@@ -617,172 +701,216 @@ export class PM_Main extends PM_WithHelpo {
           this.cleanupPorts(portsToUse);
         }
       } catch (error) {
-        if (error.message !== 'No ports available') {
+        if (error.message !== "No ports available") {
           throw error;
         }
       }
     })();
 
-    this.addPromiseProcess(processId, pythonPromise, command, "bdd-test", src, "python");
+    this.addPromiseProcess(
+      processId,
+      pythonPromise,
+      command,
+      "bdd-test",
+      src,
+      "python"
+    );
   };
 
   launchGolang = async (src: string, dest: string) => {
+    console.log(ansiC.green(ansiC.inverse(`goland < ${src}`)));
+
     const processId = `golang-${src}-${Date.now()}`;
     const command = `golang test: ${src}`;
 
     const golangPromise = (async () => {
       try {
-        const { reportDest, testResources, portsToUse } = 
+        const { reportDest, testResources, portsToUse } =
           await this.setupTestEnvironment(src, "golang");
-        
+
         const logs = createLogStreams(reportDest, "golang");
-        
-        // For Go tests, use 'go test' with JSON output
-        // The test file should be in a proper Go package structure
-        // Get the directory containing the test file
-        const testDir = path.dirname(src);
-        
-        // Ensure the bundle directory exists
-        const destDir = path.dirname(dest);
-        if (!fs.existsSync(destDir)) {
-          fs.mkdirSync(destDir, { recursive: true });
-        }
-        
-        // Copy necessary files to the bundle directory to ensure they can be found
-        // This may include the test file and any dependencies
-        const testFileName = path.basename(src);
-        const destTestPath = path.join(destDir, testFileName);
-        if (src !== destTestPath) {
-          fs.copyFileSync(src, destTestPath);
-        }
-        
-        // Create a go.mod file in the bundle directory if it doesn't exist
-        const goModPath = path.join(destDir, 'go.mod');
-        if (!fs.existsSync(goModPath)) {
-          const goModContent = `module example_test
 
-go 1.19
+        // Create IPC file path
+        const ipcfile =
+          "/tmp/tpipe_golang_" + Math.random().toString(36).substring(2);
 
-replace testeranto/src/golingvu => ../../../../../src/golingvu
+        let buffer = Buffer.from("");
+        const queue = new Queue<string[]>();
 
-require (
-    testeranto/src/golingvu v0.0.0
-)
-`;
-          fs.writeFileSync(goModPath, goModContent);
-        }
-        
-        // Run go mod tidy first to ensure dependencies are correct
-        const tidyChild = spawn("go", ["mod", "tidy"], {
-            stdio: ["pipe", "pipe", "pipe"],
-            cwd: destDir
-        });
-        
-        // Wait for go mod tidy to complete
-        await new Promise<void>((resolve, reject) => {
-            tidyChild.on("close", (code) => {
-                if (code === 0) {
-                    resolve();
-                } else {
-                    console.warn(`go mod tidy failed with exit code ${code}, continuing anyway`);
-                    resolve();
+        const onData = (data: Buffer) => {
+          buffer = Buffer.concat([buffer, data]);
+
+          // Process complete JSON messages
+          for (let b = 0; b < buffer.length + 1; b++) {
+            const c = buffer.slice(0, b);
+            try {
+              const d = JSON.parse(c.toString());
+              queue.enqueue(d);
+              buffer = buffer.slice(b);
+              b = 0;
+            } catch (e) {
+              // Continue processing
+            }
+          }
+
+          // Process messages
+          while (queue.size() > 0) {
+            const message = queue.dequeue();
+            if (message) {
+              this.mapping().forEach(async ([command, func]) => {
+                if (message[0] === command) {
+                  const args = message.slice(1, -1);
+                  try {
+                    const result = await (this as any)[command](...args);
+                    // Send response back through IPC
+                    // This would need to be implemented based on your IPC protocol
+                  } catch (error) {
+                    console.error(`Error handling command ${command}:`, error);
+                  }
                 }
-            });
-            tidyChild.on("error", (error) => {
-                console.warn(`go mod tidy error: ${error}, continuing anyway`);
-                resolve();
-            });
-        });
-        
-        // Run the tests using go test with JSON output from the test directory
-        const child = spawn("go", ["test", "-v", "-json", testFileName], {
+              });
+            }
+          }
+        };
+
+        // Create IPC server like in launchNode
+        const server = await this.createIpcServer(onData, ipcfile);
+
+        // For Go tests, we need to run from the directory containing the go.mod file
+        // Find the nearest go.mod file by walking up the directory tree
+        let currentDir = path.dirname(src);
+        let goModDir = null;
+
+        while (currentDir !== path.parse(currentDir).root) {
+          if (fs.existsSync(path.join(currentDir, "go.mod"))) {
+            goModDir = currentDir;
+            break;
+          }
+          currentDir = path.dirname(currentDir);
+        }
+
+        if (!goModDir) {
+          console.error(`Could not find go.mod file for test ${src}`);
+          // Try running from the test file's directory as a fallback
+          goModDir = path.dirname(src);
+          console.error(`Falling back to: ${goModDir}`);
+        }
+
+        // Get the relative path to the test file from the go.mod directory
+        const relativeTestPath = path.relative(goModDir, src);
+
+        // Run go test from the directory containing go.mod
+        const child = spawn(
+          "go",
+          ["test", "-v", "-json", "./" + path.dirname(relativeTestPath)],
+          {
             stdio: ["pipe", "pipe", "pipe"],
-            cwd: destDir
-        });
-        
+            env: {
+              ...process.env,
+              TEST_RESOURCES: testResources,
+              IPC_FILE: ipcfile,
+              GO111MODULE: "on",
+            },
+            cwd: goModDir,
+          }
+        );
+
         await this.handleChildProcess(child, logs, reportDest, src, "golang");
-        
+
         // Generate prompt files for Golang tests
         await this.generatePromptFiles(reportDest, src);
-        
+
         // Ensure tests.json exists by parsing the go test JSON output
         await this.processGoTestOutput(reportDest, src);
-        
-        // Clean up the test binary
+
+        // Clean up
+        server.close();
         try {
-            fs.unlinkSync(testBinaryPath);
+          fs.unlinkSync(ipcfile);
         } catch (e) {
-            // Ignore errors during cleanup
+          // Ignore errors during cleanup
         }
-        
         this.cleanupPorts(portsToUse);
       } catch (error) {
-        if (error.message !== 'No ports available') {
+        if (error.message !== "No ports available") {
           throw error;
         }
       }
     })();
 
-    this.addPromiseProcess(processId, golangPromise, command, "bdd-test", src, "golang");
+    this.addPromiseProcess(
+      processId,
+      golangPromise,
+      command,
+      "bdd-test",
+      src,
+      "golang"
+    );
   };
 
-  private async processGoTestOutput(reportDest: string, src: string): Promise<void> {
+  private async processGoTestOutput(
+    reportDest: string,
+    src: string
+  ): Promise<void> {
     const testsJsonPath = `${reportDest}/tests.json`;
-    
+
     // Parse the stdout.log to extract test results from JSON output
     const stdoutPath = `${reportDest}/stdout.log`;
     if (fs.existsSync(stdoutPath)) {
       try {
-        const stdoutContent = fs.readFileSync(stdoutPath, 'utf-8');
-        const lines = stdoutContent.split('\n').filter(line => line.trim());
-        
+        const stdoutContent = fs.readFileSync(stdoutPath, "utf-8");
+        const lines = stdoutContent.split("\n").filter((line) => line.trim());
+
         const testResults = {
           tests: [],
           features: [],
           givens: [],
-          fullPath: path.resolve(process.cwd(), src)
+          fullPath: path.resolve(process.cwd(), src),
         };
-        
+
         // Parse each JSON line from go test output
         for (const line of lines) {
           try {
             const event = JSON.parse(line);
-            if (event.Action === 'pass' || event.Action === 'fail') {
+            if (event.Action === "pass" || event.Action === "fail") {
               testResults.tests.push({
                 name: event.Test || event.Package,
-                status: event.Action === 'pass' ? 'passed' : 'failed',
-                time: event.Elapsed ? `${event.Elapsed}s` : '0s'
+                status: event.Action === "pass" ? "passed" : "failed",
+                time: event.Elapsed ? `${event.Elapsed}s` : "0s",
               });
             }
           } catch (e) {
             // Skip non-JSON lines
           }
         }
-        
+
         fs.writeFileSync(testsJsonPath, JSON.stringify(testResults, null, 2));
         return;
       } catch (error) {
-        console.error('Error processing go test output:', error);
+        console.error("Error processing go test output:", error);
       }
     }
-    
+
     // Fallback: create a basic tests.json if processing fails
     const basicTestResult = {
       tests: [],
       features: [],
       givens: [],
-      fullPath: path.resolve(process.cwd(), src)
+      fullPath: path.resolve(process.cwd(), src),
     };
     fs.writeFileSync(testsJsonPath, JSON.stringify(basicTestResult, null, 2));
   }
 
-  private async generatePromptFiles(reportDest: string, src: string): Promise<void> {
+  private async generatePromptFiles(
+    reportDest: string,
+    src: string
+  ): Promise<void> {
     try {
       // Ensure the report directory exists
       if (!fs.existsSync(reportDest)) {
         fs.mkdirSync(reportDest, { recursive: true });
       }
-      
+
       // Create message.txt
       const messagePath = `${reportDest}/message.txt`;
       const messageContent = `There are 3 types of test reports.
@@ -801,13 +929,12 @@ if this file does not exist, then static analysis passed without errors;
 
 BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns.
 Do not add error throwing/catching to the tests themselves.`;
-      
+
       fs.writeFileSync(messagePath, messageContent);
-      console.log(`Created message.txt at ${messagePath}`);
 
       // Create prompt.txt
       const promptPath = `${reportDest}/prompt.txt`;
-      
+
       const promptContent = `/read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md
 /read node_modules/testeranto/docs/testing.ai.txt
@@ -821,11 +948,8 @@ Do not add error throwing/catching to the tests themselves.`;
 /read ${reportDest}/stderr.log
 /read ${reportDest}/exit.log
 /read ${reportDest}/message.txt`;
-      
+
       fs.writeFileSync(promptPath, promptContent);
-      console.log(`Created prompt.txt at ${promptPath}`);
-      
-      console.log(ansiColors.green(`Generated prompt files for test: ${src}`));
     } catch (error) {
       console.error(`Failed to generate prompt files for ${src}:`, error);
     }
@@ -835,23 +959,23 @@ Do not add error throwing/catching to the tests themselves.`;
     // Get all .go files in the same directory as the test
     const testDir = path.dirname(src);
     const files: string[] = [];
-    
+
     try {
       const dirContents = fs.readdirSync(testDir);
-      dirContents.forEach(file => {
-        if (file.endsWith('.go')) {
+      dirContents.forEach((file) => {
+        if (file.endsWith(".go")) {
           files.push(path.join(testDir, file));
         }
       });
     } catch (error) {
       console.error(`Error reading directory ${testDir}:`, error);
     }
-    
+
     // Always include the main test file
     if (!files.includes(src)) {
       files.push(src);
     }
-    
+
     return files;
   }
 }

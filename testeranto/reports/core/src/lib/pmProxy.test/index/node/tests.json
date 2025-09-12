@@ -1,0 +1,31 @@
+{
+  "name": "PM Proxy Functionality",
+  "givens": [
+    {
+      "key": "writeFileProxyTest",
+      "whens": [],
+      "thens": [
+        {
+          "name": "theButTheProxyReturns: writeFileSync,test/path/butThen/test.txt",
+          "error": true,
+          "artifacts": []
+        }
+      ],
+      "error": [
+        "TypeError: addArtifact is not a function\n    at path2 (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:51:9)\n    at Proxy.<anonymous> (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:12:34)\n    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:177:54)\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:894:41\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/src/lib/pmProxy.test/index.mjs:446:12)\n    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:993:40)\n    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:889:25)\n    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:766:36)\n    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:373:22)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:1018:21",
+        null
+      ],
+      "failed": true,
+      "features": [
+        "butThenProxy should rewrite writeFileSync paths"
+      ],
+      "artifacts": []
+    }
+  ],
+  "fails": 1,
+  "failed": true,
+  "features": [
+    "butThenProxy should rewrite writeFileSync paths"
+  ],
+  "artifacts": []
+}

@@ -12,7 +12,15 @@ class BaseGiven:
         initial_values: Any
     ):
         self.name = name
-        self.features = features or []
+        # Ensure features are always strings
+        self.features = []
+        if features:
+            for feature in features:
+                if isinstance(feature, str):
+                    self.features.append(feature)
+                else:
+                    # Try to convert to string
+                    self.features.append(str(feature))
         self.whens = whens or []
         self.thens = thens or []
         self.given_cb = given_cb
@@ -76,6 +84,7 @@ class BaseGiven:
         suite_ndx: int
     ) -> Istore:
         self.key = key
+        self.failed = False
         t_log(f"\n {self.key}")
         t_log(f"\n Given: {self.name}")
 
@@ -95,38 +104,50 @@ class BaseGiven:
         except Exception as e:
             self.failed = True
             self.error = e
-            raise e
+            # Don't re-raise to allow processing of other givens
+            return self.store
 
         try:
             # Process whens
             for when_ndx, when_step in enumerate(self.whens):
-                await when_step.test(
-                    self.store,
-                    test_resource_configuration,
-                    t_log,
-                    pm,
-                    f"suite-{suite_ndx}/given-{key}/when/{when_ndx}"
-                )
+                try:
+                    self.store = await when_step.test(
+                        self.store,
+                        test_resource_configuration,
+                        t_log,
+                        pm,
+                        f"suite-{suite_ndx}/given-{key}/when/{when_ndx}"
+                    )
+                except Exception as e:
+                    self.failed = True
+                    self.error = e
+                    # Continue to process thens even if whens fail
             
             # Process thens
             for then_ndx, then_step in enumerate(self.thens):
-                result = await then_step.test(
-                    self.store,
-                    test_resource_configuration,
-                    t_log,
-                    pm,
-                    f"suite-{suite_ndx}/given-{key}/then-{then_ndx}"
-                )
-                tester(result)
+                try:
+                    result = await then_step.test(
+                        self.store,
+                        test_resource_configuration,
+                        t_log,
+                        pm,
+                        f"suite-{suite_ndx}/given-{key}/then-{then_ndx}"
+                    )
+                    # Test the result
+                    if not tester(result):
+                        self.failed = True
+                except Exception as e:
+                    self.failed = True
+                    self.error = e
+                    # Continue processing other thens
         except Exception as e:
             self.error = e
             self.failed = True
-            raise e
         finally:
             try:
                 await self.after_each(self.store, self.key, given_artifactory, pm)
             except Exception as e:
                 self.failed = True
-                raise e
+                # Don't re-raise
 
         return self.store

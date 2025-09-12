@@ -1,0 +1,1109 @@
+{
+  "name": "Testing Calculator operations",
+  "givens": [
+    {
+      "key": "testEmptyDisplay",
+      "whens": [],
+      "thens": [
+        {
+          "name": "result: ",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "pressing nothing, the display is empty"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testSingleDigit",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 2",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "entering a number puts it on the display"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testMultipleDigits",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 22",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "entering multiple digits concatenates them"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testLargeNumber",
+      "whens": [
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 12345",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "entering a large number works correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testAdditionExpression",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 2+3",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "addition expression is displayed correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testIncompleteAddition",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 2+",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "incomplete addition expression is displayed correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testSubtractionExpression",
+      "whens": [
+        {
+          "name": "press: 7",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: -",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 7-3",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "subtraction expression is displayed correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testMultiplicationExpression",
+      "whens": [
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: *",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 4*5",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "multiplication expression is displayed correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testDivisionExpression",
+      "whens": [
+        {
+          "name": "press: 8",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: /",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 8/2",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "division expression is displayed correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testMixedOperations",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: *",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 2+3*4",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "mixed operations are displayed correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testLongExpression",
+      "whens": [
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: *",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: -",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: /",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 1+2*3-4/5",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "long complex expression is displayed correctly"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testSimpleAddition",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 68",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "simple addition calculation"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testSimpleSubtraction",
+      "whens": [
+        {
+          "name": "press: 9",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: -",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 63",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "simple subtraction calculation"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testSimpleMultiplication",
+      "whens": [
+        {
+          "name": "press: 6",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: *",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 7",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 42",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "simple multiplication calculation"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testSimpleDivision",
+      "whens": [
+        {
+          "name": "press: 8",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: /",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 42",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "simple division calculation"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testClearOperation",
+      "whens": [
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: C",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 4",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "clear operation resets the display"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testStartingWithOperator",
+      "whens": [
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: +5",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "starting with operator should work"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testMultipleOperators",
+      "whens": [
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: -",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 5+-3",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "multiple operators in sequence"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testDecimalInput",
+      "whens": [
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: .",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 3.14",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "decimal number input"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testDecimalCalculation",
+      "whens": [
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: .",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: .",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 8",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 6",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 4.96",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "decimal calculation"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testOrderOfOperations",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: *",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 14",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "order of operations is respected"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testParenthesesExpression",
+      "whens": [
+        {
+          "name": "press: (",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: )",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: *",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 20",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "parentheses in expression"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testDivisionByZero",
+      "whens": [
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: /",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 0",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: Error",
+          "error": true,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "division by zero shows error"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testInvalidExpression",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "enter: ",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: Error",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "invalid expression shows error"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testMemoryStoreRecall",
+      "whens": [
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: MS",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: C",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: MR",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 123",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "memory store and recall"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testMemoryClear",
+      "whens": [
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 6",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: MS",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: MC",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: MR",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 0",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "memory clear"
+      ],
+      "artifacts": []
+    },
+    {
+      "key": "testMemoryAddition",
+      "whens": [
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 0",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: M+",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 0",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: M+",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: MR",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 30",
+          "error": false,
+          "artifacts": []
+        }
+      ],
+      "error": null,
+      "features": [
+        "memory addition"
+      ],
+      "artifacts": []
+    }
+  ],
+  "fails": 0,
+  "features": [
+    "pressing nothing, the display is empty",
+    "entering a number puts it on the display",
+    "entering multiple digits concatenates them",
+    "entering a large number works correctly",
+    "addition expression is displayed correctly",
+    "incomplete addition expression is displayed correctly",
+    "subtraction expression is displayed correctly",
+    "multiplication expression is displayed correctly",
+    "division expression is displayed correctly",
+    "mixed operations are displayed correctly",
+    "long complex expression is displayed correctly",
+    "simple addition calculation",
+    "simple subtraction calculation",
+    "simple multiplication calculation",
+    "simple division calculation",
+    "clear operation resets the display",
+    "starting with operator should work",
+    "multiple operators in sequence",
+    "decimal number input",
+    "decimal calculation",
+    "order of operations is respected",
+    "parentheses in expression",
+    "division by zero shows error",
+    "invalid expression shows error",
+    "memory store and recall",
+    "memory clear",
+    "memory addition"
+  ],
+  "artifacts": []
+}

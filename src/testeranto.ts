@@ -87,6 +87,8 @@ import(configFilePath).then(async (module) => {
     }
   });
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
   let pm: PM_Main | null = null;
   // Start PM_Main immediately - it will handle the build processes internally
   const { PM_Main } = await import("./PM/main");
@@ -171,6 +173,11 @@ import(configFilePath).then(async (module) => {
     golangEntryPoints,
     golangEntryPointSidecars,
   } = getRunnables(config.tests, testName);
+  
+  // Debug logging to check if entry points are being found
+  console.log("Node entry points:", Object.keys(nodeEntryPoints));
+  console.log("Web entry points:", Object.keys(webEntryPoints));
+  console.log("Pure entry points:", Object.keys(pureEntryPoints));
 
   // Handle golang tests using GolingvuBuild
   const golangTests = config.tests.filter((test) => test[1] === "golang");
@@ -179,7 +186,6 @@ import(configFilePath).then(async (module) => {
     const golingvuBuild = new GolingvuBuild(config, testName);
     const golangEntryPoints = await golingvuBuild.build();
     golingvuBuild.onBundleChange(() => {
-      // console.log("Golang bundle changed, re-adding tests to queue");
       Object.keys(golangEntryPoints).forEach((entryPoint) => {
         if (pm) {
           pm.addToQueue(entryPoint, "golang");
@@ -191,7 +197,6 @@ import(configFilePath).then(async (module) => {
   // Handle pitono (Python) tests by generating their metafiles
   const pitonoTests = config.tests.filter((test) => test[1] === "python");
   const hasPitonoTests = pitonoTests.length > 0;
-
   if (hasPitonoTests) {
     const pitonoBuild = new PitonoBuild(config, testName);
     const pitonoEntryPoints = await pitonoBuild.build();
@@ -202,29 +207,9 @@ import(configFilePath).then(async (module) => {
         }
       });
     });
-
-    // const { generatePitonoMetafile } = await import("./utils/pitonoMetafile");
-    // Get the entry points (first element of each test tuple)
-    // const pitonoEntryPoints = pitonoTests.map((test) => test[0]);
-    // const metafile = await generatePitonoMetafile(testName, pitonoEntryPoints);
-
-    // const pitonoMetafilePath = `${process.cwd()}/testeranto/metafiles/python`;
-    // await fs.promises.mkdir(pitonoMetafilePath, { recursive: true });
-
-    // fs.writeFileSync(
-    //   `${pitonoMetafilePath}/core.json`,
-    //   JSON.stringify(metafile, null, 2)
-    // );
-
-    // // Add Python tests to the processing queue
-    // Object.keys(pythonEntryPoints).forEach((entryPoint) => {
-    //   if (pm) {
-    //     pm.addToQueue(entryPoint, "python");
-    //   }
-    // });
   }
 
-  // create the necessary folders and add tests to queue
+  // create the necessary folders for all tests
   [
     ["pure", Object.keys(pureEntryPoints)],
     ["node", Object.keys(nodeEntryPoints)],
@@ -240,10 +225,10 @@ import(configFilePath).then(async (module) => {
           .join(".")}/${runtime}`,
         { recursive: true }
       );
-
-      pm.addToQueue(k, runtime);
     });
   });
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {

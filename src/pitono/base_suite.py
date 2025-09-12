@@ -70,6 +70,10 @@ class BaseSuite:
             pm
         )
         
+        # Reset fails counter
+        self.fails = 0
+        self.failed = False
+        
         for g_key, g in self.givens.items():
             try:
                 self.store = await g.give(
@@ -82,10 +86,18 @@ class BaseSuite:
                     pm,
                     self.index
                 )
+                # Add any failures from the given to the suite total
+                if hasattr(g, 'failed') and g.failed:
+                    self.fails += 1
             except Exception as e:
                 self.failed = True
                 self.fails += 1
-                raise e
+                # Log the error but continue with other givens
+                print(f"Error in given {g_key}:", str(e))
+        
+        # Mark the suite as failed if there are any failures
+        if self.fails > 0:
+            self.failed = True
         
         try:
             self.after_all(self.store, artifactory, pm)

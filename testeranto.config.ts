@@ -9,72 +9,62 @@ const config: IProject = {
   //   clientId: "Ov23li3JEcsRqW0zWCG7",
   // },
   projects: {
-    // staticSite: {
-    //   tests: [["src/ReportServer.test.ts/index.ts", "node", { ports: 1 }, []]],
-    //   clearScreen: false,
-    //   debugger: false,
-    //   externals: [],
-    //   featureIngestor: function (s: string): Promise<string> {
-    //     throw new Error("Function not implemented.");
-    //   },
-    //   importPlugins: [],
-    //   minify: false,
-    //   nodePlugins: [],
-    //   ports: ["3334"],
-    //   src: "",
-    //   webPlugins: [],
-    // },
-
     core: {
       tests: [
+        ["example/Calculator.test.ts", "node", { ports: 0 }, []],
+        ["example/Calculator.pitono.test.py", "python", { ports: 0 }, []],
+        ["example/Calculator.golingvu.go", "golang", { ports: 0 }, []],
+
         ["example/test_example.py", "python", { ports: 0 }, []],
-        ["example/base_suite_test.go", "golang", { ports: 0 }, []],
+        // ["example/base_suite_test.go", "golang", { ports: 0 }, []],
         ["src/lib/BaseSuite.test/node.test.ts", "node", { ports: 0 }, []],
         ["src/lib/BaseSuite.test/pure.test.ts", "pure", { ports: 0 }, []],
+
+        ["src/lib/TipoSkripto.test/TipoSkripto.ts", "node", { ports: 0 }, []],
+
+        ["src/Pure.test.ts", "pure", { ports: 0 }, []],
+        ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
+
+        [
+          "src/components/pure/ProjectPageView.test/index.tsx",
+          "web",
+          { ports: 0 },
+          [],
+        ],
+
+        [
+          "src/components/pure/FeaturesReporterView.test/index.tsx",
+          "web",
+          { ports: 0 },
+          [],
+        ],
         ["src/lib/BaseSuite.test/web.test.ts", "web", { ports: 0 }, []],
 
-        // ["src/lib/TipoSkripto.test/TipoSkripto.ts", "node", { ports: 0 }, []],
-
-        // ["src/Pure.test.ts", "pure", { ports: 0 }, []],
-        // ["src/lib/pmProxy.test/index.ts", "node", { ports: 0 }, []],
-
-        // [
-        //   "src/components/pure/ProjectPageView.test/index.tsx",
-        //   "web",
-        //   { ports: 0 },
-        //   [],
-        // ],
-
-        // [
-        //   "src/components/pure/FeaturesReporterView.test/index.tsx",
-        //   "web",
-        //   { ports: 0 },
-        //   [],
-        // ],
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        [
+          "src/components/pure/ModalContent.test/index.tsx",
+          "web",
+          { ports: 0 },
+          [],
+        ],
 
         // broken
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // [
         //   "src/components/pure/TestPageView.test/index.tsx",
         //   "web",
         //   { ports: 0 },
         //   [],
         // ],
-        // [
-        //   "src/components/pure/ModalContent.test/index.tsx",
-        //   "web",
-        //   { ports: 0 },
-        //   [],
-        // ],
+
         // [
         //   "src/components/pure/AppFrame.test/index.tsx",
         //   "web",
         //   { ports: 0 },
         //   [],
         // ],
+
         // ["src/mothership/test.ts", "node", { ports: 0 }, []],
-        // ["./src/lib/abstractBase.test/index.ts", "node", { ports: 0 }, []],
+        // ["src/lib/abstractBase.test/index.ts", "node", { ports: 0 }, []],
         // [
         //   "src/PM/__tests__/nodeSidecar.testeranto.ts",
         //   "node",

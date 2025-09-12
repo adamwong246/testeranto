@@ -8,7 +8,7 @@ import path from "path";
 import puppeteer, { executablePath } from "puppeteer-core";
 import ansiC from "ansi-colors";
 
-import { getRunnables } from "../utils";
+import { getRunnables } from "../utils.js";
 import { IBuiltConfig, IRunTime } from "../Types.js";
 
 import {
@@ -68,8 +68,6 @@ export abstract class PM_WithProcesses extends PM_WithGit {
   }
 
   async metafileOutputs(platform: IRunTime) {
-    console.log("mark3", platform);
-
     let metafilePath: string;
     if (platform === "python") {
       metafilePath = `./testeranto/metafiles/python/core.json`;
@@ -94,6 +92,13 @@ export abstract class PM_WithProcesses extends PM_WithGit {
         );
         return;
       }
+      // console.log(
+      //   ansiC.blue(
+      //     `Found metafile for ${platform} with ${
+      //       Object.keys(metafile.outputs || {}).length
+      //     } outputs`
+      //   )
+      // );
     } catch (error) {
       console.error(`Error reading metafile at ${metafilePath}:`, error);
       return;
@@ -110,8 +115,6 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     //   );
     //   return;
     // }
-
-    console.log("mark335", platform);
 
     Object.keys(outputs).forEach(async (k) => {
       const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
@@ -139,19 +142,18 @@ export abstract class PM_WithProcesses extends PM_WithGit {
         fs.mkdirSync(f, { recursive: true });
       }
 
-      const entrypoint = output.entryPoint;
-
-      console.log("mark334", platform, entrypoint);
+      let entrypoint = output.entryPoint;
 
       if (entrypoint) {
+        // Normalize the entrypoint path to ensure consistent comparison
+        entrypoint = path.normalize(entrypoint);
+
         const changeDigest = await filesHash(addableFiles);
 
         if (changeDigest === changes[entrypoint]) {
           // skip
         } else {
           changes[entrypoint] = changeDigest;
-
-          console.log("mark333", platform);
 
           // Run appropriate static analysis based on platform
           if (
@@ -170,10 +172,66 @@ export abstract class PM_WithProcesses extends PM_WithGit {
             this.pythonTypeCheck(entrypoint, addableFiles);
           }
 
-          this.makePrompt(entrypoint, addableFiles, "golang");
+          this.makePrompt(entrypoint, addableFiles, platform);
+
+          const testName = this.findTestNameByEntrypoint(entrypoint, platform);
+          if (testName) {
+            console.log(
+              ansiC.green(
+                ansiC.inverse(
+                  `Source files changed, re-queueing test: ${testName}`
+                )
+              )
+            );
+            this.addToQueue(testName, platform);
+          } else {
+            console.error(
+              `Could not find test for entrypoint: ${entrypoint} (${platform})`
+            );
+            process.exit(-1);
+          }
         }
       }
     });
+  }
+
+  private findTestNameByEntrypoint(
+    entrypoint: string,
+    platform: IRunTime
+  ): string | null {
+    const runnables = getRunnables(this.configs.tests, this.name);
+
+    let entryPointsMap: Record<string, string>;
+
+    switch (platform) {
+      case "node":
+        entryPointsMap = runnables.nodeEntryPoints;
+        break;
+      case "web":
+        entryPointsMap = runnables.webEntryPoints;
+        break;
+      case "pure":
+        entryPointsMap = runnables.pureEntryPoints;
+        break;
+      case "python":
+        entryPointsMap = runnables.pythonEntryPoints;
+        break;
+      case "golang":
+        entryPointsMap = runnables.golangEntryPoints;
+        break;
+      default:
+        throw "wtf";
+    }
+
+    if (!entryPointsMap) {
+      console.error("idk");
+    }
+
+    if (!entryPointsMap[entrypoint]) {
+      console.error("idk2");
+    }
+
+    return entryPointsMap[entrypoint];
   }
 
   async pythonLintCheck(entrypoint: string, addableFiles: string[]) {
@@ -310,160 +368,114 @@ export abstract class PM_WithProcesses extends PM_WithGit {
       );
     }
 
+    const runnables = getRunnables(this.configs.tests, this.name);
     const {
       nodeEntryPoints,
       webEntryPoints,
       pureEntryPoints,
       pythonEntryPoints,
       golangEntryPoints,
-    } = getRunnables(this.configs.tests, this.name);
+    } = runnables;
 
+    // Debug: log the runnables to see what we're working with
+    console.log(
+      ansiC.blue(
+        `Runnables for ${this.name}:\n` +
+          `Node: ${JSON.stringify(nodeEntryPoints, null, 2)}\n` +
+          `Web: ${JSON.stringify(webEntryPoints, null, 2)}\n` +
+          `Pure: ${JSON.stringify(pureEntryPoints, null, 2)}\n` +
+          `Python: ${JSON.stringify(pythonEntryPoints, null, 2)}\n` +
+          `Golang: ${JSON.stringify(golangEntryPoints, null, 2)}`
+      )
+    );
+
+    // Add all tests to the queue
     [
-      [
-        nodeEntryPoints,
-        this.launchNode,
-        "node",
-        (w) => {
-          this.nodeMetafileWatcher = w;
-        },
-      ],
-      [
-        webEntryPoints,
-        this.launchWeb,
-        "web",
-        (w) => {
-          this.webMetafileWatcher = w;
-        },
-      ],
-      [
-        pureEntryPoints,
-        this.launchPure,
-        "pure",
-        (w) => {
-          this.importMetafileWatcher = w;
-        },
-      ],
-      [
-        pythonEntryPoints,
-        this.launchPython,
-        "python",
-        (w) => {
-          this.pitonoMetafileWatcher = w;
-        },
-      ],
-      [
-        golangEntryPoints,
-        this.launchGolang,
-        "golang",
-        (w) => {
-          this.golangMetafileWatcher = w;
-        },
-      ],
+      ["node", nodeEntryPoints],
+      ["web", webEntryPoints],
+      ["pure", pureEntryPoints],
+      ["python", pythonEntryPoints],
+      ["golang", golangEntryPoints],
+    ].forEach(([runtime, entryPoints]: [IRunTime, Record<string, string>]) => {
+      Object.keys(entryPoints).forEach((entryPoint) => {
+        // Create the report directory
+        const reportDest = `testeranto/reports/${this.name}/${entryPoint
+          .split(".")
+          .slice(0, -1)
+          .join(".")}/${runtime}`;
+        if (!fs.existsSync(reportDest)) {
+          fs.mkdirSync(reportDest, { recursive: true });
+        }
+
+        // Add to the processing queue
+        this.addToQueue(entryPoint, runtime);
+      });
+    });
+
+    // Set up metafile watchers for each runtime
+    [
+      ["node", nodeEntryPoints],
+      ["web", webEntryPoints],
+      ["pure", pureEntryPoints],
+      ["python", pythonEntryPoints],
+      ["golang", golangEntryPoints],
     ].forEach(
-      async ([eps, launcher, runtime, watcher]: [
-        Record<string, string>,
-        (src: string, dest: string) => Promise<void>,
-        IRunTime,
-        (f: fs.FSWatcher) => void
-      ]) => {
-        // let metafile: string;
+      async ([runtime, entryPoints]: [IRunTime, Record<string, string>]) => {
+        if (Object.keys(entryPoints).length === 0) return;
 
-        // if (runtime === "python") {
-        //   metafile = `./testeranto/metafiles/python/core.json`;
-
-        //   const metafileDir = path.dirname(metafile);
-        //   if (!fs.existsSync(metafileDir)) {
-        //     fs.mkdirSync(metafileDir, { recursive: true });
-        //   }
-        // } else {
-        //   metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-        // }
         const metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-        await pollForFile(metafile);
+        try {
+          await pollForFile(metafile);
+          // console.log("Found metafile for", runtime, metafile);
 
-        console.log("metafile", metafile);
+          // Set up watcher for the metafile with debouncing
+          let timeoutId: NodeJS.Timeout;
+          const watcher = watch(metafile, async (e, filename) => {
+            // Debounce to avoid multiple rapid triggers
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(async () => {
+              console.log(
+                ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
+              );
+              try {
+                await this.metafileOutputs(runtime as IRunTime);
+                // After processing metafile changes, check the queue to run tests
+                console.log(
+                  ansiC.blue(
+                    `Metafile processed, checking queue for tests to run`
+                  )
+                );
+                this.checkQueue();
+              } catch (error) {
+                console.error(`Error processing metafile changes:`, error);
+              }
+            }, 300); // 300ms debounce
+          });
 
-        // Only poll for file if it's not a pitono runtime
-        // if (runtime !== "python") {
-        //   await pollForFile(metafile);
-        // }
+          // Store the watcher based on runtime
+          switch (runtime) {
+            case "node":
+              this.nodeMetafileWatcher = watcher;
+              break;
+            case "web":
+              this.webMetafileWatcher = watcher;
+              break;
+            case "pure":
+              this.importMetafileWatcher = watcher;
+              break;
+            case "python":
+              this.pitonoMetafileWatcher = watcher;
+              break;
+            case "golang":
+              this.golangMetafileWatcher = watcher;
+              break;
+          }
 
-        // Object.entries(eps).forEach(
-        //   async ([inputFile, outputFile]: [string, string]) => {
-        //     this.launchers[inputFile] = () => launcher(inputFile, outputFile);
-        //     this.launchers[inputFile]();
-
-        //     try {
-        //       // Check if the file exists before watching
-        //       if (fs.existsSync(outputFile)) {
-        //         watch(outputFile, async (e, filename) => {
-        //           const hash = await fileHash(outputFile);
-        //           if (fileHashes[inputFile] !== hash) {
-        //             fileHashes[inputFile] = hash;
-        //             console.log(
-        //               ansiC.yellow(ansiC.inverse(`< ${e} ${filename}`))
-        //             );
-        //             this.launchers[inputFile]();
-        //           }
-        //         });
-        //       } else {
-        //         console.log(
-        //           ansiC.yellow(
-        //             ansiC.inverse(
-        //               `File not found, skipping watch: ${outputFile}`
-        //             )
-        //           )
-        //         );
-        //       }
-        //     } catch (e) {
-        //       console.error(e);
-        //     }
-        //   }
-        // );
-
-        // this.metafileOutputs(runtime);
-
-        // // For pitono, we need to wait for the file to be created
-        // if (runtime === "python") {
-        //   // Use polling to wait for the file to exist
-        //   const checkFileExists = () => {
-        //     if (fs.existsSync(metafile)) {
-        //       console.log(
-        //         ansiC.green(ansiC.inverse(`Pitono metafile found: ${metafile}`))
-        //       );
-        //       // Set up the watcher once the file exists
-        //       watcher(
-        //         watch(metafile, async (e, filename) => {
-        //           console.log(
-        //             ansiC.yellow(
-        //               ansiC.inverse(`< ${e} ${filename} (${runtime})`)
-        //             )
-        //           );
-        //           this.metafileOutputs(runtime);
-        //         })
-        //       );
-        //       // Read the metafile immediately
-        //       this.metafileOutputs(runtime);
-        //     } else {
-        //       // Check again after a delay
-        //       setTimeout(checkFileExists, 1000);
-        //     }
-        //   };
-        //   // Start checking for the file
-        //   checkFileExists();
-        // } else {
-        //   // For other runtimes, only set up watcher if the file exists
-        //   if (fs.existsSync(metafile)) {
-        //     watcher(
-        //       watch(metafile, async (e, filename) => {
-        //         console.log(
-        //           ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
-        //         );
-        //         this.metafileOutputs(runtime);
-        //       })
-        //     );
-        //   }
-        // }
+          // Read the metafile immediately
+          await this.metafileOutputs(runtime as IRunTime);
+        } catch (error) {
+          console.error(`Error setting up watcher for ${runtime}:`, error);
+        }
       }
     );
   }
@@ -621,77 +633,195 @@ export abstract class PM_WithProcesses extends PM_WithGit {
   }
 
   addToQueue(src: string, runtime: IRunTime) {
-    // Add the test to the queue
-    this.queue.push(src);
-    console.log(
-      ansiC.green(
-        ansiC.inverse(`Added ${src} (${runtime}) to the processing queue`)
-      )
-    );
-    // Try to process the queue
-    this.checkQueue();
+    // Ensure we're using the original test source path, not a bundle path
+    // The src parameter might be a bundle path from metafile changes
+    // We need to find the corresponding test source path
+
+    // First, check if this looks like a bundle path (contains 'testeranto/bundles')
+    if (src.includes("testeranto/bundles")) {
+      // Try to find the original test name that corresponds to this bundle
+      const runnables = getRunnables(this.configs.tests, this.name);
+      const allEntryPoints = [
+        ...Object.entries(runnables.nodeEntryPoints),
+        ...Object.entries(runnables.webEntryPoints),
+        ...Object.entries(runnables.pureEntryPoints),
+        ...Object.entries(runnables.pythonEntryPoints),
+        ...Object.entries(runnables.golangEntryPoints),
+      ];
+
+      // Normalize the source path for comparison
+      const normalizedSrc = path.normalize(src);
+
+      for (const [testName, bundlePath] of allEntryPoints) {
+        const normalizedBundlePath = path.normalize(bundlePath);
+        // Check if the source path ends with the bundle path
+        if (normalizedSrc.endsWith(normalizedBundlePath)) {
+          // Use the original test name instead of the bundle path
+          src = testName;
+          break;
+        }
+      }
+    }
+
+    // First, clean up any existing processes for this test
+    this.cleanupTestProcesses(src);
+
+    // Add the test to the queue (using the original test source path)
+    // Make sure we don't add duplicates
+    if (!this.queue.includes(src)) {
+      this.queue.push(src);
+      console.log(
+        ansiC.green(
+          ansiC.inverse(`Added ${src} (${runtime}) to the processing queue`)
+        )
+      );
+      // Try to process the queue
+      this.checkQueue();
+    } else {
+      console.log(
+        ansiC.yellow(
+          ansiC.inverse(`Test ${src} is already in the queue, skipping`)
+        )
+      );
+    }
+  }
+
+  private cleanupTestProcesses(testName: string) {
+    // Find and clean up any running processes for this test
+    const processesToCleanup: string[] = [];
+
+    // Find all process IDs that match this test name
+    for (const [processId, processInfo] of this.allProcesses.entries()) {
+      if (
+        processInfo.testName === testName &&
+        processInfo.status === "running"
+      ) {
+        processesToCleanup.push(processId);
+      }
+    }
+
+    // Clean up each process
+    processesToCleanup.forEach((processId) => {
+      const processInfo = this.allProcesses.get(processId);
+      if (processInfo) {
+        // Kill child process if it exists
+        if (processInfo.child) {
+          try {
+            processInfo.child.kill();
+          } catch (error) {
+            console.error(`Error killing process ${processId}:`, error);
+          }
+        }
+
+        // Update process status
+        this.allProcesses.set(processId, {
+          ...processInfo,
+          status: "exited",
+          exitCode: -1,
+          error: "Killed due to source file change",
+        });
+
+        // Remove from running processes
+        this.runningProcesses.delete(processId);
+
+        // Broadcast process exit
+        this.broadcast({
+          type: "processExited",
+          processId,
+          exitCode: -1,
+          timestamp: new Date().toISOString(),
+          logs: ["Process killed due to source file change"],
+        });
+      }
+    });
   }
 
   checkQueue() {
-    const x = this.queue.pop();
-    if (!x) {
-      console.log(ansiC.inverse(`The queue is empty`));
-      return;
+    // Process all items in the queue
+    while (this.queue.length > 0) {
+      const x = this.queue.pop();
+      if (!x) continue;
+
+      // Check if this test is already running
+      let isRunning = false;
+      for (const processInfo of this.allProcesses.values()) {
+        if (processInfo.testName === x && processInfo.status === "running") {
+          isRunning = true;
+          break;
+        }
+      }
+
+      if (isRunning) {
+        console.log(
+          ansiC.yellow(
+            `Skipping ${x} - already running, will be re-queued when current run completes`
+          )
+        );
+        continue;
+      }
+
+      const test = this.configs.tests.find((t) => t[0] === x);
+      if (!test) {
+        console.error(`test is undefined ${x}`);
+        continue;
+      }
+
+      // Get the appropriate launcher based on the runtime type
+      const runtime = test[1];
+
+      // Get the destination path from the runnables
+      const runnables = getRunnables(this.configs.tests, this.name);
+      let dest: string;
+
+      switch (runtime) {
+        case "node":
+          dest = runnables.nodeEntryPoints[x];
+          if (dest) {
+            this.launchNode(x, dest);
+          } else {
+            console.error(`No destination found for node test: ${x}`);
+          }
+          break;
+        case "web":
+          dest = runnables.webEntryPoints[x];
+          if (dest) {
+            this.launchWeb(x, dest);
+          } else {
+            console.error(`No destination found for web test: ${x}`);
+          }
+          break;
+        case "pure":
+          dest = runnables.pureEntryPoints[x];
+          if (dest) {
+            this.launchPure(x, dest);
+          } else {
+            console.error(`No destination found for pure test: ${x}`);
+          }
+          break;
+        case "python":
+          dest = runnables.pythonEntryPoints[x];
+          if (dest) {
+            this.launchPython(x, dest);
+          } else {
+            console.error(`No destination found for python test: ${x}`);
+          }
+          break;
+        case "golang":
+          dest = runnables.golangEntryPoints[x];
+          if (dest) {
+            this.launchGolang(x, dest);
+          } else {
+            console.error(`No destination found for golang test: ${x}`);
+          }
+          break;
+        default:
+          console.error(`Unknown runtime: ${runtime} for test ${x}`);
+          break;
+      }
     }
-    const test = this.configs.tests.find((t) => t[0] === x);
-    if (!test) throw `test is undefined ${x}`;
 
-    // Get the appropriate launcher based on the runtime type
-    const runtime = test[1];
-
-    // Get the destination path from the runnables
-    const runnables = getRunnables(this.configs.tests, this.name);
-    let dest: string;
-
-    switch (runtime) {
-      case "node":
-        dest = runnables.nodeEntryPoints[x];
-        if (dest) {
-          this.launchNode(x, dest);
-        } else {
-          console.error(`No destination found for node test: ${x}`);
-        }
-        break;
-      case "web":
-        dest = runnables.webEntryPoints[x];
-        if (dest) {
-          this.launchWeb(x, dest);
-        } else {
-          console.error(`No destination found for web test: ${x}`);
-        }
-        break;
-      case "pure":
-        dest = runnables.pureEntryPoints[x];
-        if (dest) {
-          this.launchPure(x, dest);
-        } else {
-          console.error(`No destination found for pure test: ${x}`);
-        }
-        break;
-      case "python":
-        dest = runnables.pythonEntryPoints[x];
-        if (dest) {
-          this.launchPython(x, dest);
-        } else {
-          console.error(`No destination found for python test: ${x}`);
-        }
-        break;
-      case "golang":
-        dest = runnables.golangEntryPoints[x];
-        if (dest) {
-          this.launchGolang(x, dest);
-        } else {
-          console.error(`No destination found for golang test: ${x}`);
-        }
-        break;
-      default:
-        console.error(`Unknown runtime: ${runtime} for test ${x}`);
-        break;
+    if (this.queue.length === 0) {
+      console.log(ansiC.inverse(`The queue is empty`));
     }
   }
 

@@ -90,6 +90,25 @@ export const butThenProxy: IProxy = (
     [
       "createWriteStream",
       (fp) => {
+        // Add debug logging to see what fp is
+        // console.log(
+        //   `[DEBUG] createWriteStream fp type: ${typeof fp}, value:`,
+        //   fp
+        // );
+
+        // // Ensure fp is always a string
+        // if (typeof fp !== "string") {
+        //   console.error(
+        //     `[PROXY ERROR] createWriteStream fp is not a string:`,
+        //     fp
+        //   );
+        //   // Don't convert, just throw to find the source
+        //   throw new Error(
+        //     `createWriteStream expected string for fp, got ${typeof fp}: ${JSON.stringify(
+        //       fp
+        //     )}`
+        //   );
+        // }
         const path = `${filepath}/butThen/${fp}`;
         addArtifact(path);
         return [path];
@@ -98,25 +117,17 @@ export const butThenProxy: IProxy = (
     [
       "writeFileSync",
       (fp, contents, testName) => {
-        console.log(
-          `[DEBUG] butThenProxy writeFileSync: fp="${fp}" (type: ${typeof fp}), contents="${contents}" (type: ${typeof contents}), testName="${testName}" (type: ${typeof testName})`
-        );
-        // Check if fp is being treated as individual characters
-        if (typeof fp !== "string") {
-          console.log(`[ERROR] fp is not a string:`, fp);
-          // If fp is not a string, try to handle it
-          if (Array.isArray(fp)) {
-            // If it's an array, join it back into a string
-            fp = fp.join("");
-            console.log(`[DEBUG] Converted array to string: "${fp}"`);
-          } else {
-            // For other cases, convert to string
-            fp = String(fp);
-            console.log(`[DEBUG] Converted to string: "${fp}"`);
-          }
-        }
+        // Add debug logging to see what fp is
+        // console.log(`[DEBUG] writeFileSync fp type: ${typeof fp}, value:`, fp);
+
+        // Ensure fp is always a string
+        // if (typeof fp !== "string") {
+        //   console.error(`[PROXY ERROR] writeFileSync fp is not a string:`, fp);
+        //   // Don't convert, just throw to find the source
+        //   throw new Error(`writeFileSync expected string for fp, got ${typeof fp}: ${JSON.stringify(fp)}`);
+        // }
         const path = `${filepath}/butThen/${fp}`;
-        console.log(`[DEBUG] Generated path: "${path}"`);
+        // console.log(`[DEBUG] Adding artifact: "${path}"`);
         addArtifact(path);
         return [path, contents, testName];
       },
@@ -162,6 +173,19 @@ export const andWhenProxy: IProxy = (
     [
       "createWriteStream",
       (fp) => {
+        // // Add debug logging to see what fp is
+        // console.log(
+        //   `[DEBUG] andWhen createWriteStream fp type: ${typeof fp}, value:`,
+        //   fp
+        // );
+
+        // if (typeof fp !== "string") {
+        //   throw new Error(
+        //     `andWhen createWriteStream expected string for fp, got ${typeof fp}: ${JSON.stringify(
+        //       fp
+        //     )}`
+        //   );
+        // }
         const path = `${filepath}/andWhen/${fp}`;
         addArtifact(path);
         return [path];
@@ -171,6 +195,19 @@ export const andWhenProxy: IProxy = (
     [
       "writeFileSync",
       (fp, contents, testName) => {
+        // Add debug logging to see what fp is
+        // console.log(
+        //   `[DEBUG] andWhen writeFileSync fp type: ${typeof fp}, value:`,
+        //   fp
+        // );
+
+        // if (typeof fp !== "string") {
+        //   throw new Error(
+        //     `andWhen writeFileSync expected string for fp, got ${typeof fp}: ${JSON.stringify(
+        //       fp
+        //     )}`
+        //   );
+        // }
         const path = `${filepath}/andWhen/${fp}`;
         addArtifact(path);
         return [path, contents, testName];

@@ -1,0 +1,78 @@
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (68,23): Property 'name' does not exist on type 'never'.
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (84,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (139,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (142,28): Property 'name' does not exist on type 'BaseGiven<I>'.
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (168,12): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (227,20): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (236,18): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (259,16): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (283,14): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (68,26): Property 'name' does not exist on type 'never'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (89,28): Property 'name' does not exist on type 'never'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (165,29): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (171,19): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (172,31): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/index.ts (42,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (50,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (34,56): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (42,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (63,47): Property 'suites' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (64,45): Property 'givens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (65,44): Property 'whens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (66,44): Property 'thens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (71,53): Property 'givens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (135,35): Property 'whens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (136,45): Property 'whens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (142,35): Property 'thens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (143,45): Property 'thens' does not exist on type 'ITestImplementation<I, O, M>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (150,9): Argument of type '(name: string, tests: Record<string, any>, features: any[]) => { name: string; tests: Record<string, any>; features: any[]; }' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (159,28): Property 'tests' does not exist on type 'BaseSuite<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (159,50): Property 'tests' does not exist on type 'BaseSuite<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (160,51): Property 'tests' does not exist on type 'BaseSuite<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/MockTiposkripto.ts (161,32): Property 'tests' does not exist on type 'BaseSuite<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.adapter.ts (24,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.adapter.ts (27,26): Expected 1 arguments, but got 2.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.adapter.ts (29,25): Type 'Tiposkripto<any, any, any>' is missing the following properties from type 'Promise<unknown>': then, catch, finally, [Symbol.toStringTag]
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (26,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (42,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (57,32): Type 'ITestImplementation<I, O, M>' is not assignable to type 'ITestImplementation<any, any>'.
+  Type 'ITestImplementation<I, O, M>' is not assignable to type '{ whens: TestWhenImplementation<any, any>; }'.
+    Types of property 'whens' are incompatible.
+      Type '{ addArtifact: (artifact: Promise<any>) => (builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>; setTestJobs: (jobs: ITestJob[]) => (builder: Tiposkripto<...>) => Tiposkripto<...>; modifySpecs: (modifier: (specs: any[]) => any[]) => (builder: Tiposkripto<...>) => Tiposkripto<...>; modifyJobs: (modifie...' is not assignable to type 'TestWhenImplementation<any, any>'.
+        Property 'addArtifact' is incompatible with index signature.
+          Type '(artifact: Promise<any>) => (builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>' is not assignable to type '(...Iw: any) => (zel: any, tr: ITTestResourceConfiguration, utils: PM) => Promise<any>'.
+            Call signature return types '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>' and '(zel: any, tr: ITTestResourceConfiguration, utils: PM) => Promise<any>' are incompatible.
+              Type 'Tiposkripto<any, any, any>' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (62,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (72,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (82,11): Type 'never[]' is not assignable to type 'number'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (109,5): Type '(config: string) => (builder: Tiposkripto<any, any, any>) => Promise<IFinalResults>' is not assignable to type '(config: string) => (builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Call signature return types '(builder: Tiposkripto<any, any, any>) => Promise<IFinalResults>' and '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>' are incompatible.
+    Type 'Promise<IFinalResults>' is missing the following properties from type 'Tiposkripto<any, any, any>': receiveTestResourceConfig, specs, assertThis, testResourceRequirement, and 16 more.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (114,32): Type '(builder: any, utils: any) => MockTiposkripto<any, any, any>' is not assignable to type '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Target signature provides too few arguments. Expected 2 or more, but got 1.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (227,30): Type '(builder: any) => Promise<any>' is not assignable to type '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Type 'Promise<any>' is missing the following properties from type 'Tiposkripto<any, any, any>': receiveTestResourceConfig, specs, assertThis, testResourceRequirement, and 16 more.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (231,32): Type '(builder: any) => Promise<any>' is not assignable to type '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Type 'Promise<any>' is missing the following properties from type 'Tiposkripto<any, any, any>': receiveTestResourceConfig, specs, assertThis, testResourceRequirement, and 16 more.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (239,41): Type '(builder: any) => Promise<any>' is not assignable to type '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Type 'Promise<any>' is missing the following properties from type 'Tiposkripto<any, any, any>': receiveTestResourceConfig, specs, assertThis, testResourceRequirement, and 16 more.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (245,5): Type '(expectedCount: number) => (builder: any) => Promise<any>' is not assignable to type '(expectedCount: number) => (builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Call signature return types '(builder: any) => Promise<any>' and '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>' are incompatible.
+    Type 'Promise<any>' is missing the following properties from type 'Tiposkripto<any, any, any>': receiveTestResourceConfig, specs, assertThis, testResourceRequirement, and 16 more.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.implementation.ts (252,38): Type '(builder: any) => Promise<any>' is not assignable to type '(builder: Tiposkripto<any, any, any>) => Tiposkripto<any, any, any>'.
+  Type 'Promise<any>' is missing the following properties from type 'Tiposkripto<any, any, any>': receiveTestResourceConfig, specs, assertThis, testResourceRequirement, and 16 more.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (20,26): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (25,35): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (72,35): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.test/Tiposkripto.specification.ts (77,34): Expected 4 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (222,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (299,15): Expected 1 arguments, but got 3.
+/Users/adam/Code/testeranto/src/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/Node.ts (56,12): Cannot find name 'Testeranto'.
+/Users/adam/Code/testeranto/src/PM/web.ts (51,12): Property 'mainFrame' does not exist on type 'string | Page'.
+  Property 'mainFrame' does not exist on type 'string'.

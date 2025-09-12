@@ -13,6 +13,7 @@ export class GolingvuWatcher {
   private testName: string;
   private entryPoints: string[];
   private onChangeCallback: (() => void) | null = null;
+  private debounceTimer: NodeJS.Timeout | null = null;
 
   constructor(testName: string, entryPoints: string[]) {
     this.testName = testName;
@@ -132,10 +133,13 @@ export class GolingvuWatcher {
         console.log(`Raw event: ${event} on path: ${path}`);
       });
 
-    // Second watcher: watches bundle files to schedule tests when they change
+    // Second watcher: watches bundle files in the core directory
     const outputDir = path.join(
       process.cwd(),
-      `testeranto/bundles/golang/${this.testName}`
+      "testeranto",
+      "bundles",
+      "golang",
+      "core"
     );
     // Ensure the output directory exists
     if (!fs.existsSync(outputDir)) {
@@ -147,15 +151,18 @@ export class GolingvuWatcher {
     // Track the last seen signatures to detect changes
     const lastSignatures = new Map<string, string>();
 
-    // Create a separate watcher for bundle files
-    const bundleWatcher = chokidar.watch(path.join(outputDir, "*.go"), {
-      persistent: true,
-      ignoreInitial: false, // We want to capture initial files to establish baseline
-      awaitWriteFinish: {
-        stabilityThreshold: 100,
-        pollInterval: 50,
-      },
-    });
+    // Create a separate watcher for bundle files, including .golingvu.go files
+    const bundleWatcher = chokidar.watch(
+      [path.join(outputDir, "*.go"), path.join(outputDir, "*.golingvu.go")],
+      {
+        persistent: true,
+        ignoreInitial: false, // We want to capture initial files to establish baseline
+        awaitWriteFinish: {
+          stabilityThreshold: 100,
+          pollInterval: 50,
+        },
+      }
+    );
 
     bundleWatcher
       .on("add", (filePath) => {
@@ -173,38 +180,34 @@ export class GolingvuWatcher {
   }
 
   private async handleFileChange(event: string, filePath: string) {
-    // console.log(`\n=== Go file ${event}: ${filePath} ===`);
-    // Log the full path for debugging
-    const fullPath = path.join(process.cwd(), filePath);
-    // console.log(`Full path: ${fullPath}`);
+    // Debounce file changes to prevent multiple rapid triggers
+    // Use a simple timeout-based debounce
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
 
-    // Add a small delay to ensure the file is fully written
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    this.debounceTimer = setTimeout(async () => {
+      const fullPath = path.join(process.cwd(), filePath);
 
-    // Check if the file exists and log its stats
-    if (fs.existsSync(fullPath)) {
-      // console.log(`File exists`);
-      try {
-        const stats = fs.statSync(fullPath);
-        // console.log(`Size: ${stats.size} bytes, Modified: ${stats.mtime}`);
+      // Add a small delay to ensure the file is fully written
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
-        // Read a snippet of the file to confirm it's the right one
-        const content = fs.readFileSync(fullPath, "utf-8").substring(0, 200);
-        // console.log(`Content preview: ${content}...`);
-      } catch (error) {
-        console.error(`Error reading file: ${error}`);
+      // Check if the file exists and log its stats
+      if (fs.existsSync(fullPath)) {
+        try {
+          const stats = fs.statSync(fullPath);
+          console.log(`File ${filePath} changed (${stats.size} bytes)`);
+        } catch (error) {
+          console.error(`Error reading file: ${error}`);
+        }
       }
-    } else {
-      // console.log(`File does not exist (may have been deleted)`);
-    }
 
-    // Always regenerate on any .go file change
-    // console.log("Regenerating metafile due to file change...");
-    await this.regenerateMetafile();
-    if (this.onChangeCallback) {
-      // console.log("Triggering onChangeCallback...");
-      this.onChangeCallback();
-    }
+      console.log("Regenerating metafile due to file change...");
+      await this.regenerateMetafile();
+      if (this.onChangeCallback) {
+        this.onChangeCallback();
+      }
+    }, 300); // 300ms debounce
   }
 
   private readAndCheckSignature(
@@ -217,25 +220,23 @@ export class GolingvuWatcher {
       const signatureMatch = content.match(/\/\/ Signature: (\w+)/);
       if (signatureMatch && signatureMatch[1]) {
         const currentSignature = signatureMatch[1];
-        // const fileName = path.basename(filePath);
         const lastSignature = lastSignatures.get(filePath);
 
         if (lastSignature === undefined) {
           // First time seeing this file, just record the signature
-          // console.log(
-          //   `Bundle file added: ${fileName} with signature: ${currentSignature}`
-          // );
           lastSignatures.set(filePath, currentSignature);
         } else if (lastSignature !== currentSignature) {
           // Signature changed, trigger test scheduling
-          // console.log(
-          //   `Bundle file changed: ${fileName}, signature: ${lastSignature} -> ${currentSignature}`
-          // );
           lastSignatures.set(filePath, currentSignature);
 
           // Find which entry point this corresponds to
+          // Handle .golingvu.go files by mapping back to the original .go file
+          const fileName = path.basename(filePath);
+          // Remove .golingvu from the filename to find the original entry point
+          const originalFileName = fileName.replace(".golingvu.go", ".go");
+
           const originalEntryPoint = this.entryPoints.find(
-            (ep) => path.basename(ep, ".go") === path.basename(filePath, ".go")
+            (ep) => path.basename(ep) === originalFileName
           );
           if (originalEntryPoint) {
             // Add to processing queue
@@ -251,6 +252,8 @@ export class GolingvuWatcher {
   }
 
   private async regenerateMetafile() {
+    console.log("regenerateMetafile!");
+
     try {
       // console.log("Regenerating golingvu metafile...");
       // Always regenerate using the original entry points
@@ -270,6 +273,10 @@ export class GolingvuWatcher {
   }
 
   stop() {
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+      this.debounceTimer = null;
+    }
     if (this.watcher) {
       this.watcher.close();
       this.watcher = null;

@@ -23,7 +23,7 @@ export default (
 
     outdir: `testeranto/bundles/node/${testName}/`,
 
-    inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
+    // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
     metafile: true,
     supported: {
       "dynamic-import": true,

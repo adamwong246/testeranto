@@ -68200,7 +68200,6 @@ Current environment analysis:
     const { processLogs } = useTerminalWebSocket(ws2, selectedProcess);
     const handleInput = (0, import_react127.useCallback)((data2) => {
       if (ws2 && ws2.readyState === WebSocket.OPEN && selectedProcess?.status === "running") {
-        console.log("mark5", data2);
         ws2.send(
           JSON.stringify({
             type: "stdin",

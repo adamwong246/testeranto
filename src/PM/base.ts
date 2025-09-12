@@ -226,7 +226,6 @@ export abstract class PM_Base {
   }
 
   async writeFileSync(...x): Promise<boolean> {
-    console.log("writeFileSync", x);
     const filepath = x[0];
     const contents = x[1];
     const testName = x[2];

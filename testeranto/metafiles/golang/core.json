@@ -3,23 +3,64 @@
   "warnings": [],
   "metafile": {
     "inputs": {
-      "example/base_suite_test.go": {
-        "bytes": 1028,
-        "imports": []
+      "/Users/adam/Code/testeranto/example/Calculator.golingvu.go": {
+        "bytes": 1482,
+        "imports": [],
+        "format": "esm"
+      },
+      "/Users/adam/Code/testeranto/example/Calculator.go": {
+        "bytes": 1318,
+        "imports": [],
+        "format": "esm"
+      },
+      "/Users/adam/Code/testeranto/example/Calculator.golingvu.adapter.go": {
+        "bytes": 2483,
+        "imports": [],
+        "format": "esm"
+      },
+      "/Users/adam/Code/testeranto/example/Calculator.golingvu.implementation.go": {
+        "bytes": 2517,
+        "imports": [],
+        "format": "esm"
+      },
+      "/Users/adam/Code/testeranto/example/Calculator.golingvu.specification.go": {
+        "bytes": 2150,
+        "imports": [],
+        "format": "esm"
+      },
+      "/Users/adam/Code/testeranto/example/base_suite_test.go": {
+        "bytes": 1457,
+        "imports": [],
+        "format": "esm"
       }
     },
     "outputs": {
-      "testeranto/bundles/golang/core/base_suite_test.go": {
+      "golang/core/Calculator.golingvu.golingvu.go": {
         "imports": [],
         "exports": [],
-        "entryPoint": "example/base_suite_test.go",
+        "entryPoint": "/Users/adam/Code/testeranto/example/Calculator.golingvu.go",
         "inputs": {
-          "example/base_suite_test.go": {
-            "bytesInOutput": 1028
+          "/Users/adam/Code/testeranto/example/Calculator.golingvu.go": {
+            "bytesInOutput": 1482
+          },
+          "/Users/adam/Code/testeranto/example/Calculator.go": {
+            "bytesInOutput": 1318
+          },
+          "/Users/adam/Code/testeranto/example/Calculator.golingvu.adapter.go": {
+            "bytesInOutput": 2483
+          },
+          "/Users/adam/Code/testeranto/example/Calculator.golingvu.implementation.go": {
+            "bytesInOutput": 2517
+          },
+          "/Users/adam/Code/testeranto/example/Calculator.golingvu.specification.go": {
+            "bytesInOutput": 2150
+          },
+          "/Users/adam/Code/testeranto/example/base_suite_test.go": {
+            "bytesInOutput": 1457
           }
         },
-        "bytes": 1028,
-        "signature": "mfcteuik"
+        "bytes": 11407,
+        "signature": "mfg0b2vr"
       }
     }
   }

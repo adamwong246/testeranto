@@ -1,0 +1,2 @@
+example/Calculator.ts
+27:14 'error' is defined but never used. (@typescript-eslint/no-unused-vars)

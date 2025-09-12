@@ -1,0 +1,13 @@
+/read node_modules/testeranto/docs/index.md
+/read node_modules/testeranto/docs/style.md
+/read node_modules/testeranto/docs/testing.ai.txt
+/read node_modules/testeranto/src/CoreTypes.ts
+
+/read testeranto/reports/core/src/lib/TipoSkripto.test/TipoSkripto/node/tests.json
+/read testeranto/reports/core/src/lib/TipoSkripto.test/TipoSkripto/node/type_errors.txt
+/read testeranto/reports/core/src/lib/TipoSkripto.test/TipoSkripto/node/lint_errors.txt
+
+/read testeranto/reports/core/src/lib/TipoSkripto.test/TipoSkripto/node/stdout.log
+/read testeranto/reports/core/src/lib/TipoSkripto.test/TipoSkripto/node/stderr.log
+/read testeranto/reports/core/src/lib/TipoSkripto.test/TipoSkripto/node/exit.log
+/read testeranto/reports/core/src/lib/TipoSkripto.test/TipoSkripto/node/message.txt

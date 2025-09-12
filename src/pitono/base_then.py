@@ -7,6 +7,19 @@ class BaseThen:
         self.error = False
         self.artifacts: List[str] = []
     
+    async def but_then(
+        self,
+        store: Any,
+        then_cb: Any,
+        test_resource_configuration,
+        pm: Any
+    ) -> Any:
+        # Execute the then callback which should perform assertions
+        # The then_cb is typically a function that takes the store and performs checks
+        if callable(then_cb):
+            return then_cb(store)
+        return True
+    
     def add_artifact(self, path: str) -> None:
         normalized_path = path.replace('\\', '/')
         self.artifacts.append(normalized_path)

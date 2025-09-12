@@ -1,36 +1,24 @@
 Traceback (most recent call last):
-  File "/Users/adam/Code/testeranto/example/test_example.py", line 150, in <module>
+  File "/Users/adam/Code/testeranto/example/test_example.py", line 134, in <module>
     pitono = Pitono(
         input_val=None,
     ...<4 lines>...
         uber_catcher=uber_catcher
     )
-  File "/Users/adam/Code/testeranto/example/../src/pitono/__init__.py", line 38, in Pitono
+  File "/Users/adam/Code/testeranto/example/../src/pitono/Pitono.py", line 29, in Pitono
     instance = PitonoClass(
-        test_subject,
+        input_val,
     ...<4 lines>...
-        uber_catcher or (lambda x: None)  # uber_catcher placeholder
+        uber_catcher or (lambda x: None)
     )
-  File "/Users/adam/Code/testeranto/example/../src/pitono/__init__.py", line 139, in __init__
-    raise e
-  File "/Users/adam/Code/testeranto/example/../src/pitono/__init__.py", line 122, in __init__
+  File "/Users/adam/Code/testeranto/example/../src/pitono/Pitono.py", line 86, in __init__
     self.specs = test_specification(
                  ~~~~~~~~~~~~~~~~~~^
-        self.test_implementation.suites,
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<3 lines>...
-        {}  # checks - pass an empty dict for now
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.Suites(),
+        ^^^^^^^^^^^^^^
+    ...<2 lines>...
+        self.Then()
+        ^^^^^^^^^^^
     )
     ^
-  File "/Users/adam/Code/testeranto/example/test_example.py", line 45, in test_specification
-    Suite(
-    ~~~~~^
-        "Testing Rectangle functionality",
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<17 lines>...
-        []
-        ^^
-    )
-    ^
-TypeError: 'dict' object is not callable
+TypeError: test_specification() missing 1 required positional argument: 'Check'

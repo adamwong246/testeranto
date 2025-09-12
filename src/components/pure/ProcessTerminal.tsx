@@ -22,8 +22,6 @@ export const ProcessTerminal: React.FC<ProcessTerminalProps> = ({
       selectedProcess?.status === "running"
     ) {
 
-      console.log("mark5", data);
-
       ws.send(
         JSON.stringify({
           type: "stdin",

@@ -1,7 +1,6 @@
 import { ITestSpecification } from "../../CoreTypes";
 
 import { I, O } from "./Tiposkripto.types";
-import { implementation } from "./Tiposkripto.implementation";
 import { ITestJob } from "..";
 
 export const specification: ITestSpecification<I, O> = (
@@ -73,14 +72,12 @@ export const specification: ITestSpecification<I, O> = (
       customImplementation: Given.WithCustomImplementation(
         ["Custom implementation test"],
         [],
-        [Then.specsGenerated(), Then.jobsCreated()],
-        implementation
+        [Then.specsGenerated(), Then.jobsCreated()]
       ),
       customSpecification: Given.WithCustomSpecification(
         ["Custom specification test"],
         [],
-        [Then.specsGenerated(), Then.jobsCreated()],
-        specification
+        [Then.specsGenerated(), Then.jobsCreated()]
       ),
 
       // Dynamic modification tests
@@ -120,7 +117,7 @@ export const specification: ITestSpecification<I, O> = (
         [When.triggerError("test error")],
         [Then.runTimeTestsSetToNegativeOne()]
       ),
-      
+
       // Specific test cases for runTimeTests behavior
       runTimeTestsSingleSuiteFiveTests: Given.WithCustomInput(
         ["Given a config that has 1 suite containing 5 GivenWhenThens"],
@@ -135,13 +132,17 @@ export const specification: ITestSpecification<I, O> = (
         { testCount: 5 }
       ),
       runTimeTestsTwoSuitesThreeTestsEach: Given.WithCustomInput(
-        ["Given a config that has 1 suite containing 3 GivenWhenThens and 1 suite containing 3 GivenWhenThens"],
+        [
+          "Given a config that has 1 suite containing 3 GivenWhenThens and 1 suite containing 3 GivenWhenThens",
+        ],
         [],
         [Then.runTimeTestsCountIs(6)],
         { testCount: 6 }
       ),
       runTimeTestsTwoSuitesThreeTestsEachError: Given.WithCustomInput(
-        ["Given a config that has 1 suite containing 3 GivenWhenThens and 1 suite containing 3 GivenWhenThens"],
+        [
+          "Given a config that has 1 suite containing 3 GivenWhenThens and 1 suite containing 3 GivenWhenThens",
+        ],
         [When.triggerError("hard error")],
         [Then.runTimeTestsIsNegativeOne()],
         { testCount: 6 }

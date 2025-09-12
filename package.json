@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.202.0",
+  "version": "0.203.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -32,11 +32,20 @@
     "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt",
     "static-serve": "python3 -m http.server 8000",
     "buildV2": "node bundle.js",
-    "devV2": "clear; rm -rf testeranto; yarn buildV2; yarn t-init;  cp ./dist/prebuild/App.* testeranto; yarn testeranto core dev",
+    "devV2": "rm -rf testeranto; yarn buildV2; yarn t-init; cp ./dist/prebuild/App.* testeranto; tsx scripts/build-example.ts; yarn testeranto core dev",
     "start": "react-app-rewired start",
     "build-react": "react-app-rewired build",
     "test-react": "react-app-rewired test",
-    "setup-github-oauth": "echo 'Please visit https://github.com/settings/developers and create a new OAuth App. Set the Authorization callback URL to http://localhost:3000/auth/github/callback'"
+    "setup-github-oauth": "echo 'Please visit https://github.com/settings/developers and create a new OAuth App. Set the Authorization callback URL to http://localhost:3000/auth/github/callback'",
+    "build:example": "tsx scripts/build-example.ts",
+    "test:example": "node scripts/test-example.js",
+    "setup:example": "cd example && go mod tidy",
+    "clean:all": "rm -rf testeranto dist && cd example && go clean",
+    "build:all": "npm run build && npm run build:example",
+    "test:all": "npm run build:all && npm run test:example",
+    "verify": "node scripts/verify-build.js",
+    "ci": "npm run build:all && npm run test:all && npm run verify",
+    "devV2:clean": "npm run clean:all && npm run devV2"
   },
   "exports": {
     "./Puppeteer": {
