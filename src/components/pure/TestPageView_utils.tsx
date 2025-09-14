@@ -42,6 +42,14 @@ export const getLanguage = (path: string) => {
   }
 };
 
+const statusToClassName = (status: boolean | undefined): string => {
+  if (status === undefined) return "bg-secondary";
+  if (status === false) return "bg-danger";
+  if (status === true) return "bg-success";
+
+  throw `idk status: ${status}`;
+};
+
 export const renderTestResults = (
   testData: TestData,
   buildErrors,
@@ -52,8 +60,12 @@ export const renderTestResults = (
   return (
     <div className="test-results">
       {testData.givens.map((given, i) => (
-        <div key={i} className="mb-4 card">
-          <div className="card-header bg-primary text-white">
+        <div key={i} className="mb-4 card ">
+          <div
+            className={`card-header ${statusToClassName(
+              given.status
+            )} text-white`}
+          >
             <div className="d-flex justify-content-between align-items-center">
               <div>
                 <h4>Given: {given.name}</h4>
@@ -115,8 +127,9 @@ export const renderTestResults = (
             {given.whens.map((when, j) => (
               <div
                 key={`w-${j}`}
-                className={`p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"
-                  }`}
+                className={`p-3 mb-2 text-white ${statusToClassName(
+                  when.status
+                )}`}
               >
                 <div className="d-flex justify-content-between align-items-start">
                   <div>
@@ -175,8 +188,9 @@ export const renderTestResults = (
             {given.thens.map((then, k) => (
               <div
                 key={`t-${k}`}
-                className={`p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"
-                  }`}
+                className={`p-3 mb-2 text-white ${statusToClassName(
+                  then.status
+                )}`}
               >
                 <div className="d-flex justify-content-between align-items-start">
                   <div>

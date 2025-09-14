@@ -14,6 +14,7 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   whenCB: (x: I["iselection"]) => I["then"];
   error: Error;
   artifacts: string[] = [];
+  status: boolean | undefined;
 
   addArtifact(path: string) {
     if (typeof path !== "string") {
@@ -42,15 +43,12 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
   toObj() {
     const obj = {
       name: this.name,
+      status: this.status,
       error: this.error
         ? `${this.error.name}: ${this.error.message}\n${this.error.stack}`
         : null,
       artifacts: this.artifacts,
     };
-    console.log(
-      `[TOOBJ] Serializing ${this.constructor.name} with artifacts:`,
-      obj.artifacts
-    );
     return obj;
   }
 
@@ -66,22 +64,16 @@ export abstract class BaseWhen<I extends Ibdd_in_any> {
       const addArtifact = this.addArtifact.bind(this);
       const proxiedPm = andWhenProxy(pm, filepath, addArtifact);
 
-      // (proxiedPm as any).currentStep = this;
-
       const result = await this.andWhen(
         store,
         this.whenCB,
         testResourceConfiguration,
         proxiedPm
       );
-
+      this.status = true;
       return result;
     } catch (e: any) {
-      console.error(
-        "[ERROR] When step failed:",
-        this.name.toString(),
-        e.toString()
-      );
+      this.status = false;
       this.error = e;
       throw e;
     }

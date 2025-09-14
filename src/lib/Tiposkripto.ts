@@ -39,7 +39,6 @@ export default abstract class Tiposkripto<
   O extends Ibdd_out_any = Ibdd_out_any,
   M = unknown
 > {
-  // Add the receiveTestResourceConfig method from TesterantoCore
   abstract receiveTestResourceConfig(
     partialTestResource: string
   ): Promise<IFinalResults>;
@@ -225,26 +224,8 @@ export default abstract class Tiposkripto<
       this.Then()
     );
 
-    // Debug: log the structure of the first suite to see if whens are properly set up
-    // if (this.specs.length > 0 && this.specs[0]) {
-    //   const firstSuite = this.specs[0] as any;
-    //   if (firstSuite.givens) {
-    //     Object.entries(firstSuite.givens).forEach(([givenKey, given]) => {
-    //       console.log(`[DEBUG] Given "${givenKey}":`, {
-    //         name: given.name,
-    //         whens: given.whens ? given.whens.map((w) => w?.name) : [],
-    //         thens: given.thens ? given.thens.map((t) => t?.name) : [],
-    //       });
-    //     });
-    //   }
-    // }
-
-    // Calculate total number of tests (sum of all Givens across all Suites)
-    // Each suite should have a 'givens' property that's a record of test names to BaseGiven instances
     this.totalTests = this.calculateTotalTests();
-    // console.log(`Total tests calculated: ${this.totalTests}`);
 
-    // Create test jobs
     this.testJobs = this.specs.map((suite: BaseSuite<I, O>) => {
       const suiteRunner =
         (suite: BaseSuite<I, O>) =>

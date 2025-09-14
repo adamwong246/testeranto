@@ -35,6 +35,8 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
   failed: boolean;
   artifacts: string[] = [];
 
+  status: boolean | undefined;
+
   addArtifact(path: string) {
     if (typeof path !== "string") {
       throw new Error(
@@ -54,31 +56,9 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     givenCB: I["given"],
     initialValues: any
   ) {
-    // Ensure features are always strings
-    // Ensure features are always strings and not objects
-    // If features contains objects, it's likely a parameter shift error
-    this.features = (Array.isArray(features) ? features : [])
-      .map((feature) => {
-        // If feature is a string, use it directly
-        if (typeof feature === "string") return feature;
-        // If feature is an object, this is an error - log it and return empty string
-        if (feature && typeof feature === "object") {
-          console.error(
-            `[ERROR] Found object in features array: ${
-              feature.name || JSON.stringify(feature)
-            }`
-          );
-          return ""; // Return empty string to avoid issues
-        }
-        // For any other case, convert to string
-        return String(feature);
-      })
-      .filter((f) => f !== null && f !== undefined && f !== "");
-
-    // Ensure whens and thens are always arrays
-    this.whens = Array.isArray(whens) ? whens : [];
-    this.thens = Array.isArray(thens) ? thens : [];
-
+    this.features = features;
+    this.whens = whens;
+    this.thens = thens;
     this.givenCB = givenCB;
     this.initialValues = initialValues;
     this.fails = 0; // Initialize fail count
@@ -102,6 +82,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
       failed: this.failed,
       features: this.features || [],
       artifacts: this.artifacts,
+      status: this.status,
     };
   }
 
@@ -162,7 +143,9 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
         this.initialValues,
         proxiedPm
       );
+      this.status = true;
     } catch (e) {
+      this.status = false;
       // console.error("Given failure: ", e.stack);
       this.failed = true;
       this.fails++; // Increment fail count

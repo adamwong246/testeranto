@@ -14,6 +14,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
   thenCB: (storeState: I["iselection"], pm: IPM) => Promise<I["then"]>;
   error: boolean;
   artifacts: string[] = [];
+  status: boolean | undefined;
 
   constructor(
     name: string,
@@ -42,6 +43,7 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
       name: this.name,
       error: this.error,
       artifacts: this.artifacts,
+      status: this.status,
     };
     return obj;
   }
@@ -63,9 +65,9 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
     // Ensure addArtifact is properly bound to 'this'
     const addArtifact = this.addArtifact.bind(this);
     const proxiedPm = butThenProxy(pm, filepath, addArtifact);
-    
+
     try {
-      return await this.butThen(
+      const x = await this.butThen(
         store,
         async (s: I["iselection"]) => {
           try {
@@ -85,10 +87,11 @@ export abstract class BaseThen<I extends Ibdd_in_any> {
         testResourceConfiguration,
         proxiedPm
       );
+      this.status = true;
+      return x;
     } catch (e) {
-      // Record the error and mark this then step as failed
+      this.status = false;
       this.error = true;
-      // Re-throw to propagate to the test runner
       throw e;
     }
   }

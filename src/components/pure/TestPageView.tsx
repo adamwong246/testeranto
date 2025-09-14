@@ -441,6 +441,7 @@ export const TestPageView = ({
                   )}
               </div>
             )}
+
             {selectedFile?.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) && (
               <div className="text-center">
                 <img
@@ -461,6 +462,7 @@ export const TestPageView = ({
                 </div>
               </div>
             )}
+
             {selectedFile?.path.endsWith("build.json") && (
               <div>
                 <h5>Build Information</h5>
@@ -570,6 +572,7 @@ export const TestPageView = ({
                 })()}
               </div>
             )}
+
             {selectedFile?.path.endsWith(".json") &&
               !selectedFile.path.endsWith("tests.json") &&
               !selectedFile.path.endsWith("build.json") && (
@@ -577,6 +580,7 @@ export const TestPageView = ({
                   <code>{selectedFile.content}</code>
                 </pre>
               )}
+
             {selectedFile?.path.includes("source_files") && (
               <div>
                 <div className="mb-2 small text-muted">

@@ -34,7 +34,11 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
 
   addArtifact(path: string) {
     if (typeof path !== "string") {
-      throw new Error(`[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(path)}`);
+      throw new Error(
+        `[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(
+          path
+        )}`
+      );
     }
     const normalizedPath = path.replace(/\\/g, "/"); // Normalize path separators
     this.artifacts.push(normalizedPath);
@@ -61,10 +65,10 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
           return array.indexOf(value) === index;
         });
       // Convert all features to strings
-      const stringFeatures = features.map(feature => {
-        if (typeof feature === 'string') {
+      const stringFeatures = features.map((feature) => {
+        if (typeof feature === "string") {
           return feature;
-        } else if (feature && typeof feature === 'object') {
+        } else if (feature && typeof feature === "object") {
           return feature.name || JSON.stringify(feature);
         } else {
           return String(feature);
@@ -81,17 +85,19 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
     const givens = Object.keys(this.givens).map((k) => {
       const givenObj = this.givens[k].toObj();
       // Ensure given features are strings
-      if (givenObj.features) {
-        givenObj.features = givenObj.features.map(feature => {
-          if (typeof feature === 'string') {
-            return feature;
-          } else if (feature && typeof feature === 'object') {
-            return feature.name || JSON.stringify(feature);
-          } else {
-            return String(feature);
-          }
-        });
-      }
+      // if (givenObj.features) {
+      //   givenObj.features = givenObj.features.map(feature => {
+
+      //     return feature;
+      //     // if (typeof feature === 'string') {
+      //     //   return feature;
+      //     // } else if (feature && typeof feature === 'object') {
+      //     //   return feature.name || JSON.stringify(feature);
+      //     // } else {
+      //     //   return String(feature);
+      //     // }
+      //   });
+      // }
       return givenObj;
     });
 
@@ -101,7 +107,9 @@ export abstract class BaseSuite<I extends Ibdd_in_any, O extends Ibdd_out_any> {
       fails: this.fails,
       failed: this.failed,
       features: this.features(),
-      artifacts: this.artifacts ? this.artifacts.filter(art => typeof art === 'string') : [],
+      artifacts: this.artifacts
+        ? this.artifacts.filter((art) => typeof art === "string")
+        : [],
     };
   }
 
