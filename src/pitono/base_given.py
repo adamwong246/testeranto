@@ -4,14 +4,14 @@ from .types import Isubject, Istore, Iselection, Then, Given
 class BaseGiven:
     def __init__(
         self,
-        name: str,
+        key: str,
         features: List[str],
         whens: List[Any],
         thens: List[Any],
         given_cb: Given,
         initial_values: Any
     ):
-        self.name = name
+        self.key = key
         # Ensure features are always strings
         self.features = []
         if features:
@@ -29,7 +29,6 @@ class BaseGiven:
         self.error: Optional[Exception] = None
         self.failed = False
         self.store: Optional[Istore] = None
-        self.key: Optional[str] = None
     
     def add_artifact(self, path: str) -> None:
         # Normalize path separators
@@ -37,15 +36,42 @@ class BaseGiven:
         self.artifacts.append(normalized_path)
     
     def to_obj(self) -> Dict[str, Any]:
+        # Convert whens and thens to their object representations
+        when_objs = []
+        for w in self.whens:
+            if hasattr(w, 'to_obj'):
+                when_objs.append(w.to_obj())
+            else:
+                # Create a minimal when object
+                when_objs.append({
+                    'name': getattr(w, 'key', 'unknown'),
+                    'status': None,
+                    'error': None,
+                    'artifacts': []
+                })
+        
+        then_objs = []
+        for t in self.thens:
+            if hasattr(t, 'to_obj'):
+                then_objs.append(t.to_obj())
+            else:
+                # Create a minimal then object
+                then_objs.append({
+                    'name': getattr(t, 'key', 'unknown'),
+                    'error': False,
+                    'artifacts': [],
+                    'status': None
+                })
+        
         return {
             'key': self.key,
-            'name': self.name,
-            'whens': [w.to_obj() if hasattr(w, 'to_obj') else {} for w in self.whens],
-            'thens': [t.to_obj() if hasattr(t, 'to_obj') else {} for t in self.thens],
+            'whens': when_objs,
+            'thens': then_objs,
             'error': str(self.error) if self.error else None,
             'failed': self.failed,
             'features': self.features,
-            'artifacts': self.artifacts
+            'artifacts': self.artifacts,
+            'status': not self.failed
         }
     
     async def given_that(
@@ -83,10 +109,9 @@ class BaseGiven:
         pm: Any,
         suite_ndx: int
     ) -> Istore:
-        self.key = key
         self.failed = False
-        t_log(f"\n {self.key}")
-        t_log(f"\n Given: {self.name}")
+        t_log(f"\n {key}")
+        t_log(f"\n Given: {self.key}")
 
         def given_artifactory(f_path: str, value: Any):
             artifactory(f"given-{key}/{f_path}", value)

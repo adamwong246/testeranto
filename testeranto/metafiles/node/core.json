@@ -151,7 +151,7 @@
         "format": "esm"
       },
       "src/lib/BaseGiven.ts": {
-        "bytes": 9112,
+        "bytes": 8232,
         "imports": [
           {
             "path": ".",
@@ -177,7 +177,7 @@
         "format": "esm"
       },
       "src/lib/BaseWhen.ts": {
-        "bytes": 2676,
+        "bytes": 2505,
         "imports": [
           {
             "path": ".",
@@ -198,7 +198,7 @@
         "format": "esm"
       },
       "src/lib/BaseThen.ts": {
-        "bytes": 3079,
+        "bytes": 3095,
         "imports": [
           {
             "path": ".",
@@ -219,7 +219,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 6086,
+        "bytes": 6226,
         "imports": [
           {
             "path": ".",
@@ -250,7 +250,7 @@
         "format": "esm"
       },
       "src/lib/Tiposkripto.ts": {
-        "bytes": 11612,
+        "bytes": 10681,
         "imports": [
           {
             "path": "stream",
@@ -817,7 +817,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/core/chunk-RIM6RECA.mjs",
+            "path": "testeranto/bundles/node/core/chunk-M4FSQGZH.mjs",
             "kind": "import-statement"
           }
         ],
@@ -847,7 +847,7 @@
       "testeranto/bundles/node/core/src/lib/BaseSuite.test/node.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-RIM6RECA.mjs",
+            "path": "testeranto/bundles/node/core/chunk-M4FSQGZH.mjs",
             "kind": "import-statement"
           }
         ],
@@ -871,7 +871,7 @@
       "testeranto/bundles/node/core/src/lib/TipoSkripto.test/TipoSkripto.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/node/core/chunk-RIM6RECA.mjs",
+            "path": "testeranto/bundles/node/core/chunk-M4FSQGZH.mjs",
             "kind": "import-statement"
           }
         ],
@@ -905,7 +905,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/core/chunk-RIM6RECA.mjs",
+            "path": "testeranto/bundles/node/core/chunk-M4FSQGZH.mjs",
             "kind": "import-statement"
           }
         ],
@@ -944,7 +944,7 @@
         },
         "bytes": 141395
       },
-      "testeranto/bundles/node/core/chunk-RIM6RECA.mjs": {
+      "testeranto/bundles/node/core/chunk-M4FSQGZH.mjs": {
         "imports": [
           {
             "path": "net",
@@ -977,7 +977,7 @@
             "bytesInOutput": 5950
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 3684
+            "bytesInOutput": 3341
           },
           "src/lib/index.ts": {
             "bytesInOutput": 672
@@ -989,13 +989,13 @@
             "bytesInOutput": 174
           },
           "src/lib/BaseGiven.ts": {
-            "bytesInOutput": 4489
+            "bytesInOutput": 4099
           },
           "src/lib/BaseWhen.ts": {
-            "bytesInOutput": 1306
+            "bytesInOutput": 1154
           },
           "src/lib/BaseThen.ts": {
-            "bytesInOutput": 1350
+            "bytesInOutput": 1449
           },
           "src/lib/Tiposkripto.ts": {
             "bytesInOutput": 6310
@@ -1004,7 +1004,7 @@
             "bytesInOutput": 1199
           }
         },
-        "bytes": 31103
+        "bytes": 30317
       }
     }
   }

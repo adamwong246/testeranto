@@ -1,4 +1,22 @@
 Traceback (most recent call last):
+  File "/Users/adam/Code/testeranto/example/../src/pitono/Pitono.py", line 95, in __init__
+    self.specs = test_specification(
+                 ~~~~~~~~~~~~~~~~~~^
+        self.Suites(),
+        ^^^^^^^^^^^^^^
+    ...<3 lines>...
+        lambda x: x  # Simple Check function
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/adam/Code/testeranto/example/test_example.py", line 45, in test_specification
+    Suite.Default("BaseSuite Core Funct", {
+    ^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'Default'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
   File "/Users/adam/Code/testeranto/example/test_example.py", line 134, in <module>
     pitono = Pitono(
         input_val=None,
@@ -11,7 +29,7 @@ Traceback (most recent call last):
     ...<4 lines>...
         uber_catcher or (lambda x: None)
     )
-  File "/Users/adam/Code/testeranto/example/../src/pitono/Pitono.py", line 86, in __init__
+  File "/Users/adam/Code/testeranto/example/../src/pitono/Pitono.py", line 112, in __init__
     self.specs = test_specification(
                  ~~~~~~~~~~~~~~~~~~^
         self.Suites(),

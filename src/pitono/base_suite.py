@@ -32,7 +32,8 @@ class BaseSuite:
             'givens': givens,
             'fails': self.fails,
             'failed': self.failed,
-            'features': self.features()
+            'features': self.features(),
+            'artifacts': self.artifacts
         }
     
     async def setup(

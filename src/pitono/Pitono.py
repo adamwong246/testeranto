@@ -82,13 +82,65 @@ class PitonoClass:
         self.test_subject = input_val
         self.test_adapter = test_adapter
         
-        # Generate specs
-        self.specs = test_specification(
-            self.Suites(),
-            self.Given(),
-            self.When(),
-            self.Then()
-        )
+        # Initialize classy implementations
+        self._initialize_classy_implementations(test_implementation)
+        
+        # Generate specs - the specification function may expect 5 arguments
+        # Let's try to call it with the expected number of parameters
+        try:
+            import inspect
+            sig = inspect.signature(test_specification)
+            if len(sig.parameters) == 5:
+                # Add a Check parameter
+                self.specs = test_specification(
+                    self.Suites(),
+                    self.Given(),
+                    self.When(),
+                    self.Then(),
+                    lambda x: x  # Simple Check function
+                )
+            else:
+                # Assume 4 parameters
+                self.specs = test_specification(
+                    self.Suites(),
+                    self.Given(),
+                    self.When(),
+                    self.Then()
+                )
+        except:
+            # Fallback to 4 parameters
+            self.specs = test_specification(
+                self.Suites(),
+                self.Given(),
+                self.When(),
+                self.Then()
+            )
+        
+        # Initialize test jobs
+        self.test_jobs = []
+        # Create test jobs from the specs
+        for i, suite_spec in enumerate(self.specs):
+            # Create a BaseSuite instance
+            suite = BaseSuite(
+                suite_spec['name'],
+                suite_spec['givens']
+            )
+            suite.index = i
+            
+            # Create a runner function
+            async def runner(pm, t_log):
+                return await suite.run(
+                    self.test_subject,
+                    {},  # test_resource_config will be provided later
+                    lambda f_path, value: None,  # Simple artifactory
+                    t_log,
+                    pm
+                )
+            
+            self.test_jobs.append({
+                'receiveTestResourceConfig': lambda pm: self._run_test_job(runner, suite, pm),
+                'to_obj': suite.to_obj
+            })
         
     def Suites(self):
         return self.suites_overrides
@@ -102,8 +154,14 @@ class PitonoClass:
                 raise ValueError(f"Given type '{given_type}' not found")
         
         # Create a wrapper that provides access to all given types
+        # Support both attribute access and indexing
         class GivenWrapper:
             def __getattr__(self, name):
+                def given_func(features, whens, thens, initial_values=None):
+                    return create_given(name, features, whens, thens, initial_values)
+                return given_func
+            
+            def __getitem__(self, name):
                 def given_func(features, whens, thens, initial_values=None):
                     return create_given(name, features, whens, thens, initial_values)
                 return given_func
@@ -123,6 +181,11 @@ class PitonoClass:
                 def when_func(*args):
                     return create_when(name, *args)
                 return when_func
+            
+            def __getitem__(self, name):
+                def when_func(*args):
+                    return create_when(name, *args)
+                return when_func
         
         return WhenWrapper()
     
@@ -136,6 +199,11 @@ class PitonoClass:
         
         class ThenWrapper:
             def __getattr__(self, name):
+                def then_func(*args):
+                    return create_then(name, *args)
+                return then_func
+            
+            def __getitem__(self, name):
                 def then_func(*args):
                     return create_then(name, *args)
                 return then_func
@@ -164,9 +232,9 @@ class PitonoClass:
             def create_when_closure(when_key):
                 def when_func(*args):
                     # Create a BaseWhen instance
-                    name = f"{when_key}: {args}"
+                    # name = f"{when_key}: {args}"
                     when_cb = test_implementation.whens[when_key](*args)
-                    return BaseWhen(name, when_cb)
+                    return BaseWhen(when_key, when_cb)
                 return when_func
             classyWhens[key] = create_when_closure(key)
         
@@ -175,18 +243,56 @@ class PitonoClass:
             def create_then_closure(then_key):
                 def then_func(*args):
                     # Create a BaseThen instance
-                    name = f"{then_key}: {args}"
+                    # name = f"{then_key}: {args}"
                     then_cb = test_implementation.thens[then_key](*args)
-                    return BaseThen(name, then_cb)
+                    return BaseThen(then_key, then_cb)
                 return then_func
             classyThens[key] = create_then_closure(key)
         
         self.given_overrides = classyGivens
         self.when_overrides = classyWhens
         self.then_overrides = classyThens
+    
+    def _initialize_classy_implementations(self, test_implementation):
+        # Create classy implementations similar to TypeScript
+        classyGivens = {}
+        for key in test_implementation.givens.keys():
+            def create_given_closure(given_key):
+                def given_func(features, whens, thens, initial_values=None):
+                    return BaseGiven(
+                        given_key,
+                        features,
+                        whens,
+                        thens,
+                        test_implementation.givens[given_key],
+                        initial_values
+                    )
+                return given_func
+            classyGivens[key] = create_given_closure(key)
         
-        # Initialize the classy implementations
-        self._initialize_classy_implementations(test_implementation)
+        classyWhens = {}
+        for key in test_implementation.whens.keys():
+            def create_when_closure(when_key):
+                def when_func(*args):
+                    # Create a BaseWhen instance
+                    when_cb = test_implementation.whens[when_key](*args)
+                    return BaseWhen(when_key, when_cb)
+                return when_func
+            classyWhens[key] = create_when_closure(key)
+        
+        classyThens = {}
+        for key in test_implementation.thens.keys():
+            def create_then_closure(then_key):
+                def then_func(*args):
+                    # Create a BaseThen instance
+                    then_cb = test_implementation.thens[then_key](*args)
+                    return BaseThen(then_key, then_cb)
+                return then_func
+            classyThens[key] = create_then_closure(key)
+        
+        self.given_overrides = classyGivens
+        self.when_overrides = classyWhens
+        self.then_overrides = classyThens
 
     async def _run_test_job(self, runner, suite, puppet_master):
         try:
@@ -211,29 +317,28 @@ class PitonoClass:
             
             # Create a simple result object
             class Result:
-                def __init__(self, failed, fails, artifacts, features):
-                    self.failed = failed
+                def __init__(self, fails, artifacts, features):
                     self.fails = fails
                     self.artifacts = artifacts
                     self.features = features
             
             return Result(
-                fails > 0,
                 fails,
                 artifacts,
                 features
             )
         except Exception as e:
             print(f"Error in test job: {e}")
+            import traceback
+            traceback.print_exc()
             
             class Result:
-                def __init__(self, failed, fails, artifacts, features):
-                    self.failed = failed
+                def __init__(self, fails, artifacts, features):
                     self.fails = fails
                     self.artifacts = artifacts
                     self.features = features
             
-            return Result(True, 1, [], [])
+            return Result(1, [], [])
     
     async def receiveTestResourceConfig(self, partialTestResource: str, ipcfile: str) -> Any:
         # Parse the test resource configuration
@@ -249,6 +354,35 @@ class PitonoClass:
         
         # Collect all suite results
         suite_results = []
+        
+        # First, we need to create test jobs from the specs
+        # The specs should contain the test suites to run
+        if not hasattr(self, 'test_jobs') or not self.test_jobs:
+            # Create test jobs from the specs
+            self.test_jobs = []
+            for i, suite_spec in enumerate(self.specs):
+                # Create a BaseSuite instance
+                suite = BaseSuite(
+                    suite_spec['name'],
+                    suite_spec['givens']
+                )
+                suite.index = i
+                
+                # Create a runner function
+                async def runner(pm, t_log):
+                    return await suite.run(
+                        self.test_subject,
+                        test_resource_config,
+                        lambda f_path, value: None,  # Simple artifactory
+                        t_log,
+                        pm
+                    )
+                
+                self.test_jobs.append({
+                    'receiveTestResourceConfig': lambda pm: self._run_test_job(runner, suite, pm),
+                    'to_obj': suite.to_obj
+                })
+        
         for job in self.test_jobs:
             try:
                 result = await job['receiveTestResourceConfig'](pm)
@@ -264,6 +398,8 @@ class PitonoClass:
                 suite_results.append(suite_obj)
             except Exception as e:
                 print(f"Error running test job: {e}")
+                import traceback
+                traceback.print_exc()
                 total_fails += 1
         
         # Write the final tests.json
@@ -275,24 +411,34 @@ class PitonoClass:
                     all_givens.extend(suite['givens'])
             
             # Prepare tests data matching the TypeScript structure
+            # Based on the example tests.json file
             tests_data = {
-                "name": self.specs[0].name if self.specs else "Unnamed Test",
+                "name": self.specs[0]['name'] if self.specs and len(self.specs) > 0 and 'name' in self.specs[0] else "Unnamed Test",
                 "givens": all_givens,
                 "fails": total_fails,
+                "failed": total_fails > 0,
                 "features": list(all_features),
                 "artifacts": all_artifacts
             }
             
             # Write to file
             tests_json_path = f"{test_resource_config['fs']}/tests.json"
+            # Ensure the directory exists
+            import os
+            os.makedirs(os.path.dirname(tests_json_path), exist_ok=True)
             with open(tests_json_path, 'w') as f:
                 json.dump(tests_data, f, indent=2)
+            print(f"tests.json written to: {tests_json_path}")
                 
         except Exception as e:
             print(f"Error writing tests.json: {e}")
+            import traceback
+            traceback.print_exc()
         
         # Return result
         class Result:
             def __init__(self, fails):
                 self.fails = fails
+                self.features = list(all_features)
+                self.artifacts = all_artifacts
         return Result(total_fails)

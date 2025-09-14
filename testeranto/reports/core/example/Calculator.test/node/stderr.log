@@ -1,15 +1,15 @@
 Unhandled Rejection at: Promise {
   <rejected> AssertionError: expected 'Infinity' to equal 'Error'
       at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:435:14)
-      at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:894:41
+      at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:875:41
       at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:474:7)
-      at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:993:40)
-      at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:889:25)
-      at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:766:36)
-      at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:373:22)
-      at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:1018:21
-      at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:1050:31)
-      at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:1134:12) {
+      at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:977:40)
+      at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:870:28)
+      at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:752:36)
+      at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:366:22)
+      at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1002:21
+      at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1034:31)
+      at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1118:12) {
     actual: 'Infinity',
     expected: 'Error',
     showDiff: true,
@@ -17,15 +17,15 @@ Unhandled Rejection at: Promise {
   }
 } reason: AssertionError: expected 'Infinity' to equal 'Error'
     at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:435:14)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:894:41
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:875:41
     at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:474:7)
-    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:993:40)
-    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:889:25)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:766:36)
-    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:373:22)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:1018:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:1050:31)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-RIM6RECA.mjs:1134:12) {
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:977:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:870:28)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:752:36)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:366:22)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1002:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1034:31)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1118:12) {
   actual: 'Infinity',
   expected: 'Error',
   showDiff: true,

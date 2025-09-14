@@ -1,8 +1,8 @@
 from typing import Any, Dict, List
 
 class BaseWhen:
-    def __init__(self, name: str, when_cb: Any):
-        self.name = name
+    def __init__(self, key: str, when_cb: Any):
+        self.key = key
         self.when_cb = when_cb
         self.artifacts: List[str] = []
         self.error: Any = None
@@ -26,7 +26,8 @@ class BaseWhen:
     
     def to_obj(self) -> Dict[str, Any]:
         return {
-            'name': self.name,
+            'name': self.key,
+            'status': self.error is None,
             'error': str(self.error) if self.error else None,
             'artifacts': self.artifacts
         }

@@ -1,8 +1,8 @@
 from typing import Any, Dict, List
 
 class BaseThen:
-    def __init__(self, name: str, then_cb: Any):
-        self.name = name
+    def __init__(self, key: str, then_cb: Any):
+        self.key = key
         self.then_cb = then_cb
         self.error = False
         self.artifacts: List[str] = []
@@ -26,9 +26,10 @@ class BaseThen:
     
     def to_obj(self) -> Dict[str, Any]:
         return {
-            'name': self.name,
+            'name': self.key,
             'error': self.error,
-            'artifacts': self.artifacts
+            'artifacts': self.artifacts,
+            'status': not self.error
         }
     
     async def but_then(

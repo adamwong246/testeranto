@@ -1,47 +1,132 @@
 import sys
 import os
 
-# Add the current directory to the Python path to find local modules
-sys.path.insert(0, os.path.dirname(__file__))
+# Add the src directory to the Python path to find pitono
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, project_root)
 
 # Import Calculator from the current directory
 from Calculator import Calculator
 
-# Try to import pitono components
+# Import pitono components
 try:
-    # Try relative import first
-    from ..src.pitono.Pitono import Pitono, set_default_instance, main
-except ImportError:
-    try:
-        # Try absolute import
-        from src.pitono.Pitono import Pitono, set_default_instance, main
-    except ImportError:
-        print("Could not import pitono. Make sure to run from the project root")
-        raise
-
-# Import specification, implementation, and adapter
-try:
-    from .Calculator.pitono.specification import specification
-    from .Calculator.pitono.implementation import implementation
-    from .Calculator.pitono.adapter import SimpleTestAdapter
+    from src.pitono.Pitono import Pitono, set_default_instance, main
+    from src.pitono.simple_adapter import SimpleTestAdapter
 except ImportError as e:
-    print(f"Import error: {e}")
-    # Create fallback implementations if needed
+    print(f"Could not import pitono: {e}")
+    print("Make sure to run from the project root and install pitono")
     raise
 
+# Try to import specification and implementation
+# These might be in a subdirectory
+specification = None
+implementation = None
+
+def specification(Suite, Given, When, Then, Check):
+    return [
+        {
+            'name': 'Calculator Suite',
+            'givens': {
+                "basic_operations": Given["Default"](
+                    ["Basic calculator operations should work"],
+                    [],
+                    [Then["DisplayMatches"]("")]
+                ),
+                "addition": Given["Addition"](
+                    ["Addition should work correctly"],
+                    [When["Press"]("2"), When["Press"]("+"), When["Press"]("3"), When["Press"]("=")],
+                    [Then["DisplayMatches"]("5")]
+                ),
+                "subtraction": Given["Subtraction"](
+                    ["Subtraction should work correctly"],
+                    [When["Press"]("7"), When["Press"]("-"), When["Press"]("3"), When["Press"]("=")],
+                    [Then["DisplayMatches"]("4")]
+                ),
+                "multiplication": Given["Multiplication"](
+                    ["Multiplication should work correctly"],
+                    [When["Press"]("4"), When["Press"]("*"), When["Press"]("5"), When["Press"]("=")],
+                    [Then["DisplayMatches"]("20")]
+                ),
+                "division": Given["Division"](
+                    ["Division should work correctly"],
+                    [When["Press"]("8"), When["Press"]("/"), When["Press"]("2"), When["Press"]("=")],
+                    [Then["DisplayMatches"]("4")]
+                ),
+                "clear": Given["Clear"](
+                    ["Clear should reset the display"],
+                    [When["Press"]("5"), When["Press"]("+"), When["Press"]("3"), When["Press"]("C")],
+                    [Then["DisplayMatches"]("")]
+                )
+            },
+            'features': []
+        }
+    ]
+    
+# Define a comprehensive implementation that works with the existing Calculator class
+class SimpleImplementation:
+    def __init__(self):
+        self.suites = {
+            "Default": "Default Suite",
+            "Addition": "Addition Suite",
+            "Subtraction": "Subtraction Suite", 
+            "Multiplication": "Multiplication Suite",
+            "Division": "Division Suite",
+            "Clear": "Clear Suite"
+        }
+        self.givens = {
+            "Default": lambda: lambda: {"calculator": Calculator(), "display": ""},
+            "Addition": lambda: lambda: {"calculator": Calculator(), "display": ""},
+            "Subtraction": lambda: lambda: {"calculator": Calculator(), "display": ""},
+            "Multiplication": lambda: lambda: {"calculator": Calculator(), "display": ""},
+            "Division": lambda: lambda: {"calculator": Calculator(), "display": ""},
+            "Clear": lambda: lambda: {"calculator": Calculator(), "display": ""}
+        }
+        self.whens = {
+            "Press": lambda button: lambda store, pm: self._press_button(store, button)
+        }
+        self.thens = {
+            "DisplayMatches": lambda expected: lambda store, pm: store["calculator"].get_display() == expected
+        }
+    
+    def _press_button(self, store, button):
+        # Press the button on the calculator using the existing implementation
+        calculator = store["calculator"]
+        if button == "=":
+            # Use the enter method to evaluate the expression
+            calculator.enter()
+        else:
+            # Use the press method for other buttons
+            calculator.press(button)
+        # Update the display in the store
+        store["display"] = calculator.get_display()
+        return store
+
+implementation = SimpleImplementation()
+
 # Create the test instance
+# Make sure all required parameters are passed
 test_instance = Pitono(
-    Calculator,  # Pass the Calculator class as input
-    specification,
-    implementation,
-    SimpleTestAdapter(),
-    {"ports": 1}
+    input_val=Calculator,  # The subject to test
+    test_specification=specification,
+    test_implementation=implementation,
+    test_adapter=SimpleTestAdapter(),
+    test_resource_requirement={"ports": 1}
 )
 
-# Set it as the default instance
+# # Set it as the default instance
 set_default_instance(test_instance)
+# print("Default instance set successfully")
 
 # Run the main function if this file is executed directly
 if __name__ == "__main__":
     import asyncio
-    asyncio.run(main())
+    # Check if we're being called with the right arguments
+    if len(sys.argv) >= 3:
+        asyncio.run(main())
+    else:
+        print("Running in test mode (not enough arguments for main execution)")
+        # For testing, we can try to run it with some dummy parameters
+        # But this may not work if the implementation expects real parameters
+        # Let's just print a message
+        print("To run properly, this script needs to be called with:")
+        print("  <partialTestResource> <ipcfile> arguments")

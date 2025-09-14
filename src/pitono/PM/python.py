@@ -7,6 +7,9 @@ from ..types import ITTestResourceConfiguration
 
 class PM_Python:
     def __init__(self, t: ITTestResourceConfiguration, ipc_file: str):
+
+        print("PM_Python.__init__", ipc_file)
+
         self.test_resource_configuration = t
         self.client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         try:

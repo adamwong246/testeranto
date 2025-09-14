@@ -8,20 +8,23 @@
         {
           "name": "result: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "pressing nothing, the display is empty"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testSingleDigit",
       "whens": [
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -30,25 +33,29 @@
         {
           "name": "result: 2",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "entering a number puts it on the display"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testMultipleDigits",
       "whens": [
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -57,40 +64,47 @@
         {
           "name": "result: 22",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "entering multiple digits concatenates them"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testLargeNumber",
       "whens": [
         {
           "name": "press: 1",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -99,30 +113,35 @@
         {
           "name": "result: 12345",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "entering a large number works correctly"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testAdditionExpression",
       "whens": [
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -131,25 +150,29 @@
         {
           "name": "result: 2+3",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "addition expression is displayed correctly"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testIncompleteAddition",
       "whens": [
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -158,30 +181,35 @@
         {
           "name": "result: 2+",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "incomplete addition expression is displayed correctly"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testSubtractionExpression",
       "whens": [
         {
           "name": "press: 7",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: -",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -190,30 +218,35 @@
         {
           "name": "result: 7-3",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "subtraction expression is displayed correctly"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testMultiplicationExpression",
       "whens": [
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -222,30 +255,35 @@
         {
           "name": "result: 4*5",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "multiplication expression is displayed correctly"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testDivisionExpression",
       "whens": [
         {
           "name": "press: 8",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: /",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -254,40 +292,47 @@
         {
           "name": "result: 8/2",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "division expression is displayed correctly"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testMixedOperations",
       "whens": [
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -296,60 +341,71 @@
         {
           "name": "result: 2+3*4",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "mixed operations are displayed correctly"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testLongExpression",
       "whens": [
         {
           "name": "press: 1",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: -",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: /",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -358,45 +414,53 @@
         {
           "name": "result: 1+2*3-4/5",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "long complex expression is displayed correctly"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testSimpleAddition",
       "whens": [
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -405,45 +469,53 @@
         {
           "name": "result: 68",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "simple addition calculation"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testSimpleSubtraction",
       "whens": [
         {
           "name": "press: 9",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: -",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -452,35 +524,41 @@
         {
           "name": "result: 63",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "simple subtraction calculation"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testSimpleMultiplication",
       "whens": [
         {
           "name": "press: 6",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 7",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -489,40 +567,47 @@
         {
           "name": "result: 42",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "simple multiplication calculation"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testSimpleDivision",
       "whens": [
         {
           "name": "press: 8",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: /",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -531,40 +616,47 @@
         {
           "name": "result: 42",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "simple division calculation"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testClearOperation",
       "whens": [
         {
           "name": "press: 1",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: C",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -573,25 +665,29 @@
         {
           "name": "result: 4",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "clear operation resets the display"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testStartingWithOperator",
       "whens": [
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -600,35 +696,41 @@
         {
           "name": "result: +5",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "starting with operator should work"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testMultipleOperators",
       "whens": [
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: -",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -637,35 +739,41 @@
         {
           "name": "result: 5+-3",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "multiple operators in sequence"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testDecimalInput",
       "whens": [
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: .",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 1",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -674,60 +782,71 @@
         {
           "name": "result: 3.14",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "decimal number input"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testDecimalCalculation",
       "whens": [
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: .",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 1",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 1",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: .",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 8",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 6",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -736,45 +855,53 @@
         {
           "name": "result: 4.96",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "decimal calculation"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testOrderOfOperations",
       "whens": [
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -783,55 +910,65 @@
         {
           "name": "result: 14",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "order of operations is respected"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testParenthesesExpression",
       "whens": [
         {
           "name": "press: (",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: )",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -840,35 +977,41 @@
         {
           "name": "result: 20",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "parentheses in expression"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testDivisionByZero",
       "whens": [
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: /",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 0",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -877,40 +1020,47 @@
         {
           "name": "result: Error",
           "error": true,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "division by zero shows error"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testInvalidExpression",
       "whens": [
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -919,45 +1069,53 @@
         {
           "name": "result: Error",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "invalid expression shows error"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testMemoryStoreRecall",
       "whens": [
         {
           "name": "press: 1",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MS",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: C",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MR",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -966,45 +1124,53 @@
         {
           "name": "result: 123",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "memory store and recall"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testMemoryClear",
       "whens": [
         {
           "name": "press: 4",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 6",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MS",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MC",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MR",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -1013,50 +1179,59 @@
         {
           "name": "result: 0",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "memory clear"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "testMemoryAddition",
       "whens": [
         {
           "name": "press: 1",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 0",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: M+",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 0",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: M+",
+          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MR",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -1065,14 +1240,16 @@
         {
           "name": "result: 30",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "memory addition"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     }
   ],
   "fails": 0,

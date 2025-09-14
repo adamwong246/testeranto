@@ -58194,40 +58194,59 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return "plaintext";
     }
   };
+  var statusToClassName = (status) => {
+    if (status === void 0)
+      return "bg-secondary";
+    if (status === false)
+      return "bg-danger";
+    if (status === true)
+      return "bg-success";
+    throw `idk status: ${status}`;
+  };
   var renderTestResults = (testData, buildErrors, projectName, testName, runtime) => {
-    return /* @__PURE__ */ import_react100.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i2) => /* @__PURE__ */ import_react100.default.createElement("div", { key: i2, className: "mb-4 card" }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "card-header bg-primary text-white" }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react100.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi2) => /* @__PURE__ */ import_react100.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react100.default.createElement(
-      "a",
+    return /* @__PURE__ */ import_react100.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i2) => /* @__PURE__ */ import_react100.default.createElement("div", { key: i2, className: "mb-4 card " }, /* @__PURE__ */ import_react100.default.createElement(
+      "div",
       {
-        href: feature,
-        target: "_blank",
-        rel: "noopener noreferrer",
-        className: "text-white"
+        className: `card-header ${statusToClassName(
+          given.status
+        )} text-white`
       },
-      new URL(feature).hostname
-    ) : /* @__PURE__ */ import_react100.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react100.default.createElement(
-      "button",
-      {
-        className: "btn btn-sm btn-light dropdown-toggle",
-        type: "button",
-        "data-bs-toggle": "dropdown"
-      },
-      "Artifacts (",
-      given.artifacts.length,
-      ")"
-    ), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react100.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react100.default.createElement(
-      "a",
-      {
-        className: "dropdown-item",
-        href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
-        target: "_blank",
-        rel: "noopener noreferrer"
-      },
-      artifact.split("/").pop()
-    ))))))), /* @__PURE__ */ import_react100.default.createElement("div", { className: "card-body" }, given.whens.map((when, j2) => /* @__PURE__ */ import_react100.default.createElement(
+      /* @__PURE__ */ import_react100.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react100.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi2) => /* @__PURE__ */ import_react100.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react100.default.createElement(
+        "a",
+        {
+          href: feature,
+          target: "_blank",
+          rel: "noopener noreferrer",
+          className: "text-white"
+        },
+        new URL(feature).hostname
+      ) : /* @__PURE__ */ import_react100.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react100.default.createElement(
+        "button",
+        {
+          className: "btn btn-sm btn-light dropdown-toggle",
+          type: "button",
+          "data-bs-toggle": "dropdown"
+        },
+        "Artifacts (",
+        given.artifacts.length,
+        ")"
+      ), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai2) => /* @__PURE__ */ import_react100.default.createElement("li", { key: ai2 }, /* @__PURE__ */ import_react100.default.createElement(
+        "a",
+        {
+          className: "dropdown-item",
+          href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
+          target: "_blank",
+          rel: "noopener noreferrer"
+        },
+        artifact.split("/").pop()
+      ))))))
+    ), /* @__PURE__ */ import_react100.default.createElement("div", { className: "card-body" }, given.whens.map((when, j2) => /* @__PURE__ */ import_react100.default.createElement(
       "div",
       {
         key: `w-${j2}`,
-        className: `p-3 mb-2 ${when.error ? "bg-danger text-white" : "bg-success text-white"}`
+        className: `p-3 mb-2 text-white ${statusToClassName(
+          when.status
+        )}`
       },
       /* @__PURE__ */ import_react100.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react100.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi2) => /* @__PURE__ */ import_react100.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react100.default.createElement(
         "a",
@@ -58251,7 +58270,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       "div",
       {
         key: `t-${k3}`,
-        className: `p-3 mb-2 ${then.error ? "bg-danger text-white" : "bg-success text-white"}`
+        className: `p-3 mb-2 text-white ${statusToClassName(
+          then.status
+        )}`
       },
       /* @__PURE__ */ import_react100.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react100.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi2) => /* @__PURE__ */ import_react100.default.createElement("li", { key: fi2 }, feature.startsWith("http") ? /* @__PURE__ */ import_react100.default.createElement(
         "a",

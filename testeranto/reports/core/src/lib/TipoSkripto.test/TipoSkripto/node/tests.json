@@ -8,14 +8,16 @@
         {
           "name": "initializedProperly: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "Tiposkripto should initialize with default values"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "customInput",
@@ -24,14 +26,16 @@
         {
           "name": "initializedProperly: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "Custom input test"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "resourceRequirements",
@@ -40,14 +44,16 @@
         {
           "name": "resourceRequirementsSet: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "Resource requirements test"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "specGeneration",
@@ -56,14 +62,16 @@
         {
           "name": "specsGenerated: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "Should generate specs from test specification"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "jobCreation",
@@ -72,20 +80,23 @@
         {
           "name": "jobsCreated: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "Should create test jobs from specs"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "artifactTracking",
       "whens": [
         {
           "name": "addArtifact: [object Promise]",
+          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -94,14 +105,16 @@
         {
           "name": "artifactsTracked: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "Should track artifacts"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "overridesConfiguration",
@@ -110,29 +123,34 @@
         {
           "name": "suitesOverridesConfigured: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         },
         {
           "name": "givensOverridesConfigured: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         },
         {
           "name": "whensOverridesConfigured: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         },
         {
           "name": "thensOverridesConfigured: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "Should properly configure all overrides"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     },
     {
       "key": "interfaceConfiguration",
@@ -141,14 +159,16 @@
         {
           "name": "interfaceConfigured: ",
           "error": false,
-          "artifacts": []
+          "artifacts": [],
+          "status": true
         }
       ],
       "error": null,
       "features": [
         "Interface configuration test"
       ],
-      "artifacts": []
+      "artifacts": [],
+      "status": true
     }
   ],
   "fails": 0,

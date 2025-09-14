@@ -1,2 +1,2 @@
-# example [example.test]
-./Calculator.golingvu.go:15:13: undefined: SimpleTestAdapter
+# github.com/adamwong246/testeranto/src/golingvu
+../src/golingvu/golingvu.go:665:11: undefined: Calculator

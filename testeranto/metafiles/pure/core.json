@@ -49,66 +49,6 @@
     {
       "id": "",
       "location": {
-        "column": 26,
-        "file": "src/lib/BaseSuite.test/mock.ts",
-        "length": 14,
-        "line": 4,
-        "lineText": "import { BaseGiven } from \"../BaseGiven\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 26,
-        "file": "src/lib/BaseSuite.test/mock.ts",
-        "length": 14,
-        "line": 4,
-        "lineText": "import { BaseGiven } from \"../BaseGiven\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 25,
-        "file": "src/lib/BaseSuite.test/mock.ts",
-        "length": 13,
-        "line": 7,
-        "lineText": "import { BaseWhen } from \"../BaseWhen\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
-        "column": 25,
-        "file": "src/lib/BaseSuite.test/mock.ts",
-        "length": 13,
-        "line": 7,
-        "lineText": "import { BaseWhen } from \"../BaseWhen\";",
-        "namespace": "",
-        "suggestion": ""
-      },
-      "notes": [],
-      "pluginName": "console-detector",
-      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
-    },
-    {
-      "id": "",
-      "location": {
         "column": 23,
         "file": "src/lib/BaseSuite.test/pure.test.ts",
         "length": 12,
@@ -210,6 +150,36 @@
       "notes": [],
       "pluginName": "console-detector",
       "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 35,
+        "file": "src/lib/Tiposkripto.ts",
+        "length": 13,
+        "line": 29,
+        "lineText": "import { BaseGiven, IGivens } from \"./BaseGiven\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.error\" was detected, which is not supported in the pure runtime."
+    },
+    {
+      "id": "",
+      "location": {
+        "column": 35,
+        "file": "src/lib/Tiposkripto.ts",
+        "length": 13,
+        "line": 29,
+        "lineText": "import { BaseGiven, IGivens } from \"./BaseGiven\";",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "console-detector",
+      "text": "call of \"console.log\" was detected, which is not supported in the pure runtime."
     }
   ],
   "metafile": {
@@ -272,7 +242,7 @@
         "format": "esm"
       },
       "src/lib/BaseGiven.ts": {
-        "bytes": 9112,
+        "bytes": 8232,
         "imports": [
           {
             "path": ".",
@@ -298,7 +268,7 @@
         "format": "esm"
       },
       "src/lib/BaseWhen.ts": {
-        "bytes": 2676,
+        "bytes": 2505,
         "imports": [
           {
             "path": ".",
@@ -319,7 +289,7 @@
         "format": "esm"
       },
       "src/lib/BaseThen.ts": {
-        "bytes": 3079,
+        "bytes": 3095,
         "imports": [
           {
             "path": ".",
@@ -340,7 +310,7 @@
         "format": "esm"
       },
       "src/lib/BaseSuite.ts": {
-        "bytes": 6086,
+        "bytes": 6226,
         "imports": [
           {
             "path": ".",
@@ -371,7 +341,7 @@
         "format": "esm"
       },
       "src/lib/Tiposkripto.ts": {
-        "bytes": 11612,
+        "bytes": 10681,
         "imports": [
           {
             "path": "stream",
@@ -629,7 +599,7 @@
       "testeranto/bundles/pure/core/src/lib/BaseSuite.test/pure.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/core/chunk-XYOCRDEQ.mjs",
+            "path": "testeranto/bundles/pure/core/chunk-6HJFPSD3.mjs",
             "kind": "import-statement"
           }
         ],
@@ -653,7 +623,7 @@
       "testeranto/bundles/pure/core/src/Pure.test.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/pure/core/chunk-XYOCRDEQ.mjs",
+            "path": "testeranto/bundles/pure/core/chunk-6HJFPSD3.mjs",
             "kind": "import-statement"
           }
         ],
@@ -671,7 +641,7 @@
         },
         "bytes": 11473
       },
-      "testeranto/bundles/pure/core/chunk-XYOCRDEQ.mjs": {
+      "testeranto/bundles/pure/core/chunk-6HJFPSD3.mjs": {
         "imports": [],
         "exports": [
           "BaseGiven",
@@ -685,19 +655,19 @@
             "bytesInOutput": 5824
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 3679
+            "bytesInOutput": 3336
           },
           "src/lib/index.ts": {
             "bytesInOutput": 672
           },
           "src/lib/BaseGiven.ts": {
-            "bytesInOutput": 4484
+            "bytesInOutput": 4094
           },
           "src/lib/BaseWhen.ts": {
-            "bytesInOutput": 1301
+            "bytesInOutput": 1149
           },
           "src/lib/BaseThen.ts": {
-            "bytesInOutput": 1345
+            "bytesInOutput": 1444
           },
           "src/lib/Tiposkripto.ts": {
             "bytesInOutput": 6310
@@ -712,7 +682,7 @@
             "bytesInOutput": 1064
           }
         },
-        "bytes": 28092
+        "bytes": 27306
       }
     }
   }

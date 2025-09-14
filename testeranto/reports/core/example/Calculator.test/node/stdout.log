@@ -1,1076 +1,893 @@
 [ADAPTER] beforeAll called with input: [class Calculator]
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.7724360396105525] getDisplay: ''
+[CALCULATOR 0.04330211766152425] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.7724360396105525 }
-[CALCULATOR 0.7724360396105525] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.04330211766152425 }
+[CALCULATOR 0.04330211766152425] getDisplay: ''
 [ADAPTER] display: 
 [BaseGiven.give] No when steps to process
-[ADAPTER] butThen called with store: Calculator { display: '', values: {}, id: 0.7724360396105525 }
-[CALCULATOR 0.7724360396105525] getDisplay: ''
-[CALCULATOR 0.7724360396105525] getDisplay: ''
+[ADAPTER] butThen called with store: Calculator { display: '', values: {}, id: 0.04330211766152425 }
+[CALCULATOR 0.04330211766152425] getDisplay: ''
+[CALCULATOR 0.04330211766152425] getDisplay: ''
 [ADAPTER] butThen returning selection: 
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.7351385090847993] getDisplay: ''
+[CALCULATOR 0.3443893064534722] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.7351385090847993 }
-[CALCULATOR 0.7351385090847993] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.3443893064534722 }
+[CALCULATOR 0.3443893064534722] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.7351385090847993] getDisplay: ''
+[CALCULATOR 0.3443893064534722] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.7351385090847993] getDisplay: ''
+[CALCULATOR 0.3443893064534722] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.7351385090847993] Pressing: 2, current display: ''
-[CALCULATOR 0.7351385090847993] New display is: '2'
-[CALCULATOR 0.7351385090847993] getDisplay: '2'
+[CALCULATOR 0.3443893064534722] Pressing: 2, current display: ''
+[CALCULATOR 0.3443893064534722] New display is: '2'
+[CALCULATOR 0.3443893064534722] getDisplay: '2'
 [IMPLEMENTATION] calculator after press: 2
-[CALCULATOR 0.7351385090847993] getDisplay: '2'
+[CALCULATOR 0.3443893064534722] getDisplay: '2'
 [ADAPTER] Result display: 2
-[ADAPTER] butThen called with store: Calculator { display: '2', values: {}, id: 0.7351385090847993 }
-[CALCULATOR 0.7351385090847993] getDisplay: '2'
-[CALCULATOR 0.7351385090847993] getDisplay: '2'
+[ADAPTER] butThen called with store: Calculator { display: '2', values: {}, id: 0.3443893064534722 }
+[CALCULATOR 0.3443893064534722] getDisplay: '2'
+[CALCULATOR 0.3443893064534722] getDisplay: '2'
 [ADAPTER] butThen returning selection: 2
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.9552835882661568] getDisplay: ''
+[CALCULATOR 0.3199646486120906] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.9552835882661568 }
-[CALCULATOR 0.9552835882661568] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.3199646486120906 }
+[CALCULATOR 0.3199646486120906] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.9552835882661568] getDisplay: ''
+[CALCULATOR 0.3199646486120906] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.9552835882661568] getDisplay: ''
+[CALCULATOR 0.3199646486120906] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.9552835882661568] Pressing: 2, current display: ''
-[CALCULATOR 0.9552835882661568] New display is: '2'
-[CALCULATOR 0.9552835882661568] getDisplay: '2'
+[CALCULATOR 0.3199646486120906] Pressing: 2, current display: ''
+[CALCULATOR 0.3199646486120906] New display is: '2'
+[CALCULATOR 0.3199646486120906] getDisplay: '2'
 [IMPLEMENTATION] calculator after press: 2
-[CALCULATOR 0.9552835882661568] getDisplay: '2'
+[CALCULATOR 0.3199646486120906] getDisplay: '2'
 [ADAPTER] Result display: 2
 [ADAPTER] andWhen called
-[CALCULATOR 0.9552835882661568] getDisplay: '2'
+[CALCULATOR 0.3199646486120906] getDisplay: '2'
 [ADAPTER] store display: 2
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.9552835882661568] getDisplay: '2'
+[CALCULATOR 0.3199646486120906] getDisplay: '2'
 [IMPLEMENTATION] calculator before press: 2
  ---- PRESS ---
-[CALCULATOR 0.9552835882661568] Pressing: 2, current display: '2'
-[CALCULATOR 0.9552835882661568] New display is: '22'
-[CALCULATOR 0.9552835882661568] getDisplay: '22'
+[CALCULATOR 0.3199646486120906] Pressing: 2, current display: '2'
+[CALCULATOR 0.3199646486120906] New display is: '22'
+[CALCULATOR 0.3199646486120906] getDisplay: '22'
 [IMPLEMENTATION] calculator after press: 22
-[CALCULATOR 0.9552835882661568] getDisplay: '22'
+[CALCULATOR 0.3199646486120906] getDisplay: '22'
 [ADAPTER] Result display: 22
-[ADAPTER] butThen called with store: Calculator { display: '22', values: {}, id: 0.9552835882661568 }
-[CALCULATOR 0.9552835882661568] getDisplay: '22'
-[CALCULATOR 0.9552835882661568] getDisplay: '22'
+[ADAPTER] butThen called with store: Calculator { display: '22', values: {}, id: 0.3199646486120906 }
+[CALCULATOR 0.3199646486120906] getDisplay: '22'
+[CALCULATOR 0.3199646486120906] getDisplay: '22'
 [ADAPTER] butThen returning selection: 22
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.044948966821923175] getDisplay: ''
+[CALCULATOR 0.18804135634069952] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.044948966821923175 }
-[CALCULATOR 0.044948966821923175] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.18804135634069952 }
+[CALCULATOR 0.18804135634069952] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.044948966821923175] getDisplay: ''
+[CALCULATOR 0.18804135634069952] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 1
-[CALCULATOR 0.044948966821923175] getDisplay: ''
+[CALCULATOR 0.18804135634069952] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.044948966821923175] Pressing: 1, current display: ''
-[CALCULATOR 0.044948966821923175] New display is: '1'
-[CALCULATOR 0.044948966821923175] getDisplay: '1'
+[CALCULATOR 0.18804135634069952] Pressing: 1, current display: ''
+[CALCULATOR 0.18804135634069952] New display is: '1'
+[CALCULATOR 0.18804135634069952] getDisplay: '1'
 [IMPLEMENTATION] calculator after press: 1
-[CALCULATOR 0.044948966821923175] getDisplay: '1'
+[CALCULATOR 0.18804135634069952] getDisplay: '1'
 [ADAPTER] Result display: 1
 [ADAPTER] andWhen called
-[CALCULATOR 0.044948966821923175] getDisplay: '1'
+[CALCULATOR 0.18804135634069952] getDisplay: '1'
 [ADAPTER] store display: 1
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.044948966821923175] getDisplay: '1'
+[CALCULATOR 0.18804135634069952] getDisplay: '1'
 [IMPLEMENTATION] calculator before press: 1
  ---- PRESS ---
-[CALCULATOR 0.044948966821923175] Pressing: 2, current display: '1'
-[CALCULATOR 0.044948966821923175] New display is: '12'
-[CALCULATOR 0.044948966821923175] getDisplay: '12'
+[CALCULATOR 0.18804135634069952] Pressing: 2, current display: '1'
+[CALCULATOR 0.18804135634069952] New display is: '12'
+[CALCULATOR 0.18804135634069952] getDisplay: '12'
 [IMPLEMENTATION] calculator after press: 12
-[CALCULATOR 0.044948966821923175] getDisplay: '12'
+[CALCULATOR 0.18804135634069952] getDisplay: '12'
 [ADAPTER] Result display: 12
 [ADAPTER] andWhen called
-[CALCULATOR 0.044948966821923175] getDisplay: '12'
+[CALCULATOR 0.18804135634069952] getDisplay: '12'
 [ADAPTER] store display: 12
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 3
-[CALCULATOR 0.044948966821923175] getDisplay: '12'
+[CALCULATOR 0.18804135634069952] getDisplay: '12'
 [IMPLEMENTATION] calculator before press: 12
  ---- PRESS ---
-[CALCULATOR 0.044948966821923175] Pressing: 3, current display: '12'
-[CALCULATOR 0.044948966821923175] New display is: '123'
-[CALCULATOR 0.044948966821923175] getDisplay: '123'
+[CALCULATOR 0.18804135634069952] Pressing: 3, current display: '12'
+[CALCULATOR 0.18804135634069952] New display is: '123'
+[CALCULATOR 0.18804135634069952] getDisplay: '123'
 [IMPLEMENTATION] calculator after press: 123
-[CALCULATOR 0.044948966821923175] getDisplay: '123'
+[CALCULATOR 0.18804135634069952] getDisplay: '123'
 [ADAPTER] Result display: 123
 [ADAPTER] andWhen called
-[CALCULATOR 0.044948966821923175] getDisplay: '123'
+[CALCULATOR 0.18804135634069952] getDisplay: '123'
 [ADAPTER] store display: 123
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 4
-[CALCULATOR 0.044948966821923175] getDisplay: '123'
+[CALCULATOR 0.18804135634069952] getDisplay: '123'
 [IMPLEMENTATION] calculator before press: 123
  ---- PRESS ---
-[CALCULATOR 0.044948966821923175] Pressing: 4, current display: '123'
-[CALCULATOR 0.044948966821923175] New display is: '1234'
-[CALCULATOR 0.044948966821923175] getDisplay: '1234'
+[CALCULATOR 0.18804135634069952] Pressing: 4, current display: '123'
+[CALCULATOR 0.18804135634069952] New display is: '1234'
+[CALCULATOR 0.18804135634069952] getDisplay: '1234'
 [IMPLEMENTATION] calculator after press: 1234
-[CALCULATOR 0.044948966821923175] getDisplay: '1234'
+[CALCULATOR 0.18804135634069952] getDisplay: '1234'
 [ADAPTER] Result display: 1234
 [ADAPTER] andWhen called
-[CALCULATOR 0.044948966821923175] getDisplay: '1234'
+[CALCULATOR 0.18804135634069952] getDisplay: '1234'
 [ADAPTER] store display: 1234
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 5
-[CALCULATOR 0.044948966821923175] getDisplay: '1234'
+[CALCULATOR 0.18804135634069952] getDisplay: '1234'
 [IMPLEMENTATION] calculator before press: 1234
  ---- PRESS ---
-[CALCULATOR 0.044948966821923175] Pressing: 5, current display: '1234'
-[CALCULATOR 0.044948966821923175] New display is: '12345'
-[CALCULATOR 0.044948966821923175] getDisplay: '12345'
+[CALCULATOR 0.18804135634069952] Pressing: 5, current display: '1234'
+[CALCULATOR 0.18804135634069952] New display is: '12345'
+[CALCULATOR 0.18804135634069952] getDisplay: '12345'
 [IMPLEMENTATION] calculator after press: 12345
-[CALCULATOR 0.044948966821923175] getDisplay: '12345'
+[CALCULATOR 0.18804135634069952] getDisplay: '12345'
 [ADAPTER] Result display: 12345
-[ADAPTER] butThen called with store: Calculator { display: '12345', values: {}, id: 0.044948966821923175 }
-[CALCULATOR 0.044948966821923175] getDisplay: '12345'
-[CALCULATOR 0.044948966821923175] getDisplay: '12345'
+[ADAPTER] butThen called with store: Calculator { display: '12345', values: {}, id: 0.18804135634069952 }
+[CALCULATOR 0.18804135634069952] getDisplay: '12345'
+[CALCULATOR 0.18804135634069952] getDisplay: '12345'
 [ADAPTER] butThen returning selection: 12345
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.6515684545774907] getDisplay: ''
+[CALCULATOR 0.5956340998837348] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.6515684545774907 }
-[CALCULATOR 0.6515684545774907] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.5956340998837348 }
+[CALCULATOR 0.5956340998837348] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.6515684545774907] getDisplay: ''
+[CALCULATOR 0.5956340998837348] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.6515684545774907] getDisplay: ''
+[CALCULATOR 0.5956340998837348] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.6515684545774907] Pressing: 2, current display: ''
-[CALCULATOR 0.6515684545774907] New display is: '2'
-[CALCULATOR 0.6515684545774907] getDisplay: '2'
+[CALCULATOR 0.5956340998837348] Pressing: 2, current display: ''
+[CALCULATOR 0.5956340998837348] New display is: '2'
+[CALCULATOR 0.5956340998837348] getDisplay: '2'
 [IMPLEMENTATION] calculator after press: 2
-[CALCULATOR 0.6515684545774907] getDisplay: '2'
+[CALCULATOR 0.5956340998837348] getDisplay: '2'
 [ADAPTER] Result display: 2
 [ADAPTER] andWhen called
-[CALCULATOR 0.6515684545774907] getDisplay: '2'
+[CALCULATOR 0.5956340998837348] getDisplay: '2'
 [ADAPTER] store display: 2
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: +
-[CALCULATOR 0.6515684545774907] getDisplay: '2'
+[CALCULATOR 0.5956340998837348] getDisplay: '2'
 [IMPLEMENTATION] calculator before press: 2
  ---- PRESS ---
-[CALCULATOR 0.6515684545774907] Pressing: +, current display: '2'
-[CALCULATOR 0.6515684545774907] New display is: '2+'
-[CALCULATOR 0.6515684545774907] getDisplay: '2+'
+[CALCULATOR 0.5956340998837348] Pressing: +, current display: '2'
+[CALCULATOR 0.5956340998837348] New display is: '2+'
+[CALCULATOR 0.5956340998837348] getDisplay: '2+'
 [IMPLEMENTATION] calculator after press: 2+
-[CALCULATOR 0.6515684545774907] getDisplay: '2+'
+[CALCULATOR 0.5956340998837348] getDisplay: '2+'
 [ADAPTER] Result display: 2+
 [ADAPTER] andWhen called
-[CALCULATOR 0.6515684545774907] getDisplay: '2+'
+[CALCULATOR 0.5956340998837348] getDisplay: '2+'
 [ADAPTER] store display: 2+
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 3
-[CALCULATOR 0.6515684545774907] getDisplay: '2+'
+[CALCULATOR 0.5956340998837348] getDisplay: '2+'
 [IMPLEMENTATION] calculator before press: 2+
  ---- PRESS ---
-[CALCULATOR 0.6515684545774907] Pressing: 3, current display: '2+'
-[CALCULATOR 0.6515684545774907] New display is: '2+3'
-[CALCULATOR 0.6515684545774907] getDisplay: '2+3'
+[CALCULATOR 0.5956340998837348] Pressing: 3, current display: '2+'
+[CALCULATOR 0.5956340998837348] New display is: '2+3'
+[CALCULATOR 0.5956340998837348] getDisplay: '2+3'
 [IMPLEMENTATION] calculator after press: 2+3
-[CALCULATOR 0.6515684545774907] getDisplay: '2+3'
+[CALCULATOR 0.5956340998837348] getDisplay: '2+3'
 [ADAPTER] Result display: 2+3
-[ADAPTER] butThen called with store: Calculator { display: '2+3', values: {}, id: 0.6515684545774907 }
-[CALCULATOR 0.6515684545774907] getDisplay: '2+3'
-[CALCULATOR 0.6515684545774907] getDisplay: '2+3'
+[ADAPTER] butThen called with store: Calculator { display: '2+3', values: {}, id: 0.5956340998837348 }
+[CALCULATOR 0.5956340998837348] getDisplay: '2+3'
+[CALCULATOR 0.5956340998837348] getDisplay: '2+3'
 [ADAPTER] butThen returning selection: 2+3
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.8330656849128266] getDisplay: ''
+[CALCULATOR 0.6998626121538061] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.8330656849128266 }
-[CALCULATOR 0.8330656849128266] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.6998626121538061 }
+[CALCULATOR 0.6998626121538061] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.8330656849128266] getDisplay: ''
+[CALCULATOR 0.6998626121538061] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.8330656849128266] getDisplay: ''
+[CALCULATOR 0.6998626121538061] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.8330656849128266] Pressing: 2, current display: ''
-[CALCULATOR 0.8330656849128266] New display is: '2'
-[CALCULATOR 0.8330656849128266] getDisplay: '2'
+[CALCULATOR 0.6998626121538061] Pressing: 2, current display: ''
+[CALCULATOR 0.6998626121538061] New display is: '2'
+[CALCULATOR 0.6998626121538061] getDisplay: '2'
 [IMPLEMENTATION] calculator after press: 2
-[CALCULATOR 0.8330656849128266] getDisplay: '2'
+[CALCULATOR 0.6998626121538061] getDisplay: '2'
 [ADAPTER] Result display: 2
 [ADAPTER] andWhen called
-[CALCULATOR 0.8330656849128266] getDisplay: '2'
+[CALCULATOR 0.6998626121538061] getDisplay: '2'
 [ADAPTER] store display: 2
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: +
-[CALCULATOR 0.8330656849128266] getDisplay: '2'
+[CALCULATOR 0.6998626121538061] getDisplay: '2'
 [IMPLEMENTATION] calculator before press: 2
  ---- PRESS ---
-[CALCULATOR 0.8330656849128266] Pressing: +, current display: '2'
-[CALCULATOR 0.8330656849128266] New display is: '2+'
-[CALCULATOR 0.8330656849128266] getDisplay: '2+'
+[CALCULATOR 0.6998626121538061] Pressing: +, current display: '2'
+[CALCULATOR 0.6998626121538061] New display is: '2+'
+[CALCULATOR 0.6998626121538061] getDisplay: '2+'
 [IMPLEMENTATION] calculator after press: 2+
-[CALCULATOR 0.8330656849128266] getDisplay: '2+'
+[CALCULATOR 0.6998626121538061] getDisplay: '2+'
 [ADAPTER] Result display: 2+
-[ADAPTER] butThen called with store: Calculator { display: '2+', values: {}, id: 0.8330656849128266 }
-[CALCULATOR 0.8330656849128266] getDisplay: '2+'
-[CALCULATOR 0.8330656849128266] getDisplay: '2+'
+[ADAPTER] butThen called with store: Calculator { display: '2+', values: {}, id: 0.6998626121538061 }
+[CALCULATOR 0.6998626121538061] getDisplay: '2+'
+[CALCULATOR 0.6998626121538061] getDisplay: '2+'
 [ADAPTER] butThen returning selection: 2+
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.25544753061650605] getDisplay: ''
+[CALCULATOR 0.48641459263482223] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.25544753061650605 }
-[CALCULATOR 0.25544753061650605] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.48641459263482223 }
+[CALCULATOR 0.48641459263482223] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.25544753061650605] getDisplay: ''
+[CALCULATOR 0.48641459263482223] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 7
-[CALCULATOR 0.25544753061650605] getDisplay: ''
+[CALCULATOR 0.48641459263482223] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.25544753061650605] Pressing: 7, current display: ''
-[CALCULATOR 0.25544753061650605] New display is: '7'
-[CALCULATOR 0.25544753061650605] getDisplay: '7'
+[CALCULATOR 0.48641459263482223] Pressing: 7, current display: ''
+[CALCULATOR 0.48641459263482223] New display is: '7'
+[CALCULATOR 0.48641459263482223] getDisplay: '7'
 [IMPLEMENTATION] calculator after press: 7
-[CALCULATOR 0.25544753061650605] getDisplay: '7'
+[CALCULATOR 0.48641459263482223] getDisplay: '7'
 [ADAPTER] Result display: 7
 [ADAPTER] andWhen called
-[CALCULATOR 0.25544753061650605] getDisplay: '7'
+[CALCULATOR 0.48641459263482223] getDisplay: '7'
 [ADAPTER] store display: 7
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: -
-[CALCULATOR 0.25544753061650605] getDisplay: '7'
+[CALCULATOR 0.48641459263482223] getDisplay: '7'
 [IMPLEMENTATION] calculator before press: 7
  ---- PRESS ---
-[CALCULATOR 0.25544753061650605] Pressing: -, current display: '7'
-[CALCULATOR 0.25544753061650605] New display is: '7-'
-[CALCULATOR 0.25544753061650605] getDisplay: '7-'
+[CALCULATOR 0.48641459263482223] Pressing: -, current display: '7'
+[CALCULATOR 0.48641459263482223] New display is: '7-'
+[CALCULATOR 0.48641459263482223] getDisplay: '7-'
 [IMPLEMENTATION] calculator after press: 7-
-[CALCULATOR 0.25544753061650605] getDisplay: '7-'
+[CALCULATOR 0.48641459263482223] getDisplay: '7-'
 [ADAPTER] Result display: 7-
 [ADAPTER] andWhen called
-[CALCULATOR 0.25544753061650605] getDisplay: '7-'
+[CALCULATOR 0.48641459263482223] getDisplay: '7-'
 [ADAPTER] store display: 7-
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 3
-[CALCULATOR 0.25544753061650605] getDisplay: '7-'
+[CALCULATOR 0.48641459263482223] getDisplay: '7-'
 [IMPLEMENTATION] calculator before press: 7-
  ---- PRESS ---
-[CALCULATOR 0.25544753061650605] Pressing: 3, current display: '7-'
-[CALCULATOR 0.25544753061650605] New display is: '7-3'
-[CALCULATOR 0.25544753061650605] getDisplay: '7-3'
+[CALCULATOR 0.48641459263482223] Pressing: 3, current display: '7-'
+[CALCULATOR 0.48641459263482223] New display is: '7-3'
+[CALCULATOR 0.48641459263482223] getDisplay: '7-3'
 [IMPLEMENTATION] calculator after press: 7-3
-[CALCULATOR 0.25544753061650605] getDisplay: '7-3'
+[CALCULATOR 0.48641459263482223] getDisplay: '7-3'
 [ADAPTER] Result display: 7-3
-[ADAPTER] butThen called with store: Calculator { display: '7-3', values: {}, id: 0.25544753061650605 }
-[CALCULATOR 0.25544753061650605] getDisplay: '7-3'
-[CALCULATOR 0.25544753061650605] getDisplay: '7-3'
+[ADAPTER] butThen called with store: Calculator { display: '7-3', values: {}, id: 0.48641459263482223 }
+[CALCULATOR 0.48641459263482223] getDisplay: '7-3'
+[CALCULATOR 0.48641459263482223] getDisplay: '7-3'
 [ADAPTER] butThen returning selection: 7-3
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.921946343096681] getDisplay: ''
+[CALCULATOR 0.3398370264629902] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.921946343096681 }
-[CALCULATOR 0.921946343096681] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.3398370264629902 }
+[CALCULATOR 0.3398370264629902] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.921946343096681] getDisplay: ''
+[CALCULATOR 0.3398370264629902] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 4
-[CALCULATOR 0.921946343096681] getDisplay: ''
+[CALCULATOR 0.3398370264629902] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.921946343096681] Pressing: 4, current display: ''
-[CALCULATOR 0.921946343096681] New display is: '4'
-[CALCULATOR 0.921946343096681] getDisplay: '4'
+[CALCULATOR 0.3398370264629902] Pressing: 4, current display: ''
+[CALCULATOR 0.3398370264629902] New display is: '4'
+[CALCULATOR 0.3398370264629902] getDisplay: '4'
 [IMPLEMENTATION] calculator after press: 4
-[CALCULATOR 0.921946343096681] getDisplay: '4'
+[CALCULATOR 0.3398370264629902] getDisplay: '4'
 [ADAPTER] Result display: 4
 [ADAPTER] andWhen called
-[CALCULATOR 0.921946343096681] getDisplay: '4'
+[CALCULATOR 0.3398370264629902] getDisplay: '4'
 [ADAPTER] store display: 4
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: *
-[CALCULATOR 0.921946343096681] getDisplay: '4'
+[CALCULATOR 0.3398370264629902] getDisplay: '4'
 [IMPLEMENTATION] calculator before press: 4
  ---- PRESS ---
-[CALCULATOR 0.921946343096681] Pressing: *, current display: '4'
-[CALCULATOR 0.921946343096681] New display is: '4*'
-[CALCULATOR 0.921946343096681] getDisplay: '4*'
+[CALCULATOR 0.3398370264629902] Pressing: *, current display: '4'
+[CALCULATOR 0.3398370264629902] New display is: '4*'
+[CALCULATOR 0.3398370264629902] getDisplay: '4*'
 [IMPLEMENTATION] calculator after press: 4*
-[CALCULATOR 0.921946343096681] getDisplay: '4*'
+[CALCULATOR 0.3398370264629902] getDisplay: '4*'
 [ADAPTER] Result display: 4*
 [ADAPTER] andWhen called
-[CALCULATOR 0.921946343096681] getDisplay: '4*'
+[CALCULATOR 0.3398370264629902] getDisplay: '4*'
 [ADAPTER] store display: 4*
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 5
-[CALCULATOR 0.921946343096681] getDisplay: '4*'
+[CALCULATOR 0.3398370264629902] getDisplay: '4*'
 [IMPLEMENTATION] calculator before press: 4*
  ---- PRESS ---
-[CALCULATOR 0.921946343096681] Pressing: 5, current display: '4*'
-[CALCULATOR 0.921946343096681] New display is: '4*5'
-[CALCULATOR 0.921946343096681] getDisplay: '4*5'
+[CALCULATOR 0.3398370264629902] Pressing: 5, current display: '4*'
+[CALCULATOR 0.3398370264629902] New display is: '4*5'
+[CALCULATOR 0.3398370264629902] getDisplay: '4*5'
 [IMPLEMENTATION] calculator after press: 4*5
-[CALCULATOR 0.921946343096681] getDisplay: '4*5'
+[CALCULATOR 0.3398370264629902] getDisplay: '4*5'
 [ADAPTER] Result display: 4*5
-[ADAPTER] butThen called with store: Calculator { display: '4*5', values: {}, id: 0.921946343096681 }
-[CALCULATOR 0.921946343096681] getDisplay: '4*5'
-[CALCULATOR 0.921946343096681] getDisplay: '4*5'
+[ADAPTER] butThen called with store: Calculator { display: '4*5', values: {}, id: 0.3398370264629902 }
+[CALCULATOR 0.3398370264629902] getDisplay: '4*5'
+[CALCULATOR 0.3398370264629902] getDisplay: '4*5'
 [ADAPTER] butThen returning selection: 4*5
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.47648272877857556] getDisplay: ''
+[CALCULATOR 0.44112638877339805] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.47648272877857556 }
-[CALCULATOR 0.47648272877857556] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.44112638877339805 }
+[CALCULATOR 0.44112638877339805] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.47648272877857556] getDisplay: ''
+[CALCULATOR 0.44112638877339805] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 8
-[CALCULATOR 0.47648272877857556] getDisplay: ''
+[CALCULATOR 0.44112638877339805] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.47648272877857556] Pressing: 8, current display: ''
-[CALCULATOR 0.47648272877857556] New display is: '8'
-[CALCULATOR 0.47648272877857556] getDisplay: '8'
+[CALCULATOR 0.44112638877339805] Pressing: 8, current display: ''
+[CALCULATOR 0.44112638877339805] New display is: '8'
+[CALCULATOR 0.44112638877339805] getDisplay: '8'
 [IMPLEMENTATION] calculator after press: 8
-[CALCULATOR 0.47648272877857556] getDisplay: '8'
+[CALCULATOR 0.44112638877339805] getDisplay: '8'
 [ADAPTER] Result display: 8
 [ADAPTER] andWhen called
-[CALCULATOR 0.47648272877857556] getDisplay: '8'
+[CALCULATOR 0.44112638877339805] getDisplay: '8'
 [ADAPTER] store display: 8
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: /
-[CALCULATOR 0.47648272877857556] getDisplay: '8'
+[CALCULATOR 0.44112638877339805] getDisplay: '8'
 [IMPLEMENTATION] calculator before press: 8
  ---- PRESS ---
-[CALCULATOR 0.47648272877857556] Pressing: /, current display: '8'
-[CALCULATOR 0.47648272877857556] New display is: '8/'
-[CALCULATOR 0.47648272877857556] getDisplay: '8/'
+[CALCULATOR 0.44112638877339805] Pressing: /, current display: '8'
+[CALCULATOR 0.44112638877339805] New display is: '8/'
+[CALCULATOR 0.44112638877339805] getDisplay: '8/'
 [IMPLEMENTATION] calculator after press: 8/
-[CALCULATOR 0.47648272877857556] getDisplay: '8/'
+[CALCULATOR 0.44112638877339805] getDisplay: '8/'
 [ADAPTER] Result display: 8/
 [ADAPTER] andWhen called
-[CALCULATOR 0.47648272877857556] getDisplay: '8/'
+[CALCULATOR 0.44112638877339805] getDisplay: '8/'
 [ADAPTER] store display: 8/
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.47648272877857556] getDisplay: '8/'
+[CALCULATOR 0.44112638877339805] getDisplay: '8/'
 [IMPLEMENTATION] calculator before press: 8/
  ---- PRESS ---
-[CALCULATOR 0.47648272877857556] Pressing: 2, current display: '8/'
-[CALCULATOR 0.47648272877857556] New display is: '8/2'
-[CALCULATOR 0.47648272877857556] getDisplay: '8/2'
+[CALCULATOR 0.44112638877339805] Pressing: 2, current display: '8/'
+[CALCULATOR 0.44112638877339805] New display is: '8/2'
+[CALCULATOR 0.44112638877339805] getDisplay: '8/2'
 [IMPLEMENTATION] calculator after press: 8/2
-[CALCULATOR 0.47648272877857556] getDisplay: '8/2'
+[CALCULATOR 0.44112638877339805] getDisplay: '8/2'
 [ADAPTER] Result display: 8/2
-[ADAPTER] butThen called with store: Calculator { display: '8/2', values: {}, id: 0.47648272877857556 }
-[CALCULATOR 0.47648272877857556] getDisplay: '8/2'
-[CALCULATOR 0.47648272877857556] getDisplay: '8/2'
+[ADAPTER] butThen called with store: Calculator { display: '8/2', values: {}, id: 0.44112638877339805 }
+[CALCULATOR 0.44112638877339805] getDisplay: '8/2'
+[CALCULATOR 0.44112638877339805] getDisplay: '8/2'
 [ADAPTER] butThen returning selection: 8/2
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.9694256101836727] getDisplay: ''
+[CALCULATOR 0.5002525625800007] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.9694256101836727 }
-[CALCULATOR 0.9694256101836727] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.5002525625800007 }
+[CALCULATOR 0.5002525625800007] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.9694256101836727] getDisplay: ''
+[CALCULATOR 0.5002525625800007] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.9694256101836727] getDisplay: ''
+[CALCULATOR 0.5002525625800007] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.9694256101836727] Pressing: 2, current display: ''
-[CALCULATOR 0.9694256101836727] New display is: '2'
-[CALCULATOR 0.9694256101836727] getDisplay: '2'
+[CALCULATOR 0.5002525625800007] Pressing: 2, current display: ''
+[CALCULATOR 0.5002525625800007] New display is: '2'
+[CALCULATOR 0.5002525625800007] getDisplay: '2'
 [IMPLEMENTATION] calculator after press: 2
-[CALCULATOR 0.9694256101836727] getDisplay: '2'
+[CALCULATOR 0.5002525625800007] getDisplay: '2'
 [ADAPTER] Result display: 2
 [ADAPTER] andWhen called
-[CALCULATOR 0.9694256101836727] getDisplay: '2'
+[CALCULATOR 0.5002525625800007] getDisplay: '2'
 [ADAPTER] store display: 2
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: +
-[CALCULATOR 0.9694256101836727] getDisplay: '2'
+[CALCULATOR 0.5002525625800007] getDisplay: '2'
 [IMPLEMENTATION] calculator before press: 2
  ---- PRESS ---
-[CALCULATOR 0.9694256101836727] Pressing: +, current display: '2'
-[CALCULATOR 0.9694256101836727] New display is: '2+'
-[CALCULATOR 0.9694256101836727] getDisplay: '2+'
+[CALCULATOR 0.5002525625800007] Pressing: +, current display: '2'
+[CALCULATOR 0.5002525625800007] New display is: '2+'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+'
 [IMPLEMENTATION] calculator after press: 2+
-[CALCULATOR 0.9694256101836727] getDisplay: '2+'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+'
 [ADAPTER] Result display: 2+
 [ADAPTER] andWhen called
-[CALCULATOR 0.9694256101836727] getDisplay: '2+'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+'
 [ADAPTER] store display: 2+
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 3
-[CALCULATOR 0.9694256101836727] getDisplay: '2+'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+'
 [IMPLEMENTATION] calculator before press: 2+
  ---- PRESS ---
-[CALCULATOR 0.9694256101836727] Pressing: 3, current display: '2+'
-[CALCULATOR 0.9694256101836727] New display is: '2+3'
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3'
+[CALCULATOR 0.5002525625800007] Pressing: 3, current display: '2+'
+[CALCULATOR 0.5002525625800007] New display is: '2+3'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3'
 [IMPLEMENTATION] calculator after press: 2+3
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3'
 [ADAPTER] Result display: 2+3
 [ADAPTER] andWhen called
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3'
 [ADAPTER] store display: 2+3
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: *
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3'
 [IMPLEMENTATION] calculator before press: 2+3
  ---- PRESS ---
-[CALCULATOR 0.9694256101836727] Pressing: *, current display: '2+3'
-[CALCULATOR 0.9694256101836727] New display is: '2+3*'
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3*'
+[CALCULATOR 0.5002525625800007] Pressing: *, current display: '2+3'
+[CALCULATOR 0.5002525625800007] New display is: '2+3*'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3*'
 [IMPLEMENTATION] calculator after press: 2+3*
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3*'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3*'
 [ADAPTER] Result display: 2+3*
 [ADAPTER] andWhen called
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3*'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3*'
 [ADAPTER] store display: 2+3*
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 4
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3*'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3*'
 [IMPLEMENTATION] calculator before press: 2+3*
  ---- PRESS ---
-[CALCULATOR 0.9694256101836727] Pressing: 4, current display: '2+3*'
-[CALCULATOR 0.9694256101836727] New display is: '2+3*4'
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3*4'
+[CALCULATOR 0.5002525625800007] Pressing: 4, current display: '2+3*'
+[CALCULATOR 0.5002525625800007] New display is: '2+3*4'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3*4'
 [IMPLEMENTATION] calculator after press: 2+3*4
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3*4'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3*4'
 [ADAPTER] Result display: 2+3*4
-[ADAPTER] butThen called with store: Calculator { display: '2+3*4', values: {}, id: 0.9694256101836727 }
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3*4'
-[CALCULATOR 0.9694256101836727] getDisplay: '2+3*4'
+[ADAPTER] butThen called with store: Calculator { display: '2+3*4', values: {}, id: 0.5002525625800007 }
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3*4'
+[CALCULATOR 0.5002525625800007] getDisplay: '2+3*4'
 [ADAPTER] butThen returning selection: 2+3*4
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.6677013836901575] getDisplay: ''
+[CALCULATOR 0.9101259820224183] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.6677013836901575 }
-[CALCULATOR 0.6677013836901575] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.9101259820224183 }
+[CALCULATOR 0.9101259820224183] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: ''
+[CALCULATOR 0.9101259820224183] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 1
-[CALCULATOR 0.6677013836901575] getDisplay: ''
+[CALCULATOR 0.9101259820224183] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: 1, current display: ''
-[CALCULATOR 0.6677013836901575] New display is: '1'
-[CALCULATOR 0.6677013836901575] getDisplay: '1'
+[CALCULATOR 0.9101259820224183] Pressing: 1, current display: ''
+[CALCULATOR 0.9101259820224183] New display is: '1'
+[CALCULATOR 0.9101259820224183] getDisplay: '1'
 [IMPLEMENTATION] calculator after press: 1
-[CALCULATOR 0.6677013836901575] getDisplay: '1'
+[CALCULATOR 0.9101259820224183] getDisplay: '1'
 [ADAPTER] Result display: 1
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: '1'
+[CALCULATOR 0.9101259820224183] getDisplay: '1'
 [ADAPTER] store display: 1
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: +
-[CALCULATOR 0.6677013836901575] getDisplay: '1'
+[CALCULATOR 0.9101259820224183] getDisplay: '1'
 [IMPLEMENTATION] calculator before press: 1
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: +, current display: '1'
-[CALCULATOR 0.6677013836901575] New display is: '1+'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+'
+[CALCULATOR 0.9101259820224183] Pressing: +, current display: '1'
+[CALCULATOR 0.9101259820224183] New display is: '1+'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+'
 [IMPLEMENTATION] calculator after press: 1+
-[CALCULATOR 0.6677013836901575] getDisplay: '1+'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+'
 [ADAPTER] Result display: 1+
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: '1+'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+'
 [ADAPTER] store display: 1+
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.6677013836901575] getDisplay: '1+'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+'
 [IMPLEMENTATION] calculator before press: 1+
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: 2, current display: '1+'
-[CALCULATOR 0.6677013836901575] New display is: '1+2'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2'
+[CALCULATOR 0.9101259820224183] Pressing: 2, current display: '1+'
+[CALCULATOR 0.9101259820224183] New display is: '1+2'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2'
 [IMPLEMENTATION] calculator after press: 1+2
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2'
 [ADAPTER] Result display: 1+2
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2'
 [ADAPTER] store display: 1+2
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: *
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2'
 [IMPLEMENTATION] calculator before press: 1+2
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: *, current display: '1+2'
-[CALCULATOR 0.6677013836901575] New display is: '1+2*'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*'
+[CALCULATOR 0.9101259820224183] Pressing: *, current display: '1+2'
+[CALCULATOR 0.9101259820224183] New display is: '1+2*'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*'
 [IMPLEMENTATION] calculator after press: 1+2*
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*'
 [ADAPTER] Result display: 1+2*
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*'
 [ADAPTER] store display: 1+2*
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 3
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*'
 [IMPLEMENTATION] calculator before press: 1+2*
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: 3, current display: '1+2*'
-[CALCULATOR 0.6677013836901575] New display is: '1+2*3'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3'
+[CALCULATOR 0.9101259820224183] Pressing: 3, current display: '1+2*'
+[CALCULATOR 0.9101259820224183] New display is: '1+2*3'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3'
 [IMPLEMENTATION] calculator after press: 1+2*3
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3'
 [ADAPTER] Result display: 1+2*3
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3'
 [ADAPTER] store display: 1+2*3
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: -
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3'
 [IMPLEMENTATION] calculator before press: 1+2*3
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: -, current display: '1+2*3'
-[CALCULATOR 0.6677013836901575] New display is: '1+2*3-'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-'
+[CALCULATOR 0.9101259820224183] Pressing: -, current display: '1+2*3'
+[CALCULATOR 0.9101259820224183] New display is: '1+2*3-'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-'
 [IMPLEMENTATION] calculator after press: 1+2*3-
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-'
 [ADAPTER] Result display: 1+2*3-
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-'
 [ADAPTER] store display: 1+2*3-
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 4
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-'
 [IMPLEMENTATION] calculator before press: 1+2*3-
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: 4, current display: '1+2*3-'
-[CALCULATOR 0.6677013836901575] New display is: '1+2*3-4'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4'
+[CALCULATOR 0.9101259820224183] Pressing: 4, current display: '1+2*3-'
+[CALCULATOR 0.9101259820224183] New display is: '1+2*3-4'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4'
 [IMPLEMENTATION] calculator after press: 1+2*3-4
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4'
 [ADAPTER] Result display: 1+2*3-4
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4'
 [ADAPTER] store display: 1+2*3-4
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: /
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4'
 [IMPLEMENTATION] calculator before press: 1+2*3-4
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: /, current display: '1+2*3-4'
-[CALCULATOR 0.6677013836901575] New display is: '1+2*3-4/'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4/'
+[CALCULATOR 0.9101259820224183] Pressing: /, current display: '1+2*3-4'
+[CALCULATOR 0.9101259820224183] New display is: '1+2*3-4/'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4/'
 [IMPLEMENTATION] calculator after press: 1+2*3-4/
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4/'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4/'
 [ADAPTER] Result display: 1+2*3-4/
 [ADAPTER] andWhen called
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4/'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4/'
 [ADAPTER] store display: 1+2*3-4/
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 5
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4/'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4/'
 [IMPLEMENTATION] calculator before press: 1+2*3-4/
  ---- PRESS ---
-[CALCULATOR 0.6677013836901575] Pressing: 5, current display: '1+2*3-4/'
-[CALCULATOR 0.6677013836901575] New display is: '1+2*3-4/5'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4/5'
+[CALCULATOR 0.9101259820224183] Pressing: 5, current display: '1+2*3-4/'
+[CALCULATOR 0.9101259820224183] New display is: '1+2*3-4/5'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4/5'
 [IMPLEMENTATION] calculator after press: 1+2*3-4/5
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4/5'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4/5'
 [ADAPTER] Result display: 1+2*3-4/5
-[ADAPTER] butThen called with store: Calculator { display: '1+2*3-4/5', values: {}, id: 0.6677013836901575 }
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4/5'
-[CALCULATOR 0.6677013836901575] getDisplay: '1+2*3-4/5'
+[ADAPTER] butThen called with store: Calculator { display: '1+2*3-4/5', values: {}, id: 0.9101259820224183 }
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4/5'
+[CALCULATOR 0.9101259820224183] getDisplay: '1+2*3-4/5'
 [ADAPTER] butThen returning selection: 1+2*3-4/5
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.5667681413863352] getDisplay: ''
+[CALCULATOR 0.7327014000564742] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.5667681413863352 }
-[CALCULATOR 0.5667681413863352] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.7327014000564742 }
+[CALCULATOR 0.7327014000564742] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.5667681413863352] getDisplay: ''
+[CALCULATOR 0.7327014000564742] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.5667681413863352] getDisplay: ''
+[CALCULATOR 0.7327014000564742] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.5667681413863352] Pressing: 2, current display: ''
-[CALCULATOR 0.5667681413863352] New display is: '2'
-[CALCULATOR 0.5667681413863352] getDisplay: '2'
+[CALCULATOR 0.7327014000564742] Pressing: 2, current display: ''
+[CALCULATOR 0.7327014000564742] New display is: '2'
+[CALCULATOR 0.7327014000564742] getDisplay: '2'
 [IMPLEMENTATION] calculator after press: 2
-[CALCULATOR 0.5667681413863352] getDisplay: '2'
+[CALCULATOR 0.7327014000564742] getDisplay: '2'
 [ADAPTER] Result display: 2
 [ADAPTER] andWhen called
-[CALCULATOR 0.5667681413863352] getDisplay: '2'
+[CALCULATOR 0.7327014000564742] getDisplay: '2'
 [ADAPTER] store display: 2
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 3
-[CALCULATOR 0.5667681413863352] getDisplay: '2'
+[CALCULATOR 0.7327014000564742] getDisplay: '2'
 [IMPLEMENTATION] calculator before press: 2
  ---- PRESS ---
-[CALCULATOR 0.5667681413863352] Pressing: 3, current display: '2'
-[CALCULATOR 0.5667681413863352] New display is: '23'
-[CALCULATOR 0.5667681413863352] getDisplay: '23'
+[CALCULATOR 0.7327014000564742] Pressing: 3, current display: '2'
+[CALCULATOR 0.7327014000564742] New display is: '23'
+[CALCULATOR 0.7327014000564742] getDisplay: '23'
 [IMPLEMENTATION] calculator after press: 23
-[CALCULATOR 0.5667681413863352] getDisplay: '23'
+[CALCULATOR 0.7327014000564742] getDisplay: '23'
 [ADAPTER] Result display: 23
 [ADAPTER] andWhen called
-[CALCULATOR 0.5667681413863352] getDisplay: '23'
+[CALCULATOR 0.7327014000564742] getDisplay: '23'
 [ADAPTER] store display: 23
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: +
-[CALCULATOR 0.5667681413863352] getDisplay: '23'
+[CALCULATOR 0.7327014000564742] getDisplay: '23'
 [IMPLEMENTATION] calculator before press: 23
  ---- PRESS ---
-[CALCULATOR 0.5667681413863352] Pressing: +, current display: '23'
-[CALCULATOR 0.5667681413863352] New display is: '23+'
-[CALCULATOR 0.5667681413863352] getDisplay: '23+'
+[CALCULATOR 0.7327014000564742] Pressing: +, current display: '23'
+[CALCULATOR 0.7327014000564742] New display is: '23+'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+'
 [IMPLEMENTATION] calculator after press: 23+
-[CALCULATOR 0.5667681413863352] getDisplay: '23+'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+'
 [ADAPTER] Result display: 23+
 [ADAPTER] andWhen called
-[CALCULATOR 0.5667681413863352] getDisplay: '23+'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+'
 [ADAPTER] store display: 23+
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 4
-[CALCULATOR 0.5667681413863352] getDisplay: '23+'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+'
 [IMPLEMENTATION] calculator before press: 23+
  ---- PRESS ---
-[CALCULATOR 0.5667681413863352] Pressing: 4, current display: '23+'
-[CALCULATOR 0.5667681413863352] New display is: '23+4'
-[CALCULATOR 0.5667681413863352] getDisplay: '23+4'
+[CALCULATOR 0.7327014000564742] Pressing: 4, current display: '23+'
+[CALCULATOR 0.7327014000564742] New display is: '23+4'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+4'
 [IMPLEMENTATION] calculator after press: 23+4
-[CALCULATOR 0.5667681413863352] getDisplay: '23+4'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+4'
 [ADAPTER] Result display: 23+4
 [ADAPTER] andWhen called
-[CALCULATOR 0.5667681413863352] getDisplay: '23+4'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+4'
 [ADAPTER] store display: 23+4
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 5
-[CALCULATOR 0.5667681413863352] getDisplay: '23+4'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+4'
 [IMPLEMENTATION] calculator before press: 23+4
  ---- PRESS ---
-[CALCULATOR 0.5667681413863352] Pressing: 5, current display: '23+4'
-[CALCULATOR 0.5667681413863352] New display is: '23+45'
-[CALCULATOR 0.5667681413863352] getDisplay: '23+45'
+[CALCULATOR 0.7327014000564742] Pressing: 5, current display: '23+4'
+[CALCULATOR 0.7327014000564742] New display is: '23+45'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+45'
 [IMPLEMENTATION] calculator after press: 23+45
-[CALCULATOR 0.5667681413863352] getDisplay: '23+45'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+45'
 [ADAPTER] Result display: 23+45
 [ADAPTER] andWhen called
-[CALCULATOR 0.5667681413863352] getDisplay: '23+45'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+45'
 [ADAPTER] store display: 23+45
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] enter called
-[CALCULATOR 0.5667681413863352] getDisplay: '23+45'
+[CALCULATOR 0.7327014000564742] getDisplay: '23+45'
 [IMPLEMENTATION] calculator before enter: 23+45
-[CALCULATOR 0.5667681413863352] getDisplay: '68'
+[CALCULATOR 0.7327014000564742] getDisplay: '68'
 [IMPLEMENTATION] calculator after enter: 68
-[CALCULATOR 0.5667681413863352] getDisplay: '68'
+[CALCULATOR 0.7327014000564742] getDisplay: '68'
 [ADAPTER] Result display: 68
-[ADAPTER] butThen called with store: Calculator { display: '68', values: {}, id: 0.5667681413863352 }
-[CALCULATOR 0.5667681413863352] getDisplay: '68'
-[CALCULATOR 0.5667681413863352] getDisplay: '68'
+[ADAPTER] butThen called with store: Calculator { display: '68', values: {}, id: 0.7327014000564742 }
+[CALCULATOR 0.7327014000564742] getDisplay: '68'
+[CALCULATOR 0.7327014000564742] getDisplay: '68'
 [ADAPTER] butThen returning selection: 68
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.6948279785464073] getDisplay: ''
+[CALCULATOR 0.04151157746125533] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.6948279785464073 }
-[CALCULATOR 0.6948279785464073] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.04151157746125533 }
+[CALCULATOR 0.04151157746125533] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.6948279785464073] getDisplay: ''
+[CALCULATOR 0.04151157746125533] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 9
-[CALCULATOR 0.6948279785464073] getDisplay: ''
+[CALCULATOR 0.04151157746125533] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.6948279785464073] Pressing: 9, current display: ''
-[CALCULATOR 0.6948279785464073] New display is: '9'
-[CALCULATOR 0.6948279785464073] getDisplay: '9'
+[CALCULATOR 0.04151157746125533] Pressing: 9, current display: ''
+[CALCULATOR 0.04151157746125533] New display is: '9'
+[CALCULATOR 0.04151157746125533] getDisplay: '9'
 [IMPLEMENTATION] calculator after press: 9
-[CALCULATOR 0.6948279785464073] getDisplay: '9'
+[CALCULATOR 0.04151157746125533] getDisplay: '9'
 [ADAPTER] Result display: 9
 [ADAPTER] andWhen called
-[CALCULATOR 0.6948279785464073] getDisplay: '9'
+[CALCULATOR 0.04151157746125533] getDisplay: '9'
 [ADAPTER] store display: 9
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 5
-[CALCULATOR 0.6948279785464073] getDisplay: '9'
+[CALCULATOR 0.04151157746125533] getDisplay: '9'
 [IMPLEMENTATION] calculator before press: 9
  ---- PRESS ---
-[CALCULATOR 0.6948279785464073] Pressing: 5, current display: '9'
-[CALCULATOR 0.6948279785464073] New display is: '95'
-[CALCULATOR 0.6948279785464073] getDisplay: '95'
+[CALCULATOR 0.04151157746125533] Pressing: 5, current display: '9'
+[CALCULATOR 0.04151157746125533] New display is: '95'
+[CALCULATOR 0.04151157746125533] getDisplay: '95'
 [IMPLEMENTATION] calculator after press: 95
-[CALCULATOR 0.6948279785464073] getDisplay: '95'
+[CALCULATOR 0.04151157746125533] getDisplay: '95'
 [ADAPTER] Result display: 95
 [ADAPTER] andWhen called
-[CALCULATOR 0.6948279785464073] getDisplay: '95'
+[CALCULATOR 0.04151157746125533] getDisplay: '95'
 [ADAPTER] store display: 95
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: -
-[CALCULATOR 0.6948279785464073] getDisplay: '95'
+[CALCULATOR 0.04151157746125533] getDisplay: '95'
 [IMPLEMENTATION] calculator before press: 95
  ---- PRESS ---
-[CALCULATOR 0.6948279785464073] Pressing: -, current display: '95'
-[CALCULATOR 0.6948279785464073] New display is: '95-'
-[CALCULATOR 0.6948279785464073] getDisplay: '95-'
+[CALCULATOR 0.04151157746125533] Pressing: -, current display: '95'
+[CALCULATOR 0.04151157746125533] New display is: '95-'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-'
 [IMPLEMENTATION] calculator after press: 95-
-[CALCULATOR 0.6948279785464073] getDisplay: '95-'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-'
 [ADAPTER] Result display: 95-
 [ADAPTER] andWhen called
-[CALCULATOR 0.6948279785464073] getDisplay: '95-'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-'
 [ADAPTER] store display: 95-
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 3
-[CALCULATOR 0.6948279785464073] getDisplay: '95-'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-'
 [IMPLEMENTATION] calculator before press: 95-
  ---- PRESS ---
-[CALCULATOR 0.6948279785464073] Pressing: 3, current display: '95-'
-[CALCULATOR 0.6948279785464073] New display is: '95-3'
-[CALCULATOR 0.6948279785464073] getDisplay: '95-3'
+[CALCULATOR 0.04151157746125533] Pressing: 3, current display: '95-'
+[CALCULATOR 0.04151157746125533] New display is: '95-3'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-3'
 [IMPLEMENTATION] calculator after press: 95-3
-[CALCULATOR 0.6948279785464073] getDisplay: '95-3'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-3'
 [ADAPTER] Result display: 95-3
 [ADAPTER] andWhen called
-[CALCULATOR 0.6948279785464073] getDisplay: '95-3'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-3'
 [ADAPTER] store display: 95-3
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.6948279785464073] getDisplay: '95-3'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-3'
 [IMPLEMENTATION] calculator before press: 95-3
  ---- PRESS ---
-[CALCULATOR 0.6948279785464073] Pressing: 2, current display: '95-3'
-[CALCULATOR 0.6948279785464073] New display is: '95-32'
-[CALCULATOR 0.6948279785464073] getDisplay: '95-32'
+[CALCULATOR 0.04151157746125533] Pressing: 2, current display: '95-3'
+[CALCULATOR 0.04151157746125533] New display is: '95-32'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-32'
 [IMPLEMENTATION] calculator after press: 95-32
-[CALCULATOR 0.6948279785464073] getDisplay: '95-32'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-32'
 [ADAPTER] Result display: 95-32
 [ADAPTER] andWhen called
-[CALCULATOR 0.6948279785464073] getDisplay: '95-32'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-32'
 [ADAPTER] store display: 95-32
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] enter called
-[CALCULATOR 0.6948279785464073] getDisplay: '95-32'
+[CALCULATOR 0.04151157746125533] getDisplay: '95-32'
 [IMPLEMENTATION] calculator before enter: 95-32
-[CALCULATOR 0.6948279785464073] getDisplay: '63'
+[CALCULATOR 0.04151157746125533] getDisplay: '63'
 [IMPLEMENTATION] calculator after enter: 63
-[CALCULATOR 0.6948279785464073] getDisplay: '63'
+[CALCULATOR 0.04151157746125533] getDisplay: '63'
 [ADAPTER] Result display: 63
-[ADAPTER] butThen called with store: Calculator { display: '63', values: {}, id: 0.6948279785464073 }
-[CALCULATOR 0.6948279785464073] getDisplay: '63'
-[CALCULATOR 0.6948279785464073] getDisplay: '63'
+[ADAPTER] butThen called with store: Calculator { display: '63', values: {}, id: 0.04151157746125533 }
+[CALCULATOR 0.04151157746125533] getDisplay: '63'
+[CALCULATOR 0.04151157746125533] getDisplay: '63'
 [ADAPTER] butThen returning selection: 63
 [ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.595609870067134] getDisplay: ''
+[CALCULATOR 0.7256799977997417] getDisplay: ''
 [IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.595609870067134 }
-[CALCULATOR 0.595609870067134] getDisplay: ''
+[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.7256799977997417 }
+[CALCULATOR 0.7256799977997417] getDisplay: ''
 [ADAPTER] display: 
 [ADAPTER] andWhen called
-[CALCULATOR 0.595609870067134] getDisplay: ''
+[CALCULATOR 0.7256799977997417] getDisplay: ''
 [ADAPTER] store display: 
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 6
-[CALCULATOR 0.595609870067134] getDisplay: ''
+[CALCULATOR 0.7256799977997417] getDisplay: ''
 [IMPLEMENTATION] calculator before press: 
  ---- PRESS ---
-[CALCULATOR 0.595609870067134] Pressing: 6, current display: ''
-[CALCULATOR 0.595609870067134] New display is: '6'
-[CALCULATOR 0.595609870067134] getDisplay: '6'
+[CALCULATOR 0.7256799977997417] Pressing: 6, current display: ''
+[CALCULATOR 0.7256799977997417] New display is: '6'
+[CALCULATOR 0.7256799977997417] getDisplay: '6'
 [IMPLEMENTATION] calculator after press: 6
-[CALCULATOR 0.595609870067134] getDisplay: '6'
+[CALCULATOR 0.7256799977997417] getDisplay: '6'
 [ADAPTER] Result display: 6
 [ADAPTER] andWhen called
-[CALCULATOR 0.595609870067134] getDisplay: '6'
+[CALCULATOR 0.7256799977997417] getDisplay: '6'
 [ADAPTER] store display: 6
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: *
-[CALCULATOR 0.595609870067134] getDisplay: '6'
+[CALCULATOR 0.7256799977997417] getDisplay: '6'
 [IMPLEMENTATION] calculator before press: 6
  ---- PRESS ---
-[CALCULATOR 0.595609870067134] Pressing: *, current display: '6'
-[CALCULATOR 0.595609870067134] New display is: '6*'
-[CALCULATOR 0.595609870067134] getDisplay: '6*'
+[CALCULATOR 0.7256799977997417] Pressing: *, current display: '6'
+[CALCULATOR 0.7256799977997417] New display is: '6*'
+[CALCULATOR 0.7256799977997417] getDisplay: '6*'
 [IMPLEMENTATION] calculator after press: 6*
-[CALCULATOR 0.595609870067134] getDisplay: '6*'
+[CALCULATOR 0.7256799977997417] getDisplay: '6*'
 [ADAPTER] Result display: 6*
 [ADAPTER] andWhen called
-[CALCULATOR 0.595609870067134] getDisplay: '6*'
+[CALCULATOR 0.7256799977997417] getDisplay: '6*'
 [ADAPTER] store display: 6*
 [ADAPTER] Calling whenCB which should return a function
 [ADAPTER] Transform function: [Function (anonymous)]
 [IMPLEMENTATION] press called with button: 7
-[CALCULATOR 0.595609870067134] getDisplay: '6*'
+[CALCULATOR 0.7256799977997417] getDisplay: '6*'
 [IMPLEMENTATION] calculator before press: 6*
  ---- PRESS ---
-[CALCULATOR 0.595609870067134] Pressing: 7, current display: '6*'
-[CALCULATOR 0.595609870067134] New display is: '6*7'
-[CALCULATOR 0.595609870067134] getDisplay: '6*7'
-[IMPLEMENTATION] calculator after press: 6*7
-[CALCULATOR 0.595609870067134] getDisplay: '6*7'
-[ADAPTER] Result display: 6*7
-[ADAPTER] andWhen called
-[CALCULATOR 0.595609870067134] getDisplay: '6*7'
-[ADAPTER] store display: 6*7
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] enter called
-[CALCULATOR 0.595609870067134] getDisplay: '6*7'
-[IMPLEMENTATION] calculator before enter: 6*7
-[CALCULATOR 0.595609870067134] getDisplay: '42'
-[IMPLEMENTATION] calculator after enter: 42
-[CALCULATOR 0.595609870067134] getDisplay: '42'
-[ADAPTER] Result display: 42
-[ADAPTER] butThen called with store: Calculator { display: '42', values: {}, id: 0.595609870067134 }
-[CALCULATOR 0.595609870067134] getDisplay: '42'
-[CALCULATOR 0.595609870067134] getDisplay: '42'
-[ADAPTER] butThen returning selection: 42
-[ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.9686624847300549] getDisplay: ''
-[IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.9686624847300549 }
-[CALCULATOR 0.9686624847300549] getDisplay: ''
-[ADAPTER] display: 
-[ADAPTER] andWhen called
-[CALCULATOR 0.9686624847300549] getDisplay: ''
-[ADAPTER] store display: 
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: 8
-[CALCULATOR 0.9686624847300549] getDisplay: ''
-[IMPLEMENTATION] calculator before press: 
- ---- PRESS ---
-[CALCULATOR 0.9686624847300549] Pressing: 8, current display: ''
-[CALCULATOR 0.9686624847300549] New display is: '8'
-[CALCULATOR 0.9686624847300549] getDisplay: '8'
-[IMPLEMENTATION] calculator after press: 8
-[CALCULATOR 0.9686624847300549] getDisplay: '8'
-[ADAPTER] Result display: 8
-[ADAPTER] andWhen called
-[CALCULATOR 0.9686624847300549] getDisplay: '8'
-[ADAPTER] store display: 8
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: 4
-[CALCULATOR 0.9686624847300549] getDisplay: '8'
-[IMPLEMENTATION] calculator before press: 8
- ---- PRESS ---
-[CALCULATOR 0.9686624847300549] Pressing: 4, current display: '8'
-[CALCULATOR 0.9686624847300549] New display is: '84'
-[CALCULATOR 0.9686624847300549] getDisplay: '84'
-[IMPLEMENTATION] calculator after press: 84
-[CALCULATOR 0.9686624847300549] getDisplay: '84'
-[ADAPTER] Result display: 84
-[ADAPTER] andWhen called
-[CALCULATOR 0.9686624847300549] getDisplay: '84'
-[ADAPTER] store display: 84
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: /
-[CALCULATOR 0.9686624847300549] getDisplay: '84'
-[IMPLEMENTATION] calculator before press: 84
- ---- PRESS ---
-[CALCULATOR 0.9686624847300549] Pressing: /, current display: '84'
-[CALCULATOR 0.9686624847300549] New display is: '84/'
-[CALCULATOR 0.9686624847300549] getDisplay: '84/'
-[IMPLEMENTATION] calculator after press: 84/
-[CALCULATOR 0.9686624847300549] getDisplay: '84/'
-[ADAPTER] Result display: 84/
-[ADAPTER] andWhen called
-[CALCULATOR 0.9686624847300549] getDisplay: '84/'
-[ADAPTER] store display: 84/
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.9686624847300549] getDisplay: '84/'
-[IMPLEMENTATION] calculator before press: 84/
- ---- PRESS ---
-[CALCULATOR 0.9686624847300549] Pressing: 2, current display: '84/'
-[CALCULATOR 0.9686624847300549] New display is: '84/2'
-[CALCULATOR 0.9686624847300549] getDisplay: '84/2'
-[IMPLEMENTATION] calculator after press: 84/2
-[CALCULATOR 0.9686624847300549] getDisplay: '84/2'
-[ADAPTER] Result display: 84/2
-[ADAPTER] andWhen called
-[CALCULATOR 0.9686624847300549] getDisplay: '84/2'
-[ADAPTER] store display: 84/2
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] enter called
-[CALCULATOR 0.9686624847300549] getDisplay: '84/2'
-[IMPLEMENTATION] calculator before enter: 84/2
-[CALCULATOR 0.9686624847300549] getDisplay: '42'
-[IMPLEMENTATION] calculator after enter: 42
-[CALCULATOR 0.9686624847300549] getDisplay: '42'
-[ADAPTER] Result display: 42
-[ADAPTER] butThen called with store: Calculator { display: '42', values: {}, id: 0.9686624847300549 }
-[CALCULATOR 0.9686624847300549] getDisplay: '42'
-[CALCULATOR 0.9686624847300549] getDisplay: '42'
-[ADAPTER] butThen returning selection: 42
-[ADAPTER] beforeEach called with subject: [class Calculator]
-[CALCULATOR 0.6970922788445117] getDisplay: ''
-[IMPLEMENTATION] Default given, display: 
-[ADAPTER] beforeEach result: Calculator { display: '', values: {}, id: 0.6970922788445117 }
-[CALCULATOR 0.6970922788445117] getDisplay: ''
-[ADAPTER] display: 
-[ADAPTER] andWhen called
-[CALCULATOR 0.6970922788445117] getDisplay: ''
-[ADAPTER] store display: 
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: 1
-[CALCULATOR 0.6970922788445117] getDisplay: ''
-[IMPLEMENTATION] calculator before press: 
- ---- PRESS ---
-[CALCULATOR 0.6970922788445117] Pressing: 1, current display: ''
-[CALCULATOR 0.6970922788445117] New display is: '1'
-[CALCULATOR 0.6970922788445117] getDisplay: '1'
-[IMPLEMENTATION] calculator after press: 1
-[CALCULATOR 0.6970922788445117] getDisplay: '1'
-[ADAPTER] Result display: 1
-[ADAPTER] andWhen called
-[CALCULATOR 0.6970922788445117] getDisplay: '1'
-[ADAPTER] store display: 1
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: 2
-[CALCULATOR 0.6970922788445117] getDisplay: '1'
-[IMPLEMENTATION] calculator before press: 1
- ---- PRESS ---
-[CALCULATOR 0.6970922788445117] Pressing: 2, current display: '1'
-[CALCULATOR 0.6970922788445117] New display is: '12'
-[CALCULATOR 0.6970922788445117] getDisplay: '12'
-[IMPLEMENTATION] calculator after press: 12
-[CALCULATOR 0.6970922788445117] getDisplay: '12'
-[ADAPTER] Result display: 12
-[ADAPTER] andWhen called
-[CALCULATOR 0.6970922788445117] getDisplay: '12'
-[ADAPTER] store display: 12
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: 3
-[CALCULATOR 0.6970922788445117] getDisplay: '12'
-[IMPLEMENTATION] calculator before press: 12
- ---- PRESS ---
-[CALCULATOR 0.6970922788445117] Pressing: 3, current display: '12'
-[CALCULATOR 0.6970922788445117] New display is: '123'
-[CALCULATOR 0.6970922788445117] getDisplay: '123'
-[IMPLEMENTATION] calculator after press: 123
-[CALCULATOR 0.6970922788445117] getDisplay: '123'
-[ADAPTER] Result display: 123
-[ADAPTER] andWhen called
-[CALCULATOR 0.6970922788445117] getDisplay: '123'
-[ADAPTER] store display: 123
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: C
-[CALCULATOR 0.6970922788445117] getDisplay: '123'
-[IMPLEMENTATION] calculator before press: 123
- ---- PRESS ---
-[CALCULATOR 0.6970922788445117] Pressing: C, current display: '123'
-[CALCULATOR 0.6970922788445117] getDisplay: ''
-[IMPLEMENTATION] calculator after press: 
-[CALCULATOR 0.6970922788445117] getDisplay: ''
-[ADAPTER] Result display: 
-[ADAPTER] andWhen called
-[CALCULATOR 0.6970922788445117] getDisplay: ''
-[ADAPTER] store display: 
-[ADAPTER] Calling whenCB which should return a function
-[ADAPTER] Transform function: [Function (anonymous)]
-[IMPLEMENTATION] press called with button: 4
-[CALCULATOR 0.6970922788445117] getDisplay: ''
-[IMPLEMENTATION] calculator before press: 
- ---- PRESS ---
-[CALCULATOR 0.6970922788445117] Pressing: 4, current display: ''
-[CALCULATOR 0.6970922788445117] New display is: '4'
-[CALCULATOR 0.6970922788445117] getDisplay: '4'
-[IMPLEMENTATION] calculator after press: 4
-[CALCULATOR 0.6970922788445117] getDisplay: '4'
-[ADAPTER] Result display: 4
-[ADAPTER] butThen called with store: Calculator { display: '4', values
+[CALCULATOR 0.7256799977997417] Pressing: 7, current display: '6*'
+[CALCULATOR 0.7

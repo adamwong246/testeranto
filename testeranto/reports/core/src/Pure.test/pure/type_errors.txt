@@ -1,25 +1,23 @@
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (68,23): Property 'name' does not exist on type 'never'.
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (84,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (139,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (142,28): Property 'name' does not exist on type 'BaseGiven<I>'.
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (168,12): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (227,20): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (236,18): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (259,16): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (283,14): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (68,26): Property 'name' does not exist on type 'never'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (89,28): Property 'name' does not exist on type 'never'.
-/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (165,29): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (171,19): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (172,31): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (63,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (119,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (122,28): Property 'name' does not exist on type 'BaseGiven<I>'.
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (150,12): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (209,20): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (218,18): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (241,16): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (265,14): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (72,26): Property 'name' does not exist on type 'never'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (173,29): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (179,19): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (180,31): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
 /Users/adam/Code/testeranto/src/lib/index.ts (42,12): This expression is not callable.
   Type 'unknown' has no call signatures.
 /Users/adam/Code/testeranto/src/lib/index.ts (50,12): This expression is not callable.
   Type 'unknown' has no call signatures.
 /Users/adam/Code/testeranto/src/lib/pmProxy.test/mockPMBase.ts (8,14): Class 'MockPMBase' incorrectly implements class 'PM_Base'. Did you mean to extend 'PM_Base' and inherit its members as a subclass?
   Property 'mapping' is missing in type 'MockPMBase' but required in type 'PM_Base'.
-/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (222,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (299,15): Expected 1 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (221,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (280,15): Expected 1 arguments, but got 3.
 /Users/adam/Code/testeranto/src/PM/web.ts (51,12): Property 'mainFrame' does not exist on type 'string | Page'.
   Property 'mainFrame' does not exist on type 'string'.
 /Users/adam/Code/testeranto/src/Pure.test.ts (58,5): Type '() => { pm: IPM; config: {}; proxies: { butThenProxy: (pm: IPM, path: string) => { writeFileSync: (p: string, c: string) => any; testResourceConfiguration: ITTestResourceConfiguration; client: Socket; server: any; } | { ...; } | { ...; }; andWhenProxy: (pm: IPM, path: string) => { ...; } | ... 1 more ... | { ...; };...' is not assignable to type '() => () => { pm: IPM; config: {}; proxies: any; }'.

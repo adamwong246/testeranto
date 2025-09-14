@@ -21,7 +21,6 @@ import { BaseSuite } from "./BaseSuite";
 export type IGivens<I extends Ibdd_in_any> = Record<string, BaseGiven<I>>;
 
 export abstract class BaseGiven<I extends Ibdd_in_any> {
-  // name: string;
   features: string[];
   whens: any[];
   thens: any[];

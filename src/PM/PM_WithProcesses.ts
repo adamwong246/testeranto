@@ -74,6 +74,12 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     } else {
       metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
     }
+    
+    // Ensure the metafile exists
+    if (!fs.existsSync(metafilePath)) {
+      console.log(ansiC.yellow(`Metafile not found at ${metafilePath}, skipping`));
+      return;
+    }
 
     let metafile;
     try {
@@ -343,6 +349,16 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     // Wait for build processes to complete first
     try {
       await this.startBuildProcesses();
+      
+      // Generate Python metafile if there are Python tests
+      const pythonTests = this.configs.tests.filter(test => test[1] === "python");
+      if (pythonTests.length > 0) {
+        const { generatePitonoMetafile, writePitonoMetafile } = await import("../utils/pitonoMetafile.js");
+        const entryPoints = pythonTests.map(test => test[0]);
+        const metafile = await generatePitonoMetafile(this.name, entryPoints);
+        writePitonoMetafile(this.name, metafile);
+      }
+      
       this.onBuildDone();
     } catch (error) {
       console.error("Build processes failed:", error);
@@ -413,71 +429,94 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     });
 
     // Set up metafile watchers for each runtime
-    [
+    const runtimeConfigs = [
       ["node", nodeEntryPoints],
       ["web", webEntryPoints],
       ["pure", pureEntryPoints],
       ["python", pythonEntryPoints],
       ["golang", golangEntryPoints],
-    ].forEach(
-      async ([runtime, entryPoints]: [IRunTime, Record<string, string>]) => {
-        if (Object.keys(entryPoints).length === 0) return;
+    ];
+    
+    for (const [runtime, entryPoints] of runtimeConfigs) {
+      if (Object.keys(entryPoints).length === 0) continue;
 
-        const metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-        try {
-          await pollForFile(metafile);
-          // console.log("Found metafile for", runtime, metafile);
-
-          // Set up watcher for the metafile with debouncing
-          let timeoutId: NodeJS.Timeout;
-          const watcher = watch(metafile, async (e, filename) => {
-            // Debounce to avoid multiple rapid triggers
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(async () => {
-              console.log(
-                ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
-              );
-              try {
-                await this.metafileOutputs(runtime as IRunTime);
-                // After processing metafile changes, check the queue to run tests
-                console.log(
-                  ansiC.blue(
-                    `Metafile processed, checking queue for tests to run`
-                  )
-                );
-                this.checkQueue();
-              } catch (error) {
-                console.error(`Error processing metafile changes:`, error);
-              }
-            }, 300); // 300ms debounce
-          });
-
-          // Store the watcher based on runtime
-          switch (runtime) {
-            case "node":
-              this.nodeMetafileWatcher = watcher;
-              break;
-            case "web":
-              this.webMetafileWatcher = watcher;
-              break;
-            case "pure":
-              this.importMetafileWatcher = watcher;
-              break;
-            case "python":
-              this.pitonoMetafileWatcher = watcher;
-              break;
-            case "golang":
-              this.golangMetafileWatcher = watcher;
-              break;
-          }
-
-          // Read the metafile immediately
-          await this.metafileOutputs(runtime as IRunTime);
-        } catch (error) {
-          console.error(`Error setting up watcher for ${runtime}:`, error);
-        }
+      // For python, the metafile path is different
+      let metafile: string;
+      if (runtime === "python") {
+        metafile = `./testeranto/metafiles/${runtime}/core.json`;
+      } else {
+        metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
       }
-    );
+      
+      // Ensure the directory exists
+      const metafileDir = metafile.split('/').slice(0, -1).join('/');
+      if (!fs.existsSync(metafileDir)) {
+        fs.mkdirSync(metafileDir, { recursive: true });
+      }
+      
+      try {
+        // For python, we may need to generate the metafile first
+        if (runtime === "python" && !fs.existsSync(metafile)) {
+          const { generatePitonoMetafile, writePitonoMetafile } = await import("../utils/pitonoMetafile.js");
+          const entryPointList = Object.keys(entryPoints);
+          if (entryPointList.length > 0) {
+            const metafileData = await generatePitonoMetafile(this.name, entryPointList);
+            writePitonoMetafile(this.name, metafileData);
+          }
+        }
+        
+        await pollForFile(metafile);
+        // console.log("Found metafile for", runtime, metafile);
+
+        // Set up watcher for the metafile with debouncing
+        let timeoutId: NodeJS.Timeout;
+        const watcher = watch(metafile, async (e, filename) => {
+          // Debounce to avoid multiple rapid triggers
+          clearTimeout(timeoutId);
+          timeoutId = setTimeout(async () => {
+            console.log(
+              ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
+            );
+            try {
+              await this.metafileOutputs(runtime as IRunTime);
+              // After processing metafile changes, check the queue to run tests
+              console.log(
+                ansiC.blue(
+                  `Metafile processed, checking queue for tests to run`
+                )
+              );
+              this.checkQueue();
+            } catch (error) {
+              console.error(`Error processing metafile changes:`, error);
+            }
+          }, 300); // 300ms debounce
+        });
+
+        // Store the watcher based on runtime
+        switch (runtime) {
+          case "node":
+            this.nodeMetafileWatcher = watcher;
+            break;
+          case "web":
+            this.webMetafileWatcher = watcher;
+            break;
+          case "pure":
+            this.importMetafileWatcher = watcher;
+            break;
+          case "python":
+            this.pitonoMetafileWatcher = watcher;
+            break;
+          case "golang":
+            this.golangMetafileWatcher = watcher;
+            break;
+        }
+
+        // Read the metafile immediately
+        await this.metafileOutputs(runtime as IRunTime);
+      } catch (error) {
+        console.error(`Error setting up watcher for ${runtime}:`, error);
+      }
+    }
   }
 
   async stop() {
