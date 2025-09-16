@@ -2,7 +2,7 @@ package golingvu
 
 // BaseThen represents a Then condition
 type BaseThen struct {
-	Name        string
+	Key         string
 	ThenCB      interface{}
 	ButThenFunc func(store, thenCB, testResource, pm interface{}) (interface{}, error)
 }
@@ -16,6 +16,6 @@ func (bt *BaseThen) Test(store interface{}, testResourceConfiguration ITTestReso
 // ToObj converts the Then condition to a serializable object
 func (bt *BaseThen) ToObj() map[string]interface{} {
 	return map[string]interface{}{
-		"name": bt.Name,
+		"key": bt.Key,
 	}
 }

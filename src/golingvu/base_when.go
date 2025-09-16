@@ -2,7 +2,7 @@ package golingvu
 
 // BaseWhen represents a When condition
 type BaseWhen struct {
-	Name        string
+	Key         string
 	WhenCB      interface{}
 	AndWhenFunc func(store, whenCB, testResource, pm interface{}) (interface{}, error)
 }
@@ -16,6 +16,6 @@ func (bw *BaseWhen) Test(store interface{}, testResourceConfiguration ITTestReso
 // ToObj converts the When condition to a serializable object
 func (bw *BaseWhen) ToObj() map[string]interface{} {
 	return map[string]interface{}{
-		"name": bw.Name,
+		"key": bw.Key,
 	}
 }

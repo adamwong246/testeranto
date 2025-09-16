@@ -2,26 +2,26 @@ package golingvu
 
 // BaseSuite represents a test suite
 type BaseSuite struct {
-	Name           string
-	Givens         map[string]*BaseGiven
-	AfterAllFunc   func(store interface{}, artifactory func(string, interface{}), pm interface{}) interface{}
-	AssertThatFunc func(t interface{}) bool
-	SetupFunc      func(s interface{}, artifactory func(string, interface{}), tr ITTestResourceConfiguration, pm interface{}) interface{}
-	Store          interface{}
+	Key                       string
+	Givens                    map[string]*BaseGiven
+	AfterAllFunc              func(store interface{}, artifactory func(string, interface{}), pm interface{}) interface{}
+	AssertThatFunc            func(t interface{}) bool
+	SetupFunc                 func(s interface{}, artifactory func(string, interface{}), tr ITTestResourceConfiguration, pm interface{}) interface{}
+	Store                     interface{}
 	TestResourceConfiguration ITTestResourceConfiguration
-	Index          int
-	Failed         bool
-	Fails          int
-	Artifacts      []string
+	Index                     int
+	Failed                    bool
+	Fails                     int
+	Artifacts                 []string
 }
 
 // Run executes the test suite
 func (bs *BaseSuite) Run(input interface{}, testResourceConfiguration ITTestResourceConfiguration, artifactory func(string, interface{}), tLog func(...string), pm interface{}) (*BaseSuite, error) {
 	bs.TestResourceConfiguration = testResourceConfiguration
-	
+
 	// Setup
 	subject := bs.SetupFunc(input, artifactory, testResourceConfiguration, pm)
-	
+
 	// Run each given
 	for gKey, g := range bs.Givens {
 		_, err := g.Give(
@@ -40,10 +40,10 @@ func (bs *BaseSuite) Run(input interface{}, testResourceConfiguration ITTestReso
 			return bs, err
 		}
 	}
-	
+
 	// After all
 	bs.AfterAllFunc(bs.Store, artifactory, pm)
-	
+
 	return bs, nil
 }
 
@@ -53,12 +53,12 @@ func (bs *BaseSuite) ToObj() map[string]interface{} {
 	for _, given := range bs.Givens {
 		givens = append(givens, given.ToObj())
 	}
-	
+
 	return map[string]interface{}{
-		"name":    bs.Name,
-		"givens":  givens,
-		"fails":   bs.Fails,
-		"failed":  bs.Failed,
+		"key":      bs.Key,
+		"givens":   givens,
+		"fails":    bs.Fails,
+		"failed":   bs.Failed,
 		"features": bs.Features(),
 	}
 }
@@ -67,7 +67,7 @@ func (bs *BaseSuite) ToObj() map[string]interface{} {
 func (bs *BaseSuite) Features() []string {
 	features := make([]string, 0)
 	seen := make(map[string]bool)
-	
+
 	for _, given := range bs.Givens {
 		for _, feature := range given.Features {
 			if !seen[feature] {

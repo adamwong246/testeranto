@@ -1,2 +1,5 @@
 example/Calculator.ts
 27:14 'error' is defined but never used. (@typescript-eslint/no-unused-vars)
+
+src/lib/BaseGiven.ts
+266:9 Unsafe usage of ThrowStatement. (no-unsafe-finally)

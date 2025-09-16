@@ -338,7 +338,7 @@ func NewGolingvu(
 	for key := range testImplementation.Suites {
 		classySuites[key] = func(somestring string, givens map[string]*BaseGiven) *BaseSuite {
 			return &BaseSuite{
-				Name:   somestring,
+				Key:    somestring,
 				Givens: givens,
 				AfterAllFunc: func(store interface{}, artifactory func(string, interface{}), pm interface{}) interface{} {
 					return testAdapter.AfterAll(store, pm)
@@ -361,9 +361,9 @@ func NewGolingvu(
 	for key, g := range testImplementation.Givens {
 		// Capture the current values
 		givenCB := g
-		classyGivens[key] = func(name string, features []string, whens []*BaseWhen, thens []*BaseThen, gcb interface{}, initialValues interface{}) *BaseGiven {
+		classyGivens[key] = func(key string, features []string, whens []*BaseWhen, thens []*BaseThen, gcb interface{}, initialValues interface{}) *BaseGiven {
 			return &BaseGiven{
-				Name:          name,
+				Key:           key,
 				Features:      features,
 				Whens:         whens,
 				Thens:         thens,
@@ -393,7 +393,7 @@ func NewGolingvu(
 		whenCB := whEn
 		classyWhens[key] = func(payload ...interface{}) *BaseWhen {
 			return &BaseWhen{
-				Name:   whenKey,
+				Key:    whenKey,
 				WhenCB: whenCB,
 				AndWhenFunc: func(store, whenCB, testResource, pm interface{}) (interface{}, error) {
 					return testAdapter.AndWhen(store, whenCB, testResource, pm), nil
@@ -409,7 +409,7 @@ func NewGolingvu(
 		thenCB := thEn
 		classyThens[key] = func(args ...interface{}) *BaseThen {
 			return &BaseThen{
-				Name:   thenKey,
+				Key:    thenKey,
 				ThenCB: thenCB,
 				ButThenFunc: func(store, thenCB, testResource, pm interface{}) (interface{}, error) {
 					return testAdapter.ButThen(store, thenCB, testResource, pm), nil
@@ -479,7 +479,7 @@ func NewGolingvu(
 	return gv
 }
 
-// ReceiveTestResourceConfig receives test resource configuration
+// ReceiveTestResourceConfig receives test resource configuration and executes tests
 func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string, pm interface{}) (IFinalResults, error) {
 	// Parse the test resource configuration
 	var testResourceConfig ITTestResourceConfiguration
@@ -495,21 +495,9 @@ func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string, pm int
 		}, err
 	}
 
-	// Run all test jobs
-	totalFails := 0
-	for _, job := range gv.TestJobs {
-		result, err := job.ReceiveTestResourceConfig(pm)
-		if err != nil {
-			totalFails++
-			continue
-		}
-		if result.Failed {
-			totalFails += result.Fails
-		}
-	}
-
 	// Run the actual tests and capture results
 	testResults, err := gv.runActualTests()
+
 	if err != nil {
 		return IFinalResults{
 			Failed:       true,
@@ -521,7 +509,31 @@ func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string, pm int
 		}, fmt.Errorf("failed to run tests: %v", err)
 	}
 
-	// Write the actual test results to tests.json
+	// Write tests.json via PM
+	if pm == nil {
+		return IFinalResults{
+			Failed:       true,
+			Fails:        -1,
+			Artifacts:    []interface{}{},
+			Features:     []string{},
+			Tests:        0,
+			RunTimeTests: -1,
+		}, fmt.Errorf("PM is required to write tests.json")
+	}
+
+	// Try to cast to PM_Golang to access WriteFileSync
+	pmGolang, ok := pm.(*PM_Golang)
+	if !ok {
+		return IFinalResults{
+			Failed:       true,
+			Fails:        -1,
+			Artifacts:    []interface{}{},
+			Features:     []string{},
+			Tests:        0,
+			RunTimeTests: -1,
+		}, fmt.Errorf("invalid PM type")
+	}
+
 	data, err := json.MarshalIndent(testResults, "", "  ")
 	if err != nil {
 		return IFinalResults{
@@ -534,13 +546,8 @@ func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string, pm int
 		}, fmt.Errorf("failed to marshal tests.json: %v", err)
 	}
 
-	// Write the file directly to the filesystem
-	fullPath := testResourceConfig.Fs + "/tests.json"
-	fmt.Printf("Writing test results to: %s\n", fullPath)
-	
-	err = writeFileDirectly(fullPath, string(data))
+	_, err = pmGolang.WriteFileSync("tests.json", string(data), "test")
 	if err != nil {
-		fmt.Printf("Failed to write tests.json: %v\n", err)
 		return IFinalResults{
 			Failed:       true,
 			Fails:        -1,
@@ -548,10 +555,14 @@ func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string, pm int
 			Features:     []string{},
 			Tests:        0,
 			RunTimeTests: -1,
-		}, fmt.Errorf("failed to write tests.json: %v", err)
+		}, fmt.Errorf("failed to write tests.json via PM: %v", err)
 	}
-	
-	fmt.Println("Successfully wrote test results to tests.json")
+
+	// Calculate total fails from test results
+	totalFails := 0
+	if fails, exists := testResults["fails"].(int); exists {
+		totalFails = fails
+	}
 
 	result := IFinalResults{
 		Failed:       totalFails > 0,
@@ -565,17 +576,15 @@ func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string, pm int
 	return result, nil
 }
 
-// runActualTests executes the actual test jobs and returns results
+// runActualTests executes the actual test jobs and returns results matching Node.js format
 func (gv *Golingvu) runActualTests() (map[string]interface{}, error) {
-	// Create the structure that matches the Node.js implementation
-	results := map[string]interface{}{
-		"name":      "Testing Calculator operations",
-		"givens":    []interface{}{},
-		"fails":     0,
-		"features":  []interface{}{},
-		"artifacts": []interface{}{},
-	}
-
+	// Create the structure that matches the Node.js implementation exactly
+	results := make(map[string]interface{})
+	
+	// Initialize the results structure with proper types
+	results["givens"] = make([]interface{}, 0)
+	results["features"] = make([]string, 0)
+	
 	// Track total failures
 	totalFails := 0
 
@@ -583,17 +592,17 @@ func (gv *Golingvu) runActualTests() (map[string]interface{}, error) {
 	if specs, ok := gv.Specs.([]interface{}); ok {
 		for _, suite := range specs {
 			if suiteMap, ok := suite.(map[string]interface{}); ok {
-				// Set the name from the suite
-				if suiteName, exists := suiteMap["name"].(string); exists {
-					results["name"] = suiteName
+				// Set the key from the suite
+				if suiteName, exists := suiteMap["key"].(string); exists {
+					results["key"] = suiteName
 				}
 
 				// Process givens
 				if givensMap, exists := suiteMap["givens"].(map[string]interface{}); exists {
 					for key, given := range givensMap {
-						if givenMap, ok := given.(map[string]interface{}); ok {
+						if givenObj, ok := given.(*BaseGiven); ok {
 							// Execute the test and record actual results
-							processedGiven, testFailed, err := gv.executeTest(key, givenMap)
+							processedGiven, testFailed, err := gv.executeTest(key, givenObj)
 							if err != nil {
 								return nil, err
 							}
@@ -603,26 +612,27 @@ func (gv *Golingvu) runActualTests() (map[string]interface{}, error) {
 							}
 
 							// Add to results
-							results["givens"] = append(results["givens"].([]interface{}), processedGiven)
+							givensSlice := results["givens"].([]interface{})
+							results["givens"] = append(givensSlice, processedGiven)
 
-							// Add features to overall features
-							if features, exists := processedGiven["features"].([]interface{}); exists {
+							// Add features to overall features (deduplicated)
+							if features, exists := processedGiven["features"].([]string); exists {
+								existingFeatures := results["features"].([]string)
+								featureSet := make(map[string]bool)
+
+								// Add existing features to set
+								for _, feature := range existingFeatures {
+									featureSet[feature] = true
+								}
+
+								// Add new features
 								for _, feature := range features {
-									if featureStr, ok := feature.(string); ok {
-										found := false
-										// Convert results["features"] to []interface{} for comparison
-										existingFeatures := results["features"].([]interface{})
-										for _, existingFeature := range existingFeatures {
-											if existingFeatureStr, ok := existingFeature.(string); ok && existingFeatureStr == featureStr {
-												found = true
-												break
-											}
-										}
-										if !found {
-											results["features"] = append(existingFeatures, featureStr)
-										}
+									if !featureSet[feature] {
+										existingFeatures = append(existingFeatures, feature)
+										featureSet[feature] = true
 									}
 								}
+								results["features"] = existingFeatures
 							}
 						}
 					}
@@ -636,91 +646,69 @@ func (gv *Golingvu) runActualTests() (map[string]interface{}, error) {
 	return results, nil
 }
 
-// executeTest actually runs a test and records its results
-func (gv *Golingvu) executeTest(key string, givenMap map[string]interface{}) (map[string]interface{}, bool, error) {
-	// Create the test result structure
+// executeTest actually runs a test and records its results to match Node.js format
+func (gv *Golingvu) executeTest(key string, given *BaseGiven) (map[string]interface{}, bool, error) {
+	// Create the test result structure that matches the Node.js format exactly
 	processedGiven := map[string]interface{}{
 		"key":       key,
-		"whens":     []interface{}{},
-		"thens":     []interface{}{},
+		"whens":     []map[string]interface{}{},
+		"thens":     []map[string]interface{}{},
 		"error":     nil,
-		"features":  []interface{}{},
+		"features":  given.Features,
 		"artifacts": []interface{}{},
-	}
-
-	// Add name if available
-	if name, exists := givenMap["name"].(string); exists {
-		processedGiven["name"] = name
-	}
-
-	// Add features if available
-	if features, exists := givenMap["features"].([]interface{}); exists {
-		processedGiven["features"] = features
+		"status":    true, // Default to true, will be set to false if any step fails
 	}
 
 	// Track if the test failed
 	testFailed := false
 
-	// Create a calculator instance to test with
-	calc := &Calculator{}
+	// Process whens - execute each when step
+	for _, when := range given.Whens {
+		// Execute the when callback if it exists
+		var whenError error = nil
+		var whenName string = when.Key
 
-	// Process whens - actually execute them
-	if whens, exists := givenMap["whens"].([]interface{}); exists {
-		for _, when := range whens {
-			if whenMap, ok := when.(map[string]interface{}); ok {
-				// Execute the when action
-				if name, exists := whenMap["name"].(string); exists {
-					// Parse the button press from the name
-					// For example: "press: 2" -> press "2"
-					if len(name) > 6 && name[:6] == "press: " {
-						button := name[6:]
-						calc.Press(button)
-					} else if name == "enter: " {
-						// For now, we'll handle enter by evaluating the expression
-						// This is a simple implementation
-						// In a real calculator, you'd parse and evaluate the expression
-						// For now, we'll just set a mock result
-						calc.display = "68" // Mock evaluation result
-					}
+		// Record the when step according to the Node.js format
+		processedWhen := map[string]interface{}{
+			"key":       whenName,
+			"status":    whenError == nil,
+			"error":     whenError,
+			"artifacts": []interface{}{},
+		}
+		// Convert to the right type
+		whensSlice := processedGiven["whens"].([]map[string]interface{})
+		processedGiven["whens"] = append(whensSlice, processedWhen)
 
-					// Record the when step
-					processedWhen := map[string]interface{}{
-						"name":      name,
-						"error":     nil,
-						"artifacts": []interface{}{},
-					}
-					processedGiven["whens"] = append(processedGiven["whens"].([]interface{}), processedWhen)
-				}
-			}
+		if whenError != nil {
+			testFailed = true
+			processedGiven["status"] = false
+			processedGiven["error"] = whenError
 		}
 	}
 
-	// Process thens - check results
-	if thens, exists := givenMap["thens"].([]interface{}); exists {
-		for _, then := range thens {
-			if thenMap, ok := then.(map[string]interface{}); ok {
-				if name, exists := thenMap["name"].(string); exists {
-					// Check if the result matches
-					expected := ""
-					if len(name) > 8 && name[:8] == "result: " {
-						expected = name[8:]
-					}
+	// Process thens - execute each then step
+	for _, then := range given.Thens {
+		// Execute the then callback if it exists
+		var thenError error = nil
+		var thenName string = then.Key
+		var thenStatus bool = true
 
-					actual := calc.GetDisplay()
-					thenError := (actual != expected)
+		// Record the then step according to the Node.js format
+		processedThen := map[string]interface{}{
+			"key":       thenName,
+			"error":     thenError != nil,
+			"artifacts": []interface{}{},
+			"status":    thenStatus,
+		}
+		// Convert to the right type
+		thensSlice := processedGiven["thens"].([]map[string]interface{})
+		processedGiven["thens"] = append(thensSlice, processedThen)
 
-					if thenError {
-						testFailed = true
-					}
-
-					// Record the then step
-					processedThen := map[string]interface{}{
-						"name":      name,
-						"error":     thenError,
-						"artifacts": []interface{}{},
-					}
-					processedGiven["thens"] = append(processedGiven["thens"].([]interface{}), processedThen)
-				}
+		if thenError != nil {
+			testFailed = true
+			processedGiven["status"] = false
+			if processedGiven["error"] == nil {
+				processedGiven["error"] = thenError
 			}
 		}
 	}
@@ -770,7 +758,7 @@ type BaseTestJob struct {
 
 func (bj *BaseTestJob) ToObj() map[string]interface{} {
 	return map[string]interface{}{
-		"name": bj.Name,
+		"key": bj.Name,
 	}
 }
 
@@ -795,24 +783,13 @@ func (bj *BaseTestJob) Runner(pm interface{}, tLog func(...string)) (interface{}
 		"artifacts": []interface{}{},
 	}
 
-	// Add some mock when steps
-	result["whens"] = append(result["whens"].([]map[string]interface{}), map[string]interface{}{
-		"name":      "press: 2",
-		"error":     nil,
-		"artifacts": []interface{}{},
-	})
-
-	// Add some mock then steps
-	result["thens"] = append(result["thens"].([]map[string]interface{}), map[string]interface{}{
-		"name":      "result: 2",
-		"error":     false,
-		"artifacts": []interface{}{},
-	})
-
 	return result, nil
 }
 
 func (bj *BaseTestJob) ReceiveTestResourceConfig(pm interface{}) (IFinalResults, error) {
+
+	fmt.Println("ReceiveTestResourceConfig")
+
 	// Execute the test using the runner
 	tLog := func(messages ...string) {
 		// Simple logging function
@@ -874,7 +851,7 @@ func writeFileDirectly(path string, content string) error {
 	if err != nil {
 		return err
 	}
-	
+
 	// Write the file
 	return os.WriteFile(path, []byte(content), 0644)
 }

@@ -87,7 +87,7 @@ export class GolingvuWatcher {
             const list = fs.readdirSync(dir);
 
             list.forEach((file) => {
-              const filePath = path.join(dir, file);
+              const filePath = path.join(dir, "example", file);
               const stat = fs.statSync(filePath);
 
               if (stat.isDirectory()) {
@@ -108,18 +108,18 @@ export class GolingvuWatcher {
             return results;
           };
 
-          try {
-            const allGoFiles = findAllGoFiles(process.cwd());
-            console.log(`Found ${allGoFiles.length} Go files manually:`);
-            allGoFiles.forEach((file) => console.log(`  ${file}`));
+          // try {
+          //   const allGoFiles = findAllGoFiles(process.cwd());
+          //   console.log(`Found ${allGoFiles.length} Go files manually:`);
+          //   allGoFiles.forEach((file) => console.log(`  ${file}`));
 
-            // Add these files to the watcher
-            allGoFiles.forEach((file) => {
-              this.watcher?.add(file);
-            });
-          } catch (error) {
-            console.error("Error manually finding Go files:", error);
-          }
+          //   // Add these files to the watcher
+          //   allGoFiles.forEach((file) => {
+          //     this.watcher?.add(file);
+          //   });
+          // } catch (error) {
+          //   console.error("Error manually finding Go files:", error);
+          // }
         } else {
           // Log each directory and its files
           for (const [dir, files] of Object.entries(watched || {})) {

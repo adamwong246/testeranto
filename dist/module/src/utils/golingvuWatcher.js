@@ -69,7 +69,7 @@ export class GolingvuWatcher {
                     let results = [];
                     const list = fs.readdirSync(dir);
                     list.forEach((file) => {
-                        const filePath = path.join(dir, file);
+                        const filePath = path.join(dir, "example", file);
                         const stat = fs.statSync(filePath);
                         if (stat.isDirectory()) {
                             // Skip ignored directories

@@ -1,9 +1,7 @@
-module example
+module example/calculator
 
 go 1.19
 
 replace github.com/adamwong246/testeranto => ../
 
-replace github.com/adamwong246/testeranto/src/golingvu => ../src/golingvu
-
-require github.com/adamwong246/testeranto/src/golingvu v0.0.0-20250101000000-000000000000
+require github.com/adamwong246/testeranto/src/golingvu v0.0.0-20250912215240-9a7ba91edeed

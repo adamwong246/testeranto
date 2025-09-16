@@ -4,22 +4,21 @@ import "fmt"
 
 // BaseGiven represents a base Given condition
 type BaseGiven struct {
-	Name           string
-	Features       []string
-	Whens          []*BaseWhen
-	Thens          []*BaseThen
-	Error          error
-	Fail           interface{}
-	Store          interface{}
+	Features          []string
+	Whens             []*BaseWhen
+	Thens             []*BaseThen
+	Error             error
+	Fail              interface{}
+	Store             interface{}
 	RecommendedFsPath string
-	GivenCB        interface{}
-	InitialValues  interface{}
-	Key            string
-	Failed         bool
-	Artifacts      []string
-	GivenThatFunc  func(subject, testResource, artifactory, initializer, initialValues, pm interface{}) (interface{}, error)
-	AfterEachFunc  func(store interface{}, key string, artifactory, pm interface{}) (interface{}, error)
-	UberCatcherFunc func(func())
+	GivenCB           interface{}
+	InitialValues     interface{}
+	Key               string
+	Failed            bool
+	Artifacts         []string
+	GivenThatFunc     func(subject, testResource, artifactory, initializer, initialValues, pm interface{}) (interface{}, error)
+	AfterEachFunc     func(store interface{}, key string, artifactory, pm interface{}) (interface{}, error)
+	UberCatcherFunc   func(func())
 }
 
 // AddArtifact adds an artifact path
@@ -30,9 +29,9 @@ func (bg *BaseGiven) AddArtifact(path string) {
 }
 
 // NewBaseGiven creates a new BaseGiven instance
-func NewBaseGiven(name string, features []string, whens []*BaseWhen, thens []*BaseThen, givenCB, initialValues interface{}) *BaseGiven {
+func NewBaseGiven(key string, features []string, whens []*BaseWhen, thens []*BaseThen, givenCB, initialValues interface{}) *BaseGiven {
 	return &BaseGiven{
-		Name:          name,
+		Key:           key,
 		Features:      features,
 		Whens:         whens,
 		Thens:         thens,
@@ -53,20 +52,20 @@ func (bg *BaseGiven) ToObj() map[string]interface{} {
 	for i, w := range bg.Whens {
 		whenObjs[i] = w.ToObj()
 	}
-	
+
 	thenObjs := make([]map[string]interface{}, len(bg.Thens))
 	for i, t := range bg.Thens {
 		thenObjs[i] = t.ToObj()
 	}
-	
+
 	return map[string]interface{}{
-		"key":      bg.Key,
-		"name":     bg.Name,
-		"whens":    whenObjs,
-		"thens":    thenObjs,
-		"error":    bg.Error,
-		"failed":   bg.Failed,
-		"features": bg.Features,
+		"key": bg.Key,
+
+		"whens":     whenObjs,
+		"thens":     thenObjs,
+		"error":     bg.Error,
+		"failed":    bg.Failed,
+		"features":  bg.Features,
 		"artifacts": bg.Artifacts,
 	}
 }
@@ -99,8 +98,8 @@ func (bg *BaseGiven) Give(
 	suiteNdx int,
 ) (interface{}, error) {
 	bg.Key = key
-	tLog("\n " + bg.Key)
-	tLog("\n Given: " + bg.Name)
+	// tLog("\n " + bg.Key)
+	tLog("\n Given: " + bg.Key)
 
 	// Setup
 	store, err := bg.GivenThat(

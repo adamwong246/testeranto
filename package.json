@@ -32,7 +32,7 @@
     "summarizeLicenses": "yarn licenses list > ALL_LICENSES.txt; yarn license-checker >> ALL_LICENSES.txt; yarn license-checker --summary >> ALL_LICENSES.txt",
     "static-serve": "python3 -m http.server 8000",
     "buildV2": "node bundle.js",
-    "devV2": "rm -rf testeranto; yarn buildV2; yarn t-init; cp ./dist/prebuild/App.* testeranto; tsx scripts/build-example.ts; yarn testeranto core dev",
+    "devV2": "rm -rf testeranto; yarn t-init; cp ./dist/prebuild/App.* testeranto; cd example && go mod tidy && cd .. && tsx scripts/build-example.ts && yarn testeranto core dev",
     "start": "react-app-rewired start",
     "build-react": "react-app-rewired build",
     "test-react": "react-app-rewired test",
@@ -40,12 +40,14 @@
     "build:example": "tsx scripts/build-example.ts",
     "test:example": "node scripts/test-example.js",
     "setup:example": "cd example && go mod tidy",
-    "clean:all": "rm -rf testeranto dist && cd example && go clean",
+    "clean:all": "rm -rf testeranto dist && cd example && go clean && rm -f example/*.golingvu.go example/calculator_test",
     "build:all": "npm run build && npm run build:example",
     "test:all": "npm run build:all && npm run test:example",
     "verify": "node scripts/verify-build.js",
     "ci": "npm run build:all && npm run test:all && npm run verify",
-    "devV2:clean": "npm run clean:all && npm run devV2"
+    "devV2:clean": "npm run clean:all && npm run devV2",
+    "devV2:full": "rm -rf testeranto && npm run build:all && npm run t-init && cp ./dist/prebuild/App.* testeranto && cd example && go mod tidy && cd .. && npm run build:example && npm run testeranto core dev",
+    "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev"
   },
   "exports": {
     "./Puppeteer": {

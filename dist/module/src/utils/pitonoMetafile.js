@@ -3,18 +3,18 @@ import fs from "fs";
 import path from "path";
 function resolvePythonImport(importPath, currentFile) {
     // Handle relative imports
-    if (importPath.startsWith('.')) {
+    if (importPath.startsWith(".")) {
         const currentDir = path.dirname(currentFile);
         // For relative imports, we need to handle the dots properly
         // Count the number of dots to determine how many levels to go up
         let dotCount = 0;
         let remainingPath = importPath;
-        while (remainingPath.startsWith('.')) {
+        while (remainingPath.startsWith(".")) {
             dotCount++;
             remainingPath = remainingPath.substring(1);
         }
         // Remove any leading slash
-        if (remainingPath.startsWith('/')) {
+        if (remainingPath.startsWith("/")) {
             remainingPath = remainingPath.substring(1);
         }
         // Build the base path by going up the appropriate number of directories
@@ -24,7 +24,7 @@ function resolvePythonImport(importPath, currentFile) {
         }
         // Handle the case where there's no remaining path (just dots)
         if (remainingPath.length === 0) {
-            const initPath = path.join(baseDir, '__init__.py');
+            const initPath = path.join(baseDir, "__init__.py");
             if (fs.existsSync(initPath)) {
                 return initPath;
             }
@@ -33,7 +33,7 @@ function resolvePythonImport(importPath, currentFile) {
         // Resolve the full path
         const resolvedPath = path.join(baseDir, remainingPath);
         // Try different extensions
-        const extensions = ['.py', '/__init__.py'];
+        const extensions = [".py", "/__init__.py"];
         for (const ext of extensions) {
             const potentialPath = resolvedPath + ext;
             if (fs.existsSync(potentialPath)) {
@@ -41,8 +41,9 @@ function resolvePythonImport(importPath, currentFile) {
             }
         }
         // Check if it's a directory with __init__.py
-        if (fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory()) {
-            const initPath = path.join(resolvedPath, '__init__.py');
+        if (fs.existsSync(resolvedPath) &&
+            fs.statSync(resolvedPath).isDirectory()) {
+            const initPath = path.join(resolvedPath, "__init__.py");
             if (fs.existsSync(initPath)) {
                 return initPath;
             }
@@ -54,14 +55,16 @@ function resolvePythonImport(importPath, currentFile) {
     const dirs = [
         path.dirname(currentFile),
         process.cwd(),
-        ...(process.env.PYTHONPATH ? process.env.PYTHONPATH.split(path.delimiter) : [])
+        ...(process.env.PYTHONPATH
+            ? process.env.PYTHONPATH.split(path.delimiter)
+            : []),
     ];
     for (const dir of dirs) {
         const potentialPaths = [
-            path.join(dir, importPath + '.py'),
-            path.join(dir, importPath, '__init__.py'),
-            path.join(dir, importPath.replace(/\./g, '/') + '.py'),
-            path.join(dir, importPath.replace(/\./g, '/'), '__init__.py')
+            path.join(dir, importPath + ".py"),
+            path.join(dir, importPath, "__init__.py"),
+            path.join(dir, importPath.replace(/\./g, "/") + ".py"),
+            path.join(dir, importPath.replace(/\./g, "/"), "__init__.py"),
         ];
         for (const potentialPath of potentialPaths) {
             if (fs.existsSync(potentialPath)) {
@@ -73,7 +76,7 @@ function resolvePythonImport(importPath, currentFile) {
 }
 function parsePythonImports(filePath) {
     try {
-        const content = fs.readFileSync(filePath, 'utf-8');
+        const content = fs.readFileSync(filePath, "utf-8");
         const imports = [];
         // Match import statements (including multiple imports)
         const importRegex = /^import\s+([\w., ]+)/gm;
@@ -82,15 +85,15 @@ function parsePythonImports(filePath) {
         let match;
         while ((match = importRegex.exec(content)) !== null) {
             // Handle multiple imports in one line
-            const importPaths = match[1].split(',').map(p => p.trim());
+            const importPaths = match[1].split(",").map((p) => p.trim());
             for (const importPath of importPaths) {
                 // Try to resolve the import to see if it's external
                 const resolvedPath = resolvePythonImport(importPath, filePath);
                 imports.push({
                     path: importPath,
-                    kind: 'import-statement',
+                    kind: "import-statement",
                     external: resolvedPath === null,
-                    original: importPath
+                    original: importPath,
                 });
             }
         }
@@ -100,9 +103,9 @@ function parsePythonImports(filePath) {
             const resolvedPath = resolvePythonImport(importPath, filePath);
             imports.push({
                 path: importPath,
-                kind: 'import-statement',
+                kind: "import-statement",
                 external: resolvedPath === null,
-                original: importPath
+                original: importPath,
             });
         }
         return imports;
@@ -169,25 +172,6 @@ export async function generatePitonoMetafile(testName, entryPoints) {
             inputs: inputBytes,
             bytes: totalBytes,
             signature,
-        };
-    }
-    // If no valid entry points were found, add a placeholder
-    if (Object.keys(inputs).length === 0) {
-        inputs["placeholder.py"] = {
-            bytes: 0,
-            imports: [],
-        };
-        outputs["testeranto/bundles/python/core/placeholder.py"] = {
-            imports: [],
-            exports: [],
-            entryPoint: "placeholder.py",
-            inputs: {
-                "placeholder.py": {
-                    bytesInOutput: 0,
-                },
-            },
-            bytes: 0,
-            signature: "placeholder",
         };
     }
     return {

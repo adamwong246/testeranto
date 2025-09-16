@@ -184,6 +184,11 @@ class PM_WithProcesses extends PM_WithGit_js_1.PM_WithGit {
         else {
             metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
         }
+        // Ensure the metafile exists
+        if (!fs_1.default.existsSync(metafilePath)) {
+            console.log(ansi_colors_1.default.yellow(`Metafile not found at ${metafilePath}, skipping`));
+            return;
+        }
         let metafile;
         try {
             const fileContent = fs_1.default.readFileSync(metafilePath).toString();
@@ -310,7 +315,7 @@ class PM_WithProcesses extends PM_WithGit_js_1.PM_WithGit {
             console.error("idk");
         }
         if (!entryPointsMap[entrypoint]) {
-            console.error("idk2");
+            console.error(`${entrypoint} not found`);
         }
         return entryPointsMap[entrypoint];
     }
@@ -410,6 +415,14 @@ class PM_WithProcesses extends PM_WithGit_js_1.PM_WithGit {
         // Wait for build processes to complete first
         try {
             await this.startBuildProcesses();
+            // Generate Python metafile if there are Python tests
+            const pythonTests = this.configs.tests.filter((test) => test[1] === "python");
+            if (pythonTests.length > 0) {
+                const { generatePitonoMetafile, writePitonoMetafile } = await Promise.resolve().then(() => __importStar(require("../utils/pitonoMetafile.js")));
+                const entryPoints = pythonTests.map((test) => test[0]);
+                const metafile = await generatePitonoMetafile(this.name, entryPoints);
+                writePitonoMetafile(this.name, metafile);
+            }
             this.onBuildDone();
         }
         catch (error) {
@@ -461,17 +474,39 @@ class PM_WithProcesses extends PM_WithGit_js_1.PM_WithGit {
             });
         });
         // Set up metafile watchers for each runtime
-        [
+        const runtimeConfigs = [
             ["node", nodeEntryPoints],
             ["web", webEntryPoints],
             ["pure", pureEntryPoints],
             ["python", pythonEntryPoints],
             ["golang", golangEntryPoints],
-        ].forEach(async ([runtime, entryPoints]) => {
+        ];
+        for (const [runtime, entryPoints] of runtimeConfigs) {
             if (Object.keys(entryPoints).length === 0)
-                return;
-            const metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
+                continue;
+            // For python, the metafile path is different
+            let metafile;
+            if (runtime === "python") {
+                metafile = `./testeranto/metafiles/${runtime}/core.json`;
+            }
+            else {
+                metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
+            }
+            // Ensure the directory exists
+            const metafileDir = metafile.split("/").slice(0, -1).join("/");
+            if (!fs_1.default.existsSync(metafileDir)) {
+                fs_1.default.mkdirSync(metafileDir, { recursive: true });
+            }
             try {
+                // For python, we may need to generate the metafile first
+                if (runtime === "python" && !fs_1.default.existsSync(metafile)) {
+                    const { generatePitonoMetafile, writePitonoMetafile } = await Promise.resolve().then(() => __importStar(require("../utils/pitonoMetafile.js")));
+                    const entryPointList = Object.keys(entryPoints);
+                    if (entryPointList.length > 0) {
+                        const metafileData = await generatePitonoMetafile(this.name, entryPointList);
+                        writePitonoMetafile(this.name, metafileData);
+                    }
+                }
                 await (0, utils_js_2.pollForFile)(metafile);
                 // console.log("Found metafile for", runtime, metafile);
                 // Set up watcher for the metafile with debouncing
@@ -516,7 +551,7 @@ class PM_WithProcesses extends PM_WithGit_js_1.PM_WithGit {
             catch (error) {
                 console.error(`Error setting up watcher for ${runtime}:`, error);
             }
-        });
+        }
     }
     async stop() {
         console.log(ansi_colors_1.default.inverse("Testeranto-Run is shutting down gracefully..."));
@@ -711,6 +746,8 @@ class PM_WithProcesses extends PM_WithGit_js_1.PM_WithGit {
                 case "golang":
                     dest = runnables.golangEntryPoints[x];
                     if (dest) {
+                        // For Golang, we need to build and run the executable
+                        // The dest is the path to the generated wrapper file
                         this.launchGolang(x, dest);
                     }
                     else {

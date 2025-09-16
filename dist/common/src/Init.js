@@ -12,9 +12,17 @@ exports.default = async () => {
         `testeranto/bundles/node`,
         `testeranto/bundles/web`,
         `testeranto/bundles/pure`,
+        `testeranto/bundles/golang`,
+        `testeranto/bundles/python`,
         `testeranto/reports/`,
         `testeranto/features/`,
-        `testeranto/externalTests/`,
+        // `testeranto/externalTests/`,
+        `testeranto/metafiles/`,
+        `testeranto/metafiles/node`,
+        `testeranto/metafiles/web`,
+        `testeranto/metafiles/pure`,
+        `testeranto/metafiles/golang`,
+        `testeranto/metafiles/python`,
     ].forEach((f) => {
         try {
             fs_1.default.mkdirSync(`${process.cwd()}/${f}`);

@@ -29,29 +29,6 @@
       "example/Calculator.py": {
         "bytes": 2690,
         "imports": []
-      },
-      "example/test_example.py": {
-        "bytes": 5951,
-        "imports": [
-          {
-            "path": "asyncio",
-            "kind": "import-statement",
-            "external": true,
-            "original": "asyncio"
-          },
-          {
-            "path": "sys",
-            "kind": "import-statement",
-            "external": true,
-            "original": "sys"
-          },
-          {
-            "path": "os",
-            "kind": "import-statement",
-            "external": true,
-            "original": "os"
-          }
-        ]
       }
     },
     "outputs": {
@@ -68,19 +45,7 @@
           }
         },
         "bytes": 8054,
-        "signature": "mfjvzh16"
-      },
-      "python/core/test_example.py": {
-        "imports": [],
-        "exports": [],
-        "entryPoint": "example/test_example.py",
-        "inputs": {
-          "example/test_example.py": {
-            "bytesInOutput": 5951
-          }
-        },
-        "bytes": 5951,
-        "signature": "mfjvzh16"
+        "signature": "mfmmv6tj"
       }
     }
   }

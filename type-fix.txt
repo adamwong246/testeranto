@@ -1,2 +1,0 @@
-/read tsc.log
-/code Fix the type errors

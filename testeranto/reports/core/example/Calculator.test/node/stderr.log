@@ -1,31 +1,31 @@
 Unhandled Rejection at: Promise {
   <rejected> AssertionError: expected 'Infinity' to equal 'Error'
-      at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:435:14)
-      at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:875:41
-      at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:474:7)
-      at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:977:40)
-      at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:870:28)
-      at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:752:36)
-      at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:366:22)
-      at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1002:21
-      at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1034:31)
-      at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1118:12) {
+      at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5643:14)
+      at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:759:42
+      at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5682:7)
+      at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:977:40)
+      at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:754:28)
+      at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:636:36)
+      at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:864:22)
+      at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1002:21
+      at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1034:31)
+      at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1118:12) {
     actual: 'Infinity',
     expected: 'Error',
     showDiff: true,
     operator: 'strictEqual'
   }
 } reason: AssertionError: expected 'Infinity' to equal 'Error'
-    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:435:14)
-    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:875:41
-    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:474:7)
-    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:977:40)
-    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:870:28)
-    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:752:36)
-    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:366:22)
-    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1002:21
-    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1034:31)
-    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/chunk-M4FSQGZH.mjs:1118:12) {
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5643:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:759:42
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5682:7)
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:977:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:754:28)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:636:36)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:864:22)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1002:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1034:31)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1118:12) {
   actual: 'Infinity',
   expected: 'Error',
   showDiff: true,

@@ -1,1 +1,5 @@
-/add docs/index.md src/CoreTypes.ts src/lib/types.ts
+/read docs/index.md src/CoreTypes.ts src/lib/types.ts
+
+Do not introduce more than 1 change at a time.
+Do not introduce hacks, fallbacks of any kind or any change that does not address the root problem.
+You may use as much logging as you like.

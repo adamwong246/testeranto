@@ -74,10 +74,12 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     } else {
       metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
     }
-    
+
     // Ensure the metafile exists
     if (!fs.existsSync(metafilePath)) {
-      console.log(ansiC.yellow(`Metafile not found at ${metafilePath}, skipping`));
+      console.log(
+        ansiC.yellow(`Metafile not found at ${metafilePath}, skipping`)
+      );
       return;
     }
 
@@ -234,7 +236,7 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     }
 
     if (!entryPointsMap[entrypoint]) {
-      console.error("idk2");
+      console.error(`${entrypoint} not found`);
     }
 
     return entryPointsMap[entrypoint];
@@ -349,16 +351,20 @@ export abstract class PM_WithProcesses extends PM_WithGit {
     // Wait for build processes to complete first
     try {
       await this.startBuildProcesses();
-      
+
       // Generate Python metafile if there are Python tests
-      const pythonTests = this.configs.tests.filter(test => test[1] === "python");
+      const pythonTests = this.configs.tests.filter(
+        (test) => test[1] === "python"
+      );
       if (pythonTests.length > 0) {
-        const { generatePitonoMetafile, writePitonoMetafile } = await import("../utils/pitonoMetafile.js");
-        const entryPoints = pythonTests.map(test => test[0]);
+        const { generatePitonoMetafile, writePitonoMetafile } = await import(
+          "../utils/pitonoMetafile.js"
+        );
+        const entryPoints = pythonTests.map((test) => test[0]);
         const metafile = await generatePitonoMetafile(this.name, entryPoints);
         writePitonoMetafile(this.name, metafile);
       }
-      
+
       this.onBuildDone();
     } catch (error) {
       console.error("Build processes failed:", error);
@@ -436,7 +442,7 @@ export abstract class PM_WithProcesses extends PM_WithGit {
       ["python", pythonEntryPoints],
       ["golang", golangEntryPoints],
     ];
-    
+
     for (const [runtime, entryPoints] of runtimeConfigs) {
       if (Object.keys(entryPoints).length === 0) continue;
 
@@ -447,24 +453,29 @@ export abstract class PM_WithProcesses extends PM_WithGit {
       } else {
         metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
       }
-      
+
       // Ensure the directory exists
-      const metafileDir = metafile.split('/').slice(0, -1).join('/');
+      const metafileDir = metafile.split("/").slice(0, -1).join("/");
       if (!fs.existsSync(metafileDir)) {
         fs.mkdirSync(metafileDir, { recursive: true });
       }
-      
+
       try {
         // For python, we may need to generate the metafile first
         if (runtime === "python" && !fs.existsSync(metafile)) {
-          const { generatePitonoMetafile, writePitonoMetafile } = await import("../utils/pitonoMetafile.js");
+          const { generatePitonoMetafile, writePitonoMetafile } = await import(
+            "../utils/pitonoMetafile.js"
+          );
           const entryPointList = Object.keys(entryPoints);
           if (entryPointList.length > 0) {
-            const metafileData = await generatePitonoMetafile(this.name, entryPointList);
+            const metafileData = await generatePitonoMetafile(
+              this.name,
+              entryPointList
+            );
             writePitonoMetafile(this.name, metafileData);
           }
         }
-        
+
         await pollForFile(metafile);
         // console.log("Found metafile for", runtime, metafile);
 
@@ -848,6 +859,8 @@ export abstract class PM_WithProcesses extends PM_WithGit {
         case "golang":
           dest = runnables.golangEntryPoints[x];
           if (dest) {
+            // For Golang, we need to build and run the executable
+            // The dest is the path to the generated wrapper file
             this.launchGolang(x, dest);
           } else {
             console.error(`No destination found for golang test: ${x}`);
