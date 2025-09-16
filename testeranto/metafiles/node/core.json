@@ -7,7 +7,7 @@
         "column": 21,
         "file": "example/Calculator.ts",
         "length": 4,
-        "line": 25,
+        "line": 17,
         "lineText": "      const result = eval(this.display);",
         "namespace": "",
         "suggestion": ""
@@ -144,7 +144,7 @@
         "format": "esm"
       },
       "src/lib/BaseGiven.ts": {
-        "bytes": 8232,
+        "bytes": 8370,
         "imports": [
           {
             "path": ".",
@@ -331,7 +331,7 @@
         "format": "esm"
       },
       "example/Calculator.ts": {
-        "bytes": 3267,
+        "bytes": 2552,
         "imports": [],
         "format": "esm"
       },
@@ -341,7 +341,7 @@
         "format": "esm"
       },
       "example/Calculator.test.implementation.ts": {
-        "bytes": 2396,
+        "bytes": 1463,
         "imports": [
           {
             "path": "./Calculator.test.types",
@@ -367,7 +367,7 @@
         "format": "esm"
       },
       "example/Calculator.test.adapter.ts": {
-        "bytes": 3231,
+        "bytes": 1362,
         "imports": [
           {
             "path": "../src/CoreTypes",
@@ -375,17 +375,12 @@
             "external": true
           },
           {
-            "path": "example/Calculator.ts",
-            "kind": "import-statement",
-            "original": "./Calculator"
-          },
-          {
-            "path": "./Calculator.test.types",
+            "path": "./Calculator",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "testeranto/src/lib",
+            "path": "./Calculator.test.types",
             "kind": "import-statement",
             "external": true
           }
@@ -466,7 +461,7 @@
             "bytesInOutput": 5950
           },
           "src/lib/BaseGiven.ts": {
-            "bytesInOutput": 4099
+            "bytesInOutput": 3106
           },
           "src/lib/BaseWhen.ts": {
             "bytesInOutput": 1156
@@ -487,22 +482,22 @@
             "bytesInOutput": 7164
           },
           "example/Calculator.ts": {
-            "bytesInOutput": 2560
+            "bytesInOutput": 2003
           },
           "node_modules/chai/index.js": {
             "bytesInOutput": 133851
           },
           "example/Calculator.test.implementation.ts": {
-            "bytesInOutput": 1890
+            "bytesInOutput": 956
           },
           "example/Calculator.test.adapter.ts": {
-            "bytesInOutput": 1766
+            "bytesInOutput": 701
           },
           "example/Calculator.test.ts": {
             "bytesInOutput": 106
           }
         },
-        "bytes": 185245
+        "bytes": 181696
       }
     }
   }

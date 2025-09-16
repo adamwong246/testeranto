@@ -1,20 +1,16 @@
-/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (17,3): Type '(subject: typeof import("/Users/adam/Code/testeranto/example/Calculator").Calculator, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/example/Calculator").Calculator, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, initialValues: any, pm: import("/Us...' is not assignable to type '(subject: typeof import("/Users/adam/Code/testeranto/example/Calculator").Calculator, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/example/Calculator").Calculator, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, initialValues: any, pm: import("/Us...'. Two different types with this name exist, but they are unrelated.
+/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (13,3): Type '(subject: typeof import("/Users/adam/Code/testeranto/example/Calculator").Calculator, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/example/Calculator").Calculator, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, initialValues: any, pm: import("/Us...' is not assignable to type '(subject: typeof import("/Users/adam/Code/testeranto/example/Calculator").Calculator, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/example/Calculator").Calculator, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, initialValues: any, pm: import("/Us...'. Two different types with this name exist, but they are unrelated.
   Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
     Type '() => Calculator' is not assignable to type 'Calculator'.
-/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (21,46): Property 'getDisplay' does not exist on type '() => Calculator'.
-/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (81,3): Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (41,3): Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
   Types of parameters 'actual' and 'x' are incompatible.
     Type '(calculator: Calculator) => void' is not assignable to type 'string'.
 /Users/adam/Code/testeranto/example/Calculator.ts (7,3): Duplicate function implementation.
-/Users/adam/Code/testeranto/example/Calculator.ts (77,3): Duplicate function implementation.
+/Users/adam/Code/testeranto/example/Calculator.ts (68,3): Duplicate function implementation.
 /Users/adam/Code/testeranto/src/lib/BaseGiven.ts (63,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (119,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (122,28): Property 'name' does not exist on type 'BaseGiven<I>'.
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (150,12): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (209,20): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (218,18): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (241,16): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
-/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (265,14): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (118,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (149,12): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (236,16): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (259,14): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
 /Users/adam/Code/testeranto/src/lib/BaseSuite.ts (72,26): Property 'name' does not exist on type 'never'.
 /Users/adam/Code/testeranto/src/lib/BaseSuite.ts (173,29): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
 /Users/adam/Code/testeranto/src/lib/BaseSuite.ts (179,19): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?

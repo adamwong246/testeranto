@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://example.com/businessprocess/agile/kanban"
+  xmlns:kanban="http://example.com/businessprocess/agile/kanban"
+  xmlns:agile="http://example.com/businessprocess/agile"
+  elementFormDefault="qualified">
+
+  <xs:import namespace="http://example.com/businessprocess/agile" schemaLocation="agile.xsd" />
+
+  <!-- The Kanban-specific process definition, extending the agile base type -->
+  <xs:element name="KanbanProcess">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="agile:AgileProcessBaseType">
+          <xs:attribute name="wipLimit" type="xs:integer" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

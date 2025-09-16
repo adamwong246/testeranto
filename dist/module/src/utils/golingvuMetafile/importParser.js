@@ -6,24 +6,31 @@ export function parseGoImports(filePath) {
     if (!filePath.endsWith(".go")) {
         return [];
     }
-    // Find the package this file belongs to
+    // Try to get package info using go list, but handle cases where it fails
     const dir = path.dirname(filePath);
-    const packages = runGoList(dir) || [];
-    if (packages.length === 0) {
-        return [];
+    let packages = [];
+    try {
+        packages = runGoList(dir);
     }
-    const pkg = packages[0];
+    catch (error) {
+        console.warn(`go list failed for directory ${dir}:`, error);
+        // Continue with manual parsing
+    }
     const imports = [];
-    if (pkg.Imports) {
-        for (const importPath of pkg.Imports) {
-            // Check if it's a standard library import by seeing if it has a dot in the first path element
-            const firstPathElement = importPath.split("/")[0];
-            const isExternal = firstPathElement.includes(".");
-            imports.push({
-                path: importPath,
-                kind: "import-statement",
-                external: isExternal,
-            });
+    // Add imports from go list if available
+    if (packages.length > 0) {
+        const pkg = packages[0];
+        if (pkg.Imports) {
+            for (const importPath of pkg.Imports) {
+                // Check if it's a standard library import by seeing if it has a dot in the first path element
+                const firstPathElement = importPath.split("/")[0];
+                const isExternal = firstPathElement.includes(".");
+                imports.push({
+                    path: importPath,
+                    kind: "import-statement",
+                    external: isExternal,
+                });
+            }
         }
     }
     // Add standard library imports from the file content

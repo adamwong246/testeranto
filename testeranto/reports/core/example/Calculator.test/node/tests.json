@@ -24,7 +24,6 @@
       "whens": [
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -32,7 +31,7 @@
       "thens": [
         {
           "name": "result: 2",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -49,13 +48,11 @@
       "whens": [
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -63,7 +60,7 @@
       "thens": [
         {
           "name": "result: 22",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -80,31 +77,26 @@
       "whens": [
         {
           "name": "press: 1",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -112,7 +104,7 @@
       "thens": [
         {
           "name": "result: 12345",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -129,19 +121,16 @@
       "whens": [
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -149,7 +138,7 @@
       "thens": [
         {
           "name": "result: 2+3",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -166,13 +155,11 @@
       "whens": [
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -180,7 +167,7 @@
       "thens": [
         {
           "name": "result: 2+",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -197,19 +184,16 @@
       "whens": [
         {
           "name": "press: 7",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: -",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -217,7 +201,7 @@
       "thens": [
         {
           "name": "result: 7-3",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -234,19 +218,16 @@
       "whens": [
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -254,7 +235,7 @@
       "thens": [
         {
           "name": "result: 4*5",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -271,19 +252,16 @@
       "whens": [
         {
           "name": "press: 8",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: /",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -291,7 +269,7 @@
       "thens": [
         {
           "name": "result: 8/2",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -308,31 +286,26 @@
       "whens": [
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -340,7 +313,7 @@
       "thens": [
         {
           "name": "result: 2+3*4",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -357,55 +330,46 @@
       "whens": [
         {
           "name": "press: 1",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: -",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: /",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -413,7 +377,7 @@
       "thens": [
         {
           "name": "result: 1+2*3-4/5",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -430,37 +394,31 @@
       "whens": [
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -468,7 +426,7 @@
       "thens": [
         {
           "name": "result: 68",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -485,37 +443,31 @@
       "whens": [
         {
           "name": "press: 9",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: -",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -523,7 +475,7 @@
       "thens": [
         {
           "name": "result: 63",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -540,25 +492,21 @@
       "whens": [
         {
           "name": "press: 6",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 7",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -566,7 +514,7 @@
       "thens": [
         {
           "name": "result: 42",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -583,31 +531,26 @@
       "whens": [
         {
           "name": "press: 8",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: /",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -615,7 +558,7 @@
       "thens": [
         {
           "name": "result: 42",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -632,31 +575,26 @@
       "whens": [
         {
           "name": "press: 1",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: C",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -664,7 +602,7 @@
       "thens": [
         {
           "name": "result: 4",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -681,13 +619,11 @@
       "whens": [
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -695,7 +631,7 @@
       "thens": [
         {
           "name": "result: +5",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -712,25 +648,21 @@
       "whens": [
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: -",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -738,7 +670,7 @@
       "thens": [
         {
           "name": "result: 5+-3",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -755,25 +687,21 @@
       "whens": [
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: .",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 1",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -781,7 +709,7 @@
       "thens": [
         {
           "name": "result: 3.14",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -798,55 +726,46 @@
       "whens": [
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: .",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 1",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 1",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: .",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 8",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 6",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -854,7 +773,7 @@
       "thens": [
         {
           "name": "result: 4.96",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -871,37 +790,31 @@
       "whens": [
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -909,7 +822,7 @@
       "thens": [
         {
           "name": "result: 14",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -926,49 +839,41 @@
       "whens": [
         {
           "name": "press: (",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: )",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: *",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -976,7 +881,7 @@
       "thens": [
         {
           "name": "result: 20",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -993,25 +898,21 @@
       "whens": [
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: /",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 0",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -1036,31 +937,26 @@
       "whens": [
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: +",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "enter: ",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -1068,7 +964,7 @@
       "thens": [
         {
           "name": "result: Error",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -1085,37 +981,31 @@
       "whens": [
         {
           "name": "press: 1",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 3",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MS",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: C",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MR",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -1123,7 +1013,7 @@
       "thens": [
         {
           "name": "result: 123",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -1140,37 +1030,31 @@
       "whens": [
         {
           "name": "press: 4",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 5",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 6",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MS",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MC",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MR",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -1178,7 +1062,7 @@
       "thens": [
         {
           "name": "result: 0",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }
@@ -1195,43 +1079,36 @@
       "whens": [
         {
           "name": "press: 1",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 0",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: M+",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 2",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: 0",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: M+",
-          "status": true,
           "error": null,
           "artifacts": []
         },
         {
           "name": "press: MR",
-          "status": true,
           "error": null,
           "artifacts": []
         }
@@ -1239,7 +1116,7 @@
       "thens": [
         {
           "name": "result: 30",
-          "error": false,
+          "error": true,
           "artifacts": [],
           "status": true
         }

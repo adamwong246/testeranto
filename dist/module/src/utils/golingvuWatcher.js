@@ -86,19 +86,17 @@ export class GolingvuWatcher {
                     });
                     return results;
                 };
-                try {
-                    const allGoFiles = findAllGoFiles(process.cwd());
-                    console.log(`Found ${allGoFiles.length} Go files manually:`);
-                    allGoFiles.forEach((file) => console.log(`  ${file}`));
-                    // Add these files to the watcher
-                    allGoFiles.forEach((file) => {
-                        var _a;
-                        (_a = this.watcher) === null || _a === void 0 ? void 0 : _a.add(file);
-                    });
-                }
-                catch (error) {
-                    console.error("Error manually finding Go files:", error);
-                }
+                // try {
+                //   const allGoFiles = findAllGoFiles(process.cwd());
+                //   console.log(`Found ${allGoFiles.length} Go files manually:`);
+                //   allGoFiles.forEach((file) => console.log(`  ${file}`));
+                //   // Add these files to the watcher
+                //   allGoFiles.forEach((file) => {
+                //     this.watcher?.add(file);
+                //   });
+                // } catch (error) {
+                //   console.error("Error manually finding Go files:", error);
+                // }
             }
             else {
                 // Log each directory and its files

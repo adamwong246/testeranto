@@ -4,122 +4,94 @@ import path from "path";
 import { execSync } from "child_process";
 export function runGoList(pattern) {
     try {
-        // First, check if the pattern is a file path and convert it to a package path
+        // Handle directory paths by using '.' for the current directory when appropriate
         let processedPattern = pattern;
-        if (fs.existsSync(pattern) && pattern.endsWith(".go")) {
-            // Get the directory of the file
-            const dir = path.dirname(pattern);
-            // Use the directory as the pattern
-            processedPattern = dir;
+        // If it's a directory that exists, try to use it as a package path
+        if (fs.existsSync(pattern)) {
+            const stat = fs.statSync(pattern);
+            if (stat.isDirectory()) {
+                // Change to that directory and use '.' to list the current package
+                // But this might not work if the directory isn't a valid Go package
+                // So we'll try to use the relative path from the module root
+                const cwd = process.cwd();
+                try {
+                    // Try to run go list from the target directory
+                    const output = execSync(`go list -mod=readonly -json .`, {
+                        encoding: "utf-8",
+                        cwd: pattern,
+                        stdio: ["pipe", "pipe", "pipe"],
+                    });
+                    return parseGoListOutput(output);
+                }
+                catch (error) {
+                    // If that fails, fall back to using the absolute path as a pattern
+                    processedPattern = pattern;
+                }
+            }
+            else if (stat.isFile() && pattern.endsWith(".go")) {
+                // For .go files, use their directory
+                processedPattern = path.dirname(pattern);
+            }
         }
-        const output = execSync(`go list -mod=readonly -json ${processedPattern}`, {
+        // Try to run go list with the processed pattern
+        const output = execSync(`go list -mod=readonly -json "${processedPattern}"`, {
             encoding: "utf-8",
             cwd: process.cwd(),
             stdio: ["pipe", "pipe", "pipe"],
         });
-        // The output is a sequence of JSON objects, not a JSON array
-        // We need to split them and parse individually
-        const objects = [];
-        let buffer = "";
-        let depth = 0;
-        let inString = false;
-        let escapeNext = false;
-        for (const char of output) {
-            if (escapeNext) {
-                buffer += char;
-                escapeNext = false;
-                continue;
-            }
-            if (char === "\\") {
-                escapeNext = true;
-                buffer += char;
-                continue;
-            }
-            if (char === '"') {
-                inString = !inString;
-            }
-            if (!inString) {
-                if (char === "{") {
-                    depth++;
-                }
-                else if (char === "}") {
-                    depth--;
-                    if (depth === 0) {
-                        try {
-                            objects.push(JSON.parse(buffer + char));
-                            buffer = "";
-                            continue;
-                        }
-                        catch (e) {
-                            console.warn("Failed to parse JSON object:", buffer + char);
-                            buffer = "";
-                        }
-                    }
-                }
-            }
-            if (depth > 0 || buffer.length > 0) {
-                buffer += char;
-            }
-        }
-        return objects;
+        return parseGoListOutput(output);
     }
     catch (error) {
         console.warn(`Error running 'go list -json ${pattern}':`, error);
-        // Fall back to using the current directory
-        try {
-            const output = execSync(`go list -mod=readonly -json .`, {
-                encoding: "utf-8",
-                cwd: process.cwd(),
-                stdio: ["pipe", "pipe", "pipe"],
-            });
-            // Parse the output
-            const objects = [];
-            let buffer = "";
-            let depth = 0;
-            let inString = false;
-            let escapeNext = false;
-            for (const char of output) {
-                if (escapeNext) {
-                    buffer += char;
-                    escapeNext = false;
-                    continue;
-                }
-                if (char === "\\") {
-                    escapeNext = true;
-                    buffer += char;
-                    continue;
-                }
-                if (char === '"') {
-                    inString = !inString;
-                }
-                if (!inString) {
-                    if (char === "{") {
-                        depth++;
+        // Return empty array instead of trying fallbacks that will likely also fail
+        return [];
+    }
+}
+// Helper function to parse the JSON output from go list
+function parseGoListOutput(output) {
+    // The output is a sequence of JSON objects, not a JSON array
+    // We need to split them and parse individually
+    const objects = [];
+    let buffer = "";
+    let depth = 0;
+    let inString = false;
+    let escapeNext = false;
+    for (const char of output) {
+        if (escapeNext) {
+            buffer += char;
+            escapeNext = false;
+            continue;
+        }
+        if (char === "\\") {
+            escapeNext = true;
+            buffer += char;
+            continue;
+        }
+        if (char === '"') {
+            inString = !inString;
+        }
+        if (!inString) {
+            if (char === "{") {
+                depth++;
+            }
+            else if (char === "}") {
+                depth--;
+                if (depth === 0) {
+                    try {
+                        objects.push(JSON.parse(buffer + char));
+                        buffer = "";
+                        continue;
                     }
-                    else if (char === "}") {
-                        depth--;
-                        if (depth === 0) {
-                            try {
-                                objects.push(JSON.parse(buffer + char));
-                                buffer = "";
-                                continue;
-                            }
-                            catch (e) {
-                                console.warn("Failed to parse JSON object:", buffer + char);
-                                buffer = "";
-                            }
-                        }
+                    catch (e) {
+                        console.warn("Failed to parse JSON object:", buffer + char);
+                        buffer = "";
                     }
-                }
-                if (depth > 0 || buffer.length > 0) {
-                    buffer += char;
                 }
             }
-            return objects;
         }
-        catch (fallbackError) {
-            console.warn("Fallback go list also failed:", fallbackError);
-            return [];
+        if (depth > 0 || buffer.length > 0) {
+            buffer += char;
         }
     }
+    return objects;
 }

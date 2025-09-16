@@ -1,35 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
-import { runGoList } from "../golingvuMetafile/goList";
-export function findGoFilesInProject() {
-    // Use go list to find all Go files in the current module
-    const packages = runGoList("./...");
-    const goFiles = [];
-    for (const pkg of packages) {
-        // Include all Go files including test files
-        const fileTypes = [
-            "GoFiles",
-            "CgoFiles",
-            "IgnoredGoFiles",
-            "TestGoFiles",
-            "XTestGoFiles",
-        ];
-        for (const fileType of fileTypes) {
-            const files = pkg[fileType];
-            if (files) {
-                for (const file of files) {
-                    // Only include files with .go extension
-                    if (file.endsWith(".go")) {
-                        goFiles.push(path.join(pkg.Dir, file));
-                    }
-                }
-            }
-        }
-    }
-    // Filter out any non-.go files that might have slipped through
-    return goFiles.filter((file) => file.endsWith(".go"));
-}
+// import { runGoList } from "../golingvuMetafile/goList";
+// export function findGoFilesInProject(): string[] {
+//   // Use go list to find all Go files in the current module
+//   // const packages = runGoList("./...");
+//   const goFiles: string[] = [];
+//   for (const pkg of packages) {
+//     // Include all Go files including test files
+//     const fileTypes = [
+//       "GoFiles",
+//       "CgoFiles",
+//       "IgnoredGoFiles",
+//       "TestGoFiles",
+//       "XTestGoFiles",
+//     ];
+//     for (const fileType of fileTypes) {
+//       const files = (pkg as any)[fileType];
+//       if (files) {
+//         for (const file of files) {
+//           // Only include files with .go extension
+//           if (file.endsWith(".go")) {
+//             goFiles.push(path.join(pkg.Dir, file));
+//           }
+//         }
+//       }
+//     }
+//   }
+//   // Filter out any non-.go files that might have slipped through
+//   return goFiles.filter((file) => file.endsWith(".go"));
+// }
 export function collectGoDependencies(filePath, visited = new Set()) {
     // Only process .go files
     if (!filePath.endsWith(".go")) {

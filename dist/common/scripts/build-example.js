@@ -2,7 +2,6 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 const child_process_1 = require("child_process");
 const fs_1 = __importDefault(require("fs"));
@@ -40,78 +39,45 @@ go 1.19
         fs_1.default.writeFileSync(goModPath, goModContent);
         console.log("Cleaned up go.mod by removing replace and testeranto require directives");
     }
+    // Read the current go.mod content
     let goModContent = fs_1.default.readFileSync(goModPath, "utf8");
-    // Use go mod edit commands to properly manage the go.mod file
-    try {
-        // First, ensure we have a module name
-        if (!goModContent.includes("module ")) {
-            console.log("Initializing go module...");
-            (0, child_process_1.execSync)("go mod init example/calculator", {
-                stdio: "pipe",
-                cwd: exampleDir,
-            });
-        }
-        // Add the replace directive using go mod edit
+    // Ensure the module is properly set up
+    if (!goModContent.includes("module ")) {
+        console.log("Initializing go module...");
+        (0, child_process_1.execSync)("go mod init example", {
+            stdio: "pipe",
+            cwd: exampleDir,
+        });
+        // Re-read the content
+        goModContent = fs_1.default.readFileSync(goModPath, "utf8");
+    }
+    // Add the replace directive to point to the local testeranto
+    // This tells Go to use the local directory instead of trying to download from GitHub
+    if (!goModContent.includes("replace github.com/adamwong246/testeranto")) {
         console.log("Adding replace directive...");
         (0, child_process_1.execSync)("go mod edit -replace github.com/adamwong246/testeranto=../", {
             stdio: "pipe",
             cwd: exampleDir,
         });
-        // Read the updated content
-        goModContent = fs_1.default.readFileSync(goModPath, "utf8");
-        console.log("Updated go.mod content:");
-        console.log(goModContent);
+    }
+    // Add the require directive to explicitly list the dependency
+    // This ensures the dependency is tracked even if it's not imported directly in the example
+    console.log("Adding require directive...");
+    try {
+        (0, child_process_1.execSync)("go mod edit -require github.com/adamwong246/testeranto@v0.0.0", {
+            stdio: "pipe",
+            cwd: exampleDir,
+        });
     }
     catch (error) {
-        console.error("Error using go mod edit:", error);
-        console.log("Falling back to manual go.mod editing...");
-        // Fallback to manual editing if go mod edit fails
-        const lines = goModContent.split("\n");
-        const cleanedLines = [];
-        let hasModule = false;
-        for (const line of lines) {
-            const trimmedLine = line.trim();
-            if (trimmedLine.startsWith("module ")) {
-                if (!hasModule) {
-                    cleanedLines.push(trimmedLine);
-                    hasModule = true;
-                }
-                continue;
-            }
-            if (trimmedLine.length > 0) {
-                cleanedLines.push(trimmedLine);
-            }
-        }
-        if (!hasModule) {
-            cleanedLines.unshift("module example/calculator");
-        }
-        let hasGoVersion = false;
-        for (const line of cleanedLines) {
-            if (line.startsWith("go ")) {
-                hasGoVersion = true;
-                break;
-            }
-        }
-        if (!hasGoVersion) {
-            cleanedLines.push("go 1.19");
-        }
-        let hasReplace = false;
-        const correctReplace = "replace github.com/adamwong246/testeranto => ../";
-        for (const line of cleanedLines) {
-            if (line.includes("replace github.com/adamwong246/testeranto")) {
-                hasReplace = true;
-                break;
-            }
-        }
-        if (!hasReplace) {
-            cleanedLines.push(correctReplace);
-        }
-        goModContent = cleanedLines.join("\n") + "\n";
-        fs_1.default.writeFileSync(goModPath, goModContent);
-        console.log("Manually updated go.mod:");
-        console.log(goModContent);
+        // It's okay if this fails - the require might already be there
+        console.log("Require directive may already exist");
     }
-    // Run go mod tidy to ensure dependencies are correct and generate go.sum
+    // Read the updated content
+    goModContent = fs_1.default.readFileSync(goModPath, "utf8");
+    console.log("Updated go.mod content:");
+    console.log(goModContent);
+    // Run go mod tidy to ensure dependencies are correct
     console.log("Running go mod tidy...");
     try {
         const tidyOutput = (0, child_process_1.execSync)("go mod tidy -v", {
@@ -124,12 +90,11 @@ go 1.19
     }
     catch (error) {
         console.error("go mod tidy failed:");
-        console.error("stdout:", (_a = error.stdout) === null || _a === void 0 ? void 0 : _a.toString());
-        console.error("stderr:", (_b = error.stderr) === null || _b === void 0 ? void 0 : _b.toString());
-        console.error("error:", error);
-        // Don't exit on error, as it might be due to missing dependencies
-        // that aren't critical for the basic functionality
-        console.log("Continuing despite go mod tidy error...");
+        if (error.stdout)
+            console.error("stdout:", error.stdout.toString());
+        if (error.stderr)
+            console.error("stderr:", error.stderr.toString());
+        console.error("Continuing despite go mod tidy error...");
     }
     console.log("Example project built successfully!");
 }

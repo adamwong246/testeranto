@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://example.com/businessprocess/core"
+  xmlns:core="http://example.com/businessprocess/core"
+  elementFormDefault="qualified">
+
+  <!-- A collection of ProcessDefinitions that can be validated by this framework -->
+  <xs:element name="ProcessDefinitions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Abstract base type for any process, to be extended by methodology-specific schemas -->
+  <xs:complexType name="ProcessType" abstract="true">
+    <xs:sequence>
+      <xs:element name="Metadata" type="core:MetadataType" />
+      <xs:element name="Description" type="xs:string" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required" />
+    <xs:attribute name="name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <!-- Complex type for process-level metadata -->
+  <xs:complexType name="MetadataType">
+    <xs:sequence>
+      <xs:element name="Version" type="xs:string" minOccurs="0" />
+      <xs:element name="DateCreated" type="xs:date" minOccurs="0" />
+      <xs:element name="CustomProperty" type="core:CustomPropertyType" minOccurs="0"
+        maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Reusable type for custom key/value pair properties -->
+  <xs:complexType name="CustomPropertyType">
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="value" type="xs:string" use="required" />
+  </xs:complexType>
+
+</xs:schema>
