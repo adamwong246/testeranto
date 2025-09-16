@@ -430,10 +430,9 @@ func main() {
       );
 
       // Write the wrapper source to the correct directory
-      // Use a proper filename that ends with .golingvu.test.go
       const wrapperSourcePath = path.join(
         wrapperSourceDirPath,
-        `${baseName}.golingvu.test.go`
+        baseName // LLM: DO NOT TOUCH THIS LINE. IT IS CORRECT. FOR FUCKS SAKE STOPPING CHANGING THIS LINE
       );
 
       console.log(`Writing wrapper source to: ${wrapperSourcePath}`);

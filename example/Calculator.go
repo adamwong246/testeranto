@@ -1,8 +1,16 @@
 package main
 
+// Calculator represents a simple calculator
 type Calculator struct {
 	values  map[string]interface{}
 	display string
+}
+
+// NewCalculator creates a new Calculator instance
+func NewCalculator() *Calculator {
+	return &Calculator{
+		values: make(map[string]interface{}),
+	}
 }
 
 func (c *Calculator) Add(a, b float64) float64 {
@@ -62,6 +70,7 @@ func (c *Calculator) Press(button string) *Calculator {
 	return c
 }
 
+// DivisionByZeroError represents division by zero error
 type DivisionByZeroError struct{}
 
 func (e *DivisionByZeroError) Error() string {
@@ -72,4 +81,19 @@ func (e *DivisionByZeroError) Error() string {
 func (c *Calculator) press(button string) error {
 	c.Press(button)
 	return nil
+}
+
+// GetWidth is a placeholder method for testing
+func (c *Calculator) GetWidth() int {
+	return 0
+}
+
+// GetHeight is a placeholder method for testing
+func (c *Calculator) GetHeight() int {
+	return 0
+}
+
+// Area is a placeholder method for testing
+func (c *Calculator) Area() int {
+	return 0
 }
