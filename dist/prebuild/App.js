@@ -2397,9 +2397,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React180 = require_react();
+          var React181 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React180.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React181.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -4004,7 +4004,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React180.Children.forEach(props.children, function(child) {
+                  React181.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12451,7 +12451,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React180.Component().refs;
+          var emptyRefsObject = new React181.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23623,7 +23623,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React180 = require_react();
+          var React181 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23649,7 +23649,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React180.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React181.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -46420,7 +46420,7 @@ ${description}` : message
   });
 
   // src/App.tsx
-  var import_react154 = __toESM(require_react(), 1);
+  var import_react155 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -59591,6 +59591,21 @@ This file was not generated during the test run.`,
         Nav_default2.Link,
         {
           as: NavLink,
+          to: "/flua",
+          className: `${location2.pathname === "/flua" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}`
+        },
+        tutorialMode ? /* @__PURE__ */ import_react113.default.createElement(
+          OverlayTrigger_default,
+          {
+            placement: "right",
+            overlay: /* @__PURE__ */ import_react113.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Process/Project Management")
+          },
+          /* @__PURE__ */ import_react113.default.createElement("span", null, "flua")
+        ) : /* @__PURE__ */ import_react113.default.createElement("span", null, "flua")
+      ), /* @__PURE__ */ import_react113.default.createElement(
+        Nav_default2.Link,
+        {
+          as: NavLink,
           to: "/projects",
           className: `${location2.pathname === "/projects" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-2" : ""}`
         },
@@ -72162,17 +72177,23 @@ ${indent}</${node.type}>`;
     }
   ), /* @__PURE__ */ import_react153.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send"))));
 
+  // src/flua/FluaPage.tsx
+  var import_react154 = __toESM(require_react(), 1);
+  var FluaPage = () => {
+    return /* @__PURE__ */ import_react154.default.createElement(import_react154.default.Fragment, null, "FLUA PAGE GOES HERE");
+  };
+
   // src/App.tsx
-  var WebSocketContext = (0, import_react154.createContext)({
+  var WebSocketContext = (0, import_react155.createContext)({
     ws: null,
     isConnected: false
   });
-  var TutorialModeContext = (0, import_react154.createContext)({
+  var TutorialModeContext = (0, import_react155.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
-  var AuthContext = (0, import_react154.createContext)({
+  var AuthContext = (0, import_react155.createContext)({
     isAuthenticated: false,
     user: null,
     login: () => {
@@ -72181,23 +72202,23 @@ ${indent}</${node.type}>`;
     }
   });
   var useWebSocket = () => {
-    return (0, import_react154.useContext)(WebSocketContext);
+    return (0, import_react155.useContext)(WebSocketContext);
   };
   var useTutorialMode = () => {
-    return (0, import_react154.useContext)(TutorialModeContext);
+    return (0, import_react155.useContext)(TutorialModeContext);
   };
   var useAuth = () => {
-    return (0, import_react154.useContext)(AuthContext);
+    return (0, import_react155.useContext)(AuthContext);
   };
   var App = () => {
-    const [ws2, setWs] = (0, import_react154.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react154.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react154.useState)(false);
-    const [isAuthenticated, setIsAuthenticated] = (0, import_react154.useState)(
+    const [ws2, setWs] = (0, import_react155.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react155.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react155.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, import_react155.useState)(
       githubAuthService.isAuthenticated
     );
-    const [user, setUser] = (0, import_react154.useState)(githubAuthService.userInfo);
-    (0, import_react154.useEffect)(() => {
+    const [user, setUser] = (0, import_react155.useState)(githubAuthService.userInfo);
+    (0, import_react155.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -72261,61 +72282,61 @@ ${indent}</${node.type}>`;
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react154.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected, sendMessage } }, /* @__PURE__ */ import_react154.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react154.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react154.default.createElement(HashRouter, null, /* @__PURE__ */ import_react154.default.createElement(AppFrame, null, /* @__PURE__ */ import_react154.default.createElement(Routes, null, /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react154.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react154.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react154.default.createElement(
+    return /* @__PURE__ */ import_react155.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected, sendMessage } }, /* @__PURE__ */ import_react155.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react155.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react155.default.createElement(HashRouter, null, /* @__PURE__ */ import_react155.default.createElement(AppFrame, null, /* @__PURE__ */ import_react155.default.createElement(Routes, null, /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react155.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/flua", element: /* @__PURE__ */ import_react155.default.createElement(FluaPage, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react155.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/projects/:projectName",
-        element: /* @__PURE__ */ import_react154.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react155.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react154.default.createElement(
+    ), /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/projects/:projectName/tests/*",
-        element: /* @__PURE__ */ import_react154.default.createElement(TestPage, null)
+        element: /* @__PURE__ */ import_react155.default.createElement(TestPage, null)
       }
-    ), /* @__PURE__ */ import_react154.default.createElement(
+    ), /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/projects/:projectName#:tab",
-        element: /* @__PURE__ */ import_react154.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react155.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react154.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react154.default.createElement(
+    ), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/auth/github/callback",
-        element: /* @__PURE__ */ import_react154.default.createElement(AuthCallbackPage, null)
+        element: /* @__PURE__ */ import_react155.default.createElement(AuthCallbackPage, null)
       }
-    ), /* @__PURE__ */ import_react154.default.createElement(
+    ), /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/features-reporter",
-        element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react154.default.createElement(
+    ), /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/design-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react154.default.createElement(
+    ), /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/text-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
       }
-    ), isConnected ? /* @__PURE__ */ import_react154.default.createElement(import_react154.default.Fragment, null, /* @__PURE__ */ import_react154.default.createElement(
+    ), isConnected ? /* @__PURE__ */ import_react155.default.createElement(import_react155.default.Fragment, null, /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/processes",
-        element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react154.default.createElement(
+    ), /* @__PURE__ */ import_react155.default.createElement(
       Route,
       {
         path: "/processes/:processId",
-        element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(void 0, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(void 0, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
       }
-    )) : null, /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react154.default.createElement(Settings, null) }), /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react154.default.createElement(Route, { path: "/skribo", element: isAuthenticated ? /* @__PURE__ */ import_react154.default.createElement(SkriboPage, null) : /* @__PURE__ */ import_react154.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react154.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react154.default.createElement(Helpo, null) })))))));
+    )) : null, /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react155.default.createElement(Settings, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/skribo", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(SkriboPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react155.default.createElement(Helpo, null) })))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -72323,9 +72344,9 @@ ${indent}</${node.type}>`;
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react154.default.createElement(App));
+          root.render(import_react155.default.createElement(App));
         } else {
-          import_client.default.render(import_react154.default.createElement(App), rootElement);
+          import_client.default.render(import_react155.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -72337,7 +72358,7 @@ ${indent}</${node.type}>`;
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react154.default;
+    window.React = import_react155.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);

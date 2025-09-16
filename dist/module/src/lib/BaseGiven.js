@@ -24,7 +24,6 @@ export class BaseGiven {
     toObj() {
         return {
             key: this.key,
-            // name: this.name,
             whens: (this.whens || []).map((w) => {
                 if (w && w.toObj)
                     return w.toObj();
@@ -46,7 +45,7 @@ export class BaseGiven {
         this.key = key;
         this.fails = 0; // Initialize fail count for this given
         tLog(`\n ${this.key}`);
-        tLog(`\n Given: ${this.name}`);
+        tLog(`\n Given: ${this.key}`);
         const givenArtifactory = (fPath, value) => artifactory(`given-${key}/${fPath}`, value);
         this.uberCatcher((e) => {
             console.error(e.toString());
@@ -69,68 +68,70 @@ export class BaseGiven {
             // throw e;
         }
         try {
-            // tLog(`\n Given this.store`, this.store);
-            // Process when steps
             const whens = this.whens || [];
             // console.log(`[BaseGiven.give] Number of when steps: ${whens.length}`);
-            if (whens.length > 0) {
-                // console.log(`[BaseGiven.give] When steps exist, let's process them`);
-                for (const [whenNdx, whenStep] of whens.entries()) {
-                    // console.log(
-                    //   `[BaseGiven.give] Processing when step ${whenNdx}:`,
-                    //   whenStep?.name
-                    // );
-                    // console.log(`[BaseGiven.give] Store before when step:`, this.store);
-                    // console.log(`[BaseGiven.give] When step instance:`, whenStep);
-                    // Check if this is actually a then step that was incorrectly placed in whens
-                    if (whenStep &&
-                        whenStep.name &&
-                        whenStep.name.startsWith("result:")) {
-                        // console.error(
-                        //   `[BaseGiven.give] ERROR: Found then step "${whenStep.name}" in whens array!`
-                        // );
-                        // Move it to thens array
-                        this.thens.push(whenStep);
-                        // console.log(
-                        //   `[BaseGiven.give] Moved "${whenStep.name}" from whens to thens`
-                        // );
-                        continue; // Skip processing as a when step
-                    }
-                    // Check if whenStep exists and whenStep.test is a function
-                    if (whenStep && typeof whenStep.test === "function") {
-                        try {
-                            // Update the store with the result of the when step
-                            this.store = await whenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/when/${whenNdx}`);
-                            // console.log(
-                            //   `[BaseGiven.give] Store after when step ${whenNdx}:`,
-                            //   this.store
-                            // );
-                        }
-                        catch (e) {
-                            // console.error(
-                            //   `[BaseGiven.give] Error in when step ${whenNdx}:`,
-                            //   e
-                            // );
-                            this.failed = true;
-                            this.fails++; // Increment fail count
-                            throw e;
-                        }
-                    }
-                    else {
-                        // console.error(
-                        //   `[BaseGiven.give] whenStep.test is not a function:`,
-                        //   typeof whenStep?.test
-                        // );
-                        this.failed = true;
-                        this.fails++; // Increment fail count
-                        throw new Error(`When step ${whenNdx} does not have a test method`);
-                    }
-                }
-            }
-            else {
-                console.log(`[BaseGiven.give] No when steps to process`);
-            }
-            // Process then steps
+            // if (whens.length > 0) {
+            //   // console.log(`[BaseGiven.give] When steps exist, let's process them`);
+            //   for (const [whenNdx, whenStep] of whens.entries()) {
+            //     // console.log(
+            //     //   `[BaseGiven.give] Processing when step ${whenNdx}:`,
+            //     //   whenStep?.name
+            //     // );
+            //     // console.log(`[BaseGiven.give] Store before when step:`, this.store);
+            //     // console.log(`[BaseGiven.give] When step instance:`, whenStep);
+            //     // Check if this is actually a then step that was incorrectly placed in whens
+            //     // if (
+            //     //   whenStep &&
+            //     //   whenStep.name &&
+            //     //   whenStep.name.startsWith("result:")
+            //     // ) {
+            //     //   // console.error(
+            //     //   //   `[BaseGiven.give] ERROR: Found then step "${whenStep.name}" in whens array!`
+            //     //   // );
+            //     //   // Move it to thens array
+            //     //   this.thens.push(whenStep);
+            //     //   // console.log(
+            //     //   //   `[BaseGiven.give] Moved "${whenStep.name}" from whens to thens`
+            //     //   // );
+            //     //   continue; // Skip processing as a when step
+            //     // }
+            //     // // Check if whenStep exists and whenStep.test is a function
+            //     // if (whenStep && typeof whenStep.test === "function") {
+            //     //   try {
+            //     //     // Update the store with the result of the when step
+            //     //     this.store = await whenStep.test(
+            //     //       this.store,
+            //     //       testResourceConfiguration,
+            //     //       tLog,
+            //     //       pm,
+            //     //       `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
+            //     //     );
+            //     //     // console.log(
+            //     //     //   `[BaseGiven.give] Store after when step ${whenNdx}:`,
+            //     //     //   this.store
+            //     //     // );
+            //     //   } catch (e) {
+            //     //     // console.error(
+            //     //     //   `[BaseGiven.give] Error in when step ${whenNdx}:`,
+            //     //     //   e
+            //     //     // );
+            //     //     this.failed = true;
+            //     //     this.fails++; // Increment fail count
+            //     //     throw e;
+            //     //   }
+            //     // } else {
+            //     //   // console.error(
+            //     //   //   `[BaseGiven.give] whenStep.test is not a function:`,
+            //     //   //   typeof whenStep?.test
+            //     //   // );
+            //     //   this.failed = true;
+            //     //   this.fails++; // Increment fail count
+            //     //   throw new Error(`When step ${whenNdx} does not have a test method`);
+            //     // }
+            //   }
+            // } else {
+            //   console.log(`[BaseGiven.give] No when steps to process`);
+            // }
             for (const [thenNdx, thenStep] of this.thens.entries()) {
                 try {
                     const t = await thenStep.test(this.store, testResourceConfiguration, tLog, pm, `suite-${suiteNdx}/given-${key}/then-${thenNdx}`);
@@ -154,7 +155,6 @@ export class BaseGiven {
         }
         finally {
             try {
-                // Ensure addArtifact is properly bound to 'this'
                 const addArtifact = this.addArtifact.bind(this);
                 const proxiedPm = afterEachProxy(pm, suiteNdx.toString(), key, addArtifact);
                 // (proxiedPm as any).currentStep = this;

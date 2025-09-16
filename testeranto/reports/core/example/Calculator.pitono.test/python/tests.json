@@ -244,12 +244,12 @@
   "fails": 0,
   "failed": false,
   "features": [
-    "Subtraction should work correctly",
+    "Addition should work correctly",
     "Multiplication should work correctly",
-    "Clear should reset the display",
-    "Basic calculator operations should work",
     "Division should work correctly",
-    "Addition should work correctly"
+    "Clear should reset the display",
+    "Subtraction should work correctly",
+    "Basic calculator operations should work"
   ],
   "artifacts": []
 }

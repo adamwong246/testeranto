@@ -6,13 +6,7 @@ export class Calculator {
         this.id = Math.random(); // Add a unique ID to track instances
     }
     press(button) {
-        console.log(" ---- PRESS ---");
-        // Append the button to the display
-        console.log(`[CALCULATOR ${this.id}] Pressing: ${button}, current display: '${this.display}'`);
-        // Make sure we're actually modifying the instance's display
         this.display = this.display + button;
-        console.log(`[CALCULATOR ${this.id}] New display is: '${this.display}'`);
-        // Return this to allow method chaining
         return this;
     }
     enter() {
@@ -25,9 +19,9 @@ export class Calculator {
         }
         catch (error) {
             this.display = "Error";
+            throw error;
         }
     }
-    // Memory functions
     memoryStore() {
         this.setValue("memory", parseFloat(this.display) || 0);
         this.clear();
@@ -45,7 +39,6 @@ export class Calculator {
         this.setValue("memory", memoryValue + currentValue);
         this.clear();
     }
-    // Handle special buttons
     handleSpecialButton(button) {
         switch (button) {
             case "C":
@@ -68,19 +61,15 @@ export class Calculator {
         }
     }
     press(button) {
-        console.log(" ---- PRESS ---");
-        console.log(`[CALCULATOR ${this.id}] Pressing: ${button}, current display: '${this.display}'`);
         // Handle special buttons first
         if (this.handleSpecialButton(button)) {
             return this;
         }
         // For regular buttons, append to display
         this.display = this.display + button;
-        console.log(`[CALCULATOR ${this.id}] New display is: '${this.display}'`);
         return this;
     }
     getDisplay() {
-        console.log(`[CALCULATOR ${this.id}] getDisplay: '${this.display}'`);
         return this.display;
     }
     clear() {

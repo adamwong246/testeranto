@@ -60,6 +60,7 @@ const DratoPage_1 = require("./components/stateful/DratoPage");
 const GrafeoPage_1 = require("./components/stateful/GrafeoPage");
 const SkriboPage_1 = require("./components/stateful/SkriboPage");
 const Helpo_1 = require("./Helpo");
+const FluaPage_1 = require("./flua/FluaPage");
 // Create a context for the WebSocket
 const WebSocketContext = (0, react_1.createContext)({
     ws: null,
@@ -174,6 +175,7 @@ const App = () => {
                     react_1.default.createElement(AppFrame_1.AppFrame, null,
                         react_1.default.createElement(react_router_dom_1.Routes, null,
                             react_1.default.createElement(react_router_dom_1.Route, { path: "/", element: react_1.default.createElement(Helpo_1.Helpo, null) }),
+                            react_1.default.createElement(react_router_dom_1.Route, { path: "/flua", element: react_1.default.createElement(FluaPage_1.FluaPage, null) }),
                             react_1.default.createElement(react_router_dom_1.Route, { path: "/projects", element: react_1.default.createElement(ProjectsPage_1.ProjectsPage, null) }),
                             react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName", element: react_1.default.createElement(ProjectPage_1.ProjectPage, null) }),
                             react_1.default.createElement(react_router_dom_1.Route, { path: "/projects/:projectName/tests/*", element: react_1.default.createElement(TestPage_1.TestPage, null) }),

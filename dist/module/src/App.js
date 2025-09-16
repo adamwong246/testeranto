@@ -21,6 +21,7 @@ import { DratoPage } from './components/stateful/DratoPage';
 import { GrafeoPage } from './components/stateful/GrafeoPage';
 import { SkriboPage } from './components/stateful/SkriboPage';
 import { Helpo } from './Helpo';
+import { FluaPage } from './flua/FluaPage';
 // Create a context for the WebSocket
 const WebSocketContext = createContext({
     ws: null,
@@ -132,6 +133,7 @@ export const App = () => {
                     React.createElement(AppFrame, null,
                         React.createElement(Routes, null,
                             React.createElement(Route, { path: "/", element: React.createElement(Helpo, null) }),
+                            React.createElement(Route, { path: "/flua", element: React.createElement(FluaPage, null) }),
                             React.createElement(Route, { path: "/projects", element: React.createElement(ProjectsPage, null) }),
                             React.createElement(Route, { path: "/projects/:projectName", element: React.createElement(ProjectPage, null) }),
                             React.createElement(Route, { path: "/projects/:projectName/tests/*", element: React.createElement(TestPage, null) }),

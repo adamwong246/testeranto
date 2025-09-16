@@ -1,66 +1,27 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adapter = void 0;
-const Calculator_1 = require("./Calculator");
-// import { IPM } from "testeranto/src/lib/types";
 exports.adapter = {
     beforeAll: async (input, testResource, pm) => {
-        console.log("[ADAPTER] beforeAll called with input:", input);
-        // input is the Calculator constructor
         return input;
     },
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
-        console.log("[ADAPTER] beforeEach called with subject:", subject);
         const result = await initializer();
-        console.log("[ADAPTER] beforeEach result:", result);
-        console.log("[ADAPTER] display:", result.getDisplay());
-        // Make sure we always have a valid Calculator instance
-        // if (!result) {
-        //   throw new Error("Initializer did not return a valid Calculator instance");
-        // }
-        // Ensure the display is empty
-        // result.clear();
         return result;
     },
     andWhen: async (store, whenCB, testResource, pm) => {
-        console.log("[ADAPTER] andWhen called");
-        console.log("[ADAPTER] store display:", store.getDisplay());
         // The whenCB should be a function that returns a function which takes the store
         // For press("2"), whenCB is (calculator) => { calculator.press("2"); return calculator; }
-        try {
-            console.log("[ADAPTER] Calling whenCB which should return a function");
-            // whenCB is a function that returns a transformation function
-            const transform = whenCB;
-            console.log("[ADAPTER] Transform function:", transform);
-            // Apply the transformation to the store
-            const result = transform(store);
-            console.log("[ADAPTER] Result display:", result.getDisplay());
-            // Verify the result is a Calculator instance
-            if (!(result instanceof Calculator_1.Calculator)) {
-                throw new Error(`Expected Calculator instance, got ${typeof result}`);
-            }
-            return result;
-        }
-        catch (e) {
-            console.error("[ADAPTER] Error in andWhen:", e);
-            throw e;
-        }
+        const transform = whenCB;
+        const result = transform(store);
+        return result;
     },
     butThen: async (store, thenCB, testResource, pm) => {
-        console.log("[ADAPTER] butThen called with store:", store);
-        // thenCB is the function that takes the store and makes assertions
-        try {
-            // Run the then callback which may throw if assertion fails
-            thenCB(store);
-            // Return the selection (the display value)
-            const display = store.getDisplay();
-            console.log("[ADAPTER] butThen returning selection:", display);
-            return display;
-        }
-        catch (e) {
-            console.error("[ADAPTER] Error in butThen:", e);
-            throw e;
-        }
+        thenCB(store);
+        const display = store.getDisplay();
+        return display;
     },
     afterEach: async (store, key, pm) => {
         // Clean up if needed

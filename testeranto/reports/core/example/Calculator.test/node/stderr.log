@@ -470,4 +470,97 @@ Unhandled Rejection at: Promise {
       at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:606:36)
       at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:834:22)
       at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:972:21
-      at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node
+      at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1004:31)
+      at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1088:12) {
+    actual: '',
+    expected: '4',
+    showDiff: true,
+    operator: 'strictEqual'
+  }
+} reason: AssertionError: expected '' to equal '4'
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5574:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:729:42
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5594:5)
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:947:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:724:28)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:606:36)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:834:22)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:972:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1004:31)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1088:12) {
+  actual: '',
+  expected: '4',
+  showDiff: true,
+  operator: 'strictEqual'
+}
+Unhandled Rejection at: Promise {
+  <rejected> AssertionError: expected '' to equal '+5'
+      at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5574:14)
+      at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:729:42
+      at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5594:5)
+      at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:947:40)
+      at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:724:28)
+      at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:606:36)
+      at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:834:22)
+      at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:972:21
+      at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1004:31)
+      at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1088:12) {
+    actual: '',
+    expected: '+5',
+    showDiff: true,
+    operator: 'strictEqual'
+  }
+} reason: AssertionError: expected '' to equal '+5'
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5574:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:729:42
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5594:5)
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:947:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:724:28)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:606:36)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:834:22)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:972:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1004:31)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1088:12) {
+  actual: '',
+  expected: '+5',
+  showDiff: true,
+  operator: 'strictEqual'
+}
+Unhandled Rejection at: Promise {
+  <rejected> AssertionError: expected '' to equal '5+-3'
+      at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5574:14)
+      at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:729:42
+      at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5594:5)
+      at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:947:40)
+      at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:724:28)
+      at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:606:36)
+      at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:834:22)
+      at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:972:21
+      at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1004:31)
+      at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1088:12) {
+    actual: '',
+    expected: '5+-3',
+    showDiff: true,
+    operator: 'strictEqual'
+  }
+} reason: AssertionError: expected '' to equal '5+-3'
+    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5574:14)
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:729:42
+    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5594:5)
+    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:947:40)
+    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:724:28)
+    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:606:36)
+    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:834:22)
+    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:972:21
+    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1004:31)
+    at async NodeTesteranto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:1088:12) {
+  actual: '',
+  expected: '5+-3',
+  showDiff: true,
+  operator: 'strictEqual'
+}
+Unhandled Rejection at: Promise {
+  <rejected> AssertionError: expected '' to equal '3.14'
+      at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:5574:14)
+      at file:///Users/adam/Code/testeranto/testeranto/bundles/node/core/example/Calculator.test.mjs:729:42
+      at Object.but

@@ -91,6 +91,26 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
             )}
           </Nav.Link>
 
+
+          <Nav.Link
+            as={NavLink}
+            to="/flua"
+            className={`${location.pathname === "/flua" ? "active" : ""
+              } d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}`}
+          >
+            {tutorialMode ? (
+              <OverlayTrigger
+                placement="right"
+                overlay={<Tooltip id="help-tooltip">Process/Project Management</Tooltip>}
+              >
+                <span>flua</span>
+              </OverlayTrigger>
+            ) : (
+              <span>flua</span>
+            )}
+          </Nav.Link>
+
+
           {/* Projects Link - Always clickable with hover, tutorial tooltip conditionally */}
           <Nav.Link
             as={NavLink}
@@ -361,8 +381,8 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
       </div>
 
       {/* Helpo Drawer */}
-      <HelpoChatDrawer 
-        isActive={isHelpoActive} 
+      <HelpoChatDrawer
+        isActive={isHelpoActive}
         onToggle={() => setIsHelpoActive(!isHelpoActive)}
       />
 

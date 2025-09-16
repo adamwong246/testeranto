@@ -22,6 +22,7 @@ import { DratoPage } from './components/stateful/DratoPage';
 import { GrafeoPage } from './components/stateful/GrafeoPage';
 import { SkriboPage } from './components/stateful/SkriboPage';
 import { Helpo } from './Helpo';
+import { FluaPage } from './flua/FluaPage';
 
 interface WebSocketContextType {
   ws: WebSocket | null;
@@ -171,6 +172,8 @@ export const App = () => {
               <Routes>
                 {/* Public routes */}
                 <Route path="/" element={<Helpo />} />
+                <Route path="/flua" element={<FluaPage />} />
+
                 <Route path="/projects" element={<ProjectsPage />} />
                 <Route
                   path="/projects/:projectName"
