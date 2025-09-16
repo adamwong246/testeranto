@@ -580,11 +580,11 @@ func (gv *Golingvu) ReceiveTestResourceConfig(partialTestResource string, pm int
 func (gv *Golingvu) runActualTests() (map[string]interface{}, error) {
 	// Create the structure that matches the Node.js implementation exactly
 	results := make(map[string]interface{})
-	
+
 	// Initialize the results structure with proper types
 	results["givens"] = make([]interface{}, 0)
 	results["features"] = make([]string, 0)
-	
+
 	// Track total failures
 	totalFails := 0
 
