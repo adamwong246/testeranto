@@ -3,7 +3,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import ReactDom from "react-dom/client";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
-import { TestPage } from './components/stateful/TestPage';
+import { TestPage } from './frontend/testPage/TestPage';
 import { ProjectPage } from './components/stateful/ProjectPage';
 import { ProjectsPage } from './components/stateful/ProjectsPage';
 import { AppFrame } from './components/pure/AppFrame';

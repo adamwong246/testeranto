@@ -48845,7 +48845,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-router/dist/development/index.mjs
   "use client";
 
-  // src/components/stateful/TestPage.tsx
+  // src/frontend/testPage/TestPage.tsx
   var import_react107 = __toESM(require_react(), 1);
 
   // src/utils/logFiles.ts
@@ -48955,7 +48955,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return `reports/${name}/summary.json`;
   };
 
-  // src/components/pure/TestPageView.tsx
+  // src/frontend/testPage/TestPageView.tsx
   var import_react105 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
@@ -58171,7 +58171,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ))
   );
 
-  // src/components/TestPageNavbar.tsx
+  // src/frontend/testPage/TestPageNavbar.tsx
   var import_react98 = __toESM(require_react(), 1);
 
   // src/components/pure/NavBar.tsx
@@ -58246,7 +58246,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     );
   };
 
-  // src/components/TestPageNavbar.tsx
+  // src/frontend/testPage/TestPageNavbar.tsx
   var TestPageNavbar = ({ decodedTestPath, projectName, runtime, setShowAiderModal, isWebSocketConnected }) => {
     return /* @__PURE__ */ import_react98.default.createElement(
       NavBar,
@@ -58286,10 +58286,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     );
   };
 
-  // src/components/pure/TestPageMainContent.tsx
+  // src/frontend/testPage/TestPageMainContent.tsx
   var import_react100 = __toESM(require_react(), 1);
 
-  // src/components/pure/TestPageView_utils.tsx
+  // src/frontend/testPage/TestPageView_utils.tsx
   var import_react99 = __toESM(require_react(), 1);
   var getLanguage = (path) => {
     const ext = path.split(".").pop()?.toLowerCase();
@@ -58411,7 +58411,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ))))), (buildErrors.errors.length > 0 || buildErrors.warnings.length > 0) && /* @__PURE__ */ import_react99.default.createElement("div", { className: "mb-4 card border-danger" }, /* @__PURE__ */ import_react99.default.createElement("div", { className: "card-header bg-danger text-white" }, /* @__PURE__ */ import_react99.default.createElement("h4", null, "Build Errors and Warnings")), /* @__PURE__ */ import_react99.default.createElement("div", { className: "card-body" }, buildErrors.errors.length > 0 && /* @__PURE__ */ import_react99.default.createElement(import_react99.default.Fragment, null, /* @__PURE__ */ import_react99.default.createElement("h5", null, "Errors"), /* @__PURE__ */ import_react99.default.createElement("ul", null, buildErrors.errors.map((error, idx) => /* @__PURE__ */ import_react99.default.createElement("li", { key: `build-error-${idx}` }, /* @__PURE__ */ import_react99.default.createElement("strong", null, error.text), error.location && /* @__PURE__ */ import_react99.default.createElement("div", null, "File: ", error.location.file, " Line:", " ", error.location.line, " Column: ", error.location.column))))), buildErrors.warnings.length > 0 && /* @__PURE__ */ import_react99.default.createElement(import_react99.default.Fragment, null, /* @__PURE__ */ import_react99.default.createElement("h5", null, "Warnings"), /* @__PURE__ */ import_react99.default.createElement("ul", null, buildErrors.warnings.map((warning9, idx) => /* @__PURE__ */ import_react99.default.createElement("li", { key: `build-warning-${idx}` }, /* @__PURE__ */ import_react99.default.createElement("strong", null, warning9.text), warning9.location && /* @__PURE__ */ import_react99.default.createElement("div", null, "File: ", warning9.location.file, " Line:", " ", warning9.location.line, " Column:", " ", warning9.location.column))))))));
   };
 
-  // src/components/pure/TestPageMainContent.tsx
+  // src/frontend/testPage/TestPageMainContent.tsx
   var TestPageMainContent = ({
     selectedFile,
     buildErrors,
@@ -58481,7 +58481,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     )))
   );
 
-  // src/components/pure/TestPageLeftContent.tsx
+  // src/frontend/testPage/TestPageLeftContent.tsx
   var import_react104 = __toESM(require_react(), 1);
 
   // src/components/pure/FileTree.tsx
@@ -58566,7 +58566,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }));
   };
 
-  // src/components/pure/TestPageLeftContent.tsx
+  // src/frontend/testPage/TestPageLeftContent.tsx
   var TestPageLeftContent = ({
     setExpandedSections,
     expandedSections,
@@ -58714,7 +58714,7 @@ This file was not generated during the test run.`,
     ))));
   };
 
-  // src/components/pure/TestPageView.tsx
+  // src/frontend/testPage/TestPageView.tsx
   var TestPageView = ({
     projectName,
     testName,
@@ -59026,7 +59026,7 @@ This file was not generated during the test run.`,
     return receivedLogs;
   };
 
-  // src/components/stateful/TestPage.tsx
+  // src/frontend/testPage/TestPage.tsx
   var TestPage = () => {
     const navigate = useNavigate();
     const location2 = useLocation();

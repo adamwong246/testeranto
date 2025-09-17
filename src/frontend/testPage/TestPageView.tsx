@@ -6,9 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { useWebSocket } from "../../App";
 import { Container, Row, Col } from "react-bootstrap";
 import { Editor } from "@monaco-editor/react";
-import { ToastNotification } from "./ToastNotification";
-import { MagicRobotModal } from "./MagicRobotModal";
-import { TestPageNavbar } from "../TestPageNavbar";
+
+import { ToastNotification } from "../../components/pure/ToastNotification";
+import { MagicRobotModal } from "../../components/pure/MagicRobotModal";
+import { TestPageNavbar } from "./TestPageNavbar";
 import { TestPageMainContent } from "./TestPageMainContent";
 import { TestPageLeftContent } from "./TestPageLeftContent";
 

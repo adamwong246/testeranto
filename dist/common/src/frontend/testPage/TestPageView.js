@@ -41,9 +41,9 @@ const react_router_dom_1 = require("react-router-dom");
 const App_1 = require("../../App");
 const react_bootstrap_1 = require("react-bootstrap");
 const react_2 = require("@monaco-editor/react");
-const ToastNotification_1 = require("./ToastNotification");
-const MagicRobotModal_1 = require("./MagicRobotModal");
-const TestPageNavbar_1 = require("../TestPageNavbar");
+const ToastNotification_1 = require("../../components/pure/ToastNotification");
+const MagicRobotModal_1 = require("../../components/pure/MagicRobotModal");
+const TestPageNavbar_1 = require("./TestPageNavbar");
 const TestPageMainContent_1 = require("./TestPageMainContent");
 const TestPageLeftContent_1 = require("./TestPageLeftContent");
 const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsExist, errorCounts, logs, isWebSocketConnected, }) => {

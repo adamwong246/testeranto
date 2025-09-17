@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { fetchTestData } from "../../utils/api";
 import { useWebSocket } from "../../App";
-import { TestPageView } from "../pure/TestPageView";
+import { TestPageView } from "./TestPageView";
 import { fetchDataUtil } from "../../fetchDataUtil";
 export const TestPage = () => {
     const navigate = useNavigate();

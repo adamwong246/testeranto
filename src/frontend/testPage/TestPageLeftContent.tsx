@@ -4,8 +4,8 @@ import {
   RUNTIME_SPECIFIC_LOGS,
   RuntimeName,
 } from "../../utils/logFiles";
-import { FileTree } from "./FileTree";
-import { FileTreeItem } from "./FileTreeItem";
+import { FileTree } from "../../components/pure/FileTree";
+import { FileTreeItem } from "../../components/pure/FileTreeItem";
 import { getLanguage } from "./TestPageView_utils";
 
 export const TestPageLeftContent = ({

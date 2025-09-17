@@ -41,7 +41,7 @@ exports.App = exports.useAuth = exports.useTutorialMode = exports.useWebSocket =
 const react_1 = __importStar(require("react"));
 const client_1 = __importDefault(require("react-dom/client"));
 const react_router_dom_1 = require("react-router-dom");
-const TestPage_1 = require("./components/stateful/TestPage");
+const TestPage_1 = require("./frontend/testPage/TestPage");
 const ProjectPage_1 = require("./components/stateful/ProjectPage");
 const ProjectsPage_1 = require("./components/stateful/ProjectsPage");
 const AppFrame_1 = require("./components/pure/AppFrame");

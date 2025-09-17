@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { NavBar } from "./pure/NavBar";
+import { NavBar } from "../../components/pure/NavBar";
 
 export const TestPageNavbar = ({ decodedTestPath, projectName, runtime, setShowAiderModal, isWebSocketConnected }) => {
   return <NavBar

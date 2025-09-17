@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestPageLeftContent = void 0;
 const react_1 = __importDefault(require("react"));
 const logFiles_1 = require("../../utils/logFiles");
-const FileTree_1 = require("./FileTree");
-const FileTreeItem_1 = require("./FileTreeItem");
+const FileTree_1 = require("../../components/pure/FileTree");
+const FileTreeItem_1 = require("../../components/pure/FileTreeItem");
 const TestPageView_utils_1 = require("./TestPageView_utils");
 const TestPageLeftContent = ({ setExpandedSections, expandedSections, logs, setActiveTab, setSelectedFile, runtime, selectedSourcePath, activeTab, setSelectedSourcePath, }) => {
     return (react_1.default.createElement(react_1.default.Fragment, null,

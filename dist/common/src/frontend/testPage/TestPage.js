@@ -39,7 +39,7 @@ const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
 const api_1 = require("../../utils/api");
 const App_1 = require("../../App");
-const TestPageView_1 = require("../pure/TestPageView");
+const TestPageView_1 = require("./TestPageView");
 const fetchDataUtil_1 = require("../../fetchDataUtil");
 const TestPage = () => {
     const navigate = (0, react_router_dom_1.useNavigate)();
