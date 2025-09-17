@@ -1,4 +1,6 @@
-import React, { useState, useCallback } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState, useCallback, useEffect } from "react";
 import { Card, Button, ButtonGroup } from "react-bootstrap";
 import { GenericTree } from "./GenericXMLEditor/GenericTree";
 import { GenericPreview } from "./GenericXMLEditor/GenericPreview";
@@ -15,8 +17,17 @@ export interface XMLNode {
 
 interface GenericXMLEditorPageProps {
   initialTree: XMLNode;
-  renderPreview: (node: XMLNode, isSelected: boolean, eventHandlers: any) => React.ReactElement;
-  attributeEditor: (node: XMLNode, onUpdateAttributes: (attrs: Record<string, string>) => void, onUpdateTextContent: (text: string) => void) => React.ReactElement;
+  renderPreview: (
+    node: XMLNode,
+    isSelected: boolean,
+    eventHandlers: any,
+    onTreeUpdate?: (newTree: XMLNode) => void
+  ) => React.ReactElement;
+  attributeEditor: (
+    node: XMLNode,
+    onUpdateAttributes: (attrs: Record<string, string>) => void,
+    onUpdateTextContent: (text: string) => void
+  ) => React.ReactElement;
   nodeTypes: { label: string; type: string }[];
   onAddNode: (parentId: string, nodeType: string) => XMLNode;
   additionalControls?: React.ReactNode;
@@ -27,9 +38,16 @@ export const GenericXMLEditorPage: React.FC<GenericXMLEditorPageProps> = ({
   renderPreview,
   attributeEditor,
   nodeTypes,
-  onAddNode
+  onAddNode,
 }) => {
   const [xmlTree, setXmlTree] = useState<XMLNode>(initialTree);
+  // Add a check to ensure xmlTree is never undefined
+  useEffect(() => {
+    if (!xmlTree) {
+      console.error("xmlTree became undefined, resetting to initialTree");
+      setXmlTree(initialTree);
+    }
+  }, [xmlTree, initialTree]);
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<string>("preview");
   const [history, setHistory] = useState<XMLNode[]>([initialTree]);
@@ -38,7 +56,7 @@ export const GenericXMLEditorPage: React.FC<GenericXMLEditorPageProps> = ({
   const [drawerStates, setDrawerStates] = useState({
     left: { isOpen: true, zIndex: 1 },
     right: { isOpen: true, zIndex: 1 },
-    bottom: { isOpen: true, zIndex: 1 }
+    bottom: { isOpen: true, zIndex: 1 },
   });
   const [activeDrawer, setActiveDrawer] = useState<string | null>(null);
 
@@ -176,39 +194,123 @@ export const GenericXMLEditorPage: React.FC<GenericXMLEditorPageProps> = ({
   // Remove toggle functionality since we're always showing content
 
   // Bring drawer to front
-  const bringToFront = useCallback((drawer: string) => {
-    const maxZIndex = Math.max(
-      drawerStates.left.zIndex,
-      drawerStates.right.zIndex,
-      drawerStates.bottom.zIndex
-    );
-    
-    setDrawerStates(prev => {
-      const newStates = { ...prev };
-      Object.keys(newStates).forEach(key => {
-        if (key === drawer) {
-          newStates[key as keyof typeof newStates].zIndex = maxZIndex + 1;
-        } else {
-          newStates[key as keyof typeof newStates].zIndex = Math.max(1, newStates[key as keyof typeof newStates].zIndex - 1);
-        }
+  const bringToFront = useCallback(
+    (drawer: string) => {
+      const maxZIndex = Math.max(
+        drawerStates.left.zIndex,
+        drawerStates.right.zIndex,
+        drawerStates.bottom.zIndex
+      );
+
+      setDrawerStates((prev) => {
+        const newStates = { ...prev };
+        Object.keys(newStates).forEach((key) => {
+          if (key === drawer) {
+            newStates[key as keyof typeof newStates].zIndex = maxZIndex + 1;
+          } else {
+            newStates[key as keyof typeof newStates].zIndex = Math.max(
+              1,
+              newStates[key as keyof typeof newStates].zIndex - 1
+            );
+          }
+        });
+        return newStates;
       });
-      return newStates;
-    });
-    setActiveDrawer(drawer);
-  }, [drawerStates]);
+      setActiveDrawer(drawer);
+    },
+    [drawerStates]
+  );
 
   const selectedNode = selectedNodeId
     ? findNode(xmlTree, selectedNodeId)
     : null;
 
+  // Function to convert XML tree to XML string with proper formatting
+  const convertTreeToXML = useCallback((node: XMLNode, depth: number = 0): string => {
+    const indent = '  '.repeat(depth);
+    const attributes = Object.entries(node.attributes)
+      .map(([key, value]) => ` ${key}="${value}"`)
+      .join('');
+    
+    // Handle text content
+    const hasTextContent = node.textContent && node.textContent.trim().length > 0;
+    
+    if (node.children.length === 0) {
+      if (hasTextContent) {
+        return `${indent}<${node.type}${attributes}>${node.textContent}</${node.type}>\n`;
+      } else {
+        return `${indent}<${node.type}${attributes} />\n`;
+      }
+    } else {
+      let result = `${indent}<${node.type}${attributes}`;
+      
+      // If there are children and text content, we need to be careful
+      if (hasTextContent) {
+        result += `>${node.textContent}\n`;
+      } else {
+        result += '>\n';
+      }
+      
+      // Add children
+      node.children.forEach(child => {
+        result += convertTreeToXML(child, depth + 1);
+      });
+      
+      result += `${indent}</${node.type}>\n`;
+      return result;
+    }
+  }, []);
+
+  // Function to handle saving the XML
+  const handleSave = useCallback(async () => {
+    // Convert the XML tree to a proper XML string
+    const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>\n${convertTreeToXML(xmlTree)}`;
+    
+    // Debug: log the content being sent
+    console.log('Saving XML content:', xmlContent);
+    
+    // Let's also check if the content looks right
+    if (!xmlContent.includes('kanban:KanbanProcess')) {
+      console.warn('XML content may not be properly formatted');
+    }
+    
+    try {
+      const response = await fetch('/api/files/write', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          path: 'example/single-kanban-process.xml',
+          content: xmlContent
+        })
+      });
+      
+      if (response.ok) {
+        alert('File saved successfully!');
+        // Refresh the page to see changes
+        window.location.reload();
+      } else {
+        const error = await response.json();
+        console.error('Error response:', error);
+        alert(`Error saving file: ${error.error}`);
+      }
+    } catch (error) {
+      console.error('Error saving file:', error);
+      alert('Failed to save file');
+    }
+  }, [xmlTree, convertTreeToXML]);
+
   return (
     <div className="d-flex flex-column h-100">
       {/* Control Bar */}
-      <div className="border-bottom p-2 bg-light">
+      <div className="border-bottom p-0 bg-light">
         <div className="d-flex justify-content-center align-items-center">
           <ButtonGroup size="sm" className="me-2">
             <Button
-              variant={activeTab === "preview" ? "primary" : "outline-secondary"}
+              variant={
+                activeTab === "preview" ? "primary" : "outline-secondary"
+              }
               onClick={() => setActiveTab("preview")}
             >
               Preview
@@ -220,8 +322,8 @@ export const GenericXMLEditorPage: React.FC<GenericXMLEditorPageProps> = ({
               Text Mode
             </Button>
           </ButtonGroup>
-          
-          <ButtonGroup size="sm">
+
+          <ButtonGroup size="sm" className="me-2">
             <Button
               variant="outline-secondary"
               onClick={handleUndo}
@@ -237,6 +339,15 @@ export const GenericXMLEditorPage: React.FC<GenericXMLEditorPageProps> = ({
               Redo
             </Button>
           </ButtonGroup>
+          
+          <ButtonGroup size="sm">
+            <Button
+              variant="outline-success"
+              onClick={handleSave}
+            >
+              Save
+            </Button>
+          </ButtonGroup>
         </div>
       </div>
 
@@ -245,24 +356,28 @@ export const GenericXMLEditorPage: React.FC<GenericXMLEditorPageProps> = ({
         {activeTab === "preview" ? (
           <>
             {/* Preview Content */}
-            <div className="position-absolute w-100 h-100 p-3">
-              <GenericPreview
-                xmlTree={xmlTree}
-                selectedNodeId={selectedNodeId}
-                hiddenNodes={hiddenNodes}
-                renderPreview={renderPreview}
-              />
+            <div className="position-absolute w-100 h-100 p-0">
+              {xmlTree && (
+                <GenericPreview
+                  xmlTree={xmlTree}
+                  selectedNodeId={selectedNodeId}
+                  hiddenNodes={hiddenNodes}
+                  renderPreview={(node, isSelected, eventHandlers) =>
+                    renderPreview(node, isSelected, eventHandlers, updateTree)
+                  }
+                />
+              )}
             </div>
-            
+
             {/* Drawers - Only visible in preview mode */}
             <Drawer
               position="left"
               isOpen={true}
               zIndex={drawerStates.left.zIndex}
-              onBringToFront={() => bringToFront('left')}
+              onBringToFront={() => bringToFront("left")}
               title="Tree View"
             >
-              <ul style={{ paddingLeft: '0', marginBottom: '0' }}>
+              <ul style={{ paddingLeft: "0", marginBottom: "0" }}>
                 <GenericTree
                   node={xmlTree}
                   selectedNodeId={selectedNodeId}
@@ -280,7 +395,7 @@ export const GenericXMLEditorPage: React.FC<GenericXMLEditorPageProps> = ({
               position="right"
               isOpen={true}
               zIndex={drawerStates.right.zIndex}
-              onBringToFront={() => bringToFront('right')}
+              onBringToFront={() => bringToFront("right")}
               title="Attributes"
             >
               {selectedNode ? (
@@ -311,33 +426,27 @@ export const GenericXMLEditorPage: React.FC<GenericXMLEditorPageProps> = ({
               position="bottom"
               isOpen={true}
               zIndex={drawerStates.bottom.zIndex}
-              onBringToFront={() => bringToFront('bottom')}
+              onBringToFront={() => bringToFront("bottom")}
               title="Navigation Help"
             >
-              <div className="p-3">
-                <h4>Pan & Zoom Controls</h4>
-                <p>
-                  <strong>Zoom:</strong> Use mouse wheel or +/- buttons
+              <div className="p-1">
+                <h6 className="mb-0 small">Pan & Zoom</h6>
+                <p className="mb-0 small">
+                  <strong>Zoom:</strong> Wheel
                 </p>
-                <p>
-                  <strong>Pan:</strong> Middle mouse button or Alt + Left click and drag
+                <p className="mb-0 small">
+                  <strong>Pan:</strong> Alt+drag
                 </p>
-                <p>
-                  <strong>Reset:</strong> Click the Reset button to return to default view
-                </p>
-                <p className="text-muted">
-                  Note: These controls work across all editors (SVG, Bootstrap, GraphML)
+                <p className="mb-0 small">
+                  <strong>Reset:</strong> Button
                 </p>
               </div>
             </Drawer>
           </>
         ) : (
           /* Text Mode - Full screen text editor, no drawers */
-          <div className="w-100 h-100 d-flex justify-content-center p-3">
-            <GenericTextEditor
-              xmlTree={xmlTree}
-              onUpdateTree={setXmlTree}
-            />
+          <div className="w-100 h-100 d-flex justify-content-center p-0">
+            <GenericTextEditor xmlTree={xmlTree} onUpdateTree={setXmlTree} />
           </div>
         )}
       </div>

@@ -24,6 +24,7 @@ import { SkriboPage } from './components/stateful/SkriboPage';
 import { Helpo } from './Helpo';
 import { FluaPage } from './flua/FluaPage';
 
+
 interface WebSocketContextType {
   ws: WebSocket | null;
   isConnected: boolean;

@@ -9,6 +9,7 @@ import http from "http";
 import url from "url";
 import mime from "mime-types";
 import { WebSocketServer } from "ws";
+import { dirname } from "path";
 
 import { PM_Base } from "./base.js";
 import {
@@ -60,12 +61,12 @@ export abstract class PM_WithWebSocket extends PM_Base {
       ws.on("message", (data) => {
         try {
           const message: WebSocketMessage = JSON.parse(data.toString());
-          
+
           // Handle chat messages first
           if (message.type === "chatMessage") {
             // Always record the message, even if aider is not available
             console.log(`Received chat message: ${message.content}`);
-            
+
             // Pass to PM_WithHelpo if available
             if ((this as any).handleChatMessage) {
               (this as any).handleChatMessage(message.content);
@@ -74,7 +75,7 @@ export abstract class PM_WithWebSocket extends PM_Base {
             }
             return;
           }
-          
+
           // Handle file operations via WebSocket
           if (message.type === "listDirectory") {
             this.handleWebSocketListDirectory(ws, message);
@@ -275,18 +276,25 @@ export abstract class PM_WithWebSocket extends PM_Base {
             // Handle request for chat history
             // Pass to PM_WithHelpo if available
             if ((this as any).getChatHistory) {
-              (this as any).getChatHistory().then((history: any) => {
-                ws.send(JSON.stringify({
-                  type: "chatHistory",
-                  messages: history
-                }));
-              }).catch((error: any) => {
-                console.error("Error getting chat history:", error);
-                ws.send(JSON.stringify({
-                  type: "error",
-                  message: "Failed to get chat history"
-                }));
-              });
+              (this as any)
+                .getChatHistory()
+                .then((history: any) => {
+                  ws.send(
+                    JSON.stringify({
+                      type: "chatHistory",
+                      messages: history,
+                    })
+                  );
+                })
+                .catch((error: any) => {
+                  console.error("Error getting chat history:", error);
+                  ws.send(
+                    JSON.stringify({
+                      type: "error",
+                      message: "Failed to get chat history",
+                    })
+                  );
+                });
             }
           }
         } catch (error) {
@@ -491,6 +499,8 @@ export abstract class PM_WithWebSocket extends PM_Base {
         this.handleReadFile(req, res, query);
       } else if (pathname === "/api/files/exists" && req.method === "GET") {
         this.handleFileExists(req, res, query);
+      } else if (pathname === "/api/files/write" && req.method === "POST") {
+        this.handleWriteFile(req, res);
       } else {
         res.writeHead(404, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ error: "Not found" }));
@@ -501,7 +511,11 @@ export abstract class PM_WithWebSocket extends PM_Base {
     }
   }
 
-  private async handleListDirectory(req: http.IncomingMessage, res: http.ServerResponse, query: any) {
+  private async handleListDirectory(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    query: any
+  ) {
     const path = query.path as string;
     if (!path) {
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -516,13 +530,17 @@ export abstract class PM_WithWebSocket extends PM_Base {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(items));
     } catch (error) {
-      console.error('Error listing directory:', error);
+      console.error("Error listing directory:", error);
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: "Failed to list directory" }));
     }
   }
 
-  private async handleReadFile(req: http.IncomingMessage, res: http.ServerResponse, query: any) {
+  private async handleReadFile(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    query: any
+  ) {
     const path = query.path as string;
     if (!path) {
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -532,17 +550,21 @@ export abstract class PM_WithWebSocket extends PM_Base {
 
     try {
       const fullPath = this.resolvePath(path);
-      const content = await fs.promises.readFile(fullPath, 'utf-8');
+      const content = await fs.promises.readFile(fullPath, "utf-8");
       res.writeHead(200, { "Content-Type": "text/plain" });
       res.end(content);
     } catch (error) {
-      console.error('Error reading file:', error);
+      console.error("Error reading file:", error);
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: "Failed to read file" }));
     }
   }
 
-  private async handleFileExists(req: http.IncomingMessage, res: http.ServerResponse, query: any) {
+  private async handleFileExists(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    query: any
+  ) {
     const path = query.path as string;
     if (!path) {
       res.writeHead(400, { "Content-Type": "application/json" });
@@ -556,20 +578,59 @@ export abstract class PM_WithWebSocket extends PM_Base {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ exists }));
     } catch (error) {
-      console.error('Error checking file existence:', error);
+      console.error("Error checking file existence:", error);
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: "Failed to check file existence" }));
     }
+  }
+
+  private async handleWriteFile(
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) {
+    let body = "";
+    req.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on("end", async () => {
+      try {
+        const { path, content } = JSON.parse(body);
+        if (!path) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: "Path parameter required" }));
+          return;
+        }
+
+        const fullPath = this.resolvePath(path);
+        console.log(`Writing to file: ${fullPath}`);
+
+        // Ensure the directory exists
+        const dir = dirname(fullPath);
+        await fs.promises.mkdir(dir, { recursive: true });
+
+        // Write the file
+        await fs.promises.writeFile(fullPath, content, "utf-8");
+        console.log(`File written successfully: ${fullPath}`);
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true }));
+      } catch (error) {
+        console.error("Error writing file:", error);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: "Failed to write file" }));
+      }
+    });
   }
 
   private resolvePath(requestedPath: string): string {
     // Security: Prevent directory traversal attacks
     // Normalize the path and ensure it doesn't go outside the current working directory
     const normalizedPath = requestedPath
-      .replace(/\.\./g, '') // Remove any '..' sequences
-      .replace(/^\//, '') // Remove leading slash
-      .replace(/\/+/g, '/'); // Collapse multiple slashes
-    
+      .replace(/\.\./g, "") // Remove any '..' sequences
+      .replace(/^\//, "") // Remove leading slash
+      .replace(/\/+/g, "/"); // Collapse multiple slashes
+
     return `${process.cwd()}/${normalizedPath}`;
   }
 
@@ -577,32 +638,34 @@ export abstract class PM_WithWebSocket extends PM_Base {
     try {
       const items = await fs.promises.readdir(dirPath, { withFileTypes: true });
       const result: any[] = [];
-      
+
       for (const item of items) {
         // Skip hidden files and directories
-        if (item.name.startsWith('.')) continue;
-        
+        if (item.name.startsWith(".")) continue;
+
         const fullPath = `${dirPath}/${item.name}`;
-        const relativePath = fullPath.replace(process.cwd(), '').replace(/^\//, '');
-        
+        const relativePath = fullPath
+          .replace(process.cwd(), "")
+          .replace(/^\//, "");
+
         if (item.isDirectory()) {
           result.push({
             name: item.name,
-            type: 'folder',
-            path: '/' + relativePath
+            type: "folder",
+            path: "/" + relativePath,
           });
         } else if (item.isFile()) {
           result.push({
             name: item.name,
-            type: 'file',
-            path: '/' + relativePath
+            type: "file",
+            path: "/" + relativePath,
           });
         }
       }
-      
+
       return result;
     } catch (error) {
-      console.error('Error listing directory:', error);
+      console.error("Error listing directory:", error);
       throw error;
     }
   }
@@ -731,27 +794,33 @@ export abstract class PM_WithWebSocket extends PM_Base {
     try {
       const path = message.path;
       if (!path) {
-        ws.send(JSON.stringify({
-          type: 'error',
-          message: 'Path parameter required'
-        }));
+        ws.send(
+          JSON.stringify({
+            type: "error",
+            message: "Path parameter required",
+          })
+        );
         return;
       }
 
       const fullPath = this.resolvePath(path);
       const items = await this.listDirectory(fullPath);
-      
-      ws.send(JSON.stringify({
-        type: 'directoryListing',
-        path: path,
-        items: items
-      }));
+
+      ws.send(
+        JSON.stringify({
+          type: "directoryListing",
+          path: path,
+          items: items,
+        })
+      );
     } catch (error) {
-      console.error('Error handling WebSocket directory listing:', error);
-      ws.send(JSON.stringify({
-        type: 'error',
-        message: 'Failed to list directory'
-      }));
+      console.error("Error handling WebSocket directory listing:", error);
+      ws.send(
+        JSON.stringify({
+          type: "error",
+          message: "Failed to list directory",
+        })
+      );
     }
   }
 

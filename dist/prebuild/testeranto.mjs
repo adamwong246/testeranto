@@ -2103,6 +2103,7 @@ import http from "http";
 import url from "url";
 import mime from "mime-types";
 import { WebSocketServer } from "ws";
+import { dirname } from "path";
 var PM_WithWebSocket;
 var init_PM_WithWebSocket = __esm({
   "src/PM/PM_WithWebSocket.ts"() {
@@ -2303,16 +2304,20 @@ var init_PM_WithWebSocket = __esm({
               } else if (message.type === "getChatHistory") {
                 if (this.getChatHistory) {
                   this.getChatHistory().then((history) => {
-                    ws.send(JSON.stringify({
-                      type: "chatHistory",
-                      messages: history
-                    }));
+                    ws.send(
+                      JSON.stringify({
+                        type: "chatHistory",
+                        messages: history
+                      })
+                    );
                   }).catch((error) => {
                     console.error("Error getting chat history:", error);
-                    ws.send(JSON.stringify({
-                      type: "error",
-                      message: "Failed to get chat history"
-                    }));
+                    ws.send(
+                      JSON.stringify({
+                        type: "error",
+                        message: "Failed to get chat history"
+                      })
+                    );
                   });
                 }
               }
@@ -2477,6 +2482,8 @@ var init_PM_WithWebSocket = __esm({
             this.handleReadFile(req, res, query);
           } else if (pathname === "/api/files/exists" && req.method === "GET") {
             this.handleFileExists(req, res, query);
+          } else if (pathname === "/api/files/write" && req.method === "POST") {
+            this.handleWriteFile(req, res);
           } else {
             res.writeHead(404, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ error: "Not found" }));
@@ -2539,6 +2546,34 @@ var init_PM_WithWebSocket = __esm({
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "Failed to check file existence" }));
         }
+      }
+      async handleWriteFile(req, res) {
+        let body = "";
+        req.on("data", (chunk) => {
+          body += chunk.toString();
+        });
+        req.on("end", async () => {
+          try {
+            const { path: path19, content } = JSON.parse(body);
+            if (!path19) {
+              res.writeHead(400, { "Content-Type": "application/json" });
+              res.end(JSON.stringify({ error: "Path parameter required" }));
+              return;
+            }
+            const fullPath = this.resolvePath(path19);
+            console.log(`Writing to file: ${fullPath}`);
+            const dir = dirname(fullPath);
+            await fs15.promises.mkdir(dir, { recursive: true });
+            await fs15.promises.writeFile(fullPath, content, "utf-8");
+            console.log(`File written successfully: ${fullPath}`);
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: true }));
+          } catch (error) {
+            console.error("Error writing file:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Failed to write file" }));
+          }
+        });
       }
       resolvePath(requestedPath) {
         const normalizedPath = requestedPath.replace(/\.\./g, "").replace(/^\//, "").replace(/\/+/g, "/");
@@ -2667,25 +2702,31 @@ var init_PM_WithWebSocket = __esm({
         try {
           const path19 = message.path;
           if (!path19) {
-            ws.send(JSON.stringify({
-              type: "error",
-              message: "Path parameter required"
-            }));
+            ws.send(
+              JSON.stringify({
+                type: "error",
+                message: "Path parameter required"
+              })
+            );
             return;
           }
           const fullPath = this.resolvePath(path19);
           const items = await this.listDirectory(fullPath);
-          ws.send(JSON.stringify({
-            type: "directoryListing",
-            path: path19,
-            items
-          }));
+          ws.send(
+            JSON.stringify({
+              type: "directoryListing",
+              path: path19,
+              items
+            })
+          );
         } catch (error) {
           console.error("Error handling WebSocket directory listing:", error);
-          ws.send(JSON.stringify({
-            type: "error",
-            message: "Failed to list directory"
-          }));
+          ws.send(
+            JSON.stringify({
+              type: "error",
+              message: "Failed to list directory"
+            })
+          );
         }
       }
       broadcast(message) {

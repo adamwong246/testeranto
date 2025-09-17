@@ -34,14 +34,23 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GenericXMLEditorPage = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const react_1 = __importStar(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
 const GenericTree_1 = require("./GenericXMLEditor/GenericTree");
 const GenericPreview_1 = require("./GenericXMLEditor/GenericPreview");
 const GenericTextEditor_1 = require("./GenericXMLEditor/GenericTextEditor");
 const Drawer_1 = require("./GenericXMLEditor/Drawer");
-const GenericXMLEditorPage = ({ initialTree, renderPreview, attributeEditor, nodeTypes, onAddNode }) => {
+const GenericXMLEditorPage = ({ initialTree, renderPreview, attributeEditor, nodeTypes, onAddNode, }) => {
     const [xmlTree, setXmlTree] = (0, react_1.useState)(initialTree);
+    // Add a check to ensure xmlTree is never undefined
+    (0, react_1.useEffect)(() => {
+        if (!xmlTree) {
+            console.error("xmlTree became undefined, resetting to initialTree");
+            setXmlTree(initialTree);
+        }
+    }, [xmlTree, initialTree]);
     const [selectedNodeId, setSelectedNodeId] = (0, react_1.useState)(null);
     const [activeTab, setActiveTab] = (0, react_1.useState)("preview");
     const [history, setHistory] = (0, react_1.useState)([initialTree]);
@@ -50,7 +59,7 @@ const GenericXMLEditorPage = ({ initialTree, renderPreview, attributeEditor, nod
     const [drawerStates, setDrawerStates] = (0, react_1.useState)({
         left: { isOpen: true, zIndex: 1 },
         right: { isOpen: true, zIndex: 1 },
-        bottom: { isOpen: true, zIndex: 1 }
+        bottom: { isOpen: true, zIndex: 1 },
     });
     const [activeDrawer, setActiveDrawer] = (0, react_1.useState)(null);
     // Find a node by ID
@@ -167,9 +176,9 @@ const GenericXMLEditorPage = ({ initialTree, renderPreview, attributeEditor, nod
     // Bring drawer to front
     const bringToFront = (0, react_1.useCallback)((drawer) => {
         const maxZIndex = Math.max(drawerStates.left.zIndex, drawerStates.right.zIndex, drawerStates.bottom.zIndex);
-        setDrawerStates(prev => {
+        setDrawerStates((prev) => {
             const newStates = Object.assign({}, prev);
-            Object.keys(newStates).forEach(key => {
+            Object.keys(newStates).forEach((key) => {
                 if (key === drawer) {
                     newStates[key].zIndex = maxZIndex + 1;
                 }
@@ -184,22 +193,93 @@ const GenericXMLEditorPage = ({ initialTree, renderPreview, attributeEditor, nod
     const selectedNode = selectedNodeId
         ? findNode(xmlTree, selectedNodeId)
         : null;
+    // Function to convert XML tree to XML string with proper formatting
+    const convertTreeToXML = (0, react_1.useCallback)((node, depth = 0) => {
+        const indent = '  '.repeat(depth);
+        const attributes = Object.entries(node.attributes)
+            .map(([key, value]) => ` ${key}="${value}"`)
+            .join('');
+        // Handle text content
+        const hasTextContent = node.textContent && node.textContent.trim().length > 0;
+        if (node.children.length === 0) {
+            if (hasTextContent) {
+                return `${indent}<${node.type}${attributes}>${node.textContent}</${node.type}>\n`;
+            }
+            else {
+                return `${indent}<${node.type}${attributes} />\n`;
+            }
+        }
+        else {
+            let result = `${indent}<${node.type}${attributes}`;
+            // If there are children and text content, we need to be careful
+            if (hasTextContent) {
+                result += `>${node.textContent}\n`;
+            }
+            else {
+                result += '>\n';
+            }
+            // Add children
+            node.children.forEach(child => {
+                result += convertTreeToXML(child, depth + 1);
+            });
+            result += `${indent}</${node.type}>\n`;
+            return result;
+        }
+    }, []);
+    // Function to handle saving the XML
+    const handleSave = (0, react_1.useCallback)(async () => {
+        // Convert the XML tree to a proper XML string
+        const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>\n${convertTreeToXML(xmlTree)}`;
+        // Debug: log the content being sent
+        console.log('Saving XML content:', xmlContent);
+        // Let's also check if the content looks right
+        if (!xmlContent.includes('kanban:KanbanProcess')) {
+            console.warn('XML content may not be properly formatted');
+        }
+        try {
+            const response = await fetch('/api/files/write', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    path: 'example/single-kanban-process.xml',
+                    content: xmlContent
+                })
+            });
+            if (response.ok) {
+                alert('File saved successfully!');
+                // Refresh the page to see changes
+                window.location.reload();
+            }
+            else {
+                const error = await response.json();
+                console.error('Error response:', error);
+                alert(`Error saving file: ${error.error}`);
+            }
+        }
+        catch (error) {
+            console.error('Error saving file:', error);
+            alert('Failed to save file');
+        }
+    }, [xmlTree, convertTreeToXML]);
     return (react_1.default.createElement("div", { className: "d-flex flex-column h-100" },
-        react_1.default.createElement("div", { className: "border-bottom p-2 bg-light" },
+        react_1.default.createElement("div", { className: "border-bottom p-0 bg-light" },
             react_1.default.createElement("div", { className: "d-flex justify-content-center align-items-center" },
                 react_1.default.createElement(react_bootstrap_1.ButtonGroup, { size: "sm", className: "me-2" },
                     react_1.default.createElement(react_bootstrap_1.Button, { variant: activeTab === "preview" ? "primary" : "outline-secondary", onClick: () => setActiveTab("preview") }, "Preview"),
                     react_1.default.createElement(react_bootstrap_1.Button, { variant: activeTab === "text" ? "primary" : "outline-secondary", onClick: () => setActiveTab("text") }, "Text Mode")),
-                react_1.default.createElement(react_bootstrap_1.ButtonGroup, { size: "sm" },
+                react_1.default.createElement(react_bootstrap_1.ButtonGroup, { size: "sm", className: "me-2" },
                     react_1.default.createElement(react_bootstrap_1.Button, { variant: "outline-secondary", onClick: handleUndo, disabled: historyIndex === 0 }, "Undo"),
-                    react_1.default.createElement(react_bootstrap_1.Button, { variant: "outline-secondary", onClick: handleRedo, disabled: historyIndex === history.length - 1 }, "Redo")))),
+                    react_1.default.createElement(react_bootstrap_1.Button, { variant: "outline-secondary", onClick: handleRedo, disabled: historyIndex === history.length - 1 }, "Redo")),
+                react_1.default.createElement(react_bootstrap_1.ButtonGroup, { size: "sm" },
+                    react_1.default.createElement(react_bootstrap_1.Button, { variant: "outline-success", onClick: handleSave }, "Save")))),
         react_1.default.createElement("div", { className: "position-relative flex-grow-1" }, activeTab === "preview" ? (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement("div", { className: "position-absolute w-100 h-100 p-3" },
-                react_1.default.createElement(GenericPreview_1.GenericPreview, { xmlTree: xmlTree, selectedNodeId: selectedNodeId, hiddenNodes: hiddenNodes, renderPreview: renderPreview })),
-            react_1.default.createElement(Drawer_1.Drawer, { position: "left", isOpen: true, zIndex: drawerStates.left.zIndex, onBringToFront: () => bringToFront('left'), title: "Tree View" },
-                react_1.default.createElement("ul", { style: { paddingLeft: '0', marginBottom: '0' } },
+            react_1.default.createElement("div", { className: "position-absolute w-100 h-100 p-0" }, xmlTree && (react_1.default.createElement(GenericPreview_1.GenericPreview, { xmlTree: xmlTree, selectedNodeId: selectedNodeId, hiddenNodes: hiddenNodes, renderPreview: (node, isSelected, eventHandlers) => renderPreview(node, isSelected, eventHandlers, updateTree) }))),
+            react_1.default.createElement(Drawer_1.Drawer, { position: "left", isOpen: true, zIndex: drawerStates.left.zIndex, onBringToFront: () => bringToFront("left"), title: "Tree View" },
+                react_1.default.createElement("ul", { style: { paddingLeft: "0", marginBottom: "0" } },
                     react_1.default.createElement(GenericTree_1.GenericTree, { node: xmlTree, selectedNodeId: selectedNodeId, onSelectNode: setSelectedNodeId, onAddNode: handleAddChildNode, onRemoveNode: removeNode, onToggleVisibility: toggleNodeVisibility, hiddenNodes: hiddenNodes, nodeTypes: nodeTypes }))),
-            react_1.default.createElement(Drawer_1.Drawer, { position: "right", isOpen: true, zIndex: drawerStates.right.zIndex, onBringToFront: () => bringToFront('right'), title: "Attributes" }, selectedNode ? (react_1.default.createElement(react_bootstrap_1.Card, { className: "mb-3" },
+            react_1.default.createElement(Drawer_1.Drawer, { position: "right", isOpen: true, zIndex: drawerStates.right.zIndex, onBringToFront: () => bringToFront("right"), title: "Attributes" }, selectedNode ? (react_1.default.createElement(react_bootstrap_1.Card, { className: "mb-3" },
                 react_1.default.createElement(react_bootstrap_1.Card.Header, null,
                     react_1.default.createElement("strong", null,
                         "Node: ",
@@ -207,21 +287,20 @@ const GenericXMLEditorPage = ({ initialTree, renderPreview, attributeEditor, nod
                 react_1.default.createElement(react_bootstrap_1.Card.Body, null, attributeEditor(selectedNode, (attrs) => updateNodeAttributes(selectedNode.id, attrs), (text) => updateNodeTextContent(selectedNode.id, text))))) : (react_1.default.createElement(react_bootstrap_1.Card, null,
                 react_1.default.createElement(react_bootstrap_1.Card.Body, null,
                     react_1.default.createElement("p", { className: "text-muted" }, "Select a node to edit its properties"))))),
-            react_1.default.createElement(Drawer_1.Drawer, { position: "bottom", isOpen: true, zIndex: drawerStates.bottom.zIndex, onBringToFront: () => bringToFront('bottom'), title: "Navigation Help" },
-                react_1.default.createElement("div", { className: "p-3" },
-                    react_1.default.createElement("h4", null, "Pan & Zoom Controls"),
-                    react_1.default.createElement("p", null,
+            react_1.default.createElement(Drawer_1.Drawer, { position: "bottom", isOpen: true, zIndex: drawerStates.bottom.zIndex, onBringToFront: () => bringToFront("bottom"), title: "Navigation Help" },
+                react_1.default.createElement("div", { className: "p-1" },
+                    react_1.default.createElement("h6", { className: "mb-0 small" }, "Pan & Zoom"),
+                    react_1.default.createElement("p", { className: "mb-0 small" },
                         react_1.default.createElement("strong", null, "Zoom:"),
-                        " Use mouse wheel or +/- buttons"),
-                    react_1.default.createElement("p", null,
+                        " Wheel"),
+                    react_1.default.createElement("p", { className: "mb-0 small" },
                         react_1.default.createElement("strong", null, "Pan:"),
-                        " Middle mouse button or Alt + Left click and drag"),
-                    react_1.default.createElement("p", null,
+                        " Alt+drag"),
+                    react_1.default.createElement("p", { className: "mb-0 small" },
                         react_1.default.createElement("strong", null, "Reset:"),
-                        " Click the Reset button to return to default view"),
-                    react_1.default.createElement("p", { className: "text-muted" }, "Note: These controls work across all editors (SVG, Bootstrap, GraphML)"))))) : (
+                        " Button"))))) : (
         /* Text Mode - Full screen text editor, no drawers */
-        react_1.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-3" },
+        react_1.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-0" },
             react_1.default.createElement(GenericTextEditor_1.GenericTextEditor, { xmlTree: xmlTree, onUpdateTree: setXmlTree }))))));
 };
 exports.GenericXMLEditorPage = GenericXMLEditorPage;

@@ -34,14 +34,14 @@ export const AppFrame = ({ children, title, rightContent }) => {
     return (React.createElement("div", { className: "d-flex min-vh-100" },
         React.createElement("style", null, brandLogoStyle),
         React.createElement("div", { className: `border-end d-flex flex-column ${!hasAnimated ? 'sidebar-attention' : ''}`, style: {
-                flexBasis: "100px" /* Sets the initial fixed width */,
-                flexGrow: "0" /* Prevents the item from growing */,
+                flexBasis: "40px" /* Reduced from 60px */,
+                flexGrow: "0",
                 flexShrink: "0",
                 height: "100vh",
                 position: "sticky",
                 top: 0,
             } },
-            React.createElement(Nav, { variant: "pills", className: "flex-column p-2 flex-grow-1" },
+            React.createElement(Nav, { variant: "pills", className: "flex-column p-0 flex-grow-1" },
                 React.createElement(Nav.Link, { as: NavLink, to: "/helpo", className: `${location.pathname === "/helpo" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}` }, tutorialMode ? (React.createElement(OverlayTrigger, { placement: "right", overlay: React.createElement(Tooltip, { id: "help-tooltip" }, "Chat with Helpo, the helpful robot.") },
                     React.createElement("span", null, "helpo"))) : (React.createElement("span", null, "helpo"))),
                 React.createElement(Nav.Link, { as: NavLink, to: "/flua", className: `${location.pathname === "/flua" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}` }, tutorialMode ? (React.createElement(OverlayTrigger, { placement: "right", overlay: React.createElement(Tooltip, { id: "help-tooltip" }, "Process/Project Management") },
@@ -107,8 +107,8 @@ export const AppFrame = ({ children, title, rightContent }) => {
                         e.currentTarget.style.transform = 'scale(1)';
                     } },
                     React.createElement("img", { src: "https://www.testeranto.com/logo.svg", alt: "Testeranto Logo", style: {
-                            height: '64px',
-                            width: '64px',
+                            height: '32px',
+                            width: '32px',
                         } })))),
         React.createElement(HelpoChatDrawer, { isActive: isHelpoActive, onToggle: () => setIsHelpoActive(!isHelpoActive) }),
         React.createElement("div", { className: "d-flex flex-column", style: {
@@ -117,13 +117,14 @@ export const AppFrame = ({ children, title, rightContent }) => {
                 flex: "1 1 auto", // Take up remaining space
                 overflow: "auto", // Enable scrolling
             } },
-            React.createElement("main", { className: "flex-grow-1 p-4", style: {
-                    minWidth: "fit-content", // Allow the content to be as wide as needed
+            React.createElement("main", { className: "flex-grow-1 p-1", style: {
+                    minWidth: "fit-content",
                     width: "100%",
                 } },
                 React.createElement(Container, { fluid: true, style: {
                         height: "100%",
-                        minWidth: "fit-content", // Prevent the container from constraining width
+                        minWidth: "fit-content",
+                        padding: "0.125rem",
                     } }, location.pathname === "/helpo" ? (React.createElement("div", null,
                     React.createElement("h1", null, "Helpo Documentation"),
                     React.createElement("p", null, "Welcome to the Helpo documentation. Here you can find information about using Testeranto."),

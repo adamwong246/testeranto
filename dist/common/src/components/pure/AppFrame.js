@@ -70,14 +70,14 @@ const AppFrame = ({ children, title, rightContent }) => {
     return (react_1.default.createElement("div", { className: "d-flex min-vh-100" },
         react_1.default.createElement("style", null, brandLogoStyle),
         react_1.default.createElement("div", { className: `border-end d-flex flex-column ${!hasAnimated ? 'sidebar-attention' : ''}`, style: {
-                flexBasis: "100px" /* Sets the initial fixed width */,
-                flexGrow: "0" /* Prevents the item from growing */,
+                flexBasis: "40px" /* Reduced from 60px */,
+                flexGrow: "0",
                 flexShrink: "0",
                 height: "100vh",
                 position: "sticky",
                 top: 0,
             } },
-            react_1.default.createElement(react_bootstrap_1.Nav, { variant: "pills", className: "flex-column p-2 flex-grow-1" },
+            react_1.default.createElement(react_bootstrap_1.Nav, { variant: "pills", className: "flex-column p-0 flex-grow-1" },
                 react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/helpo", className: `${location.pathname === "/helpo" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "help-tooltip" }, "Chat with Helpo, the helpful robot.") },
                     react_1.default.createElement("span", null, "helpo"))) : (react_1.default.createElement("span", null, "helpo"))),
                 react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/flua", className: `${location.pathname === "/flua" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "help-tooltip" }, "Process/Project Management") },
@@ -143,8 +143,8 @@ const AppFrame = ({ children, title, rightContent }) => {
                         e.currentTarget.style.transform = 'scale(1)';
                     } },
                     react_1.default.createElement("img", { src: "https://www.testeranto.com/logo.svg", alt: "Testeranto Logo", style: {
-                            height: '64px',
-                            width: '64px',
+                            height: '32px',
+                            width: '32px',
                         } })))),
         react_1.default.createElement(HelpoChatDrawer_1.HelpoChatDrawer, { isActive: isHelpoActive, onToggle: () => setIsHelpoActive(!isHelpoActive) }),
         react_1.default.createElement("div", { className: "d-flex flex-column", style: {
@@ -153,13 +153,14 @@ const AppFrame = ({ children, title, rightContent }) => {
                 flex: "1 1 auto", // Take up remaining space
                 overflow: "auto", // Enable scrolling
             } },
-            react_1.default.createElement("main", { className: "flex-grow-1 p-4", style: {
-                    minWidth: "fit-content", // Allow the content to be as wide as needed
+            react_1.default.createElement("main", { className: "flex-grow-1 p-1", style: {
+                    minWidth: "fit-content",
                     width: "100%",
                 } },
                 react_1.default.createElement(react_bootstrap_1.Container, { fluid: true, style: {
                         height: "100%",
-                        minWidth: "fit-content", // Prevent the container from constraining width
+                        minWidth: "fit-content",
+                        padding: "0.125rem",
                     } }, location.pathname === "/helpo" ? (react_1.default.createElement("div", null,
                     react_1.default.createElement("h1", null, "Helpo Documentation"),
                     react_1.default.createElement("p", null, "Welcome to the Helpo documentation. Here you can find information about using Testeranto."),

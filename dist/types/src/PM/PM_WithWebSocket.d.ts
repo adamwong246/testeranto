@@ -28,6 +28,7 @@ export declare abstract class PM_WithWebSocket extends PM_Base {
     private handleListDirectory;
     private handleReadFile;
     private handleFileExists;
+    private handleWriteFile;
     private resolvePath;
     private listDirectory;
     findIndexHtml(): string | null;

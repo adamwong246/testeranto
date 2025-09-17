@@ -31,12 +31,12 @@ export const GenericTree: React.FC<GenericTreeProps> = ({
       style={{ listStyle: 'none', marginLeft: '0', paddingLeft: '10px' }}
     >
       <div
-        className={`d-flex justify-content-between align-items-center p-1 ${isSelected ? 'bg-primary text-white rounded' : ''}`}
+        className={`d-flex justify-content-between align-items-center p-0 ${isSelected ? 'bg-primary text-white rounded-sm' : ''}`}
         onClick={() => onSelectNode(node.id)}
         style={{ cursor: 'pointer' }}
       >
-        <span className="flex-grow-1">
-          {node.type} ({node.id})
+        <span className="flex-grow-1 small">
+          {node.type}
         </span>
         {node.type !== 'root' && (
           <ButtonGroup size="sm">
@@ -64,7 +64,7 @@ export const GenericTree: React.FC<GenericTreeProps> = ({
         )}
       </div>
       {node.children.length > 0 && (
-        <ul style={{ marginLeft: '20px', paddingLeft: '0' }}>
+        <ul style={{ marginLeft: '10px', paddingLeft: '0' }}>
           {node.children.map((child) => (
             <GenericTree
               key={child.id}
@@ -81,16 +81,17 @@ export const GenericTree: React.FC<GenericTreeProps> = ({
         </ul>
       )}
       {isSelected && (
-        <div className="mt-1">
+        <div className="mt-0">
           <Dropdown>
-            <Dropdown.Toggle size="sm" variant="outline-success" id="dropdown-add-node">
-              Add Element
+            <Dropdown.Toggle size="sm" variant="outline-success" id="dropdown-add-node" className="py-0 px-1">
+              +
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {nodeTypes.map(({ label, type }) => (
                 <Dropdown.Item 
                   key={type} 
                   onClick={() => onAddNode(node.id, type)}
+                  className="small"
                 >
                   {label}
                 </Dropdown.Item>

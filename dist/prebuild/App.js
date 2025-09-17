@@ -593,7 +593,7 @@
             var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
             return newElement;
           }
-          function cloneElement10(element, config3, children) {
+          function cloneElement11(element, config3, children) {
             if (element === null || element === void 0) {
               throw new Error("React.cloneElement(...): The argument must be a React element, but you passed " + element + ".");
             }
@@ -641,7 +641,7 @@
             }
             return ReactElement(element.type, key, ref, self2, source, owner, props);
           }
-          function isValidElement3(object) {
+          function isValidElement4(object) {
             return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
           }
           var SEPARATOR = ".";
@@ -706,7 +706,7 @@
                   return c2;
                 });
               } else if (mappedChild != null) {
-                if (isValidElement3(mappedChild)) {
+                if (isValidElement4(mappedChild)) {
                   {
                     if (mappedChild.key && (!_child || _child.key !== mappedChild.key)) {
                       checkKeyStringCoercion(mappedChild.key);
@@ -794,12 +794,12 @@
             }) || [];
           }
           function onlyChild(children) {
-            if (!isValidElement3(children)) {
+            if (!isValidElement4(children)) {
               throw new Error("React.Children.only expected to receive a single React element child.");
             }
             return children;
           }
-          function createContext18(defaultValue) {
+          function createContext19(defaultValue) {
             var context4 = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1047,7 +1047,7 @@
             }
             return false;
           }
-          function memo2(type, compare) {
+          function memo3(type, compare) {
             {
               if (!isValidElementType(type)) {
                 error("memo: The first argument must be a component. Instead received: %s", type === null ? "null" : typeof type);
@@ -1085,7 +1085,7 @@
             }
             return dispatcher;
           }
-          function useContext32(Context2) {
+          function useContext33(Context2) {
             var dispatcher = resolveDispatcher();
             {
               if (Context2._context !== void 0) {
@@ -1099,9 +1099,9 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState53(initialState) {
+          function useState55(initialState3) {
             var dispatcher = resolveDispatcher();
-            return dispatcher.useState(initialState);
+            return dispatcher.useState(initialState3);
           }
           function useReducer2(reducer, initialArg, init2) {
             var dispatcher = resolveDispatcher();
@@ -1111,7 +1111,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect55(create2, deps) {
+          function useEffect61(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create2, deps);
           }
@@ -1119,15 +1119,15 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useInsertionEffect(create2, deps);
           }
-          function useLayoutEffect6(create2, deps) {
+          function useLayoutEffect7(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useLayoutEffect(create2, deps);
           }
-          function useCallback38(callback, deps) {
+          function useCallback39(callback, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useCallback(callback, deps);
           }
-          function useMemo23(create2, deps) {
+          function useMemo34(create2, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useMemo(create2, deps);
           }
@@ -1525,11 +1525,11 @@
             if (isArray(node)) {
               for (var i2 = 0; i2 < node.length; i2++) {
                 var child = node[i2];
-                if (isValidElement3(child)) {
+                if (isValidElement4(child)) {
                   validateExplicitKey(child, parentType);
                 }
               }
-            } else if (isValidElement3(node)) {
+            } else if (isValidElement4(node)) {
               if (node._store) {
                 node._store.validated = true;
               }
@@ -1540,7 +1540,7 @@
                   var iterator = iteratorFn.call(node);
                   var step;
                   while (!(step = iterator.next()).done) {
-                    if (isValidElement3(step.value)) {
+                    if (isValidElement4(step.value)) {
                       validateExplicitKey(step.value, parentType);
                     }
                   }
@@ -1663,14 +1663,14 @@
             return validatedFactory;
           }
           function cloneElementWithValidation(element, props, children) {
-            var newElement = cloneElement10.apply(this, arguments);
+            var newElement = cloneElement11.apply(this, arguments);
             for (var i2 = 2; i2 < arguments.length; i2++) {
               validateChildKeys(arguments[i2], newElement.type);
             }
             validatePropTypes(newElement);
             return newElement;
           }
-          function startTransition3(scope, options) {
+          function startTransition3(scope2, options) {
             var prevTransition = ReactCurrentBatchConfig.transition;
             ReactCurrentBatchConfig.transition = {};
             var currentTransition = ReactCurrentBatchConfig.transition;
@@ -1678,7 +1678,7 @@
               ReactCurrentBatchConfig.transition._updatedFibers = /* @__PURE__ */ new Set();
             }
             try {
-              scope();
+              scope2();
             } finally {
               ReactCurrentBatchConfig.transition = prevTransition;
               {
@@ -1879,29 +1879,29 @@
           exports.Suspense = REACT_SUSPENSE_TYPE;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext18;
+          exports.createContext = createContext19;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
           exports.forwardRef = forwardRef92;
-          exports.isValidElement = isValidElement3;
+          exports.isValidElement = isValidElement4;
           exports.lazy = lazy;
-          exports.memo = memo2;
+          exports.memo = memo3;
           exports.startTransition = startTransition3;
           exports.unstable_act = act;
-          exports.useCallback = useCallback38;
-          exports.useContext = useContext32;
+          exports.useCallback = useCallback39;
+          exports.useContext = useContext33;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect55;
+          exports.useEffect = useEffect61;
           exports.useId = useId2;
           exports.useImperativeHandle = useImperativeHandle2;
           exports.useInsertionEffect = useInsertionEffect;
-          exports.useLayoutEffect = useLayoutEffect6;
-          exports.useMemo = useMemo23;
+          exports.useLayoutEffect = useLayoutEffect7;
+          exports.useMemo = useMemo34;
           exports.useReducer = useReducer2;
           exports.useRef = useRef40;
-          exports.useState = useState53;
+          exports.useState = useState55;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2397,9 +2397,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React181 = require_react();
+          var React182 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React181.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React182.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3767,11 +3767,11 @@
             if (node.hasOwnProperty(valueField) || typeof descriptor === "undefined" || typeof descriptor.get !== "function" || typeof descriptor.set !== "function") {
               return;
             }
-            var get2 = descriptor.get, set2 = descriptor.set;
+            var get3 = descriptor.get, set2 = descriptor.set;
             Object.defineProperty(node, valueField, {
               configurable: true,
               get: function() {
-                return get2.call(this);
+                return get3.call(this);
               },
               set: function(value) {
                 {
@@ -4004,7 +4004,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React181.Children.forEach(props.children, function(child) {
+                  React182.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -4287,7 +4287,7 @@
             }
             node.innerHTML = html;
           });
-          var ELEMENT_NODE = 1;
+          var ELEMENT_NODE2 = 1;
           var TEXT_NODE = 3;
           var COMMENT_NODE = 8;
           var DOCUMENT_NODE = 9;
@@ -4598,7 +4598,7 @@
           var voidElementTags = assign({
             menuitem: true
           }, omittedCloseTags);
-          var HTML = "__html";
+          var HTML2 = "__html";
           function assertValidProps(tag, props) {
             if (!props) {
               return;
@@ -4612,7 +4612,7 @@
               if (props.children != null) {
                 throw new Error("Can only set one of `children` or `props.dangerouslySetInnerHTML`.");
               }
-              if (typeof props.dangerouslySetInnerHTML !== "object" || !(HTML in props.dangerouslySetInnerHTML)) {
+              if (typeof props.dangerouslySetInnerHTML !== "object" || !(HTML2 in props.dangerouslySetInnerHTML)) {
                 throw new Error("`props.dangerouslySetInnerHTML` must be in the form `{__html: ...}`. Please visit https://reactjs.org/link/dangerously-set-inner-html for more information.");
               }
             }
@@ -5683,7 +5683,7 @@
               throw new Error("clearCaughtError was called but no error was captured. This error is likely caused by a bug in React. Please file an issue.");
             }
           }
-          function get(key) {
+          function get2(key) {
             return key._reactInternals;
           }
           function has2(key) {
@@ -5858,7 +5858,7 @@
                 instance._warnedAboutRefsInRender = true;
               }
             }
-            var fiber = get(component);
+            var fiber = get2(component);
             if (!fiber) {
               return false;
             }
@@ -8398,7 +8398,7 @@
             return x2 === y2 && (x2 !== 0 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
           }
           var objectIs = typeof Object.is === "function" ? Object.is : is;
-          function shallowEqual(objA, objB) {
+          function shallowEqual2(objA, objB) {
             if (objectIs(objA, objB)) {
               return true;
             }
@@ -8617,7 +8617,7 @@
               var ancestors = [];
               var ancestor = priorFocusedElem;
               while (ancestor = ancestor.parentNode) {
-                if (ancestor.nodeType === ELEMENT_NODE) {
+                if (ancestor.nodeType === ELEMENT_NODE2) {
                   ancestors.push({
                     element: ancestor,
                     left: ancestor.scrollLeft,
@@ -8697,7 +8697,7 @@
               return;
             }
             var currentSelection = getSelection$1(activeElement$1);
-            if (!lastSelection || !shallowEqual(lastSelection, currentSelection)) {
+            if (!lastSelection || !shallowEqual2(lastSelection, currentSelection)) {
               lastSelection = currentSelection;
               var listeners = accumulateTwoPhaseListeners(activeElementInst$1, "onSelect");
               if (listeners.length > 0) {
@@ -10420,7 +10420,7 @@
           function clearSuspenseBoundaryFromContainer(container, suspenseInstance) {
             if (container.nodeType === COMMENT_NODE) {
               clearSuspenseBoundary(container.parentNode, suspenseInstance);
-            } else if (container.nodeType === ELEMENT_NODE) {
+            } else if (container.nodeType === ELEMENT_NODE2) {
               clearSuspenseBoundary(container, suspenseInstance);
             }
             retryIfBlockedOn(container);
@@ -10447,7 +10447,7 @@
             textInstance.nodeValue = text;
           }
           function clearContainer(container) {
-            if (container.nodeType === ELEMENT_NODE) {
+            if (container.nodeType === ELEMENT_NODE2) {
               container.textContent = "";
             } else if (container.nodeType === DOCUMENT_NODE) {
               if (container.documentElement) {
@@ -10456,7 +10456,7 @@
             }
           }
           function canHydrateInstance(instance, type, props) {
-            if (instance.nodeType !== ELEMENT_NODE || type.toLowerCase() !== instance.nodeName.toLowerCase()) {
+            if (instance.nodeType !== ELEMENT_NODE2 || type.toLowerCase() !== instance.nodeName.toLowerCase()) {
               return null;
             }
             return instance;
@@ -10503,7 +10503,7 @@
           function getNextHydratable(node) {
             for (; node != null; node = node.nextSibling) {
               var nodeType = node.nodeType;
-              if (nodeType === ELEMENT_NODE || nodeType === TEXT_NODE) {
+              if (nodeType === ELEMENT_NODE2 || nodeType === TEXT_NODE) {
                 break;
               }
               if (nodeType === COMMENT_NODE) {
@@ -10610,7 +10610,7 @@
           }
           function didNotHydrateInstanceWithinContainer(parentContainer, instance) {
             {
-              if (instance.nodeType === ELEMENT_NODE) {
+              if (instance.nodeType === ELEMENT_NODE2) {
                 warnForDeletedHydratableElement(parentContainer, instance);
               } else if (instance.nodeType === COMMENT_NODE)
                 ;
@@ -10623,7 +10623,7 @@
             {
               var parentNode = parentInstance.parentNode;
               if (parentNode !== null) {
-                if (instance.nodeType === ELEMENT_NODE) {
+                if (instance.nodeType === ELEMENT_NODE2) {
                   warnForDeletedHydratableElement(parentNode, instance);
                 } else if (instance.nodeType === COMMENT_NODE)
                   ;
@@ -10636,7 +10636,7 @@
           function didNotHydrateInstance(parentType, parentProps, parentInstance, instance, isConcurrentMode) {
             {
               if (isConcurrentMode || parentProps[SUPPRESS_HYDRATION_WARNING$1] !== true) {
-                if (instance.nodeType === ELEMENT_NODE) {
+                if (instance.nodeType === ELEMENT_NODE2) {
                   warnForDeletedHydratableElement(parentInstance, instance);
                 } else if (instance.nodeType === COMMENT_NODE)
                   ;
@@ -12451,7 +12451,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React181.Component().refs;
+          var emptyRefsObject = new React182.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -12523,7 +12523,7 @@
           var classComponentUpdater = {
             isMounted,
             enqueueSetState: function(inst, payload, callback) {
-              var fiber = get(inst);
+              var fiber = get2(inst);
               var eventTime = requestEventTime();
               var lane = requestUpdateLane(fiber);
               var update = createUpdate(eventTime, lane);
@@ -12544,7 +12544,7 @@
               }
             },
             enqueueReplaceState: function(inst, payload, callback) {
-              var fiber = get(inst);
+              var fiber = get2(inst);
               var eventTime = requestEventTime();
               var lane = requestUpdateLane(fiber);
               var update = createUpdate(eventTime, lane);
@@ -12566,7 +12566,7 @@
               }
             },
             enqueueForceUpdate: function(inst, callback) {
-              var fiber = get(inst);
+              var fiber = get2(inst);
               var eventTime = requestEventTime();
               var lane = requestUpdateLane(fiber);
               var update = createUpdate(eventTime, lane);
@@ -12607,7 +12607,7 @@
               return shouldUpdate;
             }
             if (ctor.prototype && ctor.prototype.isPureReactComponent) {
-              return !shallowEqual(oldProps, newProps) || !shallowEqual(oldState, newState);
+              return !shallowEqual2(oldProps, newProps) || !shallowEqual2(oldState, newState);
             }
             return true;
           }
@@ -14247,20 +14247,20 @@
           }
           function mountReducer(reducer, initialArg, init2) {
             var hook = mountWorkInProgressHook();
-            var initialState;
+            var initialState3;
             if (init2 !== void 0) {
-              initialState = init2(initialArg);
+              initialState3 = init2(initialArg);
             } else {
-              initialState = initialArg;
+              initialState3 = initialArg;
             }
-            hook.memoizedState = hook.baseState = initialState;
+            hook.memoizedState = hook.baseState = initialState3;
             var queue = {
               pending: null,
               interleaved: null,
               lanes: NoLanes,
               dispatch: null,
               lastRenderedReducer: reducer,
-              lastRenderedState: initialState
+              lastRenderedState: initialState3
             };
             hook.queue = queue;
             var dispatch = queue.dispatch = dispatchReducerAction.bind(null, currentlyRenderingFiber$1, queue);
@@ -14542,28 +14542,28 @@
               scheduleUpdateOnFiber(root2, fiber, SyncLane, NoTimestamp);
             }
           }
-          function mountState(initialState) {
+          function mountState(initialState3) {
             var hook = mountWorkInProgressHook();
-            if (typeof initialState === "function") {
-              initialState = initialState();
+            if (typeof initialState3 === "function") {
+              initialState3 = initialState3();
             }
-            hook.memoizedState = hook.baseState = initialState;
+            hook.memoizedState = hook.baseState = initialState3;
             var queue = {
               pending: null,
               interleaved: null,
               lanes: NoLanes,
               dispatch: null,
               lastRenderedReducer: basicStateReducer,
-              lastRenderedState: initialState
+              lastRenderedState: initialState3
             };
             hook.queue = queue;
             var dispatch = queue.dispatch = dispatchSetState.bind(null, currentlyRenderingFiber$1, queue);
             return [hook.memoizedState, dispatch];
           }
-          function updateState2(initialState) {
+          function updateState2(initialState3) {
             return updateReducer(basicStateReducer);
           }
-          function rerenderState(initialState) {
+          function rerenderState(initialState3) {
             return rerenderReducer(basicStateReducer);
           }
           function pushEffect(tag, create2, destroy, deps) {
@@ -15079,13 +15079,13 @@
                 mountHookTypesDev();
                 return mountRef(initialValue);
               },
-              useState: function(initialState) {
+              useState: function(initialState3) {
                 currentHookNameInDev = "useState";
                 mountHookTypesDev();
                 var prevDispatcher = ReactCurrentDispatcher$1.current;
                 ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
                 try {
-                  return mountState(initialState);
+                  return mountState(initialState3);
                 } finally {
                   ReactCurrentDispatcher$1.current = prevDispatcher;
                 }
@@ -15183,13 +15183,13 @@
                 updateHookTypesDev();
                 return mountRef(initialValue);
               },
-              useState: function(initialState) {
+              useState: function(initialState3) {
                 currentHookNameInDev = "useState";
                 updateHookTypesDev();
                 var prevDispatcher = ReactCurrentDispatcher$1.current;
                 ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
                 try {
-                  return mountState(initialState);
+                  return mountState(initialState3);
                 } finally {
                   ReactCurrentDispatcher$1.current = prevDispatcher;
                 }
@@ -15287,13 +15287,13 @@
                 updateHookTypesDev();
                 return updateRef();
               },
-              useState: function(initialState) {
+              useState: function(initialState3) {
                 currentHookNameInDev = "useState";
                 updateHookTypesDev();
                 var prevDispatcher = ReactCurrentDispatcher$1.current;
                 ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
                 try {
-                  return updateState2(initialState);
+                  return updateState2(initialState3);
                 } finally {
                   ReactCurrentDispatcher$1.current = prevDispatcher;
                 }
@@ -15391,13 +15391,13 @@
                 updateHookTypesDev();
                 return updateRef();
               },
-              useState: function(initialState) {
+              useState: function(initialState3) {
                 currentHookNameInDev = "useState";
                 updateHookTypesDev();
                 var prevDispatcher = ReactCurrentDispatcher$1.current;
                 ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnRerenderInDEV;
                 try {
-                  return rerenderState(initialState);
+                  return rerenderState(initialState3);
                 } finally {
                   ReactCurrentDispatcher$1.current = prevDispatcher;
                 }
@@ -15505,14 +15505,14 @@
                 mountHookTypesDev();
                 return mountRef(initialValue);
               },
-              useState: function(initialState) {
+              useState: function(initialState3) {
                 currentHookNameInDev = "useState";
                 warnInvalidHookAccess();
                 mountHookTypesDev();
                 var prevDispatcher = ReactCurrentDispatcher$1.current;
                 ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
                 try {
-                  return mountState(initialState);
+                  return mountState(initialState3);
                 } finally {
                   ReactCurrentDispatcher$1.current = prevDispatcher;
                 }
@@ -15626,14 +15626,14 @@
                 updateHookTypesDev();
                 return updateRef();
               },
-              useState: function(initialState) {
+              useState: function(initialState3) {
                 currentHookNameInDev = "useState";
                 warnInvalidHookAccess();
                 updateHookTypesDev();
                 var prevDispatcher = ReactCurrentDispatcher$1.current;
                 ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
                 try {
-                  return updateState2(initialState);
+                  return updateState2(initialState3);
                 } finally {
                   ReactCurrentDispatcher$1.current = prevDispatcher;
                 }
@@ -15747,14 +15747,14 @@
                 updateHookTypesDev();
                 return updateRef();
               },
-              useState: function(initialState) {
+              useState: function(initialState3) {
                 currentHookNameInDev = "useState";
                 warnInvalidHookAccess();
                 updateHookTypesDev();
                 var prevDispatcher = ReactCurrentDispatcher$1.current;
                 ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
                 try {
-                  return rerenderState(initialState);
+                  return rerenderState(initialState3);
                 } finally {
                   ReactCurrentDispatcher$1.current = prevDispatcher;
                 }
@@ -16323,7 +16323,7 @@
             if (!hasScheduledUpdateOrContext) {
               var prevProps = currentChild.memoizedProps;
               var compare = Component5.compare;
-              compare = compare !== null ? compare : shallowEqual;
+              compare = compare !== null ? compare : shallowEqual2;
               if (compare(prevProps, nextProps) && current2.ref === workInProgress2.ref) {
                 return bailoutOnAlreadyFinishedWork(current2, workInProgress2, renderLanes2);
               }
@@ -16363,7 +16363,7 @@
             }
             if (current2 !== null) {
               var prevProps = current2.memoizedProps;
-              if (shallowEqual(prevProps, nextProps) && current2.ref === workInProgress2.ref && // Prevent bailout if the implementation changed due to hot reload.
+              if (shallowEqual2(prevProps, nextProps) && current2.ref === workInProgress2.ref && // Prevent bailout if the implementation changed due to hot reload.
               workInProgress2.type === current2.type) {
                 didReceiveUpdate = false;
                 workInProgress2.pendingProps = nextProps = prevProps;
@@ -22586,7 +22586,7 @@
             if (!parentComponent) {
               return emptyContextObject;
             }
-            var fiber = get(parentComponent);
+            var fiber = get2(parentComponent);
             var parentContext = findCurrentUnmaskedContext(fiber);
             if (fiber.tag === ClassComponent) {
               var Component5 = fiber.type;
@@ -22598,7 +22598,7 @@
           }
           function findHostInstanceWithWarning(component, methodName) {
             {
-              var fiber = get(component);
+              var fiber = get2(component);
               if (fiber === void 0) {
                 if (typeof component.render === "function") {
                   throw new Error("Unable to find node on an unmounted component.");
@@ -23140,14 +23140,14 @@
             return new ReactDOMHydrationRoot(root2);
           }
           function isValidContainer(node) {
-            return !!(node && (node.nodeType === ELEMENT_NODE || node.nodeType === DOCUMENT_NODE || node.nodeType === DOCUMENT_FRAGMENT_NODE || !disableCommentsAsDOMContainers));
+            return !!(node && (node.nodeType === ELEMENT_NODE2 || node.nodeType === DOCUMENT_NODE || node.nodeType === DOCUMENT_FRAGMENT_NODE || !disableCommentsAsDOMContainers));
           }
           function isValidContainerLegacy(node) {
-            return !!(node && (node.nodeType === ELEMENT_NODE || node.nodeType === DOCUMENT_NODE || node.nodeType === DOCUMENT_FRAGMENT_NODE || node.nodeType === COMMENT_NODE && node.nodeValue === " react-mount-point-unstable "));
+            return !!(node && (node.nodeType === ELEMENT_NODE2 || node.nodeType === DOCUMENT_NODE || node.nodeType === DOCUMENT_FRAGMENT_NODE || node.nodeType === COMMENT_NODE && node.nodeValue === " react-mount-point-unstable "));
           }
           function warnIfReactDOMContainerInDEV(container) {
             {
-              if (container.nodeType === ELEMENT_NODE && container.tagName && container.tagName.toUpperCase() === "BODY") {
+              if (container.nodeType === ELEMENT_NODE2 && container.tagName && container.tagName.toUpperCase() === "BODY") {
                 error("createRoot(): Creating roots directly with document.body is discouraged, since its children are often manipulated by third-party scripts and browser extensions. This may lead to subtle reconciliation issues. Try using a container element created for your app.");
               }
               if (isContainerMarkedAsRoot(container)) {
@@ -23177,7 +23177,7 @@
               if (hasNonRootReactChild && !isRootRenderedBySomeReact) {
                 error("render(...): Replacing React-rendered children with a new root component. If you intended to update the children of this node, you should instead have the existing children update their state and render the new components instead of calling ReactDOM.render.");
               }
-              if (container.nodeType === ELEMENT_NODE && container.tagName && container.tagName.toUpperCase() === "BODY") {
+              if (container.nodeType === ELEMENT_NODE2 && container.tagName && container.tagName.toUpperCase() === "BODY") {
                 error("render(): Rendering components directly into document.body is discouraged, since its children are often manipulated by third-party scripts and browser extensions. This may lead to subtle reconciliation issues. Try rendering into a container element created for your app.");
               }
             };
@@ -23302,7 +23302,7 @@
             if (componentOrElement == null) {
               return null;
             }
-            if (componentOrElement.nodeType === ELEMENT_NODE) {
+            if (componentOrElement.nodeType === ELEMENT_NODE2) {
               return componentOrElement;
             }
             {
@@ -23380,7 +23380,7 @@
               {
                 var _rootEl = getReactRootElementInContainer(container);
                 var hasNonRootReactChild = !!(_rootEl && getInstanceFromNode(_rootEl));
-                var isContainerReactRoot = container.nodeType === ELEMENT_NODE && isValidContainerLegacy(container.parentNode) && !!container.parentNode._reactRootContainer;
+                var isContainerReactRoot = container.nodeType === ELEMENT_NODE2 && isValidContainerLegacy(container.parentNode) && !!container.parentNode._reactRootContainer;
                 if (hasNonRootReactChild) {
                   error("unmountComponentAtNode(): The node you're attempting to unmount was rendered by React and is not a top-level container. %s", isContainerReactRoot ? "You may have accidentally passed in a React root node instead of its container." : "Instead, have the parent component update its state and rerender in order to remove this component.");
                 }
@@ -23586,7 +23586,7 @@
   var require_browser = __commonJS({
     "node_modules/invariant/browser.js"(exports, module) {
       "use strict";
-      var invariant6 = function(condition, format, a2, b2, c2, d2, e3, f) {
+      var invariant7 = function(condition, format, a2, b2, c2, d2, e3, f) {
         if (true) {
           if (format === void 0) {
             throw new Error("invariant requires an error message argument");
@@ -23612,7 +23612,7 @@
           throw error;
         }
       };
-      module.exports = invariant6;
+      module.exports = invariant7;
     }
   });
 
@@ -23623,7 +23623,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React181 = require_react();
+          var React182 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23649,7 +23649,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React181.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React182.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -24277,7 +24277,7 @@
           {
             propTypesMisspellWarningShown = false;
           }
-          function isValidElement3(object) {
+          function isValidElement4(object) {
             {
               return typeof object === "object" && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
             }
@@ -24344,11 +24344,11 @@
               if (isArray(node)) {
                 for (var i2 = 0; i2 < node.length; i2++) {
                   var child = node[i2];
-                  if (isValidElement3(child)) {
+                  if (isValidElement4(child)) {
                     validateExplicitKey(child, parentType);
                   }
                 }
-              } else if (isValidElement3(node)) {
+              } else if (isValidElement4(node)) {
                 if (node._store) {
                   node._store.validated = true;
                 }
@@ -24359,7 +24359,7 @@
                     var iterator = iteratorFn.call(node);
                     var step;
                     while (!(step = iterator.next()).done) {
-                      if (isValidElement3(step.value)) {
+                      if (isValidElement4(step.value)) {
                         validateExplicitKey(step.value, parentType);
                       }
                     }
@@ -24506,9 +24506,9 @@
     }
   });
 
-  // node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js
+  // node_modules/react-is/cjs/react-is.development.js
   var require_react_is_development = __commonJS({
-    "node_modules/prop-types/node_modules/react-is/cjs/react-is.development.js"(exports) {
+    "node_modules/react-is/cjs/react-is.development.js"(exports) {
       "use strict";
       if (true) {
         (function() {
@@ -24661,9 +24661,9 @@
     }
   });
 
-  // node_modules/prop-types/node_modules/react-is/index.js
+  // node_modules/react-is/index.js
   var require_react_is = __commonJS({
-    "node_modules/prop-types/node_modules/react-is/index.js"(exports, module) {
+    "node_modules/react-is/index.js"(exports, module) {
       "use strict";
       if (false) {
         module.exports = null;
@@ -24851,7 +24851,7 @@
       function emptyFunctionThatReturnsNull() {
         return null;
       }
-      module.exports = function(isValidElement3, throwOnDirectAccess) {
+      module.exports = function(isValidElement4, throwOnDirectAccess) {
         var ITERATOR_SYMBOL = typeof Symbol === "function" && Symbol.iterator;
         var FAUX_ITERATOR_SYMBOL = "@@iterator";
         function getIteratorFn(maybeIterable) {
@@ -24979,7 +24979,7 @@
         function createElementTypeChecker() {
           function validate(props, propName, componentName, location2, propFullName) {
             var propValue = props[propName];
-            if (!isValidElement3(propValue)) {
+            if (!isValidElement4(propValue)) {
               var propType = getPropType(propValue);
               return new PropTypeError("Invalid " + location2 + " `" + propFullName + "` of type " + ("`" + propType + "` supplied to `" + componentName + "`, expected a single ReactElement."));
             }
@@ -25167,7 +25167,7 @@
               if (Array.isArray(propValue)) {
                 return propValue.every(isNode);
               }
-              if (propValue === null || isValidElement3(propValue)) {
+              if (propValue === null || isValidElement4(propValue)) {
                 return true;
               }
               var iteratorFn = getIteratorFn(propValue);
@@ -38244,7 +38244,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         // @ts-ignore
         map = async (_3, entry) => entry,
         // The default reducer is a flatmap that filters out undefineds.
-        reduce = async (parent, children) => {
+        reduce: reduce7 = async (parent, children) => {
           const flatten = flat(children);
           if (parent !== void 0)
             flatten.unshift(parent);
@@ -38284,7 +38284,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           if (parent !== null) {
             let walkedChildren = await iterate(walk2, children);
             walkedChildren = walkedChildren.filter((x2) => x2 !== void 0);
-            return reduce(parent, walkedChildren);
+            return reduce7(parent, walkedChildren);
           }
         };
         return walk2(root);
@@ -38309,9 +38309,9 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         }
       }
       function isPromiseLike(obj) {
-        return isObject3(obj) && isFunction2(obj.then) && isFunction2(obj.catch);
+        return isObject4(obj) && isFunction2(obj.then) && isFunction2(obj.catch);
       }
-      function isObject3(obj) {
+      function isObject4(obj) {
         return obj && typeof obj === "object";
       }
       function isFunction2(obj) {
@@ -38797,7 +38797,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           buffer[idx] = 47;
         return buffer;
       }
-      async function add({
+      async function add2({
         fs: _fs,
         dir,
         gitdir = pathBrowserify.join(dir, ".git"),
@@ -44543,7 +44543,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             };
           }
         };
-        const reduce = async (parent, children) => {
+        const reduce7 = async (parent, children) => {
           children = children.filter(Boolean);
           if (!parent) {
             return children.length > 0 ? children : void 0;
@@ -44581,7 +44581,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
           gitdir,
           trees,
           map,
-          reduce,
+          reduce: reduce7,
           iterate
         });
         if (changedEntries.length === 0 || entries.length === 0) {
@@ -45317,7 +45317,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         filepath,
         oid,
         mode,
-        add: add2,
+        add: add3,
         remove: remove2,
         force
       }) {
@@ -45360,7 +45360,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             }
           }
           return await GitIndexManager.acquire({ fs: fs2, gitdir, cache }, async function(index4) {
-            if (!add2 && !index4.has({ filepath })) {
+            if (!add3 && !index4.has({ filepath })) {
               throw new NotFoundError(
                 `file at "${filepath}" in index and "add" not set`
               );
@@ -45414,7 +45414,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         gitdir = pathBrowserify.join(dir, ".git"),
         trees,
         map,
-        reduce,
+        reduce: reduce7,
         iterate,
         cache = {}
       }) {
@@ -45429,7 +45429,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
             gitdir,
             trees,
             map,
-            reduce,
+            reduce: reduce7,
             iterate
           });
         } catch (err) {
@@ -45611,7 +45611,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
         STAGE,
         TREE,
         WORKDIR,
-        add,
+        add: add2,
         abortMerge,
         addNote,
         addRemote,
@@ -45683,7 +45683,7 @@ ${obj.gpgsig ? obj.gpgsig : ""}`;
       exports.TREE = TREE;
       exports.WORKDIR = WORKDIR;
       exports.abortMerge = abortMerge;
-      exports.add = add;
+      exports.add = add2;
       exports.addNote = addNote;
       exports.addRemote = addRemote;
       exports.annotatedTag = annotatedTag;
@@ -46419,8 +46419,53 @@ ${description}` : message
     }
   });
 
+  // node_modules/fast-deep-equal/index.js
+  var require_fast_deep_equal = __commonJS({
+    "node_modules/fast-deep-equal/index.js"(exports, module) {
+      "use strict";
+      module.exports = function equal2(a2, b2) {
+        if (a2 === b2)
+          return true;
+        if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
+          if (a2.constructor !== b2.constructor)
+            return false;
+          var length, i2, keys;
+          if (Array.isArray(a2)) {
+            length = a2.length;
+            if (length != b2.length)
+              return false;
+            for (i2 = length; i2-- !== 0; )
+              if (!equal2(a2[i2], b2[i2]))
+                return false;
+            return true;
+          }
+          if (a2.constructor === RegExp)
+            return a2.source === b2.source && a2.flags === b2.flags;
+          if (a2.valueOf !== Object.prototype.valueOf)
+            return a2.valueOf() === b2.valueOf();
+          if (a2.toString !== Object.prototype.toString)
+            return a2.toString() === b2.toString();
+          keys = Object.keys(a2);
+          length = keys.length;
+          if (length !== Object.keys(b2).length)
+            return false;
+          for (i2 = length; i2-- !== 0; )
+            if (!Object.prototype.hasOwnProperty.call(b2, keys[i2]))
+              return false;
+          for (i2 = length; i2-- !== 0; ) {
+            var key = keys[i2];
+            if (!equal2(a2[key], b2[key]))
+              return false;
+          }
+          return true;
+        }
+        return a2 !== a2 && b2 !== b2;
+      };
+    }
+  });
+
   // src/App.tsx
-  var import_react155 = __toESM(require_react(), 1);
+  var import_react173 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -46876,18 +46921,18 @@ ${description}` : message
     let pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1");
     let captureGroups = match.slice(1);
     let params = compiledParams.reduce(
-      (memo2, { paramName, isOptional }, index3) => {
+      (memo22, { paramName, isOptional }, index3) => {
         if (paramName === "*") {
           let splatValue = captureGroups[index3] || "";
           pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
         }
         const value = captureGroups[index3];
         if (isOptional && !value) {
-          memo2[paramName] = void 0;
+          memo22[paramName] = void 0;
         } else {
-          memo2[paramName] = (value || "").replace(/%2F/g, "/");
+          memo22[paramName] = (value || "").replace(/%2F/g, "/");
         }
-        return memo2;
+        return memo22;
       },
       {}
     );
@@ -51251,7 +51296,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return element.offsetParent;
   }
   function getContainingBlock(element) {
-    var isFirefox = /firefox/i.test(getUAString());
+    var isFirefox2 = /firefox/i.test(getUAString());
     var isIE = /Trident/i.test(getUAString());
     if (isIE && isHTMLElement(element)) {
       var elementCss = getComputedStyle2(element);
@@ -51265,7 +51310,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     while (isHTMLElement(currentNode) && ["html", "body"].indexOf(getNodeName(currentNode)) < 0) {
       var css = getComputedStyle2(currentNode);
-      if (css.transform !== "none" || css.perspective !== "none" || css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === "filter" || isFirefox && css.filter && css.filter !== "none") {
+      if (css.transform !== "none" || css.perspective !== "none" || css.contain === "paint" || ["transform", "perspective"].indexOf(css.willChange) !== -1 || isFirefox2 && css.willChange === "filter" || isFirefox2 && css.filter && css.filter !== "none") {
         return currentNode;
       } else {
         currentNode = currentNode.parentNode;
@@ -54567,11 +54612,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   function useWaitForDOMRef(ref, onResolved) {
     const window2 = useWindow();
-    const [resolvedRef, setRef] = (0, import_react60.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
+    const [resolvedRef, setRef2] = (0, import_react60.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
     if (!resolvedRef) {
       const earlyRef = resolveContainerRef(ref);
       if (earlyRef)
-        setRef(earlyRef);
+        setRef2(earlyRef);
     }
     (0, import_react60.useEffect)(() => {
       if (onResolved && resolvedRef) {
@@ -54581,7 +54626,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     (0, import_react60.useEffect)(() => {
       const nextRef = resolveContainerRef(ref);
       if (nextRef !== resolvedRef) {
-        setRef(nextRef);
+        setRef2(nextRef);
       }
     }, [ref, resolvedRef]);
     return resolvedRef;
@@ -59564,7 +59609,7 @@ This file was not generated during the test run.`,
       {
         className: `border-end d-flex flex-column ${!hasAnimated ? "sidebar-attention" : ""}`,
         style: {
-          flexBasis: "100px",
+          flexBasis: "40px",
           flexGrow: "0",
           flexShrink: "0",
           height: "100vh",
@@ -59572,7 +59617,7 @@ This file was not generated during the test run.`,
           top: 0
         }
       },
-      /* @__PURE__ */ import_react113.default.createElement(Nav_default2, { variant: "pills", className: "flex-column p-2 flex-grow-1" }, /* @__PURE__ */ import_react113.default.createElement(
+      /* @__PURE__ */ import_react113.default.createElement(Nav_default2, { variant: "pills", className: "flex-column p-0 flex-grow-1" }, /* @__PURE__ */ import_react113.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
@@ -59769,8 +59814,8 @@ This file was not generated during the test run.`,
             src: "https://www.testeranto.com/logo.svg",
             alt: "Testeranto Logo",
             style: {
-              height: "64px",
-              width: "64px"
+              height: "32px",
+              width: "32px"
             }
           }
         )
@@ -59795,14 +59840,13 @@ This file was not generated during the test run.`,
           // Enable scrolling
         }
       },
-      /* @__PURE__ */ import_react113.default.createElement("main", { className: "flex-grow-1 p-4", style: {
+      /* @__PURE__ */ import_react113.default.createElement("main", { className: "flex-grow-1 p-1", style: {
         minWidth: "fit-content",
-        // Allow the content to be as wide as needed
         width: "100%"
       } }, /* @__PURE__ */ import_react113.default.createElement(Container_default, { fluid: true, style: {
         height: "100%",
-        minWidth: "fit-content"
-        // Prevent the container from constraining width
+        minWidth: "fit-content",
+        padding: "0.125rem"
       } }, location2.pathname === "/helpo" ? /* @__PURE__ */ import_react113.default.createElement("div", null, /* @__PURE__ */ import_react113.default.createElement("h1", null, "Helpo Documentation"), /* @__PURE__ */ import_react113.default.createElement("p", null, "Welcome to the Helpo documentation. Here you can find information about using Testeranto."), /* @__PURE__ */ import_react113.default.createElement("h2", null, "Getting Started"), /* @__PURE__ */ import_react113.default.createElement("p", null, "Start by creating a project and writing your first test cases."), /* @__PURE__ */ import_react113.default.createElement("h2", null, "Features"), /* @__PURE__ */ import_react113.default.createElement("ul", null, /* @__PURE__ */ import_react113.default.createElement("li", null, "Test automation"), /* @__PURE__ */ import_react113.default.createElement("li", null, "Process management"), /* @__PURE__ */ import_react113.default.createElement("li", null, "Git integration"), /* @__PURE__ */ import_react113.default.createElement("li", null, "And much more..."))) : children))
     ));
   };
@@ -69390,7 +69434,7 @@ Current environment analysis:
     onRemoveNode,
     onToggleVisibility,
     hiddenNodes,
-    nodeTypes
+    nodeTypes: nodeTypes2
   }) => {
     const isSelected = node.id === selectedNodeId;
     const isHidden = hiddenNodes.has(node.id);
@@ -69402,11 +69446,11 @@ Current environment analysis:
       /* @__PURE__ */ import_react142.default.createElement(
         "div",
         {
-          className: `d-flex justify-content-between align-items-center p-1 ${isSelected ? "bg-primary text-white rounded" : ""}`,
+          className: `d-flex justify-content-between align-items-center p-0 ${isSelected ? "bg-primary text-white rounded-sm" : ""}`,
           onClick: () => onSelectNode(node.id),
           style: { cursor: "pointer" }
         },
-        /* @__PURE__ */ import_react142.default.createElement("span", { className: "flex-grow-1" }, node.type, " (", node.id, ")"),
+        /* @__PURE__ */ import_react142.default.createElement("span", { className: "flex-grow-1 small" }, node.type),
         node.type !== "root" && /* @__PURE__ */ import_react142.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react142.default.createElement(
           Button_default2,
           {
@@ -69431,7 +69475,7 @@ Current environment analysis:
           "\xD7"
         ))
       ),
-      node.children.length > 0 && /* @__PURE__ */ import_react142.default.createElement("ul", { style: { marginLeft: "20px", paddingLeft: "0" } }, node.children.map((child) => /* @__PURE__ */ import_react142.default.createElement(
+      node.children.length > 0 && /* @__PURE__ */ import_react142.default.createElement("ul", { style: { marginLeft: "10px", paddingLeft: "0" } }, node.children.map((child) => /* @__PURE__ */ import_react142.default.createElement(
         GenericTree,
         {
           key: child.id,
@@ -69442,14 +69486,15 @@ Current environment analysis:
           onRemoveNode,
           onToggleVisibility,
           hiddenNodes,
-          nodeTypes
+          nodeTypes: nodeTypes2
         }
       ))),
-      isSelected && /* @__PURE__ */ import_react142.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react142.default.createElement(Dropdown_default2, null, /* @__PURE__ */ import_react142.default.createElement(Dropdown_default2.Toggle, { size: "sm", variant: "outline-success", id: "dropdown-add-node" }, "Add Element"), /* @__PURE__ */ import_react142.default.createElement(Dropdown_default2.Menu, null, nodeTypes.map(({ label, type }) => /* @__PURE__ */ import_react142.default.createElement(
+      isSelected && /* @__PURE__ */ import_react142.default.createElement("div", { className: "mt-0" }, /* @__PURE__ */ import_react142.default.createElement(Dropdown_default2, null, /* @__PURE__ */ import_react142.default.createElement(Dropdown_default2.Toggle, { size: "sm", variant: "outline-success", id: "dropdown-add-node", className: "py-0 px-1" }, "+"), /* @__PURE__ */ import_react142.default.createElement(Dropdown_default2.Menu, null, nodeTypes2.map(({ label, type }) => /* @__PURE__ */ import_react142.default.createElement(
         Dropdown_default2.Item,
         {
           key: type,
-          onClick: () => onAddNode(node.id, type)
+          onClick: () => onAddNode(node.id, type),
+          className: "small"
         },
         label
       )))))
@@ -69459,40 +69504,80 @@ Current environment analysis:
   // src/components/stateful/GenericXMLEditor/GenericPreview.tsx
   var import_react143 = __toESM(require_react(), 1);
   var GenericPreview = ({
-    xmlTree: xmlTree2,
-    selectedNodeId,
-    hiddenNodes,
-    renderPreview
+    onTreeUpdate,
+    xmlTree: xmlTree2 = {
+      id: "root",
+      type: "root",
+      attributes: {},
+      children: []
+    },
+    selectedNodeId = null,
+    hiddenNodes = /* @__PURE__ */ new Set(),
+    renderPreview = (node, isSelected, eventHandlers, onTreeUpdate2) => {
+      console.error("Default renderPreview called - this should be overridden");
+      return /* @__PURE__ */ import_react143.default.createElement(
+        "div",
+        {
+          style: {
+            border: isSelected ? "2px solid blue" : "1px solid gray",
+            padding: "4px"
+          }
+        },
+        "Default preview for: ",
+        node.type
+      );
+    }
   }) => {
+    console.log("GenericPreview props:", {
+      xmlTree: xmlTree2,
+      selectedNodeId,
+      hiddenNodes,
+      renderPreview,
+      onTreeUpdate
+    });
+    if (!xmlTree2) {
+      console.error("xmlTree is undefined in GenericPreview");
+      return /* @__PURE__ */ import_react143.default.createElement("div", null, "No XML tree data available");
+    }
     const [scale, setScale] = (0, import_react143.useState)(1);
     const [position, setPosition] = (0, import_react143.useState)({ x: 0, y: 0 });
     const [isPanning, setIsPanning] = (0, import_react143.useState)(false);
     const [startPanPoint, setStartPanPoint] = (0, import_react143.useState)({ x: 0, y: 0 });
     const previewRef = (0, import_react143.useRef)(null);
-    const renderNode = (node) => {
-      if (hiddenNodes.has(node.id)) {
-        return null;
+    const previewElement = import_react143.default.useMemo(() => {
+      try {
+        const isSelected = selectedNodeId === xmlTree2.id;
+        const eventHandlers = {};
+        return renderPreview(xmlTree2, isSelected, eventHandlers, onTreeUpdate);
+      } catch (error) {
+        console.error("Error in renderPreview:", error);
+        return /* @__PURE__ */ import_react143.default.createElement("div", { style: { border: "1px solid red", padding: "4px", margin: "2px" } }, "Error rendering preview");
       }
-      const isSelected = selectedNodeId === node.id;
-      const eventHandlers = {};
-      const children = node.children.map(renderNode).filter((child) => child !== null);
-      return renderPreview(node, isSelected, eventHandlers);
-    };
-    const handleMouseDown = (0, import_react143.useCallback)((e3) => {
-      if (e3.button === 1 || e3.button === 0 && e3.altKey) {
-        e3.preventDefault();
-        setIsPanning(true);
-        setStartPanPoint({ x: e3.clientX - position.x, y: e3.clientY - position.y });
-      }
-    }, [position]);
-    const handleMouseMove = (0, import_react143.useCallback)((e3) => {
-      if (isPanning) {
-        setPosition({
-          x: e3.clientX - startPanPoint.x,
-          y: e3.clientY - startPanPoint.y
-        });
-      }
-    }, [isPanning, startPanPoint]);
+    }, [xmlTree2, selectedNodeId, renderPreview, onTreeUpdate]);
+    const handleMouseDown = (0, import_react143.useCallback)(
+      (e3) => {
+        if (e3.button === 1 || e3.button === 0 && e3.altKey) {
+          e3.preventDefault();
+          setIsPanning(true);
+          setStartPanPoint({
+            x: e3.clientX - position.x,
+            y: e3.clientY - position.y
+          });
+        }
+      },
+      [position]
+    );
+    const handleMouseMove = (0, import_react143.useCallback)(
+      (e3) => {
+        if (isPanning) {
+          setPosition({
+            x: e3.clientX - startPanPoint.x,
+            y: e3.clientY - startPanPoint.y
+          });
+        }
+      },
+      [isPanning, startPanPoint]
+    );
     const handleMouseUp = (0, import_react143.useCallback)(() => {
       setIsPanning(false);
     }, []);
@@ -69505,7 +69590,20 @@ Current environment analysis:
       setScale(1);
       setPosition({ x: 0, y: 0 });
     }, []);
-    const isSVG = xmlTree2.type === "svg";
+    let isSVG = false;
+    try {
+      isSVG = xmlTree2.type === "svg";
+    } catch (error) {
+      console.error("Error checking if xmlTree is SVG:", error);
+      return /* @__PURE__ */ import_react143.default.createElement(
+        "div",
+        {
+          className: "border rounded p-3 d-flex justify-content-center align-items-center",
+          style: { height: "400px", background: "#f8f9fa" }
+        },
+        "Error: Invalid XML tree structure"
+      );
+    }
     if (isSVG) {
       return /* @__PURE__ */ import_react143.default.createElement(
         "div",
@@ -69519,13 +69617,33 @@ Current environment analysis:
           onMouseLeave: handleMouseUp,
           onWheel: handleWheel
         },
-        /* @__PURE__ */ import_react143.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react143.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setScale((s2) => Math.min(5, s2 + 0.1)) }, "+"), /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setScale((s2) => Math.max(0.1, s2 - 0.1)) }, "-"), /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
-        /* @__PURE__ */ import_react143.default.createElement("div", { style: {
-          cursor: isPanning ? "grabbing" : scale !== 1 ? "grab" : "default",
-          transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
-          transformOrigin: "center center",
-          transition: isPanning ? "none" : "transform 0.1s ease"
-        } }, /* @__PURE__ */ import_react143.default.createElement("svg", { ...xmlTree2.attributes, style: { background: "#f8f9fa" } }, xmlTree2.children.map(renderNode)))
+        /* @__PURE__ */ import_react143.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react143.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react143.default.createElement(
+          Button_default2,
+          {
+            variant: "outline-secondary",
+            onClick: () => setScale((s2) => Math.min(5, s2 + 0.1))
+          },
+          "+"
+        ), /* @__PURE__ */ import_react143.default.createElement(
+          Button_default2,
+          {
+            variant: "outline-secondary",
+            onClick: () => setScale((s2) => Math.max(0.1, s2 - 0.1))
+          },
+          "-"
+        ), /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
+        /* @__PURE__ */ import_react143.default.createElement(
+          "div",
+          {
+            style: {
+              cursor: isPanning ? "grabbing" : scale !== 1 ? "grab" : "default",
+              transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+              transformOrigin: "center center",
+              transition: isPanning ? "none" : "transform 0.1s ease"
+            }
+          },
+          previewElement
+        )
       );
     }
     return /* @__PURE__ */ import_react143.default.createElement(
@@ -69540,14 +69658,34 @@ Current environment analysis:
         onMouseLeave: handleMouseUp,
         onWheel: handleWheel
       },
-      /* @__PURE__ */ import_react143.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react143.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setScale((s2) => Math.min(5, s2 + 0.1)) }, "+"), /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "outline-secondary", onClick: () => setScale((s2) => Math.max(0.1, s2 - 0.1)) }, "-"), /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
-      /* @__PURE__ */ import_react143.default.createElement("div", { style: {
-        cursor: isPanning ? "grabbing" : scale !== 1 ? "grab" : "default",
-        transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
-        transformOrigin: "0 0",
-        transition: isPanning ? "none" : "transform 0.1s ease",
-        height: "100%"
-      } }, xmlTree2.children.map(renderNode))
+      /* @__PURE__ */ import_react143.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react143.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react143.default.createElement(
+        Button_default2,
+        {
+          variant: "outline-secondary",
+          onClick: () => setScale((s2) => Math.min(5, s2 + 0.1))
+        },
+        "+"
+      ), /* @__PURE__ */ import_react143.default.createElement(
+        Button_default2,
+        {
+          variant: "outline-secondary",
+          onClick: () => setScale((s2) => Math.max(0.1, s2 - 0.1))
+        },
+        "-"
+      ), /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
+      /* @__PURE__ */ import_react143.default.createElement(
+        "div",
+        {
+          style: {
+            cursor: isPanning ? "grabbing" : scale !== 1 ? "grab" : "default",
+            transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+            transformOrigin: "0 0",
+            transition: isPanning ? "none" : "transform 0.1s ease",
+            height: "100%"
+          }
+        },
+        previewElement
+      )
     );
   };
 
@@ -69555,15 +69693,62 @@ Current environment analysis:
   var import_react144 = __toESM(require_react(), 1);
   var nodeToXML = (node, depth = 0) => {
     const indent = "  ".repeat(depth);
-    const attributes = Object.entries(node.attributes).map(([key, value]) => ` ${key}="${value}"`).join("");
+    const attributes = Object.entries(node.attributes || {}).map(([key, value]) => ` ${key}="${value}"`).join("");
+    const hasTextContent = node.textContent && node.textContent.trim().length > 0;
     if (node.children.length === 0) {
-      return `${indent}<${node.type}${attributes} />`;
+      if (hasTextContent) {
+        return `${indent}<${node.type}${attributes}>${node.textContent}</${node.type}>`;
+      } else {
+        return `${indent}<${node.type}${attributes} />`;
+      }
     } else {
-      const children = node.children.map((child) => nodeToXML(child, depth + 1)).join("\n");
-      return `${indent}<${node.type}${attributes}>
-${children}
-${indent}</${node.type}>`;
+      let result = `${indent}<${node.type}${attributes}`;
+      if (hasTextContent) {
+        result += `>${node.textContent}
+`;
+      } else {
+        result += ">\n";
+      }
+      node.children.forEach((child) => {
+        result += nodeToXML(child, depth + 1) + "\n";
+      });
+      result += `${indent}</${node.type}>`;
+      return result;
     }
+  };
+  var parseXmlString = (xmlString) => {
+    const cleanXmlString = xmlString.replace(/<\?xml.*?\?>\s*/s, "");
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(cleanXmlString, "text/xml");
+    const parseElement = (element) => {
+      const attributes = {};
+      for (let i2 = 0; i2 < element.attributes.length; i2++) {
+        const attr = element.attributes[i2];
+        attributes[attr.name] = attr.value;
+      }
+      const children = [];
+      let textContent;
+      for (let i2 = 0; i2 < element.childNodes.length; i2++) {
+        const node = element.childNodes[i2];
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          children.push(parseElement(node));
+        } else if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+          textContent = (textContent || "") + node.textContent;
+        }
+      }
+      if (textContent) {
+        textContent = textContent.trim();
+      }
+      return {
+        id: `${element.nodeName}-${Date.now()}-${Math.random()}`,
+        type: element.nodeName,
+        attributes,
+        children,
+        textContent: textContent || void 0
+      };
+    };
+    const rootElement = xmlDoc.documentElement;
+    return parseElement(rootElement);
   };
   var GenericTextEditor = ({
     xmlTree: xmlTree2,
@@ -69573,60 +69758,63 @@ ${indent}</${node.type}>`;
     const [error, setError] = (0, import_react144.useState)(null);
     (0, import_react144.useEffect)(() => {
       try {
-        if (xmlTree2.type === "svg") {
-          const content = nodeToXML(xmlTree2, 0);
-          setXmlContent(content);
-        } else {
-          const content = xmlTree2.children.map((child) => nodeToXML(child, 0)).join("\n");
-          setXmlContent(content);
+        if (!xmlTree2) {
+          setXmlContent("");
+          return;
         }
+        const content = `<?xml version="1.0" encoding="UTF-8"?>
+${nodeToXML(xmlTree2, 0)}`;
+        setXmlContent(content);
         setError(null);
       } catch (err) {
         setError("Error generating XML");
       }
     }, [xmlTree2]);
     const handleXmlChange = (e3) => {
-      const newContent = e3.currentTarget.textContent || "";
+      const newContent = e3.target.value;
       setXmlContent(newContent);
       setError(null);
     };
     const applyChanges = () => {
       try {
-        setError("XML parsing not implemented yet");
+        const newTree = parseXmlString(xmlContent);
+        onUpdateTree(newTree);
+        setError(null);
       } catch (err) {
         setError("Error parsing XML: " + (err instanceof Error ? err.message : String(err)));
       }
     };
-    return /* @__PURE__ */ import_react144.default.createElement("div", { className: "h-100 d-flex flex-column align-items-center" }, /* @__PURE__ */ import_react144.default.createElement("div", { style: { width: "80ch", maxWidth: "100%" } }, /* @__PURE__ */ import_react144.default.createElement(
-      "div",
+    return /* @__PURE__ */ import_react144.default.createElement("div", { className: "h-100 d-flex flex-column align-items-center p-1" }, /* @__PURE__ */ import_react144.default.createElement("div", { style: { width: "100%", maxWidth: "100%", flex: 1, display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react144.default.createElement(
+      "textarea",
       {
-        contentEditable: true,
-        onInput: handleXmlChange,
+        value: xmlContent,
+        onChange: handleXmlChange,
         style: {
-          width: "80ch",
+          width: "100%",
           background: "#f8f9fa",
-          padding: "1rem",
-          borderRadius: "0.25rem",
-          overflow: "auto",
-          minHeight: "400px",
+          padding: "0.5rem",
+          borderRadius: "0.125rem",
+          flex: 1,
           fontFamily: "monospace",
-          whiteSpace: "pre-wrap",
+          whiteSpace: "pre",
           wordBreak: "break-word",
-          lineHeight: "1.4",
-          outline: "none"
-        },
-        suppressContentEditableWarning: true
-      },
-      xmlContent
-    ), error && /* @__PURE__ */ import_react144.default.createElement(Alert_default, { variant: "danger", className: "mt-2" }, error), /* @__PURE__ */ import_react144.default.createElement(
+          lineHeight: "1.2",
+          outline: "none",
+          border: "1px solid #ced4da",
+          resize: "none",
+          fontSize: "0.875rem"
+        }
+      }
+    ), error && /* @__PURE__ */ import_react144.default.createElement(Alert_default, { variant: "danger", className: "mt-1 py-1" }, /* @__PURE__ */ import_react144.default.createElement("small", null, error)), /* @__PURE__ */ import_react144.default.createElement(
       Button_default2,
       {
         variant: "primary",
         onClick: applyChanges,
-        className: "mt-2",
-        disabled: !!error
+        className: "mt-1 py-0",
+        disabled: !!error,
+        size: "sm"
       },
-      "Apply Changes"
+      "Apply"
     )));
   };
 
@@ -69788,10 +69976,16 @@ ${indent}</${node.type}>`;
     initialTree,
     renderPreview,
     attributeEditor,
-    nodeTypes,
+    nodeTypes: nodeTypes2,
     onAddNode
   }) => {
     const [xmlTree2, setXmlTree] = (0, import_react146.useState)(initialTree);
+    (0, import_react146.useEffect)(() => {
+      if (!xmlTree2) {
+        console.error("xmlTree became undefined, resetting to initialTree");
+        setXmlTree(initialTree);
+      }
+    }, [xmlTree2, initialTree]);
     const [selectedNodeId, setSelectedNodeId] = (0, import_react146.useState)(null);
     const [activeTab, setActiveTab] = (0, import_react146.useState)("preview");
     const [history, setHistory] = (0, import_react146.useState)([initialTree]);
@@ -69918,27 +70112,92 @@ ${indent}</${node.type}>`;
         setXmlTree(history[historyIndex + 1]);
       }
     }, [history, historyIndex]);
-    const bringToFront = (0, import_react146.useCallback)((drawer) => {
-      const maxZIndex = Math.max(
-        drawerStates.left.zIndex,
-        drawerStates.right.zIndex,
-        drawerStates.bottom.zIndex
-      );
-      setDrawerStates((prev) => {
-        const newStates = { ...prev };
-        Object.keys(newStates).forEach((key) => {
-          if (key === drawer) {
-            newStates[key].zIndex = maxZIndex + 1;
-          } else {
-            newStates[key].zIndex = Math.max(1, newStates[key].zIndex - 1);
-          }
+    const bringToFront = (0, import_react146.useCallback)(
+      (drawer) => {
+        const maxZIndex = Math.max(
+          drawerStates.left.zIndex,
+          drawerStates.right.zIndex,
+          drawerStates.bottom.zIndex
+        );
+        setDrawerStates((prev) => {
+          const newStates = { ...prev };
+          Object.keys(newStates).forEach((key) => {
+            if (key === drawer) {
+              newStates[key].zIndex = maxZIndex + 1;
+            } else {
+              newStates[key].zIndex = Math.max(
+                1,
+                newStates[key].zIndex - 1
+              );
+            }
+          });
+          return newStates;
         });
-        return newStates;
-      });
-      setActiveDrawer(drawer);
-    }, [drawerStates]);
+        setActiveDrawer(drawer);
+      },
+      [drawerStates]
+    );
     const selectedNode = selectedNodeId ? findNode(xmlTree2, selectedNodeId) : null;
-    return /* @__PURE__ */ import_react146.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react146.default.createElement("div", { className: "border-bottom p-2 bg-light" }, /* @__PURE__ */ import_react146.default.createElement("div", { className: "d-flex justify-content-center align-items-center" }, /* @__PURE__ */ import_react146.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react146.default.createElement(
+    const convertTreeToXML = (0, import_react146.useCallback)((node, depth = 0) => {
+      const indent = "  ".repeat(depth);
+      const attributes = Object.entries(node.attributes).map(([key, value]) => ` ${key}="${value}"`).join("");
+      const hasTextContent = node.textContent && node.textContent.trim().length > 0;
+      if (node.children.length === 0) {
+        if (hasTextContent) {
+          return `${indent}<${node.type}${attributes}>${node.textContent}</${node.type}>
+`;
+        } else {
+          return `${indent}<${node.type}${attributes} />
+`;
+        }
+      } else {
+        let result = `${indent}<${node.type}${attributes}`;
+        if (hasTextContent) {
+          result += `>${node.textContent}
+`;
+        } else {
+          result += ">\n";
+        }
+        node.children.forEach((child) => {
+          result += convertTreeToXML(child, depth + 1);
+        });
+        result += `${indent}</${node.type}>
+`;
+        return result;
+      }
+    }, []);
+    const handleSave = (0, import_react146.useCallback)(async () => {
+      const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+${convertTreeToXML(xmlTree2)}`;
+      console.log("Saving XML content:", xmlContent);
+      if (!xmlContent.includes("kanban:KanbanProcess")) {
+        console.warn("XML content may not be properly formatted");
+      }
+      try {
+        const response = await fetch("/api/files/write", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            path: "example/single-kanban-process.xml",
+            content: xmlContent
+          })
+        });
+        if (response.ok) {
+          alert("File saved successfully!");
+          window.location.reload();
+        } else {
+          const error = await response.json();
+          console.error("Error response:", error);
+          alert(`Error saving file: ${error.error}`);
+        }
+      } catch (error) {
+        console.error("Error saving file:", error);
+        alert("Failed to save file");
+      }
+    }, [xmlTree2, convertTreeToXML]);
+    return /* @__PURE__ */ import_react146.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react146.default.createElement("div", { className: "border-bottom p-0 bg-light" }, /* @__PURE__ */ import_react146.default.createElement("div", { className: "d-flex justify-content-center align-items-center" }, /* @__PURE__ */ import_react146.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react146.default.createElement(
       Button_default2,
       {
         variant: activeTab === "preview" ? "primary" : "outline-secondary",
@@ -69952,7 +70211,7 @@ ${indent}</${node.type}>`;
         onClick: () => setActiveTab("text")
       },
       "Text Mode"
-    )), /* @__PURE__ */ import_react146.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react146.default.createElement(
+    )), /* @__PURE__ */ import_react146.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react146.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -69968,13 +70227,20 @@ ${indent}</${node.type}>`;
         disabled: historyIndex === history.length - 1
       },
       "Redo"
-    )))), /* @__PURE__ */ import_react146.default.createElement("div", { className: "position-relative flex-grow-1" }, activeTab === "preview" ? /* @__PURE__ */ import_react146.default.createElement(import_react146.default.Fragment, null, /* @__PURE__ */ import_react146.default.createElement("div", { className: "position-absolute w-100 h-100 p-3" }, /* @__PURE__ */ import_react146.default.createElement(
+    )), /* @__PURE__ */ import_react146.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react146.default.createElement(
+      Button_default2,
+      {
+        variant: "outline-success",
+        onClick: handleSave
+      },
+      "Save"
+    )))), /* @__PURE__ */ import_react146.default.createElement("div", { className: "position-relative flex-grow-1" }, activeTab === "preview" ? /* @__PURE__ */ import_react146.default.createElement(import_react146.default.Fragment, null, /* @__PURE__ */ import_react146.default.createElement("div", { className: "position-absolute w-100 h-100 p-0" }, xmlTree2 && /* @__PURE__ */ import_react146.default.createElement(
       GenericPreview,
       {
         xmlTree: xmlTree2,
         selectedNodeId,
         hiddenNodes,
-        renderPreview
+        renderPreview: (node, isSelected, eventHandlers) => renderPreview(node, isSelected, eventHandlers, updateTree)
       }
     )), /* @__PURE__ */ import_react146.default.createElement(
       Drawer,
@@ -69995,7 +70261,7 @@ ${indent}</${node.type}>`;
           onRemoveNode: removeNode,
           onToggleVisibility: toggleNodeVisibility,
           hiddenNodes,
-          nodeTypes
+          nodeTypes: nodeTypes2
         }
       ))
     ), /* @__PURE__ */ import_react146.default.createElement(
@@ -70021,16 +70287,10 @@ ${indent}</${node.type}>`;
         onBringToFront: () => bringToFront("bottom"),
         title: "Navigation Help"
       },
-      /* @__PURE__ */ import_react146.default.createElement("div", { className: "p-3" }, /* @__PURE__ */ import_react146.default.createElement("h4", null, "Pan & Zoom Controls"), /* @__PURE__ */ import_react146.default.createElement("p", null, /* @__PURE__ */ import_react146.default.createElement("strong", null, "Zoom:"), " Use mouse wheel or +/- buttons"), /* @__PURE__ */ import_react146.default.createElement("p", null, /* @__PURE__ */ import_react146.default.createElement("strong", null, "Pan:"), " Middle mouse button or Alt + Left click and drag"), /* @__PURE__ */ import_react146.default.createElement("p", null, /* @__PURE__ */ import_react146.default.createElement("strong", null, "Reset:"), " Click the Reset button to return to default view"), /* @__PURE__ */ import_react146.default.createElement("p", { className: "text-muted" }, "Note: These controls work across all editors (SVG, Bootstrap, GraphML)"))
+      /* @__PURE__ */ import_react146.default.createElement("div", { className: "p-1" }, /* @__PURE__ */ import_react146.default.createElement("h6", { className: "mb-0 small" }, "Pan & Zoom"), /* @__PURE__ */ import_react146.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react146.default.createElement("strong", null, "Zoom:"), " Wheel"), /* @__PURE__ */ import_react146.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react146.default.createElement("strong", null, "Pan:"), " Alt+drag"), /* @__PURE__ */ import_react146.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react146.default.createElement("strong", null, "Reset:"), " Button"))
     )) : (
       /* Text Mode - Full screen text editor, no drawers */
-      /* @__PURE__ */ import_react146.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-3" }, /* @__PURE__ */ import_react146.default.createElement(
-        GenericTextEditor,
-        {
-          xmlTree: xmlTree2,
-          onUpdateTree: setXmlTree
-        }
-      ))
+      /* @__PURE__ */ import_react146.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-0" }, /* @__PURE__ */ import_react146.default.createElement(GenericTextEditor, { xmlTree: xmlTree2, onUpdateTree: setXmlTree }))
     )));
   };
 
@@ -72178,22 +72438,3793 @@ ${indent}</${node.type}>`;
   ), /* @__PURE__ */ import_react153.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send"))));
 
   // src/flua/FluaPage.tsx
+  var import_react172 = __toESM(require_react(), 1);
+
+  // node_modules/react-dnd/dist/core/DndContext.js
   var import_react154 = __toESM(require_react(), 1);
+  var DndContext = (0, import_react154.createContext)({
+    dragDropManager: void 0
+  });
+
+  // node_modules/react-dnd/dist/core/DndProvider.js
+  var import_jsx_runtime111 = __toESM(require_jsx_runtime(), 1);
+
+  // node_modules/redux/es/redux.js
+  var $$observable = function() {
+    return typeof Symbol === "function" && Symbol.observable || "@@observable";
+  }();
+  var randomString = function randomString2() {
+    return Math.random().toString(36).substring(7).split("").join(".");
+  };
+  var ActionTypes = {
+    INIT: "@@redux/INIT" + randomString(),
+    REPLACE: "@@redux/REPLACE" + randomString(),
+    PROBE_UNKNOWN_ACTION: function PROBE_UNKNOWN_ACTION() {
+      return "@@redux/PROBE_UNKNOWN_ACTION" + randomString();
+    }
+  };
+  function isPlainObject(obj) {
+    if (typeof obj !== "object" || obj === null)
+      return false;
+    var proto = obj;
+    while (Object.getPrototypeOf(proto) !== null) {
+      proto = Object.getPrototypeOf(proto);
+    }
+    return Object.getPrototypeOf(obj) === proto;
+  }
+  function miniKindOf(val) {
+    if (val === void 0)
+      return "undefined";
+    if (val === null)
+      return "null";
+    var type = typeof val;
+    switch (type) {
+      case "boolean":
+      case "string":
+      case "number":
+      case "symbol":
+      case "function": {
+        return type;
+      }
+    }
+    if (Array.isArray(val))
+      return "array";
+    if (isDate(val))
+      return "date";
+    if (isError(val))
+      return "error";
+    var constructorName = ctorName(val);
+    switch (constructorName) {
+      case "Symbol":
+      case "Promise":
+      case "WeakMap":
+      case "WeakSet":
+      case "Map":
+      case "Set":
+        return constructorName;
+    }
+    return type.slice(8, -1).toLowerCase().replace(/\s/g, "");
+  }
+  function ctorName(val) {
+    return typeof val.constructor === "function" ? val.constructor.name : null;
+  }
+  function isError(val) {
+    return val instanceof Error || typeof val.message === "string" && val.constructor && typeof val.constructor.stackTraceLimit === "number";
+  }
+  function isDate(val) {
+    if (val instanceof Date)
+      return true;
+    return typeof val.toDateString === "function" && typeof val.getDate === "function" && typeof val.setDate === "function";
+  }
+  function kindOf(val) {
+    var typeOfVal = typeof val;
+    if (true) {
+      typeOfVal = miniKindOf(val);
+    }
+    return typeOfVal;
+  }
+  function createStore(reducer, preloadedState, enhancer) {
+    var _ref2;
+    if (typeof preloadedState === "function" && typeof enhancer === "function" || typeof enhancer === "function" && typeof arguments[3] === "function") {
+      throw new Error(false ? formatProdErrorMessage(0) : "It looks like you are passing several store enhancers to createStore(). This is not supported. Instead, compose them together to a single function. See https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store-with-enhancers for an example.");
+    }
+    if (typeof preloadedState === "function" && typeof enhancer === "undefined") {
+      enhancer = preloadedState;
+      preloadedState = void 0;
+    }
+    if (typeof enhancer !== "undefined") {
+      if (typeof enhancer !== "function") {
+        throw new Error(false ? formatProdErrorMessage(1) : "Expected the enhancer to be a function. Instead, received: '" + kindOf(enhancer) + "'");
+      }
+      return enhancer(createStore)(reducer, preloadedState);
+    }
+    if (typeof reducer !== "function") {
+      throw new Error(false ? formatProdErrorMessage(2) : "Expected the root reducer to be a function. Instead, received: '" + kindOf(reducer) + "'");
+    }
+    var currentReducer = reducer;
+    var currentState = preloadedState;
+    var currentListeners = [];
+    var nextListeners = currentListeners;
+    var isDispatching = false;
+    function ensureCanMutateNextListeners() {
+      if (nextListeners === currentListeners) {
+        nextListeners = currentListeners.slice();
+      }
+    }
+    function getState2() {
+      if (isDispatching) {
+        throw new Error(false ? formatProdErrorMessage(3) : "You may not call store.getState() while the reducer is executing. The reducer has already received the state as an argument. Pass it down from the top reducer instead of reading it from the store.");
+      }
+      return currentState;
+    }
+    function subscribe(listener) {
+      if (typeof listener !== "function") {
+        throw new Error(false ? formatProdErrorMessage(4) : "Expected the listener to be a function. Instead, received: '" + kindOf(listener) + "'");
+      }
+      if (isDispatching) {
+        throw new Error(false ? formatProdErrorMessage(5) : "You may not call store.subscribe() while the reducer is executing. If you would like to be notified after the store has been updated, subscribe from a component and invoke store.getState() in the callback to access the latest state. See https://redux.js.org/api/store#subscribelistener for more details.");
+      }
+      var isSubscribed = true;
+      ensureCanMutateNextListeners();
+      nextListeners.push(listener);
+      return function unsubscribe() {
+        if (!isSubscribed) {
+          return;
+        }
+        if (isDispatching) {
+          throw new Error(false ? formatProdErrorMessage(6) : "You may not unsubscribe from a store listener while the reducer is executing. See https://redux.js.org/api/store#subscribelistener for more details.");
+        }
+        isSubscribed = false;
+        ensureCanMutateNextListeners();
+        var index3 = nextListeners.indexOf(listener);
+        nextListeners.splice(index3, 1);
+        currentListeners = null;
+      };
+    }
+    function dispatch(action) {
+      if (!isPlainObject(action)) {
+        throw new Error(false ? formatProdErrorMessage(7) : "Actions must be plain objects. Instead, the actual type was: '" + kindOf(action) + "'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.");
+      }
+      if (typeof action.type === "undefined") {
+        throw new Error(false ? formatProdErrorMessage(8) : 'Actions may not have an undefined "type" property. You may have misspelled an action type string constant.');
+      }
+      if (isDispatching) {
+        throw new Error(false ? formatProdErrorMessage(9) : "Reducers may not dispatch actions.");
+      }
+      try {
+        isDispatching = true;
+        currentState = currentReducer(currentState, action);
+      } finally {
+        isDispatching = false;
+      }
+      var listeners = currentListeners = nextListeners;
+      for (var i2 = 0; i2 < listeners.length; i2++) {
+        var listener = listeners[i2];
+        listener();
+      }
+      return action;
+    }
+    function replaceReducer(nextReducer) {
+      if (typeof nextReducer !== "function") {
+        throw new Error(false ? formatProdErrorMessage(10) : "Expected the nextReducer to be a function. Instead, received: '" + kindOf(nextReducer));
+      }
+      currentReducer = nextReducer;
+      dispatch({
+        type: ActionTypes.REPLACE
+      });
+    }
+    function observable() {
+      var _ref;
+      var outerSubscribe = subscribe;
+      return _ref = {
+        /**
+         * The minimal observable subscription method.
+         * @param {Object} observer Any object that can be used as an observer.
+         * The observer object should have a `next` method.
+         * @returns {subscription} An object with an `unsubscribe` method that can
+         * be used to unsubscribe the observable from the store, and prevent further
+         * emission of values from the observable.
+         */
+        subscribe: function subscribe2(observer) {
+          if (typeof observer !== "object" || observer === null) {
+            throw new Error(false ? formatProdErrorMessage(11) : "Expected the observer to be an object. Instead, received: '" + kindOf(observer) + "'");
+          }
+          function observeState() {
+            if (observer.next) {
+              observer.next(getState2());
+            }
+          }
+          observeState();
+          var unsubscribe = outerSubscribe(observeState);
+          return {
+            unsubscribe
+          };
+        }
+      }, _ref[$$observable] = function() {
+        return this;
+      }, _ref;
+    }
+    dispatch({
+      type: ActionTypes.INIT
+    });
+    return _ref2 = {
+      dispatch,
+      subscribe,
+      getState: getState2,
+      replaceReducer
+    }, _ref2[$$observable] = observable, _ref2;
+  }
+
+  // node_modules/@react-dnd/invariant/dist/index.js
+  function invariant6(condition, format, ...args) {
+    if (isProduction()) {
+      if (format === void 0) {
+        throw new Error("invariant requires an error message argument");
+      }
+    }
+    if (!condition) {
+      let error;
+      if (format === void 0) {
+        error = new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");
+      } else {
+        let argIndex = 0;
+        error = new Error(format.replace(/%s/g, function() {
+          return args[argIndex++];
+        }));
+        error.name = "Invariant Violation";
+      }
+      error.framesToPop = 1;
+      throw error;
+    }
+  }
+  function isProduction() {
+    return typeof process !== "undefined" && false;
+  }
+
+  // node_modules/dnd-core/dist/utils/js_utils.js
+  function get(obj, path, defaultValue) {
+    return path.split(".").reduce(
+      (a2, c2) => a2 && a2[c2] ? a2[c2] : defaultValue || null,
+      obj
+    );
+  }
+  function without(items, item) {
+    return items.filter(
+      (i2) => i2 !== item
+    );
+  }
+  function isObject3(input) {
+    return typeof input === "object";
+  }
+  function xor(itemsA, itemsB) {
+    const map = /* @__PURE__ */ new Map();
+    const insertItem = (item) => {
+      map.set(item, map.has(item) ? map.get(item) + 1 : 1);
+    };
+    itemsA.forEach(insertItem);
+    itemsB.forEach(insertItem);
+    const result = [];
+    map.forEach((count, key) => {
+      if (count === 1) {
+        result.push(key);
+      }
+    });
+    return result;
+  }
+  function intersection(itemsA, itemsB) {
+    return itemsA.filter(
+      (t2) => itemsB.indexOf(t2) > -1
+    );
+  }
+
+  // node_modules/dnd-core/dist/actions/dragDrop/types.js
+  var INIT_COORDS = "dnd-core/INIT_COORDS";
+  var BEGIN_DRAG = "dnd-core/BEGIN_DRAG";
+  var PUBLISH_DRAG_SOURCE = "dnd-core/PUBLISH_DRAG_SOURCE";
+  var HOVER = "dnd-core/HOVER";
+  var DROP = "dnd-core/DROP";
+  var END_DRAG = "dnd-core/END_DRAG";
+
+  // node_modules/dnd-core/dist/actions/dragDrop/local/setClientOffset.js
+  function setClientOffset(clientOffset, sourceClientOffset) {
+    return {
+      type: INIT_COORDS,
+      payload: {
+        sourceClientOffset: sourceClientOffset || null,
+        clientOffset: clientOffset || null
+      }
+    };
+  }
+
+  // node_modules/dnd-core/dist/actions/dragDrop/beginDrag.js
+  var ResetCoordinatesAction = {
+    type: INIT_COORDS,
+    payload: {
+      clientOffset: null,
+      sourceClientOffset: null
+    }
+  };
+  function createBeginDrag(manager2) {
+    return function beginDrag(sourceIds = [], options = {
+      publishSource: true
+    }) {
+      const { publishSource = true, clientOffset, getSourceClientOffset: getSourceClientOffset2 } = options;
+      const monitor = manager2.getMonitor();
+      const registry = manager2.getRegistry();
+      manager2.dispatch(setClientOffset(clientOffset));
+      verifyInvariants(sourceIds, monitor, registry);
+      const sourceId = getDraggableSource(sourceIds, monitor);
+      if (sourceId == null) {
+        manager2.dispatch(ResetCoordinatesAction);
+        return;
+      }
+      let sourceClientOffset = null;
+      if (clientOffset) {
+        if (!getSourceClientOffset2) {
+          throw new Error("getSourceClientOffset must be defined");
+        }
+        verifyGetSourceClientOffsetIsFunction(getSourceClientOffset2);
+        sourceClientOffset = getSourceClientOffset2(sourceId);
+      }
+      manager2.dispatch(setClientOffset(clientOffset, sourceClientOffset));
+      const source = registry.getSource(sourceId);
+      const item = source.beginDrag(monitor, sourceId);
+      if (item == null) {
+        return void 0;
+      }
+      verifyItemIsObject(item);
+      registry.pinSource(sourceId);
+      const itemType = registry.getSourceType(sourceId);
+      return {
+        type: BEGIN_DRAG,
+        payload: {
+          itemType,
+          item,
+          sourceId,
+          clientOffset: clientOffset || null,
+          sourceClientOffset: sourceClientOffset || null,
+          isSourcePublic: !!publishSource
+        }
+      };
+    };
+  }
+  function verifyInvariants(sourceIds, monitor, registry) {
+    invariant6(!monitor.isDragging(), "Cannot call beginDrag while dragging.");
+    sourceIds.forEach(function(sourceId) {
+      invariant6(registry.getSource(sourceId), "Expected sourceIds to be registered.");
+    });
+  }
+  function verifyGetSourceClientOffsetIsFunction(getSourceClientOffset2) {
+    invariant6(typeof getSourceClientOffset2 === "function", "When clientOffset is provided, getSourceClientOffset must be a function.");
+  }
+  function verifyItemIsObject(item) {
+    invariant6(isObject3(item), "Item must be an object.");
+  }
+  function getDraggableSource(sourceIds, monitor) {
+    let sourceId = null;
+    for (let i2 = sourceIds.length - 1; i2 >= 0; i2--) {
+      if (monitor.canDragSource(sourceIds[i2])) {
+        sourceId = sourceIds[i2];
+        break;
+      }
+    }
+    return sourceId;
+  }
+
+  // node_modules/dnd-core/dist/actions/dragDrop/drop.js
+  function _defineProperty4(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  function _objectSpread(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = arguments[i2] != null ? arguments[i2] : {};
+      var ownKeys3 = Object.keys(source);
+      if (typeof Object.getOwnPropertySymbols === "function") {
+        ownKeys3 = ownKeys3.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+        }));
+      }
+      ownKeys3.forEach(function(key) {
+        _defineProperty4(target, key, source[key]);
+      });
+    }
+    return target;
+  }
+  function createDrop(manager2) {
+    return function drop(options = {}) {
+      const monitor = manager2.getMonitor();
+      const registry = manager2.getRegistry();
+      verifyInvariants2(monitor);
+      const targetIds = getDroppableTargets(monitor);
+      targetIds.forEach((targetId, index3) => {
+        const dropResult = determineDropResult(targetId, index3, registry, monitor);
+        const action = {
+          type: DROP,
+          payload: {
+            dropResult: _objectSpread({}, options, dropResult)
+          }
+        };
+        manager2.dispatch(action);
+      });
+    };
+  }
+  function verifyInvariants2(monitor) {
+    invariant6(monitor.isDragging(), "Cannot call drop while not dragging.");
+    invariant6(!monitor.didDrop(), "Cannot call drop twice during one drag operation.");
+  }
+  function determineDropResult(targetId, index3, registry, monitor) {
+    const target = registry.getTarget(targetId);
+    let dropResult = target ? target.drop(monitor, targetId) : void 0;
+    verifyDropResultType(dropResult);
+    if (typeof dropResult === "undefined") {
+      dropResult = index3 === 0 ? {} : monitor.getDropResult();
+    }
+    return dropResult;
+  }
+  function verifyDropResultType(dropResult) {
+    invariant6(typeof dropResult === "undefined" || isObject3(dropResult), "Drop result must either be an object or undefined.");
+  }
+  function getDroppableTargets(monitor) {
+    const targetIds = monitor.getTargetIds().filter(monitor.canDropOnTarget, monitor);
+    targetIds.reverse();
+    return targetIds;
+  }
+
+  // node_modules/dnd-core/dist/actions/dragDrop/endDrag.js
+  function createEndDrag(manager2) {
+    return function endDrag() {
+      const monitor = manager2.getMonitor();
+      const registry = manager2.getRegistry();
+      verifyIsDragging(monitor);
+      const sourceId = monitor.getSourceId();
+      if (sourceId != null) {
+        const source = registry.getSource(sourceId, true);
+        source.endDrag(monitor, sourceId);
+        registry.unpinSource();
+      }
+      return {
+        type: END_DRAG
+      };
+    };
+  }
+  function verifyIsDragging(monitor) {
+    invariant6(monitor.isDragging(), "Cannot call endDrag while not dragging.");
+  }
+
+  // node_modules/dnd-core/dist/utils/matchesType.js
+  function matchesType(targetType, draggedItemType) {
+    if (draggedItemType === null) {
+      return targetType === null;
+    }
+    return Array.isArray(targetType) ? targetType.some(
+      (t2) => t2 === draggedItemType
+    ) : targetType === draggedItemType;
+  }
+
+  // node_modules/dnd-core/dist/actions/dragDrop/hover.js
+  function createHover(manager2) {
+    return function hover(targetIdsArg, { clientOffset } = {}) {
+      verifyTargetIdsIsArray(targetIdsArg);
+      const targetIds = targetIdsArg.slice(0);
+      const monitor = manager2.getMonitor();
+      const registry = manager2.getRegistry();
+      const draggedItemType = monitor.getItemType();
+      removeNonMatchingTargetIds(targetIds, registry, draggedItemType);
+      checkInvariants(targetIds, monitor, registry);
+      hoverAllTargets(targetIds, monitor, registry);
+      return {
+        type: HOVER,
+        payload: {
+          targetIds,
+          clientOffset: clientOffset || null
+        }
+      };
+    };
+  }
+  function verifyTargetIdsIsArray(targetIdsArg) {
+    invariant6(Array.isArray(targetIdsArg), "Expected targetIds to be an array.");
+  }
+  function checkInvariants(targetIds, monitor, registry) {
+    invariant6(monitor.isDragging(), "Cannot call hover while not dragging.");
+    invariant6(!monitor.didDrop(), "Cannot call hover after drop.");
+    for (let i2 = 0; i2 < targetIds.length; i2++) {
+      const targetId = targetIds[i2];
+      invariant6(targetIds.lastIndexOf(targetId) === i2, "Expected targetIds to be unique in the passed array.");
+      const target = registry.getTarget(targetId);
+      invariant6(target, "Expected targetIds to be registered.");
+    }
+  }
+  function removeNonMatchingTargetIds(targetIds, registry, draggedItemType) {
+    for (let i2 = targetIds.length - 1; i2 >= 0; i2--) {
+      const targetId = targetIds[i2];
+      const targetType = registry.getTargetType(targetId);
+      if (!matchesType(targetType, draggedItemType)) {
+        targetIds.splice(i2, 1);
+      }
+    }
+  }
+  function hoverAllTargets(targetIds, monitor, registry) {
+    targetIds.forEach(function(targetId) {
+      const target = registry.getTarget(targetId);
+      target.hover(monitor, targetId);
+    });
+  }
+
+  // node_modules/dnd-core/dist/actions/dragDrop/publishDragSource.js
+  function createPublishDragSource(manager2) {
+    return function publishDragSource() {
+      const monitor = manager2.getMonitor();
+      if (monitor.isDragging()) {
+        return {
+          type: PUBLISH_DRAG_SOURCE
+        };
+      }
+      return;
+    };
+  }
+
+  // node_modules/dnd-core/dist/actions/dragDrop/index.js
+  function createDragDropActions(manager2) {
+    return {
+      beginDrag: createBeginDrag(manager2),
+      publishDragSource: createPublishDragSource(manager2),
+      hover: createHover(manager2),
+      drop: createDrop(manager2),
+      endDrag: createEndDrag(manager2)
+    };
+  }
+
+  // node_modules/dnd-core/dist/classes/DragDropManagerImpl.js
+  var DragDropManagerImpl = class {
+    receiveBackend(backend) {
+      this.backend = backend;
+    }
+    getMonitor() {
+      return this.monitor;
+    }
+    getBackend() {
+      return this.backend;
+    }
+    getRegistry() {
+      return this.monitor.registry;
+    }
+    getActions() {
+      const manager2 = this;
+      const { dispatch } = this.store;
+      function bindActionCreator(actionCreator) {
+        return (...args) => {
+          const action = actionCreator.apply(manager2, args);
+          if (typeof action !== "undefined") {
+            dispatch(action);
+          }
+        };
+      }
+      const actions = createDragDropActions(this);
+      return Object.keys(actions).reduce((boundActions, key) => {
+        const action = actions[key];
+        boundActions[key] = bindActionCreator(action);
+        return boundActions;
+      }, {});
+    }
+    dispatch(action) {
+      this.store.dispatch(action);
+    }
+    constructor(store, monitor) {
+      this.isSetUp = false;
+      this.handleRefCountChange = () => {
+        const shouldSetUp = this.store.getState().refCount > 0;
+        if (this.backend) {
+          if (shouldSetUp && !this.isSetUp) {
+            this.backend.setup();
+            this.isSetUp = true;
+          } else if (!shouldSetUp && this.isSetUp) {
+            this.backend.teardown();
+            this.isSetUp = false;
+          }
+        }
+      };
+      this.store = store;
+      this.monitor = monitor;
+      store.subscribe(this.handleRefCountChange);
+    }
+  };
+
+  // node_modules/dnd-core/dist/utils/coords.js
+  function add(a2, b2) {
+    return {
+      x: a2.x + b2.x,
+      y: a2.y + b2.y
+    };
+  }
+  function subtract(a2, b2) {
+    return {
+      x: a2.x - b2.x,
+      y: a2.y - b2.y
+    };
+  }
+  function getSourceClientOffset(state) {
+    const { clientOffset, initialClientOffset, initialSourceClientOffset } = state;
+    if (!clientOffset || !initialClientOffset || !initialSourceClientOffset) {
+      return null;
+    }
+    return subtract(add(clientOffset, initialSourceClientOffset), initialClientOffset);
+  }
+  function getDifferenceFromInitialOffset(state) {
+    const { clientOffset, initialClientOffset } = state;
+    if (!clientOffset || !initialClientOffset) {
+      return null;
+    }
+    return subtract(clientOffset, initialClientOffset);
+  }
+
+  // node_modules/dnd-core/dist/utils/dirtiness.js
+  var NONE = [];
+  var ALL = [];
+  NONE.__IS_NONE__ = true;
+  ALL.__IS_ALL__ = true;
+  function areDirty(dirtyIds, handlerIds) {
+    if (dirtyIds === NONE) {
+      return false;
+    }
+    if (dirtyIds === ALL || typeof handlerIds === "undefined") {
+      return true;
+    }
+    const commonIds = intersection(handlerIds, dirtyIds);
+    return commonIds.length > 0;
+  }
+
+  // node_modules/dnd-core/dist/classes/DragDropMonitorImpl.js
+  var DragDropMonitorImpl = class {
+    subscribeToStateChange(listener, options = {}) {
+      const { handlerIds } = options;
+      invariant6(typeof listener === "function", "listener must be a function.");
+      invariant6(typeof handlerIds === "undefined" || Array.isArray(handlerIds), "handlerIds, when specified, must be an array of strings.");
+      let prevStateId = this.store.getState().stateId;
+      const handleChange = () => {
+        const state = this.store.getState();
+        const currentStateId = state.stateId;
+        try {
+          const canSkipListener = currentStateId === prevStateId || currentStateId === prevStateId + 1 && !areDirty(state.dirtyHandlerIds, handlerIds);
+          if (!canSkipListener) {
+            listener();
+          }
+        } finally {
+          prevStateId = currentStateId;
+        }
+      };
+      return this.store.subscribe(handleChange);
+    }
+    subscribeToOffsetChange(listener) {
+      invariant6(typeof listener === "function", "listener must be a function.");
+      let previousState = this.store.getState().dragOffset;
+      const handleChange = () => {
+        const nextState = this.store.getState().dragOffset;
+        if (nextState === previousState) {
+          return;
+        }
+        previousState = nextState;
+        listener();
+      };
+      return this.store.subscribe(handleChange);
+    }
+    canDragSource(sourceId) {
+      if (!sourceId) {
+        return false;
+      }
+      const source = this.registry.getSource(sourceId);
+      invariant6(source, `Expected to find a valid source. sourceId=${sourceId}`);
+      if (this.isDragging()) {
+        return false;
+      }
+      return source.canDrag(this, sourceId);
+    }
+    canDropOnTarget(targetId) {
+      if (!targetId) {
+        return false;
+      }
+      const target = this.registry.getTarget(targetId);
+      invariant6(target, `Expected to find a valid target. targetId=${targetId}`);
+      if (!this.isDragging() || this.didDrop()) {
+        return false;
+      }
+      const targetType = this.registry.getTargetType(targetId);
+      const draggedItemType = this.getItemType();
+      return matchesType(targetType, draggedItemType) && target.canDrop(this, targetId);
+    }
+    isDragging() {
+      return Boolean(this.getItemType());
+    }
+    isDraggingSource(sourceId) {
+      if (!sourceId) {
+        return false;
+      }
+      const source = this.registry.getSource(sourceId, true);
+      invariant6(source, `Expected to find a valid source. sourceId=${sourceId}`);
+      if (!this.isDragging() || !this.isSourcePublic()) {
+        return false;
+      }
+      const sourceType = this.registry.getSourceType(sourceId);
+      const draggedItemType = this.getItemType();
+      if (sourceType !== draggedItemType) {
+        return false;
+      }
+      return source.isDragging(this, sourceId);
+    }
+    isOverTarget(targetId, options = {
+      shallow: false
+    }) {
+      if (!targetId) {
+        return false;
+      }
+      const { shallow } = options;
+      if (!this.isDragging()) {
+        return false;
+      }
+      const targetType = this.registry.getTargetType(targetId);
+      const draggedItemType = this.getItemType();
+      if (draggedItemType && !matchesType(targetType, draggedItemType)) {
+        return false;
+      }
+      const targetIds = this.getTargetIds();
+      if (!targetIds.length) {
+        return false;
+      }
+      const index3 = targetIds.indexOf(targetId);
+      if (shallow) {
+        return index3 === targetIds.length - 1;
+      } else {
+        return index3 > -1;
+      }
+    }
+    getItemType() {
+      return this.store.getState().dragOperation.itemType;
+    }
+    getItem() {
+      return this.store.getState().dragOperation.item;
+    }
+    getSourceId() {
+      return this.store.getState().dragOperation.sourceId;
+    }
+    getTargetIds() {
+      return this.store.getState().dragOperation.targetIds;
+    }
+    getDropResult() {
+      return this.store.getState().dragOperation.dropResult;
+    }
+    didDrop() {
+      return this.store.getState().dragOperation.didDrop;
+    }
+    isSourcePublic() {
+      return Boolean(this.store.getState().dragOperation.isSourcePublic);
+    }
+    getInitialClientOffset() {
+      return this.store.getState().dragOffset.initialClientOffset;
+    }
+    getInitialSourceClientOffset() {
+      return this.store.getState().dragOffset.initialSourceClientOffset;
+    }
+    getClientOffset() {
+      return this.store.getState().dragOffset.clientOffset;
+    }
+    getSourceClientOffset() {
+      return getSourceClientOffset(this.store.getState().dragOffset);
+    }
+    getDifferenceFromInitialOffset() {
+      return getDifferenceFromInitialOffset(this.store.getState().dragOffset);
+    }
+    constructor(store, registry) {
+      this.store = store;
+      this.registry = registry;
+    }
+  };
+
+  // node_modules/@react-dnd/asap/dist/makeRequestCall.js
+  var scope = typeof global !== "undefined" ? global : self;
+  var BrowserMutationObserver = scope.MutationObserver || scope.WebKitMutationObserver;
+  function makeRequestCallFromTimer(callback) {
+    return function requestCall() {
+      const timeoutHandle = setTimeout(handleTimer, 0);
+      const intervalHandle = setInterval(handleTimer, 50);
+      function handleTimer() {
+        clearTimeout(timeoutHandle);
+        clearInterval(intervalHandle);
+        callback();
+      }
+    };
+  }
+  function makeRequestCallFromMutationObserver(callback) {
+    let toggle = 1;
+    const observer = new BrowserMutationObserver(callback);
+    const node = document.createTextNode("");
+    observer.observe(node, {
+      characterData: true
+    });
+    return function requestCall() {
+      toggle = -toggle;
+      node.data = toggle;
+    };
+  }
+  var makeRequestCall = typeof BrowserMutationObserver === "function" ? (
+    // reliably everywhere they are implemented.
+    // They are implemented in all modern browsers.
+    //
+    // - Android 4-4.3
+    // - Chrome 26-34
+    // - Firefox 14-29
+    // - Internet Explorer 11
+    // - iPad Safari 6-7.1
+    // - iPhone Safari 7-7.1
+    // - Safari 6-7
+    makeRequestCallFromMutationObserver
+  ) : (
+    // task queue, are implemented in Internet Explorer 10, Safari 5.0-1, and Opera
+    // 11-12, and in web workers in many engines.
+    // Although message channels yield to any queued rendering and IO tasks, they
+    // would be better than imposing the 4ms delay of timers.
+    // However, they do not work reliably in Internet Explorer or Safari.
+    // Internet Explorer 10 is the only browser that has setImmediate but does
+    // not have MutationObservers.
+    // Although setImmediate yields to the browser's renderer, it would be
+    // preferrable to falling back to setTimeout since it does not have
+    // the minimum 4ms penalty.
+    // Unfortunately there appears to be a bug in Internet Explorer 10 Mobile (and
+    // Desktop to a lesser extent) that renders both setImmediate and
+    // MessageChannel useless for the purposes of ASAP.
+    // https://github.com/kriskowal/q/issues/396
+    // Timers are implemented universally.
+    // We fall back to timers in workers in most engines, and in foreground
+    // contexts in the following browsers.
+    // However, note that even this simple case requires nuances to operate in a
+    // broad spectrum of browsers.
+    //
+    // - Firefox 3-13
+    // - Internet Explorer 6-9
+    // - iPad Safari 4.3
+    // - Lynx 2.8.7
+    makeRequestCallFromTimer
+  );
+
+  // node_modules/@react-dnd/asap/dist/AsapQueue.js
+  var AsapQueue = class {
+    // Use the fastest means possible to execute a task in its own turn, with
+    // priority over other events including IO, animation, reflow, and redraw
+    // events in browsers.
+    //
+    // An exception thrown by a task will permanently interrupt the processing of
+    // subsequent tasks. The higher level `asap` function ensures that if an
+    // exception is thrown by a task, that the task queue will continue flushing as
+    // soon as possible, but if you use `rawAsap` directly, you are responsible to
+    // either ensure that no exceptions are thrown from your task, or to manually
+    // call `rawAsap.requestFlush` if an exception is thrown.
+    enqueueTask(task) {
+      const { queue: q2, requestFlush } = this;
+      if (!q2.length) {
+        requestFlush();
+        this.flushing = true;
+      }
+      q2[q2.length] = task;
+    }
+    constructor() {
+      this.queue = [];
+      this.pendingErrors = [];
+      this.flushing = false;
+      this.index = 0;
+      this.capacity = 1024;
+      this.flush = () => {
+        const { queue: q2 } = this;
+        while (this.index < q2.length) {
+          const currentIndex = this.index;
+          this.index++;
+          q2[currentIndex].call();
+          if (this.index > this.capacity) {
+            for (let scan = 0, newLength = q2.length - this.index; scan < newLength; scan++) {
+              q2[scan] = q2[scan + this.index];
+            }
+            q2.length -= this.index;
+            this.index = 0;
+          }
+        }
+        q2.length = 0;
+        this.index = 0;
+        this.flushing = false;
+      };
+      this.registerPendingError = (err) => {
+        this.pendingErrors.push(err);
+        this.requestErrorThrow();
+      };
+      this.requestFlush = makeRequestCall(this.flush);
+      this.requestErrorThrow = makeRequestCallFromTimer(() => {
+        if (this.pendingErrors.length) {
+          throw this.pendingErrors.shift();
+        }
+      });
+    }
+  };
+
+  // node_modules/@react-dnd/asap/dist/RawTask.js
+  var RawTask = class {
+    call() {
+      try {
+        this.task && this.task();
+      } catch (error) {
+        this.onError(error);
+      } finally {
+        this.task = null;
+        this.release(this);
+      }
+    }
+    constructor(onError, release) {
+      this.onError = onError;
+      this.release = release;
+      this.task = null;
+    }
+  };
+
+  // node_modules/@react-dnd/asap/dist/TaskFactory.js
+  var TaskFactory = class {
+    create(task) {
+      const tasks = this.freeTasks;
+      const t1 = tasks.length ? tasks.pop() : new RawTask(
+        this.onError,
+        (t2) => tasks[tasks.length] = t2
+      );
+      t1.task = task;
+      return t1;
+    }
+    constructor(onError) {
+      this.onError = onError;
+      this.freeTasks = [];
+    }
+  };
+
+  // node_modules/@react-dnd/asap/dist/asap.js
+  var asapQueue = new AsapQueue();
+  var taskFactory = new TaskFactory(asapQueue.registerPendingError);
+  function asap(task) {
+    asapQueue.enqueueTask(taskFactory.create(task));
+  }
+
+  // node_modules/dnd-core/dist/actions/registry.js
+  var ADD_SOURCE = "dnd-core/ADD_SOURCE";
+  var ADD_TARGET = "dnd-core/ADD_TARGET";
+  var REMOVE_SOURCE = "dnd-core/REMOVE_SOURCE";
+  var REMOVE_TARGET = "dnd-core/REMOVE_TARGET";
+  function addSource(sourceId) {
+    return {
+      type: ADD_SOURCE,
+      payload: {
+        sourceId
+      }
+    };
+  }
+  function addTarget(targetId) {
+    return {
+      type: ADD_TARGET,
+      payload: {
+        targetId
+      }
+    };
+  }
+  function removeSource(sourceId) {
+    return {
+      type: REMOVE_SOURCE,
+      payload: {
+        sourceId
+      }
+    };
+  }
+  function removeTarget(targetId) {
+    return {
+      type: REMOVE_TARGET,
+      payload: {
+        targetId
+      }
+    };
+  }
+
+  // node_modules/dnd-core/dist/contracts.js
+  function validateSourceContract(source) {
+    invariant6(typeof source.canDrag === "function", "Expected canDrag to be a function.");
+    invariant6(typeof source.beginDrag === "function", "Expected beginDrag to be a function.");
+    invariant6(typeof source.endDrag === "function", "Expected endDrag to be a function.");
+  }
+  function validateTargetContract(target) {
+    invariant6(typeof target.canDrop === "function", "Expected canDrop to be a function.");
+    invariant6(typeof target.hover === "function", "Expected hover to be a function.");
+    invariant6(typeof target.drop === "function", "Expected beginDrag to be a function.");
+  }
+  function validateType(type, allowArray) {
+    if (allowArray && Array.isArray(type)) {
+      type.forEach(
+        (t2) => validateType(t2, false)
+      );
+      return;
+    }
+    invariant6(typeof type === "string" || typeof type === "symbol", allowArray ? "Type can only be a string, a symbol, or an array of either." : "Type can only be a string or a symbol.");
+  }
+
+  // node_modules/dnd-core/dist/interfaces.js
+  var HandlerRole;
+  (function(HandlerRole2) {
+    HandlerRole2["SOURCE"] = "SOURCE";
+    HandlerRole2["TARGET"] = "TARGET";
+  })(HandlerRole || (HandlerRole = {}));
+
+  // node_modules/dnd-core/dist/utils/getNextUniqueId.js
+  var nextUniqueId = 0;
+  function getNextUniqueId() {
+    return nextUniqueId++;
+  }
+
+  // node_modules/dnd-core/dist/classes/HandlerRegistryImpl.js
+  function getNextHandlerId(role) {
+    const id = getNextUniqueId().toString();
+    switch (role) {
+      case HandlerRole.SOURCE:
+        return `S${id}`;
+      case HandlerRole.TARGET:
+        return `T${id}`;
+      default:
+        throw new Error(`Unknown Handler Role: ${role}`);
+    }
+  }
+  function parseRoleFromHandlerId(handlerId) {
+    switch (handlerId[0]) {
+      case "S":
+        return HandlerRole.SOURCE;
+      case "T":
+        return HandlerRole.TARGET;
+      default:
+        throw new Error(`Cannot parse handler ID: ${handlerId}`);
+    }
+  }
+  function mapContainsValue(map, searchValue) {
+    const entries = map.entries();
+    let isDone = false;
+    do {
+      const { done, value: [, value] } = entries.next();
+      if (value === searchValue) {
+        return true;
+      }
+      isDone = !!done;
+    } while (!isDone);
+    return false;
+  }
+  var HandlerRegistryImpl = class {
+    addSource(type, source) {
+      validateType(type);
+      validateSourceContract(source);
+      const sourceId = this.addHandler(HandlerRole.SOURCE, type, source);
+      this.store.dispatch(addSource(sourceId));
+      return sourceId;
+    }
+    addTarget(type, target) {
+      validateType(type, true);
+      validateTargetContract(target);
+      const targetId = this.addHandler(HandlerRole.TARGET, type, target);
+      this.store.dispatch(addTarget(targetId));
+      return targetId;
+    }
+    containsHandler(handler) {
+      return mapContainsValue(this.dragSources, handler) || mapContainsValue(this.dropTargets, handler);
+    }
+    getSource(sourceId, includePinned = false) {
+      invariant6(this.isSourceId(sourceId), "Expected a valid source ID.");
+      const isPinned = includePinned && sourceId === this.pinnedSourceId;
+      const source = isPinned ? this.pinnedSource : this.dragSources.get(sourceId);
+      return source;
+    }
+    getTarget(targetId) {
+      invariant6(this.isTargetId(targetId), "Expected a valid target ID.");
+      return this.dropTargets.get(targetId);
+    }
+    getSourceType(sourceId) {
+      invariant6(this.isSourceId(sourceId), "Expected a valid source ID.");
+      return this.types.get(sourceId);
+    }
+    getTargetType(targetId) {
+      invariant6(this.isTargetId(targetId), "Expected a valid target ID.");
+      return this.types.get(targetId);
+    }
+    isSourceId(handlerId) {
+      const role = parseRoleFromHandlerId(handlerId);
+      return role === HandlerRole.SOURCE;
+    }
+    isTargetId(handlerId) {
+      const role = parseRoleFromHandlerId(handlerId);
+      return role === HandlerRole.TARGET;
+    }
+    removeSource(sourceId) {
+      invariant6(this.getSource(sourceId), "Expected an existing source.");
+      this.store.dispatch(removeSource(sourceId));
+      asap(() => {
+        this.dragSources.delete(sourceId);
+        this.types.delete(sourceId);
+      });
+    }
+    removeTarget(targetId) {
+      invariant6(this.getTarget(targetId), "Expected an existing target.");
+      this.store.dispatch(removeTarget(targetId));
+      this.dropTargets.delete(targetId);
+      this.types.delete(targetId);
+    }
+    pinSource(sourceId) {
+      const source = this.getSource(sourceId);
+      invariant6(source, "Expected an existing source.");
+      this.pinnedSourceId = sourceId;
+      this.pinnedSource = source;
+    }
+    unpinSource() {
+      invariant6(this.pinnedSource, "No source is pinned at the time.");
+      this.pinnedSourceId = null;
+      this.pinnedSource = null;
+    }
+    addHandler(role, type, handler) {
+      const id = getNextHandlerId(role);
+      this.types.set(id, type);
+      if (role === HandlerRole.SOURCE) {
+        this.dragSources.set(id, handler);
+      } else if (role === HandlerRole.TARGET) {
+        this.dropTargets.set(id, handler);
+      }
+      return id;
+    }
+    constructor(store) {
+      this.types = /* @__PURE__ */ new Map();
+      this.dragSources = /* @__PURE__ */ new Map();
+      this.dropTargets = /* @__PURE__ */ new Map();
+      this.pinnedSourceId = null;
+      this.pinnedSource = null;
+      this.store = store;
+    }
+  };
+
+  // node_modules/dnd-core/dist/utils/equality.js
+  var strictEquality = (a2, b2) => a2 === b2;
+  function areCoordsEqual(offsetA, offsetB) {
+    if (!offsetA && !offsetB) {
+      return true;
+    } else if (!offsetA || !offsetB) {
+      return false;
+    } else {
+      return offsetA.x === offsetB.x && offsetA.y === offsetB.y;
+    }
+  }
+  function areArraysEqual(a2, b2, isEqual = strictEquality) {
+    if (a2.length !== b2.length) {
+      return false;
+    }
+    for (let i2 = 0; i2 < a2.length; ++i2) {
+      if (!isEqual(a2[i2], b2[i2])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // node_modules/dnd-core/dist/reducers/dirtyHandlerIds.js
+  function reduce(_state = NONE, action) {
+    switch (action.type) {
+      case HOVER:
+        break;
+      case ADD_SOURCE:
+      case ADD_TARGET:
+      case REMOVE_TARGET:
+      case REMOVE_SOURCE:
+        return NONE;
+      case BEGIN_DRAG:
+      case PUBLISH_DRAG_SOURCE:
+      case END_DRAG:
+      case DROP:
+      default:
+        return ALL;
+    }
+    const { targetIds = [], prevTargetIds = [] } = action.payload;
+    const result = xor(targetIds, prevTargetIds);
+    const didChange = result.length > 0 || !areArraysEqual(targetIds, prevTargetIds);
+    if (!didChange) {
+      return NONE;
+    }
+    const prevInnermostTargetId = prevTargetIds[prevTargetIds.length - 1];
+    const innermostTargetId = targetIds[targetIds.length - 1];
+    if (prevInnermostTargetId !== innermostTargetId) {
+      if (prevInnermostTargetId) {
+        result.push(prevInnermostTargetId);
+      }
+      if (innermostTargetId) {
+        result.push(innermostTargetId);
+      }
+    }
+    return result;
+  }
+
+  // node_modules/dnd-core/dist/reducers/dragOffset.js
+  function _defineProperty5(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  function _objectSpread3(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = arguments[i2] != null ? arguments[i2] : {};
+      var ownKeys3 = Object.keys(source);
+      if (typeof Object.getOwnPropertySymbols === "function") {
+        ownKeys3 = ownKeys3.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+        }));
+      }
+      ownKeys3.forEach(function(key) {
+        _defineProperty5(target, key, source[key]);
+      });
+    }
+    return target;
+  }
+  var initialState = {
+    initialSourceClientOffset: null,
+    initialClientOffset: null,
+    clientOffset: null
+  };
+  function reduce2(state = initialState, action) {
+    const { payload } = action;
+    switch (action.type) {
+      case INIT_COORDS:
+      case BEGIN_DRAG:
+        return {
+          initialSourceClientOffset: payload.sourceClientOffset,
+          initialClientOffset: payload.clientOffset,
+          clientOffset: payload.clientOffset
+        };
+      case HOVER:
+        if (areCoordsEqual(state.clientOffset, payload.clientOffset)) {
+          return state;
+        }
+        return _objectSpread3({}, state, {
+          clientOffset: payload.clientOffset
+        });
+      case END_DRAG:
+      case DROP:
+        return initialState;
+      default:
+        return state;
+    }
+  }
+
+  // node_modules/dnd-core/dist/reducers/dragOperation.js
+  function _defineProperty6(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  function _objectSpread4(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = arguments[i2] != null ? arguments[i2] : {};
+      var ownKeys3 = Object.keys(source);
+      if (typeof Object.getOwnPropertySymbols === "function") {
+        ownKeys3 = ownKeys3.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+        }));
+      }
+      ownKeys3.forEach(function(key) {
+        _defineProperty6(target, key, source[key]);
+      });
+    }
+    return target;
+  }
+  var initialState2 = {
+    itemType: null,
+    item: null,
+    sourceId: null,
+    targetIds: [],
+    dropResult: null,
+    didDrop: false,
+    isSourcePublic: null
+  };
+  function reduce3(state = initialState2, action) {
+    const { payload } = action;
+    switch (action.type) {
+      case BEGIN_DRAG:
+        return _objectSpread4({}, state, {
+          itemType: payload.itemType,
+          item: payload.item,
+          sourceId: payload.sourceId,
+          isSourcePublic: payload.isSourcePublic,
+          dropResult: null,
+          didDrop: false
+        });
+      case PUBLISH_DRAG_SOURCE:
+        return _objectSpread4({}, state, {
+          isSourcePublic: true
+        });
+      case HOVER:
+        return _objectSpread4({}, state, {
+          targetIds: payload.targetIds
+        });
+      case REMOVE_TARGET:
+        if (state.targetIds.indexOf(payload.targetId) === -1) {
+          return state;
+        }
+        return _objectSpread4({}, state, {
+          targetIds: without(state.targetIds, payload.targetId)
+        });
+      case DROP:
+        return _objectSpread4({}, state, {
+          dropResult: payload.dropResult,
+          didDrop: true,
+          targetIds: []
+        });
+      case END_DRAG:
+        return _objectSpread4({}, state, {
+          itemType: null,
+          item: null,
+          sourceId: null,
+          dropResult: null,
+          didDrop: false,
+          isSourcePublic: null,
+          targetIds: []
+        });
+      default:
+        return state;
+    }
+  }
+
+  // node_modules/dnd-core/dist/reducers/refCount.js
+  function reduce4(state = 0, action) {
+    switch (action.type) {
+      case ADD_SOURCE:
+      case ADD_TARGET:
+        return state + 1;
+      case REMOVE_SOURCE:
+      case REMOVE_TARGET:
+        return state - 1;
+      default:
+        return state;
+    }
+  }
+
+  // node_modules/dnd-core/dist/reducers/stateId.js
+  function reduce5(state = 0) {
+    return state + 1;
+  }
+
+  // node_modules/dnd-core/dist/reducers/index.js
+  function _defineProperty7(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  function _objectSpread5(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = arguments[i2] != null ? arguments[i2] : {};
+      var ownKeys3 = Object.keys(source);
+      if (typeof Object.getOwnPropertySymbols === "function") {
+        ownKeys3 = ownKeys3.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+        }));
+      }
+      ownKeys3.forEach(function(key) {
+        _defineProperty7(target, key, source[key]);
+      });
+    }
+    return target;
+  }
+  function reduce6(state = {}, action) {
+    return {
+      dirtyHandlerIds: reduce(state.dirtyHandlerIds, {
+        type: action.type,
+        payload: _objectSpread5({}, action.payload, {
+          prevTargetIds: get(state, "dragOperation.targetIds", [])
+        })
+      }),
+      dragOffset: reduce2(state.dragOffset, action),
+      refCount: reduce4(state.refCount, action),
+      dragOperation: reduce3(state.dragOperation, action),
+      stateId: reduce5(state.stateId)
+    };
+  }
+
+  // node_modules/dnd-core/dist/createDragDropManager.js
+  function createDragDropManager(backendFactory, globalContext = void 0, backendOptions = {}, debugMode = false) {
+    const store = makeStoreInstance(debugMode);
+    const monitor = new DragDropMonitorImpl(store, new HandlerRegistryImpl(store));
+    const manager2 = new DragDropManagerImpl(store, monitor);
+    const backend = backendFactory(manager2, globalContext, backendOptions);
+    manager2.receiveBackend(backend);
+    return manager2;
+  }
+  function makeStoreInstance(debugMode) {
+    const reduxDevTools = typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION__;
+    return createStore(reduce6, debugMode && reduxDevTools && reduxDevTools({
+      name: "dnd-core",
+      instanceId: "dnd-core"
+    }));
+  }
+
+  // node_modules/react-dnd/dist/core/DndProvider.js
+  var import_react155 = __toESM(require_react(), 1);
+  function _objectWithoutProperties2(source, excluded) {
+    if (source == null)
+      return {};
+    var target = _objectWithoutPropertiesLoose14(source, excluded);
+    var key, i2;
+    if (Object.getOwnPropertySymbols) {
+      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+      for (i2 = 0; i2 < sourceSymbolKeys.length; i2++) {
+        key = sourceSymbolKeys[i2];
+        if (excluded.indexOf(key) >= 0)
+          continue;
+        if (!Object.prototype.propertyIsEnumerable.call(source, key))
+          continue;
+        target[key] = source[key];
+      }
+    }
+    return target;
+  }
+  function _objectWithoutPropertiesLoose14(source, excluded) {
+    if (source == null)
+      return {};
+    var target = {};
+    var sourceKeys = Object.keys(source);
+    var key, i2;
+    for (i2 = 0; i2 < sourceKeys.length; i2++) {
+      key = sourceKeys[i2];
+      if (excluded.indexOf(key) >= 0)
+        continue;
+      target[key] = source[key];
+    }
+    return target;
+  }
+  var refCount = 0;
+  var INSTANCE_SYM = Symbol.for("__REACT_DND_CONTEXT_INSTANCE__");
+  var DndProvider = /* @__PURE__ */ (0, import_react155.memo)(function DndProvider2(_param) {
+    var { children } = _param, props = _objectWithoutProperties2(_param, [
+      "children"
+    ]);
+    const [manager2, isGlobalInstance] = getDndContextValue(props);
+    (0, import_react155.useEffect)(() => {
+      if (isGlobalInstance) {
+        const context4 = getGlobalContext();
+        ++refCount;
+        return () => {
+          if (--refCount === 0) {
+            context4[INSTANCE_SYM] = null;
+          }
+        };
+      }
+      return;
+    }, []);
+    return /* @__PURE__ */ (0, import_jsx_runtime111.jsx)(DndContext.Provider, {
+      value: manager2,
+      children
+    });
+  });
+  function getDndContextValue(props) {
+    if ("manager" in props) {
+      const manager3 = {
+        dragDropManager: props.manager
+      };
+      return [
+        manager3,
+        false
+      ];
+    }
+    const manager2 = createSingletonDndContext(props.backend, props.context, props.options, props.debugMode);
+    const isGlobalInstance = !props.context;
+    return [
+      manager2,
+      isGlobalInstance
+    ];
+  }
+  function createSingletonDndContext(backend, context4 = getGlobalContext(), options, debugMode) {
+    const ctx = context4;
+    if (!ctx[INSTANCE_SYM]) {
+      ctx[INSTANCE_SYM] = {
+        dragDropManager: createDragDropManager(backend, context4, options, debugMode)
+      };
+    }
+    return ctx[INSTANCE_SYM];
+  }
+  function getGlobalContext() {
+    return typeof global !== "undefined" ? global : window;
+  }
+
+  // node_modules/react-dnd/dist/hooks/useCollector.js
+  var import_fast_deep_equal = __toESM(require_fast_deep_equal(), 1);
+  var import_react157 = __toESM(require_react(), 1);
+
+  // node_modules/react-dnd/dist/hooks/useIsomorphicLayoutEffect.js
+  var import_react156 = __toESM(require_react(), 1);
+  var useIsomorphicLayoutEffect2 = typeof window !== "undefined" ? import_react156.useLayoutEffect : import_react156.useEffect;
+
+  // node_modules/react-dnd/dist/hooks/useCollector.js
+  function useCollector(monitor, collect2, onUpdate) {
+    const [collected, setCollected] = (0, import_react157.useState)(
+      () => collect2(monitor)
+    );
+    const updateCollected = (0, import_react157.useCallback)(() => {
+      const nextValue = collect2(monitor);
+      if (!(0, import_fast_deep_equal.default)(collected, nextValue)) {
+        setCollected(nextValue);
+        if (onUpdate) {
+          onUpdate();
+        }
+      }
+    }, [
+      collected,
+      monitor,
+      onUpdate
+    ]);
+    useIsomorphicLayoutEffect2(updateCollected);
+    return [
+      collected,
+      updateCollected
+    ];
+  }
+
+  // node_modules/react-dnd/dist/hooks/useMonitorOutput.js
+  function useMonitorOutput(monitor, collect2, onCollect) {
+    const [collected, updateCollected] = useCollector(monitor, collect2, onCollect);
+    useIsomorphicLayoutEffect2(function subscribeToMonitorStateChange() {
+      const handlerId = monitor.getHandlerId();
+      if (handlerId == null) {
+        return;
+      }
+      return monitor.subscribeToStateChange(updateCollected, {
+        handlerIds: [
+          handlerId
+        ]
+      });
+    }, [
+      monitor,
+      updateCollected
+    ]);
+    return collected;
+  }
+
+  // node_modules/react-dnd/dist/hooks/useCollectedProps.js
+  function useCollectedProps(collector, monitor, connector) {
+    return useMonitorOutput(
+      monitor,
+      collector || (() => ({})),
+      () => connector.reconnect()
+    );
+  }
+
+  // node_modules/react-dnd/dist/hooks/useOptionalFactory.js
+  var import_react158 = __toESM(require_react(), 1);
+  function useOptionalFactory(arg, deps) {
+    const memoDeps = [
+      ...deps || []
+    ];
+    if (deps == null && typeof arg !== "function") {
+      memoDeps.push(arg);
+    }
+    return (0, import_react158.useMemo)(() => {
+      return typeof arg === "function" ? arg() : arg;
+    }, memoDeps);
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrag/connectors.js
+  var import_react159 = __toESM(require_react(), 1);
+  function useConnectDragSource(connector) {
+    return (0, import_react159.useMemo)(
+      () => connector.hooks.dragSource(),
+      [
+        connector
+      ]
+    );
+  }
+  function useConnectDragPreview(connector) {
+    return (0, import_react159.useMemo)(
+      () => connector.hooks.dragPreview(),
+      [
+        connector
+      ]
+    );
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceConnector.js
+  var import_react162 = __toESM(require_react(), 1);
+
+  // node_modules/react-dnd/dist/internals/DragSourceMonitorImpl.js
+  var isCallingCanDrag = false;
+  var isCallingIsDragging = false;
+  var DragSourceMonitorImpl = class {
+    receiveHandlerId(sourceId) {
+      this.sourceId = sourceId;
+    }
+    getHandlerId() {
+      return this.sourceId;
+    }
+    canDrag() {
+      invariant6(!isCallingCanDrag, "You may not call monitor.canDrag() inside your canDrag() implementation. Read more: http://react-dnd.github.io/react-dnd/docs/api/drag-source-monitor");
+      try {
+        isCallingCanDrag = true;
+        return this.internalMonitor.canDragSource(this.sourceId);
+      } finally {
+        isCallingCanDrag = false;
+      }
+    }
+    isDragging() {
+      if (!this.sourceId) {
+        return false;
+      }
+      invariant6(!isCallingIsDragging, "You may not call monitor.isDragging() inside your isDragging() implementation. Read more: http://react-dnd.github.io/react-dnd/docs/api/drag-source-monitor");
+      try {
+        isCallingIsDragging = true;
+        return this.internalMonitor.isDraggingSource(this.sourceId);
+      } finally {
+        isCallingIsDragging = false;
+      }
+    }
+    subscribeToStateChange(listener, options) {
+      return this.internalMonitor.subscribeToStateChange(listener, options);
+    }
+    isDraggingSource(sourceId) {
+      return this.internalMonitor.isDraggingSource(sourceId);
+    }
+    isOverTarget(targetId, options) {
+      return this.internalMonitor.isOverTarget(targetId, options);
+    }
+    getTargetIds() {
+      return this.internalMonitor.getTargetIds();
+    }
+    isSourcePublic() {
+      return this.internalMonitor.isSourcePublic();
+    }
+    getSourceId() {
+      return this.internalMonitor.getSourceId();
+    }
+    subscribeToOffsetChange(listener) {
+      return this.internalMonitor.subscribeToOffsetChange(listener);
+    }
+    canDragSource(sourceId) {
+      return this.internalMonitor.canDragSource(sourceId);
+    }
+    canDropOnTarget(targetId) {
+      return this.internalMonitor.canDropOnTarget(targetId);
+    }
+    getItemType() {
+      return this.internalMonitor.getItemType();
+    }
+    getItem() {
+      return this.internalMonitor.getItem();
+    }
+    getDropResult() {
+      return this.internalMonitor.getDropResult();
+    }
+    didDrop() {
+      return this.internalMonitor.didDrop();
+    }
+    getInitialClientOffset() {
+      return this.internalMonitor.getInitialClientOffset();
+    }
+    getInitialSourceClientOffset() {
+      return this.internalMonitor.getInitialSourceClientOffset();
+    }
+    getSourceClientOffset() {
+      return this.internalMonitor.getSourceClientOffset();
+    }
+    getClientOffset() {
+      return this.internalMonitor.getClientOffset();
+    }
+    getDifferenceFromInitialOffset() {
+      return this.internalMonitor.getDifferenceFromInitialOffset();
+    }
+    constructor(manager2) {
+      this.sourceId = null;
+      this.internalMonitor = manager2.getMonitor();
+    }
+  };
+
+  // node_modules/react-dnd/dist/internals/DropTargetMonitorImpl.js
+  var isCallingCanDrop = false;
+  var DropTargetMonitorImpl = class {
+    receiveHandlerId(targetId) {
+      this.targetId = targetId;
+    }
+    getHandlerId() {
+      return this.targetId;
+    }
+    subscribeToStateChange(listener, options) {
+      return this.internalMonitor.subscribeToStateChange(listener, options);
+    }
+    canDrop() {
+      if (!this.targetId) {
+        return false;
+      }
+      invariant6(!isCallingCanDrop, "You may not call monitor.canDrop() inside your canDrop() implementation. Read more: http://react-dnd.github.io/react-dnd/docs/api/drop-target-monitor");
+      try {
+        isCallingCanDrop = true;
+        return this.internalMonitor.canDropOnTarget(this.targetId);
+      } finally {
+        isCallingCanDrop = false;
+      }
+    }
+    isOver(options) {
+      if (!this.targetId) {
+        return false;
+      }
+      return this.internalMonitor.isOverTarget(this.targetId, options);
+    }
+    getItemType() {
+      return this.internalMonitor.getItemType();
+    }
+    getItem() {
+      return this.internalMonitor.getItem();
+    }
+    getDropResult() {
+      return this.internalMonitor.getDropResult();
+    }
+    didDrop() {
+      return this.internalMonitor.didDrop();
+    }
+    getInitialClientOffset() {
+      return this.internalMonitor.getInitialClientOffset();
+    }
+    getInitialSourceClientOffset() {
+      return this.internalMonitor.getInitialSourceClientOffset();
+    }
+    getSourceClientOffset() {
+      return this.internalMonitor.getSourceClientOffset();
+    }
+    getClientOffset() {
+      return this.internalMonitor.getClientOffset();
+    }
+    getDifferenceFromInitialOffset() {
+      return this.internalMonitor.getDifferenceFromInitialOffset();
+    }
+    constructor(manager2) {
+      this.targetId = null;
+      this.internalMonitor = manager2.getMonitor();
+    }
+  };
+
+  // node_modules/react-dnd/dist/internals/registration.js
+  function registerTarget(type, target, manager2) {
+    const registry = manager2.getRegistry();
+    const targetId = registry.addTarget(type, target);
+    return [
+      targetId,
+      () => registry.removeTarget(targetId)
+    ];
+  }
+  function registerSource(type, source, manager2) {
+    const registry = manager2.getRegistry();
+    const sourceId = registry.addSource(type, source);
+    return [
+      sourceId,
+      () => registry.removeSource(sourceId)
+    ];
+  }
+
+  // node_modules/@react-dnd/shallowequal/dist/index.js
+  function shallowEqual(objA, objB, compare, compareContext) {
+    let compareResult = compare ? compare.call(compareContext, objA, objB) : void 0;
+    if (compareResult !== void 0) {
+      return !!compareResult;
+    }
+    if (objA === objB) {
+      return true;
+    }
+    if (typeof objA !== "object" || !objA || typeof objB !== "object" || !objB) {
+      return false;
+    }
+    const keysA = Object.keys(objA);
+    const keysB = Object.keys(objB);
+    if (keysA.length !== keysB.length) {
+      return false;
+    }
+    const bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
+    for (let idx = 0; idx < keysA.length; idx++) {
+      const key = keysA[idx];
+      if (!bHasOwnProperty(key)) {
+        return false;
+      }
+      const valueA = objA[key];
+      const valueB = objB[key];
+      compareResult = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
+      if (compareResult === false || compareResult === void 0 && valueA !== valueB) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // node_modules/react-dnd/dist/internals/isRef.js
+  function isRef(obj) {
+    return (
+      // eslint-disable-next-line no-prototype-builtins
+      obj !== null && typeof obj === "object" && Object.prototype.hasOwnProperty.call(obj, "current")
+    );
+  }
+
+  // node_modules/react-dnd/dist/internals/wrapConnectorHooks.js
+  var import_react160 = __toESM(require_react(), 1);
+  function throwIfCompositeComponentElement(element) {
+    if (typeof element.type === "string") {
+      return;
+    }
+    const displayName = element.type.displayName || element.type.name || "the component";
+    throw new Error(`Only native element nodes can now be passed to React DnD connectors.You can either wrap ${displayName} into a <div>, or turn it into a drag source or a drop target itself.`);
+  }
+  function wrapHookToRecognizeElement(hook) {
+    return (elementOrNode = null, options = null) => {
+      if (!(0, import_react160.isValidElement)(elementOrNode)) {
+        const node = elementOrNode;
+        hook(node, options);
+        return node;
+      }
+      const element = elementOrNode;
+      throwIfCompositeComponentElement(element);
+      const ref = options ? (node) => hook(node, options) : hook;
+      return cloneWithRef(element, ref);
+    };
+  }
+  function wrapConnectorHooks(hooks) {
+    const wrappedHooks = {};
+    Object.keys(hooks).forEach((key) => {
+      const hook = hooks[key];
+      if (key.endsWith("Ref")) {
+        wrappedHooks[key] = hooks[key];
+      } else {
+        const wrappedHook = wrapHookToRecognizeElement(hook);
+        wrappedHooks[key] = () => wrappedHook;
+      }
+    });
+    return wrappedHooks;
+  }
+  function setRef(ref, node) {
+    if (typeof ref === "function") {
+      ref(node);
+    } else {
+      ref.current = node;
+    }
+  }
+  function cloneWithRef(element, newRef) {
+    const previousRef = element.ref;
+    invariant6(typeof previousRef !== "string", "Cannot connect React DnD to an element with an existing string ref. Please convert it to use a callback ref instead, or wrap it into a <span> or <div>. Read more: https://reactjs.org/docs/refs-and-the-dom.html#callback-refs");
+    if (!previousRef) {
+      return (0, import_react160.cloneElement)(element, {
+        ref: newRef
+      });
+    } else {
+      return (0, import_react160.cloneElement)(element, {
+        ref: (node) => {
+          setRef(previousRef, node);
+          setRef(newRef, node);
+        }
+      });
+    }
+  }
+
+  // node_modules/react-dnd/dist/internals/SourceConnector.js
+  var SourceConnector = class {
+    receiveHandlerId(newHandlerId) {
+      if (this.handlerId === newHandlerId) {
+        return;
+      }
+      this.handlerId = newHandlerId;
+      this.reconnect();
+    }
+    get connectTarget() {
+      return this.dragSource;
+    }
+    get dragSourceOptions() {
+      return this.dragSourceOptionsInternal;
+    }
+    set dragSourceOptions(options) {
+      this.dragSourceOptionsInternal = options;
+    }
+    get dragPreviewOptions() {
+      return this.dragPreviewOptionsInternal;
+    }
+    set dragPreviewOptions(options) {
+      this.dragPreviewOptionsInternal = options;
+    }
+    reconnect() {
+      const didChange = this.reconnectDragSource();
+      this.reconnectDragPreview(didChange);
+    }
+    reconnectDragSource() {
+      const dragSource = this.dragSource;
+      const didChange = this.didHandlerIdChange() || this.didConnectedDragSourceChange() || this.didDragSourceOptionsChange();
+      if (didChange) {
+        this.disconnectDragSource();
+      }
+      if (!this.handlerId) {
+        return didChange;
+      }
+      if (!dragSource) {
+        this.lastConnectedDragSource = dragSource;
+        return didChange;
+      }
+      if (didChange) {
+        this.lastConnectedHandlerId = this.handlerId;
+        this.lastConnectedDragSource = dragSource;
+        this.lastConnectedDragSourceOptions = this.dragSourceOptions;
+        this.dragSourceUnsubscribe = this.backend.connectDragSource(this.handlerId, dragSource, this.dragSourceOptions);
+      }
+      return didChange;
+    }
+    reconnectDragPreview(forceDidChange = false) {
+      const dragPreview = this.dragPreview;
+      const didChange = forceDidChange || this.didHandlerIdChange() || this.didConnectedDragPreviewChange() || this.didDragPreviewOptionsChange();
+      if (didChange) {
+        this.disconnectDragPreview();
+      }
+      if (!this.handlerId) {
+        return;
+      }
+      if (!dragPreview) {
+        this.lastConnectedDragPreview = dragPreview;
+        return;
+      }
+      if (didChange) {
+        this.lastConnectedHandlerId = this.handlerId;
+        this.lastConnectedDragPreview = dragPreview;
+        this.lastConnectedDragPreviewOptions = this.dragPreviewOptions;
+        this.dragPreviewUnsubscribe = this.backend.connectDragPreview(this.handlerId, dragPreview, this.dragPreviewOptions);
+      }
+    }
+    didHandlerIdChange() {
+      return this.lastConnectedHandlerId !== this.handlerId;
+    }
+    didConnectedDragSourceChange() {
+      return this.lastConnectedDragSource !== this.dragSource;
+    }
+    didConnectedDragPreviewChange() {
+      return this.lastConnectedDragPreview !== this.dragPreview;
+    }
+    didDragSourceOptionsChange() {
+      return !shallowEqual(this.lastConnectedDragSourceOptions, this.dragSourceOptions);
+    }
+    didDragPreviewOptionsChange() {
+      return !shallowEqual(this.lastConnectedDragPreviewOptions, this.dragPreviewOptions);
+    }
+    disconnectDragSource() {
+      if (this.dragSourceUnsubscribe) {
+        this.dragSourceUnsubscribe();
+        this.dragSourceUnsubscribe = void 0;
+      }
+    }
+    disconnectDragPreview() {
+      if (this.dragPreviewUnsubscribe) {
+        this.dragPreviewUnsubscribe();
+        this.dragPreviewUnsubscribe = void 0;
+        this.dragPreviewNode = null;
+        this.dragPreviewRef = null;
+      }
+    }
+    get dragSource() {
+      return this.dragSourceNode || this.dragSourceRef && this.dragSourceRef.current;
+    }
+    get dragPreview() {
+      return this.dragPreviewNode || this.dragPreviewRef && this.dragPreviewRef.current;
+    }
+    clearDragSource() {
+      this.dragSourceNode = null;
+      this.dragSourceRef = null;
+    }
+    clearDragPreview() {
+      this.dragPreviewNode = null;
+      this.dragPreviewRef = null;
+    }
+    constructor(backend) {
+      this.hooks = wrapConnectorHooks({
+        dragSource: (node, options) => {
+          this.clearDragSource();
+          this.dragSourceOptions = options || null;
+          if (isRef(node)) {
+            this.dragSourceRef = node;
+          } else {
+            this.dragSourceNode = node;
+          }
+          this.reconnectDragSource();
+        },
+        dragPreview: (node, options) => {
+          this.clearDragPreview();
+          this.dragPreviewOptions = options || null;
+          if (isRef(node)) {
+            this.dragPreviewRef = node;
+          } else {
+            this.dragPreviewNode = node;
+          }
+          this.reconnectDragPreview();
+        }
+      });
+      this.handlerId = null;
+      this.dragSourceRef = null;
+      this.dragSourceOptionsInternal = null;
+      this.dragPreviewRef = null;
+      this.dragPreviewOptionsInternal = null;
+      this.lastConnectedHandlerId = null;
+      this.lastConnectedDragSource = null;
+      this.lastConnectedDragSourceOptions = null;
+      this.lastConnectedDragPreview = null;
+      this.lastConnectedDragPreviewOptions = null;
+      this.backend = backend;
+    }
+  };
+
+  // node_modules/react-dnd/dist/internals/TargetConnector.js
+  var TargetConnector = class {
+    get connectTarget() {
+      return this.dropTarget;
+    }
+    reconnect() {
+      const didChange = this.didHandlerIdChange() || this.didDropTargetChange() || this.didOptionsChange();
+      if (didChange) {
+        this.disconnectDropTarget();
+      }
+      const dropTarget = this.dropTarget;
+      if (!this.handlerId) {
+        return;
+      }
+      if (!dropTarget) {
+        this.lastConnectedDropTarget = dropTarget;
+        return;
+      }
+      if (didChange) {
+        this.lastConnectedHandlerId = this.handlerId;
+        this.lastConnectedDropTarget = dropTarget;
+        this.lastConnectedDropTargetOptions = this.dropTargetOptions;
+        this.unsubscribeDropTarget = this.backend.connectDropTarget(this.handlerId, dropTarget, this.dropTargetOptions);
+      }
+    }
+    receiveHandlerId(newHandlerId) {
+      if (newHandlerId === this.handlerId) {
+        return;
+      }
+      this.handlerId = newHandlerId;
+      this.reconnect();
+    }
+    get dropTargetOptions() {
+      return this.dropTargetOptionsInternal;
+    }
+    set dropTargetOptions(options) {
+      this.dropTargetOptionsInternal = options;
+    }
+    didHandlerIdChange() {
+      return this.lastConnectedHandlerId !== this.handlerId;
+    }
+    didDropTargetChange() {
+      return this.lastConnectedDropTarget !== this.dropTarget;
+    }
+    didOptionsChange() {
+      return !shallowEqual(this.lastConnectedDropTargetOptions, this.dropTargetOptions);
+    }
+    disconnectDropTarget() {
+      if (this.unsubscribeDropTarget) {
+        this.unsubscribeDropTarget();
+        this.unsubscribeDropTarget = void 0;
+      }
+    }
+    get dropTarget() {
+      return this.dropTargetNode || this.dropTargetRef && this.dropTargetRef.current;
+    }
+    clearDropTarget() {
+      this.dropTargetRef = null;
+      this.dropTargetNode = null;
+    }
+    constructor(backend) {
+      this.hooks = wrapConnectorHooks({
+        dropTarget: (node, options) => {
+          this.clearDropTarget();
+          this.dropTargetOptions = options;
+          if (isRef(node)) {
+            this.dropTargetRef = node;
+          } else {
+            this.dropTargetNode = node;
+          }
+          this.reconnect();
+        }
+      });
+      this.handlerId = null;
+      this.dropTargetRef = null;
+      this.dropTargetOptionsInternal = null;
+      this.lastConnectedHandlerId = null;
+      this.lastConnectedDropTarget = null;
+      this.lastConnectedDropTargetOptions = null;
+      this.backend = backend;
+    }
+  };
+
+  // node_modules/react-dnd/dist/hooks/useDragDropManager.js
+  var import_react161 = __toESM(require_react(), 1);
+  function useDragDropManager() {
+    const { dragDropManager } = (0, import_react161.useContext)(DndContext);
+    invariant6(dragDropManager != null, "Expected drag drop context");
+    return dragDropManager;
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceConnector.js
+  function useDragSourceConnector(dragSourceOptions, dragPreviewOptions) {
+    const manager2 = useDragDropManager();
+    const connector = (0, import_react162.useMemo)(
+      () => new SourceConnector(manager2.getBackend()),
+      [
+        manager2
+      ]
+    );
+    useIsomorphicLayoutEffect2(() => {
+      connector.dragSourceOptions = dragSourceOptions || null;
+      connector.reconnect();
+      return () => connector.disconnectDragSource();
+    }, [
+      connector,
+      dragSourceOptions
+    ]);
+    useIsomorphicLayoutEffect2(() => {
+      connector.dragPreviewOptions = dragPreviewOptions || null;
+      connector.reconnect();
+      return () => connector.disconnectDragPreview();
+    }, [
+      connector,
+      dragPreviewOptions
+    ]);
+    return connector;
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceMonitor.js
+  var import_react163 = __toESM(require_react(), 1);
+  function useDragSourceMonitor() {
+    const manager2 = useDragDropManager();
+    return (0, import_react163.useMemo)(
+      () => new DragSourceMonitorImpl(manager2),
+      [
+        manager2
+      ]
+    );
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrag/useDragSource.js
+  var import_react164 = __toESM(require_react(), 1);
+
+  // node_modules/react-dnd/dist/hooks/useDrag/DragSourceImpl.js
+  var DragSourceImpl = class {
+    beginDrag() {
+      const spec = this.spec;
+      const monitor = this.monitor;
+      let result = null;
+      if (typeof spec.item === "object") {
+        result = spec.item;
+      } else if (typeof spec.item === "function") {
+        result = spec.item(monitor);
+      } else {
+        result = {};
+      }
+      return result !== null && result !== void 0 ? result : null;
+    }
+    canDrag() {
+      const spec = this.spec;
+      const monitor = this.monitor;
+      if (typeof spec.canDrag === "boolean") {
+        return spec.canDrag;
+      } else if (typeof spec.canDrag === "function") {
+        return spec.canDrag(monitor);
+      } else {
+        return true;
+      }
+    }
+    isDragging(globalMonitor, target) {
+      const spec = this.spec;
+      const monitor = this.monitor;
+      const { isDragging } = spec;
+      return isDragging ? isDragging(monitor) : target === globalMonitor.getSourceId();
+    }
+    endDrag() {
+      const spec = this.spec;
+      const monitor = this.monitor;
+      const connector = this.connector;
+      const { end: end2 } = spec;
+      if (end2) {
+        end2(monitor.getItem(), monitor);
+      }
+      connector.reconnect();
+    }
+    constructor(spec, monitor, connector) {
+      this.spec = spec;
+      this.monitor = monitor;
+      this.connector = connector;
+    }
+  };
+
+  // node_modules/react-dnd/dist/hooks/useDrag/useDragSource.js
+  function useDragSource(spec, monitor, connector) {
+    const handler = (0, import_react164.useMemo)(
+      () => new DragSourceImpl(spec, monitor, connector),
+      [
+        monitor,
+        connector
+      ]
+    );
+    (0, import_react164.useEffect)(() => {
+      handler.spec = spec;
+    }, [
+      spec
+    ]);
+    return handler;
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrag/useDragType.js
+  var import_react165 = __toESM(require_react(), 1);
+  function useDragType(spec) {
+    return (0, import_react165.useMemo)(() => {
+      const result = spec.type;
+      invariant6(result != null, "spec.type must be defined");
+      return result;
+    }, [
+      spec
+    ]);
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrag/useRegisteredDragSource.js
+  function useRegisteredDragSource(spec, monitor, connector) {
+    const manager2 = useDragDropManager();
+    const handler = useDragSource(spec, monitor, connector);
+    const itemType = useDragType(spec);
+    useIsomorphicLayoutEffect2(function registerDragSource() {
+      if (itemType != null) {
+        const [handlerId, unregister] = registerSource(itemType, handler, manager2);
+        monitor.receiveHandlerId(handlerId);
+        connector.receiveHandlerId(handlerId);
+        return unregister;
+      }
+      return;
+    }, [
+      manager2,
+      monitor,
+      connector,
+      handler,
+      itemType
+    ]);
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrag/useDrag.js
+  function useDrag(specArg, deps) {
+    const spec = useOptionalFactory(specArg, deps);
+    invariant6(!spec.begin, `useDrag::spec.begin was deprecated in v14. Replace spec.begin() with spec.item(). (see more here - https://react-dnd.github.io/react-dnd/docs/api/use-drag)`);
+    const monitor = useDragSourceMonitor();
+    const connector = useDragSourceConnector(spec.options, spec.previewOptions);
+    useRegisteredDragSource(spec, monitor, connector);
+    return [
+      useCollectedProps(spec.collect, monitor, connector),
+      useConnectDragSource(connector),
+      useConnectDragPreview(connector)
+    ];
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrop/connectors.js
+  var import_react166 = __toESM(require_react(), 1);
+  function useConnectDropTarget(connector) {
+    return (0, import_react166.useMemo)(
+      () => connector.hooks.dropTarget(),
+      [
+        connector
+      ]
+    );
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrop/useDropTargetConnector.js
+  var import_react167 = __toESM(require_react(), 1);
+  function useDropTargetConnector(options) {
+    const manager2 = useDragDropManager();
+    const connector = (0, import_react167.useMemo)(
+      () => new TargetConnector(manager2.getBackend()),
+      [
+        manager2
+      ]
+    );
+    useIsomorphicLayoutEffect2(() => {
+      connector.dropTargetOptions = options || null;
+      connector.reconnect();
+      return () => connector.disconnectDropTarget();
+    }, [
+      options
+    ]);
+    return connector;
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrop/useDropTargetMonitor.js
+  var import_react168 = __toESM(require_react(), 1);
+  function useDropTargetMonitor() {
+    const manager2 = useDragDropManager();
+    return (0, import_react168.useMemo)(
+      () => new DropTargetMonitorImpl(manager2),
+      [
+        manager2
+      ]
+    );
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrop/useAccept.js
+  var import_react169 = __toESM(require_react(), 1);
+  function useAccept(spec) {
+    const { accept } = spec;
+    return (0, import_react169.useMemo)(() => {
+      invariant6(spec.accept != null, "accept must be defined");
+      return Array.isArray(accept) ? accept : [
+        accept
+      ];
+    }, [
+      accept
+    ]);
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrop/useDropTarget.js
+  var import_react170 = __toESM(require_react(), 1);
+
+  // node_modules/react-dnd/dist/hooks/useDrop/DropTargetImpl.js
+  var DropTargetImpl = class {
+    canDrop() {
+      const spec = this.spec;
+      const monitor = this.monitor;
+      return spec.canDrop ? spec.canDrop(monitor.getItem(), monitor) : true;
+    }
+    hover() {
+      const spec = this.spec;
+      const monitor = this.monitor;
+      if (spec.hover) {
+        spec.hover(monitor.getItem(), monitor);
+      }
+    }
+    drop() {
+      const spec = this.spec;
+      const monitor = this.monitor;
+      if (spec.drop) {
+        return spec.drop(monitor.getItem(), monitor);
+      }
+      return;
+    }
+    constructor(spec, monitor) {
+      this.spec = spec;
+      this.monitor = monitor;
+    }
+  };
+
+  // node_modules/react-dnd/dist/hooks/useDrop/useDropTarget.js
+  function useDropTarget(spec, monitor) {
+    const dropTarget = (0, import_react170.useMemo)(
+      () => new DropTargetImpl(spec, monitor),
+      [
+        monitor
+      ]
+    );
+    (0, import_react170.useEffect)(() => {
+      dropTarget.spec = spec;
+    }, [
+      spec
+    ]);
+    return dropTarget;
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrop/useRegisteredDropTarget.js
+  function useRegisteredDropTarget(spec, monitor, connector) {
+    const manager2 = useDragDropManager();
+    const dropTarget = useDropTarget(spec, monitor);
+    const accept = useAccept(spec);
+    useIsomorphicLayoutEffect2(function registerDropTarget() {
+      const [handlerId, unregister] = registerTarget(accept, dropTarget, manager2);
+      monitor.receiveHandlerId(handlerId);
+      connector.receiveHandlerId(handlerId);
+      return unregister;
+    }, [
+      manager2,
+      monitor,
+      dropTarget,
+      connector,
+      accept.map(
+        (a2) => a2.toString()
+      ).join("|")
+    ]);
+  }
+
+  // node_modules/react-dnd/dist/hooks/useDrop/useDrop.js
+  function useDrop(specArg, deps) {
+    const spec = useOptionalFactory(specArg, deps);
+    const monitor = useDropTargetMonitor();
+    const connector = useDropTargetConnector(spec.options);
+    useRegisteredDropTarget(spec, monitor, connector);
+    return [
+      useCollectedProps(spec.collect, monitor, connector),
+      useConnectDropTarget(connector)
+    ];
+  }
+
+  // node_modules/react-dnd-html5-backend/dist/utils/js_utils.js
+  function memoize(fn3) {
+    let result = null;
+    const memoized = () => {
+      if (result == null) {
+        result = fn3();
+      }
+      return result;
+    };
+    return memoized;
+  }
+  function without2(items, item) {
+    return items.filter(
+      (i2) => i2 !== item
+    );
+  }
+  function union(itemsA, itemsB) {
+    const set = /* @__PURE__ */ new Set();
+    const insertItem = (item) => set.add(item);
+    itemsA.forEach(insertItem);
+    itemsB.forEach(insertItem);
+    const result = [];
+    set.forEach(
+      (key) => result.push(key)
+    );
+    return result;
+  }
+
+  // node_modules/react-dnd-html5-backend/dist/EnterLeaveCounter.js
+  var EnterLeaveCounter = class {
+    enter(enteringNode) {
+      const previousLength = this.entered.length;
+      const isNodeEntered = (node) => this.isNodeInDocument(node) && (!node.contains || node.contains(enteringNode));
+      this.entered = union(this.entered.filter(isNodeEntered), [
+        enteringNode
+      ]);
+      return previousLength === 0 && this.entered.length > 0;
+    }
+    leave(leavingNode) {
+      const previousLength = this.entered.length;
+      this.entered = without2(this.entered.filter(this.isNodeInDocument), leavingNode);
+      return previousLength > 0 && this.entered.length === 0;
+    }
+    reset() {
+      this.entered = [];
+    }
+    constructor(isNodeInDocument) {
+      this.entered = [];
+      this.isNodeInDocument = isNodeInDocument;
+    }
+  };
+
+  // node_modules/react-dnd-html5-backend/dist/NativeDragSources/NativeDragSource.js
+  var NativeDragSource = class {
+    initializeExposedProperties() {
+      Object.keys(this.config.exposeProperties).forEach((property) => {
+        Object.defineProperty(this.item, property, {
+          configurable: true,
+          enumerable: true,
+          get() {
+            console.warn(`Browser doesn't allow reading "${property}" until the drop event.`);
+            return null;
+          }
+        });
+      });
+    }
+    loadDataTransfer(dataTransfer) {
+      if (dataTransfer) {
+        const newProperties = {};
+        Object.keys(this.config.exposeProperties).forEach((property) => {
+          const propertyFn = this.config.exposeProperties[property];
+          if (propertyFn != null) {
+            newProperties[property] = {
+              value: propertyFn(dataTransfer, this.config.matchesTypes),
+              configurable: true,
+              enumerable: true
+            };
+          }
+        });
+        Object.defineProperties(this.item, newProperties);
+      }
+    }
+    canDrag() {
+      return true;
+    }
+    beginDrag() {
+      return this.item;
+    }
+    isDragging(monitor, handle) {
+      return handle === monitor.getSourceId();
+    }
+    endDrag() {
+    }
+    constructor(config3) {
+      this.config = config3;
+      this.item = {};
+      this.initializeExposedProperties();
+    }
+  };
+
+  // node_modules/react-dnd-html5-backend/dist/NativeTypes.js
+  var NativeTypes_exports = {};
+  __export(NativeTypes_exports, {
+    FILE: () => FILE,
+    HTML: () => HTML,
+    TEXT: () => TEXT,
+    URL: () => URL2
+  });
+  var FILE = "__NATIVE_FILE__";
+  var URL2 = "__NATIVE_URL__";
+  var TEXT = "__NATIVE_TEXT__";
+  var HTML = "__NATIVE_HTML__";
+
+  // node_modules/react-dnd-html5-backend/dist/NativeDragSources/getDataFromDataTransfer.js
+  function getDataFromDataTransfer(dataTransfer, typesToTry, defaultValue) {
+    const result = typesToTry.reduce(
+      (resultSoFar, typeToTry) => resultSoFar || dataTransfer.getData(typeToTry),
+      ""
+    );
+    return result != null ? result : defaultValue;
+  }
+
+  // node_modules/react-dnd-html5-backend/dist/NativeDragSources/nativeTypesConfig.js
+  var nativeTypesConfig = {
+    [FILE]: {
+      exposeProperties: {
+        files: (dataTransfer) => Array.prototype.slice.call(dataTransfer.files),
+        items: (dataTransfer) => dataTransfer.items,
+        dataTransfer: (dataTransfer) => dataTransfer
+      },
+      matchesTypes: [
+        "Files"
+      ]
+    },
+    [HTML]: {
+      exposeProperties: {
+        html: (dataTransfer, matchesTypes) => getDataFromDataTransfer(dataTransfer, matchesTypes, ""),
+        dataTransfer: (dataTransfer) => dataTransfer
+      },
+      matchesTypes: [
+        "Html",
+        "text/html"
+      ]
+    },
+    [URL2]: {
+      exposeProperties: {
+        urls: (dataTransfer, matchesTypes) => getDataFromDataTransfer(dataTransfer, matchesTypes, "").split("\n"),
+        dataTransfer: (dataTransfer) => dataTransfer
+      },
+      matchesTypes: [
+        "Url",
+        "text/uri-list"
+      ]
+    },
+    [TEXT]: {
+      exposeProperties: {
+        text: (dataTransfer, matchesTypes) => getDataFromDataTransfer(dataTransfer, matchesTypes, ""),
+        dataTransfer: (dataTransfer) => dataTransfer
+      },
+      matchesTypes: [
+        "Text",
+        "text/plain"
+      ]
+    }
+  };
+
+  // node_modules/react-dnd-html5-backend/dist/NativeDragSources/index.js
+  function createNativeDragSource(type, dataTransfer) {
+    const config3 = nativeTypesConfig[type];
+    if (!config3) {
+      throw new Error(`native type ${type} has no configuration`);
+    }
+    const result = new NativeDragSource(config3);
+    result.loadDataTransfer(dataTransfer);
+    return result;
+  }
+  function matchNativeItemType(dataTransfer) {
+    if (!dataTransfer) {
+      return null;
+    }
+    const dataTransferTypes = Array.prototype.slice.call(dataTransfer.types || []);
+    return Object.keys(nativeTypesConfig).filter((nativeItemType) => {
+      const typeConfig = nativeTypesConfig[nativeItemType];
+      if (!(typeConfig === null || typeConfig === void 0 ? void 0 : typeConfig.matchesTypes)) {
+        return false;
+      }
+      return typeConfig.matchesTypes.some(
+        (t2) => dataTransferTypes.indexOf(t2) > -1
+      );
+    })[0] || null;
+  }
+
+  // node_modules/react-dnd-html5-backend/dist/BrowserDetector.js
+  var isFirefox = memoize(
+    () => /firefox/i.test(navigator.userAgent)
+  );
+  var isSafari = memoize(
+    () => Boolean(window.safari)
+  );
+
+  // node_modules/react-dnd-html5-backend/dist/MonotonicInterpolant.js
+  var MonotonicInterpolant = class {
+    interpolate(x2) {
+      const { xs: xs2, ys: ys2, c1s, c2s, c3s } = this;
+      let i2 = xs2.length - 1;
+      if (x2 === xs2[i2]) {
+        return ys2[i2];
+      }
+      let low = 0;
+      let high = c3s.length - 1;
+      let mid;
+      while (low <= high) {
+        mid = Math.floor(0.5 * (low + high));
+        const xHere = xs2[mid];
+        if (xHere < x2) {
+          low = mid + 1;
+        } else if (xHere > x2) {
+          high = mid - 1;
+        } else {
+          return ys2[mid];
+        }
+      }
+      i2 = Math.max(0, high);
+      const diff = x2 - xs2[i2];
+      const diffSq = diff * diff;
+      return ys2[i2] + c1s[i2] * diff + c2s[i2] * diffSq + c3s[i2] * diff * diffSq;
+    }
+    constructor(xs2, ys2) {
+      const { length } = xs2;
+      const indexes = [];
+      for (let i2 = 0; i2 < length; i2++) {
+        indexes.push(i2);
+      }
+      indexes.sort(
+        (a2, b2) => xs2[a2] < xs2[b2] ? -1 : 1
+      );
+      const dys = [];
+      const dxs = [];
+      const ms2 = [];
+      let dx;
+      let dy;
+      for (let i1 = 0; i1 < length - 1; i1++) {
+        dx = xs2[i1 + 1] - xs2[i1];
+        dy = ys2[i1 + 1] - ys2[i1];
+        dxs.push(dx);
+        dys.push(dy);
+        ms2.push(dy / dx);
+      }
+      const c1s = [
+        ms2[0]
+      ];
+      for (let i2 = 0; i2 < dxs.length - 1; i2++) {
+        const m22 = ms2[i2];
+        const mNext = ms2[i2 + 1];
+        if (m22 * mNext <= 0) {
+          c1s.push(0);
+        } else {
+          dx = dxs[i2];
+          const dxNext = dxs[i2 + 1];
+          const common = dx + dxNext;
+          c1s.push(3 * common / ((common + dxNext) / m22 + (common + dx) / mNext));
+        }
+      }
+      c1s.push(ms2[ms2.length - 1]);
+      const c2s = [];
+      const c3s = [];
+      let m2;
+      for (let i3 = 0; i3 < c1s.length - 1; i3++) {
+        m2 = ms2[i3];
+        const c1 = c1s[i3];
+        const invDx = 1 / dxs[i3];
+        const common = c1 + c1s[i3 + 1] - m2 - m2;
+        c2s.push((m2 - c1 - common) * invDx);
+        c3s.push(common * invDx * invDx);
+      }
+      this.xs = xs2;
+      this.ys = ys2;
+      this.c1s = c1s;
+      this.c2s = c2s;
+      this.c3s = c3s;
+    }
+  };
+
+  // node_modules/react-dnd-html5-backend/dist/OffsetUtils.js
+  var ELEMENT_NODE = 1;
+  function getNodeClientOffset(node) {
+    const el = node.nodeType === ELEMENT_NODE ? node : node.parentElement;
+    if (!el) {
+      return null;
+    }
+    const { top: top2, left: left2 } = el.getBoundingClientRect();
+    return {
+      x: left2,
+      y: top2
+    };
+  }
+  function getEventClientOffset(e3) {
+    return {
+      x: e3.clientX,
+      y: e3.clientY
+    };
+  }
+  function isImageNode(node) {
+    var ref;
+    return node.nodeName === "IMG" && (isFirefox() || !((ref = document.documentElement) === null || ref === void 0 ? void 0 : ref.contains(node)));
+  }
+  function getDragPreviewSize(isImage, dragPreview, sourceWidth, sourceHeight) {
+    let dragPreviewWidth = isImage ? dragPreview.width : sourceWidth;
+    let dragPreviewHeight = isImage ? dragPreview.height : sourceHeight;
+    if (isSafari() && isImage) {
+      dragPreviewHeight /= window.devicePixelRatio;
+      dragPreviewWidth /= window.devicePixelRatio;
+    }
+    return {
+      dragPreviewWidth,
+      dragPreviewHeight
+    };
+  }
+  function getDragPreviewOffset(sourceNode, dragPreview, clientOffset, anchorPoint, offsetPoint) {
+    const isImage = isImageNode(dragPreview);
+    const dragPreviewNode = isImage ? sourceNode : dragPreview;
+    const dragPreviewNodeOffsetFromClient = getNodeClientOffset(dragPreviewNode);
+    const offsetFromDragPreview = {
+      x: clientOffset.x - dragPreviewNodeOffsetFromClient.x,
+      y: clientOffset.y - dragPreviewNodeOffsetFromClient.y
+    };
+    const { offsetWidth: sourceWidth, offsetHeight: sourceHeight } = sourceNode;
+    const { anchorX, anchorY } = anchorPoint;
+    const { dragPreviewWidth, dragPreviewHeight } = getDragPreviewSize(isImage, dragPreview, sourceWidth, sourceHeight);
+    const calculateYOffset = () => {
+      const interpolantY = new MonotonicInterpolant([
+        0,
+        0.5,
+        1
+      ], [
+        // Dock to the top
+        offsetFromDragPreview.y,
+        // Align at the center
+        offsetFromDragPreview.y / sourceHeight * dragPreviewHeight,
+        // Dock to the bottom
+        offsetFromDragPreview.y + dragPreviewHeight - sourceHeight
+      ]);
+      let y2 = interpolantY.interpolate(anchorY);
+      if (isSafari() && isImage) {
+        y2 += (window.devicePixelRatio - 1) * dragPreviewHeight;
+      }
+      return y2;
+    };
+    const calculateXOffset = () => {
+      const interpolantX = new MonotonicInterpolant([
+        0,
+        0.5,
+        1
+      ], [
+        // Dock to the left
+        offsetFromDragPreview.x,
+        // Align at the center
+        offsetFromDragPreview.x / sourceWidth * dragPreviewWidth,
+        // Dock to the right
+        offsetFromDragPreview.x + dragPreviewWidth - sourceWidth
+      ]);
+      return interpolantX.interpolate(anchorX);
+    };
+    const { offsetX, offsetY } = offsetPoint;
+    const isManualOffsetX = offsetX === 0 || offsetX;
+    const isManualOffsetY = offsetY === 0 || offsetY;
+    return {
+      x: isManualOffsetX ? offsetX : calculateXOffset(),
+      y: isManualOffsetY ? offsetY : calculateYOffset()
+    };
+  }
+
+  // node_modules/react-dnd-html5-backend/dist/OptionsReader.js
+  var OptionsReader = class {
+    get window() {
+      if (this.globalContext) {
+        return this.globalContext;
+      } else if (typeof window !== "undefined") {
+        return window;
+      }
+      return void 0;
+    }
+    get document() {
+      var ref;
+      if ((ref = this.globalContext) === null || ref === void 0 ? void 0 : ref.document) {
+        return this.globalContext.document;
+      } else if (this.window) {
+        return this.window.document;
+      } else {
+        return void 0;
+      }
+    }
+    get rootElement() {
+      var ref;
+      return ((ref = this.optionsArgs) === null || ref === void 0 ? void 0 : ref.rootElement) || this.window;
+    }
+    constructor(globalContext, options) {
+      this.ownerDocument = null;
+      this.globalContext = globalContext;
+      this.optionsArgs = options;
+    }
+  };
+
+  // node_modules/react-dnd-html5-backend/dist/HTML5BackendImpl.js
+  function _defineProperty8(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  }
+  function _objectSpread6(target) {
+    for (var i2 = 1; i2 < arguments.length; i2++) {
+      var source = arguments[i2] != null ? arguments[i2] : {};
+      var ownKeys3 = Object.keys(source);
+      if (typeof Object.getOwnPropertySymbols === "function") {
+        ownKeys3 = ownKeys3.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+        }));
+      }
+      ownKeys3.forEach(function(key) {
+        _defineProperty8(target, key, source[key]);
+      });
+    }
+    return target;
+  }
+  var HTML5BackendImpl = class {
+    /**
+    * Generate profiling statistics for the HTML5Backend.
+    */
+    profile() {
+      var ref, ref1;
+      return {
+        sourcePreviewNodes: this.sourcePreviewNodes.size,
+        sourcePreviewNodeOptions: this.sourcePreviewNodeOptions.size,
+        sourceNodeOptions: this.sourceNodeOptions.size,
+        sourceNodes: this.sourceNodes.size,
+        dragStartSourceIds: ((ref = this.dragStartSourceIds) === null || ref === void 0 ? void 0 : ref.length) || 0,
+        dropTargetIds: this.dropTargetIds.length,
+        dragEnterTargetIds: this.dragEnterTargetIds.length,
+        dragOverTargetIds: ((ref1 = this.dragOverTargetIds) === null || ref1 === void 0 ? void 0 : ref1.length) || 0
+      };
+    }
+    // public for test
+    get window() {
+      return this.options.window;
+    }
+    get document() {
+      return this.options.document;
+    }
+    /**
+    * Get the root element to use for event subscriptions
+    */
+    get rootElement() {
+      return this.options.rootElement;
+    }
+    setup() {
+      const root = this.rootElement;
+      if (root === void 0) {
+        return;
+      }
+      if (root.__isReactDndBackendSetUp) {
+        throw new Error("Cannot have two HTML5 backends at the same time.");
+      }
+      root.__isReactDndBackendSetUp = true;
+      this.addEventListeners(root);
+    }
+    teardown() {
+      const root = this.rootElement;
+      if (root === void 0) {
+        return;
+      }
+      root.__isReactDndBackendSetUp = false;
+      this.removeEventListeners(this.rootElement);
+      this.clearCurrentDragSourceNode();
+      if (this.asyncEndDragFrameId) {
+        var ref;
+        (ref = this.window) === null || ref === void 0 ? void 0 : ref.cancelAnimationFrame(this.asyncEndDragFrameId);
+      }
+    }
+    connectDragPreview(sourceId, node, options) {
+      this.sourcePreviewNodeOptions.set(sourceId, options);
+      this.sourcePreviewNodes.set(sourceId, node);
+      return () => {
+        this.sourcePreviewNodes.delete(sourceId);
+        this.sourcePreviewNodeOptions.delete(sourceId);
+      };
+    }
+    connectDragSource(sourceId, node, options) {
+      this.sourceNodes.set(sourceId, node);
+      this.sourceNodeOptions.set(sourceId, options);
+      const handleDragStart = (e3) => this.handleDragStart(e3, sourceId);
+      const handleSelectStart = (e3) => this.handleSelectStart(e3);
+      node.setAttribute("draggable", "true");
+      node.addEventListener("dragstart", handleDragStart);
+      node.addEventListener("selectstart", handleSelectStart);
+      return () => {
+        this.sourceNodes.delete(sourceId);
+        this.sourceNodeOptions.delete(sourceId);
+        node.removeEventListener("dragstart", handleDragStart);
+        node.removeEventListener("selectstart", handleSelectStart);
+        node.setAttribute("draggable", "false");
+      };
+    }
+    connectDropTarget(targetId, node) {
+      const handleDragEnter = (e3) => this.handleDragEnter(e3, targetId);
+      const handleDragOver = (e3) => this.handleDragOver(e3, targetId);
+      const handleDrop = (e3) => this.handleDrop(e3, targetId);
+      node.addEventListener("dragenter", handleDragEnter);
+      node.addEventListener("dragover", handleDragOver);
+      node.addEventListener("drop", handleDrop);
+      return () => {
+        node.removeEventListener("dragenter", handleDragEnter);
+        node.removeEventListener("dragover", handleDragOver);
+        node.removeEventListener("drop", handleDrop);
+      };
+    }
+    addEventListeners(target) {
+      if (!target.addEventListener) {
+        return;
+      }
+      target.addEventListener("dragstart", this.handleTopDragStart);
+      target.addEventListener("dragstart", this.handleTopDragStartCapture, true);
+      target.addEventListener("dragend", this.handleTopDragEndCapture, true);
+      target.addEventListener("dragenter", this.handleTopDragEnter);
+      target.addEventListener("dragenter", this.handleTopDragEnterCapture, true);
+      target.addEventListener("dragleave", this.handleTopDragLeaveCapture, true);
+      target.addEventListener("dragover", this.handleTopDragOver);
+      target.addEventListener("dragover", this.handleTopDragOverCapture, true);
+      target.addEventListener("drop", this.handleTopDrop);
+      target.addEventListener("drop", this.handleTopDropCapture, true);
+    }
+    removeEventListeners(target) {
+      if (!target.removeEventListener) {
+        return;
+      }
+      target.removeEventListener("dragstart", this.handleTopDragStart);
+      target.removeEventListener("dragstart", this.handleTopDragStartCapture, true);
+      target.removeEventListener("dragend", this.handleTopDragEndCapture, true);
+      target.removeEventListener("dragenter", this.handleTopDragEnter);
+      target.removeEventListener("dragenter", this.handleTopDragEnterCapture, true);
+      target.removeEventListener("dragleave", this.handleTopDragLeaveCapture, true);
+      target.removeEventListener("dragover", this.handleTopDragOver);
+      target.removeEventListener("dragover", this.handleTopDragOverCapture, true);
+      target.removeEventListener("drop", this.handleTopDrop);
+      target.removeEventListener("drop", this.handleTopDropCapture, true);
+    }
+    getCurrentSourceNodeOptions() {
+      const sourceId = this.monitor.getSourceId();
+      const sourceNodeOptions = this.sourceNodeOptions.get(sourceId);
+      return _objectSpread6({
+        dropEffect: this.altKeyPressed ? "copy" : "move"
+      }, sourceNodeOptions || {});
+    }
+    getCurrentDropEffect() {
+      if (this.isDraggingNativeItem()) {
+        return "copy";
+      }
+      return this.getCurrentSourceNodeOptions().dropEffect;
+    }
+    getCurrentSourcePreviewNodeOptions() {
+      const sourceId = this.monitor.getSourceId();
+      const sourcePreviewNodeOptions = this.sourcePreviewNodeOptions.get(sourceId);
+      return _objectSpread6({
+        anchorX: 0.5,
+        anchorY: 0.5,
+        captureDraggingState: false
+      }, sourcePreviewNodeOptions || {});
+    }
+    isDraggingNativeItem() {
+      const itemType = this.monitor.getItemType();
+      return Object.keys(NativeTypes_exports).some(
+        (key) => NativeTypes_exports[key] === itemType
+      );
+    }
+    beginDragNativeItem(type, dataTransfer) {
+      this.clearCurrentDragSourceNode();
+      this.currentNativeSource = createNativeDragSource(type, dataTransfer);
+      this.currentNativeHandle = this.registry.addSource(type, this.currentNativeSource);
+      this.actions.beginDrag([
+        this.currentNativeHandle
+      ]);
+    }
+    setCurrentDragSourceNode(node) {
+      this.clearCurrentDragSourceNode();
+      this.currentDragSourceNode = node;
+      const MOUSE_MOVE_TIMEOUT = 1e3;
+      this.mouseMoveTimeoutTimer = setTimeout(() => {
+        var ref;
+        return (ref = this.rootElement) === null || ref === void 0 ? void 0 : ref.addEventListener("mousemove", this.endDragIfSourceWasRemovedFromDOM, true);
+      }, MOUSE_MOVE_TIMEOUT);
+    }
+    clearCurrentDragSourceNode() {
+      if (this.currentDragSourceNode) {
+        this.currentDragSourceNode = null;
+        if (this.rootElement) {
+          var ref;
+          (ref = this.window) === null || ref === void 0 ? void 0 : ref.clearTimeout(this.mouseMoveTimeoutTimer || void 0);
+          this.rootElement.removeEventListener("mousemove", this.endDragIfSourceWasRemovedFromDOM, true);
+        }
+        this.mouseMoveTimeoutTimer = null;
+        return true;
+      }
+      return false;
+    }
+    handleDragStart(e3, sourceId) {
+      if (e3.defaultPrevented) {
+        return;
+      }
+      if (!this.dragStartSourceIds) {
+        this.dragStartSourceIds = [];
+      }
+      this.dragStartSourceIds.unshift(sourceId);
+    }
+    handleDragEnter(_e3, targetId) {
+      this.dragEnterTargetIds.unshift(targetId);
+    }
+    handleDragOver(_e3, targetId) {
+      if (this.dragOverTargetIds === null) {
+        this.dragOverTargetIds = [];
+      }
+      this.dragOverTargetIds.unshift(targetId);
+    }
+    handleDrop(_e3, targetId) {
+      this.dropTargetIds.unshift(targetId);
+    }
+    constructor(manager2, globalContext, options) {
+      this.sourcePreviewNodes = /* @__PURE__ */ new Map();
+      this.sourcePreviewNodeOptions = /* @__PURE__ */ new Map();
+      this.sourceNodes = /* @__PURE__ */ new Map();
+      this.sourceNodeOptions = /* @__PURE__ */ new Map();
+      this.dragStartSourceIds = null;
+      this.dropTargetIds = [];
+      this.dragEnterTargetIds = [];
+      this.currentNativeSource = null;
+      this.currentNativeHandle = null;
+      this.currentDragSourceNode = null;
+      this.altKeyPressed = false;
+      this.mouseMoveTimeoutTimer = null;
+      this.asyncEndDragFrameId = null;
+      this.dragOverTargetIds = null;
+      this.lastClientOffset = null;
+      this.hoverRafId = null;
+      this.getSourceClientOffset = (sourceId) => {
+        const source = this.sourceNodes.get(sourceId);
+        return source && getNodeClientOffset(source) || null;
+      };
+      this.endDragNativeItem = () => {
+        if (!this.isDraggingNativeItem()) {
+          return;
+        }
+        this.actions.endDrag();
+        if (this.currentNativeHandle) {
+          this.registry.removeSource(this.currentNativeHandle);
+        }
+        this.currentNativeHandle = null;
+        this.currentNativeSource = null;
+      };
+      this.isNodeInDocument = (node) => {
+        return Boolean(node && this.document && this.document.body && this.document.body.contains(node));
+      };
+      this.endDragIfSourceWasRemovedFromDOM = () => {
+        const node = this.currentDragSourceNode;
+        if (node == null || this.isNodeInDocument(node)) {
+          return;
+        }
+        if (this.clearCurrentDragSourceNode() && this.monitor.isDragging()) {
+          this.actions.endDrag();
+        }
+        this.cancelHover();
+      };
+      this.scheduleHover = (dragOverTargetIds) => {
+        if (this.hoverRafId === null && typeof requestAnimationFrame !== "undefined") {
+          this.hoverRafId = requestAnimationFrame(() => {
+            if (this.monitor.isDragging()) {
+              this.actions.hover(dragOverTargetIds || [], {
+                clientOffset: this.lastClientOffset
+              });
+            }
+            this.hoverRafId = null;
+          });
+        }
+      };
+      this.cancelHover = () => {
+        if (this.hoverRafId !== null && typeof cancelAnimationFrame !== "undefined") {
+          cancelAnimationFrame(this.hoverRafId);
+          this.hoverRafId = null;
+        }
+      };
+      this.handleTopDragStartCapture = () => {
+        this.clearCurrentDragSourceNode();
+        this.dragStartSourceIds = [];
+      };
+      this.handleTopDragStart = (e3) => {
+        if (e3.defaultPrevented) {
+          return;
+        }
+        const { dragStartSourceIds } = this;
+        this.dragStartSourceIds = null;
+        const clientOffset = getEventClientOffset(e3);
+        if (this.monitor.isDragging()) {
+          this.actions.endDrag();
+          this.cancelHover();
+        }
+        this.actions.beginDrag(dragStartSourceIds || [], {
+          publishSource: false,
+          getSourceClientOffset: this.getSourceClientOffset,
+          clientOffset
+        });
+        const { dataTransfer } = e3;
+        const nativeType = matchNativeItemType(dataTransfer);
+        if (this.monitor.isDragging()) {
+          if (dataTransfer && typeof dataTransfer.setDragImage === "function") {
+            const sourceId = this.monitor.getSourceId();
+            const sourceNode = this.sourceNodes.get(sourceId);
+            const dragPreview = this.sourcePreviewNodes.get(sourceId) || sourceNode;
+            if (dragPreview) {
+              const { anchorX, anchorY, offsetX, offsetY } = this.getCurrentSourcePreviewNodeOptions();
+              const anchorPoint = {
+                anchorX,
+                anchorY
+              };
+              const offsetPoint = {
+                offsetX,
+                offsetY
+              };
+              const dragPreviewOffset = getDragPreviewOffset(sourceNode, dragPreview, clientOffset, anchorPoint, offsetPoint);
+              dataTransfer.setDragImage(dragPreview, dragPreviewOffset.x, dragPreviewOffset.y);
+            }
+          }
+          try {
+            dataTransfer === null || dataTransfer === void 0 ? void 0 : dataTransfer.setData("application/json", {});
+          } catch (err) {
+          }
+          this.setCurrentDragSourceNode(e3.target);
+          const { captureDraggingState } = this.getCurrentSourcePreviewNodeOptions();
+          if (!captureDraggingState) {
+            setTimeout(
+              () => this.actions.publishDragSource(),
+              0
+            );
+          } else {
+            this.actions.publishDragSource();
+          }
+        } else if (nativeType) {
+          this.beginDragNativeItem(nativeType);
+        } else if (dataTransfer && !dataTransfer.types && (e3.target && !e3.target.hasAttribute || !e3.target.hasAttribute("draggable"))) {
+          return;
+        } else {
+          e3.preventDefault();
+        }
+      };
+      this.handleTopDragEndCapture = () => {
+        if (this.clearCurrentDragSourceNode() && this.monitor.isDragging()) {
+          this.actions.endDrag();
+        }
+        this.cancelHover();
+      };
+      this.handleTopDragEnterCapture = (e3) => {
+        this.dragEnterTargetIds = [];
+        if (this.isDraggingNativeItem()) {
+          var ref;
+          (ref = this.currentNativeSource) === null || ref === void 0 ? void 0 : ref.loadDataTransfer(e3.dataTransfer);
+        }
+        const isFirstEnter = this.enterLeaveCounter.enter(e3.target);
+        if (!isFirstEnter || this.monitor.isDragging()) {
+          return;
+        }
+        const { dataTransfer } = e3;
+        const nativeType = matchNativeItemType(dataTransfer);
+        if (nativeType) {
+          this.beginDragNativeItem(nativeType, dataTransfer);
+        }
+      };
+      this.handleTopDragEnter = (e3) => {
+        const { dragEnterTargetIds } = this;
+        this.dragEnterTargetIds = [];
+        if (!this.monitor.isDragging()) {
+          return;
+        }
+        this.altKeyPressed = e3.altKey;
+        if (dragEnterTargetIds.length > 0) {
+          this.actions.hover(dragEnterTargetIds, {
+            clientOffset: getEventClientOffset(e3)
+          });
+        }
+        const canDrop = dragEnterTargetIds.some(
+          (targetId) => this.monitor.canDropOnTarget(targetId)
+        );
+        if (canDrop) {
+          e3.preventDefault();
+          if (e3.dataTransfer) {
+            e3.dataTransfer.dropEffect = this.getCurrentDropEffect();
+          }
+        }
+      };
+      this.handleTopDragOverCapture = (e3) => {
+        this.dragOverTargetIds = [];
+        if (this.isDraggingNativeItem()) {
+          var ref;
+          (ref = this.currentNativeSource) === null || ref === void 0 ? void 0 : ref.loadDataTransfer(e3.dataTransfer);
+        }
+      };
+      this.handleTopDragOver = (e3) => {
+        const { dragOverTargetIds } = this;
+        this.dragOverTargetIds = [];
+        if (!this.monitor.isDragging()) {
+          e3.preventDefault();
+          if (e3.dataTransfer) {
+            e3.dataTransfer.dropEffect = "none";
+          }
+          return;
+        }
+        this.altKeyPressed = e3.altKey;
+        this.lastClientOffset = getEventClientOffset(e3);
+        this.scheduleHover(dragOverTargetIds);
+        const canDrop = (dragOverTargetIds || []).some(
+          (targetId) => this.monitor.canDropOnTarget(targetId)
+        );
+        if (canDrop) {
+          e3.preventDefault();
+          if (e3.dataTransfer) {
+            e3.dataTransfer.dropEffect = this.getCurrentDropEffect();
+          }
+        } else if (this.isDraggingNativeItem()) {
+          e3.preventDefault();
+        } else {
+          e3.preventDefault();
+          if (e3.dataTransfer) {
+            e3.dataTransfer.dropEffect = "none";
+          }
+        }
+      };
+      this.handleTopDragLeaveCapture = (e3) => {
+        if (this.isDraggingNativeItem()) {
+          e3.preventDefault();
+        }
+        const isLastLeave = this.enterLeaveCounter.leave(e3.target);
+        if (!isLastLeave) {
+          return;
+        }
+        if (this.isDraggingNativeItem()) {
+          setTimeout(
+            () => this.endDragNativeItem(),
+            0
+          );
+        }
+        this.cancelHover();
+      };
+      this.handleTopDropCapture = (e3) => {
+        this.dropTargetIds = [];
+        if (this.isDraggingNativeItem()) {
+          var ref;
+          e3.preventDefault();
+          (ref = this.currentNativeSource) === null || ref === void 0 ? void 0 : ref.loadDataTransfer(e3.dataTransfer);
+        } else if (matchNativeItemType(e3.dataTransfer)) {
+          e3.preventDefault();
+        }
+        this.enterLeaveCounter.reset();
+      };
+      this.handleTopDrop = (e3) => {
+        const { dropTargetIds } = this;
+        this.dropTargetIds = [];
+        this.actions.hover(dropTargetIds, {
+          clientOffset: getEventClientOffset(e3)
+        });
+        this.actions.drop({
+          dropEffect: this.getCurrentDropEffect()
+        });
+        if (this.isDraggingNativeItem()) {
+          this.endDragNativeItem();
+        } else if (this.monitor.isDragging()) {
+          this.actions.endDrag();
+        }
+        this.cancelHover();
+      };
+      this.handleSelectStart = (e3) => {
+        const target = e3.target;
+        if (typeof target.dragDrop !== "function") {
+          return;
+        }
+        if (target.tagName === "INPUT" || target.tagName === "SELECT" || target.tagName === "TEXTAREA" || target.isContentEditable) {
+          return;
+        }
+        e3.preventDefault();
+        target.dragDrop();
+      };
+      this.options = new OptionsReader(globalContext, options);
+      this.actions = manager2.getActions();
+      this.monitor = manager2.getMonitor();
+      this.registry = manager2.getRegistry();
+      this.enterLeaveCounter = new EnterLeaveCounter(this.isNodeInDocument);
+    }
+  };
+
+  // node_modules/react-dnd-html5-backend/dist/index.js
+  var HTML5Backend = function createBackend(manager2, context4, options) {
+    return new HTML5BackendImpl(manager2, context4, options);
+  };
+
+  // src/components/stateful/GenericXMLEditor/AttributeEditor.tsx
+  var import_react171 = __toESM(require_react(), 1);
+  var AttributeEditor = ({
+    node: selectedNode,
+    onUpdateAttributes,
+    onUpdateTextContent
+  }) => {
+    if (!selectedNode) {
+      return /* @__PURE__ */ import_react171.default.createElement("div", { className: "p-3 text-muted" }, "Select a node to edit its attributes");
+    }
+    const handleAttributeChange = (key, value) => {
+      const newAttributes = { ...selectedNode.attributes };
+      if (value === "") {
+        delete newAttributes[key];
+      } else {
+        newAttributes[key] = value;
+      }
+      onUpdateAttributes(newAttributes);
+    };
+    const handleAddAttribute = () => {
+      const newKey = prompt("Enter attribute name:");
+      if (newKey && newKey.trim() !== "") {
+        const newAttributes = { ...selectedNode.attributes, [newKey]: "" };
+        onUpdateAttributes(newAttributes);
+      }
+    };
+    const handleRemoveAttribute = (key) => {
+      const newAttributes = { ...selectedNode.attributes };
+      delete newAttributes[key];
+      onUpdateAttributes(newAttributes);
+    };
+    return /* @__PURE__ */ import_react171.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react171.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react171.default.createElement("h6", { className: "mb-0 small" }, "Attributes for ", selectedNode.type), /* @__PURE__ */ import_react171.default.createElement(
+      "button",
+      {
+        className: "btn btn-sm btn-outline-success py-0 px-1",
+        onClick: handleAddAttribute
+      },
+      "+ Add"
+    )), Object.entries(selectedNode.attributes).map(([key, value]) => /* @__PURE__ */ import_react171.default.createElement("div", { key, className: "mb-1 d-flex align-items-center" }, /* @__PURE__ */ import_react171.default.createElement(Form_default.Group, { className: "flex-grow-1 me-1" }, /* @__PURE__ */ import_react171.default.createElement(Form_default.Label, { className: "small mb-0" }, key), /* @__PURE__ */ import_react171.default.createElement(
+      Form_default.Control,
+      {
+        type: "text",
+        size: "sm",
+        value,
+        onChange: (e3) => handleAttributeChange(key, e3.target.value),
+        placeholder: "Value",
+        className: "py-0"
+      }
+    )), /* @__PURE__ */ import_react171.default.createElement(
+      "button",
+      {
+        className: "btn btn-sm btn-outline-danger py-0 px-1",
+        onClick: () => handleRemoveAttribute(key),
+        style: { marginTop: "1.25rem" }
+      },
+      "\xD7"
+    ))), Object.keys(selectedNode.attributes).length === 0 && /* @__PURE__ */ import_react171.default.createElement("div", { className: "text-muted small" }, "No attributes"), onUpdateTextContent && /* @__PURE__ */ import_react171.default.createElement(Form_default.Group, { className: "mt-2" }, /* @__PURE__ */ import_react171.default.createElement(Form_default.Label, { className: "small mb-0" }, "Text Content"), /* @__PURE__ */ import_react171.default.createElement(
+      Form_default.Control,
+      {
+        as: "textarea",
+        rows: 2,
+        value: selectedNode.textContent || "",
+        onChange: (e3) => onUpdateTextContent(e3.target.value),
+        placeholder: "Text content",
+        className: "py-0"
+      }
+    )));
+  };
+
+  // src/flua/FluaPage.tsx
+  var parseXmlToNode = (xmlString) => {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+    const parseElement = (element) => {
+      const attributes = {};
+      for (let i2 = 0; i2 < element.attributes.length; i2++) {
+        const attr = element.attributes[i2];
+        attributes[attr.name] = attr.value;
+      }
+      const children = [];
+      let textContent;
+      for (let i2 = 0; i2 < element.childNodes.length; i2++) {
+        const node = element.childNodes[i2];
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          children.push(parseElement(node));
+        } else if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+          textContent = (textContent || "") + node.textContent;
+        }
+      }
+      if (textContent) {
+        textContent = textContent.trim();
+      }
+      return {
+        id: `${element.nodeName}-${Date.now()}-${Math.random()}`,
+        type: element.nodeName,
+        attributes,
+        children,
+        textContent: textContent || void 0
+      };
+    };
+    const rootElement = xmlDoc.documentElement;
+    return parseElement(rootElement);
+  };
+  var loadXmlFile = async (filePath) => {
+    try {
+      const response = await fetch(`/api/files/read?path=${encodeURIComponent(filePath)}`);
+      if (!response.ok) {
+        throw new Error(`Failed to load XML file: ${response.statusText}`);
+      }
+      const xmlContent = await response.text();
+      return parseXmlToNode(xmlContent);
+    } catch (error) {
+      console.error("Error loading XML file:", error);
+      throw error;
+    }
+  };
+  var nodeTypes = [
+    { label: "Kanban Process", type: "kanban:KanbanProcess" },
+    { label: "Metadata", type: "core:Metadata" },
+    { label: "Version", type: "core:Version" },
+    { label: "Date Created", type: "core:DateCreated" },
+    { label: "Description", type: "core:Description" },
+    { label: "GraphML", type: "graphml:graphml" },
+    { label: "Key", type: "graphml:key" },
+    { label: "Graph", type: "graphml:graph" },
+    { label: "Node", type: "graphml:node" },
+    { label: "Data", type: "graphml:data" },
+    { label: "Edge", type: "graphml:edge" }
+  ];
+  var createKanbanNode = (parentId, nodeType) => {
+    const id = `${nodeType}-${Date.now()}`;
+    const baseNode = {
+      id,
+      type: nodeType,
+      attributes: {},
+      children: []
+    };
+    switch (nodeType) {
+      case "graphml:key":
+        baseNode.attributes = {
+          id: "new-key",
+          for: "node",
+          "attr.name": "",
+          "attr.type": "string"
+        };
+        break;
+      case "graphml:node":
+        baseNode.attributes = { id: `node-${Date.now()}` };
+        break;
+      case "graphml:data":
+        baseNode.attributes = { key: "name" };
+        break;
+      case "graphml:edge":
+        baseNode.attributes = { source: "", target: "" };
+        break;
+    }
+    return baseNode;
+  };
+  var KanbanCard = ({ task, status, onMoveTask }) => {
+    const [{ isDragging }, drag] = useDrag(() => ({
+      type: "task",
+      item: { id: task.id, status },
+      collect: (monitor) => ({
+        isDragging: !!monitor.isDragging()
+      })
+    }));
+    return /* @__PURE__ */ import_react172.default.createElement(
+      "div",
+      {
+        ref: drag,
+        className: "kanban-card",
+        style: {
+          background: "#fff",
+          borderRadius: "4px",
+          padding: "12px",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
+          opacity: isDragging ? 0.5 : 1,
+          cursor: "move"
+        }
+      },
+      /* @__PURE__ */ import_react172.default.createElement("div", { style: { fontWeight: "bold", marginBottom: "8px" } }, task.name),
+      /* @__PURE__ */ import_react172.default.createElement("div", { style: { fontSize: "0.875rem", color: "#666" } }, task.role)
+    );
+  };
+  var KanbanColumn = ({ status, tasks, onMoveTask }) => {
+    const [{ isOver }, drop] = useDrop(() => ({
+      accept: "task",
+      drop: (item) => {
+        if (item.status !== status) {
+          onMoveTask(item.id, status);
+        }
+      },
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver()
+      })
+    }));
+    return /* @__PURE__ */ import_react172.default.createElement(
+      "div",
+      {
+        ref: drop,
+        className: "kanban-column",
+        style: {
+          minWidth: "250px",
+          background: isOver ? "#e6f7ff" : "#f4f5f7",
+          borderRadius: "8px",
+          padding: "12px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+          transition: "background 0.2s ease"
+        }
+      },
+      /* @__PURE__ */ import_react172.default.createElement(
+        "h6",
+        {
+          style: {
+            margin: "0 0 12px 0",
+            padding: "8px",
+            background: "#fff",
+            borderRadius: "4px"
+          }
+        },
+        status,
+        " (",
+        tasks.length,
+        ")"
+      ),
+      /* @__PURE__ */ import_react172.default.createElement(
+        "div",
+        {
+          style: {
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px"
+          }
+        },
+        tasks.map((task) => /* @__PURE__ */ import_react172.default.createElement(
+          KanbanCard,
+          {
+            key: task.id,
+            task,
+            status,
+            onMoveTask
+          }
+        ))
+      )
+    );
+  };
+  var KanbanBoardPreview = ({ xmlTree: xmlTree2, onTreeUpdate }) => {
+    const [tasks, setTasks] = (0, import_react172.useState)([]);
+    console.log("mark1", KanbanBoardPreview);
+    const findGraphmlNode = import_react172.default.useCallback((node) => {
+      if (node.type === "graphml:graphml")
+        return node;
+      for (const child of node.children) {
+        const result = findGraphmlNode(child);
+        if (result)
+          return result;
+      }
+      return null;
+    }, []);
+    const extractTasks = import_react172.default.useCallback((graphmlNode) => {
+      if (!graphmlNode)
+        return [];
+      const graphNode = graphmlNode.children.find(
+        (child) => child.type === "graphml:graph"
+      );
+      if (!graphNode)
+        return [];
+      const tasks2 = graphNode.children.filter((child) => child.type === "graphml:node").map((node) => {
+        let task = {
+          id: node.attributes.id || "",
+          name: "",
+          status: "",
+          role: ""
+        };
+        node.children.forEach((dataNode) => {
+          if (dataNode.type === "graphml:data") {
+            const key = dataNode.attributes.key;
+            const value = dataNode.textContent || "";
+            switch (key) {
+              case "name":
+                task.name = value;
+                break;
+              case "status":
+                task.status = value;
+                break;
+              case "role":
+                task.role = value;
+                break;
+            }
+          }
+        });
+        return task;
+      });
+      return tasks2;
+    }, []);
+    import_react172.default.useEffect(() => {
+      const graphmlNode = findGraphmlNode(xmlTree2);
+      const extractedTasks = extractTasks(graphmlNode);
+      setTasks(extractedTasks);
+    }, [xmlTree2, findGraphmlNode, extractTasks]);
+    const handleMoveTask = (taskId, newStatus) => {
+      const newTree = JSON.parse(JSON.stringify(xmlTree2));
+      const updateStatusInTree = (node) => {
+        if (node.type === "graphml:node" && node.attributes.id === taskId) {
+          for (const child of node.children) {
+            if (child.type === "graphml:data" && child.attributes.key === "status") {
+              child.textContent = newStatus;
+              return true;
+            }
+          }
+          const statusDataNode = {
+            id: `status-${Date.now()}`,
+            type: "graphml:data",
+            attributes: { key: "status" },
+            children: [],
+            textContent: newStatus
+          };
+          node.children.push(statusDataNode);
+          return true;
+        }
+        for (const child of node.children) {
+          if (updateStatusInTree(child)) {
+            return true;
+          }
+        }
+        return false;
+      };
+      if (updateStatusInTree(newTree)) {
+        onTreeUpdate(newTree);
+        setTasks(
+          (prevTasks) => prevTasks.map(
+            (task) => task.id === taskId ? { ...task, status: newStatus } : task
+          )
+        );
+      }
+    };
+    const statusGroups = import_react172.default.useMemo(() => {
+      const groups = {};
+      tasks.forEach((task) => {
+        if (!groups[task.status]) {
+          groups[task.status] = [];
+        }
+        groups[task.status].push(task);
+      });
+      return groups;
+    }, [tasks]);
+    const statusOrder = ["To Do", "In Progress", "Done"];
+    return /* @__PURE__ */ import_react172.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react172.default.createElement(
+      "div",
+      {
+        className: "kanban-board",
+        style: {
+          display: "flex",
+          gap: "16px",
+          padding: "16px",
+          height: "100%",
+          overflowX: "auto"
+        }
+      },
+      statusOrder.map((status) => {
+        const columnTasks = statusGroups[status] || [];
+        return /* @__PURE__ */ import_react172.default.createElement(
+          KanbanColumn,
+          {
+            key: status,
+            status,
+            tasks: columnTasks,
+            onMoveTask: handleMoveTask
+          }
+        );
+      })
+    ));
+  };
+  var renderKanbanPreview = (node, isSelected, eventHandlers, onTreeUpdate) => {
+    return /* @__PURE__ */ import_react172.default.createElement(
+      "div",
+      {
+        style: {
+          height: "100%",
+          width: "100%"
+        },
+        ...eventHandlers
+      },
+      /* @__PURE__ */ import_react172.default.createElement(KanbanBoardPreview, { xmlTree: node, onTreeUpdate })
+    );
+  };
   var FluaPage = () => {
-    return /* @__PURE__ */ import_react154.default.createElement(import_react154.default.Fragment, null, "FLUA PAGE GOES HERE");
+    const [initialTree, setInitialTree] = (0, import_react172.useState)(null);
+    const [loading, setLoading] = (0, import_react172.useState)(true);
+    const [error, setError] = (0, import_react172.useState)(null);
+    (0, import_react172.useEffect)(() => {
+      const loadKanbanProcess = async () => {
+        try {
+          setLoading(true);
+          const tree = await loadXmlFile("example/single-kanban-process.xml");
+          setInitialTree(tree);
+        } catch (err) {
+          setError(err instanceof Error ? err.message : "Failed to load XML");
+          console.error("Error loading kanban process:", err);
+        } finally {
+          setLoading(false);
+        }
+      };
+      loadKanbanProcess();
+    }, []);
+    if (loading) {
+      return /* @__PURE__ */ import_react172.default.createElement("div", null, "Loading kanban process...");
+    }
+    if (error) {
+      throw error;
+    }
+    if (!initialTree) {
+      return /* @__PURE__ */ import_react172.default.createElement("div", null, "No XML data available");
+    }
+    return /* @__PURE__ */ import_react172.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react172.default.createElement(
+      GenericXMLEditorPage,
+      {
+        initialTree,
+        renderPreview: renderKanbanPreview,
+        attributeEditor: (node, onUpdateAttributes, onUpdateTextContent) => {
+          console.log("attributeEditor called with:", {
+            node,
+            onUpdateAttributes,
+            onUpdateTextContent
+          });
+          return /* @__PURE__ */ import_react172.default.createElement(
+            AttributeEditor,
+            {
+              node,
+              onUpdateAttributes,
+              onUpdateTextContent
+            }
+          );
+        },
+        nodeTypes,
+        onAddNode: createKanbanNode
+      }
+    ));
   };
 
   // src/App.tsx
-  var WebSocketContext = (0, import_react155.createContext)({
+  var WebSocketContext = (0, import_react173.createContext)({
     ws: null,
     isConnected: false
   });
-  var TutorialModeContext = (0, import_react155.createContext)({
+  var TutorialModeContext = (0, import_react173.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
-  var AuthContext = (0, import_react155.createContext)({
+  var AuthContext = (0, import_react173.createContext)({
     isAuthenticated: false,
     user: null,
     login: () => {
@@ -72202,23 +76233,23 @@ ${indent}</${node.type}>`;
     }
   });
   var useWebSocket = () => {
-    return (0, import_react155.useContext)(WebSocketContext);
+    return (0, import_react173.useContext)(WebSocketContext);
   };
   var useTutorialMode = () => {
-    return (0, import_react155.useContext)(TutorialModeContext);
+    return (0, import_react173.useContext)(TutorialModeContext);
   };
   var useAuth = () => {
-    return (0, import_react155.useContext)(AuthContext);
+    return (0, import_react173.useContext)(AuthContext);
   };
   var App = () => {
-    const [ws2, setWs] = (0, import_react155.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react155.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react155.useState)(false);
-    const [isAuthenticated, setIsAuthenticated] = (0, import_react155.useState)(
+    const [ws2, setWs] = (0, import_react173.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react173.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react173.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, import_react173.useState)(
       githubAuthService.isAuthenticated
     );
-    const [user, setUser] = (0, import_react155.useState)(githubAuthService.userInfo);
-    (0, import_react155.useEffect)(() => {
+    const [user, setUser] = (0, import_react173.useState)(githubAuthService.userInfo);
+    (0, import_react173.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -72282,61 +76313,61 @@ ${indent}</${node.type}>`;
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react155.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected, sendMessage } }, /* @__PURE__ */ import_react155.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react155.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react155.default.createElement(HashRouter, null, /* @__PURE__ */ import_react155.default.createElement(AppFrame, null, /* @__PURE__ */ import_react155.default.createElement(Routes, null, /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react155.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/flua", element: /* @__PURE__ */ import_react155.default.createElement(FluaPage, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react155.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react155.default.createElement(
+    return /* @__PURE__ */ import_react173.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected, sendMessage } }, /* @__PURE__ */ import_react173.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react173.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react173.default.createElement(HashRouter, null, /* @__PURE__ */ import_react173.default.createElement(AppFrame, null, /* @__PURE__ */ import_react173.default.createElement(Routes, null, /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react173.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/flua", element: /* @__PURE__ */ import_react173.default.createElement(FluaPage, null) }), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react173.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/projects/:projectName",
-        element: /* @__PURE__ */ import_react155.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react173.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react155.default.createElement(
+    ), /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/projects/:projectName/tests/*",
-        element: /* @__PURE__ */ import_react155.default.createElement(TestPage, null)
+        element: /* @__PURE__ */ import_react173.default.createElement(TestPage, null)
       }
-    ), /* @__PURE__ */ import_react155.default.createElement(
+    ), /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/projects/:projectName#:tab",
-        element: /* @__PURE__ */ import_react155.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react173.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(
+    ), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react173.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/auth/github/callback",
-        element: /* @__PURE__ */ import_react155.default.createElement(AuthCallbackPage, null)
+        element: /* @__PURE__ */ import_react173.default.createElement(AuthCallbackPage, null)
       }
-    ), /* @__PURE__ */ import_react155.default.createElement(
+    ), /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/features-reporter",
-        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react155.default.createElement(
+    ), /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/design-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react155.default.createElement(
+    ), /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/text-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null)
       }
-    ), isConnected ? /* @__PURE__ */ import_react155.default.createElement(import_react155.default.Fragment, null, /* @__PURE__ */ import_react155.default.createElement(
+    ), isConnected ? /* @__PURE__ */ import_react173.default.createElement(import_react173.default.Fragment, null, /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/processes",
-        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react155.default.createElement(
+    ), /* @__PURE__ */ import_react173.default.createElement(
       Route,
       {
         path: "/processes/:processId",
-        element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(void 0, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(void 0, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null)
       }
-    )) : null, /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react155.default.createElement(Settings, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "/skribo", element: isAuthenticated ? /* @__PURE__ */ import_react155.default.createElement(SkriboPage, null) : /* @__PURE__ */ import_react155.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react155.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react155.default.createElement(Helpo, null) })))))));
+    )) : null, /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react173.default.createElement(Settings, null) }), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "/skribo", element: isAuthenticated ? /* @__PURE__ */ import_react173.default.createElement(SkriboPage, null) : /* @__PURE__ */ import_react173.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react173.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react173.default.createElement(Helpo, null) })))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -72344,9 +76375,9 @@ ${indent}</${node.type}>`;
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react155.default.createElement(App));
+          root.render(import_react173.default.createElement(App));
         } else {
-          import_client.default.render(import_react155.default.createElement(App), rootElement);
+          import_client.default.render(import_react173.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -72358,7 +76389,7 @@ ${indent}</${node.type}>`;
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react155.default;
+    window.React = import_react173.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);

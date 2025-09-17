@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Alert, Button } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 import { XMLNode } from '../GenericXMLEditorPage';
 
 interface GenericTextEditorProps {
@@ -7,18 +7,88 @@ interface GenericTextEditorProps {
   onUpdateTree: (tree: XMLNode) => void;
 }
 
+// Function to convert XMLNode to proper XML string
 const nodeToXML = (node: XMLNode, depth: number = 0): string => {
   const indent = '  '.repeat(depth);
-  const attributes = Object.entries(node.attributes)
+  
+  // Handle attributes
+  const attributes = Object.entries(node.attributes || {})
     .map(([key, value]) => ` ${key}="${value}"`)
     .join('');
-
+  
+  // Handle text content
+  const hasTextContent = node.textContent && node.textContent.trim().length > 0;
+  
   if (node.children.length === 0) {
-    return `${indent}<${node.type}${attributes} />`;
+    if (hasTextContent) {
+      return `${indent}<${node.type}${attributes}>${node.textContent}</${node.type}>`;
+    } else {
+      return `${indent}<${node.type}${attributes} />`;
+    }
   } else {
-    const children = node.children.map(child => nodeToXML(child, depth + 1)).join('\n');
-    return `${indent}<${node.type}${attributes}>\n${children}\n${indent}</${node.type}>`;
+    let result = `${indent}<${node.type}${attributes}`;
+    
+    if (hasTextContent) {
+      result += `>${node.textContent}\n`;
+    } else {
+      result += '>\n';
+    }
+    
+    // Add children
+    node.children.forEach(child => {
+      result += nodeToXML(child, depth + 1) + '\n';
+    });
+    
+    result += `${indent}</${node.type}>`;
+    return result;
   }
+};
+
+// Function to parse XML string back to XMLNode structure
+const parseXmlString = (xmlString: string): XMLNode => {
+  // Remove XML declaration if present
+  const cleanXmlString = xmlString.replace(/<\?xml.*?\?>\s*/s, '');
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(cleanXmlString, 'text/xml');
+  
+  const parseElement = (element: Element): XMLNode => {
+    // Get attributes
+    const attributes: Record<string, string> = {};
+    for (let i = 0; i < element.attributes.length; i++) {
+      const attr = element.attributes[i];
+      attributes[attr.name] = attr.value;
+    }
+    
+    // Process children
+    const children: XMLNode[] = [];
+    let textContent: string | undefined;
+    
+    for (let i = 0; i < element.childNodes.length; i++) {
+      const node = element.childNodes[i];
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        children.push(parseElement(node as Element));
+      } else if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
+        textContent = (textContent || '') + node.textContent;
+      }
+    }
+    
+    // Trim text content if it exists
+    if (textContent) {
+      textContent = textContent.trim();
+    }
+    
+    return {
+      id: `${element.nodeName}-${Date.now()}-${Math.random()}`,
+      type: element.nodeName,
+      attributes,
+      children,
+      textContent: textContent || undefined
+    };
+  };
+  
+  // Get the root element
+  const rootElement = xmlDoc.documentElement;
+  return parseElement(rootElement);
 };
 
 export const GenericTextEditor: React.FC<GenericTextEditorProps> = ({
@@ -30,73 +100,72 @@ export const GenericTextEditor: React.FC<GenericTextEditorProps> = ({
 
   useEffect(() => {
     try {
-      // For SVG, the root is the svg element itself, so we need to include its attributes
-      if (xmlTree.type === 'svg') {
-        const content = nodeToXML(xmlTree, 0);
-        setXmlContent(content);
-      } else {
-        // Convert the XML tree to XML, but only the children of the root
-        const content = xmlTree.children.map(child => nodeToXML(child, 0)).join('\n');
-        setXmlContent(content);
+      if (!xmlTree) {
+        setXmlContent('');
+        return;
       }
+      
+      // Generate proper XML content with XML declaration
+      const content = `<?xml version="1.0" encoding="UTF-8"?>\n${nodeToXML(xmlTree, 0)}`;
+      setXmlContent(content);
       setError(null);
     } catch (err) {
       setError('Error generating XML');
     }
   }, [xmlTree]);
 
-  const handleXmlChange = (e: React.FormEvent<HTMLDivElement>) => {
-    const newContent = e.currentTarget.textContent || '';
+  const handleXmlChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newContent = e.target.value;
     setXmlContent(newContent);
     setError(null);
   };
 
   const applyChanges = () => {
     try {
-      // This is a placeholder - in a real implementation, you'd parse the XML
-      // and convert it back to an XMLNode structure
-      // For now, we'll just log an error
-      setError('XML parsing not implemented yet');
+      // Parse the XML content back to XMLNode structure
+      const newTree = parseXmlString(xmlContent);
+      onUpdateTree(newTree);
+      setError(null);
     } catch (err) {
       setError('Error parsing XML: ' + (err instanceof Error ? err.message : String(err)));
     }
   };
 
   return (
-    <div className="h-100 d-flex flex-column align-items-center">
-      <div style={{ width: '80ch', maxWidth: '100%' }}>
-        <div 
-          contentEditable
-          onInput={handleXmlChange}
+    <div className="h-100 d-flex flex-column align-items-center p-1">
+      <div style={{ width: '100%', maxWidth: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <textarea
+          value={xmlContent}
+          onChange={handleXmlChange}
           style={{ 
-            width: '80ch',
+            width: '100%',
             background: '#f8f9fa', 
-            padding: '1rem', 
-            borderRadius: '0.25rem',
-            overflow: 'auto',
-            minHeight: '400px',
+            padding: '0.5rem', 
+            borderRadius: '0.125rem',
+            flex: 1,
             fontFamily: 'monospace',
-            whiteSpace: 'pre-wrap',
+            whiteSpace: 'pre',
             wordBreak: 'break-word',
-            lineHeight: '1.4',
-            outline: 'none'
+            lineHeight: '1.2',
+            outline: 'none',
+            border: '1px solid #ced4da',
+            resize: 'none',
+            fontSize: '0.875rem'
           }}
-          suppressContentEditableWarning={true}
-        >
-          {xmlContent}
-        </div>
+        />
         {error && (
-          <Alert variant="danger" className="mt-2">
-            {error}
+          <Alert variant="danger" className="mt-1 py-1">
+            <small>{error}</small>
           </Alert>
         )}
         <Button
           variant="primary"
           onClick={applyChanges}
-          className="mt-2"
+          className="mt-1 py-0"
           disabled={!!error}
+          size="sm"
         >
-          Apply Changes
+          Apply
         </Button>
       </div>
     </div>

@@ -1,3 +1,167 @@
 // @import "bootstrap/scss/bootstrap.scss";
 @import "testeranto-stilo/src/style.scss";
 // @import "./themes.scss";
+
+// Ultra-tight spacing overrides
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 1.1;
+  font-size: 0.875rem;
+}
+
+.container-fluid {
+  padding-left: 0.125rem;
+  padding-right: 0.125rem;
+}
+
+// Padding utilities
+.p-4 { padding: 0.25rem !important; }
+.p-3 { padding: 0.25rem !important; }
+.p-2 { padding: 0.125rem !important; }
+.p-1 { padding: 0.0625rem !important; }
+
+// Margin utilities
+.m-2 { margin: 0.125rem !important; }
+.m-3 { margin: 0.25rem !important; }
+.mb-3 { margin-bottom: 0.25rem !important; }
+.mt-2 { margin-top: 0.125rem !important; }
+.mt-3 { margin-top: 0.25rem !important; }
+
+// Navbar and sidebar adjustments
+.navbar {
+  min-height: 1.5rem;
+}
+
+.nav-link {
+  padding: 0.125rem 0.25rem !important;
+  margin: 0.0625rem !important;
+  font-size: 0.75rem;
+}
+
+// Card adjustments
+.card {
+  margin-bottom: 0.25rem;
+}
+
+.card-body {
+  padding: 0.25rem;
+}
+
+.card-header {
+  padding: 0.125rem 0.25rem;
+  font-size: 0.75rem;
+}
+
+// Form adjustments
+.form-control {
+  padding: 0.0625rem 0.125rem;
+  font-size: 0.75rem;
+  line-height: 1.1;
+}
+
+.form-label {
+  margin-bottom: 0.0625rem;
+  font-size: 0.75rem;
+}
+
+// Button adjustments
+.btn {
+  padding: 0.0625rem 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1.1;
+}
+
+.btn-sm {
+  padding: 0.03125rem 0.125rem;
+  font-size: 0.6875rem;
+}
+
+// Alert adjustments
+.alert {
+  padding: 0.125rem 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+}
+
+// Tooltip adjustments
+.tooltip {
+  .tooltip-inner {
+    padding: 0.125rem 0.25rem;
+    font-size: 0.6875rem;
+  }
+}
+
+// Additional ultra-compact styles
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0.25rem;
+  line-height: 1.1;
+}
+
+h1 { font-size: 1.25rem; }
+h2 { font-size: 1.125rem; }
+h3 { font-size: 1rem; }
+h4 { font-size: 0.875rem; }
+h5 { font-size: 0.8125rem; }
+h6 { font-size: 0.75rem; }
+
+// List items
+ul, ol {
+  padding-left: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+li {
+  margin-bottom: 0.125rem;
+}
+
+// Table adjustments
+.table {
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+  
+  th, td {
+    padding: 0.125rem 0.25rem;
+  }
+}
+
+// Badge adjustments
+.badge {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.25rem;
+}
+
+// Dropdown adjustments
+.dropdown-menu {
+  font-size: 0.75rem;
+  padding: 0.125rem;
+  
+  .dropdown-item {
+    padding: 0.125rem 0.5rem;
+  }
+}
+
+// Modal adjustments
+.modal-content {
+  .modal-header {
+    padding: 0.25rem 0.5rem;
+  }
+  .modal-body {
+    padding: 0.25rem;
+  }
+  .modal-footer {
+    padding: 0.25rem;
+  }
+}
+
+// Reduce border radii for a more compact look
+.rounded {
+  border-radius: 0.125rem !important;
+}
+.rounded-sm {
+  border-radius: 0.0625rem !important;
+}

@@ -1,64 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<kanban:KanbanProcess xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:kanban="http://example.com/businessprocess/agile/kanban"
-  xmlns:core="http://example.com/businessprocess/core"
-  xmlns:graphml="http://graphml.graphdrawing.org/xmlns"
-  xsi:schemaLocation="http://example.com/businessprocess/agile/kanban ../src/flua/kanban.xsd
-                      http://example.com/businessprocess/core ../src/flua/core.xsd
-                      http://graphml.graphdrawing.org/xmlns ../src/graphml.xsd"
-  id="marketing-website-kanban"
-  name="Marketing Website Kanban Board"
-  wipLimit="3">
-
-  <core:Metadata>
-    <core:Version>1.0</core:Version>
-    <core:DateCreated>2025-09-16</core:DateCreated>
-  </core:Metadata>
-
-  <core:Description>
-    Kanban board for managing tasks related to the marketing website.
-  </core:Description>
-
-  <graphml:graphml>
-    <graphml:key id="name" for="node" attr.name="name" attr.type="string" />
-    <graphml:key id="status" for="node" attr.name="status" attr.type="string" />
-    <graphml:key id="role" for="node" attr.name="role" attr.type="string" />
-
-    <graphml:graph id="kanban-tasks" edgedefault="directed">
-
-      <graphml:node id="task-seo-audit">
-        <graphml:data key="name">Conduct SEO audit</graphml:data>
-        <graphml:data key="status">To Do</graphml:data>
-        <graphml:data key="role">Marketing Specialist</graphml:data>
-      </graphml:node>
-
-      <graphml:node id="task-blog-post">
-        <graphml:data key="name">Write blog post on new feature</graphml:data>
-        <graphml:data key="status">To Do</graphml:data>
-        <graphml:data key="role">Content Writer</graphml:data>
-      </graphml:node>
-
-      <graphml:node id="task-landing-page">
-        <graphml:data key="name">Design new landing page</graphml:data>
-        <graphml:data key="status">In Progress</graphml:data>
-        <graphml:data key="role">UX Designer</graphml:data>
-      </graphml:node>
-
-      <graphml:node id="task-implement-ui">
-        <graphml:data key="name">Implement landing page UI</graphml:data>
-        <graphml:data key="status">In Progress</graphml:data>
-        <graphml:data key="role">Front-End Developer</graphml:data>
-      </graphml:node>
-
-      <graphml:node id="task-campaign">
-        <graphml:data key="name">Run social media campaign</graphml:data>
-        <graphml:data key="status">Done</graphml:data>
-        <graphml:data key="role">Marketing Specialist</graphml:data>
-      </graphml:node>
-
-      <graphml:edge source="task-landing-page" target="task-implement-ui" />
-
-    </graphml:graph>
-  </graphml:graphml>
-
-</kanban:KanbanProcess>
+<Container fluid="true">
+  <Row>
+    <Col xs="12">
+      <Text class="">hello hello hello</Text>
+      <Text class="" />
+    </Col>
+  </Row>
+</Container>

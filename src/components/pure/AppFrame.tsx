@@ -59,10 +59,9 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
       <div
         className={`border-end d-flex flex-column ${!hasAnimated ? 'sidebar-attention' : ''}`}
         style={{
-          flexBasis: "100px" /* Sets the initial fixed width */,
-          flexGrow: "0" /* Prevents the item from growing */,
+          flexBasis: "40px" /* Reduced from 60px */,
+          flexGrow: "0",
           flexShrink: "0",
-
           height: "100vh",
           position: "sticky",
           top: 0,
@@ -70,7 +69,7 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
       >
 
         {/* Navigation */}
-        <Nav variant="pills" className="flex-column p-2 flex-grow-1">
+        <Nav variant="pills" className="flex-column p-0 flex-grow-1">
 
           {/* Help Link - Always accessible */}
           <Nav.Link
@@ -372,8 +371,8 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
               src="https://www.testeranto.com/logo.svg"
               alt="Testeranto Logo"
               style={{
-                height: '64px',
-                width: '64px',
+                height: '32px',
+                width: '32px',
               }}
             />
           </button>
@@ -396,13 +395,14 @@ export const AppFrame = ({ children, title, rightContent }: AppFrameProps) => {
           overflow: "auto", // Enable scrolling
         }}
       >
-        <main className="flex-grow-1 p-4" style={{
-          minWidth: "fit-content", // Allow the content to be as wide as needed
+        <main className="flex-grow-1 p-1" style={{
+          minWidth: "fit-content",
           width: "100%",
         }}>
           <Container fluid style={{
             height: "100%",
-            minWidth: "fit-content", // Prevent the container from constraining width
+            minWidth: "fit-content",
+            padding: "0.125rem",
           }}>
             {location.pathname === "/helpo" ? (
               <div>
