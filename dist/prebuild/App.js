@@ -1099,7 +1099,7 @@
             }
             return dispatcher.useContext(Context2);
           }
-          function useState55(initialState3) {
+          function useState56(initialState3) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useState(initialState3);
           }
@@ -1901,7 +1901,7 @@
           exports.useMemo = useMemo34;
           exports.useReducer = useReducer2;
           exports.useRef = useRef40;
-          exports.useState = useState55;
+          exports.useState = useState56;
           exports.useSyncExternalStore = useSyncExternalStore;
           exports.useTransition = useTransition2;
           exports.version = ReactVersion;
@@ -2397,9 +2397,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React185 = require_react();
+          var React186 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React185.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React186.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -4004,7 +4004,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React185.Children.forEach(props.children, function(child) {
+                  React186.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12451,7 +12451,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React185.Component().refs;
+          var emptyRefsObject = new React186.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23623,7 +23623,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React185 = require_react();
+          var React186 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23649,7 +23649,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React185.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React186.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -46465,7 +46465,7 @@ ${description}` : message
   });
 
   // src/App.tsx
-  var import_react176 = __toESM(require_react(), 1);
+  var import_react177 = __toESM(require_react(), 1);
   var import_client = __toESM(require_client(), 1);
 
   // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
@@ -48846,7 +48846,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   "use client";
 
   // src/frontend/testPage/TestPage.tsx
-  var import_react107 = __toESM(require_react(), 1);
+  var import_react108 = __toESM(require_react(), 1);
 
   // src/utils/logFiles.ts
   var STANDARD_LOGS = {
@@ -48956,7 +48956,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
 
   // src/frontend/testPage/TestPageView.tsx
-  var import_react105 = __toESM(require_react(), 1);
+  var import_react106 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -58418,71 +58418,61 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     projectName,
     testName,
     runtime
-  }) => /* @__PURE__ */ import_react100.default.createElement(
-    Col_default,
+  }) => /* @__PURE__ */ import_react100.default.createElement("div", { className: "p-3" }, selectedFile?.path.endsWith("tests.json") && /* @__PURE__ */ import_react100.default.createElement("div", { className: "test-results-preview" }, typeof selectedFile.content === "string" ? renderTestResults(
+    JSON.parse(selectedFile.content),
+    buildErrors,
+    projectName,
+    testName,
+    runtime
+  ) : renderTestResults(
+    selectedFile.content,
+    buildErrors,
+    projectName,
+    testName,
+    runtime
+  )), selectedFile?.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) && /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react100.default.createElement(
+    "img",
     {
-      sm: 3,
-      className: "p-0 border-start",
-      style: { height: "calc(100vh - 56px)", overflow: "auto" }
+      src: selectedFile.content,
+      alt: selectedFile.path,
+      className: "img-fluid",
+      style: { maxHeight: "300px" }
+    }
+  ), /* @__PURE__ */ import_react100.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react100.default.createElement(
+    "a",
+    {
+      href: selectedFile.content,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-outline-primary"
     },
-    /* @__PURE__ */ import_react100.default.createElement("div", { className: "p-3" }, selectedFile?.path.endsWith("tests.json") && /* @__PURE__ */ import_react100.default.createElement("div", { className: "test-results-preview" }, typeof selectedFile.content === "string" ? renderTestResults(
-      JSON.parse(selectedFile.content),
-      buildErrors,
-      projectName,
-      testName,
-      runtime
-    ) : renderTestResults(
-      selectedFile.content,
-      buildErrors,
-      projectName,
-      testName,
-      runtime
-    )), selectedFile?.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) && /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react100.default.createElement(
-      "img",
-      {
-        src: selectedFile.content,
-        alt: selectedFile.path,
-        className: "img-fluid",
-        style: { maxHeight: "300px" }
+    "Open Full Size"
+  ))), selectedFile?.path.endsWith("build.json") && /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("h5", null, "Build Information"), (() => {
+    try {
+      const buildData = JSON.parse(selectedFile.content);
+      return /* @__PURE__ */ import_react100.default.createElement(import_react100.default.Fragment, null, buildData.errors?.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react100.default.createElement("h6", { className: "text-danger" }, "Errors (", buildData.errors.length, ")"), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "list-unstyled" }, buildData.errors.map((error, index3) => /* @__PURE__ */ import_react100.default.createElement("li", { key: index3, className: "mb-2 p-2  rounded" }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-danger fw-bold" }, error.text), error.location && /* @__PURE__ */ import_react100.default.createElement("div", { className: "small text-muted" }, "File: ", error.location.file, "Line: ", error.location.line, "Column: ", error.location.column), error.notes && error.notes.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react100.default.createElement("ul", null, error.notes.map(
+        (note, noteIndex) => /* @__PURE__ */ import_react100.default.createElement("li", { key: noteIndex }, note.text)
+      ))))))), buildData.warnings?.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react100.default.createElement("h6", { className: "text-warning" }, "Warnings (", buildData.warnings.length, ")"), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "list-unstyled" }, buildData.warnings.map((warning9, index3) => /* @__PURE__ */ import_react100.default.createElement("li", { key: index3, className: "mb-2 p-2  rounded" }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-warning fw-bold" }, warning9.text), warning9.location && /* @__PURE__ */ import_react100.default.createElement("div", { className: "small text-muted" }, "File: ", warning9.location.file, "Line: ", warning9.location.line, "Column: ", warning9.location.column), warning9.notes && warning9.notes.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react100.default.createElement("ul", null, warning9.notes.map(
+        (note, noteIndex) => /* @__PURE__ */ import_react100.default.createElement("li", { key: noteIndex }, note.text)
+      ))))))), (!buildData.errors || buildData.errors.length === 0) && (!buildData.warnings || buildData.warnings.length === 0) && /* @__PURE__ */ import_react100.default.createElement("div", { className: "alert alert-success" }, "No build errors or warnings"));
+    } catch (e3) {
+      return /* @__PURE__ */ import_react100.default.createElement("div", { className: "alert alert-danger" }, "Error parsing build.json: ", e3.message);
+    }
+  })()), selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && !selectedFile.path.endsWith("build.json") && /* @__PURE__ */ import_react100.default.createElement("pre", { className: " p-2 small" }, /* @__PURE__ */ import_react100.default.createElement("code", null, selectedFile.content)), selectedFile?.path.includes("source_files") && /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-2 small text-muted" }, /* @__PURE__ */ import_react100.default.createElement("i", { className: "bi bi-file-earmark-text me-1" }), selectedFile.path.split("/").pop()), /* @__PURE__ */ import_react100.default.createElement(
+    Button_default2,
+    {
+      variant: "outline-primary",
+      size: "sm",
+      className: "mb-2",
+      onClick: () => {
+        alert("Save functionality will be implemented here");
       }
-    ), /* @__PURE__ */ import_react100.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react100.default.createElement(
-      "a",
-      {
-        href: selectedFile.content,
-        target: "_blank",
-        rel: "noopener noreferrer",
-        className: "btn btn-sm btn-outline-primary"
-      },
-      "Open Full Size"
-    ))), selectedFile?.path.endsWith("build.json") && /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("h5", null, "Build Information"), (() => {
-      try {
-        const buildData = JSON.parse(selectedFile.content);
-        return /* @__PURE__ */ import_react100.default.createElement(import_react100.default.Fragment, null, buildData.errors?.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react100.default.createElement("h6", { className: "text-danger" }, "Errors (", buildData.errors.length, ")"), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "list-unstyled" }, buildData.errors.map((error, index3) => /* @__PURE__ */ import_react100.default.createElement("li", { key: index3, className: "mb-2 p-2  rounded" }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-danger fw-bold" }, error.text), error.location && /* @__PURE__ */ import_react100.default.createElement("div", { className: "small text-muted" }, "File: ", error.location.file, "Line: ", error.location.line, "Column: ", error.location.column), error.notes && error.notes.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react100.default.createElement("ul", null, error.notes.map(
-          (note, noteIndex) => /* @__PURE__ */ import_react100.default.createElement("li", { key: noteIndex }, note.text)
-        ))))))), buildData.warnings?.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react100.default.createElement("h6", { className: "text-warning" }, "Warnings (", buildData.warnings.length, ")"), /* @__PURE__ */ import_react100.default.createElement("ul", { className: "list-unstyled" }, buildData.warnings.map(
-          (warning9, index3) => /* @__PURE__ */ import_react100.default.createElement("li", { key: index3, className: "mb-2 p-2  rounded" }, /* @__PURE__ */ import_react100.default.createElement("div", { className: "text-warning fw-bold" }, warning9.text), warning9.location && /* @__PURE__ */ import_react100.default.createElement("div", { className: "small text-muted" }, "File: ", warning9.location.file, "Line: ", warning9.location.line, "Column: ", warning9.location.column), warning9.notes && warning9.notes.length > 0 && /* @__PURE__ */ import_react100.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react100.default.createElement("ul", null, warning9.notes.map(
-            (note, noteIndex) => /* @__PURE__ */ import_react100.default.createElement("li", { key: noteIndex }, note.text)
-          ))))
-        ))), (!buildData.errors || buildData.errors.length === 0) && (!buildData.warnings || buildData.warnings.length === 0) && /* @__PURE__ */ import_react100.default.createElement("div", { className: "alert alert-success" }, "No build errors or warnings"));
-      } catch (e3) {
-        return /* @__PURE__ */ import_react100.default.createElement("div", { className: "alert alert-danger" }, "Error parsing build.json: ", e3.message);
-      }
-    })()), selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && !selectedFile.path.endsWith("build.json") && /* @__PURE__ */ import_react100.default.createElement("pre", { className: " p-2 small" }, /* @__PURE__ */ import_react100.default.createElement("code", null, selectedFile.content)), selectedFile?.path.includes("source_files") && /* @__PURE__ */ import_react100.default.createElement("div", null, /* @__PURE__ */ import_react100.default.createElement("div", { className: "mb-2 small text-muted" }, /* @__PURE__ */ import_react100.default.createElement("i", { className: "bi bi-file-earmark-text me-1" }), selectedFile.path.split("/").pop()), /* @__PURE__ */ import_react100.default.createElement(
-      Button_default2,
-      {
-        variant: "outline-primary",
-        size: "sm",
-        className: "mb-2",
-        onClick: () => {
-          alert("Save functionality will be implemented here");
-        }
-      },
-      "Save Changes"
-    )))
-  );
+    },
+    "Save Changes"
+  )));
 
   // src/frontend/testPage/TestPageLeftContent.tsx
-  var import_react104 = __toESM(require_react(), 1);
+  var import_react105 = __toESM(require_react(), 1);
 
   // src/components/pure/FileTree.tsx
   var import_react102 = __toESM(require_react(), 1);
@@ -58566,8 +58556,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }));
   };
 
-  // src/frontend/testPage/TestPageLeftContent.tsx
-  var TestPageLeftContent = ({
+  // src/frontend/testPage/ProjectsTree.tsx
+  var import_react104 = __toESM(require_react(), 1);
+  var ProjectsTree = ({
+    projects,
+    currentProjectName,
+    currentTestName,
     setExpandedSections,
     expandedSections,
     logs,
@@ -58578,24 +58572,84 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     activeTab,
     setSelectedSourcePath
   }) => {
-    return /* @__PURE__ */ import_react104.default.createElement(import_react104.default.Fragment, null, /* @__PURE__ */ import_react104.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react104.default.createElement(
+    const navigate = useNavigate();
+    const [expandedProjects, setExpandedProjects] = (0, import_react104.useState)(() => {
+      const initial = {};
+      if (projects && projects.length > 0) {
+        initial[projects[0]] = true;
+      }
+      return initial;
+    });
+    const [projectTests, setProjectTests] = (0, import_react104.useState)({});
+    const [loadingProjects, setLoadingProjects] = (0, import_react104.useState)({});
+    const toggleProject = async (projectName) => {
+      const isExpanding = !expandedProjects[projectName];
+      setExpandedProjects((prev) => ({
+        ...prev,
+        [projectName]: isExpanding
+      }));
+      if (isExpanding && !projectTests[projectName]) {
+        setLoadingProjects((prev) => ({ ...prev, [projectName]: true }));
+        try {
+          const response = await fetch(`/projects/${projectName}/tests.json`);
+          if (response.ok) {
+            const tests = await response.json();
+            setProjectTests((prev) => ({
+              ...prev,
+              [projectName]: tests
+            }));
+          } else {
+            console.error(`Failed to fetch tests for ${projectName}`);
+            setProjectTests((prev) => ({
+              ...prev,
+              [projectName]: []
+            }));
+          }
+        } catch (error) {
+          console.error(`Error fetching tests for ${projectName}:`, error);
+          setProjectTests((prev) => ({
+            ...prev,
+            [projectName]: []
+          }));
+        } finally {
+          setLoadingProjects((prev) => ({ ...prev, [projectName]: false }));
+        }
+      }
+    };
+    return /* @__PURE__ */ import_react104.default.createElement("div", null, /* @__PURE__ */ import_react104.default.createElement(
       "div",
       {
         className: "d-flex align-items-center text-muted mb-1",
-        style: { cursor: "pointer", fontSize: "0.875rem" },
+        style: { fontSize: "0.875rem", fontWeight: "bold" }
+      },
+      /* @__PURE__ */ import_react104.default.createElement("i", { className: "bi bi-folder me-1" }),
+      /* @__PURE__ */ import_react104.default.createElement("span", null, "Projects")
+    ), !projects || projects.length === 0 ? /* @__PURE__ */ import_react104.default.createElement("div", { className: "ms-3 text-muted" }, "No projects available") : /* @__PURE__ */ import_react104.default.createElement("div", null, projects.map((project, index3) => /* @__PURE__ */ import_react104.default.createElement("div", { key: project }, /* @__PURE__ */ import_react104.default.createElement(
+      FileTreeItem,
+      {
+        name: project,
+        isFile: false,
+        level: 1,
+        isSelected: false,
+        exists: true,
+        isExpanded: expandedProjects[project],
+        onClick: () => toggleProject(project)
+      }
+    ), expandedProjects[project] && /* @__PURE__ */ import_react104.default.createElement("div", { className: "ms-4" }, "  // Increased indentation for tests", loadingProjects[project] ? /* @__PURE__ */ import_react104.default.createElement("div", { className: "text-muted small" }, "Loading tests...") : /* @__PURE__ */ import_react104.default.createElement(import_react104.default.Fragment, null, index3 === 0 && /* @__PURE__ */ import_react104.default.createElement(import_react104.default.Fragment, null, /* @__PURE__ */ import_react104.default.createElement("div", null, /* @__PURE__ */ import_react104.default.createElement(
+      FileTreeItem,
+      {
+        name: "Standard Logs",
+        isFile: false,
+        level: 2,
+        isSelected: false,
+        exists: true,
+        isExpanded: expandedSections.standardLogs,
         onClick: () => setExpandedSections((prev) => ({
           ...prev,
           standardLogs: !prev.standardLogs
         }))
-      },
-      /* @__PURE__ */ import_react104.default.createElement(
-        "i",
-        {
-          className: `bi bi-chevron-${expandedSections.standardLogs ? "down" : "right"} me-1`
-        }
-      ),
-      /* @__PURE__ */ import_react104.default.createElement("span", null, "Standard Logs")
-    ), expandedSections.standardLogs && /* @__PURE__ */ import_react104.default.createElement("div", null, Object.values(STANDARD_LOGS).map((logName) => {
+      }
+    ), expandedSections.standardLogs && /* @__PURE__ */ import_react104.default.createElement("div", { className: "ms-4" }, Object.values(STANDARD_LOGS).map((logName) => {
       const logContent = logs ? logs[logName] : void 0;
       const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0);
       return /* @__PURE__ */ import_react104.default.createElement(
@@ -58604,7 +58658,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           key: logName,
           name: logName,
           isFile: true,
-          level: 1,
+          level: 3,
           isSelected: activeTab === logName,
           exists,
           onClick: () => {
@@ -58627,24 +58681,21 @@ This file was not generated during the test run.`,
           }
         }
       );
-    }))), runtime && RUNTIME_SPECIFIC_LOGS[runtime] && Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react104.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react104.default.createElement(
-      "div",
+    }))), runtime && RUNTIME_SPECIFIC_LOGS[runtime] && Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react104.default.createElement("div", null, /* @__PURE__ */ import_react104.default.createElement(
+      FileTreeItem,
       {
-        className: "d-flex align-items-center text-muted mb-1",
-        style: { cursor: "pointer", fontSize: "0.875rem" },
+        name: "Runtime Logs",
+        isFile: false,
+        level: 2,
+        isSelected: false,
+        exists: true,
+        isExpanded: expandedSections.runtimeLogs,
         onClick: () => setExpandedSections((prev) => ({
           ...prev,
           runtimeLogs: !prev.runtimeLogs
         }))
-      },
-      /* @__PURE__ */ import_react104.default.createElement(
-        "i",
-        {
-          className: `bi bi-chevron-${expandedSections.runtimeLogs ? "down" : "right"} me-1`
-        }
-      ),
-      /* @__PURE__ */ import_react104.default.createElement("span", null, "Runtime Logs")
-    ), expandedSections.runtimeLogs && /* @__PURE__ */ import_react104.default.createElement("div", null, Object.values(
+      }
+    ), expandedSections.runtimeLogs && /* @__PURE__ */ import_react104.default.createElement("div", { className: "ms-4" }, Object.values(
       RUNTIME_SPECIFIC_LOGS[runtime]
     ).map((logName) => {
       const logContent = logs ? logs[logName] : void 0;
@@ -58655,7 +58706,7 @@ This file was not generated during the test run.`,
           key: logName,
           name: logName,
           isFile: true,
-          level: 1,
+          level: 3,
           isSelected: activeTab === logName,
           exists,
           onClick: () => {
@@ -58678,24 +58729,21 @@ This file was not generated during the test run.`,
           }
         }
       );
-    }))), logs && logs.source_files && /* @__PURE__ */ import_react104.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react104.default.createElement(
-      "div",
+    }))), logs && logs.source_files && /* @__PURE__ */ import_react104.default.createElement("div", null, /* @__PURE__ */ import_react104.default.createElement(
+      FileTreeItem,
       {
-        className: "d-flex align-items-center text-muted mb-1",
-        style: { cursor: "pointer", fontSize: "0.875rem" },
+        name: "Source Files",
+        isFile: false,
+        level: 2,
+        isSelected: false,
+        exists: true,
+        isExpanded: expandedSections.sourceFiles,
         onClick: () => setExpandedSections((prev) => ({
           ...prev,
           sourceFiles: !prev.sourceFiles
         }))
-      },
-      /* @__PURE__ */ import_react104.default.createElement(
-        "i",
-        {
-          className: `bi bi-chevron-${expandedSections.sourceFiles ? "down" : "right"} me-1`
-        }
-      ),
-      /* @__PURE__ */ import_react104.default.createElement("span", null, "Source Files")
-    ), expandedSections.sourceFiles && /* @__PURE__ */ import_react104.default.createElement("div", null, /* @__PURE__ */ import_react104.default.createElement(
+      }
+    ), expandedSections.sourceFiles && /* @__PURE__ */ import_react104.default.createElement("div", { className: "ms-4" }, /* @__PURE__ */ import_react104.default.createElement(
       FileTree,
       {
         data: logs.source_files,
@@ -58708,10 +58756,57 @@ This file was not generated during the test run.`,
             language: getLanguage(path)
           });
         },
-        level: 1,
+        level: 3,
         selectedSourcePath
       }
-    ))));
+    )))), (projectTests[project] || []).map((test) => /* @__PURE__ */ import_react104.default.createElement(
+      FileTreeItem,
+      {
+        key: `${project}-${test}`,
+        name: test,
+        isFile: true,
+        level: 2,
+        isSelected: currentProjectName === project && currentTestName === test,
+        exists: true,
+        onClick: () => {
+          navigate(`/projects/${project}/tests/${encodeURIComponent(test)}`);
+        }
+      }
+    ))))))));
+  };
+
+  // src/frontend/testPage/TestPageLeftContent.tsx
+  var TestPageLeftContent = ({
+    projects,
+    setExpandedSections,
+    expandedSections,
+    logs,
+    setActiveTab,
+    setSelectedFile,
+    runtime,
+    selectedSourcePath,
+    activeTab,
+    setSelectedSourcePath,
+    projectName,
+    testName
+  }) => {
+    return /* @__PURE__ */ import_react105.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react105.default.createElement(
+      ProjectsTree,
+      {
+        projects,
+        currentProjectName: projectName,
+        currentTestName: testName,
+        setExpandedSections,
+        expandedSections,
+        logs,
+        setActiveTab,
+        setSelectedFile,
+        runtime,
+        selectedSourcePath,
+        activeTab,
+        setSelectedSourcePath
+      }
+    ));
   };
 
   // src/frontend/testPage/TestPageView.tsx
@@ -58726,27 +58821,27 @@ This file was not generated during the test run.`,
     isWebSocketConnected
   }) => {
     const navigate = useNavigate();
-    const [showAiderModal, setShowAiderModal] = (0, import_react105.useState)(false);
-    const [messageOption, setMessageOption] = (0, import_react105.useState)(
+    const [showAiderModal, setShowAiderModal] = (0, import_react106.useState)(false);
+    const [messageOption, setMessageOption] = (0, import_react106.useState)(
       "default"
     );
-    const [customMessage, setCustomMessage] = (0, import_react105.useState)(
+    const [customMessage, setCustomMessage] = (0, import_react106.useState)(
       typeof logs["message.txt"] === "string" ? logs["message.txt"] : "make a script that prints hello"
     );
-    const [showToast, setShowToast] = (0, import_react105.useState)(false);
-    const [toastMessage, setToastMessage] = (0, import_react105.useState)("");
-    const [toastVariant, setToastVariant] = (0, import_react105.useState)(
+    const [showToast, setShowToast] = (0, import_react106.useState)(false);
+    const [toastMessage, setToastMessage] = (0, import_react106.useState)("");
+    const [toastVariant, setToastVariant] = (0, import_react106.useState)(
       "success"
     );
-    const [expandedSections, setExpandedSections] = (0, import_react105.useState)({
+    const [expandedSections, setExpandedSections] = (0, import_react106.useState)({
       standardLogs: true,
       runtimeLogs: true,
       sourceFiles: true,
       buildErrors: true
     });
-    const [isNavbarCollapsed, setIsNavbarCollapsed] = (0, import_react105.useState)(false);
-    const [buildErrors, setBuildErrors] = (0, import_react105.useState)({ errors: [], warnings: [] });
-    (0, import_react105.useEffect)(() => {
+    const [isNavbarCollapsed, setIsNavbarCollapsed] = (0, import_react106.useState)(false);
+    const [buildErrors, setBuildErrors] = (0, import_react106.useState)({ errors: [], warnings: [] });
+    (0, import_react106.useEffect)(() => {
       const metafile = logs.build_logs?.metafile;
       if (!metafile) {
         setBuildErrors({ errors: [], warnings: [] });
@@ -58778,22 +58873,110 @@ This file was not generated during the test run.`,
       );
       setBuildErrors({ errors: filteredErrors, warnings: filteredWarnings });
     }, [logs, testName]);
-    (0, import_react105.useEffect)(() => {
+    (0, import_react106.useEffect)(() => {
       if (typeof logs["message.txt"] === "string" && logs["message.txt"].trim()) {
         setCustomMessage(logs["message.txt"]);
       }
     }, [logs]);
+    (0, import_react106.useEffect)(() => {
+      const fetchProjects = async () => {
+        try {
+          const response = await fetch("projects.json");
+          if (response.ok) {
+            const projectsData = await response.json();
+            setProjects(projectsData);
+          } else {
+            console.error("Failed to fetch projects");
+          }
+        } catch (error) {
+          console.error("Error fetching projects:", error);
+        }
+      };
+      fetchProjects();
+    }, []);
     const wsContext = useWebSocket();
     const ws2 = wsContext?.ws;
-    const [activeTab, setActiveTab] = import_react105.default.useState("tests.json");
-    const [selectedFile, setSelectedFile] = (0, import_react105.useState)(null);
-    const [selectedSourcePath, setSelectedSourcePath] = (0, import_react105.useState)(
+    const [activeTab, setActiveTab] = import_react106.default.useState("tests.json");
+    const [openFiles, setOpenFiles] = (0, import_react106.useState)([]);
+    const [activeFileIndex, setActiveFileIndex] = (0, import_react106.useState)(-1);
+    const [selectedSourcePath, setSelectedSourcePath] = (0, import_react106.useState)(
       null
     );
-    const [editorTheme, setEditorTheme] = (0, import_react105.useState)(
+    const [editorTheme, setEditorTheme] = (0, import_react106.useState)(
       "vs-dark"
     );
-    return /* @__PURE__ */ import_react105.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react105.default.createElement(
+    const [projects, setProjects] = (0, import_react106.useState)([]);
+    const [editorRef, setEditorRef] = (0, import_react106.useState)(null);
+    const [modelRef, setModelRef] = (0, import_react106.useState)(null);
+    const openFile = (file) => {
+      const existingIndex = openFiles.findIndex((f) => f.path === file.path);
+      if (existingIndex !== -1) {
+        setActiveFileIndex(existingIndex);
+        return;
+      }
+      setOpenFiles((prev) => [...prev, file]);
+      setActiveFileIndex(openFiles.length);
+    };
+    const closeFile = (index3) => {
+      setOpenFiles((prev) => prev.filter((_3, i2) => i2 !== index3));
+      if (activeFileIndex === index3) {
+        if (openFiles.length > 1) {
+          setActiveFileIndex(Math.min(index3, openFiles.length - 2));
+        } else {
+          setActiveFileIndex(-1);
+        }
+      } else if (activeFileIndex > index3) {
+        setActiveFileIndex(activeFileIndex - 1);
+      }
+    };
+    const selectedFile = activeFileIndex >= 0 ? openFiles[activeFileIndex] : null;
+    (0, import_react106.useEffect)(() => {
+      console.log("selectedFile changed:", {
+        path: selectedFile?.path,
+        contentLength: selectedFile?.content?.length,
+        language: selectedFile?.language
+      });
+    }, [selectedFile]);
+    (0, import_react106.useEffect)(() => {
+      console.log("selectedFile useEffect triggered", {
+        selectedFile,
+        editorRefExists: !!editorRef,
+        modelRefExists: !!modelRef
+      });
+      if (selectedFile && editorRef) {
+        console.log("Updating editor for selected file:", selectedFile.path);
+        const monaco = window.monaco;
+        if (monaco) {
+          let currentModel = editorRef.getModel();
+          if (!currentModel) {
+            currentModel = monaco.editor.createModel(
+              selectedFile.content || "// No content",
+              selectedFile.language || "plaintext"
+            );
+            editorRef.setModel(currentModel);
+            setModelRef(currentModel);
+            console.log("New model created and set");
+          } else {
+            const currentValue = currentModel.getValue();
+            const newValue = selectedFile.content || "// No content";
+            if (currentValue !== newValue) {
+              currentModel.setValue(newValue);
+              console.log("Model value updated");
+            }
+            const currentLanguage = currentModel.getLanguageId();
+            const newLanguage = selectedFile.language || "plaintext";
+            if (currentLanguage !== newLanguage) {
+              monaco.editor.setModelLanguage(currentModel, newLanguage);
+              console.log("Model language updated to:", newLanguage);
+            }
+          }
+          editorRef.revealPosition({ lineNumber: 1, column: 1 });
+        }
+      } else {
+        console.log("No selectedFile or editorRef available");
+      }
+    }, [selectedFile, editorRef, modelRef]);
+    return /* @__PURE__ */ import_react106.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react106.default.createElement(
       TestPageNavbar,
       {
         decodedTestPath,
@@ -58802,7 +58985,7 @@ This file was not generated during the test run.`,
         setShowAiderModal,
         isWebSocketConnected
       }
-    ), /* @__PURE__ */ import_react105.default.createElement(
+    ), /* @__PURE__ */ import_react106.default.createElement(
       MagicRobotModal,
       {
         customMessage,
@@ -58821,65 +59004,170 @@ This file was not generated during the test run.`,
         testName,
         ws: ws2
       }
-    ), /* @__PURE__ */ import_react105.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react105.default.createElement(
+    ), /* @__PURE__ */ import_react106.default.createElement(Row_default, { className: "g-0 flex-nowrap overflow-x-auto" }, /* @__PURE__ */ import_react106.default.createElement(
       Col_default,
       {
         sm: 3,
-        className: "border-end",
         style: {
           height: "calc(100vh - 56px)",
-          overflow: "auto",
-          backgroundColor: "#f8f9fa"
+          overflowY: "auto"
         }
       },
-      /* @__PURE__ */ import_react105.default.createElement(
+      /* @__PURE__ */ import_react106.default.createElement(
         TestPageLeftContent,
         {
+          projects,
           setExpandedSections,
           expandedSections,
           logs,
           setActiveTab,
-          setSelectedFile,
+          setSelectedFile: openFile,
           runtime,
           selectedSourcePath,
           activeTab,
-          setSelectedSourcePath
+          setSelectedSourcePath,
+          projectName,
+          testName
         }
       )
-    ), /* @__PURE__ */ import_react105.default.createElement(
+    ), /* @__PURE__ */ import_react106.default.createElement(
       Col_default,
       {
-        sm: 6,
-        className: "border-end p-0",
-        style: { height: "calc(100vh - 56px)", overflow: "hidden" }
+        sm: 8,
+        style: {
+          height: "calc(100vh - 56px)",
+          overflowY: "auto",
+          display: "flex",
+          flexDirection: "column"
+        }
       },
-      /* @__PURE__ */ import_react105.default.createElement(
+      openFiles.length > 0 && /* @__PURE__ */ import_react106.default.createElement("div", { style: {
+        display: "flex",
+        backgroundColor: "#1e1e1e",
+        borderBottom: "1px solid #3c3c3c"
+      } }, openFiles.map((file, index3) => /* @__PURE__ */ import_react106.default.createElement(
+        "div",
+        {
+          key: file.path,
+          style: {
+            padding: "8px 16px",
+            cursor: "pointer",
+            backgroundColor: index3 === activeFileIndex ? "#2d2d30" : "transparent",
+            color: index3 === activeFileIndex ? "#ffffff" : "#cccccc",
+            borderRight: "1px solid #3c3c3c",
+            display: "flex",
+            alignItems: "center"
+          },
+          onClick: () => setActiveFileIndex(index3)
+        },
+        /* @__PURE__ */ import_react106.default.createElement("span", { style: { marginRight: "8px" } }, file.path.split("/").pop()),
+        /* @__PURE__ */ import_react106.default.createElement(
+          "button",
+          {
+            onClick: (e3) => {
+              e3.stopPropagation();
+              closeFile(index3);
+            },
+            style: {
+              background: "none",
+              border: "none",
+              color: "#cccccc",
+              cursor: "pointer",
+              padding: "0",
+              width: "16px",
+              height: "16px",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            },
+            onMouseOver: (e3) => {
+              e3.currentTarget.style.backgroundColor = "#e81123";
+              e3.currentTarget.style.color = "#ffffff";
+            },
+            onMouseOut: (e3) => {
+              e3.currentTarget.style.backgroundColor = "transparent";
+              e3.currentTarget.style.color = "#cccccc";
+            }
+          },
+          "\xD7"
+        )
+      ))),
+      /* @__PURE__ */ import_react106.default.createElement("div", { style: { height: "100%", width: "100%", flexGrow: 1 }, id: "editor-wrapper" }, /* @__PURE__ */ import_react106.default.createElement(
         de,
         {
           height: "100%",
           path: selectedFile?.path || "empty",
           defaultLanguage: selectedFile?.language || "plaintext",
-          value: selectedFile?.content || "// Select a file to view its contents",
           theme: editorTheme,
           options: {
             minimap: { enabled: false },
             fontSize: 14,
             wordWrap: "on",
             automaticLayout: true,
-            readOnly: !selectedFile?.path.includes("source_files")
+            readOnly: !selectedFile?.path?.includes("source_files"),
+            // Configure scrollbars to allow horizontal scrolling to bubble up when appropriate
+            scrollbar: {
+              vertical: "auto",
+              horizontal: "auto",
+              verticalScrollbarSize: 8,
+              horizontalScrollbarSize: 8,
+              handleMouseWheel: true,
+              // This is the key option: don't always consume mouse wheel events
+              alwaysConsumeMouseWheel: false
+            },
+            mouseWheelScrollSensitivity: 1,
+            fastScrollSensitivity: 1,
+            scrollBeyondLastColumn: 0,
+            scrollBeyondLastLine: true
+          },
+          onMount: (editor, monaco) => {
+            console.log("Editor mounted", {
+              selectedFileAtMount: selectedFile,
+              monacoAvailable: !!monaco
+            });
+            setEditorRef(editor);
+            if (selectedFile) {
+              const model = monaco.editor.createModel(
+                selectedFile.content || "// Select a file to view its contents",
+                selectedFile.language || "plaintext"
+              );
+              editor.setModel(model);
+              setModelRef(model);
+              console.log("Initial model created and set");
+            }
+            console.log("Editor reference set");
+            return () => {
+              const currentModel = editor.getModel();
+              if (currentModel) {
+                currentModel.dispose();
+              }
+              setEditorRef(null);
+              setModelRef(null);
+            };
           }
         }
-      )
-    ), /* @__PURE__ */ import_react105.default.createElement(
-      TestPageMainContent,
+      ))
+    ), /* @__PURE__ */ import_react106.default.createElement(
+      Col_default,
       {
-        selectedFile,
-        buildErrors,
-        projectName,
-        testName,
-        runtime
-      }
-    )), /* @__PURE__ */ import_react105.default.createElement(
+        sm: 8,
+        style: {
+          height: "calc(100vh - 56px)",
+          overflowY: "auto"
+        }
+      },
+      /* @__PURE__ */ import_react106.default.createElement(
+        TestPageMainContent,
+        {
+          selectedFile,
+          buildErrors,
+          projectName,
+          testName,
+          runtime
+        }
+      )
+    ), /* @__PURE__ */ import_react106.default.createElement(Col_default, { sm: 3, style: { height: "calc(100vh - 56px)", overflowY: "auto" } }, "atttibute editor here"), /* @__PURE__ */ import_react106.default.createElement(Col_default, { sm: 3, style: { height: "calc(100vh - 56px)", overflowY: "auto" } }, "tree editor here")), /* @__PURE__ */ import_react106.default.createElement(
       ToastNotification,
       {
         showToast,
@@ -58970,8 +59258,6 @@ This file was not generated during the test run.`,
     }
     receivedLogs["source_files"] = sourceFiles;
     receivedLogs["build_logs"] = buildLogs;
-    console.log("Source files structure:", sourceFiles);
-    console.log("Build logs:", buildLogs);
     if (receivedLogs["tests.json"]) {
       console.log("tests.json content type:", typeof receivedLogs["tests.json"]);
       try {
@@ -59006,17 +59292,12 @@ This file was not generated during the test run.`,
       const pathParts = testPath.split("/");
       const directoryPath = pathParts.join("/");
       const buildUrl = `/reports/${projectName}/${directoryPath}/${runtime}/build.json`;
-      console.log(`Fetching build.json from: ${buildUrl}`);
       const buildResponse = await fetch(buildUrl);
       if (buildResponse.ok) {
         const buildData = await buildResponse.json();
         console.log("Build data received:", buildData);
         receivedLogs["build.json"] = buildData;
       } else {
-        console.log(
-          "Build.json not found or not accessible, status:",
-          buildResponse.status
-        );
         receivedLogs["build.json"] = { errors: [], warnings: [] };
       }
     } catch (err) {
@@ -59030,10 +59311,10 @@ This file was not generated during the test run.`,
   var TestPage = () => {
     const navigate = useNavigate();
     const location2 = useLocation();
-    const [route, setRoute] = (0, import_react107.useState)("results");
+    const [route, setRoute] = (0, import_react108.useState)("results");
     const wsContext = useWebSocket();
     const isConnected = wsContext?.isConnected || false;
-    (0, import_react107.useEffect)(() => {
+    (0, import_react108.useEffect)(() => {
       const hash3 = location2.hash.replace("#", "");
       if (hash3 && ["results", "logs", "types", "lint", "coverage"].includes(hash3)) {
         setRoute(hash3);
@@ -59041,23 +59322,23 @@ This file was not generated during the test run.`,
         setRoute("results");
       }
     }, [location2.hash]);
-    const [testName, setTestName] = (0, import_react107.useState)("");
-    const [logs, setLogs] = (0, import_react107.useState)({});
-    const [loading, setLoading] = (0, import_react107.useState)(true);
-    const [error, setError] = (0, import_react107.useState)(null);
-    const [testsExist, setTestsExist] = (0, import_react107.useState)(true);
-    const [errorCounts, setErrorCounts] = (0, import_react107.useState)({
+    const [testName, setTestName] = (0, import_react108.useState)("");
+    const [logs, setLogs] = (0, import_react108.useState)({});
+    const [loading, setLoading] = (0, import_react108.useState)(true);
+    const [error, setError] = (0, import_react108.useState)(null);
+    const [testsExist, setTestsExist] = (0, import_react108.useState)(true);
+    const [errorCounts, setErrorCounts] = (0, import_react108.useState)({
       typeErrors: 0,
       staticErrors: 0,
       runTimeErrors: 0
     });
-    const [summary, setSummary] = (0, import_react107.useState)(null);
+    const [summary, setSummary] = (0, import_react108.useState)(null);
     const { projectName, "*": splat } = useParams();
     const pathParts = splat ? splat.split("/") : [];
     const runtime = pathParts.pop() || "";
     const testPath = pathParts.join("/");
     const decodedTestPath = testPath ? decodeURIComponent(testPath) : "";
-    (0, import_react107.useEffect)(() => {
+    (0, import_react108.useEffect)(() => {
       if (!projectName || !testPath || !runtime)
         return;
       setTestName(testPath);
@@ -59088,8 +59369,8 @@ This file was not generated during the test run.`,
       fetchData();
     }, []);
     if (!logs)
-      return /* @__PURE__ */ import_react107.default.createElement("div", null, "loading...");
-    return /* @__PURE__ */ import_react107.default.createElement(import_react107.default.Fragment, null, /* @__PURE__ */ import_react107.default.createElement(
+      return /* @__PURE__ */ import_react108.default.createElement("div", null, "loading...");
+    return /* @__PURE__ */ import_react108.default.createElement(import_react108.default.Fragment, null, /* @__PURE__ */ import_react108.default.createElement(
       TestPageView,
       {
         route,
@@ -59108,16 +59389,16 @@ This file was not generated during the test run.`,
   };
 
   // src/components/stateful/ProjectPage.tsx
-  var import_react112 = __toESM(require_react(), 1);
+  var import_react113 = __toESM(require_react(), 1);
 
   // src/components/pure/ProjectPageView.tsx
-  var import_react111 = __toESM(require_react(), 1);
+  var import_react112 = __toESM(require_react(), 1);
 
   // src/components/pure/TestTable.tsx
-  var import_react109 = __toESM(require_react(), 1);
+  var import_react110 = __toESM(require_react(), 1);
 
   // src/components/TestStatusBadge.tsx
-  var import_react108 = __toESM(require_react(), 1);
+  var import_react109 = __toESM(require_react(), 1);
   var TestStatusBadge = (props) => {
     const hasTests = props.testsExist !== false;
     const testCompleted = props.runTimeErrors !== -1;
@@ -59134,9 +59415,9 @@ This file was not generated during the test run.`,
     }
     if (props.variant === "compact") {
       console.groupEnd();
-      return /* @__PURE__ */ import_react108.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
+      return /* @__PURE__ */ import_react109.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
     }
-    return /* @__PURE__ */ import_react108.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react108.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
+    return /* @__PURE__ */ import_react109.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react109.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
   };
 
   // src/components/pure/TestTable.tsx
@@ -59144,7 +59425,7 @@ This file was not generated during the test run.`,
     testStatuses,
     projectName
   }) => {
-    return /* @__PURE__ */ import_react109.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react109.default.createElement("thead", null, /* @__PURE__ */ import_react109.default.createElement("tr", null, /* @__PURE__ */ import_react109.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react109.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react109.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react109.default.createElement("th", null, "Total Tests"), /* @__PURE__ */ import_react109.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react109.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react109.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react109.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react109.default.createElement("td", null, /* @__PURE__ */ import_react109.default.createElement(
+    return /* @__PURE__ */ import_react110.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react110.default.createElement("thead", null, /* @__PURE__ */ import_react110.default.createElement("tr", null, /* @__PURE__ */ import_react110.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react110.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react110.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react110.default.createElement("th", null, "Total Tests"), /* @__PURE__ */ import_react110.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react110.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react110.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react110.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react110.default.createElement("td", null, /* @__PURE__ */ import_react110.default.createElement(
       "a",
       {
         href: `#/projects/${projectName}/tests/${encodeURIComponent(
@@ -59152,7 +59433,7 @@ This file was not generated during the test run.`,
         )}/${test.runTime}`
       },
       test.testName
-    )), /* @__PURE__ */ import_react109.default.createElement("td", null, /* @__PURE__ */ import_react109.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react109.default.createElement("td", null, /* @__PURE__ */ import_react109.default.createElement(
+    )), /* @__PURE__ */ import_react110.default.createElement("td", null, /* @__PURE__ */ import_react110.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react110.default.createElement("td", null, /* @__PURE__ */ import_react110.default.createElement(
       TestStatusBadge,
       {
         testName: test.testName,
@@ -59161,7 +59442,7 @@ This file was not generated during the test run.`,
         typeErrors: test.typeErrors,
         staticErrors: test.staticErrors
       }
-    )), /* @__PURE__ */ import_react109.default.createElement("td", null, test.runTimeTests >= 0 ? test.runTimeTests : "N/A"), /* @__PURE__ */ import_react109.default.createElement("td", null, /* @__PURE__ */ import_react109.default.createElement(
+    )), /* @__PURE__ */ import_react110.default.createElement("td", null, test.runTimeTests >= 0 ? test.runTimeTests : "N/A"), /* @__PURE__ */ import_react110.default.createElement("td", null, /* @__PURE__ */ import_react110.default.createElement(
       "a",
       {
         href: `#/projects/${projectName}/tests/${encodeURIComponent(
@@ -59169,7 +59450,7 @@ This file was not generated during the test run.`,
         )}/${test.runTime}#types`
       },
       test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705"
-    )), /* @__PURE__ */ import_react109.default.createElement("td", null, /* @__PURE__ */ import_react109.default.createElement(
+    )), /* @__PURE__ */ import_react110.default.createElement("td", null, /* @__PURE__ */ import_react110.default.createElement(
       "a",
       {
         href: `#/projects/${projectName}/tests/${encodeURIComponent(
@@ -59181,14 +59462,14 @@ This file was not generated during the test run.`,
   };
 
   // src/components/pure/BuildLogViewer.tsx
-  var import_react110 = __toESM(require_react(), 1);
+  var import_react111 = __toESM(require_react(), 1);
   var BuildLogViewer = ({ logs, runtime }) => {
     if (!logs)
-      return /* @__PURE__ */ import_react110.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
+      return /* @__PURE__ */ import_react111.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
     const hasErrors = logs.errors?.length > 0;
     const hasWarnings = logs.warnings?.length > 0;
-    const [activeTab, setActiveTab] = import_react110.default.useState("summary");
-    return /* @__PURE__ */ import_react110.default.createElement("div", null, /* @__PURE__ */ import_react110.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k3) => setActiveTab(k3 || "summary") }, /* @__PURE__ */ import_react110.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react110.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react110.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react110.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react110.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react110.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react110.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react110.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react110.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react110.default.createElement(Card_default, null, /* @__PURE__ */ import_react110.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react110.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react110.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react110.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react110.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react110.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react110.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react110.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react110.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react110.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react110.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react110.default.createElement("code", null, file), /* @__PURE__ */ import_react110.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react110.default.createElement("div", null, /* @__PURE__ */ import_react110.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react110.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react110.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react110.default.createElement("code", null, file), /* @__PURE__ */ import_react110.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react110.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react110.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react110.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react110.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react110.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react110.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react110.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react110.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i2) => /* @__PURE__ */ import_react110.default.createElement(ListGroup_default.Item, { key: i2, className: "text-warning" }, /* @__PURE__ */ import_react110.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react110.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react110.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react110.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react110.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(warn)))))))) : /* @__PURE__ */ import_react110.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react110.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react110.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react110.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react110.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react110.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react110.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react110.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i2) => /* @__PURE__ */ import_react110.default.createElement(ListGroup_default.Item, { key: i2, className: "text-danger" }, /* @__PURE__ */ import_react110.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react110.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react110.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react110.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react110.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(err)))))))) : /* @__PURE__ */ import_react110.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react110.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react110.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
+    const [activeTab, setActiveTab] = import_react111.default.useState("summary");
+    return /* @__PURE__ */ import_react111.default.createElement("div", null, /* @__PURE__ */ import_react111.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k3) => setActiveTab(k3 || "summary") }, /* @__PURE__ */ import_react111.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react111.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react111.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react111.default.createElement(Card_default, null, /* @__PURE__ */ import_react111.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react111.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react111.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react111.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react111.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react111.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react111.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react111.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react111.default.createElement("code", null, file), /* @__PURE__ */ import_react111.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react111.default.createElement("div", null, /* @__PURE__ */ import_react111.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react111.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react111.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react111.default.createElement("code", null, file), /* @__PURE__ */ import_react111.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react111.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react111.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react111.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react111.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react111.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react111.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react111.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i2) => /* @__PURE__ */ import_react111.default.createElement(ListGroup_default.Item, { key: i2, className: "text-warning" }, /* @__PURE__ */ import_react111.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react111.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react111.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react111.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react111.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(warn)))))))) : /* @__PURE__ */ import_react111.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react111.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react111.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react111.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react111.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react111.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react111.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i2) => /* @__PURE__ */ import_react111.default.createElement(ListGroup_default.Item, { key: i2, className: "text-danger" }, /* @__PURE__ */ import_react111.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react111.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react111.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react111.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react111.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(err)))))))) : /* @__PURE__ */ import_react111.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react111.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react111.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
   };
 
   // src/components/pure/ProjectPageView.tsx
@@ -59205,11 +59486,11 @@ This file was not generated during the test run.`,
     setActiveTab
   }) => {
     if (loading)
-      return /* @__PURE__ */ import_react111.default.createElement("div", null, "Loading project data...");
+      return /* @__PURE__ */ import_react112.default.createElement("div", null, "Loading project data...");
     if (error)
-      return /* @__PURE__ */ import_react111.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+      return /* @__PURE__ */ import_react112.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
     if (!summary)
-      return /* @__PURE__ */ import_react111.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
+      return /* @__PURE__ */ import_react112.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
     const testStatuses = Object.entries(summary).map(([testName, testData]) => {
       const runTime = config3.tests?.find((t2) => t2[0] === testName)?.[1] || "node";
       return {
@@ -59222,21 +59503,21 @@ This file was not generated during the test run.`,
         runTime
       };
     });
-    return /* @__PURE__ */ import_react111.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react111.default.createElement(
+    return /* @__PURE__ */ import_react112.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react112.default.createElement(
       NavBar,
       {
         title: projectName,
         backLink: "/"
       }
-    ), /* @__PURE__ */ import_react111.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react111.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react111.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react111.default.createElement(
+    ), /* @__PURE__ */ import_react112.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react112.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react112.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react112.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react112.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "tests",
         onClick: () => setActiveTab("tests"),
         className: "d-flex flex-column align-items-start"
       },
-      /* @__PURE__ */ import_react111.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react111.default.createElement("span", null, "Tests"), testStatuses.some((t2) => t2.runTimeErrors > 0) ? /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some((t2) => t2.typeErrors > 0 || t2.staticErrors > 0) ? /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
-    )), /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react111.default.createElement(
+      /* @__PURE__ */ import_react112.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react112.default.createElement("span", null, "Tests"), testStatuses.some((t2) => t2.runTimeErrors > 0) ? /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some((t2) => t2.typeErrors > 0 || t2.staticErrors > 0) ? /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
+    )), /* @__PURE__ */ import_react112.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react112.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "node",
@@ -59244,8 +59525,8 @@ This file was not generated during the test run.`,
         className: "d-flex justify-content-between align-items-center"
       },
       "Node build logs",
-      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )), /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react111.default.createElement(
+      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react112.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react112.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "web",
@@ -59253,8 +59534,8 @@ This file was not generated during the test run.`,
         className: "d-flex justify-content-between align-items-center"
       },
       "Web build logs",
-      webLogs?.errors?.length ? /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )), /* @__PURE__ */ import_react111.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react111.default.createElement(
+      webLogs?.errors?.length ? /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react112.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react112.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "pure",
@@ -59262,24 +59543,24 @@ This file was not generated during the test run.`,
         className: "d-flex justify-content-between align-items-center"
       },
       "Pure build logs",
-      pureLogs?.errors?.length ? /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react111.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )))), /* @__PURE__ */ import_react111.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react111.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react111.default.createElement(TestTable, { testStatuses, projectName }) : activeTab === "node" ? /* @__PURE__ */ import_react111.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react111.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react111.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
+      pureLogs?.errors?.length ? /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react112.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )))), /* @__PURE__ */ import_react112.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react112.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react112.default.createElement(TestTable, { testStatuses, projectName }) : activeTab === "node" ? /* @__PURE__ */ import_react112.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react112.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react112.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
   };
 
   // src/components/stateful/ProjectPage.tsx
   var ProjectPage = () => {
-    const [summary, setSummary] = (0, import_react112.useState)(null);
-    const [nodeLogs, setNodeLogs] = (0, import_react112.useState)(null);
-    const [webLogs, setWebLogs] = (0, import_react112.useState)(null);
-    const [pureLogs, setPureLogs] = (0, import_react112.useState)(null);
-    const [config3, setConfig] = (0, import_react112.useState)({});
-    const [loading, setLoading] = (0, import_react112.useState)(true);
-    const [error, setError] = (0, import_react112.useState)(null);
-    const [projectName, setProjectName] = (0, import_react112.useState)("");
+    const [summary, setSummary] = (0, import_react113.useState)(null);
+    const [nodeLogs, setNodeLogs] = (0, import_react113.useState)(null);
+    const [webLogs, setWebLogs] = (0, import_react113.useState)(null);
+    const [pureLogs, setPureLogs] = (0, import_react113.useState)(null);
+    const [config3, setConfig] = (0, import_react113.useState)({});
+    const [loading, setLoading] = (0, import_react113.useState)(true);
+    const [error, setError] = (0, import_react113.useState)(null);
+    const [projectName, setProjectName] = (0, import_react113.useState)("");
     const navigate = useNavigate();
     const location2 = useLocation();
-    const [route, setRoute] = (0, import_react112.useState)("tests");
-    (0, import_react112.useEffect)(() => {
+    const [route, setRoute] = (0, import_react113.useState)("tests");
+    (0, import_react113.useEffect)(() => {
       const hash3 = location2.hash.replace("#", "");
       if (hash3 && ["tests", "node", "web", "pure"].includes(hash3)) {
         setRoute(hash3);
@@ -59288,7 +59569,7 @@ This file was not generated during the test run.`,
       }
     }, [location2.hash]);
     const { projectName: name } = useParams();
-    (0, import_react112.useEffect)(() => {
+    (0, import_react113.useEffect)(() => {
       if (!name)
         return;
       setProjectName(name);
@@ -59321,7 +59602,7 @@ This file was not generated during the test run.`,
       };
       fetchData();
     }, [name]);
-    return /* @__PURE__ */ import_react112.default.createElement(
+    return /* @__PURE__ */ import_react113.default.createElement(
       ProjectPageView,
       {
         summary,
@@ -59339,10 +59620,10 @@ This file was not generated during the test run.`,
   };
 
   // src/components/stateful/ProjectsPage.tsx
-  var import_react114 = __toESM(require_react(), 1);
+  var import_react115 = __toESM(require_react(), 1);
 
   // src/components/pure/ProjectsPageView.tsx
-  var import_react113 = __toESM(require_react(), 1);
+  var import_react114 = __toESM(require_react(), 1);
   var ProjectsPageView = ({
     projects,
     summaries,
@@ -59364,10 +59645,10 @@ This file was not generated during the test run.`,
       }
     };
     if (loading)
-      return /* @__PURE__ */ import_react113.default.createElement("div", null, "Loading projects...");
+      return /* @__PURE__ */ import_react114.default.createElement("div", null, "Loading projects...");
     if (error)
-      return /* @__PURE__ */ import_react113.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    return /* @__PURE__ */ import_react113.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react113.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react113.default.createElement("thead", null, /* @__PURE__ */ import_react113.default.createElement("tr", null, /* @__PURE__ */ import_react113.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react113.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react113.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react113.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react113.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react113.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react113.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react113.default.createElement("td", null, /* @__PURE__ */ import_react113.default.createElement(
+      return /* @__PURE__ */ import_react114.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+    return /* @__PURE__ */ import_react114.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react114.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react114.default.createElement("thead", null, /* @__PURE__ */ import_react114.default.createElement("tr", null, /* @__PURE__ */ import_react114.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react114.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react114.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react114.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react114.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react114.default.createElement("tbody", null, projects.map((project) => /* @__PURE__ */ import_react114.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react114.default.createElement("td", null, /* @__PURE__ */ import_react114.default.createElement(
       "a",
       {
         href: "#",
@@ -59377,14 +59658,14 @@ This file was not generated during the test run.`,
         }
       },
       project.name
-    )), /* @__PURE__ */ import_react113.default.createElement("td", null, /* @__PURE__ */ import_react113.default.createElement("div", null, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName) => {
+    )), /* @__PURE__ */ import_react114.default.createElement("td", null, /* @__PURE__ */ import_react114.default.createElement("div", null, summaries[project.name] ? Object.keys(summaries[project.name]).map((testName) => {
       const testData = summaries[project.name][testName];
       const runTime = configs[project.name]?.tests?.find(
         (t2) => t2[0] === testName
       )?.[1] || "node";
       const hasRuntimeErrors = testData.runTimeErrors > 0;
       const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
-      return /* @__PURE__ */ import_react113.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react113.default.createElement(
+      return /* @__PURE__ */ import_react114.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react114.default.createElement(
         "a",
         {
           href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`
@@ -59392,19 +59673,19 @@ This file was not generated during the test run.`,
         hasRuntimeErrors ? "\u274C " : hasStaticErrors ? "\u26A0\uFE0F " : "",
         testName.split("/").pop() || testName
       ));
-    }) : /* @__PURE__ */ import_react113.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react113.default.createElement("td", null, /* @__PURE__ */ import_react113.default.createElement("a", { href: `#/projects/${project.name}#node` }, getStatusIcon(project.nodeStatus), " Node build logs")), /* @__PURE__ */ import_react113.default.createElement("td", null, /* @__PURE__ */ import_react113.default.createElement("a", { href: `#/projects/${project.name}#web` }, getStatusIcon(project.webStatus), " Web build logs")), /* @__PURE__ */ import_react113.default.createElement("td", null, /* @__PURE__ */ import_react113.default.createElement("a", { href: `#/projects/${project.name}#pure` }, getStatusIcon(project.pureStatus), " Pure build logs")))))));
+    }) : /* @__PURE__ */ import_react114.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react114.default.createElement("td", null, /* @__PURE__ */ import_react114.default.createElement("a", { href: `#/projects/${project.name}#node` }, getStatusIcon(project.nodeStatus), " Node build logs")), /* @__PURE__ */ import_react114.default.createElement("td", null, /* @__PURE__ */ import_react114.default.createElement("a", { href: `#/projects/${project.name}#web` }, getStatusIcon(project.webStatus), " Web build logs")), /* @__PURE__ */ import_react114.default.createElement("td", null, /* @__PURE__ */ import_react114.default.createElement("a", { href: `#/projects/${project.name}#pure` }, getStatusIcon(project.pureStatus), " Pure build logs")))))));
   };
 
   // src/components/stateful/ProjectsPage.tsx
   var ProjectsPage = () => {
-    const [projects, setProjects] = (0, import_react114.useState)([]);
-    const [summaries, setSummaries] = (0, import_react114.useState)({});
-    const [loading, setLoading] = (0, import_react114.useState)(true);
-    const [error, setError] = (0, import_react114.useState)(null);
-    const [configs, setConfigs] = (0, import_react114.useState)({});
+    const [projects, setProjects] = (0, import_react115.useState)([]);
+    const [summaries, setSummaries] = (0, import_react115.useState)({});
+    const [loading, setLoading] = (0, import_react115.useState)(true);
+    const [error, setError] = (0, import_react115.useState)(null);
+    const [configs, setConfigs] = (0, import_react115.useState)({});
     const navigate = useNavigate();
     const { ws: ws2 } = useWebSocket();
-    (0, import_react114.useEffect)(() => {
+    (0, import_react115.useEffect)(() => {
       if (!ws2)
         return;
       const handleMessage = (event) => {
@@ -59422,7 +59703,7 @@ This file was not generated during the test run.`,
         ws2.removeEventListener("message", handleMessage);
       };
     }, [ws2]);
-    (0, import_react114.useEffect)(() => {
+    (0, import_react115.useEffect)(() => {
       const fetchProjects = async () => {
         try {
           const projectsRes = await fetch(`projects.json`);
@@ -59463,7 +59744,7 @@ This file was not generated during the test run.`,
       };
       fetchProjects();
     }, []);
-    return /* @__PURE__ */ import_react114.default.createElement(
+    return /* @__PURE__ */ import_react115.default.createElement(
       ProjectsPageView,
       {
         projects,
@@ -59477,22 +59758,22 @@ This file was not generated during the test run.`,
   };
 
   // src/components/pure/AppFrame.tsx
-  var import_react116 = __toESM(require_react(), 1);
+  var import_react117 = __toESM(require_react(), 1);
 
   // src/components/pure/HelpoChatDrawer.tsx
-  var import_react115 = __toESM(require_react(), 1);
+  var import_react116 = __toESM(require_react(), 1);
   var HelpoChatDrawer = ({
     isActive,
     onToggle
   }) => {
     const { ws: ws2, isConnected, sendMessage } = useWebSocket();
-    const [messages, setMessages] = (0, import_react115.useState)([]);
-    const [inputMessage, setInputMessage] = (0, import_react115.useState)("");
-    const messagesEndRef = (0, import_react115.useRef)(null);
-    (0, import_react115.useEffect)(() => {
+    const [messages, setMessages] = (0, import_react116.useState)([]);
+    const [inputMessage, setInputMessage] = (0, import_react116.useState)("");
+    const messagesEndRef = (0, import_react116.useRef)(null);
+    (0, import_react116.useEffect)(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
-    (0, import_react115.useEffect)(() => {
+    (0, import_react116.useEffect)(() => {
       const handleWebSocketMessage = (event) => {
         try {
           const data2 = JSON.parse(event.data);
@@ -59546,7 +59827,7 @@ This file was not generated during the test run.`,
         handleSendMessage();
       }
     };
-    return /* @__PURE__ */ import_react115.default.createElement(
+    return /* @__PURE__ */ import_react116.default.createElement(
       "div",
       {
         className: `gradient-typed-bdd-dsl d-flex flex-column border-end ${isActive ? "active" : "inactive"}`,
@@ -59558,7 +59839,7 @@ This file was not generated during the test run.`,
           height: "100vh"
         }
       },
-      /* @__PURE__ */ import_react115.default.createElement(
+      /* @__PURE__ */ import_react116.default.createElement(
         "div",
         {
           style: {
@@ -59568,7 +59849,7 @@ This file was not generated during the test run.`,
             flexDirection: "column"
           }
         },
-        /* @__PURE__ */ import_react115.default.createElement(
+        /* @__PURE__ */ import_react116.default.createElement(
           "div",
           {
             style: {
@@ -59580,13 +59861,13 @@ This file was not generated during the test run.`,
               gap: "0.5rem"
             }
           },
-          messages.length === 0 ? /* @__PURE__ */ import_react115.default.createElement(
+          messages.length === 0 ? /* @__PURE__ */ import_react116.default.createElement(
             "div",
             {
               style: { textAlign: "center", color: "#666", marginTop: "2rem" }
             },
             "Start a conversation with Helpo!"
-          ) : messages.map((message, index3) => /* @__PURE__ */ import_react115.default.createElement(
+          ) : messages.map((message, index3) => /* @__PURE__ */ import_react116.default.createElement(
             "div",
             {
               key: index3,
@@ -59595,7 +59876,7 @@ This file was not generated during the test run.`,
                 marginBottom: "0.5rem"
               }
             },
-            /* @__PURE__ */ import_react115.default.createElement(
+            /* @__PURE__ */ import_react116.default.createElement(
               "div",
               {
                 style: {
@@ -59607,11 +59888,11 @@ This file was not generated during the test run.`,
                   wordWrap: "break-word"
                 }
               },
-              /* @__PURE__ */ import_react115.default.createElement("strong", null, message.type === "user" ? "You" : "Helpo", ":"),
-              /* @__PURE__ */ import_react115.default.createElement("br", null),
+              /* @__PURE__ */ import_react116.default.createElement("strong", null, message.type === "user" ? "You" : "Helpo", ":"),
+              /* @__PURE__ */ import_react116.default.createElement("br", null),
               message.content
             ),
-            /* @__PURE__ */ import_react115.default.createElement(
+            /* @__PURE__ */ import_react116.default.createElement(
               "div",
               {
                 style: {
@@ -59623,9 +59904,9 @@ This file was not generated during the test run.`,
               new Date(message.timestamp).toLocaleTimeString()
             )
           )),
-          /* @__PURE__ */ import_react115.default.createElement("div", { ref: messagesEndRef })
+          /* @__PURE__ */ import_react116.default.createElement("div", { ref: messagesEndRef })
         ),
-        /* @__PURE__ */ import_react115.default.createElement(
+        /* @__PURE__ */ import_react116.default.createElement(
           "div",
           {
             style: {
@@ -59633,7 +59914,7 @@ This file was not generated during the test run.`,
               borderTop: "1px solid rgba(128, 128, 128, 0.3)"
             }
           },
-          /* @__PURE__ */ import_react115.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react115.default.createElement(
+          /* @__PURE__ */ import_react116.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react116.default.createElement(
             "input",
             {
               type: "text",
@@ -59649,7 +59930,7 @@ This file was not generated during the test run.`,
                 color: "#333"
               }
             }
-          ), /* @__PURE__ */ import_react115.default.createElement(
+          ), /* @__PURE__ */ import_react116.default.createElement(
             "button",
             {
               className: "btn btn-primary",
@@ -59659,7 +59940,7 @@ This file was not generated during the test run.`,
             },
             "Send"
           )),
-          !isConnected && /* @__PURE__ */ import_react115.default.createElement("small", { className: "text-muted" }, "WebSocket disconnected. Chat unavailable.")
+          !isConnected && /* @__PURE__ */ import_react116.default.createElement("small", { className: "text-muted" }, "WebSocket disconnected. Chat unavailable.")
         )
       )
     );
@@ -59671,8 +59952,8 @@ This file was not generated during the test run.`,
     const { isConnected } = useWebSocket();
     const { tutorialMode } = useTutorialMode();
     const { isAuthenticated, logout } = useAuth();
-    const [hasAnimated, setHasAnimated] = (0, import_react116.useState)(false);
-    const [isHelpoActive, setIsHelpoActive] = (0, import_react116.useState)(false);
+    const [hasAnimated, setHasAnimated] = (0, import_react117.useState)(false);
+    const [isHelpoActive, setIsHelpoActive] = (0, import_react117.useState)(false);
     const brandLogoStyle = `
     .brand-logo:hover {
       transform: scale(1.1);
@@ -59682,7 +59963,7 @@ This file was not generated during the test run.`,
       transform: scale(0.95);
     }
   `;
-    (0, import_react116.useEffect)(() => {
+    (0, import_react117.useEffect)(() => {
       if (!hasAnimated) {
         const timer = setTimeout(() => {
           setHasAnimated(true);
@@ -59690,7 +59971,7 @@ This file was not generated during the test run.`,
         return () => clearTimeout(timer);
       }
     }, [hasAnimated]);
-    return /* @__PURE__ */ import_react116.default.createElement("div", { className: "d-flex min-vh-100" }, /* @__PURE__ */ import_react116.default.createElement("style", null, brandLogoStyle), /* @__PURE__ */ import_react116.default.createElement(
+    return /* @__PURE__ */ import_react117.default.createElement("div", { className: "d-flex min-vh-100" }, /* @__PURE__ */ import_react117.default.createElement("style", null, brandLogoStyle), /* @__PURE__ */ import_react117.default.createElement(
       "div",
       {
         className: `border-end d-flex flex-column ${!hasAnimated ? "sidebar-attention" : ""}`,
@@ -59703,52 +59984,52 @@ This file was not generated during the test run.`,
           top: 0
         }
       },
-      /* @__PURE__ */ import_react116.default.createElement(Nav_default2, { variant: "pills", className: "flex-column p-0 flex-grow-1" }, /* @__PURE__ */ import_react116.default.createElement(
+      /* @__PURE__ */ import_react117.default.createElement(Nav_default2, { variant: "pills", className: "flex-column p-0 flex-grow-1" }, /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/helpo",
           className: `${location2.pathname === "/helpo" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}`
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Chat with Helpo, the helpful robot.")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Chat with Helpo, the helpful robot.")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "helpo")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "helpo")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "helpo")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "helpo")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/flua",
           className: `${location2.pathname === "/flua" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}`
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Process/Project Management")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Process/Project Management")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "flua")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "flua")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "flua")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "flua")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/projects",
           className: `${location2.pathname === "/projects" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-2" : ""}`
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "projects-tooltip" }, "Projects")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "projects-tooltip" }, "Projects")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "testo")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "testo")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "testo")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "testo")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
@@ -59760,15 +60041,15 @@ This file was not generated during the test run.`,
             }
           }
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "processes-tooltip" }, "Processes", " ", !isAuthenticated ? "(Sign in required)" : !isConnected ? "(WebSocket disconnected)" : "")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "processes-tooltip" }, "Processes", " ", !isAuthenticated ? "(Sign in required)" : !isConnected ? "(WebSocket disconnected)" : "")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "pro\u0109o")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "pro\u0109o")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "pro\u0109o")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "pro\u0109o")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
@@ -59780,97 +60061,97 @@ This file was not generated during the test run.`,
             }
           }
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "git-tooltip" }, "Git Integration", " ", !isAuthenticated ? "(Sign in required)" : "")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "git-tooltip" }, "Git Integration", " ", !isAuthenticated ? "(Sign in required)" : "")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "arbo")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "arbo")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "arbo")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "arbo")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/svg-editor",
           className: `${location2.pathname === "/svg-editor" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "svg-editor-tooltip" }, "svg editor")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "svg-editor-tooltip" }, "svg editor")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "vektoro")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "vektoro")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "vektoro")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "vektoro")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/drato",
           className: `${location2.pathname === "/drato" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "drato-tooltip" }, "Bootstrap wireframing tool")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "drato-tooltip" }, "Bootstrap wireframing tool")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "drato")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "drato")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "drato")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "drato")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/grafeo",
           className: `${location2.pathname === "/grafeo" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "grafeo-tooltip" }, "GraphML editor")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "grafeo-tooltip" }, "GraphML editor")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "grafeo")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "grafeo")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "grafeo")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "grafeo")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/skribo",
           className: `${location2.pathname === "/skribo" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "skribo-tooltip" }, "Code editor")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "skribo-tooltip" }, "Code editor")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "skribo")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "skribo")
-      ), /* @__PURE__ */ import_react116.default.createElement(
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "skribo")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "skribo")
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/settings",
           className: `${location2.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-6" : ""}`
         },
-        tutorialMode ? /* @__PURE__ */ import_react116.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react117.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "settings-tooltip" }, "Settings")
+            overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "settings-tooltip" }, "Settings")
           },
-          /* @__PURE__ */ import_react116.default.createElement("span", null, "konto")
-        ) : /* @__PURE__ */ import_react116.default.createElement("span", null, "konto")
+          /* @__PURE__ */ import_react117.default.createElement("span", null, "konto")
+        ) : /* @__PURE__ */ import_react117.default.createElement("span", null, "konto")
       )),
-      /* @__PURE__ */ import_react116.default.createElement(
+      /* @__PURE__ */ import_react117.default.createElement(
         OverlayTrigger_default,
         {
           placement: "right",
-          overlay: /* @__PURE__ */ import_react116.default.createElement(Tooltip_default, { id: "status-tooltip" }, isConnected ? "Dev mode - Full access" : "Static mode - Read only")
+          overlay: /* @__PURE__ */ import_react117.default.createElement(Tooltip_default, { id: "status-tooltip" }, isConnected ? "Dev mode - Full access" : "Static mode - Read only")
         },
-        /* @__PURE__ */ import_react116.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react116.default.createElement(
+        /* @__PURE__ */ import_react117.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react117.default.createElement(
           "span",
           {
             className: `badge rounded-circle d-flex align-items-center justify-content-center`
@@ -59878,7 +60159,7 @@ This file was not generated during the test run.`,
           isConnected ? "\u{1F7E2}" : "\u{1F534}"
         ))
       ),
-      /* @__PURE__ */ import_react116.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react116.default.createElement(
+      /* @__PURE__ */ import_react117.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react117.default.createElement(
         "button",
         {
           onClick: () => setIsHelpoActive(!isHelpoActive),
@@ -59894,7 +60175,7 @@ This file was not generated during the test run.`,
             e3.currentTarget.style.transform = "scale(1)";
           }
         },
-        /* @__PURE__ */ import_react116.default.createElement(
+        /* @__PURE__ */ import_react117.default.createElement(
           "img",
           {
             src: "https://www.testeranto.com/logo.svg",
@@ -59906,13 +60187,13 @@ This file was not generated during the test run.`,
           }
         )
       ))
-    ), /* @__PURE__ */ import_react116.default.createElement(
+    ), /* @__PURE__ */ import_react117.default.createElement(
       HelpoChatDrawer,
       {
         isActive: isHelpoActive,
         onToggle: () => setIsHelpoActive(!isHelpoActive)
       }
-    ), /* @__PURE__ */ import_react116.default.createElement(
+    ), /* @__PURE__ */ import_react117.default.createElement(
       "div",
       {
         className: "d-flex flex-column",
@@ -59926,19 +60207,19 @@ This file was not generated during the test run.`,
           // Enable scrolling
         }
       },
-      /* @__PURE__ */ import_react116.default.createElement("main", { className: "flex-grow-1 p-1", style: {
+      /* @__PURE__ */ import_react117.default.createElement("main", { className: "flex-grow-1 p-1", style: {
         minWidth: "fit-content",
         width: "100%"
-      } }, /* @__PURE__ */ import_react116.default.createElement(Container_default, { fluid: true, style: {
+      } }, /* @__PURE__ */ import_react117.default.createElement(Container_default, { fluid: true, style: {
         height: "100%",
         minWidth: "fit-content",
         padding: "0.125rem"
-      } }, location2.pathname === "/helpo" ? /* @__PURE__ */ import_react116.default.createElement("div", null, /* @__PURE__ */ import_react116.default.createElement("h1", null, "Helpo Documentation"), /* @__PURE__ */ import_react116.default.createElement("p", null, "Welcome to the Helpo documentation. Here you can find information about using Testeranto."), /* @__PURE__ */ import_react116.default.createElement("h2", null, "Getting Started"), /* @__PURE__ */ import_react116.default.createElement("p", null, "Start by creating a project and writing your first test cases."), /* @__PURE__ */ import_react116.default.createElement("h2", null, "Features"), /* @__PURE__ */ import_react116.default.createElement("ul", null, /* @__PURE__ */ import_react116.default.createElement("li", null, "Test automation"), /* @__PURE__ */ import_react116.default.createElement("li", null, "Process management"), /* @__PURE__ */ import_react116.default.createElement("li", null, "Git integration"), /* @__PURE__ */ import_react116.default.createElement("li", null, "And much more..."))) : children))
+      } }, location2.pathname === "/helpo" ? /* @__PURE__ */ import_react117.default.createElement("div", null, /* @__PURE__ */ import_react117.default.createElement("h1", null, "Helpo Documentation"), /* @__PURE__ */ import_react117.default.createElement("p", null, "Welcome to the Helpo documentation. Here you can find information about using Testeranto."), /* @__PURE__ */ import_react117.default.createElement("h2", null, "Getting Started"), /* @__PURE__ */ import_react117.default.createElement("p", null, "Start by creating a project and writing your first test cases."), /* @__PURE__ */ import_react117.default.createElement("h2", null, "Features"), /* @__PURE__ */ import_react117.default.createElement("ul", null, /* @__PURE__ */ import_react117.default.createElement("li", null, "Test automation"), /* @__PURE__ */ import_react117.default.createElement("li", null, "Process management"), /* @__PURE__ */ import_react117.default.createElement("li", null, "Git integration"), /* @__PURE__ */ import_react117.default.createElement("li", null, "And much more..."))) : children))
     ));
   };
 
   // src/components/pure/SignIn.tsx
-  var import_react118 = __toESM(require_react(), 1);
+  var import_react119 = __toESM(require_react(), 1);
 
   // src/services/GitHubAuthService.ts
   var _GitHubAuthService = class {
@@ -60124,7 +60405,7 @@ Current environment analysis:
   var githubAuthService = new GitHubAuthService();
 
   // src/components/pure/GitHubLoginButton.tsx
-  var import_react117 = __toESM(require_react(), 1);
+  var import_react118 = __toESM(require_react(), 1);
   var GitHubLoginButton = ({
     className,
     variant = "outline-dark",
@@ -60133,7 +60414,7 @@ Current environment analysis:
     const handleLogin = () => {
       githubAuthService.initiateLogin();
     };
-    return /* @__PURE__ */ import_react117.default.createElement(
+    return /* @__PURE__ */ import_react118.default.createElement(
       Button_default2,
       {
         className,
@@ -60141,26 +60422,26 @@ Current environment analysis:
         size: size2,
         onClick: handleLogin
       },
-      /* @__PURE__ */ import_react117.default.createElement("i", { className: "bi bi-github me-2" }),
+      /* @__PURE__ */ import_react118.default.createElement("i", { className: "bi bi-github me-2" }),
       "Sign in with GitHub"
     );
   };
 
   // src/components/pure/SignIn.tsx
   var SignIn = () => {
-    return /* @__PURE__ */ import_react118.default.createElement(Container_default, { className: "d-flex align-items-center justify-content-center min-vh-100" }, /* @__PURE__ */ import_react118.default.createElement(Row_default, null, /* @__PURE__ */ import_react118.default.createElement(Col_default, { md: 12 }, /* @__PURE__ */ import_react118.default.createElement(Card_default, null, /* @__PURE__ */ import_react118.default.createElement(Card_default.Header, { className: "text-center" }, /* @__PURE__ */ import_react118.default.createElement("h3", { className: "mb-0" }, "Sign In")), /* @__PURE__ */ import_react118.default.createElement(Card_default.Body, { className: "text-center" }, githubAuthService.isConfigured() ? /* @__PURE__ */ import_react118.default.createElement(GitHubLoginButton, null) : /* @__PURE__ */ import_react118.default.createElement("div", null, /* @__PURE__ */ import_react118.default.createElement("p", { className: "text-danger" }, "GitHub authentication is not configured"), /* @__PURE__ */ import_react118.default.createElement("p", null, "Please contact the administrator")))))));
+    return /* @__PURE__ */ import_react119.default.createElement(Container_default, { className: "d-flex align-items-center justify-content-center min-vh-100" }, /* @__PURE__ */ import_react119.default.createElement(Row_default, null, /* @__PURE__ */ import_react119.default.createElement(Col_default, { md: 12 }, /* @__PURE__ */ import_react119.default.createElement(Card_default, null, /* @__PURE__ */ import_react119.default.createElement(Card_default.Header, { className: "text-center" }, /* @__PURE__ */ import_react119.default.createElement("h3", { className: "mb-0" }, "Sign In")), /* @__PURE__ */ import_react119.default.createElement(Card_default.Body, { className: "text-center" }, githubAuthService.isConfigured() ? /* @__PURE__ */ import_react119.default.createElement(GitHubLoginButton, null) : /* @__PURE__ */ import_react119.default.createElement("div", null, /* @__PURE__ */ import_react119.default.createElement("p", { className: "text-danger" }, "GitHub authentication is not configured"), /* @__PURE__ */ import_react119.default.createElement("p", null, "Please contact the administrator")))))));
   };
 
   // src/components/stateful/FeaturesReporter.tsx
-  var import_react120 = __toESM(require_react(), 1);
+  var import_react121 = __toESM(require_react(), 1);
 
   // src/components/pure/FeaturesReporterView.tsx
-  var import_react119 = __toESM(require_react(), 1);
+  var import_react120 = __toESM(require_react(), 1);
   var FeaturesReporterView = ({ treeData }) => {
-    return /* @__PURE__ */ import_react119.default.createElement("div", { className: "features-reporter" }, /* @__PURE__ */ import_react119.default.createElement("h1", null, "File Structure"), /* @__PURE__ */ import_react119.default.createElement("div", { className: "tree-container" }, treeData.map((project) => /* @__PURE__ */ import_react119.default.createElement("div", { key: project.name, className: "project" }, /* @__PURE__ */ import_react119.default.createElement("h3", null, project.name), /* @__PURE__ */ import_react119.default.createElement("ul", { className: "file-tree" }, project.children?.map((file) => renderFile(file)))))));
+    return /* @__PURE__ */ import_react120.default.createElement("div", { className: "features-reporter" }, /* @__PURE__ */ import_react120.default.createElement("h1", null, "File Structure"), /* @__PURE__ */ import_react120.default.createElement("div", { className: "tree-container" }, treeData.map((project) => /* @__PURE__ */ import_react120.default.createElement("div", { key: project.name, className: "project" }, /* @__PURE__ */ import_react120.default.createElement("h3", null, project.name), /* @__PURE__ */ import_react120.default.createElement("ul", { className: "file-tree" }, project.children?.map((file) => renderFile(file)))))));
   };
   function renderFile(node) {
-    return /* @__PURE__ */ import_react119.default.createElement("li", { key: node.name }, /* @__PURE__ */ import_react119.default.createElement("span", null, node.name), node.children && /* @__PURE__ */ import_react119.default.createElement("ul", null, node.children.map((child) => renderFile(child))));
+    return /* @__PURE__ */ import_react120.default.createElement("li", { key: node.name }, /* @__PURE__ */ import_react120.default.createElement("span", null, node.name), node.children && /* @__PURE__ */ import_react120.default.createElement("ul", null, node.children.map((child) => renderFile(child))));
   }
 
   // src/types/features.ts
@@ -60198,8 +60479,8 @@ Current environment analysis:
 
   // src/components/stateful/FeaturesReporter.tsx
   var FeaturesReporter = () => {
-    const [treeData, setTreeData] = (0, import_react120.useState)([]);
-    (0, import_react120.useEffect)(() => {
+    const [treeData, setTreeData] = (0, import_react121.useState)([]);
+    (0, import_react121.useEffect)(() => {
       const fetchProjects = async () => {
         try {
           const response = await fetch("projects.json");
@@ -60213,14 +60494,14 @@ Current environment analysis:
       };
       fetchProjects();
     }, []);
-    return /* @__PURE__ */ import_react120.default.createElement(FeaturesReporterView, { treeData });
+    return /* @__PURE__ */ import_react121.default.createElement(FeaturesReporterView, { treeData });
   };
 
   // src/components/DesignEditorPage.tsx
-  var import_react122 = __toESM(require_react(), 1);
+  var import_react123 = __toESM(require_react(), 1);
 
   // design-editor/DesignEditor.tsx
-  var import_react121 = __toESM(require_react(), 1);
+  var import_react122 = __toESM(require_react(), 1);
 
   // node_modules/fabric/dist/index.min.mjs
   function t(t2, e3, s2) {
@@ -67772,8 +68053,8 @@ Current environment analysis:
 
   // design-editor/DesignEditor.tsx
   var DesignEditor = () => {
-    const canvasRef = (0, import_react121.useRef)(null);
-    (0, import_react121.useEffect)(() => {
+    const canvasRef = (0, import_react122.useRef)(null);
+    (0, import_react122.useEffect)(() => {
       if (!canvasRef.current)
         return;
       const canvas = new In(canvasRef.current, {
@@ -67801,14 +68082,14 @@ Current environment analysis:
         canvas.dispose();
       };
     }, []);
-    return /* @__PURE__ */ import_react121.default.createElement("div", null, /* @__PURE__ */ import_react121.default.createElement("canvas", { ref: canvasRef }));
+    return /* @__PURE__ */ import_react122.default.createElement("div", null, /* @__PURE__ */ import_react122.default.createElement("canvas", { ref: canvasRef }));
   };
 
   // src/components/DesignEditorPage.tsx
   var import_file_saver = __toESM(require_FileSaver_min(), 1);
   var DesignEditorPage = () => {
-    const [projectId, setProjectId] = (0, import_react122.useState)("default-project");
-    const [fileHandle, setFileHandle] = (0, import_react122.useState)(null);
+    const [projectId, setProjectId] = (0, import_react123.useState)("default-project");
+    const [fileHandle, setFileHandle] = (0, import_react123.useState)(null);
     const handleSave = async () => {
       try {
         if (!designEditorRef.current) {
@@ -67879,8 +68160,8 @@ Current environment analysis:
         }
       }
     };
-    const [design, setDesign] = (0, import_react122.useState)(null);
-    const designEditorRef = (0, import_react122.useRef)(null);
+    const [design, setDesign] = (0, import_react123.useState)(null);
+    const designEditorRef = (0, import_react123.useRef)(null);
     const handleOpen = async () => {
       console.log("handleOpen triggered");
       try {
@@ -67951,7 +68232,7 @@ Current environment analysis:
       const blob = new Blob([designData], { type: "application/json" });
       (0, import_file_saver.saveAs)(blob, `${projectId}.json`);
     };
-    return /* @__PURE__ */ import_react122.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react122.default.createElement(Row_default, { className: "mb-3" }, /* @__PURE__ */ import_react122.default.createElement(Col_default, null, /* @__PURE__ */ import_react122.default.createElement("h1", null, "Design Editor"), /* @__PURE__ */ import_react122.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react122.default.createElement(Button_default2, { variant: "primary", onClick: handleOpen }, "Open"), /* @__PURE__ */ import_react122.default.createElement(Button_default2, { variant: "success", onClick: handleSave }, "Save"), /* @__PURE__ */ import_react122.default.createElement(Button_default2, { variant: "secondary", onClick: handleExport }, "Export")))), /* @__PURE__ */ import_react122.default.createElement(Row_default, null, /* @__PURE__ */ import_react122.default.createElement(Col_default, null, /* @__PURE__ */ import_react122.default.createElement(
+    return /* @__PURE__ */ import_react123.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react123.default.createElement(Row_default, { className: "mb-3" }, /* @__PURE__ */ import_react123.default.createElement(Col_default, null, /* @__PURE__ */ import_react123.default.createElement("h1", null, "Design Editor"), /* @__PURE__ */ import_react123.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react123.default.createElement(Button_default2, { variant: "primary", onClick: handleOpen }, "Open"), /* @__PURE__ */ import_react123.default.createElement(Button_default2, { variant: "success", onClick: handleSave }, "Save"), /* @__PURE__ */ import_react123.default.createElement(Button_default2, { variant: "secondary", onClick: handleExport }, "Export")))), /* @__PURE__ */ import_react123.default.createElement(Row_default, null, /* @__PURE__ */ import_react123.default.createElement(Col_default, null, /* @__PURE__ */ import_react123.default.createElement(
       DesignEditor,
       {
         projectId,
@@ -67961,12 +68242,12 @@ Current environment analysis:
   };
 
   // src/components/stateful/TextEditorPage.tsx
-  var import_react123 = __toESM(require_react(), 1);
+  var import_react124 = __toESM(require_react(), 1);
   var TextEditorPage = () => {
-    const [files, setFiles] = (0, import_react123.useState)([]);
-    const [activeFile, setActiveFile] = (0, import_react123.useState)(null);
-    const [editorTheme, setEditorTheme] = (0, import_react123.useState)("vs-dark");
-    (0, import_react123.useEffect)(() => {
+    const [files, setFiles] = (0, import_react124.useState)([]);
+    const [activeFile, setActiveFile] = (0, import_react124.useState)(null);
+    const [editorTheme, setEditorTheme] = (0, import_react124.useState)("vs-dark");
+    (0, import_react124.useEffect)(() => {
       const sampleFiles = [
         {
           path: "src/index.ts",
@@ -67995,7 +68276,7 @@ Current environment analysis:
         ));
       }
     };
-    const [widths, setWidths] = (0, import_react123.useState)({
+    const [widths, setWidths] = (0, import_react124.useState)({
       fileTree: 250,
       editor: window.innerWidth - 550,
       // Initial editor width (total width minus side panels)
@@ -68011,9 +68292,9 @@ Current environment analysis:
       overflow: "hidden",
       position: "relative"
     };
-    const [isResizing, setIsResizing] = (0, import_react123.useState)(false);
-    const [startX, setStartX] = (0, import_react123.useState)(0);
-    const [startWidth, setStartWidth] = (0, import_react123.useState)(0);
+    const [isResizing, setIsResizing] = (0, import_react124.useState)(false);
+    const [startX, setStartX] = (0, import_react124.useState)(0);
+    const [startWidth, setStartWidth] = (0, import_react124.useState)(0);
     const startResizing = (e3, panel) => {
       setIsResizing(true);
       setStartX(e3.clientX);
@@ -68033,7 +68314,7 @@ Current environment analysis:
     const stopResizing = () => {
       setIsResizing(false);
     };
-    (0, import_react123.useEffect)(() => {
+    (0, import_react124.useEffect)(() => {
       window.addEventListener("mousemove", resize);
       window.addEventListener("mouseup", stopResizing);
       return () => {
@@ -68041,14 +68322,14 @@ Current environment analysis:
         window.removeEventListener("mouseup", stopResizing);
       };
     }, [isResizing, startX, startWidth]);
-    return /* @__PURE__ */ import_react123.default.createElement("div", { style: containerStyle }, /* @__PURE__ */ import_react123.default.createElement("div", { style: { ...panelStyle, width: widths.fileTree } }, /* @__PURE__ */ import_react123.default.createElement(
+    return /* @__PURE__ */ import_react124.default.createElement("div", { style: containerStyle }, /* @__PURE__ */ import_react124.default.createElement("div", { style: { ...panelStyle, width: widths.fileTree } }, /* @__PURE__ */ import_react124.default.createElement(
       void 0,
       {
         files,
         onSelect: handleFileSelect,
         activeFile: activeFile?.path
       }
-    ), /* @__PURE__ */ import_react123.default.createElement(
+    ), /* @__PURE__ */ import_react124.default.createElement(
       "div",
       {
         style: {
@@ -68063,7 +68344,7 @@ Current environment analysis:
         },
         onMouseDown: (e3) => startResizing(e3, "fileTree")
       }
-    )), /* @__PURE__ */ import_react123.default.createElement("div", { style: { ...panelStyle, width: widths.editor } }, activeFile && /* @__PURE__ */ import_react123.default.createElement(
+    )), /* @__PURE__ */ import_react124.default.createElement("div", { style: { ...panelStyle, width: widths.editor } }, activeFile && /* @__PURE__ */ import_react124.default.createElement(
       de,
       {
         height: "100%",
@@ -68079,7 +68360,7 @@ Current environment analysis:
           automaticLayout: true
         }
       }
-    )), /* @__PURE__ */ import_react123.default.createElement("div", { style: { ...panelStyle, width: widths.preview } }, /* @__PURE__ */ import_react123.default.createElement(
+    )), /* @__PURE__ */ import_react124.default.createElement("div", { style: { ...panelStyle, width: widths.preview } }, /* @__PURE__ */ import_react124.default.createElement(
       "div",
       {
         style: {
@@ -68094,70 +68375,18 @@ Current environment analysis:
         },
         onMouseDown: (e3) => startResizing(e3, "editor")
       }
-    ), activeFile && /* @__PURE__ */ import_react123.default.createElement("div", null)));
+    ), activeFile && /* @__PURE__ */ import_react124.default.createElement("div", null)));
   };
 
   // src/components/stateful/ProcessManagerPage.tsx
-  var import_react132 = __toESM(require_react(), 1);
+  var import_react133 = __toESM(require_react(), 1);
 
   // src/components/pure/ProcessManagerView.tsx
-  var import_react131 = __toESM(require_react(), 1);
+  var import_react132 = __toESM(require_react(), 1);
 
   // src/components/pure/ProcessList.tsx
-  var import_react125 = __toESM(require_react(), 1);
-  var getStatusBadge = (process2) => {
-    switch (process2.status) {
-      case "running":
-        return /* @__PURE__ */ import_react125.default.createElement(Badge_default, { bg: "success" }, "Running");
-      case "exited":
-        return /* @__PURE__ */ import_react125.default.createElement(Badge_default, { bg: "secondary" }, "Exited (", process2.exitCode, ")");
-      case "error":
-        return /* @__PURE__ */ import_react125.default.createElement(Badge_default, { bg: "danger" }, "Error");
-      default:
-        return /* @__PURE__ */ import_react125.default.createElement(Badge_default, { bg: "warning" }, "Unknown");
-    }
-  };
-  var ProcessList = ({
-    processes,
-    selectedProcess,
-    onSelectProcess,
-    loading
-  }) => {
-    return /* @__PURE__ */ import_react125.default.createElement("div", { className: "p-1" }, [...processes].reverse().map((process2) => /* @__PURE__ */ import_react125.default.createElement(
-      "div",
-      {
-        key: process2.processId,
-        className: `p-2 mb-1 rounded ${selectedProcess?.processId === process2.processId ? "bg-primary text-white" : "bg-white border"}`,
-        style: { cursor: "pointer" },
-        onClick: () => onSelectProcess(process2),
-        title: process2.command
-      },
-      /* @__PURE__ */ import_react125.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react125.default.createElement("div", { className: "flex-grow-1", style: { minWidth: 0 } }, /* @__PURE__ */ import_react125.default.createElement("div", { className: "fw-bold text-truncate small" }, process2.command.split(" ")[0]), /* @__PURE__ */ import_react125.default.createElement(
-        "div",
-        {
-          className: `text-truncate ${selectedProcess?.processId === process2.processId ? "text-white-50" : "text-muted"}`,
-          style: { fontSize: "0.7rem" }
-        },
-        "PID: ",
-        process2.pid || "N/A",
-        " |",
-        " ",
-        new Date(process2.timestamp).toLocaleTimeString()
-      )), /* @__PURE__ */ import_react125.default.createElement("div", { className: "ms-2" }, getStatusBadge(process2))),
-      process2.error && /* @__PURE__ */ import_react125.default.createElement(
-        "div",
-        {
-          className: `mt-1 ${selectedProcess?.processId === process2.processId ? "text-warning" : "text-danger"}`,
-          style: { fontSize: "0.7rem" }
-        },
-        /* @__PURE__ */ import_react125.default.createElement("div", { className: "text-truncate" }, "Error: ", process2.error)
-      )
-    )), processes.length === 0 && !loading && /* @__PURE__ */ import_react125.default.createElement("div", { className: "p-2 text-center text-muted small" }, "No active processes"), loading && processes.length === 0 && /* @__PURE__ */ import_react125.default.createElement("div", { className: "p-2 text-center small" }, /* @__PURE__ */ import_react125.default.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" }, /* @__PURE__ */ import_react125.default.createElement("span", { className: "visually-hidden" }, "Loading..."))));
-  };
-
-  // src/components/pure/ProcessDetails.tsx
   var import_react126 = __toESM(require_react(), 1);
-  var getStatusBadge2 = (process2) => {
+  var getStatusBadge = (process2) => {
     switch (process2.status) {
       case "running":
         return /* @__PURE__ */ import_react126.default.createElement(Badge_default, { bg: "success" }, "Running");
@@ -68169,14 +68398,66 @@ Current environment analysis:
         return /* @__PURE__ */ import_react126.default.createElement(Badge_default, { bg: "warning" }, "Unknown");
     }
   };
+  var ProcessList = ({
+    processes,
+    selectedProcess,
+    onSelectProcess,
+    loading
+  }) => {
+    return /* @__PURE__ */ import_react126.default.createElement("div", { className: "p-1" }, [...processes].reverse().map((process2) => /* @__PURE__ */ import_react126.default.createElement(
+      "div",
+      {
+        key: process2.processId,
+        className: `p-2 mb-1 rounded ${selectedProcess?.processId === process2.processId ? "bg-primary text-white" : "bg-white border"}`,
+        style: { cursor: "pointer" },
+        onClick: () => onSelectProcess(process2),
+        title: process2.command
+      },
+      /* @__PURE__ */ import_react126.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react126.default.createElement("div", { className: "flex-grow-1", style: { minWidth: 0 } }, /* @__PURE__ */ import_react126.default.createElement("div", { className: "fw-bold text-truncate small" }, process2.command.split(" ")[0]), /* @__PURE__ */ import_react126.default.createElement(
+        "div",
+        {
+          className: `text-truncate ${selectedProcess?.processId === process2.processId ? "text-white-50" : "text-muted"}`,
+          style: { fontSize: "0.7rem" }
+        },
+        "PID: ",
+        process2.pid || "N/A",
+        " |",
+        " ",
+        new Date(process2.timestamp).toLocaleTimeString()
+      )), /* @__PURE__ */ import_react126.default.createElement("div", { className: "ms-2" }, getStatusBadge(process2))),
+      process2.error && /* @__PURE__ */ import_react126.default.createElement(
+        "div",
+        {
+          className: `mt-1 ${selectedProcess?.processId === process2.processId ? "text-warning" : "text-danger"}`,
+          style: { fontSize: "0.7rem" }
+        },
+        /* @__PURE__ */ import_react126.default.createElement("div", { className: "text-truncate" }, "Error: ", process2.error)
+      )
+    )), processes.length === 0 && !loading && /* @__PURE__ */ import_react126.default.createElement("div", { className: "p-2 text-center text-muted small" }, "No active processes"), loading && processes.length === 0 && /* @__PURE__ */ import_react126.default.createElement("div", { className: "p-2 text-center small" }, /* @__PURE__ */ import_react126.default.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" }, /* @__PURE__ */ import_react126.default.createElement("span", { className: "visually-hidden" }, "Loading..."))));
+  };
+
+  // src/components/pure/ProcessDetails.tsx
+  var import_react127 = __toESM(require_react(), 1);
+  var getStatusBadge2 = (process2) => {
+    switch (process2.status) {
+      case "running":
+        return /* @__PURE__ */ import_react127.default.createElement(Badge_default, { bg: "success" }, "Running");
+      case "exited":
+        return /* @__PURE__ */ import_react127.default.createElement(Badge_default, { bg: "secondary" }, "Exited (", process2.exitCode, ")");
+      case "error":
+        return /* @__PURE__ */ import_react127.default.createElement(Badge_default, { bg: "danger" }, "Error");
+      default:
+        return /* @__PURE__ */ import_react127.default.createElement(Badge_default, { bg: "warning" }, "Unknown");
+    }
+  };
   var ProcessDetails = ({
     selectedProcess,
     onKillProcess
   }) => {
     if (!selectedProcess) {
-      return /* @__PURE__ */ import_react126.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react126.default.createElement("i", null, "Select a process to view details"));
+      return /* @__PURE__ */ import_react127.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react127.default.createElement("i", null, "Select a process to view details"));
     }
-    return /* @__PURE__ */ import_react126.default.createElement("div", { className: "flex-grow-1 d-flex flex-column" }, /* @__PURE__ */ import_react126.default.createElement("div", { className: "d-flex align-items-center gap-2 mb-3 flex-wrap" }, /* @__PURE__ */ import_react126.default.createElement("div", null, getStatusBadge2(selectedProcess)), /* @__PURE__ */ import_react126.default.createElement("div", { className: "text-muted" }, selectedProcess.pid || "N/A"), /* @__PURE__ */ import_react126.default.createElement("div", { className: "text-muted" }, new Date(selectedProcess.timestamp).toLocaleString()), selectedProcess.status === "running" && onKillProcess && /* @__PURE__ */ import_react126.default.createElement(
+    return /* @__PURE__ */ import_react127.default.createElement("div", { className: "flex-grow-1 d-flex flex-column" }, /* @__PURE__ */ import_react127.default.createElement("div", { className: "d-flex align-items-center gap-2 mb-3 flex-wrap" }, /* @__PURE__ */ import_react127.default.createElement("div", null, getStatusBadge2(selectedProcess)), /* @__PURE__ */ import_react127.default.createElement("div", { className: "text-muted" }, selectedProcess.pid || "N/A"), /* @__PURE__ */ import_react127.default.createElement("div", { className: "text-muted" }, new Date(selectedProcess.timestamp).toLocaleString()), selectedProcess.status === "running" && onKillProcess && /* @__PURE__ */ import_react127.default.createElement(
       Button_default2,
       {
         variant: "danger",
@@ -68185,7 +68466,7 @@ Current environment analysis:
         className: "flex-grow-0 ms-auto"
       },
       "\u23F9\uFE0F Stop"
-    ), selectedProcess.exitCode !== void 0 && /* @__PURE__ */ import_react126.default.createElement("div", { className: "text-muted" }, selectedProcess.exitCode)), selectedProcess.error && /* @__PURE__ */ import_react126.default.createElement(Alert_default, { variant: "danger", className: "py-2 mb-3" }, selectedProcess.error), /* @__PURE__ */ import_react126.default.createElement("div", null, /* @__PURE__ */ import_react126.default.createElement("div", { className: "mb-1 small text-muted" }, "Command:"), /* @__PURE__ */ import_react126.default.createElement(
+    ), selectedProcess.exitCode !== void 0 && /* @__PURE__ */ import_react127.default.createElement("div", { className: "text-muted" }, selectedProcess.exitCode)), selectedProcess.error && /* @__PURE__ */ import_react127.default.createElement(Alert_default, { variant: "danger", className: "py-2 mb-3" }, selectedProcess.error), /* @__PURE__ */ import_react127.default.createElement("div", null, /* @__PURE__ */ import_react127.default.createElement("div", { className: "mb-1 small text-muted" }, "Command:"), /* @__PURE__ */ import_react127.default.createElement(
       "div",
       {
         className: "bg-dark text-light p-2 rounded",
@@ -68204,32 +68485,32 @@ Current environment analysis:
   };
 
   // src/components/pure/ProcessTerminal.tsx
-  var import_react130 = __toESM(require_react(), 1);
+  var import_react131 = __toESM(require_react(), 1);
 
   // src/components/pure/TerminalLogs.tsx
-  var import_react127 = __toESM(require_react(), 1);
+  var import_react128 = __toESM(require_react(), 1);
   var TerminalLogs = ({ logs }) => {
-    const [autoScroll, setAutoScroll] = (0, import_react127.useState)(true);
-    const logsContainerRef = (0, import_react127.useRef)(null);
-    (0, import_react127.useEffect)(() => {
+    const [autoScroll, setAutoScroll] = (0, import_react128.useState)(true);
+    const logsContainerRef = (0, import_react128.useRef)(null);
+    (0, import_react128.useEffect)(() => {
       if (autoScroll && logsContainerRef.current) {
         logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
       }
     }, [logs, autoScroll]);
-    const handleLogsScroll = (0, import_react127.useCallback)(() => {
+    const handleLogsScroll = (0, import_react128.useCallback)(() => {
       if (logsContainerRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = logsContainerRef.current;
         const isAtBottom = scrollHeight - scrollTop <= clientHeight + 10;
         setAutoScroll(isAtBottom);
       }
     }, []);
-    const handleScrollToBottom = (0, import_react127.useCallback)(() => {
+    const handleScrollToBottom = (0, import_react128.useCallback)(() => {
       setAutoScroll(true);
       if (logsContainerRef.current) {
         logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
       }
     }, []);
-    return /* @__PURE__ */ import_react127.default.createElement(
+    return /* @__PURE__ */ import_react128.default.createElement(
       "div",
       {
         ref: logsContainerRef,
@@ -68243,7 +68524,7 @@ Current environment analysis:
         },
         onScroll: handleLogsScroll
       },
-      logs.length > 0 ? /* @__PURE__ */ import_react127.default.createElement(
+      logs.length > 0 ? /* @__PURE__ */ import_react128.default.createElement(
         "pre",
         {
           className: "mb-0",
@@ -68256,8 +68537,8 @@ Current environment analysis:
           }
         },
         logs.join("")
-      ) : /* @__PURE__ */ import_react127.default.createElement("div", { className: "text-muted text-center py-4" }, /* @__PURE__ */ import_react127.default.createElement("i", null, "No output yet")),
-      !autoScroll && /* @__PURE__ */ import_react127.default.createElement("div", { className: "position-sticky bottom-0 d-flex justify-content-center mb-2" }, /* @__PURE__ */ import_react127.default.createElement(
+      ) : /* @__PURE__ */ import_react128.default.createElement("div", { className: "text-muted text-center py-4" }, /* @__PURE__ */ import_react128.default.createElement("i", null, "No output yet")),
+      !autoScroll && /* @__PURE__ */ import_react128.default.createElement("div", { className: "position-sticky bottom-0 d-flex justify-content-center mb-2" }, /* @__PURE__ */ import_react128.default.createElement(
         Button_default2,
         {
           variant: "primary",
@@ -68270,31 +68551,31 @@ Current environment analysis:
   };
 
   // src/components/pure/TerminalInput.tsx
-  var import_react128 = __toESM(require_react(), 1);
+  var import_react129 = __toESM(require_react(), 1);
   var TerminalInput = ({ onInput }) => {
-    const [inputValue, setInputValue] = (0, import_react128.useState)("");
-    const inputRef = (0, import_react128.useRef)(null);
-    const handleSubmit = (0, import_react128.useCallback)(() => {
+    const [inputValue, setInputValue] = (0, import_react129.useState)("");
+    const inputRef = (0, import_react129.useRef)(null);
+    const handleSubmit = (0, import_react129.useCallback)(() => {
       if (inputValue.trim()) {
         onInput(inputValue + "\n");
         setInputValue("");
       }
     }, [inputValue, onInput]);
-    const handleKeyPress = (0, import_react128.useCallback)((e3) => {
+    const handleKeyPress = (0, import_react129.useCallback)((e3) => {
       if (e3.key === "Enter") {
         handleSubmit();
         e3.preventDefault();
       }
     }, [handleSubmit]);
-    const handleInputChange = (0, import_react128.useCallback)((e3) => {
+    const handleInputChange = (0, import_react129.useCallback)((e3) => {
       setInputValue(e3.target.value);
     }, []);
-    (0, import_react128.useEffect)(() => {
+    (0, import_react129.useEffect)(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
     }, [inputValue]);
-    return /* @__PURE__ */ import_react128.default.createElement("div", { className: "border-top bg-white p-2 mt-2", style: { flexShrink: 0 } }, /* @__PURE__ */ import_react128.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react128.default.createElement(
+    return /* @__PURE__ */ import_react129.default.createElement("div", { className: "border-top bg-white p-2 mt-2", style: { flexShrink: 0 } }, /* @__PURE__ */ import_react129.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react129.default.createElement(
       "input",
       {
         ref: inputRef,
@@ -68314,7 +68595,7 @@ Current environment analysis:
         },
         style: { cursor: "text" }
       }
-    ), /* @__PURE__ */ import_react128.default.createElement(
+    ), /* @__PURE__ */ import_react129.default.createElement(
       "button",
       {
         className: "btn btn-primary",
@@ -68327,10 +68608,10 @@ Current environment analysis:
   };
 
   // src/hooks/useTerminalWebSocket.ts
-  var import_react129 = __toESM(require_react(), 1);
+  var import_react130 = __toESM(require_react(), 1);
   var useTerminalWebSocket = (ws2, selectedProcess) => {
-    const [processLogs, setProcessLogs] = (0, import_react129.useState)([]);
-    const handleMessage = (0, import_react129.useCallback)((event) => {
+    const [processLogs, setProcessLogs] = (0, import_react130.useState)([]);
+    const handleMessage = (0, import_react130.useCallback)((event) => {
       try {
         const data2 = JSON.parse(event.data);
         if (data2.type === "processData" && selectedProcess && data2.processId === selectedProcess.processId) {
@@ -68342,10 +68623,10 @@ Current environment analysis:
         console.error("Error parsing WebSocket message:", error);
       }
     }, [selectedProcess]);
-    (0, import_react129.useEffect)(() => {
+    (0, import_react130.useEffect)(() => {
       setProcessLogs(selectedProcess?.logs || []);
     }, [selectedProcess]);
-    (0, import_react129.useEffect)(() => {
+    (0, import_react130.useEffect)(() => {
       if (!ws2)
         return;
       ws2.addEventListener("message", handleMessage);
@@ -68364,7 +68645,7 @@ Current environment analysis:
     ws: ws2
   }) => {
     const { processLogs } = useTerminalWebSocket(ws2, selectedProcess);
-    const handleInput = (0, import_react130.useCallback)((data2) => {
+    const handleInput = (0, import_react131.useCallback)((data2) => {
       if (ws2 && ws2.readyState === WebSocket.OPEN && selectedProcess?.status === "running") {
         ws2.send(
           JSON.stringify({
@@ -68376,9 +68657,9 @@ Current environment analysis:
       }
     }, [ws2, selectedProcess]);
     if (!selectedProcess) {
-      return /* @__PURE__ */ import_react130.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react130.default.createElement("i", null, "Terminal will appear here when a process is selected"));
+      return /* @__PURE__ */ import_react131.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react131.default.createElement("i", null, "Terminal will appear here when a process is selected"));
     }
-    return /* @__PURE__ */ import_react130.default.createElement("div", { className: "flex-grow-1 d-flex flex-column", style: { minHeight: 0 } }, /* @__PURE__ */ import_react130.default.createElement(TerminalLogs, { logs: processLogs }), selectedProcess.status === "running" && /* @__PURE__ */ import_react130.default.createElement(TerminalInput, { onInput: handleInput }));
+    return /* @__PURE__ */ import_react131.default.createElement("div", { className: "flex-grow-1 d-flex flex-column", style: { minHeight: 0 } }, /* @__PURE__ */ import_react131.default.createElement(TerminalLogs, { logs: processLogs }), selectedProcess.status === "running" && /* @__PURE__ */ import_react131.default.createElement(TerminalInput, { onInput: handleInput }));
   };
 
   // src/components/pure/ProcessManagerView.tsx
@@ -68389,12 +68670,12 @@ Current environment analysis:
     loading,
     onKillProcess
   }) => {
-    const [selectedProcess, setSelectedProcess] = (0, import_react131.useState)(null);
+    const [selectedProcess, setSelectedProcess] = (0, import_react132.useState)(null);
     const { ws: ws2 } = useWebSocket();
-    const handleSelectProcess = (0, import_react131.useCallback)((process2) => {
+    const handleSelectProcess = (0, import_react132.useCallback)((process2) => {
       setSelectedProcess(process2);
     }, []);
-    (0, import_react131.useEffect)(() => {
+    (0, import_react132.useEffect)(() => {
       if (selectedProcess && ws2 && ws2.readyState === WebSocket.OPEN) {
         ws2.send(
           JSON.stringify({
@@ -68404,11 +68685,11 @@ Current environment analysis:
         );
       }
     }, [selectedProcess, ws2]);
-    return /* @__PURE__ */ import_react131.default.createElement(Container_default, { fluid: true, className: "px-0 h-100" }, /* @__PURE__ */ import_react131.default.createElement(Row_default, { className: "g-0", style: { height: "calc(100vh - 56px)" } }, /* @__PURE__ */ import_react131.default.createElement(Col_default, { sm: 2, className: "border-end", style: {
+    return /* @__PURE__ */ import_react132.default.createElement(Container_default, { fluid: true, className: "px-0 h-100" }, /* @__PURE__ */ import_react132.default.createElement(Row_default, { className: "g-0", style: { height: "calc(100vh - 56px)" } }, /* @__PURE__ */ import_react132.default.createElement(Col_default, { sm: 2, className: "border-end", style: {
       height: "100%",
       overflow: "auto",
       backgroundColor: "#f8f9fa"
-    } }, /* @__PURE__ */ import_react131.default.createElement(
+    } }, /* @__PURE__ */ import_react132.default.createElement(
       ProcessList,
       {
         processes,
@@ -68416,19 +68697,19 @@ Current environment analysis:
         onSelectProcess: handleSelectProcess,
         loading
       }
-    )), /* @__PURE__ */ import_react131.default.createElement(Col_default, { sm: 5, className: "border-end p-3 d-flex flex-column", style: {
+    )), /* @__PURE__ */ import_react132.default.createElement(Col_default, { sm: 5, className: "border-end p-3 d-flex flex-column", style: {
       height: "100%",
       overflow: "hidden"
-    } }, /* @__PURE__ */ import_react131.default.createElement(
+    } }, /* @__PURE__ */ import_react132.default.createElement(
       ProcessDetails,
       {
         selectedProcess,
         onKillProcess
       }
-    )), /* @__PURE__ */ import_react131.default.createElement(Col_default, { sm: 5, className: "p-3 d-flex flex-column", style: {
+    )), /* @__PURE__ */ import_react132.default.createElement(Col_default, { sm: 5, className: "p-3 d-flex flex-column", style: {
       height: "100%",
       overflow: "hidden"
-    } }, /* @__PURE__ */ import_react131.default.createElement(
+    } }, /* @__PURE__ */ import_react132.default.createElement(
       ProcessTerminal,
       {
         selectedProcess,
@@ -68439,11 +68720,11 @@ Current environment analysis:
 
   // src/components/stateful/ProcessManagerPage.tsx
   var ProcessManagerPage = () => {
-    const [processes, setProcesses] = (0, import_react132.useState)([]);
+    const [processes, setProcesses] = (0, import_react133.useState)([]);
     const { ws: ws2 } = useWebSocket();
-    const [loading, setLoading] = (0, import_react132.useState)(false);
+    const [loading, setLoading] = (0, import_react133.useState)(false);
     const navigate = useNavigate();
-    (0, import_react132.useEffect)(() => {
+    (0, import_react133.useEffect)(() => {
       if (!ws2)
         return;
       const handleMessage = (event) => {
@@ -68492,13 +68773,13 @@ Current environment analysis:
         ws2.removeEventListener("message", handleMessage);
       };
     }, [ws2]);
-    const handleRefresh = (0, import_react132.useCallback)(() => {
+    const handleRefresh = (0, import_react133.useCallback)(() => {
       if (ws2 && ws2.readyState === WebSocket.OPEN) {
         setLoading(true);
         ws2.send(JSON.stringify({ type: "getRunningProcesses" }));
       }
     }, [ws2]);
-    const handleKillProcess = (0, import_react132.useCallback)((processId) => {
+    const handleKillProcess = (0, import_react133.useCallback)((processId) => {
       if (ws2 && ws2.readyState === WebSocket.OPEN) {
         ws2.send(JSON.stringify({
           type: "killProcess",
@@ -68506,12 +68787,12 @@ Current environment analysis:
         }));
       }
     }, [ws2]);
-    const handleBack = (0, import_react132.useCallback)(() => {
+    const handleBack = (0, import_react133.useCallback)(() => {
       navigate("/");
     }, [navigate]);
     return (
       // don't put this in AppFrame- this is correct
-      /* @__PURE__ */ import_react132.default.createElement(
+      /* @__PURE__ */ import_react133.default.createElement(
         ProcessManagerView,
         {
           processes,
@@ -68525,18 +68806,18 @@ Current environment analysis:
   };
 
   // src/components/pure/Settings.tsx
-  var import_react133 = __toESM(require_react(), 1);
+  var import_react134 = __toESM(require_react(), 1);
   var Settings = () => {
-    const [theme, setTheme] = (0, import_react133.useState)("auto");
+    const [theme, setTheme] = (0, import_react134.useState)("auto");
     const { tutorialMode, setTutorialMode } = useTutorialMode();
     const { isAuthenticated, logout } = useAuth();
-    (0, import_react133.useEffect)(() => {
+    (0, import_react134.useEffect)(() => {
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme) {
         setTheme(savedTheme);
       }
     }, []);
-    (0, import_react133.useEffect)(() => {
+    (0, import_react134.useEffect)(() => {
       applyTheme(theme);
       localStorage.setItem("theme", theme);
     }, [theme]);
@@ -68560,7 +68841,7 @@ Current environment analysis:
       setTutorialMode(newTutorialMode);
       localStorage.setItem("tutorialMode", newTutorialMode.toString());
     };
-    return /* @__PURE__ */ import_react133.default.createElement(Container_default, null, /* @__PURE__ */ import_react133.default.createElement(Row_default, null, /* @__PURE__ */ import_react133.default.createElement(Col_default, { md: 8, lg: 6 }, /* @__PURE__ */ import_react133.default.createElement(Card_default, null, /* @__PURE__ */ import_react133.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react133.default.createElement("h5", { className: "mb-0" }, "Appearance")), /* @__PURE__ */ import_react133.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react133.default.createElement(Form_default, null, /* @__PURE__ */ import_react133.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react133.default.createElement("div", null, /* @__PURE__ */ import_react133.default.createElement(
+    return /* @__PURE__ */ import_react134.default.createElement(Container_default, null, /* @__PURE__ */ import_react134.default.createElement(Row_default, null, /* @__PURE__ */ import_react134.default.createElement(Col_default, { md: 8, lg: 6 }, /* @__PURE__ */ import_react134.default.createElement(Card_default, null, /* @__PURE__ */ import_react134.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react134.default.createElement("h5", { className: "mb-0" }, "Appearance")), /* @__PURE__ */ import_react134.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react134.default.createElement(Form_default, null, /* @__PURE__ */ import_react134.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react134.default.createElement("div", null, /* @__PURE__ */ import_react134.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -68571,7 +68852,7 @@ Current environment analysis:
         checked: theme === "light",
         onChange: handleThemeChange
       }
-    ), /* @__PURE__ */ import_react133.default.createElement(
+    ), /* @__PURE__ */ import_react134.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -68582,7 +68863,7 @@ Current environment analysis:
         checked: theme === "dark",
         onChange: handleThemeChange
       }
-    ), /* @__PURE__ */ import_react133.default.createElement(
+    ), /* @__PURE__ */ import_react134.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -68593,7 +68874,7 @@ Current environment analysis:
         checked: theme === "auto",
         onChange: handleThemeChange
       }
-    ))), /* @__PURE__ */ import_react133.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react133.default.createElement(
+    ))), /* @__PURE__ */ import_react134.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react134.default.createElement(
       Form_default.Check,
       {
         type: "switch",
@@ -68602,18 +68883,18 @@ Current environment analysis:
         checked: tutorialMode,
         onChange: handleTutorialModeChange
       }
-    ), /* @__PURE__ */ import_react133.default.createElement(Form_default.Text, { className: "text-muted" }, "When enabled, helpful tooltips will appear throughout the app to guide you."))))))), /* @__PURE__ */ import_react133.default.createElement(Row_default, { className: "mt-4" }, /* @__PURE__ */ import_react133.default.createElement(Col_default, { md: 8, lg: 6 }, /* @__PURE__ */ import_react133.default.createElement(Card_default, null, /* @__PURE__ */ import_react133.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react133.default.createElement("h5", { className: "mb-0" }, "GitHub Integration")), /* @__PURE__ */ import_react133.default.createElement(Card_default.Body, null, githubAuthService.isConfigured() ? isAuthenticated ? /* @__PURE__ */ import_react133.default.createElement("div", null, /* @__PURE__ */ import_react133.default.createElement("p", null, "Connected to GitHub"), /* @__PURE__ */ import_react133.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react133.default.createElement(Button_default2, { variant: "danger", onClick: logout }, "Sign Out from GitHub"))) : /* @__PURE__ */ import_react133.default.createElement("div", null, /* @__PURE__ */ import_react133.default.createElement("p", null, "Connect your GitHub account to enable Git operations:"), /* @__PURE__ */ import_react133.default.createElement(GitHubLoginButton, null)) : /* @__PURE__ */ import_react133.default.createElement("div", null, /* @__PURE__ */ import_react133.default.createElement("p", { className: "text-danger" }, "GitHub integration is not configured."), /* @__PURE__ */ import_react133.default.createElement("p", null, "To enable GitHub authentication:"), /* @__PURE__ */ import_react133.default.createElement("ol", { className: "small" }, /* @__PURE__ */ import_react133.default.createElement("li", null, "Create a GitHub OAuth App at https://github.com/settings/developers"), /* @__PURE__ */ import_react133.default.createElement("li", null, "Set Authorization callback URL to: ", window.location.origin, "/auth/github/callback"), /* @__PURE__ */ import_react133.default.createElement("li", null, "Update the clientId in testeranto.config.ts"), /* @__PURE__ */ import_react133.default.createElement("li", null, "Restart the development server"))))))));
+    ), /* @__PURE__ */ import_react134.default.createElement(Form_default.Text, { className: "text-muted" }, "When enabled, helpful tooltips will appear throughout the app to guide you."))))))), /* @__PURE__ */ import_react134.default.createElement(Row_default, { className: "mt-4" }, /* @__PURE__ */ import_react134.default.createElement(Col_default, { md: 8, lg: 6 }, /* @__PURE__ */ import_react134.default.createElement(Card_default, null, /* @__PURE__ */ import_react134.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react134.default.createElement("h5", { className: "mb-0" }, "GitHub Integration")), /* @__PURE__ */ import_react134.default.createElement(Card_default.Body, null, githubAuthService.isConfigured() ? isAuthenticated ? /* @__PURE__ */ import_react134.default.createElement("div", null, /* @__PURE__ */ import_react134.default.createElement("p", null, "Connected to GitHub"), /* @__PURE__ */ import_react134.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react134.default.createElement(Button_default2, { variant: "danger", onClick: logout }, "Sign Out from GitHub"))) : /* @__PURE__ */ import_react134.default.createElement("div", null, /* @__PURE__ */ import_react134.default.createElement("p", null, "Connect your GitHub account to enable Git operations:"), /* @__PURE__ */ import_react134.default.createElement(GitHubLoginButton, null)) : /* @__PURE__ */ import_react134.default.createElement("div", null, /* @__PURE__ */ import_react134.default.createElement("p", { className: "text-danger" }, "GitHub integration is not configured."), /* @__PURE__ */ import_react134.default.createElement("p", null, "To enable GitHub authentication:"), /* @__PURE__ */ import_react134.default.createElement("ol", { className: "small" }, /* @__PURE__ */ import_react134.default.createElement("li", null, "Create a GitHub OAuth App at https://github.com/settings/developers"), /* @__PURE__ */ import_react134.default.createElement("li", null, "Set Authorization callback URL to: ", window.location.origin, "/auth/github/callback"), /* @__PURE__ */ import_react134.default.createElement("li", null, "Update the clientId in testeranto.config.ts"), /* @__PURE__ */ import_react134.default.createElement("li", null, "Restart the development server"))))))));
   };
 
   // src/components/stateful/GitIntegrationPage.tsx
-  var import_react137 = __toESM(require_react(), 1);
+  var import_react138 = __toESM(require_react(), 1);
 
   // src/hooks/useGitMode.ts
-  var import_react134 = __toESM(require_react(), 1);
+  var import_react135 = __toESM(require_react(), 1);
   var useGitMode = () => {
     const { isConnected } = useWebSocket();
-    const [mode, setMode] = (0, import_react134.useState)(isConnected ? "dev" : "static");
-    (0, import_react134.useEffect)(() => {
+    const [mode, setMode] = (0, import_react135.useState)(isConnected ? "dev" : "static");
+    (0, import_react135.useEffect)(() => {
       setMode(isConnected ? "dev" : "static");
     }, [isConnected]);
     return {
@@ -68626,7 +68907,7 @@ Current environment analysis:
   };
 
   // src/components/pure/GitIntegrationView.tsx
-  var import_react135 = __toESM(require_react(), 1);
+  var import_react136 = __toESM(require_react(), 1);
   var GitIntegrationView = ({
     mode,
     setMode,
@@ -68658,11 +68939,11 @@ Current environment analysis:
     setIsPushing,
     getSyncStatusText
   }) => {
-    const [selectedFile, setSelectedFile] = (0, import_react135.useState)(null);
-    const [originalContent, setOriginalContent] = (0, import_react135.useState)("");
-    const [modifiedContent, setModifiedContent] = (0, import_react135.useState)("");
-    const [isDiffLoading, setIsDiffLoading] = (0, import_react135.useState)(false);
-    const loadFileDiff = (0, import_react135.useCallback)(
+    const [selectedFile, setSelectedFile] = (0, import_react136.useState)(null);
+    const [originalContent, setOriginalContent] = (0, import_react136.useState)("");
+    const [modifiedContent, setModifiedContent] = (0, import_react136.useState)("");
+    const [isDiffLoading, setIsDiffLoading] = (0, import_react136.useState)(false);
+    const loadFileDiff = (0, import_react136.useCallback)(
       async (filePath) => {
         console.log("loadFileDiff - filePath:", filePath);
         if (mode === "static")
@@ -68690,20 +68971,20 @@ Current environment analysis:
       },
       [fileService, mode, setError]
     );
-    (0, import_react135.useEffect)(() => {
+    (0, import_react136.useEffect)(() => {
       if (changes.length > 0 && !selectedFile) {
         console.log("First change path:", changes[0].path);
         loadFileDiff(changes[0].path);
       }
     }, [changes, selectedFile, loadFileDiff]);
-    return /* @__PURE__ */ import_react135.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react135.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react135.default.createElement(Col_default, null, /* @__PURE__ */ import_react135.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react135.default.createElement(
+    return /* @__PURE__ */ import_react136.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react136.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react136.default.createElement(Col_default, null, /* @__PURE__ */ import_react136.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react136.default.createElement(
       Badge_default,
       {
         bg: mode === "static" ? "secondary" : mode === "dev" ? "success" : "primary"
       },
       mode.toUpperCase(),
       " MODE"
-    ), /* @__PURE__ */ import_react135.default.createElement(
+    ), /* @__PURE__ */ import_react136.default.createElement(
       "select",
       {
         className: "form-select form-select-sm",
@@ -68711,10 +68992,10 @@ Current environment analysis:
         value: mode,
         onChange: (e3) => setMode(e3.target.value)
       },
-      /* @__PURE__ */ import_react135.default.createElement("option", { value: "static" }, "Static (Read-only)"),
-      /* @__PURE__ */ import_react135.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
-      /* @__PURE__ */ import_react135.default.createElement("option", { value: "git" }, "Git Remote")
-    )), mode === "static" && /* @__PURE__ */ import_react135.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react135.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react135.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react135.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react135.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, /* @__PURE__ */ import_react135.default.createElement("div", null, error), /* @__PURE__ */ import_react135.default.createElement("small", { className: "text-muted" }, "Check the browser console for more details")), mode !== "static" && /* @__PURE__ */ import_react135.default.createElement(Row_default, null, /* @__PURE__ */ import_react135.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react135.default.createElement(Card_default, null, /* @__PURE__ */ import_react135.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react135.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react135.default.createElement(
+      /* @__PURE__ */ import_react136.default.createElement("option", { value: "static" }, "Static (Read-only)"),
+      /* @__PURE__ */ import_react136.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
+      /* @__PURE__ */ import_react136.default.createElement("option", { value: "git" }, "Git Remote")
+    )), mode === "static" && /* @__PURE__ */ import_react136.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react136.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react136.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react136.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react136.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, /* @__PURE__ */ import_react136.default.createElement("div", null, error), /* @__PURE__ */ import_react136.default.createElement("small", { className: "text-muted" }, "Check the browser console for more details")), mode !== "static" && /* @__PURE__ */ import_react136.default.createElement(Row_default, null, /* @__PURE__ */ import_react136.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react136.default.createElement(Card_default, null, /* @__PURE__ */ import_react136.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react136.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -68722,14 +69003,14 @@ Current environment analysis:
         onClick: loadChanges,
         disabled: isLoading
       },
-      isLoading ? /* @__PURE__ */ import_react135.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
-    )), /* @__PURE__ */ import_react135.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react135.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react135.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react135.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react135.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react135.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react135.default.createElement(
+      isLoading ? /* @__PURE__ */ import_react136.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
+    )), /* @__PURE__ */ import_react136.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react136.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react136.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react136.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react136.default.createElement(
       "div",
       {
         key: index3,
         className: "d-flex align-items-center mb-2"
       },
-      /* @__PURE__ */ import_react135.default.createElement(
+      /* @__PURE__ */ import_react136.default.createElement(
         Badge_default,
         {
           bg: getStatusBadgeVariant(change.status),
@@ -68737,8 +69018,8 @@ Current environment analysis:
         },
         change.status.charAt(0).toUpperCase() + change.status.slice(1)
       ),
-      /* @__PURE__ */ import_react135.default.createElement("span", { className: "small text-truncate" }, change.path)
-    )))))), /* @__PURE__ */ import_react135.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react135.default.createElement(Card_default, null, /* @__PURE__ */ import_react135.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react135.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react135.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react135.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react135.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react135.default.createElement(
+      /* @__PURE__ */ import_react136.default.createElement("span", { className: "small text-truncate" }, change.path)
+    )))))), /* @__PURE__ */ import_react136.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react136.default.createElement(Card_default, null, /* @__PURE__ */ import_react136.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react136.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react136.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react136.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react136.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react136.default.createElement(
       "input",
       {
         type: "text",
@@ -68749,7 +69030,7 @@ Current environment analysis:
         onChange: (e3) => setCommitSummary(e3.target.value),
         disabled: mode === "static"
       }
-    ), /* @__PURE__ */ import_react135.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react135.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react135.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react135.default.createElement(
+    ), /* @__PURE__ */ import_react136.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react136.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react136.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react136.default.createElement(
       "textarea",
       {
         className: "form-control",
@@ -68760,14 +69041,14 @@ Current environment analysis:
         onChange: (e3) => setCommitDescription(e3.target.value),
         disabled: mode === "static"
       }
-    )), /* @__PURE__ */ import_react135.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react135.default.createElement(
+    )), /* @__PURE__ */ import_react136.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "primary",
         onClick: handleSaveChanges,
         disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
       },
-      isCommitting ? /* @__PURE__ */ import_react135.default.createElement(import_react135.default.Fragment, null, /* @__PURE__ */ import_react135.default.createElement(
+      isCommitting ? /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, /* @__PURE__ */ import_react136.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -68775,14 +69056,14 @@ Current environment analysis:
           className: "me-2"
         }
       ), "Saving...") : "Save to Computer"
-    ), /* @__PURE__ */ import_react135.default.createElement(
+    ), /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "success",
         onClick: handleShareChanges,
         disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
       },
-      isPushing ? /* @__PURE__ */ import_react135.default.createElement(import_react135.default.Fragment, null, /* @__PURE__ */ import_react135.default.createElement(
+      isPushing ? /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, /* @__PURE__ */ import_react136.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -68790,7 +69071,7 @@ Current environment analysis:
           className: "me-2"
         }
       ), "Sharing...") : "Save & Share"
-    ))))), /* @__PURE__ */ import_react135.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react135.default.createElement(Card_default, null, /* @__PURE__ */ import_react135.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react135.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react135.default.createElement(
+    ))))), /* @__PURE__ */ import_react136.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react136.default.createElement(Card_default, null, /* @__PURE__ */ import_react136.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react136.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -68798,14 +69079,14 @@ Current environment analysis:
         onClick: (e3) => loadGitStatus(e3)
       },
       "\u21BB"
-    )), /* @__PURE__ */ import_react135.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react135.default.createElement("div", { className: "text-center mb-3" }, /* @__PURE__ */ import_react135.default.createElement(Badge_default, { bg: getSyncStatusVariant() }, getSyncStatusText()), /* @__PURE__ */ import_react135.default.createElement("div", { className: "small text-muted mt-1" }, "Branch: ", currentBranch)), /* @__PURE__ */ import_react135.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react135.default.createElement(
+    )), /* @__PURE__ */ import_react136.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center mb-3" }, /* @__PURE__ */ import_react136.default.createElement(Badge_default, { bg: getSyncStatusVariant() }, getSyncStatusText()), /* @__PURE__ */ import_react136.default.createElement("div", { className: "small text-muted mt-1" }, "Branch: ", currentBranch)), /* @__PURE__ */ import_react136.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "outline-primary",
         onClick: handleGetUpdates,
         disabled: mode === "static" || isPulling
       },
-      isPulling ? /* @__PURE__ */ import_react135.default.createElement(import_react135.default.Fragment, null, /* @__PURE__ */ import_react135.default.createElement(
+      isPulling ? /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, /* @__PURE__ */ import_react136.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -68813,7 +69094,7 @@ Current environment analysis:
           className: "me-2"
         }
       ), "Updating...") : "Get Updates"
-    ), /* @__PURE__ */ import_react135.default.createElement(
+    ), /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "outline-success",
@@ -68834,7 +69115,7 @@ Current environment analysis:
           }
         }
       },
-      isPushing ? /* @__PURE__ */ import_react135.default.createElement(import_react135.default.Fragment, null, /* @__PURE__ */ import_react135.default.createElement(
+      isPushing ? /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, /* @__PURE__ */ import_react136.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -68842,7 +69123,7 @@ Current environment analysis:
           className: "me-2"
         }
       ), "Sharing...") : `Share Changes (${remoteStatus.ahead})`
-    )), /* @__PURE__ */ import_react135.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react135.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))), /* @__PURE__ */ import_react135.default.createElement(Card_default, null, /* @__PURE__ */ import_react135.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react135.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react135.default.createElement(
+    )), /* @__PURE__ */ import_react136.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react136.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))), /* @__PURE__ */ import_react136.default.createElement(Card_default, null, /* @__PURE__ */ import_react136.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react136.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -68850,8 +69131,8 @@ Current environment analysis:
         onClick: loadChanges,
         disabled: isLoading
       },
-      isLoading ? /* @__PURE__ */ import_react135.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
-    )), /* @__PURE__ */ import_react135.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react135.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react135.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react135.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react135.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react135.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react135.default.createElement(
+      isLoading ? /* @__PURE__ */ import_react136.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
+    )), /* @__PURE__ */ import_react136.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react136.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react136.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react136.default.createElement("div", null, changes.map((change, index3) => /* @__PURE__ */ import_react136.default.createElement(
       "div",
       {
         key: index3,
@@ -68859,7 +69140,7 @@ Current environment analysis:
         style: { cursor: "pointer" },
         onClick: () => loadFileDiff(change.path)
       },
-      /* @__PURE__ */ import_react135.default.createElement(
+      /* @__PURE__ */ import_react136.default.createElement(
         Badge_default,
         {
           bg: getStatusBadgeVariant(change.status),
@@ -68867,8 +69148,8 @@ Current environment analysis:
         },
         change.status.charAt(0).toUpperCase() + change.status.slice(1)
       ),
-      /* @__PURE__ */ import_react135.default.createElement("span", { className: "small text-truncate" }, change.path)
-    )))))), /* @__PURE__ */ import_react135.default.createElement(Col_default, { md: 8 }, /* @__PURE__ */ import_react135.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react135.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react135.default.createElement("h5", null, "Changes Preview")), /* @__PURE__ */ import_react135.default.createElement(Card_default.Body, { style: { height: "400px" } }, isDiffLoading ? /* @__PURE__ */ import_react135.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react135.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react135.default.createElement("div", null, "Loading diff...")) : selectedFile ? modifiedContent ? /* @__PURE__ */ import_react135.default.createElement(
+      /* @__PURE__ */ import_react136.default.createElement("span", { className: "small text-truncate" }, change.path)
+    )))))), /* @__PURE__ */ import_react136.default.createElement(Col_default, { md: 8 }, /* @__PURE__ */ import_react136.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react136.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react136.default.createElement("h5", null, "Changes Preview")), /* @__PURE__ */ import_react136.default.createElement(Card_default.Body, { style: { height: "400px" } }, isDiffLoading ? /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react136.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react136.default.createElement("div", null, "Loading diff...")) : selectedFile ? modifiedContent ? /* @__PURE__ */ import_react136.default.createElement(
       de,
       {
         height: "100%",
@@ -68893,7 +69174,7 @@ Current environment analysis:
           renderLineHighlight: "all"
         }
       }
-    ) : /* @__PURE__ */ import_react135.default.createElement("div", { className: "text-center text-muted" }, /* @__PURE__ */ import_react135.default.createElement("p", null, "Could not load file content."), /* @__PURE__ */ import_react135.default.createElement("small", null, "Check that the development server is running and has file API endpoints implemented.")) : /* @__PURE__ */ import_react135.default.createElement("div", { className: "text-center text-muted" }, "Select a file to view changes"))), /* @__PURE__ */ import_react135.default.createElement(Card_default, null, /* @__PURE__ */ import_react135.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react135.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react135.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react135.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react135.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react135.default.createElement(
+    ) : /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center text-muted" }, /* @__PURE__ */ import_react136.default.createElement("p", null, "Could not load file content."), /* @__PURE__ */ import_react136.default.createElement("small", null, "Check that the development server is running and has file API endpoints implemented.")) : /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center text-muted" }, "Select a file to view changes"))), /* @__PURE__ */ import_react136.default.createElement(Card_default, null, /* @__PURE__ */ import_react136.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react136.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react136.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react136.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react136.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react136.default.createElement(
       "input",
       {
         type: "text",
@@ -68904,7 +69185,7 @@ Current environment analysis:
         onChange: (e3) => setCommitSummary(e3.target.value),
         disabled: mode === "static"
       }
-    ), /* @__PURE__ */ import_react135.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react135.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react135.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react135.default.createElement(
+    ), /* @__PURE__ */ import_react136.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react136.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react136.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react136.default.createElement(
       "textarea",
       {
         className: "form-control",
@@ -68915,14 +69196,14 @@ Current environment analysis:
         onChange: (e3) => setCommitDescription(e3.target.value),
         disabled: mode === "static"
       }
-    )), /* @__PURE__ */ import_react135.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react135.default.createElement(
+    )), /* @__PURE__ */ import_react136.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "primary",
         onClick: handleSaveChanges,
         disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
       },
-      isCommitting ? /* @__PURE__ */ import_react135.default.createElement(import_react135.default.Fragment, null, /* @__PURE__ */ import_react135.default.createElement(
+      isCommitting ? /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, /* @__PURE__ */ import_react136.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -68930,14 +69211,14 @@ Current environment analysis:
           className: "me-2"
         }
       ), "Saving...") : "Save to Computer"
-    ), /* @__PURE__ */ import_react135.default.createElement(
+    ), /* @__PURE__ */ import_react136.default.createElement(
       Button_default2,
       {
         variant: "success",
         onClick: handleShareChanges,
         disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
       },
-      isPushing ? /* @__PURE__ */ import_react135.default.createElement(import_react135.default.Fragment, null, /* @__PURE__ */ import_react135.default.createElement(
+      isPushing ? /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, /* @__PURE__ */ import_react136.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -68945,27 +69226,27 @@ Current environment analysis:
           className: "me-2"
         }
       ), "Sharing...") : "Save & Share"
-    )))))), mode === "static" && /* @__PURE__ */ import_react135.default.createElement(Row_default, null, /* @__PURE__ */ import_react135.default.createElement(Col_default, null, /* @__PURE__ */ import_react135.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react135.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react135.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
+    )))))), mode === "static" && /* @__PURE__ */ import_react136.default.createElement(Row_default, null, /* @__PURE__ */ import_react136.default.createElement(Col_default, null, /* @__PURE__ */ import_react136.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react136.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react136.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
   };
 
   // src/components/stateful/GitIntegrationPage.tsx
   init_FileService();
   var GitIntegrationPage = () => {
-    const [isLoading, setIsLoading] = (0, import_react137.useState)(true);
+    const [isLoading, setIsLoading] = (0, import_react138.useState)(true);
     const { mode, setMode, isStatic, isDev, isGit } = useGitMode();
-    const [fileService, setFileService] = (0, import_react137.useState)(() => getFileService(mode));
-    const [changes, setChanges] = (0, import_react137.useState)([]);
-    const [remoteStatus, setRemoteStatus] = (0, import_react137.useState)({
+    const [fileService, setFileService] = (0, import_react138.useState)(() => getFileService(mode));
+    const [changes, setChanges] = (0, import_react138.useState)([]);
+    const [remoteStatus, setRemoteStatus] = (0, import_react138.useState)({
       ahead: 0,
       behind: 0
     });
-    const [currentBranch, setCurrentBranch] = (0, import_react137.useState)("main");
-    const [error, setError] = (0, import_react137.useState)(null);
-    const [commitSummary, setCommitSummary] = (0, import_react137.useState)("");
-    const [commitDescription, setCommitDescription] = (0, import_react137.useState)("");
-    const [isCommitting, setIsCommitting] = (0, import_react137.useState)(false);
-    const [isPushing, setIsPushing] = (0, import_react137.useState)(false);
-    const [isPulling, setIsPulling] = (0, import_react137.useState)(false);
+    const [currentBranch, setCurrentBranch] = (0, import_react138.useState)("main");
+    const [error, setError] = (0, import_react138.useState)(null);
+    const [commitSummary, setCommitSummary] = (0, import_react138.useState)("");
+    const [commitDescription, setCommitDescription] = (0, import_react138.useState)("");
+    const [isCommitting, setIsCommitting] = (0, import_react138.useState)(false);
+    const [isPushing, setIsPushing] = (0, import_react138.useState)(false);
+    const [isPulling, setIsPulling] = (0, import_react138.useState)(false);
     const handleSaveChanges = async () => {
       if (!commitSummary.trim()) {
         setError("Please provide a commit summary");
@@ -69091,7 +69372,7 @@ Current environment analysis:
         setIsLoading(false);
       }
     };
-    (0, import_react137.useEffect)(() => {
+    (0, import_react138.useEffect)(() => {
       const newFileService = getFileService(mode);
       setFileService(newFileService);
       const loadData = async () => {
@@ -69134,7 +69415,7 @@ Current environment analysis:
         };
       }
     }, [mode]);
-    return /* @__PURE__ */ import_react137.default.createElement(
+    return /* @__PURE__ */ import_react138.default.createElement(
       GitIntegrationView,
       {
         mode,
@@ -69171,26 +69452,26 @@ Current environment analysis:
   };
 
   // src/components/stateful/AuthCallbackPage.tsx
-  var import_react138 = __toESM(require_react(), 1);
+  var import_react139 = __toESM(require_react(), 1);
   var AuthCallbackPage = () => {
-    (0, import_react138.useEffect)(() => {
+    (0, import_react139.useEffect)(() => {
     }, []);
-    return /* @__PURE__ */ import_react138.default.createElement(Container_default, { className: "d-flex justify-content-center align-items-center", style: { minHeight: "50vh" } }, /* @__PURE__ */ import_react138.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react138.default.createElement(Spinner_default, { animation: "border", role: "status", className: "mb-3" }, /* @__PURE__ */ import_react138.default.createElement("span", { className: "visually-hidden" }, "Authenticating...")), /* @__PURE__ */ import_react138.default.createElement("h4", null, "Completing GitHub authentication...")));
+    return /* @__PURE__ */ import_react139.default.createElement(Container_default, { className: "d-flex justify-content-center align-items-center", style: { minHeight: "50vh" } }, /* @__PURE__ */ import_react139.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react139.default.createElement(Spinner_default, { animation: "border", role: "status", className: "mb-3" }, /* @__PURE__ */ import_react139.default.createElement("span", { className: "visually-hidden" }, "Authenticating...")), /* @__PURE__ */ import_react139.default.createElement("h4", null, "Completing GitHub authentication...")));
   };
 
   // src/components/stateful/SVGEditorPage.tsx
-  var import_react151 = __toESM(require_react(), 1);
+  var import_react152 = __toESM(require_react(), 1);
 
   // src/components/stateful/SVGEditor/SVGAttributesEditor.tsx
-  var import_react139 = __toESM(require_react(), 1);
+  var import_react140 = __toESM(require_react(), 1);
   var SVGAttributesEditor = ({
     node,
     onUpdateAttributes,
     onUpdateTextContent
   }) => {
-    const [attributes, setAttributes] = (0, import_react139.useState)(node.attributes);
-    const [textContent, setTextContent] = (0, import_react139.useState)("");
-    (0, import_react139.useEffect)(() => {
+    const [attributes, setAttributes] = (0, import_react140.useState)(node.attributes);
+    const [textContent, setTextContent] = (0, import_react140.useState)("");
+    (0, import_react140.useEffect)(() => {
       setAttributes(node.attributes);
     }, [node.id]);
     const handleAttributeChange = (key, value) => {
@@ -69198,7 +69479,7 @@ Current environment analysis:
       setAttributes(newAttributes);
       onUpdateAttributes(newAttributes);
     };
-    return /* @__PURE__ */ import_react139.default.createElement("div", null, (node.type === "text" || node.type === "tspan") && /* @__PURE__ */ import_react139.default.createElement(Form_default.Group, { className: "mb-3" }, /* @__PURE__ */ import_react139.default.createElement(Form_default.Label, null, "Text Content"), /* @__PURE__ */ import_react139.default.createElement(
+    return /* @__PURE__ */ import_react140.default.createElement("div", null, (node.type === "text" || node.type === "tspan") && /* @__PURE__ */ import_react140.default.createElement(Form_default.Group, { className: "mb-3" }, /* @__PURE__ */ import_react140.default.createElement(Form_default.Label, null, "Text Content"), /* @__PURE__ */ import_react140.default.createElement(
       Form_default.Control,
       {
         type: "text",
@@ -69210,14 +69491,14 @@ Current environment analysis:
           }
         }
       }
-    )), Object.entries(attributes).filter(([key]) => key !== "text-content").map(([key, value]) => /* @__PURE__ */ import_react139.default.createElement(Form_default.Group, { key, className: "mb-2" }, /* @__PURE__ */ import_react139.default.createElement(Form_default.Label, null, key), /* @__PURE__ */ import_react139.default.createElement(
+    )), Object.entries(attributes).filter(([key]) => key !== "text-content").map(([key, value]) => /* @__PURE__ */ import_react140.default.createElement(Form_default.Group, { key, className: "mb-2" }, /* @__PURE__ */ import_react140.default.createElement(Form_default.Label, null, key), /* @__PURE__ */ import_react140.default.createElement(
       Form_default.Control,
       {
         type: "text",
         value,
         onChange: (e3) => handleAttributeChange(key, e3.target.value)
       }
-    ))), /* @__PURE__ */ import_react139.default.createElement(Form_default.Group, null, /* @__PURE__ */ import_react139.default.createElement(Form_default.Label, null, "Add New Attribute"), /* @__PURE__ */ import_react139.default.createElement(
+    ))), /* @__PURE__ */ import_react140.default.createElement(Form_default.Group, null, /* @__PURE__ */ import_react140.default.createElement(Form_default.Label, null, "Add New Attribute"), /* @__PURE__ */ import_react140.default.createElement(
       Form_default.Control,
       {
         type: "text",
@@ -69237,20 +69518,20 @@ Current environment analysis:
   };
 
   // src/components/stateful/SVGEditor/SVGElementForm.tsx
-  var import_react144 = __toESM(require_react(), 1);
+  var import_react145 = __toESM(require_react(), 1);
 
   // src/components/stateful/SVGEditor/CircleForm.tsx
-  var import_react141 = __toESM(require_react(), 1);
+  var import_react142 = __toESM(require_react(), 1);
 
   // src/components/stateful/SVGEditor/SVGAttributeField.tsx
-  var import_react140 = __toESM(require_react(), 1);
+  var import_react141 = __toESM(require_react(), 1);
   var SVGAttributeField = ({
     label,
     value,
     onChange,
     type = "text"
   }) => {
-    return /* @__PURE__ */ import_react140.default.createElement("div", { style: { marginBottom: "8px" } }, /* @__PURE__ */ import_react140.default.createElement("label", { style: { display: "block", marginBottom: "4px" } }, label, ":"), /* @__PURE__ */ import_react140.default.createElement(
+    return /* @__PURE__ */ import_react141.default.createElement("div", { style: { marginBottom: "8px" } }, /* @__PURE__ */ import_react141.default.createElement("label", { style: { display: "block", marginBottom: "4px" } }, label, ":"), /* @__PURE__ */ import_react141.default.createElement(
       "input",
       {
         type,
@@ -69266,7 +69547,7 @@ Current environment analysis:
     const handleChange = (key, value) => {
       onChange({ ...attributes, [key]: value });
     };
-    return /* @__PURE__ */ import_react141.default.createElement("div", null, /* @__PURE__ */ import_react141.default.createElement("h3", null, "Circle Attributes"), /* @__PURE__ */ import_react141.default.createElement(
+    return /* @__PURE__ */ import_react142.default.createElement("div", null, /* @__PURE__ */ import_react142.default.createElement("h3", null, "Circle Attributes"), /* @__PURE__ */ import_react142.default.createElement(
       SVGAttributeField,
       {
         label: "Center X",
@@ -69274,7 +69555,7 @@ Current environment analysis:
         onChange: (value) => handleChange("cx", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react141.default.createElement(
+    ), /* @__PURE__ */ import_react142.default.createElement(
       SVGAttributeField,
       {
         label: "Center Y",
@@ -69282,7 +69563,7 @@ Current environment analysis:
         onChange: (value) => handleChange("cy", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react141.default.createElement(
+    ), /* @__PURE__ */ import_react142.default.createElement(
       SVGAttributeField,
       {
         label: "Radius",
@@ -69290,7 +69571,7 @@ Current environment analysis:
         onChange: (value) => handleChange("r", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react141.default.createElement(
+    ), /* @__PURE__ */ import_react142.default.createElement(
       SVGAttributeField,
       {
         label: "Fill Color",
@@ -69298,7 +69579,7 @@ Current environment analysis:
         onChange: (value) => handleChange("fill", value),
         type: "color"
       }
-    ), /* @__PURE__ */ import_react141.default.createElement(
+    ), /* @__PURE__ */ import_react142.default.createElement(
       SVGAttributeField,
       {
         label: "Stroke Color",
@@ -69306,7 +69587,7 @@ Current environment analysis:
         onChange: (value) => handleChange("stroke", value),
         type: "color"
       }
-    ), /* @__PURE__ */ import_react141.default.createElement(
+    ), /* @__PURE__ */ import_react142.default.createElement(
       SVGAttributeField,
       {
         label: "Stroke Width",
@@ -69314,7 +69595,7 @@ Current environment analysis:
         onChange: (value) => handleChange("strokeWidth", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react141.default.createElement(
+    ), /* @__PURE__ */ import_react142.default.createElement(
       SVGAttributeField,
       {
         label: "ID",
@@ -69322,7 +69603,7 @@ Current environment analysis:
         onChange: (value) => handleChange("id", value),
         type: "text"
       }
-    ), /* @__PURE__ */ import_react141.default.createElement(
+    ), /* @__PURE__ */ import_react142.default.createElement(
       SVGAttributeField,
       {
         label: "Class Name",
@@ -69334,12 +69615,12 @@ Current environment analysis:
   };
 
   // src/components/stateful/SVGEditor/RectForm.tsx
-  var import_react142 = __toESM(require_react(), 1);
+  var import_react143 = __toESM(require_react(), 1);
   var RectForm = ({ attributes, onChange }) => {
     const handleChange = (key, value) => {
       onChange({ ...attributes, [key]: value });
     };
-    return /* @__PURE__ */ import_react142.default.createElement("div", null, /* @__PURE__ */ import_react142.default.createElement("h3", null, "Rectangle Attributes"), /* @__PURE__ */ import_react142.default.createElement(
+    return /* @__PURE__ */ import_react143.default.createElement("div", null, /* @__PURE__ */ import_react143.default.createElement("h3", null, "Rectangle Attributes"), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "X Position",
@@ -69347,7 +69628,7 @@ Current environment analysis:
         onChange: (value) => handleChange("x", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "Y Position",
@@ -69355,7 +69636,7 @@ Current environment analysis:
         onChange: (value) => handleChange("y", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "Width",
@@ -69363,7 +69644,7 @@ Current environment analysis:
         onChange: (value) => handleChange("width", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "Height",
@@ -69371,7 +69652,7 @@ Current environment analysis:
         onChange: (value) => handleChange("height", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "RX (Corner Radius X)",
@@ -69379,7 +69660,7 @@ Current environment analysis:
         onChange: (value) => handleChange("rx", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "RY (Corner Radius Y)",
@@ -69387,7 +69668,7 @@ Current environment analysis:
         onChange: (value) => handleChange("ry", value),
         type: "number"
       }
-    ), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "Fill Color",
@@ -69395,7 +69676,7 @@ Current environment analysis:
         onChange: (value) => handleChange("fill", value),
         type: "color"
       }
-    ), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "Stroke Color",
@@ -69403,7 +69684,7 @@ Current environment analysis:
         onChange: (value) => handleChange("stroke", value),
         type: "color"
       }
-    ), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react143.default.createElement(
       SVGAttributeField,
       {
         label: "Stroke Width",
@@ -69415,12 +69696,12 @@ Current environment analysis:
   };
 
   // src/components/stateful/SVGEditor/GroupForm.tsx
-  var import_react143 = __toESM(require_react(), 1);
+  var import_react144 = __toESM(require_react(), 1);
   var GroupForm = ({ attributes, onChange }) => {
     const handleChange = (key, value) => {
       onChange({ ...attributes, [key]: value });
     };
-    return /* @__PURE__ */ import_react143.default.createElement("div", null, /* @__PURE__ */ import_react143.default.createElement("h3", null, "Group Attributes"), /* @__PURE__ */ import_react143.default.createElement(
+    return /* @__PURE__ */ import_react144.default.createElement("div", null, /* @__PURE__ */ import_react144.default.createElement("h3", null, "Group Attributes"), /* @__PURE__ */ import_react144.default.createElement(
       SVGAttributeField,
       {
         label: "ID",
@@ -69428,7 +69709,7 @@ Current environment analysis:
         onChange: (value) => handleChange("id", value),
         type: "text"
       }
-    ), /* @__PURE__ */ import_react143.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(
       SVGAttributeField,
       {
         label: "Class Name",
@@ -69436,7 +69717,7 @@ Current environment analysis:
         onChange: (value) => handleChange("className", value),
         type: "text"
       }
-    ), /* @__PURE__ */ import_react143.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(
       SVGAttributeField,
       {
         label: "Transform",
@@ -69444,7 +69725,7 @@ Current environment analysis:
         onChange: (value) => handleChange("transform", value),
         type: "text"
       }
-    ), /* @__PURE__ */ import_react143.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(
       SVGAttributeField,
       {
         label: "Fill Color",
@@ -69452,7 +69733,7 @@ Current environment analysis:
         onChange: (value) => handleChange("fill", value),
         type: "color"
       }
-    ), /* @__PURE__ */ import_react143.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(
       SVGAttributeField,
       {
         label: "Stroke Color",
@@ -69460,7 +69741,7 @@ Current environment analysis:
         onChange: (value) => handleChange("stroke", value),
         type: "color"
       }
-    ), /* @__PURE__ */ import_react143.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(
       SVGAttributeField,
       {
         label: "Stroke Width",
@@ -69479,7 +69760,7 @@ Current environment analysis:
   }) => {
     switch (elementType) {
       case "circle":
-        return /* @__PURE__ */ import_react144.default.createElement(
+        return /* @__PURE__ */ import_react145.default.createElement(
           CircleForm,
           {
             attributes,
@@ -69487,7 +69768,7 @@ Current environment analysis:
           }
         );
       case "rect":
-        return /* @__PURE__ */ import_react144.default.createElement(
+        return /* @__PURE__ */ import_react145.default.createElement(
           RectForm,
           {
             attributes,
@@ -69495,7 +69776,7 @@ Current environment analysis:
           }
         );
       case "g":
-        return /* @__PURE__ */ import_react144.default.createElement(
+        return /* @__PURE__ */ import_react145.default.createElement(
           GroupForm,
           {
             attributes,
@@ -69503,15 +69784,15 @@ Current environment analysis:
           }
         );
       default:
-        return /* @__PURE__ */ import_react144.default.createElement("div", null, "Select an element type");
+        return /* @__PURE__ */ import_react145.default.createElement("div", null, "Select an element type");
     }
   };
 
   // src/components/stateful/GenericXMLEditorPage.tsx
-  var import_react149 = __toESM(require_react(), 1);
+  var import_react150 = __toESM(require_react(), 1);
 
   // src/components/stateful/GenericXMLEditor/GenericTree.tsx
-  var import_react145 = __toESM(require_react(), 1);
+  var import_react146 = __toESM(require_react(), 1);
   var GenericTree = ({
     node,
     selectedNodeId,
@@ -69524,20 +69805,20 @@ Current environment analysis:
   }) => {
     const isSelected = node.id === selectedNodeId;
     const isHidden = hiddenNodes.has(node.id);
-    return /* @__PURE__ */ import_react145.default.createElement(
+    return /* @__PURE__ */ import_react146.default.createElement(
       "li",
       {
         style: { listStyle: "none", marginLeft: "0", paddingLeft: "10px" }
       },
-      /* @__PURE__ */ import_react145.default.createElement(
+      /* @__PURE__ */ import_react146.default.createElement(
         "div",
         {
           className: `d-flex justify-content-between align-items-center p-0 ${isSelected ? "bg-primary text-white rounded-sm" : ""}`,
           onClick: () => onSelectNode(node.id),
           style: { cursor: "pointer" }
         },
-        /* @__PURE__ */ import_react145.default.createElement("span", { className: "flex-grow-1 small" }, node.type),
-        node.type !== "root" && /* @__PURE__ */ import_react145.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react145.default.createElement(
+        /* @__PURE__ */ import_react146.default.createElement("span", { className: "flex-grow-1 small" }, node.type),
+        node.type !== "root" && /* @__PURE__ */ import_react146.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react146.default.createElement(
           Button_default2,
           {
             variant: "outline-secondary",
@@ -69548,7 +69829,7 @@ Current environment analysis:
             title: isHidden ? "Show node" : "Hide node"
           },
           isHidden ? "\u{1F441}\uFE0F\u200D\u{1F5E8}\uFE0F" : "\u{1F441}\uFE0F"
-        ), /* @__PURE__ */ import_react145.default.createElement(
+        ), /* @__PURE__ */ import_react146.default.createElement(
           Button_default2,
           {
             variant: "outline-danger",
@@ -69561,7 +69842,7 @@ Current environment analysis:
           "\xD7"
         ))
       ),
-      node.children.length > 0 && /* @__PURE__ */ import_react145.default.createElement("ul", { style: { marginLeft: "10px", paddingLeft: "0" } }, node.children.map((child) => /* @__PURE__ */ import_react145.default.createElement(
+      node.children.length > 0 && /* @__PURE__ */ import_react146.default.createElement("ul", { style: { marginLeft: "10px", paddingLeft: "0" } }, node.children.map((child) => /* @__PURE__ */ import_react146.default.createElement(
         GenericTree,
         {
           key: child.id,
@@ -69575,7 +69856,7 @@ Current environment analysis:
           nodeTypes: nodeTypes2
         }
       ))),
-      isSelected && /* @__PURE__ */ import_react145.default.createElement("div", { className: "mt-0" }, /* @__PURE__ */ import_react145.default.createElement(Dropdown_default2, null, /* @__PURE__ */ import_react145.default.createElement(Dropdown_default2.Toggle, { size: "sm", variant: "outline-success", id: "dropdown-add-node", className: "py-0 px-1" }, "+"), /* @__PURE__ */ import_react145.default.createElement(Dropdown_default2.Menu, null, nodeTypes2.map(({ label, type }) => /* @__PURE__ */ import_react145.default.createElement(
+      isSelected && /* @__PURE__ */ import_react146.default.createElement("div", { className: "mt-0" }, /* @__PURE__ */ import_react146.default.createElement(Dropdown_default2, null, /* @__PURE__ */ import_react146.default.createElement(Dropdown_default2.Toggle, { size: "sm", variant: "outline-success", id: "dropdown-add-node", className: "py-0 px-1" }, "+"), /* @__PURE__ */ import_react146.default.createElement(Dropdown_default2.Menu, null, nodeTypes2.map(({ label, type }) => /* @__PURE__ */ import_react146.default.createElement(
         Dropdown_default2.Item,
         {
           key: type,
@@ -69588,7 +69869,7 @@ Current environment analysis:
   };
 
   // src/components/stateful/GenericXMLEditor/GenericPreview.tsx
-  var import_react146 = __toESM(require_react(), 1);
+  var import_react147 = __toESM(require_react(), 1);
   var GenericPreview = ({
     onTreeUpdate,
     xmlTree: xmlTree2 = {
@@ -69601,7 +69882,7 @@ Current environment analysis:
     hiddenNodes = /* @__PURE__ */ new Set(),
     renderPreview = (node, isSelected, eventHandlers, onTreeUpdate2) => {
       console.error("Default renderPreview called - this should be overridden");
-      return /* @__PURE__ */ import_react146.default.createElement(
+      return /* @__PURE__ */ import_react147.default.createElement(
         "div",
         {
           style: {
@@ -69623,24 +69904,24 @@ Current environment analysis:
     });
     if (!xmlTree2) {
       console.error("xmlTree is undefined in GenericPreview");
-      return /* @__PURE__ */ import_react146.default.createElement("div", null, "No XML tree data available");
+      return /* @__PURE__ */ import_react147.default.createElement("div", null, "No XML tree data available");
     }
-    const [scale, setScale] = (0, import_react146.useState)(1);
-    const [position, setPosition] = (0, import_react146.useState)({ x: 0, y: 0 });
-    const [isPanning, setIsPanning] = (0, import_react146.useState)(false);
-    const [startPanPoint, setStartPanPoint] = (0, import_react146.useState)({ x: 0, y: 0 });
-    const previewRef = (0, import_react146.useRef)(null);
-    const previewElement = import_react146.default.useMemo(() => {
+    const [scale, setScale] = (0, import_react147.useState)(1);
+    const [position, setPosition] = (0, import_react147.useState)({ x: 0, y: 0 });
+    const [isPanning, setIsPanning] = (0, import_react147.useState)(false);
+    const [startPanPoint, setStartPanPoint] = (0, import_react147.useState)({ x: 0, y: 0 });
+    const previewRef = (0, import_react147.useRef)(null);
+    const previewElement = import_react147.default.useMemo(() => {
       try {
         const isSelected = selectedNodeId === xmlTree2.id;
         const eventHandlers = {};
         return renderPreview(xmlTree2, isSelected, eventHandlers, onTreeUpdate);
       } catch (error) {
         console.error("Error in renderPreview:", error);
-        return /* @__PURE__ */ import_react146.default.createElement("div", { style: { border: "1px solid red", padding: "4px", margin: "2px" } }, "Error rendering preview");
+        return /* @__PURE__ */ import_react147.default.createElement("div", { style: { border: "1px solid red", padding: "4px", margin: "2px" } }, "Error rendering preview");
       }
     }, [xmlTree2, selectedNodeId, renderPreview, onTreeUpdate]);
-    const handleMouseDown = (0, import_react146.useCallback)(
+    const handleMouseDown = (0, import_react147.useCallback)(
       (e3) => {
         if (e3.button === 1 || e3.button === 0 && e3.altKey) {
           e3.preventDefault();
@@ -69653,7 +69934,7 @@ Current environment analysis:
       },
       [position]
     );
-    const handleMouseMove = (0, import_react146.useCallback)(
+    const handleMouseMove = (0, import_react147.useCallback)(
       (e3) => {
         if (isPanning) {
           setPosition({
@@ -69664,15 +69945,15 @@ Current environment analysis:
       },
       [isPanning, startPanPoint]
     );
-    const handleMouseUp = (0, import_react146.useCallback)(() => {
+    const handleMouseUp = (0, import_react147.useCallback)(() => {
       setIsPanning(false);
     }, []);
-    const handleWheel = (0, import_react146.useCallback)((e3) => {
+    const handleWheel = (0, import_react147.useCallback)((e3) => {
       e3.preventDefault();
       const delta = -e3.deltaY * 0.01;
       setScale((prevScale) => Math.max(0.1, Math.min(5, prevScale + delta)));
     }, []);
-    const resetView = (0, import_react146.useCallback)(() => {
+    const resetView = (0, import_react147.useCallback)(() => {
       setScale(1);
       setPosition({ x: 0, y: 0 });
     }, []);
@@ -69681,7 +69962,7 @@ Current environment analysis:
       isSVG = xmlTree2.type === "svg";
     } catch (error) {
       console.error("Error checking if xmlTree is SVG:", error);
-      return /* @__PURE__ */ import_react146.default.createElement(
+      return /* @__PURE__ */ import_react147.default.createElement(
         "div",
         {
           className: "border rounded p-3 d-flex justify-content-center align-items-center",
@@ -69691,7 +69972,7 @@ Current environment analysis:
       );
     }
     if (isSVG) {
-      return /* @__PURE__ */ import_react146.default.createElement(
+      return /* @__PURE__ */ import_react147.default.createElement(
         "div",
         {
           className: "border rounded p-3 d-flex justify-content-center align-items-center position-relative",
@@ -69703,22 +69984,22 @@ Current environment analysis:
           onMouseLeave: handleMouseUp,
           onWheel: handleWheel
         },
-        /* @__PURE__ */ import_react146.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react146.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react146.default.createElement(
+        /* @__PURE__ */ import_react147.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react147.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react147.default.createElement(
           Button_default2,
           {
             variant: "outline-secondary",
             onClick: () => setScale((s2) => Math.min(5, s2 + 0.1))
           },
           "+"
-        ), /* @__PURE__ */ import_react146.default.createElement(
+        ), /* @__PURE__ */ import_react147.default.createElement(
           Button_default2,
           {
             variant: "outline-secondary",
             onClick: () => setScale((s2) => Math.max(0.1, s2 - 0.1))
           },
           "-"
-        ), /* @__PURE__ */ import_react146.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
-        /* @__PURE__ */ import_react146.default.createElement(
+        ), /* @__PURE__ */ import_react147.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
+        /* @__PURE__ */ import_react147.default.createElement(
           "div",
           {
             style: {
@@ -69732,7 +70013,7 @@ Current environment analysis:
         )
       );
     }
-    return /* @__PURE__ */ import_react146.default.createElement(
+    return /* @__PURE__ */ import_react147.default.createElement(
       "div",
       {
         className: "border rounded p-3 position-relative",
@@ -69744,22 +70025,22 @@ Current environment analysis:
         onMouseLeave: handleMouseUp,
         onWheel: handleWheel
       },
-      /* @__PURE__ */ import_react146.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react146.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react146.default.createElement(
+      /* @__PURE__ */ import_react147.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react147.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react147.default.createElement(
         Button_default2,
         {
           variant: "outline-secondary",
           onClick: () => setScale((s2) => Math.min(5, s2 + 0.1))
         },
         "+"
-      ), /* @__PURE__ */ import_react146.default.createElement(
+      ), /* @__PURE__ */ import_react147.default.createElement(
         Button_default2,
         {
           variant: "outline-secondary",
           onClick: () => setScale((s2) => Math.max(0.1, s2 - 0.1))
         },
         "-"
-      ), /* @__PURE__ */ import_react146.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
-      /* @__PURE__ */ import_react146.default.createElement(
+      ), /* @__PURE__ */ import_react147.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
+      /* @__PURE__ */ import_react147.default.createElement(
         "div",
         {
           style: {
@@ -69776,7 +70057,7 @@ Current environment analysis:
   };
 
   // src/components/stateful/GenericXMLEditor/GenericTextEditor.tsx
-  var import_react147 = __toESM(require_react(), 1);
+  var import_react148 = __toESM(require_react(), 1);
   var nodeToXML = (node, depth = 0) => {
     const indent = "  ".repeat(depth);
     const attributes = Object.entries(node.attributes || {}).map(([key, value]) => ` ${key}="${value}"`).join("");
@@ -69840,9 +70121,9 @@ Current environment analysis:
     xmlTree: xmlTree2,
     onUpdateTree
   }) => {
-    const [xmlContent, setXmlContent] = (0, import_react147.useState)("");
-    const [error, setError] = (0, import_react147.useState)(null);
-    (0, import_react147.useEffect)(() => {
+    const [xmlContent, setXmlContent] = (0, import_react148.useState)("");
+    const [error, setError] = (0, import_react148.useState)(null);
+    (0, import_react148.useEffect)(() => {
       try {
         if (!xmlTree2) {
           setXmlContent("");
@@ -69870,7 +70151,7 @@ ${nodeToXML(xmlTree2, 0)}`;
         setError("Error parsing XML: " + (err instanceof Error ? err.message : String(err)));
       }
     };
-    return /* @__PURE__ */ import_react147.default.createElement("div", { className: "h-100 d-flex flex-column align-items-center p-1" }, /* @__PURE__ */ import_react147.default.createElement("div", { style: { width: "100%", maxWidth: "100%", flex: 1, display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react147.default.createElement(
+    return /* @__PURE__ */ import_react148.default.createElement("div", { className: "h-100 d-flex flex-column align-items-center p-1" }, /* @__PURE__ */ import_react148.default.createElement("div", { style: { width: "100%", maxWidth: "100%", flex: 1, display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react148.default.createElement(
       "textarea",
       {
         value: xmlContent,
@@ -69891,7 +70172,7 @@ ${nodeToXML(xmlTree2, 0)}`;
           fontSize: "0.875rem"
         }
       }
-    ), error && /* @__PURE__ */ import_react147.default.createElement(Alert_default, { variant: "danger", className: "mt-1 py-1" }, /* @__PURE__ */ import_react147.default.createElement("small", null, error)), /* @__PURE__ */ import_react147.default.createElement(
+    ), error && /* @__PURE__ */ import_react148.default.createElement(Alert_default, { variant: "danger", className: "mt-1 py-1" }, /* @__PURE__ */ import_react148.default.createElement("small", null, error)), /* @__PURE__ */ import_react148.default.createElement(
       Button_default2,
       {
         variant: "primary",
@@ -69905,7 +70186,7 @@ ${nodeToXML(xmlTree2, 0)}`;
   };
 
   // src/components/stateful/GenericXMLEditor/Drawer.tsx
-  var import_react148 = __toESM(require_react(), 1);
+  var import_react149 = __toESM(require_react(), 1);
   var Drawer = ({
     position,
     isOpen,
@@ -69914,10 +70195,10 @@ ${nodeToXML(xmlTree2, 0)}`;
     title,
     children
   }) => {
-    const [size2, setSize] = (0, import_react148.useState)(position === "bottom" ? 200 : 300);
-    const [isResizing, setIsResizing] = (0, import_react148.useState)(false);
-    const [dragStart, setDragStart] = (0, import_react148.useState)({ x: 0, y: 0, size: 0 });
-    const drawerRef = (0, import_react148.useRef)(null);
+    const [size2, setSize] = (0, import_react149.useState)(position === "bottom" ? 200 : 300);
+    const [isResizing, setIsResizing] = (0, import_react149.useState)(false);
+    const [dragStart, setDragStart] = (0, import_react149.useState)({ x: 0, y: 0, size: 0 });
+    const drawerRef = (0, import_react149.useRef)(null);
     const handleMouseDown = (e3) => {
       setIsResizing(true);
       setDragStart({
@@ -69928,7 +70209,7 @@ ${nodeToXML(xmlTree2, 0)}`;
       onBringToFront();
       e3.preventDefault();
     };
-    (0, import_react148.useEffect)(() => {
+    (0, import_react149.useEffect)(() => {
       const handleMouseMove = (e3) => {
         if (!isResizing)
           return;
@@ -70020,7 +70301,7 @@ ${nodeToXML(xmlTree2, 0)}`;
           return {};
       }
     };
-    return /* @__PURE__ */ import_react148.default.createElement(
+    return /* @__PURE__ */ import_react149.default.createElement(
       "div",
       {
         ref: drawerRef,
@@ -70032,17 +70313,17 @@ ${nodeToXML(xmlTree2, 0)}`;
           overflow: "hidden"
         }
       },
-      /* @__PURE__ */ import_react148.default.createElement(
+      /* @__PURE__ */ import_react149.default.createElement(
         "div",
         {
           className: "d-flex justify-content-between align-items-center p-2 border-bottom bg-white",
           onMouseDown: () => onBringToFront(),
           style: { cursor: "move" }
         },
-        /* @__PURE__ */ import_react148.default.createElement("span", null, title)
+        /* @__PURE__ */ import_react149.default.createElement("span", null, title)
       ),
-      /* @__PURE__ */ import_react148.default.createElement("div", { className: "h-100", style: { overflow: "auto" } }, children),
-      /* @__PURE__ */ import_react148.default.createElement(
+      /* @__PURE__ */ import_react149.default.createElement("div", { className: "h-100", style: { overflow: "auto" } }, children),
+      /* @__PURE__ */ import_react149.default.createElement(
         "div",
         {
           style: {
@@ -70065,25 +70346,25 @@ ${nodeToXML(xmlTree2, 0)}`;
     nodeTypes: nodeTypes2,
     onAddNode
   }) => {
-    const [xmlTree2, setXmlTree] = (0, import_react149.useState)(initialTree);
-    (0, import_react149.useEffect)(() => {
+    const [xmlTree2, setXmlTree] = (0, import_react150.useState)(initialTree);
+    (0, import_react150.useEffect)(() => {
       if (!xmlTree2) {
         console.error("xmlTree became undefined, resetting to initialTree");
         setXmlTree(initialTree);
       }
     }, [xmlTree2, initialTree]);
-    const [selectedNodeId, setSelectedNodeId] = (0, import_react149.useState)(null);
-    const [activeTab, setActiveTab] = (0, import_react149.useState)("preview");
-    const [history, setHistory] = (0, import_react149.useState)([initialTree]);
-    const [historyIndex, setHistoryIndex] = (0, import_react149.useState)(0);
-    const [hiddenNodes, setHiddenNodes] = (0, import_react149.useState)(/* @__PURE__ */ new Set());
-    const [drawerStates, setDrawerStates] = (0, import_react149.useState)({
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react150.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react150.useState)("preview");
+    const [history, setHistory] = (0, import_react150.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react150.useState)(0);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react150.useState)(/* @__PURE__ */ new Set());
+    const [drawerStates, setDrawerStates] = (0, import_react150.useState)({
       left: { isOpen: true, zIndex: 1 },
       right: { isOpen: true, zIndex: 1 },
       bottom: { isOpen: true, zIndex: 1 }
     });
-    const [activeDrawer, setActiveDrawer] = (0, import_react149.useState)(null);
-    const findNode = (0, import_react149.useCallback)((node, id) => {
+    const [activeDrawer, setActiveDrawer] = (0, import_react150.useState)(null);
+    const findNode = (0, import_react150.useCallback)((node, id) => {
       if (node.id === id)
         return node;
       for (const child of node.children) {
@@ -70093,7 +70374,7 @@ ${nodeToXML(xmlTree2, 0)}`;
       }
       return null;
     }, []);
-    const updateTree = (0, import_react149.useCallback)(
+    const updateTree = (0, import_react150.useCallback)(
       (newTree) => {
         setXmlTree(newTree);
         setHistory((prevHistory) => {
@@ -70105,7 +70386,7 @@ ${nodeToXML(xmlTree2, 0)}`;
       },
       [historyIndex]
     );
-    const updateNodeAttributes = (0, import_react149.useCallback)(
+    const updateNodeAttributes = (0, import_react150.useCallback)(
       (nodeId, attributes) => {
         setXmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70119,7 +70400,7 @@ ${nodeToXML(xmlTree2, 0)}`;
       },
       [findNode, updateTree]
     );
-    const updateNodeTextContent = (0, import_react149.useCallback)(
+    const updateNodeTextContent = (0, import_react150.useCallback)(
       (nodeId, textContent) => {
         setXmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70133,7 +70414,7 @@ ${nodeToXML(xmlTree2, 0)}`;
       },
       [findNode, updateTree]
     );
-    const toggleNodeVisibility = (0, import_react149.useCallback)((nodeId) => {
+    const toggleNodeVisibility = (0, import_react150.useCallback)((nodeId) => {
       setHiddenNodes((prev) => {
         const newHidden = new Set(prev);
         if (newHidden.has(nodeId)) {
@@ -70144,7 +70425,7 @@ ${nodeToXML(xmlTree2, 0)}`;
         return newHidden;
       });
     }, []);
-    const handleAddChildNode = (0, import_react149.useCallback)(
+    const handleAddChildNode = (0, import_react150.useCallback)(
       (parentId, nodeType) => {
         setXmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70160,7 +70441,7 @@ ${nodeToXML(xmlTree2, 0)}`;
       },
       [findNode, updateTree, onAddNode]
     );
-    const removeNode = (0, import_react149.useCallback)(
+    const removeNode = (0, import_react150.useCallback)(
       (nodeId) => {
         setXmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70186,19 +70467,19 @@ ${nodeToXML(xmlTree2, 0)}`;
       },
       [selectedNodeId, updateTree]
     );
-    const handleUndo = (0, import_react149.useCallback)(() => {
+    const handleUndo = (0, import_react150.useCallback)(() => {
       if (historyIndex > 0) {
         setHistoryIndex((prevIndex) => prevIndex - 1);
         setXmlTree(history[historyIndex - 1]);
       }
     }, [history, historyIndex]);
-    const handleRedo = (0, import_react149.useCallback)(() => {
+    const handleRedo = (0, import_react150.useCallback)(() => {
       if (historyIndex < history.length - 1) {
         setHistoryIndex((prevIndex) => prevIndex + 1);
         setXmlTree(history[historyIndex + 1]);
       }
     }, [history, historyIndex]);
-    const bringToFront = (0, import_react149.useCallback)(
+    const bringToFront = (0, import_react150.useCallback)(
       (drawer) => {
         const maxZIndex = Math.max(
           drawerStates.left.zIndex,
@@ -70224,7 +70505,7 @@ ${nodeToXML(xmlTree2, 0)}`;
       [drawerStates]
     );
     const selectedNode = selectedNodeId ? findNode(xmlTree2, selectedNodeId) : null;
-    const convertTreeToXML = (0, import_react149.useCallback)((node, depth = 0) => {
+    const convertTreeToXML = (0, import_react150.useCallback)((node, depth = 0) => {
       const indent = "  ".repeat(depth);
       const attributes = Object.entries(node.attributes).map(([key, value]) => ` ${key}="${value}"`).join("");
       const hasTextContent = node.textContent && node.textContent.trim().length > 0;
@@ -70252,7 +70533,7 @@ ${nodeToXML(xmlTree2, 0)}`;
         return result;
       }
     }, []);
-    const handleSave = (0, import_react149.useCallback)(async () => {
+    const handleSave = (0, import_react150.useCallback)(async () => {
       const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 ${convertTreeToXML(xmlTree2)}`;
       console.log("Saving XML content:", xmlContent);
@@ -70283,21 +70564,21 @@ ${convertTreeToXML(xmlTree2)}`;
         alert("Failed to save file");
       }
     }, [xmlTree2, convertTreeToXML]);
-    return /* @__PURE__ */ import_react149.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react149.default.createElement("div", { className: "border-bottom p-0 bg-light" }, /* @__PURE__ */ import_react149.default.createElement("div", { className: "d-flex justify-content-center align-items-center" }, /* @__PURE__ */ import_react149.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react149.default.createElement(
+    return /* @__PURE__ */ import_react150.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react150.default.createElement("div", { className: "border-bottom p-0 bg-light" }, /* @__PURE__ */ import_react150.default.createElement("div", { className: "d-flex justify-content-center align-items-center" }, /* @__PURE__ */ import_react150.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react150.default.createElement(
       Button_default2,
       {
         variant: activeTab === "preview" ? "primary" : "outline-secondary",
         onClick: () => setActiveTab("preview")
       },
       "Preview"
-    ), /* @__PURE__ */ import_react149.default.createElement(
+    ), /* @__PURE__ */ import_react150.default.createElement(
       Button_default2,
       {
         variant: activeTab === "text" ? "primary" : "outline-secondary",
         onClick: () => setActiveTab("text")
       },
       "Text Mode"
-    )), /* @__PURE__ */ import_react149.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react149.default.createElement(
+    )), /* @__PURE__ */ import_react150.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react150.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -70305,7 +70586,7 @@ ${convertTreeToXML(xmlTree2)}`;
         disabled: historyIndex === 0
       },
       "Undo"
-    ), /* @__PURE__ */ import_react149.default.createElement(
+    ), /* @__PURE__ */ import_react150.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -70313,14 +70594,14 @@ ${convertTreeToXML(xmlTree2)}`;
         disabled: historyIndex === history.length - 1
       },
       "Redo"
-    )), /* @__PURE__ */ import_react149.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react149.default.createElement(
+    )), /* @__PURE__ */ import_react150.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react150.default.createElement(
       Button_default2,
       {
         variant: "outline-success",
         onClick: handleSave
       },
       "Save"
-    )))), /* @__PURE__ */ import_react149.default.createElement("div", { className: "position-relative flex-grow-1" }, activeTab === "preview" ? /* @__PURE__ */ import_react149.default.createElement(import_react149.default.Fragment, null, /* @__PURE__ */ import_react149.default.createElement("div", { className: "position-absolute w-100 h-100 p-0" }, xmlTree2 && /* @__PURE__ */ import_react149.default.createElement(
+    )))), /* @__PURE__ */ import_react150.default.createElement("div", { className: "position-relative flex-grow-1" }, activeTab === "preview" ? /* @__PURE__ */ import_react150.default.createElement(import_react150.default.Fragment, null, /* @__PURE__ */ import_react150.default.createElement("div", { className: "position-absolute w-100 h-100 p-0" }, xmlTree2 && /* @__PURE__ */ import_react150.default.createElement(
       GenericPreview,
       {
         xmlTree: xmlTree2,
@@ -70328,7 +70609,7 @@ ${convertTreeToXML(xmlTree2)}`;
         hiddenNodes,
         renderPreview: (node, isSelected, eventHandlers) => renderPreview(node, isSelected, eventHandlers, updateTree)
       }
-    )), /* @__PURE__ */ import_react149.default.createElement(
+    )), /* @__PURE__ */ import_react150.default.createElement(
       Drawer,
       {
         position: "left",
@@ -70337,7 +70618,7 @@ ${convertTreeToXML(xmlTree2)}`;
         onBringToFront: () => bringToFront("left"),
         title: "Tree View"
       },
-      /* @__PURE__ */ import_react149.default.createElement("ul", { style: { paddingLeft: "0", marginBottom: "0" } }, /* @__PURE__ */ import_react149.default.createElement(
+      /* @__PURE__ */ import_react150.default.createElement("ul", { style: { paddingLeft: "0", marginBottom: "0" } }, /* @__PURE__ */ import_react150.default.createElement(
         GenericTree,
         {
           node: xmlTree2,
@@ -70350,7 +70631,7 @@ ${convertTreeToXML(xmlTree2)}`;
           nodeTypes: nodeTypes2
         }
       ))
-    ), /* @__PURE__ */ import_react149.default.createElement(
+    ), /* @__PURE__ */ import_react150.default.createElement(
       Drawer,
       {
         position: "right",
@@ -70359,12 +70640,12 @@ ${convertTreeToXML(xmlTree2)}`;
         onBringToFront: () => bringToFront("right"),
         title: "Attributes"
       },
-      selectedNode ? /* @__PURE__ */ import_react149.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react149.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react149.default.createElement("strong", null, "Node: ", selectedNode.type)), /* @__PURE__ */ import_react149.default.createElement(Card_default.Body, null, attributeEditor(
+      selectedNode ? /* @__PURE__ */ import_react150.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react150.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react150.default.createElement("strong", null, "Node: ", selectedNode.type)), /* @__PURE__ */ import_react150.default.createElement(Card_default.Body, null, attributeEditor(
         selectedNode,
         (attrs) => updateNodeAttributes(selectedNode.id, attrs),
         (text) => updateNodeTextContent(selectedNode.id, text)
-      ))) : /* @__PURE__ */ import_react149.default.createElement(Card_default, null, /* @__PURE__ */ import_react149.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react149.default.createElement("p", { className: "text-muted" }, "Select a node to edit its properties")))
-    ), /* @__PURE__ */ import_react149.default.createElement(
+      ))) : /* @__PURE__ */ import_react150.default.createElement(Card_default, null, /* @__PURE__ */ import_react150.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react150.default.createElement("p", { className: "text-muted" }, "Select a node to edit its properties")))
+    ), /* @__PURE__ */ import_react150.default.createElement(
       Drawer,
       {
         position: "bottom",
@@ -70373,21 +70654,21 @@ ${convertTreeToXML(xmlTree2)}`;
         onBringToFront: () => bringToFront("bottom"),
         title: "Navigation Help"
       },
-      /* @__PURE__ */ import_react149.default.createElement("div", { className: "p-1" }, /* @__PURE__ */ import_react149.default.createElement("h6", { className: "mb-0 small" }, "Pan & Zoom"), /* @__PURE__ */ import_react149.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react149.default.createElement("strong", null, "Zoom:"), " Wheel"), /* @__PURE__ */ import_react149.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react149.default.createElement("strong", null, "Pan:"), " Alt+drag"), /* @__PURE__ */ import_react149.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react149.default.createElement("strong", null, "Reset:"), " Button"))
+      /* @__PURE__ */ import_react150.default.createElement("div", { className: "p-1" }, /* @__PURE__ */ import_react150.default.createElement("h6", { className: "mb-0 small" }, "Pan & Zoom"), /* @__PURE__ */ import_react150.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react150.default.createElement("strong", null, "Zoom:"), " Wheel"), /* @__PURE__ */ import_react150.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react150.default.createElement("strong", null, "Pan:"), " Alt+drag"), /* @__PURE__ */ import_react150.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react150.default.createElement("strong", null, "Reset:"), " Button"))
     )) : (
       /* Text Mode - Full screen text editor, no drawers */
-      /* @__PURE__ */ import_react149.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-0" }, /* @__PURE__ */ import_react149.default.createElement(GenericTextEditor, { xmlTree: xmlTree2, onUpdateTree: setXmlTree }))
+      /* @__PURE__ */ import_react150.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-0" }, /* @__PURE__ */ import_react150.default.createElement(GenericTextEditor, { xmlTree: xmlTree2, onUpdateTree: setXmlTree }))
     )));
   };
 
   // src/components/stateful/SVGEditor/SVGPreview.tsx
-  var import_react150 = __toESM(require_react(), 1);
+  var import_react151 = __toESM(require_react(), 1);
   var renderGrid = (width, height) => {
     const gridSize = 20;
     const lines = [];
     for (let y2 = 0; y2 <= height; y2 += gridSize) {
       lines.push(
-        /* @__PURE__ */ import_react150.default.createElement(
+        /* @__PURE__ */ import_react151.default.createElement(
           "line",
           {
             key: `h-${y2}`,
@@ -70403,7 +70684,7 @@ ${convertTreeToXML(xmlTree2)}`;
     }
     for (let x2 = 0; x2 <= width; x2 += gridSize) {
       lines.push(
-        /* @__PURE__ */ import_react150.default.createElement(
+        /* @__PURE__ */ import_react151.default.createElement(
           "line",
           {
             key: `v-${x2}`,
@@ -70427,11 +70708,11 @@ ${convertTreeToXML(xmlTree2)}`;
     onNodeInteraction,
     hiddenNodes
   }) => {
-    const svgRef = (0, import_react150.useRef)(null);
-    const [isInteracting, setIsInteracting] = (0, import_react150.useState)(false);
-    const [startPoint, setStartPoint] = (0, import_react150.useState)({ x: 0, y: 0 });
-    const [originalAttributes, setOriginalAttributes] = (0, import_react150.useState)({});
-    const getSVGPoint = (0, import_react150.useCallback)((clientX, clientY) => {
+    const svgRef = (0, import_react151.useRef)(null);
+    const [isInteracting, setIsInteracting] = (0, import_react151.useState)(false);
+    const [startPoint, setStartPoint] = (0, import_react151.useState)({ x: 0, y: 0 });
+    const [originalAttributes, setOriginalAttributes] = (0, import_react151.useState)({});
+    const getSVGPoint = (0, import_react151.useCallback)((clientX, clientY) => {
       if (svgRef.current) {
         const pt2 = svgRef.current.createSVGPoint();
         pt2.x = clientX;
@@ -70440,7 +70721,7 @@ ${convertTreeToXML(xmlTree2)}`;
       }
       return { x: 0, y: 0 };
     }, []);
-    const handleMouseDown = (0, import_react150.useCallback)((e3, node) => {
+    const handleMouseDown = (0, import_react151.useCallback)((e3, node) => {
       if (editMode !== "none" && selectedNodeId === node.id) {
         e3.preventDefault();
         setIsInteracting(true);
@@ -70448,7 +70729,7 @@ ${convertTreeToXML(xmlTree2)}`;
         setOriginalAttributes({ ...node.attributes });
       }
     }, [editMode, selectedNodeId]);
-    const handleMouseMove = (0, import_react150.useCallback)((e3, node) => {
+    const handleMouseMove = (0, import_react151.useCallback)((e3, node) => {
       if (isInteracting && editMode !== "none" && selectedNodeId === node.id) {
         e3.preventDefault();
         const currentPoint = getSVGPoint(e3.clientX, e3.clientY);
@@ -70492,10 +70773,10 @@ ${convertTreeToXML(xmlTree2)}`;
         onNodeInteraction(node.id, updates);
       }
     }, [isInteracting, editMode, selectedNodeId, startPoint, originalAttributes, getSVGPoint, onNodeInteraction]);
-    const handleMouseUp = (0, import_react150.useCallback)(() => {
+    const handleMouseUp = (0, import_react151.useCallback)(() => {
       setIsInteracting(false);
     }, []);
-    const renderSVGNode = (0, import_react150.useCallback)((node) => {
+    const renderSVGNode = (0, import_react151.useCallback)((node) => {
       if (hiddenNodes.has(node.id)) {
         return null;
       }
@@ -70512,7 +70793,7 @@ ${convertTreeToXML(xmlTree2)}`;
       if (type === "text" || type === "tspan") {
         const textContent = attributes["text-content"] || "";
         const { "text-content": _3, ...filteredAttributes } = attributes;
-        return import_react150.default.createElement(
+        return import_react151.default.createElement(
           type,
           {
             key: node.id,
@@ -70523,7 +70804,7 @@ ${convertTreeToXML(xmlTree2)}`;
           ...visibleChildren
         );
       }
-      return import_react150.default.createElement(
+      return import_react151.default.createElement(
         type,
         {
           key: node.id,
@@ -70547,7 +70828,7 @@ ${convertTreeToXML(xmlTree2)}`;
     };
     const width = parseInt(svgTree.attributes.width || "400");
     const height = parseInt(svgTree.attributes.height || "400");
-    return /* @__PURE__ */ import_react150.default.createElement(
+    return /* @__PURE__ */ import_react151.default.createElement(
       "div",
       {
         className: "border rounded p-3 d-flex justify-content-center align-items-center",
@@ -70555,7 +70836,7 @@ ${convertTreeToXML(xmlTree2)}`;
         onMouseUp: handleMouseUp,
         onMouseLeave: handleMouseUp
       },
-      /* @__PURE__ */ import_react150.default.createElement(
+      /* @__PURE__ */ import_react151.default.createElement(
         "svg",
         {
           ref: svgRef,
@@ -70601,20 +70882,20 @@ ${convertTreeToXML(xmlTree2)}`;
         }
       ]
     };
-    const [svgTree, setSvgTree] = (0, import_react151.useState)(initialTree);
-    const [selectedNodeId, setSelectedNodeId] = (0, import_react151.useState)(null);
-    const [activeTab, setActiveTab] = (0, import_react151.useState)("preview");
-    const [history, setHistory] = (0, import_react151.useState)([initialTree]);
-    const [historyIndex, setHistoryIndex] = (0, import_react151.useState)(0);
-    const [editMode, setEditMode] = (0, import_react151.useState)("none");
-    const [showGrid, setShowGrid] = (0, import_react151.useState)(false);
-    const [snapToGrid, setSnapToGrid] = (0, import_react151.useState)(false);
-    const [hiddenNodes, setHiddenNodes] = (0, import_react151.useState)(/* @__PURE__ */ new Set());
-    const [dragInfo, setDragInfo] = (0, import_react151.useState)({
+    const [svgTree, setSvgTree] = (0, import_react152.useState)(initialTree);
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react152.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react152.useState)("preview");
+    const [history, setHistory] = (0, import_react152.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react152.useState)(0);
+    const [editMode, setEditMode] = (0, import_react152.useState)("none");
+    const [showGrid, setShowGrid] = (0, import_react152.useState)(false);
+    const [snapToGrid, setSnapToGrid] = (0, import_react152.useState)(false);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react152.useState)(/* @__PURE__ */ new Set());
+    const [dragInfo, setDragInfo] = (0, import_react152.useState)({
       isDragging: false,
       nodeId: null
     });
-    const findNode = (0, import_react151.useCallback)((node, id) => {
+    const findNode = (0, import_react152.useCallback)((node, id) => {
       if (node.id === id)
         return node;
       for (const child of node.children) {
@@ -70624,7 +70905,7 @@ ${convertTreeToXML(xmlTree2)}`;
       }
       return null;
     }, []);
-    const updateTree = (0, import_react151.useCallback)(
+    const updateTree = (0, import_react152.useCallback)(
       (newTree) => {
         setSvgTree(newTree);
         setHistory((prevHistory) => {
@@ -70636,7 +70917,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [historyIndex]
     );
-    const updateNodeAttributes = (0, import_react151.useCallback)(
+    const updateNodeAttributes = (0, import_react152.useCallback)(
       (nodeId, attributes) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70650,7 +70931,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const updateNodeTextContent = (0, import_react151.useCallback)(
+    const updateNodeTextContent = (0, import_react152.useCallback)(
       (nodeId, textContent) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70664,7 +70945,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const toggleNodeVisibility = (0, import_react151.useCallback)((nodeId) => {
+    const toggleNodeVisibility = (0, import_react152.useCallback)((nodeId) => {
       setHiddenNodes((prev) => {
         const newHidden = new Set(prev);
         if (newHidden.has(nodeId)) {
@@ -70675,13 +70956,13 @@ ${convertTreeToXML(xmlTree2)}`;
         return newHidden;
       });
     }, []);
-    const handleDragStart = (0, import_react151.useCallback)((nodeId) => {
+    const handleDragStart = (0, import_react152.useCallback)((nodeId) => {
       setDragInfo({ isDragging: true, nodeId });
     }, []);
-    const handleDragEnd = (0, import_react151.useCallback)(() => {
+    const handleDragEnd = (0, import_react152.useCallback)(() => {
       setDragInfo({ isDragging: false, nodeId: null });
     }, []);
-    const moveNode = (0, import_react151.useCallback)(
+    const moveNode = (0, import_react152.useCallback)(
       (nodeId, newParentId, index3) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70730,7 +71011,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [updateTree]
     );
-    const addChildNode = (0, import_react151.useCallback)(
+    const addChildNode = (0, import_react152.useCallback)(
       (parentId, nodeType) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70798,7 +71079,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const removeNode = (0, import_react151.useCallback)(
+    const removeNode = (0, import_react152.useCallback)(
       (nodeId) => {
         setSvgTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -70824,19 +71105,19 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [selectedNodeId, updateTree]
     );
-    const handleUndo = (0, import_react151.useCallback)(() => {
+    const handleUndo = (0, import_react152.useCallback)(() => {
       if (historyIndex > 0) {
         setHistoryIndex((prevIndex) => prevIndex - 1);
         setSvgTree(history[historyIndex - 1]);
       }
     }, [history, historyIndex]);
-    const handleRedo = (0, import_react151.useCallback)(() => {
+    const handleRedo = (0, import_react152.useCallback)(() => {
       if (historyIndex < history.length - 1) {
         setHistoryIndex((prevIndex) => prevIndex + 1);
         setSvgTree(history[historyIndex + 1]);
       }
     }, [history, historyIndex]);
-    const handleMove = (0, import_react151.useCallback)(() => {
+    const handleMove = (0, import_react152.useCallback)(() => {
       console.log("Move functionality to be implemented");
     }, []);
     const isMoveMode = editMode === "move";
@@ -70912,7 +71193,7 @@ ${convertTreeToXML(xmlTree2)}`;
         (child) => renderSVGPreview(child, selectedNodeId === child.id, {})
       );
       if (type === "text" || type === "tspan") {
-        return import_react151.default.createElement(
+        return import_react152.default.createElement(
           type,
           {
             key: node.id,
@@ -70925,7 +71206,7 @@ ${convertTreeToXML(xmlTree2)}`;
         );
       }
       const elementType = type.toLowerCase();
-      return import_react151.default.createElement(
+      return import_react152.default.createElement(
         elementType,
         {
           key: node.id,
@@ -70938,7 +71219,7 @@ ${convertTreeToXML(xmlTree2)}`;
     };
     const renderSVGAttributeEditor = (node, onUpdateAttributes, onUpdateTextContent) => {
       if (["circle", "rect", "g"].includes(node.type)) {
-        return /* @__PURE__ */ import_react151.default.createElement(
+        return /* @__PURE__ */ import_react152.default.createElement(
           SVGElementForm,
           {
             elementType: node.type,
@@ -70947,7 +71228,7 @@ ${convertTreeToXML(xmlTree2)}`;
           }
         );
       } else {
-        return /* @__PURE__ */ import_react151.default.createElement(
+        return /* @__PURE__ */ import_react152.default.createElement(
           SVGAttributesEditor,
           {
             node,
@@ -70964,7 +71245,7 @@ ${convertTreeToXML(xmlTree2)}`;
         attributes: xmlTree.attributes,
         children: xmlTree.children
       };
-      return /* @__PURE__ */ import_react151.default.createElement(
+      return /* @__PURE__ */ import_react152.default.createElement(
         SVGPreview,
         {
           svgTree: svgTree2,
@@ -70981,7 +71262,7 @@ ${convertTreeToXML(xmlTree2)}`;
     const renderSVGPreviewWithControls = (node, isSelected, eventHandlers) => {
       return renderSVGPreview(node, isSelected, eventHandlers);
     };
-    return /* @__PURE__ */ import_react151.default.createElement(
+    return /* @__PURE__ */ import_react152.default.createElement(
       GenericXMLEditorPage,
       {
         initialTree,
@@ -70994,7 +71275,7 @@ ${convertTreeToXML(xmlTree2)}`;
   };
 
   // src/components/stateful/DratoPage.tsx
-  var import_react152 = __toESM(require_react(), 1);
+  var import_react153 = __toESM(require_react(), 1);
   var DratoPage = () => {
     const initialTree = {
       id: "root",
@@ -71004,13 +71285,13 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       children: []
     };
-    const [bootstrapTree, setBootstrapTree] = (0, import_react152.useState)(initialTree);
-    const [selectedNodeId, setSelectedNodeId] = (0, import_react152.useState)(null);
-    const [activeTab, setActiveTab] = (0, import_react152.useState)("preview");
-    const [history, setHistory] = (0, import_react152.useState)([initialTree]);
-    const [historyIndex, setHistoryIndex] = (0, import_react152.useState)(0);
-    const [hiddenNodes, setHiddenNodes] = (0, import_react152.useState)(/* @__PURE__ */ new Set());
-    const findNode = (0, import_react152.useCallback)((node, id) => {
+    const [bootstrapTree, setBootstrapTree] = (0, import_react153.useState)(initialTree);
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react153.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react153.useState)("preview");
+    const [history, setHistory] = (0, import_react153.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react153.useState)(0);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react153.useState)(/* @__PURE__ */ new Set());
+    const findNode = (0, import_react153.useCallback)((node, id) => {
       if (node.id === id)
         return node;
       for (const child of node.children) {
@@ -71020,7 +71301,7 @@ ${convertTreeToXML(xmlTree2)}`;
       }
       return null;
     }, []);
-    const updateTree = (0, import_react152.useCallback)(
+    const updateTree = (0, import_react153.useCallback)(
       (newTree) => {
         setBootstrapTree(newTree);
         setHistory((prevHistory) => {
@@ -71032,7 +71313,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [historyIndex]
     );
-    const updateNodeAttributes = (0, import_react152.useCallback)(
+    const updateNodeAttributes = (0, import_react153.useCallback)(
       (nodeId, attributes) => {
         setBootstrapTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -71046,7 +71327,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const updateNodeTextContent = (0, import_react152.useCallback)(
+    const updateNodeTextContent = (0, import_react153.useCallback)(
       (nodeId, textContent) => {
         setBootstrapTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -71060,7 +71341,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const toggleNodeVisibility = (0, import_react152.useCallback)((nodeId) => {
+    const toggleNodeVisibility = (0, import_react153.useCallback)((nodeId) => {
       setHiddenNodes((prev) => {
         const newHidden = new Set(prev);
         if (newHidden.has(nodeId)) {
@@ -71071,7 +71352,7 @@ ${convertTreeToXML(xmlTree2)}`;
         return newHidden;
       });
     }, []);
-    const addChildNode = (0, import_react152.useCallback)(
+    const addChildNode = (0, import_react153.useCallback)(
       (parentId, nodeType) => {
         setBootstrapTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -71112,7 +71393,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const removeNode = (0, import_react152.useCallback)(
+    const removeNode = (0, import_react153.useCallback)(
       (nodeId) => {
         setBootstrapTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -71138,13 +71419,13 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [selectedNodeId, updateTree]
     );
-    const handleUndo = (0, import_react152.useCallback)(() => {
+    const handleUndo = (0, import_react153.useCallback)(() => {
       if (historyIndex > 0) {
         setHistoryIndex((prevIndex) => prevIndex - 1);
         setBootstrapTree(history[historyIndex - 1]);
       }
     }, [history, historyIndex]);
-    const handleRedo = (0, import_react152.useCallback)(() => {
+    const handleRedo = (0, import_react153.useCallback)(() => {
       if (historyIndex < history.length - 1) {
         setHistoryIndex((prevIndex) => prevIndex + 1);
         setBootstrapTree(history[historyIndex + 1]);
@@ -71198,7 +71479,7 @@ ${convertTreeToXML(xmlTree2)}`;
       );
       switch (type) {
         case "Container":
-          return /* @__PURE__ */ import_react152.default.createElement(
+          return /* @__PURE__ */ import_react153.default.createElement(
             "div",
             {
               key: node.id,
@@ -71210,7 +71491,7 @@ ${convertTreeToXML(xmlTree2)}`;
             textContent
           );
         case "Row":
-          return /* @__PURE__ */ import_react152.default.createElement(
+          return /* @__PURE__ */ import_react153.default.createElement(
             "div",
             {
               key: node.id,
@@ -71223,7 +71504,7 @@ ${convertTreeToXML(xmlTree2)}`;
           );
         case "Col":
           const colClasses = Object.entries(attributes).filter(([key]) => ["xs", "sm", "md", "lg", "xl", "xxl"].includes(key)).map(([breakpoint, size2]) => `col-${breakpoint}-${size2}`).join(" ");
-          return /* @__PURE__ */ import_react152.default.createElement(
+          return /* @__PURE__ */ import_react153.default.createElement(
             "div",
             {
               key: node.id,
@@ -71235,7 +71516,7 @@ ${convertTreeToXML(xmlTree2)}`;
             textContent
           );
         case "Button":
-          return /* @__PURE__ */ import_react152.default.createElement(
+          return /* @__PURE__ */ import_react153.default.createElement(
             "button",
             {
               key: node.id,
@@ -71246,7 +71527,7 @@ ${convertTreeToXML(xmlTree2)}`;
             textContent || "Button"
           );
         case "Card":
-          return /* @__PURE__ */ import_react152.default.createElement(
+          return /* @__PURE__ */ import_react153.default.createElement(
             "div",
             {
               key: node.id,
@@ -71254,10 +71535,10 @@ ${convertTreeToXML(xmlTree2)}`;
               style: style2,
               ...eventHandlers
             },
-            /* @__PURE__ */ import_react152.default.createElement("div", { className: "card-body" }, childElements, textContent)
+            /* @__PURE__ */ import_react153.default.createElement("div", { className: "card-body" }, childElements, textContent)
           );
         case "Text":
-          return /* @__PURE__ */ import_react152.default.createElement(
+          return /* @__PURE__ */ import_react153.default.createElement(
             "div",
             {
               key: node.id,
@@ -71269,7 +71550,7 @@ ${convertTreeToXML(xmlTree2)}`;
             childElements
           );
         default:
-          return /* @__PURE__ */ import_react152.default.createElement("div", { key: node.id, style: style2, ...eventHandlers }, type, " element", childElements, textContent);
+          return /* @__PURE__ */ import_react153.default.createElement("div", { key: node.id, style: style2, ...eventHandlers }, type, " element", childElements, textContent);
       }
     };
     const renderBootstrapAttributeEditor = (node, onUpdateAttributes, onUpdateTextContent) => {
@@ -71280,7 +71561,7 @@ ${convertTreeToXML(xmlTree2)}`;
       const handleTextChange = (e3) => {
         onUpdateTextContent(e3.target.value);
       };
-      return /* @__PURE__ */ import_react152.default.createElement("div", null, (node.type === "Button" || node.type === "Card" || node.type === "Text") && /* @__PURE__ */ import_react152.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react152.default.createElement("label", { className: "form-label" }, "Text Content"), /* @__PURE__ */ import_react152.default.createElement(
+      return /* @__PURE__ */ import_react153.default.createElement("div", null, (node.type === "Button" || node.type === "Card" || node.type === "Text") && /* @__PURE__ */ import_react153.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react153.default.createElement("label", { className: "form-label" }, "Text Content"), /* @__PURE__ */ import_react153.default.createElement(
         "input",
         {
           type: "text",
@@ -71288,16 +71569,16 @@ ${convertTreeToXML(xmlTree2)}`;
           value: node.textContent || "",
           onChange: handleTextChange
         }
-      )), node.type === "Container" && /* @__PURE__ */ import_react152.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react152.default.createElement("label", { className: "form-label" }, "Fluid"), /* @__PURE__ */ import_react152.default.createElement(
+      )), node.type === "Container" && /* @__PURE__ */ import_react153.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react153.default.createElement("label", { className: "form-label" }, "Fluid"), /* @__PURE__ */ import_react153.default.createElement(
         "select",
         {
           className: "form-select",
           value: node.attributes.fluid || "false",
           onChange: (e3) => handleAttributeChange("fluid", e3.target.value)
         },
-        /* @__PURE__ */ import_react152.default.createElement("option", { value: "true" }, "True"),
-        /* @__PURE__ */ import_react152.default.createElement("option", { value: "false" }, "False")
-      )), node.type === "Col" && /* @__PURE__ */ import_react152.default.createElement("div", null, ["xs", "sm", "md", "lg", "xl", "xxl"].map((breakpoint) => /* @__PURE__ */ import_react152.default.createElement("div", { key: breakpoint, className: "mb-2" }, /* @__PURE__ */ import_react152.default.createElement("label", { className: "form-label" }, breakpoint.toUpperCase()), /* @__PURE__ */ import_react152.default.createElement(
+        /* @__PURE__ */ import_react153.default.createElement("option", { value: "true" }, "True"),
+        /* @__PURE__ */ import_react153.default.createElement("option", { value: "false" }, "False")
+      )), node.type === "Col" && /* @__PURE__ */ import_react153.default.createElement("div", null, ["xs", "sm", "md", "lg", "xl", "xxl"].map((breakpoint) => /* @__PURE__ */ import_react153.default.createElement("div", { key: breakpoint, className: "mb-2" }, /* @__PURE__ */ import_react153.default.createElement("label", { className: "form-label" }, breakpoint.toUpperCase()), /* @__PURE__ */ import_react153.default.createElement(
         "input",
         {
           type: "text",
@@ -71306,15 +71587,15 @@ ${convertTreeToXML(xmlTree2)}`;
           onChange: (e3) => handleAttributeChange(breakpoint, e3.target.value),
           placeholder: "1-12"
         }
-      )))), node.type === "Button" && /* @__PURE__ */ import_react152.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react152.default.createElement("label", { className: "form-label" }, "Variant"), /* @__PURE__ */ import_react152.default.createElement(
+      )))), node.type === "Button" && /* @__PURE__ */ import_react153.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react153.default.createElement("label", { className: "form-label" }, "Variant"), /* @__PURE__ */ import_react153.default.createElement(
         "select",
         {
           className: "form-select",
           value: node.attributes.variant || "primary",
           onChange: (e3) => handleAttributeChange("variant", e3.target.value)
         },
-        ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"].map((variant) => /* @__PURE__ */ import_react152.default.createElement("option", { key: variant, value: variant }, variant))
-      )), node.type === "Text" && /* @__PURE__ */ import_react152.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react152.default.createElement("label", { className: "form-label" }, "CSS Classes"), /* @__PURE__ */ import_react152.default.createElement(
+        ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"].map((variant) => /* @__PURE__ */ import_react153.default.createElement("option", { key: variant, value: variant }, variant))
+      )), node.type === "Text" && /* @__PURE__ */ import_react153.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react153.default.createElement("label", { className: "form-label" }, "CSS Classes"), /* @__PURE__ */ import_react153.default.createElement(
         "input",
         {
           type: "text",
@@ -71323,7 +71604,7 @@ ${convertTreeToXML(xmlTree2)}`;
           onChange: (e3) => handleAttributeChange("class", e3.target.value),
           placeholder: "e.g., text-primary fs-4"
         }
-      )), /* @__PURE__ */ import_react152.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react152.default.createElement("label", { className: "form-label" }, "Other Attributes"), Object.entries(node.attributes).filter(([key]) => !["fluid", "variant"].includes(key) && !["xs", "sm", "md", "lg", "xl", "xxl"].includes(key)).map(([key, value]) => /* @__PURE__ */ import_react152.default.createElement("div", { key, className: "input-group mb-2" }, /* @__PURE__ */ import_react152.default.createElement("span", { className: "input-group-text" }, key), /* @__PURE__ */ import_react152.default.createElement(
+      )), /* @__PURE__ */ import_react153.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react153.default.createElement("label", { className: "form-label" }, "Other Attributes"), Object.entries(node.attributes).filter(([key]) => !["fluid", "variant"].includes(key) && !["xs", "sm", "md", "lg", "xl", "xxl"].includes(key)).map(([key, value]) => /* @__PURE__ */ import_react153.default.createElement("div", { key, className: "input-group mb-2" }, /* @__PURE__ */ import_react153.default.createElement("span", { className: "input-group-text" }, key), /* @__PURE__ */ import_react153.default.createElement(
         "input",
         {
           type: "text",
@@ -71333,7 +71614,7 @@ ${convertTreeToXML(xmlTree2)}`;
         }
       )))));
     };
-    return /* @__PURE__ */ import_react152.default.createElement(
+    return /* @__PURE__ */ import_react153.default.createElement(
       GenericXMLEditorPage,
       {
         initialTree,
@@ -71346,7 +71627,7 @@ ${convertTreeToXML(xmlTree2)}`;
   };
 
   // src/components/stateful/GrafeoPage.tsx
-  var import_react153 = __toESM(require_react(), 1);
+  var import_react154 = __toESM(require_react(), 1);
   var GrafeoPage = () => {
     const initialTree = {
       id: "root",
@@ -71453,13 +71734,13 @@ ${convertTreeToXML(xmlTree2)}`;
         }
       ]
     };
-    const [graphmlTree, setGraphmlTree] = (0, import_react153.useState)(initialTree);
-    const [selectedNodeId, setSelectedNodeId] = (0, import_react153.useState)(null);
-    const [activeTab, setActiveTab] = (0, import_react153.useState)("preview");
-    const [history, setHistory] = (0, import_react153.useState)([initialTree]);
-    const [historyIndex, setHistoryIndex] = (0, import_react153.useState)(0);
-    const [hiddenNodes, setHiddenNodes] = (0, import_react153.useState)(/* @__PURE__ */ new Set());
-    const findNode = (0, import_react153.useCallback)((node, id) => {
+    const [graphmlTree, setGraphmlTree] = (0, import_react154.useState)(initialTree);
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react154.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react154.useState)("preview");
+    const [history, setHistory] = (0, import_react154.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react154.useState)(0);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react154.useState)(/* @__PURE__ */ new Set());
+    const findNode = (0, import_react154.useCallback)((node, id) => {
       if (node.id === id)
         return node;
       for (const child of node.children) {
@@ -71469,7 +71750,7 @@ ${convertTreeToXML(xmlTree2)}`;
       }
       return null;
     }, []);
-    const updateTree = (0, import_react153.useCallback)(
+    const updateTree = (0, import_react154.useCallback)(
       (newTree) => {
         setGraphmlTree(newTree);
         setHistory((prevHistory) => {
@@ -71481,7 +71762,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [historyIndex]
     );
-    const updateNodeAttributes = (0, import_react153.useCallback)(
+    const updateNodeAttributes = (0, import_react154.useCallback)(
       (nodeId, attributes) => {
         setGraphmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -71495,7 +71776,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const updateNodeTextContent = (0, import_react153.useCallback)(
+    const updateNodeTextContent = (0, import_react154.useCallback)(
       (nodeId, textContent) => {
         setGraphmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -71509,7 +71790,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const toggleNodeVisibility = (0, import_react153.useCallback)((nodeId) => {
+    const toggleNodeVisibility = (0, import_react154.useCallback)((nodeId) => {
       setHiddenNodes((prev) => {
         const newHidden = new Set(prev);
         if (newHidden.has(nodeId)) {
@@ -71520,7 +71801,7 @@ ${convertTreeToXML(xmlTree2)}`;
         return newHidden;
       });
     }, []);
-    const addChildNode = (0, import_react153.useCallback)(
+    const addChildNode = (0, import_react154.useCallback)(
       (parentId, nodeType) => {
         setGraphmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -71558,7 +71839,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       [findNode, updateTree]
     );
-    const removeNode = (0, import_react153.useCallback)(
+    const removeNode = (0, import_react154.useCallback)(
       (nodeId) => {
         setGraphmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -71624,7 +71905,7 @@ ${convertTreeToXML(xmlTree2)}`;
       );
       switch (type) {
         case "node":
-          return /* @__PURE__ */ import_react153.default.createElement(
+          return /* @__PURE__ */ import_react154.default.createElement(
             "div",
             {
               key: node.id,
@@ -71637,7 +71918,7 @@ ${convertTreeToXML(xmlTree2)}`;
             childElements
           );
         case "edge":
-          return /* @__PURE__ */ import_react153.default.createElement(
+          return /* @__PURE__ */ import_react154.default.createElement(
             "div",
             {
               key: node.id,
@@ -71652,7 +71933,7 @@ ${convertTreeToXML(xmlTree2)}`;
             childElements
           );
         case "key":
-          return /* @__PURE__ */ import_react153.default.createElement(
+          return /* @__PURE__ */ import_react154.default.createElement(
             "div",
             {
               key: node.id,
@@ -71668,7 +71949,7 @@ ${convertTreeToXML(xmlTree2)}`;
             childElements
           );
         case "data":
-          return /* @__PURE__ */ import_react153.default.createElement(
+          return /* @__PURE__ */ import_react154.default.createElement(
             "div",
             {
               key: node.id,
@@ -71683,7 +71964,7 @@ ${convertTreeToXML(xmlTree2)}`;
             childElements
           );
         case "graph":
-          return /* @__PURE__ */ import_react153.default.createElement(
+          return /* @__PURE__ */ import_react154.default.createElement(
             "div",
             {
               key: node.id,
@@ -71696,7 +71977,7 @@ ${convertTreeToXML(xmlTree2)}`;
             childElements
           );
         case "graphml":
-          return /* @__PURE__ */ import_react153.default.createElement(
+          return /* @__PURE__ */ import_react154.default.createElement(
             "div",
             {
               key: node.id,
@@ -71707,7 +71988,7 @@ ${convertTreeToXML(xmlTree2)}`;
             childElements
           );
         default:
-          return /* @__PURE__ */ import_react153.default.createElement("div", { key: node.id, style: style2, ...eventHandlers }, type, " element", childElements, textContent);
+          return /* @__PURE__ */ import_react154.default.createElement("div", { key: node.id, style: style2, ...eventHandlers }, type, " element", childElements, textContent);
       }
     };
     const renderGraphMLAttributeEditor = (node, onUpdateAttributes, onUpdateTextContent) => {
@@ -71718,7 +71999,7 @@ ${convertTreeToXML(xmlTree2)}`;
       const handleTextChange = (e3) => {
         onUpdateTextContent(e3.target.value);
       };
-      return /* @__PURE__ */ import_react153.default.createElement("div", null, node.type === "data" && /* @__PURE__ */ import_react153.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react153.default.createElement("label", { className: "form-label" }, "Value"), /* @__PURE__ */ import_react153.default.createElement(
+      return /* @__PURE__ */ import_react154.default.createElement("div", null, node.type === "data" && /* @__PURE__ */ import_react154.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react154.default.createElement("label", { className: "form-label" }, "Value"), /* @__PURE__ */ import_react154.default.createElement(
         "input",
         {
           type: "text",
@@ -71726,7 +72007,7 @@ ${convertTreeToXML(xmlTree2)}`;
           value: node.textContent || "",
           onChange: handleTextChange
         }
-      )), Object.entries(node.attributes).map(([key, value]) => /* @__PURE__ */ import_react153.default.createElement("div", { key, className: "mb-2" }, /* @__PURE__ */ import_react153.default.createElement("label", { className: "form-label" }, key), /* @__PURE__ */ import_react153.default.createElement(
+      )), Object.entries(node.attributes).map(([key, value]) => /* @__PURE__ */ import_react154.default.createElement("div", { key, className: "mb-2" }, /* @__PURE__ */ import_react154.default.createElement("label", { className: "form-label" }, key), /* @__PURE__ */ import_react154.default.createElement(
         "input",
         {
           type: "text",
@@ -71749,20 +72030,20 @@ ${convertTreeToXML(xmlTree2)}`;
       };
       const graph = findGraph(xmlTree2);
       if (!graph) {
-        return /* @__PURE__ */ import_react153.default.createElement("div", null, "No graph found");
+        return /* @__PURE__ */ import_react154.default.createElement("div", null, "No graph found");
       }
       const nodes = graph.children.filter((child) => child.type === "node");
       const edges = graph.children.filter((child) => child.type === "edge");
       const radius = 150;
       const centerX = 200;
       const centerY = 200;
-      return /* @__PURE__ */ import_react153.default.createElement(
+      return /* @__PURE__ */ import_react154.default.createElement(
         "div",
         {
           className: "border rounded p-3 d-flex justify-content-center align-items-center",
           style: { height: "400px", background: "#f8f9fa" }
         },
-        /* @__PURE__ */ import_react153.default.createElement("svg", { width: "400", height: "400", style: { background: "white" } }, edges.map((edge) => {
+        /* @__PURE__ */ import_react154.default.createElement("svg", { width: "400", height: "400", style: { background: "white" } }, edges.map((edge) => {
           const sourceId = edge.attributes.source;
           const targetId = edge.attributes.target;
           const sourceNode = nodes.find((n2) => n2.attributes.id === sourceId);
@@ -71777,7 +72058,7 @@ ${convertTreeToXML(xmlTree2)}`;
           const sourceY = centerY + radius * Math.sin(sourceAngle);
           const targetX = centerX + radius * Math.cos(targetAngle);
           const targetY = centerY + radius * Math.sin(targetAngle);
-          return /* @__PURE__ */ import_react153.default.createElement(
+          return /* @__PURE__ */ import_react154.default.createElement(
             "line",
             {
               key: edge.id,
@@ -71794,7 +72075,7 @@ ${convertTreeToXML(xmlTree2)}`;
           const x2 = centerX + radius * Math.cos(angle);
           const y2 = centerY + radius * Math.sin(angle);
           const isSelected = selectedNodeId === node.id;
-          return /* @__PURE__ */ import_react153.default.createElement("g", { key: node.id }, /* @__PURE__ */ import_react153.default.createElement(
+          return /* @__PURE__ */ import_react154.default.createElement("g", { key: node.id }, /* @__PURE__ */ import_react154.default.createElement(
             "circle",
             {
               cx: x2,
@@ -71806,7 +72087,7 @@ ${convertTreeToXML(xmlTree2)}`;
               style: { cursor: "pointer" },
               onClick: () => setSelectedNodeId(node.id)
             }
-          ), /* @__PURE__ */ import_react153.default.createElement(
+          ), /* @__PURE__ */ import_react154.default.createElement(
             "text",
             {
               x: x2,
@@ -71823,9 +72104,9 @@ ${convertTreeToXML(xmlTree2)}`;
       );
     };
     const renderGraphMLPreviewWithGraph = (node, isSelected, eventHandlers) => {
-      return /* @__PURE__ */ import_react153.default.createElement(GraphMLPreview, { xmlTree: graphmlTree });
+      return /* @__PURE__ */ import_react154.default.createElement(GraphMLPreview, { xmlTree: graphmlTree });
     };
-    return /* @__PURE__ */ import_react153.default.createElement(
+    return /* @__PURE__ */ import_react154.default.createElement(
       GenericXMLEditorPage,
       {
         initialTree,
@@ -71838,22 +72119,22 @@ ${convertTreeToXML(xmlTree2)}`;
   };
 
   // src/components/stateful/SkriboPage.tsx
-  var import_react154 = __toESM(require_react(), 1);
+  var import_react155 = __toESM(require_react(), 1);
   var SkriboPage = () => {
-    const [code, setCode] = (0, import_react154.useState)('// Write your code here\nfunction hello() {\n  console.log("Hello, world!");\n}');
-    const [language, setLanguage] = (0, import_react154.useState)("javascript");
-    const [fileTreeWidth, setFileTreeWidth] = (0, import_react154.useState)(250);
-    const [editorWidth, setEditorWidth] = (0, import_react154.useState)(600);
-    const [previewWidth, setPreviewWidth] = (0, import_react154.useState)(400);
-    const [isResizing, setIsResizing] = (0, import_react154.useState)(false);
-    const [resizeType, setResizeType] = (0, import_react154.useState)(null);
-    const [isLoading, setIsLoading] = (0, import_react154.useState)(false);
-    const [currentPath, setCurrentPath] = (0, import_react154.useState)("");
-    const [fileTree, setFileTree] = (0, import_react154.useState)([]);
-    const [canUndo, setCanUndo] = (0, import_react154.useState)(false);
-    const [canRedo, setCanRedo] = (0, import_react154.useState)(false);
-    const containerRef = (0, import_react154.useRef)(null);
-    const [xmlTree2, setXmlTree] = (0, import_react154.useState)({
+    const [code, setCode] = (0, import_react155.useState)('// Write your code here\nfunction hello() {\n  console.log("Hello, world!");\n}');
+    const [language, setLanguage] = (0, import_react155.useState)("javascript");
+    const [fileTreeWidth, setFileTreeWidth] = (0, import_react155.useState)(250);
+    const [editorWidth, setEditorWidth] = (0, import_react155.useState)(600);
+    const [previewWidth, setPreviewWidth] = (0, import_react155.useState)(400);
+    const [isResizing, setIsResizing] = (0, import_react155.useState)(false);
+    const [resizeType, setResizeType] = (0, import_react155.useState)(null);
+    const [isLoading, setIsLoading] = (0, import_react155.useState)(false);
+    const [currentPath, setCurrentPath] = (0, import_react155.useState)("");
+    const [fileTree, setFileTree] = (0, import_react155.useState)([]);
+    const [canUndo, setCanUndo] = (0, import_react155.useState)(false);
+    const [canRedo, setCanRedo] = (0, import_react155.useState)(false);
+    const containerRef = (0, import_react155.useRef)(null);
+    const [xmlTree2, setXmlTree] = (0, import_react155.useState)({
       id: "root",
       type: "svg",
       attributes: { width: "100", height: "100" },
@@ -71866,8 +72147,8 @@ ${convertTreeToXML(xmlTree2)}`;
         }
       ]
     });
-    const [selectedNodeId, setSelectedNodeId] = (0, import_react154.useState)(null);
-    const [hiddenNodes, setHiddenNodes] = (0, import_react154.useState)(/* @__PURE__ */ new Set());
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react155.useState)(null);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react155.useState)(/* @__PURE__ */ new Set());
     const findNode = (node, id) => {
       if (node.id === id)
         return node;
@@ -71917,7 +72198,7 @@ ${convertTreeToXML(xmlTree2)}`;
       setIsResizing(true);
       setResizeType(type);
     };
-    (0, import_react154.useEffect)(() => {
+    (0, import_react155.useEffect)(() => {
       const loadFileTree = async () => {
         setIsLoading(true);
         try {
@@ -72113,7 +72394,7 @@ ${convertTreeToXML(xmlTree2)}`;
       };
       loadFileTree();
     }, []);
-    (0, import_react154.useEffect)(() => {
+    (0, import_react155.useEffect)(() => {
       const handleMouseMove = (e3) => {
         if (!isResizing || !containerRef.current)
           return;
@@ -72285,7 +72566,7 @@ ${convertTreeToXML(xmlTree2)}`;
       setLanguage(languageMap[extension || ""] || "plaintext");
     };
     const renderFileTree = (items) => {
-      return /* @__PURE__ */ import_react154.default.createElement("ul", { style: { listStyle: "none", paddingLeft: "0" } }, items.map((item, index3) => /* @__PURE__ */ import_react154.default.createElement("li", { key: index3, style: { marginBottom: "0.25rem" } }, /* @__PURE__ */ import_react154.default.createElement(
+      return /* @__PURE__ */ import_react155.default.createElement("ul", { style: { listStyle: "none", paddingLeft: "0" } }, items.map((item, index3) => /* @__PURE__ */ import_react155.default.createElement("li", { key: index3, style: { marginBottom: "0.25rem" } }, /* @__PURE__ */ import_react155.default.createElement(
         "div",
         {
           className: "d-flex align-items-center",
@@ -72296,11 +72577,11 @@ ${convertTreeToXML(xmlTree2)}`;
             }
           }
         },
-        /* @__PURE__ */ import_react154.default.createElement("span", { className: "me-1" }, item.type === "folder" ? "\u{1F4C1} " : "\u{1F4C4} "),
-        /* @__PURE__ */ import_react154.default.createElement("span", { className: "small" }, item.name)
-      ), item.type === "folder" && item.children && /* @__PURE__ */ import_react154.default.createElement("div", { style: { marginLeft: "1rem" } }, renderFileTree(item.children)))));
+        /* @__PURE__ */ import_react155.default.createElement("span", { className: "me-1" }, item.type === "folder" ? "\u{1F4C1} " : "\u{1F4C4} "),
+        /* @__PURE__ */ import_react155.default.createElement("span", { className: "small" }, item.name)
+      ), item.type === "folder" && item.children && /* @__PURE__ */ import_react155.default.createElement("div", { style: { marginLeft: "1rem" } }, renderFileTree(item.children)))));
     };
-    return /* @__PURE__ */ import_react154.default.createElement("div", { style: { height: "100%", width: "100%", overflow: "hidden" } }, /* @__PURE__ */ import_react154.default.createElement(
+    return /* @__PURE__ */ import_react155.default.createElement("div", { style: { height: "100%", width: "100%", overflow: "hidden" } }, /* @__PURE__ */ import_react155.default.createElement(
       "div",
       {
         ref: containerRef,
@@ -72315,7 +72596,7 @@ ${convertTreeToXML(xmlTree2)}`;
         },
         onMouseMove: (e3) => e3.preventDefault()
       },
-      /* @__PURE__ */ import_react154.default.createElement(
+      /* @__PURE__ */ import_react155.default.createElement(
         "div",
         {
           style: {
@@ -72332,7 +72613,7 @@ ${convertTreeToXML(xmlTree2)}`;
             // Prevent shrinking
           }
         },
-        /* @__PURE__ */ import_react154.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react154.default.createElement("h6", null, "Files"), /* @__PURE__ */ import_react154.default.createElement(
+        /* @__PURE__ */ import_react155.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react155.default.createElement("h6", null, "Files"), /* @__PURE__ */ import_react155.default.createElement(
           "button",
           {
             className: "btn btn-sm btn-outline-secondary",
@@ -72341,9 +72622,9 @@ ${convertTreeToXML(xmlTree2)}`;
           },
           "\u21BB"
         )),
-        isLoading ? /* @__PURE__ */ import_react154.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react154.default.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" }, /* @__PURE__ */ import_react154.default.createElement("span", { className: "visually-hidden" }, "Loading..."))) : /* @__PURE__ */ import_react154.default.createElement(import_react154.default.Fragment, null, currentPath && /* @__PURE__ */ import_react154.default.createElement("div", { className: "small text-muted mb-2" }, "Current: ", currentPath), renderFileTree(fileTree))
+        isLoading ? /* @__PURE__ */ import_react155.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react155.default.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" }, /* @__PURE__ */ import_react155.default.createElement("span", { className: "visually-hidden" }, "Loading..."))) : /* @__PURE__ */ import_react155.default.createElement(import_react155.default.Fragment, null, currentPath && /* @__PURE__ */ import_react155.default.createElement("div", { className: "small text-muted mb-2" }, "Current: ", currentPath), renderFileTree(fileTree))
       ),
-      /* @__PURE__ */ import_react154.default.createElement(
+      /* @__PURE__ */ import_react155.default.createElement(
         "div",
         {
           style: {
@@ -72358,7 +72639,7 @@ ${convertTreeToXML(xmlTree2)}`;
           onMouseDown: () => startResizing("fileTree")
         }
       ),
-      /* @__PURE__ */ import_react154.default.createElement(
+      /* @__PURE__ */ import_react155.default.createElement(
         "div",
         {
           style: {
@@ -72372,7 +72653,7 @@ ${convertTreeToXML(xmlTree2)}`;
             flexShrink: 0
           }
         },
-        /* @__PURE__ */ import_react154.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2 p-2" }, /* @__PURE__ */ import_react154.default.createElement("div", { className: "btn-group", role: "group" }, /* @__PURE__ */ import_react154.default.createElement(
+        /* @__PURE__ */ import_react155.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2 p-2" }, /* @__PURE__ */ import_react155.default.createElement("div", { className: "btn-group", role: "group" }, /* @__PURE__ */ import_react155.default.createElement(
           "button",
           {
             type: "button",
@@ -72382,7 +72663,7 @@ ${convertTreeToXML(xmlTree2)}`;
             title: "Undo"
           },
           "\u21B6"
-        ), /* @__PURE__ */ import_react154.default.createElement(
+        ), /* @__PURE__ */ import_react155.default.createElement(
           "button",
           {
             type: "button",
@@ -72392,7 +72673,7 @@ ${convertTreeToXML(xmlTree2)}`;
             title: "Redo"
           },
           "\u21B7"
-        )), /* @__PURE__ */ import_react154.default.createElement(
+        )), /* @__PURE__ */ import_react155.default.createElement(
           "select",
           {
             className: "form-select form-select-sm",
@@ -72400,16 +72681,16 @@ ${convertTreeToXML(xmlTree2)}`;
             value: language,
             onChange: (e3) => setLanguage(e3.target.value)
           },
-          /* @__PURE__ */ import_react154.default.createElement("option", { value: "javascript" }, "JavaScript"),
-          /* @__PURE__ */ import_react154.default.createElement("option", { value: "typescript" }, "TypeScript"),
-          /* @__PURE__ */ import_react154.default.createElement("option", { value: "python" }, "Python"),
-          /* @__PURE__ */ import_react154.default.createElement("option", { value: "html" }, "HTML"),
-          /* @__PURE__ */ import_react154.default.createElement("option", { value: "css" }, "CSS"),
-          /* @__PURE__ */ import_react154.default.createElement("option", { value: "json" }, "JSON"),
-          /* @__PURE__ */ import_react154.default.createElement("option", { value: "markdown" }, "Markdown"),
-          /* @__PURE__ */ import_react154.default.createElement("option", { value: "xml" }, "XML")
+          /* @__PURE__ */ import_react155.default.createElement("option", { value: "javascript" }, "JavaScript"),
+          /* @__PURE__ */ import_react155.default.createElement("option", { value: "typescript" }, "TypeScript"),
+          /* @__PURE__ */ import_react155.default.createElement("option", { value: "python" }, "Python"),
+          /* @__PURE__ */ import_react155.default.createElement("option", { value: "html" }, "HTML"),
+          /* @__PURE__ */ import_react155.default.createElement("option", { value: "css" }, "CSS"),
+          /* @__PURE__ */ import_react155.default.createElement("option", { value: "json" }, "JSON"),
+          /* @__PURE__ */ import_react155.default.createElement("option", { value: "markdown" }, "Markdown"),
+          /* @__PURE__ */ import_react155.default.createElement("option", { value: "xml" }, "XML")
         )),
-        /* @__PURE__ */ import_react154.default.createElement("div", { style: { flex: 1, border: "1px solid #ccc", borderRadius: "4px", overflow: "hidden" } }, /* @__PURE__ */ import_react154.default.createElement(
+        /* @__PURE__ */ import_react155.default.createElement("div", { style: { flex: 1, border: "1px solid #ccc", borderRadius: "4px", overflow: "hidden" } }, /* @__PURE__ */ import_react155.default.createElement(
           Ft,
           {
             height: "100%",
@@ -72434,7 +72715,7 @@ ${convertTreeToXML(xmlTree2)}`;
           }
         ))
       ),
-      /* @__PURE__ */ import_react154.default.createElement(
+      /* @__PURE__ */ import_react155.default.createElement(
         "div",
         {
           style: {
@@ -72449,7 +72730,7 @@ ${convertTreeToXML(xmlTree2)}`;
           onMouseDown: () => startResizing("editor")
         }
       ),
-      /* @__PURE__ */ import_react154.default.createElement(
+      /* @__PURE__ */ import_react155.default.createElement(
         "div",
         {
           style: {
@@ -72462,8 +72743,8 @@ ${convertTreeToXML(xmlTree2)}`;
             flexShrink: 0
           }
         },
-        /* @__PURE__ */ import_react154.default.createElement("h5", null, "Preview"),
-        /* @__PURE__ */ import_react154.default.createElement(
+        /* @__PURE__ */ import_react155.default.createElement("h5", null, "Preview"),
+        /* @__PURE__ */ import_react155.default.createElement(
           GenericPreview,
           {
             xmlTree: xmlTree2,
@@ -72471,7 +72752,7 @@ ${convertTreeToXML(xmlTree2)}`;
             hiddenNodes,
             renderPreview: (node, isSelected, eventHandlers) => {
               if (node.type === "rect") {
-                return /* @__PURE__ */ import_react154.default.createElement(
+                return /* @__PURE__ */ import_react155.default.createElement(
                   "rect",
                   {
                     key: node.id,
@@ -72491,29 +72772,29 @@ ${convertTreeToXML(xmlTree2)}`;
   };
 
   // src/Helpo.tsx
-  var import_react156 = __toESM(require_react(), 1);
-  var Helpo = () => /* @__PURE__ */ import_react156.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react156.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react156.default.createElement(
+  var import_react157 = __toESM(require_react(), 1);
+  var Helpo = () => /* @__PURE__ */ import_react157.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react157.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react157.default.createElement(
     "div",
     {
       className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
       style: { width: "40px", height: "40px" }
     },
     "\u{1F916}"
-  )), /* @__PURE__ */ import_react156.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react156.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react156.default.createElement("p", null, "Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?")))), /* @__PURE__ */ import_react156.default.createElement("div", { className: "d-flex mb-3 justify-content-end" }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "flex-grow-1 me-2 text-end" }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "fw-bold" }, "You"), /* @__PURE__ */ import_react156.default.createElement("div", { className: "bg-primary text-white p-3 rounded" }, /* @__PURE__ */ import_react156.default.createElement("p", null, "Can you show me how to format text with ", /* @__PURE__ */ import_react156.default.createElement("strong", null, "bold"), " and", " ", /* @__PURE__ */ import_react156.default.createElement("em", null, "italic"), "?"))), /* @__PURE__ */ import_react156.default.createElement("div", null, /* @__PURE__ */ import_react156.default.createElement(
+  )), /* @__PURE__ */ import_react157.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react157.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react157.default.createElement("p", null, "Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?")))), /* @__PURE__ */ import_react157.default.createElement("div", { className: "d-flex mb-3 justify-content-end" }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "flex-grow-1 me-2 text-end" }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "fw-bold" }, "You"), /* @__PURE__ */ import_react157.default.createElement("div", { className: "bg-primary text-white p-3 rounded" }, /* @__PURE__ */ import_react157.default.createElement("p", null, "Can you show me how to format text with ", /* @__PURE__ */ import_react157.default.createElement("strong", null, "bold"), " and", " ", /* @__PURE__ */ import_react157.default.createElement("em", null, "italic"), "?"))), /* @__PURE__ */ import_react157.default.createElement("div", null, /* @__PURE__ */ import_react157.default.createElement(
     "div",
     {
       className: "rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white",
       style: { width: "40px", height: "40px" }
     },
     "\u{1F464}"
-  ))), /* @__PURE__ */ import_react156.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react156.default.createElement(
+  ))), /* @__PURE__ */ import_react157.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react157.default.createElement(
     "div",
     {
       className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
       style: { width: "40px", height: "40px" }
     },
     "\u{1F916}"
-  )), /* @__PURE__ */ import_react156.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react156.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react156.default.createElement("p", null, "Sure! Here's an example:"), /* @__PURE__ */ import_react156.default.createElement("ul", null, /* @__PURE__ */ import_react156.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react156.default.createElement("code", null, "<strong>"), " for ", /* @__PURE__ */ import_react156.default.createElement("strong", null, "bold text")), /* @__PURE__ */ import_react156.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react156.default.createElement("code", null, "<em>"), " for ", /* @__PURE__ */ import_react156.default.createElement("em", null, "italic text")), /* @__PURE__ */ import_react156.default.createElement("li", null, "You can even include lists and other HTML elements")), /* @__PURE__ */ import_react156.default.createElement("p", null, "Let me know if you need help with anything else!"))))), /* @__PURE__ */ import_react156.default.createElement("div", { className: "border-top p-3" }, /* @__PURE__ */ import_react156.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react156.default.createElement(
+  )), /* @__PURE__ */ import_react157.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react157.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react157.default.createElement("p", null, "Sure! Here's an example:"), /* @__PURE__ */ import_react157.default.createElement("ul", null, /* @__PURE__ */ import_react157.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react157.default.createElement("code", null, "<strong>"), " for ", /* @__PURE__ */ import_react157.default.createElement("strong", null, "bold text")), /* @__PURE__ */ import_react157.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react157.default.createElement("code", null, "<em>"), " for ", /* @__PURE__ */ import_react157.default.createElement("em", null, "italic text")), /* @__PURE__ */ import_react157.default.createElement("li", null, "You can even include lists and other HTML elements")), /* @__PURE__ */ import_react157.default.createElement("p", null, "Let me know if you need help with anything else!"))))), /* @__PURE__ */ import_react157.default.createElement("div", { className: "border-top p-3" }, /* @__PURE__ */ import_react157.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react157.default.createElement(
     "input",
     {
       type: "text",
@@ -72521,14 +72802,14 @@ ${convertTreeToXML(xmlTree2)}`;
       placeholder: "Type your message...",
       disabled: true
     }
-  ), /* @__PURE__ */ import_react156.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send"))));
+  ), /* @__PURE__ */ import_react157.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send"))));
 
   // src/flua/FluaPage.tsx
-  var import_react175 = __toESM(require_react(), 1);
+  var import_react176 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/core/DndContext.js
-  var import_react157 = __toESM(require_react(), 1);
-  var DndContext = (0, import_react157.createContext)({
+  var import_react158 = __toESM(require_react(), 1);
+  var DndContext = (0, import_react158.createContext)({
     dragDropManager: void 0
   });
 
@@ -73960,7 +74241,7 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/core/DndProvider.js
-  var import_react158 = __toESM(require_react(), 1);
+  var import_react159 = __toESM(require_react(), 1);
   function _objectWithoutProperties2(source, excluded) {
     if (source == null)
       return {};
@@ -73995,12 +74276,12 @@ ${convertTreeToXML(xmlTree2)}`;
   }
   var refCount = 0;
   var INSTANCE_SYM = Symbol.for("__REACT_DND_CONTEXT_INSTANCE__");
-  var DndProvider = /* @__PURE__ */ (0, import_react158.memo)(function DndProvider2(_param) {
+  var DndProvider = /* @__PURE__ */ (0, import_react159.memo)(function DndProvider2(_param) {
     var { children } = _param, props = _objectWithoutProperties2(_param, [
       "children"
     ]);
     const [manager2, isGlobalInstance] = getDndContextValue(props);
-    (0, import_react158.useEffect)(() => {
+    (0, import_react159.useEffect)(() => {
       if (isGlobalInstance) {
         const context4 = getGlobalContext();
         ++refCount;
@@ -74049,18 +74330,18 @@ ${convertTreeToXML(xmlTree2)}`;
 
   // node_modules/react-dnd/dist/hooks/useCollector.js
   var import_fast_deep_equal = __toESM(require_fast_deep_equal(), 1);
-  var import_react160 = __toESM(require_react(), 1);
+  var import_react161 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useIsomorphicLayoutEffect.js
-  var import_react159 = __toESM(require_react(), 1);
-  var useIsomorphicLayoutEffect2 = typeof window !== "undefined" ? import_react159.useLayoutEffect : import_react159.useEffect;
+  var import_react160 = __toESM(require_react(), 1);
+  var useIsomorphicLayoutEffect2 = typeof window !== "undefined" ? import_react160.useLayoutEffect : import_react160.useEffect;
 
   // node_modules/react-dnd/dist/hooks/useCollector.js
   function useCollector(monitor, collect2, onUpdate) {
-    const [collected, setCollected] = (0, import_react160.useState)(
+    const [collected, setCollected] = (0, import_react161.useState)(
       () => collect2(monitor)
     );
-    const updateCollected = (0, import_react160.useCallback)(() => {
+    const updateCollected = (0, import_react161.useCallback)(() => {
       const nextValue = collect2(monitor);
       if (!(0, import_fast_deep_equal.default)(collected, nextValue)) {
         setCollected(nextValue);
@@ -74110,7 +74391,7 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useOptionalFactory.js
-  var import_react161 = __toESM(require_react(), 1);
+  var import_react162 = __toESM(require_react(), 1);
   function useOptionalFactory(arg, deps) {
     const memoDeps = [
       ...deps || []
@@ -74118,15 +74399,15 @@ ${convertTreeToXML(xmlTree2)}`;
     if (deps == null && typeof arg !== "function") {
       memoDeps.push(arg);
     }
-    return (0, import_react161.useMemo)(() => {
+    return (0, import_react162.useMemo)(() => {
       return typeof arg === "function" ? arg() : arg;
     }, memoDeps);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/connectors.js
-  var import_react162 = __toESM(require_react(), 1);
+  var import_react163 = __toESM(require_react(), 1);
   function useConnectDragSource(connector) {
-    return (0, import_react162.useMemo)(
+    return (0, import_react163.useMemo)(
       () => connector.hooks.dragSource(),
       [
         connector
@@ -74134,7 +74415,7 @@ ${convertTreeToXML(xmlTree2)}`;
     );
   }
   function useConnectDragPreview(connector) {
-    return (0, import_react162.useMemo)(
+    return (0, import_react163.useMemo)(
       () => connector.hooks.dragPreview(),
       [
         connector
@@ -74143,7 +74424,7 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceConnector.js
-  var import_react165 = __toESM(require_react(), 1);
+  var import_react166 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/internals/DragSourceMonitorImpl.js
   var isCallingCanDrag = false;
@@ -74359,7 +74640,7 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/internals/wrapConnectorHooks.js
-  var import_react163 = __toESM(require_react(), 1);
+  var import_react164 = __toESM(require_react(), 1);
   function throwIfCompositeComponentElement(element) {
     if (typeof element.type === "string") {
       return;
@@ -74369,7 +74650,7 @@ ${convertTreeToXML(xmlTree2)}`;
   }
   function wrapHookToRecognizeElement(hook) {
     return (elementOrNode = null, options = null) => {
-      if (!(0, import_react163.isValidElement)(elementOrNode)) {
+      if (!(0, import_react164.isValidElement)(elementOrNode)) {
         const node = elementOrNode;
         hook(node, options);
         return node;
@@ -74404,11 +74685,11 @@ ${convertTreeToXML(xmlTree2)}`;
     const previousRef = element.ref;
     invariant6(typeof previousRef !== "string", "Cannot connect React DnD to an element with an existing string ref. Please convert it to use a callback ref instead, or wrap it into a <span> or <div>. Read more: https://reactjs.org/docs/refs-and-the-dom.html#callback-refs");
     if (!previousRef) {
-      return (0, import_react163.cloneElement)(element, {
+      return (0, import_react164.cloneElement)(element, {
         ref: newRef
       });
     } else {
-      return (0, import_react163.cloneElement)(element, {
+      return (0, import_react164.cloneElement)(element, {
         ref: (node) => {
           setRef(previousRef, node);
           setRef(newRef, node);
@@ -74650,9 +74931,9 @@ ${convertTreeToXML(xmlTree2)}`;
   };
 
   // node_modules/react-dnd/dist/hooks/useDragDropManager.js
-  var import_react164 = __toESM(require_react(), 1);
+  var import_react165 = __toESM(require_react(), 1);
   function useDragDropManager() {
-    const { dragDropManager } = (0, import_react164.useContext)(DndContext);
+    const { dragDropManager } = (0, import_react165.useContext)(DndContext);
     invariant6(dragDropManager != null, "Expected drag drop context");
     return dragDropManager;
   }
@@ -74660,7 +74941,7 @@ ${convertTreeToXML(xmlTree2)}`;
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceConnector.js
   function useDragSourceConnector(dragSourceOptions, dragPreviewOptions) {
     const manager2 = useDragDropManager();
-    const connector = (0, import_react165.useMemo)(
+    const connector = (0, import_react166.useMemo)(
       () => new SourceConnector(manager2.getBackend()),
       [
         manager2
@@ -74686,10 +74967,10 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceMonitor.js
-  var import_react166 = __toESM(require_react(), 1);
+  var import_react167 = __toESM(require_react(), 1);
   function useDragSourceMonitor() {
     const manager2 = useDragDropManager();
-    return (0, import_react166.useMemo)(
+    return (0, import_react167.useMemo)(
       () => new DragSourceMonitorImpl(manager2),
       [
         manager2
@@ -74698,7 +74979,7 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSource.js
-  var import_react167 = __toESM(require_react(), 1);
+  var import_react168 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useDrag/DragSourceImpl.js
   var DragSourceImpl = class {
@@ -74751,14 +75032,14 @@ ${convertTreeToXML(xmlTree2)}`;
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSource.js
   function useDragSource(spec, monitor, connector) {
-    const handler = (0, import_react167.useMemo)(
+    const handler = (0, import_react168.useMemo)(
       () => new DragSourceImpl(spec, monitor, connector),
       [
         monitor,
         connector
       ]
     );
-    (0, import_react167.useEffect)(() => {
+    (0, import_react168.useEffect)(() => {
       handler.spec = spec;
     }, [
       spec
@@ -74767,9 +75048,9 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragType.js
-  var import_react168 = __toESM(require_react(), 1);
+  var import_react169 = __toESM(require_react(), 1);
   function useDragType(spec) {
-    return (0, import_react168.useMemo)(() => {
+    return (0, import_react169.useMemo)(() => {
       const result = spec.type;
       invariant6(result != null, "spec.type must be defined");
       return result;
@@ -74815,9 +75096,9 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/connectors.js
-  var import_react169 = __toESM(require_react(), 1);
+  var import_react170 = __toESM(require_react(), 1);
   function useConnectDropTarget(connector) {
-    return (0, import_react169.useMemo)(
+    return (0, import_react170.useMemo)(
       () => connector.hooks.dropTarget(),
       [
         connector
@@ -74826,10 +75107,10 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTargetConnector.js
-  var import_react170 = __toESM(require_react(), 1);
+  var import_react171 = __toESM(require_react(), 1);
   function useDropTargetConnector(options) {
     const manager2 = useDragDropManager();
-    const connector = (0, import_react170.useMemo)(
+    const connector = (0, import_react171.useMemo)(
       () => new TargetConnector(manager2.getBackend()),
       [
         manager2
@@ -74846,10 +75127,10 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTargetMonitor.js
-  var import_react171 = __toESM(require_react(), 1);
+  var import_react172 = __toESM(require_react(), 1);
   function useDropTargetMonitor() {
     const manager2 = useDragDropManager();
-    return (0, import_react171.useMemo)(
+    return (0, import_react172.useMemo)(
       () => new DropTargetMonitorImpl(manager2),
       [
         manager2
@@ -74858,10 +75139,10 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useAccept.js
-  var import_react172 = __toESM(require_react(), 1);
+  var import_react173 = __toESM(require_react(), 1);
   function useAccept(spec) {
     const { accept } = spec;
-    return (0, import_react172.useMemo)(() => {
+    return (0, import_react173.useMemo)(() => {
       invariant6(spec.accept != null, "accept must be defined");
       return Array.isArray(accept) ? accept : [
         accept
@@ -74872,7 +75153,7 @@ ${convertTreeToXML(xmlTree2)}`;
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTarget.js
-  var import_react173 = __toESM(require_react(), 1);
+  var import_react174 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useDrop/DropTargetImpl.js
   var DropTargetImpl = class {
@@ -74904,13 +75185,13 @@ ${convertTreeToXML(xmlTree2)}`;
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTarget.js
   function useDropTarget(spec, monitor) {
-    const dropTarget = (0, import_react173.useMemo)(
+    const dropTarget = (0, import_react174.useMemo)(
       () => new DropTargetImpl(spec, monitor),
       [
         monitor
       ]
     );
-    (0, import_react173.useEffect)(() => {
+    (0, import_react174.useEffect)(() => {
       dropTarget.spec = spec;
     }, [
       spec
@@ -75858,14 +76139,14 @@ ${convertTreeToXML(xmlTree2)}`;
   };
 
   // src/components/stateful/GenericXMLEditor/AttributeEditor.tsx
-  var import_react174 = __toESM(require_react(), 1);
+  var import_react175 = __toESM(require_react(), 1);
   var AttributeEditor = ({
     node: selectedNode,
     onUpdateAttributes,
     onUpdateTextContent
   }) => {
     if (!selectedNode) {
-      return /* @__PURE__ */ import_react174.default.createElement("div", { className: "p-3 text-muted" }, "Select a node to edit its attributes");
+      return /* @__PURE__ */ import_react175.default.createElement("div", { className: "p-3 text-muted" }, "Select a node to edit its attributes");
     }
     const handleAttributeChange = (key, value) => {
       const newAttributes = { ...selectedNode.attributes };
@@ -75888,14 +76169,14 @@ ${convertTreeToXML(xmlTree2)}`;
       delete newAttributes[key];
       onUpdateAttributes(newAttributes);
     };
-    return /* @__PURE__ */ import_react174.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react174.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react174.default.createElement("h6", { className: "mb-0 small" }, "Attributes for ", selectedNode.type), /* @__PURE__ */ import_react174.default.createElement(
+    return /* @__PURE__ */ import_react175.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react175.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react175.default.createElement("h6", { className: "mb-0 small" }, "Attributes for ", selectedNode.type), /* @__PURE__ */ import_react175.default.createElement(
       "button",
       {
         className: "btn btn-sm btn-outline-success py-0 px-1",
         onClick: handleAddAttribute
       },
       "+ Add"
-    )), Object.entries(selectedNode.attributes).map(([key, value]) => /* @__PURE__ */ import_react174.default.createElement("div", { key, className: "mb-1 d-flex align-items-center" }, /* @__PURE__ */ import_react174.default.createElement(Form_default.Group, { className: "flex-grow-1 me-1" }, /* @__PURE__ */ import_react174.default.createElement(Form_default.Label, { className: "small mb-0" }, key), /* @__PURE__ */ import_react174.default.createElement(
+    )), Object.entries(selectedNode.attributes).map(([key, value]) => /* @__PURE__ */ import_react175.default.createElement("div", { key, className: "mb-1 d-flex align-items-center" }, /* @__PURE__ */ import_react175.default.createElement(Form_default.Group, { className: "flex-grow-1 me-1" }, /* @__PURE__ */ import_react175.default.createElement(Form_default.Label, { className: "small mb-0" }, key), /* @__PURE__ */ import_react175.default.createElement(
       Form_default.Control,
       {
         type: "text",
@@ -75905,7 +76186,7 @@ ${convertTreeToXML(xmlTree2)}`;
         placeholder: "Value",
         className: "py-0"
       }
-    )), /* @__PURE__ */ import_react174.default.createElement(
+    )), /* @__PURE__ */ import_react175.default.createElement(
       "button",
       {
         className: "btn btn-sm btn-outline-danger py-0 px-1",
@@ -75913,7 +76194,7 @@ ${convertTreeToXML(xmlTree2)}`;
         style: { marginTop: "1.25rem" }
       },
       "\xD7"
-    ))), Object.keys(selectedNode.attributes).length === 0 && /* @__PURE__ */ import_react174.default.createElement("div", { className: "text-muted small" }, "No attributes"), onUpdateTextContent && /* @__PURE__ */ import_react174.default.createElement(Form_default.Group, { className: "mt-2" }, /* @__PURE__ */ import_react174.default.createElement(Form_default.Label, { className: "small mb-0" }, "Text Content"), /* @__PURE__ */ import_react174.default.createElement(
+    ))), Object.keys(selectedNode.attributes).length === 0 && /* @__PURE__ */ import_react175.default.createElement("div", { className: "text-muted small" }, "No attributes"), onUpdateTextContent && /* @__PURE__ */ import_react175.default.createElement(Form_default.Group, { className: "mt-2" }, /* @__PURE__ */ import_react175.default.createElement(Form_default.Label, { className: "small mb-0" }, "Text Content"), /* @__PURE__ */ import_react175.default.createElement(
       Form_default.Control,
       {
         as: "textarea",
@@ -76023,7 +76304,7 @@ ${convertTreeToXML(xmlTree2)}`;
         isDragging: !!monitor.isDragging()
       })
     }));
-    return /* @__PURE__ */ import_react175.default.createElement(
+    return /* @__PURE__ */ import_react176.default.createElement(
       "div",
       {
         ref: drag,
@@ -76037,8 +76318,8 @@ ${convertTreeToXML(xmlTree2)}`;
           cursor: "move"
         }
       },
-      /* @__PURE__ */ import_react175.default.createElement("div", { style: { fontWeight: "bold", marginBottom: "8px" } }, task.name),
-      /* @__PURE__ */ import_react175.default.createElement("div", { style: { fontSize: "0.875rem", color: "#666" } }, task.role)
+      /* @__PURE__ */ import_react176.default.createElement("div", { style: { fontWeight: "bold", marginBottom: "8px" } }, task.name),
+      /* @__PURE__ */ import_react176.default.createElement("div", { style: { fontSize: "0.875rem", color: "#666" } }, task.role)
     );
   };
   var KanbanColumn = ({ status, tasks, onMoveTask }) => {
@@ -76053,7 +76334,7 @@ ${convertTreeToXML(xmlTree2)}`;
         isOver: !!monitor.isOver()
       })
     }));
-    return /* @__PURE__ */ import_react175.default.createElement(
+    return /* @__PURE__ */ import_react176.default.createElement(
       "div",
       {
         ref: drop,
@@ -76069,7 +76350,7 @@ ${convertTreeToXML(xmlTree2)}`;
           transition: "background 0.2s ease"
         }
       },
-      /* @__PURE__ */ import_react175.default.createElement(
+      /* @__PURE__ */ import_react176.default.createElement(
         "h6",
         {
           style: {
@@ -76084,7 +76365,7 @@ ${convertTreeToXML(xmlTree2)}`;
         tasks.length,
         ")"
       ),
-      /* @__PURE__ */ import_react175.default.createElement(
+      /* @__PURE__ */ import_react176.default.createElement(
         "div",
         {
           style: {
@@ -76094,7 +76375,7 @@ ${convertTreeToXML(xmlTree2)}`;
             gap: "8px"
           }
         },
-        tasks.map((task) => /* @__PURE__ */ import_react175.default.createElement(
+        tasks.map((task) => /* @__PURE__ */ import_react176.default.createElement(
           KanbanCard,
           {
             key: task.id,
@@ -76107,9 +76388,8 @@ ${convertTreeToXML(xmlTree2)}`;
     );
   };
   var KanbanBoardPreview = ({ xmlTree: xmlTree2, onTreeUpdate }) => {
-    const [tasks, setTasks] = (0, import_react175.useState)([]);
-    console.log("mark1", KanbanBoardPreview);
-    const findGraphmlNode = import_react175.default.useCallback((node) => {
+    const [tasks, setTasks] = (0, import_react176.useState)([]);
+    const findGraphmlNode = import_react176.default.useCallback((node) => {
       if (node.type === "graphml:graphml")
         return node;
       for (const child of node.children) {
@@ -76119,7 +76399,7 @@ ${convertTreeToXML(xmlTree2)}`;
       }
       return null;
     }, []);
-    const extractTasks = import_react175.default.useCallback((graphmlNode) => {
+    const extractTasks = import_react176.default.useCallback((graphmlNode) => {
       if (!graphmlNode)
         return [];
       const graphNode = graphmlNode.children.find(
@@ -76155,7 +76435,7 @@ ${convertTreeToXML(xmlTree2)}`;
       });
       return tasks2;
     }, []);
-    import_react175.default.useEffect(() => {
+    import_react176.default.useEffect(() => {
       const graphmlNode = findGraphmlNode(xmlTree2);
       const extractedTasks = extractTasks(graphmlNode);
       setTasks(extractedTasks);
@@ -76196,7 +76476,7 @@ ${convertTreeToXML(xmlTree2)}`;
         );
       }
     };
-    const statusGroups = import_react175.default.useMemo(() => {
+    const statusGroups = import_react176.default.useMemo(() => {
       const groups = {};
       tasks.forEach((task) => {
         if (!groups[task.status]) {
@@ -76207,7 +76487,7 @@ ${convertTreeToXML(xmlTree2)}`;
       return groups;
     }, [tasks]);
     const statusOrder = ["To Do", "In Progress", "Done"];
-    return /* @__PURE__ */ import_react175.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react175.default.createElement(
+    return /* @__PURE__ */ import_react176.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react176.default.createElement(
       "div",
       {
         className: "kanban-board",
@@ -76221,7 +76501,7 @@ ${convertTreeToXML(xmlTree2)}`;
       },
       statusOrder.map((status) => {
         const columnTasks = statusGroups[status] || [];
-        return /* @__PURE__ */ import_react175.default.createElement(
+        return /* @__PURE__ */ import_react176.default.createElement(
           KanbanColumn,
           {
             key: status,
@@ -76234,7 +76514,7 @@ ${convertTreeToXML(xmlTree2)}`;
     ));
   };
   var renderKanbanPreview = (node, isSelected, eventHandlers, onTreeUpdate) => {
-    return /* @__PURE__ */ import_react175.default.createElement(
+    return /* @__PURE__ */ import_react176.default.createElement(
       "div",
       {
         style: {
@@ -76243,14 +76523,14 @@ ${convertTreeToXML(xmlTree2)}`;
         },
         ...eventHandlers
       },
-      /* @__PURE__ */ import_react175.default.createElement(KanbanBoardPreview, { xmlTree: node, onTreeUpdate })
+      /* @__PURE__ */ import_react176.default.createElement(KanbanBoardPreview, { xmlTree: node, onTreeUpdate })
     );
   };
   var FluaPage = () => {
-    const [initialTree, setInitialTree] = (0, import_react175.useState)(null);
-    const [loading, setLoading] = (0, import_react175.useState)(true);
-    const [error, setError] = (0, import_react175.useState)(null);
-    (0, import_react175.useEffect)(() => {
+    const [initialTree, setInitialTree] = (0, import_react176.useState)(null);
+    const [loading, setLoading] = (0, import_react176.useState)(true);
+    const [error, setError] = (0, import_react176.useState)(null);
+    (0, import_react176.useEffect)(() => {
       const loadKanbanProcess = async () => {
         try {
           setLoading(true);
@@ -76266,15 +76546,15 @@ ${convertTreeToXML(xmlTree2)}`;
       loadKanbanProcess();
     }, []);
     if (loading) {
-      return /* @__PURE__ */ import_react175.default.createElement("div", null, "Loading kanban process...");
+      return /* @__PURE__ */ import_react176.default.createElement("div", null, "Loading kanban process...");
     }
     if (error) {
       throw error;
     }
     if (!initialTree) {
-      return /* @__PURE__ */ import_react175.default.createElement("div", null, "No XML data available");
+      return /* @__PURE__ */ import_react176.default.createElement("div", null, "No XML data available");
     }
-    return /* @__PURE__ */ import_react175.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react175.default.createElement(
+    return /* @__PURE__ */ import_react176.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react176.default.createElement(
       GenericXMLEditorPage,
       {
         initialTree,
@@ -76285,7 +76565,7 @@ ${convertTreeToXML(xmlTree2)}`;
             onUpdateAttributes,
             onUpdateTextContent
           });
-          return /* @__PURE__ */ import_react175.default.createElement(
+          return /* @__PURE__ */ import_react176.default.createElement(
             AttributeEditor,
             {
               node,
@@ -76301,16 +76581,16 @@ ${convertTreeToXML(xmlTree2)}`;
   };
 
   // src/App.tsx
-  var WebSocketContext = (0, import_react176.createContext)({
+  var WebSocketContext = (0, import_react177.createContext)({
     ws: null,
     isConnected: false
   });
-  var TutorialModeContext = (0, import_react176.createContext)({
+  var TutorialModeContext = (0, import_react177.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
-  var AuthContext = (0, import_react176.createContext)({
+  var AuthContext = (0, import_react177.createContext)({
     isAuthenticated: false,
     user: null,
     login: () => {
@@ -76319,23 +76599,23 @@ ${convertTreeToXML(xmlTree2)}`;
     }
   });
   var useWebSocket = () => {
-    return (0, import_react176.useContext)(WebSocketContext);
+    return (0, import_react177.useContext)(WebSocketContext);
   };
   var useTutorialMode = () => {
-    return (0, import_react176.useContext)(TutorialModeContext);
+    return (0, import_react177.useContext)(TutorialModeContext);
   };
   var useAuth = () => {
-    return (0, import_react176.useContext)(AuthContext);
+    return (0, import_react177.useContext)(AuthContext);
   };
   var App = () => {
-    const [ws2, setWs] = (0, import_react176.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react176.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react176.useState)(false);
-    const [isAuthenticated, setIsAuthenticated] = (0, import_react176.useState)(
+    const [ws2, setWs] = (0, import_react177.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react177.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react177.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, import_react177.useState)(
       githubAuthService.isAuthenticated
     );
-    const [user, setUser] = (0, import_react176.useState)(githubAuthService.userInfo);
-    (0, import_react176.useEffect)(() => {
+    const [user, setUser] = (0, import_react177.useState)(githubAuthService.userInfo);
+    (0, import_react177.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -76399,61 +76679,61 @@ ${convertTreeToXML(xmlTree2)}`;
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react176.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected, sendMessage } }, /* @__PURE__ */ import_react176.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react176.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react176.default.createElement(HashRouter, null, /* @__PURE__ */ import_react176.default.createElement(AppFrame, null, /* @__PURE__ */ import_react176.default.createElement(Routes, null, /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react176.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/flua", element: /* @__PURE__ */ import_react176.default.createElement(FluaPage, null) }), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react176.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react176.default.createElement(
+    return /* @__PURE__ */ import_react177.default.createElement(WebSocketContext.Provider, { value: { ws: ws2, isConnected, sendMessage } }, /* @__PURE__ */ import_react177.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react177.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react177.default.createElement(HashRouter, null, /* @__PURE__ */ import_react177.default.createElement(AppFrame, null, /* @__PURE__ */ import_react177.default.createElement(Routes, null, /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react177.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/flua", element: /* @__PURE__ */ import_react177.default.createElement(FluaPage, null) }), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react177.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/projects/:projectName",
-        element: /* @__PURE__ */ import_react176.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react177.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react176.default.createElement(
+    ), /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/projects/:projectName/tests/*",
-        element: /* @__PURE__ */ import_react176.default.createElement(TestPage, null)
+        element: /* @__PURE__ */ import_react177.default.createElement(TestPage, null)
       }
-    ), /* @__PURE__ */ import_react176.default.createElement(
+    ), /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/projects/:projectName#:tab",
-        element: /* @__PURE__ */ import_react176.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react177.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react176.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react176.default.createElement(
+    ), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react177.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/auth/github/callback",
-        element: /* @__PURE__ */ import_react176.default.createElement(AuthCallbackPage, null)
+        element: /* @__PURE__ */ import_react177.default.createElement(AuthCallbackPage, null)
       }
-    ), /* @__PURE__ */ import_react176.default.createElement(
+    ), /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/features-reporter",
-        element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(FeaturesReporter, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react176.default.createElement(
+    ), /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/design-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react176.default.createElement(
+    ), /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/text-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null)
       }
-    ), isConnected ? /* @__PURE__ */ import_react176.default.createElement(import_react176.default.Fragment, null, /* @__PURE__ */ import_react176.default.createElement(
+    ), isConnected ? /* @__PURE__ */ import_react177.default.createElement(import_react177.default.Fragment, null, /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/processes",
-        element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react176.default.createElement(
+    ), /* @__PURE__ */ import_react177.default.createElement(
       Route,
       {
         path: "/processes/:processId",
-        element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(void 0, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(void 0, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null)
       }
-    )) : null, /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react176.default.createElement(Settings, null) }), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "/skribo", element: isAuthenticated ? /* @__PURE__ */ import_react176.default.createElement(SkriboPage, null) : /* @__PURE__ */ import_react176.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react176.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react176.default.createElement(Helpo, null) })))))));
+    )) : null, /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react177.default.createElement(Settings, null) }), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/git", element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/svg-editor", element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(SVGEditorPage, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/drato", element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(DratoPage, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/grafeo", element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(GrafeoPage, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "/skribo", element: isAuthenticated ? /* @__PURE__ */ import_react177.default.createElement(SkriboPage, null) : /* @__PURE__ */ import_react177.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react177.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react177.default.createElement(Helpo, null) })))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
@@ -76461,9 +76741,9 @@ ${convertTreeToXML(xmlTree2)}`;
       try {
         if (import_client.default.createRoot) {
           const root = import_client.default.createRoot(rootElement);
-          root.render(import_react176.default.createElement(App));
+          root.render(import_react177.default.createElement(App));
         } else {
-          import_client.default.render(import_react176.default.createElement(App), rootElement);
+          import_client.default.render(import_react177.default.createElement(App), rootElement);
         }
       } catch (err) {
         console.error("Error rendering app:", err);
@@ -76475,7 +76755,7 @@ ${convertTreeToXML(xmlTree2)}`;
   }
   if (typeof window !== "undefined" && typeof document !== "undefined") {
     window.App = App;
-    window.React = import_react176.default;
+    window.React = import_react177.default;
     window.ReactDOM = import_client.default;
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initApp);

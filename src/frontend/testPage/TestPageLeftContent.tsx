@@ -7,8 +7,10 @@ import {
 import { FileTree } from "../../components/pure/FileTree";
 import { FileTreeItem } from "../../components/pure/FileTreeItem";
 import { getLanguage } from "./TestPageView_utils";
+import { ProjectsTree } from "./ProjectsTree";
 
-export const TestPageLeftContent = ({
+// Current test details component (renamed from the original TestPageLeftContent)
+const CurrentTestDetails = ({
   setExpandedSections,
   expandedSections,
   logs,
@@ -200,5 +202,39 @@ export const TestPageLeftContent = ({
         </div>
       )}
     </>
+  );
+};
+
+export const TestPageLeftContent = ({
+  projects,
+  setExpandedSections,
+  expandedSections,
+  logs,
+  setActiveTab,
+  setSelectedFile,
+  runtime,
+  selectedSourcePath,
+  activeTab,
+  setSelectedSourcePath,
+  projectName,
+  testName,
+}) => {
+  return (
+    <div className="p-2">
+      <ProjectsTree 
+        projects={projects} 
+        currentProjectName={projectName}
+        currentTestName={testName}
+        setExpandedSections={setExpandedSections}
+        expandedSections={expandedSections}
+        logs={logs}
+        setActiveTab={setActiveTab}
+        setSelectedFile={setSelectedFile}
+        runtime={runtime}
+        selectedSourcePath={selectedSourcePath}
+        activeTab={activeTab}
+        setSelectedSourcePath={setSelectedSourcePath}
+      />
+    </div>
   );
 };

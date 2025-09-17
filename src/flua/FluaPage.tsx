@@ -220,8 +220,7 @@ const KanbanBoardPreview: React.FC<{
   onTreeUpdate: (newTree: XMLNode) => void;
 }> = ({ xmlTree, onTreeUpdate }) => {
   const [tasks, setTasks] = useState<any[]>([]);
-  console.log("mark1", KanbanBoardPreview);
-  // Find the graphml node which contains the tasks
+
   const findGraphmlNode = React.useCallback((node: XMLNode): XMLNode | null => {
     if (node.type === "graphml:graphml") return node;
     for (const child of node.children) {

@@ -9,7 +9,9 @@ const logFiles_1 = require("../../utils/logFiles");
 const FileTree_1 = require("../../components/pure/FileTree");
 const FileTreeItem_1 = require("../../components/pure/FileTreeItem");
 const TestPageView_utils_1 = require("./TestPageView_utils");
-const TestPageLeftContent = ({ setExpandedSections, expandedSections, logs, setActiveTab, setSelectedFile, runtime, selectedSourcePath, activeTab, setSelectedSourcePath, }) => {
+const ProjectsTree_1 = require("./ProjectsTree");
+// Current test details component (renamed from the original TestPageLeftContent)
+const CurrentTestDetails = ({ setExpandedSections, expandedSections, logs, setActiveTab, setSelectedFile, runtime, selectedSourcePath, activeTab, setSelectedSourcePath, }) => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement("div", { className: "p-2" },
             react_1.default.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: "pointer", fontSize: "0.875rem" }, onClick: () => setExpandedSections((prev) => (Object.assign(Object.assign({}, prev), { standardLogs: !prev.standardLogs }))) },
@@ -97,5 +99,9 @@ const TestPageLeftContent = ({ setExpandedSections, expandedSections, logs, setA
                             language: (0, TestPageView_utils_1.getLanguage)(path),
                         });
                     }, level: 1, selectedSourcePath: selectedSourcePath })))))));
+};
+const TestPageLeftContent = ({ projects, setExpandedSections, expandedSections, logs, setActiveTab, setSelectedFile, runtime, selectedSourcePath, activeTab, setSelectedSourcePath, projectName, testName, }) => {
+    return (react_1.default.createElement("div", { className: "p-2" },
+        react_1.default.createElement(ProjectsTree_1.ProjectsTree, { projects: projects, currentProjectName: projectName, currentTestName: testName, setExpandedSections: setExpandedSections, expandedSections: expandedSections, logs: logs, setActiveTab: setActiveTab, setSelectedFile: setSelectedFile, runtime: runtime, selectedSourcePath: selectedSourcePath, activeTab: activeTab, setSelectedSourcePath: setSelectedSourcePath })));
 };
 exports.TestPageLeftContent = TestPageLeftContent;

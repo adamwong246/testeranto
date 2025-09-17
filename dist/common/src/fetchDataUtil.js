@@ -104,8 +104,8 @@ const fetchDataUtil = async (testResponse, metafileRes, testPath, setLogs, proje
     // Add source files and build logs to logs
     receivedLogs["source_files"] = sourceFiles;
     receivedLogs["build_logs"] = buildLogs;
-    console.log("Source files structure:", sourceFiles);
-    console.log("Build logs:", buildLogs);
+    // console.log("Source files structure:", sourceFiles);
+    // console.log("Build logs:", buildLogs);
     // Ensure tests.json is properly formatted
     if (receivedLogs["tests.json"]) {
         console.log("tests.json content type:", typeof receivedLogs["tests.json"]);
@@ -154,7 +154,7 @@ const fetchDataUtil = async (testResponse, metafileRes, testPath, setLogs, proje
         const directoryPath = pathParts.join("/");
         // Construct the path without the filename without extension
         const buildUrl = `/reports/${projectName}/${directoryPath}/${runtime}/build.json`;
-        console.log(`Fetching build.json from: ${buildUrl}`);
+        // console.log(`Fetching build.json from: ${buildUrl}`);
         const buildResponse = await fetch(buildUrl);
         if (buildResponse.ok) {
             const buildData = await buildResponse.json();
@@ -163,7 +163,10 @@ const fetchDataUtil = async (testResponse, metafileRes, testPath, setLogs, proje
             receivedLogs["build.json"] = buildData;
         }
         else {
-            console.log("Build.json not found or not accessible, status:", buildResponse.status);
+            // console.log(
+            //   "Build.json not found or not accessible, status:",
+            //   buildResponse.status
+            // );
             // Add an empty build.json to logs to prevent errors
             receivedLogs["build.json"] = { errors: [], warnings: [] };
         }

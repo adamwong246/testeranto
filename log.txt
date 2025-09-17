@@ -1,180 +1,39 @@
-GenericPreview props: 
-{
-    "xmlTree": {
-        "id": "root",
-        "type": "kanban:KanbanProcess",
-        "attributes": {
-            "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-            "xmlns:kanban": "http://example.com/businessprocess/agile/kanban",
-            "xmlns:core": "http://example.com/businessprocess/core",
-            "xmlns:graphml": "http://graphml.graphdrawing.org/xmlns",
-            "xsi:schemaLocation": "http://example.com/businessprocess/agile/kanban ../src/flua/kanban.xsd\n                      http://example.com/businessprocess/core ../src/flua/core.xsd\n                      http://graphml.graphdrawing.org/xmlns ../src/graphml.xsd",
-            "id": "marketing-website-kanban",
-            "name": "Marketing Website Kanban Board",
-            "wipLimit": "3"
-        },
-        "children": [
-            {
-                "id": "metadata",
-                "type": "core:Metadata",
-                "attributes": {},
-                "children": [
-                    {
-                        "id": "version",
-                        "type": "core:Version",
-                        "attributes": {},
-                        "children": [],
-                        "textContent": "1.0"
-                    },
-                    {
-                        "id": "date-created",
-                        "type": "core:DateCreated",
-                        "attributes": {},
-                        "children": [],
-                        "textContent": "2025-09-16"
-                    }
-                ]
-            },
-            {
-                "id": "description",
-                "type": "core:Description",
-                "attributes": {},
-                "children": [],
-                "textContent": "Kanban board for managing tasks related to the marketing website."
-            },
-            {
-                "id": "graphml",
-                "type": "graphml:graphml",
-                "attributes": {},
-                "children": [
-                    {
-                        "id": "key-name",
-                        "type": "graphml:key",
-                        "attributes": {
-                            "id": "name",
-                            "for": "node",
-                            "attr.name": "name",
-                            "attr.type": "string"
-                        },
-                        "children": []
-                    },
-                    {
-                        "id": "key-status",
-                        "type": "graphml:key",
-                        "attributes": {
-                            "id": "status",
-                            "for": "node",
-                            "attr.name": "status",
-                            "attr.type": "string"
-                        },
-                        "children": []
-                    },
-                    {
-                        "id": "key-role",
-                        "type": "graphml:key",
-                        "attributes": {
-                            "id": "role",
-                            "for": "node",
-                            "attr.name": "role",
-                            "attr.type": "string"
-                        },
-                        "children": []
-                    },
-                    {
-                        "id": "graph",
-                        "type": "graphml:graph",
-                        "attributes": {
-                            "id": "kanban-tasks",
-                            "edgedefault": "directed"
-                        },
-                        "children": [
-                            {
-                                "id": "task-seo-audit",
-                                "type": "graphml:node",
-                                "attributes": {
-                                    "id": "task-seo-audit"
-                                },
-                                "children": [
-                                    {
-                                        "id": "data-name-1",
-                                        "type": "graphml:data",
-                                        "attributes": {
-                                            "key": "name"
-                                        },
-                                        "children": [],
-                                        "textContent": "Conduct SEO audit"
-                                    },
-                                    {
-                                        "id": "data-status-1",
-                                        "type": "graphml:data",
-                                        "attributes": {
-                                            "key": "status"
-                                        },
-                                        "children": [],
-                                        "textContent": "To Do"
-                                    },
-                                    {
-                                        "id": "data-role-1",
-                                        "type": "graphml:data",
-                                        "attributes": {
-                                            "key": "role"
-                                        },
-                                        "children": [],
-                                        "textContent": "Marketing Specialist"
-                                    }
-                                ]
-                            },
-                            {
-                                "id": "task-blog-post",
-                                "type": "graphml:node",
-                                "attributes": {
-                                    "id": "task-blog-post"
-                                },
-                                "children": [
-                                    {
-                                        "id": "data-name-2",
-                                        "type": "graphml:data",
-                                        "attributes": {
-                                            "key": "name"
-                                        },
-                                        "children": [],
-                                        "textContent": "Write blog post on new feature"
-                                    },
-                                    {
-                                        "id": "data-status-2",
-                                        "type": "graphml:data",
-                                        "attributes": {
-                                            "key": "status"
-                                        },
-                                        "children": [],
-                                        "textContent": "To Do"
-                                    },
-                                    {
-                                        "id": "data-role-2",
-                                        "type": "graphml:data",
-                                        "attributes": {
-                                            "key": "role"
-                                        },
-                                        "children": [],
-                                        "textContent": "Content Writer"
-                                    }
-                                ]
-                            },
-                            {
-                                "id": "edge-1",
-                                "type": "graphml:edge",
-                                "attributes": {
-                                    "source": "task-landing-page",
-                                    "target": "task-implement-ui"
-                                },
-                                "children": []
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    },
-    "selectedNodeId": null,
-    "hiddenNodes": {}
-}
+horizontal scrolling works, until you change the content
+For your bootstrap layout, the challenge is maintaining the Monaco editor's built-in vertical scrolling while allowing the parent container to handle horizontal scrolling, even when the editor's content changes.The issue arises because simply disabling the mouse wheel with handleMouseWheel: false disables all mouse wheel event capturing, including the vertical scrolling you want to keep. 
+The solution is to selectively capture and apply vertical scroll events to the Monaco editor while allowing all other scroll events, particularly horizontal ones, to bubble up to the parent container.This is done by adding a custom event listener and checking the scroll direction. 
+The JavaScript solution
+This approach modifies the earlier solution by adding logic to differentiate between vertical and horizontal scroll events.
+Instantiate Monaco with handleMouseWheel: false: This is the crucial first step to stop the editor from automatically consuming any scroll events.
+Add a wheel event listener to the container: Attach a listener to the editor's parent container or the editor's own DOM element.
+Check the scroll direction: In the event handler, check if the vertical scroll movement(e.deltaY) is greater than the horizontal movement(e.deltaX).
+Manually scroll the editor vertically: If the scroll is mostly vertical, call editor.setScrollPosition() to programmatically scroll the editor's content.
+Prevent default for vertical scrolls: After handling the vertical scroll, call e.preventDefault() to stop the event from affecting the parent container.
+Allow default for horizontal scrolls: If the scroll is mostly horizontal, do nothing.The event will not be prevented and will bubble up, allowing the bootstrap layout to scroll horizontally.
+Manage the editor content with a model: To ensure this behavior persists when the content changes, continue to use monaco.editor.createModel() and model.setValue() as described in the previous answer. 
+
+By setting scrollbar.handleMouseWheel: false, you completely override the editor's default scroll hijacking behavior from the start.
+By using a wheel event listener with logic to check for vertical movement (Math.abs(e.deltaY) > Math.abs(e.deltaX)), you ensure that only vertical scrolls are explicitly handled by the editor.
+The e.preventDefault() inside the vertical scroll logic stops those events from propagating, while horizontal scrolls are ignored, allowing them to bubble up to the multi-column Bootstrap layout.
+The use of model.setValue() to update the content ensures that the editor instance itself is never destroyed and recreated, so the scrollbar.handleMouseWheel: false setting is never lost. 
+
+To achieve conditional scroll bubbling, you need to check if the Monaco editor has reached its vertical or horizontal scroll boundaries before deciding whether to prevent the scroll event from bubbling up to the parent container. This allows the editor to handle its own scrolling first, and once it's maxed out, the parent Bootstrap layout can take over. 
+This requires a custom event listener that inspects the editor's scroll state in real-time.
+The JavaScript solution
+Initialize Monaco with handleMouseWheel: false: As before, this is the first and most critical step to prevent the editor from always consuming scroll events.
+Add a wheel event listener: Attach a listener to the editor's container.
+Get the editor's scroll dimensions: Inside the event handler, get the editor's current scroll position and total scrollable dimensions.
+Check for scroll boundaries: Determine if the scroll direction is horizontal or vertical and if the scroll position is at the maximum or minimum.
+Conditionally prevent bubbling:
+If the editor can still scroll in the intended direction, apply the scroll and prevent the event from bubbling.
+If the editor is at its max scroll in that direction, let the event propagate.
+Manage content with models: Continue using monaco.editor.createModel() and model.setValue() to update the content, which preserves the initial configuration. 
+
+Explanation
+editor.getScrollPosition(): Returns the current scrollTop and scrollLeft values.
+editor.getScrollDimensions(): Returns the total scrollHeight and scrollWidth of the editor's content.
+editor.getDomNode(): Provides access to the editor's DOM element, from which we can get the clientHeight and clientWidth (the visible dimensions of the editor).
+The logic inside the event listener calculates if the scroll position is already at its limit in the direction of the scroll.
+For example, scrollTop + clientHeight >= scrollHeight is how you check if the editor is scrolled all the way to the bottom.
+If the scroll has not reached its limit, e.preventDefault() and e.stopPropagation() are called to keep the event contained within the editor.
+If the scroll limit has been reached, the event is not prevented, and it bubbles up naturally to the parent Bootstrap layout, which can then handle its own scrolling.
+This approach ensures that regardless of how many times you update the editor's content with model.setValue(), the custom scroll handling logic remains active because the editor instance is never destroyed. 

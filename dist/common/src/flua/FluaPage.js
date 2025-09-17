@@ -205,8 +205,6 @@ const KanbanColumn = ({ status, tasks, onMoveTask }) => {
 // Kanban board preview component
 const KanbanBoardPreview = ({ xmlTree, onTreeUpdate }) => {
     const [tasks, setTasks] = (0, react_1.useState)([]);
-    console.log("mark1", KanbanBoardPreview);
-    // Find the graphml node which contains the tasks
     const findGraphmlNode = react_1.default.useCallback((node) => {
         if (node.type === "graphml:graphml")
             return node;

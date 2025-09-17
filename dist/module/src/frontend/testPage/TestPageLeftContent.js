@@ -3,7 +3,9 @@ import { STANDARD_LOGS, RUNTIME_SPECIFIC_LOGS, } from "../../utils/logFiles";
 import { FileTree } from "../../components/pure/FileTree";
 import { FileTreeItem } from "../../components/pure/FileTreeItem";
 import { getLanguage } from "./TestPageView_utils";
-export const TestPageLeftContent = ({ setExpandedSections, expandedSections, logs, setActiveTab, setSelectedFile, runtime, selectedSourcePath, activeTab, setSelectedSourcePath, }) => {
+import { ProjectsTree } from "./ProjectsTree";
+// Current test details component (renamed from the original TestPageLeftContent)
+const CurrentTestDetails = ({ setExpandedSections, expandedSections, logs, setActiveTab, setSelectedFile, runtime, selectedSourcePath, activeTab, setSelectedSourcePath, }) => {
     return (React.createElement(React.Fragment, null,
         React.createElement("div", { className: "p-2" },
             React.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { cursor: "pointer", fontSize: "0.875rem" }, onClick: () => setExpandedSections((prev) => (Object.assign(Object.assign({}, prev), { standardLogs: !prev.standardLogs }))) },
@@ -91,4 +93,8 @@ export const TestPageLeftContent = ({ setExpandedSections, expandedSections, log
                             language: getLanguage(path),
                         });
                     }, level: 1, selectedSourcePath: selectedSourcePath })))))));
+};
+export const TestPageLeftContent = ({ projects, setExpandedSections, expandedSections, logs, setActiveTab, setSelectedFile, runtime, selectedSourcePath, activeTab, setSelectedSourcePath, projectName, testName, }) => {
+    return (React.createElement("div", { className: "p-2" },
+        React.createElement(ProjectsTree, { projects: projects, currentProjectName: projectName, currentTestName: testName, setExpandedSections: setExpandedSections, expandedSections: expandedSections, logs: logs, setActiveTab: setActiveTab, setSelectedFile: setSelectedFile, runtime: runtime, selectedSourcePath: selectedSourcePath, activeTab: activeTab, setSelectedSourcePath: setSelectedSourcePath })));
 };
