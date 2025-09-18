@@ -110,17 +110,35 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
     (0, react_1.useEffect)(() => {
         const fetchProjects = async () => {
             try {
-                const response = await fetch('projects.json');
+                // First try to fetch from the API endpoint
+                try {
+                    const response = await fetch('/api/projects/list');
+                    if (response.ok) {
+                        const projectsData = await response.json();
+                        setProjects(projectsData);
+                        return;
+                    }
+                    // If response is not ok, throw to trigger the catch block
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                catch (apiError) {
+                    console.warn('API endpoint failed, trying projects.json:', apiError);
+                }
+                // Fall back to projects.json
+                const response = await fetch('/projects.json');
                 if (response.ok) {
                     const projectsData = await response.json();
                     setProjects(projectsData);
                 }
                 else {
-                    console.error('Failed to fetch projects');
+                    // Throw an error if projects.json doesn't exist
+                    throw new Error('projects.json not found');
                 }
             }
             catch (error) {
                 console.error('Error fetching projects:', error);
+                // Set projects to empty array to show appropriate UI
+                setProjects([]);
             }
         };
         fetchProjects();

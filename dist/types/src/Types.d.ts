@@ -116,4 +116,5 @@ export type IBuiltConfig = {
 } & ITestconfig;
 export type IProject = {
     projects: Record<string, ITestconfig>;
+    ignore: string[];
 };

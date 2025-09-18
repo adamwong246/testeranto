@@ -63,7 +63,7 @@ export const ProjectsTree: React.FC<ProjectsTreeProps> = ({
     if (isExpanding && !projectTests[projectName]) {
       setLoadingProjects(prev => ({ ...prev, [projectName]: true }));
       try {
-        const response = await fetch(`/projects/${projectName}/tests.json`);
+        const response = await fetch(`/api/projects/tests?project=${encodeURIComponent(projectName)}`);
         if (response.ok) {
           const tests = await response.json();
           setProjectTests(prev => ({
@@ -98,9 +98,11 @@ export const ProjectsTree: React.FC<ProjectsTreeProps> = ({
         <span>Projects</span>
       </div>
       
-      {/* Show projects list or "No projects available" */}
-      {(!projects || projects.length === 0) ? (
-        <div className="ms-3 text-muted">No projects available</div>
+      {/* Show projects list or appropriate message */}
+      {!projects ? (
+        <div className="ms-3 text-muted">Loading projects...</div>
+      ) : projects.length === 0 ? (
+        <div className="ms-3 text-muted">No projects available. Please check if projects.json exists.</div>
       ) : (
         <div>
           {projects.map((project, index) => (
@@ -161,16 +163,18 @@ export const ProjectsTree: React.FC<ProjectsTreeProps> = ({
                                       onClick={() => {
                                         if (exists) {
                                           setActiveTab(logName);
-                                          setSelectedFile({
-                                            path: logName,
-                                            content:
-                                              typeof logContent === "string"
-                                                ? logContent
-                                                : JSON.stringify(logContent, null, 2),
-                                            language: logName.endsWith(".json")
-                                              ? "json"
-                                              : "plaintext",
-                                          });
+                                          if (typeof setSelectedFile === 'function') {
+                                            setSelectedFile({
+                                              path: logName,
+                                              content:
+                                                typeof logContent === "string"
+                                                  ? logContent
+                                                  : JSON.stringify(logContent, null, 2),
+                                              language: logName.endsWith(".json")
+                                                ? "json"
+                                                : "plaintext",
+                                            });
+                                          }
                                         } else {
                                           setActiveTab(logName);
                                           setSelectedFile({

@@ -201,4 +201,5 @@ export type IBuiltConfig = { buildDir: string } & ITestconfig;
 
 export type IProject = {
   projects: Record<string, ITestconfig>;
+  ignore: string[]; //list of glob patterns to ignore
 };

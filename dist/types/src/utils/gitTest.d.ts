@@ -1,7 +1,7 @@
 export declare const testGitIntegration: () => Promise<{
     success: boolean;
-    changes: import("../services/FileService").FileChange[];
-    branch: string;
+    changes: any;
+    branch: any;
     error?: undefined;
 } | {
     success: boolean;

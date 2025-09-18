@@ -10,6 +10,7 @@ export class PM_WithGit extends PM_WithEslintAndTsc {
         super(configs, name, mode);
         this.gitWatchTimeout = null;
         this.gitWatcher = null;
+        // The configs should be available through inheritance
     }
     // Override requestHandler to add Git-specific endpoints
     requestHandler(req, res) {
@@ -349,18 +350,57 @@ export class PM_WithGit extends PM_WithEslintAndTsc {
     async startGitWatcher() {
         console.log("Starting Git watcher for real-time updates");
         // Watch for file system changes in the current directory
-        const watcher = (await import("fs")).watch(process.cwd(), { recursive: true }, async (eventType, filename) => {
+        const fs = await import("fs");
+        const watcher = fs.watch(process.cwd(), { recursive: true }, async (eventType, filename) => {
             if (filename && !filename.includes(".git")) {
                 try {
                     // Debounce the Git status check
                     clearTimeout(this.gitWatchTimeout);
                     this.gitWatchTimeout = setTimeout(async () => {
+                        var _a;
                         const changes = await this.getGitChanges();
                         const status = await this.getGitRemoteStatus();
                         const branch = await this.getCurrentGitBranch();
                         this.broadcast({ type: "changes", changes });
                         this.broadcast({ type: "status", status });
                         this.broadcast({ type: "branch", branch });
+                        // Broadcast file system changes, but only if not ignored
+                        if (filename) {
+                            // Check if the file should be ignored
+                            const ignorePatterns = ((_a = this.configs) === null || _a === void 0 ? void 0 : _a.ignore) || [];
+                            const shouldIgnore = ignorePatterns.some(pattern => {
+                                // Convert glob pattern to regex
+                                let regexPattern = pattern
+                                    .replace(/\./g, '\\.')
+                                    .replace(/\*\*/g, '.*')
+                                    .replace(/\*/g, '[^/]*')
+                                    .replace(/\?/g, '[^/]');
+                                if (!regexPattern.startsWith('^'))
+                                    regexPattern = '^' + regexPattern;
+                                if (!regexPattern.endsWith('$'))
+                                    regexPattern = regexPattern + '$';
+                                const regex = new RegExp(regexPattern);
+                                return regex.test(filename);
+                            });
+                            if (!shouldIgnore) {
+                                // Get the updated file content
+                                try {
+                                    const fullPath = `${process.cwd()}/${filename}`;
+                                    if (fs.existsSync(fullPath)) {
+                                        const content = await fs.promises.readFile(fullPath, 'utf-8');
+                                        this.broadcast({
+                                            type: "fileChanged",
+                                            path: filename,
+                                            content,
+                                            eventType
+                                        });
+                                    }
+                                }
+                                catch (error) {
+                                    console.error('Error reading changed file:', error);
+                                }
+                            }
+                        }
                     }, 500); // Wait 500ms after last change
                 }
                 catch (error) {

@@ -60,7 +60,7 @@ const ProjectsTree = ({ projects, currentProjectName, currentTestName, setExpand
         if (isExpanding && !projectTests[projectName]) {
             setLoadingProjects(prev => (Object.assign(Object.assign({}, prev), { [projectName]: true })));
             try {
-                const response = await fetch(`/projects/${projectName}/tests.json`);
+                const response = await fetch(`/api/projects/tests?project=${encodeURIComponent(projectName)}`);
                 if (response.ok) {
                     const tests = await response.json();
                     setProjectTests(prev => (Object.assign(Object.assign({}, prev), { [projectName]: tests })));
@@ -83,7 +83,7 @@ const ProjectsTree = ({ projects, currentProjectName, currentTestName, setExpand
         react_1.default.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { fontSize: "0.875rem", fontWeight: "bold" } },
             react_1.default.createElement("i", { className: "bi bi-folder me-1" }),
             react_1.default.createElement("span", null, "Projects")),
-        (!projects || projects.length === 0) ? (react_1.default.createElement("div", { className: "ms-3 text-muted" }, "No projects available")) : (react_1.default.createElement("div", null, projects.map((project, index) => (react_1.default.createElement("div", { key: project },
+        !projects ? (react_1.default.createElement("div", { className: "ms-3 text-muted" }, "Loading projects...")) : projects.length === 0 ? (react_1.default.createElement("div", { className: "ms-3 text-muted" }, "No projects available. Please check if projects.json exists.")) : (react_1.default.createElement("div", null, projects.map((project, index) => (react_1.default.createElement("div", { key: project },
             react_1.default.createElement(FileTreeItem_1.FileTreeItem, { name: project, isFile: false, level: 1, isSelected: false, exists: true, isExpanded: expandedProjects[project], onClick: () => toggleProject(project) }),
             expandedProjects[project] && (react_1.default.createElement("div", { className: "ms-4" },
                 "  // Increased indentation for tests",
@@ -101,15 +101,17 @@ const ProjectsTree = ({ projects, currentProjectName, currentTestName, setExpand
                                 return (react_1.default.createElement(FileTreeItem_1.FileTreeItem, { key: logName, name: logName, isFile: true, level: 3, isSelected: activeTab === logName, exists: exists, onClick: () => {
                                         if (exists) {
                                             setActiveTab(logName);
-                                            setSelectedFile({
-                                                path: logName,
-                                                content: typeof logContent === "string"
-                                                    ? logContent
-                                                    : JSON.stringify(logContent, null, 2),
-                                                language: logName.endsWith(".json")
-                                                    ? "json"
-                                                    : "plaintext",
-                                            });
+                                            if (typeof setSelectedFile === 'function') {
+                                                setSelectedFile({
+                                                    path: logName,
+                                                    content: typeof logContent === "string"
+                                                        ? logContent
+                                                        : JSON.stringify(logContent, null, 2),
+                                                    language: logName.endsWith(".json")
+                                                        ? "json"
+                                                        : "plaintext",
+                                                });
+                                            }
                                         }
                                         else {
                                             setActiveTab(logName);

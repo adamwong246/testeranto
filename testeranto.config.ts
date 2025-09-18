@@ -96,5 +96,7 @@ const config: IProject = {
       },
     },
   },
+
+  ignore: ["dist/ "],
 };
 export default config;

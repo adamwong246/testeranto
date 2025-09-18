@@ -23,6 +23,11 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
         this.runningProcesses = new Map();
         this.allProcesses = new Map();
         this.processLogs = new Map();
+        this.configs = configs;
+        console.log("PM_WithWebSocket constructor called with configs:", configs);
+        // Check if projects are directly in configs or in configs.projects
+        const projects = (configs === null || configs === void 0 ? void 0 : configs.projects) || configs;
+        console.log("Projects in config:", projects ? Object.keys(projects) : "No projects");
         // Create HTTP server
         this.httpServer = http_1.default.createServer(this.requestHandler.bind(this));
         // Start WebSocket server attached to the HTTP server
@@ -269,15 +274,60 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
         // Parse the URL
         const parsedUrl = url_1.default.parse(req.url || "/", true);
         const pathname = parsedUrl.pathname || "/";
-        // Handle file system API endpoints
-        if (pathname === null || pathname === void 0 ? void 0 : pathname.startsWith("/api/files/")) {
-            this.handleFilesApi(req, res);
-            return;
-        }
-        // Handle health check endpoint
-        if (pathname === "/health") {
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ status: "ok", timestamp: new Date().toISOString() }));
+        // Handle API endpoints first
+        if (pathname === null || pathname === void 0 ? void 0 : pathname.startsWith("/api/")) {
+            console.log("API request received:", pathname);
+            // Set CORS headers for all API responses
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+            res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+            // Handle preflight requests
+            if (req.method === "OPTIONS") {
+                res.writeHead(200);
+                res.end();
+                return;
+            }
+            // Handle file system API endpoints
+            if (pathname.startsWith("/api/files/")) {
+                this.handleFilesApi(req, res);
+                return;
+            }
+            // Handle projects API endpoints
+            if (pathname === "/api/projects/list") {
+                console.log("Handling /api/projects/list");
+                this.handleListProjects(req, res);
+                return;
+            }
+            if (pathname === "/api/projects/tree") {
+                console.log("Handling /api/projects/tree");
+                // Parse query parameters
+                const query = parsedUrl.query || {};
+                console.log("Query parameters:", query);
+                // Handle both with and without test parameter using the same handler
+                this.handleProjectTree(req, res, query);
+                return;
+            }
+            // Handle project tests endpoint
+            if (pathname === "/api/projects/tests") {
+                const query = parsedUrl.query || {};
+                this.handleProjectTests(req, res, query);
+                return;
+            }
+            // Handle project files endpoint
+            if (pathname === "/api/projects/files") {
+                const query = parsedUrl.query || {};
+                this.handleProjectFiles(req, res, query);
+                return;
+            }
+            // Handle health check endpoint
+            if (pathname === "/api/health") {
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ status: "ok", timestamp: new Date().toISOString() }));
+                return;
+            }
+            // If no API endpoint matches, return 404
+            res.writeHead(404, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "API endpoint not found" }));
             return;
         }
         // Handle root path
@@ -297,8 +347,8 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
             filePath = `testeranto/${filePath}`;
         }
         else if (filePath === "projects.json") {
-            // Serve projects.json
-            filePath = `testeranto/${filePath}`;
+            // Serve projects.json from the root
+            // Don't modify filePath, it's already correct
         }
         else {
             // For frontend assets, try multiple possible locations
@@ -336,8 +386,16 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
                     return;
                 }
                 else {
-                    res.writeHead(404, { "Content-Type": "text/plain" });
-                    res.end("404 Not Found");
+                    // Serve a simple message if index.html is not found
+                    res.writeHead(200, { "Content-Type": "text/html" });
+                    res.end(`
+              <html>
+                <body>
+                  <h1>Testeranto is running</h1>
+                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
+                </body>
+              </html>
+            `);
                     return;
                 }
             }
@@ -428,10 +486,7 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
             return;
         }
         try {
-            if (pathname === "/api/files/list" && req.method === "GET") {
-                this.handleListDirectory(req, res, query);
-            }
-            else if (pathname === "/api/files/read" && req.method === "GET") {
+            if (pathname === "/api/files/read" && req.method === "GET") {
                 this.handleReadFile(req, res, query);
             }
             else if (pathname === "/api/files/exists" && req.method === "GET") {
@@ -439,6 +494,12 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
             }
             else if (pathname === "/api/files/write" && req.method === "POST") {
                 this.handleWriteFile(req, res);
+            }
+            else if (pathname === "/api/files/tree" && req.method === "GET") {
+                this.handleFileTree(req, res, query);
+            }
+            else if (pathname === "/api/files/content" && req.method === "GET") {
+                this.handleFileContent(req, res, query);
             }
             else {
                 res.writeHead(404, { "Content-Type": "application/json" });
@@ -450,7 +511,7 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
             res.end(JSON.stringify({ error: "Internal server error" }));
         }
     }
-    async handleListDirectory(req, res, query) {
+    async handleFileTree(req, res, query) {
         const path = query.path;
         if (!path) {
             res.writeHead(400, { "Content-Type": "application/json" });
@@ -458,16 +519,34 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
             return;
         }
         try {
-            // Resolve the path relative to the current working directory
             const fullPath = this.resolvePath(path);
-            const items = await this.listDirectory(fullPath);
+            const tree = await this.buildFileTree(fullPath, path);
             res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify(items));
+            res.end(JSON.stringify(tree));
         }
         catch (error) {
-            console.error("Error listing directory:", error);
+            console.error("Error building file tree:", error);
             res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Failed to list directory" }));
+            res.end(JSON.stringify({ error: "Failed to build file tree" }));
+        }
+    }
+    async handleFileContent(req, res, query) {
+        const path = query.path;
+        if (!path) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Path parameter required" }));
+            return;
+        }
+        try {
+            const fullPath = this.resolvePath(path);
+            const content = await fs_1.default.promises.readFile(fullPath, "utf-8");
+            res.writeHead(200, { "Content-Type": "text/plain" });
+            res.end(content);
+        }
+        catch (error) {
+            console.error("Error reading file:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Failed to read file" }));
         }
     }
     async handleReadFile(req, res, query) {
@@ -478,6 +557,8 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
             return;
         }
         try {
+            // Resolve the path relative to the current working directory
+            // Files are stored relative to the project root
             const fullPath = this.resolvePath(path);
             const content = await fs_1.default.promises.readFile(fullPath, "utf-8");
             res.writeHead(200, { "Content-Type": "text/plain" });
@@ -506,6 +587,302 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
             console.error("Error checking file existence:", error);
             res.writeHead(500, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ error: "Failed to check file existence" }));
+        }
+    }
+    async handleListProjects(req, res) {
+        var _a;
+        try {
+            // Get project names from the configuration - check both configs and configs.projects
+            const projects = ((_a = this.configs) === null || _a === void 0 ? void 0 : _a.projects) || this.configs;
+            const projectNames = projects ? Object.keys(projects) : [];
+            // If no projects found in config, try to read from projects.json
+            if (projectNames.length === 0) {
+                console.log("No projects found in config, trying to read projects.json");
+                try {
+                    const projectsData = await fs_1.default.promises.readFile("testeranto/projects.json", "utf-8");
+                    const projectsFromFile = JSON.parse(projectsData);
+                    res.writeHead(200, { "Content-Type": "application/json" });
+                    res.end(JSON.stringify(projectsFromFile));
+                    return;
+                }
+                catch (error) {
+                    console.error("Error reading projects.json:", error);
+                }
+            }
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(projectNames));
+        }
+        catch (error) {
+            console.error("Error listing projects:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Failed to list projects" }));
+        }
+    }
+    async handleProjectTree(req, res, query) {
+        var _a;
+        const project = query.project;
+        const test = query.test;
+        console.log("handleProjectTree called with project:", project, "test:", test);
+        if (!project) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Project parameter required" }));
+            return;
+        }
+        try {
+            // Get the project configuration - check both configs and configs.projects
+            const projects = ((_a = this.configs) === null || _a === void 0 ? void 0 : _a.projects) || this.configs;
+            console.log("Available projects in config:", projects ? Object.keys(projects) : "No projects");
+            if (!projects || !projects[project]) {
+                console.error("Project not found in config:", project);
+                res.writeHead(404, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ error: "Project not found" }));
+                return;
+            }
+            const projectConfig = projects[project];
+            // Use the project's source directory, default to empty string
+            const sourceDir = projectConfig.src || "";
+            console.log("Source directory for project:", sourceDir);
+            const fullPath = this.resolvePath(sourceDir);
+            console.log("Full path to build tree:", fullPath);
+            // Recursively build the file tree
+            const tree = await this.buildFileTree(fullPath, sourceDir);
+            console.log("Built tree with", tree.length, "items");
+            // If a test is specified, we can filter or modify the tree to include test-specific files
+            // For now, we'll just return the full tree
+            // In the future, this could include test-specific reports or other files
+            const result = {
+                sourceFiles: tree,
+                // Add test-specific files if needed
+                testFiles: test ? await this.getTestSpecificFiles(project, test) : [],
+            };
+            res.writeHead(200, {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, OPTIONS"
+            });
+            res.end(JSON.stringify(result));
+        }
+        catch (error) {
+            console.error("Error building project tree:", error);
+            res.writeHead(500, {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, OPTIONS"
+            });
+            res.end(JSON.stringify({ error: "Failed to build project tree" }));
+        }
+    }
+    async handleProjectTests(req, res, query) {
+        var _a, _b;
+        const project = query.project;
+        if (!project) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Project parameter required" }));
+            return;
+        }
+        try {
+            // Get the project configuration - check both configs and configs.projects
+            const projects = ((_a = this.configs) === null || _a === void 0 ? void 0 : _a.projects) || this.configs;
+            if (!projects || !projects[project]) {
+                res.writeHead(404, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ error: "Project not found" }));
+                return;
+            }
+            const projectConfig = projects[project];
+            // Extract test paths from the project configuration
+            const tests = ((_b = projectConfig.tests) === null || _b === void 0 ? void 0 : _b.map((test) => {
+                // Handle different test formats
+                if (Array.isArray(test)) {
+                    // Format: ["path/to/test", "runtime", { ports: number }, [...]]
+                    return test[0];
+                }
+                else if (typeof test === "string") {
+                    return test;
+                }
+                return null;
+            }).filter(Boolean)) || [];
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(tests));
+        }
+        catch (error) {
+            console.error("Error getting project tests:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Failed to get project tests" }));
+        }
+    }
+    async handleProjectFiles(req, res, query) {
+        var _a;
+        const project = query.project;
+        const test = query.test;
+        if (!project || !test) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Project and test parameters required" }));
+            return;
+        }
+        try {
+            // Get the project configuration - check both configs and configs.projects
+            const projects = ((_a = this.configs) === null || _a === void 0 ? void 0 : _a.projects) || this.configs;
+            if (!projects || !projects[project]) {
+                res.writeHead(404, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ error: "Project not found" }));
+                return;
+            }
+            const projectConfig = projects[project];
+            // For now, we'll return a combination of source files and reports
+            // This is a simplified implementation
+            const result = {
+                sourceFiles: [],
+                reportFiles: [],
+            };
+            // Get source directory tree
+            const sourceDir = projectConfig.src || "";
+            if (sourceDir) {
+                const fullPath = this.resolvePath(sourceDir);
+                try {
+                    result.sourceFiles = await this.buildFileTree(fullPath, sourceDir);
+                }
+                catch (error) {
+                    console.error("Error building source file tree:", error);
+                }
+            }
+            // Get report files (this would need to be implemented based on your reporting structure)
+            // For now, we'll return an empty array
+            result.reportFiles = [];
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(result));
+        }
+        catch (error) {
+            console.error("Error getting project files:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Failed to get project files" }));
+        }
+    }
+    async handleProjectTreeWithTest(req, res, query) {
+        var _a;
+        const project = query.project;
+        const test = query.test;
+        if (!project) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Project parameter required" }));
+            return;
+        }
+        try {
+            // Get the project configuration - check both configs and configs.projects
+            const projects = ((_a = this.configs) === null || _a === void 0 ? void 0 : _a.projects) || this.configs;
+            if (!projects || !projects[project]) {
+                res.writeHead(404, { "Content-Type": "application/json" });
+                res.end(JSON.stringify({ error: "Project not found" }));
+                return;
+            }
+            const projectConfig = projects[project];
+            // Use the project's source directory, default to empty string
+            const sourceDir = projectConfig.src || "";
+            const fullPath = this.resolvePath(sourceDir);
+            // Recursively build the file tree
+            const tree = await this.buildFileTree(fullPath, sourceDir);
+            // If a test is specified, we can filter or modify the tree to include test-specific files
+            // For now, we'll just return the full tree
+            // In the future, this could include test-specific reports or other files
+            const result = {
+                sourceFiles: tree,
+                // Add test-specific files if needed
+                testFiles: test ? await this.getTestSpecificFiles(project, test) : [],
+            };
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(result));
+        }
+        catch (error) {
+            console.error("Error building project tree with test:", error);
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Failed to build project tree" }));
+        }
+    }
+    async getTestSpecificFiles(project, test) {
+        try {
+            // Look for test-specific files in the reports directory
+            const testReportsPath = `testeranto/reports/${project}/${encodeURIComponent(test)}`;
+            const fullPath = this.resolvePath(testReportsPath);
+            // Check if the reports directory exists
+            try {
+                await fs_1.default.promises.access(fullPath);
+            }
+            catch (_a) {
+                // Directory doesn't exist, return empty array
+                return [];
+            }
+            // Build file tree for test-specific reports
+            const testFiles = await this.buildFileTree(fullPath, testReportsPath);
+            // Add metadata to identify these as test-specific files
+            return testFiles.map(file => (Object.assign(Object.assign({}, file), { isTestSpecific: true, testName: test })));
+        }
+        catch (error) {
+            console.error("Error getting test-specific files:", error);
+            return [];
+        }
+    }
+    async buildFileTree(dirPath, basePath) {
+        var _a;
+        try {
+            // Check if directory exists
+            try {
+                await fs_1.default.promises.access(dirPath);
+            }
+            catch (error) {
+                console.error("Directory does not exist:", dirPath);
+                return [];
+            }
+            const items = await fs_1.default.promises.readdir(dirPath, { withFileTypes: true });
+            const result = [];
+            // Get ignore patterns from config - check both configs and configs.ignore
+            const ignorePatterns = ((_a = this.configs) === null || _a === void 0 ? void 0 : _a.ignore) || [];
+            for (const item of items) {
+                // Skip hidden files and directories
+                if (item.name.startsWith("."))
+                    continue;
+                const fullPath = `${dirPath}/${item.name}`;
+                const relativePath = fullPath
+                    .replace(process.cwd(), "")
+                    .replace(/^\//, "");
+                // Check if this path should be ignored
+                const shouldIgnore = ignorePatterns.some((pattern) => {
+                    // Convert glob pattern to regex
+                    let regexPattern = pattern
+                        .replace(/\./g, "\\.")
+                        .replace(/\*\*/g, ".*") // ** matches any number of directories
+                        .replace(/\*/g, "[^/]*") // * matches any characters except /
+                        .replace(/\?/g, "[^/]"); // ? matches any single character except /
+                    // Add anchors if not already present
+                    if (!regexPattern.startsWith("^"))
+                        regexPattern = "^" + regexPattern;
+                    if (!regexPattern.endsWith("$"))
+                        regexPattern = regexPattern + "$";
+                    const regex = new RegExp(regexPattern);
+                    return regex.test(relativePath) || regex.test(item.name);
+                });
+                if (shouldIgnore)
+                    continue;
+                if (item.isDirectory()) {
+                    const children = await this.buildFileTree(fullPath, basePath);
+                    result.push({
+                        name: item.name,
+                        type: "folder",
+                        path: "/" + relativePath,
+                        children,
+                    });
+                }
+                else if (item.isFile()) {
+                    result.push({
+                        name: item.name,
+                        type: "file",
+                        path: "/" + relativePath,
+                    });
+                }
+            }
+            return result;
+        }
+        catch (error) {
+            console.error("Error building file tree:", error);
+            return [];
         }
     }
     async handleWriteFile(req, res) {
@@ -549,9 +926,12 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
         return `${process.cwd()}/${normalizedPath}`;
     }
     async listDirectory(dirPath) {
+        var _a;
         try {
             const items = await fs_1.default.promises.readdir(dirPath, { withFileTypes: true });
             const result = [];
+            // Get ignore patterns from config
+            const ignorePatterns = ((_a = this.configs) === null || _a === void 0 ? void 0 : _a.ignore) || [];
             for (const item of items) {
                 // Skip hidden files and directories
                 if (item.name.startsWith("."))
@@ -560,6 +940,26 @@ class PM_WithWebSocket extends base_js_1.PM_Base {
                 const relativePath = fullPath
                     .replace(process.cwd(), "")
                     .replace(/^\//, "");
+                // Check if this path should be ignored
+                const shouldIgnore = ignorePatterns.some((pattern) => {
+                    // Convert glob pattern to regex
+                    // Handle ** which matches any number of directories
+                    let regexPattern = pattern
+                        .replace(/\./g, "\\.")
+                        .replace(/\*\*/g, ".*") // ** matches any number of directories
+                        .replace(/\*/g, "[^/]*") // * matches any characters except /
+                        .replace(/\?/g, "[^/]"); // ? matches any single character except /
+                    // Add anchors if not already present
+                    if (!regexPattern.startsWith("^"))
+                        regexPattern = "^" + regexPattern;
+                    if (!regexPattern.endsWith("$"))
+                        regexPattern = regexPattern + "$";
+                    const regex = new RegExp(regexPattern);
+                    // Test against both the relative path and just the item name
+                    return regex.test(relativePath) || regex.test(item.name);
+                });
+                if (shouldIgnore)
+                    continue;
                 if (item.isDirectory()) {
                     result.push({
                         name: item.name,

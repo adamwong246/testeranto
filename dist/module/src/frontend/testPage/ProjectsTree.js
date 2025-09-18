@@ -24,7 +24,7 @@ export const ProjectsTree = ({ projects, currentProjectName, currentTestName, se
         if (isExpanding && !projectTests[projectName]) {
             setLoadingProjects(prev => (Object.assign(Object.assign({}, prev), { [projectName]: true })));
             try {
-                const response = await fetch(`/projects/${projectName}/tests.json`);
+                const response = await fetch(`/api/projects/tests?project=${encodeURIComponent(projectName)}`);
                 if (response.ok) {
                     const tests = await response.json();
                     setProjectTests(prev => (Object.assign(Object.assign({}, prev), { [projectName]: tests })));
@@ -47,7 +47,7 @@ export const ProjectsTree = ({ projects, currentProjectName, currentTestName, se
         React.createElement("div", { className: "d-flex align-items-center text-muted mb-1", style: { fontSize: "0.875rem", fontWeight: "bold" } },
             React.createElement("i", { className: "bi bi-folder me-1" }),
             React.createElement("span", null, "Projects")),
-        (!projects || projects.length === 0) ? (React.createElement("div", { className: "ms-3 text-muted" }, "No projects available")) : (React.createElement("div", null, projects.map((project, index) => (React.createElement("div", { key: project },
+        !projects ? (React.createElement("div", { className: "ms-3 text-muted" }, "Loading projects...")) : projects.length === 0 ? (React.createElement("div", { className: "ms-3 text-muted" }, "No projects available. Please check if projects.json exists.")) : (React.createElement("div", null, projects.map((project, index) => (React.createElement("div", { key: project },
             React.createElement(FileTreeItem, { name: project, isFile: false, level: 1, isSelected: false, exists: true, isExpanded: expandedProjects[project], onClick: () => toggleProject(project) }),
             expandedProjects[project] && (React.createElement("div", { className: "ms-4" },
                 "  // Increased indentation for tests",
@@ -65,15 +65,17 @@ export const ProjectsTree = ({ projects, currentProjectName, currentTestName, se
                                 return (React.createElement(FileTreeItem, { key: logName, name: logName, isFile: true, level: 3, isSelected: activeTab === logName, exists: exists, onClick: () => {
                                         if (exists) {
                                             setActiveTab(logName);
-                                            setSelectedFile({
-                                                path: logName,
-                                                content: typeof logContent === "string"
-                                                    ? logContent
-                                                    : JSON.stringify(logContent, null, 2),
-                                                language: logName.endsWith(".json")
-                                                    ? "json"
-                                                    : "plaintext",
-                                            });
+                                            if (typeof setSelectedFile === 'function') {
+                                                setSelectedFile({
+                                                    path: logName,
+                                                    content: typeof logContent === "string"
+                                                        ? logContent
+                                                        : JSON.stringify(logContent, null, 2),
+                                                    language: logName.endsWith(".json")
+                                                        ? "json"
+                                                        : "plaintext",
+                                                });
+                                            }
                                         }
                                         else {
                                             setActiveTab(logName);

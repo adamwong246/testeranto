@@ -86,5 +86,6 @@ const config = {
             },
         },
     },
+    ignore: ["dist/ "],
 };
 exports.default = config;

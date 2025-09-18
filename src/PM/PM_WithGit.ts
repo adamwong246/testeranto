@@ -22,6 +22,7 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
 
   constructor(configs: IBuiltConfig, name: string, mode: "once" | "dev") {
     super(configs, name, mode);
+    // The configs should be available through inheritance
   }
 
   // Override requestHandler to add Git-specific endpoints
@@ -432,7 +433,8 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
     console.log("Starting Git watcher for real-time updates");
 
     // Watch for file system changes in the current directory
-    const watcher = (await import("fs")).watch(
+    const fs = await import("fs");
+    const watcher = fs.watch(
       process.cwd(),
       { recursive: true },
       async (eventType, filename) => {
@@ -448,6 +450,44 @@ export abstract class PM_WithGit extends PM_WithEslintAndTsc {
               this.broadcast({ type: "changes", changes });
               this.broadcast({ type: "status", status });
               this.broadcast({ type: "branch", branch });
+              
+              // Broadcast file system changes, but only if not ignored
+              if (filename) {
+                // Check if the file should be ignored
+                const ignorePatterns = this.configs?.ignore || [];
+                const shouldIgnore = ignorePatterns.some(pattern => {
+                  // Convert glob pattern to regex
+                  let regexPattern = pattern
+                    .replace(/\./g, '\\.')
+                    .replace(/\*\*/g, '.*')
+                    .replace(/\*/g, '[^/]*')
+                    .replace(/\?/g, '[^/]');
+              
+                  if (!regexPattern.startsWith('^')) regexPattern = '^' + regexPattern;
+                  if (!regexPattern.endsWith('$')) regexPattern = regexPattern + '$';
+              
+                  const regex = new RegExp(regexPattern);
+                  return regex.test(filename);
+                });
+            
+                if (!shouldIgnore) {
+                  // Get the updated file content
+                  try {
+                    const fullPath = `${process.cwd()}/${filename}`;
+                    if (fs.existsSync(fullPath)) {
+                      const content = await fs.promises.readFile(fullPath, 'utf-8');
+                      this.broadcast({
+                        type: "fileChanged",
+                        path: filename,
+                        content,
+                        eventType
+                      });
+                    }
+                  } catch (error) {
+                    console.error('Error reading changed file:', error);
+                  }
+                }
+              }
             }, 500); // Wait 500ms after last change
           } catch (error) {
             console.error("Error checking Git status:", error);
