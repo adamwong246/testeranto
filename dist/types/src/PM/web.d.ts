@@ -1,13 +1,13 @@
 import { PassThrough } from "stream";
 import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
+import { Page } from "puppeteer-core";
+import { ITLog, ITTestResourceConfiguration } from "../lib";
+import { PM } from ".";
 declare module "puppeteer-core" {
     interface Frame {
         _id: string;
     }
 }
-import { Page } from "puppeteer-core";
-import { ITLog, ITTestResourceConfiguration } from "../lib";
-import { PM } from ".";
 export declare class PM_Web extends PM {
     testResourceConfiguration: ITTestResourceConfiguration;
     constructor(t: ITTestResourceConfiguration);
@@ -16,7 +16,7 @@ export declare class PM_Web extends PM {
     getInnerHtml(selector: string, page: string): void;
     pages(): Promise<string[]>;
     waitForSelector(p: string, s: string): any;
-    screencast(opts: ScreencastOptions, page: string | Page): Promise<string>;
+    screencast(opts: ScreencastOptions, page: Page): Promise<string>;
     screencastStop(recorder: string): any;
     closePage(p: any): string;
     goto(p: any, url: string): any;

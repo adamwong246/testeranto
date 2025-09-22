@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { MockTiposkripto } from "./MockTiposkripto";
 import { specification } from "./Tiposkripto.specification";
 import { testAdapter } from "./Tiposkripto.adapter";
@@ -12,7 +14,7 @@ export const implementation = {
             const builder = new MockTiposkripto({}, // input
             specification, // Use the current specification
             implementation, // Use the current implementation
-            { ports: [] }, // Default resource requirements
+            { ports: 0 }, // Default resource requirements
             testAdapter, // Default adapter
             (cb) => cb() // Default uberCatcher
             );
@@ -24,19 +26,19 @@ export const implementation = {
             return builder;
         },
         WithCustomInput: (input = {}) => {
-            return new MockTiposkripto(input, specification, implementation, { ports: [] }, testAdapter, (cb) => cb());
+            return new MockTiposkripto(input, specification, implementation, { ports: 0 }, testAdapter, (cb) => cb());
         },
         WithResourceRequirements: (requirements = { ports: 0 }) => {
             return new MockTiposkripto({}, specification, implementation, requirements, testAdapter, (cb) => cb());
         },
         WithCustomImplementation: (impl = implementation) => {
-            return new MockTiposkripto({}, specification, impl, { ports: [] }, testAdapter, (cb) => cb());
+            return new MockTiposkripto({}, specification, impl, { ports: 0 }, testAdapter, (cb) => cb());
         },
         WithCustomSpecification: (spec = specification) => {
-            return new MockTiposkripto({}, spec, implementation, { ports: [] }, testAdapter, (cb) => cb());
+            return new MockTiposkripto({}, spec, implementation, { ports: 0 }, testAdapter, (cb) => cb());
         },
         WithCustomAdapter: (customAdapter = {}) => {
-            return new MockTiposkripto({}, specification, implementation, { ports: [] }, Object.assign(Object.assign({}, testAdapter), customAdapter), (cb) => cb());
+            return new MockTiposkripto({}, specification, implementation, { ports: 0 }, Object.assign(Object.assign({}, testAdapter), customAdapter), (cb) => cb());
         },
     },
     whens: {
@@ -144,16 +146,16 @@ export const implementation = {
             }
             // Check if the test adapter has the required methods
             const requiredMethods = [
-                'beforeAll',
-                'beforeEach',
-                'andWhen',
-                'butThen',
-                'afterEach',
-                'afterAll',
-                'assertThis'
+                "beforeAll",
+                "beforeEach",
+                "andWhen",
+                "butThen",
+                "afterEach",
+                "afterAll",
+                "assertThis",
             ];
             for (const method of requiredMethods) {
-                if (typeof builder.testAdapter[method] !== 'function') {
+                if (typeof builder.testAdapter[method] !== "function") {
                     throw new Error(`Test adapter missing required method: ${method}`);
                 }
             }

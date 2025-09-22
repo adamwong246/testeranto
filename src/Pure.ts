@@ -43,21 +43,6 @@ export class PureTesteranto<
     const t: ITTestResourceConfiguration = JSON.parse(partialTestResource);
     const pm = new PM_Pure(t);
 
-    // if (!this.testJobs || this.testJobs.length === 0) {
-    //   console.error(
-    //     "[ERROR] No test jobs available - checking specs:",
-    //     this.specs?.length
-    //   );
-    //   console.error("[ERROR] Test implementation:", this.testImplementation);
-    //   return {
-    //     failed: true,
-    //     fails: 1,
-    //     artifacts: [],
-    //     // logPromise: Promise.resolve(),
-    //     features: [],
-    //   };
-    // }
-
     try {
       const result = this.testJobs[0].receiveTestResourceConfig(pm);
       return result;
@@ -80,7 +65,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testImplementation: ITestImplementation<I, O, M>,
   testAdapter: Partial<ITestAdapter<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<number | Testeranto<I, O, M>> => {
+): Promise<PureTesteranto<I, O, M>> => {
   return new PureTesteranto<I, O, M>(
     input,
     testSpecification,

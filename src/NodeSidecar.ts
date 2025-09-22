@@ -11,12 +11,4 @@ export abstract class NodeSidecar extends Sidecar {
       this.start(JSON.parse(process.argv[2]));
     });
   }
-  // start(t: ITTestResourceConfiguration) {
-  //   throw new Error("Method not implemented.");
-  // }
-  // stop() {
-  //   console.log("NewSideCar stop");
-  //   // process.exit();
-  //   throw new Error("STOP not implemented.");
-  // }
 }

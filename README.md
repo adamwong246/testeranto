@@ -20,7 +20,7 @@ We're launching a private beta for GitHub stargazers first, followed by a public
 
 ## quick links
 
-- Example test reports: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/projects.html)
+- Example test reports: [adamwong246.github.io/testeranto/testeranto](https://adamwong246.github.io/testeranto/testeranto/index.html)
 - demo of me using testeranto to fix a bug: [youtube](https://www.youtube.com/embed/WvU5xMqGi6Q)
 - a starter testeranto project: [testeranto-starter](https://github.com/adamwong246/testeranto-starter)
 - Explainer video source: [github.com/adamwong246/testeranto-video](https://github.com/adamwong246/testeranto-video)
@@ -62,6 +62,7 @@ We're launching a private beta for GitHub stargazers first, followed by a public
 For GitHub authentication to work properly, you need to set up the server-side token exchange:
 
 1. Add the following environment variables to your server:
+
    ```
    GITHUB_CLIENT_ID=your_github_oauth_client_id
    GITHUB_CLIENT_SECRET=your_github_oauth_client_secret
@@ -233,6 +234,7 @@ Test a react component. You can choose from a variety of types (jsx functions, c
 ## Sidecars (COMING SOON)
 
 Alongside your test, you can include a number of "sidecars" - other bundled JavaScript assets upon which your test depends. For example, suppose you have an app with frontend and backend components. You could run a React test in the web and include the Node HTTP server as a sidecar.
+
 # Testeranto
 
 A multi-language testing framework.

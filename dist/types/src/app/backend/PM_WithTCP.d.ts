@@ -1,0 +1,42 @@
+import { ChildProcess } from "child_process";
+import http from "http";
+import { RawData, WebSocketServer } from "ws";
+import { IBuiltConfig } from "../../Types.js";
+import { FileService } from "../FileService.js";
+import { PM_Base } from "./base.js";
+export declare abstract class PM_WithTCP extends PM_Base implements FileService {
+    wss: WebSocketServer;
+    httpServer: http.Server;
+    clients: Set<any>;
+    runningProcesses: Map<string, ChildProcess | Promise<any>>;
+    allProcesses: Map<string, {
+        child?: ChildProcess;
+        promise?: Promise<any>;
+        status: "running" | "exited" | "error" | "completed";
+        exitCode?: number;
+        error?: string;
+        command: string;
+        pid?: number;
+        timestamp: string;
+        type: "process" | "promise";
+        category: "aider" | "bdd-test" | "build-time" | "other";
+        testName?: string;
+        platform?: "node" | "web" | "pure" | "python" | "golang";
+    }>;
+    processLogs: Map<string, string[]>;
+    constructor(configs: IBuiltConfig, name: any, mode: any);
+    writeFile(path: string, content: string): Promise<void>;
+    readFile(path: string): Promise<string>;
+    createDirectory(path: string): Promise<void>;
+    deleteFile(path: string): Promise<void>;
+    files(path: string): Promise<object>;
+    projects(project: string): Promise<string[]>;
+    tests(project: string): Promise<string[]>;
+    report(project: string, test: string): Promise<object>;
+    webSocketBroadcastMessage(message: any): void;
+    httpRequest(req: http.IncomingMessage, res: http.ServerResponse): void;
+    private serveFile;
+    private serveFileSync;
+    private findIndexHtml;
+    websocket(data: RawData, ws: any): void;
+}

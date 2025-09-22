@@ -1,4 +1,5 @@
 import Testeranto from "../../Node";
+
 import { implementation } from "./implementation";
 import { specification } from "./specification";
 import { testAdapter } from "./adapter";
@@ -8,8 +9,7 @@ import { butThenProxy, IProxy } from "../pmProxy";
 
 export type ITestProxies = { butThenProxy: IProxy };
 
-export default Testeranto<I, O, {}>(
-  // because of the nature of testeranto, we must add all the testable items here
+export default Testeranto<I, O, object>(
   {
     butThenProxy,
   },

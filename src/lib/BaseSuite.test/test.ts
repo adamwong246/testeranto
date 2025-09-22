@@ -139,18 +139,14 @@ export const implementation: ITestImplementation<I, O> = {
 
   whens: {
     // Add TestWhen which is defined in O type
-    TestWhen:
-      (): ((suite: MockSuite) => MockSuite) =>
-      (suite: MockSuite) => {
-        return suite;
-      },
+    TestWhen: (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
+      return suite;
+    },
 
     // Add RunSuite which is defined in O type
-    RunSuite:
-      (): ((suite: MockSuite) => MockSuite) =>
-      (suite: MockSuite) => {
-        return suite;
-      },
+    RunSuite: (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
+      return suite;
+    },
 
     // Add AddFeature which is used in the specification
     AddFeature:
@@ -166,8 +162,7 @@ export const implementation: ITestImplementation<I, O> = {
 
     // Add RunSuiteWithError which is used in the specification
     RunSuiteWithError:
-      (): ((suite: MockSuite) => MockSuite) =>
-      (suite: MockSuite) => {
+      (): ((suite: MockSuite) => MockSuite) => (suite: MockSuite) => {
         // Mark the suite as having an error
         return suite;
       },

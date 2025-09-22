@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import chokidar from "chokidar";
-import { generatePitonoMetafile, writePitonoMetafile, } from "./pitonoMetafile";
+import { generatePitonoMetafile, writePitonoMetafile } from "./pitonoMetafile";
 import path from "path";
 import fs from "fs";
 export class PitonoWatcher {
@@ -49,10 +49,6 @@ export class PitonoWatcher {
         });
         // Second watcher: watches bundle files to schedule tests when they change
         const outputDir = path.join(process.cwd(), `testeranto/bundles/python/${this.testName}`);
-        // Ensure the output directory exists
-        if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir, { recursive: true });
-        }
         // Track the last seen signatures to detect changes
         const lastSignatures = new Map();
         // Create a separate watcher for bundle files

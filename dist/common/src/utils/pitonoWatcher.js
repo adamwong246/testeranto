@@ -55,10 +55,6 @@ class PitonoWatcher {
         });
         // Second watcher: watches bundle files to schedule tests when they change
         const outputDir = path_1.default.join(process.cwd(), `testeranto/bundles/python/${this.testName}`);
-        // Ensure the output directory exists
-        if (!fs_1.default.existsSync(outputDir)) {
-            fs_1.default.mkdirSync(outputDir, { recursive: true });
-        }
         // Track the last seen signatures to detect changes
         const lastSignatures = new Map();
         // Create a separate watcher for bundle files

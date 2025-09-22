@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import chokidar from "chokidar";
-import { generateGolingvuMetafile, writeGolingvuMetafile, } from "./golingvuMetafile";
 import path from "path";
 import fs from "fs";
+import chokidar from "chokidar";
+import { generateGolingvuMetafile, writeGolingvuMetafile, } from "./golingvuMetafile";
 export class GolingvuWatcher {
     constructor(testName, entryPoints) {
         this.watcher = null;
@@ -57,9 +57,7 @@ export class GolingvuWatcher {
             .on("ready", () => {
             var _a;
             console.log("Initial golang source file scan complete. Ready for changes.");
-            // Log the watched paths for debugging
             const watched = (_a = this.watcher) === null || _a === void 0 ? void 0 : _a.getWatched();
-            console.log("Number of watched directories:", Object.keys(watched || {}).length);
             // If no directories are being watched, let's try a different approach
             if (Object.keys(watched || {}).length === 0) {
                 console.error("WARNING: No directories are being watched!");
@@ -99,24 +97,24 @@ export class GolingvuWatcher {
                 // }
             }
             else {
-                // Log each directory and its files
-                for (const [dir, files] of Object.entries(watched || {})) {
-                    console.log(`Directory: ${dir}`);
-                    console.log(`Files: ${files.join(", ")}`);
-                }
+                // // Log each directory and its files
+                // for (const [dir, files] of Object.entries(watched || {})) {
+                //   console.log(`Directory: ${dir}`);
+                //   console.log(`Files: ${(files as string[]).join(", ")}`);
+                // }
             }
         })
             .on("raw", (event, path, details) => {
             // This can help debug what events are being emitted
-            console.log(`Raw event: ${event} on path: ${path}`);
+            // console.log(`Raw event: ${event} on path: ${path}`);
         });
         // Second watcher: watches bundle files in the core directory
         const outputDir = path.join(process.cwd(), "testeranto", "bundles", "golang", "core");
         // Ensure the output directory exists
-        if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir, { recursive: true });
-        }
-        console.log(`Watching bundle directory: ${outputDir}`);
+        // if (!fs.existsSync(outputDir)) {
+        //   fs.mkdirSync(outputDir, { recursive: true });
+        // }
+        // console.log(`Watching bundle directory: ${outputDir}`);
         // Track the last seen signatures to detect changes
         const lastSignatures = new Map();
         // Create a separate watcher for bundle files, including .golingvu.go files
@@ -130,11 +128,9 @@ export class GolingvuWatcher {
         });
         bundleWatcher
             .on("add", (filePath) => {
-            // Read the signature when the file is added
             this.readAndCheckSignature(filePath, lastSignatures);
         })
             .on("change", (filePath) => {
-            // Check if the signature has changed when the file is modified
             this.readAndCheckSignature(filePath, lastSignatures);
         })
             .on("error", (error) => console.error(`Bundle watcher error: ${error}`));
@@ -152,15 +148,14 @@ export class GolingvuWatcher {
             // Add a small delay to ensure the file is fully written
             await new Promise((resolve) => setTimeout(resolve, 100));
             // Check if the file exists and log its stats
-            if (fs.existsSync(fullPath)) {
-                try {
-                    const stats = fs.statSync(fullPath);
-                    console.log(`File ${filePath} changed (${stats.size} bytes)`);
-                }
-                catch (error) {
-                    console.error(`Error reading file: ${error}`);
-                }
-            }
+            // if (fs.existsSync(fullPath)) {
+            //   try {
+            //     const stats = fs.statSync(fullPath);
+            //     console.log(`File ${filePath} changed (${stats.size} bytes)`);
+            //   } catch (error) {
+            //     console.error(`Error reading file: ${error}`);
+            //   }
+            // }
             console.log("Regenerating metafile due to file change...");
             await this.regenerateMetafile();
             if (this.onChangeCallback) {

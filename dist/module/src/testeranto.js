@@ -3,9 +3,9 @@
 import ansiC from "ansi-colors";
 import fs from "fs";
 import readline from "readline";
-import { getRunnables } from "./utils";
 import { AppHtml } from "./utils/buildTemplates";
 import { PitonoBuild } from "./PM/pitonoBuild";
+import { getRunnables } from "./app/backend/utils";
 const { GolingvuBuild } = await import("./PM/golingvuBuild");
 // if (!process.env.GITHUB_CLIENT_ID) {
 //   console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
@@ -64,7 +64,7 @@ import(configFilePath).then(async (module) => {
     //////////////////////////////////////////////////////////////////////////////////////////////////
     let pm = null;
     // Start PM_Main immediately - it will handle the build processes internally
-    const { PM_Main } = await import("./PM/main");
+    const { PM_Main } = await import("./app/backend/main");
     pm = new PM_Main(config, testName, mode);
     await pm.start();
     fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());

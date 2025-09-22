@@ -41,9 +41,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ansi_colors_1 = __importDefault(require("ansi-colors"));
 const fs_1 = __importDefault(require("fs"));
 const readline_1 = __importDefault(require("readline"));
-const utils_1 = require("./utils");
 const buildTemplates_1 = require("./utils/buildTemplates");
 const pitonoBuild_1 = require("./PM/pitonoBuild");
+const utils_1 = require("./app/backend/utils");
 const { GolingvuBuild } = await Promise.resolve().then(() => __importStar(require("./PM/golingvuBuild")));
 // if (!process.env.GITHUB_CLIENT_ID) {
 //   console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
@@ -102,7 +102,7 @@ Promise.resolve(`${configFilePath}`).then(s => __importStar(require(s))).then(as
     //////////////////////////////////////////////////////////////////////////////////////////////////
     let pm = null;
     // Start PM_Main immediately - it will handle the build processes internally
-    const { PM_Main } = await Promise.resolve().then(() => __importStar(require("./PM/main")));
+    const { PM_Main } = await Promise.resolve().then(() => __importStar(require("./app/backend/main")));
     pm = new PM_Main(config, testName, mode);
     await pm.start();
     fs_1.default.writeFileSync(`${process.cwd()}/testeranto/projects.html`, (0, buildTemplates_1.AppHtml)());

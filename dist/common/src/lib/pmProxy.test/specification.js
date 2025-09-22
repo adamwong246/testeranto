@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.specification = void 0;
-console.log("wtf");
 const specification = (Suite, Given, When, Then) => [
     Suite.Default("PM Proxy Functionality", {
         // Basic path rewriting tests

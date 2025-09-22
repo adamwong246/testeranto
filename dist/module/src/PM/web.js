@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PM } from ".";
 export class PM_Web extends PM {
     constructor(t) {
@@ -61,8 +63,6 @@ export class PM_Web extends PM {
     customScreenShot(x, y) {
         const opts = x[0];
         const page = x[1];
-        // console.log("customScreenShot 2 opts", opts);
-        // console.log("customScreenShot 2 page", page);
         return window["customScreenShot"](Object.assign(Object.assign({}, opts), { path: this.testResourceConfiguration.fs + "/" + opts.path }), this.testResourceConfiguration.name, page);
     }
     existsSync(destFolder) {
@@ -75,12 +75,8 @@ export class PM_Web extends PM {
         return window["write"](uid, contents);
     }
     writeFileSync(x) {
-        // eslint-disable-next-line prefer-rest-params
-        // const z = arguments["0"];
-        // const filepath = z[0];
-        // const contents = z[1];
-        const filepath = arguments[0];
-        const contents = arguments[1];
+        const filepath = x[0];
+        const contents = x[1];
         return window["writeFileSync"](this.testResourceConfiguration.fs + "/" + filepath, contents, this.testResourceConfiguration.name);
     }
     createWriteStream(filepath) {

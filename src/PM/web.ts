@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PassThrough } from "stream";
 
+import { PassThrough } from "stream";
 import { ScreencastOptions, ScreenshotOptions, Frame } from "puppeteer-core";
+import { Page } from "puppeteer-core";
+
+import { ITLog, ITTestResourceConfiguration } from "../lib";
+import { PM } from ".";
 
 declare module "puppeteer-core" {
   interface Frame {
     _id: string;
   }
 }
-import { Page } from "puppeteer-core";
-
-import { ITLog, ITTestResourceConfiguration } from "../lib";
-import { PM } from ".";
 
 export class PM_Web extends PM {
   testResourceConfiguration: ITTestResourceConfiguration;
@@ -42,7 +42,7 @@ export class PM_Web extends PM {
     return window["waitForSelector"](p, s);
   }
 
-  screencast(opts: ScreencastOptions, page: string | Page): Promise<string> {
+  screencast(opts: ScreencastOptions, page: Page): Promise<string> {
     return window["screencast"](
       {
         ...opts,
@@ -103,8 +103,6 @@ export class PM_Web extends PM {
   customScreenShot(x: ScreenshotOptions, y: any) {
     const opts = x[0];
     const page = x[1];
-    // console.log("customScreenShot 2 opts", opts);
-    // console.log("customScreenShot 2 page", page);
     return window["customScreenShot"](
       {
         ...opts,
@@ -128,14 +126,8 @@ export class PM_Web extends PM {
   }
 
   writeFileSync(x) {
-    // eslint-disable-next-line prefer-rest-params
-    // const z = arguments["0"];
-
-    // const filepath = z[0];
-    // const contents = z[1];
-
-    const filepath = arguments[0];
-    const contents = arguments[1];
+    const filepath = x[0];
+    const contents = x[1];
 
     return window["writeFileSync"](
       this.testResourceConfiguration.fs + "/" + filepath,
@@ -171,12 +163,4 @@ export class PM_Web extends PM {
       );
     };
   }
-
-  // stopSideCar(n: number): Promise<any> {
-  //   return window["stopSideCar"](n, this.testResourceConfiguration.name);
-  // }
-
-  // launchSideCar(n: number): Promise<[number, ITTestResourceConfiguration]> {
-  //   return window["launchSideCar"](n, this.testResourceConfiguration.name);
-  // }
 }

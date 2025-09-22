@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MockPMBase } from "./mockPMBase";
 export class MockPM extends MockPMBase {
     constructor(configs) {

@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { PassThrough } from "stream";
 
-import { ITestImplementation, ITestSpecification, ITestAdapter } from "../../CoreTypes";
+import {
+  ITestImplementation,
+  ITestSpecification,
+  ITestAdapter,
+} from "../../CoreTypes";
 import { MockTiposkripto } from "./MockTiposkripto";
 
 import { I, O, M } from "./Tiposkripto.types";
@@ -23,7 +26,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         {}, // input
         specification, // Use the current specification
         implementation, // Use the current implementation
-        { ports: [] }, // Default resource requirements
+        { ports: 0 }, // Default resource requirements
         testAdapter, // Default adapter
         (cb) => cb() // Default uberCatcher
       );
@@ -39,12 +42,14 @@ export const implementation: ITestImplementation<I, O, M> = {
         input,
         specification,
         implementation,
-        { ports: [] },
+        { ports: 0 },
         testAdapter,
         (cb) => cb()
       );
     },
-    WithResourceRequirements: (requirements: ITTestResourceRequest = { ports: 0 }) => {
+    WithResourceRequirements: (
+      requirements: ITTestResourceRequest = { ports: 0 }
+    ) => {
       return new MockTiposkripto(
         {},
         specification,
@@ -54,22 +59,26 @@ export const implementation: ITestImplementation<I, O, M> = {
         (cb) => cb()
       );
     },
-    WithCustomImplementation: (impl: ITestImplementation<any, any> = implementation) => {
+    WithCustomImplementation: (
+      impl: ITestImplementation<any, any> = implementation
+    ) => {
       return new MockTiposkripto(
         {},
         specification,
         impl,
-        { ports: [] },
+        { ports: 0 },
         testAdapter,
         (cb) => cb()
       );
     },
-    WithCustomSpecification: (spec: ITestSpecification<any, any> = specification) => {
+    WithCustomSpecification: (
+      spec: ITestSpecification<any, any> = specification
+    ) => {
       return new MockTiposkripto(
         {},
         spec,
         implementation,
-        { ports: [] },
+        { ports: 0 },
         testAdapter,
         (cb) => cb()
       );
@@ -79,7 +88,7 @@ export const implementation: ITestImplementation<I, O, M> = {
         {},
         specification,
         implementation,
-        { ports: [] },
+        { ports: 0 },
         { ...testAdapter, ...customAdapter },
         (cb) => cb()
       );
@@ -193,16 +202,16 @@ export const implementation: ITestImplementation<I, O, M> = {
       }
       // Check if the test adapter has the required methods
       const requiredMethods = [
-        'beforeAll',
-        'beforeEach',
-        'andWhen',
-        'butThen',
-        'afterEach',
-        'afterAll',
-        'assertThis'
+        "beforeAll",
+        "beforeEach",
+        "andWhen",
+        "butThen",
+        "afterEach",
+        "afterAll",
+        "assertThis",
       ];
       for (const method of requiredMethods) {
-        if (typeof builder.testAdapter[method] !== 'function') {
+        if (typeof builder.testAdapter[method] !== "function") {
           throw new Error(`Test adapter missing required method: ${method}`);
         }
       }
@@ -232,7 +241,9 @@ export const implementation: ITestImplementation<I, O, M> = {
       const result = await builder.receiveTestResourceConfig("");
       // The total number of tests should be greater than 0
       if (result.runTimeTests <= 0) {
-        throw new Error(`Expected runTimeTests > 0, got ${result.runTimeTests}`);
+        throw new Error(
+          `Expected runTimeTests > 0, got ${result.runTimeTests}`
+        );
       }
       return builder;
     },
@@ -245,7 +256,9 @@ export const implementation: ITestImplementation<I, O, M> = {
     runTimeTestsCountIs: (expectedCount: number) => async (builder: any) => {
       const result = await builder.receiveTestResourceConfig("");
       if (result.runTimeTests !== expectedCount) {
-        throw new Error(`Expected runTimeTests to be ${expectedCount}, got ${result.runTimeTests}`);
+        throw new Error(
+          `Expected runTimeTests to be ${expectedCount}, got ${result.runTimeTests}`
+        );
       }
       return builder;
     },

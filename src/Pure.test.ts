@@ -4,6 +4,7 @@
 import {
   Ibdd_in,
   Ibdd_out,
+  ITestAdapter,
   ITestImplementation,
   ITestSpecification,
 } from "./CoreTypes";
@@ -11,12 +12,21 @@ import PureTesteranto from "./Pure";
 import { MockPMBase } from "./lib/pmProxy.test/mockPMBase";
 import { IPM } from "./lib/types";
 
-// Test types specific to PureTesteranto testing
 type I = Ibdd_in<
   null, // No initial input needed
   IPM, // Test subject is IPM
-  { pm: IPM; artifacts?: any[]; testJobs?: any[]; specs?: any[]; largePayload?: boolean }, // Store contains PM instance
-  { pm: IPM }, // Selection is same as store
+  {
+    pm: IPM;
+    artifacts?: any[];
+    testJobs?: any[];
+    specs?: any[];
+    largePayload?: boolean;
+  }, // Store contains PM instance
+  {
+    artifacts: never[];
+    specs: never[];
+    pm: IPM;
+  }, // Selection is same as store
   () => { pm: IPM; config: {}; proxies: any }, // Given returns initial state
   (store: { pm: IPM; [key: string]: any }) => { pm: IPM; [key: string]: any }, // When modifies store
   (store: { pm: IPM; [key: string]: any }) => { pm: IPM; [key: string]: any } // Then verifies store
@@ -48,7 +58,6 @@ type O = Ibdd_out<
   }
 >;
 
-// Implementation for PureTesteranto tests
 const implementation: ITestImplementation<I, O> = {
   suites: {
     Default: "PureTesteranto Test Suite",
@@ -76,7 +85,10 @@ const implementation: ITestImplementation<I, O> = {
           beforeEachProxy: (pm: IPM, suite: string) => ({
             ...pm,
             writeFileSync: (p: string, c: string) => {
-              return (pm as any).writeFileSync(`suite-${suite}/beforeEach/${p}`, c);
+              return (pm as any).writeFileSync(
+                `suite-${suite}/beforeEach/${p}`,
+                c
+              );
             },
           }),
         },
@@ -180,7 +192,6 @@ const implementation: ITestImplementation<I, O> = {
   },
 };
 
-// Specification for PureTesteranto tests
 const specification: ITestSpecification<I, O> = (Suite, Given, When, Then) => [
   Suite.Default("Core Functionality", {
     initializationTest: Given.Default(
@@ -311,7 +322,6 @@ const specification: ITestSpecification<I, O> = (Suite, Given, When, Then) => [
   }),
 ];
 
-// Test adapter for PureTesteranto
 const testAdapter: Partial<ITestAdapter<I>> = {
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
     const initialized = initializer();
@@ -331,9 +341,8 @@ const testAdapter: Partial<ITestAdapter<I>> = {
   assertThis: (x) => x,
 };
 
-// Export the test suite
 export default PureTesteranto<I, O, {}>(
-  null, // No initial input
+  null,
   specification,
   implementation,
   testAdapter

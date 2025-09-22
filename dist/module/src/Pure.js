@@ -10,20 +10,6 @@ export class PureTesteranto extends Tiposkripto {
     async receiveTestResourceConfig(partialTestResource) {
         const t = JSON.parse(partialTestResource);
         const pm = new PM_Pure(t);
-        // if (!this.testJobs || this.testJobs.length === 0) {
-        //   console.error(
-        //     "[ERROR] No test jobs available - checking specs:",
-        //     this.specs?.length
-        //   );
-        //   console.error("[ERROR] Test implementation:", this.testImplementation);
-        //   return {
-        //     failed: true,
-        //     fails: 1,
-        //     artifacts: [],
-        //     // logPromise: Promise.resolve(),
-        //     features: [],
-        //   };
-        // }
         try {
             const result = this.testJobs[0].receiveTestResourceConfig(pm);
             return result;

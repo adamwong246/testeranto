@@ -133,7 +133,7 @@
         "format": "esm"
       },
       "src/lib/pmProxy.ts": {
-        "bytes": 9566,
+        "bytes": 6912,
         "imports": [
           {
             "path": "./types",
@@ -289,7 +289,7 @@
         "format": "esm"
       },
       "src/Node.ts": {
-        "bytes": 2131,
+        "bytes": 2088,
         "imports": [
           {
             "path": "src/lib/index.ts",

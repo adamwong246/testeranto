@@ -2,8 +2,6 @@ import { ITestSpecification } from "../../CoreTypes";
 
 import { I, O } from "./types";
 
-console.log("wtf");
-
 export const specification: ITestSpecification<I, O> = (
   Suite,
   Given,

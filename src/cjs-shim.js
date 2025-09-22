@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-undef */
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import url from 'node:url';

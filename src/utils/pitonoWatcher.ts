@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import chokidar from "chokidar";
 import type { FSWatcher } from "chokidar";
-import {
-  generatePitonoMetafile,
-  writePitonoMetafile,
-} from "./pitonoMetafile";
+import { generatePitonoMetafile, writePitonoMetafile } from "./pitonoMetafile";
 import path from "path";
 import fs from "fs";
 
@@ -66,10 +63,6 @@ export class PitonoWatcher {
       process.cwd(),
       `testeranto/bundles/python/${this.testName}`
     );
-    // Ensure the output directory exists
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
 
     // Track the last seen signatures to detect changes
     const lastSignatures = new Map<string, string>();
@@ -132,7 +125,7 @@ export class PitonoWatcher {
     }
   }
 
-  private async regenerateMetafile() {
+  async regenerateMetafile() {
     try {
       const metafile = await generatePitonoMetafile(
         this.testName,

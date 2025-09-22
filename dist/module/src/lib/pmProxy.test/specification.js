@@ -1,4 +1,3 @@
-console.log("wtf");
 export const specification = (Suite, Given, When, Then) => [
     Suite.Default("PM Proxy Functionality", {
         // Basic path rewriting tests

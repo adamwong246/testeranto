@@ -1,4 +1,3 @@
-// import Testeranto from "./lib/core.js";
 import {
   defaultTestResourceRequirement,
   ITTestResourceRequest,

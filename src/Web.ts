@@ -10,20 +10,11 @@ import {
 } from "./CoreTypes";
 import { PM_Web } from "./PM/web";
 import Tiposkripto from "./lib/Tiposkripto";
-
 import {
   ITTestResourceConfiguration,
   ITTestResourceRequest,
   defaultTestResourceRequirement,
 } from "./lib/index.js";
-
-// let errorCallback = (e: any) => {};
-// let unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
-//   console.log(
-//     "window.addEventListener unhandledrejection 1",
-//     JSON.stringify(event)
-//   );
-// };
 
 export class WebTesteranto<
   I extends Ibdd_in_any,
@@ -44,34 +35,7 @@ export class WebTesteranto<
       testResourceRequirement,
       testAdapter,
       (cb) => {
-        // window.removeEventListener("error", errorCallback);
-        // errorCallback = (e) => {
-        //   console.log("window.addEventListener error 2", JSON.stringify(e));
-        //   cb(e);
-        //   // throw e;
-        // };
-        // window.addEventListener("error", errorCallback);
-        // window.removeEventListener(
-        //   "unhandledrejection",
-        //   unhandledrejectionCallback
-        // );
-        // /////////////////////
-        // window.removeEventListener(
-        //   "unhandledrejection",
-        //   unhandledrejectionCallback
-        // );
-        // unhandledrejectionCallback = (event: PromiseRejectionEvent) => {
-        //   console.log(
-        //     "window.addEventListener unhandledrejection 3",
-        //     JSON.stringify(event)
-        //   );
-        //   cb({ error: event.reason.message });
-        //   // throw event;
-        // };
-        // window.addEventListener(
-        //   "unhandledrejection",
-        //   unhandledrejectionCallback
-        // );
+        // todo
       }
     );
   }
@@ -89,7 +53,7 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testImplementation: ITestImplementation<I, O, M>,
   testAdapter: Partial<ITestAdapter<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
-): Promise<Testeranto<I, O, M>> => {
+): Promise<WebTesteranto<I, O, M>> => {
   return new WebTesteranto<I, O, M>(
     input,
     testSpecification,

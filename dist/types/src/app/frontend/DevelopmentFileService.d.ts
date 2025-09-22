@@ -1,0 +1,35 @@
+import { FileService, FileChange, RemoteStatus, FileEntry, FileStatus } from "../FileService";
+export declare class DevelopmentFileService extends FileService {
+    private ws;
+    private changeCallbacks;
+    private statusCallbacks;
+    private branchCallbacks;
+    private fileCallbacks;
+    private directoryCallbacks;
+    constructor();
+    files(path: string): Promise<object>;
+    projects(project: string): Promise<string[]>;
+    tests(project: string): Promise<string[]>;
+    report(project: string, test: string): Promise<object>;
+    fsTree(path: string): Promise<object>;
+    projectTree(project: string): Promise<object>;
+    private connectWebSocket;
+    onChanges(callback: (changes: FileChange[]) => void): () => void;
+    onStatusUpdate(callback: (status: RemoteStatus) => void): () => void;
+    onBranchUpdate(callback: (branch: string) => void): () => void;
+    private ensureWebSocketConnected;
+    readFile(path: string): Promise<string>;
+    readDirectory(path: string): Promise<FileEntry[]>;
+    private readDirectoryViaWebSocket;
+    exists(path: string): Promise<boolean>;
+    writeFile(path: string, content: string): Promise<void>;
+    createDirectory(path: string): Promise<void>;
+    deleteFile(path: string): Promise<void>;
+    getFileStatus(path: string): Promise<FileStatus>;
+    getChanges(): Promise<FileChange[]>;
+    commitChanges(message: string, description?: string): Promise<void>;
+    pushChanges(): Promise<void>;
+    pullChanges(): Promise<void>;
+    getCurrentBranch(): Promise<string>;
+    getRemoteStatus(): Promise<RemoteStatus>;
+}

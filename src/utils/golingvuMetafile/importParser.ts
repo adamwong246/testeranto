@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
+
 import { runGoList } from "../golingvuMetafile/goList";
+
+import { GoListOutput } from "./types";
 
 export function parseGoImports(
   filePath: string
@@ -13,7 +16,7 @@ export function parseGoImports(
   // Try to get package info using go list, but handle cases where it fails
   const dir = path.dirname(filePath);
   let packages: GoListOutput[] = [];
-  
+
   try {
     packages = runGoList(dir);
   } catch (error) {

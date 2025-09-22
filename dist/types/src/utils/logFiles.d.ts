@@ -95,7 +95,7 @@ export declare const ALL_LOGS: {
     readonly BUILD: "build.json";
 };
 export declare const getRuntimeLogs: (runtime: RuntimeName) => {
-    standard: ("tests.json" | "type_errors.txt" | "lint_errors.txt" | "exit.log" | "message.txt" | "prompt.txt" | "build.json")[];
+    standard: ("tests.json" | "type_errors.txt" | "lint_errors.txt" | "prompt.txt" | "exit.log" | "message.txt" | "build.json")[];
     runtimeSpecific: ("stdout.log" | "stderr.log" | "info.log" | "error.log" | "warn.log" | "debug.log")[];
 };
 export type RuntimeLogs = typeof RUNTIME_SPECIFIC_LOGS;

@@ -1,4 +1,6 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -10,11 +12,11 @@ const specification = (Suite, Given, When, Then) => {
     return [
         Suite.TheMothership("the mothership allows the coordination of test resources", {
             test0: Given.ItIsRunning([`a resource can be claimed`], [When.IClaimTheResource("test")], [Then.TheResourceIsClaimed("test")]),
-        }, []),
+        }),
     ];
 };
 const implementation = {
-    suites: { TheMothership: (x) => x },
+    suites: { TheMothership: "idk" },
     givens: { ItIsRunning: () => undefined },
     whens: {
         IClaimTheResource: (resource) => async (app, tr, pm) => {

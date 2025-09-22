@@ -1,6 +1,6 @@
 {
   "example/Calculator.test.ts": {
-    "typeErrors": 20,
+    "typeErrors": 19,
     "staticErrors": 1,
     "runTimeErrors": 0,
     "prompt": "aider --model deepseek/deepseek-chat --load testeranto/core/reports/node/example/Calculator.test/prompt.txt",

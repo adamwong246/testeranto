@@ -1,4 +1,3 @@
-// import Testeranto from "./lib/core.js";
 import { defaultTestResourceRequirement, } from "./lib/index.js";
 import { PM_Node } from "./PM/node.js";
 import Tiposkripto from "./lib/Tiposkripto.js";

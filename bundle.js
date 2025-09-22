@@ -4,12 +4,8 @@ import { sassPlugin } from 'esbuild-sass-plugin'
 await esbuild.build({
   outExtension: { '.js': '.mjs' },
   entryPoints: [
-    // 'src/build.ts',
-    // 'src/run.ts',
     'src/init-docs.ts',
-    // 'src/ReportServer.ts',
     'src/esbuildConfigs/eslint-formatter-testeranto.ts',
-    // 'src/mothership/index.ts',
     'src/testeranto.ts'
   ],
   bundle: true,
@@ -28,13 +24,8 @@ await esbuild.build({
 
 await esbuild.build({
   entryPoints: [
-    // 'src/ProjectsPage.tsx',
-    // 'src/ProjectPage.tsx',
-    // 'src/TestPage.tsx',
-    // 'src/BuildLogsPage.tsx',
-    // 'src/TestReport.tsx',
-    'src/App.scss',
-    'src/App.tsx',
+    'src/app/frontend/App.scss',
+    'src/app/frontend/App.tsx',
   ],
   bundle: true,
   format: "iife",

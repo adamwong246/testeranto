@@ -9,122 +9,6 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
-// src/utils.ts
-import path from "path";
-var webEvaluator, tscPather, lintPather, promptPather, getRunnables;
-var init_utils = __esm({
-  "src/utils.ts"() {
-    "use strict";
-    webEvaluator = (d, webArgz) => {
-      return `
-import('${d}').then(async (x) => {
-  try {
-    return await (await x.default).receiveTestResourceConfig(${webArgz})
-  } catch (e) {
-    console.log("web run failure", e.toString())
-  }
-})
-`;
-    };
-    tscPather = (entryPoint, platform, projectName) => {
-      return path.join(
-        "testeranto",
-        "reports",
-        projectName,
-        entryPoint.split(".").slice(0, -1).join("."),
-        platform,
-        `type_errors.txt`
-      );
-    };
-    lintPather = (entryPoint, platform, projectName) => {
-      return path.join(
-        "testeranto",
-        "reports",
-        projectName,
-        entryPoint.split(".").slice(0, -1).join("."),
-        platform,
-        `lint_errors.txt`
-      );
-    };
-    promptPather = (entryPoint, platform, projectName) => {
-      return path.join(
-        "testeranto",
-        "reports",
-        projectName,
-        entryPoint.split(".").slice(0, -1).join("."),
-        platform,
-        `prompt.txt`
-      );
-    };
-    getRunnables = (tests, projectName, payload = {
-      nodeEntryPoints: {},
-      nodeEntryPointSidecars: {},
-      webEntryPoints: {},
-      webEntryPointSidecars: {},
-      pureEntryPoints: {},
-      pureEntryPointSidecars: {},
-      golangEntryPoints: {},
-      golangEntryPointSidecars: {},
-      pythonEntryPoints: {},
-      pythonEntryPointSidecars: {}
-    }) => {
-      const initializedPayload = {
-        nodeEntryPoints: payload.nodeEntryPoints || {},
-        nodeEntryPointSidecars: payload.nodeEntryPointSidecars || {},
-        webEntryPoints: payload.webEntryPoints || {},
-        webEntryPointSidecars: payload.webEntryPointSidecars || {},
-        pureEntryPoints: payload.pureEntryPoints || {},
-        pureEntryPointSidecars: payload.pureEntryPointSidecars || {},
-        golangEntryPoints: payload.golangEntryPoints || {},
-        golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
-        pythonEntryPoints: payload.pythonEntryPoints || {},
-        pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {}
-      };
-      return tests.reduce((pt, cv, cndx, cry) => {
-        if (cv[1] === "node") {
-          pt.nodeEntryPoints[cv[0]] = path.resolve(
-            `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-          );
-        } else if (cv[1] === "web") {
-          pt.webEntryPoints[cv[0]] = path.resolve(
-            `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-          );
-        } else if (cv[1] === "pure") {
-          pt.pureEntryPoints[cv[0]] = path.resolve(
-            `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-          );
-        } else if (cv[1] === "golang") {
-          pt.golangEntryPoints[cv[0]] = path.resolve(cv[0]);
-        } else if (cv[1] === "python") {
-          pt.pythonEntryPoints[cv[0]] = path.resolve(cv[0]);
-        }
-        cv[3].filter((t) => t[1] === "node").forEach((t) => {
-          pt.nodeEntryPointSidecars[`${t[0]}`] = path.resolve(
-            `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-          );
-        });
-        cv[3].filter((t) => t[1] === "web").forEach((t) => {
-          pt.webEntryPointSidecars[`${t[0]}`] = path.resolve(
-            `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-          );
-        });
-        cv[3].filter((t) => t[1] === "pure").forEach((t) => {
-          pt.pureEntryPointSidecars[`${t[0]}`] = path.resolve(
-            `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
-          );
-        });
-        cv[3].filter((t) => t[1] === "golang").forEach((t) => {
-          pt.golangEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
-        });
-        cv[3].filter((t) => t[1] === "python").forEach((t) => {
-          pt.pythonEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
-        });
-        return pt;
-      }, initializedPayload);
-    };
-  }
-});
-
 // src/utils/pitonoMetafile.ts
 var pitonoMetafile_exports = {};
 __export(pitonoMetafile_exports, {
@@ -132,10 +16,10 @@ __export(pitonoMetafile_exports, {
   writePitonoMetafile: () => writePitonoMetafile
 });
 import fs from "fs";
-import path2 from "path";
+import path from "path";
 function resolvePythonImport(importPath, currentFile) {
   if (importPath.startsWith(".")) {
-    const currentDir = path2.dirname(currentFile);
+    const currentDir = path.dirname(currentFile);
     let dotCount = 0;
     let remainingPath = importPath;
     while (remainingPath.startsWith(".")) {
@@ -147,16 +31,16 @@ function resolvePythonImport(importPath, currentFile) {
     }
     let baseDir = currentDir;
     for (let i = 1; i < dotCount; i++) {
-      baseDir = path2.dirname(baseDir);
+      baseDir = path.dirname(baseDir);
     }
     if (remainingPath.length === 0) {
-      const initPath = path2.join(baseDir, "__init__.py");
+      const initPath = path.join(baseDir, "__init__.py");
       if (fs.existsSync(initPath)) {
         return initPath;
       }
       return null;
     }
-    const resolvedPath = path2.join(baseDir, remainingPath);
+    const resolvedPath = path.join(baseDir, remainingPath);
     const extensions = [".py", "/__init__.py"];
     for (const ext of extensions) {
       const potentialPath = resolvedPath + ext;
@@ -165,7 +49,7 @@ function resolvePythonImport(importPath, currentFile) {
       }
     }
     if (fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory()) {
-      const initPath = path2.join(resolvedPath, "__init__.py");
+      const initPath = path.join(resolvedPath, "__init__.py");
       if (fs.existsSync(initPath)) {
         return initPath;
       }
@@ -173,16 +57,16 @@ function resolvePythonImport(importPath, currentFile) {
     return null;
   }
   const dirs = [
-    path2.dirname(currentFile),
+    path.dirname(currentFile),
     process.cwd(),
-    ...process.env.PYTHONPATH ? process.env.PYTHONPATH.split(path2.delimiter) : []
+    ...process.env.PYTHONPATH ? process.env.PYTHONPATH.split(path.delimiter) : []
   ];
   for (const dir of dirs) {
     const potentialPaths = [
-      path2.join(dir, importPath + ".py"),
-      path2.join(dir, importPath, "__init__.py"),
-      path2.join(dir, importPath.replace(/\./g, "/") + ".py"),
-      path2.join(dir, importPath.replace(/\./g, "/"), "__init__.py")
+      path.join(dir, importPath + ".py"),
+      path.join(dir, importPath, "__init__.py"),
+      path.join(dir, importPath.replace(/\./g, "/") + ".py"),
+      path.join(dir, importPath.replace(/\./g, "/"), "__init__.py")
     ];
     for (const potentialPath of potentialPaths) {
       if (fs.existsSync(potentialPath)) {
@@ -263,7 +147,7 @@ async function generatePitonoMetafile(testName2, entryPoints) {
         };
       }
     }
-    const entryPointName = path2.basename(entryPoint, ".py");
+    const entryPointName = path.basename(entryPoint, ".py");
     const outputKey = `python/core/${entryPointName}.py`;
     const inputBytes = {};
     let totalBytes = 0;
@@ -292,19 +176,19 @@ async function generatePitonoMetafile(testName2, entryPoints) {
 }
 function writePitonoMetafile(testName2, metafile) {
   const projectRoot = process.cwd();
-  const metafilePath = path2.join(
+  const metafilePath = path.join(
     projectRoot,
     "testeranto",
     "metafiles",
     "python",
     "core.json"
   );
-  const metafileDir = path2.dirname(metafilePath);
+  const metafileDir = path.dirname(metafilePath);
   if (!fs.existsSync(metafileDir)) {
     fs.mkdirSync(metafileDir, { recursive: true });
   }
   fs.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
-  const outputDir = path2.join(
+  const outputDir = path.join(
     projectRoot,
     "testeranto",
     "bundles",
@@ -317,9 +201,9 @@ function writePitonoMetafile(testName2, metafile) {
   for (const [outputPath, outputInfo] of Object.entries(
     metafile.metafile.outputs
   )) {
-    const fileName = path2.basename(outputPath);
-    const fullOutputPath = path2.join(outputDir, fileName);
-    const outputDirPath = path2.dirname(fullOutputPath);
+    const fileName = path.basename(outputPath);
+    const fullOutputPath = path.join(outputDir, fileName);
+    const outputDirPath = path.dirname(fullOutputPath);
     if (!fs.existsSync(outputDirPath)) {
       fs.mkdirSync(outputDirPath, { recursive: true });
     }
@@ -356,6 +240,123 @@ except Exception as e:
 var init_pitonoMetafile = __esm({
   "src/utils/pitonoMetafile.ts"() {
     "use strict";
+  }
+});
+
+// src/app/backend/utils.ts
+import path3 from "path";
+var webEvaluator, tscPather, lintPather, promptPather, getRunnables;
+var init_utils = __esm({
+  "src/app/backend/utils.ts"() {
+    "use strict";
+    webEvaluator = (d, webArgz) => {
+      return `
+import('${d}').then(async (x) => {
+  try {
+    return await (await x.default).receiveTestResourceConfig(${webArgz})
+  } catch (e) {
+    console.log("web run failure", e.toString())
+  }
+})
+`;
+    };
+    tscPather = (entryPoint, platform, projectName) => {
+      return path3.join(
+        "testeranto",
+        "reports",
+        projectName,
+        entryPoint.split(".").slice(0, -1).join("."),
+        platform,
+        `type_errors.txt`
+      );
+    };
+    lintPather = (entryPoint, platform, projectName) => {
+      return path3.join(
+        "testeranto",
+        "reports",
+        projectName,
+        entryPoint.split(".").slice(0, -1).join("."),
+        platform,
+        `lint_errors.txt`
+      );
+    };
+    promptPather = (entryPoint, platform, projectName) => {
+      const e = entryPoint.split(".").slice(0, -1).join(".");
+      return path3.join(
+        "testeranto",
+        "reports",
+        projectName,
+        e,
+        platform,
+        `prompt.txt`
+      );
+    };
+    getRunnables = (tests, projectName, payload = {
+      nodeEntryPoints: {},
+      nodeEntryPointSidecars: {},
+      webEntryPoints: {},
+      webEntryPointSidecars: {},
+      pureEntryPoints: {},
+      pureEntryPointSidecars: {},
+      golangEntryPoints: {},
+      golangEntryPointSidecars: {},
+      pythonEntryPoints: {},
+      pythonEntryPointSidecars: {}
+    }) => {
+      const initializedPayload = {
+        nodeEntryPoints: payload.nodeEntryPoints || {},
+        nodeEntryPointSidecars: payload.nodeEntryPointSidecars || {},
+        webEntryPoints: payload.webEntryPoints || {},
+        webEntryPointSidecars: payload.webEntryPointSidecars || {},
+        pureEntryPoints: payload.pureEntryPoints || {},
+        pureEntryPointSidecars: payload.pureEntryPointSidecars || {},
+        golangEntryPoints: payload.golangEntryPoints || {},
+        golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
+        pythonEntryPoints: payload.pythonEntryPoints || {},
+        pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {}
+      };
+      return tests.reduce((pt, cv, cndx, cry) => {
+        if (cv[1] === "node") {
+          pt.nodeEntryPoints[cv[0]] = path3.resolve(
+            `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+          );
+        } else if (cv[1] === "web") {
+          pt.webEntryPoints[cv[0]] = path3.resolve(
+            `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+          );
+        } else if (cv[1] === "pure") {
+          pt.pureEntryPoints[cv[0]] = path3.resolve(
+            `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+          );
+        } else if (cv[1] === "golang") {
+          pt.golangEntryPoints[cv[0]] = path3.resolve(cv[0]);
+        } else if (cv[1] === "python") {
+          pt.pythonEntryPoints[cv[0]] = path3.resolve(cv[0]);
+        }
+        cv[3].filter((t) => t[1] === "node").forEach((t) => {
+          pt.nodeEntryPointSidecars[`${t[0]}`] = path3.resolve(
+            `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+          );
+        });
+        cv[3].filter((t) => t[1] === "web").forEach((t) => {
+          pt.webEntryPointSidecars[`${t[0]}`] = path3.resolve(
+            `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+          );
+        });
+        cv[3].filter((t) => t[1] === "pure").forEach((t) => {
+          pt.pureEntryPointSidecars[`${t[0]}`] = path3.resolve(
+            `./testeranto/bundles/pure/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+          );
+        });
+        cv[3].filter((t) => t[1] === "golang").forEach((t) => {
+          pt.golangEntryPointSidecars[`${t[0]}`] = path3.resolve(t[0]);
+        });
+        cv[3].filter((t) => t[1] === "python").forEach((t) => {
+          pt.pythonEntryPointSidecars[`${t[0]}`] = path3.resolve(t[0]);
+        });
+        return pt;
+      }, initializedPayload);
+    };
   }
 });
 
@@ -493,11 +494,14 @@ function runGoList(pattern) {
         processedPattern = path6.dirname(pattern);
       }
     }
-    const output = execSync(`go list -mod=readonly -json "${processedPattern}"`, {
-      encoding: "utf-8",
-      cwd: process.cwd(),
-      stdio: ["pipe", "pipe", "pipe"]
-    });
+    const output = execSync(
+      `go list -mod=readonly -json "${processedPattern}"`,
+      {
+        encoding: "utf-8",
+        cwd: process.cwd(),
+        stdio: ["pipe", "pipe", "pipe"]
+      }
+    );
     return parseGoListOutput(output);
   } catch (error) {
     console.warn(`Error running 'go list -json ${pattern}':`, error);
@@ -760,26 +764,16 @@ import path9 from "path";
 import fs8 from "fs";
 function writeGolingvuMetafile(testName2, metafile) {
   const projectRoot = findProjectRoot();
-  console.log("Project root found:", projectRoot);
-  if (!fs8.existsSync(projectRoot)) {
-    throw new Error(`Project root does not exist: ${projectRoot}`);
-  }
   const metafilePath = path9.join(
     "testeranto",
     "metafiles",
     "golang",
     "core.json"
   );
-  const metafileDir = path9.dirname(metafilePath);
   fs8.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
-  console.log(`Golang metafile written to: ${metafilePath}`);
-  const outputDir = path9.join("bundles", "golang", "core");
-  console.log("Output directory:", outputDir);
   for (const [outputPath, outputInfo] of Object.entries(
     metafile.metafile.outputs
   )) {
-    const fileName = path9.basename(outputPath);
-    const fullOutputPath = path9.join("testeranto", outputDir, fileName);
     const entryPoint = outputInfo.entryPoint;
     const signature = outputInfo.signature;
     let moduleRoot = process.cwd();
@@ -815,12 +809,7 @@ function writeGolingvuMetafile(testName2, metafile) {
     if (!entryPointValue || entryPointValue === "") {
       throw new Error("No valid entry point found for generating wrapper");
     }
-    console.log("Building in main package - no imports needed");
-    console.log(`Generated single Golingvu wrapper: ${fullOutputPath}`);
-    const binaryName = "calculator_test";
     try {
-      const projectDir = path9.dirname(entryPoint);
-      const exampleDir = path9.join(projectRoot, "example");
       let packageName = "main";
       try {
         const originalContent = fs8.readFileSync(entryPoint, "utf-8");
@@ -909,13 +898,7 @@ func main() {
         baseName
         // LLM: DO NOT TOUCH THIS LINE. IT IS CORRECT. FOR FUCKS SAKE STOPPING CHANGING THIS LINE
       );
-      console.log(`Writing wrapper source to: ${wrapperSourcePath}`);
-      fs8.mkdirSync(wrapperSourceDirPath, { recursive: true });
       fs8.writeFileSync(wrapperSourcePath, wrapperContent);
-      console.log(`Using go run instead of compiling binary`);
-      console.log(
-        `To execute: go run ${wrapperSourcePath} <test-resource-config>`
-      );
     } catch (e) {
       console.error(e);
     }
@@ -941,9 +924,9 @@ var init_golingvuMetafile = __esm({
 });
 
 // src/utils/golingvuWatcher.ts
-import chokidar2 from "chokidar";
 import path10 from "path";
 import fs9 from "fs";
+import chokidar2 from "chokidar";
 var GolingvuWatcher;
 var init_golingvuWatcher = __esm({
   "src/utils/golingvuWatcher.ts"() {
@@ -996,10 +979,6 @@ var init_golingvuWatcher = __esm({
             "Initial golang source file scan complete. Ready for changes."
           );
           const watched = this.watcher?.getWatched();
-          console.log(
-            "Number of watched directories:",
-            Object.keys(watched || {}).length
-          );
           if (Object.keys(watched || {}).length === 0) {
             console.error("WARNING: No directories are being watched!");
             console.error("Trying to manually find and watch .go files...");
@@ -1021,13 +1000,8 @@ var init_golingvuWatcher = __esm({
               return results;
             };
           } else {
-            for (const [dir, files3] of Object.entries(watched || {})) {
-              console.log(`Directory: ${dir}`);
-              console.log(`Files: ${files3.join(", ")}`);
-            }
           }
-        }).on("raw", (event, path19, details) => {
-          console.log(`Raw event: ${event} on path: ${path19}`);
+        }).on("raw", (event, path20, details) => {
         });
         const outputDir = path10.join(
           process.cwd(),
@@ -1036,10 +1010,6 @@ var init_golingvuWatcher = __esm({
           "golang",
           "core"
         );
-        if (!fs9.existsSync(outputDir)) {
-          fs9.mkdirSync(outputDir, { recursive: true });
-        }
-        console.log(`Watching bundle directory: ${outputDir}`);
         const lastSignatures = /* @__PURE__ */ new Map();
         const bundleWatcher = chokidar2.watch(
           [path10.join(outputDir, "*.go"), path10.join(outputDir, "*.golingvu.go")],
@@ -1067,14 +1037,6 @@ var init_golingvuWatcher = __esm({
         this.debounceTimer = setTimeout(async () => {
           const fullPath = path10.join(process.cwd(), filePath);
           await new Promise((resolve) => setTimeout(resolve, 100));
-          if (fs9.existsSync(fullPath)) {
-            try {
-              const stats = fs9.statSync(fullPath);
-              console.log(`File ${filePath} changed (${stats.size} bytes)`);
-            } catch (error) {
-              console.error(`Error reading file: ${error}`);
-            }
-          }
           console.log("Regenerating metafile due to file change...");
           await this.regenerateMetafile();
           if (this.onChangeCallback) {
@@ -1228,209 +1190,6 @@ var init_queue = __esm({
   }
 });
 
-// src/PM/utils.ts
-import ansiC from "ansi-colors";
-import path11 from "path";
-import fs10 from "fs";
-import crypto from "node:crypto";
-function runtimeLogs(runtime, reportDest) {
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-  try {
-    if (!fs10.existsSync(safeDest)) {
-      fs10.mkdirSync(safeDest, { recursive: true });
-    }
-    if (runtime === "node") {
-      return {
-        stdout: fs10.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs10.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs10.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "web") {
-      return {
-        info: fs10.createWriteStream(`${safeDest}/info.log`),
-        warn: fs10.createWriteStream(`${safeDest}/warn.log`),
-        error: fs10.createWriteStream(`${safeDest}/error.log`),
-        debug: fs10.createWriteStream(`${safeDest}/debug.log`),
-        exit: fs10.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "pure") {
-      return {
-        exit: fs10.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "python") {
-      return {
-        stdout: fs10.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs10.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs10.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else if (runtime === "golang") {
-      return {
-        stdout: fs10.createWriteStream(`${safeDest}/stdout.log`),
-        stderr: fs10.createWriteStream(`${safeDest}/stderr.log`),
-        exit: fs10.createWriteStream(`${safeDest}/exit.log`)
-      };
-    } else {
-      throw `unknown runtime: ${runtime}`;
-    }
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-function createLogStreams(reportDest, runtime) {
-  if (!fs10.existsSync(reportDest)) {
-    fs10.mkdirSync(reportDest, { recursive: true });
-  }
-  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
-  try {
-    if (!fs10.existsSync(safeDest)) {
-      fs10.mkdirSync(safeDest, { recursive: true });
-    }
-    const streams = runtimeLogs(runtime, safeDest);
-    return {
-      ...streams,
-      closeAll: () => {
-        Object.values(streams).forEach(
-          (stream) => !stream.closed && stream.close()
-        );
-      },
-      writeExitCode: (code, error) => {
-        if (error) {
-          streams.exit.write(`Error: ${error.message}
-`);
-          if (error.stack) {
-            streams.exit.write(`Stack Trace:
-${error.stack}
-`);
-          }
-        }
-        streams.exit.write(`${code}
-`);
-      },
-      exit: streams.exit
-    };
-  } catch (e) {
-    console.error(`Failed to create log streams in ${safeDest}:`, e);
-    throw e;
-  }
-}
-async function fileHash(filePath, algorithm = "md5") {
-  return new Promise((resolve, reject) => {
-    const hash = crypto.createHash(algorithm);
-    const fileStream = fs10.createReadStream(filePath);
-    fileStream.on("data", (data) => {
-      hash.update(data);
-    });
-    fileStream.on("end", () => {
-      const fileHash3 = hash.digest("hex");
-      resolve(fileHash3);
-    });
-    fileStream.on("error", (error) => {
-      reject(`Error reading file: ${error.message}`);
-    });
-  });
-}
-async function writeFileAndCreateDir(filePath, data) {
-  const dirPath = path11.dirname(filePath);
-  try {
-    await fs10.promises.mkdir(dirPath, { recursive: true });
-    await fs10.writeFileSync(filePath, data);
-  } catch (error) {
-    console.error(`Error writing file: ${error}`);
-  }
-}
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-async function pollForFile(path19, timeout = 2e3) {
-  const intervalObj = setInterval(function() {
-    const file = path19;
-    const fileExists = fs10.existsSync(file);
-    if (fileExists) {
-      clearInterval(intervalObj);
-    }
-  }, timeout);
-}
-var statusMessagePretty, filesHash, executablePath, puppeteerConfigs;
-var init_utils2 = __esm({
-  "src/PM/utils.ts"() {
-    "use strict";
-    statusMessagePretty = (failures, test, runtime) => {
-      if (failures === 0) {
-        console.log(ansiC.green(ansiC.inverse(`${runtime} > ${test}`)));
-      } else if (failures > 0) {
-        console.log(
-          ansiC.red(
-            ansiC.inverse(
-              `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
-            )
-          )
-        );
-      } else {
-        console.log(
-          ansiC.red(ansiC.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
-        );
-      }
-    };
-    filesHash = async (files3, algorithm = "md5") => {
-      return new Promise((resolve, reject) => {
-        resolve(
-          files3.reduce(async (mm, f) => {
-            return await mm + await fileHash(f);
-          }, Promise.resolve(""))
-        );
-      });
-    };
-    executablePath = "/opt/homebrew/bin/chromium";
-    puppeteerConfigs = {
-      slowMo: 1,
-      waitForInitialPage: false,
-      executablePath,
-      headless: true,
-      defaultViewport: null,
-      // Disable default 800x600 viewport
-      dumpio: false,
-      devtools: false,
-      args: [
-        "--allow-file-access-from-files",
-        "--allow-insecure-localhost",
-        "--allow-running-insecure-content",
-        "--auto-open-devtools-for-tabs",
-        "--disable-dev-shm-usage",
-        "--disable-extensions",
-        "--disable-features=site-per-process",
-        "--disable-gpu",
-        "--disable-setuid-sandbox",
-        "--disable-site-isolation-trials",
-        "--disable-web-security",
-        "--no-first-run",
-        "--no-sandbox",
-        "--no-startup-window",
-        "--reduce-security-for-testing",
-        "--remote-allow-origins=*",
-        "--start-maximized",
-        "--unsafely-treat-insecure-origin-as-secure=*",
-        `--remote-debugging-port=3234`
-        // "--disable-features=IsolateOrigins,site-per-process",
-        // "--disable-features=IsolateOrigins",
-        // "--disk-cache-dir=/dev/null",
-        // "--disk-cache-size=1",
-        // "--no-zygote",
-        // "--remote-allow-origins=ws://localhost:3234",
-        // "--single-process",
-        // "--start-maximized",
-        // "--unsafely-treat-insecure-origin-as-secure",
-        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-      ]
-    };
-  }
-});
-
 // src/esbuildConfigs/index.ts
 var esbuildConfigs_default;
 var init_esbuildConfigs = __esm({
@@ -1459,7 +1218,7 @@ var init_esbuildConfigs = __esm({
 });
 
 // src/esbuildConfigs/inputFilesPlugin.ts
-import fs11 from "fs";
+import fs10 from "fs";
 var otherInputs, register, inputFilesPlugin_default;
 var init_inputFilesPlugin = __esm({
   "src/esbuildConfigs/inputFilesPlugin.ts"() {
@@ -1473,8 +1232,8 @@ var init_inputFilesPlugin = __esm({
     };
     inputFilesPlugin_default = (platform, testName2) => {
       const f = `testeranto/metafiles/${platform}/${testName2}.json`;
-      if (!fs11.existsSync(`testeranto/metafiles/${platform}`)) {
-        fs11.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
+      if (!fs10.existsSync(`testeranto/metafiles/${platform}`)) {
+        fs10.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
       }
       return {
         register,
@@ -1482,7 +1241,7 @@ var init_inputFilesPlugin = __esm({
           name: "metafileWriter",
           setup(build) {
             build.onEnd((result) => {
-              fs11.writeFileSync(f, JSON.stringify(result, null, 2));
+              fs10.writeFileSync(f, JSON.stringify(result, null, 2));
             });
           }
         }
@@ -1492,7 +1251,7 @@ var init_inputFilesPlugin = __esm({
 });
 
 // src/esbuildConfigs/featuresPlugin.ts
-import path12 from "path";
+import path11 from "path";
 var featuresPlugin_default;
 var init_featuresPlugin = __esm({
   "src/esbuildConfigs/featuresPlugin.ts"() {
@@ -1504,7 +1263,7 @@ var init_featuresPlugin = __esm({
           if (args.resolveDir === "")
             return;
           return {
-            path: path12.isAbsolute(args.path) ? args.path : path12.join(args.resolveDir, args.path),
+            path: path11.isAbsolute(args.path) ? args.path : path11.join(args.resolveDir, args.path),
             namespace: "feature-markdown"
           };
         });
@@ -1531,7 +1290,7 @@ var init_featuresPlugin = __esm({
 });
 
 // src/esbuildConfigs/rebuildPlugin.ts
-import fs12 from "fs";
+import fs11 from "fs";
 var rebuildPlugin_default;
 var init_rebuildPlugin = __esm({
   "src/esbuildConfigs/rebuildPlugin.ts"() {
@@ -1543,7 +1302,7 @@ var init_rebuildPlugin = __esm({
           build.onEnd((result) => {
             console.log(`${r} > build ended with ${result.errors.length} errors`);
             if (result.errors.length > 0) {
-              fs12.writeFileSync(
+              fs11.writeFileSync(
                 `./testeranto/reports${r}_build_errors`,
                 JSON.stringify(result, null, 2)
               );
@@ -1601,7 +1360,7 @@ var init_node = __esm({
 
 // src/esbuildConfigs/web.ts
 import { polyfillNode } from "esbuild-plugin-polyfill-node";
-import path13 from "path";
+import path12 from "path";
 var web_default;
 var init_web = __esm({
   "src/esbuildConfigs/web.ts"() {
@@ -1620,7 +1379,7 @@ var init_web = __esm({
         treeShaking: true,
         outdir: `testeranto/bundles/web/${testName2}`,
         alias: {
-          react: path13.resolve("./node_modules/react")
+          react: path12.resolve("./node_modules/react")
         },
         metafile: true,
         external: [
@@ -1665,7 +1424,7 @@ var init_web = __esm({
 });
 
 // src/esbuildConfigs/consoleDetectorPlugin.ts
-import fs13 from "fs";
+import fs12 from "fs";
 var consoleDetectorPlugin;
 var init_consoleDetectorPlugin = __esm({
   "src/esbuildConfigs/consoleDetectorPlugin.ts"() {
@@ -1674,7 +1433,7 @@ var init_consoleDetectorPlugin = __esm({
       name: "console-detector",
       setup(build) {
         build.onLoad({ filter: /\.(js|ts)$/ }, async (args) => {
-          const contents = await fs13.promises.readFile(args.path, "utf8");
+          const contents = await fs12.promises.readFile(args.path, "utf8");
           const consolePattern = /console\.(log|error|warn|info|debug|trace|dir|dirxml|table|group|groupEnd|clear|count|countReset|assert|profile|profileEnd|time|timeLog|timeEnd|timeStamp|context|memory)/g;
           const matches = contents.match(consolePattern);
           if (matches) {
@@ -1768,21 +1527,281 @@ var init_pure = __esm({
   }
 });
 
-// src/PM/base.ts
+// src/PM/utils.ts
+import ansiC from "ansi-colors";
+import path13 from "path";
+import fs13 from "fs";
+import crypto from "node:crypto";
+function runtimeLogs(runtime, reportDest) {
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs13.existsSync(safeDest)) {
+      fs13.mkdirSync(safeDest, { recursive: true });
+    }
+    if (runtime === "node") {
+      return {
+        stdout: fs13.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs13.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs13.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "web") {
+      return {
+        info: fs13.createWriteStream(`${safeDest}/info.log`),
+        warn: fs13.createWriteStream(`${safeDest}/warn.log`),
+        error: fs13.createWriteStream(`${safeDest}/error.log`),
+        debug: fs13.createWriteStream(`${safeDest}/debug.log`),
+        exit: fs13.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "pure") {
+      return {
+        exit: fs13.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "python") {
+      return {
+        stdout: fs13.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs13.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs13.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else if (runtime === "golang") {
+      return {
+        stdout: fs13.createWriteStream(`${safeDest}/stdout.log`),
+        stderr: fs13.createWriteStream(`${safeDest}/stderr.log`),
+        exit: fs13.createWriteStream(`${safeDest}/exit.log`)
+      };
+    } else {
+      throw `unknown runtime: ${runtime}`;
+    }
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+function createLogStreams(reportDest, runtime) {
+  if (!fs13.existsSync(reportDest)) {
+    fs13.mkdirSync(reportDest, { recursive: true });
+  }
+  const safeDest = reportDest || `testeranto/reports/default_${Date.now()}`;
+  try {
+    if (!fs13.existsSync(safeDest)) {
+      fs13.mkdirSync(safeDest, { recursive: true });
+    }
+    const streams = runtimeLogs(runtime, safeDest);
+    return {
+      ...streams,
+      closeAll: () => {
+        Object.values(streams).forEach(
+          (stream) => !stream.closed && stream.close()
+        );
+      },
+      writeExitCode: (code, error) => {
+        if (error) {
+          streams.exit.write(`Error: ${error.message}
+`);
+          if (error.stack) {
+            streams.exit.write(`Stack Trace:
+${error.stack}
+`);
+          }
+        }
+        streams.exit.write(`${code}
+`);
+      },
+      exit: streams.exit
+    };
+  } catch (e) {
+    console.error(`Failed to create log streams in ${safeDest}:`, e);
+    throw e;
+  }
+}
+async function fileHash(filePath, algorithm = "md5") {
+  return new Promise((resolve, reject) => {
+    const hash = crypto.createHash(algorithm);
+    const fileStream = fs13.createReadStream(filePath);
+    fileStream.on("data", (data) => {
+      hash.update(data);
+    });
+    fileStream.on("end", () => {
+      const fileHash2 = hash.digest("hex");
+      resolve(fileHash2);
+    });
+    fileStream.on("error", (error) => {
+      reject(`Error reading file: ${error.message}`);
+    });
+  });
+}
+async function writeFileAndCreateDir(filePath, data) {
+  const dirPath = path13.dirname(filePath);
+  try {
+    await fs13.promises.mkdir(dirPath, { recursive: true });
+    await fs13.writeFileSync(filePath, data);
+  } catch (error) {
+    console.error(`Error writing file: ${error}`);
+  }
+}
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+async function pollForFile(path20, timeout = 2e3) {
+  const intervalObj = setInterval(function() {
+    const file = path20;
+    const fileExists = fs13.existsSync(file);
+    if (fileExists) {
+      clearInterval(intervalObj);
+    }
+  }, timeout);
+}
+var statusMessagePretty, filesHash, executablePath, puppeteerConfigs;
+var init_utils2 = __esm({
+  "src/PM/utils.ts"() {
+    "use strict";
+    statusMessagePretty = (failures, test, runtime) => {
+      if (failures === 0) {
+        console.log(ansiC.green(ansiC.inverse(`${runtime} > ${test}`)));
+      } else if (failures > 0) {
+        console.log(
+          ansiC.red(
+            ansiC.inverse(
+              `${runtime} > ${test} failed ${failures} times (exit code: ${failures})`
+            )
+          )
+        );
+      } else {
+        console.log(
+          ansiC.red(ansiC.inverse(`${runtime} > ${test} crashed (exit code: -1)`))
+        );
+      }
+    };
+    filesHash = async (files3, algorithm = "md5") => {
+      return new Promise((resolve, reject) => {
+        resolve(
+          files3.reduce(async (mm, f) => {
+            return await mm + await fileHash(f);
+          }, Promise.resolve(""))
+        );
+      });
+    };
+    executablePath = "/opt/homebrew/bin/chromium";
+    puppeteerConfigs = {
+      slowMo: 1,
+      waitForInitialPage: false,
+      executablePath,
+      headless: true,
+      defaultViewport: null,
+      // Disable default 800x600 viewport
+      dumpio: false,
+      devtools: false,
+      args: [
+        "--allow-file-access-from-files",
+        "--allow-insecure-localhost",
+        "--allow-running-insecure-content",
+        "--auto-open-devtools-for-tabs",
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--disable-features=site-per-process",
+        "--disable-gpu",
+        "--disable-setuid-sandbox",
+        "--disable-site-isolation-trials",
+        "--disable-web-security",
+        "--no-first-run",
+        "--no-sandbox",
+        "--no-startup-window",
+        "--reduce-security-for-testing",
+        "--remote-allow-origins=*",
+        "--start-maximized",
+        "--unsafely-treat-insecure-origin-as-secure=*",
+        `--remote-debugging-port=3234`
+        // "--disable-features=IsolateOrigins,site-per-process",
+        // "--disable-features=IsolateOrigins",
+        // "--disk-cache-dir=/dev/null",
+        // "--disk-cache-size=1",
+        // "--no-zygote",
+        // "--remote-allow-origins=ws://localhost:3234",
+        // "--single-process",
+        // "--start-maximized",
+        // "--unsafely-treat-insecure-origin-as-secure",
+        // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
+      ]
+    };
+  }
+});
+
+// src/app/backend/getAllFilesRecursively.ts
 import fs14 from "fs";
 import path14 from "path";
-var fileStreams3, fPaths, files, recorders, screenshots, PM_Base;
-var init_base = __esm({
-  "src/PM/base.ts"() {
+async function getAllFilesRecursively(directoryPath) {
+  let fileList = [];
+  const files3 = await fs14.readdirSync(directoryPath, { withFileTypes: true });
+  for (const file of files3) {
+    const fullPath = path14.join(directoryPath, file.name);
+    if (file.isDirectory()) {
+      fileList = fileList.concat(await getAllFilesRecursively(fullPath));
+    } else if (file.isFile()) {
+      fileList.push(fullPath);
+    }
+  }
+  return fileList;
+}
+var init_getAllFilesRecursively = __esm({
+  "src/app/backend/getAllFilesRecursively.ts"() {
+    "use strict";
+  }
+});
+
+// src/app/FileService.ts
+var FileService_methods;
+var init_FileService = __esm({
+  "src/app/FileService.ts"() {
+    "use strict";
+    FileService_methods = [
+      "writeFile_send",
+      "writeFile_receive",
+      "readFile_receive",
+      "readFile_send",
+      "createDirectory_receive",
+      "createDirectory_send",
+      "deleteFile_receive",
+      "deleteFile_send",
+      "files_send",
+      "files_receive",
+      "projects_send",
+      "projects_receive",
+      "tests_send",
+      "tests_receive",
+      "report_send",
+      "report_receive"
+    ];
+  }
+});
+
+// src/app/api.ts
+var init_api = __esm({
+  "src/app/api.ts"() {
+    "use strict";
+  }
+});
+
+// src/app/backend/PM_0.ts
+import fs15 from "fs";
+import path15 from "path";
+var fileStreams3, fPaths, files, recorders, screenshots, PM_0;
+var init_PM_0 = __esm({
+  "src/app/backend/PM_0.ts"() {
     "use strict";
     fileStreams3 = [];
     fPaths = [];
     files = {};
     recorders = {};
     screenshots = {};
-    PM_Base = class {
-      constructor(configs) {
+    PM_0 = class {
+      constructor(configs, projectName, mode2) {
         this.configs = configs;
+        this.mode = mode2;
+        this.projectName = projectName;
       }
       mapping() {
         return [
@@ -1814,38 +1833,6 @@ var init_base = __esm({
           ["writeFileSync", this.writeFileSync]
         ];
       }
-      // keep this forever. do not delete
-      // mapping(): [string, (...a) => any][] {
-      //   return [
-      //     ["$", (...args) => this.$(...args)],
-      //     ["click", (...args) => this.click(...args)],
-      //     ["closePage", (...args) => this.closePage(...args)],
-      //     ["createWriteStream", (...args) => this.createWriteStream(...args)],
-      //     ["customclose", (...args) => this.customclose(...args)],
-      //     ["customScreenShot", (...args) => this.customScreenShot(...args)],
-      //     ["end", (...args) => this.end(...args)],
-      //     ["existsSync", (...args) => this.existsSync(...args)],
-      //     ["focusOn", (...args) => this.focusOn(...args)],
-      //     ["getAttribute", (...args) => this.getAttribute(...args)],
-      //     ["getInnerHtml", (...args) => this.getInnerHtml(...args)],
-      //     // ["setValue", (...args) => this.setValue(...args)],
-      //     ["goto", (...args) => this.goto(...args)],
-      //     ["isDisabled", (...args) => this.isDisabled(...args)],
-      //     // ["launchSideCar", (...args) => this.launchSideCar(...args)],
-      //     ["mkdirSync", (...args) => this.mkdirSync(...args)],
-      //     ["newPage", (...args) => this.newPage(...args)],
-      //     ["page", (...args) => this.page(...args)],
-      //     ["pages", (...args) => this.pages(...args)],
-      //     ["screencast", (...args) => this.screencast(...args)],
-      //     ["screencastStop", (...args) => this.screencastStop(...args)],
-      //     // ["stopSideCar", (...args) => this.stopSideCar(...args)],
-      //     ["typeInto", (...args) => this.typeInto(...args)],
-      //     ["waitForSelector", (...args) => this.waitForSelector(...args)],
-      //     ["write", (...args) => this.write(...args)],
-      //     ["writeFileSync", (...args) => this.writeFileSync(...args)],
-      //   ];
-      // }
-      // abstract launchSideCar(n: number, testName: string, projectName: string);
       customclose() {
         throw new Error("customclose not implemented.");
       }
@@ -1869,10 +1856,10 @@ var init_base = __esm({
       async newPage() {
         return (await this.browser.newPage()).mainFrame()._id;
       }
-      goto(p, url3) {
+      goto(p, url2) {
         return new Promise((res) => {
           this.doInPage(p, async (page) => {
-            await page?.goto(url3);
+            await page?.goto(url2);
             res({});
           });
         });
@@ -1893,8 +1880,8 @@ var init_base = __esm({
       }
       async screencast(ssOpts, testName2, page) {
         const p = ssOpts.path;
-        const dir = path14.dirname(p);
-        fs14.mkdirSync(dir, {
+        const dir = path15.dirname(p);
+        fs15.mkdirSync(dir, {
           recursive: true
         });
         if (!files[testName2]) {
@@ -1914,8 +1901,8 @@ var init_base = __esm({
       }
       async customScreenShot(ssOpts, testName2, pageUid) {
         const p = ssOpts.path;
-        const dir = path14.dirname(p);
-        fs14.mkdirSync(dir, {
+        const dir = path15.dirname(p);
+        fs15.mkdirSync(dir, {
           recursive: true
         });
         if (!files[testName2]) {
@@ -1941,11 +1928,11 @@ var init_base = __esm({
         return true;
       }
       existsSync(destFolder) {
-        return fs14.existsSync(destFolder);
+        return fs15.existsSync(destFolder);
       }
       async mkdirSync(fp) {
-        if (!fs14.existsSync(fp)) {
-          return fs14.mkdirSync(fp, {
+        if (!fs15.existsSync(fp)) {
+          return fs15.mkdirSync(fp, {
             recursive: true
           });
         }
@@ -1956,26 +1943,26 @@ var init_base = __esm({
         const contents = x[1];
         const testName2 = x[2];
         return new Promise(async (res) => {
-          fs14.mkdirSync(path14.dirname(filepath), {
+          fs15.mkdirSync(path15.dirname(filepath), {
             recursive: true
           });
           if (!files[testName2]) {
             files[testName2] = /* @__PURE__ */ new Set();
           }
           files[testName2].add(filepath);
-          await fs14.writeFileSync(filepath, contents);
+          await fs15.writeFileSync(filepath, contents);
           res(true);
         });
       }
       async createWriteStream(filepath, testName2) {
         const folder = filepath.split("/").slice(0, -1).join("/");
         return new Promise((res) => {
-          if (!fs14.existsSync(folder)) {
-            return fs14.mkdirSync(folder, {
+          if (!fs15.existsSync(folder)) {
+            return fs15.mkdirSync(folder, {
               recursive: true
             });
           }
-          const f = fs14.createWriteStream(filepath);
+          const f = fs15.createWriteStream(filepath);
           fileStreams3.push(f);
           if (!files[testName2]) {
             files[testName2] = /* @__PURE__ */ new Set();
@@ -1989,15 +1976,14 @@ var init_base = __esm({
           callback(
             new Promise((res, rej) => {
               tLog("testArtiFactory =>", fPath);
-              const cleanPath = path14.resolve(fPath);
+              const cleanPath = path15.resolve(fPath);
               fPaths.push(cleanPath.replace(process.cwd(), ``));
               const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-              fs14.mkdir(targetDir, { recursive: true }, async (error) => {
+              fs15.mkdir(targetDir, { recursive: true }, async (error) => {
                 if (error) {
-                  console.error(`\u2757\uFE0FtestArtiFactory failed`, targetDir, error);
                 }
-                fs14.writeFileSync(
-                  path14.resolve(
+                fs15.writeFileSync(
+                  path15.resolve(
                     targetDir.split("/").slice(0, -1).join("/"),
                     "manifest"
                   ),
@@ -2008,16 +1994,16 @@ var init_base = __esm({
                   }
                 );
                 if (Buffer.isBuffer(value)) {
-                  fs14.writeFileSync(fPath, value, "binary");
+                  fs15.writeFileSync(fPath, value, "binary");
                   res();
                 } else if (`string` === typeof value) {
-                  fs14.writeFileSync(fPath, value.toString(), {
+                  fs15.writeFileSync(fPath, value.toString(), {
                     encoding: "utf-8"
                   });
                   res();
                 } else {
                   const pipeStream = value;
-                  const myFile = fs14.createWriteStream(fPath);
+                  const myFile = fs15.createWriteStream(fPath);
                   pipeStream.pipe(myFile);
                   pipeStream.on("close", () => {
                     myFile.close();
@@ -2051,11 +2037,6 @@ var init_base = __esm({
           return page.keyboard.type(value);
         });
       }
-      // setValue(value: string, p: string) {
-      //   this.doInPage(p, (page) => {
-      //     return page.keyboard.type(value);
-      //   });
-      // }
       getAttribute(selector, attribute, p) {
         this.doInPage(p, (page) => {
           return page.$eval(selector, (input) => input.getAttribute(attribute));
@@ -2091,1179 +2072,6 @@ var init_base = __esm({
             return cb(page);
           }
         });
-      }
-    };
-  }
-});
-
-// src/PM/PM_WithWebSocket.ts
-import { spawn } from "node:child_process";
-import fs15 from "fs";
-import http from "http";
-import url from "url";
-import mime from "mime-types";
-import { WebSocketServer } from "ws";
-import { dirname } from "path";
-var PM_WithWebSocket;
-var init_PM_WithWebSocket = __esm({
-  "src/PM/PM_WithWebSocket.ts"() {
-    "use strict";
-    init_base();
-    PM_WithWebSocket = class extends PM_Base {
-      constructor(configs) {
-        super(configs);
-        this.clients = /* @__PURE__ */ new Set();
-        this.runningProcesses = /* @__PURE__ */ new Map();
-        this.allProcesses = /* @__PURE__ */ new Map();
-        this.processLogs = /* @__PURE__ */ new Map();
-        this.configs = configs;
-        console.log("PM_WithWebSocket constructor called with configs:", configs);
-        const projects = configs?.projects || configs;
-        console.log(
-          "Projects in config:",
-          projects ? Object.keys(projects) : "No projects"
-        );
-        this.httpServer = http.createServer(this.requestHandler.bind(this));
-        this.wss = new WebSocketServer({ server: this.httpServer });
-        this.wss.on("connection", (ws) => {
-          this.clients.add(ws);
-          console.log("Client connected");
-          ws.on("message", (data) => {
-            try {
-              const message = JSON.parse(data.toString());
-              if (message.type === "chatMessage") {
-                console.log(`Received chat message: ${message.content}`);
-                if (this.handleChatMessage) {
-                  this.handleChatMessage(message.content);
-                } else {
-                  console.log("PM_WithHelpo not available - message not processed");
-                }
-                return;
-              }
-              if (message.type === "listDirectory") {
-                this.handleWebSocketListDirectory(ws, message);
-              } else if (message.type === "executeCommand") {
-                const executeMessage = message;
-                if (message.command && message.command.trim().startsWith("aider")) {
-                  console.log(`Executing command: ${message.command}`);
-                  const processId = Date.now().toString();
-                  const child = spawn(message.command, {
-                    shell: true,
-                    cwd: process.cwd()
-                  });
-                  this.runningProcesses.set(processId, child);
-                  this.allProcesses.set(processId, {
-                    child,
-                    status: "running",
-                    command: message.command,
-                    pid: child.pid,
-                    timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-                    type: "process",
-                    category: "aider"
-                  });
-                  this.processLogs.set(processId, []);
-                  this.broadcast({
-                    type: "processStarted",
-                    processId,
-                    command: message.command,
-                    timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-                    logs: []
-                  });
-                  child.stdout?.on("data", (data2) => {
-                    const logData = data2.toString();
-                    const logs = this.processLogs.get(processId) || [];
-                    logs.push(logData);
-                    this.processLogs.set(processId, logs);
-                    this.broadcast({
-                      type: "processStdout",
-                      processId,
-                      data: logData,
-                      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-                    });
-                  });
-                  child.stderr?.on("data", (data2) => {
-                    const logData = data2.toString();
-                    const logs = this.processLogs.get(processId) || [];
-                    logs.push(logData);
-                    this.processLogs.set(processId, logs);
-                    this.broadcast({
-                      type: "processStderr",
-                      processId,
-                      data: logData,
-                      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-                    });
-                  });
-                  child.on("error", (error) => {
-                    console.error(`Failed to execute command: ${error}`);
-                    this.runningProcesses.delete(processId);
-                    const processInfo = this.allProcesses.get(processId);
-                    if (processInfo) {
-                      this.allProcesses.set(processId, {
-                        ...processInfo,
-                        status: "error",
-                        error: error.message
-                      });
-                    }
-                    this.broadcast({
-                      type: "processError",
-                      processId,
-                      error: error.message,
-                      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-                    });
-                  });
-                  child.on("exit", (code) => {
-                    console.log(`Command exited with code ${code}`);
-                    this.runningProcesses.delete(processId);
-                    const processInfo = this.allProcesses.get(processId);
-                    if (processInfo) {
-                      this.allProcesses.set(processId, {
-                        ...processInfo,
-                        status: "exited",
-                        exitCode: code
-                      });
-                    }
-                    this.broadcast({
-                      type: "processExited",
-                      processId,
-                      exitCode: code,
-                      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-                    });
-                  });
-                } else {
-                  console.error('Invalid command: must start with "aider"');
-                }
-              } else if (message.type === "getRunningProcesses") {
-                const getRunningMessage = message;
-                const processes = Array.from(this.allProcesses.entries()).map(
-                  ([id, procInfo]) => ({
-                    processId: id,
-                    command: procInfo.command,
-                    pid: procInfo.pid,
-                    status: procInfo.status,
-                    exitCode: procInfo.exitCode,
-                    error: procInfo.error,
-                    timestamp: procInfo.timestamp,
-                    category: procInfo.category,
-                    testName: procInfo.testName,
-                    platform: procInfo.platform,
-                    logs: this.processLogs.get(id) || []
-                  })
-                );
-                ws.send(
-                  JSON.stringify({
-                    type: "runningProcesses",
-                    processes
-                  })
-                );
-              } else if (message.type === "getProcess") {
-                const getProcessMessage = message;
-                const processId = message.processId;
-                const procInfo = this.allProcesses.get(processId);
-                if (procInfo) {
-                  ws.send(
-                    JSON.stringify({
-                      type: "processData",
-                      processId,
-                      command: procInfo.command,
-                      pid: procInfo.pid,
-                      status: procInfo.status,
-                      exitCode: procInfo.exitCode,
-                      error: procInfo.error,
-                      timestamp: procInfo.timestamp,
-                      category: procInfo.category,
-                      testName: procInfo.testName,
-                      platform: procInfo.platform,
-                      logs: this.processLogs.get(processId) || []
-                    })
-                  );
-                }
-              } else if (message.type === "stdin") {
-                const stdinMessage = message;
-                const processId = message.processId;
-                const data2 = message.data;
-                console.log("Received stdin for process", processId, ":", data2);
-                const childProcess = this.runningProcesses.get(processId);
-                if (childProcess && childProcess.stdin) {
-                  console.log("Writing to process stdin");
-                  childProcess.stdin.write(data2);
-                } else {
-                  console.log(
-                    "Cannot write to stdin - process not found or no stdin:",
-                    {
-                      processExists: !!childProcess,
-                      stdinExists: childProcess?.stdin ? true : false
-                    }
-                  );
-                }
-              } else if (message.type === "killProcess") {
-                const killProcessMessage = message;
-                const processId = message.processId;
-                console.log("Received killProcess for process", processId);
-                const childProcess = this.runningProcesses.get(processId);
-                if (childProcess) {
-                  console.log("Killing process");
-                  childProcess.kill("SIGTERM");
-                } else {
-                  console.log("Cannot kill process - process not found:", {
-                    processExists: !!childProcess
-                  });
-                }
-              } else if (message.type === "getChatHistory") {
-                if (this.getChatHistory) {
-                  this.getChatHistory().then((history) => {
-                    ws.send(
-                      JSON.stringify({
-                        type: "chatHistory",
-                        messages: history
-                      })
-                    );
-                  }).catch((error) => {
-                    console.error("Error getting chat history:", error);
-                    ws.send(
-                      JSON.stringify({
-                        type: "error",
-                        message: "Failed to get chat history"
-                      })
-                    );
-                  });
-                }
-              }
-            } catch (error) {
-              console.error("Error handling WebSocket message:", error);
-            }
-          });
-          ws.on("close", () => {
-            this.clients.delete(ws);
-            console.log("Client disconnected");
-          });
-          ws.on("error", (error) => {
-            console.error("WebSocket error:", error);
-            this.clients.delete(ws);
-          });
-        });
-        const httpPort = Number(process.env.HTTP_PORT) || 3e3;
-        this.httpServer.listen(httpPort, () => {
-          console.log(`HTTP server running on http://localhost:${httpPort}`);
-        });
-      }
-      requestHandler(req, res) {
-        const parsedUrl = url.parse(req.url || "/", true);
-        const pathname = parsedUrl.pathname || "/";
-        if (pathname?.startsWith("/api/")) {
-          console.log("API request received:", pathname);
-          res.setHeader("Access-Control-Allow-Origin", "*");
-          res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-          res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-          if (req.method === "OPTIONS") {
-            res.writeHead(200);
-            res.end();
-            return;
-          }
-          if (pathname.startsWith("/api/files/")) {
-            this.handleFilesApi(req, res);
-            return;
-          }
-          if (pathname === "/api/projects/list") {
-            console.log("Handling /api/projects/list");
-            this.handleListProjects(req, res);
-            return;
-          }
-          if (pathname === "/api/projects/tree") {
-            console.log("Handling /api/projects/tree");
-            const query = parsedUrl.query || {};
-            console.log("Query parameters:", query);
-            this.handleProjectTree(req, res, query);
-            return;
-          }
-          if (pathname === "/api/projects/tests") {
-            const query = parsedUrl.query || {};
-            this.handleProjectTests(req, res, query);
-            return;
-          }
-          if (pathname === "/api/projects/files") {
-            const query = parsedUrl.query || {};
-            this.handleProjectFiles(req, res, query);
-            return;
-          }
-          if (pathname === "/api/health") {
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(
-              JSON.stringify({ status: "ok", timestamp: (/* @__PURE__ */ new Date()).toISOString() })
-            );
-            return;
-          }
-          res.writeHead(404, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "API endpoint not found" }));
-          return;
-        }
-        let processedPathname = pathname;
-        if (processedPathname === "/") {
-          processedPathname = "/index.html";
-        }
-        let filePath = processedPathname.substring(1);
-        if (filePath.startsWith("reports/")) {
-          filePath = `testeranto/${filePath}`;
-        } else if (filePath.startsWith("metafiles/")) {
-          filePath = `testeranto/${filePath}`;
-        } else if (filePath === "projects.json") {
-        } else {
-          const possiblePaths = [
-            `dist/${filePath}`,
-            `testeranto/dist/${filePath}`,
-            `../dist/${filePath}`,
-            `./${filePath}`
-          ];
-          let foundPath = null;
-          for (const possiblePath of possiblePaths) {
-            if (fs15.existsSync(possiblePath)) {
-              foundPath = possiblePath;
-              break;
-            }
-          }
-          if (foundPath) {
-            filePath = foundPath;
-          } else {
-            const indexPath = this.findIndexHtml();
-            if (indexPath) {
-              fs15.readFile(indexPath, (err, data) => {
-                if (err) {
-                  res.writeHead(404, { "Content-Type": "text/plain" });
-                  res.end("404 Not Found");
-                  return;
-                }
-                res.writeHead(200, { "Content-Type": "text/html" });
-                res.end(data);
-              });
-              return;
-            } else {
-              res.writeHead(200, { "Content-Type": "text/html" });
-              res.end(`
-              <html>
-                <body>
-                  <h1>Testeranto is running</h1>
-                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
-                </body>
-              </html>
-            `);
-              return;
-            }
-          }
-        }
-        fs15.exists(filePath, (exists) => {
-          if (!exists) {
-            if (!processedPathname.includes(".") && processedPathname !== "/") {
-              const indexPath = this.findIndexHtml();
-              if (indexPath) {
-                fs15.readFile(indexPath, (err, data) => {
-                  if (err) {
-                    res.writeHead(404, { "Content-Type": "text/plain" });
-                    res.end("404 Not Found");
-                    return;
-                  }
-                  res.writeHead(200, { "Content-Type": "text/html" });
-                  res.end(data);
-                });
-                return;
-              } else {
-                res.writeHead(200, { "Content-Type": "text/html" });
-                res.end(`
-              <html>
-                <body>
-                  <h1>Testeranto is running</h1>
-                  <p>Frontend files are not built yet. Run 'npm run build' to build the frontend.</p>
-                </body>
-              </html>
-            `);
-                return;
-              }
-            }
-            res.writeHead(404, { "Content-Type": "text/plain" });
-            res.end("404 Not Found");
-            return;
-          }
-          fs15.readFile(filePath, (err, data) => {
-            if (err) {
-              res.writeHead(500, { "Content-Type": "text/plain" });
-              res.end("500 Internal Server Error");
-              return;
-            }
-            if (filePath.endsWith(".html")) {
-              let content = data.toString();
-              if (content.includes("</body>")) {
-                const configScript = `
-              <script>
-                window.testerantoConfig = ${JSON.stringify({
-                  githubOAuth: {
-                    clientId: process.env.GITHUB_CLIENT_ID || ""
-                  },
-                  serverOrigin: process.env.SERVER_ORIGIN || "http://localhost:3000"
-                })};
-              </script>
-            `;
-                content = content.replace("</body>", `${configScript}</body>`);
-              }
-              res.writeHead(200, { "Content-Type": "text/html" });
-              res.end(content);
-            } else {
-              const mimeType = mime.lookup(filePath) || "application/octet-stream";
-              res.writeHead(200, { "Content-Type": mimeType });
-              res.end(data);
-            }
-          });
-        });
-      }
-      handleFilesApi(req, res) {
-        const parsedUrl = url.parse(req.url || "/", true);
-        const pathname = parsedUrl.pathname || "/";
-        const query = parsedUrl.query || {};
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        if (req.method === "OPTIONS") {
-          res.writeHead(200);
-          res.end();
-          return;
-        }
-        try {
-          if (pathname === "/api/files/read" && req.method === "GET") {
-            this.handleReadFile(req, res, query);
-          } else if (pathname === "/api/files/exists" && req.method === "GET") {
-            this.handleFileExists(req, res, query);
-          } else if (pathname === "/api/files/write" && req.method === "POST") {
-            this.handleWriteFile(req, res);
-          } else if (pathname === "/api/files/tree" && req.method === "GET") {
-            this.handleFileTree(req, res, query);
-          } else if (pathname === "/api/files/content" && req.method === "GET") {
-            this.handleFileContent(req, res, query);
-          } else {
-            res.writeHead(404, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Not found" }));
-          }
-        } catch (error) {
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Internal server error" }));
-        }
-      }
-      async handleFileTree(req, res, query) {
-        const path19 = query.path;
-        if (!path19) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Path parameter required" }));
-          return;
-        }
-        try {
-          const fullPath = this.resolvePath(path19);
-          const tree = await this.buildFileTree(fullPath, path19);
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify(tree));
-        } catch (error) {
-          console.error("Error building file tree:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Failed to build file tree" }));
-        }
-      }
-      async handleFileContent(req, res, query) {
-        const path19 = query.path;
-        if (!path19) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Path parameter required" }));
-          return;
-        }
-        try {
-          const fullPath = this.resolvePath(path19);
-          const content = await fs15.promises.readFile(fullPath, "utf-8");
-          res.writeHead(200, { "Content-Type": "text/plain" });
-          res.end(content);
-        } catch (error) {
-          console.error("Error reading file:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Failed to read file" }));
-        }
-      }
-      async handleReadFile(req, res, query) {
-        const path19 = query.path;
-        if (!path19) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Path parameter required" }));
-          return;
-        }
-        try {
-          const fullPath = this.resolvePath(path19);
-          const content = await fs15.promises.readFile(fullPath, "utf-8");
-          res.writeHead(200, { "Content-Type": "text/plain" });
-          res.end(content);
-        } catch (error) {
-          console.error("Error reading file:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Failed to read file" }));
-        }
-      }
-      async handleFileExists(req, res, query) {
-        const path19 = query.path;
-        if (!path19) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Path parameter required" }));
-          return;
-        }
-        try {
-          const fullPath = this.resolvePath(path19);
-          const exists = fs15.existsSync(fullPath);
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ exists }));
-        } catch (error) {
-          console.error("Error checking file existence:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Failed to check file existence" }));
-        }
-      }
-      async handleListProjects(req, res) {
-        try {
-          const projects = this.configs?.projects || this.configs;
-          const projectNames = projects ? Object.keys(projects) : [];
-          if (projectNames.length === 0) {
-            console.log(
-              "No projects found in config, trying to read projects.json"
-            );
-            try {
-              const projectsData = await fs15.promises.readFile(
-                "testeranto/projects.json",
-                "utf-8"
-              );
-              const projectsFromFile = JSON.parse(projectsData);
-              res.writeHead(200, { "Content-Type": "application/json" });
-              res.end(JSON.stringify(projectsFromFile));
-              return;
-            } catch (error) {
-              console.error("Error reading projects.json:", error);
-            }
-          }
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify(projectNames));
-        } catch (error) {
-          console.error("Error listing projects:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Failed to list projects" }));
-        }
-      }
-      async handleProjectTree(req, res, query) {
-        const project = query.project;
-        const test = query.test;
-        console.log("handleProjectTree called with project:", project, "test:", test);
-        if (!project) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Project parameter required" }));
-          return;
-        }
-        try {
-          const projects = this.configs?.projects || this.configs;
-          console.log(
-            "Available projects in config:",
-            projects ? Object.keys(projects) : "No projects"
-          );
-          if (!projects || !projects[project]) {
-            console.error("Project not found in config:", project);
-            res.writeHead(404, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Project not found" }));
-            return;
-          }
-          const projectConfig = projects[project];
-          const sourceDir = projectConfig.src || "";
-          console.log("Source directory for project:", sourceDir);
-          const fullPath = this.resolvePath(sourceDir);
-          console.log("Full path to build tree:", fullPath);
-          const tree = await this.buildFileTree(fullPath, sourceDir);
-          console.log("Built tree with", tree.length, "items");
-          const result = {
-            sourceFiles: tree,
-            // Add test-specific files if needed
-            testFiles: test ? await this.getTestSpecificFiles(project, test) : []
-          };
-          res.writeHead(200, {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, OPTIONS"
-          });
-          res.end(JSON.stringify(result));
-        } catch (error) {
-          console.error("Error building project tree:", error);
-          res.writeHead(500, {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, OPTIONS"
-          });
-          res.end(JSON.stringify({ error: "Failed to build project tree" }));
-        }
-      }
-      async handleProjectTests(req, res, query) {
-        const project = query.project;
-        if (!project) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Project parameter required" }));
-          return;
-        }
-        try {
-          const projects = this.configs?.projects || this.configs;
-          if (!projects || !projects[project]) {
-            res.writeHead(404, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Project not found" }));
-            return;
-          }
-          const projectConfig = projects[project];
-          const tests = projectConfig.tests?.map((test) => {
-            if (Array.isArray(test)) {
-              return test[0];
-            } else if (typeof test === "string") {
-              return test;
-            }
-            return null;
-          }).filter(Boolean) || [];
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify(tests));
-        } catch (error) {
-          console.error("Error getting project tests:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Failed to get project tests" }));
-        }
-      }
-      async handleProjectFiles(req, res, query) {
-        const project = query.project;
-        const test = query.test;
-        if (!project || !test) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(
-            JSON.stringify({ error: "Project and test parameters required" })
-          );
-          return;
-        }
-        try {
-          const projects = this.configs?.projects || this.configs;
-          if (!projects || !projects[project]) {
-            res.writeHead(404, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Project not found" }));
-            return;
-          }
-          const projectConfig = projects[project];
-          const result = {
-            sourceFiles: [],
-            reportFiles: []
-          };
-          const sourceDir = projectConfig.src || "";
-          if (sourceDir) {
-            const fullPath = this.resolvePath(sourceDir);
-            try {
-              result.sourceFiles = await this.buildFileTree(fullPath, sourceDir);
-            } catch (error) {
-              console.error("Error building source file tree:", error);
-            }
-          }
-          result.reportFiles = [];
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify(result));
-        } catch (error) {
-          console.error("Error getting project files:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Failed to get project files" }));
-        }
-      }
-      async handleProjectTreeWithTest(req, res, query) {
-        const project = query.project;
-        const test = query.test;
-        if (!project) {
-          res.writeHead(400, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Project parameter required" }));
-          return;
-        }
-        try {
-          const projects = this.configs?.projects || this.configs;
-          if (!projects || !projects[project]) {
-            res.writeHead(404, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Project not found" }));
-            return;
-          }
-          const projectConfig = projects[project];
-          const sourceDir = projectConfig.src || "";
-          const fullPath = this.resolvePath(sourceDir);
-          const tree = await this.buildFileTree(fullPath, sourceDir);
-          const result = {
-            sourceFiles: tree,
-            // Add test-specific files if needed
-            testFiles: test ? await this.getTestSpecificFiles(project, test) : []
-          };
-          res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify(result));
-        } catch (error) {
-          console.error("Error building project tree with test:", error);
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Failed to build project tree" }));
-        }
-      }
-      async getTestSpecificFiles(project, test) {
-        try {
-          const testReportsPath = `testeranto/reports/${project}/${encodeURIComponent(test)}`;
-          const fullPath = this.resolvePath(testReportsPath);
-          try {
-            await fs15.promises.access(fullPath);
-          } catch {
-            return [];
-          }
-          const testFiles = await this.buildFileTree(fullPath, testReportsPath);
-          return testFiles.map((file) => ({
-            ...file,
-            isTestSpecific: true,
-            testName: test
-          }));
-        } catch (error) {
-          console.error("Error getting test-specific files:", error);
-          return [];
-        }
-      }
-      async buildFileTree(dirPath, basePath) {
-        try {
-          try {
-            await fs15.promises.access(dirPath);
-          } catch (error) {
-            console.error("Directory does not exist:", dirPath);
-            return [];
-          }
-          const items = await fs15.promises.readdir(dirPath, { withFileTypes: true });
-          const result = [];
-          const ignorePatterns = this.configs?.ignore || [];
-          for (const item of items) {
-            if (item.name.startsWith("."))
-              continue;
-            const fullPath = `${dirPath}/${item.name}`;
-            const relativePath = fullPath.replace(process.cwd(), "").replace(/^\//, "");
-            const shouldIgnore = ignorePatterns.some((pattern) => {
-              let regexPattern = pattern.replace(/\./g, "\\.").replace(/\*\*/g, ".*").replace(/\*/g, "[^/]*").replace(/\?/g, "[^/]");
-              if (!regexPattern.startsWith("^"))
-                regexPattern = "^" + regexPattern;
-              if (!regexPattern.endsWith("$"))
-                regexPattern = regexPattern + "$";
-              const regex = new RegExp(regexPattern);
-              return regex.test(relativePath) || regex.test(item.name);
-            });
-            if (shouldIgnore)
-              continue;
-            if (item.isDirectory()) {
-              const children = await this.buildFileTree(fullPath, basePath);
-              result.push({
-                name: item.name,
-                type: "folder",
-                path: "/" + relativePath,
-                children
-              });
-            } else if (item.isFile()) {
-              result.push({
-                name: item.name,
-                type: "file",
-                path: "/" + relativePath
-              });
-            }
-          }
-          return result;
-        } catch (error) {
-          console.error("Error building file tree:", error);
-          return [];
-        }
-      }
-      async handleWriteFile(req, res) {
-        let body = "";
-        req.on("data", (chunk) => {
-          body += chunk.toString();
-        });
-        req.on("end", async () => {
-          try {
-            const { path: path19, content } = JSON.parse(body);
-            if (!path19) {
-              res.writeHead(400, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ error: "Path parameter required" }));
-              return;
-            }
-            const fullPath = this.resolvePath(path19);
-            console.log(`Writing to file: ${fullPath}`);
-            const dir = dirname(fullPath);
-            await fs15.promises.mkdir(dir, { recursive: true });
-            await fs15.promises.writeFile(fullPath, content, "utf-8");
-            console.log(`File written successfully: ${fullPath}`);
-            res.writeHead(200, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ success: true }));
-          } catch (error) {
-            console.error("Error writing file:", error);
-            res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Failed to write file" }));
-          }
-        });
-      }
-      resolvePath(requestedPath) {
-        const normalizedPath = requestedPath.replace(/\.\./g, "").replace(/^\//, "").replace(/\/+/g, "/");
-        return `${process.cwd()}/${normalizedPath}`;
-      }
-      async listDirectory(dirPath) {
-        try {
-          const items = await fs15.promises.readdir(dirPath, { withFileTypes: true });
-          const result = [];
-          const ignorePatterns = this.configs?.ignore || [];
-          for (const item of items) {
-            if (item.name.startsWith("."))
-              continue;
-            const fullPath = `${dirPath}/${item.name}`;
-            const relativePath = fullPath.replace(process.cwd(), "").replace(/^\//, "");
-            const shouldIgnore = ignorePatterns.some((pattern) => {
-              let regexPattern = pattern.replace(/\./g, "\\.").replace(/\*\*/g, ".*").replace(/\*/g, "[^/]*").replace(/\?/g, "[^/]");
-              if (!regexPattern.startsWith("^"))
-                regexPattern = "^" + regexPattern;
-              if (!regexPattern.endsWith("$"))
-                regexPattern = regexPattern + "$";
-              const regex = new RegExp(regexPattern);
-              return regex.test(relativePath) || regex.test(item.name);
-            });
-            if (shouldIgnore)
-              continue;
-            if (item.isDirectory()) {
-              result.push({
-                name: item.name,
-                type: "folder",
-                path: "/" + relativePath
-              });
-            } else if (item.isFile()) {
-              result.push({
-                name: item.name,
-                type: "file",
-                path: "/" + relativePath
-              });
-            }
-          }
-          return result;
-        } catch (error) {
-          console.error("Error listing directory:", error);
-          throw error;
-        }
-      }
-      findIndexHtml() {
-        const possiblePaths = [
-          "dist/index.html",
-          "testeranto/dist/index.html",
-          "../dist/index.html",
-          "./index.html"
-        ];
-        for (const path19 of possiblePaths) {
-          if (fs15.existsSync(path19)) {
-            return path19;
-          }
-        }
-        return null;
-      }
-      // Add a method to track promise-based processes
-      addPromiseProcess(processId, promise, command, category = "other", testName2, platform, onResolve, onReject) {
-        this.runningProcesses.set(processId, promise);
-        this.allProcesses.set(processId, {
-          promise,
-          status: "running",
-          command,
-          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          type: "promise",
-          category,
-          testName: testName2,
-          platform
-        });
-        this.processLogs.set(processId, []);
-        const startMessage = `Starting: ${command}`;
-        const logs = this.processLogs.get(processId) || [];
-        logs.push(startMessage);
-        this.processLogs.set(processId, logs);
-        this.broadcast({
-          type: "processStarted",
-          processId,
-          command,
-          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          logs: [startMessage]
-        });
-        promise.then((result) => {
-          this.runningProcesses.delete(processId);
-          const processInfo = this.allProcesses.get(processId);
-          if (processInfo) {
-            this.allProcesses.set(processId, {
-              ...processInfo,
-              status: "completed",
-              exitCode: 0
-            });
-          }
-          const successMessage = `Completed successfully with result: ${JSON.stringify(
-            result
-          )}`;
-          const currentLogs = this.processLogs.get(processId) || [];
-          currentLogs.push(successMessage);
-          this.processLogs.set(processId, currentLogs);
-          this.broadcast({
-            type: "processExited",
-            processId,
-            exitCode: 0,
-            timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-            logs: [successMessage]
-          });
-          if (onResolve)
-            onResolve(result);
-        }).catch((error) => {
-          this.runningProcesses.delete(processId);
-          const processInfo = this.allProcesses.get(processId);
-          if (processInfo) {
-            this.allProcesses.set(processId, {
-              ...processInfo,
-              status: "error",
-              error: error.message
-            });
-          }
-          const errorMessage = `Failed with error: ${error.message}`;
-          const currentLogs = this.processLogs.get(processId) || [];
-          currentLogs.push(errorMessage);
-          this.processLogs.set(processId, currentLogs);
-          this.broadcast({
-            type: "processError",
-            processId,
-            error: error.message,
-            timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-            logs: [errorMessage]
-          });
-          if (onReject)
-            onReject(error);
-        });
-        return processId;
-      }
-      async handleWebSocketListDirectory(ws, message) {
-        try {
-          const path19 = message.path;
-          if (!path19) {
-            ws.send(
-              JSON.stringify({
-                type: "error",
-                message: "Path parameter required"
-              })
-            );
-            return;
-          }
-          const fullPath = this.resolvePath(path19);
-          const items = await this.listDirectory(fullPath);
-          ws.send(
-            JSON.stringify({
-              type: "directoryListing",
-              path: path19,
-              items
-            })
-          );
-        } catch (error) {
-          console.error("Error handling WebSocket directory listing:", error);
-          ws.send(
-            JSON.stringify({
-              type: "error",
-              message: "Failed to list directory"
-            })
-          );
-        }
-      }
-      broadcast(message) {
-        const data = typeof message === "string" ? message : JSON.stringify(message);
-        this.clients.forEach((client) => {
-          if (client.readyState === 1) {
-            client.send(data);
-          }
-        });
-      }
-      // Helper methods to get processes by category
-      getProcessesByCategory(category) {
-        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.category === category).map(([id, procInfo]) => ({
-          processId: id,
-          command: procInfo.command,
-          pid: procInfo.pid,
-          status: procInfo.status,
-          exitCode: procInfo.exitCode,
-          error: procInfo.error,
-          timestamp: procInfo.timestamp,
-          category: procInfo.category,
-          testName: procInfo.testName,
-          platform: procInfo.platform,
-          logs: this.processLogs.get(id) || []
-        }));
-      }
-      getBDDTestProcesses() {
-        return this.getProcessesByCategory("bdd-test");
-      }
-      getBuildTimeProcesses() {
-        return this.getProcessesByCategory("build-time");
-      }
-      getAiderProcesses() {
-        return this.getProcessesByCategory("aider");
-      }
-      getProcessesByTestName(testName2) {
-        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.testName === testName2).map(([id, procInfo]) => ({
-          processId: id,
-          command: procInfo.command,
-          pid: procInfo.pid,
-          status: procInfo.status,
-          exitCode: procInfo.exitCode,
-          error: procInfo.error,
-          timestamp: procInfo.timestamp,
-          category: procInfo.category,
-          testName: procInfo.testName,
-          platform: procInfo.platform,
-          logs: this.processLogs.get(id) || []
-        }));
-      }
-      getProcessesByPlatform(platform) {
-        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.platform === platform).map(([id, procInfo]) => ({
-          processId: id,
-          command: procInfo.command,
-          pid: procInfo.pid,
-          status: procInfo.status,
-          exitCode: procInfo.exitCode,
-          error: procInfo.error,
-          timestamp: procInfo.timestamp,
-          category: procInfo.category,
-          testName: procInfo.testName,
-          platform: procInfo.platform,
-          logs: this.processLogs.get(id) || []
-        }));
-      }
-    };
-  }
-});
-
-// src/PM/PM_WithBuild.ts
-import esbuild from "esbuild";
-var PM_WithBuild;
-var init_PM_WithBuild = __esm({
-  "src/PM/PM_WithBuild.ts"() {
-    "use strict";
-    init_node();
-    init_web();
-    init_pure();
-    init_utils();
-    init_PM_WithWebSocket();
-    PM_WithBuild = class extends PM_WithWebSocket {
-      constructor(configs, name, mode2) {
-        super(configs);
-        this.currentBuildResolve = null;
-        this.currentBuildReject = null;
-        this.configs = configs;
-        this.name = name;
-        this.mode = mode2;
-      }
-      async startBuildProcesses() {
-        const { nodeEntryPoints, webEntryPoints, pureEntryPoints } = getRunnables(
-          this.configs.tests,
-          this.name
-        );
-        console.log(`Starting build processes for ${this.name}...`);
-        console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
-        console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
-        console.log(`  Pure entry points: ${Object.keys(pureEntryPoints).length}`);
-        await Promise.all([
-          this.startBuildProcess(node_default, nodeEntryPoints, "node"),
-          this.startBuildProcess(web_default, webEntryPoints, "web"),
-          this.startBuildProcess(pure_default, pureEntryPoints, "pure")
-        ]);
-      }
-      async startBuildProcess(configer, entryPoints, runtime) {
-        const entryPointKeys = Object.keys(entryPoints);
-        if (entryPointKeys.length === 0)
-          return;
-        const self = this;
-        const buildProcessTrackerPlugin = {
-          name: "build-process-tracker",
-          setup(build) {
-            build.onStart(() => {
-              const processId = `build-${runtime}-${Date.now()}`;
-              const command = `esbuild ${runtime} for ${self.name}`;
-              const buildPromise = new Promise((resolve, reject) => {
-                self.currentBuildResolve = resolve;
-                self.currentBuildReject = reject;
-              });
-              if (self.addPromiseProcess) {
-                self.addPromiseProcess(
-                  processId,
-                  buildPromise,
-                  command,
-                  "build-time",
-                  self.name,
-                  runtime
-                );
-              }
-              console.log(
-                `Starting ${runtime} build for ${entryPointKeys.length} entry points`
-              );
-              if (self.broadcast) {
-                self.broadcast({
-                  type: "buildEvent",
-                  event: "start",
-                  runtime,
-                  timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-                  entryPoints: entryPointKeys.length,
-                  processId
-                });
-              }
-            });
-            build.onEnd((result) => {
-              const event = {
-                type: "buildEvent",
-                event: result.errors.length > 0 ? "error" : "success",
-                runtime,
-                timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-                errors: result.errors.length,
-                warnings: result.warnings.length
-              };
-              if (result.errors.length > 0) {
-                console.error(
-                  `Build ${runtime} failed with ${result.errors.length} errors`
-                );
-                if (self.currentBuildReject) {
-                  self.currentBuildReject(
-                    new Error(`Build failed with ${result.errors.length} errors`)
-                  );
-                }
-              } else {
-                console.log(`Build ${runtime} completed successfully`);
-                if (self.currentBuildResolve) {
-                  self.currentBuildResolve();
-                }
-              }
-              if (self.broadcast) {
-                self.broadcast(event);
-              }
-              self.currentBuildResolve = null;
-              self.currentBuildReject = null;
-            });
-          }
-        };
-        const baseConfig = configer(this.configs, entryPointKeys, this.name);
-        const configWithPlugin = {
-          ...baseConfig,
-          plugins: [...baseConfig.plugins || [], buildProcessTrackerPlugin]
-        };
-        try {
-          if (this.mode === "dev") {
-            const ctx = await esbuild.context(configWithPlugin);
-            await ctx.rebuild();
-            await ctx.watch();
-          } else {
-            const result = await esbuild.build(configWithPlugin);
-            if (result.errors.length === 0) {
-              console.log(`Successfully built ${runtime} bundle`);
-            }
-          }
-        } catch (error) {
-          console.error(`Failed to build ${runtime}:`, error);
-          if (this.broadcast) {
-            this.broadcast({
-              type: "buildEvent",
-              event: "error",
-              runtime,
-              timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-              errors: 1,
-              warnings: 0,
-              message: error.message
-            });
-          }
-          throw error;
-        }
       }
     };
   }
@@ -3336,33 +2144,30 @@ var init_logFiles = __esm({
   }
 });
 
-// src/utils/makePrompt.ts
+// src/app/backend/makePrompt.ts
 import fs16 from "fs";
-import path15 from "path";
-var makePrompt, makePromptInternal;
+import path16 from "path";
+var makePrompt;
 var init_makePrompt = __esm({
-  "src/utils/makePrompt.ts"() {
+  "src/app/backend/makePrompt.ts"() {
     "use strict";
     init_utils();
     init_logFiles();
     init_logFiles();
-    makePrompt = async (summary, name, entryPoint, addableFiles, runtime) => {
+    makePrompt = async (summary, name, entryPoint, addableFiles, runTime) => {
       summary[entryPoint].prompt = "?";
-      const promptPath = promptPather(entryPoint, runtime, name);
-      const testDir = path15.join(
+      const promptPath = promptPather(entryPoint, runTime, name);
+      const testDir = path16.join(
         "testeranto",
         "reports",
         name,
         entryPoint.split(".").slice(0, -1).join("."),
-        runtime
+        runTime
       );
-      if (!fs16.existsSync(testDir)) {
-        fs16.mkdirSync(testDir, { recursive: true });
-      }
-      const testPaths = path15.join(testDir, LOG_FILES.TESTS);
-      const lintPath = path15.join(testDir, LOG_FILES.LINT_ERRORS);
-      const typePath = path15.join(testDir, LOG_FILES.TYPE_ERRORS);
-      const messagePath = path15.join(testDir, LOG_FILES.MESSAGE);
+      const testPaths = path16.join(testDir, LOG_FILES.TESTS);
+      const lintPath = path16.join(testDir, LOG_FILES.LINT_ERRORS);
+      const typePath = path16.join(testDir, LOG_FILES.TYPE_ERRORS);
+      const messagePath = path16.join(testDir, LOG_FILES.MESSAGE);
       try {
         await Promise.all([
           fs16.promises.writeFile(
@@ -3381,7 +2186,7 @@ ${addableFiles.map((x) => {
 /read ${typePath}
 /read ${lintPath}
 
-/read ${getLogFilesForRuntime(runtime).map((p) => `${testDir}/${p}`).join("\n/read ")}
+/read ${getLogFilesForRuntime(runTime).map((p) => `${testDir}/${p}`).join("\n/read ")}
 `
           ),
           fs16.promises.writeFile(
@@ -3411,42 +2216,1208 @@ Do not add error throwing/catching to the tests themselves.
         console.error(e);
         throw e;
       }
-      summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${name}/reports/${runtime}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
-    };
-    makePromptInternal = (summary, name, entryPoint, addableFiles, runTime) => {
-      if (runTime === "node") {
-        return makePrompt(summary, name, entryPoint, addableFiles, "node");
-      }
-      if (runTime === "web") {
-        return makePrompt(summary, name, entryPoint, addableFiles, "web");
-      }
-      if (runTime === "pure") {
-        return makePrompt(summary, name, entryPoint, addableFiles, "pure");
-      }
-      if (runTime === "golang") {
-        return makePrompt(summary, name, entryPoint, addableFiles, "golang");
-      }
-      if (runTime === "python") {
-        return makePrompt(summary, name, entryPoint, addableFiles, "python");
-      }
-      throw `unknown runTime: ${runTime}`;
+      summary[entryPoint].prompt = `aider --model deepseek/deepseek-chat --load testeranto/${name}/reports/${runTime}/${entryPoint.split(".").slice(0, -1).join(".")}/prompt.txt`;
     };
   }
 });
 
-// src/PM/PM_WithEslintAndTsc.ts
-import ts from "typescript";
-import fs17 from "fs";
+// src/app/backend/PM_1_WithProcesses.ts
+import path17 from "path";
+import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
 import ansiC2 from "ansi-colors";
+import fs17, { watch } from "fs";
+var changes, PM_1_WithProcesses;
+var init_PM_1_WithProcesses = __esm({
+  "src/app/backend/PM_1_WithProcesses.ts"() {
+    "use strict";
+    init_utils2();
+    init_PM_0();
+    init_makePrompt();
+    init_utils();
+    changes = {};
+    PM_1_WithProcesses = class extends PM_0 {
+      constructor(configs, name, mode2) {
+        super(configs, name, mode2);
+        this.summary = {};
+        this.logStreams = {};
+        this.runningProcesses = /* @__PURE__ */ new Map();
+        this.allProcesses = /* @__PURE__ */ new Map();
+        this.processLogs = /* @__PURE__ */ new Map();
+        this.clients = /* @__PURE__ */ new Set();
+        this.writeBigBoard = () => {
+          const summaryPath = `./testeranto/reports/${this.projectName}/summary.json`;
+          const summaryData = JSON.stringify(this.summary, null, 2);
+          fs17.writeFileSync(summaryPath, summaryData);
+          this.webSocketBroadcastMessage({
+            type: "summaryUpdate",
+            data: this.summary
+          });
+        };
+        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
+          const featureDestination = path17.resolve(
+            process.cwd(),
+            "reports",
+            "features",
+            "strings",
+            srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
+          );
+          const testReportPath = `${reportDest}/tests.json`;
+          if (!fs17.existsSync(testReportPath)) {
+            console.error(`tests.json not found at: ${testReportPath}`);
+            return;
+          }
+          const testReport = JSON.parse(fs17.readFileSync(testReportPath, "utf8"));
+          if (testReport.tests) {
+            testReport.tests.forEach((test) => {
+              test.fullPath = path17.resolve(process.cwd(), srcTest);
+            });
+          }
+          testReport.fullPath = path17.resolve(process.cwd(), srcTest);
+          fs17.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
+          testReport.features.reduce(async (mm, featureStringKey) => {
+            const accum = await mm;
+            const isUrl = isValidUrl(featureStringKey);
+            if (isUrl) {
+              const u = new URL(featureStringKey);
+              if (u.protocol === "file:") {
+                accum.files.push(u.pathname);
+              } else if (u.protocol === "http:" || u.protocol === "https:") {
+                const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
+                const body = await this.configs.featureIngestor(featureStringKey);
+                writeFileAndCreateDir(newPath, body);
+                accum.files.push(newPath);
+              }
+            } else {
+              await fs17.promises.mkdir(path17.dirname(featureDestination), {
+                recursive: true
+              });
+              accum.strings.push(featureStringKey);
+            }
+            return accum;
+          }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3 }) => {
+            fs17.writeFileSync(
+              `testeranto/reports/${this.projectName}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
+              files3.map((f) => {
+                return `/read ${f}`;
+              }).join("\n")
+            );
+          });
+          testReport.givens.forEach((g) => {
+            if (g.failed === true) {
+              this.summary[srcTest].failingFeatures[g.key] = g.features;
+            }
+          });
+          this.writeBigBoard();
+        };
+        this.checkForShutdown = () => {
+          this.checkQueue();
+          console.log(
+            ansiC2.inverse(
+              `The following jobs are awaiting resources: ${JSON.stringify(
+                this.queue
+              )}`
+            )
+          );
+          console.log(
+            ansiC2.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
+          );
+          this.writeBigBoard();
+          if (this.mode === "dev")
+            return;
+          let inflight = false;
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].prompt === "?") {
+              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} prompt ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].runTimeErrors === "?") {
+              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} runTimeError ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].staticErrors === "?") {
+              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} staticErrors ${k}`)));
+              inflight = true;
+            }
+          });
+          Object.keys(this.summary).forEach((k) => {
+            if (this.summary[k].typeErrors === "?") {
+              console.log(ansiC2.blue(ansiC2.inverse(`\u{1F555} typeErrors ${k}`)));
+              inflight = true;
+            }
+          });
+          this.writeBigBoard();
+          if (!inflight) {
+            if (this.browser) {
+              if (this.browser) {
+                this.browser.disconnect().then(() => {
+                  console.log(
+                    ansiC2.inverse(`${this.projectName} has been tested. Goodbye.`)
+                  );
+                  process.exit();
+                });
+              }
+            }
+          }
+        };
+        this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
+          this.ensureSummaryEntry(t);
+          sidecars.forEach(([sidecarName]) => {
+            this.ensureSummaryEntry(sidecarName, true);
+          });
+        });
+        this.launchers = {};
+        this.ports = {};
+        this.queue = [];
+        this.configs.ports.forEach((element) => {
+          this.ports[element] = "";
+        });
+      }
+      webSocketBroadcastMessage(message) {
+        const data = typeof message === "string" ? message : JSON.stringify(message);
+        this.clients.forEach((client) => {
+          if (client.readyState === 1) {
+            client.send(data);
+          }
+        });
+      }
+      addPromiseProcess(processId, promise, command, category = "other", testName2, platform, onResolve, onReject) {
+        this.runningProcesses.set(processId, promise);
+        this.allProcesses.set(processId, {
+          promise,
+          status: "running",
+          command,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          type: "promise",
+          category,
+          testName: testName2,
+          platform
+        });
+        this.processLogs.set(processId, []);
+        const startMessage = `Starting: ${command}`;
+        const logs = this.processLogs.get(processId) || [];
+        logs.push(startMessage);
+        this.processLogs.set(processId, logs);
+        this.webSocketBroadcastMessage({
+          type: "processStarted",
+          processId,
+          command,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          logs: [startMessage]
+        });
+        promise.then((result) => {
+          this.runningProcesses.delete(processId);
+          const processInfo = this.allProcesses.get(processId);
+          if (processInfo) {
+            this.allProcesses.set(processId, {
+              ...processInfo,
+              status: "completed",
+              exitCode: 0
+            });
+          }
+          const successMessage = `Completed successfully with result: ${JSON.stringify(
+            result
+          )}`;
+          const currentLogs = this.processLogs.get(processId) || [];
+          currentLogs.push(successMessage);
+          this.processLogs.set(processId, currentLogs);
+          this.webSocketBroadcastMessage({
+            type: "processExited",
+            processId,
+            exitCode: 0,
+            timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+            logs: [successMessage]
+          });
+          if (onResolve)
+            onResolve(result);
+        }).catch((error) => {
+          this.runningProcesses.delete(processId);
+          const processInfo = this.allProcesses.get(processId);
+          if (processInfo) {
+            this.allProcesses.set(processId, {
+              ...processInfo,
+              status: "error",
+              error: error.message
+            });
+          }
+          const errorMessage = `Failed with error: ${error.message}`;
+          const currentLogs = this.processLogs.get(processId) || [];
+          currentLogs.push(errorMessage);
+          this.processLogs.set(processId, currentLogs);
+          this.webSocketBroadcastMessage({
+            type: "processError",
+            processId,
+            error: error.message,
+            timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+            logs: [errorMessage]
+          });
+          if (onReject)
+            onReject(error);
+        });
+        return processId;
+      }
+      getProcessesByCategory(category) {
+        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.category === category).map(([id, procInfo]) => ({
+          processId: id,
+          command: procInfo.command,
+          pid: procInfo.pid,
+          status: procInfo.status,
+          exitCode: procInfo.exitCode,
+          error: procInfo.error,
+          timestamp: procInfo.timestamp,
+          category: procInfo.category,
+          testName: procInfo.testName,
+          platform: procInfo.platform,
+          logs: this.processLogs.get(id) || []
+        }));
+      }
+      getBDDTestProcesses() {
+        return this.getProcessesByCategory("bdd-test");
+      }
+      getBuildTimeProcesses() {
+        return this.getProcessesByCategory("build-time");
+      }
+      getAiderProcesses() {
+        return this.getProcessesByCategory("aider");
+      }
+      getProcessesByTestName(testName2) {
+        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.testName === testName2).map(([id, procInfo]) => ({
+          processId: id,
+          command: procInfo.command,
+          pid: procInfo.pid,
+          status: procInfo.status,
+          exitCode: procInfo.exitCode,
+          error: procInfo.error,
+          timestamp: procInfo.timestamp,
+          category: procInfo.category,
+          testName: procInfo.testName,
+          platform: procInfo.platform,
+          logs: this.processLogs.get(id) || []
+        }));
+      }
+      getProcessesByPlatform(platform) {
+        return Array.from(this.allProcesses.entries()).filter(([id, procInfo]) => procInfo.platform === platform).map(([id, procInfo]) => ({
+          processId: id,
+          command: procInfo.command,
+          pid: procInfo.pid,
+          status: procInfo.status,
+          exitCode: procInfo.exitCode,
+          error: procInfo.error,
+          timestamp: procInfo.timestamp,
+          category: procInfo.category,
+          testName: procInfo.testName,
+          platform: procInfo.platform,
+          logs: this.processLogs.get(id) || []
+        }));
+      }
+      bddTestIsRunning(src) {
+        this.summary[src] = {
+          prompt: "?",
+          runTimeErrors: "?",
+          staticErrors: "?",
+          typeErrors: "?",
+          failingFeatures: {}
+        };
+      }
+      async metafileOutputs(platform) {
+        let metafilePath;
+        if (platform === "python") {
+          metafilePath = `./testeranto/metafiles/python/core.json`;
+        } else {
+          metafilePath = `./testeranto/metafiles/${platform}/${this.projectName}.json`;
+        }
+        if (!fs17.existsSync(metafilePath)) {
+          console.log(
+            ansiC2.yellow(`Metafile not found at ${metafilePath}, skipping`)
+          );
+          return;
+        }
+        let metafile;
+        try {
+          const fileContent = fs17.readFileSync(metafilePath).toString();
+          const parsedData = JSON.parse(fileContent);
+          if (platform === "python") {
+            metafile = parsedData.metafile || parsedData;
+          } else {
+            metafile = parsedData.metafile;
+          }
+          if (!metafile) {
+            console.log(
+              ansiC2.yellow(ansiC2.inverse(`No metafile found in ${metafilePath}`))
+            );
+            return;
+          }
+        } catch (error) {
+          console.error(`Error reading metafile at ${metafilePath}:`, error);
+          return;
+        }
+        const outputs = metafile.outputs;
+        Object.keys(outputs).forEach(async (k) => {
+          const pattern = `testeranto/bundles/${platform}/${this.projectName}/${this.configs.src}`;
+          if (!k.startsWith(pattern)) {
+            return;
+          }
+          const output = outputs[k];
+          const addableFiles = Object.keys(output.inputs).filter((i) => {
+            if (!fs17.existsSync(i))
+              return false;
+            if (i.startsWith("node_modules"))
+              return false;
+            if (i.startsWith("./node_modules"))
+              return false;
+            return true;
+          });
+          const f = `${k.split(".").slice(0, -1).join(".")}/`;
+          if (!fs17.existsSync(f)) {
+            fs17.mkdirSync(f, { recursive: true });
+          }
+          let entrypoint = output.entryPoint;
+          if (entrypoint) {
+            entrypoint = path17.normalize(entrypoint);
+            const changeDigest = await filesHash(addableFiles);
+            if (changeDigest === changes[entrypoint]) {
+            } else {
+              changes[entrypoint] = changeDigest;
+              if (platform === "node" || platform === "web" || platform === "pure") {
+                this.tscCheck({ entrypoint, addableFiles, platform });
+                this.eslintCheck({ entrypoint, addableFiles, platform });
+              } else if (platform === "python") {
+                this.pythonLintCheck(entrypoint, addableFiles);
+                this.pythonTypeCheck(entrypoint, addableFiles);
+              }
+              makePrompt(
+                this.summary,
+                this.projectName,
+                entrypoint,
+                addableFiles,
+                platform
+              );
+              const testName2 = this.findTestNameByEntrypoint(entrypoint, platform);
+              if (testName2) {
+                console.log(
+                  ansiC2.green(
+                    ansiC2.inverse(
+                      `Source files changed, re-queueing test: ${testName2}`
+                    )
+                  )
+                );
+                this.addToQueue(testName2, platform);
+              } else {
+                console.error(
+                  `Could not find test for entrypoint: ${entrypoint} (${platform})`
+                );
+                process.exit(-1);
+              }
+            }
+          }
+        });
+      }
+      findTestNameByEntrypoint(entrypoint, platform) {
+        const runnables = getRunnables(this.configs.tests, this.projectName);
+        let entryPointsMap;
+        switch (platform) {
+          case "node":
+            entryPointsMap = runnables.nodeEntryPoints;
+            break;
+          case "web":
+            entryPointsMap = runnables.webEntryPoints;
+            break;
+          case "pure":
+            entryPointsMap = runnables.pureEntryPoints;
+            break;
+          case "python":
+            entryPointsMap = runnables.pythonEntryPoints;
+            break;
+          case "golang":
+            entryPointsMap = runnables.golangEntryPoints;
+            break;
+          default:
+            throw "wtf";
+        }
+        if (!entryPointsMap) {
+          console.error("idk");
+        }
+        if (!entryPointsMap[entrypoint]) {
+          console.error(`${entrypoint} not found`);
+        }
+        return entryPointsMap[entrypoint];
+      }
+      async pythonLintCheck(entrypoint, addableFiles) {
+        const reportDest = `testeranto/reports/${this.projectName}/${entrypoint.split(".").slice(0, -1).join(".")}/python`;
+        if (!fs17.existsSync(reportDest)) {
+          fs17.mkdirSync(reportDest, { recursive: true });
+        }
+        const lintErrorsPath = `${reportDest}/lint_errors.txt`;
+        try {
+          const { spawn: spawn2 } = await import("child_process");
+          const child = spawn2("flake8", [entrypoint, "--max-line-length=88"], {
+            stdio: ["pipe", "pipe", "pipe"]
+          });
+          let stderr = "";
+          child.stderr.on("data", (data) => {
+            stderr += data.toString();
+          });
+          let stdout = "";
+          child.stdout.on("data", (data) => {
+            stdout += data.toString();
+          });
+          return new Promise((resolve) => {
+            child.on("close", () => {
+              const output = stdout + stderr;
+              if (output.trim()) {
+                fs17.writeFileSync(lintErrorsPath, output);
+                this.summary[entrypoint].staticErrors = output.split("\n").length;
+              } else {
+                if (fs17.existsSync(lintErrorsPath)) {
+                  fs17.unlinkSync(lintErrorsPath);
+                }
+                this.summary[entrypoint].staticErrors = 0;
+              }
+              resolve();
+            });
+          });
+        } catch (error) {
+          console.error(`Error running flake8 on ${entrypoint}:`, error);
+          fs17.writeFileSync(
+            lintErrorsPath,
+            `Error running flake8: ${error.message}`
+          );
+          this.summary[entrypoint].staticErrors = -1;
+        }
+      }
+      async pythonTypeCheck(entrypoint, addableFiles) {
+        const reportDest = `testeranto/reports/${this.projectName}/${entrypoint.split(".").slice(0, -1).join(".")}/python`;
+        if (!fs17.existsSync(reportDest)) {
+          fs17.mkdirSync(reportDest, { recursive: true });
+        }
+        const typeErrorsPath = `${reportDest}/type_errors.txt`;
+        try {
+          const { spawn: spawn2 } = await import("child_process");
+          const child = spawn2("mypy", [entrypoint], {
+            stdio: ["pipe", "pipe", "pipe"]
+          });
+          let stderr = "";
+          child.stderr.on("data", (data) => {
+            stderr += data.toString();
+          });
+          let stdout = "";
+          child.stdout.on("data", (data) => {
+            stdout += data.toString();
+          });
+          return new Promise((resolve) => {
+            child.on("close", () => {
+              const output = stdout + stderr;
+              if (output.trim()) {
+                fs17.writeFileSync(typeErrorsPath, output);
+                this.summary[entrypoint].typeErrors = output.split("\n").length;
+              } else {
+                if (fs17.existsSync(typeErrorsPath)) {
+                  fs17.unlinkSync(typeErrorsPath);
+                }
+                this.summary[entrypoint].typeErrors = 0;
+              }
+              resolve();
+            });
+          });
+        } catch (error) {
+          console.error(`Error running mypy on ${entrypoint}:`, error);
+          fs17.writeFileSync(typeErrorsPath, `Error running mypy: ${error.message}`);
+          this.summary[entrypoint].typeErrors = -1;
+        }
+      }
+      async start() {
+        try {
+          await this.startBuildProcesses();
+          const pythonTests = this.configs.tests.filter(
+            (test) => test[1] === "python"
+          );
+          if (pythonTests.length > 0) {
+            const { generatePitonoMetafile: generatePitonoMetafile2, writePitonoMetafile: writePitonoMetafile2 } = await Promise.resolve().then(() => (init_pitonoMetafile(), pitonoMetafile_exports));
+            const entryPoints = pythonTests.map((test) => test[0]);
+            const metafile = await generatePitonoMetafile2(
+              this.projectName,
+              entryPoints
+            );
+            writePitonoMetafile2(this.projectName, metafile);
+          }
+          this.onBuildDone();
+        } catch (error) {
+          console.error("Build processes failed:", error);
+          return;
+        }
+        this.mapping().forEach(async ([command, func]) => {
+          globalThis[command] = func;
+        });
+        if (!fs17.existsSync(`testeranto/reports/${this.projectName}`)) {
+          fs17.mkdirSync(`testeranto/reports/${this.projectName}`);
+        }
+        try {
+          this.browser = await puppeteer.launch(puppeteerConfigs);
+        } catch (e) {
+          console.error(e);
+          console.error(
+            "could not start chrome via puppeter. Check this path: ",
+            executablePath2
+          );
+        }
+        const runnables = getRunnables(this.configs.tests, this.projectName);
+        const {
+          nodeEntryPoints,
+          webEntryPoints,
+          pureEntryPoints,
+          pythonEntryPoints,
+          golangEntryPoints
+        } = runnables;
+        [
+          ["node", nodeEntryPoints],
+          ["web", webEntryPoints],
+          ["pure", pureEntryPoints],
+          ["python", pythonEntryPoints],
+          ["golang", golangEntryPoints]
+        ].forEach(([runtime, entryPoints]) => {
+          Object.keys(entryPoints).forEach((entryPoint) => {
+            const reportDest = `testeranto/reports/${this.projectName}/${entryPoint.split(".").slice(0, -1).join(".")}/${runtime}`;
+            if (!fs17.existsSync(reportDest)) {
+              fs17.mkdirSync(reportDest, { recursive: true });
+            }
+            this.addToQueue(entryPoint, runtime);
+          });
+        });
+        const runtimeConfigs = [
+          ["node", nodeEntryPoints],
+          ["web", webEntryPoints],
+          ["pure", pureEntryPoints],
+          ["python", pythonEntryPoints],
+          ["golang", golangEntryPoints]
+        ];
+        for (const [runtime, entryPoints] of runtimeConfigs) {
+          if (Object.keys(entryPoints).length === 0)
+            continue;
+          let metafile;
+          if (runtime === "python") {
+            metafile = `./testeranto/metafiles/${runtime}/core.json`;
+          } else {
+            metafile = `./testeranto/metafiles/${runtime}/${this.projectName}.json`;
+          }
+          const metafileDir = metafile.split("/").slice(0, -1).join("/");
+          if (!fs17.existsSync(metafileDir)) {
+            fs17.mkdirSync(metafileDir, { recursive: true });
+          }
+          try {
+            if (runtime === "python" && !fs17.existsSync(metafile)) {
+              const { generatePitonoMetafile: generatePitonoMetafile2, writePitonoMetafile: writePitonoMetafile2 } = await Promise.resolve().then(() => (init_pitonoMetafile(), pitonoMetafile_exports));
+              const entryPointList = Object.keys(entryPoints);
+              if (entryPointList.length > 0) {
+                const metafileData = await generatePitonoMetafile2(
+                  this.projectName,
+                  entryPointList
+                );
+                writePitonoMetafile2(this.projectName, metafileData);
+              }
+            }
+            await pollForFile(metafile);
+            let timeoutId;
+            const watcher = watch(metafile, async (e, filename) => {
+              clearTimeout(timeoutId);
+              timeoutId = setTimeout(async () => {
+                console.log(
+                  ansiC2.yellow(ansiC2.inverse(`< ${e} ${filename} (${runtime})`))
+                );
+                try {
+                  await this.metafileOutputs(runtime);
+                  console.log(
+                    ansiC2.blue(
+                      `Metafile processed, checking queue for tests to run`
+                    )
+                  );
+                  this.checkQueue();
+                } catch (error) {
+                  console.error(`Error processing metafile changes:`, error);
+                }
+              }, 300);
+            });
+            switch (runtime) {
+              case "node":
+                this.nodeMetafileWatcher = watcher;
+                break;
+              case "web":
+                this.webMetafileWatcher = watcher;
+                break;
+              case "pure":
+                this.importMetafileWatcher = watcher;
+                break;
+              case "python":
+                this.pitonoMetafileWatcher = watcher;
+                break;
+              case "golang":
+                this.golangMetafileWatcher = watcher;
+                break;
+            }
+            await this.metafileOutputs(runtime);
+          } catch (error) {
+            console.error(`Error setting up watcher for ${runtime}:`, error);
+          }
+        }
+      }
+      async stop() {
+        console.log(ansiC2.inverse("Testeranto-Run is shutting down gracefully..."));
+        this.mode = "once";
+        this.nodeMetafileWatcher.close();
+        this.webMetafileWatcher.close();
+        this.importMetafileWatcher.close();
+        if (this.pitonoMetafileWatcher) {
+          this.pitonoMetafileWatcher.close();
+        }
+        Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
+        this.clients.forEach((client) => {
+          client.terminate();
+        });
+        this.clients.clear();
+        this.checkForShutdown();
+      }
+      addToQueue(src, runtime) {
+        if (src.includes("testeranto/bundles")) {
+          const runnables = getRunnables(this.configs.tests, this.projectName);
+          const allEntryPoints = [
+            ...Object.entries(runnables.nodeEntryPoints),
+            ...Object.entries(runnables.webEntryPoints),
+            ...Object.entries(runnables.pureEntryPoints),
+            ...Object.entries(runnables.pythonEntryPoints),
+            ...Object.entries(runnables.golangEntryPoints)
+          ];
+          const normalizedSrc = path17.normalize(src);
+          for (const [testName2, bundlePath] of allEntryPoints) {
+            const normalizedBundlePath = path17.normalize(bundlePath);
+            if (normalizedSrc.endsWith(normalizedBundlePath)) {
+              src = testName2;
+              break;
+            }
+          }
+        }
+        this.cleanupTestProcesses(src);
+        if (!this.queue.includes(src)) {
+          this.queue.push(src);
+          console.log(
+            ansiC2.green(
+              ansiC2.inverse(`Added ${src} (${runtime}) to the processing queue`)
+            )
+          );
+          this.checkQueue();
+        } else {
+          console.log(
+            ansiC2.yellow(
+              ansiC2.inverse(`Test ${src} is already in the queue, skipping`)
+            )
+          );
+        }
+      }
+      cleanupTestProcesses(testName2) {
+        const processesToCleanup = [];
+        for (const [processId, processInfo] of this.allProcesses.entries()) {
+          if (processInfo.testName === testName2 && processInfo.status === "running") {
+            processesToCleanup.push(processId);
+          }
+        }
+        processesToCleanup.forEach((processId) => {
+          const processInfo = this.allProcesses.get(processId);
+          if (processInfo) {
+            if (processInfo.child) {
+              try {
+                processInfo.child.kill();
+              } catch (error) {
+                console.error(`Error killing process ${processId}:`, error);
+              }
+            }
+            this.allProcesses.set(processId, {
+              ...processInfo,
+              status: "exited",
+              exitCode: -1,
+              error: "Killed due to source file change"
+            });
+            this.runningProcesses.delete(processId);
+            this.webSocketBroadcastMessage({
+              type: "processExited",
+              processId,
+              exitCode: -1,
+              timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+              logs: ["Process killed due to source file change"]
+            });
+          }
+        });
+      }
+      checkQueue() {
+        while (this.queue.length > 0) {
+          const x = this.queue.pop();
+          if (!x)
+            continue;
+          let isRunning = false;
+          for (const processInfo of this.allProcesses.values()) {
+            if (processInfo.testName === x && processInfo.status === "running") {
+              isRunning = true;
+              break;
+            }
+          }
+          if (isRunning) {
+            console.log(
+              ansiC2.yellow(
+                `Skipping ${x} - already running, will be re-queued when current run completes`
+              )
+            );
+            continue;
+          }
+          const test = this.configs.tests.find((t) => t[0] === x);
+          if (!test) {
+            console.error(`test is undefined ${x}`);
+            continue;
+          }
+          const runtime = test[1];
+          const runnables = getRunnables(this.configs.tests, this.projectName);
+          let dest;
+          switch (runtime) {
+            case "node":
+              dest = runnables.nodeEntryPoints[x];
+              if (dest) {
+                this.launchNode(x, dest);
+              } else {
+                console.error(`No destination found for node test: ${x}`);
+              }
+              break;
+            case "web":
+              dest = runnables.webEntryPoints[x];
+              if (dest) {
+                this.launchWeb(x, dest);
+              } else {
+                console.error(`No destination found for web test: ${x}`);
+              }
+              break;
+            case "pure":
+              dest = runnables.pureEntryPoints[x];
+              if (dest) {
+                this.launchPure(x, dest);
+              } else {
+                console.error(`No destination found for pure test: ${x}`);
+              }
+              break;
+            case "python":
+              dest = runnables.pythonEntryPoints[x];
+              if (dest) {
+                this.launchPython(x, dest);
+              } else {
+                console.error(`No destination found for python test: ${x}`);
+              }
+              break;
+            case "golang":
+              dest = runnables.golangEntryPoints[x];
+              if (dest) {
+                this.launchGolang(x, dest);
+              } else {
+                console.error(`No destination found for golang test: ${x}`);
+              }
+              break;
+            default:
+              console.error(`Unknown runtime: ${runtime} for test ${x}`);
+              break;
+          }
+        }
+        if (this.queue.length === 0) {
+          console.log(ansiC2.inverse(`The queue is empty`));
+        }
+      }
+      ensureSummaryEntry(src, isSidecar = false) {
+        if (!this.summary[src]) {
+          this.summary[src] = {
+            typeErrors: void 0,
+            staticErrors: void 0,
+            runTimeErrors: void 0,
+            prompt: void 0,
+            failingFeatures: {}
+          };
+          if (isSidecar) {
+          }
+        }
+        return this.summary[src];
+      }
+    };
+  }
+});
+
+// src/app/backend/PM_2_WithTCP.ts
+import { WebSocketServer } from "ws";
+import http from "http";
+import fs18 from "fs";
+var PM_2_WithTCP;
+var init_PM_2_WithTCP = __esm({
+  "src/app/backend/PM_2_WithTCP.ts"() {
+    "use strict";
+    init_getAllFilesRecursively();
+    init_FileService();
+    init_api();
+    init_PM_1_WithProcesses();
+    PM_2_WithTCP = class extends PM_1_WithProcesses {
+      constructor(configs, name, mode2) {
+        super(configs, name, mode2);
+        this.httpServer = http.createServer(this.handleHttpRequest.bind(this));
+        this.wss = new WebSocketServer({ server: this.httpServer });
+        this.wss.on("connection", (ws) => {
+          this.clients.add(ws);
+          console.log("Client connected");
+          ws.on("message", (data) => {
+            try {
+              this.websocket(data, ws);
+            } catch (error) {
+              console.error("Error handling WebSocket message:", error);
+            }
+          });
+          ws.on("close", () => {
+            this.clients.delete(ws);
+            console.log("Client disconnected");
+          });
+          ws.on("error", (error) => {
+            console.error("WebSocket error:", error);
+            this.clients.delete(ws);
+          });
+        });
+        const httpPort = Number(process.env.HTTP_PORT) || 3e3;
+        this.httpServer.listen(httpPort, "0.0.0.0", () => {
+          console.log(`HTTP server running on http://localhost:${httpPort}`);
+        });
+      }
+      websocket(data, ws) {
+        try {
+          const wsm = JSON.parse(data.toString());
+          FileService_methods.forEach((fsm) => {
+            if (wsm.type === fsm) {
+              this[fsm](wsm, ws);
+            }
+          });
+          if (wsm.type === "getRunningProcesses") {
+            const processes = Array.from(this.allProcesses.entries()).map(
+              ([id, procInfo]) => ({
+                processId: id,
+                command: procInfo.command,
+                pid: procInfo.pid,
+                status: procInfo.status,
+                exitCode: procInfo.exitCode,
+                error: procInfo.error,
+                timestamp: procInfo.timestamp,
+                category: procInfo.category,
+                testName: procInfo.testName,
+                platform: procInfo.platform,
+                logs: this.processLogs.get(id) || []
+              })
+            );
+            ws.send(
+              JSON.stringify({
+                type: "runningProcesses",
+                processes
+              })
+            );
+          } else if (wsm.type === "getProcess") {
+            const processId = wsm.data.processId;
+            const procInfo = this.allProcesses.get(processId);
+            if (procInfo) {
+              ws.send(
+                JSON.stringify({
+                  type: "processData",
+                  processId,
+                  command: procInfo.command,
+                  pid: procInfo.pid,
+                  status: procInfo.status,
+                  exitCode: procInfo.exitCode,
+                  error: procInfo.error,
+                  timestamp: procInfo.timestamp,
+                  category: procInfo.category,
+                  testName: procInfo.testName,
+                  platform: procInfo.platform,
+                  logs: this.processLogs.get(processId) || []
+                })
+              );
+            }
+          } else if (wsm.type === "stdin") {
+            const processId = wsm.data.processId;
+            const data2 = wsm.data.data;
+            const childProcess = this.runningProcesses.get(processId);
+            if (childProcess && childProcess.stdin) {
+              childProcess.stdin.write(data2);
+            } else {
+              console.log(
+                "Cannot write to stdin - process not found or no stdin:",
+                {
+                  processExists: !!childProcess,
+                  stdinExists: childProcess?.stdin ? true : false
+                }
+              );
+            }
+          } else if (wsm.type === "killProcess") {
+            const processId = wsm.processId;
+            console.log("Received killProcess for process", processId);
+            const childProcess = this.runningProcesses.get(processId);
+            if (childProcess) {
+              console.log("Killing process");
+              childProcess.kill("SIGTERM");
+            } else {
+              console.log("Cannot kill process - process not found:", {
+                processExists: !!childProcess
+              });
+            }
+          } else if (wsm.type === "getChatHistory") {
+            if (this.getChatHistory) {
+              this.getChatHistory().then((history) => {
+                ws.send(
+                  JSON.stringify({
+                    type: "chatHistory",
+                    messages: history
+                  })
+                );
+              }).catch((error) => {
+                console.error("Error getting chat history:", error);
+                ws.send(
+                  JSON.stringify({
+                    type: "error",
+                    message: "Failed to get chat history"
+                  })
+                );
+              });
+            }
+          }
+        } catch (error) {
+          console.error("Error handling WebSocket message:", error);
+        }
+      }
+      handleHttpRequest(req, res) {
+        console.log(req.method, req.url);
+        if (req.url === "/testeranto/index.html" /* root */) {
+          fs18.readFile("./testeranto/index.html" /* root */, (err, data) => {
+            if (err) {
+              res.writeHead(404, { "Content-Type": "text/plain" });
+              res.end(`500 ${err.toString()}`);
+              return;
+            }
+            res.writeHead(200, { "Content-Type": "text/html" });
+            res.end(data);
+          });
+          return;
+        } else if (req.url === "/testeranto/App.css" /* style */) {
+          fs18.readFile("./testeranto/App.css" /* style */, (err, data) => {
+            if (err) {
+              res.writeHead(404, { "Content-Type": "text/plain" });
+              res.end(`500 ${err.toString()}`);
+              return;
+            }
+            res.writeHead(200, { "Content-Type": "text/css" });
+            res.end(data);
+          });
+          return;
+        } else if (req.url === "/testeranto/App.js" /* script */) {
+          fs18.readFile("./testeranto/App.js" /* script */, (err, data) => {
+            if (err) {
+              res.writeHead(404, { "Content-Type": "text/plain" });
+              res.end(`500 ${err.toString()}`);
+              return;
+            }
+            res.writeHead(200, { "Content-Type": "text/css" });
+            res.end(data);
+            return;
+          });
+          return;
+        } else {
+          res.writeHead(404);
+          res.end(`404 Not Found. ${req.url}`);
+          return;
+        }
+      }
+      // FileService methods
+      writeFile_send(wsm, ws) {
+        ws.send(JSON.stringify(["writeFile", wsm.data.path]));
+      }
+      writeFile_receive(wsm, ws) {
+        fs18.writeFileSync(wsm.data.path, wsm.data.content);
+      }
+      readFile_receive(wsm, ws) {
+        this.readFile_send(wsm, ws, fs18.readFileSync(wsm.data.path).toString());
+      }
+      readFile_send(wsm, ws, content) {
+        ws.send(JSON.stringify(["readFile", wsm.data.path, content]));
+      }
+      createDirectory_receive(wsm, ws) {
+        fs18.mkdirSync(wsm.data.path);
+        this.createDirectory_send(wsm, ws);
+      }
+      createDirectory_send(wsm, ws) {
+        ws.send(JSON.stringify(["createDirectory", wsm.data.path]));
+      }
+      deleteFile_receive(wsm, ws) {
+        fs18.unlinkSync(wsm.data.path);
+        this.deleteFile_send(wsm, ws);
+      }
+      deleteFile_send(wsm, ws) {
+        ws.send(JSON.stringify(["deleteFile", wsm.data.path]));
+      }
+      async files_receive(wsm, ws) {
+        this.files_send(wsm, ws, await getAllFilesRecursively("."));
+      }
+      files_send(wsm, ws, files3) {
+        ws.send(JSON.stringify(["files", files3]));
+      }
+      projects_receive(wsm, ws) {
+        this.projects_send(
+          wsm,
+          ws,
+          JSON.parse(fs18.readFileSync("./testeranto/projects.json", "utf-8"))
+        );
+      }
+      projects_send(wsm, ws, projects) {
+        ws.send(JSON.stringify(["projects", projects]));
+      }
+      report_receive(wsm, ws) {
+        this.report_send(wsm, ws);
+      }
+      async report_send(wsm, ws) {
+      }
+      async test_receive(wsm, ws) {
+      }
+      test_send(wsm, ws, project) {
+        ws.send(JSON.stringify(["tests", project]));
+      }
+    };
+  }
+});
+
+// src/app/backend/PM_WithBuild.ts
+import esbuild from "esbuild";
+var PM_WithBuild;
+var init_PM_WithBuild = __esm({
+  "src/app/backend/PM_WithBuild.ts"() {
+    "use strict";
+    init_PM_2_WithTCP();
+    PM_WithBuild = class extends PM_2_WithTCP {
+      constructor() {
+        super(...arguments);
+        this.currentBuildResolve = null;
+        this.currentBuildReject = null;
+      }
+      async startBuildProcess(configer, entryPoints, runtime) {
+        const entryPointKeys = Object.keys(entryPoints);
+        if (entryPointKeys.length === 0)
+          return;
+        const self = this;
+        const buildProcessTrackerPlugin = {
+          name: "build-process-tracker",
+          setup(build) {
+            build.onStart(() => {
+              const processId = `build-${runtime}-${Date.now()}`;
+              const command = `esbuild ${runtime} for ${self.projectName}`;
+              const buildPromise = new Promise((resolve, reject) => {
+                self.currentBuildResolve = resolve;
+                self.currentBuildReject = reject;
+              });
+              if (self.addPromiseProcess) {
+                self.addPromiseProcess(
+                  processId,
+                  buildPromise,
+                  command,
+                  "build-time",
+                  self.projectName,
+                  runtime
+                );
+              }
+              console.log(
+                `Starting ${runtime} build for ${entryPointKeys.length} entry points`
+              );
+              if (self.webSocketBroadcastMessage) {
+                self.webSocketBroadcastMessage({
+                  type: "buildEvent",
+                  event: "start",
+                  runtime,
+                  timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                  entryPoints: entryPointKeys.length,
+                  processId
+                });
+              }
+            });
+            build.onEnd((result) => {
+              const event = {
+                type: "buildEvent",
+                event: result.errors.length > 0 ? "error" : "success",
+                runtime,
+                timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+                errors: result.errors.length,
+                warnings: result.warnings.length
+              };
+              if (result.errors.length > 0) {
+                console.error(
+                  `Build ${runtime} failed with ${result.errors.length} errors`
+                );
+                if (self.currentBuildReject) {
+                  self.currentBuildReject(
+                    new Error(`Build failed with ${result.errors.length} errors`)
+                  );
+                }
+              } else {
+                console.log(`Build ${runtime} completed successfully`);
+                if (self.currentBuildResolve) {
+                  self.currentBuildResolve();
+                }
+              }
+              if (self.webSocketBroadcastMessage) {
+                self.webSocketBroadcastMessage(event);
+              }
+              self.currentBuildResolve = null;
+              self.currentBuildReject = null;
+            });
+          }
+        };
+        const baseConfig = configer(this.configs, entryPointKeys, this.projectName);
+        const configWithPlugin = {
+          ...baseConfig,
+          plugins: [...baseConfig.plugins || [], buildProcessTrackerPlugin]
+        };
+        try {
+          if (this.mode === "dev") {
+            const ctx = await esbuild.context(configWithPlugin);
+            await ctx.rebuild();
+            await ctx.watch();
+          } else {
+            const result = await esbuild.build(configWithPlugin);
+            if (result.errors.length === 0) {
+              console.log(`Successfully built ${runtime} bundle`);
+            }
+          }
+        } catch (error) {
+          console.error(`Failed to build ${runtime}:`, error);
+          if (this.webSocketBroadcastMessage) {
+            this.webSocketBroadcastMessage({
+              type: "buildEvent",
+              event: "error",
+              runtime,
+              timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+              errors: 1,
+              warnings: 0,
+              message: error.message
+            });
+          }
+          throw error;
+        }
+      }
+    };
+  }
+});
+
+// src/app/backend/PM_WithEslintAndTsc.ts
+import ts from "typescript";
+import fs19 from "fs";
+import ansiC3 from "ansi-colors";
 import { ESLint } from "eslint";
 import tsc from "tsc-prog";
 var eslint, formatter, PM_WithEslintAndTsc;
 var init_PM_WithEslintAndTsc = __esm({
-  async "src/PM/PM_WithEslintAndTsc.ts"() {
+  async "src/app/backend/PM_WithEslintAndTsc.ts"() {
     "use strict";
     init_utils();
     init_PM_WithBuild();
-    init_makePrompt();
     eslint = new ESLint();
     formatter = await eslint.loadFormatter(
       "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
@@ -3454,7 +3425,6 @@ var init_PM_WithEslintAndTsc = __esm({
     PM_WithEslintAndTsc = class extends PM_WithBuild {
       constructor(configs, name, mode2) {
         super(configs, name, mode2);
-        this.summary = {};
         this.tscCheck = async ({
           entrypoint,
           addableFiles,
@@ -3472,12 +3442,12 @@ var init_PM_WithEslintAndTsc = __esm({
               basePath: process.cwd(),
               configFilePath: "tsconfig.json",
               compilerOptions: {
-                outDir: tscPather(entrypoint, platform, this.name),
+                outDir: tscPather(entrypoint, platform, this.projectName),
                 noEmit: true
               },
               include: addableFiles
             });
-            const tscPath = tscPather(entrypoint, platform, this.name);
+            const tscPath = tscPather(entrypoint, platform, this.projectName);
             const allDiagnostics = program.getSemanticDiagnostics();
             const results = [];
             allDiagnostics.forEach((diagnostic) => {
@@ -3499,23 +3469,23 @@ var init_PM_WithEslintAndTsc = __esm({
                 );
               }
             });
-            fs17.writeFileSync(tscPath, results.join("\n"));
+            fs19.writeFileSync(tscPath, results.join("\n"));
             this.typeCheckIsNowDone(entrypoint, results.length);
             return results.length;
           })();
-          if (this.addPromiseProcess) {
-            this.addPromiseProcess(
-              processId,
-              tscPromise,
-              command,
-              "build-time",
-              entrypoint
-            );
-          } else {
-            await tscPromise;
-          }
+          this.addPromiseProcess(
+            processId,
+            tscPromise,
+            command,
+            "build-time",
+            entrypoint
+          );
         };
-        this.eslintCheck = async (entrypoint, platform, addableFiles) => {
+        this.eslintCheck = async ({
+          entrypoint,
+          addableFiles,
+          platform
+        }) => {
           const processId = `eslint-${entrypoint}-${Date.now()}`;
           const command = `eslint check for ${entrypoint}`;
           const eslintPromise = (async () => {
@@ -3524,40 +3494,26 @@ var init_PM_WithEslintAndTsc = __esm({
             } catch (e) {
               throw new Error(`Error in eslintCheck: ${e.message}`);
             }
-            const filepath = lintPather(entrypoint, platform, this.name);
-            if (fs17.existsSync(filepath))
-              fs17.rmSync(filepath);
+            const filepath = lintPather(entrypoint, platform, this.projectName);
+            if (fs19.existsSync(filepath))
+              fs19.rmSync(filepath);
             const results = (await eslint.lintFiles(addableFiles)).filter((r) => r.messages.length).filter((r) => {
               return r.messages[0].ruleId !== null;
             }).map((r) => {
               delete r.source;
               return r;
             });
-            fs17.writeFileSync(filepath, await formatter.format(results));
+            fs19.writeFileSync(filepath, await formatter.format(results));
             this.lintIsNowDone(entrypoint, results.length);
             return results.length;
           })();
-          if (this.addPromiseProcess) {
-            this.addPromiseProcess(
-              processId,
-              eslintPromise,
-              command,
-              "build-time",
-              entrypoint
-            );
-          } else {
-            await eslintPromise;
-          }
-        };
-        this.makePrompt = async (entryPoint, addableFiles, platform) => {
-          await makePromptInternal(
-            this.summary,
-            this.name,
-            entryPoint,
-            addableFiles,
-            platform
+          this.addPromiseProcess(
+            processId,
+            eslintPromise,
+            command,
+            "build-time",
+            entrypoint
           );
-          this.checkForShutdown();
         };
         this.typeCheckIsRunning = (src) => {
           if (!this.summary[src]) {
@@ -3566,14 +3522,11 @@ var init_PM_WithEslintAndTsc = __esm({
           this.summary[src].typeErrors = "?";
         };
         this.typeCheckIsNowDone = (src, failures) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
           if (failures === 0) {
-            console.log(ansiC2.green(ansiC2.inverse(`tsc > ${src}`)));
+            console.log(ansiC3.green(ansiC3.inverse(`tsc > ${src}`)));
           } else {
             console.log(
-              ansiC2.red(ansiC2.inverse(`tsc > ${src} failed ${failures} times`))
+              ansiC3.red(ansiC3.inverse(`tsc > ${src} failed ${failures} times`))
             );
           }
           this.summary[src].typeErrors = failures;
@@ -3581,21 +3534,15 @@ var init_PM_WithEslintAndTsc = __esm({
           this.checkForShutdown();
         };
         this.lintIsRunning = (src) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
           this.summary[src].staticErrors = "?";
           this.writeBigBoard();
         };
         this.lintIsNowDone = (src, failures) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
           if (failures === 0) {
-            console.log(ansiC2.green(ansiC2.inverse(`eslint > ${src}`)));
+            console.log(ansiC3.green(ansiC3.inverse(`eslint > ${src}`)));
           } else {
             console.log(
-              ansiC2.red(ansiC2.inverse(`eslint > ${src} failed ${failures} times`))
+              ansiC3.red(ansiC3.inverse(`eslint > ${src} failed ${failures} times`))
             );
           }
           this.summary[src].staticErrors = failures;
@@ -3603,63 +3550,28 @@ var init_PM_WithEslintAndTsc = __esm({
           this.checkForShutdown();
         };
         this.bddTestIsRunning = (src) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
           this.summary[src].runTimeErrors = "?";
           this.writeBigBoard();
         };
         this.bddTestIsNowDone = (src, failures) => {
-          if (!this.summary[src]) {
-            throw `this.summary[${src}] is undefined`;
-          }
           this.summary[src].runTimeErrors = failures;
           this.writeBigBoard();
           this.checkForShutdown();
         };
-        this.writeBigBoard = () => {
-          const summaryPath = `./testeranto/reports/${this.name}/summary.json`;
-          const summaryData = JSON.stringify(this.summary, null, 2);
-          fs17.writeFileSync(summaryPath, summaryData);
-          this.broadcast({
-            type: "summaryUpdate",
-            data: this.summary
-          });
-        };
-        this.summary = {};
-        this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
-          this.ensureSummaryEntry(t);
-          sidecars.forEach(([sidecarName]) => {
-            this.ensureSummaryEntry(sidecarName, true);
-          });
-        });
-      }
-      ensureSummaryEntry(src, isSidecar = false) {
-        if (!this.summary[src]) {
-          this.summary[src] = {
-            typeErrors: void 0,
-            staticErrors: void 0,
-            runTimeErrors: void 0,
-            prompt: void 0,
-            failingFeatures: {}
-          };
-          if (isSidecar) {
-          }
-        }
-        return this.summary[src];
       }
     };
   }
 });
 
-// src/PM/PM_WithGit.ts
-import fs18 from "fs";
-import url2 from "url";
-var PM_WithGit;
+// src/app/backend/PM_WithGit.ts
+import fs20 from "fs";
+import url from "url";
+var exec, PM_WithGit;
 var init_PM_WithGit = __esm({
-  async "src/PM/PM_WithGit.ts"() {
+  async "src/app/backend/PM_WithGit.ts"() {
     "use strict";
     await init_PM_WithEslintAndTsc();
+    ({ exec } = await import("child_process"));
     PM_WithGit = class extends PM_WithEslintAndTsc {
       constructor(configs, name, mode2) {
         super(configs, name, mode2);
@@ -3667,83 +3579,90 @@ var init_PM_WithGit = __esm({
         this.gitWatcher = null;
       }
       // Override requestHandler to add Git-specific endpoints
-      requestHandler(req, res) {
-        const parsedUrl = url2.parse(req.url || "/");
-        const pathname = parsedUrl.pathname || "/";
-        if (pathname?.startsWith("/api/git/")) {
-          this.handleGitApi(req, res);
-          return;
-        }
-        if (pathname === "/api/auth/github/token" && req.method === "POST") {
-          this.handleGitHubTokenExchange(req, res);
-          return;
-        }
-        if (pathname === "/auth/github/callback") {
-          const callbackHtml = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>GitHub Authentication - Testeranto</title>
-    <script>
-        // Extract the code from the URL and send it to the parent window
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const error = urlParams.get('error');
-        
-        if (code) {
-            window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
-        } else if (error) {
-            window.opener.postMessage({ type: 'github-auth-error', error }, '*');
-        }
-        window.close();
-    </script>
-</head>
-<body>
-    <p>Completing authentication...</p>
-</body>
-</html>`;
-          res.writeHead(200, { "Content-Type": "text/html" });
-          res.end(callbackHtml);
-          return;
-        }
-        super.requestHandler(req, res);
-      }
+      //   httpRequest(req: http.IncomingMessage, res: http.ServerResponse) {
+      //     const parsedUrl = url.parse(req.url || "/");
+      //     const pathname = parsedUrl.pathname || "/";
+      //     // Handle Git API endpoints
+      //     if (pathname?.startsWith("/api/git/")) {
+      //       // this.handleGitApi(req, res);
+      //       return;
+      //     }
+      //     if (pathname === "/api/auth/github/token" && req.method === "POST") {
+      //       this.handleGitHubTokenExchange(req, res);
+      //       return;
+      //     }
+      //     // Handle GitHub OAuth callback
+      //     if (pathname === "/auth/github/callback") {
+      //       // Serve the callback HTML page
+      //       const callbackHtml = `
+      // <!DOCTYPE html>
+      // <html>
+      // <head>
+      //     <title>GitHub Authentication - Testeranto</title>
+      //     <script>
+      //         // Extract the code from the URL and send it to the parent window
+      //         const urlParams = new URLSearchParams(window.location.search);
+      //         const code = urlParams.get('code');
+      //         const error = urlParams.get('error');
+      //         if (code) {
+      //             window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
+      //         } else if (error) {
+      //             window.opener.postMessage({ type: 'github-auth-error', error }, '*');
+      //         }
+      //         window.close();
+      //     </script>
+      // </head>
+      // <body>
+      //     <p>Completing authentication...</p>
+      // </body>
+      // </html>`;
+      //       res.writeHead(200, { "Content-Type": "text/html" });
+      //       res.end(callbackHtml);
+      //       return;
+      //     }
+      //     // Call the parent class's requestHandler for all other requests
+      //     // super.httpRequest(req, res);
+      //   }
       // this method is also horrible
-      handleGitApi(req, res) {
-        const parsedUrl = url2.parse(req.url || "/");
-        const pathname = parsedUrl.pathname || "/";
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        if (req.method === "OPTIONS") {
-          res.writeHead(200);
-          res.end();
-          return;
-        }
-        try {
-          if (pathname === "/api/git/changes" && req.method === "GET") {
-            this.handleGitChanges(req, res);
-          } else if (pathname === "/api/git/status" && req.method === "GET") {
-            this.handleGitFileStatus(req, res);
-          } else if (pathname === "/api/git/commit" && req.method === "POST") {
-            this.handleGitCommit(req, res);
-          } else if (pathname === "/api/git/push" && req.method === "POST") {
-            this.handleGitPush(req, res);
-          } else if (pathname === "/api/git/pull" && req.method === "POST") {
-            this.handleGitPull(req, res);
-          } else if (pathname === "/api/git/branch" && req.method === "GET") {
-            this.handleGitBranch(req, res);
-          } else if (pathname === "/api/git/remote-status" && req.method === "GET") {
-            this.handleGitRemoteStatus(req, res);
-          } else {
-            res.writeHead(404, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Not found" }));
-          }
-        } catch (error) {
-          res.writeHead(500, { "Content-Type": "application/json" });
-          res.end(JSON.stringify({ error: "Internal server error" }));
-        }
-      }
+      // private handleGitApi(req: http.IncomingMessage, res: http.ServerResponse) {
+      //   const parsedUrl = url.parse(req.url || "/");
+      //   const pathname = parsedUrl.pathname || "/";
+      //   // Set CORS headers
+      //   res.setHeader("Access-Control-Allow-Origin", "*");
+      //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+      //   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+      //   if (req.method === "OPTIONS") {
+      //     res.writeHead(200);
+      //     res.end();
+      //     return;
+      //   }
+      //   try {
+      //     if (pathname === "/api/git/changes" && req.method === "GET") {
+      //       this.handleGitChanges(req, res);
+      //     } else if (pathname === "/api/git/status" && req.method === "GET") {
+      //       this.handleGitFileStatus(req, res);
+      //     } else if (pathname === "/api/git/commit" && req.method === "POST") {
+      //       this.handleGitCommit(req, res);
+      //     } else if (pathname === "/api/git/push" && req.method === "POST") {
+      //       this.handleGitPush(req, res);
+      //     } else if (pathname === "/api/git/pull" && req.method === "POST") {
+      //       this.handleGitPull(req, res);
+      //     } else if (pathname === "/api/git/branch" && req.method === "GET") {
+      //       this.handleGitBranch(req, res);
+      //     } else if (
+      //       pathname === "/api/git/remote-status" &&
+      //       req.method === "GET"
+      //     ) {
+      //       this.handleGitRemoteStatus(req, res);
+      //     } else {
+      //       res.writeHead(404, { "Content-Type": "application/json" });
+      //       res.end(JSON.stringify({ error: "Not found" }));
+      //     }
+      //   } catch (error) {
+      //     res.writeHead(500, { "Content-Type": "application/json" });
+      //     res.end(JSON.stringify({ error: "Internal server error" }));
+      //   }
+      // }
       async handleGitChanges(req, res) {
         try {
           const changes2 = await this.getGitChanges();
@@ -3755,17 +3674,17 @@ var init_PM_WithGit = __esm({
         }
       }
       async handleGitFileStatus(req, res) {
-        const parsedUrl = url2.parse(req.url || "/");
+        const parsedUrl = url.parse(req.url || "/");
         const query = parsedUrl.query || "";
         const params = new URLSearchParams(query);
-        const path19 = params.get("path");
-        if (!path19) {
+        const path20 = params.get("path");
+        if (!path20) {
           res.writeHead(400, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "Path parameter required" }));
           return;
         }
         try {
-          const status = await this.getGitFileStatus(path19);
+          const status = await this.getGitFileStatus(path20);
           res.writeHead(200, { "Content-Type": "application/json" });
           res.end(JSON.stringify(status));
         } catch (error) {
@@ -3867,10 +3786,10 @@ var init_PM_WithGit = __esm({
           res.end(JSON.stringify({ error: "Failed to get remote status" }));
         }
       }
-      async getGitFileStatus(path19) {
+      async getGitFileStatus(path20) {
         try {
           const changes2 = await this.getGitChanges();
-          const fileChange = changes2.find((change) => change.path === path19);
+          const fileChange = changes2.find((change) => change.path === path20);
           if (fileChange) {
             return { status: fileChange.status };
           }
@@ -3882,7 +3801,6 @@ var init_PM_WithGit = __esm({
       }
       async executeGitCommit(message, description) {
         try {
-          const { exec } = await import("child_process");
           const fullMessage = description ? `${message}
 
 ${description}` : message;
@@ -3913,7 +3831,6 @@ ${description}` : message;
       }
       async executeGitPush() {
         try {
-          const { exec } = await import("child_process");
           return new Promise((resolve, reject) => {
             exec("git push", { cwd: process.cwd() }, (error) => {
               if (error) {
@@ -3931,7 +3848,6 @@ ${description}` : message;
       }
       async executeGitPull() {
         try {
-          const { exec } = await import("child_process");
           return new Promise((resolve, reject) => {
             exec("git pull", { cwd: process.cwd() }, (error) => {
               if (error) {
@@ -3983,8 +3899,7 @@ ${description}` : message;
       }
       async startGitWatcher() {
         console.log("Starting Git watcher for real-time updates");
-        const fs23 = await import("fs");
-        const watcher = fs23.watch(
+        const watcher = fs20.watch(
           process.cwd(),
           { recursive: true },
           async (eventType, filename) => {
@@ -3995,9 +3910,9 @@ ${description}` : message;
                   const changes2 = await this.getGitChanges();
                   const status = await this.getGitRemoteStatus();
                   const branch = await this.getCurrentGitBranch();
-                  this.broadcast({ type: "changes", changes: changes2 });
-                  this.broadcast({ type: "status", status });
-                  this.broadcast({ type: "branch", branch });
+                  this.webSocketBroadcastMessage({ type: "changes", changes: changes2 });
+                  this.webSocketBroadcastMessage({ type: "status", status });
+                  this.webSocketBroadcastMessage({ type: "branch", branch });
                   if (filename) {
                     const ignorePatterns = this.configs?.ignore || [];
                     const shouldIgnore = ignorePatterns.some((pattern) => {
@@ -4012,9 +3927,12 @@ ${description}` : message;
                     if (!shouldIgnore) {
                       try {
                         const fullPath = `${process.cwd()}/${filename}`;
-                        if (fs23.existsSync(fullPath)) {
-                          const content = await fs23.promises.readFile(fullPath, "utf-8");
-                          this.broadcast({
+                        if (fs20.existsSync(fullPath)) {
+                          const content = await fs20.promises.readFile(
+                            fullPath,
+                            "utf-8"
+                          );
+                          this.webSocketBroadcastMessage({
                             type: "fileChanged",
                             path: filename,
                             content,
@@ -4038,9 +3956,9 @@ ${description}` : message;
             const changes2 = await this.getGitChanges();
             const status = await this.getGitRemoteStatus();
             const branch = await this.getCurrentGitBranch();
-            this.broadcast({ type: "changes", changes: changes2 });
-            this.broadcast({ type: "status", status });
-            this.broadcast({ type: "branch", branch });
+            this.webSocketBroadcastMessage({ type: "changes", changes: changes2 });
+            this.webSocketBroadcastMessage({ type: "status", status });
+            this.webSocketBroadcastMessage({ type: "branch", branch });
           } catch (error) {
             console.error("Error checking Git status:", error);
           }
@@ -4049,7 +3967,6 @@ ${description}` : message;
       }
       async getGitChanges() {
         try {
-          const { exec } = await import("child_process");
           return new Promise((resolve, reject) => {
             exec(
               "git status --porcelain=v1",
@@ -4071,12 +3988,12 @@ ${description}` : message;
                     continue;
                   }
                   const status = match[1];
-                  let path19 = match[2];
-                  if (status === "R " && path19.includes(" -> ")) {
-                    const parts = path19.split(" -> ");
-                    path19 = parts[parts.length - 1];
+                  let path20 = match[2];
+                  if (status === "R " && path20.includes(" -> ")) {
+                    const parts = path20.split(" -> ");
+                    path20 = parts[parts.length - 1];
                   }
-                  path19 = path19.trim();
+                  path20 = path20.trim();
                   let fileStatus = "unchanged";
                   const firstChar = status.charAt(0);
                   if (firstChar === "M" || firstChar === " ") {
@@ -4093,13 +4010,13 @@ ${description}` : message;
                     fileStatus = "modified";
                   }
                   if (fileStatus !== "unchanged") {
-                    const fullPath = `${process.cwd()}/${path19}`;
+                    const fullPath = `${process.cwd()}/${path20}`;
                     try {
-                      await fs18.promises.access(fullPath);
+                      await fs20.promises.access(fullPath);
                     } catch (error2) {
                     }
                     changes2.push({
-                      path: path19,
+                      path: path20,
                       status: fileStatus
                     });
                   }
@@ -4114,7 +4031,6 @@ ${description}` : message;
       }
       async getGitRemoteStatus() {
         try {
-          const { exec } = await import("child_process");
           return new Promise((resolve) => {
             exec(
               "git rev-list --left-right --count HEAD...@{u}",
@@ -4136,7 +4052,6 @@ ${description}` : message;
       }
       async getCurrentGitBranch() {
         try {
-          const { exec } = await import("child_process");
           return new Promise((resolve) => {
             exec(
               "git branch --show-current",
@@ -4160,720 +4075,23 @@ ${description}` : message;
   }
 });
 
-// src/PM/PM_WithProcesses.ts
-import fs19, { watch } from "fs";
-import path16 from "path";
-import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
-import ansiC3 from "ansi-colors";
-var changes, PM_WithProcesses;
-var init_PM_WithProcesses = __esm({
-  async "src/PM/PM_WithProcesses.ts"() {
-    "use strict";
-    init_utils();
-    init_utils2();
-    await init_PM_WithGit();
-    changes = {};
-    PM_WithProcesses = class extends PM_WithGit {
-      constructor(configs, name, mode2) {
-        super(configs, name, mode2);
-        this.logStreams = {};
-        this.receiveFeaturesV2 = (reportDest, srcTest, platform) => {
-          const featureDestination = path16.resolve(
-            process.cwd(),
-            "reports",
-            "features",
-            "strings",
-            srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
-          );
-          const testReportPath = `${reportDest}/tests.json`;
-          if (!fs19.existsSync(testReportPath)) {
-            console.error(`tests.json not found at: ${testReportPath}`);
-            return;
-          }
-          const testReport = JSON.parse(fs19.readFileSync(testReportPath, "utf8"));
-          if (testReport.tests) {
-            testReport.tests.forEach((test) => {
-              test.fullPath = path16.resolve(process.cwd(), srcTest);
-            });
-          }
-          testReport.fullPath = path16.resolve(process.cwd(), srcTest);
-          fs19.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
-          testReport.features.reduce(async (mm, featureStringKey) => {
-            const accum = await mm;
-            const isUrl = isValidUrl(featureStringKey);
-            if (isUrl) {
-              const u = new URL(featureStringKey);
-              if (u.protocol === "file:") {
-                const newPath = `${process.cwd()}/testeranto/features/internal/${path16.relative(
-                  process.cwd(),
-                  u.pathname
-                )}`;
-                accum.files.push(u.pathname);
-              } else if (u.protocol === "http:" || u.protocol === "https:") {
-                const newPath = `${process.cwd()}/testeranto/features/external/${u.hostname}${u.pathname}`;
-                const body = await this.configs.featureIngestor(featureStringKey);
-                writeFileAndCreateDir(newPath, body);
-                accum.files.push(newPath);
-              }
-            } else {
-              await fs19.promises.mkdir(path16.dirname(featureDestination), {
-                recursive: true
-              });
-              accum.strings.push(featureStringKey);
-            }
-            return accum;
-          }, Promise.resolve({ files: [], strings: [] })).then(({ files: files3, strings }) => {
-            fs19.writeFileSync(
-              `testeranto/reports/${this.name}/${srcTest.split(".").slice(0, -1).join(".")}/${platform}/featurePrompt.txt`,
-              files3.map((f) => {
-                return `/read ${f}`;
-              }).join("\n")
-            );
-          });
-          testReport.givens.forEach((g) => {
-            if (g.failed === true) {
-              this.summary[srcTest].failingFeatures[g.key] = g.features;
-            }
-          });
-          this.writeBigBoard();
-        };
-        this.checkForShutdown = () => {
-          this.checkQueue();
-          console.log(
-            ansiC3.inverse(
-              `The following jobs are awaiting resources: ${JSON.stringify(
-                this.queue
-              )}`
-            )
-          );
-          console.log(
-            ansiC3.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
-          );
-          this.writeBigBoard();
-          if (this.mode === "dev")
-            return;
-          let inflight = false;
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].prompt === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} prompt ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].runTimeErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} runTimeError ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].staticErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} staticErrors ${k}`)));
-              inflight = true;
-            }
-          });
-          Object.keys(this.summary).forEach((k) => {
-            if (this.summary[k].typeErrors === "?") {
-              console.log(ansiC3.blue(ansiC3.inverse(`\u{1F555} typeErrors ${k}`)));
-              inflight = true;
-            }
-          });
-          this.writeBigBoard();
-          if (!inflight) {
-            if (this.browser) {
-              if (this.browser) {
-                this.browser.disconnect().then(() => {
-                  console.log(
-                    ansiC3.inverse(`${this.name} has been tested. Goodbye.`)
-                  );
-                  process.exit();
-                });
-              }
-            }
-          }
-        };
-        this.launchers = {};
-        this.ports = {};
-        this.queue = [];
-        this.configs.ports.forEach((element) => {
-          this.ports[element] = "";
-        });
-      }
-      bddTestIsRunning(src) {
-        this.summary[src] = {
-          prompt: "?",
-          runTimeErrors: "?",
-          staticErrors: "?",
-          typeErrors: "?",
-          failingFeatures: {}
-        };
-      }
-      async metafileOutputs(platform) {
-        let metafilePath;
-        if (platform === "python") {
-          metafilePath = `./testeranto/metafiles/python/core.json`;
-        } else {
-          metafilePath = `./testeranto/metafiles/${platform}/${this.name}.json`;
-        }
-        if (!fs19.existsSync(metafilePath)) {
-          console.log(
-            ansiC3.yellow(`Metafile not found at ${metafilePath}, skipping`)
-          );
-          return;
-        }
-        let metafile;
-        try {
-          const fileContent = fs19.readFileSync(metafilePath).toString();
-          const parsedData = JSON.parse(fileContent);
-          if (platform === "python") {
-            metafile = parsedData.metafile || parsedData;
-          } else {
-            metafile = parsedData.metafile;
-          }
-          if (!metafile) {
-            console.log(
-              ansiC3.yellow(ansiC3.inverse(`No metafile found in ${metafilePath}`))
-            );
-            return;
-          }
-        } catch (error) {
-          console.error(`Error reading metafile at ${metafilePath}:`, error);
-          return;
-        }
-        const outputs = metafile.outputs;
-        Object.keys(outputs).forEach(async (k) => {
-          const pattern = `testeranto/bundles/${platform}/${this.name}/${this.configs.src}`;
-          if (!k.startsWith(pattern)) {
-            return;
-          }
-          const output = outputs[k];
-          if (!output || !output.inputs) {
-            return;
-          }
-          const addableFiles = Object.keys(output.inputs).filter((i) => {
-            if (!fs19.existsSync(i))
-              return false;
-            if (i.startsWith("node_modules"))
-              return false;
-            if (i.startsWith("./node_modules"))
-              return false;
-            return true;
-          });
-          const f = `${k.split(".").slice(0, -1).join(".")}/`;
-          if (!fs19.existsSync(f)) {
-            fs19.mkdirSync(f, { recursive: true });
-          }
-          let entrypoint = output.entryPoint;
-          if (entrypoint) {
-            entrypoint = path16.normalize(entrypoint);
-            const changeDigest = await filesHash(addableFiles);
-            if (changeDigest === changes[entrypoint]) {
-            } else {
-              changes[entrypoint] = changeDigest;
-              if (platform === "node" || platform === "web" || platform === "pure") {
-                this.tscCheck({
-                  platform,
-                  addableFiles,
-                  entrypoint
-                });
-                this.eslintCheck(entrypoint, platform, addableFiles);
-              } else if (platform === "python") {
-                this.pythonLintCheck(entrypoint, addableFiles);
-                this.pythonTypeCheck(entrypoint, addableFiles);
-              }
-              this.makePrompt(entrypoint, addableFiles, platform);
-              const testName2 = this.findTestNameByEntrypoint(entrypoint, platform);
-              if (testName2) {
-                console.log(
-                  ansiC3.green(
-                    ansiC3.inverse(
-                      `Source files changed, re-queueing test: ${testName2}`
-                    )
-                  )
-                );
-                this.addToQueue(testName2, platform);
-              } else {
-                console.error(
-                  `Could not find test for entrypoint: ${entrypoint} (${platform})`
-                );
-                process.exit(-1);
-              }
-            }
-          }
-        });
-      }
-      findTestNameByEntrypoint(entrypoint, platform) {
-        const runnables = getRunnables(this.configs.tests, this.name);
-        let entryPointsMap;
-        switch (platform) {
-          case "node":
-            entryPointsMap = runnables.nodeEntryPoints;
-            break;
-          case "web":
-            entryPointsMap = runnables.webEntryPoints;
-            break;
-          case "pure":
-            entryPointsMap = runnables.pureEntryPoints;
-            break;
-          case "python":
-            entryPointsMap = runnables.pythonEntryPoints;
-            break;
-          case "golang":
-            entryPointsMap = runnables.golangEntryPoints;
-            break;
-          default:
-            throw "wtf";
-        }
-        if (!entryPointsMap) {
-          console.error("idk");
-        }
-        if (!entryPointsMap[entrypoint]) {
-          console.error(`${entrypoint} not found`);
-        }
-        return entryPointsMap[entrypoint];
-      }
-      async pythonLintCheck(entrypoint, addableFiles) {
-        const reportDest = `testeranto/reports/${this.name}/${entrypoint.split(".").slice(0, -1).join(".")}/python`;
-        if (!fs19.existsSync(reportDest)) {
-          fs19.mkdirSync(reportDest, { recursive: true });
-        }
-        const lintErrorsPath = `${reportDest}/lint_errors.txt`;
-        try {
-          const { spawn: spawn4 } = await import("child_process");
-          const child = spawn4("flake8", [entrypoint, "--max-line-length=88"], {
-            stdio: ["pipe", "pipe", "pipe"]
-          });
-          let stderr = "";
-          child.stderr.on("data", (data) => {
-            stderr += data.toString();
-          });
-          let stdout = "";
-          child.stdout.on("data", (data) => {
-            stdout += data.toString();
-          });
-          return new Promise((resolve) => {
-            child.on("close", (code) => {
-              const output = stdout + stderr;
-              if (output.trim()) {
-                fs19.writeFileSync(lintErrorsPath, output);
-                this.summary[entrypoint].staticErrors = output.split("\n").length;
-              } else {
-                if (fs19.existsSync(lintErrorsPath)) {
-                  fs19.unlinkSync(lintErrorsPath);
-                }
-                this.summary[entrypoint].staticErrors = 0;
-              }
-              resolve();
-            });
-          });
-        } catch (error) {
-          console.error(`Error running flake8 on ${entrypoint}:`, error);
-          fs19.writeFileSync(
-            lintErrorsPath,
-            `Error running flake8: ${error.message}`
-          );
-          this.summary[entrypoint].staticErrors = -1;
-        }
-      }
-      async pythonTypeCheck(entrypoint, addableFiles) {
-        const reportDest = `testeranto/reports/${this.name}/${entrypoint.split(".").slice(0, -1).join(".")}/python`;
-        if (!fs19.existsSync(reportDest)) {
-          fs19.mkdirSync(reportDest, { recursive: true });
-        }
-        const typeErrorsPath = `${reportDest}/type_errors.txt`;
-        try {
-          const { spawn: spawn4 } = await import("child_process");
-          const child = spawn4("mypy", [entrypoint], {
-            stdio: ["pipe", "pipe", "pipe"]
-          });
-          let stderr = "";
-          child.stderr.on("data", (data) => {
-            stderr += data.toString();
-          });
-          let stdout = "";
-          child.stdout.on("data", (data) => {
-            stdout += data.toString();
-          });
-          return new Promise((resolve) => {
-            child.on("close", (code) => {
-              const output = stdout + stderr;
-              if (output.trim()) {
-                fs19.writeFileSync(typeErrorsPath, output);
-                this.summary[entrypoint].typeErrors = output.split("\n").length;
-              } else {
-                if (fs19.existsSync(typeErrorsPath)) {
-                  fs19.unlinkSync(typeErrorsPath);
-                }
-                this.summary[entrypoint].typeErrors = 0;
-              }
-              resolve();
-            });
-          });
-        } catch (error) {
-          console.error(`Error running mypy on ${entrypoint}:`, error);
-          fs19.writeFileSync(typeErrorsPath, `Error running mypy: ${error.message}`);
-          this.summary[entrypoint].typeErrors = -1;
-        }
-      }
-      async start() {
-        try {
-          await this.startBuildProcesses();
-          const pythonTests = this.configs.tests.filter(
-            (test) => test[1] === "python"
-          );
-          if (pythonTests.length > 0) {
-            const { generatePitonoMetafile: generatePitonoMetafile2, writePitonoMetafile: writePitonoMetafile2 } = await Promise.resolve().then(() => (init_pitonoMetafile(), pitonoMetafile_exports));
-            const entryPoints = pythonTests.map((test) => test[0]);
-            const metafile = await generatePitonoMetafile2(this.name, entryPoints);
-            writePitonoMetafile2(this.name, metafile);
-          }
-          this.onBuildDone();
-        } catch (error) {
-          console.error("Build processes failed:", error);
-          return;
-        }
-        this.mapping().forEach(async ([command, func]) => {
-          globalThis[command] = func;
-        });
-        if (!fs19.existsSync(`testeranto/reports/${this.name}`)) {
-          fs19.mkdirSync(`testeranto/reports/${this.name}`);
-        }
-        try {
-          this.browser = await puppeteer.launch(puppeteerConfigs);
-        } catch (e) {
-          console.error(e);
-          console.error(
-            "could not start chrome via puppeter. Check this path: ",
-            executablePath2
-          );
-        }
-        const runnables = getRunnables(this.configs.tests, this.name);
-        const {
-          nodeEntryPoints,
-          webEntryPoints,
-          pureEntryPoints,
-          pythonEntryPoints,
-          golangEntryPoints
-        } = runnables;
-        console.log(
-          ansiC3.blue(
-            `Runnables for ${this.name}:
-Node: ${JSON.stringify(nodeEntryPoints, null, 2)}
-Web: ${JSON.stringify(webEntryPoints, null, 2)}
-Pure: ${JSON.stringify(pureEntryPoints, null, 2)}
-Python: ${JSON.stringify(pythonEntryPoints, null, 2)}
-Golang: ${JSON.stringify(golangEntryPoints, null, 2)}`
-          )
-        );
-        [
-          ["node", nodeEntryPoints],
-          ["web", webEntryPoints],
-          ["pure", pureEntryPoints],
-          ["python", pythonEntryPoints],
-          ["golang", golangEntryPoints]
-        ].forEach(([runtime, entryPoints]) => {
-          Object.keys(entryPoints).forEach((entryPoint) => {
-            const reportDest = `testeranto/reports/${this.name}/${entryPoint.split(".").slice(0, -1).join(".")}/${runtime}`;
-            if (!fs19.existsSync(reportDest)) {
-              fs19.mkdirSync(reportDest, { recursive: true });
-            }
-            this.addToQueue(entryPoint, runtime);
-          });
-        });
-        const runtimeConfigs = [
-          ["node", nodeEntryPoints],
-          ["web", webEntryPoints],
-          ["pure", pureEntryPoints],
-          ["python", pythonEntryPoints],
-          ["golang", golangEntryPoints]
-        ];
-        for (const [runtime, entryPoints] of runtimeConfigs) {
-          if (Object.keys(entryPoints).length === 0)
-            continue;
-          let metafile;
-          if (runtime === "python") {
-            metafile = `./testeranto/metafiles/${runtime}/core.json`;
-          } else {
-            metafile = `./testeranto/metafiles/${runtime}/${this.name}.json`;
-          }
-          const metafileDir = metafile.split("/").slice(0, -1).join("/");
-          if (!fs19.existsSync(metafileDir)) {
-            fs19.mkdirSync(metafileDir, { recursive: true });
-          }
-          try {
-            if (runtime === "python" && !fs19.existsSync(metafile)) {
-              const { generatePitonoMetafile: generatePitonoMetafile2, writePitonoMetafile: writePitonoMetafile2 } = await Promise.resolve().then(() => (init_pitonoMetafile(), pitonoMetafile_exports));
-              const entryPointList = Object.keys(entryPoints);
-              if (entryPointList.length > 0) {
-                const metafileData = await generatePitonoMetafile2(
-                  this.name,
-                  entryPointList
-                );
-                writePitonoMetafile2(this.name, metafileData);
-              }
-            }
-            await pollForFile(metafile);
-            let timeoutId;
-            const watcher = watch(metafile, async (e, filename) => {
-              clearTimeout(timeoutId);
-              timeoutId = setTimeout(async () => {
-                console.log(
-                  ansiC3.yellow(ansiC3.inverse(`< ${e} ${filename} (${runtime})`))
-                );
-                try {
-                  await this.metafileOutputs(runtime);
-                  console.log(
-                    ansiC3.blue(
-                      `Metafile processed, checking queue for tests to run`
-                    )
-                  );
-                  this.checkQueue();
-                } catch (error) {
-                  console.error(`Error processing metafile changes:`, error);
-                }
-              }, 300);
-            });
-            switch (runtime) {
-              case "node":
-                this.nodeMetafileWatcher = watcher;
-                break;
-              case "web":
-                this.webMetafileWatcher = watcher;
-                break;
-              case "pure":
-                this.importMetafileWatcher = watcher;
-                break;
-              case "python":
-                this.pitonoMetafileWatcher = watcher;
-                break;
-              case "golang":
-                this.golangMetafileWatcher = watcher;
-                break;
-            }
-            await this.metafileOutputs(runtime);
-          } catch (error) {
-            console.error(`Error setting up watcher for ${runtime}:`, error);
-          }
-        }
-      }
-      async stop() {
-        console.log(ansiC3.inverse("Testeranto-Run is shutting down gracefully..."));
-        this.mode = "once";
-        this.nodeMetafileWatcher.close();
-        this.webMetafileWatcher.close();
-        this.importMetafileWatcher.close();
-        if (this.pitonoMetafileWatcher) {
-          this.pitonoMetafileWatcher.close();
-        }
-        if (this.gitWatcher) {
-          this.gitWatcher.close();
-        }
-        if (this.gitWatchTimeout) {
-          clearTimeout(this.gitWatchTimeout);
-        }
-        Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
-        if (this.wss) {
-          this.wss.close(() => {
-            console.log("WebSocket server closed");
-          });
-        }
-        this.clients.forEach((client) => {
-          client.terminate();
-        });
-        this.clients.clear();
-        if (this.httpServer) {
-          this.httpServer.close(() => {
-            console.log("HTTP server closed");
-          });
-        }
-        this.checkForShutdown();
-      }
-      findIndexHtml() {
-        const possiblePaths = [
-          "dist/index.html",
-          "testeranto/dist/index.html",
-          "../dist/index.html",
-          "./index.html"
-        ];
-        for (const path19 of possiblePaths) {
-          if (fs19.existsSync(path19)) {
-            return path19;
-          }
-        }
-        return null;
-      }
-      addToQueue(src, runtime) {
-        if (src.includes("testeranto/bundles")) {
-          const runnables = getRunnables(this.configs.tests, this.name);
-          const allEntryPoints = [
-            ...Object.entries(runnables.nodeEntryPoints),
-            ...Object.entries(runnables.webEntryPoints),
-            ...Object.entries(runnables.pureEntryPoints),
-            ...Object.entries(runnables.pythonEntryPoints),
-            ...Object.entries(runnables.golangEntryPoints)
-          ];
-          const normalizedSrc = path16.normalize(src);
-          for (const [testName2, bundlePath] of allEntryPoints) {
-            const normalizedBundlePath = path16.normalize(bundlePath);
-            if (normalizedSrc.endsWith(normalizedBundlePath)) {
-              src = testName2;
-              break;
-            }
-          }
-        }
-        this.cleanupTestProcesses(src);
-        if (!this.queue.includes(src)) {
-          this.queue.push(src);
-          console.log(
-            ansiC3.green(
-              ansiC3.inverse(`Added ${src} (${runtime}) to the processing queue`)
-            )
-          );
-          this.checkQueue();
-        } else {
-          console.log(
-            ansiC3.yellow(
-              ansiC3.inverse(`Test ${src} is already in the queue, skipping`)
-            )
-          );
-        }
-      }
-      cleanupTestProcesses(testName2) {
-        const processesToCleanup = [];
-        for (const [processId, processInfo] of this.allProcesses.entries()) {
-          if (processInfo.testName === testName2 && processInfo.status === "running") {
-            processesToCleanup.push(processId);
-          }
-        }
-        processesToCleanup.forEach((processId) => {
-          const processInfo = this.allProcesses.get(processId);
-          if (processInfo) {
-            if (processInfo.child) {
-              try {
-                processInfo.child.kill();
-              } catch (error) {
-                console.error(`Error killing process ${processId}:`, error);
-              }
-            }
-            this.allProcesses.set(processId, {
-              ...processInfo,
-              status: "exited",
-              exitCode: -1,
-              error: "Killed due to source file change"
-            });
-            this.runningProcesses.delete(processId);
-            this.broadcast({
-              type: "processExited",
-              processId,
-              exitCode: -1,
-              timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-              logs: ["Process killed due to source file change"]
-            });
-          }
-        });
-      }
-      checkQueue() {
-        while (this.queue.length > 0) {
-          const x = this.queue.pop();
-          if (!x)
-            continue;
-          let isRunning = false;
-          for (const processInfo of this.allProcesses.values()) {
-            if (processInfo.testName === x && processInfo.status === "running") {
-              isRunning = true;
-              break;
-            }
-          }
-          if (isRunning) {
-            console.log(
-              ansiC3.yellow(
-                `Skipping ${x} - already running, will be re-queued when current run completes`
-              )
-            );
-            continue;
-          }
-          const test = this.configs.tests.find((t) => t[0] === x);
-          if (!test) {
-            console.error(`test is undefined ${x}`);
-            continue;
-          }
-          const runtime = test[1];
-          const runnables = getRunnables(this.configs.tests, this.name);
-          let dest;
-          switch (runtime) {
-            case "node":
-              dest = runnables.nodeEntryPoints[x];
-              if (dest) {
-                this.launchNode(x, dest);
-              } else {
-                console.error(`No destination found for node test: ${x}`);
-              }
-              break;
-            case "web":
-              dest = runnables.webEntryPoints[x];
-              if (dest) {
-                this.launchWeb(x, dest);
-              } else {
-                console.error(`No destination found for web test: ${x}`);
-              }
-              break;
-            case "pure":
-              dest = runnables.pureEntryPoints[x];
-              if (dest) {
-                this.launchPure(x, dest);
-              } else {
-                console.error(`No destination found for pure test: ${x}`);
-              }
-              break;
-            case "python":
-              dest = runnables.pythonEntryPoints[x];
-              if (dest) {
-                this.launchPython(x, dest);
-              } else {
-                console.error(`No destination found for python test: ${x}`);
-              }
-              break;
-            case "golang":
-              dest = runnables.golangEntryPoints[x];
-              if (dest) {
-                this.launchGolang(x, dest);
-              } else {
-                console.error(`No destination found for golang test: ${x}`);
-              }
-              break;
-            default:
-              console.error(`Unknown runtime: ${runtime} for test ${x}`);
-              break;
-          }
-        }
-        if (this.queue.length === 0) {
-          console.log(ansiC3.inverse(`The queue is empty`));
-        }
-      }
-      onBuildDone() {
-        console.log("Build processes completed");
-        this.startGitWatcher();
-      }
-    };
-  }
-});
-
-// src/PM/PM_WithHelpo.ts
+// src/app/backend/PM_WithHelpo.ts
 import { spawnSync } from "node:child_process";
-import fs20 from "fs";
-import path17 from "path";
+import fs21 from "fs";
+import path18 from "path";
 var PM_WithHelpo;
 var init_PM_WithHelpo = __esm({
-  async "src/PM/PM_WithHelpo.ts"() {
+  async "src/app/backend/PM_WithHelpo.ts"() {
     "use strict";
-    await init_PM_WithProcesses();
-    PM_WithHelpo = class extends PM_WithProcesses {
+    await init_PM_WithGit();
+    PM_WithHelpo = class extends PM_WithGit {
       constructor(configs, name, mode2) {
         super(configs, name, mode2);
         this.aiderProcess = null;
         this.MAX_HISTORY_SIZE = 10 * 1024;
         // 10KB
         this.isAiderAtPrompt = false;
-        this.chatHistoryPath = path17.join(
+        this.chatHistoryPath = path18.join(
           process.cwd(),
           "testeranto",
           "helpo_chat_history.json"
@@ -4882,17 +4100,17 @@ var init_PM_WithHelpo = __esm({
         this.startAiderProcess();
       }
       initializeChatHistory() {
-        fs20.writeFileSync(this.chatHistoryPath, JSON.stringify([]));
-        const messagePath = path17.join(
+        fs21.writeFileSync(this.chatHistoryPath, JSON.stringify([]));
+        const messagePath = path18.join(
           process.cwd(),
           "testeranto",
           "helpo_chat_message.txt"
         );
-        const messageDir = path17.dirname(messagePath);
-        if (!fs20.existsSync(messageDir)) {
-          fs20.mkdirSync(messageDir, { recursive: true });
+        const messageDir = path18.dirname(messagePath);
+        if (!fs21.existsSync(messageDir)) {
+          fs21.mkdirSync(messageDir, { recursive: true });
         }
-        fs20.writeFileSync(messagePath, "");
+        fs21.writeFileSync(messagePath, "");
       }
       startAiderProcess() {
       }
@@ -4908,7 +4126,7 @@ var init_PM_WithHelpo = __esm({
         };
         await this.addToChatHistory(assistantMessage);
         const history = await this.getChatHistory();
-        this.broadcast({
+        this.webSocketBroadcastMessage({
           type: "chatHistory",
           messages: history
         });
@@ -4931,7 +4149,7 @@ var init_PM_WithHelpo = __esm({
       async addToChatHistory(message) {
         const history = await this.getChatHistory();
         history.push(message);
-        fs20.writeFileSync(this.chatHistoryPath, JSON.stringify(history, null, 2));
+        fs21.writeFileSync(this.chatHistoryPath, JSON.stringify(history, null, 2));
         console.log(
           `Added message to chat history: ${message.content.substring(0, 50)}...`
         );
@@ -4943,11 +4161,11 @@ var init_PM_WithHelpo = __esm({
           history.shift();
           currentSize = Buffer.from(JSON.stringify(history)).length;
         }
-        fs20.writeFileSync(this.chatHistoryPath, JSON.stringify(history, null, 2));
+        fs21.writeFileSync(this.chatHistoryPath, JSON.stringify(history, null, 2));
       }
       async getChatHistory() {
         try {
-          const data = fs20.readFileSync(this.chatHistoryPath, "utf-8");
+          const data = fs21.readFileSync(this.chatHistoryPath, "utf-8");
           return JSON.parse(data);
         } catch (error) {
           return [];
@@ -4961,7 +4179,7 @@ var init_PM_WithHelpo = __esm({
         };
         await this.addToChatHistory(userChatMessage);
         const history = await this.getChatHistory();
-        this.broadcast({
+        this.webSocketBroadcastMessage({
           type: "chatHistory",
           messages: history
         });
@@ -4975,12 +4193,12 @@ var init_PM_WithHelpo = __esm({
         setTimeout(() => {
           try {
             if (this.aiderProcess) {
-              const messagePath = path17.join(
+              const messagePath = path18.join(
                 process.cwd(),
                 "testeranto",
                 "helpo_chat_message.txt"
               );
-              fs20.writeFileSync(messagePath, "");
+              fs21.writeFileSync(messagePath, "");
               const ptyProcess = this.aiderProcess;
               ptyProcess.write(
                 "PROCESS_CHAT_HISTORY_AND_RESPOND: Read the chat history and write your response ONLY to testeranto/helpo_chat_message.txt. Do NOT print to stdout.\n"
@@ -4993,43 +4211,49 @@ var init_PM_WithHelpo = __esm({
           }
         }, 100);
       }
-      // Override WebSocket message handling to include chat messages
-      setupWebSocketHandlers() {
-      }
-      // This method should be called when a WebSocket message is received
-      handleWebSocketMessage(ws, message) {
-        try {
-          const parsedMessage = JSON.parse(message.toString());
-          if (parsedMessage.type === "chatMessage") {
-            this.handleChatMessage(parsedMessage.content);
-          } else {
-            super.handleWebSocketMessage?.(ws, message);
-          }
-        } catch (error) {
-          console.error("Error handling WebSocket message:", error);
-        }
-      }
+      // // Override WebSocket message handling to include chat messages
+      // protected setupWebSocketHandlers() {
+      //   // This would be called from the parent class's WebSocket setup
+      //   // For now, we'll assume the parent class calls this
+      // }
+      // // This method should be called when a WebSocket message is received
+      // public handleWebSocketMessage(ws: any, message: any): void {
+      //   try {
+      //     const parsedMessage = JSON.parse(message.toString());
+      //     if (parsedMessage.type === "chatMessage") {
+      //       this.handleChatMessage(parsedMessage.content);
+      //     } else {
+      //       // Let parent class handle other message types
+      //       super.handleWebSocketMessage?.(ws, message);
+      //     }
+      //   } catch (error) {
+      //     console.error("Error handling WebSocket message:", error);
+      //   }
+      // }
     };
   }
 });
 
-// src/PM/main.ts
+// src/app/backend/main.ts
 var main_exports = {};
 __export(main_exports, {
   PM_Main: () => PM_Main
 });
-import { spawn as spawn3 } from "node:child_process";
+import path19 from "node:path";
+import { spawn } from "node:child_process";
 import ansiColors from "ansi-colors";
 import net from "net";
-import fs21 from "fs";
+import fs22 from "fs";
 import ansiC4 from "ansi-colors";
-import path18 from "node:path";
 var files2, screenshots2, PM_Main;
 var init_main = __esm({
-  async "src/PM/main.ts"() {
+  async "src/app/backend/main.ts"() {
     "use strict";
     init_utils();
     init_queue();
+    init_node();
+    init_web();
+    init_pure();
     init_utils2();
     await init_PM_WithHelpo();
     files2 = {};
@@ -5043,9 +4267,9 @@ var init_main = __esm({
           const command = `pure test: ${src}`;
           const purePromise = (async () => {
             this.bddTestIsRunning(src);
-            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/pure`;
-            if (!fs21.existsSync(reportDest)) {
-              fs21.mkdirSync(reportDest, { recursive: true });
+            const reportDest = `testeranto/reports/${this.projectName}/${src.split(".").slice(0, -1).join(".")}/pure`;
+            if (!fs22.existsSync(reportDest)) {
+              fs22.mkdirSync(reportDest, { recursive: true });
             }
             const destFolder = dest.replace(".mjs", "");
             let argz = "";
@@ -5109,8 +4333,8 @@ var init_main = __esm({
                     )
                   );
                   const testsJsonPath = `${reportDest}/tests.json`;
-                  if (!fs21.existsSync(testsJsonPath)) {
-                    fs21.writeFileSync(
+                  if (!fs22.existsSync(testsJsonPath)) {
+                    fs22.writeFileSync(
                       testsJsonPath,
                       JSON.stringify(
                         {
@@ -5133,8 +4357,8 @@ var init_main = __esm({
               });
             } catch (e3) {
               const testsJsonPath = `${reportDest}/tests.json`;
-              if (!fs21.existsSync(testsJsonPath)) {
-                fs21.writeFileSync(
+              if (!fs22.existsSync(testsJsonPath)) {
+                fs22.writeFileSync(
                   testsJsonPath,
                   JSON.stringify(
                     {
@@ -5226,7 +4450,7 @@ var init_main = __esm({
                 }
               };
               const server = await this.createIpcServer(onData, ipcfile);
-              const child = spawn3("node", [builtfile, testResources, ipcfile], {
+              const child = spawn("node", [builtfile, testResources, ipcfile], {
                 stdio: ["pipe", "pipe", "pipe", "ipc"]
               });
               try {
@@ -5257,9 +4481,9 @@ var init_main = __esm({
           const command = `web test: ${src}`;
           const webPromise = (async () => {
             this.bddTestIsRunning(src);
-            const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/web`;
-            if (!fs21.existsSync(reportDest)) {
-              fs21.mkdirSync(reportDest, { recursive: true });
+            const reportDest = `testeranto/reports/${this.projectName}/${src.split(".").slice(0, -1).join(".")}/web`;
+            if (!fs22.existsSync(reportDest)) {
+              fs22.mkdirSync(reportDest, { recursive: true });
             }
             const destFolder = dest.replace(".mjs", "");
             const webArgz = JSON.stringify({
@@ -5347,8 +4571,8 @@ var init_main = __esm({
                     )
                   );
                   const testsJsonPath = `${reportDest}/tests.json`;
-                  if (!fs21.existsSync(testsJsonPath)) {
-                    fs21.writeFileSync(
+                  if (!fs22.existsSync(testsJsonPath)) {
+                    fs22.writeFileSync(
                       testsJsonPath,
                       JSON.stringify(
                         {
@@ -5391,9 +4615,9 @@ var init_main = __esm({
               const { reportDest, testResources, portsToUse } = await this.setupTestEnvironment(src, "python");
               const logs = createLogStreams(reportDest, "python");
               const venvPython = `./venv/bin/python3`;
-              const pythonCommand = fs21.existsSync(venvPython) ? venvPython : "python3";
+              const pythonCommand = fs22.existsSync(venvPython) ? venvPython : "python3";
               const ipcfile = "/tmp/tpipe_python_" + Math.random();
-              const child = spawn3(pythonCommand, [src, testResources, ipcfile], {
+              const child = spawn(pythonCommand, [src, testResources, ipcfile], {
                 stdio: ["pipe", "pipe", "pipe", "ipc"]
               });
               let buffer = Buffer.from("");
@@ -5495,24 +4719,24 @@ var init_main = __esm({
                 }
               };
               const server = await this.createIpcServer(onData, ipcfile);
-              let currentDir = path18.dirname(src);
+              let currentDir = path19.dirname(src);
               let goModDir = null;
-              while (currentDir !== path18.parse(currentDir).root) {
-                if (fs21.existsSync(path18.join(currentDir, "go.mod"))) {
+              while (currentDir !== path19.parse(currentDir).root) {
+                if (fs22.existsSync(path19.join(currentDir, "go.mod"))) {
                   goModDir = currentDir;
                   break;
                 }
-                currentDir = path18.dirname(currentDir);
+                currentDir = path19.dirname(currentDir);
               }
               if (!goModDir) {
                 console.error(`Could not find go.mod file for test ${src}`);
-                goModDir = path18.dirname(src);
+                goModDir = path19.dirname(src);
                 console.error(`Falling back to: ${goModDir}`);
               }
-              const relativeTestPath = path18.relative(goModDir, src);
-              const child = spawn3(
+              const relativeTestPath = path19.relative(goModDir, src);
+              const child = spawn(
                 "go",
-                ["test", "-v", "-json", "./" + path18.dirname(relativeTestPath)],
+                ["test", "-v", "-json", "./" + path19.dirname(relativeTestPath)],
                 {
                   stdio: ["pipe", "pipe", "pipe"],
                   env: {
@@ -5521,6 +4745,7 @@ var init_main = __esm({
                     IPC_FILE: ipcfile,
                     GO111MODULE: "on"
                   },
+                  // @ts-ignore
                   cwd: goModDir
                 }
               );
@@ -5529,7 +4754,7 @@ var init_main = __esm({
               await this.processGoTestOutput(reportDest, src);
               server.close();
               try {
-                fs21.unlinkSync(ipcfile);
+                fs22.unlinkSync(ipcfile);
               } catch (e) {
               }
               this.cleanupPorts(portsToUse);
@@ -5549,11 +4774,26 @@ var init_main = __esm({
           );
         };
       }
+      async startBuildProcesses() {
+        const { nodeEntryPoints, webEntryPoints, pureEntryPoints } = getRunnables(
+          this.configs.tests,
+          this.projectName
+        );
+        console.log(`Starting build processes for ${this.projectName}...`);
+        console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
+        console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
+        console.log(`  Pure entry points: ${Object.keys(pureEntryPoints).length}`);
+        await Promise.all([
+          this.startBuildProcess(node_default, nodeEntryPoints, "node"),
+          this.startBuildProcess(web_default, webEntryPoints, "web"),
+          this.startBuildProcess(pure_default, pureEntryPoints, "pure")
+        ]);
+      }
       async setupTestEnvironment(src, runtime) {
         this.bddTestIsRunning(src);
-        const reportDest = `testeranto/reports/${this.name}/${src.split(".").slice(0, -1).join(".")}/${runtime}`;
-        if (!fs21.existsSync(reportDest)) {
-          fs21.mkdirSync(reportDest, { recursive: true });
+        const reportDest = `testeranto/reports/${this.projectName}/${src.split(".").slice(0, -1).join(".")}/${runtime}`;
+        if (!fs22.existsSync(reportDest)) {
+          fs22.mkdirSync(reportDest, { recursive: true });
         }
         const testConfig = this.configs.tests.find((t) => t[0] === src);
         if (!testConfig) {
@@ -5679,15 +4919,15 @@ var init_main = __esm({
       async processGoTestOutput(reportDest, src) {
         const testsJsonPath = `${reportDest}/tests.json`;
         const stdoutPath = `${reportDest}/stdout.log`;
-        if (fs21.existsSync(stdoutPath)) {
+        if (fs22.existsSync(stdoutPath)) {
           try {
-            const stdoutContent = fs21.readFileSync(stdoutPath, "utf-8");
+            const stdoutContent = fs22.readFileSync(stdoutPath, "utf-8");
             const lines = stdoutContent.split("\n").filter((line) => line.trim());
             const testResults = {
               tests: [],
               features: [],
               givens: [],
-              fullPath: path18.resolve(process.cwd(), src)
+              fullPath: path19.resolve(process.cwd(), src)
             };
             for (const line of lines) {
               try {
@@ -5702,7 +4942,7 @@ var init_main = __esm({
               } catch (e) {
               }
             }
-            fs21.writeFileSync(testsJsonPath, JSON.stringify(testResults, null, 2));
+            fs22.writeFileSync(testsJsonPath, JSON.stringify(testResults, null, 2));
             return;
           } catch (error) {
             console.error("Error processing go test output:", error);
@@ -5712,14 +4952,14 @@ var init_main = __esm({
           tests: [],
           features: [],
           givens: [],
-          fullPath: path18.resolve(process.cwd(), src)
+          fullPath: path19.resolve(process.cwd(), src)
         };
-        fs21.writeFileSync(testsJsonPath, JSON.stringify(basicTestResult, null, 2));
+        fs22.writeFileSync(testsJsonPath, JSON.stringify(basicTestResult, null, 2));
       }
       async generatePromptFiles(reportDest, src) {
         try {
-          if (!fs21.existsSync(reportDest)) {
-            fs21.mkdirSync(reportDest, { recursive: true });
+          if (!fs22.existsSync(reportDest)) {
+            fs22.mkdirSync(reportDest, { recursive: true });
           }
           const messagePath = `${reportDest}/message.txt`;
           const messageContent = `There are 3 types of test reports.
@@ -5738,7 +4978,7 @@ if this file does not exist, then static analysis passed without errors;
 
 BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns.
 Do not add error throwing/catching to the tests themselves.`;
-          fs21.writeFileSync(messagePath, messageContent);
+          fs22.writeFileSync(messagePath, messageContent);
           const promptPath = `${reportDest}/prompt.txt`;
           const promptContent = `/read node_modules/testeranto/docs/index.md
 /read node_modules/testeranto/docs/style.md
@@ -5753,37 +4993,38 @@ Do not add error throwing/catching to the tests themselves.`;
 /read ${reportDest}/stderr.log
 /read ${reportDest}/exit.log
 /read ${reportDest}/message.txt`;
-          fs21.writeFileSync(promptPath, promptContent);
+          fs22.writeFileSync(promptPath, promptContent);
         } catch (error) {
           console.error(`Failed to generate prompt files for ${src}:`, error);
         }
       }
-      getGolangSourceFiles(src) {
-        const testDir = path18.dirname(src);
-        const files3 = [];
-        try {
-          const dirContents = fs21.readdirSync(testDir);
-          dirContents.forEach((file) => {
-            if (file.endsWith(".go")) {
-              files3.push(path18.join(testDir, file));
-            }
-          });
-        } catch (error) {
-          console.error(`Error reading directory ${testDir}:`, error);
-        }
-        if (!files3.includes(src)) {
-          files3.push(src);
-        }
-        return files3;
-      }
+      // private getGolangSourceFiles(src: string): string[] {
+      //   // Get all .go files in the same directory as the test
+      //   const testDir = path.dirname(src);
+      //   const files: string[] = [];
+      //   try {
+      //     const dirContents = fs.readdirSync(testDir);
+      //     dirContents.forEach((file) => {
+      //       if (file.endsWith(".go")) {
+      //         files.push(path.join(testDir, file));
+      //       }
+      //     });
+      //   } catch (error) {
+      //     console.error(`Error reading directory ${testDir}:`, error);
+      //   }
+      //   // Always include the main test file
+      //   if (!files.includes(src)) {
+      //     files.push(src);
+      //   }
+      //   return files;
+      // }
     };
   }
 });
 
 // src/testeranto.ts
-init_utils();
 import ansiC5 from "ansi-colors";
-import fs22 from "fs";
+import fs23 from "fs";
 import readline from "readline";
 
 // src/utils/buildTemplates.ts
@@ -5827,7 +5068,7 @@ init_pitonoMetafile();
 // src/utils/pitonoWatcher.ts
 init_pitonoMetafile();
 import chokidar from "chokidar";
-import path3 from "path";
+import path2 from "path";
 import fs2 from "fs";
 var PitonoWatcher = class {
   constructor(testName2, entryPoints) {
@@ -5868,15 +5109,12 @@ var PitonoWatcher = class {
         "Initial python source file scan complete. Ready for changes."
       );
     });
-    const outputDir = path3.join(
+    const outputDir = path2.join(
       process.cwd(),
       `testeranto/bundles/python/${this.testName}`
     );
-    if (!fs2.existsSync(outputDir)) {
-      fs2.mkdirSync(outputDir, { recursive: true });
-    }
     const lastSignatures = /* @__PURE__ */ new Map();
-    const bundleWatcher = chokidar.watch(path3.join(outputDir, "*.py"), {
+    const bundleWatcher = chokidar.watch(path2.join(outputDir, "*.py"), {
       persistent: true,
       ignoreInitial: false,
       awaitWriteFinish: {
@@ -5979,6 +5217,7 @@ var PitonoBuild = class {
 };
 
 // src/testeranto.ts
+init_utils();
 var { GolingvuBuild: GolingvuBuild2 } = await Promise.resolve().then(() => (init_golingvuBuild(), golingvuBuild_exports));
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -5999,7 +5238,7 @@ import(configFilePath).then(async (module) => {
     process.exit(-1);
   }
   try {
-    fs22.writeFileSync(
+    fs23.writeFileSync(
       `${process.cwd()}/testeranto/projects.json`,
       JSON.stringify(Object.keys(bigConfig.projects), null, 2)
     );
@@ -6035,12 +5274,12 @@ import(configFilePath).then(async (module) => {
   const { PM_Main: PM_Main2 } = await init_main().then(() => main_exports);
   pm = new PM_Main2(config, testName, mode);
   await pm.start();
-  fs22.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
+  fs23.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
   Object.keys(bigConfig.projects).forEach((projectName) => {
-    if (!fs22.existsSync(`testeranto/reports/${projectName}`)) {
-      fs22.mkdirSync(`testeranto/reports/${projectName}`);
+    if (!fs23.existsSync(`testeranto/reports/${projectName}`)) {
+      fs23.mkdirSync(`testeranto/reports/${projectName}`);
     }
-    fs22.writeFileSync(
+    fs23.writeFileSync(
       `testeranto/reports/${projectName}/config.json`,
       JSON.stringify(config, null, 2)
     );
@@ -6094,7 +5333,7 @@ import(configFilePath).then(async (module) => {
     ["golang", Object.keys(golangEntryPoints)]
   ].forEach(async ([runtime, keys]) => {
     keys.forEach(async (k) => {
-      fs22.mkdirSync(
+      fs23.mkdirSync(
         `testeranto/reports/${testName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`,
         { recursive: true }
       );

@@ -2,54 +2,13 @@
 import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
-
-export interface GoListOutput {
-  Dir: string;
-  ImportPath: string;
-  ImportComment?: string;
-  Name: string;
-  Target?: string;
-  Stale?: boolean;
-  StaleReason?: string;
-  Root?: string;
-  GoFiles?: string[];
-  CgoFiles?: string[];
-  IgnoredGoFiles?: string[];
-  CFiles?: string[];
-  CXXFiles?: string[];
-  MFiles?: string[];
-  HFiles?: string[];
-  FFiles?: string[];
-  SFiles?: string[];
-  SwigFiles?: string[];
-  SwigCXXFiles?: string[];
-  SysoFiles?: string[];
-  Imports?: string[];
-  Deps?: string[];
-  TestImports?: string[];
-  XTestImports?: string[];
-  Module?: {
-    Path: string;
-    Version: string;
-    Replace?: {
-      Path: string;
-      Version: string;
-    };
-    Main: boolean;
-    Dir: string;
-    GoMod: string;
-    GoVersion: string;
-  };
-  Match?: string[];
-  DepOnly?: boolean;
-  Standard?: boolean;
-}
+import { GoListOutput } from "./types";
 
 export function runGoList(pattern: string): GoListOutput[] {
   try {
     // Handle directory paths by using '.' for the current directory when appropriate
     let processedPattern = pattern;
-    
+
     // If it's a directory that exists, try to use it as a package path
     if (fs.existsSync(pattern)) {
       const stat = fs.statSync(pattern);
@@ -77,11 +36,14 @@ export function runGoList(pattern: string): GoListOutput[] {
     }
 
     // Try to run go list with the processed pattern
-    const output = execSync(`go list -mod=readonly -json "${processedPattern}"`, {
-      encoding: "utf-8",
-      cwd: process.cwd(),
-      stdio: ["pipe", "pipe", "pipe"],
-    });
+    const output = execSync(
+      `go list -mod=readonly -json "${processedPattern}"`,
+      {
+        encoding: "utf-8",
+        cwd: process.cwd(),
+        stdio: ["pipe", "pipe", "pipe"],
+      }
+    );
 
     return parseGoListOutput(output);
   } catch (error) {

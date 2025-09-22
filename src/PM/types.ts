@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ProcessStatus = "running" | "exited" | "error" | "completed";
 export type ProcessType = "process" | "promise";
 export type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";

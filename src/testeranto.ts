@@ -7,11 +7,12 @@ import readline from "readline";
 
 import { ITestconfig, IRunTime, IBuiltConfig } from "./lib";
 import { IProject } from "./Types";
-import { getRunnables } from "./utils";
+
 import { AppHtml } from "./utils/buildTemplates";
 
-import { PM_Main } from "./PM/main";
+import { PM_Main } from "./app/backend/main";
 import { PitonoBuild } from "./PM/pitonoBuild";
+import { getRunnables } from "./app/backend/utils";
 const { GolingvuBuild } = await import("./PM/golingvuBuild");
 
 // if (!process.env.GITHUB_CLIENT_ID) {
@@ -91,11 +92,11 @@ import(configFilePath).then(async (module) => {
 
   let pm: PM_Main | null = null;
   // Start PM_Main immediately - it will handle the build processes internally
-  const { PM_Main } = await import("./PM/main");
+  const { PM_Main } = await import("./app/backend/main");
   pm = new PM_Main(config, testName, mode);
   await pm.start();
 
-  fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
+  fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
 
   Object.keys(bigConfig.projects).forEach((projectName) => {
     // console.log(`testeranto/reports/${projectName}`);
@@ -173,7 +174,7 @@ import(configFilePath).then(async (module) => {
     golangEntryPoints,
     golangEntryPointSidecars,
   } = getRunnables(config.tests, testName);
-  
+
   // Debug logging to check if entry points are being found
   console.log("Node entry points:", Object.keys(nodeEntryPoints));
   console.log("Web entry points:", Object.keys(webEntryPoints));

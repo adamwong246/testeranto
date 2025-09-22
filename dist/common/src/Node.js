@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NodeTesteranto = void 0;
-// import Testeranto from "./lib/core.js";
 const index_js_1 = require("./lib/index.js");
 const node_js_1 = require("./PM/node.js");
 const Tiposkripto_js_1 = __importDefault(require("./lib/Tiposkripto.js"));

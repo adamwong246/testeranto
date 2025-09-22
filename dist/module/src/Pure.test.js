@@ -1,6 +1,5 @@
 import PureTesteranto from "./Pure";
 import { MockPMBase } from "./lib/pmProxy.test/mockPMBase";
-// Implementation for PureTesteranto tests
 const implementation = {
     suites: {
         Default: "PureTesteranto Test Suite",
@@ -97,7 +96,6 @@ const implementation = {
         },
     },
 };
-// Specification for PureTesteranto tests
 const specification = (Suite, Given, When, Then) => [
     Suite.Default("Core Functionality", {
         initializationTest: Given.Default(["Should initialize with default configuration"], [], [Then.verifyNoProxy()]),
@@ -151,7 +149,6 @@ const specification = (Suite, Given, When, Then) => [
         ], [Then.testRunSuccessful(), Then.artifactsTracked(), Then.specsModified(0)]),
     }),
 ];
-// Test adapter for PureTesteranto
 const testAdapter = {
     beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
         const initialized = initializer();
@@ -170,6 +167,4 @@ const testAdapter = {
     beforeAll: async (input, testResource, pm) => ({}),
     assertThis: (x) => x,
 };
-// Export the test suite
-export default PureTesteranto(null, // No initial input
-specification, implementation, testAdapter);
+export default PureTesteranto(null, specification, implementation, testAdapter);

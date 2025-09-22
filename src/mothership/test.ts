@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
+import type { Express } from "express";
+
 import {
   Ibdd_in,
   Ibdd_out,
@@ -13,8 +16,6 @@ import Testeranto from "../Node";
 import { PM } from "../PM";
 
 import appFactory from "./index";
-
-import type { Express } from "express";
 
 type I = Ibdd_in<
   (port: number) => Express,
@@ -60,14 +61,13 @@ const specification: ITestSpecification<Ibdd_in_any, O> = (
           [When.IClaimTheResource("test")],
           [Then.TheResourceIsClaimed("test")]
         ),
-      },
-      []
+      }
     ),
   ];
 };
 
 const implementation: ITestImplementation<I, O> = {
-  suites: { TheMothership: (x) => x },
+  suites: { TheMothership: "idk" },
   givens: { ItIsRunning: () => undefined },
   whens: {
     IClaimTheResource: (resource) => async (app, tr, pm) => {

@@ -7,7 +7,7 @@ export declare class PitonoWatcher {
     start(): Promise<void>;
     private handleFileChange;
     private readAndCheckSignature;
-    private regenerateMetafile;
+    regenerateMetafile(): Promise<void>;
     onMetafileChange(callback: () => void): void;
     stop(): void;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ITestProxies } from ".";
 import { Ibdd_in, Ibdd_out } from "../../CoreTypes";
 

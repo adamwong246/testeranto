@@ -10,5 +10,5 @@ export declare class PureTesteranto<I extends Ibdd_in_any, O extends Ibdd_out, M
         features: never[];
     }>;
 }
-declare const _default: <I extends Ibdd_in_any, O extends Ibdd_out, M>(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O, M>, testAdapter: Partial<ITestAdapter<I>>, testResourceRequirement?: ITTestResourceRequest) => Promise<number | Testeranto<I, O, M>>;
+declare const _default: <I extends Ibdd_in_any, O extends Ibdd_out, M>(input: I["iinput"], testSpecification: ITestSpecification<I, O>, testImplementation: ITestImplementation<I, O, M>, testAdapter: Partial<ITestAdapter<I>>, testResourceRequirement?: ITTestResourceRequest) => Promise<PureTesteranto<I, O, M>>;
 export default _default;

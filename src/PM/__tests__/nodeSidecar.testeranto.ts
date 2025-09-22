@@ -7,6 +7,7 @@ import Testeranto from "../../Node";
 import {
   Ibdd_in_any,
   Ibdd_out,
+  ITestAdapter,
   ITestImplementation,
   ITestSpecification,
 } from "../../CoreTypes";
@@ -27,6 +28,8 @@ type O = Ibdd_out<
     ListenersCleaned: [];
   }
 >;
+
+type I = Ibdd_in_any;
 
 const specification: ITestSpecification<Ibdd_in_any, O> = (
   Suite,
@@ -132,7 +135,7 @@ const implementation: ITestImplementation<I, O> = {
   },
 };
 
-const testAdapter: IPartialNodeAdapter<I> = {
+const testAdapter: ITestAdapter<I> = {
   beforeEach: async (subject, initializer, testResource, initialValues, pm) => {
     const sidecar = initializer();
     sidecar.client = {

@@ -1,5 +1,5 @@
-// @import "bootstrap/scss/bootstrap.scss";
-@import "testeranto-stilo/src/style.scss";
+@import "bootstrap/scss/bootstrap.scss";
+// @import "testeranto-stilo/src/style.scss";
 // @import "./themes.scss";
 
 // Ultra-tight spacing overrides
@@ -20,17 +20,35 @@ body {
 }
 
 // Padding utilities
-.p-4 { padding: 0.25rem !important; }
-.p-3 { padding: 0.25rem !important; }
-.p-2 { padding: 0.125rem !important; }
-.p-1 { padding: 0.0625rem !important; }
+.p-4 {
+  padding: 0.25rem !important;
+}
+.p-3 {
+  padding: 0.25rem !important;
+}
+.p-2 {
+  padding: 0.125rem !important;
+}
+.p-1 {
+  padding: 0.0625rem !important;
+}
 
 // Margin utilities
-.m-2 { margin: 0.125rem !important; }
-.m-3 { margin: 0.25rem !important; }
-.mb-3 { margin-bottom: 0.25rem !important; }
-.mt-2 { margin-top: 0.125rem !important; }
-.mt-3 { margin-top: 0.25rem !important; }
+.m-2 {
+  margin: 0.125rem !important;
+}
+.m-3 {
+  margin: 0.25rem !important;
+}
+.mb-3 {
+  margin-bottom: 0.25rem !important;
+}
+.mt-2 {
+  margin-top: 0.125rem !important;
+}
+.mt-3 {
+  margin-top: 0.25rem !important;
+}
 
 // Navbar and sidebar adjustments
 .navbar {
@@ -97,20 +115,38 @@ body {
 }
 
 // Additional ultra-compact styles
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-bottom: 0.25rem;
   line-height: 1.1;
 }
 
-h1 { font-size: 1.25rem; }
-h2 { font-size: 1.125rem; }
-h3 { font-size: 1rem; }
-h4 { font-size: 0.875rem; }
-h5 { font-size: 0.8125rem; }
-h6 { font-size: 0.75rem; }
+h1 {
+  font-size: 1.25rem;
+}
+h2 {
+  font-size: 1.125rem;
+}
+h3 {
+  font-size: 1rem;
+}
+h4 {
+  font-size: 0.875rem;
+}
+h5 {
+  font-size: 0.8125rem;
+}
+h6 {
+  font-size: 0.75rem;
+}
 
 // List items
-ul, ol {
+ul,
+ol {
   padding-left: 1rem;
   margin-bottom: 0.25rem;
 }
@@ -123,8 +159,9 @@ li {
 .table {
   font-size: 0.75rem;
   margin-bottom: 0.25rem;
-  
-  th, td {
+
+  th,
+  td {
     padding: 0.125rem 0.25rem;
   }
 }
@@ -139,7 +176,7 @@ li {
 .dropdown-menu {
   font-size: 0.75rem;
   padding: 0.125rem;
-  
+
   .dropdown-item {
     padding: 0.125rem 0.5rem;
   }
@@ -164,4 +201,62 @@ li {
 }
 .rounded-sm {
   border-radius: 0.0625rem !important;
+}
+
+/////////////////////////////////
+///
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url("../../../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf")
+    format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url("../../../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf")
+    format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url("../../../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Regular.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url("../../../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url("../../../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf")
+    format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url("../../../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf")
+    format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "M PLUS Rounded 1c";
+  src: url("../../../fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf")
+    format("truetype");
+  font-weight: 900;
+  font-style: normal;
 }

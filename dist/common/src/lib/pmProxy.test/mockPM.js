@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MockPM = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const mockPMBase_1 = require("./mockPMBase");
 class MockPM extends mockPMBase_1.MockPMBase {
     constructor(configs) {

@@ -5,24 +5,13 @@ import Tiposkripto from "../Tiposkripto";
  * Concrete implementation of Tiposkripto for testing purposes
  */
 export class MockTiposkripto extends Tiposkripto {
-    constructor(input, testSpecification, testImplementation, testResourceRequirement = { ports: [] }, testAdapter, uberCatcher = (cb) => cb()) {
-        // Call super first
+    constructor(input, testSpecification, testImplementation, testResourceRequirement = { ports: 0 }, testAdapter, uberCatcher = (cb) => cb()) {
         super(input, testSpecification, testImplementation, testResourceRequirement, testAdapter, uberCatcher);
         this.specs = [];
         this.testJobs = [];
         this.artifacts = [];
         this.features = [];
         this.testImplementation = testImplementation;
-        // Add debug logging for features
-        console.log('MockTiposkripto constructor called with input:', JSON.stringify(input));
-        // Validate required implementation methods
-        const requiredMethods = ["suites", "givens", "whens", "thens"];
-        requiredMethods.forEach((method) => {
-            if (!testImplementation[method]) {
-                throw new Error(`Missing required implementation method: ${method}`);
-            }
-        });
-        // Store the test adapter
         this.testAdapter = testAdapter;
         // Store implementation methods as overrides
         this.suitesOverrides = testImplementation.suites;
@@ -34,9 +23,9 @@ export class MockTiposkripto extends Tiposkripto {
         // Each Given corresponds to one test
         let totalTests = Object.keys(testImplementation.givens).length;
         // Override with specific values for test cases
-        if (input && typeof input === 'object') {
+        if (input && typeof input === "object") {
             const inputObj = input;
-            if ('testCount' in inputObj) {
+            if ("testCount" in inputObj) {
                 totalTests = Number(inputObj.testCount);
             }
         }
@@ -45,27 +34,27 @@ export class MockTiposkripto extends Tiposkripto {
             this.features = this.extractFeaturesFromSpecification(testSpecification);
         }
         catch (error) {
-            console.error('Failed to extract features, using fallback:', error);
+            console.error("Failed to extract features, using fallback:", error);
             // Fallback to basic features
             this.features = [
-                'Tiposkripto should initialize with default values',
-                'Custom input test',
-                'Resource requirements test',
-                'Should generate specs from test specification',
-                'Should create test jobs from specs',
-                'Should track artifacts',
-                'Should properly configure all overrides',
-                'Interface configuration test',
-                'Custom implementation test',
-                'Custom specification test',
-                'Should allow modifying specs',
-                'Should allow modifying jobs',
-                'Should properly handle errors',
-                'Should complete a full test run successfully',
-                'Should correctly count the number of tests',
-                'Should set runTimeTests to -1 on hard errors',
-                'Given a config that has 1 suite containing 5 GivenWhenThens',
-                'Given a config that has 1 suite containing 3 GivenWhenThens and 1 suite containing 3 GivenWhenThens'
+                "Tiposkripto should initialize with default values",
+                "Custom input test",
+                "Resource requirements test",
+                "Should generate specs from test specification",
+                "Should create test jobs from specs",
+                "Should track artifacts",
+                "Should properly configure all overrides",
+                "Interface configuration test",
+                "Custom implementation test",
+                "Custom specification test",
+                "Should allow modifying specs",
+                "Should allow modifying jobs",
+                "Should properly handle errors",
+                "Should complete a full test run successfully",
+                "Should correctly count the number of tests",
+                "Should set runTimeTests to -1 on hard errors",
+                "Given a config that has 1 suite containing 5 GivenWhenThens",
+                "Given a config that has 1 suite containing 3 GivenWhenThens and 1 suite containing 3 GivenWhenThens",
             ];
         }
     }
@@ -76,14 +65,16 @@ export class MockTiposkripto extends Tiposkripto {
             const mockSuite = (name, tests, features) => ({
                 name,
                 tests,
-                features
+                features,
             });
             // The Given function should take features, whens, thens
             const mockGiven = (features, whens, thens) => {
                 return {
-                    features: Array.isArray(features) ? features.filter(f => typeof f === 'string') : [],
+                    features: Array.isArray(features)
+                        ? features.filter((f) => typeof f === "string")
+                        : [],
                     whens,
-                    thens
+                    thens,
                 };
             };
             // Create mock When and Then objects that have all the methods from the implementation
@@ -92,13 +83,13 @@ export class MockTiposkripto extends Tiposkripto {
             const mockThen = {};
             // Add all when methods
             if (this.testImplementation.whens) {
-                Object.keys(this.testImplementation.whens).forEach(key => {
+                Object.keys(this.testImplementation.whens).forEach((key) => {
                     mockWhen[key] = (...args) => ({ name: key, args });
                 });
             }
             // Add all then methods
             if (this.testImplementation.thens) {
-                Object.keys(this.testImplementation.thens).forEach(key => {
+                Object.keys(this.testImplementation.thens).forEach((key) => {
                     mockThen[key] = (...args) => ({ name: key, args });
                 });
             }
@@ -107,13 +98,13 @@ export class MockTiposkripto extends Tiposkripto {
             // Extract all features from all tests in all suites
             const features = [];
             for (const suite of suites) {
-                if (suite && suite.tests && typeof suite.tests === 'object') {
+                if (suite && suite.tests && typeof suite.tests === "object") {
                     for (const testKey of Object.keys(suite.tests)) {
                         const test = suite.tests[testKey];
                         if (test && test.features && Array.isArray(test.features)) {
                             // Ensure all features are strings
                             for (const feature of test.features) {
-                                if (typeof feature === 'string') {
+                                if (typeof feature === "string") {
                                     features.push(feature);
                                 }
                             }
@@ -123,11 +114,10 @@ export class MockTiposkripto extends Tiposkripto {
             }
             // Remove duplicates
             const uniqueFeatures = [...new Set(features)];
-            console.log('Extracted features:', JSON.stringify(uniqueFeatures));
             return uniqueFeatures;
         }
         catch (error) {
-            console.error('Error extracting features from specification:', error);
+            console.error("Error extracting features from specification:", error);
             return [];
         }
     }
@@ -138,13 +128,13 @@ export class MockTiposkripto extends Tiposkripto {
                 throw new Error("Test adapter not configured");
             }
             // Ensure features are always strings
-            const stringFeatures = this.features.filter(f => typeof f === 'string');
+            const stringFeatures = this.features.filter((f) => typeof f === "string");
             // Calculate totalTests based on input
             let totalTests = Object.keys(this.givenOverides).length;
             const input = this.input;
             // Override with specific values for test cases
-            if (input && typeof input === 'object') {
-                if ('testCount' in input) {
+            if (input && typeof input === "object") {
+                if ("testCount" in input) {
                     totalTests = input.testCount;
                 }
             }
