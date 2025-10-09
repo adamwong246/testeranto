@@ -13,6 +13,7 @@
   "author": "adam wong <adamwong246@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "mothership": "tsx src/mothership/start.ts",
     "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
     "build3": "yarn bundle",
@@ -206,6 +207,7 @@
     "chai": "^5.2.0",
     "chokidar": "^4.0.3",
     "chromium": "^3.0.3",
+    "dockernode": "^0.1.0",
     "dynamic-base": "^1.1.2",
     "esbuild": "0.17.5",
     "esbuild-plugin-external-package": "^1.0.0",

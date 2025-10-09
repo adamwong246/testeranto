@@ -1,0 +1,7 @@
+FROM node:18-alpine
+WORKDIR /workspace
+COPY package*.json ./
+# RUN npm install
+# Install ts-node to run TypeScript files
+# RUN npm install -g ts-node typescript
+# COPY . .
