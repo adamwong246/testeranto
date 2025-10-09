@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.204.0",
+  "version": "0.205.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -172,8 +172,8 @@
     "@types/react-test-renderer": "19.0.0",
     "@types/uuid": "^10.0.0",
     "@types/ws": "^8.18.1",
-    "@typescript-eslint/eslint-plugin": "^5.46.0",
-    "@typescript-eslint/parser": "^5.46.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
     "react-app-rewired": "^2.2.1",
     "self-import": "*",
     "testeranto-react": "0.0.9",
@@ -209,7 +209,7 @@
     "chromium": "^3.0.3",
     "dockernode": "^0.1.0",
     "dynamic-base": "^1.1.2",
-    "esbuild": "0.17.5",
+    "esbuild": "^0.20.1",
     "esbuild-plugin-external-package": "^1.0.0",
     "esbuild-plugin-import-map": "^2.1.0",
     "esbuild-plugin-markdown": "^0.0.3",

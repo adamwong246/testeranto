@@ -515,7 +515,7 @@
             }
             return element;
           };
-          function createElement10(type, config3, children) {
+          function createElement11(type, config3, children) {
             var propName;
             var props = {};
             var key = null;
@@ -789,7 +789,7 @@
             }
             return children;
           }
-          function createContext21(defaultValue) {
+          function createContext22(defaultValue) {
             var context4 = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1131,7 +1131,7 @@
               return dispatcher.useDebugValue(value, formatterFn);
             }
           }
-          function useTransition2() {
+          function useTransition3() {
             var dispatcher = resolveDispatcher();
             return dispatcher.useTransition();
           }
@@ -1614,7 +1614,7 @@
                 error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
               }
             }
-            var element = createElement10.apply(this, arguments);
+            var element = createElement11.apply(this, arguments);
             if (element == null) {
               return element;
             }
@@ -1869,7 +1869,7 @@
           exports.Suspense = REACT_SUSPENSE_TYPE;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext21;
+          exports.createContext = createContext22;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -1893,7 +1893,7 @@
           exports.useRef = useRef37;
           exports.useState = useState50;
           exports.useSyncExternalStore = useSyncExternalStore;
-          exports.useTransition = useTransition2;
+          exports.useTransition = useTransition3;
           exports.version = ReactVersion;
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
@@ -9393,7 +9393,7 @@
               }
             }
           }
-          function createElement10(type, props, rootContainerElement, parentNamespace) {
+          function createElement11(type, props, rootContainerElement, parentNamespace) {
             var isCustomComponentTag;
             var ownerDocument2 = getOwnerDocumentFromRootContainer(rootContainerElement);
             var domElement;
@@ -10254,7 +10254,7 @@
               }
               parentNamespace = hostContextDev.namespace;
             }
-            var domElement = createElement10(type, props, rootContainerInstance, parentNamespace);
+            var domElement = createElement11(type, props, rootContainerInstance, parentNamespace);
             precacheFiberNode(internalInstanceHandle, domElement);
             updateFiberProps(domElement, props);
             return domElement;
@@ -26850,7 +26850,7 @@
   // src/app/frontend/App.tsx
   var import_react164 = __toESM(require_react(), 1);
 
-  // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
+  // node_modules/react-router/dist/development/chunk-OIYGIGL5.mjs
   var React = __toESM(require_react(), 1);
   var React2 = __toESM(require_react(), 1);
   var React3 = __toESM(require_react(), 1);
@@ -27685,13 +27685,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           params: Object.assign({}, parentParams, match.params),
           pathname: joinPaths([
             parentPathnameBase,
-            // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
+            // Re-encode pathnames that were decoded inside matchRoutes.
+            // Pre-encode `?` and `#` ahead of `encodeLocation` because it uses
+            // `new URL()` internally and we need to prevent it from treating
+            // them as separators
+            navigator2.encodeLocation ? navigator2.encodeLocation(
+              match.pathname.replace(/\?/g, "%3F").replace(/#/g, "%23")
+            ).pathname : match.pathname
           ]),
           pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
             parentPathnameBase,
             // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
+            // Pre-encode `?` and `#` ahead of `encodeLocation` because it uses
+            // `new URL()` internally and we need to prevent it from treating
+            // them as separators
+            navigator2.encodeLocation ? navigator2.encodeLocation(
+              match.pathnameBase.replace(/\?/g, "%3F").replace(/#/g, "%23")
+            ).pathname : match.pathnameBase
           ])
         })
       ),
@@ -28120,6 +28130,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         Component: element.props.Component,
         index: element.props.index,
         path: element.props.path,
+        middleware: element.props.middleware,
         loader: element.props.loader,
         action: element.props.action,
         hydrateFallbackElement: element.props.hydrateFallbackElement,
@@ -28639,7 +28650,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   try {
     if (isBrowser) {
       window.__reactRouterVersion = // @ts-expect-error
-      "7.8.2";
+      "7.9.4";
     }
   } catch (e) {
   }
@@ -35077,7 +35088,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/@restart/ui/esm/ImperativeTransition.js
   var import_jsx_runtime61 = __toESM(require_jsx_runtime());
-  function useTransition({
+  function useTransition2({
     in: inProp,
     onTransition
   }) {
@@ -35118,7 +35129,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (inProp && exited) {
       setExited(false);
     }
-    const ref = useTransition({
+    const ref = useTransition2({
       in: !!inProp,
       onTransition: (options) => {
         const onFinish = () => {
@@ -46827,9 +46838,9 @@ object-assign/index.js:
   @license MIT
   *)
 
-react-router/dist/development/chunk-PVWAREVJ.mjs:
+react-router/dist/development/chunk-OIYGIGL5.mjs:
   (**
-   * react-router v7.8.2
+   * react-router v7.9.4
    *
    * Copyright (c) Remix Software Inc.
    *
@@ -46841,7 +46852,7 @@ react-router/dist/development/chunk-PVWAREVJ.mjs:
 
 react-router/dist/development/index.mjs:
   (**
-   * react-router v7.8.2
+   * react-router v7.9.4
    *
    * Copyright (c) Remix Software Inc.
    *

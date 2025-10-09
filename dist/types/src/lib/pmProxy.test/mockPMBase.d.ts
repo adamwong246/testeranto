@@ -1,6 +1,6 @@
 import { Browser } from "puppeteer-core";
 import { IBuiltConfig, ITLog } from "../index";
-import { PM_Base } from "../../app/backend/base";
+import { PM_Base } from "../../app/backend/PM_0";
 export declare class MockPMBase implements PM_Base {
     browser: Browser;
     configs: IBuiltConfig;

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useWebSocket } from "./App";
+import { useWebSocket } from "./useWebSocket";
 export const useGitMode = () => {
     const { isConnected } = useWebSocket();
     const [mode, setMode] = useState(isConnected ? "dev" : "static");
     useEffect(() => {
-        // Auto-detect mode based on WebSocket connection
         setMode(isConnected ? "dev" : "static");
     }, [isConnected]);
     return {

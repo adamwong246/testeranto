@@ -1,8 +1,10 @@
 FROM node:18-alpine
-# Install Python3, pip, and git (needed for git-based dependencies)
-RUN apk add --update python3 py3-pip git
+# Install Python3, pip, git, build tools for node-gyp, and libxml2-utils for xmllint
+RUN apk add --update python3 py3-pip git make g++ linux-headers libxml2-utils
 WORKDIR /workspace
 COPY package*.json ./
+# Install npm dependencies first (this will help with node-gyp)
+RUN npm install --legacy-peer-deps
 # Copy Python requirements and install dependencies in a virtual environment
 COPY ./example/requirements.txt .
 # Configure git to use HTTPS by default

@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_WithBuild = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const esbuild_1 = __importDefault(require("esbuild"));
-const PM_WithProcesses_js_1 = require("./PM_WithProcesses.js");
-class PM_WithBuild extends PM_WithProcesses_js_1.PM_WithProcesses {
+const PM_2_WithTCP_js_1 = require("./PM_2_WithTCP.js");
+class PM_WithBuild extends PM_2_WithTCP_js_1.PM_2_WithTCP {
     constructor() {
         super(...arguments);
         this.currentBuildResolve = null;

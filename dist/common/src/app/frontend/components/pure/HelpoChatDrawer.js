@@ -35,9 +35,11 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HelpoChatDrawer = void 0;
 const react_1 = __importStar(require("react"));
-const App_1 = require("../../App");
-const HelpoChatDrawer = ({ isActive, onToggle, }) => {
-    const { ws, isConnected, sendMessage } = (0, App_1.useWebSocket)();
+const useWebSocket_1 = require("../../useWebSocket");
+const HelpoChatDrawer = ({ isActive,
+// onToggle,
+ }) => {
+    const { ws, isConnected, sendMessage } = (0, useWebSocket_1.useWebSocket)();
     const [messages, setMessages] = (0, react_1.useState)([]);
     const [inputMessage, setInputMessage] = (0, react_1.useState)("");
     const messagesEndRef = (0, react_1.useRef)(null);

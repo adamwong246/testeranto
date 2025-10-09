@@ -105,7 +105,7 @@ Promise.resolve(`${configFilePath}`).then(s => __importStar(require(s))).then(as
     const { PM_Main } = await Promise.resolve().then(() => __importStar(require("./app/backend/main")));
     pm = new PM_Main(config, testName, mode);
     await pm.start();
-    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/projects.html`, (0, buildTemplates_1.AppHtml)());
+    fs_1.default.writeFileSync(`${process.cwd()}/testeranto/index.html`, (0, buildTemplates_1.AppHtml)());
     Object.keys(bigConfig.projects).forEach((projectName) => {
         // console.log(`testeranto/reports/${projectName}`);
         if (!fs_1.default.existsSync(`testeranto/reports/${projectName}`)) {

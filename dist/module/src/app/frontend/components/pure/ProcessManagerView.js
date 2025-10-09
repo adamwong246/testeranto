@@ -3,8 +3,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import { ProcessList } from './ProcessList';
 import { ProcessDetails } from './ProcessDetails';
 import { ProcessTerminal } from './ProcessTerminal';
-import { useWebSocket } from "../../App";
-export const ProcessManagerView = ({ processes, onRefresh, onBack, loading, onKillProcess, }) => {
+import { useWebSocket } from "../../useWebSocket";
+export const ProcessManagerView = ({ processes, 
+// onRefresh,
+// onBack,
+loading, onKillProcess, }) => {
     const [selectedProcess, setSelectedProcess] = useState(null);
     const { ws } = useWebSocket();
     // Handle process selection
@@ -39,3 +42,4 @@ export const ProcessManagerView = ({ processes, onRefresh, onBack, loading, onKi
                 } },
                 React.createElement(ProcessTerminal, { selectedProcess: selectedProcess, ws: ws })))));
 };
+// export { Process };

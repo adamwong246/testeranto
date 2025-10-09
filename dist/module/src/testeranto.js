@@ -67,7 +67,7 @@ import(configFilePath).then(async (module) => {
     const { PM_Main } = await import("./app/backend/main");
     pm = new PM_Main(config, testName, mode);
     await pm.start();
-    fs.writeFileSync(`${process.cwd()}/testeranto/projects.html`, AppHtml());
+    fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
     Object.keys(bigConfig.projects).forEach((projectName) => {
         // console.log(`testeranto/reports/${projectName}`);
         if (!fs.existsSync(`testeranto/reports/${projectName}`)) {

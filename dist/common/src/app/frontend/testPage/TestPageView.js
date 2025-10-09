@@ -38,7 +38,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TestPageView = void 0;
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
-const App_1 = require("../App");
 const react_bootstrap_1 = require("react-bootstrap");
 const react_2 = require("@monaco-editor/react");
 const TestPageNavbar_1 = require("./TestPageNavbar");
@@ -63,89 +62,90 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
         sourceFiles: true,
         buildErrors: true,
     });
-    const [isNavbarCollapsed, setIsNavbarCollapsed] = (0, react_1.useState)(false);
-    // Extract build errors and warnings relevant to this test
-    const [buildErrors, setBuildErrors] = (0, react_1.useState)({ errors: [], warnings: [] });
-    (0, react_1.useEffect)(() => {
-        var _a, _b, _c;
-        const metafile = (_a = logs.build_logs) === null || _a === void 0 ? void 0 : _a.metafile;
-        if (!metafile) {
-            setBuildErrors({ errors: [], warnings: [] });
-            return;
-        }
-        const sourceFilesSet = new Set();
-        // Collect all input files from metafile outputs related to this test
-        Object.entries(metafile.outputs || {}).forEach(([outputPath, output]) => {
-            // Normalize paths for comparison
-            const normalizedTestName = testName.replace(/\\/g, "/");
-            const normalizedEntryPoint = output.entryPoint
-                ? output.entryPoint.replace(/\\/g, "/")
-                : "";
-            if (normalizedEntryPoint.includes(normalizedTestName)) {
-                Object.keys(output.inputs || {}).forEach((inputPath) => {
-                    sourceFilesSet.add(inputPath.replace(/\\/g, "/"));
-                });
-            }
-        });
-        // Filter errors and warnings to those originating from source files of this test
-        const filteredErrors = (((_b = logs.build_logs) === null || _b === void 0 ? void 0 : _b.errors) || []).filter((err) => {
-            if (!err.location || !err.location.file)
-                return false;
-            return sourceFilesSet.has(err.location.file.replace(/\\/g, "/"));
-        });
-        const filteredWarnings = (((_c = logs.build_logs) === null || _c === void 0 ? void 0 : _c.warnings) || []).filter((warn) => {
-            if (!warn.location || !warn.location.file)
-                return false;
-            return sourceFilesSet.has(warn.location.file.replace(/\\/g, "/"));
-        });
-        setBuildErrors({ errors: filteredErrors, warnings: filteredWarnings });
-    }, [logs, testName]);
-    // Update customMessage when logs change
-    (0, react_1.useEffect)(() => {
-        if (typeof logs["message.txt"] === "string" && logs["message.txt"].trim()) {
-            setCustomMessage(logs["message.txt"]);
-        }
-    }, [logs]);
-    // Fetch projects data
-    (0, react_1.useEffect)(() => {
-        const fetchProjects = async () => {
-            try {
-                // First try to fetch from the API endpoint
-                try {
-                    const response = await fetch('/api/projects/list');
-                    if (response.ok) {
-                        const projectsData = await response.json();
-                        setProjects(projectsData);
-                        return;
-                    }
-                    // If response is not ok, throw to trigger the catch block
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                catch (apiError) {
-                    console.warn('API endpoint failed, trying projects.json:', apiError);
-                }
-                // Fall back to projects.json
-                const response = await fetch('/projects.json');
-                if (response.ok) {
-                    const projectsData = await response.json();
-                    setProjects(projectsData);
-                }
-                else {
-                    // Throw an error if projects.json doesn't exist
-                    throw new Error('projects.json not found');
-                }
-            }
-            catch (error) {
-                console.error('Error fetching projects:', error);
-                // Set projects to empty array to show appropriate UI
-                setProjects([]);
-            }
-        };
-        fetchProjects();
-    }, []);
-    // Use the centralized WebSocket from App context
-    const wsContext = (0, App_1.useWebSocket)();
-    const ws = wsContext === null || wsContext === void 0 ? void 0 : wsContext.ws;
+    // const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(false);
+    // // Extract build errors and warnings relevant to this test
+    // const [buildErrors, setBuildErrors] = useState<{
+    //   errors: any[];
+    //   warnings: any[];
+    // }>({ errors: [], warnings: [] });
+    // useEffect(() => {
+    //   const metafile = logs.build_logs?.metafile;
+    //   if (!metafile) {
+    //     setBuildErrors({ errors: [], warnings: [] });
+    //     return;
+    //   }
+    //   const sourceFilesSet = new Set<string>();
+    //   // Collect all input files from metafile outputs related to this test
+    //   Object.entries(metafile.outputs || {}).forEach(([outputPath, output]) => {
+    //     // Normalize paths for comparison
+    //     const normalizedTestName = testName.replace(/\\/g, "/");
+    //     const normalizedEntryPoint = output.entryPoint
+    //       ? output.entryPoint.replace(/\\/g, "/")
+    //       : "";
+    //     if (normalizedEntryPoint.includes(normalizedTestName)) {
+    //       Object.keys(output.inputs || {}).forEach((inputPath) => {
+    //         sourceFilesSet.add(inputPath.replace(/\\/g, "/"));
+    //       });
+    //     }
+    //   });
+    //   // Filter errors and warnings to those originating from source files of this test
+    //   const filteredErrors = (logs.build_logs?.errors || []).filter(
+    //     (err: any) => {
+    //       if (!err.location || !err.location.file) return false;
+    //       return sourceFilesSet.has(err.location.file.replace(/\\/g, "/"));
+    //     }
+    //   );
+    //   const filteredWarnings = (logs.build_logs?.warnings || []).filter(
+    //     (warn: any) => {
+    //       if (!warn.location || !warn.location.file) return false;
+    //       return sourceFilesSet.has(warn.location.file.replace(/\\/g, "/"));
+    //     }
+    //   );
+    //   setBuildErrors({ errors: filteredErrors, warnings: filteredWarnings });
+    // }, [logs, testName]);
+    // // Update customMessage when logs change
+    // useEffect(() => {
+    //   if (typeof logs["message.txt"] === "string" && logs["message.txt"].trim()) {
+    //     setCustomMessage(logs["message.txt"]);
+    //   }
+    // }, [logs]);
+    // // Fetch projects data
+    // useEffect(() => {
+    //   const fetchProjects = async () => {
+    //     try {
+    //       // First try to fetch from the API endpoint
+    //       try {
+    //         const response = await fetch('/api/projects/list');
+    //         if (response.ok) {
+    //           const projectsData = await response.json();
+    //           setProjects(projectsData);
+    //           return;
+    //         }
+    //         // If response is not ok, throw to trigger the catch block
+    //         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    //       } catch (apiError) {
+    //         console.warn('API endpoint failed, trying projects.json:', apiError);
+    //       }
+    //       // Fall back to projects.json
+    //       const response = await fetch('/projects.json');
+    //       if (response.ok) {
+    //         const projectsData = await response.json();
+    //         setProjects(projectsData);
+    //       } else {
+    //         // Throw an error if projects.json doesn't exist
+    //         throw new Error('projects.json not found');
+    //       }
+    //     } catch (error) {
+    //       console.error('Error fetching projects:', error);
+    //       // Set projects to empty array to show appropriate UI
+    //       setProjects([]);
+    //     }
+    //   };
+    //   fetchProjects();
+    // }, []);
+    // // Use the centralized WebSocket from App context
+    // const wsContext = useWebSocket();
+    // const ws = wsContext?.ws;
     const [activeTab, setActiveTab] = react_1.default.useState("tests.json");
     const [openFiles, setOpenFiles] = (0, react_1.useState)([]);
     const [activeFileIndex, setActiveFileIndex] = (0, react_1.useState)(-1);
@@ -188,21 +188,20 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
     // Update selectedFile when activeFileIndex changes
     const selectedFile = activeFileIndex >= 0 ? openFiles[activeFileIndex] : null;
     // Debug: track selectedFile changes
-    (0, react_1.useEffect)(() => {
-        var _a;
-        console.log('selectedFile changed:', {
-            path: selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.path,
-            contentLength: (_a = selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.content) === null || _a === void 0 ? void 0 : _a.length,
-            language: selectedFile === null || selectedFile === void 0 ? void 0 : selectedFile.language
-        });
-    }, [selectedFile]);
+    // useEffect(() => {
+    //   console.log('selectedFile changed:', {
+    //     path: selectedFile?.path,
+    //     contentLength: selectedFile?.content?.length,
+    //     language: selectedFile?.language
+    //   });
+    // }, [selectedFile]);
     // Update editor content when selectedFile changes
     (0, react_1.useEffect)(() => {
-        console.log('selectedFile useEffect triggered', {
-            selectedFile: selectedFile,
-            editorRefExists: !!editorRef,
-            modelRefExists: !!modelRef
-        });
+        // console.log('selectedFile useEffect triggered', {
+        //   selectedFile: selectedFile,
+        //   editorRefExists: !!editorRef,
+        //   modelRefExists: !!modelRef
+        // });
         if (selectedFile && editorRef) {
             console.log('Updating editor for selected file:', selectedFile.path);
             const monaco = window.monaco;
@@ -243,7 +242,7 @@ const TestPageView = ({ projectName, testName, decodedTestPath, runtime, testsEx
     }, [selectedFile, editorRef, modelRef]);
     return (react_1.default.createElement(react_bootstrap_1.Container, { fluid: true, className: "px-0" },
         react_1.default.createElement(TestPageNavbar_1.TestPageNavbar, { decodedTestPath: decodedTestPath, projectName: projectName, runtime: runtime, setShowAiderModal: setShowAiderModal, isWebSocketConnected: isWebSocketConnected }),
-        react_1.default.createElement(MagicRobotModal_1.MagicRobotModal, { customMessage: customMessage, isWebSocketConnected: isWebSocketConnected, messageOption: messageOption, navigate: navigate, projectName: projectName, runtime: runtime, setCustomMessage: setCustomMessage, setMessageOption: setMessageOption, setShowAiderModal: setShowAiderModal, setShowToast: setShowToast, setToastMessage: setToastMessage, setToastVariant: setToastVariant, showAiderModal: showAiderModal, testName: testName, ws: ws }),
+        react_1.default.createElement(MagicRobotModal_1.MagicRobotModal, { customMessage: customMessage, isWebSocketConnected: isWebSocketConnected, messageOption: messageOption, navigate: navigate, projectName: projectName, runtime: runtime, setCustomMessage: setCustomMessage, setMessageOption: setMessageOption, setShowAiderModal: setShowAiderModal, setShowToast: setShowToast, setToastMessage: setToastMessage, setToastVariant: setToastVariant, showAiderModal: showAiderModal, testName: testName }),
         react_1.default.createElement(react_bootstrap_1.Row, { className: "g-0 flex-nowrap overflow-x-auto" },
             react_1.default.createElement(react_bootstrap_1.Col, { sm: 3, style: {
                     height: "calc(100vh - 56px)",

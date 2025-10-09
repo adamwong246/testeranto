@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useWebSocket } from "../../App";
-export const HelpoChatDrawer = ({ isActive, onToggle, }) => {
+import { useWebSocket } from "../../useWebSocket";
+export const HelpoChatDrawer = ({ isActive,
+// onToggle,
+ }) => {
     const { ws, isConnected, sendMessage } = useWebSocket();
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState("");

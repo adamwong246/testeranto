@@ -3,14 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { useGitMode } from "../../useGitMode";
 import { GitIntegrationView } from "../pure/GitIntegrationView";
-import { useFileService } from "../../FileServiceContext";
-// import { FileChange, RemoteStatus } from "../../../appCommon/FileService";
-// import { useFileService } from "../../../appCommon/FileServiceContext";
 export const GitIntegrationPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const { mode, setMode, isStatic, isDev, isGit } = useGitMode();
     // const [fileService, setFileService] = useState(() => getFileService(mode));
-    const fileService = useFileService();
+    // const fileService = useFileService()
     const [changes, setChanges] = useState([]);
     const [remoteStatus, setRemoteStatus] = useState({
         ahead: 0,
@@ -31,7 +28,7 @@ export const GitIntegrationPage = () => {
         try {
             setIsCommitting(true);
             setError(null);
-            await fileService.commitChanges(commitSummary, commitDescription);
+            // await fileService.commitChanges(commitSummary, commitDescription);
             setCommitSummary("");
             setCommitDescription("");
             await loadChanges();
@@ -55,9 +52,9 @@ export const GitIntegrationPage = () => {
             setIsCommitting(true);
             setIsPushing(true);
             setError(null);
-            await fileService.commitChanges(commitSummary, commitDescription);
-            await fileService.pushChanges();
-            setCommitSummary("");
+            // await fileService.commitChanges(commitSummary, commitDescription);
+            // await fileService.pushChanges();
+            // setCommitSummary("");
             setCommitDescription("");
             await loadChanges();
             await loadGitStatus();
@@ -76,7 +73,7 @@ export const GitIntegrationPage = () => {
         try {
             setIsPulling(true);
             setError(null);
-            await fileService.pullChanges();
+            // await fileService.pullChanges();
             await loadChanges();
             await loadGitStatus();
         }
@@ -131,8 +128,8 @@ export const GitIntegrationPage = () => {
         }
         try {
             setError(null);
-            const branch = await fileService.getCurrentBranch();
-            const status = await fileService.getRemoteStatus();
+            // const branch = await fileService.getCurrentBranch();
+            // const status = await fileService.getRemoteStatus();
             setCurrentBranch(branch);
             setRemoteStatus(status);
         }
@@ -150,7 +147,7 @@ export const GitIntegrationPage = () => {
         try {
             setIsLoading(true);
             setError(null);
-            const changes = await fileService.getChanges();
+            // const changes = await fileService.getChanges();
             setChanges(changes);
         }
         catch (err) {
@@ -163,16 +160,15 @@ export const GitIntegrationPage = () => {
         }
     };
     useEffect(() => {
-        var _a, _b, _c;
         const loadData = async () => {
             try {
                 setIsLoading(true);
-                const changes = await fileService.getChanges();
+                // const changes = await fileService.getChanges();
                 setChanges(changes);
-                const branch = await fileService.getCurrentBranch();
-                const status = await fileService.getRemoteStatus();
-                setCurrentBranch(branch);
-                setRemoteStatus(status);
+                // const branch = await fileService.getCurrentBranch();
+                // const status = await fileService.getRemoteStatus();
+                // setCurrentBranch(branch);
+                // setRemoteStatus(status);
             }
             catch (err) {
                 console.warn("Failed to load data:", err);
@@ -184,22 +180,36 @@ export const GitIntegrationPage = () => {
         loadData();
         // Set up real-time updates for dev mode
         if (mode === "dev") {
-            const devFileService = fileService;
-            const unsubscribeChanges = (_a = devFileService.onChanges) === null || _a === void 0 ? void 0 : _a.call(devFileService, (newChanges) => {
-                setChanges(newChanges);
-            });
-            const unsubscribeStatus = (_b = devFileService.onStatusUpdate) === null || _b === void 0 ? void 0 : _b.call(devFileService, (newStatus) => {
-                setRemoteStatus(newStatus);
-            });
-            const unsubscribeBranch = (_c = devFileService.onBranchUpdate) === null || _c === void 0 ? void 0 : _c.call(devFileService, (newBranch) => {
-                setCurrentBranch(newBranch);
-            });
+            // const devFileService = fileService as any;
+            // const unsubscribeChanges = devFileService.onChanges?.(
+            //   (newChanges: FileChange[]) => {
+            //     setChanges(newChanges);
+            //   }
+            // );
+            // const unsubscribeStatus = devFileService.onStatusUpdate?.(
+            //   (newStatus: RemoteStatus) => {
+            //     setRemoteStatus(newStatus);
+            //   }
+            // );
+            // const unsubscribeBranch = devFileService.onBranchUpdate?.(
+            //   (newBranch: string) => {
+            //     setCurrentBranch(newBranch);
+            //   }
+            // );
             return () => {
-                unsubscribeChanges === null || unsubscribeChanges === void 0 ? void 0 : unsubscribeChanges();
-                unsubscribeStatus === null || unsubscribeStatus === void 0 ? void 0 : unsubscribeStatus();
-                unsubscribeBranch === null || unsubscribeBranch === void 0 ? void 0 : unsubscribeBranch();
+                // unsubscribeChanges?.();
+                // unsubscribeStatus?.();
+                // unsubscribeBranch?.();
             };
         }
     }, [mode]);
-    return (React.createElement(GitIntegrationView, { mode: mode, setMode: setMode, fileService: fileService, setChanges: setChanges, remoteStatus: remoteStatus, changes: changes, currentBranch: currentBranch, setIsLoading: setIsLoading, isLoading: isLoading, setCurrentBranch: setCurrentBranch, setRemoteStatus: setRemoteStatus, setError: setError, loadChanges: loadChanges, loadGitStatus: loadGitStatus, error: error, getStatusBadgeVariant: getStatusBadgeVariant, commitSummary: commitSummary, setCommitSummary: setCommitSummary, commitDescription: commitDescription, setCommitDescription: setCommitDescription, handleSaveChanges: handleSaveChanges, isCommitting: isCommitting, handleShareChanges: handleShareChanges, getSyncStatusVariant: getSyncStatusVariant, handleGetUpdates: handleGetUpdates, isPulling: isPulling, isPushing: isPushing, setIsPushing: setIsPushing, getSyncStatusText: getSyncStatusText }));
+    return (React.createElement(GitIntegrationView, { mode: mode, setMode: setMode, 
+        // fileService={fileService}
+        // setChanges={setChanges}
+        remoteStatus: remoteStatus, changes: changes, currentBranch: currentBranch, 
+        // setIsLoading={setIsLoading}
+        isLoading: isLoading, 
+        // setCurrentBranch={setCurrentBranch}
+        // setRemoteStatus={setRemoteStatus}
+        setError: setError, loadChanges: loadChanges, loadGitStatus: loadGitStatus, error: error, getStatusBadgeVariant: getStatusBadgeVariant, commitSummary: commitSummary, setCommitSummary: setCommitSummary, commitDescription: commitDescription, setCommitDescription: setCommitDescription, handleSaveChanges: handleSaveChanges, isCommitting: isCommitting, handleShareChanges: handleShareChanges, getSyncStatusVariant: getSyncStatusVariant, handleGetUpdates: handleGetUpdates, isPulling: isPulling, isPushing: isPushing, setIsPushing: setIsPushing, getSyncStatusText: getSyncStatusText, fileService: undefined }));
 };

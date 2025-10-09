@@ -1,21 +1,21 @@
-export declare enum ApiEndpoint {
-    files = "/api/files/",
-    projects = "/api/projects/",
-    tests = "/api/projects/tests",
-    report = "/api/report",
-    health = "/api/health",
-    write = "/api/files/write",
-    read = "/api/files/read"
-}
+export declare const FileService_methods: string[];
 export declare abstract class FileService {
-    abstract writeFile(path: string, content: string): Promise<void>;
-    abstract readFile(path: string): Promise<string>;
-    abstract createDirectory(path: string): Promise<void>;
-    abstract deleteFile(path: string): Promise<void>;
-    abstract files(path: string): Promise<object>;
-    abstract projects(project: string): Promise<string[]>;
-    abstract tests(project: string): Promise<string[]>;
-    abstract report(project: string, test: string): Promise<object>;
+    abstract writeFile_send(...x: any[]): any;
+    abstract writeFile_receive(...x: any[]): any;
+    abstract readFile_receive(...x: any[]): any;
+    abstract readFile_send(...x: any[]): any;
+    abstract createDirectory_receive(...x: any[]): any;
+    abstract createDirectory_send(...x: any[]): any;
+    abstract deleteFile_receive(...x: any[]): any;
+    abstract deleteFile_send(...x: any[]): any;
+    abstract files_send(...x: any[]): any;
+    abstract files_receive(...x: any[]): any;
+    abstract projects_send(...x: any[]): any;
+    abstract projects_receive(...x: any[]): any;
+    abstract tests_send(...x: any[]): any;
+    abstract tests_receive(...x: any[]): any;
+    abstract report_send(...x: any[]): any;
+    abstract report_receive(...x: any[]): any;
 }
 export interface FileEntry {
     name: string;

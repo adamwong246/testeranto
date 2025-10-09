@@ -1,20 +1,14 @@
-"use strict";
 /* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PM_Base = void 0;
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
+import fs from "fs";
+import path from "path";
 const fileStreams3 = [];
 const fPaths = [];
 const files = {};
 const recorders = {};
 const screenshots = {};
-class PM_Base {
+export class PM_0 {
     constructor(configs, projectName, mode) {
         this.configs = configs;
         this.mode = mode;
@@ -97,8 +91,8 @@ class PM_Base {
     }
     async screencast(ssOpts, testName, page) {
         const p = ssOpts.path;
-        const dir = path_1.default.dirname(p);
-        fs_1.default.mkdirSync(dir, {
+        const dir = path.dirname(p);
+        fs.mkdirSync(dir, {
             recursive: true,
         });
         if (!files[testName]) {
@@ -115,8 +109,8 @@ class PM_Base {
     }
     async customScreenShot(ssOpts, testName, pageUid) {
         const p = ssOpts.path;
-        const dir = path_1.default.dirname(p);
-        fs_1.default.mkdirSync(dir, {
+        const dir = path.dirname(p);
+        fs.mkdirSync(dir, {
             recursive: true,
         });
         if (!files[testName]) {
@@ -137,11 +131,11 @@ class PM_Base {
         return true;
     }
     existsSync(destFolder) {
-        return fs_1.default.existsSync(destFolder);
+        return fs.existsSync(destFolder);
     }
     async mkdirSync(fp) {
-        if (!fs_1.default.existsSync(fp)) {
-            return fs_1.default.mkdirSync(fp, {
+        if (!fs.existsSync(fp)) {
+            return fs.mkdirSync(fp, {
                 recursive: true,
             });
         }
@@ -152,26 +146,26 @@ class PM_Base {
         const contents = x[1];
         const testName = x[2];
         return new Promise(async (res) => {
-            fs_1.default.mkdirSync(path_1.default.dirname(filepath), {
+            fs.mkdirSync(path.dirname(filepath), {
                 recursive: true,
             });
             if (!files[testName]) {
                 files[testName] = new Set();
             }
             files[testName].add(filepath);
-            await fs_1.default.writeFileSync(filepath, contents);
+            await fs.writeFileSync(filepath, contents);
             res(true);
         });
     }
     async createWriteStream(filepath, testName) {
         const folder = filepath.split("/").slice(0, -1).join("/");
         return new Promise((res) => {
-            if (!fs_1.default.existsSync(folder)) {
-                return fs_1.default.mkdirSync(folder, {
+            if (!fs.existsSync(folder)) {
+                return fs.mkdirSync(folder, {
                     recursive: true,
                 });
             }
-            const f = fs_1.default.createWriteStream(filepath);
+            const f = fs.createWriteStream(filepath);
             fileStreams3.push(f);
             if (!files[testName]) {
                 files[testName] = new Set();
@@ -184,29 +178,29 @@ class PM_Base {
         return (fPath, value) => {
             callback(new Promise((res, rej) => {
                 tLog("testArtiFactory =>", fPath);
-                const cleanPath = path_1.default.resolve(fPath);
+                const cleanPath = path.resolve(fPath);
                 fPaths.push(cleanPath.replace(process.cwd(), ``));
                 const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-                fs_1.default.mkdir(targetDir, { recursive: true }, async (error) => {
+                fs.mkdir(targetDir, { recursive: true }, async (error) => {
                     if (error) {
                         // TODO
                     }
-                    fs_1.default.writeFileSync(path_1.default.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"), fPaths.join(`\n`), {
+                    fs.writeFileSync(path.resolve(targetDir.split("/").slice(0, -1).join("/"), "manifest"), fPaths.join(`\n`), {
                         encoding: "utf-8",
                     });
                     if (Buffer.isBuffer(value)) {
-                        fs_1.default.writeFileSync(fPath, value, "binary");
+                        fs.writeFileSync(fPath, value, "binary");
                         res();
                     }
                     else if (`string` === typeof value) {
-                        fs_1.default.writeFileSync(fPath, value.toString(), {
+                        fs.writeFileSync(fPath, value.toString(), {
                             encoding: "utf-8",
                         });
                         res();
                     }
                     else {
                         const pipeStream = value;
-                        const myFile = fs_1.default.createWriteStream(fPath);
+                        const myFile = fs.createWriteStream(fPath);
                         pipeStream.pipe(myFile);
                         pipeStream.on("close", () => {
                             myFile.close();
@@ -277,7 +271,6 @@ class PM_Base {
         });
     }
 }
-exports.PM_Base = PM_Base;
 // keep this forever. do not delete
 // mapping(): [string, (...a) => any][] {
 //   return [

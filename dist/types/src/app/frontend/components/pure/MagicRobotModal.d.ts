@@ -1,4 +1,4 @@
-export declare const MagicRobotModal: ({ customMessage, isWebSocketConnected, messageOption, navigate, projectName, runtime, setCustomMessage, setMessageOption, setShowAiderModal, setShowToast, setToastMessage, setToastVariant, showAiderModal, testName, ws, }: {
+export declare const MagicRobotModal: ({ customMessage, isWebSocketConnected, messageOption, navigate, projectName, runtime, setCustomMessage, setMessageOption, setShowAiderModal, setShowToast, setToastMessage, setToastVariant, showAiderModal, testName, }: {
     customMessage: any;
     isWebSocketConnected: any;
     messageOption: any;
@@ -13,5 +13,4 @@ export declare const MagicRobotModal: ({ customMessage, isWebSocketConnected, me
     setToastVariant: any;
     showAiderModal: any;
     testName: any;
-    ws: any;
 }) => JSX.Element;

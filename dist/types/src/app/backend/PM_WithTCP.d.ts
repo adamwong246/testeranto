@@ -3,7 +3,7 @@ import http from "http";
 import { RawData, WebSocketServer } from "ws";
 import { IBuiltConfig } from "../../Types.js";
 import { FileService } from "../FileService.js";
-import { PM_Base } from "./base.js";
+import { PM_Base } from "./PM_0.js";
 export declare abstract class PM_WithTCP extends PM_Base implements FileService {
     wss: WebSocketServer;
     httpServer: http.Server;
@@ -25,6 +25,11 @@ export declare abstract class PM_WithTCP extends PM_Base implements FileService 
     }>;
     processLogs: Map<string, string[]>;
     constructor(configs: IBuiltConfig, name: any, mode: any);
+    websocket(data: RawData, ws: any): void;
+    webSocketBroadcastMessage(message: any): void;
+    handleHttpRequest(req: http.IncomingMessage, res: http.ServerResponse<http.IncomingMessage> & {
+        req: http.IncomingMessage;
+    }): void;
     writeFile(path: string, content: string): Promise<void>;
     readFile(path: string): Promise<string>;
     createDirectory(path: string): Promise<void>;
@@ -33,10 +38,4 @@ export declare abstract class PM_WithTCP extends PM_Base implements FileService 
     projects(project: string): Promise<string[]>;
     tests(project: string): Promise<string[]>;
     report(project: string, test: string): Promise<object>;
-    webSocketBroadcastMessage(message: any): void;
-    httpRequest(req: http.IncomingMessage, res: http.ServerResponse): void;
-    private serveFile;
-    private serveFileSync;
-    private findIndexHtml;
-    websocket(data: RawData, ws: any): void;
 }

@@ -8,4 +8,3 @@ export interface ProcessManagerViewProps {
     onKillProcess?: (processId: string) => void;
 }
 export declare const ProcessManagerView: React.FC<ProcessManagerViewProps>;
-export { Process };

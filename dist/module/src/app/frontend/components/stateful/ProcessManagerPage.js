@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useWebSocket } from '../../useWebSocket';
 import { ProcessManagerView } from '../pure/ProcessManagerView';
-import { useWebSocket } from '../../App';
+// import { ProcessManagerView, Process } from '../pure/ProcessManagerView';
+// import { useWebSocket } from '../../App';
 export const ProcessManagerPage = () => {
     const [processes, setProcesses] = useState([]);
     const { ws } = useWebSocket();

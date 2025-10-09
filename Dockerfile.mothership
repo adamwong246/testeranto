@@ -1,7 +1,9 @@
 FROM node:18-alpine
+# Install build tools for node-gyp and libxml2-utils for xmllint
+RUN apk add --update make g++ linux-headers python3 libxml2-utils
 WORKDIR /workspace
 COPY package*.json ./
-# RUN npm install --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 # Install Docker SDK
 # RUN npm install dockerode
 # COPY . .

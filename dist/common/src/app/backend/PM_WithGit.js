@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PM_WithGit = void 0;
+const { exec } = await Promise.resolve().then(() => __importStar(require("child_process")));
 const fs_1 = __importDefault(require("fs"));
 const url_1 = __importDefault(require("url"));
 const PM_WithEslintAndTsc_js_1 = require("./PM_WithEslintAndTsc.js");
@@ -51,97 +52,90 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
         this.gitWatcher = null;
     }
     // Override requestHandler to add Git-specific endpoints
-    httpRequest(req, res) {
-        const parsedUrl = url_1.default.parse(req.url || "/");
-        const pathname = parsedUrl.pathname || "/";
-        // Handle Git API endpoints
-        if (pathname === null || pathname === void 0 ? void 0 : pathname.startsWith("/api/git/")) {
-            this.handleGitApi(req, res);
-            return;
-        }
-        if (pathname === "/api/auth/github/token" && req.method === "POST") {
-            this.handleGitHubTokenExchange(req, res);
-            return;
-        }
-        // Handle GitHub OAuth callback
-        if (pathname === "/auth/github/callback") {
-            // Serve the callback HTML page
-            const callbackHtml = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>GitHub Authentication - Testeranto</title>
-    <script>
-        // Extract the code from the URL and send it to the parent window
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const error = urlParams.get('error');
-        
-        if (code) {
-            window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
-        } else if (error) {
-            window.opener.postMessage({ type: 'github-auth-error', error }, '*');
-        }
-        window.close();
-    </script>
-</head>
-<body>
-    <p>Completing authentication...</p>
-</body>
-</html>`;
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(callbackHtml);
-            return;
-        }
-        // Call the parent class's requestHandler for all other requests
-        // super.httpRequest(req, res);
-    }
+    //   httpRequest(req: http.IncomingMessage, res: http.ServerResponse) {
+    //     const parsedUrl = url.parse(req.url || "/");
+    //     const pathname = parsedUrl.pathname || "/";
+    //     // Handle Git API endpoints
+    //     if (pathname?.startsWith("/api/git/")) {
+    //       // this.handleGitApi(req, res);
+    //       return;
+    //     }
+    //     if (pathname === "/api/auth/github/token" && req.method === "POST") {
+    //       this.handleGitHubTokenExchange(req, res);
+    //       return;
+    //     }
+    //     // Handle GitHub OAuth callback
+    //     if (pathname === "/auth/github/callback") {
+    //       // Serve the callback HTML page
+    //       const callbackHtml = `
+    // <!DOCTYPE html>
+    // <html>
+    // <head>
+    //     <title>GitHub Authentication - Testeranto</title>
+    //     <script>
+    //         // Extract the code from the URL and send it to the parent window
+    //         const urlParams = new URLSearchParams(window.location.search);
+    //         const code = urlParams.get('code');
+    //         const error = urlParams.get('error');
+    //         if (code) {
+    //             window.opener.postMessage({ type: 'github-auth-callback', code }, '*');
+    //         } else if (error) {
+    //             window.opener.postMessage({ type: 'github-auth-error', error }, '*');
+    //         }
+    //         window.close();
+    //     </script>
+    // </head>
+    // <body>
+    //     <p>Completing authentication...</p>
+    // </body>
+    // </html>`;
+    //       res.writeHead(200, { "Content-Type": "text/html" });
+    //       res.end(callbackHtml);
+    //       return;
+    //     }
+    //     // Call the parent class's requestHandler for all other requests
+    //     // super.httpRequest(req, res);
+    //   }
     // this method is also horrible
-    handleGitApi(req, res) {
-        const parsedUrl = url_1.default.parse(req.url || "/");
-        const pathname = parsedUrl.pathname || "/";
-        // Set CORS headers
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        if (req.method === "OPTIONS") {
-            res.writeHead(200);
-            res.end();
-            return;
-        }
-        try {
-            if (pathname === "/api/git/changes" && req.method === "GET") {
-                this.handleGitChanges(req, res);
-            }
-            else if (pathname === "/api/git/status" && req.method === "GET") {
-                this.handleGitFileStatus(req, res);
-            }
-            else if (pathname === "/api/git/commit" && req.method === "POST") {
-                this.handleGitCommit(req, res);
-            }
-            else if (pathname === "/api/git/push" && req.method === "POST") {
-                this.handleGitPush(req, res);
-            }
-            else if (pathname === "/api/git/pull" && req.method === "POST") {
-                this.handleGitPull(req, res);
-            }
-            else if (pathname === "/api/git/branch" && req.method === "GET") {
-                this.handleGitBranch(req, res);
-            }
-            else if (pathname === "/api/git/remote-status" &&
-                req.method === "GET") {
-                this.handleGitRemoteStatus(req, res);
-            }
-            else {
-                res.writeHead(404, { "Content-Type": "application/json" });
-                res.end(JSON.stringify({ error: "Not found" }));
-            }
-        }
-        catch (error) {
-            res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: "Internal server error" }));
-        }
-    }
+    // private handleGitApi(req: http.IncomingMessage, res: http.ServerResponse) {
+    //   const parsedUrl = url.parse(req.url || "/");
+    //   const pathname = parsedUrl.pathname || "/";
+    //   // Set CORS headers
+    //   res.setHeader("Access-Control-Allow-Origin", "*");
+    //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    //   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    //   if (req.method === "OPTIONS") {
+    //     res.writeHead(200);
+    //     res.end();
+    //     return;
+    //   }
+    //   try {
+    //     if (pathname === "/api/git/changes" && req.method === "GET") {
+    //       this.handleGitChanges(req, res);
+    //     } else if (pathname === "/api/git/status" && req.method === "GET") {
+    //       this.handleGitFileStatus(req, res);
+    //     } else if (pathname === "/api/git/commit" && req.method === "POST") {
+    //       this.handleGitCommit(req, res);
+    //     } else if (pathname === "/api/git/push" && req.method === "POST") {
+    //       this.handleGitPush(req, res);
+    //     } else if (pathname === "/api/git/pull" && req.method === "POST") {
+    //       this.handleGitPull(req, res);
+    //     } else if (pathname === "/api/git/branch" && req.method === "GET") {
+    //       this.handleGitBranch(req, res);
+    //     } else if (
+    //       pathname === "/api/git/remote-status" &&
+    //       req.method === "GET"
+    //     ) {
+    //       this.handleGitRemoteStatus(req, res);
+    //     } else {
+    //       res.writeHead(404, { "Content-Type": "application/json" });
+    //       res.end(JSON.stringify({ error: "Not found" }));
+    //     }
+    //   } catch (error) {
+    //     res.writeHead(500, { "Content-Type": "application/json" });
+    //     res.end(JSON.stringify({ error: "Internal server error" }));
+    //   }
+    // }
     async handleGitChanges(req, res) {
         try {
             const changes = await this.getGitChanges();
@@ -287,7 +281,6 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     }
     async executeGitCommit(message, description) {
         try {
-            const { exec } = await Promise.resolve().then(() => __importStar(require("child_process")));
             const fullMessage = description
                 ? `${message}\n\n${description}`
                 : message;
@@ -316,7 +309,6 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     }
     async executeGitPush() {
         try {
-            const { exec } = await Promise.resolve().then(() => __importStar(require("child_process")));
             return new Promise((resolve, reject) => {
                 exec("git push", { cwd: process.cwd() }, (error) => {
                     if (error) {
@@ -333,7 +325,6 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     }
     async executeGitPull() {
         try {
-            const { exec } = await Promise.resolve().then(() => __importStar(require("child_process")));
             return new Promise((resolve, reject) => {
                 exec("git pull", { cwd: process.cwd() }, (error) => {
                     if (error) {
@@ -388,8 +379,7 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     async startGitWatcher() {
         console.log("Starting Git watcher for real-time updates");
         // Watch for file system changes in the current directory
-        const fs = await Promise.resolve().then(() => __importStar(require("fs")));
-        const watcher = fs.watch(process.cwd(), { recursive: true }, async (eventType, filename) => {
+        const watcher = fs_1.default.watch(process.cwd(), { recursive: true }, async (eventType, filename) => {
             if (filename && !filename.includes(".git")) {
                 try {
                     // Debounce the Git status check
@@ -424,8 +414,8 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
                                 // Get the updated file content
                                 try {
                                     const fullPath = `${process.cwd()}/${filename}`;
-                                    if (fs.existsSync(fullPath)) {
-                                        const content = await fs.promises.readFile(fullPath, "utf-8");
+                                    if (fs_1.default.existsSync(fullPath)) {
+                                        const content = await fs_1.default.promises.readFile(fullPath, "utf-8");
                                         this.webSocketBroadcastMessage({
                                             type: "fileChanged",
                                             path: filename,
@@ -465,7 +455,6 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     async getGitChanges() {
         try {
             // Use git status --porcelain to get machine-readable output
-            const { exec } = await Promise.resolve().then(() => __importStar(require("child_process")));
             return new Promise((resolve, reject) => {
                 // console.log("Current working directory:", process.cwd());
                 exec("git status --porcelain=v1", { cwd: process.cwd() }, async (error, stdout, stderr) => {
@@ -557,7 +546,6 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     }
     async getGitRemoteStatus() {
         try {
-            const { exec } = await Promise.resolve().then(() => __importStar(require("child_process")));
             return new Promise((resolve) => {
                 // Get ahead/behind status for current branch
                 exec("git rev-list --left-right --count HEAD...@{u}", { cwd: process.cwd() }, (error, stdout, stderr) => {
@@ -578,7 +566,6 @@ class PM_WithGit extends PM_WithEslintAndTsc_js_1.PM_WithEslintAndTsc {
     }
     async getCurrentGitBranch() {
         try {
-            const { exec } = await Promise.resolve().then(() => __importStar(require("child_process")));
             return new Promise((resolve) => {
                 exec("git branch --show-current", { cwd: process.cwd() }, (error, stdout, stderr) => {
                     if (error) {

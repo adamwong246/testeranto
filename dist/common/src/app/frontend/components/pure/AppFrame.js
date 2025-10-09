@@ -39,11 +39,12 @@ const react_1 = __importStar(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
 const react_router_dom_1 = require("react-router-dom");
 const react_router_dom_2 = require("react-router-dom");
-const HelpoChatDrawer_1 = require("./HelpoChatDrawer");
 const App_1 = require("../../App");
+const useWebSocket_1 = require("../../useWebSocket");
+const HelpoChatDrawer_1 = require("./HelpoChatDrawer");
 const AppFrame = ({ children, title, rightContent }) => {
     const location = (0, react_router_dom_2.useLocation)();
-    const { isConnected } = (0, App_1.useWebSocket)();
+    const { isConnected } = (0, useWebSocket_1.useWebSocket)();
     const { tutorialMode } = (0, App_1.useTutorialMode)();
     const { isAuthenticated, logout } = (0, App_1.useAuth)();
     const [hasAnimated, setHasAnimated] = (0, react_1.useState)(false);
@@ -69,7 +70,7 @@ const AppFrame = ({ children, title, rightContent }) => {
     }, [hasAnimated]);
     return (react_1.default.createElement("div", { className: "d-flex min-vh-100" },
         react_1.default.createElement("style", null, brandLogoStyle),
-        react_1.default.createElement("div", { className: `border-end d-flex flex-column ${!hasAnimated ? 'sidebar-attention' : ''}`, style: {
+        react_1.default.createElement("div", { className: `border-end d-flex flex-column ${!hasAnimated ? "sidebar-attention" : ""}`, style: {
                 flexBasis: "40px" /* Reduced from 60px */,
                 flexGrow: "0",
                 flexShrink: "0",
@@ -78,13 +79,13 @@ const AppFrame = ({ children, title, rightContent }) => {
                 top: 0,
             } },
             react_1.default.createElement(react_bootstrap_1.Nav, { variant: "pills", className: "flex-column p-0 flex-grow-1" },
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/helpo", className: `${location.pathname === "/helpo" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "help-tooltip" }, "Chat with Helpo, the helpful robot.") },
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/helpo", className: `${location.pathname === "/helpo" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "help-tooltip" }, "Chat with Helpo, the helpful robot.") },
                     react_1.default.createElement("span", null, "helpo"))) : (react_1.default.createElement("span", null, "helpo"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/flua", className: `${location.pathname === "/flua" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-1' : ''}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "help-tooltip" }, "Process/Project Management") },
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/flua", className: `${location.pathname === "/flua" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "help-tooltip" }, "Process/Project Management") },
                     react_1.default.createElement("span", null, "flua"))) : (react_1.default.createElement("span", null, "flua"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/projects", className: `${location.pathname === "/projects" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-2' : ''}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "projects-tooltip" }, "Projects") },
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/projects", className: `${location.pathname === "/projects" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-2" : ""}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "projects-tooltip" }, "Projects") },
                     react_1.default.createElement("span", null, "testo"))) : (react_1.default.createElement("span", null, "testo"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/processes", className: `${location.pathname.startsWith('/processes') ? 'active' : ''} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-3' : ''}`, 
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/processes", className: `${location.pathname.startsWith("/processes") ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-3" : ""}`, 
                     // style={{
                     //   height: '40px',
                     //   width: '40px',
@@ -103,7 +104,7 @@ const AppFrame = ({ children, title, rightContent }) => {
                                 ? "(WebSocket disconnected)"
                                 : "") },
                     react_1.default.createElement("span", null, "pro\u0109o"))) : (react_1.default.createElement("span", null, "pro\u0109o"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/git", className: `${location.pathname === "/git" ? "active" : ""} d-flex align-items-center justify-content-center ${!isAuthenticated ? "text-muted pe-none" : ""} ${!hasAnimated ? 'navbar-attention-4' : ''}`, 
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/git", className: `${location.pathname === "/git" ? "active" : ""} d-flex align-items-center justify-content-center ${!isAuthenticated ? "text-muted pe-none" : ""} ${!hasAnimated ? "navbar-attention-4" : ""}`, 
                     // style={{
                     //   height: '40px',
                     //   width: '40px',
@@ -118,15 +119,15 @@ const AppFrame = ({ children, title, rightContent }) => {
                         " ",
                         !isAuthenticated ? "(Sign in required)" : "") },
                     react_1.default.createElement("span", null, "arbo"))) : (react_1.default.createElement("span", null, "arbo"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/svg-editor", className: `${location.pathname === '/svg-editor' ? 'active' : ''} d-flex align-items-center justify-content-center` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "svg-editor-tooltip" }, "svg editor") },
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/svg-editor", className: `${location.pathname === "/svg-editor" ? "active" : ""} d-flex align-items-center justify-content-center` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "svg-editor-tooltip" }, "svg editor") },
                     react_1.default.createElement("span", null, "vektoro"))) : (react_1.default.createElement("span", null, "vektoro"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/drato", className: `${location.pathname === '/drato' ? 'active' : ''} d-flex align-items-center justify-content-center` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "drato-tooltip" }, "Bootstrap wireframing tool") },
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/drato", className: `${location.pathname === "/drato" ? "active" : ""} d-flex align-items-center justify-content-center` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "drato-tooltip" }, "Bootstrap wireframing tool") },
                     react_1.default.createElement("span", null, "drato"))) : (react_1.default.createElement("span", null, "drato"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/grafeo", className: `${location.pathname === '/grafeo' ? 'active' : ''} d-flex align-items-center justify-content-center` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "grafeo-tooltip" }, "GraphML editor") },
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/grafeo", className: `${location.pathname === "/grafeo" ? "active" : ""} d-flex align-items-center justify-content-center` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "grafeo-tooltip" }, "GraphML editor") },
                     react_1.default.createElement("span", null, "grafeo"))) : (react_1.default.createElement("span", null, "grafeo"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/skribo", className: `${location.pathname === '/skribo' ? 'active' : ''} d-flex align-items-center justify-content-center` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "skribo-tooltip" }, "Code editor") },
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/skribo", className: `${location.pathname === "/skribo" ? "active" : ""} d-flex align-items-center justify-content-center` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "skribo-tooltip" }, "Code editor") },
                     react_1.default.createElement("span", null, "skribo"))) : (react_1.default.createElement("span", null, "skribo"))),
-                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/settings", className: `${location.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? 'navbar-attention-6' : ''}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "settings-tooltip" }, "Settings") },
+                react_1.default.createElement(react_bootstrap_1.Nav.Link, { as: react_router_dom_1.NavLink, to: "/settings", className: `${location.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-6" : ""}` }, tutorialMode ? (react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "settings-tooltip" }, "Settings") },
                     react_1.default.createElement("span", null, "konto"))) : (react_1.default.createElement("span", null, "konto")))),
             react_1.default.createElement(react_bootstrap_1.OverlayTrigger, { placement: "right", overlay: react_1.default.createElement(react_bootstrap_1.Tooltip, { id: "status-tooltip" }, isConnected
                     ? "Dev mode - Full access"
@@ -135,16 +136,16 @@ const AppFrame = ({ children, title, rightContent }) => {
                     react_1.default.createElement("span", { className: `badge rounded-circle d-flex align-items-center justify-content-center` }, isConnected ? "🟢" : "🔴"))),
             react_1.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" },
                 react_1.default.createElement("button", { onClick: () => setIsHelpoActive(!isHelpoActive), className: "brand-logo btn p-0 border-0 bg-transparent", style: {
-                        display: 'block',
-                        transition: 'transform 0.3s ease',
+                        display: "block",
+                        transition: "transform 0.3s ease",
                     }, onMouseEnter: (e) => {
-                        e.currentTarget.style.transform = 'scale(1.1)';
+                        e.currentTarget.style.transform = "scale(1.1)";
                     }, onMouseLeave: (e) => {
-                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.transform = "scale(1)";
                     } },
                     react_1.default.createElement("img", { src: "https://www.testeranto.com/logo.svg", alt: "Testeranto Logo", style: {
-                            height: '32px',
-                            width: '32px',
+                            height: "32px",
+                            width: "32px",
                         } })))),
         react_1.default.createElement(HelpoChatDrawer_1.HelpoChatDrawer, { isActive: isHelpoActive, onToggle: () => setIsHelpoActive(!isHelpoActive) }),
         react_1.default.createElement("div", { className: "d-flex flex-column", style: {

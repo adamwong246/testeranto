@@ -3,7 +3,7 @@ mccabe==0.7.0
 mypy==1.17.1
 mypy_extensions==1.1.0
 pathspec==0.12.1
--e git+https://github.com/adamwong246/testeranto.ts.git@78a90abb30aadc7e6811ef1be3651690c03bd770#egg=pitono&subdirectory=src/pitono
+-e git+https://github.com/adamwong246/testeranto.ts.git@7d3e6e2818f1c7e3d868fbb0a368adc1f02cf391#egg=pitono&subdirectory=src/pitono
 pycodestyle==2.14.0
 pyflakes==3.4.0
 typing_extensions==4.15.0

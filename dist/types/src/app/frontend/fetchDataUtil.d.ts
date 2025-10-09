@@ -1,1 +1,0 @@
-export declare const fetchDataUtil: (testResponse: any, metafileRes: any, testPath: any, setLogs: any, projectName: any, setSummary: any, setErrorCounts: any, setTestsExist: any, runtime: any) => Promise<any>;

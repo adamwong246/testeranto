@@ -37,31 +37,34 @@ exports.TestPage = void 0;
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
-const App_1 = require("../App");
+// import { useWebSocket } from "../App";
 const TestPageView_1 = require("./TestPageView");
-const fetchDataUtil_1 = require("../fetchDataUtil");
-const api_1 = require("../api");
+const useFs_1 = require("./../useFs");
+// import { fetchDataUtil } from "../fetchDataUtil";
+// import { fetchTestData } from "../api";
 const TestPage = () => {
     const navigate = (0, react_router_dom_1.useNavigate)();
     const location = (0, react_router_dom_1.useLocation)();
     const [route, setRoute] = (0, react_1.useState)("results");
-    const wsContext = (0, App_1.useWebSocket)();
-    const isConnected = (wsContext === null || wsContext === void 0 ? void 0 : wsContext.isConnected) || false;
+    // const wsContext = useWebSocket();
+    const fs = (0, useFs_1.useFs)();
+    const isConnected = (fs === null || fs === void 0 ? void 0 : fs.isConnected) || false;
     // Sync route with hash changes
-    (0, react_1.useEffect)(() => {
-        const hash = location.hash.replace("#", "");
-        if (hash &&
-            ["results", "logs", "types", "lint", "coverage"].includes(hash)) {
-            setRoute(hash);
-        }
-        else {
-            setRoute("results");
-        }
-    }, [location.hash]);
+    // useEffect(() => {
+    //   const hash = location.hash.replace("#", "");
+    //   if (
+    //     hash &&
+    //     ["results", "logs", "types", "lint", "coverage"].includes(hash)
+    //   ) {
+    //     setRoute(hash);
+    //   } else {
+    //     setRoute("results");
+    //   }
+    // }, [location.hash]);
     const [testName, setTestName] = (0, react_1.useState)("");
     const [logs, setLogs] = (0, react_1.useState)({});
-    const [loading, setLoading] = (0, react_1.useState)(true);
-    const [error, setError] = (0, react_1.useState)(null);
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState(null);
     const [testsExist, setTestsExist] = (0, react_1.useState)(true);
     const [errorCounts, setErrorCounts] = (0, react_1.useState)({
         typeErrors: 0,
@@ -74,28 +77,6 @@ const TestPage = () => {
     const runtime = pathParts.pop() || "";
     const testPath = pathParts.join("/");
     const decodedTestPath = testPath ? decodeURIComponent(testPath) : "";
-    (0, react_1.useEffect)(() => {
-        if (!projectName || !testPath || !runtime)
-            return;
-        setTestName(testPath);
-        const fetchData = async () => {
-            try {
-                const [testResponse, metafileRes] = await Promise.all([
-                    (0, api_1.fetchTestData)(projectName, testPath, runtime),
-                    fetch(`metafiles/${runtime}/${projectName}.json`),
-                ]);
-                (0, fetchDataUtil_1.fetchDataUtil)(testResponse, metafileRes, testPath, setLogs, projectName, setSummary, setErrorCounts, setTestsExist, runtime);
-            }
-            catch (err) {
-                setError(err instanceof Error ? err.message : "Unknown error");
-                setTestsExist(false);
-            }
-            finally {
-                setLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
     if (!logs)
         return react_1.default.createElement("div", null, "loading...");
     return (react_1.default.createElement(react_1.default.Fragment, null,

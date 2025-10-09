@@ -34,13 +34,16 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProcessManagerPage = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const react_1 = __importStar(require("react"));
 const react_router_dom_1 = require("react-router-dom");
+const useWebSocket_1 = require("../../useWebSocket");
 const ProcessManagerView_1 = require("../pure/ProcessManagerView");
-const App_1 = require("../../App");
+// import { ProcessManagerView, Process } from '../pure/ProcessManagerView';
+// import { useWebSocket } from '../../App';
 const ProcessManagerPage = () => {
     const [processes, setProcesses] = (0, react_1.useState)([]);
-    const { ws } = (0, App_1.useWebSocket)();
+    const { ws } = (0, useWebSocket_1.useWebSocket)();
     const [loading, setLoading] = (0, react_1.useState)(false);
     const navigate = (0, react_router_dom_1.useNavigate)();
     // Handle WebSocket messages

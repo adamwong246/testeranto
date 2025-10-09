@@ -1,6 +1,6 @@
 import { IBuiltConfig } from "../../Types.js";
-import { PM_WithProcesses } from "./PM_WithProcesses.js";
-export declare abstract class PM_WithBuild extends PM_WithProcesses {
+import { PM_2_WithTCP } from "./PM_2_WithTCP.js";
+export declare abstract class PM_WithBuild extends PM_2_WithTCP {
     configs: IBuiltConfig;
     currentBuildResolve: (() => void) | null;
     currentBuildReject: ((error: any) => void) | null;

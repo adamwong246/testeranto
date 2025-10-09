@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import esbuild from "esbuild";
-import { PM_WithProcesses } from "./PM_WithProcesses.js";
-export class PM_WithBuild extends PM_WithProcesses {
+import { PM_2_WithTCP } from "./PM_2_WithTCP.js";
+export class PM_WithBuild extends PM_2_WithTCP {
     constructor() {
         super(...arguments);
         this.currentBuildResolve = null;

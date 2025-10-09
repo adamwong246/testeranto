@@ -39,10 +39,13 @@ const react_bootstrap_1 = require("react-bootstrap");
 const ProcessList_1 = require("./ProcessList");
 const ProcessDetails_1 = require("./ProcessDetails");
 const ProcessTerminal_1 = require("./ProcessTerminal");
-const App_1 = require("../../App");
-const ProcessManagerView = ({ processes, onRefresh, onBack, loading, onKillProcess, }) => {
+const useWebSocket_1 = require("../../useWebSocket");
+const ProcessManagerView = ({ processes, 
+// onRefresh,
+// onBack,
+loading, onKillProcess, }) => {
     const [selectedProcess, setSelectedProcess] = (0, react_1.useState)(null);
-    const { ws } = (0, App_1.useWebSocket)();
+    const { ws } = (0, useWebSocket_1.useWebSocket)();
     // Handle process selection
     const handleSelectProcess = (0, react_1.useCallback)((process) => {
         setSelectedProcess(process);
@@ -76,3 +79,4 @@ const ProcessManagerView = ({ processes, onRefresh, onBack, loading, onKillProce
                 react_1.default.createElement(ProcessTerminal_1.ProcessTerminal, { selectedProcess: selectedProcess, ws: ws })))));
 };
 exports.ProcessManagerView = ProcessManagerView;
+// export { Process };
