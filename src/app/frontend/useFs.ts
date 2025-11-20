@@ -12,5 +12,6 @@ export const useFs = () => {
   if (!context) {
     throw new Error("useFileService must be used within a FileServiceProvider");
   }
-  return context;
+  // Return as an array to make it iterable
+  return [context];
 };

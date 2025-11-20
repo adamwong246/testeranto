@@ -31,6 +31,10 @@ const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
 export class PM_Main extends PM_WithHelpo {
+  constructor(configs: any, name: string, mode: string) {
+    super(configs, name, mode);
+  }
+
   async startBuildProcesses(): Promise<void> {
     const { nodeEntryPoints, webEntryPoints, pureEntryPoints } = getRunnables(
       this.configs.tests,
@@ -513,11 +517,18 @@ export class PM_Main extends PM_WithHelpo {
 
       const logs = createLogStreams(reportDest, "web");
 
+      logs.info?.write("testing123");
+      logs.info?.write("wtf");
+
       return new Promise<void>((resolve, reject) => {
         this.browser
           .newPage()
+
           .then((page) => {
+            // page.on("")
             page.on("console", (log: ConsoleMessage) => {
+              console.log("mark9", log);
+
               const msg = `${log.text()}\n`;
 
               switch (log.type()) {
@@ -539,6 +550,7 @@ export class PM_Main extends PM_WithHelpo {
             });
 
             page.on("close", () => {
+              logs.info?.write("close 1");
               logs.writeExitCode(0);
               logs.closeAll();
             });
@@ -561,6 +573,8 @@ export class PM_Main extends PM_WithHelpo {
           })
           .then(async (page) => {
             const close = () => {
+              logs.info?.write("close2");
+
               if (!files[src]) {
                 files[src] = new Set();
               }
@@ -574,14 +588,15 @@ export class PM_Main extends PM_WithHelpo {
             };
 
             page.on("pageerror", (err: Error) => {
-              logs.writeExitCode(-1, err);
-              console.log(
-                ansiColors.red(
-                  `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
-                )
-              );
-              this.bddTestIsNowDone(src, -1);
-              close();
+              logs.info?.write("pageerror");
+              // logs.writeExitCode(-1, err);
+              // console.log(
+              //   ansiColors.red(
+              //     `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
+              //   )
+              // );
+              // this.bddTestIsNowDone(src, -1);
+              // close();
               reject(err);
             });
 
@@ -590,11 +605,13 @@ export class PM_Main extends PM_WithHelpo {
             await page
               .evaluate(webEvaluator(d, webArgz))
               .then(async ({ fails, failed, features }: IFinalResults) => {
+                logs.info?.write("\n idk1");
                 statusMessagePretty(fails, src, "web");
                 this.bddTestIsNowDone(src, fails);
                 resolve();
               })
               .catch((e) => {
+                logs.info?.write("\n idk2");
                 console.log(ansiC.red(ansiC.inverse(e.stack)));
                 console.log(
                   ansiC.red(
@@ -626,6 +643,7 @@ export class PM_Main extends PM_WithHelpo {
                 reject(e);
               })
               .finally(async () => {
+                logs.info?.write("\n idk3");
                 // Generate prompt files for Web tests
                 await this.generatePromptFiles(reportDest, src);
                 close();

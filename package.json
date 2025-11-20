@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.205.0",
+  "version": "0.206.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -13,7 +13,7 @@
   "author": "adam wong <adamwong246@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "mothership": "tsx src/mothership/start.ts",
+    "mothership": "node dist/prebuild/mothership/index.mjs",
     "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
     "build3": "yarn bundle",
@@ -83,6 +83,10 @@
     "./src/WebSidecar": {
       "import": "./src/WebSidecar.ts",
       "require": "./src/WebSidecar.ts"
+    },
+    "./src/CoreTypes": {
+      "import": "./src/CoreTypes.ts",
+      "require": "./src/CoreTypes.ts"
     },
     "./src/Types": {
       "import": "./src/Types.ts",
@@ -189,6 +193,7 @@
     "@jest/globals": "^30.0.4",
     "@monaco-editor/react": "^4.7.0",
     "@types/chokidar": "^2.1.7",
+    "@types/dockerode": "3.3.40",
     "@types/eslint": "^9.6.1",
     "@types/fabric": "^5.3.10",
     "@types/file-saver": "^2.0.7",
@@ -207,7 +212,7 @@
     "chai": "^5.2.0",
     "chokidar": "^4.0.3",
     "chromium": "^3.0.3",
-    "dockernode": "^0.1.0",
+    "dockerode": "^4.0.9",
     "dynamic-base": "^1.1.2",
     "esbuild": "^0.20.1",
     "esbuild-plugin-external-package": "^1.0.0",

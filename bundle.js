@@ -4,15 +4,16 @@ import { sassPlugin } from 'esbuild-sass-plugin'
 await esbuild.build({
   outExtension: { '.js': '.mjs' },
   entryPoints: [
-    'src/init-docs.ts',
-    'src/esbuildConfigs/eslint-formatter-testeranto.ts',
-    'src/testeranto.ts'
+    // 'src/init-docs.ts',
+    // 'src/esbuildConfigs/eslint-formatter-testeranto.ts',
+    // 'src/testeranto.ts',
+    'src/mothership/mothership.ts',
   ],
   bundle: true,
   format: "esm",
   platform: "node",
   outdir: 'dist/prebuild',
-  packages: "external",
+  // packages: "external",
   supported: {
     "dynamic-import": true,
   },

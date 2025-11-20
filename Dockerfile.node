@@ -2,8 +2,10 @@ FROM node:18-alpine
 # Install build tools for node-gyp and libxml2-utils for xmllint
 RUN apk add --update make g++ linux-headers python3 libxml2-utils
 WORKDIR /workspace
+# Copy package files first to leverage Docker cache
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
-# Install ts-node to run TypeScript files
-# RUN npm install -g ts-node typescript
-# COPY . .
+# Now copy the rest of the source code
+COPY ./src ./src
+Run yarn tsc ./src
+

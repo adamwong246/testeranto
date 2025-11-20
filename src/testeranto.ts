@@ -6,14 +6,16 @@ import fs from "fs";
 import readline from "readline";
 
 import { ITestconfig, IRunTime, IBuiltConfig } from "./lib";
-import { IProject } from "./Types";
+import { IProject, ITestTypes } from "./Types";
 
 import { AppHtml } from "./utils/buildTemplates";
 
 import { PM_Main } from "./app/backend/main";
 import { PitonoBuild } from "./PM/pitonoBuild";
 import { getRunnables } from "./app/backend/utils";
+import path from "path";
 const { GolingvuBuild } = await import("./PM/golingvuBuild");
+import webHtmlFrame from "./web.html";
 
 // if (!process.env.GITHUB_CLIENT_ID) {
 //   console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
@@ -110,20 +112,20 @@ import(configFilePath).then(async (module) => {
     );
   });
 
-  // const getSecondaryEndpointsPoints = (runtime?: IRunTime): string[] => {
-  //   const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
-  //     ts.forEach((t) => {
-  //       if (t[1] === runtime) {
-  //         st.add(t[0]);
-  //       }
-  //       if (Array.isArray(t[3])) {
-  //         meta(t[3], st);
-  //       }
-  //     });
-  //     return st;
-  //   };
-  //   return Array.from(meta(config.tests, new Set()));
-  // };
+  const getSecondaryEndpointsPoints = (runtime?: IRunTime): string[] => {
+    const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
+      ts.forEach((t) => {
+        if (t[1] === runtime) {
+          st.add(t[0]);
+        }
+        if (Array.isArray(t[3])) {
+          meta(t[3], st);
+        }
+      });
+      return st;
+    };
+    return Array.from(meta(config.tests, new Set()));
+  };
 
   // Also handle pitono endpoints for HTML generation if needed
   // [...getSecondaryEndpointsPoints("python")].forEach(async (sourceFilePath) => {
@@ -131,36 +133,36 @@ import(configFilePath).then(async (module) => {
   //   console.log(`Pitono test found: ${sourceFilePath}`);
   // });
 
-  // Promise.resolve(
-  //   Promise.all(
-  //     [...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
-  //       const sourceFileSplit = sourceFilePath.split("/");
-  //       const sourceDir = sourceFileSplit.slice(0, -1);
-  //       const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-  //       const sourceFileNameMinusJs = sourceFileName
-  //         .split(".")
-  //         .slice(0, -1)
-  //         .join(".");
+  Promise.resolve(
+    Promise.all(
+      [...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
+        const sourceFileSplit = sourceFilePath.split("/");
+        const sourceDir = sourceFileSplit.slice(0, -1);
+        const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+        const sourceFileNameMinusJs = sourceFileName
+          .split(".")
+          .slice(0, -1)
+          .join(".");
 
-  //       const htmlFilePath = path.normalize(
-  //         `${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join(
-  //           "/"
-  //         )}/${sourceFileNameMinusJs}.html`
-  //       );
-  //       const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-  //       const cssFilePath = `./${sourceFileNameMinusJs}.css`;
+        const htmlFilePath = path.normalize(
+          `${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join(
+            "/"
+          )}/${sourceFileNameMinusJs}.html`
+        );
+        const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+        const cssFilePath = `./${sourceFileNameMinusJs}.css`;
 
-  //       return fs.promises
-  //         .mkdir(path.dirname(htmlFilePath), { recursive: true })
-  //         .then((x) =>
-  //           fs.writeFileSync(
-  //             htmlFilePath,
-  //             webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
-  //           )
-  //         );
-  //     })
-  //   )
-  // );
+        return fs.promises
+          .mkdir(path.dirname(htmlFilePath), { recursive: true })
+          .then((x) =>
+            fs.writeFileSync(
+              htmlFilePath,
+              webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
+            )
+          );
+      })
+    )
+  );
 
   const {
     nodeEntryPoints,

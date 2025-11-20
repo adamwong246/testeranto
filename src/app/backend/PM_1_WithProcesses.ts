@@ -39,8 +39,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
   launchers: Record<string, () => void>;
 
-  configs: any;
-
   abstract launchNode(src: string, dest: string);
   abstract launchWeb(src: string, dest: string);
   abstract launchPure(src: string, dest: string);
@@ -97,6 +95,10 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
   constructor(configs: IBuiltConfig, name, mode) {
     super(configs, name, mode);
+
+    console.log("mark5", configs);
+
+    console.log("mark1", this.configs);
 
     this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
       this.ensureSummaryEntry(t);
