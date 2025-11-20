@@ -38826,7 +38826,7 @@ Current environment analysis:
     if (!context4) {
       throw new Error("useFileService must be used within a FileServiceProvider");
     }
-    return context4;
+    return [context4];
   };
 
   // src/app/frontend/components/stateful/ProjectsPage.tsx
