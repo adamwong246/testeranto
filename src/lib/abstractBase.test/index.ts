@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import Testeranto from "../../Node";
-import { specification } from "./specification";
-import { implementation } from "./implementation";
+import Tiposkripto from "../../Tiposkripto";
 import { testAdapter } from "./adapter";
-import { I, O } from "./types";
+import { implementation } from "./implementation";
 import { MockGiven } from "./MockGiven";
 import { MockThen } from "./MockThen";
 import { MockWhen } from "./MockWhen";
+import { specification } from "./specification";
+import { I, O } from "./types";
 
-export default Testeranto<I, O, {}>(
+export default Tiposkripto<I, O, {}>(
   {
     MockGiven,
     MockWhen,

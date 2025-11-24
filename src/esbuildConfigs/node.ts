@@ -1,10 +1,8 @@
 import { BuildOptions } from "esbuild";
-
 import { ITestconfig } from "../lib/index.js";
-
+import featuresPlugin from "./featuresPlugin";
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
-import featuresPlugin from "./featuresPlugin";
 import rebuildPlugin from "./rebuildPlugin.js";
 
 export default (
@@ -31,7 +29,9 @@ export default (
 
     define: {
       "process.env.FLUENTFFMPEG_COV": "0",
+      ENV: `"node"`,
     },
+
     absWorkingDir: process.cwd(),
     banner: {
       js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,

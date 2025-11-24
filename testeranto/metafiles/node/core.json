@@ -92,7 +92,7 @@
         "format": "esm"
       },
       "src/PM/node.ts": {
-        "bytes": 7133,
+        "bytes": 7156,
         "imports": [
           {
             "path": "net",
@@ -169,48 +169,6 @@
         ],
         "format": "esm"
       },
-      "src/lib/BaseWhen.ts": {
-        "bytes": 2505,
-        "imports": [
-          {
-            "path": ".",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/pmProxy.ts",
-            "kind": "import-statement",
-            "original": "./pmProxy.js"
-          }
-        ],
-        "format": "esm"
-      },
-      "src/lib/BaseThen.ts": {
-        "bytes": 3095,
-        "imports": [
-          {
-            "path": ".",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./types.js",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/lib/pmProxy.ts",
-            "kind": "import-statement",
-            "original": "./pmProxy.js"
-          }
-        ],
-        "format": "esm"
-      },
       "src/lib/BaseSuite.ts": {
         "bytes": 6226,
         "imports": [
@@ -242,8 +200,50 @@
         ],
         "format": "esm"
       },
+      "src/lib/BaseThen.ts": {
+        "bytes": 3095,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseWhen.ts": {
+        "bytes": 2505,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          }
+        ],
+        "format": "esm"
+      },
       "src/lib/Tiposkripto.ts": {
-        "bytes": 10774,
+        "bytes": 10665,
         "imports": [
           {
             "path": "stream",
@@ -256,19 +256,14 @@
             "external": true
           },
           {
-            "path": "src/lib/index.ts",
-            "kind": "import-statement",
-            "original": "./index.js"
-          },
-          {
             "path": "src/lib/BaseGiven.ts",
             "kind": "import-statement",
             "original": "./BaseGiven"
           },
           {
-            "path": "src/lib/BaseWhen.ts",
+            "path": "src/lib/BaseSuite.ts",
             "kind": "import-statement",
-            "original": "./BaseWhen.js"
+            "original": "./BaseSuite"
           },
           {
             "path": "src/lib/BaseThen.ts",
@@ -276,49 +271,85 @@
             "original": "./BaseThen.js"
           },
           {
+            "path": "src/lib/BaseWhen.ts",
+            "kind": "import-statement",
+            "original": "./BaseWhen.js"
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
             "path": "./types.js",
             "kind": "import-statement",
             "external": true
-          },
-          {
-            "path": "src/lib/BaseSuite.ts",
-            "kind": "import-statement",
-            "original": "./BaseSuite"
           }
         ],
         "format": "esm"
       },
-      "src/Node.ts": {
-        "bytes": 2088,
+      "src/lib/Node.ts": {
+        "bytes": 2139,
         "imports": [
           {
             "path": "src/lib/index.ts",
             "kind": "import-statement",
-            "original": "./lib/index.js"
+            "original": "./index.js"
           },
           {
             "path": "src/PM/node.ts",
             "kind": "import-statement",
-            "original": "./PM/node.js"
+            "original": "../PM/node.js"
           },
           {
-            "path": "./CoreTypes.js",
+            "path": "../CoreTypes.js",
             "kind": "import-statement",
             "external": true
           },
           {
             "path": "src/lib/Tiposkripto.ts",
             "kind": "import-statement",
-            "original": "./lib/Tiposkripto.js"
+            "original": "./Tiposkripto.js"
           }
         ],
         "format": "esm"
       },
-      "example/Calculator.test.specification.ts": {
-        "bytes": 6850,
+      "src/Tiposkripto.ts": {
+        "bytes": 1677,
+        "imports": [
+          {
+            "path": "./CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./lib"
+          },
+          {
+            "path": "src/lib/Node.ts",
+            "kind": "dynamic-import",
+            "original": "./lib/Node"
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.ts": {
+        "bytes": 2565,
+        "imports": [],
+        "format": "esm"
+      },
+      "example/Calculator.test.adapter.ts": {
+        "bytes": 1362,
         "imports": [
           {
             "path": "../src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./Calculator",
             "kind": "import-statement",
             "external": true
           },
@@ -328,11 +359,6 @@
             "external": true
           }
         ],
-        "format": "esm"
-      },
-      "example/Calculator.ts": {
-        "bytes": 2552,
-        "imports": [],
         "format": "esm"
       },
       "node_modules/chai/index.js": {
@@ -366,16 +392,11 @@
         ],
         "format": "esm"
       },
-      "example/Calculator.test.adapter.ts": {
-        "bytes": 1362,
+      "example/Calculator.test.specification.ts": {
+        "bytes": 6850,
         "imports": [
           {
             "path": "../src/CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "./Calculator",
             "kind": "import-statement",
             "external": true
           },
@@ -388,22 +409,17 @@
         "format": "esm"
       },
       "example/Calculator.test.ts": {
-        "bytes": 424,
+        "bytes": 450,
         "imports": [
           {
-            "path": "src/Node.ts",
+            "path": "src/Tiposkripto.ts",
             "kind": "import-statement",
-            "original": "testeranto/src/Node"
+            "original": "../src/Tiposkripto"
           },
           {
-            "path": "example/Calculator.test.specification.ts",
+            "path": "example/Calculator.ts",
             "kind": "import-statement",
-            "original": "./Calculator.test.specification"
-          },
-          {
-            "path": "example/Calculator.test.implementation.ts",
-            "kind": "import-statement",
-            "original": "./Calculator.test.implementation"
+            "original": "./Calculator"
           },
           {
             "path": "example/Calculator.test.adapter.ts",
@@ -411,14 +427,19 @@
             "original": "./Calculator.test.adapter"
           },
           {
+            "path": "example/Calculator.test.implementation.ts",
+            "kind": "import-statement",
+            "original": "./Calculator.test.implementation"
+          },
+          {
+            "path": "example/Calculator.test.specification.ts",
+            "kind": "import-statement",
+            "original": "./Calculator.test.specification"
+          },
+          {
             "path": "./Calculator.test.types",
             "kind": "import-statement",
             "external": true
-          },
-          {
-            "path": "example/Calculator.ts",
-            "kind": "import-statement",
-            "original": "./Calculator"
           }
         ],
         "format": "esm"
@@ -427,6 +448,50 @@
     "outputs": {
       "testeranto/bundles/node/core/example/Calculator.test.mjs": {
         "imports": [
+          {
+            "path": "testeranto/bundles/node/core/chunk-NBYHXE6Z.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/node/core/Node-PNXHYSZI.mjs",
+            "kind": "dynamic-import"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "example/Calculator.test.ts",
+        "inputs": {
+          "src/Tiposkripto.ts": {
+            "bytesInOutput": 579
+          },
+          "example/Calculator.ts": {
+            "bytesInOutput": 2036
+          },
+          "example/Calculator.test.adapter.ts": {
+            "bytesInOutput": 701
+          },
+          "node_modules/chai/index.js": {
+            "bytesInOutput": 133847
+          },
+          "example/Calculator.test.implementation.ts": {
+            "bytesInOutput": 956
+          },
+          "example/Calculator.test.specification.ts": {
+            "bytesInOutput": 7164
+          },
+          "example/Calculator.test.ts": {
+            "bytesInOutput": 137
+          }
+        },
+        "bytes": 153316
+      },
+      "testeranto/bundles/node/core/Node-PNXHYSZI.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/node/core/chunk-NBYHXE6Z.mjs",
+            "kind": "import-statement"
+          },
           {
             "path": "net",
             "kind": "import-statement",
@@ -444,15 +509,13 @@
           }
         ],
         "exports": [
+          "NodeTiposkripto",
           "default"
         ],
-        "entryPoint": "example/Calculator.test.ts",
+        "entryPoint": "src/lib/Node.ts",
         "inputs": {
-          "src/lib/index.ts": {
-            "bytesInOutput": 672
-          },
           "src/PM/node.ts": {
-            "bytesInOutput": 5514
+            "bytesInOutput": 5461
           },
           "src/PM/index.ts": {
             "bytesInOutput": 174
@@ -463,41 +526,36 @@
           "src/lib/BaseGiven.ts": {
             "bytesInOutput": 3106
           },
-          "src/lib/BaseWhen.ts": {
-            "bytesInOutput": 1156
-          },
-          "src/lib/BaseThen.ts": {
-            "bytesInOutput": 1451
-          },
           "src/lib/BaseSuite.ts": {
             "bytesInOutput": 3341
+          },
+          "src/lib/BaseThen.ts": {
+            "bytesInOutput": 1449
+          },
+          "src/lib/BaseWhen.ts": {
+            "bytesInOutput": 1154
           },
           "src/lib/Tiposkripto.ts": {
             "bytesInOutput": 6310
           },
-          "src/Node.ts": {
-            "bytesInOutput": 1199
-          },
-          "example/Calculator.test.specification.ts": {
-            "bytesInOutput": 7164
-          },
-          "example/Calculator.ts": {
-            "bytesInOutput": 2003
-          },
-          "node_modules/chai/index.js": {
-            "bytesInOutput": 133851
-          },
-          "example/Calculator.test.implementation.ts": {
-            "bytesInOutput": 956
-          },
-          "example/Calculator.test.adapter.ts": {
-            "bytesInOutput": 701
-          },
-          "example/Calculator.test.ts": {
-            "bytesInOutput": 106
+          "src/lib/Node.ts": {
+            "bytesInOutput": 1255
           }
         },
-        "bytes": 181696
+        "bytes": 28661
+      },
+      "testeranto/bundles/node/core/chunk-NBYHXE6Z.mjs": {
+        "imports": [],
+        "exports": [
+          "DefaultAdapter",
+          "defaultTestResourceRequirement"
+        ],
+        "inputs": {
+          "src/lib/index.ts": {
+            "bytesInOutput": 672
+          }
+        },
+        "bytes": 844
       }
     }
   }

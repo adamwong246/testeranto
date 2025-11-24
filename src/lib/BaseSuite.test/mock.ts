@@ -7,7 +7,7 @@ import { BaseThen } from "../BaseThen";
 import { BaseWhen } from "../BaseWhen";
 import { IPM } from "../types";
 
-import { I, TestStore, TestSelection, O } from "./test";
+import { I, TestStore, TestSelection, O } from "./utils";
 
 export class MockGiven extends BaseGiven<I> {
   constructor(
@@ -43,9 +43,9 @@ export class MockWhen extends BaseWhen<I> {
     pm: IPM
   ): Promise<TestStore> {
     // Create a TestSelection from the store
-    const selection: TestSelection = { 
+    const selection: TestSelection = {
       testSelection: store.testStore,
-      testStore: store.testStore
+      testStore: store.testStore,
     };
     // Call whenCB with the selection
     await whenCB(selection);
@@ -65,9 +65,9 @@ export class MockThen extends BaseThen<I> {
     pm: IPM
   ): Promise<TestSelection> {
     // Create a TestSelection from the store
-    const selection: TestSelection = { 
+    const selection: TestSelection = {
       testSelection: store.testStore,
-      testStore: store.testStore
+      testStore: store.testStore,
     };
     // Call thenCB with the selection
     await thenCB(selection);

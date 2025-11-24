@@ -3,7 +3,7 @@ import { BaseSuite } from "../BaseSuite";
 import { BaseThen } from "../BaseThen";
 import { BaseWhen } from "../BaseWhen";
 import { IPM } from "../types";
-import { I, TestStore, TestSelection, O } from "./test";
+import { I, TestStore, TestSelection, O } from "./utils";
 export declare class MockGiven extends BaseGiven<I> {
     constructor(name: string, features: string[], whens: BaseWhen<I>[], thens: BaseThen<I>[]);
     givenThat(): Promise<TestStore>;

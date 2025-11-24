@@ -1,3 +1,4 @@
+
 There are 3 types of test reports.
 1) bdd (highest priority)
 2) type checker

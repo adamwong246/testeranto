@@ -12,7 +12,7 @@ import {
 } from "../CoreTypes";
 import { ITTestResourceConfiguration } from "../lib";
 import { IPM } from "../lib/types";
-import Testeranto from "../Node";
+import Tiposkripto from "../lib/Node";
 import { PM } from "../PM";
 
 import appFactory from "./index";
@@ -155,7 +155,7 @@ const testAdapter = {
   },
 };
 
-export default Testeranto(
+export default Tiposkripto(
   appFactory,
   specification,
   implementation,

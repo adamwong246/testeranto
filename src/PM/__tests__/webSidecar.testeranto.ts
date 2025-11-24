@@ -2,7 +2,7 @@ import net from "net";
 
 import { ITTestResourceConfiguration } from "../../lib";
 import { PM_Web_Sidecar } from "../webSidecar";
-import Testeranto from "../../Node";
+import Tiposkripto from "../../lib/Node";
 import {
   Ibdd_out,
   ITestSpecification,
@@ -135,7 +135,7 @@ const testAdapter: IPartialNodeAdapter<I> = {
   },
 };
 
-export default Testeranto(
+export default Tiposkripto(
   () => new PM_Web_Sidecar({} as ITTestResourceConfiguration),
   specification,
   implementation,

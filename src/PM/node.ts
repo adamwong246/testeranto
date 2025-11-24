@@ -164,14 +164,14 @@ export class PM_Node extends PM {
     return await this.send("write", ...arguments);
   }
 
-  async writeFileSync(x) {
+  async writeFileSync(filepath, contents) {
     const z = arguments["0"];
 
     // const filepath = z[0];
     // const contents = z[1];
 
-    const filepath = arguments[0];
-    const contents = arguments[1];
+    // const filepath = arguments[0];
+    // const contents = arguments[1];
 
     return await this.send<boolean>(
       "writeFileSync",

@@ -223,10 +223,14 @@ export const puppeteerConfigs = {
   slowMo: 1,
   waitForInitialPage: false,
   executablePath,
-  headless: true,
+
   defaultViewport: null, // Disable default 800x600 viewport
   dumpio: false,
-  devtools: false,
+
+  // headless: true,
+  // devtools: false,
+  headless: false,
+  devtools: true,
 
   args: [
     "--allow-file-access-from-files",

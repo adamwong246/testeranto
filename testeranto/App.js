@@ -515,7 +515,7 @@
             }
             return element;
           };
-          function createElement10(type, config3, children) {
+          function createElement11(type, config3, children) {
             var propName;
             var props = {};
             var key = null;
@@ -789,7 +789,7 @@
             }
             return children;
           }
-          function createContext21(defaultValue) {
+          function createContext22(defaultValue) {
             var context4 = {
               $$typeof: REACT_CONTEXT_TYPE,
               // As a workaround to support multiple concurrent renderers, we categorize
@@ -1131,7 +1131,7 @@
               return dispatcher.useDebugValue(value, formatterFn);
             }
           }
-          function useTransition2() {
+          function useTransition3() {
             var dispatcher = resolveDispatcher();
             return dispatcher.useTransition();
           }
@@ -1614,7 +1614,7 @@
                 error("React.createElement: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", typeString, info);
               }
             }
-            var element = createElement10.apply(this, arguments);
+            var element = createElement11.apply(this, arguments);
             if (element == null) {
               return element;
             }
@@ -1869,7 +1869,7 @@
           exports.Suspense = REACT_SUSPENSE_TYPE;
           exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactSharedInternals;
           exports.cloneElement = cloneElement$1;
-          exports.createContext = createContext21;
+          exports.createContext = createContext22;
           exports.createElement = createElement$1;
           exports.createFactory = createFactory;
           exports.createRef = createRef;
@@ -1893,7 +1893,7 @@
           exports.useRef = useRef37;
           exports.useState = useState50;
           exports.useSyncExternalStore = useSyncExternalStore;
-          exports.useTransition = useTransition2;
+          exports.useTransition = useTransition3;
           exports.version = ReactVersion;
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
@@ -9393,7 +9393,7 @@
               }
             }
           }
-          function createElement10(type, props, rootContainerElement, parentNamespace) {
+          function createElement11(type, props, rootContainerElement, parentNamespace) {
             var isCustomComponentTag;
             var ownerDocument2 = getOwnerDocumentFromRootContainer(rootContainerElement);
             var domElement;
@@ -10254,7 +10254,7 @@
               }
               parentNamespace = hostContextDev.namespace;
             }
-            var domElement = createElement10(type, props, rootContainerInstance, parentNamespace);
+            var domElement = createElement11(type, props, rootContainerInstance, parentNamespace);
             precacheFiberNode(internalInstanceHandle, domElement);
             updateFiberProps(domElement, props);
             return domElement;
@@ -26850,7 +26850,7 @@
   // src/app/frontend/App.tsx
   var import_react164 = __toESM(require_react(), 1);
 
-  // node_modules/react-router/dist/development/chunk-PVWAREVJ.mjs
+  // node_modules/react-router/dist/development/chunk-OIYGIGL5.mjs
   var React = __toESM(require_react(), 1);
   var React2 = __toESM(require_react(), 1);
   var React3 = __toESM(require_react(), 1);
@@ -27685,13 +27685,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           params: Object.assign({}, parentParams, match.params),
           pathname: joinPaths([
             parentPathnameBase,
-            // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathname).pathname : match.pathname
+            // Re-encode pathnames that were decoded inside matchRoutes.
+            // Pre-encode `?` and `#` ahead of `encodeLocation` because it uses
+            // `new URL()` internally and we need to prevent it from treating
+            // them as separators
+            navigator2.encodeLocation ? navigator2.encodeLocation(
+              match.pathname.replace(/\?/g, "%3F").replace(/#/g, "%23")
+            ).pathname : match.pathname
           ]),
           pathnameBase: match.pathnameBase === "/" ? parentPathnameBase : joinPaths([
             parentPathnameBase,
             // Re-encode pathnames that were decoded inside matchRoutes
-            navigator2.encodeLocation ? navigator2.encodeLocation(match.pathnameBase).pathname : match.pathnameBase
+            // Pre-encode `?` and `#` ahead of `encodeLocation` because it uses
+            // `new URL()` internally and we need to prevent it from treating
+            // them as separators
+            navigator2.encodeLocation ? navigator2.encodeLocation(
+              match.pathnameBase.replace(/\?/g, "%3F").replace(/#/g, "%23")
+            ).pathname : match.pathnameBase
           ])
         })
       ),
@@ -28120,6 +28130,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         Component: element.props.Component,
         index: element.props.index,
         path: element.props.path,
+        middleware: element.props.middleware,
         loader: element.props.loader,
         action: element.props.action,
         hydrateFallbackElement: element.props.hydrateFallbackElement,
@@ -28639,7 +28650,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   try {
     if (isBrowser) {
       window.__reactRouterVersion = // @ts-expect-error
-      "7.8.2";
+      "7.9.4";
     }
   } catch (e) {
   }
@@ -29224,9 +29235,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return matchPath(path.pathname, nextPath) != null || matchPath(path.pathname, currentPath) != null;
   }
 
-  // node_modules/react-router/dist/development/index.mjs
-  "use client";
-
   // src/app/frontend/App.tsx
   var import_client = __toESM(require_client(), 1);
 
@@ -29402,7 +29410,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React14 = __toESM(require_react());
   var import_react4 = __toESM(require_react());
   var import_jsx_runtime = __toESM(require_jsx_runtime());
-  "use client";
   var DEFAULT_BREAKPOINTS = ["xxl", "xl", "lg", "md", "sm", "xs"];
   var DEFAULT_MIN_BREAKPOINT = "xs";
   var ThemeContext = /* @__PURE__ */ React14.createContext({
@@ -30158,7 +30165,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/TransitionWrapper.js
   var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-  "use client";
   var TransitionWrapper = /* @__PURE__ */ import_react8.default.forwardRef(({
     onEnter,
     onEntering,
@@ -30338,7 +30344,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/AlertHeading.js
   var import_jsx_runtime5 = __toESM(require_jsx_runtime());
-  "use client";
   var DivStyledAsH4 = divWithClassName_default("h4");
   DivStyledAsH4.displayName = "DivStyledAsH4";
   var AlertHeading = /* @__PURE__ */ React21.forwardRef(({
@@ -30598,7 +30603,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/AlertLink.js
   var import_jsx_runtime8 = __toESM(require_jsx_runtime());
-  "use client";
   var AlertLink = /* @__PURE__ */ React24.forwardRef(({
     className,
     bsPrefix,
@@ -30694,7 +30698,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-bootstrap/esm/Alert.js
   var import_jsx_runtime11 = __toESM(require_jsx_runtime());
   var import_jsx_runtime12 = __toESM(require_jsx_runtime());
-  "use client";
   var Alert = /* @__PURE__ */ React27.forwardRef((uncontrolledProps, ref) => {
     const {
       bsPrefix,
@@ -30749,7 +30752,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames8 = __toESM(require_classnames());
   var React28 = __toESM(require_react());
   var import_jsx_runtime13 = __toESM(require_jsx_runtime());
-  "use client";
   var Badge = /* @__PURE__ */ React28.forwardRef(({
     bsPrefix,
     bg = "primary",
@@ -30773,7 +30775,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames9 = __toESM(require_classnames());
   var React29 = __toESM(require_react());
   var import_jsx_runtime14 = __toESM(require_jsx_runtime());
-  "use client";
   var Button2 = /* @__PURE__ */ React29.forwardRef(({
     as,
     bsPrefix,
@@ -30808,7 +30809,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames10 = __toESM(require_classnames());
   var React30 = __toESM(require_react());
   var import_jsx_runtime15 = __toESM(require_jsx_runtime());
-  "use client";
   var ButtonGroup = /* @__PURE__ */ React30.forwardRef(({
     bsPrefix,
     size: size2,
@@ -30841,7 +30841,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React31 = __toESM(require_react());
   var import_classnames11 = __toESM(require_classnames());
   var import_jsx_runtime16 = __toESM(require_jsx_runtime());
-  "use client";
   var CardBody = /* @__PURE__ */ React31.forwardRef(({
     className,
     bsPrefix,
@@ -30862,7 +30861,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React32 = __toESM(require_react());
   var import_classnames12 = __toESM(require_classnames());
   var import_jsx_runtime17 = __toESM(require_jsx_runtime());
-  "use client";
   var CardFooter = /* @__PURE__ */ React32.forwardRef(({
     className,
     bsPrefix,
@@ -30886,14 +30884,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/CardHeaderContext.js
   var React33 = __toESM(require_react());
-  "use client";
   var context = /* @__PURE__ */ React33.createContext(null);
   context.displayName = "CardHeaderContext";
   var CardHeaderContext_default = context;
 
   // node_modules/react-bootstrap/esm/CardHeader.js
   var import_jsx_runtime18 = __toESM(require_jsx_runtime());
-  "use client";
   var CardHeader = /* @__PURE__ */ React34.forwardRef(({
     bsPrefix,
     className,
@@ -30921,7 +30917,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames14 = __toESM(require_classnames());
   var React35 = __toESM(require_react());
   var import_jsx_runtime19 = __toESM(require_jsx_runtime());
-  "use client";
   var CardImg = /* @__PURE__ */ React35.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     ({
@@ -30946,7 +30941,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React36 = __toESM(require_react());
   var import_classnames15 = __toESM(require_classnames());
   var import_jsx_runtime20 = __toESM(require_jsx_runtime());
-  "use client";
   var CardImgOverlay = /* @__PURE__ */ React36.forwardRef(({
     className,
     bsPrefix,
@@ -30967,7 +30961,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React37 = __toESM(require_react());
   var import_classnames16 = __toESM(require_classnames());
   var import_jsx_runtime21 = __toESM(require_jsx_runtime());
-  "use client";
   var CardLink = /* @__PURE__ */ React37.forwardRef(({
     className,
     bsPrefix,
@@ -30988,7 +30981,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React38 = __toESM(require_react());
   var import_classnames17 = __toESM(require_classnames());
   var import_jsx_runtime22 = __toESM(require_jsx_runtime());
-  "use client";
   var DivStyledAsH6 = divWithClassName_default("h6");
   var CardSubtitle = /* @__PURE__ */ React38.forwardRef(({
     className,
@@ -31010,7 +31002,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React39 = __toESM(require_react());
   var import_classnames18 = __toESM(require_classnames());
   var import_jsx_runtime23 = __toESM(require_jsx_runtime());
-  "use client";
   var CardText = /* @__PURE__ */ React39.forwardRef(({
     className,
     bsPrefix,
@@ -31031,7 +31022,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React40 = __toESM(require_react());
   var import_classnames19 = __toESM(require_classnames());
   var import_jsx_runtime24 = __toESM(require_jsx_runtime());
-  "use client";
   var DivStyledAsH5 = divWithClassName_default("h5");
   var CardTitle = /* @__PURE__ */ React40.forwardRef(({
     className,
@@ -31051,7 +31041,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Card.js
   var import_jsx_runtime25 = __toESM(require_jsx_runtime());
-  "use client";
   var Card = /* @__PURE__ */ React41.forwardRef(({
     bsPrefix,
     className,
@@ -31159,7 +31148,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames21 = __toESM(require_classnames());
   var React43 = __toESM(require_react());
   var import_jsx_runtime26 = __toESM(require_jsx_runtime());
-  "use client";
   function useCol({
     as,
     bsPrefix,
@@ -31228,7 +31216,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames22 = __toESM(require_classnames());
   var React44 = __toESM(require_react());
   var import_jsx_runtime27 = __toESM(require_jsx_runtime());
-  "use client";
   var Container = /* @__PURE__ */ React44.forwardRef(({
     bsPrefix,
     fluid = false,
@@ -33567,7 +33554,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/DropdownContext.js
   var React52 = __toESM(require_react());
-  "use client";
   var DropdownContext2 = /* @__PURE__ */ React52.createContext({});
   DropdownContext2.displayName = "DropdownContext";
   var DropdownContext_default2 = DropdownContext2;
@@ -33576,7 +33562,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React53 = __toESM(require_react());
   var import_classnames23 = __toESM(require_classnames());
   var import_jsx_runtime32 = __toESM(require_jsx_runtime());
-  "use client";
   var DropdownDivider = /* @__PURE__ */ React53.forwardRef(({
     className,
     bsPrefix,
@@ -33599,7 +33584,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React54 = __toESM(require_react());
   var import_classnames24 = __toESM(require_classnames());
   var import_jsx_runtime33 = __toESM(require_jsx_runtime());
-  "use client";
   var DropdownHeader = /* @__PURE__ */ React54.forwardRef(({
     className,
     bsPrefix,
@@ -33622,7 +33606,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames25 = __toESM(require_classnames());
   var React55 = __toESM(require_react());
   var import_jsx_runtime34 = __toESM(require_jsx_runtime());
-  "use client";
   var DropdownItem2 = /* @__PURE__ */ React55.forwardRef(({
     bsPrefix,
     className,
@@ -33655,7 +33638,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React56 = __toESM(require_react());
   var import_classnames26 = __toESM(require_classnames());
   var import_jsx_runtime35 = __toESM(require_jsx_runtime());
-  "use client";
   var DropdownItemText = /* @__PURE__ */ React56.forwardRef(({
     className,
     bsPrefix,
@@ -33690,14 +33672,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/InputGroupContext.js
   var React57 = __toESM(require_react());
-  "use client";
   var context2 = /* @__PURE__ */ React57.createContext(null);
   context2.displayName = "InputGroupContext";
   var InputGroupContext_default = context2;
 
   // node_modules/react-bootstrap/esm/NavbarContext.js
   var React58 = __toESM(require_react());
-  "use client";
   var context3 = /* @__PURE__ */ React58.createContext(null);
   context3.displayName = "NavbarContext";
   var NavbarContext_default = context3;
@@ -33716,7 +33696,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/DropdownMenu.js
   var import_jsx_runtime36 = __toESM(require_jsx_runtime());
-  "use client";
   function getDropdownMenuPlacement(alignEnd, dropDirection, isRTL) {
     const topStart = isRTL ? "top-end" : "top-start";
     const topEnd = isRTL ? "top-start" : "top-end";
@@ -33831,7 +33810,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React60 = __toESM(require_react());
   var import_react45 = __toESM(require_react());
   var import_jsx_runtime37 = __toESM(require_jsx_runtime());
-  "use client";
   var DropdownToggle2 = /* @__PURE__ */ React60.forwardRef(({
     bsPrefix,
     split,
@@ -33859,7 +33837,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Dropdown.js
   var import_jsx_runtime38 = __toESM(require_jsx_runtime());
-  "use client";
   var Dropdown2 = /* @__PURE__ */ React61.forwardRef((pProps, ref) => {
     const {
       bsPrefix,
@@ -33994,13 +33971,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FormContext.js
   var React63 = __toESM(require_react());
-  "use client";
   var FormContext = /* @__PURE__ */ React63.createContext({});
   var FormContext_default = FormContext;
 
   // node_modules/react-bootstrap/esm/FormCheckInput.js
   var import_jsx_runtime40 = __toESM(require_jsx_runtime());
-  "use client";
   var FormCheckInput = /* @__PURE__ */ React64.forwardRef(({
     id,
     bsPrefix,
@@ -34032,7 +34007,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React65 = __toESM(require_react());
   var import_react48 = __toESM(require_react());
   var import_jsx_runtime41 = __toESM(require_jsx_runtime());
-  "use client";
   var FormCheckLabel = /* @__PURE__ */ React65.forwardRef(({
     bsPrefix,
     className,
@@ -34057,7 +34031,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_jsx_runtime42 = __toESM(require_jsx_runtime());
   var import_jsx_runtime43 = __toESM(require_jsx_runtime());
   var import_jsx_runtime44 = __toESM(require_jsx_runtime());
-  "use client";
   var FormCheck = /* @__PURE__ */ React66.forwardRef(({
     id,
     bsPrefix,
@@ -34128,7 +34101,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_react50 = __toESM(require_react());
   var import_warning3 = __toESM(require_warning());
   var import_jsx_runtime45 = __toESM(require_jsx_runtime());
-  "use client";
   var FormControl = /* @__PURE__ */ React67.forwardRef(({
     bsPrefix,
     type,
@@ -34168,7 +34140,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React68 = __toESM(require_react());
   var import_classnames35 = __toESM(require_classnames());
   var import_jsx_runtime46 = __toESM(require_jsx_runtime());
-  "use client";
   var FormFloating = /* @__PURE__ */ React68.forwardRef(({
     className,
     bsPrefix,
@@ -34215,7 +34186,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_react52 = __toESM(require_react());
   var import_warning4 = __toESM(require_warning());
   var import_jsx_runtime48 = __toESM(require_jsx_runtime());
-  "use client";
   var FormLabel = /* @__PURE__ */ React70.forwardRef(({
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     as: Component5 = "label",
@@ -34259,7 +34229,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React71 = __toESM(require_react());
   var import_react53 = __toESM(require_react());
   var import_jsx_runtime49 = __toESM(require_jsx_runtime());
-  "use client";
   var FormRange = /* @__PURE__ */ React71.forwardRef(({
     bsPrefix,
     className,
@@ -34286,7 +34255,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React72 = __toESM(require_react());
   var import_react54 = __toESM(require_react());
   var import_jsx_runtime50 = __toESM(require_jsx_runtime());
-  "use client";
   var FormSelect = /* @__PURE__ */ React72.forwardRef(({
     bsPrefix,
     size: size2,
@@ -34316,7 +34284,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames39 = __toESM(require_classnames());
   var React73 = __toESM(require_react());
   var import_jsx_runtime51 = __toESM(require_jsx_runtime());
-  "use client";
   var FormText = /* @__PURE__ */ React73.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     ({
@@ -34356,7 +34323,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React75 = __toESM(require_react());
   var import_jsx_runtime53 = __toESM(require_jsx_runtime());
   var import_jsx_runtime54 = __toESM(require_jsx_runtime());
-  "use client";
   var FloatingLabel = /* @__PURE__ */ React75.forwardRef(({
     bsPrefix,
     className,
@@ -34669,7 +34635,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React80 = __toESM(require_react());
   var import_warning5 = __toESM(require_warning());
   var import_jsx_runtime58 = __toESM(require_jsx_runtime());
-  "use client";
   var ListGroupItem = /* @__PURE__ */ React80.forwardRef(({
     bsPrefix,
     active,
@@ -34714,7 +34679,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ListGroup.js
   var import_jsx_runtime59 = __toESM(require_jsx_runtime());
-  "use client";
   var ListGroup = /* @__PURE__ */ React81.forwardRef((props, ref) => {
     const {
       className,
@@ -35077,7 +35041,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/@restart/ui/esm/ImperativeTransition.js
   var import_jsx_runtime61 = __toESM(require_jsx_runtime());
-  function useTransition({
+  function useTransition2({
     in: inProp,
     onTransition
   }) {
@@ -35118,7 +35082,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     if (inProp && exited) {
       setExited(false);
     }
-    const ref = useTransition({
+    const ref = useTransition2({
       in: !!inProp,
       onTransition: (options) => {
         const onFinish = () => {
@@ -35475,7 +35439,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React85 = __toESM(require_react());
   var import_classnames44 = __toESM(require_classnames());
   var import_jsx_runtime63 = __toESM(require_jsx_runtime());
-  "use client";
   var ModalBody = /* @__PURE__ */ React85.forwardRef(({
     className,
     bsPrefix,
@@ -35494,7 +35457,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ModalContext.js
   var React86 = __toESM(require_react());
-  "use client";
   var ModalContext = /* @__PURE__ */ React86.createContext({
     onHide() {
     }
@@ -35505,7 +35467,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames45 = __toESM(require_classnames());
   var React87 = __toESM(require_react());
   var import_jsx_runtime64 = __toESM(require_jsx_runtime());
-  "use client";
   var ModalDialog = /* @__PURE__ */ React87.forwardRef(({
     bsPrefix,
     className,
@@ -35537,7 +35498,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React88 = __toESM(require_react());
   var import_classnames46 = __toESM(require_classnames());
   var import_jsx_runtime65 = __toESM(require_jsx_runtime());
-  "use client";
   var ModalFooter = /* @__PURE__ */ React88.forwardRef(({
     className,
     bsPrefix,
@@ -35563,7 +35523,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_react66 = __toESM(require_react());
   var import_jsx_runtime66 = __toESM(require_jsx_runtime());
   var import_jsx_runtime67 = __toESM(require_jsx_runtime());
-  "use client";
   var AbstractModalHeader = /* @__PURE__ */ React89.forwardRef(({
     closeLabel = "Close",
     closeVariant,
@@ -35592,7 +35551,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ModalHeader.js
   var import_jsx_runtime68 = __toESM(require_jsx_runtime());
-  "use client";
   var ModalHeader = /* @__PURE__ */ React90.forwardRef(({
     bsPrefix,
     className,
@@ -35616,7 +35574,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React91 = __toESM(require_react());
   var import_classnames48 = __toESM(require_classnames());
   var import_jsx_runtime69 = __toESM(require_jsx_runtime());
-  "use client";
   var DivStyledAsH42 = divWithClassName_default("h4");
   var ModalTitle = /* @__PURE__ */ React91.forwardRef(({
     className,
@@ -35636,7 +35593,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Modal.js
   var import_jsx_runtime70 = __toESM(require_jsx_runtime());
-  "use client";
   function DialogTransition(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime70.jsx)(Fade_default, {
       ...props,
@@ -35862,7 +35818,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React93 = __toESM(require_react());
   var import_classnames50 = __toESM(require_classnames());
   var import_jsx_runtime71 = __toESM(require_jsx_runtime());
-  "use client";
   var NavItem2 = /* @__PURE__ */ React93.forwardRef(({
     className,
     bsPrefix,
@@ -35883,7 +35838,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames51 = __toESM(require_classnames());
   var React94 = __toESM(require_react());
   var import_jsx_runtime72 = __toESM(require_jsx_runtime());
-  "use client";
   var NavLink2 = /* @__PURE__ */ React94.forwardRef(({
     bsPrefix,
     className,
@@ -35913,7 +35867,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Nav.js
   var import_jsx_runtime73 = __toESM(require_jsx_runtime());
-  "use client";
   var Nav2 = /* @__PURE__ */ React95.forwardRef((uncontrolledProps, ref) => {
     const {
       as = "div",
@@ -35974,7 +35927,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames53 = __toESM(require_classnames());
   var React96 = __toESM(require_react());
   var import_jsx_runtime74 = __toESM(require_jsx_runtime());
-  "use client";
   var NavbarBrand = /* @__PURE__ */ React96.forwardRef(({
     bsPrefix,
     className,
@@ -35996,7 +35948,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React97 = __toESM(require_react());
   var import_react69 = __toESM(require_react());
   var import_jsx_runtime75 = __toESM(require_jsx_runtime());
-  "use client";
   var NavbarCollapse = /* @__PURE__ */ React97.forwardRef(({
     children,
     bsPrefix,
@@ -36022,7 +35973,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React98 = __toESM(require_react());
   var import_react70 = __toESM(require_react());
   var import_jsx_runtime76 = __toESM(require_jsx_runtime());
-  "use client";
   var NavbarToggle = /* @__PURE__ */ React98.forwardRef(({
     bsPrefix,
     className,
@@ -36183,7 +36133,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React99 = __toESM(require_react());
   var import_classnames55 = __toESM(require_classnames());
   var import_jsx_runtime77 = __toESM(require_jsx_runtime());
-  "use client";
   var OffcanvasBody = /* @__PURE__ */ React99.forwardRef(({
     className,
     bsPrefix,
@@ -36204,7 +36153,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames56 = __toESM(require_classnames());
   var React100 = __toESM(require_react());
   var import_jsx_runtime78 = __toESM(require_jsx_runtime());
-  "use client";
   var transitionStyles = {
     [ENTERING]: "show",
     [ENTERED]: "show"
@@ -36242,7 +36190,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames57 = __toESM(require_classnames());
   var React101 = __toESM(require_react());
   var import_jsx_runtime79 = __toESM(require_jsx_runtime());
-  "use client";
   var OffcanvasHeader = /* @__PURE__ */ React101.forwardRef(({
     bsPrefix,
     className,
@@ -36266,7 +36213,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React102 = __toESM(require_react());
   var import_classnames58 = __toESM(require_classnames());
   var import_jsx_runtime80 = __toESM(require_jsx_runtime());
-  "use client";
   var DivStyledAsH52 = divWithClassName_default("h5");
   var OffcanvasTitle = /* @__PURE__ */ React102.forwardRef(({
     className,
@@ -36288,7 +36234,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_jsx_runtime81 = __toESM(require_jsx_runtime());
   var import_jsx_runtime82 = __toESM(require_jsx_runtime());
   var import_jsx_runtime83 = __toESM(require_jsx_runtime());
-  "use client";
   function DialogTransition2(props) {
     return /* @__PURE__ */ (0, import_jsx_runtime81.jsx)(OffcanvasToggling_default, {
       ...props
@@ -36414,7 +36359,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
   var import_jsx_runtime84 = __toESM(require_jsx_runtime());
-  "use client";
   var NavbarOffcanvas = /* @__PURE__ */ React104.forwardRef(({
     onHide,
     ...props
@@ -36439,7 +36383,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React105 = __toESM(require_react());
   var import_classnames60 = __toESM(require_classnames());
   var import_jsx_runtime85 = __toESM(require_jsx_runtime());
-  "use client";
   var NavbarText = /* @__PURE__ */ React105.forwardRef(({
     className,
     bsPrefix,
@@ -36458,7 +36401,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Navbar.js
   var import_jsx_runtime86 = __toESM(require_jsx_runtime());
-  "use client";
   var Navbar = /* @__PURE__ */ React106.forwardRef((props, ref) => {
     const {
       bsPrefix: initialBsPrefix,
@@ -36656,7 +36598,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React108 = __toESM(require_react());
   var import_classnames62 = __toESM(require_classnames());
   var import_jsx_runtime87 = __toESM(require_jsx_runtime());
-  "use client";
   var PopoverHeader = /* @__PURE__ */ React108.forwardRef(({
     className,
     bsPrefix,
@@ -36677,7 +36618,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React109 = __toESM(require_react());
   var import_classnames63 = __toESM(require_classnames());
   var import_jsx_runtime88 = __toESM(require_jsx_runtime());
-  "use client";
   var PopoverBody = /* @__PURE__ */ React109.forwardRef(({
     className,
     bsPrefix,
@@ -36720,7 +36660,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-bootstrap/esm/Popover.js
   var import_jsx_runtime89 = __toESM(require_jsx_runtime());
   var import_jsx_runtime90 = __toESM(require_jsx_runtime());
-  "use client";
   var Popover = /* @__PURE__ */ React111.forwardRef(({
     bsPrefix,
     placement = "right",
@@ -36774,7 +36713,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React112 = __toESM(require_react());
   var import_jsx_runtime91 = __toESM(require_jsx_runtime());
   var import_jsx_runtime92 = __toESM(require_jsx_runtime());
-  "use client";
   var Tooltip = /* @__PURE__ */ React112.forwardRef(({
     bsPrefix,
     placement = "right",
@@ -36822,7 +36760,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/useOverlayOffset.js
-  "use client";
   function useOverlayOffset(customOffset) {
     const overlayRef = (0, import_react78.useRef)(null);
     const popoverClass = useBootstrapPrefix(void 0, "popover");
@@ -36851,7 +36788,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Overlay.js
   var import_jsx_runtime93 = __toESM(require_jsx_runtime());
-  "use client";
   function wrapRefs(props, arrowProps) {
     const {
       ref
@@ -36956,7 +36892,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_jsx_runtime94 = __toESM(require_jsx_runtime());
   var import_jsx_runtime95 = __toESM(require_jsx_runtime());
   var import_jsx_runtime96 = __toESM(require_jsx_runtime());
-  "use client";
   function normalizeDelay(delay) {
     return delay && typeof delay === "object" ? delay : {
       show: delay,
@@ -37076,7 +37011,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames67 = __toESM(require_classnames());
   var React115 = __toESM(require_react());
   var import_jsx_runtime97 = __toESM(require_jsx_runtime());
-  "use client";
   var Row = /* @__PURE__ */ React115.forwardRef(({
     bsPrefix,
     className,
@@ -37117,7 +37051,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames68 = __toESM(require_classnames());
   var React116 = __toESM(require_react());
   var import_jsx_runtime98 = __toESM(require_jsx_runtime());
-  "use client";
   var Spinner = /* @__PURE__ */ React116.forwardRef(({
     bsPrefix,
     variant,
@@ -37327,7 +37260,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React119 = __toESM(require_react());
   var import_classnames69 = __toESM(require_classnames());
   var import_jsx_runtime102 = __toESM(require_jsx_runtime());
-  "use client";
   var TabContent = /* @__PURE__ */ React119.forwardRef(({
     className,
     bsPrefix,
@@ -37348,7 +37280,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames70 = __toESM(require_classnames());
   var React120 = __toESM(require_react());
   var import_jsx_runtime103 = __toESM(require_jsx_runtime());
-  "use client";
   var TabPane = /* @__PURE__ */ React120.forwardRef(({
     bsPrefix,
     transition,
@@ -37435,7 +37366,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames71 = __toESM(require_classnames());
   var React121 = __toESM(require_react());
   var import_jsx_runtime104 = __toESM(require_jsx_runtime());
-  "use client";
   var Table = /* @__PURE__ */ React121.forwardRef(({
     bsPrefix,
     className,
@@ -37497,7 +37427,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ToastContext.js
   var React123 = __toESM(require_react());
-  "use client";
   var ToastContext = /* @__PURE__ */ React123.createContext({
     onClose() {
     }
@@ -37507,7 +37436,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-bootstrap/esm/ToastHeader.js
   var import_jsx_runtime106 = __toESM(require_jsx_runtime());
   var import_jsx_runtime107 = __toESM(require_jsx_runtime());
-  "use client";
   var ToastHeader = /* @__PURE__ */ React124.forwardRef(({
     bsPrefix,
     closeLabel = "Close",
@@ -37541,7 +37469,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var React125 = __toESM(require_react());
   var import_classnames73 = __toESM(require_classnames());
   var import_jsx_runtime108 = __toESM(require_jsx_runtime());
-  "use client";
   var ToastBody = /* @__PURE__ */ React125.forwardRef(({
     className,
     bsPrefix,
@@ -37560,7 +37487,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Toast.js
   var import_jsx_runtime109 = __toESM(require_jsx_runtime());
-  "use client";
   var Toast = /* @__PURE__ */ React126.forwardRef(({
     bsPrefix,
     className,
@@ -37633,7 +37559,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_classnames75 = __toESM(require_classnames());
   var React127 = __toESM(require_react());
   var import_jsx_runtime110 = __toESM(require_jsx_runtime());
-  "use client";
   var positionClasses = {
     "top-start": "top-0 start-0",
     "top-center": "top-0 start-50 translate-middle-x",
@@ -38156,7 +38081,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_react88 = __toESM(require_react(), 1);
 
   // src/app/frontend/GitHubAuthService.ts
-  var _GitHubAuthService = class {
+  var GitHubAuthService = class _GitHubAuthService {
     constructor() {
       this.accessToken = null;
       this.user = null;
@@ -38169,6 +38094,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
       console.log("GitHub OAuth client ID not found in configuration");
       return void 0;
+    }
+    static {
+      this.REDIRECT_URI = `${window.location.origin}/auth/github/callback`;
+    }
+    static {
+      this.SCOPE = "repo user";
     }
     on(event, listener) {
       if (!this.listeners.has(event)) {
@@ -38333,9 +38264,6 @@ Current environment analysis:
       return response;
     }
   };
-  var GitHubAuthService = _GitHubAuthService;
-  GitHubAuthService.REDIRECT_URI = `${window.location.origin}/auth/github/callback`;
-  GitHubAuthService.SCOPE = "repo user";
   var githubAuthService = new GitHubAuthService();
 
   // src/app/frontend/components/pure/GitHubLoginButton.tsx
@@ -38898,7 +38826,7 @@ Current environment analysis:
     if (!context4) {
       throw new Error("useFileService must be used within a FileServiceProvider");
     }
-    return context4;
+    return [context4];
   };
 
   // src/app/frontend/components/stateful/ProjectsPage.tsx
@@ -46827,9 +46755,9 @@ object-assign/index.js:
   @license MIT
   *)
 
-react-router/dist/development/chunk-PVWAREVJ.mjs:
+react-router/dist/development/chunk-OIYGIGL5.mjs:
   (**
-   * react-router v7.8.2
+   * react-router v7.9.4
    *
    * Copyright (c) Remix Software Inc.
    *
@@ -46841,7 +46769,7 @@ react-router/dist/development/chunk-PVWAREVJ.mjs:
 
 react-router/dist/development/index.mjs:
   (**
-   * react-router v7.8.2
+   * react-router v7.9.4
    *
    * Copyright (c) Remix Software Inc.
    *

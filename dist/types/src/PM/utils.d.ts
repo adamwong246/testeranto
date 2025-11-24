@@ -27,9 +27,9 @@ export declare const puppeteerConfigs: {
     slowMo: number;
     waitForInitialPage: boolean;
     executablePath: string;
-    headless: boolean;
     defaultViewport: null;
     dumpio: boolean;
+    headless: boolean;
     devtools: boolean;
     args: string[];
 };

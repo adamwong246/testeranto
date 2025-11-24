@@ -1,9 +1,9 @@
 import { NonEmptyObject } from "type-fest";
-import type { Ibdd_in_any, Ibdd_out_any, ITestImplementation, ITestSpecification, ITestAdapter } from "../CoreTypes";
-import { ITestJob, IFinalResults, ITTestResourceRequest } from "./index.js";
+import type { Ibdd_in_any, Ibdd_out_any, ITestAdapter, ITestImplementation, ITestSpecification } from "../CoreTypes";
 import { BaseGiven } from "./BaseGiven";
-import { BaseWhen } from "./BaseWhen.js";
 import { BaseThen } from "./BaseThen.js";
+import { BaseWhen } from "./BaseWhen.js";
+import { IFinalResults, ITestJob, ITTestResourceRequest } from "./index.js";
 import { IPM } from "./types.js";
 type IExtenstions = Record<string, unknown>;
 export default abstract class Tiposkripto<I extends Ibdd_in_any = Ibdd_in_any, O extends Ibdd_out_any = Ibdd_out_any, M = unknown> {

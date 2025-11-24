@@ -33,7 +33,7 @@ export declare class PM_Web extends PM {
     existsSync(destFolder: string): Promise<boolean>;
     mkdirSync(x: any): any;
     write(uid: number, contents: string): Promise<boolean>;
-    writeFileSync(x: any): any;
+    writeFileSync(x: any, y: any): any;
     createWriteStream(filepath: string): any;
     end(uid: number): Promise<boolean>;
     customclose(): void;

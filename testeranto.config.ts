@@ -1,16 +1,13 @@
+import { sassPlugin } from "esbuild-sass-plugin";
 import { IProject } from "./src/Types";
 
-import { sassPlugin } from "esbuild-sass-plugin";
-// TODO- this config file is horrible. I need to redo how config files are handled.
+// TODO this config file is horrible. I need to redo how config files are handled.
 
 const config: IProject = {
-  // Add GitHub OAuth configuration
-  // githubOAuth: {
-  //   clientId: "Ov23li3JEcsRqW0zWCG7",
-  // },
   projects: {
     core: {
       tests: [
+        ["example/Calculator.test.ts", "web", { ports: 0 }, []],
         ["example/Calculator.test.ts", "node", { ports: 0 }, []],
         ["example/Calculator.pitono.test.py", "python", { ports: 0 }, []],
         ["example/Calculator.golingvu.test.go", "golang", { ports: 0 }, []],

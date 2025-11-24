@@ -3,7 +3,7 @@
 import net from "net";
 import { ITTestResourceConfiguration } from "../../lib";
 import { PM_Node_Sidecar } from "../nodeSidecar";
-import Testeranto from "../../Node";
+import Testeranto from "../../lib/Node";
 import {
   Ibdd_in_any,
   Ibdd_out,

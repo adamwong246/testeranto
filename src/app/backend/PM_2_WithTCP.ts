@@ -18,9 +18,6 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
   constructor(configs: any, name: string, mode: string) {
     super(configs, name, mode);
 
-    console.log("mark2", this.configs);
-    console.log("mark3", configs);
-
     this.httpServer = http.createServer(this.handleHttpRequest.bind(this));
     this.wss = new WebSocketServer({ server: this.httpServer });
 

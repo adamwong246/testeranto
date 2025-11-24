@@ -1,31 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import ansiC from "ansi-colors";
 import fs from "fs";
-import readline from "readline";
-
-import { ITestconfig, IRunTime, IBuiltConfig } from "./lib";
-import { IProject, ITestTypes } from "./Types";
-
-import { AppHtml } from "./utils/buildTemplates";
-
-import { PM_Main } from "./app/backend/main";
-import { PitonoBuild } from "./PM/pitonoBuild";
-import { getRunnables } from "./app/backend/utils";
 import path from "path";
-const { GolingvuBuild } = await import("./PM/golingvuBuild");
+import readline from "readline";
+import { PM_Main } from "./app/backend/main";
+import { getRunnables } from "./app/backend/utils";
+import { IBuiltConfig, IRunTime, ITestconfig } from "./lib";
+import { PitonoBuild } from "./PM/pitonoBuild";
+import { IProject, ITestTypes } from "./Types";
+import { AppHtml } from "./utils/buildTemplates";
 import webHtmlFrame from "./web.html";
-
-// if (!process.env.GITHUB_CLIENT_ID) {
-//   console.error(`env var "GITHUB_CLIENT_ID" needs to be set!`);
-//   process.exit(-1);
-// }
-
-// if (!process.env.GITHUB_CLIENT_SECRET) {
-//   console.error(`env var "GITHUB_CLIENT_SECRET" needs to be set!`);
-//   process.exit(-1);
-// }
+const { GolingvuBuild } = await import("./PM/golingvuBuild");
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -41,7 +25,7 @@ if (mode !== "once" && mode !== "dev") {
 const configFilePath = process.cwd() + "/" + "testeranto.config.ts";
 
 import(configFilePath).then(async (module) => {
-  const pckge = (await import(`${process.cwd()}/package.json`)).default;
+  // const pckge = (await import(`${process.cwd()}/package.json`)).default;
   const bigConfig: IProject = module.default;
 
   const project = bigConfig.projects[testName];
@@ -152,29 +136,32 @@ import(configFilePath).then(async (module) => {
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
         const cssFilePath = `./${sourceFileNameMinusJs}.css`;
 
-        return fs.promises
-          .mkdir(path.dirname(htmlFilePath), { recursive: true })
-          .then((x) =>
-            fs.writeFileSync(
-              htmlFilePath,
-              webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
+        return (
+          fs.promises
+            .mkdir(path.dirname(htmlFilePath), { recursive: true })
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            .then((x) =>
+              fs.writeFileSync(
+                htmlFilePath,
+                webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
+              )
             )
-          );
+        );
       })
     )
   );
 
   const {
     nodeEntryPoints,
-    nodeEntryPointSidecars,
+    // nodeEntryPointSidecars,
     webEntryPoints,
-    webEntryPointSidecars,
+    // webEntryPointSidecars,
     pureEntryPoints,
-    pureEntryPointSidecars,
+    // pureEntryPointSidecars,
     pythonEntryPoints,
-    pythonEntryPointSidecars,
+    // pythonEntryPointSidecars,
     golangEntryPoints,
-    golangEntryPointSidecars,
+    // golangEntryPointSidecars,
   } = getRunnables(config.tests, testName);
 
   // Debug logging to check if entry points are being found

@@ -31,10 +31,7 @@ export abstract class PM_0 {
   projectName: string;
 
   constructor(configs: IBuiltConfig, projectName: string, mode: IMode) {
-    console.log("mark6", configs);
-    console.log("mark7", this.configs);
     this.configs = configs;
-    console.log("mark8", this.configs);
     this.mode = mode;
     this.projectName = projectName;
   }

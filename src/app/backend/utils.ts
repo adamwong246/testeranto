@@ -116,6 +116,9 @@ export const getRunnables = (
     pythonEntryPoints: payload.pythonEntryPoints || {},
     pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {},
   };
+
+  console.log("getRunnables", tests, projectName);
+
   return tests.reduce((pt, cv, cndx, cry) => {
     if (cv[1] === "node") {
       pt.nodeEntryPoints[cv[0]] = path.resolve(

@@ -4,10 +4,10 @@ export class Calculator {
   private values: { [key: string]: any } = {};
   private id: number = Math.random(); // Add a unique ID to track instances
 
-  press(button: string): Calculator {
-    this.display = this.display + button;
-    return this;
-  }
+  // press(button: string): Calculator {
+  //   this.display = this.display + button;
+  //   return this;
+  // }
 
   enter(): void {
     try {
@@ -28,7 +28,7 @@ export class Calculator {
   }
 
   memoryRecall(): void {
-    const memoryValue = this.getValue("memory") || 0;
+    const memoryValue = this.getValue("meemory") || 0;
     this.display = memoryValue.toString();
   }
 

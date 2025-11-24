@@ -1,4 +1,4 @@
-import Testeranto from "../../Node";
+import Typoskripto from "../TipoSkripto";
 
 import { implementation } from "./implementation";
 import { specification } from "./specification";
@@ -9,7 +9,7 @@ import { butThenProxy, IProxy } from "../pmProxy";
 
 export type ITestProxies = { butThenProxy: IProxy };
 
-export default Testeranto<I, O, object>(
+export default new Typoskripto<I, O, object>(
   {
     butThenProxy,
   },

@@ -96,10 +96,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   constructor(configs: IBuiltConfig, name, mode) {
     super(configs, name, mode);
 
-    console.log("mark5", configs);
-
-    console.log("mark1", this.configs);
-
     this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
       this.ensureSummaryEntry(t);
       sidecars.forEach(([sidecarName]) => {
@@ -375,84 +371,103 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     // }
 
     // @ts-ignore
-    Object.keys(outputs).forEach(async (k) => {
-      const pattern = `testeranto/bundles/${platform}/${this.projectName}/${this.configs.src}`;
-      if (!k.startsWith(pattern)) {
-        return;
-      }
-
-      // // @ts-ignore
-      const output = outputs[k];
-      // Check if the output entry exists and has inputs
-      // if (!output || !output.inputs) {
+    Object.keys(outputs).forEach(async (builtOutput) => {
+      // const pattern = `testeranto/bundles/${platform}/${this.projectName}/${this.configs.src}`;
+      // if (!k.startsWith(pattern)) {
       //   return;
       // }
 
-      // @ts-ignore
-      const addableFiles = Object.keys(output.inputs).filter((i) => {
-        if (!fs.existsSync(i)) return false;
-        if (i.startsWith("node_modules")) return false;
-        if (i.startsWith("./node_modules")) return false;
-
-        return true;
-      });
-
-      const f = `${k.split(".").slice(0, -1).join(".")}/`;
-
-      if (!fs.existsSync(f)) {
-        fs.mkdirSync(f, { recursive: true });
-      }
-
-      // @ts-ignore
-      let entrypoint = output.entryPoint;
+      const entrypoint = await this.configs.tests.filter(
+        ([testEntryPoint, testPlatform]) => {
+          if (
+            testEntryPoint ===
+              builtOutput
+                .replace(
+                  `testeranto/bundles/${platform}/${this.projectName}/`,
+                  ``
+                )
+                .replace(`.mjs`, `.ts`) &&
+            testPlatform === platform
+          ) {
+            return true;
+          }
+        }
+      )[0];
 
       if (entrypoint) {
-        // Normalize the entrypoint path to ensure consistent comparison
-        entrypoint = path.normalize(entrypoint);
+        const metafileOutput = outputs[builtOutput];
 
-        const changeDigest = await filesHash(addableFiles);
+        // const output = outputs[k];
+        // Check if the output entry exists and has inputs
+        // if (!output || !output.inputs) {
+        //   return;
+        // }
 
-        if (changeDigest === changes[entrypoint]) {
-          // skip
-        } else {
-          changes[entrypoint] = changeDigest;
+        // @ts-ignore
+        const addableFiles = Object.keys(metafileOutput.inputs).filter((i) => {
+          if (!fs.existsSync(i)) return false;
+          if (i.startsWith("node_modules")) return false;
+          if (i.startsWith("./node_modules")) return false;
 
-          // Run appropriate static analysis based on platform
-          if (
-            platform === "node" ||
-            platform === "web" ||
-            platform === "pure"
-          ) {
-            this.tscCheck({ entrypoint, addableFiles, platform });
-            this.eslintCheck({ entrypoint, addableFiles, platform });
-          } else if (platform === "python") {
-            this.pythonLintCheck(entrypoint, addableFiles);
-            this.pythonTypeCheck(entrypoint, addableFiles);
-          }
+          return true;
+        });
 
-          makePrompt(
-            this.summary,
-            this.projectName,
-            entrypoint,
-            addableFiles,
-            platform
-          );
+        const f = `${builtOutput.split(".").slice(0, -1).join(".")}/`;
 
-          const testName = this.findTestNameByEntrypoint(entrypoint, platform);
-          if (testName) {
-            console.log(
-              ansiC.green(
-                ansiC.inverse(
-                  `Source files changed, re-queueing test: ${testName}`
-                )
-              )
-            );
-            this.addToQueue(testName, platform);
+        if (!fs.existsSync(f)) {
+          fs.mkdirSync(f, { recursive: true });
+        }
+
+        // @ts-ignore
+        let entrypoint = metafileOutput.entryPoint;
+
+        if (entrypoint) {
+          // Normalize the entrypoint path to ensure consistent comparison
+          entrypoint = path.normalize(entrypoint);
+
+          const changeDigest = await filesHash(addableFiles);
+
+          if (changeDigest === changes[entrypoint]) {
+            // skip
           } else {
-            console.error(
-              `Could not find test for entrypoint: ${entrypoint} (${platform})`
+            changes[entrypoint] = changeDigest;
+
+            // Run appropriate static analysis based on platform
+            if (platform === "node" || platform === "web") {
+              this.tscCheck({ entrypoint, addableFiles, platform });
+              this.eslintCheck({ entrypoint, addableFiles, platform });
+            } else if (platform === "python") {
+              this.pythonLintCheck(entrypoint, addableFiles);
+              this.pythonTypeCheck(entrypoint, addableFiles);
+            }
+
+            makePrompt(
+              this.summary,
+              this.projectName,
+              entrypoint,
+              addableFiles,
+              platform
             );
-            process.exit(-1);
+
+            const testName = this.findTestNameByEntrypoint(
+              entrypoint,
+              platform
+            );
+            if (testName) {
+              console.log(
+                ansiC.green(
+                  ansiC.inverse(
+                    `Source files changed, re-queueing test: ${testName}`
+                  )
+                )
+              );
+              this.addToQueue(testName, platform);
+            } else {
+              console.error(
+                `Could not find test for entrypoint: ${entrypoint} (${platform})`
+              );
+              throw `Could not find test for entrypoint: ${entrypoint} (${platform})`;
+            }
           }
         }
       }
@@ -463,6 +478,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     entrypoint: string,
     platform: IRunTime
   ): string | null {
+    console.log("findTestNameByEntrypoint", entrypoint, platform);
     const runnables = getRunnables(this.configs.tests, this.projectName);
 
     let entryPointsMap: Record<string, string>;
@@ -492,7 +508,9 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     }
 
     if (!entryPointsMap[entrypoint]) {
-      console.error(`${entrypoint} not found`);
+      console.error(`${entrypoint} not found 1`, entryPointsMap);
+      console.trace();
+      throw `${entrypoint} not found`;
     }
 
     return entryPointsMap[entrypoint];
@@ -529,10 +547,10 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
       return new Promise<void>((resolve) => {
         child.on("close", () => {
-          const output = stdout + stderr;
-          if (output.trim()) {
-            fs.writeFileSync(lintErrorsPath, output);
-            this.summary[entrypoint].staticErrors = output.split("\n").length;
+          const logOut = stdout + stderr;
+          if (logOut.trim()) {
+            fs.writeFileSync(lintErrorsPath, logOut);
+            this.summary[entrypoint].staticErrors = logOut.split("\n").length;
           } else {
             if (fs.existsSync(lintErrorsPath)) {
               fs.unlinkSync(lintErrorsPath);
@@ -583,10 +601,10 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
       return new Promise<void>((resolve) => {
         child.on("close", () => {
-          const output = stdout + stderr;
-          if (output.trim()) {
-            fs.writeFileSync(typeErrorsPath, output);
-            this.summary[entrypoint].typeErrors = output.split("\n").length;
+          const logOut = stdout + stderr;
+          if (logOut.trim()) {
+            fs.writeFileSync(typeErrorsPath, logOut);
+            this.summary[entrypoint].typeErrors = logOut.split("\n").length;
           } else {
             if (fs.existsSync(typeErrorsPath)) {
               fs.unlinkSync(typeErrorsPath);

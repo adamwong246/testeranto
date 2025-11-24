@@ -1,14 +1,13 @@
-import { polyfillNode } from "esbuild-plugin-polyfill-node";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BuildOptions } from "esbuild";
+import { polyfillNode } from "esbuild-plugin-polyfill-node";
 import path from "path";
-
 import { ITestconfig } from "../lib/index.js";
-
+import featuresPlugin from "./featuresPlugin.js";
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
-import featuresPlugin from "./featuresPlugin.js";
 import rebuildPlugin from "./rebuildPlugin.js";
+
 export default (
   config: ITestconfig,
   entryPoints: string[],
@@ -21,6 +20,11 @@ export default (
 
   return {
     ...baseEsBuildConfig(config),
+
+    define: {
+      "process.env.FLUENTFFMPEG_COV": "0",
+      ENV: `"web"`,
+    },
 
     treeShaking: true,
     outdir: `testeranto/bundles/web/${testName}`,

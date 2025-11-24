@@ -125,9 +125,9 @@ export class PM_Web extends PM {
     return window["write"](uid, contents);
   }
 
-  writeFileSync(x) {
-    const filepath = x[0];
-    const contents = x[1];
+  writeFileSync(x, y) {
+    const filepath = x;
+    const contents = y;
 
     return window["writeFileSync"](
       this.testResourceConfiguration.fs + "/" + filepath,

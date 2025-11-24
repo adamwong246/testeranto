@@ -2,6 +2,14 @@
   "tests": [
     [
       "example/Calculator.test.ts",
+      "web",
+      {
+        "ports": 0
+      },
+      []
+    ],
+    [
+      "example/Calculator.test.ts",
       "node",
       {
         "ports": 0

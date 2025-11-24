@@ -1,5 +1,5 @@
 go: inconsistent vendoring in /Users/adam/Code/testeranto/example:
-	github.com/adamwong246/testeranto/src/golingvu@v0.0.0-20250916161432-df2d728242b4: is explicitly required in go.mod, but not marked as explicit in vendor/modules.txt
+	github.com/adamwong246/testeranto/src/golingvu@v0.0.0-20251009224308-c2fde1410839: is explicitly required in go.mod, but not marked as explicit in vendor/modules.txt
 	github.com/adamwong246/testeranto/src/golingvu@v0.0.0-20250912215240-9a7ba91edeed: is marked as explicit in vendor/modules.txt, but not explicitly required in go.mod
 
 	To ignore the vendor directory, use -mod=readonly or -mod=mod.
