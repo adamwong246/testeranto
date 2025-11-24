@@ -1,7 +1,7 @@
 {
   "name": "testeranto",
   "description": "the AI powered BDD test framework for typescript projects",
-  "version": "0.206.0",
+  "version": "0.208.0",
   "engines": {
     "node": "18.18.0"
   },
@@ -16,7 +16,7 @@
     "mothership": "node dist/prebuild/mothership/index.mjs",
     "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
-    "build3": "yarn bundle",
+    "build3": "yarn bundle; tsc -p tsconfig.types.json",
     "dev": "sh prebuild.sh;  cp ./src/cjs-shim.js ./dist/cjs-shim.js; sh postBuild.sh; tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch  ",
     "bundle": "node bundle.js",
     "build-module": "tsc -p tsconfig.module.json",
@@ -86,7 +86,8 @@
     },
     "./src/CoreTypes": {
       "import": "./src/CoreTypes.ts",
-      "require": "./src/CoreTypes.ts"
+      "require": "./src/CoreTypes.ts",
+      "types": "./src/CoreTypes.d.ts"
     },
     "./src/Types": {
       "import": "./src/Types.ts",
@@ -173,7 +174,7 @@
     "@types/node": "^24.1.0",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
-    "@types/react-test-renderer": "19.0.0",
+    "@types/react-test-renderer": "^19.1.0",
     "@types/uuid": "^10.0.0",
     "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
@@ -254,6 +255,7 @@
     "react-draggable": "^4.5.0",
     "react-resizable": "^3.0.5",
     "react-router-dom": "^7.7.0",
+    "react-test-renderer": "^19.2.0",
     "sass": "^1.90.0",
     "ssml-check": "^0.4.6",
     "tsc-prog": "^2.3.0",

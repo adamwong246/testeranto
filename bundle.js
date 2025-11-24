@@ -5,7 +5,7 @@ await esbuild.build({
   outExtension: { '.js': '.mjs' },
   entryPoints: [
     // 'src/init-docs.ts',
-    // 'src/esbuildConfigs/eslint-formatter-testeranto.ts',
+    'src/esbuildConfigs/eslint-formatter-testeranto.ts',
     // 'src/testeranto.ts',
     'src/mothership/mothership.ts',
   ],
