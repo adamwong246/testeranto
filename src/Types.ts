@@ -183,23 +183,47 @@ export type IRunTime = `node` | `web` | "pure" | `golang` | `python`;
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
 export type ITestconfig = {
-  clearScreen: boolean;
-  debugger: boolean;
-  externals: string[];
+  // debugger: boolean;
+  // externals: string[];
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
-  minify: boolean;
-  nodePlugins: IPluginFactory[];
+  // minify: boolean;
+  // nodePlugins: IPluginFactory[];
   ports: string[];
   src: string;
-  tests: ITestTypes[];
-  webPlugins: IPluginFactory[];
-  webLoaders: Record<string, string>;
+
+  golang: {
+    plugins: any[];
+    tests: Record<string, { port: number }>;
+    loaders: Record<string, string>;
+  };
+
+  python: {
+    plugins: any[];
+    tests: Record<string, { port: number }>;
+    loaders: Record<string, string>;
+  };
+
+  node: {
+    plugins: any[];
+    tests: Record<string, { port: number }>;
+    loaders: Record<string, string>;
+    externals: string[];
+  };
+  web: {
+    plugins: any[];
+    tests: Record<string, { port: number }>;
+    loaders: Record<string, string>;
+    externals: string[];
+  };
+  // tests: ITestTypes[];
+  // webPlugins: IPluginFactory[];
+  // webLoaders: Record<string, string>;
 };
 
 export type IBuiltConfig = { buildDir: string } & ITestconfig;
 
-export type IProject = {
-  projects: Record<string, ITestconfig>;
-  ignore: string[]; //list of glob patterns to ignore
-};
+// export type IProject = {
+//   projects: Record<string, ITestconfig>;
+//   ignore: string[]; //list of glob patterns to ignore
+// };

@@ -4,9 +4,8 @@ import path from "path";
 import readline from "readline";
 import { PM_Main } from "./app/backend/main";
 import { getRunnables } from "./app/backend/utils";
-import { IBuiltConfig, IRunTime, ITestconfig } from "./lib";
 import { PitonoBuild } from "./PM/pitonoBuild";
-import { IProject, ITestTypes } from "./Types";
+import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
 import { AppHtml } from "./utils/buildTemplates";
 import webHtmlFrame from "./web.html";
 const { GolingvuBuild } = await import("./PM/golingvuBuild");
@@ -14,7 +13,16 @@ const { GolingvuBuild } = await import("./PM/golingvuBuild");
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-const testName = process.argv[2];
+if (!process.argv[2]) {
+  console.error(`The 2nd argument should be a testeranto config file name.`);
+  process.exit(-1);
+}
+const configFilepath = process.argv[2];
+const testsName = path
+  .basename(configFilepath)
+  .split(".")
+  .slice(0, -1)
+  .join(".");
 
 const mode = process.argv[3] as "once" | "dev";
 if (mode !== "once" && mode !== "dev") {
@@ -22,46 +30,46 @@ if (mode !== "once" && mode !== "dev") {
   process.exit(-1);
 }
 
-const configFilePath = process.cwd() + "/" + "testeranto.config.ts";
+// const configFilePath = process.cwd() + "/" + "testeranto.config.ts";
 
-import(configFilePath).then(async (module) => {
+import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   // const pckge = (await import(`${process.cwd()}/package.json`)).default;
-  const bigConfig: IProject = module.default;
+  const bigConfig: ITestconfig = module.default;
 
-  const project = bigConfig.projects[testName];
-  if (!project) {
-    console.error("no project found for", testName, "in testeranto.config.ts");
-    process.exit(-1);
-  }
+  // const project = bigConfig.projects[testName];
+  // if (!project) {
+  //   console.error("no project found for", testName, "in testeranto.config.ts");
+  //   process.exit(-1);
+  // }
 
   try {
-    fs.writeFileSync(
-      `${process.cwd()}/testeranto/projects.json`,
-      JSON.stringify(Object.keys(bigConfig.projects), null, 2)
-    );
+    // fs.writeFileSync(
+    //   `${process.cwd()}/testeranto/projects.json`,
+    //   JSON.stringify(Object.keys(bigConfig.projects), null, 2)
+    // );
   } catch (e) {
     console.error("there was a problem");
     console.error(e);
   }
 
-  const rawConfig: ITestconfig = bigConfig.projects[testName];
+  // const rawConfig: ITestconfig = bigConfig.projects[testName];
 
-  if (!rawConfig) {
-    console.error(`Project "${testName}" does not exist in the configuration.`);
-    console.error("Available projects:", Object.keys(bigConfig.projects));
-    process.exit(-1);
-  }
+  // if (!rawConfig) {
+  //   console.error(`Project "${testName}" does not exist in the configuration.`);
+  //   console.error("Available projects:", Object.keys(bigConfig.projects));
+  //   process.exit(-1);
+  // }
 
-  if (!rawConfig.tests) {
-    console.error(testName, "appears to have no tests: ", configFilePath);
-    console.error(`here is the config:`);
-    console.log(JSON.stringify(rawConfig));
-    process.exit(-1);
-  }
+  // if (!rawConfig.tests) {
+  //   console.error(testName, "appears to have no tests: ", configFilePath);
+  //   console.error(`here is the config:`);
+  //   console.log(JSON.stringify(rawConfig));
+  //   process.exit(-1);
+  // }
 
   const config: IBuiltConfig = {
-    ...rawConfig,
-    buildDir: process.cwd() + "/testeranto/bundles/" + testName,
+    ...bigConfig,
+    buildDir: process.cwd() + "/testeranto/bundles/" + testsName,
   };
 
   console.log(ansiC.inverse("Press 'q' to initiate a graceful shutdown."));
@@ -79,36 +87,45 @@ import(configFilePath).then(async (module) => {
   let pm: PM_Main | null = null;
   // Start PM_Main immediately - it will handle the build processes internally
   const { PM_Main } = await import("./app/backend/main");
-  pm = new PM_Main(config, testName, mode);
+  pm = new PM_Main(config, testsName, mode);
   await pm.start();
 
   fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
 
-  Object.keys(bigConfig.projects).forEach((projectName) => {
-    // console.log(`testeranto/reports/${projectName}`);
-    if (!fs.existsSync(`testeranto/reports/${projectName}`)) {
-      fs.mkdirSync(`testeranto/reports/${projectName}`);
-    }
+  if (!fs.existsSync(`testeranto/reports/${testsName}`)) {
+    fs.mkdirSync(`testeranto/reports/${testsName}`);
+  }
+  fs.writeFileSync(
+    `testeranto/reports/${testsName}/config.json`,
+    JSON.stringify(config, null, 2)
+  );
 
-    fs.writeFileSync(
-      `testeranto/reports/${projectName}/config.json`,
-      JSON.stringify(config, null, 2)
-    );
-  });
+  // Object.keys(bigConfig.projects).forEach((projectName) => {
+  //   // console.log(`testeranto/reports/${projectName}`);
+  //   if (!fs.existsSync(`testeranto/reports/${projectName}`)) {
+  //     fs.mkdirSync(`testeranto/reports/${projectName}`);
+  //   }
 
-  const getSecondaryEndpointsPoints = (runtime?: IRunTime): string[] => {
-    const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
-      ts.forEach((t) => {
-        if (t[1] === runtime) {
-          st.add(t[0]);
-        }
-        if (Array.isArray(t[3])) {
-          meta(t[3], st);
-        }
-      });
-      return st;
-    };
-    return Array.from(meta(config.tests, new Set()));
+  //   fs.writeFileSync(
+  //     `testeranto/reports/${projectName}/config.json`,
+  //     JSON.stringify(config, null, 2)
+  //   );
+  // });
+
+  // the web runtime needs html, js and css files for support.
+  const getSecondaryEndpointsPoints = (runtime: IRunTime): string[] => {
+    // const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
+    //   ts.forEach((t) => {
+    //     if (t[1] === runtime) {
+    //       st.add(t[0]);
+    //     }
+    //     if (Array.isArray(t[3])) {
+    //       meta(t[3], st);
+    //     }
+    //   });
+    //   return st;
+    // };
+    return Array.from((config[runtime].tests, new Set()));
   };
 
   // Also handle pitono endpoints for HTML generation if needed
@@ -129,7 +146,7 @@ import(configFilePath).then(async (module) => {
           .join(".");
 
         const htmlFilePath = path.normalize(
-          `${process.cwd()}/testeranto/bundles/web/${testName}/${sourceDir.join(
+          `${process.cwd()}/testeranto/bundles/web/${testsName}/${sourceDir.join(
             "/"
           )}/${sourceFileNameMinusJs}.html`
         );
@@ -156,24 +173,25 @@ import(configFilePath).then(async (module) => {
     // nodeEntryPointSidecars,
     webEntryPoints,
     // webEntryPointSidecars,
-    pureEntryPoints,
+    // pureEntryPoints,
     // pureEntryPointSidecars,
     pythonEntryPoints,
     // pythonEntryPointSidecars,
     golangEntryPoints,
     // golangEntryPointSidecars,
-  } = getRunnables(config.tests, testName);
+  } = getRunnables(config, testsName);
 
   // Debug logging to check if entry points are being found
   console.log("Node entry points:", Object.keys(nodeEntryPoints));
   console.log("Web entry points:", Object.keys(webEntryPoints));
-  console.log("Pure entry points:", Object.keys(pureEntryPoints));
+  // console.log("Pure entry points:", Object.keys(pureEntryPoints));
 
   // Handle golang tests using GolingvuBuild
-  const golangTests = config.tests.filter((test) => test[1] === "golang");
-  const hasGolangTests = golangTests.length > 0;
+  // const golangTests = config.tests.filter((test) => test[1] === "golang");
+  // const golangTests = config.golang.map((_, testName) => [
+  const hasGolangTests = Object.keys(config.golang).length > 0;
   if (hasGolangTests) {
-    const golingvuBuild = new GolingvuBuild(config, testName);
+    const golingvuBuild = new GolingvuBuild(config, testsName);
     const golangEntryPoints = await golingvuBuild.build();
     golingvuBuild.onBundleChange(() => {
       Object.keys(golangEntryPoints).forEach((entryPoint) => {
@@ -185,10 +203,10 @@ import(configFilePath).then(async (module) => {
   }
 
   // Handle pitono (Python) tests by generating their metafiles
-  const pitonoTests = config.tests.filter((test) => test[1] === "python");
-  const hasPitonoTests = pitonoTests.length > 0;
+  // const pitonoTests = config.tests.filter((test) => test[1] === "python");
+  const hasPitonoTests = Object.keys(config.python).length > 0;
   if (hasPitonoTests) {
-    const pitonoBuild = new PitonoBuild(config, testName);
+    const pitonoBuild = new PitonoBuild(config, testsName);
     const pitonoEntryPoints = await pitonoBuild.build();
     pitonoBuild.onBundleChange(() => {
       Object.keys(pitonoEntryPoints).forEach((entryPoint) => {
@@ -201,7 +219,6 @@ import(configFilePath).then(async (module) => {
 
   // create the necessary folders for all tests
   [
-    ["pure", Object.keys(pureEntryPoints)],
     ["node", Object.keys(nodeEntryPoints)],
     ["web", Object.keys(webEntryPoints)],
     ["python", Object.keys(pythonEntryPoints)],
@@ -209,7 +226,7 @@ import(configFilePath).then(async (module) => {
   ].forEach(async ([runtime, keys]: [IRunTime, string[]]) => {
     keys.forEach(async (k) => {
       fs.mkdirSync(
-        `testeranto/reports/${testName}/${k
+        `testeranto/reports/${testsName}/${k
           .split(".")
           .slice(0, -1)
           .join(".")}/${runtime}`,

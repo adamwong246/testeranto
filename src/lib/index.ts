@@ -125,17 +125,16 @@ export type ITestArtifactory = (key: string, value: unknown) => unknown;
 export type { ITestconfig, IBuiltConfig, IRunTime, ITestTypes };
 
 export type IRunnables = {
-  nodeEntryPoints: Record<string, string>;
-  nodeEntryPointSidecars: Record<string, string>;
-  webEntryPoints: Record<string, string>;
-  webEntryPointSidecars: Record<string, string>;
-  pureEntryPoints: Record<string, string>;
-  pureEntryPointSidecars: Record<string, string>;
-
-  pythonEntryPoints: Record<string, string>;
-  pythonEntryPointSidecars: Record<string, string>;
+  // golangEntryPointSidecars: Record<string, string>;
+  // nodeEntryPointSidecars: Record<string, string>;
+  // pureEntryPointSidecars: Record<string, string>;
+  // pythonEntryPointSidecars: Record<string, string>;
+  // webEntryPointSidecars: Record<string, string>;
   golangEntryPoints: Record<string, string>;
-  golangEntryPointSidecars: Record<string, string>;
+  nodeEntryPoints: Record<string, string>;
+  // pureEntryPoints: Record<string, string>;
+  pythonEntryPoints: Record<string, string>;
+  webEntryPoints: Record<string, string>;
 };
 
 export type IFinalResults = {

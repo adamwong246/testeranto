@@ -264,13 +264,21 @@ export function writePitonoMetafile(
 ): void {
   // Always use the project root for testeranto directories
   const projectRoot = process.cwd();
+
   const metafilePath = path.join(
-    projectRoot,
     "testeranto",
     "metafiles",
     "python",
-    "core.json"
+    `${path.basename(testName)}.json`
   );
+
+  // const metafilePath = path.join(
+  //   projectRoot,
+  //   "testeranto",
+  //   "metafiles",
+  //   "python",
+  //   "core.json"
+  // );
   const metafileDir = path.dirname(metafilePath);
 
   // Ensure directory exists

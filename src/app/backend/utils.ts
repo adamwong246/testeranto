@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import path from "path";
 import { IRunnables } from "../../lib";
-import { IRunTime, IBuiltConfig, ITestTypes } from "../../Types";
+import { IRunTime, IBuiltConfig, ITestTypes, ITestconfig } from "../../Types";
 
 export const webEvaluator = (d, webArgz) => {
   return `
@@ -88,118 +88,152 @@ export const promptPather = (
 };
 
 export const getRunnables = (
-  tests: ITestTypes[],
-  projectName: string,
-  payload = {
-    nodeEntryPoints: {},
-    nodeEntryPointSidecars: {},
-    webEntryPoints: {},
-    webEntryPointSidecars: {},
-    pureEntryPoints: {},
-    pureEntryPointSidecars: {},
-    golangEntryPoints: {},
-    golangEntryPointSidecars: {},
-    pythonEntryPoints: {},
-    pythonEntryPointSidecars: {},
-  }
+  config: ITestconfig,
+  projectName: string
+  // payload = {
+  //   nodeEntryPoints: {},
+  //   nodeEntryPointSidecars: {},
+  //   webEntryPoints: {},
+  //   webEntryPointSidecars: {},
+  //   pureEntryPoints: {},
+  //   pureEntryPointSidecars: {},
+  //   golangEntryPoints: {},
+  //   golangEntryPointSidecars: {},
+  //   pythonEntryPoints: {},
+  //   pythonEntryPointSidecars: {},
+  // }
 ): IRunnables => {
   // Ensure all properties are properly initialized
-  const initializedPayload = {
-    nodeEntryPoints: payload.nodeEntryPoints || {},
-    nodeEntryPointSidecars: payload.nodeEntryPointSidecars || {},
-    webEntryPoints: payload.webEntryPoints || {},
-    webEntryPointSidecars: payload.webEntryPointSidecars || {},
-    pureEntryPoints: payload.pureEntryPoints || {},
-    pureEntryPointSidecars: payload.pureEntryPointSidecars || {},
-    golangEntryPoints: payload.golangEntryPoints || {},
-    golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
-    pythonEntryPoints: payload.pythonEntryPoints || {},
-    pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {},
-  };
-
-  console.log("getRunnables", tests, projectName);
-
-  return tests.reduce((pt, cv, cndx, cry) => {
-    if (cv[1] === "node") {
-      pt.nodeEntryPoints[cv[0]] = path.resolve(
+  return {
+    // pureEntryPoints: payload.pureEntryPoints || {},
+    golangEntryPoints: Object.entries(config.golang.tests).reduce((pt, cv) => {
+      pt[cv[0]] = path.resolve(cv[0]);
+      return pt;
+    }, {}),
+    // golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
+    nodeEntryPoints: Object.entries(config.node.tests).reduce((pt, cv) => {
+      pt[cv[0]] = path.resolve(
         `./testeranto/bundles/node/${projectName}/${cv[0]
           .split(".")
           .slice(0, -1)
           .concat("mjs")
           .join(".")}`
       );
-    } else if (cv[1] === "web") {
-      pt.webEntryPoints[cv[0]] = path.resolve(
+      return pt;
+    }, {} as Record<string, string>),
+    // nodeEntryPointSidecars: payload.nodeEntryPointSidecars || {},
+    pythonEntryPoints: Object.entries(config.python.tests).reduce((pt, cv) => {
+      pt[cv[0]] = path.resolve(cv[0]);
+      return pt;
+    }, {}),
+    // pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {},
+    webEntryPoints: Object.entries(config.web.tests).reduce((pt, cv) => {
+      pt[cv[0]] = path.resolve(
         `./testeranto/bundles/web/${projectName}/${cv[0]
           .split(".")
           .slice(0, -1)
           .concat("mjs")
           .join(".")}`
       );
-    } else if (cv[1] === "pure") {
-      pt.pureEntryPoints[cv[0]] = path.resolve(
-        `./testeranto/bundles/pure/${projectName}/${cv[0]
-          .split(".")
-          .slice(0, -1)
-          .concat("mjs")
-          .join(".")}`
-      );
-    } else if (cv[1] === "golang") {
-      // For Go files, we'll use the original path since they're not compiled to JS
-      pt.golangEntryPoints[cv[0]] = path.resolve(cv[0]);
-    } else if (cv[1] === "python") {
-      // For python files, use the original Python file path
-      pt.pythonEntryPoints[cv[0]] = path.resolve(cv[0]);
-    }
+      return pt;
+    }, {} as Record<string, string>),
+    // webEntryPointSidecars: payload.webEntryPointSidecars || {},
+  };
 
-    //////////////////////////////////////////////////////////
+  // console.log("getRunnables", tests, projectName);
 
-    cv[3]
-      .filter((t) => t[1] === "node")
-      .forEach((t) => {
-        pt.nodeEntryPointSidecars[`${t[0]}`] = path.resolve(
-          `./testeranto/bundles/node/${projectName}/${cv[0]
-            .split(".")
-            .slice(0, -1)
-            .concat("mjs")
-            .join(".")}`
-        );
-      });
-    cv[3]
-      .filter((t) => t[1] === "web")
-      .forEach((t) => {
-        pt.webEntryPointSidecars[`${t[0]}`] = path.resolve(
-          `./testeranto/bundles/web/${projectName}/${cv[0]
-            .split(".")
-            .slice(0, -1)
-            .concat("mjs")
-            .join(".")}`
-        );
-      });
-    cv[3]
-      .filter((t) => t[1] === "pure")
-      .forEach((t) => {
-        pt.pureEntryPointSidecars[`${t[0]}`] = path.resolve(
-          `./testeranto/bundles/pure/${projectName}/${cv[0]
-            .split(".")
-            .slice(0, -1)
-            .concat("mjs")
-            .join(".")}`
-        );
-      });
-    cv[3]
-      .filter((t) => t[1] === "golang")
-      .forEach((t) => {
-        // For Go sidecars, use the original path
-        pt.golangEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
-      });
-    cv[3]
-      .filter((t) => t[1] === "python")
-      .forEach((t) => {
-        // For python sidecars, use the original Python file path
-        pt.pythonEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
-      });
+  // initializedPayload.nodeEntryPoints = {};
+  // initializedPayload.nodeEntryPointSidecars = {};
+  // initializedPayload.webEntryPoints = {};
+  // initializedPayload.webEntryPointSidecars = {};
+  // initializedPayload.pureEntryPoints = {};
+  // initializedPayload.pureEntryPointSidecars = {};
+  // initializedPayload.golangEntryPoints = {};
+  // initializedPayload.golangEntryPointSidecars = {};
+  // initializedPayload.pythonEntryPoints = {};
+  // initializedPayload.pythonEntryPointSidecars = {};
 
-    return pt;
-  }, initializedPayload as IRunnables);
+  // return tests.reduce((pt, cv, cndx, cry) => {
+  //   if (cv[1] === "node") {
+  //     pt.nodeEntryPoints[cv[0]] = path.resolve(
+  //       `./testeranto/bundles/node/${projectName}/${cv[0]
+  //         .split(".")
+  //         .slice(0, -1)
+  //         .concat("mjs")
+  //         .join(".")}`
+  //     );
+  //   } else if (cv[1] === "web") {
+  //     pt.webEntryPoints[cv[0]] = path.resolve(
+  //       `./testeranto/bundles/web/${projectName}/${cv[0]
+  //         .split(".")
+  //         .slice(0, -1)
+  //         .concat("mjs")
+  //         .join(".")}`
+  //     );
+  //   } else if (cv[1] === "pure") {
+  //     pt.pureEntryPoints[cv[0]] = path.resolve(
+  //       `./testeranto/bundles/pure/${projectName}/${cv[0]
+  //         .split(".")
+  //         .slice(0, -1)
+  //         .concat("mjs")
+  //         .join(".")}`
+  //     );
+  //   } else if (cv[1] === "golang") {
+  //     // For Go files, we'll use the original path since they're not compiled to JS
+  //     pt.golangEntryPoints[cv[0]] = path.resolve(cv[0]);
+  //   } else if (cv[1] === "python") {
+  //     // For python files, use the original Python file path
+  //     pt.pythonEntryPoints[cv[0]] = path.resolve(cv[0]);
+  //   }
+
+  //   //////////////////////////////////////////////////////////
+
+  //   cv[3]
+  //     .filter((t) => t[1] === "node")
+  //     .forEach((t) => {
+  //       pt.nodeEntryPointSidecars[`${t[0]}`] = path.resolve(
+  //         `./testeranto/bundles/node/${projectName}/${cv[0]
+  //           .split(".")
+  //           .slice(0, -1)
+  //           .concat("mjs")
+  //           .join(".")}`
+  //       );
+  //     });
+  //   cv[3]
+  //     .filter((t) => t[1] === "web")
+  //     .forEach((t) => {
+  //       pt.webEntryPointSidecars[`${t[0]}`] = path.resolve(
+  //         `./testeranto/bundles/web/${projectName}/${cv[0]
+  //           .split(".")
+  //           .slice(0, -1)
+  //           .concat("mjs")
+  //           .join(".")}`
+  //       );
+  //     });
+  //   cv[3]
+  //     .filter((t) => t[1] === "pure")
+  //     .forEach((t) => {
+  //       pt.pureEntryPointSidecars[`${t[0]}`] = path.resolve(
+  //         `./testeranto/bundles/pure/${projectName}/${cv[0]
+  //           .split(".")
+  //           .slice(0, -1)
+  //           .concat("mjs")
+  //           .join(".")}`
+  //       );
+  //     });
+  //   cv[3]
+  //     .filter((t) => t[1] === "golang")
+  //     .forEach((t) => {
+  //       // For Go sidecars, use the original path
+  //       pt.golangEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
+  //     });
+  //   cv[3]
+  //     .filter((t) => t[1] === "python")
+  //     .forEach((t) => {
+  //       // For python sidecars, use the original Python file path
+  //       pt.pythonEntryPointSidecars[`${t[0]}`] = path.resolve(t[0]);
+  //     });
+
+  //   return pt;
+  // }, initializedPayload as IRunnables);
 };

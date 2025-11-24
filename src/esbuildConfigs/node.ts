@@ -38,7 +38,7 @@ export default (
     },
     platform: "node",
 
-    external: ["react", ...config.externals],
+    external: ["react", ...config.node.externals],
 
     entryPoints: [...entryPoints],
     plugins: [
@@ -47,7 +47,7 @@ export default (
       inputFilesPluginFactory,
       rebuildPlugin("node"),
 
-      ...(config.nodePlugins.map((p) => p(register, entryPoints)) || []),
+      ...(config.node.plugins.map((p) => p(register, entryPoints)) || []),
     ],
   };
 };

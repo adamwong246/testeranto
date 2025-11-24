@@ -1,5 +1,8 @@
 import { IBuiltConfig } from "../Types";
-import { generatePitonoMetafile, writePitonoMetafile } from "../utils/pitonoMetafile";
+import {
+  generatePitonoMetafile,
+  writePitonoMetafile,
+} from "../utils/pitonoMetafile";
 import { PitonoWatcher } from "../utils/pitonoWatcher";
 
 export class PitonoBuild {
@@ -14,24 +17,34 @@ export class PitonoBuild {
 
   async build() {
     // Filter python tests
-    const pythonTests = this.config.tests.filter((test) => test[1] === "python");
+    const pythonTests: [string, string, object, object[]][] = Object.keys(
+      this.config.golang.tests
+    ).map((testName) => [
+      testName,
+      "python",
+      this.config.python.tests[testName],
+      [],
+    ]);
     const hasPythonTests = pythonTests.length > 0;
-    
+
     if (hasPythonTests) {
       // Get the entry points
       const pythonEntryPoints = pythonTests.map((test) => test[0]);
-      
+
       // Generate and write metafile
-      const metafile = await generatePitonoMetafile(this.testName, pythonEntryPoints);
+      const metafile = await generatePitonoMetafile(
+        this.testName,
+        pythonEntryPoints
+      );
       writePitonoMetafile(this.testName, metafile);
 
       // Start watching for changes
       this.watcher = new PitonoWatcher(this.testName, pythonEntryPoints);
       await this.watcher.start();
-      
+
       return pythonEntryPoints;
     }
-    
+
     return [];
   }
 

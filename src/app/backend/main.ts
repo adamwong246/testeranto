@@ -18,7 +18,7 @@ import {
 import { Queue } from "../../utils/queue.js";
 import { PM_WithHelpo } from "./PM_WithHelpo.js";
 import { getRunnables, webEvaluator } from "./utils.js";
-import { evaluationString } from "puppeteer-core/lib/esm/puppeteer/index-browser.js";
+// import { evaluationString } from "puppeteer-core/lib/esm/puppeteer/index-browser.js";
 
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
@@ -29,21 +29,21 @@ export class PM_Main extends PM_WithHelpo {
   }
 
   async startBuildProcesses(): Promise<void> {
-    const { nodeEntryPoints, webEntryPoints, pureEntryPoints } = getRunnables(
-      this.configs.tests,
+    const { nodeEntryPoints, webEntryPoints } = getRunnables(
+      this.configs,
       this.projectName
     );
 
     console.log(`Starting build processes for ${this.projectName}...`);
     console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
     console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
-    console.log(`  Pure entry points: ${Object.keys(pureEntryPoints).length}`);
+    // console.log(`  Pure entry points: ${Object.keys(pureEntryPoints).length}`);
 
     // Start all build processes (only node, web, pure)
     await Promise.all([
       this.startBuildProcess(esbuildNodeConfiger, nodeEntryPoints, "node"),
       this.startBuildProcess(esbuildWebConfiger, webEntryPoints, "web"),
-      this.startBuildProcess(esbuildImportConfiger, pureEntryPoints, "pure"),
+      // this.startBuildProcess(esbuildImportConfiger, pureEntryPoints, "pure"),
     ]);
   }
 
@@ -68,7 +68,7 @@ export class PM_Main extends PM_WithHelpo {
       fs.mkdirSync(reportDest, { recursive: true });
     }
 
-    const testConfig = this.configs.tests.find((t) => t[0] === src);
+    const testConfig = this.configTests().find((t) => t[0] === src);
     if (!testConfig) {
       console.log(
         ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`)
@@ -77,6 +77,8 @@ export class PM_Main extends PM_WithHelpo {
     }
 
     const testConfigResource = testConfig[2];
+
+    console.log("mark1", this.configTests());
     const portsToUse: string[] = [];
     let testResources = "";
 
@@ -143,7 +145,6 @@ export class PM_Main extends PM_WithHelpo {
         socket.on("data", onData);
       });
 
-      // @ts-ignore
       server.listen(ipcfile, (err) => {
         if (err) reject(err);
         else resolve(server);
@@ -643,7 +644,6 @@ export class PM_Main extends PM_WithHelpo {
 
         while (currentDir !== path.parse(currentDir).root) {
           if (fs.existsSync(path.join(currentDir, "go.mod"))) {
-            // @ts-ignore
             goModDir = currentDir;
             break;
           }
@@ -653,13 +653,11 @@ export class PM_Main extends PM_WithHelpo {
         if (!goModDir) {
           console.error(`Could not find go.mod file for test ${src}`);
           // Try running from the test file's directory as a fallback
-          // @ts-ignore
           goModDir = path.dirname(src);
           console.error(`Falling back to: ${goModDir}`);
         }
 
         // Get the relative path to the test file from the go.mod directory
-        // @ts-ignore
         const relativeTestPath = path.relative(goModDir, src);
 
         // Run go test from the directory containing go.mod
@@ -674,7 +672,6 @@ export class PM_Main extends PM_WithHelpo {
               IPC_FILE: ipcfile,
               GO111MODULE: "on",
             },
-            // @ts-ignore
             cwd: goModDir,
           }
         );
@@ -737,7 +734,6 @@ export class PM_Main extends PM_WithHelpo {
           try {
             const event = JSON.parse(line);
             if (event.Action === "pass" || event.Action === "fail") {
-              // @ts-ignore
               testResults.tests.push({
                 name: event.Test || event.Package,
                 status: event.Action === "pass" ? "passed" : "failed",

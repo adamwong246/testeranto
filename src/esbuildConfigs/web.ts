@@ -59,7 +59,7 @@ export default (
 
     entryPoints: [...entryPoints],
 
-    loader: config.webLoaders as any,
+    loader: config.web.loaders as any,
 
     plugins: [
       featuresPlugin,
@@ -76,7 +76,8 @@ export default (
 
       rebuildPlugin("web"),
 
-      ...((config.webPlugins || []).map((p) => p(register, entryPoints)) || []),
+      ...((config.web.plugins || []).map((p) => p(register, entryPoints)) ||
+        []),
     ],
   };
 };

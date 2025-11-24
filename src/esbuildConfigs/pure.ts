@@ -1,79 +1,79 @@
-import { BuildOptions } from "esbuild";
+// import { BuildOptions } from "esbuild";
 
-import { ITestconfig } from "../lib/index.js";
+// import { ITestconfig } from "../lib/index.js";
 
-import baseEsBuildConfig from "./index.js";
-import inputFilesPlugin from "./inputFilesPlugin.js";
-import featuresPlugin from "./featuresPlugin.js";
+// import baseEsBuildConfig from "./index.js";
+// import inputFilesPlugin from "./inputFilesPlugin.js";
+// import featuresPlugin from "./featuresPlugin.js";
 
-import { isBuiltin } from "node:module";
-import { consoleDetectorPlugin } from "./consoleDetectorPlugin.js";
-import rebuildPlugin from "./rebuildPlugin.js";
-import { nativeImportDetectorPlugin } from "./nativeImportDetectorPlugin.js";
+// import { isBuiltin } from "node:module";
+// import { consoleDetectorPlugin } from "./consoleDetectorPlugin.js";
+// import rebuildPlugin from "./rebuildPlugin.js";
+// import { nativeImportDetectorPlugin } from "./nativeImportDetectorPlugin.js";
 
-export default (
-  config: ITestconfig,
-  entryPoints: string[],
-  testName: string
-): BuildOptions => {
-  const { inputFilesPluginFactory, register } = inputFilesPlugin(
-    "pure",
-    testName
-  );
-  return {
-    ...baseEsBuildConfig(config),
+// export default (
+//   config: ITestconfig,
+//   entryPoints: string[],
+//   testName: string
+// ): BuildOptions => {
+//   const { inputFilesPluginFactory, register } = inputFilesPlugin(
+//     "pure",
+//     testName
+//   );
+//   return {
+//     ...baseEsBuildConfig(config),
 
-    drop: [],
+//     drop: [],
 
-    splitting: true,
+//     splitting: true,
 
-    outdir: `testeranto/bundles/pure/${testName}/`,
+//     outdir: `testeranto/bundles/pure/${testName}/`,
 
-    // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
-    metafile: true,
-    supported: {
-      "dynamic-import": true,
-    },
+//     // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
+//     metafile: true,
+//     supported: {
+//       "dynamic-import": true,
+//     },
 
-    define: {
-      "process.env.FLUENTFFMPEG_COV": "0",
-    },
-    absWorkingDir: process.cwd(),
-    banner: {
-      js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-    },
-    platform: "node",
+//     define: {
+//       "process.env.FLUENTFFMPEG_COV": "0",
+//     },
+//     absWorkingDir: process.cwd(),
+//     banner: {
+//       js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
+//     },
+//     platform: "node",
 
-    external: ["react", ...config.externals],
+//     external: ["react", ...config.externals],
 
-    entryPoints: [...entryPoints],
-    plugins: [
-      featuresPlugin,
+//     entryPoints: [...entryPoints],
+//     plugins: [
+//       featuresPlugin,
 
-      inputFilesPluginFactory,
+//       inputFilesPluginFactory,
 
-      consoleDetectorPlugin,
+//       consoleDetectorPlugin,
 
-      // nativeImportDetectorPlugin,
-      {
-        name: "native-node-import-filter",
-        setup(build) {
-          build.onResolve({ filter: /fs/ }, (args) => {
-            if (isBuiltin(args.path)) {
-              throw new Error(
-                `You attempted to import a node module "${args.path}" into a "pure" test, which is not allowed. If you really want to use this package, convert this test from "pure" to "node"`
-              );
-            }
+//       // nativeImportDetectorPlugin,
+//       {
+//         name: "native-node-import-filter",
+//         setup(build) {
+//           build.onResolve({ filter: /fs/ }, (args) => {
+//             if (isBuiltin(args.path)) {
+//               throw new Error(
+//                 `You attempted to import a node module "${args.path}" into a "pure" test, which is not allowed. If you really want to use this package, convert this test from "pure" to "node"`
+//               );
+//             }
 
-            return { path: args.path };
-          });
-        },
-      },
+//             return { path: args.path };
+//           });
+//         },
+//       },
 
-      rebuildPlugin("pure"),
+//       rebuildPlugin("pure"),
 
-      ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) ||
-        []),
-    ],
-  };
-};
+//       ...((config.nodePlugins || []).map((p) => p(register, entryPoints)) ||
+//         []),
+//     ],
+//   };
+// };

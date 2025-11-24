@@ -41,7 +41,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
   abstract launchNode(src: string, dest: string);
   abstract launchWeb(src: string, dest: string);
-  abstract launchPure(src: string, dest: string);
+  // abstract launchPure(src: string, dest: string);
   abstract launchPython(src: string, dest: string);
   abstract launchGolang(src: string, dest: string);
   abstract startBuildProcesses(): Promise<void>;
@@ -84,7 +84,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       type: "process" | "promise";
       category: "aider" | "bdd-test" | "build-time" | "other";
       testName?: string;
-      platform?: "node" | "web" | "pure" | "python" | "golang";
+      platform: IRunTime;
     }
   > = new Map();
   processLogs: Map<string, string[]> = new Map();
@@ -96,7 +96,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   constructor(configs: IBuiltConfig, name, mode) {
     super(configs, name, mode);
 
-    this.configs.tests.forEach(([t, rt, tr, sidecars]) => {
+    this.configTests().forEach(([t, rt, tr, sidecars]) => {
       this.ensureSummaryEntry(t);
       sidecars.forEach(([sidecarName]) => {
         this.ensureSummaryEntry(sidecarName, true);
@@ -111,6 +111,36 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       this.ports[element] = ""; // set ports as open
     });
   }
+
+  configTests: () => [string, IRunTime, { ports: number }, object][] = () => {
+    return [
+      ...Object.keys(this.configs.node.tests).map((t) => [
+        t,
+        "node",
+        this.configs.node.tests[t],
+        [],
+      ]),
+
+      ...Object.keys(this.configs.web.tests).map((t) => [
+        t,
+        "web",
+        this.configs.web.tests[t],
+        [],
+      ]),
+      ...Object.keys(this.configs.python.tests).map((t) => [
+        t,
+        "python",
+        this.configs.python.tests[t],
+        [],
+      ]),
+      ...Object.keys(this.configs.golang.tests).map((t) => [
+        t,
+        "golang",
+        this.configs.golang.tests[t],
+        [],
+      ]),
+    ];
+  };
 
   writeBigBoard = () => {
     // note: this path is different from the one used by front end
@@ -140,8 +170,8 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     promise: Promise<any>,
     command: string,
     category: "aider" | "bdd-test" | "build-time" | "other" = "other",
-    testName?: string,
-    platform?: "node" | "web" | "pure" | "python" | "golang",
+    testName: string,
+    platform: IRunTime,
     onResolve?: (result: any) => void,
     onReject?: (error: any) => void
   ) {
@@ -282,9 +312,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       }));
   }
 
-  getProcessesByPlatform(
-    platform: "node" | "web" | "pure" | "pitono" | "golang"
-  ) {
+  getProcessesByPlatform(platform: IRunTime) {
     return Array.from(this.allProcesses.entries())
       .filter(([id, procInfo]) => procInfo.platform === platform)
       .map(([id, procInfo]) => ({
@@ -377,7 +405,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       //   return;
       // }
 
-      const entrypoint = await this.configs.tests.filter(
+      const entrypoint = await this.configTests().filter(
         ([testEntryPoint, testPlatform]) => {
           if (
             testEntryPoint ===
@@ -479,7 +507,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     platform: IRunTime
   ): string | null {
     console.log("findTestNameByEntrypoint", entrypoint, platform);
-    const runnables = getRunnables(this.configs.tests, this.projectName);
+    const runnables = getRunnables(this.configs, this.projectName);
 
     let entryPointsMap: Record<string, string>;
 
@@ -490,9 +518,9 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       case "web":
         entryPointsMap = runnables.webEntryPoints;
         break;
-      case "pure":
-        entryPointsMap = runnables.pureEntryPoints;
-        break;
+      // case "pure":
+      //   entryPointsMap = runnables.pureEntryPoints;
+      //   break;
       case "python":
         entryPointsMap = runnables.pythonEntryPoints;
         break;
@@ -627,7 +655,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       await this.startBuildProcesses();
 
       // Generate Python metafile if there are Python tests
-      const pythonTests = this.configs.tests.filter(
+      const pythonTests = this.configTests().filter(
         (test) => test[1] === "python"
       );
       if (pythonTests.length > 0) {
@@ -667,11 +695,11 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       );
     }
 
-    const runnables = getRunnables(this.configs.tests, this.projectName);
+    const runnables = getRunnables(this.configs, this.projectName);
     const {
       nodeEntryPoints,
       webEntryPoints,
-      pureEntryPoints,
+      // pureEntryPoints,
       pythonEntryPoints,
       golangEntryPoints,
     } = runnables;
@@ -680,7 +708,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     [
       ["node", nodeEntryPoints],
       ["web", webEntryPoints],
-      ["pure", pureEntryPoints],
+      // ["pure", pureEntryPoints],
       ["python", pythonEntryPoints],
       ["golang", golangEntryPoints],
     ].forEach(([runtime, entryPoints]: [IRunTime, Record<string, string>]) => {
@@ -703,7 +731,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     const runtimeConfigs = [
       ["node", nodeEntryPoints],
       ["web", webEntryPoints],
-      ["pure", pureEntryPoints],
+      // ["pure", pureEntryPoints],
       ["python", pythonEntryPoints],
       ["golang", golangEntryPoints],
     ];
@@ -776,9 +804,9 @@ export abstract class PM_1_WithProcesses extends PM_0 {
           case "web":
             this.webMetafileWatcher = watcher;
             break;
-          case "pure":
-            this.importMetafileWatcher = watcher;
-            break;
+          // case "pure":
+          //   this.importMetafileWatcher = watcher;
+          //   break;
           case "python":
             this.pitonoMetafileWatcher = watcher;
             break;
@@ -935,11 +963,11 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     // First, check if this looks like a bundle path (contains 'testeranto/bundles')
     if (src.includes("testeranto/bundles")) {
       // Try to find the original test name that corresponds to this bundle
-      const runnables = getRunnables(this.configs.tests, this.projectName);
+      const runnables = getRunnables(this.configs, this.projectName);
       const allEntryPoints = [
         ...Object.entries(runnables.nodeEntryPoints),
         ...Object.entries(runnables.webEntryPoints),
-        ...Object.entries(runnables.pureEntryPoints),
+        // ...Object.entries(runnables.pureEntryPoints),
         ...Object.entries(runnables.pythonEntryPoints),
         ...Object.entries(runnables.golangEntryPoints),
       ];
@@ -1055,16 +1083,23 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         continue;
       }
 
-      const test = this.configs.tests.find((t) => t[0] === x);
+      const test = this.configTests().find((t) => t[0] === x);
       if (!test) {
-        console.error(`test is undefined ${x}`);
+        console.error(
+          `test is undefined ${x}, ${JSON.stringify(
+            this.configTests(),
+            null,
+            2
+          )}`
+        );
+        process.exit(-1);
         continue;
       }
 
       // Get the appropriate launcher based on the runtime type
       const runtime = test[1];
 
-      const runnables = getRunnables(this.configs.tests, this.projectName);
+      const runnables = getRunnables(this.configs, this.projectName);
       let dest: string;
 
       switch (runtime) {
@@ -1084,14 +1119,14 @@ export abstract class PM_1_WithProcesses extends PM_0 {
             console.error(`No destination found for web test: ${x}`);
           }
           break;
-        case "pure":
-          dest = runnables.pureEntryPoints[x];
-          if (dest) {
-            this.launchPure(x, dest);
-          } else {
-            console.error(`No destination found for pure test: ${x}`);
-          }
-          break;
+        // case "pure":
+        // dest = runnables.pureEntryPoints[x];
+        // if (dest) {
+        //   this.launchPure(x, dest);
+        // } else {
+        //   console.error(`No destination found for pure test: ${x}`);
+        // }
+        // break;
         case "python":
           dest = runnables.pythonEntryPoints[x];
           if (dest) {
