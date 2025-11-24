@@ -1,9 +1,6 @@
 {
   "example/Calculator.test.ts": {
-    "typeErrors": 17,
-    "staticErrors": 0,
     "runTimeErrors": 27,
-    "prompt": "aider --model deepseek/deepseek-chat --load testeranto/allTests/reports/node/example/Calculator.test/prompt.txt",
     "failingFeatures": {}
   },
   "example/Calculator.pitono.test.py": {
