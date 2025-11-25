@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Plugin } from "esbuild";
-
-import { ITTestResourceConfiguration } from "./lib/index.js";
-import { PM } from "./PM/index.js";
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
-
+import { BaseGiven, IGivens } from "./lib/BaseGiven.js";
 import { BaseSuite } from "./lib/BaseSuite.js";
-import { IGivens, BaseGiven } from "./lib/BaseGiven.js";
 import { BaseThen } from "./lib/BaseThen.js";
 import { BaseWhen } from "./lib/BaseWhen.js";
+import { ITTestResourceConfiguration } from "./lib/index.js";
+import { PM } from "./PM/index.js";
 
 export type ISummary = Record<
   string,
@@ -182,48 +180,38 @@ export type IRunTime = `node` | `web` | "pure" | `golang` | `python`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
+export type IDockerFile = [
+  (
+    | ["COPY", string]
+    | ["WORKDIR", string]
+    | ["RUN", string]
+    | ["FROM", string]
+    | ["STATIC_ANALYSIS", (files) => [string, ...string[]]]
+  )[],
+  string
+];
+
+export type ITests = {
+  plugins: any[];
+  tests: Record<string, { ports: number }>;
+  loaders: Record<string, string>;
+  dockerfile: IDockerFile;
+};
+
 export type ITestconfig = {
-  // debugger: boolean;
-  // externals: string[];
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
-  // minify: boolean;
-  // nodePlugins: IPluginFactory[];
   ports: string[];
   src: string;
 
-  golang: {
-    plugins: any[];
-    tests: Record<string, { port: number }>;
-    loaders: Record<string, string>;
-  };
-
-  python: {
-    plugins: any[];
-    tests: Record<string, { port: number }>;
-    loaders: Record<string, string>;
-  };
-
-  node: {
-    plugins: any[];
-    tests: Record<string, { port: number }>;
-    loaders: Record<string, string>;
+  golang: ITests;
+  python: ITests;
+  node: ITests & {
     externals: string[];
   };
-  web: {
-    plugins: any[];
-    tests: Record<string, { port: number }>;
-    loaders: Record<string, string>;
+  web: ITests & {
     externals: string[];
   };
-  // tests: ITestTypes[];
-  // webPlugins: IPluginFactory[];
-  // webLoaders: Record<string, string>;
 };
 
 export type IBuiltConfig = { buildDir: string } & ITestconfig;
-
-// export type IProject = {
-//   projects: Record<string, ITestconfig>;
-//   ignore: string[]; //list of glob patterns to ignore
-// };

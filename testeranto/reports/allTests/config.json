@@ -11,7 +11,13 @@
       "example/Calculator.golingvu.test.go": {
         "ports": 0
       }
-    }
+    },
+    "dockerfile": [
+      [
+        "FROM",
+        "golang:latest"
+      ]
+    ]
   },
   "python": {
     "plugins": [],
@@ -20,7 +26,13 @@
       "example/Calculator.pitono.test.py": {
         "ports": 0
       }
-    }
+    },
+    "dockerfile": [
+      [
+        "FROM",
+        "python:latest"
+      ]
+    ]
   },
   "web": {
     "plugins": [
@@ -34,7 +46,13 @@
         "ports": 0
       }
     },
-    "externals": []
+    "externals": [],
+    "dockerfile": [
+      [
+        "FROM",
+        "node:latest"
+      ]
+    ]
   },
   "node": {
     "plugins": [],
@@ -44,7 +62,44 @@
         "ports": 0
       }
     },
-    "externals": []
+    "externals": [],
+    "dockerfile": [
+      [
+        [
+          "FROM",
+          "node:latest"
+        ],
+        [
+          "RUN",
+          "apk add --update make g++ linux-headers python3 libxml2-utils"
+        ],
+        [
+          "COPY",
+          "package*.json ./"
+        ],
+        [
+          "WORKDIR",
+          "/workspace"
+        ],
+        [
+          "RUN",
+          "yarn install install --legacy-peer-deps"
+        ],
+        [
+          "COPY",
+          "./src ./src"
+        ],
+        [
+          "STATIC_ANALYSIS",
+          null
+        ],
+        [
+          "STATIC_ANALYSIS",
+          null
+        ]
+      ],
+      "node"
+    ]
   },
   "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/allTests"
 }

@@ -1,13 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { PM_Main } from "./app/backend/main";
+import yaml from "js-yaml";
+// import { PM_Main } from "./app/backend/main";
+import DockerMan from "./DockerMan/index";
 import { getRunnables } from "./app/backend/utils";
 import { PitonoBuild } from "./PM/pitonoBuild";
-import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
+import { IBuiltConfig, IRunTime, ITestconfig, ITests } from "./Types";
 import { AppHtml } from "./utils/buildTemplates";
 import webHtmlFrame from "./web.html";
+import tiposkripto from "./lib/Node";
+import { build } from "esbuild";
 const { GolingvuBuild } = await import("./PM/golingvuBuild");
 
 readline.emitKeypressEvents(process.stdin);
@@ -30,42 +35,8 @@ if (mode !== "once" && mode !== "dev") {
   process.exit(-1);
 }
 
-// const configFilePath = process.cwd() + "/" + "testeranto.config.ts";
-
 import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
-  // const pckge = (await import(`${process.cwd()}/package.json`)).default;
   const bigConfig: ITestconfig = module.default;
-
-  // const project = bigConfig.projects[testName];
-  // if (!project) {
-  //   console.error("no project found for", testName, "in testeranto.config.ts");
-  //   process.exit(-1);
-  // }
-
-  try {
-    // fs.writeFileSync(
-    //   `${process.cwd()}/testeranto/projects.json`,
-    //   JSON.stringify(Object.keys(bigConfig.projects), null, 2)
-    // );
-  } catch (e) {
-    console.error("there was a problem");
-    console.error(e);
-  }
-
-  // const rawConfig: ITestconfig = bigConfig.projects[testName];
-
-  // if (!rawConfig) {
-  //   console.error(`Project "${testName}" does not exist in the configuration.`);
-  //   console.error("Available projects:", Object.keys(bigConfig.projects));
-  //   process.exit(-1);
-  // }
-
-  // if (!rawConfig.tests) {
-  //   console.error(testName, "appears to have no tests: ", configFilePath);
-  //   console.error(`here is the config:`);
-  //   console.log(JSON.stringify(rawConfig));
-  //   process.exit(-1);
-  // }
 
   const config: IBuiltConfig = {
     ...bigConfig,
@@ -84,11 +55,13 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  let pm: PM_Main | null = null;
+  // let pm: PM_Main | null = null;
   // Start PM_Main immediately - it will handle the build processes internally
-  const { PM_Main } = await import("./app/backend/main");
-  pm = new PM_Main(config, testsName, mode);
-  await pm.start();
+  // const { PM_Main } = await import("./app/backend/main");
+  // pm = new PM_Main(config, testsName, mode);
+  // await pm.start();
+
+  const dockerMan = new DockerMan();
 
   fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
 
@@ -98,6 +71,87 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   fs.writeFileSync(
     `testeranto/reports/${testsName}/config.json`,
     JSON.stringify(config, null, 2)
+  );
+
+  // Helper function to generate Dockerfile content for a specific runtime and test
+  const generateDockerfile = (
+    c: IBuiltConfig,
+    runtime: IRunTime,
+    testName: string
+  ): string => {
+    return c[runtime].dockerfile[0]
+      .map((line) => {
+        if (line[0] === "STATIC_ANALYSIS") {
+          const cmdFx = line[1];
+          return `RUN ${cmdFx("x").join(" ")}\n`;
+        } else {
+          return `${line[0]} ${line[0]}\n`;
+        }
+      })
+      .join("");
+  };
+
+  // Helper function to get the appropriate command for a runtime
+  const getCommandForRuntime = (runtime: IRunTime): string => {
+    switch (runtime) {
+      case "node":
+        return "node";
+      case "web":
+        return "node";
+      case "python":
+        return "python3";
+      case "golang":
+        return "go";
+      default:
+        return "echo 'Unknown runtime'";
+    }
+  };
+
+  // Generate services for all runtimes
+  const generateServices = (c: IBuiltConfig): Record<string, any> => {
+    const services: Record<string, any> = {};
+
+    // Process each runtime
+    const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
+    runtimes.forEach((runtime) => {
+      // Check if the runtime has tests configured
+      if (c[runtime] && c[runtime].tests) {
+        Object.keys(c[runtime].tests).forEach((testName) => {
+          const serviceName = `${runtime}-${testName}`;
+
+          // Generate Dockerfile content
+          const dockerfileContent = generateDockerfile(c, runtime, testName);
+
+          // Write Dockerfile
+          const dockerfilePath = `testeranto/bundles/${testsName}/${serviceName}.Dockerfile`;
+          fs.mkdirSync(path.dirname(dockerfilePath), { recursive: true });
+          fs.writeFileSync(dockerfilePath, dockerfileContent);
+
+          // Add service configuration
+          services[serviceName] = {
+            build: {
+              context: ".",
+              dockerfile: `testeranto/bundles/${testsName}/Dockerfile.${serviceName}`,
+            },
+            command: getCommandForRuntime(runtime),
+          };
+        });
+      }
+    });
+
+    return services;
+  };
+
+  const services = generateServices(config);
+
+  const dump = {
+    version: "3.8",
+    services,
+  };
+
+  fs.writeFileSync(
+    `testeranto/bundles/${testsName}-docker-compose.yml`,
+    yaml.dump(dump)
   );
 
   // Object.keys(bigConfig.projects).forEach((projectName) => {
@@ -153,17 +207,14 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
         const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
         const cssFilePath = `./${sourceFileNameMinusJs}.css`;
 
-        return (
-          fs.promises
-            .mkdir(path.dirname(htmlFilePath), { recursive: true })
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            .then((x) =>
-              fs.writeFileSync(
-                htmlFilePath,
-                webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
-              )
+        return fs.promises
+          .mkdir(path.dirname(htmlFilePath), { recursive: true })
+          .then((x) =>
+            fs.writeFileSync(
+              htmlFilePath,
+              webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
             )
-        );
+          );
       })
     )
   );
@@ -181,38 +232,26 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
     // golangEntryPointSidecars,
   } = getRunnables(config, testsName);
 
-  // Debug logging to check if entry points are being found
-  console.log("Node entry points:", Object.keys(nodeEntryPoints));
-  console.log("Web entry points:", Object.keys(webEntryPoints));
-  // console.log("Pure entry points:", Object.keys(pureEntryPoints));
-
-  // Handle golang tests using GolingvuBuild
-  // const golangTests = config.tests.filter((test) => test[1] === "golang");
-  // const golangTests = config.golang.map((_, testName) => [
+  // Handle golingvu (Golang) tests by generating their metafiles
   const hasGolangTests = Object.keys(config.golang).length > 0;
   if (hasGolangTests) {
     const golingvuBuild = new GolingvuBuild(config, testsName);
     const golangEntryPoints = await golingvuBuild.build();
     golingvuBuild.onBundleChange(() => {
       Object.keys(golangEntryPoints).forEach((entryPoint) => {
-        if (pm) {
-          pm.addToQueue(entryPoint, "golang");
-        }
+        dockerMan.onBundleChange(entryPoint, "golang");
       });
     });
   }
 
   // Handle pitono (Python) tests by generating their metafiles
-  // const pitonoTests = config.tests.filter((test) => test[1] === "python");
   const hasPitonoTests = Object.keys(config.python).length > 0;
   if (hasPitonoTests) {
     const pitonoBuild = new PitonoBuild(config, testsName);
     const pitonoEntryPoints = await pitonoBuild.build();
     pitonoBuild.onBundleChange(() => {
       Object.keys(pitonoEntryPoints).forEach((entryPoint) => {
-        if (pm) {
-          pm.addToQueue(entryPoint, "python");
-        }
+        dockerMan.onBundleChange(entryPoint, "python");
       });
     });
   }
@@ -240,11 +279,12 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   process.stdin.on("keypress", (str, key) => {
     if (key.name === "q") {
       console.log("Testeranto is shutting down gracefully...");
-      if (pm) {
-        pm.stop();
-      } else {
-        process.exit();
-      }
+      dockerMan.stop();
+      // if (pm) {
+      //   pm.stop();
+      // } else {
+      //   process.exit();
+      // }
     }
   });
 });
