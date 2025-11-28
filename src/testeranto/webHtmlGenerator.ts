@@ -24,19 +24,24 @@ export async function setupWebHtmlFiles(
         .slice(0, -1)
         .join(".");
 
-      const htmlFilePath = path.normalize(
-        `${process.cwd()}/testeranto/bundles/web/${testsName}/${sourceDir.join(
-          "/"
-        )}/${sourceFileNameMinusJs}.html`
+      const htmlFileDir = path.join(
+        "testeranto",
+        "bundles",
+        "web",
+        testsName,
+        ...sourceDir
       );
+      const htmlFilePath = path.join(htmlFileDir, `${sourceFileNameMinusJs}.html`);
       const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
       const cssFilePath = `./${sourceFileNameMinusJs}.css`;
 
+      // Create the directory and write the file
+      const fullHtmlFileDir = path.join(process.cwd(), htmlFileDir);
       return fs.promises
-        .mkdir(path.dirname(htmlFilePath), { recursive: true })
+        .mkdir(fullHtmlFileDir, { recursive: true })
         .then((x) =>
           fs.writeFileSync(
-            htmlFilePath,
+            path.join(process.cwd(), htmlFilePath),
             webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
           )
         );

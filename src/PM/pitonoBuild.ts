@@ -18,7 +18,7 @@ export class PitonoBuild {
   async build() {
     // Filter python tests
     const pythonTests: [string, string, object, object[]][] = Object.keys(
-      this.config.golang.tests
+      this.config.python.tests
     ).map((testName) => [
       testName,
       "python",
@@ -31,12 +31,8 @@ export class PitonoBuild {
       // Get the entry points
       const pythonEntryPoints = pythonTests.map((test) => test[0]);
 
-      // Generate and write metafile
-      const metafile = await generatePitonoMetafile(
-        this.testName,
-        pythonEntryPoints
-      );
-      writePitonoMetafile(this.testName, metafile);
+      // Metafile generation is now handled by the build service inside Docker
+      // Remove external metafile generation
 
       // Start watching for changes
       this.watcher = new PitonoWatcher(this.testName, pythonEntryPoints);

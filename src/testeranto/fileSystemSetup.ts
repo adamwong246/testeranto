@@ -10,7 +10,7 @@ export function setupFileSystem(config: IBuiltConfig, testsName: string) {
   if (!fs.existsSync(`testeranto/reports/${testsName}`)) {
     fs.mkdirSync(`testeranto/reports/${testsName}`, { recursive: true });
   }
-  
+
   // Write config to reports
   fs.writeFileSync(
     `testeranto/reports/${testsName}/config.json`,

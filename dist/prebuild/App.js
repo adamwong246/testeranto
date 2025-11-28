@@ -26850,7 +26850,7 @@
   // src/app/frontend/App.tsx
   var import_react164 = __toESM(require_react(), 1);
 
-  // node_modules/react-router/dist/development/chunk-OIYGIGL5.mjs
+  // node_modules/react-router/dist/development/chunk-4WY6JWTD.mjs
   var React = __toESM(require_react(), 1);
   var React2 = __toESM(require_react(), 1);
   var React3 = __toESM(require_react(), 1);
@@ -27374,13 +27374,36 @@
     }
     return pathname.slice(startIndex) || "/";
   }
+  var ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
+  var isAbsoluteUrl = (url) => ABSOLUTE_URL_REGEX.test(url);
   function resolvePath(to, fromPathname = "/") {
     let {
       pathname: toPathname,
       search = "",
       hash: hash3 = ""
     } = typeof to === "string" ? parsePath(to) : to;
-    let pathname = toPathname ? toPathname.startsWith("/") ? toPathname : resolvePathname(toPathname, fromPathname) : fromPathname;
+    let pathname;
+    if (toPathname) {
+      if (isAbsoluteUrl(toPathname)) {
+        pathname = toPathname;
+      } else {
+        if (toPathname.includes("//")) {
+          let oldPathname = toPathname;
+          toPathname = toPathname.replace(/\/\/+/g, "/");
+          warning(
+            false,
+            `Pathnames cannot have embedded double slashes - normalizing ${oldPathname} -> ${toPathname}`
+          );
+        }
+        if (toPathname.startsWith("/")) {
+          pathname = resolvePathname(toPathname.substring(1), "/");
+        } else {
+          pathname = resolvePathname(toPathname, fromPathname);
+        }
+      }
+    } else {
+      pathname = fromPathname;
+    }
     return {
       pathname,
       search: normalizeSearch(search),
@@ -27467,6 +27490,8 @@
   function isRouteErrorResponse(error) {
     return error != null && typeof error.status === "number" && typeof error.statusText === "string" && typeof error.internal === "boolean" && "data" in error;
   }
+  var UninstrumentedSymbol = Symbol("Uninstrumented");
+  var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
   var validMutationMethodsArr = [
     "POST",
     "PUT",
@@ -27777,8 +27802,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       };
     }
     componentDidCatch(error, errorInfo) {
-      if (this.props.unstable_onError) {
-        this.props.unstable_onError(error, errorInfo);
+      if (this.props.onError) {
+        this.props.onError(error, errorInfo);
       } else {
         console.error(
           "React Router caught the following error during render",
@@ -27856,6 +27881,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       }
     }
+    let onError = dataRouterState && unstable_onError ? (error, errorInfo) => {
+      unstable_onError(error, {
+        location: dataRouterState.location,
+        params: dataRouterState.matches?.[0]?.params ?? {},
+        errorInfo
+      });
+    } : void 0;
     return renderedMatches.reduceRight(
       (outlet, match, index2) => {
         let error;
@@ -27916,7 +27948,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             error,
             children: getChildren(),
             routeContext: { outlet: null, matches: matches2, isDataRoute: true },
-            unstable_onError
+            onError
           }
         ) : getChildren();
       },
@@ -28255,7 +28287,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
     return { action, method: method.toLowerCase(), encType, formData, body };
   }
-  var objectProtoNames = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
+  var objectProtoNames2 = Object.getOwnPropertyNames(Object.prototype).sort().join("\0");
   function invariant2(value, message) {
     if (value === false || value === null || typeof value === "undefined") {
       throw new Error(message);
@@ -28650,7 +28682,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   try {
     if (isBrowser) {
       window.__reactRouterVersion = // @ts-expect-error
-      "7.9.4";
+      "7.9.6";
     }
   } catch (e) {
   }
@@ -43508,136 +43540,121 @@ ${convertTreeToXML(xmlTree)}`;
   var import_react145 = __toESM(require_react(), 1);
 
   // node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js
-  function _defineProperty7(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-    return obj;
+  function _arrayLikeToArray(r, a) {
+    (null == a || a > r.length) && (a = r.length);
+    for (var e = 0, n = Array(a); e < a; e++)
+      n[e] = r[e];
+    return n;
   }
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly)
-        symbols = symbols.filter(function(sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-      keys.push.apply(keys, symbols);
-    }
-    return keys;
+  function _arrayWithHoles(r) {
+    if (Array.isArray(r))
+      return r;
   }
-  function _objectSpread22(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function(key) {
-          _defineProperty7(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function(key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-    return target;
+  function _defineProperty7(e, r, t) {
+    return (r = _toPropertyKey2(r)) in e ? Object.defineProperty(e, r, {
+      value: t,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    }) : e[r] = t, e;
   }
-  function _objectWithoutPropertiesLoose14(source, excluded) {
-    if (source == null)
-      return {};
-    var target = {};
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for (i = 0; i < sourceKeys.length; i++) {
-      key = sourceKeys[i];
-      if (excluded.indexOf(key) >= 0)
-        continue;
-      target[key] = source[key];
-    }
-    return target;
-  }
-  function _objectWithoutProperties2(source, excluded) {
-    if (source == null)
-      return {};
-    var target = _objectWithoutPropertiesLoose14(source, excluded);
-    var key, i;
-    if (Object.getOwnPropertySymbols) {
-      var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-      for (i = 0; i < sourceSymbolKeys.length; i++) {
-        key = sourceSymbolKeys[i];
-        if (excluded.indexOf(key) >= 0)
-          continue;
-        if (!Object.prototype.propertyIsEnumerable.call(source, key))
-          continue;
-        target[key] = source[key];
-      }
-    }
-    return target;
-  }
-  function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-  }
-  function _arrayWithHoles(arr) {
-    if (Array.isArray(arr))
-      return arr;
-  }
-  function _iterableToArrayLimit(arr, i) {
-    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr)))
-      return;
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e2 = void 0;
-    try {
-      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-        if (i && _arr.length === i)
-          break;
-      }
-    } catch (err) {
-      _d = true;
-      _e2 = err;
-    } finally {
+  function _iterableToArrayLimit(r, l2) {
+    var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
+    if (null != t) {
+      var e, n, i, u, a = [], f = true, o = false;
       try {
-        if (!_n && _i["return"] != null)
-          _i["return"]();
+        if (i = (t = t.call(r)).next, 0 === l2)
+          ;
+        else
+          for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l2); f = true)
+            ;
+      } catch (r2) {
+        o = true, n = r2;
       } finally {
-        if (_d)
-          throw _e2;
+        try {
+          if (!f && null != t.return && (u = t.return(), Object(u) !== u))
+            return;
+        } finally {
+          if (o)
+            throw n;
+        }
       }
+      return a;
     }
-    return _arr;
-  }
-  function _unsupportedIterableToArray(o, minLen) {
-    if (!o)
-      return;
-    if (typeof o === "string")
-      return _arrayLikeToArray(o, minLen);
-    var n = Object.prototype.toString.call(o).slice(8, -1);
-    if (n === "Object" && o.constructor)
-      n = o.constructor.name;
-    if (n === "Map" || n === "Set")
-      return Array.from(o);
-    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
-      return _arrayLikeToArray(o, minLen);
-  }
-  function _arrayLikeToArray(arr, len) {
-    if (len == null || len > arr.length)
-      len = arr.length;
-    for (var i = 0, arr2 = new Array(len); i < len; i++)
-      arr2[i] = arr[i];
-    return arr2;
   }
   function _nonIterableRest() {
     throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  function ownKeys(e, r) {
+    var t = Object.keys(e);
+    if (Object.getOwnPropertySymbols) {
+      var o = Object.getOwnPropertySymbols(e);
+      r && (o = o.filter(function(r2) {
+        return Object.getOwnPropertyDescriptor(e, r2).enumerable;
+      })), t.push.apply(t, o);
+    }
+    return t;
+  }
+  function _objectSpread22(e) {
+    for (var r = 1; r < arguments.length; r++) {
+      var t = null != arguments[r] ? arguments[r] : {};
+      r % 2 ? ownKeys(Object(t), true).forEach(function(r2) {
+        _defineProperty7(e, r2, t[r2]);
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function(r2) {
+        Object.defineProperty(e, r2, Object.getOwnPropertyDescriptor(t, r2));
+      });
+    }
+    return e;
+  }
+  function _objectWithoutProperties2(e, t) {
+    if (null == e)
+      return {};
+    var o, r, i = _objectWithoutPropertiesLoose14(e, t);
+    if (Object.getOwnPropertySymbols) {
+      var n = Object.getOwnPropertySymbols(e);
+      for (r = 0; r < n.length; r++)
+        o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+    }
+    return i;
+  }
+  function _objectWithoutPropertiesLoose14(r, e) {
+    if (null == r)
+      return {};
+    var t = {};
+    for (var n in r)
+      if ({}.hasOwnProperty.call(r, n)) {
+        if (-1 !== e.indexOf(n))
+          continue;
+        t[n] = r[n];
+      }
+    return t;
+  }
+  function _slicedToArray(r, e) {
+    return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest();
+  }
+  function _toPrimitive2(t, r) {
+    if ("object" != typeof t || !t)
+      return t;
+    var e = t[Symbol.toPrimitive];
+    if (void 0 !== e) {
+      var i = e.call(t, r);
+      if ("object" != typeof i)
+        return i;
+      throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return ("string" === r ? String : Number)(t);
+  }
+  function _toPropertyKey2(t) {
+    var i = _toPrimitive2(t, "string");
+    return "symbol" == typeof i ? i : i + "";
+  }
+  function _unsupportedIterableToArray(r, a) {
+    if (r) {
+      if ("string" == typeof r)
+        return _arrayLikeToArray(r, a);
+      var t = {}.toString.call(r).slice(8, -1);
+      return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0;
+    }
   }
 
   // node_modules/state-local/lib/es/state-local.js
@@ -43814,10 +43831,9 @@ ${convertTreeToXML(xmlTree)}`;
   // node_modules/@monaco-editor/loader/lib/es/config/index.js
   var config = {
     paths: {
-      vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs"
+      vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs"
     }
   };
-  var config_default2 = config;
 
   // node_modules/@monaco-editor/loader/lib/es/utils/curry.js
   function curry2(fn2) {
@@ -43834,19 +43850,17 @@ ${convertTreeToXML(xmlTree)}`;
       };
     };
   }
-  var curry_default = curry2;
 
   // node_modules/@monaco-editor/loader/lib/es/utils/isObject.js
   function isObject3(value) {
     return {}.toString.call(value).includes("Object");
   }
-  var isObject_default = isObject3;
 
   // node_modules/@monaco-editor/loader/lib/es/validators/index.js
   function validateConfig(config3) {
     if (!config3)
       errorHandler2("configIsRequired");
-    if (!isObject_default(config3))
+    if (!isObject3(config3))
       errorHandler2("configType");
     if (config3.urls) {
       informAboutDeprecation();
@@ -43870,11 +43884,10 @@ ${convertTreeToXML(xmlTree)}`;
     "default": "an unknown error accured in `@monaco-editor/loader` package",
     deprecation: "Deprecation warning!\n    You are using deprecated way of configuration.\n\n    Instead of using\n      monaco.config({ urls: { monacoBase: '...' } })\n    use\n      monaco.config({ paths: { vs: '...' } })\n\n    For more please check the link https://github.com/suren-atoyan/monaco-loader#config\n  "
   };
-  var errorHandler2 = curry_default(throwError2)(errorMessages2);
+  var errorHandler2 = curry2(throwError2)(errorMessages2);
   var validators2 = {
     config: validateConfig
   };
-  var validators_default = validators2;
 
   // node_modules/@monaco-editor/loader/lib/es/utils/compose.js
   var compose2 = function compose3() {
@@ -43887,7 +43900,6 @@ ${convertTreeToXML(xmlTree)}`;
       }, x);
     };
   };
-  var compose_default = compose2;
 
   // node_modules/@monaco-editor/loader/lib/es/utils/deepMerge.js
   function merge(target, source) {
@@ -43900,7 +43912,6 @@ ${convertTreeToXML(xmlTree)}`;
     });
     return _objectSpread22(_objectSpread22({}, target), source);
   }
-  var deepMerge_default = merge;
 
   // node_modules/@monaco-editor/loader/lib/es/utils/makeCancelable.js
   var CANCELATION_MESSAGE = {
@@ -43919,11 +43930,11 @@ ${convertTreeToXML(xmlTree)}`;
       return hasCanceled_ = true;
     }, wrappedPromise;
   }
-  var makeCancelable_default = makeCancelable;
 
   // node_modules/@monaco-editor/loader/lib/es/loader/index.js
+  var _excluded12 = ["monaco"];
   var _state$create = state_local_default.create({
-    config: config_default2,
+    config,
     isInitialized: false,
     resolve: null,
     reject: null,
@@ -43933,10 +43944,10 @@ ${convertTreeToXML(xmlTree)}`;
   var getState = _state$create2[0];
   var setState = _state$create2[1];
   function config2(globalConfig) {
-    var _validators$config = validators_default.config(globalConfig), monaco = _validators$config.monaco, config3 = _objectWithoutProperties2(_validators$config, ["monaco"]);
+    var _validators$config = validators2.config(globalConfig), monaco = _validators$config.monaco, config3 = _objectWithoutProperties2(_validators$config, _excluded12);
     setState(function(state) {
       return {
-        config: deepMerge_default(state.config, config3),
+        config: merge(state.config, config3),
         monaco
       };
     });
@@ -43956,16 +43967,16 @@ ${convertTreeToXML(xmlTree)}`;
       });
       if (state.monaco) {
         state.resolve(state.monaco);
-        return makeCancelable_default(wrapperPromise);
+        return makeCancelable(wrapperPromise);
       }
       if (window.monaco && window.monaco.editor) {
         storeMonacoInstance(window.monaco);
         state.resolve(window.monaco);
-        return makeCancelable_default(wrapperPromise);
+        return makeCancelable(wrapperPromise);
       }
-      compose_default(injectScripts, getMonacoLoaderScript)(configureLoader);
+      compose2(injectScripts, getMonacoLoaderScript)(configureLoader);
     }
-    return makeCancelable_default(wrapperPromise);
+    return makeCancelable(wrapperPromise);
   }
   function injectScripts(script) {
     return document.body.appendChild(script);
@@ -44000,7 +44011,8 @@ ${convertTreeToXML(xmlTree)}`;
     });
     var require2 = window.require;
     require2.config(state.config);
-    require2(["vs/editor/editor.main"], function(monaco) {
+    require2(["vs/editor/editor.main"], function(loaded) {
+      var monaco = loaded.m || loaded;
       storeMonacoInstance(monaco);
       state.resolve(monaco);
     }, function(error) {
@@ -44031,7 +44043,6 @@ ${convertTreeToXML(xmlTree)}`;
     init,
     __getMonacoInstance
   };
-  var loader_default = loader;
 
   // node_modules/@monaco-editor/react/dist/index.mjs
   var import_react124 = __toESM(require_react(), 1);
@@ -44087,7 +44098,7 @@ ${convertTreeToXML(xmlTree)}`;
   function Oe({ original: e, modified: r, language: n, originalLanguage: t, modifiedLanguage: a, originalModelPath: m, modifiedModelPath: E, keepCurrentOriginalModel: g = false, keepCurrentModifiedModel: N = false, theme: x = "light", loading: P = "Loading...", options: y = {}, height: V = "100%", width: z = "100%", className: F, wrapperProps: j = {}, beforeMount: A = D, onMount: q = D }) {
     let [M, O] = (0, import_react125.useState)(false), [T, s] = (0, import_react125.useState)(true), u = (0, import_react125.useRef)(null), c = (0, import_react125.useRef)(null), w = (0, import_react125.useRef)(null), d = (0, import_react125.useRef)(q), o = (0, import_react125.useRef)(A), b = (0, import_react125.useRef)(false);
     k(() => {
-      let i = loader_default.init();
+      let i = loader.init();
       return i.then((f) => (c.current = f) && s(false)).catch((f) => f?.type !== "cancelation" && console.error("Monaco initialization: error:", f)), () => u.current ? I() : i.cancel();
     }), l(() => {
       if (u.current && c.current) {
@@ -44145,7 +44156,7 @@ ${convertTreeToXML(xmlTree)}`;
   function Ve({ defaultValue: e, defaultLanguage: r, defaultPath: n, value: t, language: a, path: m, theme: E = "light", line: g, loading: N = "Loading...", options: x = {}, overrideServices: P = {}, saveViewState: y = true, keepCurrentModel: V = false, width: z = "100%", height: F = "100%", className: j, wrapperProps: A = {}, beforeMount: q = D, onMount: M = D, onChange: O, onValidate: T = D }) {
     let [s, u] = (0, import_react133.useState)(false), [c, w] = (0, import_react133.useState)(true), d = (0, import_react133.useRef)(null), o = (0, import_react133.useRef)(null), b = (0, import_react133.useRef)(null), L = (0, import_react133.useRef)(M), U = (0, import_react133.useRef)(q), I = (0, import_react133.useRef)(), i = (0, import_react133.useRef)(t), f = se(m), Q = (0, import_react133.useRef)(false), B = (0, import_react133.useRef)(false);
     k(() => {
-      let p = loader_default.init();
+      let p = loader.init();
       return p.then((R) => (d.current = R) && w(false)).catch((R) => R?.type !== "cancelation" && console.error("Monaco initialization: error:", R)), () => o.current ? pe() : p.cancel();
     }), l(() => {
       let p = h(d.current, e || t || "", r || a || "", m || n || "");
@@ -46755,9 +46766,9 @@ object-assign/index.js:
   @license MIT
   *)
 
-react-router/dist/development/chunk-OIYGIGL5.mjs:
+react-router/dist/development/chunk-4WY6JWTD.mjs:
   (**
-   * react-router v7.9.4
+   * react-router v7.9.6
    *
    * Copyright (c) Remix Software Inc.
    *
@@ -46769,7 +46780,7 @@ react-router/dist/development/chunk-OIYGIGL5.mjs:
 
 react-router/dist/development/index.mjs:
   (**
-   * react-router v7.9.4
+   * react-router v7.9.6
    *
    * Copyright (c) Remix Software Inc.
    *

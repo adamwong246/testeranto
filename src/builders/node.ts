@@ -1,34 +1,122 @@
-console.log("Node build process started");
-
-import { exec } from 'child_process';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
+import { IBuiltConfig } from "../Types.js";
+import nodeEsbuildConfig from "../esbuildConfigs/node.js";
+import esbuild from "esbuild";
+import path from "path";
 
 async function runNodeBuild() {
-    try {
-        // Install dependencies
-        console.log("Installing Node.js dependencies...");
-        const installResult = await execAsync('npm install');
-        if (installResult.stdout) console.log(installResult.stdout);
-        
-        // Run tests
-        console.log("Running Node.js tests...");
-        const testResult = await execAsync('npm test');
-        if (testResult.stdout) console.log(testResult.stdout);
-        if (testResult.stderr) console.error(testResult.stderr);
-        
-        // Build the project
-        console.log("Building Node.js project...");
-        const buildResult = await execAsync('npm run build');
-        if (buildResult.stdout) console.log(buildResult.stdout);
-        if (buildResult.stderr) console.error(buildResult.stderr);
-        
-        console.log("Node.js build completed successfully");
-    } catch (error) {
-        console.error("Node.js build failed:", error);
-        process.exit(1);
+  try {
+    console.log("NODE BUILDER: Starting build process inside Docker...");
+    console.log("NODE BUILDER: Process args:", process.argv);
+    
+    // Write a test file first to verify the container is working
+    const fs = await import('fs');
+    const testPath = '/workspace/test.txt';
+    fs.writeFileSync(testPath, 'Test file created at ' + new Date().toISOString());
+    console.log("NODE BUILDER: Test file written to:", testPath);
+    
+    const configPath = process.argv[2];
+    if (!configPath) {
+      throw new Error("Configuration path not provided");
     }
+    console.log("NODE BUILDER: Config path:", configPath);
+
+    // When running inside Docker, the current working directory is /workspace
+    // So we need to resolve paths relative to that
+    const absoluteConfigPath = path.resolve(process.cwd(), configPath);
+    console.log("NODE BUILDER: Absolute config path:", absoluteConfigPath);
+    console.log("NODE BUILDER: Current working directory:", process.cwd());
+    
+    // Check if the config file exists
+    const fs = await import('fs');
+    if (!fs.existsSync(absoluteConfigPath)) {
+      throw new Error(`Config file does not exist: ${absoluteConfigPath}`);
+    }
+    console.log("NODE BUILDER: Config file exists");
+    
+    const configModule = await import(absoluteConfigPath);
+    const config: IBuiltConfig = configModule.default;
+    console.log("NODE BUILDER: Config loaded successfully");
+    
+    const entryPoints = Object.keys(config.node.tests);
+    console.log("NODE BUILDER: Entry points:", entryPoints);
+
+    if (entryPoints.length === 0) {
+      console.log("NODE BUILDER: No node tests found");
+      // Still write an empty metafile to indicate the build ran
+      const metafileDir = '/workspace/testeranto/metafiles/node';
+      const metafilePath = path.join(metafileDir, `${path.basename(configPath, path.extname(configPath))}.json`);
+      
+      if (!fs.existsSync(metafileDir)) {
+        fs.mkdirSync(metafileDir, { recursive: true });
+      }
+      
+      const emptyMetafile = {
+        entryPoints: [],
+        buildTime: new Date().toISOString(),
+        runtime: 'node',
+        message: 'No node tests found'
+      };
+      fs.writeFileSync(metafilePath, JSON.stringify(emptyMetafile, null, 2));
+      console.log(`NODE BUILDER: Empty metafile written to: ${metafilePath}`);
+      return;
+    }
+
+    console.log("NODE BUILDER: Starting esbuild...");
+    const buildOptions = nodeEsbuildConfig(config, entryPoints, configPath);
+    const result = await esbuild.build(buildOptions);
+
+    if (result.errors.length === 0) {
+      console.log(`NODE BUILDER: Build completed successfully for test: ${configPath}`);
+      console.log(`NODE BUILDER: Entry points: ${entryPoints.join(", ")}`);
+      
+      // Always write metafile to the mounted volume path when running in Docker
+      // This ensures metafiles are generated inside the container and synced via volume
+      const metafileDir = '/workspace/testeranto/metafiles/node';
+      const metafilePath = path.join(metafileDir, `${path.basename(configPath, path.extname(configPath))}.json`);
+      
+      console.log("NODE BUILDER: Writing metafile to:", metafilePath);
+      
+      // Ensure the directory exists
+      if (!fs.existsSync(metafileDir)) {
+        console.log("NODE BUILDER: Creating metafile directory:", metafileDir);
+        fs.mkdirSync(metafileDir, { recursive: true });
+      } else {
+        console.log("NODE BUILDER: Metafile directory already exists:", metafileDir);
+      }
+      
+      // Write the metafile
+      if (result.metafile) {
+        console.log("NODE BUILDER: Writing metafile content...");
+        fs.writeFileSync(metafilePath, JSON.stringify(result.metafile, null, 2));
+        console.log(`NODE BUILDER: Metafile written to: ${metafilePath}`);
+        
+        // Verify the file was written
+        if (fs.existsSync(metafilePath)) {
+          console.log("NODE BUILDER: Metafile verified to exist");
+        } else {
+          console.log("NODE BUILDER: ERROR: Metafile was not created!");
+        }
+      } else {
+        console.log('NODE BUILDER: No metafile generated by esbuild');
+        // Write a basic metafile anyway
+        const basicMetafile = {
+          entryPoints: entryPoints,
+          buildTime: new Date().toISOString(),
+          runtime: 'node',
+          message: 'Build completed but no esbuild metafile generated'
+        };
+        fs.writeFileSync(metafilePath, JSON.stringify(basicMetafile, null, 2));
+        console.log(`NODE BUILDER: Basic metafile written to: ${metafilePath}`);
+      }
+    } else {
+      console.error("NODE BUILDER: Build errors:", result.errors);
+      process.exit(1);
+    }
+  } catch (error) {
+    console.error("NODE BUILDER: Build failed:", error);
+    console.error("NODE BUILDER: Full error:", error);
+    process.exit(1);
+  }
 }
 
 runNodeBuild();

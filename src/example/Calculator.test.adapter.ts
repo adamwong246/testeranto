@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { ITestAdapter } from "../src/CoreTypes";
+import { ITestAdapter } from "../CoreTypes";
 import { Calculator } from "./Calculator";
 import { I } from "./Calculator.test.types";
 

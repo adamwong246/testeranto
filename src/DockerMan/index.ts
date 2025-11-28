@@ -1,7 +1,6 @@
-import fs from "fs";
+import { upAll } from "docker-compose";
 import path from "path";
 import { IRunTime } from "../Types";
-import { upAll } from "docker-compose";
 
 export default class DockerMan {
   testName: string;
@@ -19,20 +18,13 @@ export default class DockerMan {
   }
 
   start() {
-    console.log("DockerMan starting all containers...");
     const composeDir = process.cwd();
-    const composeFile = path.join("testeranto", "bundles", `${this.testName}-docker-compose.yml`);
-    
-    console.log(`Using compose file: ${composeFile}`);
-    console.log(`In directory: ${composeDir}`);
-    console.log(`Full compose file path: ${path.join(composeDir, composeFile)}`);
-    
-    // Check if the compose file exists
-    if (!fs.existsSync(path.join(composeDir, composeFile))) {
-      console.error(`Docker Compose file not found: ${path.join(composeDir, composeFile)}`);
-      return;
-    }
-    
+    const composeFile = path.join(
+      composeDir,
+      "testeranto",
+      "bundles",
+      `${this.testName}-docker-compose.yml`
+    );
     upAll({
       cwd: composeDir,
       config: composeFile,

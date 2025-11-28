@@ -1,6 +1,7 @@
 import fs from "fs";
 import type { Plugin } from "esbuild";
 import { IRunTime } from "../lib";
+import path from 'path';
 
 const otherInputs: Record<string, Set<string>> = {};
 
@@ -18,9 +19,11 @@ export default (
   register: (entrypoint: string, sources: string[]) => void;
   inputFilesPluginFactory: Plugin;
 } => {
-  const f = `testeranto/metafiles/${platform}/${testName}.json`;
-  if (!fs.existsSync(`testeranto/metafiles/${platform}`)) {
-    fs.mkdirSync(`testeranto/metafiles/${platform}`, { recursive: true });
+  const f = path.join(process.cwd(), `testeranto/metafiles/${platform}/${testName}.json`);
+  const metafilesDir = path.join(process.cwd(), `testeranto/metafiles/${platform}`);
+  
+  if (!fs.existsSync(metafilesDir)) {
+    fs.mkdirSync(metafilesDir, { recursive: true });
   }
   return {
     register,

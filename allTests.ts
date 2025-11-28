@@ -13,17 +13,17 @@ const config: ITestconfig = {
     plugins: [],
     loaders: {},
     tests: {
-      "example/Calculator.golingvu.test.go": { ports: 0 },
+      "src/example/Calculator.golingvu.test.go": { ports: 0 },
     },
-    dockerfile: [["FROM", "golang:latest"]],
+    dockerfile: [[["FROM", "golang:latest"]], "go"],
   },
   python: {
     plugins: [],
     loaders: {},
     tests: {
-      "example/Calculator.pitono.test.py": { ports: 0 },
+      "src/example/Calculator.pitono.test.py": { ports: 0 },
     },
-    dockerfile: [["FROM", "python:latest"]],
+    dockerfile: [[["FROM", "python:latest"]], "python"],
   },
 
   web: {
@@ -32,29 +32,52 @@ const config: ITestconfig = {
       ".ttf": "file",
     },
     tests: {
-      "example/Calculator.test.ts": { ports: 0 },
+      "src/example/Calculator.test.ts": { ports: 0 },
     },
     externals: [],
-    dockerfile: [["FROM", "node:latest"]],
+    dockerfile: [
+      [
+        ["FROM", "node:18-alpine"],
+        [
+          "RUN",
+          `
+# Install Chromium and necessary dependencies for headless operation
+RUN apk update && apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    freetype-dev \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    font-noto-emoji \
+    && rm -rf /var/cache/apk/*
+          `,
+        ],
+        ["ENV", "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true"],
+        ["ENV", "PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser"],
+      ],
+      "web",
+    ],
   },
 
   node: {
     plugins: [],
     loaders: {},
     tests: {
-      "example/Calculator.test.ts": { ports: 0 },
+      "src/example/Calculator.test.ts": { ports: 0 },
     },
     externals: [],
     dockerfile: [
       [
-        ["FROM", "node:latest"],
+        ["FROM", "node:18-alpine"],
         [
           "RUN",
           "apk add --update make g++ linux-headers python3 libxml2-utils",
         ],
         ["COPY", "package*.json ./"],
         ["WORKDIR", "/workspace"],
-        ["RUN", "yarn install install --legacy-peer-deps"],
+        ["RUN", "npm install --legacy-peer-deps"],
         ["COPY", "./src ./src"],
         [
           "STATIC_ANALYSIS",

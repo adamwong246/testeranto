@@ -24,7 +24,7 @@ export function writeGolingvuMetafile(
     "testeranto",
     "metafiles",
     "golang",
-    `${path.basename(testName)}.json`
+    `${path.basename(testName)}`
   );
 
   fs.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));

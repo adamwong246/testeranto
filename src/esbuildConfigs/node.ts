@@ -1,6 +1,6 @@
 import { BuildOptions } from "esbuild";
 import { ITestconfig } from "../lib/index.js";
-import featuresPlugin from "./featuresPlugin";
+import featuresPlugin from "./featuresPlugin.js";
 import baseEsBuildConfig from "./index.js";
 import inputFilesPlugin from "./inputFilesPlugin.js";
 import rebuildPlugin from "./rebuildPlugin.js";
@@ -14,6 +14,7 @@ export default (
     "node",
     testName
   );
+
   return {
     ...baseEsBuildConfig(config),
 
@@ -33,9 +34,9 @@ export default (
     },
 
     absWorkingDir: process.cwd(),
-    banner: {
-      js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-    },
+    // banner: {
+    //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
+    // },
     platform: "node",
 
     external: ["react", ...config.node.externals],

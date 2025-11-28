@@ -8,30 +8,36 @@
     "plugins": [],
     "loaders": {},
     "tests": {
-      "example/Calculator.golingvu.test.go": {
+      "src/example/Calculator.golingvu.test.go": {
         "ports": 0
       }
     },
     "dockerfile": [
       [
-        "FROM",
-        "golang:latest"
-      ]
+        [
+          "FROM",
+          "golang:latest"
+        ]
+      ],
+      "go"
     ]
   },
   "python": {
     "plugins": [],
     "loaders": {},
     "tests": {
-      "example/Calculator.pitono.test.py": {
+      "src/example/Calculator.pitono.test.py": {
         "ports": 0
       }
     },
     "dockerfile": [
       [
-        "FROM",
-        "python:latest"
-      ]
+        [
+          "FROM",
+          "python:latest"
+        ]
+      ],
+      "python"
     ]
   },
   "web": {
@@ -42,23 +48,7 @@
       ".ttf": "file"
     },
     "tests": {
-      "example/Calculator.test.ts": {
-        "ports": 0
-      }
-    },
-    "externals": [],
-    "dockerfile": [
-      [
-        "FROM",
-        "node:latest"
-      ]
-    ]
-  },
-  "node": {
-    "plugins": [],
-    "loaders": {},
-    "tests": {
-      "example/Calculator.test.ts": {
+      "src/example/Calculator.test.ts": {
         "ports": 0
       }
     },
@@ -67,7 +57,38 @@
       [
         [
           "FROM",
-          "node:latest"
+          "node:18-alpine"
+        ],
+        [
+          "RUN",
+          "\n# Install Chromium and necessary dependencies for headless operation\nRUN apk update && apk add --no-cache     chromium     nss     freetype     freetype-dev     harfbuzz     ca-certificates     ttf-freefont     font-noto-emoji     && rm -rf /var/cache/apk/*\n          "
+        ],
+        [
+          "ENV",
+          "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true"
+        ],
+        [
+          "ENV",
+          "PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser"
+        ]
+      ],
+      "web"
+    ]
+  },
+  "node": {
+    "plugins": [],
+    "loaders": {},
+    "tests": {
+      "src/example/Calculator.test.ts": {
+        "ports": 0
+      }
+    },
+    "externals": [],
+    "dockerfile": [
+      [
+        [
+          "FROM",
+          "node:18-alpine"
         ],
         [
           "RUN",
@@ -83,7 +104,7 @@
         ],
         [
           "RUN",
-          "yarn install install --legacy-peer-deps"
+          "npm install --legacy-peer-deps"
         ],
         [
           "COPY",

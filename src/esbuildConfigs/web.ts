@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BuildOptions } from "esbuild";
-import { polyfillNode } from "esbuild-plugin-polyfill-node";
 import path from "path";
 import { ITestconfig } from "../lib/index.js";
 import featuresPlugin from "./featuresPlugin.js";
@@ -64,15 +63,6 @@ export default (
     plugins: [
       featuresPlugin,
       inputFilesPluginFactory,
-
-      polyfillNode({
-        // You might need to configure specific Node.js modules you want to polyfill
-        // Example:
-        // modules: {
-        //   'util': true,
-        //   'fs': false,
-        // }
-      }),
 
       rebuildPlugin("web"),
 

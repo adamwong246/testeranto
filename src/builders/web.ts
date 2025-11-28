@@ -1,34 +1,115 @@
-console.log("Web build process started");
-
-import { exec } from 'child_process';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
+import { IBuiltConfig } from "../Types.js";
+import webEsbuildConfig from "../esbuildConfigs/web.js";
+import esbuild from "esbuild";
+import path from "path";
 
 async function runWebBuild() {
-    try {
-        // Install dependencies
-        console.log("Installing web dependencies...");
-        const installResult = await execAsync('npm install');
-        if (installResult.stdout) console.log(installResult.stdout);
-        
-        // Run linting
-        console.log("Running linting...");
-        const lintResult = await execAsync('npm run lint');
-        if (lintResult.stdout) console.log(lintResult.stdout);
-        if (lintResult.stderr) console.error(lintResult.stderr);
-        
-        // Build the web assets
-        console.log("Building web assets...");
-        const buildResult = await execAsync('npm run build');
-        if (buildResult.stdout) console.log(buildResult.stdout);
-        if (buildResult.stderr) console.error(buildResult.stderr);
-        
-        console.log("Web build completed successfully");
-    } catch (error) {
-        console.error("Web build failed:", error);
-        process.exit(1);
+  try {
+    console.log("WEB BUILDER: Starting build process inside Docker...");
+    console.log("WEB BUILDER: Process args:", process.argv);
+    
+    const configPath = process.argv[2];
+    if (!configPath) {
+      throw new Error("Configuration path not provided");
     }
+
+    console.log("WEB BUILDER: Config path:", configPath);
+    console.log("WEB BUILDER: Current working directory:", process.cwd());
+    
+    // Check if the config file exists
+    const fs = await import('fs');
+    const absoluteConfigPath = path.resolve(process.cwd(), configPath);
+    if (!fs.existsSync(absoluteConfigPath)) {
+      throw new Error(`Config file does not exist: ${absoluteConfigPath}`);
+    }
+    console.log("WEB BUILDER: Config file exists");
+    
+    // Dynamically import the TypeScript configuration file
+    // Since we're using --loader tsx, we can import .ts files directly
+    const configModule = await import(absoluteConfigPath);
+    const config: IBuiltConfig = configModule.default;
+    console.log("WEB BUILDER: Config loaded successfully");
+    
+    const entryPoints = Object.keys(config.web.tests);
+    console.log("WEB BUILDER: Entry points:", entryPoints);
+
+    if (entryPoints.length === 0) {
+      console.log("WEB BUILDER: No web tests found");
+      // Still write an empty metafile to indicate the build ran
+      const metafileDir = '/workspace/testeranto/metafiles/web';
+      const metafilePath = path.join(metafileDir, `${path.basename(configPath, path.extname(configPath))}.json`);
+      
+      if (!fs.existsSync(metafileDir)) {
+        fs.mkdirSync(metafileDir, { recursive: true });
+      }
+      
+      const emptyMetafile = {
+        entryPoints: [],
+        buildTime: new Date().toISOString(),
+        runtime: 'web',
+        message: 'No web tests found'
+      };
+      fs.writeFileSync(metafilePath, JSON.stringify(emptyMetafile, null, 2));
+      console.log(`WEB BUILDER: Empty metafile written to: ${metafilePath}`);
+      return;
+    }
+
+    console.log("WEB BUILDER: Starting esbuild...");
+    const buildOptions = webEsbuildConfig(config, entryPoints, configPath);
+    const result = await esbuild.build(buildOptions);
+
+    if (result.errors.length === 0) {
+      console.log(`WEB BUILDER: Build completed successfully for test: ${configPath}`);
+      console.log(`WEB BUILDER: Entry points: ${entryPoints.join(", ")}`);
+      
+      // Always write metafile to the mounted volume path when running in Docker
+      // This ensures metafiles are generated inside the container and synced via volume
+      const metafileDir = '/workspace/testeranto/metafiles/web';
+      const metafilePath = path.join(metafileDir, `${path.basename(configPath, path.extname(configPath))}.json`);
+      
+      console.log("WEB BUILDER: Writing metafile to:", metafilePath);
+      
+      // Ensure the directory exists
+      if (!fs.existsSync(metafileDir)) {
+        console.log("WEB BUILDER: Creating metafile directory:", metafileDir);
+        fs.mkdirSync(metafileDir, { recursive: true });
+      } else {
+        console.log("WEB BUILDER: Metafile directory already exists:", metafileDir);
+      }
+      
+      // Write the metafile
+      if (result.metafile) {
+        console.log("WEB BUILDER: Writing metafile content...");
+        fs.writeFileSync(metafilePath, JSON.stringify(result.metafile, null, 2));
+        console.log(`WEB BUILDER: Metafile written to: ${metafilePath}`);
+        
+        // Verify the file was written
+        if (fs.existsSync(metafilePath)) {
+          console.log("WEB BUILDER: Metafile verified to exist");
+        } else {
+          console.log("WEB BUILDER: ERROR: Metafile was not created!");
+        }
+      } else {
+        console.log('WEB BUILDER: No metafile generated by esbuild');
+        // Write a basic metafile anyway
+        const basicMetafile = {
+          entryPoints: entryPoints,
+          buildTime: new Date().toISOString(),
+          runtime: 'web',
+          message: 'Build completed but no esbuild metafile generated'
+        };
+        fs.writeFileSync(metafilePath, JSON.stringify(basicMetafile, null, 2));
+        console.log(`WEB BUILDER: Basic metafile written to: ${metafilePath}`);
+      }
+    } else {
+      console.error("WEB BUILDER: Build errors:", result.errors);
+      process.exit(1);
+    }
+  } catch (error) {
+    console.error("WEB BUILDER: Build failed:", error);
+    console.error("WEB BUILDER: Full error:", error);
+    process.exit(1);
+  }
 }
 
 runWebBuild();

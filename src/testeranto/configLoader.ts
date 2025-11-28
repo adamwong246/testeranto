@@ -1,7 +1,9 @@
 import path from "path";
 import { IBuiltConfig, ITestconfig } from "../Types";
 
-export async function loadConfig(configFilepath: string): Promise<{ config: IBuiltConfig; testsName: string }> {
+export async function loadConfig(
+  configFilepath: string
+): Promise<{ config: IBuiltConfig; testsName: string }> {
   const testsName = path
     .basename(configFilepath)
     .split(".")

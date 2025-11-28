@@ -7,7 +7,7 @@ import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
 import esbuildNodeConfiger from "../../esbuildConfigs/node.js";
-import esbuildImportConfiger from "../../esbuildConfigs/pure.js";
+// import esbuildImportConfiger from "../../esbuildConfigs/pure.js";
 import esbuildWebConfiger from "../../esbuildConfigs/web.js";
 import { IFinalResults, IRunTime } from "../../lib/index.js";
 import {
@@ -18,7 +18,6 @@ import {
 import { Queue } from "../../utils/queue.js";
 import { PM_WithHelpo } from "./PM_WithHelpo.js";
 import { getRunnables, webEvaluator } from "./utils.js";
-// import { evaluationString } from "puppeteer-core/lib/esm/puppeteer/index-browser.js";
 
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
@@ -145,7 +144,7 @@ export class PM_Main extends PM_WithHelpo {
         socket.on("data", onData);
       });
 
-      server.listen(ipcfile, (err) => {
+      server.listen(ipcfile, (err: any) => {
         if (err) reject(err);
         else resolve(server);
       });
@@ -366,7 +365,7 @@ export class PM_Main extends PM_WithHelpo {
 
             this.mapping().forEach(async ([command, func]) => {
               if (command === "page") {
-                page.exposeFunction(command, (x?) => {
+                page.exposeFunction(command, (x?: any) => {
                   if (x) {
                     return func(x);
                   } else {
@@ -815,206 +814,4 @@ Do not add error throwing/catching to the tests themselves.`;
       console.error(`Failed to generate prompt files for ${src}:`, error);
     }
   }
-
-  // private getGolangSourceFiles(src: string): string[] {
-  //   // Get all .go files in the same directory as the test
-  //   const testDir = path.dirname(src);
-  //   const files: string[] = [];
-
-  //   try {
-  //     const dirContents = fs.readdirSync(testDir);
-  //     dirContents.forEach((file) => {
-  //       if (file.endsWith(".go")) {
-  //         files.push(path.join(testDir, file));
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error(`Error reading directory ${testDir}:`, error);
-  //   }
-
-  //   // Always include the main test file
-  //   if (!files.includes(src)) {
-  //     files.push(src);
-  //   }
-
-  //   return files;
-  // }
-
-  // launchPure = async (src: string, dest: string) => {
-  //   console.log(ansiC.green(ansiC.inverse(`pure < ${src}`)));
-
-  //   const processId = `pure-${src}-${Date.now()}`;
-  //   const command = `pure test: ${src}`;
-
-  //   // Create the promise
-  //   const purePromise = (async () => {
-  //     this.bddTestIsRunning(src);
-
-  //     const reportDest = `testeranto/reports/${this.projectName}/${src
-  //       .split(".")
-  //       .slice(0, -1)
-  //       .join(".")}/pure`;
-
-  //     if (!fs.existsSync(reportDest)) {
-  //       fs.mkdirSync(reportDest, { recursive: true });
-  //     }
-
-  //     const destFolder = dest.replace(".mjs", "");
-
-  //     let argz = "";
-
-  //     const testConfig = this.configs.tests.find((t) => {
-  //       return t[0] === src;
-  //     });
-
-  //     if (!testConfig) {
-  //       console.log(
-  //         ansiC.inverse("missing test config! Exiting ungracefully!")
-  //       );
-  //       process.exit(-1);
-  //     }
-  //     const testConfigResource = testConfig[2];
-
-  //     const portsToUse: string[] = [];
-  //     if (testConfigResource.ports === 0) {
-  //       argz = JSON.stringify({
-  //         scheduled: true,
-  //         name: src,
-  //         ports: portsToUse,
-  //         fs: reportDest,
-  //         browserWSEndpoint: this.browser.wsEndpoint(),
-  //       });
-  //     } else if (testConfigResource.ports > 0) {
-  //       const openPorts = Object.entries(this.ports).filter(
-  //         ([portnumber, status]) => status === ""
-  //       );
-
-  //       if (openPorts.length >= testConfigResource.ports) {
-  //         for (let i = 0; i < testConfigResource.ports; i++) {
-  //           portsToUse.push(openPorts[i][0]);
-
-  //           this.ports[openPorts[i][0]] = src; // port is now claimed
-  //         }
-
-  //         argz = JSON.stringify({
-  //           scheduled: true,
-  //           name: src,
-  //           ports: portsToUse,
-  //           fs: destFolder,
-  //           browserWSEndpoint: this.browser.wsEndpoint(),
-  //         });
-  //       } else {
-  //         this.queue.push(src);
-  //         return [Math.random(), argz];
-  //       }
-  //     } else {
-  //       console.error("negative port makes no sense", src);
-  //       process.exit(-1);
-  //     }
-
-  //     const builtfile = dest;
-
-  //     const logs = createLogStreams(reportDest, "pure");
-
-  //     try {
-  //       await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
-  //         return module.default
-  //           .then((defaultModule) => {
-  //             return defaultModule
-  //               .receiveTestResourceConfig(argz)
-  //               .then(async (results: IFinalResults) => {
-  //                 // Ensure the test results are properly processed
-  //                 // The receiveTestResourceConfig should handle creating tests.json
-  //                 statusMessagePretty(results.fails, src, "pure");
-  //                 this.bddTestIsNowDone(src, results.fails);
-  //                 return results.fails;
-  //               });
-  //           })
-  //           .catch((e2) => {
-  //             console.log(
-  //               ansiColors.red(
-  //                 `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
-  //               )
-  //             );
-
-  //             // Create a minimal tests.json even on failure
-  //             const testsJsonPath = `${reportDest}/tests.json`;
-  //             if (!fs.existsSync(testsJsonPath)) {
-  //               fs.writeFileSync(
-  //                 testsJsonPath,
-  //                 JSON.stringify(
-  //                   {
-  //                     tests: [],
-  //                     features: [],
-  //                     givens: [],
-  //                     fullPath: src,
-  //                   },
-  //                   null,
-  //                   2
-  //                 )
-  //               );
-  //             }
-
-  //             logs.exit.write(e2.stack);
-  //             logs.exit.write(-1);
-  //             this.bddTestIsNowDone(src, -1);
-  //             statusMessagePretty(-1, src, "pure");
-  //             throw e2;
-  //           });
-  //       });
-  //     } catch (e3) {
-  //       // Create a minimal tests.json even on uncaught errors
-  //       const testsJsonPath = `${reportDest}/tests.json`;
-  //       if (!fs.existsSync(testsJsonPath)) {
-  //         fs.writeFileSync(
-  //           testsJsonPath,
-  //           JSON.stringify(
-  //             {
-  //               tests: [],
-  //               features: [],
-  //               givens: [],
-  //               fullPath: src,
-  //             },
-  //             null,
-  //             2
-  //           )
-  //         );
-  //       }
-
-  //       logs.writeExitCode(-1, e3);
-  //       console.log(
-  //         ansiC.red(
-  //           ansiC.inverse(
-  //             `${src} 1 errored with: ${e3}. Check logs for more info`
-  //           )
-  //         )
-  //       );
-
-  //       logs.exit.write(e3.stack);
-  //       logs.exit.write("-1");
-  //       this.bddTestIsNowDone(src, -1);
-  //       statusMessagePretty(-1, src, "pure");
-  //       throw e3;
-  //     } finally {
-  //       // Generate prompt files for Pure tests
-  //       await this.generatePromptFiles(reportDest, src);
-
-  //       for (let i = 0; i <= portsToUse.length; i++) {
-  //         if (portsToUse[i]) {
-  //           this.ports[portsToUse[i]] = ""; // port is open again
-  //         }
-  //       }
-  //     }
-  //   })();
-
-  //   // Add to process manager
-  //   this.addPromiseProcess(
-  //     processId,
-  //     purePromise,
-  //     command,
-  //     "bdd-test",
-  //     src,
-  //     "pure"
-  //   );
-  // };
 }

@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Ibdd_in, Ibdd_out } from "../src/CoreTypes";
+import { Ibdd_in, Ibdd_out } from "../CoreTypes";
 import { Calculator } from "./Calculator";
 
 export type I = Ibdd_in<
-  typeof Calculator,           // iinput
-  typeof Calculator,           // isubject
-  Calculator,                  // istore
-  string,                      // iselection (getDisplay returns string)
-  () => Calculator,            // given
-  (calculator: Calculator) => Calculator,  // when
-  (calculator: Calculator) => void         // then
+  typeof Calculator, // iinput
+  typeof Calculator, // isubject
+  Calculator, // istore
+  string, // iselection (getDisplay returns string)
+  () => Calculator, // given
+  (calculator: Calculator) => Calculator, // when
+  (calculator: Calculator) => void // then
 >;
 
 export type O = Ibdd_out<
