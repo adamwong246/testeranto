@@ -41,7 +41,7 @@
     "setup-github-oauth": "echo 'Please visit https://github.com/settings/developers and create a new OAuth App. Set the Authorization callback URL to http://localhost:3000/auth/github/callback'",
     "build:example": "tsx scripts/build-example.ts",
     "test:example": "node scripts/test-example.js",
-    "setup:example": "cd example && go mod tidy",
+    "setup:example": "cd ./src/example && go mod tidy",
     "clean:all": "rm -rf testeranto dist && cd example && go clean && rm -f example/*.golingvu.go example/calculator_test",
     "build:all": "npm run build3 && npm run build:example",
     "test:all": "npm run build:all && npm run test:example",
@@ -49,7 +49,8 @@
     "ci": "npm run build:all && npm run test:all && npm run verify",
     "devV2:clean": "npm run clean:all && npm run devV2",
     "devV2:full": "rm -rf testeranto && npm run build:all && npm run t-init && cp ./dist/prebuild/App.* testeranto && cd example && go mod tidy && cd .. && npm run build:example && npm run testeranto core dev",
-    "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev"
+    "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev",
+    "devV4": "npm run testeranto allTests.ts once"
   },
   "exports": {
     "./Puppeteer": {
