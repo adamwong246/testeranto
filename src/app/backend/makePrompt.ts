@@ -6,6 +6,8 @@ import { IRunTime, ISummary } from "../../Types";
 import { getLogFilesForRuntime } from "../../utils/logFiles";
 import { LOG_FILES } from "../../utils/logFiles";
 
+const testsDotHtml = `"asdasdasd";`;
+
 export const makePrompt = async (
   summary: ISummary,
   name: string,
@@ -29,6 +31,19 @@ export const makePrompt = async (
   const lintPath = path.join(testDir, LOG_FILES.LINT_ERRORS);
   const typePath = path.join(testDir, LOG_FILES.TYPE_ERRORS);
   const messagePath = path.join(testDir, LOG_FILES.MESSAGE);
+
+  fs.writeFileSync(
+    `${testDir}/tests.html`,
+    `aider --model deepseek/deepseek-chat --load testeranto/reports/${name}/${entryPoint
+      .split(".")
+      .slice(0, -1)
+      .join(
+        "."
+      )}/${runTime}/prompt.txt --message-file testeranto/reports/${name}/${entryPoint
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/${runTime}/message.txt`
+  );
 
   try {
     await Promise.all([

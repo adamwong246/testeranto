@@ -150,13 +150,17 @@ export const specification: ITestSpecification<
       {
         test0: Given.Default(
           ["https://api.github.com/repos/adamwong246/testeranto/issues/8"],
+          //  a list of Whens
           [],
-          [Then.getWidth(2)]
+          // a list of Thens
+          [Then.getWidth(2)],
+          // optional arguments go here
         ),
         test1: Given.Default(
           [`Rectangles have width and height.`],
           [When.setWidth(4), When.setHeight(5)],
-          [Then.getWidth(4), Then.getHeight(5), Then.area(20)]
+          [Then.getWidth(4), Then.getHeight(5), Then.area(20)],
+          // optional arguments go here
         ),
       },
 

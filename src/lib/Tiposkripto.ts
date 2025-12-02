@@ -108,16 +108,9 @@ export default abstract class Tiposkripto<
           features: string[],
           whens: BaseWhen<I>[],
           thens: BaseThen<I>[],
-          gcb: I["given"],
+          // gcb: I["given"],
           initialValues: any
         ) => {
-          // Debug the parameters being passed - check if features contains when-like objects
-          // console.log(`[Tiposkripto] Creating Given ${key} with:`);
-          // console.log(`  name: ${name}`);
-          // console.log(`  features:`, features);
-          // console.log(`  whens:`, whens);
-          // console.log(`  thens:`, thens);
-
           // Ensure parameters are arrays and create copies to avoid reference issues
           const safeFeatures = Array.isArray(features) ? [...features] : [];
           const safeWhens = Array.isArray(whens) ? [...whens] : [];
@@ -194,7 +187,6 @@ export default abstract class Tiposkripto<
               return await fullAdapter.butThen(store, thenCB, testResource, pm);
             }
           })(`${key}: ${args && args.toString()}`, thEn(...args));
-          // console.log(`[Tiposkripto] Created Then ${key}:`, thenInstance.name);
           return thenInstance;
         };
         return a;

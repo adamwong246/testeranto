@@ -90,7 +90,7 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   pm = new PM_Main(config, testsName, mode);
   await pm.start();
 
-  fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
+  // fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
 
   if (!fs.existsSync(`testeranto/reports/${testsName}`)) {
     fs.mkdirSync(`testeranto/reports/${testsName}`);

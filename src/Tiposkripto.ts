@@ -1,11 +1,11 @@
 import {
   Ibdd_in_any,
   Ibdd_out,
-  ITestSpecification,
-  ITestImplementation,
   ITestAdapter,
+  ITestImplementation,
+  ITestSpecification,
 } from "./CoreTypes";
-import { ITTestResourceRequest, defaultTestResourceRequirement } from "./lib";
+import { defaultTestResourceRequirement, ITTestResourceRequest } from "./lib";
 import type Tiposkripto from "./lib/Tiposkripto.js";
 
 let tpskrt;
@@ -20,14 +20,6 @@ if (ENV === "node") {
   throw `Unknown ENV ${ENV}`;
 }
 
-console.log("Hello universal Tiposkripto!", ENV, tpskrt);
-
-// async function ttt<I extends Ibdd_in_any, O extends Ibdd_out_any, M>(): Promise<
-//   Tiposkripto<I, O, M>
-// > {
-//   return await tpskrt.default;
-// }
-
 export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   input: I["iinput"],
   testSpecification: ITestSpecification<I, O>,
@@ -35,7 +27,6 @@ export default async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testAdapter: Partial<ITestAdapter<I>>,
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Tiposkripto<I, O, M>> => {
-  console.log("mark100", await tpskrt.default.toString());
   return (
     (await tpskrt.default) as unknown as <
       II extends Ibdd_in_any,

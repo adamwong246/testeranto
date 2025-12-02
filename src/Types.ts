@@ -194,25 +194,25 @@ export type ITestconfig = {
 
   golang: {
     plugins: any[];
-    tests: Record<string, { port: number }>;
+    tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
   };
 
   python: {
     plugins: any[];
-    tests: Record<string, { port: number }>;
+    tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
   };
 
   node: {
     plugins: any[];
-    tests: Record<string, { port: number }>;
+    tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
   };
   web: {
     plugins: any[];
-    tests: Record<string, { port: number }>;
+    tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
   };

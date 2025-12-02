@@ -7,7 +7,7 @@ import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
 import esbuildNodeConfiger from "../../esbuildConfigs/node.js";
-import esbuildImportConfiger from "../../esbuildConfigs/pure.js";
+// import esbuildImportConfiger from "../../esbuildConfigs/pure.js";
 import esbuildWebConfiger from "../../esbuildConfigs/web.js";
 import { IFinalResults, IRunTime } from "../../lib/index.js";
 import {
@@ -78,7 +78,6 @@ export class PM_Main extends PM_WithHelpo {
 
     const testConfigResource = testConfig[2];
 
-    console.log("mark1", this.configTests());
     const portsToUse: string[] = [];
     let testResources = "";
 
@@ -145,12 +144,11 @@ export class PM_Main extends PM_WithHelpo {
         socket.on("data", onData);
       });
 
-      server.listen(ipcfile, (err) => {
-        if (err) reject(err);
-        else resolve(server);
+      server.listen(ipcfile, () => {
+        resolve(server);
       });
 
-      server.on("error", reject);
+      server.on("error", (err) => reject(err));
     });
   }
 
@@ -256,12 +254,14 @@ export class PM_Main extends PM_WithHelpo {
                   const args = message.slice(1, -1);
                   try {
                     const result = await (this as any)[command](...args);
-                    child.send(
-                      JSON.stringify({
-                        payload: result,
-                        key: message[message.length - 1],
-                      })
-                    );
+                    if (child.send) {
+                      child.send(
+                        JSON.stringify({
+                          payload: result,
+                          key: message[message.length - 1],
+                        })
+                      );
+                    }
                   } catch (error) {
                     console.error(`Error handling command ${command}:`, error);
                   }
@@ -535,12 +535,14 @@ export class PM_Main extends PM_WithHelpo {
                   const args = message.slice(1, -1);
                   try {
                     const result = await (this as any)[command](...args);
-                    child.send(
-                      JSON.stringify({
-                        payload: result,
-                        key: message[message.length - 1],
-                      })
-                    );
+                    if (child.send) {
+                      child.send(
+                        JSON.stringify({
+                          payload: result,
+                          key: message[message.length - 1],
+                        })
+                      );
+                    }
                   } catch (error) {
                     console.error(`Error handling command ${command}:`, error);
                   }
@@ -722,7 +724,12 @@ export class PM_Main extends PM_WithHelpo {
         const stdoutContent = fs.readFileSync(stdoutPath, "utf-8");
         const lines = stdoutContent.split("\n").filter((line) => line.trim());
 
-        const testResults = {
+        const testResults: {
+          tests: Array<{ name: string; status: string; time: string }>;
+          features: any[];
+          givens: any[];
+          fullPath: string;
+        } = {
           tests: [],
           features: [],
           givens: [],
