@@ -6,4 +6,6 @@ RUN apk update && apk add --no-cache     chromium     nss     freetype     freet
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 RUN mkdir -p /workspace/testeranto
+RUN mkdir -p /workspace/testeranto/bundles
 RUN mkdir -p /workspace/testeranto/metafiles
+RUN mkdir -p /workspace/testeranto/reports

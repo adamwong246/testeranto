@@ -7,7 +7,7 @@ services:
       tags:
         - bundles-node-build:latest
     volumes:
-      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./testeranto:/workspace/testeranto
     image: bundles-node-build:latest
     restart: 'no'
   web-build:
@@ -17,7 +17,7 @@ services:
       tags:
         - bundles-web-build:latest
     volumes:
-      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./testeranto:/workspace/testeranto
     image: bundles-web-build:latest
     restart: 'no'
   golang-build:
@@ -27,7 +27,7 @@ services:
       tags:
         - bundles-golang-build:latest
     volumes:
-      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./testeranto:/workspace/testeranto
     image: bundles-golang-build:latest
     restart: 'no'
   python-build:
@@ -37,7 +37,7 @@ services:
       tags:
         - bundles-python-build:latest
     volumes:
-      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./testeranto:/workspace/testeranto
     image: bundles-python-build:latest
     restart: 'no'
   node-src-example-calculator-test-ts:
@@ -47,7 +47,7 @@ services:
         testeranto/bundles/allTests/node/src/example/Calculator.test.ts/Dockerfile
     command: node testeranto/bundles/node/allTests/Calculator.test.mjs
     volumes:
-      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./testeranto:/workspace/testeranto
       - ./src:/workspace/src
     depends_on:
       - node-build
@@ -59,7 +59,7 @@ services:
         testeranto/bundles/allTests/web/src/example/Calculator.test.ts/Dockerfile
     command: node testeranto/bundles/web/allTests/Calculator.test.mjs
     volumes:
-      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./testeranto:/workspace/testeranto
       - ./src:/workspace/src
     depends_on:
       - web-build
@@ -71,7 +71,7 @@ services:
         testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go/Dockerfile
     command: go test src/example/Calculator.golingvu.test.go
     volumes:
-      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./testeranto:/workspace/testeranto
       - ./src:/workspace/src
     depends_on:
       - golang-build
@@ -83,7 +83,7 @@ services:
         testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py/Dockerfile
     command: 'python src/example/Calculator.pitono.test.py '
     volumes:
-      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./testeranto:/workspace/testeranto
       - ./src:/workspace/src
     depends_on:
       - python-build

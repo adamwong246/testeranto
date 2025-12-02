@@ -5,4 +5,6 @@ WORKDIR /workspace
 RUN npm install --legacy-peer-deps
 COPY ./src ./src
 RUN mkdir -p /workspace/testeranto
+RUN mkdir -p /workspace/testeranto/bundles
 RUN mkdir -p /workspace/testeranto/metafiles
+RUN mkdir -p /workspace/testeranto/reports

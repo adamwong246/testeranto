@@ -94,7 +94,7 @@ function generateServicesForRuntime(
       },
       command: getCommandForRuntime(runtime, testName),
       volumes: [
-        "./testeranto/metafiles:/workspace/testeranto/metafiles",
+        "./testeranto:/workspace/testeranto",
         "./src:/workspace/src", // Mount source code
       ],
       depends_on: [`${runtime}-build`],
@@ -173,7 +173,7 @@ function generateBuildServiceForRuntime(
         dockerfile: path.join(buildDockerfileDir, buildDockerfileName),
         tags: [`bundles-${runtime}-build:latest`],
       },
-      volumes: ["./testeranto/metafiles:/workspace/testeranto/metafiles"],
+      volumes: ["./testeranto:/workspace/testeranto"],
       image: `bundles-${runtime}-build:latest`,
       restart: "no", // Don't restart after the build completes
     },

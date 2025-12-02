@@ -105,9 +105,12 @@ export function generateDockerfile(
   //   }\nWORKDIR /app\nRUN mkdir -p /workspace/testeranto/metafiles\nCOPY . .\n`;
   // }
 
-  // Add the metafiles directory creation to the end of the Dockerfile
+  // Add the directory creation to the end of the Dockerfile
   return (
     dockerfileLines +
-    "\nRUN mkdir -p /workspace/testeranto\nRUN mkdir -p /workspace/testeranto/metafiles\n"
+    "\nRUN mkdir -p /workspace/testeranto\n" +
+    "RUN mkdir -p /workspace/testeranto/bundles\n" +
+    "RUN mkdir -p /workspace/testeranto/metafiles\n" +
+    "RUN mkdir -p /workspace/testeranto/reports\n"
   );
 }
