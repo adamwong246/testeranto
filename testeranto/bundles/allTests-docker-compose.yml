@@ -1,0 +1,93 @@
+version: '3.8'
+services:
+  node-build:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/bundles/allTests/node/node.Dockerfile
+      tags:
+        - bundles-node-build:latest
+    volumes:
+      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+    image: bundles-node-build:latest
+    restart: 'no'
+  web-build:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/bundles/allTests/web/web.Dockerfile
+      tags:
+        - bundles-web-build:latest
+    volumes:
+      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+    image: bundles-web-build:latest
+    restart: 'no'
+  golang-build:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/bundles/allTests/golang/golang.Dockerfile
+      tags:
+        - bundles-golang-build:latest
+    volumes:
+      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+    image: bundles-golang-build:latest
+    restart: 'no'
+  python-build:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/bundles/allTests/python/python.Dockerfile
+      tags:
+        - bundles-python-build:latest
+    volumes:
+      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+    image: bundles-python-build:latest
+    restart: 'no'
+  node-src-example-calculator-test-ts:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: >-
+        testeranto/bundles/allTests/node/src/example/Calculator.test.ts/Dockerfile
+    command: node testeranto/bundles/node/allTests/Calculator.test.mjs
+    volumes:
+      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./src:/workspace/src
+    depends_on:
+      - node-build
+    working_dir: /workspace
+  web-src-example-calculator-test-ts:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: >-
+        testeranto/bundles/allTests/web/src/example/Calculator.test.ts/Dockerfile
+    command: node testeranto/bundles/web/allTests/Calculator.test.mjs
+    volumes:
+      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./src:/workspace/src
+    depends_on:
+      - web-build
+    working_dir: /workspace
+  golang-src-example-calculator-golingvu-test-go:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: >-
+        testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go/Dockerfile
+    command: go test src/example/Calculator.golingvu.test.go
+    volumes:
+      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./src:/workspace/src
+    depends_on:
+      - golang-build
+    working_dir: /workspace
+  python-src-example-calculator-pitono-test-py:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: >-
+        testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py/Dockerfile
+    command: 'python src/example/Calculator.pitono.test.py '
+    volumes:
+      - ./testeranto/metafiles:/workspace/testeranto/metafiles
+      - ./src:/workspace/src
+    depends_on:
+      - python-build
+    working_dir: /workspace
+networks:
+  default:
+    name: allTests_network
