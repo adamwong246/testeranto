@@ -9,8 +9,12 @@ RUN npm install -g tsx
 COPY ./src ./src/
 COPY allTests.ts .
 COPY dist/prebuild/builders/node.mjs ./node.mjs
-# Create the full metafiles directory structure before CMD
+# Create the full directory structure before CMD
 RUN mkdir -p /workspace/testeranto
+RUN mkdir -p /workspace/testeranto/bundles
+RUN mkdir -p /workspace/testeranto/bundles/allTests
+RUN mkdir -p /workspace/testeranto/bundles/allTests/node
+RUN mkdir -p /workspace/testeranto/metafiles
 RUN mkdir -p /workspace/testeranto/metafiles/node
 # Run the build to generate metafiles when container starts
 CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/builders/ && which node && which npx && npx tsx ./dist/prebuild/builders/node.mjs allTests.ts"]
