@@ -16,6 +16,8 @@ export function generateServices(
   const services: Record<string, any> = {};
   const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
 
+  console.log("generateServices", testsName);
+
   // First, always generate build services for all runtimes that have tests defined
   runtimes.forEach((runtime) => {
     if (
@@ -23,7 +25,7 @@ export function generateServices(
       c[runtime].tests &&
       Object.keys(c[runtime].tests).length > 0
     ) {
-      console.log(`Generating build service for runtime: ${runtime}`);
+      // console.log(`Generating build service for runtime: ${runtime}`);
 
       // Generate build service
       const buildService = generateBuildServiceForRuntime(
@@ -42,24 +44,24 @@ export function generateServices(
       c[runtime].tests &&
       Object.keys(c[runtime].tests).length > 0
     ) {
-      console.log(`Generating test services for runtime: ${runtime}`);
+      // console.log(`Generating test services for runtime: ${runtime}`);
 
       // Generate test services
       const runtimeServices = generateServicesForRuntime(c, runtime, testsName);
       Object.assign(services, runtimeServices);
 
-      console.log(
-        `Generated ${
-          Object.keys(runtimeServices).length
-        } test services for ${runtime}`
-      );
+      // console.log(
+      //   `Generated ${
+      //     Object.keys(runtimeServices).length
+      //   } test services for ${runtime}`
+      // );
     } else {
       console.log(`Skipping ${runtime} - no tests found`);
     }
   });
 
-  console.log(`Total services generated: ${Object.keys(services).length}`);
-  console.log(`Service names: ${Object.keys(services).join(", ")}`);
+  // console.log(`Total services generated: ${Object.keys(services).length}`);
+  // console.log(`Service names: ${Object.keys(services).join(", ")}`);
 
   return services;
 }
@@ -93,10 +95,10 @@ function generateServicesForRuntime(
       command: getCommandForRuntime(runtime, testName),
       volumes: [
         "./testeranto/metafiles:/workspace/testeranto/metafiles",
-        "./src:/workspace/src" // Mount source code
+        "./src:/workspace/src", // Mount source code
       ],
       depends_on: [`${runtime}-build`],
-      working_dir: "/workspace"
+      working_dir: "/workspace",
     };
   });
 
@@ -120,6 +122,12 @@ function setupDockerfileForTest(
     testName
   );
   const dockerfilePath = path.join(dockerfileDir, dockerfileName);
+
+  // Ensure we're not writing outside of testeranto/bundles
+  const normalizedDir = path.normalize(dockerfileDir);
+  if (!normalizedDir.startsWith(path.join("testeranto", "bundles"))) {
+    throw new Error(`Invalid Dockerfile directory: ${dockerfileDir}. Must be under testeranto/bundles/`);
+  }
 
   // Create the directory and write the file
   const fullDockerfileDir = path.join(process.cwd(), dockerfileDir);
@@ -152,9 +160,9 @@ function generateBuildServiceForRuntime(
   const buildDockerfileDir = setupDockerfileForBuild(runtime, testsName);
   const buildDockerfileName = `${runtime}.Dockerfile`;
 
-  console.log(`Setting up build service for ${runtime}`);
-  console.log(`  Build Dockerfile directory: ${buildDockerfileDir}`);
-  console.log(`  Build Dockerfile name: ${buildDockerfileName}`);
+  // console.log(`Setting up build service for ${runtime}`);
+  // console.log(`  Build Dockerfile directory: ${buildDockerfileDir}`);
+  // console.log(`  Build Dockerfile name: ${buildDockerfileName}`);
 
   const serviceName = `${runtime}-build`;
 
@@ -305,9 +313,9 @@ CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/builders/ &
 
 function setupDockerfileForBuild(runtime: IRunTime, testsName: string): string {
   const configFilePath = process.argv[2];
-  console.log(
-    `Setting up build Dockerfile for ${runtime} with config: ${configFilePath}`
-  );
+  // console.log(
+  //   `Setting up build Dockerfile for ${runtime} with config: ${configFilePath}`
+  // );
 
   let dockerfileContent: string;
 
@@ -325,9 +333,9 @@ function setupDockerfileForBuild(runtime: IRunTime, testsName: string): string {
     );
   }
 
-  console.log(`Generated Build Dockerfile for ${runtime}:`);
-  console.log(dockerfileContent);
-  console.log("---");
+  // console.log(`Generated Build Dockerfile for ${runtime}:`);
+  // console.log(dockerfileContent);
+  // console.log("---");
 
   if (!dockerfileContent || dockerfileContent.trim().length === 0) {
     console.warn(
@@ -341,12 +349,18 @@ function setupDockerfileForBuild(runtime: IRunTime, testsName: string): string {
         : runtime === "golang"
         ? "node:18-alpine"
         : "alpine:latest"
-    }\nWORKDIR /app\nCOPY . .\nRUN echo 'Build phase completed'\n`;
+    }\nWORKDIR /app\nRUN mkdir -p /workspace/testeranto/metafiles\nCOPY . .\nRUN echo 'Build phase completed'\n`;
   }
 
   const dockerfileName = `${runtime}.Dockerfile`;
   const dockerfileDir = path.join("testeranto", "bundles", testsName, runtime);
   const dockerfilePath = path.join(dockerfileDir, dockerfileName);
+
+  // Ensure we're not writing outside of testeranto/bundles
+  const normalizedDir = path.normalize(dockerfileDir);
+  if (!normalizedDir.startsWith(path.join("testeranto", "bundles"))) {
+    throw new Error(`Invalid Dockerfile directory: ${dockerfileDir}. Must be under testeranto/bundles/`);
+  }
 
   // Create the directory and write the file
   const fullDockerfileDir = path.join(process.cwd(), dockerfileDir);
@@ -360,7 +374,7 @@ function setupDockerfileForBuild(runtime: IRunTime, testsName: string): string {
       `Failed to create build Dockerfile at ${fullDockerfilePath}`
     );
   }
-  console.log(`  Verified build Dockerfile exists at: ${fullDockerfilePath}`);
+  // console.log(`  Verified build Dockerfile exists at: ${fullDockerfilePath}`);
 
   // Return the directory containing the Dockerfile
   return dockerfileDir;

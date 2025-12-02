@@ -84,7 +84,6 @@ export function generateDockerfile(
     .filter(
       (line) => line && !line.startsWith("# STATIC_ANALYSIS - not implemented")
     )
-    .concat(["asdf"])
     .join("\n");
 
   console.log(`Generated Dockerfile for ${runtime}-${testName}:`);
