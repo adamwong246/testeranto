@@ -76,8 +76,8 @@ var inputFilesPlugin_default = (platform, testName) => {
     inputFilesPluginFactory: {
       name: "metafileWriter",
       setup(build) {
-        build.onEnd((result) => {
-          fs.writeFileSync(f, JSON.stringify(result, null, 2));
+        build.onEnd((result2) => {
+          fs.writeFileSync(f, JSON.stringify(result2, null, 2));
         });
       }
     }
@@ -91,14 +91,14 @@ var rebuildPlugin_default = (r) => {
   return {
     name: "rebuild-notify",
     setup: (build) => {
-      build.onEnd((result) => {
-        console.log(`${r} > build ended with ${result.errors.length} errors`);
-        if (result.errors.length > 0) {
-          const errorFile = path3.join(process.cwd(), `testeranto/reports${r}_build_errors`);
-          fs2.writeFileSync(
-            errorFile,
-            JSON.stringify(result, null, 2)
+      build.onEnd((result2) => {
+        console.log(`${r} > build qqq with ${result2.errors.length} errors`);
+        if (result2.errors.length > 0) {
+          const errorFile = path3.join(
+            process.cwd(),
+            `testeranto/reports${r}_build_errors`
           );
+          fs2.writeFileSync(errorFile, JSON.stringify(result2, null, 2));
         }
       });
     }
@@ -106,7 +106,7 @@ var rebuildPlugin_default = (r) => {
 };
 
 // src/esbuildConfigs/web.ts
-var web_default = (config, entryPoints, testName) => {
+var web_default = (config, entryPoints, testName, bundlesDir) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "web",
     testName
@@ -118,7 +118,7 @@ var web_default = (config, entryPoints, testName) => {
       ENV: `"web"`
     },
     treeShaking: true,
-    outdir: `testeranto/bundles/web/${testName}`,
+    outdir: bundlesDir || `testeranto/bundles/web/${testName}`,
     alias: {
       react: path4.resolve("./node_modules/react")
     },
@@ -155,7 +155,6 @@ var web_default = (config, entryPoints, testName) => {
 };
 
 // src/builders/web.ts
-import esbuild from "esbuild";
 import path5 from "path";
 async function runWebBuild() {
   try {
@@ -181,7 +180,10 @@ async function runWebBuild() {
     if (entryPoints.length === 0) {
       console.log("WEB BUILDER: No web tests found");
       const metafileDir = "/workspace/testeranto/metafiles/web";
-      const metafilePath = path5.join(metafileDir, `${path5.basename(configPath, path5.extname(configPath))}.json`);
+      const metafilePath = path5.join(
+        metafileDir,
+        `${path5.basename(configPath, path5.extname(configPath))}.json`
+      );
       if (!fs3.existsSync(metafileDir)) {
         fs3.mkdirSync(metafileDir, { recursive: true });
       }
@@ -196,42 +198,109 @@ async function runWebBuild() {
       return;
     }
     console.log("WEB BUILDER: Starting esbuild...");
-    const buildOptions = web_default(config, entryPoints, configPath);
-    const result = await esbuild.build(buildOptions);
-    if (result.errors.length === 0) {
-      console.log(`WEB BUILDER: Build completed successfully for test: ${configPath}`);
-      console.log(`WEB BUILDER: Entry points: ${entryPoints.join(", ")}`);
-      const metafileDir = "/workspace/testeranto/metafiles/web";
-      const metafilePath = path5.join(metafileDir, `${path5.basename(configPath, path5.extname(configPath))}.json`);
-      console.log("WEB BUILDER: Writing metafile to:", metafilePath);
-      if (!fs3.existsSync(metafileDir)) {
-        console.log("WEB BUILDER: Creating metafile directory:", metafileDir);
-        fs3.mkdirSync(metafileDir, { recursive: true });
-      } else {
-        console.log("WEB BUILDER: Metafile directory already exists:", metafileDir);
-      }
-      if (result.metafile) {
-        console.log("WEB BUILDER: Writing metafile content...");
-        fs3.writeFileSync(metafilePath, JSON.stringify(result.metafile, null, 2));
-        console.log(`WEB BUILDER: Metafile written to: ${metafilePath}`);
-        if (fs3.existsSync(metafilePath)) {
-          console.log("WEB BUILDER: Metafile verified to exist");
+    const bundlesDir = process.env.BUNDLES_DIR || "/workspace/testeranto/bundles/allTests/web";
+    const metafilesDir = process.env.METAFILES_DIR || "/workspace/testeranto/metafiles/web";
+    console.log("WEB BUILDER: Using bundles directory:", bundlesDir);
+    console.log("WEB BUILDER: Using metafiles directory:", metafilesDir);
+    const buildOptions = web_default(
+      config,
+      entryPoints,
+      configPath,
+      bundlesDir
+    );
+    console.log("WEB BUILDER: Esbuild options outdir:", buildOptions.outdir);
+    console.log(
+      "WEB BUILDER: Esbuild options entryPoints:",
+      buildOptions.entryPoints
+    );
+    try {
+      console.log("WEB BUILDER: Esbuild build completed");
+      if (result.errors.length === 0) {
+        console.log(
+          `WEB BUILDER: Build completed successfully for test: ${configPath}`
+        );
+        console.log(`WEB BUILDER: Entry points: ${entryPoints.join(", ")}`);
+        console.log("WEB BUILDER: Checking output directory:", bundlesDir);
+        if (fs3.existsSync(bundlesDir)) {
+          console.log(
+            "WEB BUILDER: Contents of bundlesDir:",
+            fs3.readdirSync(bundlesDir)
+          );
         } else {
-          console.log("WEB BUILDER: ERROR: Metafile was not created!");
+          console.log(
+            "WEB BUILDER: ERROR: bundlesDir does not exist:",
+            bundlesDir
+          );
+        }
+        const metafileDir = process.env.METAFILES_DIR || "/workspace/testeranto/metafiles/web";
+        const metafilePath = path5.join(
+          metafileDir,
+          `${path5.basename(configPath, path5.extname(configPath))}.json`
+        );
+        console.log("WEB BUILDER: Writing metafile to:", metafilePath);
+        if (!fs3.existsSync(metafileDir)) {
+          console.log("WEB BUILDER: Creating metafile directory:", metafileDir);
+          fs3.mkdirSync(metafileDir, { recursive: true });
+        } else {
+          console.log(
+            "WEB BUILDER: Metafile directory already exists:",
+            metafileDir
+          );
+        }
+        if (result.metafile) {
+          console.log("WEB BUILDER: Writing metafile content...");
+          fs3.writeFileSync(
+            metafilePath,
+            JSON.stringify(result.metafile, null, 2)
+          );
+          console.log(`WEB BUILDER: Metafile written to: ${metafilePath}`);
+          if (fs3.existsSync(metafilePath)) {
+            console.log("WEB BUILDER: Metafile verified to exist");
+          } else {
+            console.log("WEB BUILDER: ERROR: Metafile was not created!");
+          }
+        } else {
+          console.log("WEB BUILDER: No metafile generated by esbuild");
+          const basicMetafile = {
+            entryPoints,
+            buildTime: (/* @__PURE__ */ new Date()).toISOString(),
+            runtime: "web",
+            message: "Build completed but no esbuild metafile generated"
+          };
+          fs3.writeFileSync(
+            metafilePath,
+            JSON.stringify(basicMetafile, null, 2)
+          );
+          console.log(
+            `WEB BUILDER: Basic metafile written to: ${metafilePath}`
+          );
+        }
+        console.log(
+          "WEB BUILDER: Final check - listing /workspace/testeranto/bundles:"
+        );
+        if (fs3.existsSync("/workspace/testeranto/bundles")) {
+          console.log(fs3.readdirSync("/workspace/testeranto/bundles"));
+          if (fs3.existsSync("/workspace/testeranto/bundles/web")) {
+            console.log(
+              "WEB BUILDER: Contents of /workspace/testeranto/bundles/web:"
+            );
+            console.log(fs3.readdirSync("/workspace/testeranto/bundles/web"));
+            if (fs3.existsSync("/workspace/testeranto/bundles/web/allTests")) {
+              console.log(
+                "WEB BUILDER: Contents of /workspace/testeranto/bundles/web/allTests:"
+              );
+              console.log(
+                fs3.readdirSync("/workspace/testeranto/bundles/web/allTests")
+              );
+            }
+          }
         }
       } else {
-        console.log("WEB BUILDER: No metafile generated by esbuild");
-        const basicMetafile = {
-          entryPoints,
-          buildTime: (/* @__PURE__ */ new Date()).toISOString(),
-          runtime: "web",
-          message: "Build completed but no esbuild metafile generated"
-        };
-        fs3.writeFileSync(metafilePath, JSON.stringify(basicMetafile, null, 2));
-        console.log(`WEB BUILDER: Basic metafile written to: ${metafilePath}`);
+        console.error("WEB BUILDER: Build errors:", result.errors);
+        process.exit(1);
       }
-    } else {
-      console.error("WEB BUILDER: Build errors:", result.errors);
+    } catch (error) {
+      console.error("WEB BUILDER: Esbuild build failed with error:", error);
       process.exit(1);
     }
   } catch (error) {

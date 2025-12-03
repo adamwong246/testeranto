@@ -1,0 +1,41 @@
+{
+  "errors": [
+    {
+      "id": "",
+      "location": {
+        "column": 11,
+        "file": "src/Tiposkripto.ts",
+        "length": 5,
+        "line": 16,
+        "lineText": "  tpskrt = await import(\"./lib/Node\");",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [],
+      "pluginName": "",
+      "text": "Top-level await is currently not supported with the \"cjs\" output format"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "direct-eval",
+      "location": {
+        "column": 21,
+        "file": "src/example/Calculator.ts",
+        "length": 4,
+        "line": 17,
+        "lineText": "      const result = eval(this.display);",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": null,
+          "text": "You can read more about direct eval and bundling here: https://esbuild.github.io/link/direct-eval"
+        }
+      ],
+      "pluginName": "",
+      "text": "Using direct eval with a bundler is not recommended and may cause problems"
+    }
+  ]
+}

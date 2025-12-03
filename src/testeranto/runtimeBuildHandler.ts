@@ -64,5 +64,5 @@ export async function handleRuntimeBuilds(
     });
   });
 
-  dockerMan.start();
+  await dockerMan.start();
 }

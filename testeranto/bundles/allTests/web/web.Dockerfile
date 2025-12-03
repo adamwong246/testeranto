@@ -13,9 +13,12 @@ COPY dist/prebuild/builders/web.mjs ./web.mjs
 # Create the full directory structure before CMD
 RUN mkdir -p /workspace/testeranto
 RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/allTests
-RUN mkdir -p /workspace/testeranto/bundles/allTests/web
+RUN mkdir -p /workspace/testeranto/bundles/web
+RUN mkdir -p /workspace/testeranto/bundles/web/allTests
 RUN mkdir -p /workspace/testeranto/metafiles
 RUN mkdir -p /workspace/testeranto/metafiles/web
+# Set environment variables for output directories
+ENV BUNDLES_DIR=/workspace/testeranto/bundles/web/allTests.ts
+ENV METAFILES_DIR=/workspace/testeranto/metafiles/web
 # Run the build to generate metafiles when container starts
-CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/builders/ && which node && which npx && npx tsx ./dist/prebuild/builders/web.mjs allTests.ts"]
+CMD ["sh", "-c", "echo 'Starting build...' && echo 'Current directory:' && pwd && echo 'Listing dist/prebuild/builders/:' && ls -la ./dist/prebuild/builders/ 2>&1 || echo 'Directory does not exist' && echo 'Checking if web.mjs exists:' && if [ -f ./dist/prebuild/builders/web.mjs ]; then echo 'web.mjs exists'; else echo 'ERROR: web.mjs does not exist'; exit 1; fi && echo 'Node version:' && node --version && echo 'npx version:' && npx --version && echo 'Running build...' && npx tsx ./dist/prebuild/builders/web.mjs allTests.ts dev"]

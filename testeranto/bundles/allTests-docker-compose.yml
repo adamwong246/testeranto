@@ -6,87 +6,292 @@ services:
       dockerfile: testeranto/bundles/allTests/node/node.Dockerfile
       tags:
         - bundles-node-build:latest
+      args:
+        NODE_MJS_HASH: 9dea0a0a22322cbb70da4d848d623950
     volumes:
-      - ./testeranto:/workspace/testeranto
+      - ../../testeranto:/workspace/testeranto
     image: bundles-node-build:latest
-    restart: 'no'
+    restart: unless-stopped
+    environment:
+      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/node
+      METAFILES_DIR: /workspace/testeranto/metafiles/node
+    command:
+      - sh
+      - '-c'
+      - |
+        echo 'Starting node build in watch mode...'; 
+                echo 'Creating output directory...'; 
+                mkdir -p /workspace/testeranto/bundles/allTests/node;
+                mkdir -p /workspace/testeranto/metafiles/node;
+                echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+                # Run in watch mode and keep the process alive
+                npx tsx ./node.mjs allTests.ts dev || echo "Build process exited, but keeping container alive for health checks";
+                # Keep the container running even if the build command exits
+                while true; do
+                  sleep 3600
+                done
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          [ -f /workspace/testeranto/metafiles/node/allTests.json ] && echo
+          "healthy" || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      start_period: 10s
   web-build:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: testeranto/bundles/allTests/web/web.Dockerfile
       tags:
         - bundles-web-build:latest
+      args: {}
     volumes:
-      - ./testeranto:/workspace/testeranto
+      - ../../testeranto:/workspace/testeranto
     image: bundles-web-build:latest
-    restart: 'no'
+    restart: unless-stopped
+    environment:
+      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/web
+      METAFILES_DIR: /workspace/testeranto/metafiles/web
+    command:
+      - sh
+      - '-c'
+      - |
+        echo 'Starting web build in watch mode...'; 
+                echo 'Creating output directory...'; 
+                mkdir -p /workspace/testeranto/bundles/allTests/web;
+                mkdir -p /workspace/testeranto/metafiles/web;
+                echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+                # Run in watch mode and keep the process alive
+                npx tsx ./web.mjs allTests.ts dev || echo "Build process exited, but keeping container alive for health checks";
+                # Keep the container running even if the build command exits
+                while true; do
+                  sleep 3600
+                done
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          [ -f /workspace/testeranto/metafiles/web/allTests.json ] && echo
+          "healthy" || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      start_period: 10s
   golang-build:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: testeranto/bundles/allTests/golang/golang.Dockerfile
       tags:
         - bundles-golang-build:latest
+      args: {}
     volumes:
-      - ./testeranto:/workspace/testeranto
+      - ../../testeranto:/workspace/testeranto
     image: bundles-golang-build:latest
-    restart: 'no'
+    restart: unless-stopped
+    environment:
+      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/golang
+      METAFILES_DIR: /workspace/testeranto/metafiles/golang
+    command:
+      - sh
+      - '-c'
+      - |
+        echo 'Starting golang build in watch mode...'; 
+                echo 'Creating output directory...'; 
+                mkdir -p /workspace/testeranto/bundles/allTests/golang;
+                mkdir -p /workspace/testeranto/metafiles/golang;
+                echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+                # Run in watch mode and keep the process alive
+                npx tsx ./golang.mjs allTests.ts dev || echo "Build process exited, but keeping container alive for health checks";
+                # Keep the container running even if the build command exits
+                while true; do
+                  sleep 3600
+                done
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          [ -f /workspace/testeranto/metafiles/golang/allTests.json ] && echo
+          "healthy" || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      start_period: 10s
   python-build:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: testeranto/bundles/allTests/python/python.Dockerfile
       tags:
         - bundles-python-build:latest
+      args: {}
     volumes:
-      - ./testeranto:/workspace/testeranto
+      - ../../testeranto:/workspace/testeranto
     image: bundles-python-build:latest
-    restart: 'no'
+    restart: unless-stopped
+    environment:
+      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/python
+      METAFILES_DIR: /workspace/testeranto/metafiles/python
+    command:
+      - sh
+      - '-c'
+      - |
+        echo 'Starting python build in watch mode...'; 
+                echo 'Creating output directory...'; 
+                mkdir -p /workspace/testeranto/bundles/allTests/python;
+                mkdir -p /workspace/testeranto/metafiles/python;
+                echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+                # Run in watch mode and keep the process alive
+                npx tsx ./python.mjs allTests.ts dev || echo "Build process exited, but keeping container alive for health checks";
+                # Keep the container running even if the build command exits
+                while true; do
+                  sleep 3600
+                done
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          [ -f /workspace/testeranto/metafiles/python/allTests.json ] && echo
+          "healthy" || exit 1
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      start_period: 10s
   node-src-example-calculator-test-ts:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: >-
         testeranto/bundles/allTests/node/src/example/Calculator.test.ts/Dockerfile
-    command: node testeranto/bundles/node/allTests/Calculator.test.mjs
+    environment:
+      BUNDLES_DIR: /testeranto/bundles/allTests/node
+      METAFILES_DIR: /testeranto/metafiles/node
+    command:
+      - sh
+      - '-c'
+      - >-
+        echo "Test service starting for src/example/Calculator.test.ts
+        testeranto/bundles/allTests/node/src/example/Calculator.test.mjs"; 
+                # Wait for the bundle file to exist
+                # BUNDLE_PATH="/workspace/testeranto/bundles/allTests/node/src/example/Calculator.test.mjs"
+                # echo "Looking for bundle at: $BUNDLE_PATH"
+                while [ ! -f "testeranto/bundles/allTests/node/src/example/Calculator.test.mjs" ]; do
+                  echo "Bundle not ready yet, waiting...";
+                  sleep 2;
+                done
+                echo "Build is ready. Proceeding with test...";
+                # List the directory to confirm
+                # ls -la /workspace/testeranto/bundles/allTests/node/
+                # Run the test
+                node testeranto/bundles/allTests/node/src/example/Calculator.test.mjs
+                
     volumes:
-      - ./testeranto:/workspace/testeranto
-      - ./src:/workspace/src
+      - ../../testeranto:/workspace/testeranto
+      - ../../src:/workspace/src
     depends_on:
-      - node-build
+      node-build:
+        condition: service_healthy
     working_dir: /workspace
   web-src-example-calculator-test-ts:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: >-
         testeranto/bundles/allTests/web/src/example/Calculator.test.ts/Dockerfile
-    command: node testeranto/bundles/web/allTests/Calculator.test.mjs
+    environment:
+      BUNDLES_DIR: /testeranto/bundles/allTests/web
+      METAFILES_DIR: /testeranto/metafiles/web
+    command:
+      - sh
+      - '-c'
+      - >-
+        echo "Test service starting for src/example/Calculator.test.ts
+        testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"; 
+                # Wait for the bundle file to exist
+                # BUNDLE_PATH="/workspace/testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
+                # echo "Looking for bundle at: $BUNDLE_PATH"
+                while [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.mjs" ]; do
+                  echo "Bundle not ready yet, waiting...";
+                  sleep 2;
+                done
+                echo "Build is ready. Proceeding with test...";
+                # List the directory to confirm
+                # ls -la /workspace/testeranto/bundles/allTests/web/
+                # Run the test
+                node testeranto/bundles/allTests/web/src/example/Calculator.test.mjs
+                
     volumes:
-      - ./testeranto:/workspace/testeranto
-      - ./src:/workspace/src
+      - ../../testeranto:/workspace/testeranto
+      - ../../src:/workspace/src
     depends_on:
-      - web-build
+      web-build:
+        condition: service_healthy
     working_dir: /workspace
   golang-src-example-calculator-golingvu-test-go:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: >-
         testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go/Dockerfile
-    command: go test src/example/Calculator.golingvu.test.go
+    environment:
+      BUNDLES_DIR: /testeranto/bundles/allTests/golang
+      METAFILES_DIR: /testeranto/metafiles/golang
+    command:
+      - sh
+      - '-c'
+      - >-
+        echo "Test service starting for src/example/Calculator.golingvu.test.go
+        testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go"; 
+                # Wait for the bundle file to exist
+                # BUNDLE_PATH="/workspace/testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go"
+                # echo "Looking for bundle at: $BUNDLE_PATH"
+                while [ ! -f "testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go" ]; do
+                  echo "Bundle not ready yet, waiting...";
+                  sleep 2;
+                done
+                echo "Build is ready. Proceeding with test...";
+                # List the directory to confirm
+                # ls -la /workspace/testeranto/bundles/allTests/golang/
+                # Run the test
+                node testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go
+                
     volumes:
-      - ./testeranto:/workspace/testeranto
-      - ./src:/workspace/src
+      - ../../testeranto:/workspace/testeranto
+      - ../../src:/workspace/src
     depends_on:
-      - golang-build
+      golang-build:
+        condition: service_healthy
     working_dir: /workspace
   python-src-example-calculator-pitono-test-py:
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: >-
         testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py/Dockerfile
-    command: 'python src/example/Calculator.pitono.test.py '
+    environment:
+      BUNDLES_DIR: /testeranto/bundles/allTests/python
+      METAFILES_DIR: /testeranto/metafiles/python
+    command:
+      - sh
+      - '-c'
+      - >-
+        echo "Test service starting for src/example/Calculator.pitono.test.py
+        testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py"; 
+                # Wait for the bundle file to exist
+                # BUNDLE_PATH="/workspace/testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py"
+                # echo "Looking for bundle at: $BUNDLE_PATH"
+                while [ ! -f "testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py" ]; do
+                  echo "Bundle not ready yet, waiting...";
+                  sleep 2;
+                done
+                echo "Build is ready. Proceeding with test...";
+                # List the directory to confirm
+                # ls -la /workspace/testeranto/bundles/allTests/python/
+                # Run the test
+                node testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py
+                
     volumes:
-      - ./testeranto:/workspace/testeranto
-      - ./src:/workspace/src
+      - ../../testeranto:/workspace/testeranto
+      - ../../src:/workspace/src
     depends_on:
-      - python-build
+      python-build:
+        condition: service_healthy
     working_dir: /workspace
 networks:
   default:

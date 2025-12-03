@@ -2321,9 +2321,12 @@ async function runGolangBuild() {
     console.log("DEBUG: Build completed, entry points:", entryPoints);
     console.log(`Golang build completed successfully for test: ${configPath}`);
     console.log(`Entry points: ${entryPoints.join(", ")}`);
-    const metafileDir = "/workspace/testeranto/metafiles/golang";
-    const metafilePath = path8.join(metafileDir, `${path8.basename(configPath, path8.extname(configPath))}.json`);
+    const metafileDir = process.env.METAFILES_DIR || "/workspace/testeranto/metafiles/golang";
+    const bundlesDir = process.env.BUNDLES_DIR || "/workspace/testeranto/bundles/allTests/golang";
     const fs8 = await import("fs");
+    console.log("GOLANG BUILDER: Using metafiles directory:", metafileDir);
+    console.log("GOLANG BUILDER: Using bundles directory:", bundlesDir);
+    const metafilePath = path8.join(metafileDir, `${path8.basename(configPath, path8.extname(configPath))}.json`);
     if (!fs8.existsSync(metafileDir)) {
       fs8.mkdirSync(metafileDir, { recursive: true });
     }
@@ -2334,6 +2337,10 @@ async function runGolangBuild() {
     };
     fs8.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
     console.log(`Metafile written to: ${metafilePath}`);
+    if (!fs8.existsSync(bundlesDir)) {
+      fs8.mkdirSync(bundlesDir, { recursive: true });
+      console.log("GOLANG BUILDER: Created bundles directory:", bundlesDir);
+    }
   } catch (error) {
     console.error("Golang build failed:", error);
     console.error("Full error details:", error);

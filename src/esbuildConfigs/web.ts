@@ -10,7 +10,8 @@ import rebuildPlugin from "./rebuildPlugin.js";
 export default (
   config: ITestconfig,
   entryPoints: string[],
-  testName: string
+  testName: string,
+  bundlesDir?: string
 ): BuildOptions => {
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
     "web",
@@ -26,7 +27,7 @@ export default (
     },
 
     treeShaking: true,
-    outdir: `testeranto/bundles/web/${testName}`,
+    outdir: bundlesDir || `testeranto/bundles/web/${testName}`,
 
     alias: {
       react: path.resolve("./node_modules/react"),

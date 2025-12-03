@@ -2068,7 +2068,7 @@ var PitonoBuild = class {
 
 // src/builders/python.ts
 import path3 from "path";
-console.log("Python build process started");
+var fs3 = await import("fs");
 async function runPythonBuild() {
   try {
     const configPath = process.argv[2];
@@ -2076,16 +2076,18 @@ async function runPythonBuild() {
       throw new Error("Configuration path not provided");
     }
     const absoluteConfigPath = path3.resolve(process.cwd(), configPath);
-    console.log("mark222 python", absoluteConfigPath);
     const configModule = await import(absoluteConfigPath);
     const config = configModule.default;
     const pitonoBuild = new PitonoBuild(config, configPath);
     const entryPoints = await pitonoBuild.build();
-    console.log(`Python build completed successfully for test: ${configPath}`);
-    console.log(`Entry points: ${entryPoints.join(", ")}`);
-    const metafileDir = "/workspace/testeranto/metafiles/python";
-    const metafilePath = path3.join(metafileDir, `${path3.basename(configPath, path3.extname(configPath))}.json`);
-    const fs3 = await import("fs");
+    const metafileDir = process.env.METAFILES_DIR || "/workspace/testeranto/metafiles/python";
+    const bundlesDir = process.env.BUNDLES_DIR || "/workspace/testeranto/bundles/allTests/python";
+    console.log("PYTHON BUILDER: Using metafiles directory:", metafileDir);
+    console.log("PYTHON BUILDER: Using bundles directory:", bundlesDir);
+    const metafilePath = path3.join(
+      metafileDir,
+      `${path3.basename(configPath, path3.extname(configPath))}.json`
+    );
     if (!fs3.existsSync(metafileDir)) {
       fs3.mkdirSync(metafileDir, { recursive: true });
     }
@@ -2095,7 +2097,11 @@ async function runPythonBuild() {
       runtime: "python"
     };
     fs3.writeFileSync(metafilePath, JSON.stringify(metafile, null, 2));
-    console.log(`Metafile written to: ${metafilePath}`);
+    console.log("PYTHON BUILDER: Metafile written to:", metafilePath);
+    if (!fs3.existsSync(bundlesDir)) {
+      fs3.mkdirSync(bundlesDir, { recursive: true });
+      console.log("PYTHON BUILDER: Created bundles directory:", bundlesDir);
+    }
   } catch (error) {
     console.error("Python build failed:", error);
     process.exit(1);

@@ -1,3 +1,7 @@
+// src/esbuildConfigs/node.ts
+import fs3 from "fs";
+import path4 from "path";
+
 // src/esbuildConfigs/featuresPlugin.ts
 import path from "path";
 var featuresPlugin_default = {
@@ -89,13 +93,13 @@ var rebuildPlugin_default = (r) => {
     name: "rebuild-notify",
     setup: (build) => {
       build.onEnd((result) => {
-        console.log(`${r} > build ended with ${result.errors.length} errors`);
+        console.log(`${r} > build qqq with ${result.errors.length} errors`);
         if (result.errors.length > 0) {
-          const errorFile = path3.join(process.cwd(), `testeranto/reports${r}_build_errors`);
-          fs2.writeFileSync(
-            errorFile,
-            JSON.stringify(result, null, 2)
+          const errorFile = path3.join(
+            process.cwd(),
+            `testeranto/reports${r}_build_errors`
           );
+          fs2.writeFileSync(errorFile, JSON.stringify(result, null, 2));
         }
       });
     }
@@ -103,16 +107,28 @@ var rebuildPlugin_default = (r) => {
 };
 
 // src/esbuildConfigs/node.ts
-var node_default = (config, entryPoints, testName) => {
+var node_default = (config, entryPoints, testName, bundlesDir) => {
   const { inputFilesPluginFactory, register: register2 } = inputFilesPlugin_default(
     "node",
     testName
   );
+  const entryPointsObj = {};
+  for (const entryPoint of entryPoints) {
+    const withoutExt = entryPoint.replace(/\.ts$/, "");
+    const baseName = path4.basename(withoutExt);
+    const dirName = path4.dirname(entryPoint);
+    const outputKey = path4.join(dirName, baseName);
+    entryPointsObj[outputKey] = entryPoint;
+    console.log(`  ${entryPoint} -> ${outputKey}.mjs`);
+  }
+  const effectiveBundlesDir = process.env.BUNDLES_DIR || bundlesDir;
+  const absoluteBundlesDir = path4.isAbsolute(effectiveBundlesDir) ? effectiveBundlesDir : path4.join(process.cwd(), effectiveBundlesDir);
   return {
     ...esbuildConfigs_default(config),
-    splitting: true,
-    outdir: `testeranto/bundles/node/${testName}/`,
-    // inject: [`./node_modules/testeranto/dist/cjs-shim.js`],
+    // splitting: false, // Disable splitting since each entry point is separate
+    outdir: absoluteBundlesDir,
+    outbase: ".",
+    // Preserve directory structure relative to outdir
     metafile: true,
     supported: {
       "dynamic-import": true
@@ -122,106 +138,82 @@ var node_default = (config, entryPoints, testName) => {
       ENV: `"node"`
     },
     absWorkingDir: process.cwd(),
-    // banner: {
-    //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-    // },
     platform: "node",
     external: ["react", ...config.node.externals],
-    entryPoints: [...entryPoints],
+    entryPoints: entryPointsObj,
     plugins: [
       featuresPlugin_default,
       inputFilesPluginFactory,
       rebuildPlugin_default("node"),
-      ...config.node.plugins.map((p) => p(register2, entryPoints)) || []
+      ...config.node.plugins.map((p) => p(register2, entryPoints)) || [],
+      {
+        name: "list-output-files",
+        setup(build) {
+          build.onEnd((result) => {
+            if (result.errors.length === 0) {
+              console.log(
+                "Build completed successfully. Listing output directory:"
+              );
+              try {
+                let listDir2 = function(dir, indent = "") {
+                  const items = fs3.readdirSync(dir, { withFileTypes: true });
+                  for (const item of items) {
+                    console.log(indent + item.name);
+                    if (item.isDirectory()) {
+                      listDir2(path4.join(dir, item.name), indent + "  ");
+                    }
+                  }
+                };
+                var listDir = listDir2;
+                const files = fs3.readdirSync(absoluteBundlesDir);
+                console.log("Top level:", files);
+                listDir2(absoluteBundlesDir);
+              } catch (e) {
+                console.log("Error listing output:", e.message);
+              }
+            }
+          });
+        }
+      }
     ]
   };
 };
 
 // src/builders/node.ts
 import esbuild from "esbuild";
-import path4 from "path";
+import path5 from "path";
+var fs4 = await import("fs");
+console.error("NODE.ts");
 async function runNodeBuild() {
+  console.error("runNodeBuild");
   try {
-    console.log("NODE BUILDER: Starting build process inside Docker...");
-    console.log("NODE BUILDER: Process args:", process.argv);
     const configPath = process.argv[2];
     if (!configPath) {
       throw new Error("Configuration path not provided");
     }
-    console.log("NODE BUILDER: Config path:", configPath);
-    const absoluteConfigPath = path4.resolve(process.cwd(), configPath);
-    console.log("NODE BUILDER: Absolute config path:", absoluteConfigPath);
-    console.log("NODE BUILDER: Current working directory:", process.cwd());
-    const fs3 = await import("fs");
-    if (!fs3.existsSync(absoluteConfigPath)) {
+    const absoluteConfigPath = path5.resolve(process.cwd(), configPath);
+    if (!fs4.existsSync(absoluteConfigPath)) {
       throw new Error(`Config file does not exist: ${absoluteConfigPath}`);
     }
-    console.log("NODE BUILDER: Config file exists");
     const configModule = await import(absoluteConfigPath);
     const config = configModule.default;
-    console.log("NODE BUILDER: Config loaded successfully");
     const entryPoints = Object.keys(config.node.tests);
-    console.log("NODE BUILDER: Entry points:", entryPoints);
-    if (entryPoints.length === 0) {
-      console.log("NODE BUILDER: No node tests found");
-      const metafileDir = "/workspace/testeranto/metafiles/node";
-      const metafilePath = path4.join(metafileDir, `${path4.basename(configPath, path4.extname(configPath))}.json`);
-      if (!fs3.existsSync(metafileDir)) {
-        fs3.mkdirSync(metafileDir, { recursive: true });
-      }
-      const emptyMetafile = {
-        entryPoints: [],
-        buildTime: (/* @__PURE__ */ new Date()).toISOString(),
-        runtime: "node",
-        message: "No node tests found"
-      };
-      fs3.writeFileSync(metafilePath, JSON.stringify(emptyMetafile, null, 2));
-      console.log(`NODE BUILDER: Empty metafile written to: ${metafilePath}`);
-      return;
-    }
-    console.log("NODE BUILDER: Starting esbuild...");
-    const buildOptions = node_default(config, entryPoints, configPath);
+    const bundlesDir = process.env.BUNDLES_DIR;
+    const buildOptions = node_default(
+      config,
+      entryPoints,
+      configPath,
+      bundlesDir
+    );
     const result = await esbuild.build(buildOptions);
-    if (result.errors.length === 0) {
-      console.log(`NODE BUILDER: Build completed successfully for test: ${configPath}`);
-      console.log(`NODE BUILDER: Entry points: ${entryPoints.join(", ")}`);
-      const metafileDir = "/workspace/testeranto/metafiles/node";
-      const metafilePath = path4.join(metafileDir, `${path4.basename(configPath, path4.extname(configPath))}.json`);
-      console.log("NODE BUILDER: Writing metafile to:", metafilePath);
-      if (!fs3.existsSync(metafileDir)) {
-        console.log("NODE BUILDER: Creating metafile directory:", metafileDir);
-        fs3.mkdirSync(metafileDir, { recursive: true });
-      } else {
-        console.log("NODE BUILDER: Metafile directory already exists:", metafileDir);
-      }
-      if (result.metafile) {
-        console.log("NODE BUILDER: Writing metafile content...");
-        fs3.writeFileSync(metafilePath, JSON.stringify(result.metafile, null, 2));
-        console.log(`NODE BUILDER: Metafile written to: ${metafilePath}`);
-        if (fs3.existsSync(metafilePath)) {
-          console.log("NODE BUILDER: Metafile verified to exist");
-        } else {
-          console.log("NODE BUILDER: ERROR: Metafile was not created!");
-        }
-      } else {
-        console.log("NODE BUILDER: No metafile generated by esbuild");
-        const basicMetafile = {
-          entryPoints,
-          buildTime: (/* @__PURE__ */ new Date()).toISOString(),
-          runtime: "node",
-          message: "Build completed but no esbuild metafile generated"
-        };
-        fs3.writeFileSync(metafilePath, JSON.stringify(basicMetafile, null, 2));
-        console.log(`NODE BUILDER: Basic metafile written to: ${metafilePath}`);
-      }
-    } else {
-      console.error("NODE BUILDER: Build errors:", result.errors);
-      process.exit(1);
-    }
+    const metafileDir = process.env.METAFILES_DIR || "/workspace/testeranto/metafiles/node";
+    const metafilePath = path5.join(
+      metafileDir,
+      `${path5.basename(configPath, path5.extname(configPath))}.json`
+    );
+    fs4.writeFileSync(metafilePath, JSON.stringify(result.metafile, null, 2));
   } catch (error) {
     console.error("NODE BUILDER: Build failed:", error);
-    console.error("NODE BUILDER: Full error:", error);
-    process.exit(1);
   }
 }
 runNodeBuild();

@@ -13,11 +13,6 @@ export function generateDockerfile(
     return `# No dockerfile configuration for ${runtime}`;
   }
 
-  console.log(
-    `Dockerfile config for ${runtime}:`,
-    JSON.stringify(c[runtime].dockerfile, null, 2)
-  );
-
   let dockerfileInstructions: any[] = [];
 
   if (
@@ -85,10 +80,6 @@ export function generateDockerfile(
       (line) => line && !line.startsWith("# STATIC_ANALYSIS - not implemented")
     )
     .join("\n");
-
-  console.log(`Generated Dockerfile for ${runtime}-${testName}:`);
-  console.log(dockerfileLines);
-  console.log("---");
 
   // if (!dockerfileLines || dockerfileLines.trim().length === 0) {
   //   console.warn(

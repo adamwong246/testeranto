@@ -15,9 +15,12 @@ COPY dist/prebuild/builders/golang.mjs ./golang.mjs
 # Create the full directory structure before CMD
 RUN mkdir -p /workspace/testeranto
 RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/allTests
-RUN mkdir -p /workspace/testeranto/bundles/allTests/golang
+RUN mkdir -p /workspace/testeranto/bundles/golang
+RUN mkdir -p /workspace/testeranto/bundles/golang/allTests
 RUN mkdir -p /workspace/testeranto/metafiles
 RUN mkdir -p /workspace/testeranto/metafiles/golang
+# Set environment variables for output directories
+ENV BUNDLES_DIR=/workspace/testeranto/bundles/golang/allTests.ts
+ENV METAFILES_DIR=/workspace/testeranto/metafiles/golang
 # Run the build to generate metafiles when container starts
 CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/builders/ && which node && which npx && npx tsx ./dist/prebuild/builders/golang.mjs allTests.ts"]

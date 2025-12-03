@@ -31,7 +31,12 @@ export async function main() {
   setupKeypressHandling();
   setupFileSystem(config, testsName);
   await setupDockerCompose(config, testsName);
-  await handleRuntimeBuilds(config, testsName);
+  try {
+    await handleRuntimeBuilds(config, testsName);
+  } catch (error) {
+    console.error("Error during runtime builds:", error);
+    process.exit(1);
+  }
 
   console.log("Testeranto is running...");
 }

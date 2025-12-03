@@ -9,12 +9,7 @@ export async function setupDockerCompose(
   testsName: string
 ) {
   const services = generateServices(config, testsName);
-
-  // Log the generated service names for debugging
   const serviceNames = Object.keys(services);
-  console.log("Generated service names:", serviceNames);
-
-  // Validate service names
   const invalidServiceNames = serviceNames.filter(
     (name) => !/^[a-z][a-z0-9_-]*$/.test(name)
   );
@@ -28,11 +23,6 @@ export async function setupDockerCompose(
   const dump = {
     version: "3.8",
     services,
-    // volumes: {
-    //   metafiles: {
-    //     driver: "local"
-    //   }
-    // },
     networks: {
       default: {
         name: `${testsName}_network`,
@@ -44,7 +34,6 @@ export async function setupDockerCompose(
 
   try {
     fs.mkdirSync(composeDir, { recursive: true });
-    console.log(`Directory created or already exists: ${composeDir}`);
   } catch (error) {
     console.error(`Error creating directory ${composeDir}:`, error);
     throw error;
@@ -54,12 +43,9 @@ export async function setupDockerCompose(
     composeDir,
     `${testsName}-docker-compose.yml`
   );
-  console.log(`Compose file path: ${composeFilePath}`);
 
   try {
     fs.writeFileSync(composeFilePath, yaml.dump(dump));
-    console.log(`Docker Compose file written to: ${composeFilePath}`);
-    console.log("Full path:", path.resolve(composeFilePath));
   } catch (error) {
     console.error(`Error writing compose file:`, error);
     throw error;
