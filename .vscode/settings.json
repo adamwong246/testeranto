@@ -2,7 +2,9 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "cSpell.words": [
+    "argz",
     "configer",
+    "DOCKERMAN",
     "Extenstions",
     "flua",
     "Golingvu",
@@ -10,6 +12,7 @@
     "Ibdd",
     "iinput",
     "Ingestor",
+    "ipcfile",
     "jsfile",
     "mothership",
     "Pitono",

@@ -15,7 +15,7 @@ import { PassThrough } from "stream";
 import { ITLog } from "../../lib/index.js";
 import { IBuiltConfig } from "../../Types.js";
 
-import { IMode } from "../types.js";
+import { IMode } from "../../../trash/types.js";
 
 const fileStreams3: fs.WriteStream[] = [];
 type IFPaths = string[];

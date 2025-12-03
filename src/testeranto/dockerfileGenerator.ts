@@ -97,9 +97,14 @@ export function generateDockerfile(
   // }
 
   // Add the directory creation to the end of the Dockerfile
+  // Also add ENV variable to specify the runtime
+  const runtimeEnv = `ENV TESTERANTO_RUNTIME=${runtime}`;
+  
   return (
     dockerfileLines +
-    "\nRUN mkdir -p /workspace/testeranto\n" +
+    "\n" +
+    runtimeEnv + "\n" +
+    "RUN mkdir -p /workspace/testeranto\n" +
     "RUN mkdir -p /workspace/testeranto/bundles\n" +
     "RUN mkdir -p /workspace/testeranto/metafiles\n" +
     "RUN mkdir -p /workspace/testeranto/reports\n"

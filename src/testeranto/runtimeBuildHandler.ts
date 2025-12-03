@@ -8,10 +8,9 @@ import { IBuiltConfig, IRunTime } from "../Types";
 
 export async function handleRuntimeBuilds(
   config: IBuiltConfig,
-  testsName: string
+  testsName: string,
+  dockerMan: DockerMan
 ) {
-  const dockerMan = new DockerMan(testsName);
-
   const {
     nodeEntryPoints,
     webEntryPoints,
@@ -42,8 +41,8 @@ export async function handleRuntimeBuilds(
   //   pitonoBuild.onBundleChange(() => {
   //     Object.keys(pitonoEntryPoints).forEach((entryPoint) => {
   //       dockerMan.onBundleChange(entryPoint, "python");
-  //     });
   //   });
+  // });
   // }
 
   // Create report directories for all tests
@@ -64,5 +63,13 @@ export async function handleRuntimeBuilds(
     });
   });
 
-  await dockerMan.start();
+  console.log("🚀 Starting Docker Compose services via DockerMan...");
+  try {
+    await dockerMan.start();
+    console.log("✅ DockerMan.start() completed");
+  } catch (error) {
+    console.error("❌ DockerMan.start() failed:", error);
+    console.error("Full error details:", JSON.stringify(error, null, 2));
+    throw error;
+  }
 }

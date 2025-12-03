@@ -1,6 +1,7 @@
 import * as esbuild from 'esbuild'
-import { sassPlugin } from 'esbuild-sass-plugin'
 
+
+// Build the main bundles
 await esbuild.build({
   outExtension: { '.js': '.mjs' },
   entryPoints: [
@@ -14,7 +15,7 @@ await esbuild.build({
   bundle: true,
   format: "esm",
   platform: "node",
-  target: "node18",
+  target: "node20",
   outdir: 'dist/prebuild',
   // Don't bundle Node.js built-ins
   external: [
@@ -22,40 +23,74 @@ await esbuild.build({
     'http', 'https', 'zlib', 'crypto', 'buffer', 'net', 'dns', 'tls',
     'assert', 'querystring', 'punycode', 'readline', 'repl', 'vm',
     'perf_hooks', 'async_hooks', 'timers', 'console', 'module', 'process',
-    'esbuild' // Add esbuild to external packages
   ],
+  plugins: [],
   supported: {
     "dynamic-import": true,
   },
   logLevel: 'debug',
-  // Comment out the banner to avoid import conflicts
-  // banner: {
-  //   js: `
-  // import { createRequire } from 'module';
-  // import { fileURLToPath } from 'url';
-  // import { dirname } from 'path';
-  // const require = createRequire(import.meta.url);
-  // const __filename = fileURLToPath(import.meta.url);
-  // const __dirname = dirname(__filename);
-  //   `.trim(),
-  // },
 })
 
+// Clean up the output directory first
+// import { rm } from 'fs/promises';
+// try {
+//   await rm('dist/prebuild/cli', { recursive: true, force: true });
+// } catch (error) {
+//   // Ignore if directory doesn't exist
+// }
+
+// Build CLI entry points as ES modules with .js extension
 await esbuild.build({
+  outExtension: { '.js': '.mjs' },
   entryPoints: [
-    'src/app/frontend/App.scss',
-    'src/app/frontend/App.tsx',
+    'src/cli/cli.ts',
+    'src/cli/tui.ts',
   ],
   bundle: true,
-  format: "iife",
-  platform: "browser",
-  outdir: 'dist/prebuild',
-  logLevel: 'error',
-  loader: {
-    ".scss": "text",
-    ".ttf": "binary",
-    ".png": "binary",
-    ".jpg": "binary",
+  splitting: false,
+  format: "esm",
+  platform: "node",
+  target: "node20",
+  outdir: 'dist/prebuild/cli',
+  entryNames: '[dir]/[name]',
+  packages: "external",
+  // Mark Node.js built-ins and esbuild as external
+  // external: [
+  //   // Node.js built-ins
+  //   'fs', 'path', 'url', 'child_process', 'util', 'os', 'events', 'stream',
+  //   'http', 'https', 'zlib', 'crypto', 'buffer', 'net', 'dns', 'tls',
+  //   'assert', 'querystring', 'punycode', 'readline', 'repl', 'vm',
+  //   'perf_hooks', 'async_hooks', 'timers', 'console', 'module', 'process',
+  //   // External tools
+  //   'esbuild',
+  //   // Dependencies that may cause issues
+  //   'yoga-layout',
+  //   'ink',
+  //   // Blessed library
+  //   'blessed',
+  // ],
+  // plugins: allPlugins,
+  supported: {
+    "dynamic-import": true,
   },
-  plugins: [sassPlugin()]
+  // logLevel: 'debug',
 })
+
+// await esbuild.build({
+//   entryPoints: [
+//     'src/app/frontend/App.scss',
+//     'src/app/frontend/App.tsx',
+//   ],
+//   bundle: true,
+//   format: "iife",
+//   platform: "browser",
+//   outdir: 'dist/prebuild',
+//   logLevel: 'error',
+//   loader: {
+//     ".scss": "text",
+//     ".ttf": "binary",
+//     ".png": "binary",
+//     ".jpg": "binary",
+//   },
+//   plugins: [sassPlugin()]
+// })

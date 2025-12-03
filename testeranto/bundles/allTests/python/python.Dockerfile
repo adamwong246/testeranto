@@ -1,12 +1,15 @@
 
 FROM node:18-alpine
 WORKDIR /workspace
-RUN apk update && apk add --no-cache     build-base     python3     py3-pip     cairo-dev     pango-dev     jpeg-dev     giflib-dev     librsvg-dev     libxml2-utils
+RUN apk update && apk add --no-cache     build-base     python3     py3-pip     cairo-dev     pango-dev     jpeg-dev     giflib-dev     librsvg-dev     libxml2-utils &&     rm -rf /var/cache/apk/*
 # Ensure Python is properly installed and available
 RUN python3 --version && pip3 --version
 RUN npm install -g node-gyp
 COPY package.json .
-RUN yarn install --ignore-engines
+# Try yarn install, fallback to npm install if it fails
+ENV npm_config_build_from_source=false
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) &&     npm cache clean --force &&     yarn cache clean || true
 COPY ./src ./src/
 COPY allTests.ts .
 COPY dist/prebuild/builders/python.mjs ./python.mjs

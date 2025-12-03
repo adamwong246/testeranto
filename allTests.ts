@@ -73,7 +73,7 @@ RUN apk update && apk add --no-cache \
         ["FROM", "node:18-alpine"],
         [
           "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils",
+          "apk add --update make g++ linux-headers python3 libxml2-utils netcat-openbsd",
         ],
         ["COPY", "package*.json ./"],
         ["WORKDIR", "/workspace"],

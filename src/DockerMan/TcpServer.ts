@@ -1,0 +1,156 @@
+import net from "net";
+import { EventEmitter } from "events";
+import { TcpConnection } from "./types";
+
+export class TcpServer extends EventEmitter {
+  private server: net.Server;
+  private port: number = 0;
+  private connections: Map<string, TcpConnection> = new Map();
+
+  constructor() {
+    super();
+    this.server = this.createServer();
+  }
+
+  private createServer(): net.Server {
+    const server = net.createServer((socket) => {
+      const clientId = `${socket.remoteAddress}:${socket.remotePort}`;
+      console.log(`🔌 TCP connection from ${clientId}`);
+
+      this.connections.set(clientId, { socket, testInfo: {} });
+
+      let buffer = "";
+      socket.on("data", (data) => {
+        buffer += data.toString();
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          if (line.trim()) {
+            try {
+              const message = JSON.parse(line);
+              this.handleMessage(clientId, message, socket);
+            } catch (e) {
+              console.error(`❌ Failed to parse message: ${line}`, e);
+            }
+          }
+        }
+      });
+
+      socket.on("end", () => {
+        console.log(`🔌 TCP connection closed: ${clientId}`);
+        this.connections.delete(clientId);
+      });
+
+      socket.on("error", (err) => {
+        console.error(`❌ TCP socket error for ${clientId}:`, err.message);
+        this.connections.delete(clientId);
+      });
+    });
+
+    return server;
+  }
+
+  public async start(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      this.server.listen(0, "0.0.0.0", () => {
+        const address = this.server.address();
+        if (address && typeof address === "object") {
+          this.port = address.port;
+          console.log(`🔌 TCP server listening on port ${this.port}`);
+          resolve(this.port);
+        } else {
+          console.error(`❌ TCP server failed to get address`);
+          reject(new Error("TCP server failed to get address"));
+        }
+      });
+      
+      this.server.on('error', (err) => {
+        console.error(`❌ TCP server error: ${err.message}`);
+        reject(err);
+      });
+    });
+  }
+
+  public getPort(): number {
+    return this.port;
+  }
+
+  public getConnections(): Map<string, TcpConnection> {
+    return this.connections;
+  }
+
+  public sendToClient(clientId: string, data: any): void {
+    const connection = this.connections.get(clientId);
+    if (connection) {
+      connection.socket.write(JSON.stringify(data) + "\n");
+    }
+  }
+
+  public broadcast(data: any): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [clientId, connection] of this.connections) {
+      this.sendToClient(clientId, data);
+    }
+  }
+
+  public close(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    for (const [clientId, connection] of this.connections) {
+      connection.socket.end();
+    }
+    this.connections.clear();
+    this.server.close();
+  }
+
+  private handleMessage(
+    clientId: string,
+    message: string[],
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    socket: net.Socket
+  ): void {
+    if (!Array.isArray(message) || message.length < 1) {
+      console.error(`Invalid message format:`, message);
+      return;
+    }
+
+    const command = message[0];
+
+    if (command === "register" && message.length >= 2) {
+      const serviceName = message[1];
+      console.log(
+        `📝 Service ${serviceName} registered via TCP connection ${clientId}`
+      );
+      const connection = this.connections.get(clientId);
+      if (connection) {
+        connection.testInfo = { serviceName };
+      }
+      this.emit("serviceRegistered", { clientId, serviceName });
+      return;
+    }
+
+    if (message.length < 2) {
+      console.error(`Invalid message format (missing callbackId):`, message);
+      return;
+    }
+
+    const callbackId = message[message.length - 1];
+    const args = message.slice(1, -1);
+
+    let serviceName = "unknown";
+    const connection = this.connections.get(clientId);
+    if (connection?.testInfo?.serviceName) {
+      serviceName = connection.testInfo.serviceName;
+    }
+
+    console.log(`📤 [${serviceName}] ${command} ${JSON.stringify(args)}`);
+    this.emit("commandReceived", {
+      clientId,
+      serviceName,
+      command,
+      args,
+      callbackId,
+    });
+  }
+}

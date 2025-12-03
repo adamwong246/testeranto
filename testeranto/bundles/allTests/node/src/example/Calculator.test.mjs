@@ -4,14 +4,13 @@ import {
 
 // src/Tiposkripto.ts
 var tpskrt;
-if (true) {
-  tpskrt = await import("../../Node-W6I7QB2T.mjs");
-} else if (false) {
-  tpskrt = await null;
+if (process.env["TESTERANTO_RUNTIME"] === "node") {
+  tpskrt = await import("../../Node-BZQTO4SH.mjs");
+} else if (process.env["TESTERANTO_RUNTIME"] === "web") {
+  tpskrt = await import("../../Web-VDKH5XU3.mjs");
 } else {
-  throw `Unknown ENV ${"node"}`;
+  throw `Unknown ENV ${process.env["TESTERANTO_RUNTIME"]}`;
 }
-console.log("Hello universal Tiposkripto!", "node", tpskrt);
 var Tiposkripto_default = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement) => {
   console.log("mark100", await tpskrt.default.toString());
   return (await tpskrt.default)(

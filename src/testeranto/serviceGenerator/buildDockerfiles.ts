@@ -18,14 +18,22 @@ RUN apk update && apk add --no-cache \
     jpeg-dev \
     giflib-dev \
     librsvg-dev \
-    libxml2-utils
+    libxml2-utils && \
+    rm -rf /var/cache/apk/*
 RUN npm install -g node-gyp tsx
 COPY package.json .
-RUN yarn install --ignore-engines
-RUN npm install -g tsx
+# Try yarn install, fallback to npm install if it fails
+ENV npm_config_build_from_source=false
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \
+    npm install -g tsx && \
+    npm cache clean --force && \
+    yarn cache clean || true
 COPY ./src ./src/
 COPY ${config} .
 ARG NODE_MJS_HASH
+# Use the hash to bust cache for the node.mjs copy
+RUN echo "Node.mjs hash: $NODE_MJS_HASH" > /tmp/node-mjs-hash.txt
 COPY dist/prebuild/builders/node.mjs ./node.mjs
 # Create the full directory structure before CMD
 RUN mkdir -p /workspace/testeranto
@@ -77,12 +85,18 @@ RUN apk update && apk add --no-cache \
     harfbuzz \
     ca-certificates \
     ttf-freefont \
-    font-noto-emoji
+    font-noto-emoji && \
+    rm -rf /var/cache/apk/*
 RUN npm install -g node-gyp
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 COPY package.json .
-RUN yarn install --ignore-engines
+# Try yarn install, fallback to npm install if it fails
+ENV npm_config_build_from_source=false
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \
+    npm cache clean --force && \
+    yarn cache clean || true
 COPY ./src ./src/
 COPY ${config} .
 COPY dist/prebuild/builders/web.mjs ./web.mjs
@@ -114,12 +128,18 @@ RUN apk update && apk add --no-cache \
     jpeg-dev \
     giflib-dev \
     librsvg-dev \
-    libxml2-utils
+    libxml2-utils && \
+    rm -rf /var/cache/apk/*
 # Ensure Python is properly installed and available
 RUN python3 --version && pip3 --version
 RUN npm install -g node-gyp
 COPY package.json .
-RUN yarn install --ignore-engines
+# Try yarn install, fallback to npm install if it fails
+ENV npm_config_build_from_source=false
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \
+    npm cache clean --force && \
+    yarn cache clean || true
 COPY ./src ./src/
 COPY ${config} .
 COPY dist/prebuild/builders/python.mjs ./python.mjs
@@ -153,14 +173,20 @@ RUN apk update && apk add --no-cache \
     giflib-dev \
     librsvg-dev \
     libxml2-utils \
-    wget
+    wget && \
+    rm -rf /var/cache/apk/*
 # Install Go
 RUN wget -q -O - https://go.dev/dl/go1.21.0.linux-amd64.tar.gz | tar -xz -C /usr/local
 ENV GOROOT=/usr/local/go
 ENV PATH=$PATH:$GOROOT/bin
 RUN npm install -g node-gyp
 COPY package.json .
-RUN yarn install --ignore-engines
+# Try yarn install, fallback to npm install if it fails
+ENV npm_config_build_from_source=false
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \
+    npm cache clean --force && \
+    yarn cache clean || true
 COPY ./src ./src/
 COPY ${config} .
 COPY dist/prebuild/builders/golang.mjs ./golang.mjs

@@ -18,12 +18,21 @@ export class PM_Node extends PM {
   testResourceConfiguration: ITTestResourceConfiguration;
   client: net.Socket;
 
-  constructor(t: ITTestResourceConfiguration, ipcFile: string) {
+  constructor(t: ITTestResourceConfiguration, dockerManHost: string, dockerManPort: number) {
     super();
     this.testResourceConfiguration = t;
 
-    this.client = net.createConnection(ipcFile, () => {
+    console.log(`🔌 Connecting to DockerMan at ${dockerManHost}:${dockerManPort}`);
+    this.client = net.createConnection(dockerManPort, dockerManHost, () => {
+      console.log('✅ Connected to DockerMan via TCP');
+      // Send registration message
+      const registerMessage = JSON.stringify(['register', this.testResourceConfiguration.name]) + '\n';
+      this.client.write(registerMessage);
       return;
+    });
+
+    this.client.on('error', (err) => {
+      console.error('❌ Failed to connect to DockerMan:', err.message);
     });
   }
 
@@ -36,26 +45,41 @@ export class PM_Node extends PM {
   }
 
   send<I>(command: string, ...argz): Promise<I> {
-    const key = Math.random().toString();
-    if (!this.client) {
+    const callbackId = Math.random().toString();
+    if (!this.client || this.client.destroyed) {
       console.error(
-        `Tried to send "${command} (${argz})" but the test has not been started and the IPC client is not established. Exiting as failure!`
+        `Tried to send "${command} (${argz})" but the TCP client is not established or destroyed. Exiting as failure!`
       );
       process.exit(-1);
     }
 
-    return new Promise<I>((res) => {
-      const myListener = (event) => {
-        const x = JSON.parse(event);
-        if (x.key === key) {
-          process.removeListener("message", myListener);
-          res(x.payload);
+    return new Promise<I>((resolve, reject) => {
+      const messageHandler = (data: Buffer) => {
+        try {
+          const response = JSON.parse(data.toString());
+          if (response.callbackId === callbackId) {
+            this.client.removeListener('data', messageHandler);
+            if (response.error) {
+              reject(new Error(response.error));
+            } else {
+              resolve(response.result);
+            }
+          }
+        } catch (err) {
+          // Not our response, continue
         }
       };
 
-      process.addListener("message", myListener);
-
-      this.client.write(JSON.stringify([command, ...argz, key]));
+      this.client.on('data', messageHandler);
+      
+      // Send the message
+      const message = JSON.stringify([command, ...argz, callbackId]) + '\n';
+      this.client.write(message, (err) => {
+        if (err) {
+          this.client.removeListener('data', messageHandler);
+          reject(err);
+        }
+      });
     });
   }
 

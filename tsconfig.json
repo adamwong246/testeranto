@@ -53,6 +53,10 @@
     "./src/**/*.*tsx",
     "./src/types/**/*.d.ts",
     "allTests.ts",
+    "trash/api.ts",
+    "trash/FileService.ts",
+    "trash/types.ts",
+    "trash/Helpo.tsx",
   ],
   "exclude": [
     "node_modules",

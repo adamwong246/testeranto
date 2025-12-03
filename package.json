@@ -6,6 +6,10 @@
     "node": "18.18.0"
   },
   "type": "module",
+  "bin": {
+    "testeranto": "./dist/cli/cli.js",
+    "testeranto-tui": "./dist/cli/tui.js"
+  },
   "types": "./dist/index.d.mts",
   "module": "dist/module/index.js",
   "repository": "git@github.com:adamwong246/testeranto.git",
@@ -15,7 +19,7 @@
   "scripts": {
     "mothership": "node dist/prebuild/mothership/index.mjs",
     "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
-    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
+    "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; yarn bundle; sh postBuild.sh",
     "build3": "yarn bundle; tsc -p tsconfig.types.json",
     "dev": "sh prebuild.sh;  cp ./src/cjs-shim.js ./dist/cjs-shim.js; sh postBuild.sh; tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch  ",
     "bundle": "node bundle.js",
@@ -50,7 +54,11 @@
     "devV2:clean": "npm run clean:all && npm run devV2",
     "devV2:full": "rm -rf testeranto && npm run build:all && npm run t-init && cp ./dist/prebuild/App.* testeranto && cd example && go mod tidy && cd .. && npm run build:example && npm run testeranto core dev",
     "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev",
-    "devV4": "npm run testeranto allTests.ts once"
+    "devV4": "npm run testeranto allTests.ts once",
+    "cli": "node dist/prebuild/cli/cli.mjs",
+    "tui": "NODE_ENV=production node dist/prebuild/cli/tui.mjs",
+    "cli-dev": "NODE_ENV=development node --experimental-print-required-tla dist/prebuild/cli/cli.cjs",
+    "tui-dev": "NODE_ENV=development node --experimental-print-required-tla dist/prebuild/cli/tui.cjs"
   },
   "exports": {
     "./Puppeteer": {
@@ -215,6 +223,7 @@
     "chai": "^5.2.0",
     "chokidar": "^4.0.3",
     "chromium": "^3.0.3",
+    "commander": "^14.0.2",
     "dockerode": "^4.0.9",
     "dynamic-base": "^1.1.2",
     "esbuild": "^0.20.1",
@@ -236,6 +245,7 @@
     "fs.promises.exists": "^1.1.4",
     "get-audio-duration": "^4.0.1",
     "html-to-image": "^1.11.13",
+    "blessed": "^0.1.81",
     "isomorphic-git": "^1.33.1",
     "js-yaml": "^4.1.1",
     "license-checker": "^25.0.1",
@@ -252,6 +262,7 @@
     "puppeteer-core": "24.4.0",
     "react": "18.2.0",
     "react-bootstrap": "^2.10.9",
+    "react-devtools-core": "^7.0.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "18.2.0",

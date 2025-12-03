@@ -68,7 +68,7 @@
       "format": "esm"
     },
     "src/PM/node.ts": {
-      "bytes": 7156,
+      "bytes": 8163,
       "imports": [
         {
           "path": "net",
@@ -265,7 +265,7 @@
       "format": "esm"
     },
     "src/lib/Node.ts": {
-      "bytes": 2139,
+      "bytes": 3964,
       "imports": [
         {
           "path": "src/lib/index.ts",
@@ -290,8 +290,65 @@
       ],
       "format": "esm"
     },
+    "src/PM/web.ts": {
+      "bytes": 3806,
+      "imports": [
+        {
+          "path": "stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "puppeteer-core",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "puppeteer-core",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../lib",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/PM/index.ts",
+          "kind": "import-statement",
+          "original": "."
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/Web.ts": {
+      "bytes": 1725,
+      "imports": [
+        {
+          "path": "../CoreTypes",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/PM/web.ts",
+          "kind": "import-statement",
+          "original": "../PM/web"
+        },
+        {
+          "path": "src/lib/Tiposkripto.ts",
+          "kind": "import-statement",
+          "original": "./Tiposkripto"
+        },
+        {
+          "path": "src/lib/index.ts",
+          "kind": "import-statement",
+          "original": "./index.js"
+        }
+      ],
+      "format": "esm"
+    },
     "src/Tiposkripto.ts": {
-      "bytes": 1677,
+      "bytes": 1847,
       "imports": [
         {
           "path": "./CoreTypes",
@@ -307,6 +364,11 @@
           "path": "src/lib/Node.ts",
           "kind": "dynamic-import",
           "original": "./lib/Node"
+        },
+        {
+          "path": "src/lib/Web.ts",
+          "kind": "dynamic-import",
+          "original": "./lib/Web"
         }
       ],
       "format": "esm"
@@ -429,7 +491,11 @@
           "kind": "import-statement"
         },
         {
-          "path": "testeranto/bundles/allTests/node/Node-W6I7QB2T.mjs",
+          "path": "testeranto/bundles/allTests/node/Node-BZQTO4SH.mjs",
+          "kind": "dynamic-import"
+        },
+        {
+          "path": "testeranto/bundles/allTests/node/Web-VDKH5XU3.mjs",
           "kind": "dynamic-import"
         }
       ],
@@ -439,7 +505,7 @@
       "entryPoint": "src/example/Calculator.test.ts",
       "inputs": {
         "src/Tiposkripto.ts": {
-          "bytesInOutput": 582
+          "bytesInOutput": 654
         },
         "src/example/Calculator.ts": {
           "bytesInOutput": 1993
@@ -460,10 +526,14 @@
           "bytesInOutput": 137
         }
       },
-      "bytes": 153232
+      "bytes": 153304
     },
-    "testeranto/bundles/allTests/node/Node-W6I7QB2T.mjs": {
+    "testeranto/bundles/allTests/node/Node-BZQTO4SH.mjs": {
       "imports": [
+        {
+          "path": "testeranto/bundles/allTests/node/chunk-MNYRTJ7L.mjs",
+          "kind": "import-statement"
+        },
         {
           "path": "testeranto/bundles/allTests/node/chunk-GD6O3ZZC.mjs",
           "kind": "import-statement"
@@ -491,34 +561,75 @@
       "entryPoint": "src/lib/Node.ts",
       "inputs": {
         "src/PM/node.ts": {
-          "bytesInOutput": 5500
+          "bytesInOutput": 6394
         },
-        "src/PM/index.ts": {
-          "bytesInOutput": 213
+        "src/lib/Node.ts": {
+          "bytesInOutput": 2701
+        }
+      },
+      "bytes": 9324
+    },
+    "testeranto/bundles/allTests/node/Web-VDKH5XU3.mjs": {
+      "imports": [
+        {
+          "path": "testeranto/bundles/allTests/node/chunk-MNYRTJ7L.mjs",
+          "kind": "import-statement"
         },
+        {
+          "path": "testeranto/bundles/allTests/node/chunk-GD6O3ZZC.mjs",
+          "kind": "import-statement"
+        }
+      ],
+      "exports": [
+        "WebTesteranto",
+        "default"
+      ],
+      "entryPoint": "src/lib/Web.ts",
+      "inputs": {
+        "src/PM/web.ts": {
+          "bytesInOutput": 2822
+        },
+        "src/lib/Web.ts": {
+          "bytesInOutput": 788
+        }
+      },
+      "bytes": 3834
+    },
+    "testeranto/bundles/allTests/node/chunk-MNYRTJ7L.mjs": {
+      "imports": [
+        {
+          "path": "testeranto/bundles/allTests/node/chunk-GD6O3ZZC.mjs",
+          "kind": "import-statement"
+        }
+      ],
+      "exports": [
+        "PM",
+        "Tiposkripto"
+      ],
+      "inputs": {
         "src/lib/pmProxy.ts": {
-          "bytesInOutput": 5950
+          "bytesInOutput": 5824
         },
         "src/lib/BaseGiven.ts": {
-          "bytesInOutput": 3231
+          "bytesInOutput": 3226
         },
         "src/lib/BaseSuite.ts": {
-          "bytesInOutput": 3418
+          "bytesInOutput": 3413
         },
         "src/lib/BaseThen.ts": {
-          "bytesInOutput": 1479
+          "bytesInOutput": 1474
         },
         "src/lib/BaseWhen.ts": {
-          "bytesInOutput": 1184
+          "bytesInOutput": 1179
         },
         "src/lib/Tiposkripto.ts": {
           "bytesInOutput": 6400
         },
-        "src/lib/Node.ts": {
-          "bytesInOutput": 1255
+        "src/PM/index.ts": {
+          "bytesInOutput": 213
         }
       },
-      "bytes": 29004
+      "bytes": 22021
     },
     "testeranto/bundles/allTests/node/chunk-GD6O3ZZC.mjs": {
       "imports": [],
