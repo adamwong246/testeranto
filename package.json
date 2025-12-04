@@ -54,7 +54,7 @@
     "devV2:clean": "npm run clean:all && npm run devV2",
     "devV2:full": "rm -rf testeranto && npm run build:all && npm run t-init && cp ./dist/prebuild/App.* testeranto && cd example && go mod tidy && cd .. && npm run build:example && npm run testeranto core dev",
     "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev",
-    "devV4": "npm run testeranto allTests.ts once",
+    "devV4": "yarn bundle && npm run testeranto allTests.ts once",
     "cli": "node dist/prebuild/cli/cli.mjs",
     "tui": "NODE_ENV=production node dist/prebuild/cli/tui.mjs",
     "cli-dev": "NODE_ENV=development node --experimental-print-required-tla dist/prebuild/cli/cli.cjs",
