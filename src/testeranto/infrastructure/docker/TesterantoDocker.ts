@@ -2,7 +2,7 @@ import { EventEmitter } from "events";
 import path from "path";
 import fs from "fs";
 import { execSync } from "child_process";
-import { IRunTime } from "../Types";
+import { IRunTime } from "../../../Types";
 import { BrowserManager } from "./BrowserManager";
 import { BuildServiceMonitor } from "./BuildServiceMonitor";
 import { DockerCompose } from "./DockerCompose";
@@ -12,7 +12,7 @@ import { TestServiceManager } from "./TestServiceManager";
 import { TestResource, TestServiceConfig, TestServiceInfo } from "./types";
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
 
-export default class DockerMan extends EventEmitter {
+export default class TesterantoDocker extends EventEmitter {
   testName: string;
   private composeDir: string;
   private composeFile: string;
@@ -27,7 +27,7 @@ export default class DockerMan extends EventEmitter {
 
   constructor(testName: string) {
     super();
-    console.log("DockerMan initialized.");
+    console.log("TesterantoDocker initialized.");
     this.testName = testName;
     this.composeDir = process.cwd();
     this.composeFile = path.join(
@@ -58,48 +58,37 @@ export default class DockerMan extends EventEmitter {
   }
 
   private setupEventForwarding(): void {
-    // Forward events from components
-    this.testServiceManager.on("testServiceStarting", (data) =>
-      this.emit("testServiceStarting", data)
-    );
-    this.testServiceManager.on("testStarted", (data) =>
-      this.emit("testStarted", data)
-    );
-    this.testServiceManager.on("testServiceError", (data) =>
-      this.emit("testServiceError", data)
-    );
-    this.testServiceManager.on("testStopped", (data) =>
-      this.emit("testStopped", data)
-    );
+    // Forward events from components using a helper function
+    const forwardEvents = (component: any, eventNames: string[]) => {
+      eventNames.forEach(eventName => {
+        component.on(eventName, (data: any) => this.emit(eventName, data));
+      });
+    };
 
-    this.buildServiceMonitor.on("buildServiceWaiting", (data) =>
-      this.emit("buildServiceWaiting", data)
-    );
-    this.buildServiceMonitor.on("buildServiceHealthy", (data) =>
-      this.emit("buildServiceHealthy", data)
-    );
-    this.buildServiceMonitor.on("buildServiceError", (data) =>
-      this.emit("buildServiceError", data)
-    );
-    this.buildServiceMonitor.on("buildServiceTimeout", (data) =>
-      this.emit("buildServiceTimeout", data)
-    );
-    this.buildServiceMonitor.on("buildServiceStatus", (data) =>
-      this.emit("buildServiceStatus", data)
-    );
-    this.buildServiceMonitor.on("monitoringStarted", (data) =>
-      this.emit("monitoringStarted", data)
-    );
-    this.buildServiceMonitor.on("monitoringError", (data) =>
-      this.emit("monitoringError", data)
-    );
+    // Forward events from testServiceManager
+    forwardEvents(this.testServiceManager, [
+      "testServiceStarting",
+      "testStarted", 
+      "testServiceError",
+      "testStopped"
+    ]);
 
-    this.tcpServer.on("serviceRegistered", (data) =>
-      this.emit("serviceRegistered", data)
-    );
-    this.tcpServer.on("commandReceived", (data) =>
-      this.emit("commandReceived", data)
-    );
+    // Forward events from buildServiceMonitor
+    forwardEvents(this.buildServiceMonitor, [
+      "buildServiceWaiting",
+      "buildServiceHealthy",
+      "buildServiceError",
+      "buildServiceTimeout",
+      "buildServiceStatus",
+      "monitoringStarted",
+      "monitoringError"
+    ]);
+
+    // Forward events from tcpServer
+    forwardEvents(this.tcpServer, [
+      "serviceRegistered",
+      "commandReceived"
+    ]);
   }
 
   private async initializeServices(): Promise<void> {
@@ -380,7 +369,7 @@ export default class DockerMan extends EventEmitter {
     testResource?: TestResource,
     additionalEnv?: Record<string, string>
   ): Promise<boolean> {
-    const serviceName = DockerMan.generateTestServiceName(entryPoint, runtime);
+    const serviceName = TesterantoDocker.generateTestServiceName(entryPoint, runtime);
 
     const env = {
       ...additionalEnv,
@@ -403,12 +392,8 @@ export default class DockerMan extends EventEmitter {
       `🚀 Looking for test services for build service: ${buildServiceName}`
     );
 
-    let runtime: IRunTime | null = null;
-    if (buildServiceName.includes("node-build")) runtime = "node";
-    else if (buildServiceName.includes("web-build")) runtime = "web";
-    else if (buildServiceName.includes("python-build")) runtime = "python";
-    else if (buildServiceName.includes("golang-build")) runtime = "golang";
-
+    // Extract runtime from build service name using a helper
+    const runtime = this.extractRuntimeFromBuildService(buildServiceName);
     if (!runtime) {
       console.log(
         `⚠️ Could not determine runtime for build service: ${buildServiceName}`
@@ -436,55 +421,7 @@ export default class DockerMan extends EventEmitter {
         );
 
         for (const testService of testServices) {
-          const fullServiceName = testService.name;
-
-          let baseServiceName = fullServiceName;
-          baseServiceName = baseServiceName.replace(/-[0-9]+$/, "");
-          if (baseServiceName.startsWith("bundles-")) {
-            baseServiceName = baseServiceName.substring("bundles-".length);
-          }
-
-          if (this.testServiceManager.getRunningTests().has(baseServiceName)) {
-            console.log(
-              `⏭️ Test service ${baseServiceName} is already running, skipping`
-            );
-            continue;
-          }
-
-          console.log(
-            `🚀 Starting test service: ${baseServiceName} (from ${fullServiceName})`
-          );
-
-          const parsed = DockerMan.parseTestServiceName(fullServiceName);
-          if (!parsed.runtime || !parsed.entryPoint) {
-            console.log(
-              `⚠️ Could not parse test service name: ${fullServiceName}`
-            );
-            continue;
-          }
-
-          const testResource: TestResource = {
-            name: parsed.entryPoint,
-            ports: [],
-            fs: `/testeranto/reports/${this.testName}/${parsed.entryPoint
-              .split(".")
-              .slice(0, -1)
-              .join(".")}/${parsed.runtime}`,
-          };
-
-          const config: TestServiceConfig = {
-            serviceName: baseServiceName,
-            runtime: parsed.runtime,
-            entryPoint: parsed.entryPoint,
-            testResource,
-            env: {
-              BUNDLES_DIR: `/testeranto/bundles/${this.testName}/${parsed.runtime}`,
-              METAFILES_DIR: `/testeranto/metafiles/${parsed.runtime}`,
-              TESTERANTO_RUNTIME: parsed.runtime,
-            },
-          };
-
-          await this.startTestService(config);
+          await this.startTestServiceFromServiceInfo(testService, runtime);
         }
       }
     } catch (err) {
@@ -493,6 +430,70 @@ export default class DockerMan extends EventEmitter {
         (err as Error).message
       );
     }
+  }
+
+  private extractRuntimeFromBuildService(buildServiceName: string): IRunTime | null {
+    if (buildServiceName.includes("node-build")) return "node";
+    if (buildServiceName.includes("web-build")) return "web";
+    if (buildServiceName.includes("python-build")) return "python";
+    if (buildServiceName.includes("golang-build")) return "golang";
+    return null;
+  }
+
+  private async startTestServiceFromServiceInfo(serviceInfo: any, runtime: IRunTime): Promise<void> {
+    const fullServiceName = serviceInfo.name;
+    const baseServiceName = this.normalizeServiceName(fullServiceName);
+
+    if (this.testServiceManager.getRunningTests().has(baseServiceName)) {
+      console.log(
+        `⏭️ Test service ${baseServiceName} is already running, skipping`
+      );
+      return;
+    }
+
+    console.log(
+      `🚀 Starting test service: ${baseServiceName} (from ${fullServiceName})`
+    );
+
+    const parsed = TestServiceManager.parseTestServiceName(fullServiceName);
+    if (!parsed.runtime || !parsed.entryPoint) {
+      console.log(
+        `⚠️ Could not parse test service name: ${fullServiceName}`
+      );
+      return;
+    }
+
+    const testResource: TestResource = {
+      name: parsed.entryPoint,
+      ports: [],
+      fs: `/testeranto/reports/${this.testName}/${parsed.entryPoint
+        .split(".")
+        .slice(0, -1)
+        .join(".")}/${parsed.runtime}`,
+    };
+
+    const config: TestServiceConfig = {
+      serviceName: baseServiceName,
+      runtime: parsed.runtime,
+      entryPoint: parsed.entryPoint,
+      testResource,
+      env: {
+        BUNDLES_DIR: `/testeranto/bundles/${this.testName}/${parsed.runtime}`,
+        METAFILES_DIR: `/testeranto/metafiles/${parsed.runtime}`,
+        TESTERANTO_RUNTIME: parsed.runtime,
+      },
+    };
+
+    await this.startTestService(config);
+  }
+
+  private normalizeServiceName(serviceName: string): string {
+    let normalized = serviceName.replace(/-[0-9]+$/, "");
+    if (normalized.startsWith('bundles-')) {
+      normalized = normalized.substring('bundles-'.length);
+    }
+    // Ensure the normalized name is lowercase for consistency
+    return normalized.toLowerCase();
   }
 
   getTestStatuses(): Array<{

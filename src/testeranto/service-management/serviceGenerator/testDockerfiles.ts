@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { IBuiltConfig, IRunTime } from "../../Types";
+import { IBuiltConfig, IRunTime } from "../../../Types";
 import { generateDockerfile } from "../dockerfileGenerator";
 
 export function setupDockerfileForTest(

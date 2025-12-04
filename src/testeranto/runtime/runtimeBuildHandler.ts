@@ -1,15 +1,15 @@
 import fs from "fs";
-import { getRunnables } from "../app/backend/utils";
-import DockerMan from "../DockerMan";
+import { getRunnables } from "../../app/backend/utils";
+import TesterantoDocker from "../infrastructure/docker/TesterantoDocker";
 // import { GolingvuBuild } from "../PM/golingvuBuild";
 // import { PitonoBuild } from "../PM/pitonoBuild";
 import { setupWebHtmlFiles } from "./webHtmlGenerator";
-import { IBuiltConfig, IRunTime } from "../Types";
+import { IBuiltConfig, IRunTime } from "../../../Types";
 
 export async function handleRuntimeBuilds(
   config: IBuiltConfig,
   testsName: string,
-  dockerMan: DockerMan
+  dockerMan: TesterantoDocker
 ) {
   const {
     nodeEntryPoints,

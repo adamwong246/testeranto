@@ -1,4 +1,4 @@
-import { IRunTime } from "../Types";
+import { IRunTime } from "../../../Types";
 
 export interface TestResource {
   name: string;

@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { IRunTime } from "../Types";
+import { IRunTime } from "../../../Types";
 import { TestServiceConfig, TestResource, TestServiceInfo } from "./types";
 import { DockerCompose } from "./DockerCompose";
 
@@ -123,7 +123,8 @@ export class TestServiceManager extends EventEmitter {
   public static generateTestServiceName(entryPoint: string, runtime: IRunTime): string {
     const withoutExt = entryPoint.replace(/\.[^/.]+$/, "");
     const normalized = withoutExt.replace(/\//g, '-').replace(/\./g, '-');
-    return `${runtime}-${normalized}`;
+    // Ensure the entire service name is lowercase to comply with Docker Compose naming rules
+    return `${runtime}-${normalized}`.toLowerCase();
   }
 
   public static parseTestServiceName(serviceName: string): { runtime: IRunTime | null, entryPoint: string | null } {
@@ -136,6 +137,7 @@ export class TestServiceManager extends EventEmitter {
     const parts = nameWithoutNumber.split('-');
     if (parts.length < 2) return { runtime: null, entryPoint: null };
     
+    // The runtime part should be lowercase, but we need to ensure it's valid
     const runtime = parts[0] as IRunTime;
     const entryPoint = parts.slice(1).join('-');
     
@@ -145,5 +147,11 @@ export class TestServiceManager extends EventEmitter {
     }
     
     return { runtime, entryPoint };
+  }
+
+  // Helper method to validate runtime
+  public static isValidRuntime(runtime: string): runtime is IRunTime {
+    const validRuntimes: IRunTime[] = ['node', 'web', 'pure', 'golang', 'python'];
+    return validRuntimes.includes(runtime as IRunTime);
   }
 }

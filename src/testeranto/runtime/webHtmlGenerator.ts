@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import webHtmlFrame from "../web.html";
-import { IBuiltConfig } from "../Types";
+import { IBuiltConfig } from "../../Types";
 
 export async function setupWebHtmlFiles(
   config: IBuiltConfig,

@@ -1,5 +1,5 @@
 import path from "path";
-import { IBuiltConfig, ITestconfig } from "../Types";
+import { IBuiltConfig, ITestconfig } from "../../Types";
 
 export async function loadConfig(
   configFilepath: string

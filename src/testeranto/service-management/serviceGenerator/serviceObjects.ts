@@ -1,5 +1,5 @@
 import path from "path";
-import { IRunTime } from "../../Types";
+import { IRunTime } from "../../../Types";
 import { generateServiceName } from "./serviceNames";
 import { computeNodeMjsHash } from "./buildDockerfiles";
 
@@ -23,13 +23,13 @@ export function createTestService(
   }
   const bundlePath = `testeranto/bundles/allTests/${runtime}/${bundleFileName}`;
 
-  // Get DockerMan TCP server port from environment or use default
+  // Get TesterantoDocker TCP server port from environment or use default
   // The TCP server runs on the host, so from inside containers we need to use host.docker.internal
-  const dockerManHost = "host.docker.internal";
-  // We need to know the TCP port DockerMan is listening on
+  const testerantoDockerHost = "host.docker.internal";
+  // We need to know the TCP port TesterantoDocker is listening on
   // This should be passed from the main process or read from a file
   // For now, we'll use a default and hope it matches
-  const dockerManPort = 3000; // Default TCP port for DockerMan
+  const testerantoDockerPort = 3000; // Default TCP port for TesterantoDocker
   
   // Ensure testsName doesn't have trailing whitespace
   const cleanTestsName = testsName.trim();
@@ -56,7 +56,7 @@ export function createTestService(
         BUNDLES_DIR: `/testeranto/bundles/allTests/${runtime}`,
         METAFILES_DIR: `/testeranto/metafiles/${runtime}`,
         TEST_RESOURCES: JSON.stringify(testResourceConfig),
-        DOCKERMAN_HOST: dockerManHost,
+        DOCKERMAN_HOST: testerantoDockerHost,
         DOCKERMAN_PORT: "0",  // Will be overridden by reading from file
         TESTERANTO_RUNTIME: runtime,
       },
@@ -74,7 +74,7 @@ export function createTestService(
         # Build service health is managed by Docker Compose depends_on
         echo "Build service ${runtime}-build health is managed by Docker Compose"
         
-        # Wait for DockerMan port file to exist (written by main.ts)
+        # Wait for TesterantoDocker port file to exist (written by main.ts)
         PORT_FILE="/workspace/testeranto/bundles/${cleanTestsName}-docker-man-port.txt"
         # Trim any whitespace from the path
         PORT_FILE=$(echo "$PORT_FILE" | tr -d '[:space:]')
@@ -96,20 +96,20 @@ export function createTestService(
         
         # Check if file exists
         if [ ! -f "$PORT_FILE" ]; then
-          echo "ERROR: DockerMan port file not found at '$PORT_FILE'"
+          echo "ERROR: TesterantoDocker port file not found at '$PORT_FILE'"
           echo "The file should exist. Here's what's in /workspace/testeranto/bundles/:"
           ls -la /workspace/testeranto/bundles/
           echo "This file should be created by the main testeranto process."
-          echo "Make sure DockerMan's TCP server is running on the host."
+          echo "Make sure TesterantoDocker's TCP server is running on the host."
           exit 1
         fi
         
         DOCKERMAN_PORT=$(cat "$PORT_FILE")
         export DOCKERMAN_PORT
-        echo "Using DockerMan port from file: $DOCKERMAN_PORT"
+        echo "Using TesterantoDocker port from file: $DOCKERMAN_PORT"
         
         if [ -z "$DOCKERMAN_PORT" ] || [ "$DOCKERMAN_PORT" = "0" ]; then
-          echo "ERROR: Invalid DockerMan port: $DOCKERMAN_PORT"
+          echo "ERROR: Invalid TesterantoDocker port: $DOCKERMAN_PORT"
           exit 1
         fi
         
@@ -130,29 +130,29 @@ export function createTestService(
         fi
         echo "Build is ready. Proceeding with test...";
         
-        # Wait for DockerMan TCP server to be reachable
-        echo "Waiting for DockerMan TCP server to be reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT..."
+        # Wait for TesterantoDocker TCP server to be reachable
+        echo "Waiting for TesterantoDocker TCP server to be reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT..."
         MAX_RETRIES=30
         RETRY_COUNT=0
         while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
           # Try using netcat if available
           if command -v nc >/dev/null 2>&1; then
             if nc -z -w 1 "$DOCKERMAN_HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
-              echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via nc)"
+              echo "TesterantoDocker TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via nc)"
               break
             fi
           # Fallback to /dev/tcp
           elif (echo > "/dev/tcp/$DOCKERMAN_HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
-            echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via /dev/tcp)"
+            echo "TesterantoDocker TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via /dev/tcp)"
             break
           fi
-          echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
+          echo "TesterantoDocker TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
           RETRY_COUNT=$((RETRY_COUNT+1))
           sleep 2
         done
         
         if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-          echo "ERROR: DockerMan TCP server never became reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT"
+          echo "ERROR: TesterantoDocker TCP server never became reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT"
           echo "Make sure the TCP server is running on the host and accessible from containers."
           exit 1
         fi
@@ -183,7 +183,7 @@ export function createTestService(
         "../../src:/workspace/src",
       ],
       depends_on: {
-        [`${runtime}-build`]: {
+        [`${runtime}-build`.toLowerCase()]: {
           condition: "service_healthy",
         },
       },
@@ -197,7 +197,7 @@ export function createBuildService(
   dockerfileDir: string,
   testsName: string
 ): Record<string, any> {
-  const serviceName = `${runtime}-build`;
+  const serviceName = `${runtime}-build`.toLowerCase();
   const configFilePath = process.argv[2];
 
   // Prepare build arguments

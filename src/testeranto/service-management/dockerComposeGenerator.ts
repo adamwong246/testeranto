@@ -1,7 +1,7 @@
 import fs from "fs";
 import yaml from "js-yaml";
 import path from "path";
-import { IBuiltConfig } from "../Types";
+import { IBuiltConfig } from "../../Types";
 import { generateServices } from "./serviceGenerator";
 
 export async function setupDockerCompose(

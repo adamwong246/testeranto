@@ -1,33 +1,59 @@
 import fs from "fs";
 import path from "path";
-import { IRunTime } from "../../Types";
+import { IRunTime } from "../../../Types";
 
 import crypto from "crypto";
 
-export function setupDockerfileForBuildNode(config: string): string {
-  // Add ARG for cache busting
-  return `
-FROM node:18-alpine
+// Common base Dockerfile content
+const BASE_DOCKERFILE = `FROM node:18-alpine
 WORKDIR /workspace
-RUN apk update && apk add --no-cache \
-    build-base \
-    python3 \
-    py3-pip \
-    cairo-dev \
-    pango-dev \
-    jpeg-dev \
-    giflib-dev \
-    librsvg-dev \
-    libxml2-utils && \
-    rm -rf /var/cache/apk/*
+RUN apk update && apk add --no-cache \\
+    build-base \\
+    python3 \\
+    py3-pip \\
+    cairo-dev \\
+    pango-dev \\
+    jpeg-dev \\
+    giflib-dev \\
+    librsvg-dev \\
+    libxml2-utils && \\
+    rm -rf /var/cache/apk/*`;
+
+// Common package installation
+const COMMON_PACKAGE_INSTALL = `RUN npm install -g node-gyp
+COPY package.json .
+# Try yarn install, fallback to npm install if it fails
+ENV npm_config_build_from_source=false
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \\
+    npm cache clean --force && \\
+    yarn cache clean || true
+COPY ./src ./src/`;
+
+// Helper to create directory structure
+function createDirectoryStructure(runtime: string): string {
+  return `# Create the full directory structure before CMD
+RUN mkdir -p /workspace/testeranto
+RUN mkdir -p /workspace/testeranto/bundles
+RUN mkdir -p /workspace/testeranto/bundles/${runtime}
+RUN mkdir -p /workspace/testeranto/bundles/${runtime}/allTests
+RUN mkdir -p /workspace/testeranto/metafiles
+RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
+# Set environment variables for output directories
+ENV BUNDLES_DIR=/workspace/testeranto/bundles/${runtime}/allTests.ts
+ENV METAFILES_DIR=/workspace/testeranto/metafiles/${runtime}`;
+}
+
+export function setupDockerfileForBuildNode(config: string): string {
+  return `${BASE_DOCKERFILE}
 RUN npm install -g node-gyp tsx
 COPY package.json .
 # Try yarn install, fallback to npm install if it fails
 ENV npm_config_build_from_source=false
 ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \
-    npm install -g tsx && \
-    npm cache clean --force && \
+RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \\
+    npm install -g tsx && \\
+    npm cache clean --force && \\
     yarn cache clean || true
 COPY ./src ./src/
 COPY ${config} .
@@ -35,16 +61,7 @@ ARG NODE_MJS_HASH
 # Use the hash to bust cache for the node.mjs copy
 RUN echo "Node.mjs hash: $NODE_MJS_HASH" > /tmp/node-mjs-hash.txt
 COPY dist/prebuild/builders/node.mjs ./node.mjs
-# Create the full directory structure before CMD
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/node
-RUN mkdir -p /workspace/testeranto/bundles/node/allTests
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/node
-# Set environment variables for output directories
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/allTests/node
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/node
+${createDirectoryStructure('node')}
 # The actual build command will be provided by the docker-compose service command
 # No CMD here, let the service command override
 `;
@@ -65,141 +82,79 @@ export function computeNodeMjsHash(): string {
 }
 
 export function setupDockerfileForBuildWeb(config: string): string {
-  return `
-FROM node:18-alpine
+  const webSpecificPackages = `\\
+    chromium \\
+    nss \\
+    freetype \\
+    freetype-dev \\
+    harfbuzz \\
+    ca-certificates \\
+    ttf-freefont \\
+    font-noto-emoji`;
+    
+  return `FROM node:18-alpine
 WORKDIR /workspace
-RUN apk update && apk add --no-cache \
-    build-base \
-    python3 \
-    py3-pip \
-    cairo-dev \
-    pango-dev \
-    jpeg-dev \
-    giflib-dev \
-    librsvg-dev \
-    libxml2-utils \
-    chromium \
-    nss \
-    freetype \
-    freetype-dev \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
-    font-noto-emoji && \
+RUN apk update && apk add --no-cache \\
+    build-base \\
+    python3 \\
+    py3-pip \\
+    cairo-dev \\
+    pango-dev \\
+    jpeg-dev \\
+    giflib-dev \\
+    librsvg-dev \\
+    libxml2-utils${webSpecificPackages} && \\
     rm -rf /var/cache/apk/*
 RUN npm install -g node-gyp
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-COPY package.json .
-# Try yarn install, fallback to npm install if it fails
-ENV npm_config_build_from_source=false
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \
-    npm cache clean --force && \
-    yarn cache clean || true
-COPY ./src ./src/
+${COMMON_PACKAGE_INSTALL}
 COPY ${config} .
 COPY dist/prebuild/builders/web.mjs ./web.mjs
-# Create the full directory structure before CMD
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/web
-RUN mkdir -p /workspace/testeranto/bundles/web/allTests
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/web
-# Set environment variables for output directories
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/web/allTests.ts
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/web
+${createDirectoryStructure('web')}
 # Run the build to generate metafiles when container starts
 CMD ["sh", "-c", "echo 'Starting build...' && echo 'Current directory:' && pwd && echo 'Listing dist/prebuild/builders/:' && ls -la ./dist/prebuild/builders/ 2>&1 || echo 'Directory does not exist' && echo 'Checking if web.mjs exists:' && if [ -f ./dist/prebuild/builders/web.mjs ]; then echo 'web.mjs exists'; else echo 'ERROR: web.mjs does not exist'; exit 1; fi && echo 'Node version:' && node --version && echo 'npx version:' && npx --version && echo 'Running build...' && npx tsx ./dist/prebuild/builders/web.mjs ${config} dev"]
 `;
 }
 
 export function setupDockerfileForBuildPython(config: string): string {
-  return `
-FROM node:18-alpine
-WORKDIR /workspace
-RUN apk update && apk add --no-cache \
-    build-base \
-    python3 \
-    py3-pip \
-    cairo-dev \
-    pango-dev \
-    jpeg-dev \
-    giflib-dev \
-    librsvg-dev \
-    libxml2-utils && \
-    rm -rf /var/cache/apk/*
+  return `${BASE_DOCKERFILE}
 # Ensure Python is properly installed and available
 RUN python3 --version && pip3 --version
-RUN npm install -g node-gyp
-COPY package.json .
-# Try yarn install, fallback to npm install if it fails
-ENV npm_config_build_from_source=false
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \
-    npm cache clean --force && \
-    yarn cache clean || true
-COPY ./src ./src/
+${COMMON_PACKAGE_INSTALL}
 COPY ${config} .
 COPY dist/prebuild/builders/python.mjs ./python.mjs
-# Create the full directory structure before CMD
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/python
-RUN mkdir -p /workspace/testeranto/bundles/python/allTests
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/python
-# Set environment variables for output directories
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/python/allTests.ts
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/python
+${createDirectoryStructure('python')}
 # Run the build to generate metafiles when container starts
 CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/builders/ && which node && which npx && npx tsx ./dist/prebuild/builders/python.mjs ${config}"]
-
 `;
 }
 
 export function setupDockerfileForBuildGolang(config: string): string {
-  return `
-FROM node:18-alpine
+  const goSpecificPackages = `\\
+    wget`;
+    
+  return `FROM node:18-alpine
 WORKDIR /workspace
-RUN apk update && apk add --no-cache \
-    build-base \
-    python3 \
-    py3-pip \
-    cairo-dev \
-    pango-dev \
-    jpeg-dev \
-    giflib-dev \
-    librsvg-dev \
-    libxml2-utils \
-    wget && \
+RUN apk update && apk add --no-cache \\
+    build-base \\
+    python3 \\
+    py3-pip \\
+    cairo-dev \\
+    pango-dev \\
+    jpeg-dev \\
+    giflib-dev \\
+    librsvg-dev \\
+    libxml2-utils${goSpecificPackages} && \\
     rm -rf /var/cache/apk/*
 # Install Go
 RUN wget -q -O - https://go.dev/dl/go1.21.0.linux-amd64.tar.gz | tar -xz -C /usr/local
 ENV GOROOT=/usr/local/go
 ENV PATH=$PATH:$GOROOT/bin
-RUN npm install -g node-gyp
-COPY package.json .
-# Try yarn install, fallback to npm install if it fails
-ENV npm_config_build_from_source=false
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \
-    npm cache clean --force && \
-    yarn cache clean || true
-COPY ./src ./src/
+${COMMON_PACKAGE_INSTALL}
 COPY ${config} .
 COPY dist/prebuild/builders/golang.mjs ./golang.mjs
-# Create the full directory structure before CMD
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/golang
-RUN mkdir -p /workspace/testeranto/bundles/golang/allTests
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/golang
-# Set environment variables for output directories
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/golang/allTests.ts
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/golang
+${createDirectoryStructure('golang')}
 # Run the build to generate metafiles when container starts
 CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/builders/ && which node && which npx && npx tsx ./dist/prebuild/builders/golang.mjs ${config}"]
 `;

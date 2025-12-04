@@ -8,8 +8,8 @@ export function setupKeypressHandling() {
     }
     if (key.name === "q") {
       console.log("Testeranto is shutting down gracefully...");
-      // Note: DockerMan instance would need to be accessible here
-      // For now, we'll exit, but in the full implementation, we need to stop DockerMan
+      // Note: TesterantoDocker instance would need to be accessible here
+      // For now, we'll exit, but in the full implementation, we need to stop TesterantoDocker
       process.exit(0);
     }
   });
