@@ -56,9 +56,7 @@
     "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev",
     "devV4": "yarn bundle && npm run testeranto allTests.ts once",
     "cli": "node dist/prebuild/cli/cli.mjs",
-    "tui": "NODE_ENV=production node dist/prebuild/cli/tui.mjs",
-    "cli-dev": "NODE_ENV=development node --experimental-print-required-tla dist/prebuild/cli/cli.cjs",
-    "tui-dev": "NODE_ENV=development node --experimental-print-required-tla dist/prebuild/cli/tui.cjs"
+    "tui": "NODE_ENV=production node dist/prebuild/cli/tui.mjs"
   },
   "exports": {
     "./Puppeteer": {
@@ -218,6 +216,7 @@
     "axios": "^1.11.0",
     "babel-loader": "^8.2.5",
     "blessed": "^0.1.81",
+    "blessed-contrib": "^4.11.0",
     "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",
     "buffer": "^6.0.3",
