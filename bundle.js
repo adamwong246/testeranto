@@ -11,6 +11,8 @@ await esbuild.build({
     'src/builders/web.ts',
     'src/builders/golang.ts',
     'src/builders/python.ts',
+    'src/cli/cli.ts',
+    'src/cli/tui.ts',
   ],
   bundle: true,
   format: "esm",
@@ -22,7 +24,7 @@ await esbuild.build({
     'fs', 'path', 'url', 'child_process', 'util', 'os', 'events', 'stream',
     'http', 'https', 'zlib', 'crypto', 'buffer', 'net', 'dns', 'tls',
     'assert', 'querystring', 'punycode', 'readline', 'repl', 'vm',
-    'perf_hooks', 'async_hooks', 'timers', 'console', 'module', 'process',
+    'perf_hooks', 'async_hooks', 'timers', 'console', 'module', 'process', 'term.js', 'pty.js'
   ],
   plugins: [],
   supported: {
@@ -40,57 +42,57 @@ await esbuild.build({
 // }
 
 // Build CLI entry points as ES modules with .js extension
-await esbuild.build({
-  outExtension: { '.js': '.mjs' },
-  entryPoints: [
-    'src/cli/cli.ts',
-    'src/cli/tui.ts',
-  ],
-  bundle: true,
-  splitting: false,
-  format: "esm",
-  platform: "node",
-  target: "node20",
-  outdir: 'dist/prebuild/cli',
-  entryNames: '[dir]/[name]',
-  packages: "external",
-  // Mark Node.js built-ins and esbuild as external
-  // external: [
-  //   // Node.js built-ins
-  //   'fs', 'path', 'url', 'child_process', 'util', 'os', 'events', 'stream',
-  //   'http', 'https', 'zlib', 'crypto', 'buffer', 'net', 'dns', 'tls',
-  //   'assert', 'querystring', 'punycode', 'readline', 'repl', 'vm',
-  //   'perf_hooks', 'async_hooks', 'timers', 'console', 'module', 'process',
-  //   // External tools
-  //   'esbuild',
-  //   // Dependencies that may cause issues
-  //   'yoga-layout',
-  //   'ink',
-  //   // Blessed library
-  //   'blessed',
-  // ],
-  // plugins: allPlugins,
-  supported: {
-    "dynamic-import": true,
-  },
-  // logLevel: 'debug',
-})
-
 // await esbuild.build({
+//   outExtension: { '.js': '.mjs' },
 //   entryPoints: [
-//     'src/app/frontend/App.scss',
-//     'src/app/frontend/App.tsx',
+//     'src/cli/cli.ts',
+//     'src/cli/tui.ts',
 //   ],
 //   bundle: true,
-//   format: "iife",
-//   platform: "browser",
-//   outdir: 'dist/prebuild',
-//   logLevel: 'error',
-//   loader: {
-//     ".scss": "text",
-//     ".ttf": "binary",
-//     ".png": "binary",
-//     ".jpg": "binary",
+//   splitting: false,
+//   format: "esm",
+//   platform: "node",
+//   target: "node20",
+//   outdir: 'dist/prebuild/cli',
+//   entryNames: '[dir]/[name]',
+//   packages: "external",
+//   // Mark Node.js built-ins and esbuild as external
+//   // external: [
+//   //   // Node.js built-ins
+//   //   'fs', 'path', 'url', 'child_process', 'util', 'os', 'events', 'stream',
+//   //   'http', 'https', 'zlib', 'crypto', 'buffer', 'net', 'dns', 'tls',
+//   //   'assert', 'querystring', 'punycode', 'readline', 'repl', 'vm',
+//   //   'perf_hooks', 'async_hooks', 'timers', 'console', 'module', 'process',
+//   //   // External tools
+//   //   'esbuild',
+//   //   // Dependencies that may cause issues
+//   //   'yoga-layout',
+//   //   'ink',
+//   //   // Blessed library
+//   //   'blessed',
+//   // ],
+//   // plugins: allPlugins,
+//   supported: {
+//     "dynamic-import": true,
 //   },
-//   plugins: [sassPlugin()]
+//   // logLevel: 'debug',
 // })
+
+// // await esbuild.build({
+// //   entryPoints: [
+// //     'src/app/frontend/App.scss',
+// //     'src/app/frontend/App.tsx',
+// //   ],
+// //   bundle: true,
+// //   format: "iife",
+// //   platform: "browser",
+// //   outdir: 'dist/prebuild',
+// //   logLevel: 'error',
+// //   loader: {
+// //     ".scss": "text",
+// //     ".ttf": "binary",
+// //     ".png": "binary",
+// //     ".jpg": "binary",
+// //   },
+// //   plugins: [sassPlugin()]
+// // })
