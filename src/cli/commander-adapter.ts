@@ -7,9 +7,19 @@ import blessed from "blessed";
 export class CommanderTuiAdapter {
   private program: Command;
   private screen: blessed.Widgets.Screen | null = null;
-  private outputBox: blessed.Widgets.Log | null = null;
   private inputBox: blessed.Widgets.TextboxElement | null = null;
-  private commandHistory: string[] = [];
+  private tabs: blessed.Widgets.ListElement | null = null;
+  private activeTab: string = "testeranto";
+  
+  // Separate output boxes for each tab
+  private testerantoOutputBox: blessed.Widgets.Log | null = null;
+  private dockerComposeOutputBox: blessed.Widgets.Log | null = null;
+  
+  // Separate command history for each tab
+  private testerantoCommandHistory: string[] = [];
+  private dockerComposeCommandHistory: string[] = [];
+  
+  // Current history index for active tab
   private historyIndex: number = -1;
 
   constructor(program: Command) {
@@ -31,14 +41,63 @@ export class CommanderTuiAdapter {
       },
     });
 
-    // Create output area (80% of screen)
-    this.outputBox = blessed.log({
+    // Create main layout container
+    const layout = blessed.layout({
       parent: this.screen,
+      width: "100%",
+      height: "100%",
+      layout: "inline",
+    });
+
+    // Create left sidebar for tabs (20% width)
+    const sidebar = blessed.box({
+      parent: layout,
+      width: "20%",
+      height: "100%",
+      border: { type: "line" },
+      style: {
+        border: { fg: theme === "dark" ? "white" : "black" },
+      },
+    });
+
+    // Create tabs list in sidebar
+    this.tabs = blessed.list({
+      parent: sidebar,
       top: 0,
       left: 0,
       width: "100%",
-      height: "80%",
-      label: " Output ",
+      height: "100%",
+      keys: true,
+      vi: true,
+      mouse: true,
+      border: { type: "line" },
+      style: {
+        selected: { bg: "blue", fg: "white" },
+        item: { fg: "white" },
+        border: { fg: theme === "dark" ? "white" : "black" },
+      },
+      items: ["testeranto", "docker-compose"],
+    });
+
+    // Create main content area (80% width)
+    const contentArea = blessed.box({
+      parent: layout,
+      width: "80%",
+      height: "100%",
+      border: { type: "line" },
+      style: {
+        border: { fg: theme === "dark" ? "white" : "black" },
+      },
+    });
+
+    // Create testeranto output area (70% of content area)
+    this.testerantoOutputBox = blessed.log({
+      parent: contentArea,
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "70%",
+      label: " testeranto Output ",
       keys: true,
       vi: true,
       mouse: true,
@@ -60,13 +119,43 @@ export class CommanderTuiAdapter {
       },
     });
 
-    // Create input area (20% of screen)
-    this.inputBox = blessed.textbox({
-      parent: this.screen,
-      top: "80%",
+    // Create docker-compose output area (70% of content area) - initially hidden
+    this.dockerComposeOutputBox = blessed.log({
+      parent: contentArea,
+      top: 0,
       left: 0,
       width: "100%",
-      height: "20%",
+      height: "70%",
+      label: " docker-compose Output ",
+      keys: true,
+      vi: true,
+      mouse: true,
+      scrollable: true,
+      scrollbar: {
+        ch: " ",
+        track: {
+          bg: "cyan",
+        },
+        style: {
+          inverse: true,
+        },
+      },
+      border: { type: "line" },
+      style: {
+        fg: "white",
+        bg: "black",
+        border: { fg: theme === "dark" ? "white" : "black" },
+      },
+      hidden: true,
+    });
+
+    // Create input area (30% of content area)
+    this.inputBox = blessed.textbox({
+      parent: contentArea,
+      top: "70%",
+      left: 0,
+      width: "100%",
+      height: "30%",
       label: " Command Input (Ctrl+C to exit, ↑/↓ for history) ",
       keys: true,
       vi: true,
@@ -81,30 +170,36 @@ export class CommanderTuiAdapter {
       },
     });
 
-    // Welcome message
-    this.outputBox!.add("=== Testeranto TUI ===");
-    this.outputBox!.add("Type any CLI command and press Enter to execute.");
-    this.outputBox!.add("Commands will execute exactly as in the CLI.");
-    this.outputBox!.add("Output will appear here in real-time.");
-    this.outputBox!.add("Use ↑/↓ arrow keys to navigate command history.");
-    this.outputBox!.add("Press Ctrl+C to exit.\n");
+    // Initialize tab content
+    this.initializeTabContent();
+
+    // Tab selection handler
+    this.tabs!.on("select", (item: any) => {
+      const tabName = item.getText();
+      this.switchTab(tabName);
+      this.screen!.render();
+    });
 
     // Input handler for command execution
     this.inputBox!.on("submit", async (value: string) => {
       if (value.trim() === "") return;
 
+      // Get current output box and history based on active tab
+      const currentOutputBox = this.getCurrentOutputBox();
+      const currentHistory = this.getCurrentCommandHistory();
+
       // Add to history
-      this.commandHistory.push(value);
-      this.historyIndex = this.commandHistory.length;
+      currentHistory.push(value);
+      this.historyIndex = currentHistory.length;
 
       // Display the command
-      this.outputBox!.add(`$ testeranto ${value}`);
+      currentOutputBox!.add(`$ testeranto ${value}`);
 
       try {
         // Execute the command
-        await this.executeCommand(value);
+        await this.executeCommand(value, currentOutputBox!);
       } catch (error: any) {
-        this.outputBox!.add(`Error: ${error.message}`);
+        currentOutputBox!.add(`Error: ${error.message}`);
       }
 
       this.inputBox!.clearValue();
@@ -114,27 +209,29 @@ export class CommanderTuiAdapter {
 
     // Command history navigation
     this.inputBox!.key(["up"], () => {
-      if (this.commandHistory.length > 0) {
+      const currentHistory = this.getCurrentCommandHistory();
+      if (currentHistory.length > 0) {
         if (this.historyIndex > 0) {
           this.historyIndex--;
         }
         if (
           this.historyIndex >= 0 &&
-          this.historyIndex < this.commandHistory.length
+          this.historyIndex < currentHistory.length
         ) {
-          this.inputBox!.setValue(this.commandHistory[this.historyIndex]);
+          this.inputBox!.setValue(currentHistory[this.historyIndex]);
           this.screen!.render();
         }
       }
     });
 
     this.inputBox!.key(["down"], () => {
-      if (this.commandHistory.length > 0) {
-        if (this.historyIndex < this.commandHistory.length - 1) {
+      const currentHistory = this.getCurrentCommandHistory();
+      if (currentHistory.length > 0) {
+        if (this.historyIndex < currentHistory.length - 1) {
           this.historyIndex++;
-          this.inputBox!.setValue(this.commandHistory[this.historyIndex]);
+          this.inputBox!.setValue(currentHistory[this.historyIndex]);
         } else {
-          this.historyIndex = this.commandHistory.length;
+          this.historyIndex = currentHistory.length;
           this.inputBox!.clearValue();
         }
         this.screen!.render();
@@ -147,8 +244,24 @@ export class CommanderTuiAdapter {
       process.exit(0);
     });
 
+    this.screen!.key(["tab"], () => {
+      if (this.inputBox!.focused) {
+        this.tabs!.focus();
+      } else {
+        this.inputBox!.focus();
+      }
+      this.screen!.render();
+    });
+
+    // Select the first tab initially
+    this.tabs!.select(0);
+    
     // Initial focus
-    this.inputBox!.focus();
+    this.tabs!.focus();
+    
+    // Ensure initial tab is properly set
+    this.switchTab("testeranto");
+    
     this.screen!.render();
 
     return {
@@ -156,7 +269,73 @@ export class CommanderTuiAdapter {
     };
   }
 
-  private async executeCommand(commandString: string): Promise<void> {
+  private initializeTabContent(): void {
+    // testeranto tab content
+    this.testerantoOutputBox!.add("=== testeranto Tab ===");
+    this.testerantoOutputBox!.add("This tab is for testeranto CLI commands.");
+    this.testerantoOutputBox!.add("Type testeranto commands in the input below.");
+    this.testerantoOutputBox!.add("\nAvailable testeranto commands:");
+    this.testerantoOutputBox!.add("  run <testPattern> - Run tests matching the pattern");
+    this.testerantoOutputBox!.add("  build <type> - Build test bundles");
+    this.testerantoOutputBox!.add("  init [projectName] - Initialize test configuration");
+    this.testerantoOutputBox!.add("  watch - Watch for changes and rebuild");
+    this.testerantoOutputBox!.add("  list [filter] - List available tests");
+    this.testerantoOutputBox!.add("  clean - Clean build artifacts");
+    this.testerantoOutputBox!.add("\nType 'help' for more information.");
+    this.testerantoOutputBox!.add("\n");
+
+    // docker-compose tab content
+    this.dockerComposeOutputBox!.add("=== docker-compose Tab ===");
+    this.dockerComposeOutputBox!.add("This tab is for docker-compose commands.");
+    this.dockerComposeOutputBox!.add("Type docker-compose commands in the input below.");
+    this.dockerComposeOutputBox!.add("\nAvailable docker-compose commands:");
+    this.dockerComposeOutputBox!.add("  docker-compose up - Start services");
+    this.dockerComposeOutputBox!.add("  docker-compose down - Stop services");
+    this.dockerComposeOutputBox!.add("  docker-compose ps - List containers");
+    this.dockerComposeOutputBox!.add("  docker-compose logs - View logs");
+    this.dockerComposeOutputBox!.add("  docker-compose build - Build images");
+    this.dockerComposeOutputBox!.add("\nNote: These are placeholder commands.");
+    this.dockerComposeOutputBox!.add("Actual docker-compose integration would be implemented separately.");
+    this.dockerComposeOutputBox!.add("\n");
+  }
+
+  private switchTab(tabName: string): void {
+    this.activeTab = tabName;
+    
+    // Hide all output boxes
+    this.testerantoOutputBox!.hide();
+    this.dockerComposeOutputBox!.hide();
+    
+    // Show the active tab's output box
+    if (tabName === "testeranto") {
+      this.testerantoOutputBox!.show();
+    } else if (tabName === "docker-compose") {
+      this.dockerComposeOutputBox!.show();
+    }
+    
+    // Reset history index for the new tab
+    this.historyIndex = this.getCurrentCommandHistory().length;
+  }
+
+  private getCurrentOutputBox(): blessed.Widgets.Log | null {
+    if (this.activeTab === "testeranto") {
+      return this.testerantoOutputBox;
+    } else if (this.activeTab === "docker-compose") {
+      return this.dockerComposeOutputBox;
+    }
+    return null;
+  }
+
+  private getCurrentCommandHistory(): string[] {
+    if (this.activeTab === "testeranto") {
+      return this.testerantoCommandHistory;
+    } else if (this.activeTab === "docker-compose") {
+      return this.dockerComposeCommandHistory;
+    }
+    return [];
+  }
+
+  private async executeCommand(commandString: string, outputBox: blessed.Widgets.Log): Promise<void> {
     // Parse the command string
     const userArgs = commandString.trim().split(/\s+/);
 
@@ -173,23 +352,22 @@ export class CommanderTuiAdapter {
       const originalInfo = console.info;
 
       console.log = (...args: any[]) => {
-        this.outputBox!.add(args.join(" "));
+        outputBox.add(args.join(" "));
       };
 
       console.error = (...args: any[]) => {
-        this.outputBox!.add(`ERROR: ${args.join(" ")}`);
+        outputBox.add(`ERROR: ${args.join(" ")}`);
       };
 
       console.warn = (...args: any[]) => {
-        this.outputBox!.add(`WARN: ${args.join(" ")}`);
+        outputBox.add(`WARN: ${args.join(" ")}`);
       };
 
       console.info = (...args: any[]) => {
-        this.outputBox!.add(`INFO: ${args.join(" ")}`);
+        outputBox.add(`INFO: ${args.join(" ")}`);
       };
 
       // Create a fresh program instance by importing the shared program function
-      // We need to import it dynamically to avoid circular dependencies
       const { createSharedProgram } = await import('./shared-program.js');
       const tempProgram = createSharedProgram();
       
@@ -205,7 +383,7 @@ export class CommanderTuiAdapter {
       console.warn = originalWarn;
       console.info = originalInfo;
     } catch (error: any) {
-      this.outputBox!.add(`Error: ${error.message}`);
+      outputBox.add(`Error: ${error.message}`);
     }
   }
 
