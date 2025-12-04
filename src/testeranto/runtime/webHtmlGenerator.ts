@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 import path from "path";
-import webHtmlFrame from "../web.html";
+import webHtmlFrame from "../../web.html.js";
 import { IBuiltConfig } from "../../Types";
 
 export async function setupWebHtmlFiles(
@@ -31,7 +31,10 @@ export async function setupWebHtmlFiles(
         testsName,
         ...sourceDir
       );
-      const htmlFilePath = path.join(htmlFileDir, `${sourceFileNameMinusJs}.html`);
+      const htmlFilePath = path.join(
+        htmlFileDir,
+        `${sourceFileNameMinusJs}.html`
+      );
       const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
       const cssFilePath = `./${sourceFileNameMinusJs}.css`;
 

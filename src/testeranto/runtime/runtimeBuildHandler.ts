@@ -68,7 +68,10 @@ export async function handleRuntimeBuilds(
     await dockerMan.start();
     console.log("✅ DockerMan.start() completed");
   } catch (error) {
-    console.error("❌ DockerMan.start() failed:", error);
+    console.error("❌ DockerMan.start() failed:", error instanceof Error ? error.message : String(error));
+    if (error instanceof Error && error.stack) {
+      console.error("Stack trace:", error.stack);
+    }
     console.error("Full error details:", JSON.stringify(error, null, 2));
     throw error;
   }

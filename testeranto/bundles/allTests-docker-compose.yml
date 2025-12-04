@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  node-build:
+    build:
+      context: .
+      dockerfile: testeranto/bundles/allTests/node-build/Dockerfile
+  web-build:
+    build:
+      context: .
+      dockerfile: testeranto/bundles/allTests/web-build/Dockerfile
+  golang-build:
+    build:
+      context: .
+      dockerfile: testeranto/bundles/allTests/golang-build/Dockerfile
+  python-build:
+    build:
+      context: .
+      dockerfile: testeranto/bundles/allTests/python-build/Dockerfile
+  node-calculator-test:
+    build:
+      context: testeranto/bundles/allTests/node/Calculator.test
+      dockerfile: Dockerfile
+  web-calculator-test:
+    build:
+      context: testeranto/bundles/allTests/web/Calculator.test
+      dockerfile: Dockerfile
+  golang-calculator-golingvu-test:
+    build:
+      context: testeranto/bundles/allTests/golang/Calculator.golingvu.test
+      dockerfile: Dockerfile
+  python-calculator-pitono-test:
+    build:
+      context: testeranto/bundles/allTests/python/Calculator.pitono.test
+      dockerfile: Dockerfile
+networks:
+  default:
+    name: allTests_network

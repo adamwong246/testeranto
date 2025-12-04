@@ -6,15 +6,38 @@ import { generateServices } from "./serviceGenerator";
 
 export async function setupDockerCompose(
   config: IBuiltConfig,
-  testsName: string
+  testsName: string,
+  logger?: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+  }
 ) {
-  const services = generateServices(config, testsName);
+  const log = logger?.log || console.log;
+  const error = logger?.error || console.error;
+
+  // First, ensure all necessary directories exist
+  const composeDir = path.join(process.cwd(), "testeranto", "bundles");
+  const testBundleDir = path.join(composeDir, testsName);
+  
+  try {
+    fs.mkdirSync(composeDir, { recursive: true });
+    log(`Created directory: ${composeDir}`);
+    
+    // Also create the test-specific bundle directory
+    fs.mkdirSync(testBundleDir, { recursive: true });
+    log(`Created directory: ${testBundleDir}`);
+  } catch (err) {
+    error(`Error creating directories:`, err);
+    throw err;
+  }
+
+  const services = generateServices(config, testsName, logger);
   const serviceNames = Object.keys(services);
   const invalidServiceNames = serviceNames.filter(
     (name) => !/^[a-z][a-z0-9_-]*$/.test(name)
   );
   if (invalidServiceNames.length > 0) {
-    console.error("Invalid service names found:", invalidServiceNames);
+    error("Invalid service names found:", invalidServiceNames);
     throw new Error(
       "Docker Compose service names must be lowercase and alphanumeric"
     );
@@ -30,15 +53,6 @@ export async function setupDockerCompose(
     },
   };
 
-  const composeDir = path.join("testeranto", "bundles");
-
-  try {
-    fs.mkdirSync(composeDir, { recursive: true });
-  } catch (error) {
-    console.error(`Error creating directory ${composeDir}:`, error);
-    throw error;
-  }
-
   const composeFilePath = path.join(
     composeDir,
     `${testsName}-docker-compose.yml`
@@ -46,8 +60,9 @@ export async function setupDockerCompose(
 
   try {
     fs.writeFileSync(composeFilePath, yaml.dump(dump));
-  } catch (error) {
-    console.error(`Error writing compose file:`, error);
-    throw error;
+    log(`Generated docker-compose file: ${composeFilePath}`);
+  } catch (err) {
+    error(`Error writing compose file:`, err);
+    throw err;
   }
 }

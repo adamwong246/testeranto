@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Command } from "commander";
 
 export function createSharedProgram(): Command {
@@ -17,8 +18,8 @@ export function createSharedProgram(): Command {
     .option("-t, --timeout <seconds>", "Timeout in seconds", "30")
     .action((testPattern: string, options: any) => {
       console.log(`Running tests matching: ${testPattern}`);
-      console.log(`Watch mode: ${options.watch ? 'enabled' : 'disabled'}`);
-      console.log(`Verbose mode: ${options.verbose ? 'enabled' : 'disabled'}`);
+      console.log(`Watch mode: ${options.watch ? "enabled" : "disabled"}`);
+      console.log(`Verbose mode: ${options.verbose ? "enabled" : "disabled"}`);
       console.log(`Timeout: ${options.timeout} seconds`);
       console.log("Test execution would start here...");
     });
@@ -33,8 +34,8 @@ export function createSharedProgram(): Command {
     .action((type: string, options: any) => {
       console.log(`Building ${type} test bundles...`);
       console.log(`Output directory: ${options.output}`);
-      console.log(`Minify: ${options.minify ? 'yes' : 'no'}`);
-      console.log(`Source maps: ${options.sourcemap ? 'yes' : 'no'}`);
+      console.log(`Minify: ${options.minify ? "yes" : "no"}`);
+      console.log(`Source maps: ${options.sourcemap ? "yes" : "no"}`);
       console.log("Build process would start here...");
     });
 
@@ -47,7 +48,7 @@ export function createSharedProgram(): Command {
     .action((projectName: string = "my-project", options: any) => {
       console.log(`Initializing project: ${projectName}`);
       console.log(`Template: ${options.template}`);
-      console.log(`Force overwrite: ${options.force ? 'yes' : 'no'}`);
+      console.log(`Force overwrite: ${options.force ? "yes" : "no"}`);
       console.log("Initialization would start here...");
     });
 
@@ -61,7 +62,7 @@ export function createSharedProgram(): Command {
     .action((options: any) => {
       console.log("Starting watch mode...");
       console.log(`Dev server: ${options.host}:${options.port}`);
-      console.log(`Auto reload: ${options.reload ? 'enabled' : 'disabled'}`);
+      console.log(`Auto reload: ${options.reload ? "enabled" : "disabled"}`);
       console.log("Watching for changes...");
     });
 
@@ -70,10 +71,14 @@ export function createSharedProgram(): Command {
     .command("list [filter]")
     .description("List available tests")
     .option("-a, --all", "Show all tests including hidden")
-    .option("-f, --format <format>", "Output format (json, table, csv)", "table")
+    .option(
+      "-f, --format <format>",
+      "Output format (json, table, csv)",
+      "table"
+    )
     .action((filter: string = "", options: any) => {
-      console.log(`Listing tests with filter: ${filter || 'none'}`);
-      console.log(`Show all: ${options.all ? 'yes' : 'no'}`);
+      console.log(`Listing tests with filter: ${filter || "none"}`);
+      console.log(`Show all: ${options.all ? "yes" : "no"}`);
       console.log(`Output format: ${options.format}`);
       console.log("Test list would be displayed here...");
     });
@@ -87,9 +92,9 @@ export function createSharedProgram(): Command {
     .option("-n, --node_modules", "Clean node_modules")
     .action((options: any) => {
       console.log("Cleaning build artifacts...");
-      console.log(`Clean dist: ${options.dist ? 'yes' : 'no'}`);
-      console.log(`Clean cache: ${options.cache ? 'yes' : 'no'}`);
-      console.log(`Clean node_modules: ${options.node_modules ? 'yes' : 'no'}`);
+      console.log(`Clean dist: ${options.dist ? "yes" : "no"}`);
+      console.log(`Clean cache: ${options.cache ? "yes" : "no"}`);
+      console.log(`Clean node_modules: ${options.node_modules ? "yes" : "no"}`);
       console.log("Cleanup would start here...");
     });
 

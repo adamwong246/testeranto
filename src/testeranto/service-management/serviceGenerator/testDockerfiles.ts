@@ -1,44 +1,51 @@
 import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../../Types";
-import { generateDockerfile } from "../dockerfileGenerator";
+import { generateDockerfile } from "../../configuration/dockerfileGenerator";
 
 export function setupDockerfileForTest(
   c: IBuiltConfig,
   runtime: IRunTime,
-  testName: string,
+  testPath: string,
   testsName: string
 ): string {
-  const dockerfileContent = generateDockerfile(c, runtime, testName);
+  // Extract just the filename without path for directory naming
+  const testFileName = path.basename(testPath);
+  const testNameWithoutExt = testFileName.replace(/\.[^/.]+$/, '');
+  
+  const dockerfileContent = generateDockerfile(c, runtime, testPath);
   const dockerfileName = "Dockerfile";
-  // The path should be relative to the current working directory
+  // Use testNameWithoutExt for directory, not the full path
   const dockerfileDir = path.join(
+    process.cwd(),
     "testeranto",
     "bundles",
     testsName,
     runtime,
-    testName
+    testNameWithoutExt
   );
   const dockerfilePath = path.join(dockerfileDir, dockerfileName);
 
   // Ensure we're not writing outside of testeranto/bundles
   const normalizedDir = path.normalize(dockerfileDir);
-  if (!normalizedDir.startsWith(path.join("testeranto", "bundles"))) {
+  const bundlesPath = path.join(process.cwd(), "testeranto", "bundles");
+  if (!normalizedDir.startsWith(bundlesPath)) {
     throw new Error(
-      `Invalid Dockerfile directory: ${dockerfileDir}. Must be under testeranto/bundles/`
+      `Invalid Dockerfile directory: ${dockerfileDir}. Must be under ${bundlesPath}`
     );
   }
 
   // Create the directory and write the file
-  const fullDockerfileDir = path.join(process.cwd(), dockerfileDir);
-  fs.mkdirSync(fullDockerfileDir, { recursive: true });
-  const fullDockerfilePath = path.join(process.cwd(), dockerfilePath);
-  fs.writeFileSync(fullDockerfilePath, dockerfileContent);
+  fs.mkdirSync(dockerfileDir, { recursive: true });
+  fs.writeFileSync(dockerfilePath, dockerfileContent);
 
   // Verify the file exists
-  if (!fs.existsSync(fullDockerfilePath)) {
-    throw new Error(`Failed to create Dockerfile at ${fullDockerfilePath}`);
+  if (!fs.existsSync(dockerfilePath)) {
+    throw new Error(`Failed to create Dockerfile at ${dockerfilePath}`);
   }
 
-  return dockerfileDir;
+  // Return relative path from process.cwd() for use in docker-compose.yml
+  const relativePath = path.relative(process.cwd(), dockerfileDir);
+  // Ensure it uses forward slashes for Docker compatibility
+  return relativePath.split(path.sep).join('/');
 }

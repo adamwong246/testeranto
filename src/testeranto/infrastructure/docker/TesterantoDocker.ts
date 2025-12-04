@@ -260,8 +260,9 @@ export default class TesterantoDocker extends EventEmitter {
       
       await this.buildServiceMonitor.identifyBuildServices();
     } catch (err) {
-      console.log("❌ Error starting Docker Compose:", (err as Error).message);
-      console.log("Stack trace:", (err as Error).stack);
+      const error = err instanceof Error ? err : new Error(String(err));
+      console.log("❌ Error starting Docker Compose:", error.message);
+      console.log("Stack trace:", error.stack);
       // Try to get more details
       try {
         const errorOutput = execSync(`${composeCommand} -f "${this.composeFile}" up --build --force-recreate --remove-orphans -d 2>&1`, {
@@ -270,9 +271,10 @@ export default class TesterantoDocker extends EventEmitter {
         });
         console.log("📋 Docker Compose output:", errorOutput);
       } catch (execErr) {
-        console.log("⚠️ Could not get detailed error output:", (execErr as Error).message);
+        const execError = execErr instanceof Error ? execErr : new Error(String(execErr));
+        console.log("⚠️ Could not get detailed error output:", execError.message);
       }
-      throw err; // Re-throw to let caller know
+      throw error; // Re-throw to let caller know
     }
   }
 
@@ -327,6 +329,20 @@ export default class TesterantoDocker extends EventEmitter {
 
   async getTestLogs(serviceName: string, tail: number = 100): Promise<string> {
     return this.testServiceManager.getTestLogs(serviceName, tail);
+  }
+
+  async getBuildServiceLogs(serviceName: string, tail: number = 100): Promise<string> {
+    try {
+      const result = await this.dockerCompose.logs(serviceName, {
+        log: false,
+        follow: false,
+        tail: tail,
+      });
+      return result.out || result.err || '';
+    } catch (err) {
+      console.log(`Error getting build service logs for ${serviceName}:`, (err as Error).message);
+      return '';
+    }
   }
 
   getRunningTests(): Map<string, TestServiceInfo> {
