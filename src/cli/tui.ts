@@ -2,8 +2,6 @@ import { createSharedProgram } from "./shared-program.js";
 import { adaptExistingProgramForTui } from "./commander-adapter.js";
 import config from "../../allTests.js";
 
-console.log("WTF");
-
 export function launchTui() {
   // Use the shared Commander program
   const program = createSharedProgram();
