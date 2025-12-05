@@ -6,16 +6,33 @@ export class TcpServer extends EventEmitter {
   private server: net.Server;
   private port: number = 0;
   private connections: Map<string, TcpConnection> = new Map();
+  private logger: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+  };
 
-  constructor() {
+  constructor(logger?: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+  }) {
     super();
+    this.logger = {
+      log: logger?.log || console.log,
+      error: logger?.error || console.error,
+      warn: logger?.warn || console.warn,
+      info: logger?.info || console.info,
+    };
     this.server = this.createServer();
   }
 
   private createServer(): net.Server {
     const server = net.createServer((socket) => {
       const clientId = `${socket.remoteAddress}:${socket.remotePort}`;
-      console.log(`🔌 TCP connection from ${clientId}`);
+      this.logger.log(`🔌 TCP connection from ${clientId}`);
 
       this.connections.set(clientId, { socket, testInfo: {} });
 
@@ -31,19 +48,19 @@ export class TcpServer extends EventEmitter {
               const message = JSON.parse(line);
               this.handleMessage(clientId, message, socket);
             } catch (e) {
-              console.error(`❌ Failed to parse message: ${line}`, e);
+              this.logger.error(`❌ Failed to parse message: ${line}`, e);
             }
           }
         }
       });
 
       socket.on("end", () => {
-        console.log(`🔌 TCP connection closed: ${clientId}`);
+        this.logger.log(`🔌 TCP connection closed: ${clientId}`);
         this.connections.delete(clientId);
       });
 
       socket.on("error", (err) => {
-        console.error(`❌ TCP socket error for ${clientId}:`, err.message);
+        this.logger.error(`❌ TCP socket error for ${clientId}:`, err.message);
         this.connections.delete(clientId);
       });
     });
@@ -57,16 +74,16 @@ export class TcpServer extends EventEmitter {
         const address = this.server.address();
         if (address && typeof address === "object") {
           this.port = address.port;
-          console.log(`🔌 TCP server listening on port ${this.port}`);
+          this.logger.log(`🔌 TCP server listening on port ${this.port}`);
           resolve(this.port);
         } else {
-          console.error(`❌ TCP server failed to get address`);
+          this.logger.error(`❌ TCP server failed to get address`);
           reject(new Error("TCP server failed to get address"));
         }
       });
       
       this.server.on('error', (err) => {
-        console.error(`❌ TCP server error: ${err.message}`);
+        this.logger.error(`❌ TCP server error: ${err.message}`);
         reject(err);
       });
     });
@@ -111,7 +128,7 @@ export class TcpServer extends EventEmitter {
     socket: net.Socket
   ): void {
     if (!Array.isArray(message) || message.length < 1) {
-      console.error(`Invalid message format:`, message);
+      this.logger.error(`Invalid message format:`, message);
       return;
     }
 
@@ -119,7 +136,7 @@ export class TcpServer extends EventEmitter {
 
     if (command === "register" && message.length >= 2) {
       const serviceName = message[1];
-      console.log(
+      this.logger.log(
         `📝 Service ${serviceName} registered via TCP connection ${clientId}`
       );
       const connection = this.connections.get(clientId);
@@ -131,7 +148,7 @@ export class TcpServer extends EventEmitter {
     }
 
     if (message.length < 2) {
-      console.error(`Invalid message format (missing callbackId):`, message);
+      this.logger.error(`Invalid message format (missing callbackId):`, message);
       return;
     }
 
@@ -144,7 +161,7 @@ export class TcpServer extends EventEmitter {
       serviceName = connection.testInfo.serviceName;
     }
 
-    console.log(`📤 [${serviceName}] ${command} ${JSON.stringify(args)}`);
+    this.logger.log(`📤 [${serviceName}] ${command} ${JSON.stringify(args)}`);
     this.emit("commandReceived", {
       clientId,
       serviceName,

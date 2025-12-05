@@ -6,10 +6,27 @@ export class BuildServiceMonitor extends EventEmitter {
   private dockerCompose: DockerCompose;
   private buildServices: Set<string> = new Set();
   private monitoringIntervalId?: NodeJS.Timeout;
+  private logger: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+  };
 
-  constructor(dockerCompose: DockerCompose) {
+  constructor(dockerCompose: DockerCompose, logger?: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+  }) {
     super();
     this.dockerCompose = dockerCompose;
+    this.logger = {
+      log: logger?.log || console.log,
+      error: logger?.error || console.error,
+      warn: logger?.warn || console.warn,
+      info: logger?.info || console.info,
+    };
   }
 
   public async identifyBuildServices(): Promise<void> {
@@ -23,14 +40,14 @@ export class BuildServiceMonitor extends EventEmitter {
         for (const service of result.data.services) {
           if (service.name.includes("build")) {
             this.buildServices.add(service.name);
-            console.log(
+            this.logger.log(
               `🔧 Identified build service: ${service.name} - ${
                 service.status || service.state
               }`
             );
 
             if (service.status?.includes("unhealthy")) {
-              console.log(
+              this.logger.log(
                 `⚠️ Build service ${service.name} is unhealthy. Checking logs...`
               );
               try {
@@ -40,15 +57,15 @@ export class BuildServiceMonitor extends EventEmitter {
                   tail: 20,
                 });
                 if (logsResult.out) {
-                  console.log(`📝 ${service.name} stdout (last 20 lines):`);
-                  console.log(logsResult.out);
+                  this.logger.log(`📝 ${service.name} stdout (last 20 lines):`);
+                  this.logger.log(logsResult.out);
                 }
                 if (logsResult.err) {
-                  console.log(`📝 ${service.name} stderr (last 20 lines):`);
-                  console.log(logsResult.err);
+                  this.logger.log(`📝 ${service.name} stderr (last 20 lines):`);
+                  this.logger.log(logsResult.err);
                 }
               } catch (logErr) {
-                console.log(
+                this.logger.log(
                   `❌ Could not get logs for ${service.name}:`,
                   (logErr as Error).message
                 );
@@ -56,14 +73,14 @@ export class BuildServiceMonitor extends EventEmitter {
             }
           }
         }
-        console.log(
+        this.logger.log(
           `🔧 Total build services identified: ${this.buildServices.size}`
         );
       } else {
-        console.log(`🔧 No services found in docker-compose ps output`);
+        this.logger.log(`🔧 No services found in docker-compose ps output`);
       }
     } catch (err) {
-      console.log(
+      this.logger.log(
         "❌ Error identifying build services:",
         (err as Error).message
       );
@@ -74,7 +91,7 @@ export class BuildServiceMonitor extends EventEmitter {
     serviceName: string,
     timeoutMs: number = 10000
   ): Promise<boolean> {
-    console.log(
+    this.logger.log(
       `⏳ Waiting for build service ${serviceName} to be healthy (timeout: ${timeoutMs}ms)...`
     );
     this.emit("buildServiceWaiting", { serviceName });
@@ -97,13 +114,13 @@ export class BuildServiceMonitor extends EventEmitter {
             const currentStatus = service.status || service.state;
 
             if (currentStatus !== lastStatus) {
-              console.log(
+              this.logger.log(
                 `📊 Build service ${serviceName} status: ${currentStatus}`
               );
               lastStatus = currentStatus;
               lastLogTime = Date.now();
             } else if (Date.now() - lastLogTime > 3000) {
-              console.log(
+              this.logger.log(
                 `📊 Build service ${serviceName} still: ${currentStatus}`
               );
               lastLogTime = Date.now();
@@ -113,7 +130,7 @@ export class BuildServiceMonitor extends EventEmitter {
               service.state === "running" &&
               service.status?.includes("healthy")
             ) {
-              console.log(`✅ Build service ${serviceName} is healthy`);
+              this.logger.log(`✅ Build service ${serviceName} is healthy`);
               this.emit("buildServiceHealthy", {
                 serviceName,
                 status: currentStatus,
@@ -122,14 +139,14 @@ export class BuildServiceMonitor extends EventEmitter {
             }
 
             if (service.status?.includes("unhealthy")) {
-              console.log(`⚠️ Build service ${serviceName} is unhealthy`);
+              this.logger.log(`⚠️ Build service ${serviceName} is unhealthy`);
             }
           }
         }
 
         await new Promise((resolve) => setTimeout(resolve, 1000));
       } catch (err) {
-        console.log(
+        this.logger.log(
           `❌ Error checking build service ${serviceName}:`,
           (err as Error).message
         );
@@ -140,7 +157,7 @@ export class BuildServiceMonitor extends EventEmitter {
       }
     }
 
-    console.log(
+    this.logger.log(
       `⏰ Timeout waiting for build service ${serviceName} after ${timeoutMs}ms`
     );
     this.emit("buildServiceTimeout", { serviceName });
@@ -165,7 +182,7 @@ export class BuildServiceMonitor extends EventEmitter {
         }
       }
     } catch (err) {
-      console.log(
+      this.logger.log(
         "❌ Error getting build service statuses:",
         (err as Error).message
       );
@@ -176,7 +193,7 @@ export class BuildServiceMonitor extends EventEmitter {
   public startMonitoring(
     callback: (serviceName: string, status: string) => void
   ): void {
-    console.log(`👀 Starting build services monitoring...`);
+    this.logger.log(`👀 Starting build services monitoring...`);
     this.emit("monitoringStarted", {
       buildServices: Array.from(this.buildServices),
     });
@@ -218,7 +235,7 @@ export class BuildServiceMonitor extends EventEmitter {
             }
           }
         } catch (err) {
-          console.log(
+          this.logger.log(
             `❌ Error monitoring build service ${serviceName}:`,
             (err as Error).message
           );
@@ -234,7 +251,7 @@ export class BuildServiceMonitor extends EventEmitter {
   public stopMonitoring(): void {
     if (this.monitoringIntervalId) {
       clearInterval(this.monitoringIntervalId);
-      console.log("📊 Stopped build services monitoring");
+      this.logger.log("📊 Stopped build services monitoring");
     }
   }
 

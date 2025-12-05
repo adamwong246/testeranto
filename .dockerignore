@@ -1,0 +1,9 @@
+.npmrc
+.npmrc.*
+*.npmrc
+.npmrc
+.npmrc.*
+*.npmrc
+node_modules
+dist
+testeranto

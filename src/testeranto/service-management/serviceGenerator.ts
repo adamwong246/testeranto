@@ -154,40 +154,55 @@ CMD ["tsx", "src/builders/python.ts", "${testsName}.ts"]
 `;
   } else if (runtime === 'golang') {
     // Check if files exist
-    const goModExists = fs.existsSync(path.join(process.cwd(), 'go.mod'));
-    const goSumExists = fs.existsSync(path.join(process.cwd(), 'go.sum'));
+    const packageJsonExists = fs.existsSync(path.join(process.cwd(), 'package.json'));
     const srcExists = fs.existsSync(path.join(process.cwd(), 'src'));
     const testsFileExists = fs.existsSync(path.join(process.cwd(), `${testsName}.ts`));
     const golangMjsExists = fs.existsSync(path.join(process.cwd(), 'dist/prebuild/builders/golang.mjs'));
     
-    dockerfileContent = `FROM golang:1.21-alpine
+    dockerfileContent = `FROM node:18-alpine
 WORKDIR /workspace
 RUN apk update && apk add --no-cache \\
     build-base \\
-    git \\
-    nodejs \\
-    npm \\
-    && rm -rf /var/cache/apk/*
-RUN npm install -g tsx
-${goModExists ? 'COPY go.mod .' : '# go.mod not found'}
-${goSumExists ? 'COPY go.sum .' : '# go.sum not found'}
-${goModExists || goSumExists ? 'RUN go mod download' : '# Skipping go mod download'}
+    python3 \\
+    py3-pip \\
+    cairo-dev \\
+    pango-dev \\
+    jpeg-dev \\
+    giflib-dev \\
+    librsvg-dev \\
+    libxml2-utils\\
+    wget && \\
+    rm -rf /var/cache/apk/*
+# Install Go
+RUN wget -q -O - https://go.dev/dl/go1.21.0.linux-amd64.tar.gz | tar -xz -C /usr/local
+ENV GOROOT=/usr/local/go
+ENV PATH=$PATH:$GOROOT/bin
+RUN npm install -g node-gyp tsx
+${packageJsonExists ? 'COPY package.json .' : '# package.json not found'}
+# Try yarn install, fallback to npm install if it fails
+ENV npm_config_build_from_source=false
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \\
+    npm install -g tsx && \\
+    npm cache clean --force && \\
+    yarn cache clean || true
 ${srcExists ? 'COPY ./src ./src/' : '# src directory not found'}
 ${testsFileExists ? `COPY ${testsName}.ts .` : `# ${testsName}.ts not found`}
 # Copy builders source code
 COPY ./src/builders ./src/builders/
+# Create the full directory structure before CMD
 RUN mkdir -p /workspace/testeranto
 RUN mkdir -p /workspace/testeranto/bundles
 RUN mkdir -p /workspace/testeranto/bundles/${runtime}
 RUN mkdir -p /workspace/testeranto/bundles/${runtime}/${testsName}
 RUN mkdir -p /workspace/testeranto/metafiles
 RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
+# Set environment variables for output directories
 ENV BUNDLES_DIR=/workspace/testeranto/bundles/${runtime}/${testsName}
 ENV METAFILES_DIR=/workspace/testeranto/metafiles/${runtime}
 ENV TESTERANTO_RUNTIME=${runtime}
-ENV GO111MODULE=on
 # Run the golang builder using tsx
-CMD ["tsx", "src/builders/golang.ts", "${testsName}.ts"]
+CMD ["sh", "-c", "echo 'Starting build...' && which node && which npx && npx tsx ./src/builders/golang.ts ${testsName}.ts"]
 `;
   } else {
     // Default fallback
@@ -205,24 +220,32 @@ ENV TESTERANTO_RUNTIME=${runtime}
 `;
   }
   
-  // Create the directory for the build Dockerfile
+  // Create the directory for the build Dockerfile matching the old structure
   const dockerfileDir = path.join(
     process.cwd(),
     "testeranto",
     "bundles",
-    testsName,
-    `${runtime}-build`
+    "allTests",
+    runtime
   );
   
   fs.mkdirSync(dockerfileDir, { recursive: true });
-  const dockerfilePath = path.join(dockerfileDir, "Dockerfile");
+  
+  // Use the appropriate filename based on runtime
+  const dockerfileName = runtime === 'node' ? 'node.Dockerfile' :
+                         runtime === 'web' ? 'web.Dockerfile' :
+                         runtime === 'golang' ? 'golang.Dockerfile' :
+                         runtime === 'python' ? 'python.Dockerfile' :
+                         'Dockerfile';
+  
+  const dockerfilePath = path.join(dockerfileDir, dockerfileName);
   fs.writeFileSync(dockerfilePath, dockerfileContent);
   
   log(`Created build Dockerfile at ${dockerfilePath}`);
   
-  // Return relative path from process.cwd() for use in docker-compose.yml
-  // dockerfileDir is already an absolute path, make it relative
-  const relativePath = path.relative(process.cwd(), dockerfileDir);
+  // Return the path relative to project root for use in docker-compose.yml
+  // The old format uses paths like "testeranto/bundles/allTests/node/node.Dockerfile"
+  const relativePath = path.relative(process.cwd(), dockerfilePath);
   // Ensure it uses forward slashes for Docker compatibility
   return relativePath.split(path.sep).join('/');
 }
@@ -262,11 +285,12 @@ function setupDockerfileForTest(
 }
 
 function generateServiceName(runtime: IRunTime, testPath: string): string {
-  // Extract filename without extension
-  const basename = path.basename(testPath);
-  const nameWithoutExt = basename.replace(/\.[^/.]+$/, '');
-  // Sanitize to only allow alphanumeric and hyphens
-  const sanitized = nameWithoutExt.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+  // Convert test path to the format used in the old docker-compose file
+  // e.g., src/example/Calculator.test.ts -> src-example-calculator-test-ts
+  // Remove leading ./ if present
+  const cleanPath = testPath.replace(/^\.\//, '');
+  // Replace path separators and dots with hyphens
+  const sanitized = cleanPath.replace(/[\/\.]/g, '-').toLowerCase();
   return `${runtime}-${sanitized}`;
 }
 
@@ -284,23 +308,51 @@ function validateServiceNames(serviceNames: string[], logger?: {
 function createTestService(
   runtime: IRunTime,
   serviceName: string,
-  dockerfileDir: string,
-  testsName: string
+  dockerfilePath: string, // This is now the path to the Dockerfile
+  testsName: string,
+  testPath: string // Add test path parameter
 ): Record<string, any> {
-  // dockerfileDir is a relative path from process.cwd() to the directory containing Dockerfile
-  // For example: "testeranto/bundles/testsName/runtime/testName"
-  // The build context should be the directory containing the Dockerfile
-  // So context is dockerfileDir, and dockerfile is "Dockerfile"
-  // Ensure forward slashes for Docker compatibility
-  const context = dockerfileDir.split(path.sep).join('/');
+  // Determine command based on runtime and service name
+  let command: string = '';
+  
+  const testFileName = path.basename(testPath);
+  const testNameWithoutExt = testFileName.replace(/\.[^/.]+$/, '');
+  
+  // Generate the appropriate command based on runtime
+  if (runtime === 'node') {
+    command = `node testeranto/bundles/node/allTests/${testNameWithoutExt}.mjs`;
+  } else if (runtime === 'web') {
+    command = `node testeranto/bundles/web/allTests/${testNameWithoutExt}.mjs`;
+  } else if (runtime === 'golang') {
+    // For golang, the test path is src/example/Calculator.golingvu.test.go
+    command = `go test ${testPath}`;
+  } else if (runtime === 'python') {
+    command = `python ${testPath}`;
+  }
+  
+  // Build the service configuration matching the old format (context: /Users/adam/Code/testeranto)
+  const serviceConfig: any = {
+    build: {
+      context: "/Users/adam/Code/testeranto",
+      dockerfile: dockerfilePath,
+    },
+    volumes: [
+      "./testeranto/metafiles:/workspace/testeranto/metafiles",
+      "./src:/workspace/src"
+    ],
+    depends_on: [
+      `${runtime}-build`
+    ],
+    working_dir: "/workspace",
+  };
+  
+  // Add command if specified
+  if (command) {
+    serviceConfig.command = command;
+  }
   
   return {
-    [serviceName]: {
-      build: {
-        context: context,
-        dockerfile: "Dockerfile",
-      },
-    },
+    [serviceName]: serviceConfig,
   };
 }
 
@@ -309,21 +361,36 @@ function createBuildService(
   dockerfileDir: string,
   testsName: string
 ): Record<string, any> {
-  // dockerfileDir is a relative path from process.cwd() to the directory containing Dockerfile
-  // For example: "testeranto/bundles/testsName/runtime-build"
-  // The build context should be the project root (where package.json, src/, etc. are)
-  // So we need to compute the Dockerfile path relative to the context
-  const context = "."; // Project root
-  // dockerfileDir is already relative to process.cwd(), so join with "Dockerfile"
-  const dockerfilePath = path.join(dockerfileDir, "Dockerfile");
+  // Determine the Dockerfile path based on runtime
+  let dockerfilePath: string;
+  
+  if (runtime === 'node') {
+    dockerfilePath = `testeranto/bundles/allTests/node/node.Dockerfile`;
+  } else if (runtime === 'web') {
+    dockerfilePath = `testeranto/bundles/allTests/web/web.Dockerfile`;
+  } else if (runtime === 'golang') {
+    dockerfilePath = `testeranto/bundles/allTests/golang/golang.Dockerfile`;
+  } else if (runtime === 'python') {
+    dockerfilePath = `testeranto/bundles/allTests/python/python.Dockerfile`;
+  } else {
+    dockerfilePath = `${dockerfileDir}/Dockerfile`;
+  }
+  
+  // Build the service configuration matching the old format (context: /Users/adam/Code/testeranto)
+  const serviceConfig: any = {
+    build: {
+      context: "/Users/adam/Code/testeranto",
+      dockerfile: dockerfilePath,
+    },
+    volumes: [
+      "./testeranto/metafiles:/workspace/testeranto/metafiles"
+    ],
+    image: `bundles-${runtime}-build:latest`,
+    restart: 'no',
+  };
   
   return {
-    [`${runtime}-build`]: {
-      build: {
-        context: context,
-        dockerfile: dockerfilePath,
-      },
-    },
+    [`${runtime}-build`]: serviceConfig,
   };
 }
 
@@ -391,7 +458,7 @@ function generateServicesForRuntime(
   const services: Record<string, any> = {};
 
   Object.keys(c[runtime].tests).forEach((testPath) => {
-    const dockerfileDir = setupDockerfileForTest(
+    const dockerfilePath = setupDockerfileForTest(
       c,
       runtime,
       testPath,
@@ -400,7 +467,7 @@ function generateServicesForRuntime(
     );
     // For service name, use a sanitized version of the test path
     const serviceName = generateServiceName(runtime, testPath);
-    const service = createTestService(runtime, serviceName, dockerfileDir, testsName);
+    const service = createTestService(runtime, serviceName, dockerfilePath, testsName, testPath);
     Object.assign(services, service);
     log(`Created service for ${runtime} test: ${testPath}`);
   });

@@ -96,8 +96,8 @@ export class CommanderTuiAdapter {
     sidebar.mouse = false;
     sidebar.clickable = false;
 
-    // Create tabs list in sidebar
-    this.tabs = BlessedElementFactory.createTabsList(sidebar, theme);
+    // Create tree list in sidebar
+    this.tabs = BlessedElementFactory.createTreeList(sidebar, theme);
     // Disable mouse on tabs list
     this.tabs.mouse = false;
     this.tabs.clickable = false;
@@ -109,7 +109,7 @@ export class CommanderTuiAdapter {
     // Add a status line at the top to show active tab and keyboard hints
     const statusLine = BlessedElementFactory.createStatusLine(
       contentArea,
-      "Active: testeranto | Sidebar: 20% | Use ↑/↓ to switch tabs | Use ←/→ to resize sidebar | PageUp/PageDown to scroll",
+      "Active: testeranto | Sidebar: 20% | Tree view enabled | Use ↑/↓ to navigate tree | Use ←/→ to resize sidebar | PageUp/PageDown to scroll",
       theme
     );
 
@@ -204,7 +204,7 @@ export class CommanderTuiAdapter {
     // Initialize tab content
     this.initializeTabContent();
 
-    // Tab selection handler - for mouse clicks and keyboard selection
+    // Tab selection handler - for keyboard selection
     this.tabs!.on("select", (item: any) => {
       const tabName = item.getText();
       this.switchTab(tabName);
@@ -456,6 +456,9 @@ export class CommanderTuiAdapter {
   }
 
   private switchTab(tabName: string): void {
+    // Clean up the tab name by removing tree characters
+    const cleanTabName = tabName.replace(/[▶├─└│ ]/g, '').trim();
+    
     // Hide all output boxes
     if (this.testerantoOutputBox) this.testerantoOutputBox.hide();
     if (this.dockerComposeOutputBox) this.dockerComposeOutputBox.hide();
@@ -469,30 +472,133 @@ export class CommanderTuiAdapter {
 
     // Show the active tab's output box
     let activeOutputBox: blessed.Widgets.Log | null = null;
-    if (tabName === "testeranto") {
+    
+    // Handle the new hierarchical structure
+    if (cleanTabName === "testeranto") {
       if (this.testerantoOutputBox) this.testerantoOutputBox.show();
       activeOutputBox = this.testerantoOutputBox;
-    } else if (tabName === "docker-compose") {
+    } else if (cleanTabName === "allTests") {
+      // For now, show testeranto output box for allTests
+      if (this.testerantoOutputBox) this.testerantoOutputBox.show();
+      activeOutputBox = this.testerantoOutputBox;
+    } else if (cleanTabName === "docker-compose") {
       if (this.dockerComposeOutputBox) this.dockerComposeOutputBox.show();
       activeOutputBox = this.dockerComposeOutputBox;
-    } else if (tabName === "node-build") {
+    } else if (cleanTabName === "node") {
+      // For the node runtime tab, show node build output
       if (this.nodeBuildOutputBox) this.nodeBuildOutputBox.show();
       activeOutputBox = this.nodeBuildOutputBox;
-    } else if (tabName === "web-build") {
+    } else if (cleanTabName === "web") {
       if (this.webBuildOutputBox) this.webBuildOutputBox.show();
       activeOutputBox = this.webBuildOutputBox;
-    } else if (tabName === "python-build") {
+    } else if (cleanTabName === "python") {
       if (this.pythonBuildOutputBox) this.pythonBuildOutputBox.show();
       activeOutputBox = this.pythonBuildOutputBox;
-    } else if (tabName === "golang-build") {
+    } else if (cleanTabName === "golang") {
       if (this.golangBuildOutputBox) this.golangBuildOutputBox.show();
       activeOutputBox = this.golangBuildOutputBox;
+    } else if (cleanTabName === "build") {
+      // Determine which runtime's build to show based on context
+      // For now, show node build as default
+      if (this.nodeBuildOutputBox) this.nodeBuildOutputBox.show();
+      activeOutputBox = this.nodeBuildOutputBox;
+    } else if (cleanTabName === "Calculator") {
+      // Determine which runtime's Calculator test to show
+      // For now, create a generic test box
+      if (!this.testOutputBoxes.has("Calculator")) {
+        const testBox = this.createFakeProcessBox("Calculator", "Test");
+        this.testOutputBoxes.set("Calculator", testBox);
+      }
+      const box = this.testOutputBoxes.get("Calculator");
+      if (box) {
+        box.show();
+        activeOutputBox = box;
+      }
+    } else if (cleanTabName === "testprocess") {
+      // Handle test process tab
+      if (!this.testOutputBoxes.has("test process")) {
+        const testBox = this.createFakeProcessBox("test process", "Test Process");
+        this.testOutputBoxes.set("test process", testBox);
+      }
+      const box = this.testOutputBoxes.get("test process");
+      if (box) {
+        box.show();
+        activeOutputBox = box;
+      }
+    } else if (cleanTabName === "aiderprocess") {
+      // Handle aider process tab
+      if (!this.testOutputBoxes.has("aider process")) {
+        const aiderBox = this.createAiderBox("aider process", "Calculator");
+        this.testOutputBoxes.set("aider process", aiderBox);
+      }
+      const box = this.testOutputBoxes.get("aider process");
+      if (box) {
+        box.show();
+        activeOutputBox = box;
+      }
     } else {
-      // Check if it's a test tab
-      const testBox = this.testOutputBoxes.get(tabName);
-      if (testBox) {
-        testBox.show();
-        activeOutputBox = testBox;
+      // Check if it's a test name (could be like "Calculator.pitono.test")
+      // First, check if it matches any of our test tabs
+      let matchedTest = null;
+      if (this.testTabs) {
+        matchedTest = this.testTabs.find(test => {
+          const parts = test.name.split('/');
+          const filename = parts[parts.length - 1];
+          const name = filename.replace(/\.[^/.]+$/, '');
+          return name === cleanTabName;
+        });
+      }
+      
+      if (matchedTest) {
+        // It's a test from the config
+        const runtime = matchedTest.runtime;
+        if (!this.testOutputBoxes.has(cleanTabName)) {
+          const testBox = this.createFakeProcessBox(cleanTabName, runtime);
+          this.testOutputBoxes.set(cleanTabName, testBox);
+        }
+        const box = this.testOutputBoxes.get(cleanTabName);
+        if (box) {
+          box.show();
+          activeOutputBox = box;
+        }
+      } else {
+        // Check if it's a test process or aider process
+        if (cleanTabName === "testprocess" || cleanTabName === "test process") {
+          // Find the parent test name from context
+          // For now, create a generic test process box
+          if (!this.testOutputBoxes.has("test process")) {
+            const testBox = this.createFakeProcessBox("test process", "Test Process");
+            this.testOutputBoxes.set("test process", testBox);
+          }
+          const box = this.testOutputBoxes.get("test process");
+          if (box) {
+            box.show();
+            activeOutputBox = box;
+          }
+        } else if (cleanTabName === "aiderprocess" || cleanTabName === "aider process") {
+          // Find the parent test name from context
+          // For now, create a generic aider box
+          if (!this.testOutputBoxes.has("aider process")) {
+            const aiderBox = this.createAiderBox("aider process", "Test");
+            this.testOutputBoxes.set("aider process", aiderBox);
+          }
+          const box = this.testOutputBoxes.get("aider process");
+          if (box) {
+            box.show();
+            activeOutputBox = box;
+          }
+        } else {
+          // For any other tab, create a generic box
+          if (!this.testOutputBoxes.has(cleanTabName)) {
+            const genericBox = this.createFakeProcessBox(cleanTabName, "Generic");
+            this.testOutputBoxes.set(cleanTabName, genericBox);
+          }
+          const box = this.testOutputBoxes.get(cleanTabName);
+          if (box) {
+            box.show();
+            activeOutputBox = box;
+          }
+        }
       }
     }
 
@@ -506,7 +612,7 @@ export class CommanderTuiAdapter {
           child.content.includes("Active:")
       );
       if (statusLine) {
-        statusLine.setContent(`Active: ${tabName} | Tab: switch focus | Mouse wheel scrolls when output box is focused`);
+        statusLine.setContent(`Active: ${cleanTabName} | Tab: switch focus | Mouse wheel scrolls when output box is focused`);
       }
     }
 
@@ -515,27 +621,116 @@ export class CommanderTuiAdapter {
       this.screen.render();
     }
 
-    this.activeTab = tabName;
+    this.activeTab = cleanTabName;
     // Reset history index for the new tab
     this.historyIndex = this.getCurrentCommandHistory().length;
   }
 
+  private createFakeProcessBox(tabName: string, runtime: string): blessed.Widgets.Log {
+    const box = BlessedElementFactory.createLogBox(
+      this.testerantoOutputBox!.parent as blessed.Widgets.Node,
+      {
+        top: 1,
+        left: 0,
+        width: "100%",
+        height: "70%-1",
+        theme: "dark",
+        hidden: true,
+      }
+    );
+    
+    // Disable mouse on the box
+    box.mouse = false;
+    box.clickable = false;
+    
+    // Add fake content
+    box.add(`=== ${tabName} (${runtime}) ===`);
+    box.add(`This is a fake process tab showing simulated logs.`);
+    box.add(`Runtime: ${runtime}`);
+    box.add(`Process ID: ${Math.floor(Math.random() * 10000)}`);
+    box.add(`Status: Running`);
+    box.add(`\n`);
+    box.add(`[${new Date().toISOString()}] Process started`);
+    box.add(`[${new Date().toISOString()}] Initializing modules...`);
+    box.add(`[${new Date().toISOString()}] Loading configuration...`);
+    box.add(`[${new Date().toISOString()}] Connecting to database...`);
+    box.add(`[${new Date().toISOString()}] Starting HTTP server on port ${3000 + Math.floor(Math.random() * 1000)}...`);
+    box.add(`[${new Date().toISOString()}] Ready to accept connections`);
+    box.add(`[${new Date().toISOString()}] Processing request #1`);
+    box.add(`[${new Date().toISOString()}] Processing request #2`);
+    box.add(`[${new Date().toISOString()}] Processing request #3`);
+    box.add(`\n`);
+    box.add(`Fake logs will continue to appear here.`);
+    box.add(`Use PageUp/PageDown to scroll through the logs.`);
+    
+    return box;
+  }
+
+  private createAiderBox(tabName: string, testName: string): blessed.Widgets.Log {
+    const box = BlessedElementFactory.createLogBox(
+      this.testerantoOutputBox!.parent as blessed.Widgets.Node,
+      {
+        top: 1,
+        left: 0,
+        width: "100%",
+        height: "70%-1",
+        theme: "dark",
+        hidden: true,
+      }
+    );
+    
+    // Disable mouse on the box
+    box.mouse = false;
+    box.clickable = false;
+    
+    // Add aider content
+    box.add(`=== ${tabName} ===`);
+    box.add(`This is the aider tab for test: ${testName}`);
+    box.add(`Aider provides AI-powered assistance for test development and debugging.`);
+    box.add(`\n`);
+    box.add(`Available commands:`);
+    box.add(`  • help - Show this help message`);
+    box.add(`  • explain - Explain the current test structure`);
+    box.add(`  • suggest - Suggest improvements to the test`);
+    box.add(`  • generate - Generate test cases based on requirements`);
+    box.add(`  • debug - Help debug failing tests`);
+    box.add(`\n`);
+    box.add(`Example usage:`);
+    box.add(`  Type 'explain' to get an explanation of the test structure.`);
+    box.add(`  Type 'suggest' to get suggestions for improving test coverage.`);
+    box.add(`  Type 'generate' to generate additional test cases.`);
+    box.add(`\n`);
+    box.add(`Status: Ready to assist`);
+    box.add(`Last updated: ${new Date().toISOString()}`);
+    box.add(`\n`);
+    box.add(`Type a command in the input box below to interact with aider.`);
+    
+    return box;
+  }
+
   private getCurrentOutputBox(): blessed.Widgets.Log | null {
+    // Check for main tabs
     switch (this.activeTab) {
       case "testeranto":
+      case "allTests":
         return this.testerantoOutputBox;
       case "docker-compose":
         return this.dockerComposeOutputBox;
-      case "node-build":
+      case "node":
+      case "build": // When build is selected, default to node build
         return this.nodeBuildOutputBox;
-      case "web-build":
+      case "web":
         return this.webBuildOutputBox;
-      case "python-build":
+      case "python":
         return this.pythonBuildOutputBox;
-      case "golang-build":
+      case "golang":
         return this.golangBuildOutputBox;
+      case "Calculator":
+      case "test process":
+      case "aider process":
+        return this.testOutputBoxes.get(this.activeTab) || null;
       default:
-        // Check if it's a test tab
+        // Check if it's a process tab
         return this.testOutputBoxes.get(this.activeTab) || null;
     }
   }
@@ -591,74 +786,97 @@ export class CommanderTuiAdapter {
   private updateTabsWithTests(tests: {name: string, runtime: string}[]): void {
     this.testTabs = tests;
     
-    // Update the tabs list
+    // Update the tabs list with tree structure
     if (this.tabs && this.screen && this.testerantoOutputBox) {
-      // Create tab names: use the test name, but make it readable
-      const testTabNames: string[] = [];
+      // Group tests by runtime
+      const testsByRuntime: Record<string, Array<{name: string, displayName: string}>> = {
+        'node': [],
+        'web': [],
+        'python': [],
+        'golang': []
+      };
       
       tests.forEach(test => {
-        // Extract just the filename without path for display
         const parts = test.name.split('/');
         const filename = parts[parts.length - 1];
-        // Remove extension
         const name = filename.replace(/\.[^/.]+$/, '');
-        const baseTabName = `${test.runtime}-${name}`;
+        const displayName = `${name}`;
         
-        // Add the main test tab
-        testTabNames.push(baseTabName);
-        // Add the aider tab
-        testTabNames.push(`${baseTabName}-aider`);
-      });
-      
-      // Create output boxes for each test tab and aider tab
-      testTabNames.forEach(tabName => {
-        if (!this.testOutputBoxes.has(tabName)) {
-          const testBox = BlessedElementFactory.createLogBox(
-            this.testerantoOutputBox!.parent as blessed.Widgets.Node,
-            {
-              top: 1,
-              left: 0,
-              width: "100%",
-              height: "70%-1",
-              theme: "dark",
-              hidden: true,
-            }
-          );
-          
-          // Disable mouse on test boxes
-          testBox.mouse = false;
-          testBox.clickable = false;
-          
-          // Add initial content
-          if (tabName.endsWith('-aider')) {
-            testBox.add(`=== ${tabName} Tab ===`);
-            testBox.add(`This tab shows aider information for test: ${tabName.replace('-aider', '')}`);
-            testBox.add(`Status: Not started`);
-          } else {
-            testBox.add(`=== ${tabName} Tab ===`);
-            testBox.add(`This tab shows logs for test: ${tabName}`);
-            testBox.add(`Status: Not started`);
-          }
-          testBox.add("\n");
-          
-          this.testOutputBoxes.set(tabName, testBox);
+        if (testsByRuntime[test.runtime]) {
+          testsByRuntime[test.runtime].push({name: test.name, displayName});
         }
       });
       
-      // Standard tabs + test tabs + aider tabs
-      const allTabItems = [
-        "testeranto",
-        "docker-compose",
-        "node-build",
-        "web-build",
-        "python-build",
-        "golang-build",
-        ...testTabNames
+      // Build tree items with the new hierarchical structure
+      const treeItems = [
+        "▶ testeranto",
+        "  └─▶ allTests",
+        ...this.buildProjectTreeItems(testsByRuntime)
       ];
       
-      this.tabs.setItems(allTabItems);
+      this.tabs.setItems(treeItems);
       this.screen.render();
     }
+  }
+
+  private buildProjectTreeItems(testsByRuntime: Record<string, Array<{name: string, displayName: string}>>): string[] {
+    const items: string[] = [];
+    
+    // Add docker-compose under allTests
+    items.push("      ├─▶ docker-compose");
+    
+    // Add each runtime with its build service and tests
+    const runtimes = ['node', 'web', 'python', 'golang'];
+    
+    for (let i = 0; i < runtimes.length; i++) {
+      const runtime = runtimes[i];
+      const isLastRuntime = i === runtimes.length - 1;
+      const runtimePrefix = isLastRuntime ? "      └─▶ " : "      ├─▶ ";
+      
+      // Add runtime header
+      items.push(`      ${isLastRuntime ? ' ' : '│'}   ${runtimePrefix}${runtime}`);
+      
+      // Add build service under runtime
+      const buildIndent = isLastRuntime ? "            " : "      │     ";
+      items.push(`${buildIndent}├─▶ build`);
+      
+      // Add tests under runtime
+      const tests = testsByRuntime[runtime] || [];
+      if (tests.length === 0) {
+        // If no tests, add a placeholder
+        const testIndent = isLastRuntime ? "            " : "      │     ";
+        items.push(`${testIndent}└─▶ (no tests)`);
+      } else {
+        // Add each test with its test process and aider process
+        for (let j = 0; j < tests.length; j++) {
+          const test = tests[j];
+          const isLastTest = j === tests.length - 1;
+          const testIndent = isLastRuntime ? "            " : "      │     ";
+          const testPrefix = isLastTest ? "└─▶ " : "├─▶ ";
+          
+          // Extract just the filename without path for display
+          const parts = test.name.split('/');
+          const filename = parts[parts.length - 1];
+          // Remove extension
+          const name = filename.replace(/\.[^/.]+$/, '');
+          
+          // Add test name
+          items.push(`${testIndent}${testPrefix}${name}`);
+          
+          // Add test process under the test
+          const processIndent = isLastRuntime ? "              " : "      │       ";
+          const processPrefix = "├─▶ ";
+          items.push(`${processIndent}${processPrefix}test process`);
+          
+          // Add aider process under the test
+          const aiderIndent = isLastRuntime ? "              " : "      │       ";
+          const aiderPrefix = "└─▶ ";
+          items.push(`${aiderIndent}${aiderPrefix}aider process`);
+        }
+      }
+    }
+    
+    return items;
   }
 
   private async createTesterantoDockerInstance(
@@ -756,7 +974,7 @@ export class CommanderTuiAdapter {
       );
     if (statusLine) {
       statusLine.setContent(
-        `Active: ${this.activeTab} | Sidebar: ${this.sidebarWidth}% | Use ↑/↓ to switch tabs | Use ←/→ to resize sidebar | PageUp/PageDown to scroll`
+        `Active: ${this.activeTab} | Sidebar: ${this.sidebarWidth}% | Tree view | Use ↑/↓ to navigate tree | Use ←/→ to resize sidebar | PageUp/PageDown to scroll`
       );
     }
   }

@@ -2,6 +2,6 @@
   "entryPoints": [
     "src/example/Calculator.golingvu.test.go"
   ],
-  "buildTime": "2025-12-04T01:04:04.250Z",
+  "buildTime": "2025-12-05T05:51:29.654Z",
   "runtime": "golang"
 }

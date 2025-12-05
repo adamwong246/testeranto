@@ -7,27 +7,44 @@ export class TestServiceManager extends EventEmitter {
   private runningTests: Map<string, TestServiceInfo> = new Map();
   private dockerCompose: DockerCompose;
   private testName: string;
+  private logger: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+  };
 
-  constructor(testName: string, dockerCompose: DockerCompose) {
+  constructor(testName: string, dockerCompose: DockerCompose, logger?: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+  }) {
     super();
     this.testName = testName;
     this.dockerCompose = dockerCompose;
+    this.logger = {
+      log: logger?.log || console.log,
+      error: logger?.error || console.error,
+      warn: logger?.warn || console.warn,
+      info: logger?.info || console.info,
+    };
   }
 
   public async startTestService(config: TestServiceConfig): Promise<boolean> {
     const { serviceName, testResource, env = {}, runtime, entryPoint } = config;
     
-    console.log(`🚀 Starting test service: ${serviceName}`);
-    console.log(`   Runtime: ${runtime}, Entry point: ${entryPoint}`);
+    this.logger.log(`🚀 Starting test service: ${serviceName}`);
+    this.logger.log(`   Runtime: ${runtime}, Entry point: ${entryPoint}`);
     this.emit('testServiceStarting', { serviceName, config });
     
     const serviceEnv: Record<string, string> = { ...env };
     
     if (testResource) {
       serviceEnv.TEST_RESOURCES = JSON.stringify(testResource);
-      console.log(`📋 Test resources provided for ${serviceName}`);
+      this.logger.log(`📋 Test resources provided for ${serviceName}`);
     } else {
-      console.log(`📋 No test resources provided for ${serviceName}`);
+      this.logger.log(`📋 No test resources provided for ${serviceName}`);
       const defaultTestResource: TestResource = {
         name: serviceName,
         ports: [],
@@ -39,20 +56,20 @@ export class TestServiceManager extends EventEmitter {
     
     serviceEnv.TESTERANTO_RUNTIME = runtime;
     
-    console.log(`⚙️ Environment variables set for ${serviceName}:`, Object.keys(serviceEnv));
+    this.logger.log(`⚙️ Environment variables set for ${serviceName}:`, Object.keys(serviceEnv));
     
     try {
-      console.log(`🎬 Executing docker-compose up for ${serviceName}...`);
+      this.logger.log(`🎬 Executing docker-compose up for ${serviceName}...`);
       const result = await this.dockerCompose.upOne(serviceName, {
         log: true,
         commandOptions: ['--no-deps'],
         env: serviceEnv,
       });
       
-      console.log(`✅ Test service ${serviceName} started successfully`);
+      this.logger.log(`✅ Test service ${serviceName} started successfully`);
       if (result.out && result.out.length > 0) {
         const preview = result.out.substring(0, Math.min(200, result.out.length));
-        console.log(`   Command output: ${preview}${result.out.length > 200 ? '...' : ''}`);
+        this.logger.log(`   Command output: ${preview}${result.out.length > 200 ? '...' : ''}`);
       }
       
       this.runningTests.set(serviceName, {
@@ -65,14 +82,14 @@ export class TestServiceManager extends EventEmitter {
       return true;
     } catch (err) {
       const errorMessage = (err as Error).message;
-      console.log(`❌ Error starting test service ${serviceName}:`, errorMessage);
+      this.logger.log(`❌ Error starting test service ${serviceName}:`, errorMessage);
       this.emit('testServiceError', { serviceName, config, error: errorMessage });
       return false;
     }
   }
 
   public async stopTestService(serviceName: string): Promise<boolean> {
-    console.log(`Stopping test service: ${serviceName}`);
+    this.logger.log(`Stopping test service: ${serviceName}`);
     
     try {
       await this.dockerCompose.down({
@@ -84,7 +101,7 @@ export class TestServiceManager extends EventEmitter {
       this.emit('testStopped', { serviceName });
       return true;
     } catch (err) {
-      console.log(`Error stopping test service ${serviceName}:`, (err as Error).message);
+      this.logger.log(`Error stopping test service ${serviceName}:`, (err as Error).message);
       return false;
     }
   }
@@ -99,7 +116,7 @@ export class TestServiceManager extends EventEmitter {
       
       return result.out || result.err || '';
     } catch (err) {
-      console.log(`Error getting logs for ${serviceName}:`, (err as Error).message);
+      this.logger.log(`Error getting logs for ${serviceName}:`, (err as Error).message);
       return '';
     }
   }

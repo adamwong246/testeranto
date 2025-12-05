@@ -37,8 +37,21 @@ export class TabContentInitializer {
       testerantoOutputBox.add("\n");
     }
 
-    // docker-compose tab content - empty, only logs will appear
-    // No introductory content
+    // docker-compose tab content
+    if (dockerComposeOutputBox) {
+      dockerComposeOutputBox.add("=== docker-compose Tab ===");
+      dockerComposeOutputBox.add("This tab shows docker-compose commands and logs.");
+      dockerComposeOutputBox.add("\nAvailable commands:");
+      dockerComposeOutputBox.add("  docker-compose up      - Start services");
+      dockerComposeOutputBox.add("  docker-compose down    - Stop and remove services");
+      dockerComposeOutputBox.add("  docker-compose ps      - List services");
+      dockerComposeOutputBox.add("  docker-compose logs    - Show service logs");
+      dockerComposeOutputBox.add("  docker-compose build   - Build services");
+      dockerComposeOutputBox.add("\nNote: Services are automatically stopped before starting fresh.");
+      dockerComposeOutputBox.add("\nTo manually load allTests-docker-compose.yml:");
+      dockerComposeOutputBox.add("  docker-compose -f testeranto/bundles/allTests-docker-compose.yml up");
+      dockerComposeOutputBox.add("\n");
+    }
 
     // Initialize build service tabs with dummy content
     if (nodeBuildOutputBox) {

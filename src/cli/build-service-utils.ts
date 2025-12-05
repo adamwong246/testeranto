@@ -18,23 +18,22 @@ export class BuildServiceUtils {
     screen: blessed.Widgets.Screen | null
   ): void {
     let targetBox: blessed.Widgets.Log | null = null;
+    let tabName: string | null = null;
 
-    // Extract the base service name
-    const baseName = serviceName
-      .replace(/^bundles-/, "")
-      .replace(/-[0-9]+$/, "");
-
-    if (baseName.includes("node-build")) {
+    // Get the appropriate tab name for this service
+    tabName = this.getBuildServiceTabName(serviceName);
+    
+    if (tabName === "node-build") {
       targetBox = nodeBuildOutputBox;
-    } else if (baseName.includes("web-build")) {
+    } else if (tabName === "web-build") {
       targetBox = webBuildOutputBox;
-    } else if (baseName.includes("python-build")) {
+    } else if (tabName === "python-build") {
       targetBox = pythonBuildOutputBox;
-    } else if (baseName.includes("golang-build")) {
+    } else if (tabName === "golang-build") {
       targetBox = golangBuildOutputBox;
     }
 
-    if (targetBox) {
+    if (targetBox && logs) {
       // Don't clear the content every time, just append new logs
       // To avoid losing previous logs
       const lines = logs.split("\n");
@@ -45,7 +44,6 @@ export class BuildServiceUtils {
       });
 
       // If this tab is active, render the screen
-      const tabName = baseName.replace("-build", "-build");
       if (activeTab === tabName) {
         screen?.render();
       }
@@ -56,17 +54,27 @@ export class BuildServiceUtils {
    * Determine which build service tab corresponds to a service name
    */
   static getBuildServiceTabName(serviceName: string): string | null {
-    const baseName = serviceName
-      .replace(/^bundles-/, "")
-      .replace(/-[0-9]+$/, "");
+    // Handle different naming patterns
+    let baseName = serviceName;
+    
+    // Remove common prefixes
+    baseName = baseName.replace(/^bundles-/, "");
+    baseName = baseName.replace(/^testeranto-/, "");
+    
+    // Remove numeric suffixes like -1, -2, etc.
+    baseName = baseName.replace(/-[0-9]+$/, "");
+    
+    // Also handle container names that might have additional suffixes
+    baseName = baseName.replace(/-container$/, "");
+    baseName = baseName.replace(/-service$/, "");
 
-    if (baseName.includes("node-build")) {
+    if (baseName.includes("node-build") || baseName.includes("node_build")) {
       return "node-build";
-    } else if (baseName.includes("web-build")) {
+    } else if (baseName.includes("web-build") || baseName.includes("web_build")) {
       return "web-build";
-    } else if (baseName.includes("python-build")) {
+    } else if (baseName.includes("python-build") || baseName.includes("python_build")) {
       return "python-build";
-    } else if (baseName.includes("golang-build")) {
+    } else if (baseName.includes("golang-build") || baseName.includes("golang_build") || baseName.includes("go-build")) {
       return "golang-build";
     }
     return null;

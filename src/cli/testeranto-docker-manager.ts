@@ -31,7 +31,31 @@ export class TesterantoDockerManager {
       );
       const TesterantoDocker = TesterantoDockerModule.default;
 
-      this.testerantoDocker = new TesterantoDocker(testsName);
+      // Create a logger that writes to the dockerComposeOutputBox
+      const logger = {
+        log: (...args: any[]) => {
+          if (dockerComposeOutputBox) {
+            dockerComposeOutputBox.add(args.join(" "));
+          }
+        },
+        error: (...args: any[]) => {
+          if (dockerComposeOutputBox) {
+            dockerComposeOutputBox.add(`ERROR: ${args.join(" ")}`);
+          }
+        },
+        warn: (...args: any[]) => {
+          if (dockerComposeOutputBox) {
+            dockerComposeOutputBox.add(`WARN: ${args.join(" ")}`);
+          }
+        },
+        info: (...args: any[]) => {
+          if (dockerComposeOutputBox) {
+            dockerComposeOutputBox.add(`INFO: ${args.join(" ")}`);
+          }
+        },
+      };
+
+      this.testerantoDocker = new TesterantoDocker(testsName, logger);
       await this.testerantoDocker.initialize();
 
       // Start monitoring build services
@@ -97,15 +121,19 @@ export class TesterantoDockerManager {
 
         const interval = setInterval(async () => {
           try {
-            const logs = await this.testerantoDocker.getBuildServiceLogs(
-              serviceName,
-              50
-            );
-            if (logs.trim()) {
-              updateBuildServiceTab(serviceName, logs);
+            // Check if the method exists
+            if (this.testerantoDocker && typeof this.testerantoDocker.getBuildServiceLogs === 'function') {
+              const logs = await this.testerantoDocker.getBuildServiceLogs(
+                serviceName,
+                50
+              );
+              if (logs && logs.trim()) {
+                updateBuildServiceTab(serviceName, logs);
+              }
             }
           } catch (error) {
             // Service might not exist yet, ignore
+            // Don't log errors to avoid spamming
           }
         }, 2000); // Poll every 2 seconds
 

@@ -515,11 +515,11 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/allTests/web/Node-BZQTO4SH.mjs",
+            "path": "testeranto/bundles/allTests/web/Node-L63D7ERI.mjs",
             "kind": "dynamic-import"
           },
           {
-            "path": "testeranto/bundles/allTests/web/Web-VDKH5XU3.mjs",
+            "path": "testeranto/bundles/allTests/web/Web-OGTIUJXQ.mjs",
             "kind": "dynamic-import"
           }
         ],
@@ -532,7 +532,7 @@
             "bytesInOutput": 654
           },
           "src/example/Calculator.ts": {
-            "bytesInOutput": 1993
+            "bytesInOutput": 2036
           },
           "src/example/Calculator.test.adapter.ts": {
             "bytesInOutput": 701
@@ -550,12 +550,12 @@
             "bytesInOutput": 137
           }
         },
-        "bytes": 153304
+        "bytes": 153347
       },
-      "testeranto/bundles/allTests/web/Node-BZQTO4SH.mjs": {
+      "testeranto/bundles/allTests/web/Node-L63D7ERI.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/allTests/web/chunk-MNYRTJ7L.mjs",
+            "path": "testeranto/bundles/allTests/web/chunk-P3FJP2UF.mjs",
             "kind": "import-statement"
           },
           {
@@ -585,18 +585,18 @@
         "entryPoint": "src/lib/Node.ts",
         "inputs": {
           "src/PM/node.ts": {
-            "bytesInOutput": 6394
+            "bytesInOutput": 6355
           },
           "src/lib/Node.ts": {
             "bytesInOutput": 2701
           }
         },
-        "bytes": 9324
+        "bytes": 9285
       },
-      "testeranto/bundles/allTests/web/Web-VDKH5XU3.mjs": {
+      "testeranto/bundles/allTests/web/Web-OGTIUJXQ.mjs": {
         "imports": [
           {
-            "path": "testeranto/bundles/allTests/web/chunk-MNYRTJ7L.mjs",
+            "path": "testeranto/bundles/allTests/web/chunk-P3FJP2UF.mjs",
             "kind": "import-statement"
           },
           {
@@ -611,15 +611,15 @@
         "entryPoint": "src/lib/Web.ts",
         "inputs": {
           "src/PM/web.ts": {
-            "bytesInOutput": 2822
+            "bytesInOutput": 2793
           },
           "src/lib/Web.ts": {
             "bytesInOutput": 788
           }
         },
-        "bytes": 3834
+        "bytes": 3805
       },
-      "testeranto/bundles/allTests/web/chunk-MNYRTJ7L.mjs": {
+      "testeranto/bundles/allTests/web/chunk-P3FJP2UF.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/allTests/web/chunk-GD6O3ZZC.mjs",
@@ -635,25 +635,25 @@
             "bytesInOutput": 5824
           },
           "src/lib/BaseGiven.ts": {
-            "bytesInOutput": 3226
+            "bytesInOutput": 3101
           },
           "src/lib/BaseSuite.ts": {
-            "bytesInOutput": 3413
+            "bytesInOutput": 3336
           },
           "src/lib/BaseThen.ts": {
-            "bytesInOutput": 1474
+            "bytesInOutput": 1444
           },
           "src/lib/BaseWhen.ts": {
-            "bytesInOutput": 1179
+            "bytesInOutput": 1149
           },
           "src/lib/Tiposkripto.ts": {
-            "bytesInOutput": 6400
+            "bytesInOutput": 6310
           },
           "src/PM/index.ts": {
-            "bytesInOutput": 213
+            "bytesInOutput": 174
           }
         },
-        "bytes": 22021
+        "bytes": 21630
       },
       "testeranto/bundles/allTests/web/chunk-GD6O3ZZC.mjs": {
         "imports": [],

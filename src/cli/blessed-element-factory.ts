@@ -54,9 +54,9 @@ export class BlessedElementFactory {
   }
 
   /**
-   * Create a tabs list
+   * Create a tree list for the sidebar
    */
-  static createTabsList(parent: blessed.Widgets.Node, theme: "light" | "dark" = "dark"): blessed.Widgets.ListElement {
+  static createTreeList(parent: blessed.Widgets.Node, theme: "light" | "dark" = "dark"): blessed.Widgets.ListElement {
     return blessed.list({
       parent,
       top: 0,
@@ -75,12 +75,29 @@ export class BlessedElementFactory {
         border: { fg: theme === "dark" ? "white" : "black" },
       },
       items: [
-        "testeranto",
-        "docker-compose",
-        "node-build",
-        "web-build",
-        "python-build",
-        "golang-build",
+        "▶ testeranto",
+        "  └─▶ allTests",
+        "      ├─▶ docker-compose",
+        "      ├─▶ node",
+        "      │   ├─▶ build",
+        "      │   └─▶ Calculator",
+        "      │       ├─▶ test process",
+        "      │       └─▶ aider process",
+        "      ├─▶ web",
+        "      │   ├─▶ build",
+        "      │   └─▶ Calculator",
+        "      │       ├─▶ test process",
+        "      │       └─▶ aider process",
+        "      ├─▶ python",
+        "      │   ├─▶ build",
+        "      │   └─▶ Calculator",
+        "      │       ├─▶ test process",
+        "      │       └─▶ aider process",
+        "      └─▶ golang",
+        "          ├─▶ build",
+        "          └─▶ Calculator",
+        "              ├─▶ test process",
+        "              └─▶ aider process",
       ],
     });
   }

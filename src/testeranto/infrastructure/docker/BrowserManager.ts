@@ -3,13 +3,30 @@ import { Browser, Page } from "puppeteer-core/lib/esm/puppeteer";
 export class BrowserManager {
   private browser: Browser | null = null;
   private webPages: Map<string, Page> = new Map();
+  private logger: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+  };
 
-  constructor() {
-    console.log(`🌐 BrowserManager initialized`);
+  constructor(logger?: {
+    log: (...args: any[]) => void;
+    error: (...args: any[]) => void;
+    warn?: (...args: any[]) => void;
+    info?: (...args: any[]) => void;
+  }) {
+    this.logger = {
+      log: logger?.log || console.log,
+      error: logger?.error || console.error,
+      warn: logger?.warn || console.warn,
+      info: logger?.info || console.info,
+    };
+    this.logger.log(`🌐 BrowserManager initialized`);
   }
 
   public async initialize(): Promise<void> {
-    console.log(
+    this.logger.log(
       `🌐 Puppeteer will be launched by individual web test wrappers`
     );
     // Browser initialization is handled by individual test wrappers
