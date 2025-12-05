@@ -5,8 +5,6 @@ import { implementation } from "./Calculator.test.implementation";
 import { specification } from "./Calculator.test.specification";
 import { I, M, O } from "./Calculator.test.types";
 
-console.log("mark101");
-
 export default Tiposkripto<I, O, M>(
   Calculator,
   specification,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import blessed from "blessed";
 
 /**
@@ -122,7 +123,10 @@ export class TuiTesterantoDockerManager {
         const interval = setInterval(async () => {
           try {
             // Check if the method exists
-            if (this.testerantoDocker && typeof this.testerantoDocker.getBuildServiceLogs === 'function') {
+            if (
+              this.testerantoDocker &&
+              typeof this.testerantoDocker.getBuildServiceLogs === "function"
+            ) {
               const logs = await this.testerantoDocker.getBuildServiceLogs(
                 serviceName,
                 50

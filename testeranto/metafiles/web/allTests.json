@@ -447,7 +447,7 @@
       "format": "esm"
     },
     "src/example/Calculator.test.ts": {
-      "bytes": 446,
+      "bytes": 421,
       "imports": [
         {
           "path": "src/Tiposkripto.ts",
@@ -523,10 +523,10 @@
           "bytesInOutput": 7184
         },
         "src/example/Calculator.test.ts": {
-          "bytesInOutput": 137
+          "bytesInOutput": 113
         }
       },
-      "bytes": 153347
+      "bytes": 153323
     },
     "testeranto/bundles/allTests/web/Node-NDQ2VKUO.mjs": {
       "imports": [

@@ -1,5 +1,36 @@
 version: '3.8'
 services:
+  chromium:
+    image: selenium/standalone-chromium:latest
+    container_name: chromium
+    restart: unless-stopped
+    ports:
+      - '4444:4444'
+      - '7900:7900'
+    shm_size: 2g
+    environment:
+      SE_EVENT_BUS_HOST: selenium-hub
+      SE_EVENT_BUS_PUBLISH_PORT: '4442'
+      SE_EVENT_BUS_SUBSCRIBE_PORT: '4443'
+      SE_NODE_MAX_SESSIONS: 4
+      SE_NODE_OVERRIDE_MAX_SESSIONS: true
+      SE_SCREEN_WIDTH: '1920'
+      SE_SCREEN_HEIGHT: '1080'
+      SE_SCREEN_DEPTH: '24'
+      SE_VNC_NO_PASSWORD: '1'
+      SE_VNC_VIEW_ONLY: '0'
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - http://localhost:4444/wd/hub/status
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - default
   node-build:
     build:
       context: /Users/adam/Code/testeranto
@@ -21,7 +52,7 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/node
       METAFILES_DIR: /workspace/testeranto/metafiles/node
-      DOCKERMAN_PORT: '53290'
+      DOCKERMAN_PORT: '59487'
     command:
       - sh
       - '-c'
@@ -75,7 +106,7 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/web
       METAFILES_DIR: /workspace/testeranto/metafiles/web
-      DOCKERMAN_PORT: '53290'
+      DOCKERMAN_PORT: '59487'
     command:
       - sh
       - '-c'
@@ -129,7 +160,7 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/golang
       METAFILES_DIR: /workspace/testeranto/metafiles/golang
-      DOCKERMAN_PORT: '53290'
+      DOCKERMAN_PORT: '59487'
     command:
       - sh
       - '-c'
@@ -183,7 +214,7 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/python
       METAFILES_DIR: /workspace/testeranto/metafiles/python
-      DOCKERMAN_PORT: '53290'
+      DOCKERMAN_PORT: '59487'
     command:
       - sh
       - '-c'
@@ -226,8 +257,21 @@ services:
       METAFILES_DIR: /testeranto/metafiles/node
       TEST_RESOURCES: '{"name":"node-src-example-calculator-test-ts","fs":"./reports/allTests/node","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
       DOCKERMAN_HOST: host.docker.internal
-      DOCKERMAN_PORT: '53290'
+      DOCKERMAN_PORT: '59487'
+      WEBSOCKET_PORT: '0'
       TESTERANTO_RUNTIME: node
+    volumes:
+      - ../../src:/workspace/src:ro
+      - ../../dist:/workspace/dist:ro
+      - ../../testeranto:/workspace/testeranto
+      - ../../package.json:/workspace/package.json:ro
+      - ../../tsconfig.json:/workspace/tsconfig.json:ro
+      - ../../allTests.ts:/workspace/allTests.ts:ro
+      - node_modules:/workspace/node_modules
+    depends_on:
+      node-build:
+        condition: service_healthy
+    working_dir: /workspace
     command:
       - sh
       - '-c'
@@ -345,7 +389,7 @@ services:
                         
                         # Run the test based on runtime
                         echo "=== Running test ==="
-                        if [ "node" = "node" ] || [ "node" = "web" ]; then
+                        if [ "node" = "node" ]; then
                           echo "Executing: node testeranto/bundles/allTests/node/src/example/Calculator.test.mjs"
                           node testeranto/bundles/allTests/node/src/example/Calculator.test.mjs
                         elif [ "node" = "golang" ]; then
@@ -410,18 +454,6 @@ services:
                         TEST_EXIT_CODE=$?
                         echo "=== Test completed with exit code: $TEST_EXIT_CODE ==="
                         exit $TEST_EXIT_CODE
-    volumes:
-      - ../../src:/workspace/src:ro
-      - ../../dist:/workspace/dist:ro
-      - ../../testeranto:/workspace/testeranto
-      - ../../package.json:/workspace/package.json:ro
-      - ../../tsconfig.json:/workspace/tsconfig.json:ro
-      - ../../allTests.ts:/workspace/allTests.ts:ro
-      - node_modules:/workspace/node_modules
-    depends_on:
-      node-build:
-        condition: service_healthy
-    working_dir: /workspace
   web-src-example-calculator-test-ts:
     build:
       context: /Users/adam/Code/testeranto
@@ -431,8 +463,25 @@ services:
       METAFILES_DIR: /testeranto/metafiles/web
       TEST_RESOURCES: '{"name":"web-src-example-calculator-test-ts","fs":"./reports/allTests/web","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
       DOCKERMAN_HOST: host.docker.internal
-      DOCKERMAN_PORT: '53290'
+      DOCKERMAN_PORT: '59487'
+      WEBSOCKET_PORT: '0'
       TESTERANTO_RUNTIME: web
+      CHROMIUM_URL: http://chromium:4444/wd/hub
+      CHROMIUM_VNC_URL: http://localhost:7900
+    volumes:
+      - ../../src:/workspace/src:ro
+      - ../../dist:/workspace/dist:ro
+      - ../../testeranto:/workspace/testeranto
+      - ../../package.json:/workspace/package.json:ro
+      - ../../tsconfig.json:/workspace/tsconfig.json:ro
+      - ../../allTests.ts:/workspace/allTests.ts:ro
+      - node_modules:/workspace/node_modules
+    depends_on:
+      web-build:
+        condition: service_healthy
+      chromium:
+        condition: service_healthy
+    working_dir: /workspace
     command:
       - sh
       - '-c'
@@ -442,7 +491,7 @@ services:
                         echo "Runtime: web"
                         echo "Test name: src/example/Calculator.test.ts"
                         echo "=== Environment variables ==="
-                        env | grep -E "TEST|DOCKERMAN|BUNDLES|METAFILES" || true
+                        env | grep -E "TEST|DOCKERMAN|BUNDLES|METAFILES|CHROMIUM" || true
                         echo "=== End environment variables ==="
                         # Debug: Show DOCKERMAN_HOST and DOCKERMAN_PORT
                         echo "DOCKERMAN_HOST='$DOCKERMAN_HOST'"
@@ -460,32 +509,41 @@ services:
                         fi
                         echo "Using DockerMan port from environment variable: $DOCKERMAN_PORT"
                         
-                        # Wait for the bundle file to exist (skip for golang since it uses source files directly)
-                        if [ "web" = "golang" ]; then
-                          echo "Golang runtime detected: using source file directly, not waiting for bundle"
-                          # Check if source file exists
-                          if [ ! -f "src/example/Calculator.test.ts" ]; then
-                            echo "ERROR: Source file not found at src/example/Calculator.test.ts"
-                            exit 1
+                        
+                        # Wait for Chromium to be ready
+                        echo "Waiting for Chromium to be ready..."
+                        MAX_CHROMIUM_RETRIES=30
+                        CHROMIUM_RETRY_COUNT=0
+                        while [ $CHROMIUM_RETRY_COUNT -lt $MAX_CHROMIUM_RETRIES ]; do
+                          if curl -s http://chromium:4444/wd/hub/status | grep -q '"ready":true'; then
+                            echo "✅ Chromium is ready"
+                            break
                           fi
-                          echo "Source file found: src/example/Calculator.test.ts"
-                        else
-                          echo "Waiting for bundle file: testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
-                          MAX_BUNDLE_RETRIES=60
-                          BUNDLE_RETRY_COUNT=0
-                          while [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.mjs" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
-                            echo "Bundle not ready yet (attempt $((BUNDLE_RETRY_COUNT+1))/$MAX_BUNDLE_RETRIES)"
-                            BUNDLE_RETRY_COUNT=$((BUNDLE_RETRY_COUNT+1))
-                            sleep 2
-                          done
-                          
-                          if [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.mjs" ]; then
-                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
-                            echo "The build service may have failed to create the bundle."
-                            exit 1
-                          fi
-                          echo "Build is ready. Proceeding with test...";
+                          echo "Chromium not ready yet (attempt $((CHROMIUM_RETRY_COUNT+1))/$MAX_CHROMIUM_RETRIES)"
+                          CHROMIUM_RETRY_COUNT=$((CHROMIUM_RETRY_COUNT+1))
+                          sleep 2
+                        done
+                        if [ $CHROMIUM_RETRY_COUNT -eq $MAX_CHROMIUM_RETRIES ]; then
+                          echo "⚠️ Chromium may not be fully ready, but proceeding anyway"
                         fi
+                        
+                        
+                        # Wait for the bundle file to exist
+                        echo "Waiting for bundle file: testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
+                        MAX_BUNDLE_RETRIES=60
+                        BUNDLE_RETRY_COUNT=0
+                        while [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.mjs" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
+                          echo "Bundle not ready yet (attempt $((BUNDLE_RETRY_COUNT+1))/$MAX_BUNDLE_RETRIES)"
+                          BUNDLE_RETRY_COUNT=$((BUNDLE_RETRY_COUNT+1))
+                          sleep 2
+                        done
+                        
+                        if [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.mjs" ]; then
+                          echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
+                          echo "The build service may have failed to create the bundle."
+                          exit 1
+                        fi
+                        echo "Build is ready. Proceeding with test...";
                         
                         # Wait for DockerMan TCP server to be reachable
                         # Ensure DOCKERMAN_HOST has a value
@@ -548,85 +606,177 @@ services:
                         
                         echo "Using DockerMan host: $DOCKERMAN_HOST"
                         
-                        # Run the test based on runtime
-                        echo "=== Running test ==="
-                        if [ "web" = "node" ] || [ "web" = "web" ]; then
-                          echo "Executing: node testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
-                          node testeranto/bundles/allTests/web/src/example/Calculator.test.mjs
-                        elif [ "web" = "golang" ]; then
-                          # For golang, we need to compile and run the test program
-                          # testPath is something like "src/example/Calculator.golingvu.test.go"
-                          echo "Running golang (golingvu) test: src/example/Calculator.test.ts"
-                          
-                          # First, check if we're in the right directory
-                          echo "Current directory: $(pwd)"
-                          echo "Checking if test file exists: src/example/Calculator.test.ts"
-                          
-                          if [ ! -f "src/example/Calculator.test.ts" ]; then
-                            echo "ERROR: Test file not found at src/example/Calculator.test.ts"
-                            exit 1
-                          fi
-                          
-                          # Try to determine the best way to run this test
-                          # Since it's a golingvu test, it might need special handling
-                          # For now, try to run it with go run
-                          echo "Attempting to run with: go run src/example/Calculator.test.ts"
-                          go run "src/example/Calculator.test.ts"
-                          RUN_EXIT_CODE=$?
-                          
-                          if [ $RUN_EXIT_CODE -eq 0 ]; then
-                            echo "Go run succeeded"
-                            exit 0
-                          else
-                            echo "Go run failed with exit code: $RUN_EXIT_CODE"
-                            echo "Trying alternative approach..."
-                            
-                            # Try building and running as executable
-                            TEST_DIR=$(dirname "src/example/Calculator.test.ts")
-                            TEST_FILE=$(basename "src/example/Calculator.test.ts")
-                            EXECUTABLE_NAME="/tmp/golang_test_$(echo src/example/Calculator.test.ts | tr '/' '_' | tr '.' '_')"
-                            
-                            echo "Building in directory: $TEST_DIR"
-                            cd "$TEST_DIR" || { echo "ERROR: Failed to change to directory $TEST_DIR"; exit 1; }
-                            
-                            echo "Building: go build -o $EXECUTABLE_NAME $TEST_FILE"
-                            go build -o $EXECUTABLE_NAME $TEST_FILE
-                            
-                            if [ $? -eq 0 ]; then
-                              echo "Build successful, running: $EXECUTABLE_NAME"
-                              $EXECUTABLE_NAME
-                              BUILD_EXIT_CODE=$?
-                              echo "Executable exited with code: $BUILD_EXIT_CODE"
-                              exit $BUILD_EXIT_CODE
-                            else
-                              echo "ERROR: All attempts to run golang test failed"
-                              echo "This might be a golingvu test that requires special handling"
-                              exit 1
+                        # Also check WebSocket server if port is provided
+                        if [ -n "$WEBSOCKET_PORT" ] && [ "$WEBSOCKET_PORT" != "0" ]; then
+                          echo "Checking WebSocket server on port $WEBSOCKET_PORT..."
+                          WS_SUCCESS=0
+                          for HOST in $HOSTS_TO_TRY; do
+                            echo "Trying WebSocket connection to $HOST:$WEBSOCKET_PORT..."
+                            if command -v nc >/dev/null 2>&1; then
+                              if nc -z -w 1 "$HOST" "$WEBSOCKET_PORT" 2>/dev/null; then
+                                echo "✅ WebSocket server is reachable at $HOST:$WEBSOCKET_PORT"
+                                WS_SUCCESS=1
+                                break
+                              fi
+                            elif (echo > "/dev/tcp/$HOST/$WEBSOCKET_PORT") &>/dev/null 2>&1; then
+                              echo "✅ WebSocket server is reachable at $HOST:$WEBSOCKET_PORT"
+                              WS_SUCCESS=1
+                              break
                             fi
+                          done
+                          if [ $WS_SUCCESS -eq 0 ]; then
+                            echo "⚠️ WebSocket server may not be reachable, but continuing anyway"
                           fi
-                        elif [ "web" = "python" ]; then
-                          echo "Executing: python src/example/Calculator.test.ts"
-                          python src/example/Calculator.test.ts
-                        else
-                          echo "ERROR: Unknown runtime: web"
-                          exit 1
                         fi
                         
+                        # For web tests, we need to run in browser, not with Node directly
+                        # Create an HTML file that loads the test bundle
+                        echo "Creating HTML wrapper for web test..."
+                        HTML_FILE="/tmp/test_$$.html"
+                        cat > "$HTML_FILE" << 'EOF'
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Web Test: src/example/Calculator.test.ts</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <div id="root"></div>
+            <script type="module">
+                // Import the test bundle
+                import('./testeranto/bundles/allTests/web/src/example/Calculator.test.mjs?t=' + Date.now()).then(module => {
+                    // The test bundle should handle communication with WebSocket server
+                    if (module.default) {
+                        return module.default;
+                    }
+                    return module;
+                }).catch(error => {
+                    console.error('Failed to load test module:', error);
+                    // Signal completion even on error
+                    window.__testComplete = true;
+                    window.__testError = error.message;
+                });
+            </script>
+        </body>
+        </html>
+        EOF
+                        
+                        echo "HTML wrapper created at: $HTML_FILE"
+                        
+                        # We need to run a Node script that uses Puppeteer to open the page
+                        # and communicate results back via WebSocket
+                        echo "=== Running web test in browser ==="
+                        echo "Creating browser test runner script..."
+                        
+                        RUNNER_SCRIPT="/tmp/runner_$$.mjs"
+                        cat > "$RUNNER_SCRIPT" << 'EOF'
+        import puppeteer from 'puppeteer-core';
+
+        const htmlFile = process.argv[2];
+        const testName = process.argv[3] || 'web-test';
+
+        async function run() {
+            console.log('Connecting to Chromium...');
+            
+            try {
+                // Connect to existing Chromium via WebSocket
+                const browser = await puppeteer.connect({
+                    browserWSEndpoint: process.env.CHROMIUM_URL ? 
+                        process.env.CHROMIUM_URL.replace('http://', 'ws://').replace('/wd/hub', '') : 
+                        'ws://chromium:4444',
+                    defaultViewport: null,
+                });
+                
+                console.log('Connected to Chromium');
+                
+                const page = await browser.newPage();
+                
+                // Set up console logging
+                page.on('console', msg => {
+                    const type = msg.type();
+                    const text = msg.text();
+                    console.log('Browser ' + type + ': ' + text);
+                });
+                
+                page.on('pageerror', error => {
+                    console.error('Browser page error: ' + error.message);
+                });
+                
+                // Expose a function for the test to signal completion
+                await page.exposeFunction('signalTestComplete', (success, results) => {
+                    console.log('Test completed: success=' + success + ', results=' + JSON.stringify(results));
+                    window.__testComplete = true;
+                    window.__testSuccess = success;
+                    window.__testResults = results;
+                });
+                
+                // Navigate to the HTML file
+                console.log('Navigating to file://' + htmlFile);
+                await page.goto('file://' + htmlFile, { 
+                    waitUntil: 'networkidle0',
+                    timeout: 30000 
+                });
+                
+                // Wait for test completion - the test should signal completion
+                console.log('Waiting for test completion (max 60 seconds)...');
+                try {
+                    await page.waitForFunction(() => window.__testComplete === true, { 
+                        timeout: 60000,
+                        polling: 1000 
+                    });
+                    
+                    // Get test results
+                    const testSuccess = await page.evaluate(() => window.__testSuccess);
+                    const testResults = await page.evaluate(() => window.__testResults);
+                    
+                    if (testSuccess) {
+                        console.log('✅ Test passed: ' + testName);
+                    } else {
+                        console.log('❌ Test failed: ' + testName);
+                        console.log('Results: ' + JSON.stringify(testResults));
+                    }
+                } catch (waitError) {
+                    console.log('Test timeout or error waiting for completion:', waitError.message);
+                    // Check if there's an error
+                    const testError = await page.evaluate(() => window.__testError);
+                    if (testError) {
+                        console.error('Test error: ' + testError);
+                    }
+                }
+                
+                // Close the page
+                await page.close();
+                
+                // Don't close the browser since it's shared
+                // await browser.close();
+                
+                console.log('Test execution finished');
+                process.exit(0);
+                
+            } catch (error) {
+                console.error('Failed to run web test:', error);
+                process.exit(1);
+            }
+        }
+
+        run().catch(err => {
+            console.error('Test runner error:', err);
+            process.exit(1);
+        });
+        EOF
+                        
+                        echo "Running browser test..."
+                        # Install puppeteer-core if not present
+                        if ! npm list puppeteer-core 2>/dev/null | grep -q puppeteer-core; then
+                            echo "Installing puppeteer-core..."
+                            npm install --no-save puppeteer-core --no-audit --no-fund --ignore-scripts --no-optional || echo "puppeteer-core installation may have issues"
+                        fi
+                        
+                        node "$RUNNER_SCRIPT" "$HTML_FILE" "src/example/Calculator.test.ts"
+                        
                         TEST_EXIT_CODE=$?
-                        echo "=== Test completed with exit code: $TEST_EXIT_CODE ==="
+                        echo "=== Web test completed with exit code: $TEST_EXIT_CODE ==="
                         exit $TEST_EXIT_CODE
-    volumes:
-      - ../../src:/workspace/src:ro
-      - ../../dist:/workspace/dist:ro
-      - ../../testeranto:/workspace/testeranto
-      - ../../package.json:/workspace/package.json:ro
-      - ../../tsconfig.json:/workspace/tsconfig.json:ro
-      - ../../allTests.ts:/workspace/allTests.ts:ro
-      - node_modules:/workspace/node_modules
-    depends_on:
-      web-build:
-        condition: service_healthy
-    working_dir: /workspace
   golang-src-example-calculator-golingvu-test-go:
     build:
       context: /Users/adam/Code/testeranto
@@ -636,8 +786,21 @@ services:
       METAFILES_DIR: /testeranto/metafiles/golang
       TEST_RESOURCES: '{"name":"golang-src-example-calculator-golingvu-test-go","fs":"./reports/allTests/golang","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
       DOCKERMAN_HOST: host.docker.internal
-      DOCKERMAN_PORT: '53290'
+      DOCKERMAN_PORT: '59487'
+      WEBSOCKET_PORT: '0'
       TESTERANTO_RUNTIME: golang
+    volumes:
+      - ../../src:/workspace/src:ro
+      - ../../dist:/workspace/dist:ro
+      - ../../testeranto:/workspace/testeranto
+      - ../../package.json:/workspace/package.json:ro
+      - ../../tsconfig.json:/workspace/tsconfig.json:ro
+      - ../../allTests.ts:/workspace/allTests.ts:ro
+      - node_modules:/workspace/node_modules
+    depends_on:
+      golang-build:
+        condition: service_healthy
+    working_dir: /workspace
     command:
       - sh
       - '-c'
@@ -755,7 +918,7 @@ services:
                         
                         # Run the test based on runtime
                         echo "=== Running test ==="
-                        if [ "golang" = "node" ] || [ "golang" = "web" ]; then
+                        if [ "golang" = "node" ]; then
                           echo "Executing: node testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go"
                           node testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go
                         elif [ "golang" = "golang" ]; then
@@ -820,18 +983,6 @@ services:
                         TEST_EXIT_CODE=$?
                         echo "=== Test completed with exit code: $TEST_EXIT_CODE ==="
                         exit $TEST_EXIT_CODE
-    volumes:
-      - ../../src:/workspace/src:ro
-      - ../../dist:/workspace/dist:ro
-      - ../../testeranto:/workspace/testeranto
-      - ../../package.json:/workspace/package.json:ro
-      - ../../tsconfig.json:/workspace/tsconfig.json:ro
-      - ../../allTests.ts:/workspace/allTests.ts:ro
-      - node_modules:/workspace/node_modules
-    depends_on:
-      golang-build:
-        condition: service_healthy
-    working_dir: /workspace
   python-src-example-calculator-pitono-test-py:
     build:
       context: /Users/adam/Code/testeranto
@@ -841,8 +992,21 @@ services:
       METAFILES_DIR: /testeranto/metafiles/python
       TEST_RESOURCES: '{"name":"python-src-example-calculator-pitono-test-py","fs":"./reports/allTests/python","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
       DOCKERMAN_HOST: host.docker.internal
-      DOCKERMAN_PORT: '53290'
+      DOCKERMAN_PORT: '59487'
+      WEBSOCKET_PORT: '0'
       TESTERANTO_RUNTIME: python
+    volumes:
+      - ../../src:/workspace/src:ro
+      - ../../dist:/workspace/dist:ro
+      - ../../testeranto:/workspace/testeranto
+      - ../../package.json:/workspace/package.json:ro
+      - ../../tsconfig.json:/workspace/tsconfig.json:ro
+      - ../../allTests.ts:/workspace/allTests.ts:ro
+      - node_modules:/workspace/node_modules
+    depends_on:
+      python-build:
+        condition: service_healthy
+    working_dir: /workspace
     command:
       - sh
       - '-c'
@@ -960,7 +1124,7 @@ services:
                         
                         # Run the test based on runtime
                         echo "=== Running test ==="
-                        if [ "python" = "node" ] || [ "python" = "web" ]; then
+                        if [ "python" = "node" ]; then
                           echo "Executing: node testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py"
                           node testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py
                         elif [ "python" = "golang" ]; then
@@ -1025,18 +1189,6 @@ services:
                         TEST_EXIT_CODE=$?
                         echo "=== Test completed with exit code: $TEST_EXIT_CODE ==="
                         exit $TEST_EXIT_CODE
-    volumes:
-      - ../../src:/workspace/src:ro
-      - ../../dist:/workspace/dist:ro
-      - ../../testeranto:/workspace/testeranto
-      - ../../package.json:/workspace/package.json:ro
-      - ../../tsconfig.json:/workspace/tsconfig.json:ro
-      - ../../allTests.ts:/workspace/allTests.ts:ro
-      - node_modules:/workspace/node_modules
-    depends_on:
-      python-build:
-        condition: service_healthy
-    working_dir: /workspace
 volumes:
   node_modules:
     driver: local

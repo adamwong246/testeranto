@@ -55,7 +55,14 @@ export async function main() {
     fs.unlinkSync(composeFilePath);
   }
 
-  await setupDockerCompose(config, testsName);
+  await setupDockerCompose(config, testsName, {
+    logger: {
+      log: console.log,
+      error: console.error,
+    },
+    dockerManPort: finalTcpPort,
+    webSocketPort: finalWebSocketPort,
+  });
 
   // Create TesterantoDocker instance
   testerantoDocker = new TesterantoDocker(testsName);
@@ -64,9 +71,12 @@ export async function main() {
   // console.log("⏳ Initializing TesterantoDocker...");
   await testerantoDocker.initialize();
 
-  // Write TesterantoDocker TCP port to a file for service generation
+  // Write TesterantoDocker TCP and WebSocket ports to files for service generation
   const tcpPort = testerantoDocker.getTcpPort();
+  const webSocketPort = testerantoDocker.getWebSocketPort();
+  
   // console.log(`🔌 TCP server port: ${tcpPort}`);
+  // console.log(`🔌 WebSocket server port: ${webSocketPort}`);
 
   if (tcpPort === 0) {
     console.error(
@@ -82,20 +92,32 @@ export async function main() {
   }
 
   const finalTcpPort = testerantoDocker.getTcpPort();
-  const portFilePath = path.join(
+  const finalWebSocketPort = testerantoDocker.getWebSocketPort();
+  
+  // Write TCP port file
+  const tcpPortFilePath = path.join(
     process.cwd(),
     "testeranto",
     "bundles",
     `${testsName}-docker-man-port.txt`
   );
 
+  // Write WebSocket port file
+  const wsPortFilePath = path.join(
+    process.cwd(),
+    "testeranto",
+    "bundles",
+    `${testsName}-websocket-port.txt`
+  );
+
   // Ensure directory exists
-  const portFileDir = path.dirname(portFilePath);
+  const portFileDir = path.dirname(tcpPortFilePath);
   if (!fs.existsSync(portFileDir)) {
     fs.mkdirSync(portFileDir, { recursive: true });
   }
 
-  fs.writeFileSync(portFilePath, finalTcpPort.toString());
+  fs.writeFileSync(tcpPortFilePath, finalTcpPort.toString());
+  fs.writeFileSync(wsPortFilePath, finalWebSocketPort.toString());
   // console.log(
   //   `📝 TesterantoDocker TCP port ${finalTcpPort} written to ${portFilePath}`
   // );

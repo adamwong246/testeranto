@@ -4519,7 +4519,6 @@ var specification = (Suite, Given, When, Then) => {
 };
 
 // src/example/Calculator.test.ts
-console.log("mark101");
 var Calculator_test_default = Tiposkripto_default(
   Calculator,
   specification,

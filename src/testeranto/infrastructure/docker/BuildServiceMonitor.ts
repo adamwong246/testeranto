@@ -31,7 +31,7 @@ export class BuildServiceMonitor extends EventEmitter {
 
   public async identifyBuildServices(): Promise<void> {
     try {
-      const result = await this.dockerCompose.ps({
+      const result = await this.dockerCompose.DC_ps({
         log: false,
       });
 
@@ -51,7 +51,7 @@ export class BuildServiceMonitor extends EventEmitter {
                 `⚠️ Build service ${service.name} is unhealthy. Checking logs...`
               );
               try {
-                const logsResult = await this.dockerCompose.logs(service.name, {
+                const logsResult = await this.dockerCompose.DC_logs(service.name, {
                   log: false,
                   follow: false,
                   tail: 20,
@@ -102,7 +102,7 @@ export class BuildServiceMonitor extends EventEmitter {
 
     while (Date.now() - startTime < timeoutMs) {
       try {
-        const result = await this.dockerCompose.ps({
+        const result = await this.dockerCompose.DC_ps({
           log: false,
         });
 
@@ -167,7 +167,7 @@ export class BuildServiceMonitor extends EventEmitter {
   public async getBuildServiceStatuses(): Promise<BuildServiceStatus[]> {
     const statuses: BuildServiceStatus[] = [];
     try {
-      const result = await this.dockerCompose.ps({
+      const result = await this.dockerCompose.DC_ps({
         log: false,
       });
 
@@ -201,7 +201,7 @@ export class BuildServiceMonitor extends EventEmitter {
     this.monitoringIntervalId = setInterval(async () => {
       for (const serviceName of this.buildServices) {
         try {
-          const result = await this.dockerCompose.ps({
+          const result = await this.dockerCompose.DC_ps({
             log: false,
           });
 

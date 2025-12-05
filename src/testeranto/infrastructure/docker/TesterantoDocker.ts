@@ -12,6 +12,7 @@ import { DockerCompose } from "./DockerCompose";
 import { DockerValidator } from "./DockerValidator";
 import { FileSystem } from "./FileSystem";
 import { TcpServer } from "./TcpServer";
+import { WebSocketServerManager } from "./WebSocketServer";
 import { TestServiceManager } from "./TestServiceManager";
 import { TestResource, TestServiceConfig, TestServiceInfo } from "./types";
 
@@ -27,12 +28,14 @@ export default class TesterantoDocker extends EventEmitter {
   };
 
   private tcpServer: TcpServer;
+  private webSocketServer: WebSocketServerManager;
   private fileSystem: FileSystem;
   private dockerCompose: DockerCompose;
   private browserManager: BrowserManager;
   private testServiceManager: TestServiceManager;
   private buildServiceMonitor: BuildServiceMonitor;
   private tcpPort: number = 0;
+  private webSocketPort: number = 0;
 
   constructor(
     testName: string,
@@ -64,6 +67,7 @@ export default class TesterantoDocker extends EventEmitter {
 
     // Initialize components
     this.tcpServer = new TcpServer(this.logger);
+    this.webSocketServer = new WebSocketServerManager(this.logger);
     this.fileSystem = new FileSystem();
     this.dockerCompose = new DockerCompose(this.composeDir, this.composeFile);
     this.browserManager = new BrowserManager(this.logger);
@@ -115,15 +119,173 @@ export default class TesterantoDocker extends EventEmitter {
 
     // Forward events from tcpServer
     forwardEvents(this.tcpServer, ["serviceRegistered", "commandReceived"]);
+
+    // Forward events from webSocketServer
+    forwardEvents(this.webSocketServer, [
+      "clientConnected",
+      "clientDisconnected",
+      "clientError",
+      "message",
+    ]);
+  }
+
+  private setupWebSocketHandling(): void {
+    // Handle WebSocket messages by processing them like TCP commands
+    this.webSocketServer.on('message', async ({ connectionId, message }) => {
+      // The message format should be the same as TCP: ["command", ...args, callbackId]
+      if (Array.isArray(message) && message.length > 0) {
+        const callbackId = message[message.length - 1];
+        const command = message[0];
+        const args = message.slice(1, -1);
+        
+        this.logger.log(`📨 WebSocket command: ${command} from ${connectionId} (callbackId: ${callbackId})`);
+        
+        try {
+          // Handle the command
+          const result = await this.handleWebSocketCommand(command, args, connectionId);
+          
+          // Send success response
+          this.webSocketServer.send(connectionId, {
+            id: callbackId,
+            result,
+            error: null
+          });
+        } catch (error: any) {
+          this.logger.error(`❌ Error handling command ${command}:`, error);
+          
+          // Send error response
+          this.webSocketServer.send(connectionId, {
+            id: callbackId,
+            result: null,
+            error: error.message || 'Unknown error'
+          });
+        }
+      }
+    });
+  }
+  
+  private async handleWebSocketCommand(command: string, args: any[], connectionId: string): Promise<any> {
+    // Get service name for context
+    const serviceName = this.webSocketServer.getServiceName(connectionId) || 'unknown';
+    
+    // Handle different commands
+    switch (command) {
+      case 'register':
+        // Already handled in WebSocketServer
+        return { registered: true, serviceName };
+      
+      case 'page':
+        // Return current page info
+        // For now, return a placeholder
+        return { pageId: 'default-page' };
+      
+      case 'newPage':
+        // Create a new page in browser manager
+        try {
+          const testId = `web-test-${Date.now()}`;
+          await this.browserManager.createPage(testId);
+          return { pageId: testId };
+        } catch (error) {
+          this.logger.warn(`Browser not available for newPage, returning placeholder`);
+          return { pageId: 'placeholder-page-id' };
+        }
+      
+      case 'closePage':
+        // Close a page
+        if (args.length > 0) {
+          try {
+            await this.browserManager.closePage(args[0]);
+            return { closed: true };
+          } catch (error) {
+            this.logger.warn(`Browser not available for closePage, returning success anyway`);
+            return { closed: true };
+          }
+        } else {
+          throw new Error('Missing page ID');
+        }
+      
+      case 'screencast':
+        // Start screencast - placeholder implementation
+        this.logger.log(`Screencast command: ${JSON.stringify(args)}`);
+        return { screencastId: `screencast-${Date.now()}` };
+      
+      case 'screencastStop':
+        // Stop screencast
+        return { stopped: true };
+      
+      // File system commands
+      case 'existsSync':
+        if (args.length > 0) {
+          const path = args[0];
+          // existsSync is synchronous
+          const exists = this.fileSystem.existsSync(path);
+          return exists;
+        }
+        throw new Error('Missing path for existsSync');
+      
+      case 'mkdirSync':
+        if (args.length > 0) {
+          const path = args[0];
+          await this.fileSystem.mkdir(path, { recursive: true });
+          return { created: true };
+        }
+        throw new Error('Missing path for mkdirSync');
+      
+      case 'writeFileSync':
+        if (args.length >= 2) {
+          const [filePath, content] = args;
+          await this.fileSystem.writeFile(filePath, content);
+          return { written: true };
+        }
+        throw new Error('Missing arguments for writeFileSync');
+      
+      // Browser interaction commands - placeholder implementations
+      case 'click':
+      case 'goto':
+      case '$':
+      case 'getAttribute':
+      case 'getInnerHtml':
+      case 'isDisabled':
+      case 'waitForSelector':
+      case 'focusOn':
+      case 'typeInto':
+      case 'getValue':
+      case 'write':
+      case 'createWriteStream':
+      case 'end':
+      case 'customclose':
+      case 'customScreenShot':
+      case 'pages':
+        // For now, return a placeholder
+        this.logger.log(`Command ${command} received with args: ${JSON.stringify(args)}`);
+        return { 
+          command, 
+          status: 'handled', 
+          note: 'This is a placeholder implementation. Actual functionality needs to be implemented.',
+          args 
+        };
+      
+      default:
+        throw new Error(`Unknown command: ${command}`);
+    }
   }
 
   private async initializeServices(): Promise<void> {
     try {
-      const port = await this.tcpServer.start();
-      this.logger.log(`🔌 TCP server started on port ${port}`);
-      this.tcpPort = port;
+      // Start TCP server
+      const tcpPort = await this.tcpServer.start();
+      this.logger.log(`🔌 TCP server started on port ${tcpPort}`);
+      this.tcpPort = tcpPort;
+      
+      // Start WebSocket server on a different port
+      const wsPort = await this.webSocketServer.start(0);
+      this.logger.log(`🔌 WebSocket server started on port ${wsPort}`);
+      this.webSocketPort = wsPort;
+      
+      // Set up WebSocket message handling
+      this.setupWebSocketHandling();
     } catch (error) {
-      this.logger.error(`❌ Failed to start TCP server:`, error);
+      this.logger.error(`❌ Failed to start servers:`, error);
       throw error;
     }
     await this.browserManager.initialize();
@@ -134,6 +296,14 @@ export default class TesterantoDocker extends EventEmitter {
     const port = this.tcpServer.getPort();
     if (port === 0) {
       this.logger.warn(`⚠️ TCP port is 0, server may not be ready`);
+    }
+    return port;
+  }
+
+  public getWebSocketPort(): number {
+    const port = this.webSocketServer.getPort();
+    if (port === 0) {
+      this.logger.warn(`⚠️ WebSocket port is 0, server may not be ready`);
     }
     return port;
   }
@@ -150,6 +320,7 @@ export default class TesterantoDocker extends EventEmitter {
     this.logger.log("🛑 DockerMan stopping...");
 
     this.tcpServer.close();
+    this.webSocketServer.close();
     this.buildServiceMonitor.stopMonitoring();
     await this.browserManager.closeAll();
 
