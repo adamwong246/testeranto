@@ -21,7 +21,7 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/node
       METAFILES_DIR: /workspace/testeranto/metafiles/node
-      DOCKERMAN_PORT: '58762'
+      DOCKERMAN_PORT: '53290'
     command:
       - sh
       - '-c'
@@ -75,7 +75,7 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/web
       METAFILES_DIR: /workspace/testeranto/metafiles/web
-      DOCKERMAN_PORT: '58762'
+      DOCKERMAN_PORT: '53290'
     command:
       - sh
       - '-c'
@@ -129,7 +129,7 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/golang
       METAFILES_DIR: /workspace/testeranto/metafiles/golang
-      DOCKERMAN_PORT: '58762'
+      DOCKERMAN_PORT: '53290'
     command:
       - sh
       - '-c'
@@ -183,7 +183,7 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/python
       METAFILES_DIR: /workspace/testeranto/metafiles/python
-      DOCKERMAN_PORT: '58762'
+      DOCKERMAN_PORT: '53290'
     command:
       - sh
       - '-c'
@@ -224,21 +224,24 @@ services:
     environment:
       BUNDLES_DIR: /testeranto/bundles/allTests/node
       METAFILES_DIR: /testeranto/metafiles/node
-      TEST_RESOURCES: '{"name":"node-src-example-calculator-test-ts","fs":"/workspace/testeranto/reports/allTests/src/example/Calculator/test/ts/node","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
+      TEST_RESOURCES: '{"name":"node-src-example-calculator-test-ts","fs":"./reports/allTests/node","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
       DOCKERMAN_HOST: host.docker.internal
-      DOCKERMAN_PORT: '58762'
+      DOCKERMAN_PORT: '53290'
       TESTERANTO_RUNTIME: node
     command:
       - sh
       - '-c'
       - |-
         echo "=== Starting test service for src/example/Calculator.test.ts ==="
-                        echo "Bundle path: testeranto/bundles/allTests/node/src/example/Calculator.test.ts.mjs"
+                        echo "Bundle path: testeranto/bundles/allTests/node/src/example/Calculator.test.mjs"
                         echo "Runtime: node"
                         echo "Test name: src/example/Calculator.test.ts"
                         echo "=== Environment variables ==="
                         env | grep -E "TEST|DOCKERMAN|BUNDLES|METAFILES" || true
                         echo "=== End environment variables ==="
+                        # Debug: Show DOCKERMAN_HOST and DOCKERMAN_PORT
+                        echo "DOCKERMAN_HOST='$DOCKERMAN_HOST'"
+                        echo "DOCKERMAN_PORT='$DOCKERMAN_PORT'"
                         
                         # Build service health is managed by Docker Compose depends_on
                         echo "Build service node-build health is managed by Docker Compose"
@@ -262,17 +265,17 @@ services:
                           fi
                           echo "Source file found: src/example/Calculator.test.ts"
                         else
-                          echo "Waiting for bundle file: testeranto/bundles/allTests/node/src/example/Calculator.test.ts.mjs"
+                          echo "Waiting for bundle file: testeranto/bundles/allTests/node/src/example/Calculator.test.mjs"
                           MAX_BUNDLE_RETRIES=60
                           BUNDLE_RETRY_COUNT=0
-                          while [ ! -f "testeranto/bundles/allTests/node/src/example/Calculator.test.ts.mjs" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
+                          while [ ! -f "testeranto/bundles/allTests/node/src/example/Calculator.test.mjs" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
                             echo "Bundle not ready yet (attempt $((BUNDLE_RETRY_COUNT+1))/$MAX_BUNDLE_RETRIES)"
                             BUNDLE_RETRY_COUNT=$((BUNDLE_RETRY_COUNT+1))
                             sleep 2
                           done
                           
-                          if [ ! -f "testeranto/bundles/allTests/node/src/example/Calculator.test.ts.mjs" ]; then
-                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/node/src/example/Calculator.test.ts.mjs"
+                          if [ ! -f "testeranto/bundles/allTests/node/src/example/Calculator.test.mjs" ]; then
+                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/node/src/example/Calculator.test.mjs"
                             echo "The build service may have failed to create the bundle."
                             exit 1
                           fi
@@ -280,37 +283,71 @@ services:
                         fi
                         
                         # Wait for DockerMan TCP server to be reachable
-                        echo "Waiting for DockerMan TCP server to be reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT..."
+                        # Ensure DOCKERMAN_HOST has a value
+                        if [ -z "$DOCKERMAN_HOST" ]; then
+                          DOCKERMAN_HOST="host.docker.internal"
+                          echo "DOCKERMAN_HOST was empty, using default: $DOCKERMAN_HOST"
+                        fi
+                        
+                        # Try multiple host options if the default doesn't work
+                        HOSTS_TO_TRY="$DOCKERMAN_HOST"
+                        # Add gateway IP for Linux containers
+                        GATEWAY_IP=$(ip route | grep default | awk '{print $3}' 2>/dev/null || echo "")
+                        if [ -n "$GATEWAY_IP" ]; then
+                          HOSTS_TO_TRY="$HOSTS_TO_TRY $GATEWAY_IP"
+                        fi
+                        # Add docker host IP
+                        HOSTS_TO_TRY="$HOSTS_TO_TRY 172.17.0.1"
+                        
+                        echo "Waiting for DockerMan TCP server to be reachable on port $DOCKERMAN_PORT..."
+                        echo "Will try hosts: $HOSTS_TO_TRY"
+                        
                         MAX_RETRIES=30
                         RETRY_COUNT=0
-                        while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-                          # Try using netcat if available
-                          if command -v nc >/dev/null 2>&1; then
-                            if nc -z -w 1 "$DOCKERMAN_HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
-                              echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via nc)"
+                        SUCCESS=0
+                        
+                        while [ $RETRY_COUNT -lt $MAX_RETRIES ] && [ $SUCCESS -eq 0 ]; do
+                          for HOST in $HOSTS_TO_TRY; do
+                            echo "Trying to connect to $HOST:$DOCKERMAN_PORT (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)..."
+                            # Try using netcat if available
+                            if command -v nc >/dev/null 2>&1; then
+                              if nc -z -w 1 "$HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
+                                echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via nc)"
+                                DOCKERMAN_HOST="$HOST"
+                                SUCCESS=1
+                                break
+                              fi
+                            # Fallback to /dev/tcp
+                            elif (echo > "/dev/tcp/$HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
+                              echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via /dev/tcp)"
+                              DOCKERMAN_HOST="$HOST"
+                              SUCCESS=1
                               break
                             fi
-                          # Fallback to /dev/tcp
-                          elif (echo > "/dev/tcp/$DOCKERMAN_HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
-                            echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via /dev/tcp)"
-                            break
+                          done
+                          
+                          if [ $SUCCESS -eq 0 ]; then
+                            echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
+                            RETRY_COUNT=$((RETRY_COUNT+1))
+                            sleep 2
                           fi
-                          echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
-                          RETRY_COUNT=$((RETRY_COUNT+1))
-                          sleep 2
                         done
                         
-                        if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-                          echo "ERROR: DockerMan TCP server never became reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT"
+                        if [ $SUCCESS -eq 0 ]; then
+                          echo "ERROR: DockerMan TCP server never became reachable on port $DOCKERMAN_PORT"
+                          echo "Tried hosts: $HOSTS_TO_TRY"
                           echo "Make sure the TCP server is running on the host and accessible from containers."
+                          echo "On Linux, you may need to expose the port differently or use host networking."
                           exit 1
                         fi
+                        
+                        echo "Using DockerMan host: $DOCKERMAN_HOST"
                         
                         # Run the test based on runtime
                         echo "=== Running test ==="
                         if [ "node" = "node" ] || [ "node" = "web" ]; then
-                          echo "Executing: node testeranto/bundles/allTests/node/src/example/Calculator.test.ts.mjs"
-                          node testeranto/bundles/allTests/node/src/example/Calculator.test.ts.mjs
+                          echo "Executing: node testeranto/bundles/allTests/node/src/example/Calculator.test.mjs"
+                          node testeranto/bundles/allTests/node/src/example/Calculator.test.mjs
                         elif [ "node" = "golang" ]; then
                           # For golang, we need to compile and run the test program
                           # testPath is something like "src/example/Calculator.golingvu.test.go"
@@ -392,21 +429,24 @@ services:
     environment:
       BUNDLES_DIR: /testeranto/bundles/allTests/web
       METAFILES_DIR: /testeranto/metafiles/web
-      TEST_RESOURCES: '{"name":"web-src-example-calculator-test-ts","fs":"/workspace/testeranto/reports/allTests/src/example/Calculator/test/ts/web","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
+      TEST_RESOURCES: '{"name":"web-src-example-calculator-test-ts","fs":"./reports/allTests/web","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
       DOCKERMAN_HOST: host.docker.internal
-      DOCKERMAN_PORT: '58762'
+      DOCKERMAN_PORT: '53290'
       TESTERANTO_RUNTIME: web
     command:
       - sh
       - '-c'
       - |-
         echo "=== Starting test service for src/example/Calculator.test.ts ==="
-                        echo "Bundle path: testeranto/bundles/allTests/web/src/example/Calculator.test.ts.mjs"
+                        echo "Bundle path: testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
                         echo "Runtime: web"
                         echo "Test name: src/example/Calculator.test.ts"
                         echo "=== Environment variables ==="
                         env | grep -E "TEST|DOCKERMAN|BUNDLES|METAFILES" || true
                         echo "=== End environment variables ==="
+                        # Debug: Show DOCKERMAN_HOST and DOCKERMAN_PORT
+                        echo "DOCKERMAN_HOST='$DOCKERMAN_HOST'"
+                        echo "DOCKERMAN_PORT='$DOCKERMAN_PORT'"
                         
                         # Build service health is managed by Docker Compose depends_on
                         echo "Build service web-build health is managed by Docker Compose"
@@ -430,17 +470,17 @@ services:
                           fi
                           echo "Source file found: src/example/Calculator.test.ts"
                         else
-                          echo "Waiting for bundle file: testeranto/bundles/allTests/web/src/example/Calculator.test.ts.mjs"
+                          echo "Waiting for bundle file: testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
                           MAX_BUNDLE_RETRIES=60
                           BUNDLE_RETRY_COUNT=0
-                          while [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.ts.mjs" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
+                          while [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.mjs" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
                             echo "Bundle not ready yet (attempt $((BUNDLE_RETRY_COUNT+1))/$MAX_BUNDLE_RETRIES)"
                             BUNDLE_RETRY_COUNT=$((BUNDLE_RETRY_COUNT+1))
                             sleep 2
                           done
                           
-                          if [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.ts.mjs" ]; then
-                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/web/src/example/Calculator.test.ts.mjs"
+                          if [ ! -f "testeranto/bundles/allTests/web/src/example/Calculator.test.mjs" ]; then
+                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
                             echo "The build service may have failed to create the bundle."
                             exit 1
                           fi
@@ -448,37 +488,71 @@ services:
                         fi
                         
                         # Wait for DockerMan TCP server to be reachable
-                        echo "Waiting for DockerMan TCP server to be reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT..."
+                        # Ensure DOCKERMAN_HOST has a value
+                        if [ -z "$DOCKERMAN_HOST" ]; then
+                          DOCKERMAN_HOST="host.docker.internal"
+                          echo "DOCKERMAN_HOST was empty, using default: $DOCKERMAN_HOST"
+                        fi
+                        
+                        # Try multiple host options if the default doesn't work
+                        HOSTS_TO_TRY="$DOCKERMAN_HOST"
+                        # Add gateway IP for Linux containers
+                        GATEWAY_IP=$(ip route | grep default | awk '{print $3}' 2>/dev/null || echo "")
+                        if [ -n "$GATEWAY_IP" ]; then
+                          HOSTS_TO_TRY="$HOSTS_TO_TRY $GATEWAY_IP"
+                        fi
+                        # Add docker host IP
+                        HOSTS_TO_TRY="$HOSTS_TO_TRY 172.17.0.1"
+                        
+                        echo "Waiting for DockerMan TCP server to be reachable on port $DOCKERMAN_PORT..."
+                        echo "Will try hosts: $HOSTS_TO_TRY"
+                        
                         MAX_RETRIES=30
                         RETRY_COUNT=0
-                        while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-                          # Try using netcat if available
-                          if command -v nc >/dev/null 2>&1; then
-                            if nc -z -w 1 "$DOCKERMAN_HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
-                              echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via nc)"
+                        SUCCESS=0
+                        
+                        while [ $RETRY_COUNT -lt $MAX_RETRIES ] && [ $SUCCESS -eq 0 ]; do
+                          for HOST in $HOSTS_TO_TRY; do
+                            echo "Trying to connect to $HOST:$DOCKERMAN_PORT (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)..."
+                            # Try using netcat if available
+                            if command -v nc >/dev/null 2>&1; then
+                              if nc -z -w 1 "$HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
+                                echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via nc)"
+                                DOCKERMAN_HOST="$HOST"
+                                SUCCESS=1
+                                break
+                              fi
+                            # Fallback to /dev/tcp
+                            elif (echo > "/dev/tcp/$HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
+                              echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via /dev/tcp)"
+                              DOCKERMAN_HOST="$HOST"
+                              SUCCESS=1
                               break
                             fi
-                          # Fallback to /dev/tcp
-                          elif (echo > "/dev/tcp/$DOCKERMAN_HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
-                            echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via /dev/tcp)"
-                            break
+                          done
+                          
+                          if [ $SUCCESS -eq 0 ]; then
+                            echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
+                            RETRY_COUNT=$((RETRY_COUNT+1))
+                            sleep 2
                           fi
-                          echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
-                          RETRY_COUNT=$((RETRY_COUNT+1))
-                          sleep 2
                         done
                         
-                        if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-                          echo "ERROR: DockerMan TCP server never became reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT"
+                        if [ $SUCCESS -eq 0 ]; then
+                          echo "ERROR: DockerMan TCP server never became reachable on port $DOCKERMAN_PORT"
+                          echo "Tried hosts: $HOSTS_TO_TRY"
                           echo "Make sure the TCP server is running on the host and accessible from containers."
+                          echo "On Linux, you may need to expose the port differently or use host networking."
                           exit 1
                         fi
+                        
+                        echo "Using DockerMan host: $DOCKERMAN_HOST"
                         
                         # Run the test based on runtime
                         echo "=== Running test ==="
                         if [ "web" = "node" ] || [ "web" = "web" ]; then
-                          echo "Executing: node testeranto/bundles/allTests/web/src/example/Calculator.test.ts.mjs"
-                          node testeranto/bundles/allTests/web/src/example/Calculator.test.ts.mjs
+                          echo "Executing: node testeranto/bundles/allTests/web/src/example/Calculator.test.mjs"
+                          node testeranto/bundles/allTests/web/src/example/Calculator.test.mjs
                         elif [ "web" = "golang" ]; then
                           # For golang, we need to compile and run the test program
                           # testPath is something like "src/example/Calculator.golingvu.test.go"
@@ -560,21 +634,24 @@ services:
     environment:
       BUNDLES_DIR: /testeranto/bundles/allTests/golang
       METAFILES_DIR: /testeranto/metafiles/golang
-      TEST_RESOURCES: '{"name":"golang-src-example-calculator-golingvu-test-go","fs":"/workspace/testeranto/reports/allTests/src/example/Calculator/golingvu/test/go/golang","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
+      TEST_RESOURCES: '{"name":"golang-src-example-calculator-golingvu-test-go","fs":"./reports/allTests/golang","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
       DOCKERMAN_HOST: host.docker.internal
-      DOCKERMAN_PORT: '58762'
+      DOCKERMAN_PORT: '53290'
       TESTERANTO_RUNTIME: golang
     command:
       - sh
       - '-c'
       - |-
         echo "=== Starting test service for src/example/Calculator.golingvu.test.go ==="
-                        echo "Bundle path: testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go.go"
+                        echo "Bundle path: testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go"
                         echo "Runtime: golang"
                         echo "Test name: src/example/Calculator.golingvu.test.go"
                         echo "=== Environment variables ==="
                         env | grep -E "TEST|DOCKERMAN|BUNDLES|METAFILES" || true
                         echo "=== End environment variables ==="
+                        # Debug: Show DOCKERMAN_HOST and DOCKERMAN_PORT
+                        echo "DOCKERMAN_HOST='$DOCKERMAN_HOST'"
+                        echo "DOCKERMAN_PORT='$DOCKERMAN_PORT'"
                         
                         # Build service health is managed by Docker Compose depends_on
                         echo "Build service golang-build health is managed by Docker Compose"
@@ -598,17 +675,17 @@ services:
                           fi
                           echo "Source file found: src/example/Calculator.golingvu.test.go"
                         else
-                          echo "Waiting for bundle file: testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go.go"
+                          echo "Waiting for bundle file: testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go"
                           MAX_BUNDLE_RETRIES=60
                           BUNDLE_RETRY_COUNT=0
-                          while [ ! -f "testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go.go" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
+                          while [ ! -f "testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
                             echo "Bundle not ready yet (attempt $((BUNDLE_RETRY_COUNT+1))/$MAX_BUNDLE_RETRIES)"
                             BUNDLE_RETRY_COUNT=$((BUNDLE_RETRY_COUNT+1))
                             sleep 2
                           done
                           
-                          if [ ! -f "testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go.go" ]; then
-                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go.go"
+                          if [ ! -f "testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go" ]; then
+                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go"
                             echo "The build service may have failed to create the bundle."
                             exit 1
                           fi
@@ -616,37 +693,71 @@ services:
                         fi
                         
                         # Wait for DockerMan TCP server to be reachable
-                        echo "Waiting for DockerMan TCP server to be reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT..."
+                        # Ensure DOCKERMAN_HOST has a value
+                        if [ -z "$DOCKERMAN_HOST" ]; then
+                          DOCKERMAN_HOST="host.docker.internal"
+                          echo "DOCKERMAN_HOST was empty, using default: $DOCKERMAN_HOST"
+                        fi
+                        
+                        # Try multiple host options if the default doesn't work
+                        HOSTS_TO_TRY="$DOCKERMAN_HOST"
+                        # Add gateway IP for Linux containers
+                        GATEWAY_IP=$(ip route | grep default | awk '{print $3}' 2>/dev/null || echo "")
+                        if [ -n "$GATEWAY_IP" ]; then
+                          HOSTS_TO_TRY="$HOSTS_TO_TRY $GATEWAY_IP"
+                        fi
+                        # Add docker host IP
+                        HOSTS_TO_TRY="$HOSTS_TO_TRY 172.17.0.1"
+                        
+                        echo "Waiting for DockerMan TCP server to be reachable on port $DOCKERMAN_PORT..."
+                        echo "Will try hosts: $HOSTS_TO_TRY"
+                        
                         MAX_RETRIES=30
                         RETRY_COUNT=0
-                        while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-                          # Try using netcat if available
-                          if command -v nc >/dev/null 2>&1; then
-                            if nc -z -w 1 "$DOCKERMAN_HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
-                              echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via nc)"
+                        SUCCESS=0
+                        
+                        while [ $RETRY_COUNT -lt $MAX_RETRIES ] && [ $SUCCESS -eq 0 ]; do
+                          for HOST in $HOSTS_TO_TRY; do
+                            echo "Trying to connect to $HOST:$DOCKERMAN_PORT (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)..."
+                            # Try using netcat if available
+                            if command -v nc >/dev/null 2>&1; then
+                              if nc -z -w 1 "$HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
+                                echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via nc)"
+                                DOCKERMAN_HOST="$HOST"
+                                SUCCESS=1
+                                break
+                              fi
+                            # Fallback to /dev/tcp
+                            elif (echo > "/dev/tcp/$HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
+                              echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via /dev/tcp)"
+                              DOCKERMAN_HOST="$HOST"
+                              SUCCESS=1
                               break
                             fi
-                          # Fallback to /dev/tcp
-                          elif (echo > "/dev/tcp/$DOCKERMAN_HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
-                            echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via /dev/tcp)"
-                            break
+                          done
+                          
+                          if [ $SUCCESS -eq 0 ]; then
+                            echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
+                            RETRY_COUNT=$((RETRY_COUNT+1))
+                            sleep 2
                           fi
-                          echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
-                          RETRY_COUNT=$((RETRY_COUNT+1))
-                          sleep 2
                         done
                         
-                        if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-                          echo "ERROR: DockerMan TCP server never became reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT"
+                        if [ $SUCCESS -eq 0 ]; then
+                          echo "ERROR: DockerMan TCP server never became reachable on port $DOCKERMAN_PORT"
+                          echo "Tried hosts: $HOSTS_TO_TRY"
                           echo "Make sure the TCP server is running on the host and accessible from containers."
+                          echo "On Linux, you may need to expose the port differently or use host networking."
                           exit 1
                         fi
+                        
+                        echo "Using DockerMan host: $DOCKERMAN_HOST"
                         
                         # Run the test based on runtime
                         echo "=== Running test ==="
                         if [ "golang" = "node" ] || [ "golang" = "web" ]; then
-                          echo "Executing: node testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go.go"
-                          node testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go.go
+                          echo "Executing: node testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go"
+                          node testeranto/bundles/allTests/golang/src/example/Calculator.golingvu.test.go
                         elif [ "golang" = "golang" ]; then
                           # For golang, we need to compile and run the test program
                           # testPath is something like "src/example/Calculator.golingvu.test.go"
@@ -728,21 +839,24 @@ services:
     environment:
       BUNDLES_DIR: /testeranto/bundles/allTests/python
       METAFILES_DIR: /testeranto/metafiles/python
-      TEST_RESOURCES: '{"name":"python-src-example-calculator-pitono-test-py","fs":"/workspace/testeranto/reports/allTests/src/example/Calculator/pitono/test/py/python","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
+      TEST_RESOURCES: '{"name":"python-src-example-calculator-pitono-test-py","fs":"./reports/allTests/python","ports":[],"browserWSEndpoint":"","timeout":30000,"retries":3,"environment":{}}'
       DOCKERMAN_HOST: host.docker.internal
-      DOCKERMAN_PORT: '58762'
+      DOCKERMAN_PORT: '53290'
       TESTERANTO_RUNTIME: python
     command:
       - sh
       - '-c'
       - |-
         echo "=== Starting test service for src/example/Calculator.pitono.test.py ==="
-                        echo "Bundle path: testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py.py"
+                        echo "Bundle path: testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py"
                         echo "Runtime: python"
                         echo "Test name: src/example/Calculator.pitono.test.py"
                         echo "=== Environment variables ==="
                         env | grep -E "TEST|DOCKERMAN|BUNDLES|METAFILES" || true
                         echo "=== End environment variables ==="
+                        # Debug: Show DOCKERMAN_HOST and DOCKERMAN_PORT
+                        echo "DOCKERMAN_HOST='$DOCKERMAN_HOST'"
+                        echo "DOCKERMAN_PORT='$DOCKERMAN_PORT'"
                         
                         # Build service health is managed by Docker Compose depends_on
                         echo "Build service python-build health is managed by Docker Compose"
@@ -766,17 +880,17 @@ services:
                           fi
                           echo "Source file found: src/example/Calculator.pitono.test.py"
                         else
-                          echo "Waiting for bundle file: testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py.py"
+                          echo "Waiting for bundle file: testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py"
                           MAX_BUNDLE_RETRIES=60
                           BUNDLE_RETRY_COUNT=0
-                          while [ ! -f "testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py.py" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
+                          while [ ! -f "testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py" ] && [ $BUNDLE_RETRY_COUNT -lt $MAX_BUNDLE_RETRIES ]; do
                             echo "Bundle not ready yet (attempt $((BUNDLE_RETRY_COUNT+1))/$MAX_BUNDLE_RETRIES)"
                             BUNDLE_RETRY_COUNT=$((BUNDLE_RETRY_COUNT+1))
                             sleep 2
                           done
                           
-                          if [ ! -f "testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py.py" ]; then
-                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py.py"
+                          if [ ! -f "testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py" ]; then
+                            echo "ERROR: Bundle file never appeared at testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py"
                             echo "The build service may have failed to create the bundle."
                             exit 1
                           fi
@@ -784,37 +898,71 @@ services:
                         fi
                         
                         # Wait for DockerMan TCP server to be reachable
-                        echo "Waiting for DockerMan TCP server to be reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT..."
+                        # Ensure DOCKERMAN_HOST has a value
+                        if [ -z "$DOCKERMAN_HOST" ]; then
+                          DOCKERMAN_HOST="host.docker.internal"
+                          echo "DOCKERMAN_HOST was empty, using default: $DOCKERMAN_HOST"
+                        fi
+                        
+                        # Try multiple host options if the default doesn't work
+                        HOSTS_TO_TRY="$DOCKERMAN_HOST"
+                        # Add gateway IP for Linux containers
+                        GATEWAY_IP=$(ip route | grep default | awk '{print $3}' 2>/dev/null || echo "")
+                        if [ -n "$GATEWAY_IP" ]; then
+                          HOSTS_TO_TRY="$HOSTS_TO_TRY $GATEWAY_IP"
+                        fi
+                        # Add docker host IP
+                        HOSTS_TO_TRY="$HOSTS_TO_TRY 172.17.0.1"
+                        
+                        echo "Waiting for DockerMan TCP server to be reachable on port $DOCKERMAN_PORT..."
+                        echo "Will try hosts: $HOSTS_TO_TRY"
+                        
                         MAX_RETRIES=30
                         RETRY_COUNT=0
-                        while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-                          # Try using netcat if available
-                          if command -v nc >/dev/null 2>&1; then
-                            if nc -z -w 1 "$DOCKERMAN_HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
-                              echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via nc)"
+                        SUCCESS=0
+                        
+                        while [ $RETRY_COUNT -lt $MAX_RETRIES ] && [ $SUCCESS -eq 0 ]; do
+                          for HOST in $HOSTS_TO_TRY; do
+                            echo "Trying to connect to $HOST:$DOCKERMAN_PORT (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)..."
+                            # Try using netcat if available
+                            if command -v nc >/dev/null 2>&1; then
+                              if nc -z -w 1 "$HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
+                                echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via nc)"
+                                DOCKERMAN_HOST="$HOST"
+                                SUCCESS=1
+                                break
+                              fi
+                            # Fallback to /dev/tcp
+                            elif (echo > "/dev/tcp/$HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
+                              echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via /dev/tcp)"
+                              DOCKERMAN_HOST="$HOST"
+                              SUCCESS=1
                               break
                             fi
-                          # Fallback to /dev/tcp
-                          elif (echo > "/dev/tcp/$DOCKERMAN_HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
-                            echo "DockerMan TCP server is reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT (via /dev/tcp)"
-                            break
+                          done
+                          
+                          if [ $SUCCESS -eq 0 ]; then
+                            echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
+                            RETRY_COUNT=$((RETRY_COUNT+1))
+                            sleep 2
                           fi
-                          echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
-                          RETRY_COUNT=$((RETRY_COUNT+1))
-                          sleep 2
                         done
                         
-                        if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-                          echo "ERROR: DockerMan TCP server never became reachable at $DOCKERMAN_HOST:$DOCKERMAN_PORT"
+                        if [ $SUCCESS -eq 0 ]; then
+                          echo "ERROR: DockerMan TCP server never became reachable on port $DOCKERMAN_PORT"
+                          echo "Tried hosts: $HOSTS_TO_TRY"
                           echo "Make sure the TCP server is running on the host and accessible from containers."
+                          echo "On Linux, you may need to expose the port differently or use host networking."
                           exit 1
                         fi
+                        
+                        echo "Using DockerMan host: $DOCKERMAN_HOST"
                         
                         # Run the test based on runtime
                         echo "=== Running test ==="
                         if [ "python" = "node" ] || [ "python" = "web" ]; then
-                          echo "Executing: node testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py.py"
-                          node testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py.py
+                          echo "Executing: node testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py"
+                          node testeranto/bundles/allTests/python/src/example/Calculator.pitono.test.py
                         elif [ "python" = "golang" ]; then
                           # For golang, we need to compile and run the test program
                           # testPath is something like "src/example/Calculator.golingvu.test.go"

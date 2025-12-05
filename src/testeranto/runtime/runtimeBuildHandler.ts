@@ -46,22 +46,48 @@ export async function handleRuntimeBuilds(
   // }
 
   // Create report directories for all tests
-  [
-    ["node", Object.keys(nodeEntryPoints)],
-    ["web", Object.keys(webEntryPoints)],
-    ["python", Object.keys(pythonEntryPoints)],
-    ["golang", Object.keys(golangEntryPoints)],
-  ].forEach(([runtime, keys]: [IRunTime, string[]]) => {
-    keys.forEach((k) => {
-      fs.mkdirSync(
-        `testeranto/reports/${testsName}/${k
-          .split(".")
-          .slice(0, -1)
-          .join(".")}/${runtime}`,
-        { recursive: true }
-      );
+  const createReportDirs = (runtime: IRunTime, entryPoints: string[]) => {
+    entryPoints.forEach((entryPoint) => {
+      // Handle different path formats:
+      // 1. src/example/Calculator.test.ts -> src/example/Calculator
+      // 2. src/example/Calculator.test -> src/example/Calculator
+      // 3. src/example/Calculator.ts -> src/example/Calculator
+      // Remove file extension and any .test suffix
+      let dirName = entryPoint;
+      
+      // Remove .ts, .js, .mjs, .cjs, .py, .go extensions
+      const extensions = ['.ts', '.js', '.mjs', '.cjs', '.py', '.go', '.test.ts', '.test.js', '.test.mjs', '.test.py', '.test.go'];
+      for (const ext of extensions) {
+        if (dirName.endsWith(ext)) {
+          dirName = dirName.slice(0, -ext.length);
+          break;
+        }
+      }
+      
+      // Also remove any remaining .test suffix
+      if (dirName.endsWith('.test')) {
+        dirName = dirName.slice(0, -5);
+      }
+      
+      // Ensure we don't have trailing slashes
+      dirName = dirName.replace(/\/+$/, '');
+      
+      const reportDir = `testeranto/reports/${testsName}/${dirName}/${runtime}`;
+      try {
+        fs.mkdirSync(reportDir, { recursive: true });
+      } catch (err: any) {
+        // If directory already exists, that's fine
+        if (err.code !== 'EEXIST') {
+          console.warn(`Could not create report directory ${reportDir}:`, err.message);
+        }
+      }
     });
-  });
+  };
+
+  createReportDirs("node", Object.keys(nodeEntryPoints));
+  createReportDirs("web", Object.keys(webEntryPoints));
+  createReportDirs("python", Object.keys(pythonEntryPoints));
+  createReportDirs("golang", Object.keys(golangEntryPoints));
 
   console.log("🚀 Starting Docker Compose services via DockerMan...");
   try {

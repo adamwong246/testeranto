@@ -2,7 +2,7 @@ import {
   defaultTestResourceRequirement,
   ITTestResourceRequest,
 } from "./index.js";
-import { PM_Node } from "../PM/node.js";
+import { PM_Node } from "../PM/PM_Node.js";
 import {
   ITestSpecification,
   ITestImplementation,
@@ -41,7 +41,7 @@ export class NodeTiposkripto<
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async receiveTestResourceConfig(partialTestResource: string) {
+  async receiveTestResourceConfig() {
     // Always read test resource configuration from environment variable
     // The command line argument is no longer used with TCP
     const envTestResources = process.env.TEST_RESOURCES;
@@ -80,6 +80,8 @@ export class NodeTiposkripto<
       )}`
     );
 
+    console.log("mark4", this.testJobs[0]);
+
     return await this.testJobs[0].receiveTestResourceConfig(
       new PM_Node(testResourceConfig, dockerManHost, dockerManPort)
     );
@@ -102,6 +104,8 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       testAdapter
     );
 
+    console.log("mark3");
+
     process.on("unhandledRejection", (reason, promise) => {
       console.error("Unhandled Rejection at:", promise, "reason:", reason);
       // Optionally, terminate the process or perform cleanup
@@ -121,7 +125,10 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       `   DOCKERMAN_PORT: ${process.env.DOCKERMAN_PORT || "Not set"}`
     );
 
-    process.exit((await t.receiveTestResourceConfig("")).fails);
+    const x = await t.receiveTestResourceConfig();
+    console.log("mark5", x);
+
+    process.exit(x.fails);
   } catch (e) {
     console.error(e);
     console.error(e.stack);

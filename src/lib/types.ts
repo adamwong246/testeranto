@@ -3,7 +3,7 @@
 // Do not add logging to this file as it is used by the pure runtime.
 
 import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
-import { PM_Node } from "../PM/node";
+import { PM_Node } from "../PM/PM_Node";
 import { PM_Pure } from "../PM/pure";
 import { PM_Web } from "../PM/web";
 import { IGivens, BaseGiven } from "./BaseGiven";

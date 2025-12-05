@@ -1,9 +1,9 @@
 import blessed from "blessed";
 
 /**
- * Manages TesterantoDocker instance creation and build service monitoring
+ * Manages TesterantoDocker instance creation and build service monitoring for the TUI
  */
-export class TesterantoDockerManager {
+export class TuiTesterantoDockerManager {
   private testerantoDocker: any = null;
   private buildServiceLogIntervals: Map<string, NodeJS.Timeout> = new Map();
 

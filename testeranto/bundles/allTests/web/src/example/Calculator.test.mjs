@@ -5,7 +5,7 @@ import {
 // src/Tiposkripto.ts
 var tpskrt;
 if (process.env["TESTERANTO_RUNTIME"] === "node") {
-  tpskrt = await import("../../Node-L63D7ERI.mjs");
+  tpskrt = await import("../../Node-NDQ2VKUO.mjs");
 } else if (process.env["TESTERANTO_RUNTIME"] === "web") {
   tpskrt = await import("../../Web-OGTIUJXQ.mjs");
 } else {

@@ -1,16 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// import { execSync } from "child_process";
 import { EventEmitter } from "events";
-import path from "path";
 import fs from "fs";
-import { execSync } from "child_process";
+import path from "path";
+import { Page } from "puppeteer-core/lib/esm/puppeteer";
 import { IRunTime } from "../../../Types";
 import { BrowserManager } from "./BrowserManager";
 import { BuildServiceMonitor } from "./BuildServiceMonitor";
 import { DockerCompose } from "./DockerCompose";
+import { DockerValidator } from "./DockerValidator";
 import { FileSystem } from "./FileSystem";
 import { TcpServer } from "./TcpServer";
 import { TestServiceManager } from "./TestServiceManager";
 import { TestResource, TestServiceConfig, TestServiceInfo } from "./types";
-import { Page } from "puppeteer-core/lib/esm/puppeteer";
 
 export default class TesterantoDocker extends EventEmitter {
   testName: string;
@@ -31,12 +34,15 @@ export default class TesterantoDocker extends EventEmitter {
   private buildServiceMonitor: BuildServiceMonitor;
   private tcpPort: number = 0;
 
-  constructor(testName: string, logger?: {
-    log: (...args: any[]) => void;
-    error: (...args: any[]) => void;
-    warn?: (...args: any[]) => void;
-    info?: (...args: any[]) => void;
-  }) {
+  constructor(
+    testName: string,
+    logger?: {
+      log: (...args: any[]) => void;
+      error: (...args: any[]) => void;
+      warn?: (...args: any[]) => void;
+      info?: (...args: any[]) => void;
+    }
+  ) {
     super();
     // Set up logger - use provided logger or default to console
     this.logger = {
@@ -45,7 +51,7 @@ export default class TesterantoDocker extends EventEmitter {
       warn: logger?.warn || console.warn,
       info: logger?.info || console.info,
     };
-    
+
     this.logger.log("TesterantoDocker initialized.");
     this.testName = testName;
     this.composeDir = process.cwd();
@@ -66,7 +72,10 @@ export default class TesterantoDocker extends EventEmitter {
       this.dockerCompose,
       this.logger
     );
-    this.buildServiceMonitor = new BuildServiceMonitor(this.dockerCompose, this.logger);
+    this.buildServiceMonitor = new BuildServiceMonitor(
+      this.dockerCompose,
+      this.logger
+    );
 
     // Set up event forwarding
     this.setupEventForwarding();
@@ -145,7 +154,7 @@ export default class TesterantoDocker extends EventEmitter {
     await this.browserManager.closeAll();
 
     try {
-      await this.dockerCompose.down({
+      await this.dockerCompose.DC_down({
         log: true,
         commandOptions: ["-v", "--remove-orphans"],
       });
@@ -162,7 +171,7 @@ export default class TesterantoDocker extends EventEmitter {
   }
 
   onBundleChange(entryPoint: string, lang: IRunTime) {
-    console.log(`Bundle changed for ${lang}: ${entryPoint}`);
+    // console.log(`Bundle changed for ${lang}: ${entryPoint}`);
     this.emit("bundleChange", { entryPoint, lang });
   }
 
@@ -180,88 +189,32 @@ export default class TesterantoDocker extends EventEmitter {
       );
     }
 
-    this.logger.log("🚀 Starting Docker Compose with fresh containers...");
-    this.logger.log(`📁 Docker Compose file: ${this.composeFile}`);
-    this.logger.log(`📁 Current directory: ${this.composeDir}`);
+    // this.logger.log("🚀 Starting Docker Compose with fresh containers...");
+    // this.logger.log(`📁 Docker Compose file: ${this.composeFile}`);
+    // this.logger.log(`📁 Current directory: ${this.composeDir}`);
 
     // Check if docker-compose file exists
     if (!fs.existsSync(this.composeFile)) {
-      this.logger.error(`❌ Docker Compose file not found: ${this.composeFile}`);
+      this.logger.error(
+        `❌ Docker Compose file not found: ${this.composeFile}`
+      );
       throw new Error(`Docker Compose file not found: ${this.composeFile}`);
     }
 
-    // Check if Docker is running
-    this.logger.log("🔍 Checking if Docker daemon is running...");
-    try {
-      execSync("docker info", { stdio: "pipe" });
-      this.logger.log("✅ Docker daemon is running");
-    } catch (dockerErr) {
-      this.logger.error("❌ Docker daemon is not running or not accessible");
-      this.logger.error("Please start Docker Desktop or the Docker service");
-      throw new Error("Docker daemon is not running");
-    }
-
-    // Check if docker-compose is available
-    this.logger.log("🔍 Checking if docker-compose is available...");
-    let composeCommand = "docker-compose";
-    try {
-      execSync("docker-compose --version", { stdio: "pipe" });
-      this.logger.log("✅ docker-compose is available");
-    } catch (composeErr) {
-      this.logger.log(
-        "⚠️ docker-compose command not found, trying docker compose..."
-      );
-      try {
-        execSync("docker compose version", { stdio: "pipe" });
-        composeCommand = "docker compose";
-        this.logger.log("✅ docker compose (v2) is available");
-      } catch (dockerComposeErr) {
-        this.logger.error(
-          "❌ Neither docker-compose nor docker compose are available"
-        );
-        this.logger.error("Please install docker-compose or Docker Compose v2");
-        throw new Error("docker-compose not available");
-      }
-    }
-
-    // Validate docker-compose file
-    this.logger.log("🔍 Validating docker-compose file...");
-    try {
-      execSync(`${composeCommand} -f "${this.composeFile}" config`, {
-        stdio: "pipe",
-        cwd: this.composeDir,
-      });
-      this.logger.log("✅ Docker Compose file is valid");
-    } catch (validateErr) {
-      this.logger.error(
-        "❌ Docker Compose file validation failed:",
-        (validateErr as Error).message
-      );
-      this.logger.error("Please check the docker-compose file for errors");
-      throw new Error("Docker Compose file validation failed");
-    }
-
-    // List services in the compose file
-    this.logger.log("🔍 Listing services in docker-compose file...");
-    try {
-      const servicesOutput = execSync(
-        `${composeCommand} -f "${this.composeFile}" config --services`,
-        {
-          encoding: "utf8",
-          cwd: this.composeDir,
-        }
-      );
-      this.logger.log(
-        "📋 Services to start:",
-        servicesOutput.trim().split("\n").join(", ")
-      );
-    } catch (listErr) {
-      this.logger.log("⚠️ Could not list services:", (listErr as Error).message);
-    }
+    // Use shared validation utility
+    const { composeCommand } = await DockerValidator.validateDockerEnvironment(
+      this.logger
+    );
+    await DockerValidator.validateComposeFile(
+      this.composeFile,
+      this.composeDir,
+      composeCommand,
+      this.logger
+    );
 
     try {
       this.logger.log("🎬 Running docker-compose up...");
-      const result = await this.dockerCompose.upAll({
+      const result = await this.dockerCompose.DC_upAll({
         log: true,
         commandOptions: [
           "--build",
@@ -271,47 +224,13 @@ export default class TesterantoDocker extends EventEmitter {
         ],
         detach: true,
       });
-      this.logger.log(
-        "✅ Docker Compose started successfully with fresh containers"
-      );
+      // this.logger.log(
+      //   "✅ Docker Compose started successfully with fresh containers"
+      // );
 
       // Check if containers are actually running
       this.logger.log("🔍 Checking if containers are running...");
       await new Promise((resolve) => setTimeout(resolve, 3000));
-      try {
-        const psOutput = execSync(
-          `${composeCommand} -f "${this.composeFile}" ps --services --filter "status=running"`,
-          {
-            encoding: "utf8",
-            cwd: this.composeDir,
-          }
-        );
-        const runningServices = psOutput
-          .trim()
-          .split("\n")
-          .filter((s) => s.trim());
-        this.logger.log(
-          `📊 ${runningServices.length} services are running:`,
-          runningServices.join(", ")
-        );
-        if (runningServices.length === 0) {
-          this.logger.log("⚠️ No services are running. Checking for errors...");
-          const allPsOutput = execSync(
-            `${composeCommand} -f "${this.composeFile}" ps`,
-            {
-              encoding: "utf8",
-              cwd: this.composeDir,
-            }
-          );
-          this.logger.log("📋 All services status:\n", allPsOutput);
-        }
-      } catch (psErr) {
-        this.logger.log(
-          "⚠️ Could not check running services:",
-          (psErr as Error).message
-        );
-      }
-
       // Wait a bit more for services to initialize
       this.logger.log("⏳ Waiting for services to initialize...");
       await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -321,24 +240,7 @@ export default class TesterantoDocker extends EventEmitter {
       const error = err instanceof Error ? err : new Error(String(err));
       this.logger.log("❌ Error starting Docker Compose:", error.message);
       this.logger.log("Stack trace:", error.stack);
-      // Try to get more details
-      try {
-        const errorOutput = execSync(
-          `${composeCommand} -f "${this.composeFile}" up --build --force-recreate --remove-orphans -d 2>&1`,
-          {
-            encoding: "utf8",
-            cwd: this.composeDir,
-          }
-        );
-        this.logger.log("📋 Docker Compose output:", errorOutput);
-      } catch (execErr) {
-        const execError =
-          execErr instanceof Error ? execErr : new Error(String(execErr));
-        this.logger.log(
-          "⚠️ Could not get detailed error output:",
-          execError.message
-        );
-      }
+
       throw error; // Re-throw to let caller know
     }
   }
@@ -355,7 +257,7 @@ export default class TesterantoDocker extends EventEmitter {
       `Rebuilding Docker Compose ${noCache ? "without cache" : "with cache"}...`
     );
     try {
-      const result = await this.dockerCompose.upAll({
+      const result = await this.dockerCompose.DC_upAll({
         log: true,
         commandOptions: commandOptions,
       });
@@ -401,17 +303,17 @@ export default class TesterantoDocker extends EventEmitter {
     tail: number = 100
   ): Promise<string> {
     try {
-      const result = await this.dockerCompose.logs(serviceName, {
+      const result = await this.dockerCompose.DC_logs(serviceName, {
         log: false,
         follow: false,
         tail: tail,
       });
       return result.out || result.err || "";
     } catch (err) {
-      this.logger.log(
-        `Error getting build service logs for ${serviceName}:`,
-        (err as Error).message
-      );
+      // this.logger.log(
+      //   `Error getting build service logs for ${serviceName}:`,
+      //   (err as Error).message
+      // );
       return "";
     }
   }
@@ -494,7 +396,7 @@ export default class TesterantoDocker extends EventEmitter {
     this.logger.log(`🔍 Starting test services for runtime: ${runtime}`);
 
     try {
-      const result = await this.dockerCompose.ps({
+      const result = await this.dockerCompose.DC_ps({
         log: false,
       });
 
@@ -552,7 +454,9 @@ export default class TesterantoDocker extends EventEmitter {
 
     const parsed = TestServiceManager.parseTestServiceName(fullServiceName);
     if (!parsed.runtime || !parsed.entryPoint) {
-      this.logger.log(`⚠️ Could not parse test service name: ${fullServiceName}`);
+      this.logger.log(
+        `⚠️ Could not parse test service name: ${fullServiceName}`
+      );
       return;
     }
 

@@ -1,7 +1,7 @@
 {
   "inputs": {
     "src/lib/index.ts": {
-      "bytes": 4010,
+      "bytes": 4013,
       "imports": [
         {
           "path": "../CoreTypes",
@@ -9,7 +9,7 @@
           "external": true
         },
         {
-          "path": "../PM/node",
+          "path": "../PM/PM_Node",
           "kind": "import-statement",
           "external": true
         },
@@ -67,7 +67,7 @@
       ],
       "format": "esm"
     },
-    "src/PM/node.ts": {
+    "src/PM/PM_Node.ts": {
       "bytes": 8163,
       "imports": [
         {
@@ -265,7 +265,7 @@
       "format": "esm"
     },
     "src/lib/Node.ts": {
-      "bytes": 3964,
+      "bytes": 4055,
       "imports": [
         {
           "path": "src/lib/index.ts",
@@ -273,9 +273,9 @@
           "original": "./index.js"
         },
         {
-          "path": "src/PM/node.ts",
+          "path": "src/PM/PM_Node.ts",
           "kind": "import-statement",
-          "original": "../PM/node.js"
+          "original": "../PM/PM_Node.js"
         },
         {
           "path": "../CoreTypes.js",
@@ -491,7 +491,7 @@
           "kind": "import-statement"
         },
         {
-          "path": "testeranto/bundles/allTests/node/Node-L63D7ERI.mjs",
+          "path": "testeranto/bundles/allTests/node/Node-NDQ2VKUO.mjs",
           "kind": "dynamic-import"
         },
         {
@@ -528,7 +528,7 @@
       },
       "bytes": 153347
     },
-    "testeranto/bundles/allTests/node/Node-L63D7ERI.mjs": {
+    "testeranto/bundles/allTests/node/Node-NDQ2VKUO.mjs": {
       "imports": [
         {
           "path": "testeranto/bundles/allTests/node/chunk-P3FJP2UF.mjs",
@@ -560,14 +560,14 @@
       ],
       "entryPoint": "src/lib/Node.ts",
       "inputs": {
-        "src/PM/node.ts": {
+        "src/PM/PM_Node.ts": {
           "bytesInOutput": 6355
         },
         "src/lib/Node.ts": {
-          "bytesInOutput": 2701
+          "bytesInOutput": 2794
         }
       },
-      "bytes": 9285
+      "bytes": 9381
     },
     "testeranto/bundles/allTests/node/Web-OGTIUJXQ.mjs": {
       "imports": [

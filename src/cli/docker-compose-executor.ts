@@ -1,7 +1,7 @@
-import compose from "docker-compose";
 import path from "path";
 import fs from "fs";
 import blessed from "blessed";
+import { DockerCompose } from "../testeranto/infrastructure/docker/DockerCompose";
 
 /**
  * Handles execution of docker-compose commands
@@ -83,33 +83,18 @@ export class DockerComposeExecutor {
       try {
         switch (command) {
           case "up":
-            result = await compose.up(options);
+            result = await DockerCompose.upAll(options);
             break;
           case "down":
-            result = await compose.down(options);
-            break;
-          case "ps":
-            result = await compose.ps(options);
+            result = await DockerCompose.down(options);
             break;
           case "logs":
             // For logs, we need to handle service name
             if (commandArgs.length > 0) {
-              result = await compose.logs(commandArgs[0], options);
+              result = await DockerCompose.logs(commandArgs[0], options);
             } else {
-              result = await compose.logs(options);
+              result = await DockerCompose.logs("", options);
             }
-            break;
-          case "build":
-            result = await compose.build(options);
-            break;
-          case "start":
-            result = await compose.start(options);
-            break;
-          case "stop":
-            result = await compose.stop(options);
-            break;
-          case "restart":
-            result = await compose.restart(options);
             break;
           default:
             outputBox.add(`Command not yet implemented: ${command}`);

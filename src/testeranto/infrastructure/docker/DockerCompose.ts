@@ -17,21 +17,21 @@ export class DockerCompose {
     this.config = config;
   }
 
-  public async upAll(
+  public async DC_upAll(
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
     const opts = this.mergeOptions(options);
     return await upAll(opts);
   }
 
-  public async down(
+  public async DC_down(
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
     const opts = this.mergeOptions(options);
     return await down(opts);
   }
 
-  public async upOne(
+  public async DC_upOne(
     serviceName: string,
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
@@ -39,14 +39,14 @@ export class DockerCompose {
     return await upOne(serviceName, opts);
   }
 
-  public async ps(
+  public async DC_ps(
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
     const opts = this.mergeOptions(options);
     return await ps(opts);
   }
 
-  public async logs(
+  public async DC_logs(
     serviceName: string,
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
@@ -74,5 +74,25 @@ export class DockerCompose {
 
   public getConfig(): string {
     return this.config;
+  }
+
+  // Static methods for direct usage without creating an instance
+  static async upAll(
+    options: DockerComposeOptions
+  ): Promise<IDockerComposeResult> {
+    return await upAll(options);
+  }
+
+  static async down(
+    options: DockerComposeOptions
+  ): Promise<IDockerComposeResult> {
+    return await down(options);
+  }
+
+  static async logs(
+    serviceName: string,
+    options: DockerComposeOptions
+  ): Promise<IDockerComposeResult> {
+    return await logs(serviceName, options);
   }
 }

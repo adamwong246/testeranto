@@ -33,12 +33,20 @@ export class TcpServer extends EventEmitter {
     const server = net.createServer((socket) => {
       const clientId = `${socket.remoteAddress}:${socket.remotePort}`;
       this.logger.log(`🔌 TCP connection from ${clientId}`);
+      // Emit client connected event
+      this.emit("clientConnected", clientId);
 
       this.connections.set(clientId, { socket, testInfo: {} });
 
       let buffer = "";
       socket.on("data", (data) => {
-        buffer += data.toString();
+        const dataStr = data.toString();
+        // Log raw data received
+        this.logger.log(`📥 Raw data from ${clientId}: ${dataStr.substring(0, 200)}${dataStr.length > 200 ? '...' : ''}`);
+        // Emit message received event
+        this.emit("messageReceived", clientId, dataStr);
+        
+        buffer += dataStr;
         const lines = buffer.split("\n");
         buffer = lines.pop() || "";
 
@@ -56,11 +64,13 @@ export class TcpServer extends EventEmitter {
 
       socket.on("end", () => {
         this.logger.log(`🔌 TCP connection closed: ${clientId}`);
+        this.emit("clientDisconnected", clientId);
         this.connections.delete(clientId);
       });
 
       socket.on("error", (err) => {
         this.logger.error(`❌ TCP socket error for ${clientId}:`, err.message);
+        this.emit("clientDisconnected", clientId);
         this.connections.delete(clientId);
       });
     });
@@ -100,7 +110,12 @@ export class TcpServer extends EventEmitter {
   public sendToClient(clientId: string, data: any): void {
     const connection = this.connections.get(clientId);
     if (connection) {
-      connection.socket.write(JSON.stringify(data) + "\n");
+      const messageStr = JSON.stringify(data) + "\n";
+      // Log raw data being sent
+      this.logger.log(`📤 Raw data to ${clientId}: ${messageStr.substring(0, 200)}${messageStr.length > 200 ? '...' : ''}`);
+      // Emit message sent event
+      this.emit("messageSent", clientId, messageStr);
+      connection.socket.write(messageStr);
     }
   }
 

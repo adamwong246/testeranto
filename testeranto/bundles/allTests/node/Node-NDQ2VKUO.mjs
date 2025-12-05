@@ -6,7 +6,7 @@ import {
   defaultTestResourceRequirement
 } from "./chunk-GD6O3ZZC.mjs";
 
-// src/PM/node.ts
+// src/PM/PM_Node.ts
 import net from "net";
 import fs from "fs";
 import path from "path";
@@ -242,7 +242,7 @@ var NodeTiposkripto = class extends Tiposkripto {
     );
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async receiveTestResourceConfig(partialTestResource) {
+  async receiveTestResourceConfig() {
     const envTestResources = process.env.TEST_RESOURCES;
     if (!envTestResources) {
       throw new Error("TEST_RESOURCES environment variable must be set");
@@ -273,6 +273,7 @@ var NodeTiposkripto = class extends Tiposkripto {
         2
       )}`
     );
+    console.log("mark4", this.testJobs[0]);
     return await this.testJobs[0].receiveTestResourceConfig(
       new PM_Node(testResourceConfig, dockerManHost, dockerManPort)
     );
@@ -287,6 +288,7 @@ var tiposkripto = async (input, testSpecification, testImplementation, testAdapt
       testResourceRequirement,
       testAdapter
     );
+    console.log("mark3");
     process.on("unhandledRejection", (reason, promise) => {
       console.error("Unhandled Rejection at:", promise, "reason:", reason);
     });
@@ -300,7 +302,9 @@ var tiposkripto = async (input, testSpecification, testImplementation, testAdapt
     console.log(
       `   DOCKERMAN_PORT: ${process.env.DOCKERMAN_PORT || "Not set"}`
     );
-    process.exit((await t.receiveTestResourceConfig("")).fails);
+    const x = await t.receiveTestResourceConfig();
+    console.log("mark5", x);
+    process.exit(x.fails);
   } catch (e) {
     console.error(e);
     console.error(e.stack);
