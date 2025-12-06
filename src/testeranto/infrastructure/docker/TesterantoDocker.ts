@@ -5,6 +5,7 @@ import { EventEmitter } from "events";
 import fs from "fs";
 import path from "path";
 import { Page } from "puppeteer-core/lib/esm/puppeteer";
+import net from "net";
 import { IRunTime } from "../../../Types";
 import { BrowserManager } from "./BrowserManager";
 import { BuildServiceMonitor } from "./BuildServiceMonitor";
@@ -270,6 +271,55 @@ export default class TesterantoDocker extends EventEmitter {
     }
   }
 
+  private async waitForChromium(timeoutMs: number = 30000): Promise<void> {
+    const startTime = Date.now();
+    this.logger.log(`⏳ Waiting for browserless/chrome to be ready...`);
+    
+    while (Date.now() - startTime < timeoutMs) {
+      try {
+        // Check health endpoint
+        const healthResponse = await fetch(`http://localhost:3000/health`);
+        if (healthResponse.ok) {
+          const healthData = await healthResponse.json();
+          // Check if the service is healthy
+          if (healthData.ready === true || healthData.status === "ready") {
+            this.logger.log(`✅ browserless/chrome health check passed`);
+            
+            // Try to get WebSocket endpoint from port 9222
+            try {
+              const jsonResponse = await fetch(`http://localhost:9222/json/version`);
+              if (jsonResponse.ok) {
+                const jsonData = await jsonResponse.json();
+                if (jsonData.webSocketDebuggerUrl) {
+                  this.logger.log(`🌐 WebSocket endpoint (port 9222): ${jsonData.webSocketDebuggerUrl}`);
+                }
+              }
+            } catch (error) {
+              // Try port 3000
+              try {
+                const jsonResponse = await fetch(`http://localhost:3000/json/version`);
+                if (jsonResponse.ok) {
+                  const jsonData = await jsonResponse.json();
+                  if (jsonData.webSocketDebuggerUrl) {
+                    this.logger.log(`🌐 WebSocket endpoint (port 3000): ${jsonData.webSocketDebuggerUrl}`);
+                  }
+                }
+              } catch (error) {
+                // It's okay if this fails
+                this.logger.log(`ℹ️ Could not fetch JSON version, but health check passed`);
+              }
+            }
+            return;
+          }
+        }
+      } catch (error) {
+        // Not ready yet
+      }
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+    throw new Error(`browserless/chrome not ready after ${timeoutMs}ms`);
+  }
+
   private async initializeServices(): Promise<void> {
     try {
       // Start TCP server
@@ -288,6 +338,12 @@ export default class TesterantoDocker extends EventEmitter {
       this.logger.error(`❌ Failed to start servers:`, error);
       throw error;
     }
+    
+    // Wait for Chromium to be ready
+    await this.waitForChromium();
+    
+    // Connect to browserless/chrome container
+    // Let the browser manager auto-discover the endpoint
     await this.browserManager.initialize();
   }
 

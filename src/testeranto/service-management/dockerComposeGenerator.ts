@@ -245,27 +245,24 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
   // Generate services according to the example structure
   const services: any = {};
 
-  // Add Chromium service for web tests
+  // Add Chromium service for web tests using browserless/chrome
   services["chromium"] = {
-    image: "selenium/standalone-chromium:latest",
+    image: "browserless/chrome:latest",
     container_name: "chromium",
     restart: "unless-stopped",
-    ports: ["4444:4444", "7900:7900"],
+    ports: ["3000:3000", "9222:9222"],
     shm_size: "2g",
     environment: {
-      SE_EVENT_BUS_HOST: "selenium-hub",
-      SE_EVENT_BUS_PUBLISH_PORT: "4442",
-      SE_EVENT_BUS_SUBSCRIBE_PORT: "4443",
-      SE_NODE_MAX_SESSIONS: 4,
-      SE_NODE_OVERRIDE_MAX_SESSIONS: true,
-      SE_SCREEN_WIDTH: "1920",
-      SE_SCREEN_HEIGHT: "1080",
-      SE_SCREEN_DEPTH: "24",
-      SE_VNC_NO_PASSWORD: "1",
-      SE_VNC_VIEW_ONLY: "0",
+      // Browserless configuration
+      CONNECTION_TIMEOUT: "60000",
+      MAX_CONCURRENT_SESSIONS: "10",
+      ENABLE_CORS: "true",
+      // Enable remote debugging
+      REMOTE_DEBUGGING_PORT: "9222",
+      REMOTE_DEBUGGING_ADDRESS: "0.0.0.0",
     },
     healthcheck: {
-      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"],
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"],
       interval: "10s",
       timeout: "10s",
       retries: 5,
@@ -449,26 +446,26 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
           condition: "service_healthy",
         };
         serviceConfig.environment["CHROMIUM_URL"] =
-          "http://chromium:4444/wd/hub";
+          "http://chromium:3000";
         serviceConfig.environment["CHROMIUM_VNC_URL"] = "http://localhost:7900";
 
         // Update the command to include Chromium connection logic
         const chromiumCommand = `
-                # Wait for Chromium to be ready
-                echo "Waiting for Chromium to be ready..."
+                # Wait for browserless/chrome to be ready
+                echo "Waiting for browserless/chrome to be ready..."
                 MAX_CHROMIUM_RETRIES=30
                 CHROMIUM_RETRY_COUNT=0
                 while [ $CHROMIUM_RETRY_COUNT -lt $MAX_CHROMIUM_RETRIES ]; do
-                  if curl -s http://chromium:4444/wd/hub/status | grep -q '"ready":true'; then
-                    echo "✅ Chromium is ready"
+                  if curl -s http://chromium:3000/health 2>/dev/null | grep -q '"ready":true'; then
+                    echo "✅ browserless/chrome is ready"
                     break
                   fi
-                  echo "Chromium not ready yet (attempt $((CHROMIUM_RETRY_COUNT+1))/$MAX_CHROMIUM_RETRIES)"
+                  echo "browserless/chrome not ready yet (attempt $((CHROMIUM_RETRY_COUNT+1))/$MAX_CHROMIUM_RETRIES)"
                   CHROMIUM_RETRY_COUNT=$((CHROMIUM_RETRY_COUNT+1))
                   sleep 2
                 done
                 if [ $CHROMIUM_RETRY_COUNT -eq $MAX_CHROMIUM_RETRIES ]; then
-                  echo "⚠️ Chromium may not be fully ready, but proceeding anyway"
+                  echo "⚠️ browserless/chrome may not be fully ready, but proceeding anyway"
                 fi
                 `;
 
@@ -651,11 +648,32 @@ async function run() {
     console.log('Connecting to Chromium...');
     
     try {
-        // Connect to existing Chromium via WebSocket
+        // Connect to existing browserless/chrome via WebSocket
+        // Try to get WebSocket URL from JSON endpoints
+        let wsUrl;
+        
+        // Try port 9222 first (remote debugging port)
+        try {
+            const devToolsInfo = await fetch('http://chromium:9222/json/version');
+            const data = await devToolsInfo.json();
+            wsUrl = data.webSocketDebuggerUrl;
+            console.log('Using WebSocket from port 9222:', wsUrl);
+        } catch (error) {
+            // Fallback to port 3000
+            try {
+                const devToolsInfo = await fetch('http://chromium:3000/json/version');
+                const data = await devToolsInfo.json();
+                wsUrl = data.webSocketDebuggerUrl;
+                console.log('Using WebSocket from port 3000:', wsUrl);
+            } catch (error) {
+                // Fallback to direct WebSocket connection
+                wsUrl = 'ws://chromium:3000';
+                console.log('Using fallback WebSocket:', wsUrl);
+            }
+        }
+        
         const browser = await puppeteer.connect({
-            browserWSEndpoint: process.env.CHROMIUM_URL ? 
-                process.env.CHROMIUM_URL.replace('http://', 'ws://').replace('/wd/hub', '') : 
-                'ws://chromium:4444',
+            browserWSEndpoint: wsUrl,
             defaultViewport: null,
         });
         
