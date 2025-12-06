@@ -1,0 +1,27 @@
+export declare const GitIntegrationView: ({ mode, setMode, fileService, remoteStatus, changes, currentBranch, isLoading, setError, loadChanges, loadGitStatus, error, getStatusBadgeVariant, commitSummary, setCommitSummary, commitDescription, setCommitDescription, handleSaveChanges, isCommitting, handleShareChanges, getSyncStatusVariant, handleGetUpdates, isPulling, isPushing, setIsPushing, getSyncStatusText, }: {
+    mode: any;
+    setMode: any;
+    fileService: any;
+    remoteStatus: any;
+    changes: any;
+    currentBranch: any;
+    isLoading: any;
+    setError: any;
+    loadChanges: any;
+    loadGitStatus: any;
+    error: any;
+    getStatusBadgeVariant: any;
+    commitSummary: any;
+    setCommitSummary: any;
+    commitDescription: any;
+    setCommitDescription: any;
+    handleSaveChanges: any;
+    isCommitting: any;
+    handleShareChanges: any;
+    getSyncStatusVariant: any;
+    handleGetUpdates: any;
+    isPulling: any;
+    isPushing: any;
+    setIsPushing: any;
+    getSyncStatusText: any;
+}) => JSX.Element;

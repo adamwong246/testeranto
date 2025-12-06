@@ -24,17 +24,10 @@ export class NodeTiposkripto<
     input: I["iinput"],
     testSpecification: ITestSpecification<I, O>,
     testImplementation: ITestImplementation<I, O, M>,
-    testAdapter: Partial<ITestAdapter<I>>,
-    testResourceRequirement: ITTestResourceRequest
+    testResourceRequirement: ITTestResourceRequest,
+    testAdapter: Partial<ITestAdapter<I>>
   ) {
-    // console.log("NodeTiposkripto input", input);
-    // console.log("NodeTiposkripto testSpecification", testSpecification);
-    // console.log("NodeTiposkripto testImplementation", testImplementation);
-    // console.log("NodeTiposkripto testAdapter", testAdapter);
-    // console.log(
-    //   "NodeTiposkripto testResourceRequirement",
-    //   testResourceRequirement
-    // );
+    console.log("111 NodeTiposkripto constructor");
     super(
       input,
       testSpecification,

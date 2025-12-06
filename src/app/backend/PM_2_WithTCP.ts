@@ -25,20 +25,6 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
       this.clients.add(ws);
       console.log("Client connected");
 
-      // Send welcome message
-      ws.send(JSON.stringify({
-        type: "system",
-        message: "Connected to Testeranto WebSocket server",
-        timestamp: new Date().toISOString(),
-        serverInfo: {
-          projectName: this.projectName,
-          mode: this.mode
-        }
-      }));
-
-      // Send all existing processes to the newly connected client
-      this.sendAllProcessesToClient(ws);
-
       ws.on("message", (data) => {
         try {
           this.websocket(data, ws);
@@ -62,46 +48,6 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
     this.httpServer.listen(httpPort, "0.0.0.0", () => {
       console.log(`HTTP server running on http://localhost:${httpPort}`);
     });
-  }
-
-  protected sendAllProcessesToClient(ws: WebSocket): void {
-    // Send all existing processes to the client
-    const allProcesses = Array.from(this.allProcesses.entries()).map(
-      ([id, procInfo]) => ({
-        processId: id,
-        command: procInfo.command,
-        pid: procInfo.pid,
-        status: procInfo.status,
-        exitCode: procInfo.exitCode,
-        error: procInfo.error,
-        timestamp: procInfo.timestamp,
-        category: procInfo.category,
-        testName: procInfo.testName,
-        platform: procInfo.platform,
-        logs: this.processLogs.get(id) || [],
-      })
-    );
-
-    ws.send(JSON.stringify({
-      type: "allProcesses",
-      processes: allProcesses,
-      timestamp: new Date().toISOString(),
-      count: allProcesses.length
-    }));
-
-    // Also send a summary of the current state
-    const runningCount = allProcesses.filter(p => p.status === "running").length;
-    const completedCount = allProcesses.filter(p => p.status === "completed").length;
-    const errorCount = allProcesses.filter(p => p.status === "error").length;
-    
-    ws.send(JSON.stringify({
-      type: "processSummary",
-      total: allProcesses.length,
-      running: runningCount,
-      completed: completedCount,
-      error: errorCount,
-      timestamp: new Date().toISOString()
-    }));
   }
 
   protected websocket(data: any, ws: WebSocket) {
@@ -209,31 +155,6 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
               );
             });
         }
-      } else if (wsm.type === "test") {
-        // Echo back test messages for verification
-        ws.send(JSON.stringify({
-          type: "testResponse",
-          message: "Test received",
-          original: wsm
-        }));
-      } else if (wsm.type === "triggerTest") {
-        // Send back a confirmation and broadcast a test process
-        ws.send(JSON.stringify({
-          type: "triggerTestResponse",
-          message: "Test trigger received",
-          timestamp: new Date().toISOString()
-        }));
-        
-        // Broadcast a test process event
-        this.webSocketBroadcastMessage({
-          type: "testProcessEvent",
-          message: "Test process triggered from frontend",
-          timestamp: new Date().toISOString(),
-          data: {
-            triggeredBy: "frontend",
-            randomId: Math.random().toString(36).substring(2, 15)
-          }
-        });
       }
     } catch (error) {
       console.error("Error handling WebSocket message:", error);

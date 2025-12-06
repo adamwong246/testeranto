@@ -1,0 +1,12 @@
+import { IPM } from "./types";
+export type IProxyBase = (pm: IPM, mappings: [string, (...x: any) => any][]) => IPM;
+export type IProxy = (pm: IPM, filepath: string, step: any) => IPM;
+export type IProxyAfterEach = (pm: IPM, suite: string, given: string, step: any) => IPM;
+export type IProxyBeforeEach = (pm: IPM, suite: string, step: any) => IPM;
+export type IProxiedFunctions = "screencast" | "createWriteStream" | "writeFileSync" | "customScreenShot";
+export declare const butThenProxy: IProxy;
+export declare const andWhenProxy: IProxy;
+export declare const afterEachProxy: IProxyAfterEach;
+export declare const beforeEachProxy: IProxyBeforeEach;
+export declare const beforeAllProxy: IProxy;
+export declare const afterAllProxy: IProxy;

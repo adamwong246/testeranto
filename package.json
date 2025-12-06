@@ -17,7 +17,6 @@
     "build-hard": "rm -rf testeranto/** && yarn build && yarn type-check; yarn t-init; cp dist/prebuild/App.*  testeranto; yarn t-build core once; yarn t-run core once",
     "build": "sh prebuild.sh; cp ./src/cjs-shim.js ./dist/cjs-shim.js; tsc -p tsconfig.module.json; tsc -p tsconfig.common.json; tsc -p tsconfig.types.json; sh postBuild.sh; yarn bundle",
     "build3": "yarn bundle; tsc -p tsconfig.types.json",
-    "build4": "yarn bundle",
     "dev": "sh prebuild.sh;  cp ./src/cjs-shim.js ./dist/cjs-shim.js; sh postBuild.sh; tsc -p tsconfig.module.json --watch & tsc -p tsconfig.common.json --watch  ",
     "bundle": "node bundle.js",
     "build-module": "tsc -p tsconfig.module.json",
@@ -50,14 +49,9 @@
     "ci": "npm run build:all && npm run test:all && npm run verify",
     "devV2:clean": "npm run clean:all && npm run devV2",
     "devV2:full": "rm -rf testeranto && npm run build:all && npm run t-init && cp ./dist/prebuild/App.* testeranto && cd example && go mod tidy && cd .. && npm run build:example && npm run testeranto core dev",
-    "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev",
-    "devV4": "rm -rf testeranto && yarn run t-init && npm run testeranto core dev"
+    "devV3": "rm -rf testeranto && yarn run t-init && npm run setup:example && npm run build:example && npm run testeranto core dev"
   },
   "exports": {
-    "./src/Tiposkripto": {
-      "import": "./src/Tiposkripto.ts",
-      "require": "./dist/module/src/Tiposkripto.js"
-    },
     "./Puppeteer": {
       "import": "./dist/prebuild/Puppeteer.mjs",
       "require": "./dist/prebuild/Puppeteer.mjs"
@@ -276,9 +270,6 @@
     "xterm": "^5.3.0",
     "xterm-addon-fit": "^0.8.0",
     "xterm-react": "^1.0.0"
-  },
-  "bin": {
-    "testeranto": "./dist/prebuild/testeranto.mjs"
   },
   "keywords": [
     "typescript",

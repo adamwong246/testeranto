@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-rest-params */
-import WebSocket from "ws";
+import net from "net";
 import fs from "fs";
 import path from "path";
 import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
@@ -16,47 +16,14 @@ const fPaths: IFPaths = [];
 
 export class PM_Node extends PM {
   testResourceConfiguration: ITTestResourceConfiguration;
-  ws: WebSocket;
-  private pendingRequests: Map<string, { resolve: (value: any) => void; reject: (error: any) => void }> = new Map();
+  client: net.Socket;
 
-  constructor(t: ITTestResourceConfiguration, wsPort: number) {
+  constructor(t: ITTestResourceConfiguration, ipcFile: string) {
     super();
     this.testResourceConfiguration = t;
-    
-    // Connect to WebSocket server
-    this.ws = new WebSocket(`ws://localhost:${wsPort}`);
-    
-    this.ws.on('open', () => {
-      console.log('Connected to WebSocket server');
-    });
-    
-    this.ws.on('message', (data) => {
-      try {
-        const message = JSON.parse(data.toString());
-        if (message.type === 'response' && message.id) {
-          const pending = this.pendingRequests.get(message.id);
-          if (pending) {
-            pending.resolve(message.result);
-            this.pendingRequests.delete(message.id);
-          }
-        } else if (message.type === 'error' && message.id) {
-          const pending = this.pendingRequests.get(message.id);
-          if (pending) {
-            pending.reject(new Error(message.error));
-            this.pendingRequests.delete(message.id);
-          }
-        }
-      } catch (error) {
-        console.error('Error processing WebSocket message:', error);
-      }
-    });
-    
-    this.ws.on('error', (error) => {
-      console.error('WebSocket error:', error);
-    });
-    
-    this.ws.on('close', () => {
-      console.log('WebSocket connection closed');
+
+    this.client = net.createConnection(ipcFile, () => {
+      return;
     });
   }
 
@@ -69,44 +36,26 @@ export class PM_Node extends PM {
   }
 
   send<I>(command: string, ...argz): Promise<I> {
-    return new Promise<I>((resolve, reject) => {
-      if (this.ws.readyState !== WebSocket.OPEN) {
-        reject(new Error("WebSocket is not connected"));
-        return;
-      }
-      
-      const id = Math.random().toString(36).substring(2);
-      this.pendingRequests.set(id, { resolve, reject });
-      
-      const timeout = setTimeout(() => {
-        const pending = this.pendingRequests.get(id);
-        if (pending) {
-          pending.reject(new Error("Request timeout"));
-          this.pendingRequests.delete(id);
+    const key = Math.random().toString();
+    if (!this.client) {
+      console.error(
+        `Tried to send "${command} (${argz})" but the test has not been started and the IPC client is not established. Exiting as failure!`
+      );
+      process.exit(-1);
+    }
+
+    return new Promise<I>((res) => {
+      const myListener = (event) => {
+        const x = JSON.parse(event);
+        if (x.key === key) {
+          process.removeListener("message", myListener);
+          res(x.payload);
         }
-      }, 30000);
-      
-      // Override the original resolve/reject to clear timeout
-      const originalResolve = resolve;
-      const originalReject = reject;
-      
-      this.pendingRequests.set(id, {
-        resolve: (value) => {
-          clearTimeout(timeout);
-          originalResolve(value);
-        },
-        reject: (error) => {
-          clearTimeout(timeout);
-          originalReject(error);
-        }
-      });
-      
-      this.ws.send(JSON.stringify({
-        type: 'command',
-        command,
-        args: argz,
-        id
-      }));
+      };
+
+      process.addListener("message", myListener);
+
+      this.client.write(JSON.stringify([command, ...argz, key]));
     });
   }
 

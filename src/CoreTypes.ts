@@ -43,9 +43,9 @@ export type ITestAdapter<I extends Ibdd_in_any> = {
   ) => Promise<I["isubject"]>;
   beforeEach: (
     subject: I["isubject"],
-    initializer: (c: any) => I["given"],
+    initializer: (c?) => I["given"],
     testResource: ITTestResourceConfiguration,
-    initialValues: unknown,
+    initialValues,
     pm: IPM
   ) => Promise<I["istore"]>;
 };

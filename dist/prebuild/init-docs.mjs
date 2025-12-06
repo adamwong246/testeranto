@@ -1,3 +1,5 @@
+import { createRequire } from 'module';const require = createRequire(import.meta.url);
+
 // src/Init.ts
 import fs from "fs";
 var Init_default = async () => {

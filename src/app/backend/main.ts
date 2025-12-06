@@ -6,9 +6,8 @@ import net from "net";
 import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
-import { WebSocketServer } from "ws";
 import esbuildNodeConfiger from "../../esbuildConfigs/node.js";
-// import esbuildImportConfiger from "../../esbuildConfigs/pure.js";
+import esbuildImportConfiger from "../../esbuildConfigs/pure.js";
 import esbuildWebConfiger from "../../esbuildConfigs/web.js";
 import { IFinalResults, IRunTime } from "../../lib/index.js";
 import {
@@ -57,7 +56,6 @@ export class PM_Main extends PM_WithHelpo {
     testConfigResource: any;
     portsToUse: string[];
     testResources: string;
-    wsPort: number;
   }> {
     this.bddTestIsRunning(src);
 
@@ -80,20 +78,16 @@ export class PM_Main extends PM_WithHelpo {
 
     const testConfigResource = testConfig[2];
 
+    console.log("mark1", this.configTests());
     const portsToUse: string[] = [];
     let testResources = "";
-
-    // Find an available port for WebSocket connection
-    const wsPort = await this.findAvailablePort();
 
     if (testConfigResource.ports === 0) {
       testResources = JSON.stringify({
         name: src,
         ports: [],
         fs: reportDest,
-        browserWSEndpoint: this.browser ? this.browser.wsEndpoint() : "",
-        wsPort: wsPort,
-        wsHost: "localhost",
+        browserWSEndpoint: this.browser.wsEndpoint(),
       });
     } else if (testConfigResource.ports > 0) {
       const openPorts = Object.entries(this.ports).filter(
@@ -111,9 +105,7 @@ export class PM_Main extends PM_WithHelpo {
           name: src,
           ports: portsToUse,
           fs: reportDest,
-          browserWSEndpoint: this.browser ? this.browser.wsEndpoint() : "",
-          wsPort: wsPort,
-          wsHost: "localhost",
+          browserWSEndpoint: this.browser.wsEndpoint(),
         });
       } else {
         console.log(
@@ -135,25 +127,7 @@ export class PM_Main extends PM_WithHelpo {
       testConfigResource,
       portsToUse,
       testResources,
-      wsPort,
     };
-  }
-
-  private async findAvailablePort(): Promise<number> {
-    return new Promise((resolve, reject) => {
-      const server = net.createServer();
-      server.listen(0, () => {
-        const address = server.address();
-        const port =
-          typeof address === "string"
-            ? parseInt(address.split(":").pop() || "0")
-            : address?.port || 0;
-        server.close(() => {
-          resolve(port);
-        });
-      });
-      server.on("error", reject);
-    });
   }
 
   private cleanupPorts(portsToUse: string[]) {
@@ -171,11 +145,12 @@ export class PM_Main extends PM_WithHelpo {
         socket.on("data", onData);
       });
 
-      server.listen(ipcfile, () => {
-        resolve(server);
+      server.listen(ipcfile, (err) => {
+        if (err) reject(err);
+        else resolve(server);
       });
 
-      server.on("error", (err) => reject(err));
+      server.on("error", reject);
     });
   }
 
@@ -246,117 +221,60 @@ export class PM_Main extends PM_WithHelpo {
 
     const nodePromise = (async () => {
       try {
-        const { reportDest, testResources, portsToUse, wsPort } =
+        const { reportDest, testResources, portsToUse } =
           await this.setupTestEnvironment(src, "node");
 
         const builtfile = dest;
+        const ipcfile = "/tmp/tpipe_" + Math.random();
         const logs = createLogStreams(reportDest, "node");
 
-        // Create a WebSocket server for this test
-        const wss = new WebSocketServer({ port: wsPort });
+        let buffer = Buffer.from("");
+        const queue = new Queue<string[]>();
 
-        // Store connection for this test
-        let testConnection: WebSocket | null = null;
+        const onData = (data: Buffer) => {
+          buffer = Buffer.concat([buffer, data]);
 
-        // Send a message to the frontend about the test WebSocket server
-        this.webSocketBroadcastMessage({
-          type: "testWebSocketServer",
-          message: `Created WebSocket server for test ${src} on port ${wsPort}`,
-          test: src,
-          wsPort,
-          timestamp: new Date().toISOString(),
-        });
-
-        wss.on("connection", (ws) => {
-          testConnection = ws;
-          console.log(`WebSocket connected for test ${src}`);
-
-          // Send a message to the frontend about the connection
-          this.webSocketBroadcastMessage({
-            type: "testWebSocketConnection",
-            message: `Test ${src} connected to its WebSocket server`,
-            test: src,
-            timestamp: new Date().toISOString(),
-          });
-
-          ws.on("message", async (data) => {
+          // Process complete JSON messages
+          for (let b = 0; b < buffer.length + 1; b++) {
+            const c = buffer.slice(0, b);
             try {
-              const message = JSON.parse(data.toString());
-              if (message.type === "command") {
-                const { command, args, id } = message;
-                try {
-                  const func = this.mapping().find(
-                    ([cmd]) => cmd === command
-                  )?.[1];
-                  if (func) {
-                    const result = await (this as any)[command](...args);
-                    ws.send(
-                      JSON.stringify({
-                        type: "response",
-                        id,
-                        result,
-                      })
-                    );
-                  } else {
-                    ws.send(
-                      JSON.stringify({
-                        type: "error",
-                        id,
-                        error: `Command ${command} not found`,
-                      })
-                    );
-                  }
-                } catch (error) {
-                  ws.send(
-                    JSON.stringify({
-                      type: "error",
-                      id,
-                      error: error.message,
-                    })
-                  );
-                }
-              }
-            } catch (error) {
-              console.error(
-                `Error handling WebSocket message for ${src}:`,
-                error
-              );
+              const d = JSON.parse(c.toString());
+              queue.enqueue(d);
+              buffer = buffer.slice(b);
+              b = 0;
+            } catch (e) {
+              // Continue processing
             }
-          });
-
-          ws.on("close", () => {
-            console.log(`WebSocket closed for test ${src}`);
-            testConnection = null;
-
-            // Send a message to the frontend about the disconnection
-            this.webSocketBroadcastMessage({
-              type: "testWebSocketDisconnection",
-              message: `Test ${src} disconnected from its WebSocket server`,
-              test: src,
-              timestamp: new Date().toISOString(),
-            });
-          });
-
-          ws.on("error", (error) => {
-            console.error(`WebSocket error for test ${src}:`, error);
-
-            this.webSocketBroadcastMessage({
-              type: "testWebSocketError",
-              message: `WebSocket error for test ${src}: ${error.message}`,
-              test: src,
-              error: error.message,
-              timestamp: new Date().toISOString(),
-            });
-          });
-        });
-
-        const child = spawn(
-          "node",
-          [builtfile, testResources, wsPort.toString()],
-          {
-            stdio: ["pipe", "pipe", "pipe"],
           }
-        );
+
+          // Process messages
+          while (queue.size() > 0) {
+            const message = queue.dequeue();
+            if (message) {
+              this.mapping().forEach(async ([command, func]) => {
+                if (message[0] === command) {
+                  const args = message.slice(1, -1);
+                  try {
+                    const result = await (this as any)[command](...args);
+                    child.send(
+                      JSON.stringify({
+                        payload: result,
+                        key: message[message.length - 1],
+                      })
+                    );
+                  } catch (error) {
+                    console.error(`Error handling command ${command}:`, error);
+                  }
+                }
+              });
+            }
+          }
+        };
+
+        const server = await this.createIpcServer(onData, ipcfile);
+        const child = spawn("node", [builtfile, testResources, ipcfile], {
+          stdio: ["pipe", "pipe", "pipe", "ipc"],
+        });
 
         try {
           await this.handleChildProcess(child, logs, reportDest, src, "node");
@@ -364,7 +282,7 @@ export class PM_Main extends PM_WithHelpo {
           // Generate prompt files for Node tests
           await this.generatePromptFiles(reportDest, src);
         } finally {
-          wss.close();
+          server.close();
           this.cleanupPorts(portsToUse);
         }
       } catch (error) {
@@ -408,7 +326,7 @@ export class PM_Main extends PM_WithHelpo {
         name: src,
         ports: [].toString(),
         fs: reportDest,
-        browserWSEndpoint: this.browser ? this.browser.wsEndpoint() : "",
+        browserWSEndpoint: this.browser.wsEndpoint(),
       });
 
       const d = `${dest}?cacheBust=${Date.now()}`;
@@ -416,10 +334,6 @@ export class PM_Main extends PM_WithHelpo {
       const logs = createLogStreams(reportDest, "web");
 
       return new Promise<void>((resolve, reject) => {
-        if (!this.browser) {
-          reject(new Error("Browser not initialized"));
-          return;
-        }
         this.browser
           .newPage()
 
@@ -621,14 +535,12 @@ export class PM_Main extends PM_WithHelpo {
                   const args = message.slice(1, -1);
                   try {
                     const result = await (this as any)[command](...args);
-                    if (child.send) {
-                      child.send(
-                        JSON.stringify({
-                          payload: result,
-                          key: message[message.length - 1],
-                        })
-                      );
-                    }
+                    child.send(
+                      JSON.stringify({
+                        payload: result,
+                        key: message[message.length - 1],
+                      })
+                    );
                   } catch (error) {
                     console.error(`Error handling command ${command}:`, error);
                   }
@@ -810,12 +722,7 @@ export class PM_Main extends PM_WithHelpo {
         const stdoutContent = fs.readFileSync(stdoutPath, "utf-8");
         const lines = stdoutContent.split("\n").filter((line) => line.trim());
 
-        const testResults: {
-          tests: Array<{ name: string; status: string; time: string }>;
-          features: any[];
-          givens: any[];
-          fullPath: string;
-        } = {
+        const testResults = {
           tests: [],
           features: [],
           givens: [],
@@ -908,4 +815,206 @@ Do not add error throwing/catching to the tests themselves.`;
       console.error(`Failed to generate prompt files for ${src}:`, error);
     }
   }
+
+  // private getGolangSourceFiles(src: string): string[] {
+  //   // Get all .go files in the same directory as the test
+  //   const testDir = path.dirname(src);
+  //   const files: string[] = [];
+
+  //   try {
+  //     const dirContents = fs.readdirSync(testDir);
+  //     dirContents.forEach((file) => {
+  //       if (file.endsWith(".go")) {
+  //         files.push(path.join(testDir, file));
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error(`Error reading directory ${testDir}:`, error);
+  //   }
+
+  //   // Always include the main test file
+  //   if (!files.includes(src)) {
+  //     files.push(src);
+  //   }
+
+  //   return files;
+  // }
+
+  // launchPure = async (src: string, dest: string) => {
+  //   console.log(ansiC.green(ansiC.inverse(`pure < ${src}`)));
+
+  //   const processId = `pure-${src}-${Date.now()}`;
+  //   const command = `pure test: ${src}`;
+
+  //   // Create the promise
+  //   const purePromise = (async () => {
+  //     this.bddTestIsRunning(src);
+
+  //     const reportDest = `testeranto/reports/${this.projectName}/${src
+  //       .split(".")
+  //       .slice(0, -1)
+  //       .join(".")}/pure`;
+
+  //     if (!fs.existsSync(reportDest)) {
+  //       fs.mkdirSync(reportDest, { recursive: true });
+  //     }
+
+  //     const destFolder = dest.replace(".mjs", "");
+
+  //     let argz = "";
+
+  //     const testConfig = this.configs.tests.find((t) => {
+  //       return t[0] === src;
+  //     });
+
+  //     if (!testConfig) {
+  //       console.log(
+  //         ansiC.inverse("missing test config! Exiting ungracefully!")
+  //       );
+  //       process.exit(-1);
+  //     }
+  //     const testConfigResource = testConfig[2];
+
+  //     const portsToUse: string[] = [];
+  //     if (testConfigResource.ports === 0) {
+  //       argz = JSON.stringify({
+  //         scheduled: true,
+  //         name: src,
+  //         ports: portsToUse,
+  //         fs: reportDest,
+  //         browserWSEndpoint: this.browser.wsEndpoint(),
+  //       });
+  //     } else if (testConfigResource.ports > 0) {
+  //       const openPorts = Object.entries(this.ports).filter(
+  //         ([portnumber, status]) => status === ""
+  //       );
+
+  //       if (openPorts.length >= testConfigResource.ports) {
+  //         for (let i = 0; i < testConfigResource.ports; i++) {
+  //           portsToUse.push(openPorts[i][0]);
+
+  //           this.ports[openPorts[i][0]] = src; // port is now claimed
+  //         }
+
+  //         argz = JSON.stringify({
+  //           scheduled: true,
+  //           name: src,
+  //           ports: portsToUse,
+  //           fs: destFolder,
+  //           browserWSEndpoint: this.browser.wsEndpoint(),
+  //         });
+  //       } else {
+  //         this.queue.push(src);
+  //         return [Math.random(), argz];
+  //       }
+  //     } else {
+  //       console.error("negative port makes no sense", src);
+  //       process.exit(-1);
+  //     }
+
+  //     const builtfile = dest;
+
+  //     const logs = createLogStreams(reportDest, "pure");
+
+  //     try {
+  //       await import(`${builtfile}?cacheBust=${Date.now()}`).then((module) => {
+  //         return module.default
+  //           .then((defaultModule) => {
+  //             return defaultModule
+  //               .receiveTestResourceConfig(argz)
+  //               .then(async (results: IFinalResults) => {
+  //                 // Ensure the test results are properly processed
+  //                 // The receiveTestResourceConfig should handle creating tests.json
+  //                 statusMessagePretty(results.fails, src, "pure");
+  //                 this.bddTestIsNowDone(src, results.fails);
+  //                 return results.fails;
+  //               });
+  //           })
+  //           .catch((e2) => {
+  //             console.log(
+  //               ansiColors.red(
+  //                 `pure ! ${src} failed to execute. No "tests.json" file was generated. Check the logs for more info`
+  //               )
+  //             );
+
+  //             // Create a minimal tests.json even on failure
+  //             const testsJsonPath = `${reportDest}/tests.json`;
+  //             if (!fs.existsSync(testsJsonPath)) {
+  //               fs.writeFileSync(
+  //                 testsJsonPath,
+  //                 JSON.stringify(
+  //                   {
+  //                     tests: [],
+  //                     features: [],
+  //                     givens: [],
+  //                     fullPath: src,
+  //                   },
+  //                   null,
+  //                   2
+  //                 )
+  //               );
+  //             }
+
+  //             logs.exit.write(e2.stack);
+  //             logs.exit.write(-1);
+  //             this.bddTestIsNowDone(src, -1);
+  //             statusMessagePretty(-1, src, "pure");
+  //             throw e2;
+  //           });
+  //       });
+  //     } catch (e3) {
+  //       // Create a minimal tests.json even on uncaught errors
+  //       const testsJsonPath = `${reportDest}/tests.json`;
+  //       if (!fs.existsSync(testsJsonPath)) {
+  //         fs.writeFileSync(
+  //           testsJsonPath,
+  //           JSON.stringify(
+  //             {
+  //               tests: [],
+  //               features: [],
+  //               givens: [],
+  //               fullPath: src,
+  //             },
+  //             null,
+  //             2
+  //           )
+  //         );
+  //       }
+
+  //       logs.writeExitCode(-1, e3);
+  //       console.log(
+  //         ansiC.red(
+  //           ansiC.inverse(
+  //             `${src} 1 errored with: ${e3}. Check logs for more info`
+  //           )
+  //         )
+  //       );
+
+  //       logs.exit.write(e3.stack);
+  //       logs.exit.write("-1");
+  //       this.bddTestIsNowDone(src, -1);
+  //       statusMessagePretty(-1, src, "pure");
+  //       throw e3;
+  //     } finally {
+  //       // Generate prompt files for Pure tests
+  //       await this.generatePromptFiles(reportDest, src);
+
+  //       for (let i = 0; i <= portsToUse.length; i++) {
+  //         if (portsToUse[i]) {
+  //           this.ports[portsToUse[i]] = ""; // port is open again
+  //         }
+  //       }
+  //     }
+  //   })();
+
+  //   // Add to process manager
+  //   this.addPromiseProcess(
+  //     processId,
+  //     purePromise,
+  //     command,
+  //     "bdd-test",
+  //     src,
+  //     "pure"
+  //   );
+  // };
 }

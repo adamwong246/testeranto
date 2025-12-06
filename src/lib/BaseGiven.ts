@@ -33,7 +33,6 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
   key: string;
   failed: boolean;
   artifacts: string[] = [];
-  fails: number;
 
   status: boolean | undefined;
 
@@ -103,7 +102,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     return store;
   }
 
-  abstract uberCatcher(e: any): void;
+  abstract uberCatcher(e);
 
   async give(
     subject: I["isubject"],
@@ -124,7 +123,7 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
     const givenArtifactory = (fPath: string, value: unknown) =>
       artifactory(`given-${key}/${fPath}`, value);
 
-    this.uberCatcher((e: any) => {
+    this.uberCatcher((e) => {
       console.error(e.toString());
       this.error = e.error;
       tLog(e.stack);
@@ -143,9 +142,9 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
         proxiedPm
       );
       this.status = true;
-    } catch (e: any) {
+    } catch (e) {
       this.status = false;
-
+      // console.error("Given failure: ", e.stack);
       this.failed = true;
       this.fails++; // Increment fail count
       this.error = e.stack;
@@ -154,24 +153,71 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
 
     try {
       const whens = this.whens || [];
+      // console.log(`[BaseGiven.give] Number of when steps: ${whens.length}`);
+      // if (whens.length > 0) {
+      //   // console.log(`[BaseGiven.give] When steps exist, let's process them`);
+      //   for (const [whenNdx, whenStep] of whens.entries()) {
+      //     // console.log(
+      //     //   `[BaseGiven.give] Processing when step ${whenNdx}:`,
+      //     //   whenStep?.name
+      //     // );
+      //     // console.log(`[BaseGiven.give] Store before when step:`, this.store);
+      //     // console.log(`[BaseGiven.give] When step instance:`, whenStep);
 
-      if (whens.length > 0) {
-        for (const [whenNdx, whenStep] of whens.entries()) {
-          try {
-            this.store = await whenStep.test(
-              this.store,
-              testResourceConfiguration,
-              tLog,
-              pm,
-              `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
-            );
-          } catch (e) {
-            this.failed = true;
-            this.fails++;
-            throw e;
-          }
-        }
-      }
+      //     // Check if this is actually a then step that was incorrectly placed in whens
+      //     // if (
+      //     //   whenStep &&
+      //     //   whenStep.name &&
+      //     //   whenStep.name.startsWith("result:")
+      //     // ) {
+      //     //   // console.error(
+      //     //   //   `[BaseGiven.give] ERROR: Found then step "${whenStep.name}" in whens array!`
+      //     //   // );
+      //     //   // Move it to thens array
+      //     //   this.thens.push(whenStep);
+      //     //   // console.log(
+      //     //   //   `[BaseGiven.give] Moved "${whenStep.name}" from whens to thens`
+      //     //   // );
+      //     //   continue; // Skip processing as a when step
+      //     // }
+
+      //     // // Check if whenStep exists and whenStep.test is a function
+      //     // if (whenStep && typeof whenStep.test === "function") {
+      //     //   try {
+      //     //     // Update the store with the result of the when step
+      //     //     this.store = await whenStep.test(
+      //     //       this.store,
+      //     //       testResourceConfiguration,
+      //     //       tLog,
+      //     //       pm,
+      //     //       `suite-${suiteNdx}/given-${key}/when/${whenNdx}`
+      //     //     );
+      //     //     // console.log(
+      //     //     //   `[BaseGiven.give] Store after when step ${whenNdx}:`,
+      //     //     //   this.store
+      //     //     // );
+      //     //   } catch (e) {
+      //     //     // console.error(
+      //     //     //   `[BaseGiven.give] Error in when step ${whenNdx}:`,
+      //     //     //   e
+      //     //     // );
+      //     //     this.failed = true;
+      //     //     this.fails++; // Increment fail count
+      //     //     throw e;
+      //     //   }
+      //     // } else {
+      //     //   // console.error(
+      //     //   //   `[BaseGiven.give] whenStep.test is not a function:`,
+      //     //   //   typeof whenStep?.test
+      //     //   // );
+      //     //   this.failed = true;
+      //     //   this.fails++; // Increment fail count
+      //     //   throw new Error(`When step ${whenNdx} does not have a test method`);
+      //     // }
+      //   }
+      // } else {
+      //   console.log(`[BaseGiven.give] No when steps to process`);
+      // }
 
       for (const [thenNdx, thenStep] of this.thens.entries()) {
         try {
@@ -182,17 +228,21 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
             pm,
             `suite-${suiteNdx}/given-${key}/then-${thenNdx}`
           );
+          // If the test doesn't throw, it passed
           tester(t);
-        } catch (e: any) {
+        } catch (e) {
+          // Mark the given as failed if any then step fails
           this.failed = true;
           this.fails++; // Increment fail count
           // Re-throw to propagate the error
           throw e;
         }
       }
-    } catch (e: any) {
+    } catch (e) {
       this.error = e.stack;
       this.failed = true;
+      // tLog(e.stack);
+      // throw e;
     } finally {
       try {
         const addArtifact = this.addArtifact.bind(this);
@@ -202,8 +252,9 @@ export abstract class BaseGiven<I extends Ibdd_in_any> {
           key,
           addArtifact
         );
+        // (proxiedPm as any).currentStep = this;
         await this.afterEach(this.store, this.key, givenArtifactory, proxiedPm);
-      } catch (e: any) {
+      } catch (e) {
         this.failed = true;
         this.fails++; // Increment fail count
         throw e;
