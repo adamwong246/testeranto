@@ -6,6 +6,7 @@ import net from "net";
 import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
+import { WebSocketServer } from "ws";
 import esbuildNodeConfiger from "../../esbuildConfigs/node.js";
 import esbuildImportConfiger from "../../esbuildConfigs/pure.js";
 import esbuildWebConfiger from "../../esbuildConfigs/web.js";
@@ -56,6 +57,7 @@ export class PM_Main extends PM_WithHelpo {
     testConfigResource: any;
     portsToUse: string[];
     testResources: string;
+    wsPort: number;
   }> {
     this.bddTestIsRunning(src);
 
@@ -82,12 +84,17 @@ export class PM_Main extends PM_WithHelpo {
     const portsToUse: string[] = [];
     let testResources = "";
 
+    // Find an available port for WebSocket connection
+    const wsPort = await this.findAvailablePort();
+    
     if (testConfigResource.ports === 0) {
       testResources = JSON.stringify({
         name: src,
         ports: [],
         fs: reportDest,
-        browserWSEndpoint: this.browser.wsEndpoint(),
+        browserWSEndpoint: this.browser ? this.browser.wsEndpoint() : '',
+        wsPort: wsPort,
+        wsHost: 'localhost'
       });
     } else if (testConfigResource.ports > 0) {
       const openPorts = Object.entries(this.ports).filter(
@@ -105,7 +112,9 @@ export class PM_Main extends PM_WithHelpo {
           name: src,
           ports: portsToUse,
           fs: reportDest,
-          browserWSEndpoint: this.browser.wsEndpoint(),
+          browserWSEndpoint: this.browser ? this.browser.wsEndpoint() : '',
+          wsPort: wsPort,
+          wsHost: 'localhost'
         });
       } else {
         console.log(
@@ -127,7 +136,22 @@ export class PM_Main extends PM_WithHelpo {
       testConfigResource,
       portsToUse,
       testResources,
+      wsPort,
     };
+  }
+
+  private async findAvailablePort(): Promise<number> {
+    return new Promise((resolve, reject) => {
+      const server = net.createServer();
+      server.listen(0, () => {
+        const address = server.address();
+        const port = typeof address === 'string' ? parseInt(address.split(':').pop() || '0') : address?.port || 0;
+        server.close(() => {
+          resolve(port);
+        });
+      });
+      server.on('error', reject);
+    });
   }
 
   private cleanupPorts(portsToUse: string[]) {
@@ -221,59 +245,101 @@ export class PM_Main extends PM_WithHelpo {
 
     const nodePromise = (async () => {
       try {
-        const { reportDest, testResources, portsToUse } =
+        const { reportDest, testResources, portsToUse, wsPort } =
           await this.setupTestEnvironment(src, "node");
 
         const builtfile = dest;
-        const ipcfile = "/tmp/tpipe_" + Math.random();
         const logs = createLogStreams(reportDest, "node");
 
-        let buffer = Buffer.from("");
-        const queue = new Queue<string[]>();
-
-        const onData = (data: Buffer) => {
-          buffer = Buffer.concat([buffer, data]);
-
-          // Process complete JSON messages
-          for (let b = 0; b < buffer.length + 1; b++) {
-            const c = buffer.slice(0, b);
+        // Create a WebSocket server for this test
+        const wss = new WebSocketServer({ port: wsPort });
+        
+        // Store connection for this test
+        let testConnection: WebSocket | null = null;
+        
+        // Send a message to the frontend about the test WebSocket server
+        this.webSocketBroadcastMessage({
+          type: "testWebSocketServer",
+          message: `Created WebSocket server for test ${src} on port ${wsPort}`,
+          test: src,
+          wsPort,
+          timestamp: new Date().toISOString()
+        });
+        
+        wss.on('connection', (ws) => {
+          testConnection = ws;
+          console.log(`WebSocket connected for test ${src}`);
+          
+          // Send a message to the frontend about the connection
+          this.webSocketBroadcastMessage({
+            type: "testWebSocketConnection",
+            message: `Test ${src} connected to its WebSocket server`,
+            test: src,
+            timestamp: new Date().toISOString()
+          });
+          
+          ws.on('message', async (data) => {
             try {
-              const d = JSON.parse(c.toString());
-              queue.enqueue(d);
-              buffer = buffer.slice(b);
-              b = 0;
-            } catch (e) {
-              // Continue processing
-            }
-          }
-
-          // Process messages
-          while (queue.size() > 0) {
-            const message = queue.dequeue();
-            if (message) {
-              this.mapping().forEach(async ([command, func]) => {
-                if (message[0] === command) {
-                  const args = message.slice(1, -1);
-                  try {
+              const message = JSON.parse(data.toString());
+              if (message.type === 'command') {
+                const { command, args, id } = message;
+                try {
+                  const func = this.mapping().find(([cmd]) => cmd === command)?.[1];
+                  if (func) {
                     const result = await (this as any)[command](...args);
-                    child.send(
-                      JSON.stringify({
-                        payload: result,
-                        key: message[message.length - 1],
-                      })
-                    );
-                  } catch (error) {
-                    console.error(`Error handling command ${command}:`, error);
+                    ws.send(JSON.stringify({
+                      type: 'response',
+                      id,
+                      result
+                    }));
+                  } else {
+                    ws.send(JSON.stringify({
+                      type: 'error',
+                      id,
+                      error: `Command ${command} not found`
+                    }));
                   }
+                } catch (error) {
+                  ws.send(JSON.stringify({
+                    type: 'error',
+                    id,
+                    error: error.message
+                  }));
                 }
-              });
+              }
+            } catch (error) {
+              console.error(`Error handling WebSocket message for ${src}:`, error);
             }
-          }
-        };
+          });
+          
+          ws.on('close', () => {
+            console.log(`WebSocket closed for test ${src}`);
+            testConnection = null;
+            
+            // Send a message to the frontend about the disconnection
+            this.webSocketBroadcastMessage({
+              type: "testWebSocketDisconnection",
+              message: `Test ${src} disconnected from its WebSocket server`,
+              test: src,
+              timestamp: new Date().toISOString()
+            });
+          });
+          
+          ws.on('error', (error) => {
+            console.error(`WebSocket error for test ${src}:`, error);
+            
+            this.webSocketBroadcastMessage({
+              type: "testWebSocketError",
+              message: `WebSocket error for test ${src}: ${error.message}`,
+              test: src,
+              error: error.message,
+              timestamp: new Date().toISOString()
+            });
+          });
+        });
 
-        const server = await this.createIpcServer(onData, ipcfile);
-        const child = spawn("node", [builtfile, testResources, ipcfile], {
-          stdio: ["pipe", "pipe", "pipe", "ipc"],
+        const child = spawn("node", [builtfile, testResources, wsPort.toString()], {
+          stdio: ["pipe", "pipe", "pipe"],
         });
 
         try {
@@ -282,7 +348,7 @@ export class PM_Main extends PM_WithHelpo {
           // Generate prompt files for Node tests
           await this.generatePromptFiles(reportDest, src);
         } finally {
-          server.close();
+          wss.close();
           this.cleanupPorts(portsToUse);
         }
       } catch (error) {
@@ -326,7 +392,7 @@ export class PM_Main extends PM_WithHelpo {
         name: src,
         ports: [].toString(),
         fs: reportDest,
-        browserWSEndpoint: this.browser.wsEndpoint(),
+        browserWSEndpoint: this.browser ? this.browser.wsEndpoint() : '',
       });
 
       const d = `${dest}?cacheBust=${Date.now()}`;
@@ -334,6 +400,10 @@ export class PM_Main extends PM_WithHelpo {
       const logs = createLogStreams(reportDest, "web");
 
       return new Promise<void>((resolve, reject) => {
+        if (!this.browser) {
+          reject(new Error("Browser not initialized"));
+          return;
+        }
         this.browser
           .newPage()
 

@@ -705,7 +705,7 @@
         "format": "esm"
       },
       "example/Calculator.test.specification.ts": {
-        "bytes": 6850,
+        "bytes": 7422,
         "imports": [
           {
             "path": "../src/CoreTypes",
@@ -820,13 +820,13 @@
             "bytesInOutput": 956
           },
           "example/Calculator.test.specification.ts": {
-            "bytesInOutput": 7164
+            "bytesInOutput": 7183
           },
           "example/Calculator.test.ts": {
             "bytesInOutput": 137
           }
         },
-        "bytes": 153236
+        "bytes": 153255
       },
       "testeranto/bundles/web/allTests/Web-FH4QAHMO.mjs": {
         "imports": [

@@ -17,7 +17,7 @@ export const specification: ITestSpecification<I, O> = (
         [Then.result("")]
       ),
       testSingleDigit: Given.Default(
-        ["entering a number puts it on the display"],
+        ["entering a number puts it on the disply"],
         [When.press("2")],
         [Then.result("2")]
       ),
@@ -28,7 +28,13 @@ export const specification: ITestSpecification<I, O> = (
       ),
       testLargeNumber: Given.Default(
         ["entering a large number works correctly"],
-        [When.press("1"), When.press("2"), When.press("3"), When.press("4"), When.press("5")],
+        [
+          When.press("1"),
+          When.press("2"),
+          When.press("3"),
+          When.press("4"),
+          When.press("5"),
+        ],
         [Then.result("12345")]
       ),
 
@@ -62,15 +68,27 @@ export const specification: ITestSpecification<I, O> = (
       // Complex expressions
       testMixedOperations: Given.Default(
         ["mixed operations are displayed correctly"],
-        [When.press("2"), When.press("+"), When.press("3"), When.press("*"), When.press("4")],
+        [
+          When.press("2"),
+          When.press("+"),
+          When.press("3"),
+          When.press("*"),
+          When.press("4"),
+        ],
         [Then.result("2+3*4")]
       ),
       testLongExpression: Given.Default(
         ["long complex expression is displayed correctly"],
         [
-          When.press("1"), When.press("+"), When.press("2"), 
-          When.press("*"), When.press("3"), When.press("-"), 
-          When.press("4"), When.press("/"), When.press("5")
+          When.press("1"),
+          When.press("+"),
+          When.press("2"),
+          When.press("*"),
+          When.press("3"),
+          When.press("-"),
+          When.press("4"),
+          When.press("/"),
+          When.press("5"),
         ],
         [Then.result("1+2*3-4/5")]
       ),
@@ -79,32 +97,40 @@ export const specification: ITestSpecification<I, O> = (
       testSimpleAddition: Given.Default(
         ["simple addition calculation"],
         [
-          When.press("2"), When.press("3"), When.press("+"),
-          When.press("4"), When.press("5"), When.enter()
+          When.press("2"),
+          When.press("3"),
+          When.press("+"),
+          When.press("4"),
+          When.press("5"),
+          When.enter(),
         ],
         [Then.result("68")]
       ),
       testSimpleSubtraction: Given.Default(
         ["simple subtraction calculation"],
         [
-          When.press("9"), When.press("5"), When.press("-"),
-          When.press("3"), When.press("2"), When.enter()
+          When.press("9"),
+          When.press("5"),
+          When.press("-"),
+          When.press("3"),
+          When.press("2"),
+          When.enter(),
         ],
         [Then.result("63")]
       ),
       testSimpleMultiplication: Given.Default(
         ["simple multiplication calculation"],
-        [
-          When.press("6"), When.press("*"), When.press("7"),
-          When.enter()
-        ],
+        [When.press("6"), When.press("*"), When.press("7"), When.enter()],
         [Then.result("42")]
       ),
       testSimpleDivision: Given.Default(
         ["simple division calculation"],
         [
-          When.press("8"), When.press("4"), When.press("/"),
-          When.press("2"), When.enter()
+          When.press("8"),
+          When.press("4"),
+          When.press("/"),
+          When.press("2"),
+          When.enter(),
         ],
         [Then.result("42")]
       ),
@@ -113,8 +139,11 @@ export const specification: ITestSpecification<I, O> = (
       testClearOperation: Given.Default(
         ["clear operation resets the display"],
         [
-          When.press("1"), When.press("2"), When.press("3"),
-          When.press("C"), When.press("4")
+          When.press("1"),
+          When.press("2"),
+          When.press("3"),
+          When.press("C"),
+          When.press("4"),
         ],
         [Then.result("4")]
       ),
@@ -138,9 +167,15 @@ export const specification: ITestSpecification<I, O> = (
       testDecimalCalculation: Given.Default(
         ["decimal calculation"],
         [
-          When.press("3"), When.press("."), When.press("1"), When.press("+"),
-          When.press("1"), When.press("."), When.press("8"), When.press("6"),
-          When.enter()
+          When.press("3"),
+          When.press("."),
+          When.press("1"),
+          When.press("+"),
+          When.press("1"),
+          When.press("."),
+          When.press("8"),
+          When.press("6"),
+          When.enter(),
         ],
         [Then.result("4.96")]
       ),
@@ -149,17 +184,26 @@ export const specification: ITestSpecification<I, O> = (
       testOrderOfOperations: Given.Default(
         ["order of operations is respected"],
         [
-          When.press("2"), When.press("+"), When.press("3"),
-          When.press("*"), When.press("4"), When.enter()
+          When.press("2"),
+          When.press("+"),
+          When.press("3"),
+          When.press("*"),
+          When.press("4"),
+          When.enter(),
         ],
         [Then.result("14")]
       ),
       testParenthesesExpression: Given.Default(
         ["parentheses in expression"],
         [
-          When.press("("), When.press("2"), When.press("+"),
-          When.press("3"), When.press(")"), When.press("*"),
-          When.press("4"), When.enter()
+          When.press("("),
+          When.press("2"),
+          When.press("+"),
+          When.press("3"),
+          When.press(")"),
+          When.press("*"),
+          When.press("4"),
+          When.enter(),
         ],
         [Then.result("20")]
       ),
@@ -167,17 +211,17 @@ export const specification: ITestSpecification<I, O> = (
       // Error cases
       testDivisionByZero: Given.Default(
         ["division by zero shows error"],
-        [
-          When.press("5"), When.press("/"), When.press("0"),
-          When.enter()
-        ],
+        [When.press("5"), When.press("/"), When.press("0"), When.enter()],
         [Then.result("Error")]
       ),
       testInvalidExpression: Given.Default(
         ["invalid expression shows error"],
         [
-          When.press("2"), When.press("+"), When.press("+"),
-          When.press("3"), When.enter()
+          When.press("2"),
+          When.press("+"),
+          When.press("+"),
+          When.press("3"),
+          When.enter(),
         ],
         [Then.result("Error")]
       ),
@@ -186,28 +230,40 @@ export const specification: ITestSpecification<I, O> = (
       testMemoryStoreRecall: Given.Default(
         ["memory store and recall"],
         [
-          When.press("1"), When.press("2"), When.press("3"),
-          When.press("MS"), When.press("C"), When.press("MR")
+          When.press("1"),
+          When.press("2"),
+          When.press("3"),
+          When.press("MS"),
+          When.press("C"),
+          When.press("MR"),
         ],
         [Then.result("123")]
       ),
       testMemoryClear: Given.Default(
         ["memory clear"],
         [
-          When.press("4"), When.press("5"), When.press("6"),
-          When.press("MS"), When.press("MC"), When.press("MR")
+          When.press("4"),
+          When.press("5"),
+          When.press("6"),
+          When.press("MS"),
+          When.press("MC"),
+          When.press("MR"),
         ],
         [Then.result("0")]
       ),
       testMemoryAddition: Given.Default(
         ["memory addition"],
         [
-          When.press("1"), When.press("0"), When.press("M+"),
-          When.press("2"), When.press("0"), When.press("M+"),
-          When.press("MR")
+          When.press("1"),
+          When.press("0"),
+          When.press("M+"),
+          When.press("2"),
+          When.press("0"),
+          When.press("M+"),
+          When.press("MR"),
         ],
         [Then.result("30")]
-      )
+      ),
     }),
   ];
 };

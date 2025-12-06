@@ -195,12 +195,26 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     logs.push(startMessage);
     this.processLogs.set(processId, logs);
 
+    // Broadcast to all connected clients
     this.webSocketBroadcastMessage({
       type: "processStarted",
       processId,
       command,
       timestamp: new Date().toISOString(),
       logs: [startMessage],
+      category,
+      testName,
+      platform,
+    });
+
+    // Send a simple test message to verify WebSocket is working
+    this.webSocketBroadcastMessage({
+      type: "debug",
+      message: `Test process added: ${testName} (${platform})`,
+      processId,
+      testName,
+      platform,
+      timestamp: new Date().toISOString()
     });
 
     promise
@@ -650,6 +664,20 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   }
 
   async start() {
+    // Initialize browser first
+    try {
+      this.browser = await puppeteer.launch(puppeteerConfigs);
+      console.log("Browser initialized successfully");
+    } catch (e) {
+      console.error("Failed to initialize browser:", e);
+      console.error(
+        "could not start chrome via puppeter. Check this path: ",
+        executablePath
+      );
+      // Don't exit, but note that web tests may fail
+      this.browser = undefined;
+    }
+
     // Wait for build processes to complete first
     try {
       await this.startBuildProcesses();
@@ -683,16 +711,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
     if (!fs.existsSync(`testeranto/reports/${this.projectName}`)) {
       fs.mkdirSync(`testeranto/reports/${this.projectName}`);
-    }
-
-    try {
-      this.browser = await puppeteer.launch(puppeteerConfigs);
-    } catch (e) {
-      console.error(e);
-      console.error(
-        "could not start chrome via puppeter. Check this path: ",
-        executablePath
-      );
     }
 
     const runnables = getRunnables(this.configs, this.projectName);

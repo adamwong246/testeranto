@@ -1,0 +1,8 @@
+Error: WebSocket is not connected
+    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-JGN6ERUQ.mjs:3778:16
+    at new Promise (<anonymous>)
+    at PM_Node.send (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-JGN6ERUQ.mjs:3776:12)
+    at PM_Node.writeFileSync (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-JGN6ERUQ.mjs:3893:23)
+    at Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-JGN6ERUQ.mjs:4733:32)
+    at async NodeTiposkripto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-JGN6ERUQ.mjs:4816:12)
+    at async tiposkripto (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-JGN6ERUQ.mjs:4834:19)
