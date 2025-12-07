@@ -9,11 +9,11 @@ import fs from "fs";
 import path from "path";
 import { getAllFilesRecursively } from "./getAllFilesRecursively.js";
 
-import { PM_1_WithProcesses } from "./PM_1_WithProcesses.js";
 import { ApiEndpoint, ApiFilename } from "../app/api.js";
 import { FileService_methods } from "../app/FileService.js";
+import { Server_Base } from "./Server_Base.js";
 
-export class PM_2_WithTCP extends PM_1_WithProcesses {
+export class Server_TCP extends Server_Base {
   protected wss: WebSocketServer;
   protected httpServer: http.Server;
 
@@ -411,7 +411,7 @@ export class PM_2_WithTCP extends PM_1_WithProcesses {
     contents: string,
     testName?: string
   ): boolean {
-    console.log("PM_2_WithTCP.writeFileSync called:", {
+    console.log("Server.writeFileSync called:", {
       filepath,
       testName,
       contentsLength: contents.length,

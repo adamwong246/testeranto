@@ -1,5 +1,4 @@
 import ansiC from "ansi-colors";
-import { ISummary } from "../Types.js";
 import { SummaryManager } from "./SummaryManager.js";
 import { QueueManager } from "./QueueManager.js";
 
@@ -7,8 +6,6 @@ export function checkForShutdown(
   mode: string,
   summaryManager: SummaryManager,
   queueManager: QueueManager,
-  projectName: string,
-  browser: any,
   checkQueue: () => void,
   writeBigBoard: () => void
 ): void {

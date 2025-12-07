@@ -3,7 +3,7 @@
 import { Browser } from "puppeteer-core";
 
 import { IBuiltConfig, ITLog } from "../index";
-import { PM_Base } from "../../server/PM_0";
+import { PM_Base } from "../../server/Server_Base";
 
 export class MockPMBase implements PM_Base {
   browser: Browser;

@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import esbuildWebConfiger from "../esbuildConfigs/web.js";
-import esbuildNodeConfiger from "../esbuildConfigs/node.js";
-import ansiC from "ansi-colors";
+
+import { default as ansiC, default as ansiColors } from "ansi-colors";
+import { ChildProcess, spawn } from "child_process";
 import esbuild from "esbuild";
-import { ESLint } from "eslint";
 import fs, { watch } from "fs";
+import path from "path";
 import puppeteer, { ConsoleMessage, executablePath } from "puppeteer-core";
-import tsc from "tsc-prog";
 import ts, { server } from "typescript";
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
 import {
@@ -22,59 +21,49 @@ import {
   generatePitonoMetafile,
   writePitonoMetafile,
 } from "../clients/utils/pitonoMetafile.js";
+import { Queue } from "../clients/utils/queue.js";
+import esbuildNodeConfiger from "../esbuildConfigs/node.js";
+import esbuildWebConfiger from "../esbuildConfigs/web.js";
+import { IFinalResults } from "../lib/index.js";
 import { MetafileManager } from "./MetafileManager.js";
-import { PM_0 } from "./PM_0.js";
 import { PortManager } from "./PortManager.js";
 import { ProcessManager } from "./ProcessManager.js";
 import { QueueManager } from "./QueueManager.js";
+import { Server_TCP } from "./Server_TCP.js";
 import { SummaryManager } from "./SummaryManager.js";
+import { checkForShutdown } from "./checkForShutdown";
 import configTests from "./configTests.js";
 import { ensureSummaryEntry } from "./ensureSummaryEntry.js";
+import { lintCheck } from "./lintCheck";
 import { makePrompt } from "./makePrompt.js";
 import { pythonLintCheck } from "./pythonLintCheck.js";
 import { pythonTypeCheck } from "./pythonTypeCheck.js";
-import { lintPather, tscPather, webEvaluator } from "./utils";
-import { getRunnables } from "./utils.js";
-import ansiColors from "ansi-colors";
-import { ChildProcess, spawn } from "child_process";
-import { Queue } from "../clients/utils/queue.js";
-import path from "path";
-import { IFinalResults } from "../lib/index.js";
+import { tscCheck } from "./tscCheck";
+import { getRunnables, lintPather, tscPather, webEvaluator } from "./utils.js";
+import { generatePromptFiles } from "./generatePromptFiles.js";
+import { processGoTestOutput } from "./processGoTestOutput.js";
 
-const eslint = new ESLint();
-const formatter = await eslint.loadFormatter(
-  "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
-);
-
-export abstract class PM_1_WithProcesses extends PM_0 {
-  summary: ISummary = {};
-
+export class Server extends Server_TCP {
   webMetafileWatcher: fs.FSWatcher;
   nodeMetafileWatcher: fs.FSWatcher;
   importMetafileWatcher: fs.FSWatcher;
   pitonoMetafileWatcher: fs.FSWatcher;
   golangMetafileWatcher: fs.FSWatcher;
 
-  ports: Record<number, string>;
   queueManager: QueueManager;
-  logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
-  launchers: Record<string, () => void>;
-
   portManager: PortManager;
   processManager: ProcessManager = new ProcessManager();
   metafileManager: MetafileManager = new MetafileManager();
   summaryManager: SummaryManager = new SummaryManager();
 
-  // abstract launchNode(src: string, dest: string);
-  // abstract launchWeb(src: string, dest: string);
-  // abstract launchPython(src: string, dest: string);
-  // abstract launchGolang(src: string, dest: string);
-  // abstract startBuildProcesses(): Promise<void>;
-  // abstract onBuildDone(): void;
-
+  summary: ISummary = {};
+  ports: Record<number, string>;
+  logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
+  launchers: Record<string, () => void>;
   clients: Set<any> = new Set();
-  public fs: import("@isomorphic-git/lightning-fs");
   connected: boolean;
+
+  private isProcessingQueue = false;
 
   constructor(configs: IBuiltConfig, name: string, mode: string) {
     super(configs, name, mode);
@@ -86,11 +75,14 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
     this.configTests().forEach(([t, rt, tr, sidecars]) => {
       this.summaryManager.ensureSummaryEntry(t);
-      sidecars.forEach(([sidecarName]) => {
-        this.summaryManager.ensureSummaryEntry(sidecarName, true);
-      });
+      // sidecars.forEach(([sidecarName]) => {
+      //   this.summaryManager.ensureSummaryEntry(sidecarName, true);
+      // });
     });
   }
+
+  currentBuildResolve: (() => void) | null = null;
+  currentBuildReject: ((error: any) => void) | null = null;
 
   async startBuildProcesses(): Promise<void> {
     const { nodeEntryPoints, webEntryPoints } = getRunnables(
@@ -257,9 +249,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       });
     });
   }
-
-  currentBuildResolve: (() => void) | null = null;
-  currentBuildReject: ((error: any) => void) | null = null;
 
   async startBuildProcess(
     configer: (
@@ -486,10 +475,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
   getBuildTimeProcesses() {
     return this.getProcessesByCategory("build-time");
-  }
-
-  getAiderProcesses() {
-    return this.getProcessesByCategory("aider");
   }
 
   getProcessesByTestName(testName: string) {
@@ -746,32 +731,24 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       this.pitonoMetafileWatcher.close();
     }
 
-    // if (this.gitWatcher) {
-    //   this.gitWatcher.close();
-    // }
-
-    // if (this.gitWatchTimeout) {
-    //   clearTimeout(this.gitWatchTimeout);
-    // }
-
     Object.values(this.logStreams || {}).forEach((logs) => logs.closeAll());
 
-    // if (this.wss) {
-    //   this.wss.close(() => {
-    //     console.log("WebSocket server closed");
-    //   });
-    // }
+    if (this.wss) {
+      this.wss.close(() => {
+        console.log("WebSocket server closed");
+      });
+    }
 
     this.clients.forEach((client) => {
       client.terminate();
     });
     this.clients.clear();
 
-    // if (this.httpServer) {
-    //   this.httpServer.close(() => {
-    //     console.log("HTTP server closed");
-    //   });
-    // }
+    if (this.httpServer) {
+      this.httpServer.close(() => {
+        console.log("HTTP server closed");
+      });
+    }
     this.checkForShutdown();
   }
 
@@ -801,8 +778,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       });
     });
   }
-
-  private isProcessingQueue = false;
 
   async checkQueue() {
     // If already processing the queue, wait
@@ -936,13 +911,10 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   }
 
   checkForShutdown = async () => {
-    const { checkForShutdown } = await import("./checkForShutdown.js");
     checkForShutdown(
       this.mode,
       this.summaryManager,
       this.queueManager,
-      this.projectName,
-      this.browser,
       this.checkQueue.bind(this),
       this.writeBigBoard.bind(this)
     );
@@ -991,43 +963,17 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         throw new Error(`Error in tscCheck: ${e.message}`);
       }
 
-      const program = tsc.createProgramFromConfig({
-        basePath: process.cwd(),
-        configFilePath: "tsconfig.json",
-        compilerOptions: {
-          outDir: tscPather(entrypoint, platform, this.projectName),
-          noEmit: true,
-        },
-        include: addableFiles,
-      });
       const tscPath = tscPather(entrypoint, platform, this.projectName);
 
-      const allDiagnostics = program.getSemanticDiagnostics();
-
-      const results: string[] = [];
-      allDiagnostics.forEach((diagnostic) => {
-        if (diagnostic.file) {
-          const { line, character } = ts.getLineAndCharacterOfPosition(
-            diagnostic.file,
-            diagnostic.start!
-          );
-          const message = ts.flattenDiagnosticMessageText(
-            diagnostic.messageText,
-            "\n"
-          );
-          results.push(
-            `${diagnostic.file.fileName} (${line + 1},${
-              character + 1
-            }): ${message}`
-          );
-        } else {
-          results.push(
-            ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
-          );
-        }
+      const results = tscCheck({
+        entrypoint,
+        addableFiles,
+        platform,
+        projectName: this.projectName,
       });
 
       fs.writeFileSync(tscPath, results.join("\n"));
+
       this.typeCheckIsNowDone(entrypoint, results.length);
       return results.length;
     })();
@@ -1037,7 +983,8 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       tscPromise,
       command,
       "build-time",
-      entrypoint
+      entrypoint,
+      platform
     );
   };
 
@@ -1059,20 +1006,10 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       } catch (e) {
         throw new Error(`Error in eslintCheck: ${e.message}`);
       }
-
       const filepath = lintPather(entrypoint, platform, this.projectName);
       if (fs.existsSync(filepath)) fs.rmSync(filepath);
-      const results = (await eslint.lintFiles(addableFiles))
-        .filter((r) => r.messages.length)
-        .filter((r) => {
-          return r.messages[0].ruleId !== null;
-        })
-        .map((r) => {
-          delete r.source;
-          return r;
-        });
-
-      fs.writeFileSync(filepath, await formatter.format(results));
+      const results = await lintCheck(addableFiles);
+      fs.writeFileSync(filepath, results);
       this.lintIsNowDone(entrypoint, results.length);
       return results.length;
     })();
@@ -1082,7 +1019,8 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       eslintPromise,
       command,
       "build-time",
-      entrypoint
+      entrypoint,
+      platform
     );
   };
 
@@ -1147,7 +1085,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
           await this.setupTestEnvironment(src, "node");
 
         const builtfile = dest;
-        const ipcfile = "/tmp/tpipe_" + Math.random();
+        // const ipcfile = "/tmp/tpipe_" + Math.random();
         const logs = createLogStreams(reportDest, "node");
 
         let buffer = Buffer.from("");
@@ -1194,7 +1132,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         };
 
         // const server = await this.createIpcServer(onData, ipcfile);
-        const child = spawn("node", [builtfile, testResources, ipcfile], {
+        const child = spawn("node", [builtfile, testResources, "ipcfile"], {
           stdio: ["pipe", "pipe", "pipe", "ipc"],
         });
 
@@ -1202,9 +1140,9 @@ export abstract class PM_1_WithProcesses extends PM_0 {
           await this.handleChildProcess(child, logs, reportDest, src, "node");
 
           // Generate prompt files for Node tests
-          await this.generatePromptFiles(reportDest, src);
+          generatePromptFiles(reportDest, src);
         } finally {
-          server.close();
+          // this.server.close();
           this.cleanupPorts(portsToUse);
         }
       } catch (error: any) {
@@ -1417,7 +1355,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         }
 
         // Generate prompt files for Web tests
-        await this.generatePromptFiles(reportDest, src);
+        generatePromptFiles(reportDest, src);
 
         await page.close();
         close();
@@ -1517,9 +1455,9 @@ export abstract class PM_1_WithProcesses extends PM_0 {
           await this.handleChildProcess(child, logs, reportDest, src, "python");
 
           // Generate prompt files for Python tests
-          await this.generatePromptFiles(reportDest, src);
+          await generatePromptFiles(reportDest, src);
         } finally {
-          server.close();
+          // server.close();
           this.cleanupPorts(portsToUse);
         }
       } catch (error: any) {
@@ -1647,13 +1585,13 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         await this.handleChildProcess(child, logs, reportDest, src, "golang");
 
         // Generate prompt files for Golang tests
-        await this.generatePromptFiles(reportDest, src);
+        generatePromptFiles(reportDest, src);
 
         // Ensure tests.json exists by parsing the go test JSON output
-        await this.processGoTestOutput(reportDest, src);
+        processGoTestOutput(reportDest, src);
 
         // Clean up
-        server.close();
+        // server.close();
         try {
           fs.unlinkSync(ipcfile);
         } catch (e) {
@@ -1682,111 +1620,4 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       }
     );
   };
-
-  private async processGoTestOutput(
-    reportDest: string,
-    src: string
-  ): Promise<void> {
-    const testsJsonPath = `${reportDest}/tests.json`;
-
-    // Parse the stdout.log to extract test results from JSON output
-    const stdoutPath = `${reportDest}/stdout.log`;
-    if (fs.existsSync(stdoutPath)) {
-      try {
-        const stdoutContent = fs.readFileSync(stdoutPath, "utf-8");
-        const lines = stdoutContent.split("\n").filter((line) => line.trim());
-
-        const testResults = {
-          tests: [],
-          features: [],
-          givens: [],
-          fullPath: path.resolve(process.cwd(), src),
-        };
-
-        // Parse each JSON line from go test output
-        for (const line of lines) {
-          try {
-            const event = JSON.parse(line);
-            if (event.Action === "pass" || event.Action === "fail") {
-              testResults.tests.push({
-                name: event.Test || event.Package,
-                status: event.Action === "pass" ? "passed" : "failed",
-                time: event.Elapsed ? `${event.Elapsed}s` : "0s",
-              });
-            }
-          } catch (e) {
-            // Skip non-JSON lines
-          }
-        }
-
-        fs.writeFileSync(testsJsonPath, JSON.stringify(testResults, null, 2));
-        return;
-      } catch (error) {
-        console.error("Error processing go test output:", error);
-      }
-    }
-
-    // Fallback: create a basic tests.json if processing fails
-    const basicTestResult = {
-      tests: [],
-      features: [],
-      givens: [],
-      fullPath: path.resolve(process.cwd(), src),
-    };
-    fs.writeFileSync(testsJsonPath, JSON.stringify(basicTestResult, null, 2));
-  }
-
-  private async generatePromptFiles(
-    reportDest: string,
-    src: string
-  ): Promise<void> {
-    try {
-      // Ensure the report directory exists
-      if (!fs.existsSync(reportDest)) {
-        fs.mkdirSync(reportDest, { recursive: true });
-      }
-
-      // Create message.txt
-      const messagePath = `${reportDest}/message.txt`;
-      const messageContent = `There are 3 types of test reports.
-1) bdd (highest priority)
-2) type checker
-3) static analysis (lowest priority)
-
-"tests.json" is the detailed result of the bdd tests.
-if these files do not exist, then something has gone badly wrong and needs to be addressed.
-
-"type_errors.txt" is the result of the type checker.
-if this file does not exist, then type check passed without errors;
-
-"lint_errors.txt" is the result of the static analysis.
-if this file does not exist, then static analysis passed without errors;
-
-BDD failures are the highest priority. Focus on passing BDD tests before addressing other concerns.
-Do not add error throwing/catching to the tests themselves.`;
-
-      fs.writeFileSync(messagePath, messageContent);
-
-      // Create prompt.txt
-      const promptPath = `${reportDest}/prompt.txt`;
-
-      const promptContent = `/read node_modules/testeranto/docs/index.md
-/read node_modules/testeranto/docs/style.md
-/read node_modules/testeranto/docs/testing.ai.txt
-/read node_modules/testeranto/src/CoreTypes.ts
-
-/read ${reportDest}/tests.json
-/read ${reportDest}/type_errors.txt
-/read ${reportDest}/lint_errors.txt
-
-/read ${reportDest}/stdout.log
-/read ${reportDest}/stderr.log
-/read ${reportDest}/exit.log
-/read ${reportDest}/message.txt`;
-
-      fs.writeFileSync(promptPath, promptContent);
-    } catch (error) {
-      console.error(`Failed to generate prompt files for ${src}:`, error);
-    }
-  }
 }

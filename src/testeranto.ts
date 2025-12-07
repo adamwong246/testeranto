@@ -2,11 +2,11 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-// import { PM_2_WithTCP } from "./server/PM_2_WithTCP";
+// import { Server } from "./server/Server";
 import { getRunnables } from "./server/utils";
 import { PitonoBuild } from "./clients/pitonoBuild";
 import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
-import { PM_2_WithTCP } from "./server/PM_2_WithTCP";
+import { Server } from "./server/Server";
 import webHtmlFrame from "./web.html";
 import { AppHtml } from "./clients/utils/buildTemplates";
 const { GolingvuBuild } = await import("./clients/golingvuBuild");
@@ -85,10 +85,10 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  let pm: PM_2_WithTCP | null = null;
+  let pm: Server | null = null;
   // Start PM_4_Main immediately - it will handle the build processes internally
 
-  pm = new PM_2_WithTCP(config, testsName, mode);
+  pm = new Server(config, testsName, mode);
   await pm.start();
 
   fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());

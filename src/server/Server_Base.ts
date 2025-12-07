@@ -24,7 +24,7 @@ const files: Record<string, Set<string>> = {};
 const recorders: Record<string, ScreenRecorder> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-export abstract class PM_0 {
+export abstract class Server_Base {
   mode: IMode;
   browser: Browser;
   configs: IBuiltConfig;
