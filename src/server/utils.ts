@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import path from "path";
-import { IRunnables } from "../../lib";
-import { IRunTime, IBuiltConfig, ITestTypes, ITestconfig } from "../../Types";
+import { IRunnables } from "../lib";
+import { IRunTime, IBuiltConfig, ITestTypes, ITestconfig } from "../Types";
 
 export const webEvaluator = (d, webArgz) => {
   return `

@@ -2,14 +2,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { WebSocketMessage } from "../../PM/types.js";
+import { WebSocketMessage } from "../PM/types.js";
 import { WebSocketServer, WebSocket } from "ws";
 import http from "http";
 import fs from "fs";
 import { getAllFilesRecursively } from "./getAllFilesRecursively.js";
-import { FileService_methods } from "../FileService.js";
-import { ApiEndpoint, ApiFilename } from "../api.js";
+
 import { PM_1_WithProcesses } from "./PM_1_WithProcesses.js";
+import { ApiEndpoint, ApiFilename } from "../app/api.js";
+import { FileService_methods } from "../app/FileService.js";
 
 export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
   protected wss: WebSocketServer;

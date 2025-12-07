@@ -14,18 +14,18 @@ node_modules/testeranto-react/src/react-dom/jsx/dynamic.ts(42,17): error TS2551:
 node_modules/testeranto-react/src/react-dom/jsx/dynamic.ts(43,15): error TS2339: Property 'domRoot' does not exist on type 'HTMLElement'.
 node_modules/testeranto-react/src/react-dom/jsx/dynamic.ts(44,15): error TS2551: Property 'container' does not exist on type 'HTMLElement'. Did you mean 'contains'?
 node_modules/testeranto-react/src/react/component/index.ts(21,3): error TS2739: Type '{ beforeEach: () => Promise<CElement<any, any>>; andWhen: (s: CElement<any, any>, whenCB: () => (s: CElement<any, any>) => any) => any; }' is missing the following properties from type 'ITestAdapter<I>': assertThis, butThen, afterAll, afterEach, beforeAll
-src/app/backend/PM_WithGit.ts(434,26): error TS2769: No overload matches this call.
+src/server/PM_WithGit.ts(434,26): error TS2769: No overload matches this call.
   Overload 1 of 2, '(timeout: string | number | Timeout | undefined): void', gave the following error.
     Argument of type 'Timeout | null' is not assignable to parameter of type 'string | number | Timeout | undefined'.
       Type 'null' is not assignable to type 'string | number | Timeout | undefined'.
   Overload 2 of 2, '(id: number | undefined): void', gave the following error.
     Argument of type 'Timeout | null' is not assignable to parameter of type 'number | undefined'.
       Type 'null' is not assignable to type 'number | undefined'.
-src/app/backend/PM_WithGit.ts(447,54): error TS2339: Property 'ignore' does not exist on type 'IBuiltConfig'.
-src/app/backend/PM_WithProcesses.ts(753,14): error TS2339: Property 'gitWatcher' does not exist on type 'PM_WithProcesses'.
-src/app/backend/PM_WithProcesses.ts(754,12): error TS2339: Property 'gitWatcher' does not exist on type 'PM_WithProcesses'.
-src/app/backend/PM_WithProcesses.ts(757,14): error TS2339: Property 'gitWatchTimeout' does not exist on type 'PM_WithProcesses'.
-src/app/backend/PM_WithProcesses.ts(758,25): error TS2339: Property 'gitWatchTimeout' does not exist on type 'PM_WithProcesses'.
+src/server/PM_WithGit.ts(447,54): error TS2339: Property 'ignore' does not exist on type 'IBuiltConfig'.
+src/server/PM_WithProcesses.ts(753,14): error TS2339: Property 'gitWatcher' does not exist on type 'PM_WithProcesses'.
+src/server/PM_WithProcesses.ts(754,12): error TS2339: Property 'gitWatcher' does not exist on type 'PM_WithProcesses'.
+src/server/PM_WithProcesses.ts(757,14): error TS2339: Property 'gitWatchTimeout' does not exist on type 'PM_WithProcesses'.
+src/server/PM_WithProcesses.ts(758,25): error TS2339: Property 'gitWatchTimeout' does not exist on type 'PM_WithProcesses'.
 src/app/frontend/components/pure/AppFrame.test/implementation.tsx(4,37): error TS2307: Cannot find module '../../../CoreTypes' or its corresponding type declarations.
 src/app/frontend/components/pure/AppFrame.test/index.tsx(21,3): error TS2345: Argument of type 'FC<{ children?: ReactNode; }>' is not assignable to parameter of type 'typeof Component'.
   Type 'FunctionComponent<{ children?: ReactNode; }>' provides no match for the signature 'new <P = {}, S = {}, SS = any>(props: P | Readonly<P>): Component<P, S, SS>'.

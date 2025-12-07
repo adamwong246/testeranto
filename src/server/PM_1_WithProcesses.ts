@@ -5,7 +5,7 @@
 import path from "path";
 import puppeteer, { executablePath } from "puppeteer-core";
 import ansiC from "ansi-colors";
-import { IBuiltConfig, IRunTime, ISummary } from "../../Types.js";
+import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
 import { ChildProcess } from "child_process";
 import fs, { watch } from "fs";
 
@@ -17,7 +17,7 @@ import {
   pollForFile,
   puppeteerConfigs,
   writeFileAndCreateDir,
-} from "../../PM/utils.js";
+} from "../PM/utils.js";
 
 import { PM_0 } from "./PM_0.js";
 import { makePrompt } from "./makePrompt.js";
@@ -660,7 +660,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       );
       if (pythonTests.length > 0) {
         const { generatePitonoMetafile, writePitonoMetafile } = await import(
-          "../../utils/pitonoMetafile.js"
+          "../utils/pitonoMetafile.js"
         );
         const entryPoints = pythonTests.map((test) => test[0]);
         const metafile = await generatePitonoMetafile(
@@ -757,7 +757,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         // For python, we may need to generate the metafile first
         if (runtime === "python" && !fs.existsSync(metafile)) {
           const { generatePitonoMetafile, writePitonoMetafile } = await import(
-            "../../utils/pitonoMetafile.js"
+            "../utils/pitonoMetafile.js"
           );
           const entryPointList = Object.keys(entryPoints);
           if (entryPointList.length > 0) {

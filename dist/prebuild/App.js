@@ -2387,9 +2387,9 @@
           if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
             __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
           }
-          var React172 = require_react();
+          var React171 = require_react();
           var Scheduler = require_scheduler();
-          var ReactSharedInternals = React172.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React171.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           var suppressWarning = false;
           function setSuppressWarning(newSuppressWarning) {
             {
@@ -3994,7 +3994,7 @@
             {
               if (props.value == null) {
                 if (typeof props.children === "object" && props.children !== null) {
-                  React172.Children.forEach(props.children, function(child) {
+                  React171.Children.forEach(props.children, function(child) {
                     if (child == null) {
                       return;
                     }
@@ -12441,7 +12441,7 @@
             }
           }
           var fakeInternalInstance = {};
-          var emptyRefsObject = new React172.Component().refs;
+          var emptyRefsObject = new React171.Component().refs;
           var didWarnAboutStateAssignmentForComponent;
           var didWarnAboutUninitializedState;
           var didWarnAboutGetSnapshotBeforeUpdateWithoutDidUpdate;
@@ -23613,7 +23613,7 @@
       if (true) {
         (function() {
           "use strict";
-          var React172 = require_react();
+          var React171 = require_react();
           var REACT_ELEMENT_TYPE = Symbol.for("react.element");
           var REACT_PORTAL_TYPE = Symbol.for("react.portal");
           var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -23639,7 +23639,7 @@
             }
             return null;
           }
-          var ReactSharedInternals = React172.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+          var ReactSharedInternals = React171.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
           function error(format) {
             {
               {
@@ -26848,7 +26848,7 @@
   });
 
   // src/app/frontend/App.tsx
-  var import_react164 = __toESM(require_react(), 1);
+  var import_react163 = __toESM(require_react(), 1);
 
   // node_modules/react-router/dist/development/chunk-OIYGIGL5.mjs
   var React = __toESM(require_react(), 1);
@@ -29238,41 +29238,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // src/app/frontend/App.tsx
   var import_client = __toESM(require_client(), 1);
 
-  // src/Helpo.tsx
-  var import_react = __toESM(require_react(), 1);
-  var Helpo = () => /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "border-bottom p-3" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 p-3", style: { overflowY: "auto" } }, /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react.default.createElement(
-    "div",
-    {
-      className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
-      style: { width: "40px", height: "40px" }
-    },
-    "\u{1F916}"
-  )), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react.default.createElement("p", null, "Hello! I'm Helpo, your helpful robot assistant. How can I assist you today?")))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3 justify-content-end" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1 me-2 text-end" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, "You"), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-primary text-white p-3 rounded" }, /* @__PURE__ */ import_react.default.createElement("p", null, "Can you show me how to format text with ", /* @__PURE__ */ import_react.default.createElement("strong", null, "bold"), " and", " ", /* @__PURE__ */ import_react.default.createElement("em", null, "italic"), "?"))), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement(
-    "div",
-    {
-      className: "rounded-circle d-flex align-items-center justify-content-center bg-secondary text-white",
-      style: { width: "40px", height: "40px" }
-    },
-    "\u{1F464}"
-  ))), /* @__PURE__ */ import_react.default.createElement("div", { className: "d-flex mb-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "me-2" }, /* @__PURE__ */ import_react.default.createElement(
-    "div",
-    {
-      className: "rounded-circle d-flex align-items-center justify-content-center bg-primary text-white",
-      style: { width: "40px", height: "40px" }
-    },
-    "\u{1F916}"
-  )), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex-grow-1" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "fw-bold" }, "Helpo"), /* @__PURE__ */ import_react.default.createElement("div", { className: "bg-light p-3 rounded" }, /* @__PURE__ */ import_react.default.createElement("p", null, "Sure! Here's an example:"), /* @__PURE__ */ import_react.default.createElement("ul", null, /* @__PURE__ */ import_react.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react.default.createElement("code", null, "<strong>"), " for ", /* @__PURE__ */ import_react.default.createElement("strong", null, "bold text")), /* @__PURE__ */ import_react.default.createElement("li", null, "Use ", /* @__PURE__ */ import_react.default.createElement("code", null, "<em>"), " for ", /* @__PURE__ */ import_react.default.createElement("em", null, "italic text")), /* @__PURE__ */ import_react.default.createElement("li", null, "You can even include lists and other HTML elements")), /* @__PURE__ */ import_react.default.createElement("p", null, "Let me know if you need help with anything else!"))))), /* @__PURE__ */ import_react.default.createElement("div", { className: "border-top p-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react.default.createElement(
-    "input",
-    {
-      type: "text",
-      className: "form-control",
-      placeholder: "Type your message...",
-      disabled: true
-    }
-  ), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn btn-primary", type: "button", disabled: true }, "Send"))));
-
   // src/app/frontend/components/pure/AppFrame.tsx
-  var import_react87 = __toESM(require_react(), 1);
+  var import_react86 = __toESM(require_react(), 1);
 
   // node_modules/@babel/runtime/helpers/esm/extends.js
   function _extends() {
@@ -29301,7 +29268,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/uncontrollable/lib/esm/hook.js
-  var import_react2 = __toESM(require_react());
+  var import_react = __toESM(require_react());
 
   // node_modules/uncontrollable/lib/esm/utils.js
   var import_invariant = __toESM(require_browser());
@@ -29327,15 +29294,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return (hint === "string" ? String : Number)(input);
   }
   function useUncontrolledProp(propValue, defaultValue, handler) {
-    var wasPropRef = (0, import_react2.useRef)(propValue !== void 0);
-    var _useState = (0, import_react2.useState)(defaultValue), stateValue = _useState[0], setState2 = _useState[1];
+    var wasPropRef = (0, import_react.useRef)(propValue !== void 0);
+    var _useState = (0, import_react.useState)(defaultValue), stateValue = _useState[0], setState2 = _useState[1];
     var isProp2 = propValue !== void 0;
     var wasProp = wasPropRef.current;
     wasPropRef.current = isProp2;
     if (!isProp2 && wasProp && stateValue !== defaultValue) {
       setState2(defaultValue);
     }
-    return [isProp2 ? propValue : stateValue, (0, import_react2.useCallback)(function(value) {
+    return [isProp2 ? propValue : stateValue, (0, import_react.useCallback)(function(value) {
       for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         args[_key - 1] = arguments[_key];
       }
@@ -29367,7 +29334,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/uncontrollable/lib/esm/uncontrollable.js
-  var import_react3 = __toESM(require_react());
+  var import_react2 = __toESM(require_react());
 
   // node_modules/react-lifecycles-compat/react-lifecycles-compat.es.js
   function componentWillMount() {
@@ -29407,12 +29374,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_invariant2 = __toESM(require_browser());
 
   // node_modules/react-bootstrap/esm/ThemeProvider.js
-  var React14 = __toESM(require_react());
-  var import_react4 = __toESM(require_react());
+  var React13 = __toESM(require_react());
+  var import_react3 = __toESM(require_react());
   var import_jsx_runtime = __toESM(require_jsx_runtime());
   var DEFAULT_BREAKPOINTS = ["xxl", "xl", "lg", "md", "sm", "xs"];
   var DEFAULT_MIN_BREAKPOINT = "xs";
-  var ThemeContext = /* @__PURE__ */ React14.createContext({
+  var ThemeContext = /* @__PURE__ */ React13.createContext({
     prefixes: {},
     breakpoints: DEFAULT_BREAKPOINTS,
     minBreakpoint: DEFAULT_MIN_BREAKPOINT
@@ -29424,25 +29391,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function useBootstrapPrefix(prefix, defaultPrefix) {
     const {
       prefixes
-    } = (0, import_react4.useContext)(ThemeContext);
+    } = (0, import_react3.useContext)(ThemeContext);
     return prefix || prefixes[defaultPrefix] || defaultPrefix;
   }
   function useBootstrapBreakpoints() {
     const {
       breakpoints
-    } = (0, import_react4.useContext)(ThemeContext);
+    } = (0, import_react3.useContext)(ThemeContext);
     return breakpoints;
   }
   function useBootstrapMinBreakpoint() {
     const {
       minBreakpoint
-    } = (0, import_react4.useContext)(ThemeContext);
+    } = (0, import_react3.useContext)(ThemeContext);
     return minBreakpoint;
   }
   function useIsRTL() {
     const {
       dir
-    } = (0, import_react4.useContext)(ThemeContext);
+    } = (0, import_react3.useContext)(ThemeContext);
     return dir === "rtl";
   }
 
@@ -29508,11 +29475,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var css_default = style;
 
   // node_modules/react-bootstrap/esm/Collapse.js
-  var import_react9 = __toESM(require_react());
+  var import_react8 = __toESM(require_react());
 
   // node_modules/react-transition-group/esm/Transition.js
   var import_prop_types2 = __toESM(require_prop_types());
-  var import_react6 = __toESM(require_react());
+  var import_react5 = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
   // node_modules/react-transition-group/esm/config.js
@@ -29541,8 +29508,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   })]) : null;
 
   // node_modules/react-transition-group/esm/TransitionGroupContext.js
-  var import_react5 = __toESM(require_react());
-  var TransitionGroupContext_default = import_react5.default.createContext(null);
+  var import_react4 = __toESM(require_react());
+  var TransitionGroupContext_default = import_react4.default.createContext(null);
 
   // node_modules/react-transition-group/esm/utils/reflow.js
   var forceReflow = function forceReflow2(node) {
@@ -29758,13 +29725,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       var _this$props = this.props, children = _this$props.children, _in = _this$props.in, _mountOnEnter = _this$props.mountOnEnter, _unmountOnExit = _this$props.unmountOnExit, _appear = _this$props.appear, _enter = _this$props.enter, _exit = _this$props.exit, _timeout = _this$props.timeout, _addEndListener = _this$props.addEndListener, _onEnter = _this$props.onEnter, _onEntering = _this$props.onEntering, _onEntered = _this$props.onEntered, _onExit = _this$props.onExit, _onExiting = _this$props.onExiting, _onExited = _this$props.onExited, _nodeRef = _this$props.nodeRef, childProps = _objectWithoutPropertiesLoose(_this$props, ["children", "in", "mountOnEnter", "unmountOnExit", "appear", "enter", "exit", "timeout", "addEndListener", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "nodeRef"]);
       return (
         // allows for nested Transitions
-        /* @__PURE__ */ import_react6.default.createElement(TransitionGroupContext_default.Provider, {
+        /* @__PURE__ */ import_react5.default.createElement(TransitionGroupContext_default.Provider, {
           value: null
-        }, typeof children === "function" ? children(status2, childProps) : import_react6.default.cloneElement(import_react6.default.Children.only(children), childProps))
+        }, typeof children === "function" ? children(status2, childProps) : import_react5.default.cloneElement(import_react5.default.Children.only(children), childProps))
       );
     };
     return Transition2;
-  }(import_react6.default.Component);
+  }(import_react5.default.Component);
   Transition.contextType = TransitionGroupContext_default;
   Transition.propTypes = true ? {
     /**
@@ -29961,12 +29928,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var Transition_default = Transition;
 
   // node_modules/@restart/ui/esm/utils.js
-  var React17 = __toESM(require_react());
+  var React16 = __toESM(require_react());
   function isEscKey(e) {
     return e.code === "Escape" || e.keyCode === 27;
   }
   function getReactVersion() {
-    const parts = React17.version.split(".");
+    const parts = React16.version.split(".");
     return {
       major: +parts[0],
       minor: +parts[1],
@@ -30132,10 +30099,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/react-bootstrap/esm/TransitionWrapper.js
-  var import_react8 = __toESM(require_react());
+  var import_react7 = __toESM(require_react());
 
   // node_modules/@restart/hooks/esm/useMergedRefs.js
-  var import_react7 = __toESM(require_react());
+  var import_react6 = __toESM(require_react());
   var toFnRef = (ref) => !ref || typeof ref === "function" ? ref : (value) => {
     ref.current = value;
   };
@@ -30150,7 +30117,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
   }
   function useMergedRefs(refA, refB) {
-    return (0, import_react7.useMemo)(() => mergeRefs2(refA, refB), [refA, refB]);
+    return (0, import_react6.useMemo)(() => mergeRefs2(refA, refB), [refA, refB]);
   }
   var useMergedRefs_default = useMergedRefs;
 
@@ -30165,7 +30132,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/TransitionWrapper.js
   var import_jsx_runtime2 = __toESM(require_jsx_runtime());
-  var TransitionWrapper = /* @__PURE__ */ import_react8.default.forwardRef(({
+  var TransitionWrapper = /* @__PURE__ */ import_react7.default.forwardRef(({
     onEnter,
     onEntering,
     onEntered,
@@ -30177,7 +30144,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     childRef,
     ...props
   }, ref) => {
-    const nodeRef = (0, import_react8.useRef)(null);
+    const nodeRef = (0, import_react7.useRef)(null);
     const mergedRef = useMergedRefs_default(nodeRef, childRef);
     const attachRef = (r) => {
       mergedRef(safeFindDOMNode(r));
@@ -30187,13 +30154,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         callback(nodeRef.current, param);
       }
     };
-    const handleEnter = (0, import_react8.useCallback)(normalize(onEnter), [onEnter]);
-    const handleEntering = (0, import_react8.useCallback)(normalize(onEntering), [onEntering]);
-    const handleEntered = (0, import_react8.useCallback)(normalize(onEntered), [onEntered]);
-    const handleExit = (0, import_react8.useCallback)(normalize(onExit), [onExit]);
-    const handleExiting = (0, import_react8.useCallback)(normalize(onExiting), [onExiting]);
-    const handleExited = (0, import_react8.useCallback)(normalize(onExited), [onExited]);
-    const handleAddEndListener = (0, import_react8.useCallback)(normalize(addEndListener), [addEndListener]);
+    const handleEnter = (0, import_react7.useCallback)(normalize(onEnter), [onEnter]);
+    const handleEntering = (0, import_react7.useCallback)(normalize(onEntering), [onEntering]);
+    const handleEntered = (0, import_react7.useCallback)(normalize(onEntered), [onEntered]);
+    const handleExit = (0, import_react7.useCallback)(normalize(onExit), [onExit]);
+    const handleExiting = (0, import_react7.useCallback)(normalize(onExiting), [onExiting]);
+    const handleExited = (0, import_react7.useCallback)(normalize(onExited), [onExited]);
+    const handleAddEndListener = (0, import_react7.useCallback)(normalize(addEndListener), [addEndListener]);
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Transition_default, {
       ref,
       ...props,
@@ -30211,7 +30178,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           ...innerProps,
           ref: attachRef
         })
-      ) : /* @__PURE__ */ import_react8.default.cloneElement(children, {
+      ) : /* @__PURE__ */ import_react7.default.cloneElement(children, {
         ref: attachRef
       })
     });
@@ -30239,7 +30206,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     [ENTERING]: "collapsing",
     [ENTERED]: "collapse show"
   };
-  var Collapse = /* @__PURE__ */ import_react9.default.forwardRef(({
+  var Collapse = /* @__PURE__ */ import_react8.default.forwardRef(({
     onEnter,
     onEntering,
     onEntered,
@@ -30257,21 +30224,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     const computedDimension = typeof dimension === "function" ? dimension() : dimension;
-    const handleEnter = (0, import_react9.useMemo)(() => createChainedFunction_default((elem) => {
+    const handleEnter = (0, import_react8.useMemo)(() => createChainedFunction_default((elem) => {
       elem.style[computedDimension] = "0";
     }, onEnter), [computedDimension, onEnter]);
-    const handleEntering = (0, import_react9.useMemo)(() => createChainedFunction_default((elem) => {
+    const handleEntering = (0, import_react8.useMemo)(() => createChainedFunction_default((elem) => {
       const scroll = `scroll${computedDimension[0].toUpperCase()}${computedDimension.slice(1)}`;
       elem.style[computedDimension] = `${elem[scroll]}px`;
     }, onEntering), [computedDimension, onEntering]);
-    const handleEntered = (0, import_react9.useMemo)(() => createChainedFunction_default((elem) => {
+    const handleEntered = (0, import_react8.useMemo)(() => createChainedFunction_default((elem) => {
       elem.style[computedDimension] = null;
     }, onEntered), [computedDimension, onEntered]);
-    const handleExit = (0, import_react9.useMemo)(() => createChainedFunction_default((elem) => {
+    const handleExit = (0, import_react8.useMemo)(() => createChainedFunction_default((elem) => {
       elem.style[computedDimension] = `${getDimensionValue(computedDimension, elem)}px`;
       triggerBrowserReflow(elem);
     }, onExit), [onExit, getDimensionValue, computedDimension]);
-    const handleExiting = (0, import_react9.useMemo)(() => createChainedFunction_default((elem) => {
+    const handleExiting = (0, import_react8.useMemo)(() => createChainedFunction_default((elem) => {
       elem.style[computedDimension] = null;
     }, onExiting), [computedDimension, onExiting]);
     return /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(TransitionWrapper_default, {
@@ -30290,7 +30257,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       mountOnEnter,
       unmountOnExit,
       appear,
-      children: (state, innerProps) => /* @__PURE__ */ import_react9.default.cloneElement(children, {
+      children: (state, innerProps) => /* @__PURE__ */ import_react8.default.cloneElement(children, {
         ...innerProps,
         className: (0, import_classnames.default)(className, children.props.className, collapseStyles[state], computedDimension === "width" && "collapse-horizontal")
       })
@@ -30301,16 +30268,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Alert.js
   var import_classnames7 = __toESM(require_classnames());
-  var React27 = __toESM(require_react());
+  var React26 = __toESM(require_react());
 
   // node_modules/@restart/hooks/esm/useEventCallback.js
-  var import_react11 = __toESM(require_react());
+  var import_react10 = __toESM(require_react());
 
   // node_modules/@restart/hooks/esm/useCommittedRef.js
-  var import_react10 = __toESM(require_react());
+  var import_react9 = __toESM(require_react());
   function useCommittedRef(value) {
-    const ref = (0, import_react10.useRef)(value);
-    (0, import_react10.useEffect)(() => {
+    const ref = (0, import_react9.useRef)(value);
+    (0, import_react9.useEffect)(() => {
       ref.current = value;
     }, [value]);
     return ref;
@@ -30320,22 +30287,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/@restart/hooks/esm/useEventCallback.js
   function useEventCallback(fn2) {
     const ref = useCommittedRef_default(fn2);
-    return (0, import_react11.useCallback)(function(...args) {
+    return (0, import_react10.useCallback)(function(...args) {
       return ref.current && ref.current(...args);
     }, [ref]);
   }
 
   // node_modules/react-bootstrap/esm/AlertHeading.js
-  var React21 = __toESM(require_react());
+  var React20 = __toESM(require_react());
   var import_classnames3 = __toESM(require_classnames());
 
   // node_modules/react-bootstrap/esm/divWithClassName.js
-  var React20 = __toESM(require_react());
+  var React19 = __toESM(require_react());
   var import_classnames2 = __toESM(require_classnames());
   var import_jsx_runtime4 = __toESM(require_jsx_runtime());
   var divWithClassName_default = (className) => (
     // eslint-disable-next-line react/display-name
-    /* @__PURE__ */ React20.forwardRef((p, ref) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", {
+    /* @__PURE__ */ React19.forwardRef((p, ref) => /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", {
       ...p,
       ref,
       className: (0, import_classnames2.default)(p.className, className)
@@ -30346,7 +30313,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_jsx_runtime5 = __toESM(require_jsx_runtime());
   var DivStyledAsH4 = divWithClassName_default("h4");
   DivStyledAsH4.displayName = "DivStyledAsH4";
-  var AlertHeading = /* @__PURE__ */ React21.forwardRef(({
+  var AlertHeading = /* @__PURE__ */ React20.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = DivStyledAsH4,
@@ -30363,23 +30330,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var AlertHeading_default = AlertHeading;
 
   // node_modules/react-bootstrap/esm/AlertLink.js
-  var React24 = __toESM(require_react());
+  var React23 = __toESM(require_react());
   var import_classnames4 = __toESM(require_classnames());
 
   // node_modules/@restart/ui/esm/Anchor.js
-  var React23 = __toESM(require_react());
+  var React22 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCallbackRef.js
-  var import_react12 = __toESM(require_react());
+  var import_react11 = __toESM(require_react());
   function useCallbackRef() {
-    return (0, import_react12.useState)(null);
+    return (0, import_react11.useState)(null);
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useCommittedRef.js
-  var import_react13 = __toESM(require_react());
+  var import_react12 = __toESM(require_react());
   function useCommittedRef2(value) {
-    const ref = (0, import_react13.useRef)(value);
-    (0, import_react13.useEffect)(() => {
+    const ref = (0, import_react12.useRef)(value);
+    (0, import_react12.useEffect)(() => {
       ref.current = value;
     }, [value]);
     return ref;
@@ -30387,19 +30354,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var useCommittedRef_default2 = useCommittedRef2;
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js
-  var import_react14 = __toESM(require_react());
+  var import_react13 = __toESM(require_react());
   function useEventCallback2(fn2) {
     const ref = useCommittedRef_default2(fn2);
-    return (0, import_react14.useCallback)(function(...args) {
+    return (0, import_react13.useCallback)(function(...args) {
       return ref.current && ref.current(...args);
     }, [ref]);
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventListener.js
-  var import_react15 = __toESM(require_react());
+  var import_react14 = __toESM(require_react());
   function useEventListener(eventTarget, event, listener, capture = false) {
     const handler = useEventCallback2(listener);
-    (0, import_react15.useEffect)(() => {
+    (0, import_react14.useEffect)(() => {
       const target = typeof eventTarget === "function" ? eventTarget() : eventTarget;
       target.addEventListener(event, handler, capture);
       return () => target.removeEventListener(event, handler, capture);
@@ -30407,23 +30374,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useGlobalListener.js
-  var import_react16 = __toESM(require_react());
+  var import_react15 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useInterval.js
-  var import_react17 = __toESM(require_react());
+  var import_react16 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useRafInterval.js
-  var import_react18 = __toESM(require_react());
+  var import_react17 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergeState.js
-  var import_react19 = __toESM(require_react());
+  var import_react18 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMounted.js
-  var import_react20 = __toESM(require_react());
+  var import_react19 = __toESM(require_react());
   function useMounted() {
-    const mounted = (0, import_react20.useRef)(true);
-    const isMounted = (0, import_react20.useRef)(() => mounted.current);
-    (0, import_react20.useEffect)(() => {
+    const mounted = (0, import_react19.useRef)(true);
+    const isMounted = (0, import_react19.useRef)(() => mounted.current);
+    (0, import_react19.useEffect)(() => {
       mounted.current = true;
       return () => {
         mounted.current = false;
@@ -30433,31 +30400,31 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/usePrevious.js
-  var import_react21 = __toESM(require_react());
+  var import_react20 = __toESM(require_react());
   function usePrevious(value) {
-    const ref = (0, import_react21.useRef)(null);
-    (0, import_react21.useEffect)(() => {
+    const ref = (0, import_react20.useRef)(null);
+    (0, import_react20.useEffect)(() => {
       ref.current = value;
     });
     return ref.current;
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useImage.js
-  var import_react22 = __toESM(require_react());
+  var import_react21 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useResizeObserver.js
-  var import_react24 = __toESM(require_react());
+  var import_react23 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useIsomorphicEffect.js
-  var import_react23 = __toESM(require_react());
+  var import_react22 = __toESM(require_react());
   var isReactNative = typeof global !== "undefined" && // @ts-ignore
   global.navigator && // @ts-ignore
   global.navigator.product === "ReactNative";
   var isDOM = typeof document !== "undefined";
-  var useIsomorphicEffect_default = isDOM || isReactNative ? import_react23.useLayoutEffect : import_react23.useEffect;
+  var useIsomorphicEffect_default = isDOM || isReactNative ? import_react22.useLayoutEffect : import_react22.useEffect;
 
   // node_modules/@restart/ui/esm/Button.js
-  var React22 = __toESM(require_react());
+  var React21 = __toESM(require_react());
   var import_jsx_runtime6 = __toESM(require_jsx_runtime());
   var _excluded = ["as", "disabled"];
   function _objectWithoutPropertiesLoose2(r, e) {
@@ -30538,7 +30505,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onKeyDown: handleKeyDown
     }, meta];
   }
-  var Button = /* @__PURE__ */ React22.forwardRef((_ref, ref) => {
+  var Button = /* @__PURE__ */ React21.forwardRef((_ref, ref) => {
     let {
       as: asProp,
       disabled
@@ -30574,7 +30541,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function isTrivialHref2(href) {
     return !href || href.trim() === "#";
   }
-  var Anchor = /* @__PURE__ */ React23.forwardRef((_ref, ref) => {
+  var Anchor = /* @__PURE__ */ React22.forwardRef((_ref, ref) => {
     let {
       onKeyDown
     } = _ref, props = _objectWithoutPropertiesLoose3(_ref, _excluded2);
@@ -30603,7 +30570,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/AlertLink.js
   var import_jsx_runtime8 = __toESM(require_jsx_runtime());
-  var AlertLink = /* @__PURE__ */ React24.forwardRef(({
+  var AlertLink = /* @__PURE__ */ React23.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = Anchor_default,
@@ -30621,14 +30588,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Fade.js
   var import_classnames5 = __toESM(require_classnames());
-  var React25 = __toESM(require_react());
-  var import_react25 = __toESM(require_react());
+  var React24 = __toESM(require_react());
+  var import_react24 = __toESM(require_react());
   var import_jsx_runtime9 = __toESM(require_jsx_runtime());
   var fadeStyles = {
     [ENTERING]: "show",
     [ENTERED]: "show"
   };
-  var Fade = /* @__PURE__ */ React25.forwardRef(({
+  var Fade = /* @__PURE__ */ React24.forwardRef(({
     className,
     children,
     transitionClasses = {},
@@ -30643,7 +30610,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       appear: false,
       ...rest
     };
-    const handleEnter = (0, import_react25.useCallback)((node, isAppearing) => {
+    const handleEnter = (0, import_react24.useCallback)((node, isAppearing) => {
       triggerBrowserReflow(node);
       onEnter == null || onEnter(node, isAppearing);
     }, [onEnter]);
@@ -30653,7 +30620,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ...props,
       onEnter: handleEnter,
       childRef: getChildRef(children),
-      children: (status2, innerProps) => /* @__PURE__ */ React25.cloneElement(children, {
+      children: (status2, innerProps) => /* @__PURE__ */ React24.cloneElement(children, {
         ...innerProps,
         className: (0, import_classnames5.default)("fade", className, children.props.className, fadeStyles[status2], transitionClasses[status2])
       })
@@ -30664,7 +30631,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/CloseButton.js
   var import_prop_types3 = __toESM(require_prop_types());
-  var React26 = __toESM(require_react());
+  var React25 = __toESM(require_react());
   var import_classnames6 = __toESM(require_classnames());
   var import_jsx_runtime10 = __toESM(require_jsx_runtime());
   var propTypes = {
@@ -30679,7 +30646,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
      */
     variant: import_prop_types3.default.oneOf(["white"])
   };
-  var CloseButton = /* @__PURE__ */ React26.forwardRef(({
+  var CloseButton = /* @__PURE__ */ React25.forwardRef(({
     className,
     variant,
     "aria-label": ariaLabel = "Close",
@@ -30698,7 +30665,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-bootstrap/esm/Alert.js
   var import_jsx_runtime11 = __toESM(require_jsx_runtime());
   var import_jsx_runtime12 = __toESM(require_jsx_runtime());
-  var Alert = /* @__PURE__ */ React27.forwardRef((uncontrolledProps, ref) => {
+  var Alert = /* @__PURE__ */ React26.forwardRef((uncontrolledProps, ref) => {
     const {
       bsPrefix,
       show = true,
@@ -30750,9 +30717,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Badge.js
   var import_classnames8 = __toESM(require_classnames());
-  var React28 = __toESM(require_react());
+  var React27 = __toESM(require_react());
   var import_jsx_runtime13 = __toESM(require_jsx_runtime());
-  var Badge = /* @__PURE__ */ React28.forwardRef(({
+  var Badge = /* @__PURE__ */ React27.forwardRef(({
     bsPrefix,
     bg = "primary",
     pill = false,
@@ -30773,9 +30740,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Button.js
   var import_classnames9 = __toESM(require_classnames());
-  var React29 = __toESM(require_react());
+  var React28 = __toESM(require_react());
   var import_jsx_runtime14 = __toESM(require_jsx_runtime());
-  var Button2 = /* @__PURE__ */ React29.forwardRef(({
+  var Button2 = /* @__PURE__ */ React28.forwardRef(({
     as,
     bsPrefix,
     variant = "primary",
@@ -30807,9 +30774,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ButtonGroup.js
   var import_classnames10 = __toESM(require_classnames());
-  var React30 = __toESM(require_react());
+  var React29 = __toESM(require_react());
   var import_jsx_runtime15 = __toESM(require_jsx_runtime());
-  var ButtonGroup = /* @__PURE__ */ React30.forwardRef(({
+  var ButtonGroup = /* @__PURE__ */ React29.forwardRef(({
     bsPrefix,
     size: size2,
     vertical = false,
@@ -30835,13 +30802,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Card.js
   var import_classnames20 = __toESM(require_classnames());
-  var React41 = __toESM(require_react());
+  var React40 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/CardBody.js
-  var React31 = __toESM(require_react());
+  var React30 = __toESM(require_react());
   var import_classnames11 = __toESM(require_classnames());
   var import_jsx_runtime16 = __toESM(require_jsx_runtime());
-  var CardBody = /* @__PURE__ */ React31.forwardRef(({
+  var CardBody = /* @__PURE__ */ React30.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -30858,10 +30825,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var CardBody_default = CardBody;
 
   // node_modules/react-bootstrap/esm/CardFooter.js
-  var React32 = __toESM(require_react());
+  var React31 = __toESM(require_react());
   var import_classnames12 = __toESM(require_classnames());
   var import_jsx_runtime17 = __toESM(require_jsx_runtime());
-  var CardFooter = /* @__PURE__ */ React32.forwardRef(({
+  var CardFooter = /* @__PURE__ */ React31.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -30879,18 +30846,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/CardHeader.js
   var import_classnames13 = __toESM(require_classnames());
-  var React34 = __toESM(require_react());
-  var import_react26 = __toESM(require_react());
+  var React33 = __toESM(require_react());
+  var import_react25 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/CardHeaderContext.js
-  var React33 = __toESM(require_react());
-  var context = /* @__PURE__ */ React33.createContext(null);
+  var React32 = __toESM(require_react());
+  var context = /* @__PURE__ */ React32.createContext(null);
   context.displayName = "CardHeaderContext";
   var CardHeaderContext_default = context;
 
   // node_modules/react-bootstrap/esm/CardHeader.js
   var import_jsx_runtime18 = __toESM(require_jsx_runtime());
-  var CardHeader = /* @__PURE__ */ React34.forwardRef(({
+  var CardHeader = /* @__PURE__ */ React33.forwardRef(({
     bsPrefix,
     className,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
@@ -30898,7 +30865,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     const prefix = useBootstrapPrefix(bsPrefix, "card-header");
-    const contextValue = (0, import_react26.useMemo)(() => ({
+    const contextValue = (0, import_react25.useMemo)(() => ({
       cardHeaderBsPrefix: prefix
     }), [prefix]);
     return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(CardHeaderContext_default.Provider, {
@@ -30915,9 +30882,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/CardImg.js
   var import_classnames14 = __toESM(require_classnames());
-  var React35 = __toESM(require_react());
+  var React34 = __toESM(require_react());
   var import_jsx_runtime19 = __toESM(require_jsx_runtime());
-  var CardImg = /* @__PURE__ */ React35.forwardRef(
+  var CardImg = /* @__PURE__ */ React34.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     ({
       bsPrefix,
@@ -30938,10 +30905,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var CardImg_default = CardImg;
 
   // node_modules/react-bootstrap/esm/CardImgOverlay.js
-  var React36 = __toESM(require_react());
+  var React35 = __toESM(require_react());
   var import_classnames15 = __toESM(require_classnames());
   var import_jsx_runtime20 = __toESM(require_jsx_runtime());
-  var CardImgOverlay = /* @__PURE__ */ React36.forwardRef(({
+  var CardImgOverlay = /* @__PURE__ */ React35.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -30958,10 +30925,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var CardImgOverlay_default = CardImgOverlay;
 
   // node_modules/react-bootstrap/esm/CardLink.js
-  var React37 = __toESM(require_react());
+  var React36 = __toESM(require_react());
   var import_classnames16 = __toESM(require_classnames());
   var import_jsx_runtime21 = __toESM(require_jsx_runtime());
-  var CardLink = /* @__PURE__ */ React37.forwardRef(({
+  var CardLink = /* @__PURE__ */ React36.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "a",
@@ -30978,11 +30945,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var CardLink_default = CardLink;
 
   // node_modules/react-bootstrap/esm/CardSubtitle.js
-  var React38 = __toESM(require_react());
+  var React37 = __toESM(require_react());
   var import_classnames17 = __toESM(require_classnames());
   var import_jsx_runtime22 = __toESM(require_jsx_runtime());
   var DivStyledAsH6 = divWithClassName_default("h6");
-  var CardSubtitle = /* @__PURE__ */ React38.forwardRef(({
+  var CardSubtitle = /* @__PURE__ */ React37.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = DivStyledAsH6,
@@ -30999,10 +30966,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var CardSubtitle_default = CardSubtitle;
 
   // node_modules/react-bootstrap/esm/CardText.js
-  var React39 = __toESM(require_react());
+  var React38 = __toESM(require_react());
   var import_classnames18 = __toESM(require_classnames());
   var import_jsx_runtime23 = __toESM(require_jsx_runtime());
-  var CardText = /* @__PURE__ */ React39.forwardRef(({
+  var CardText = /* @__PURE__ */ React38.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "p",
@@ -31019,11 +30986,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var CardText_default = CardText;
 
   // node_modules/react-bootstrap/esm/CardTitle.js
-  var React40 = __toESM(require_react());
+  var React39 = __toESM(require_react());
   var import_classnames19 = __toESM(require_classnames());
   var import_jsx_runtime24 = __toESM(require_jsx_runtime());
   var DivStyledAsH5 = divWithClassName_default("h5");
-  var CardTitle = /* @__PURE__ */ React40.forwardRef(({
+  var CardTitle = /* @__PURE__ */ React39.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = DivStyledAsH5,
@@ -31041,7 +31008,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Card.js
   var import_jsx_runtime25 = __toESM(require_jsx_runtime());
-  var Card = /* @__PURE__ */ React41.forwardRef(({
+  var Card = /* @__PURE__ */ React40.forwardRef(({
     bsPrefix,
     className,
     bg,
@@ -31077,14 +31044,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/@restart/hooks/esm/useTimeout.js
-  var import_react30 = __toESM(require_react());
+  var import_react29 = __toESM(require_react());
 
   // node_modules/@restart/hooks/esm/useMounted.js
-  var import_react27 = __toESM(require_react());
+  var import_react26 = __toESM(require_react());
   function useMounted2() {
-    const mounted = (0, import_react27.useRef)(true);
-    const isMounted = (0, import_react27.useRef)(() => mounted.current);
-    (0, import_react27.useEffect)(() => {
+    const mounted = (0, import_react26.useRef)(true);
+    const isMounted = (0, import_react26.useRef)(() => mounted.current);
+    (0, import_react26.useEffect)(() => {
       mounted.current = true;
       return () => {
         mounted.current = false;
@@ -31094,18 +31061,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/hooks/esm/useUpdatedRef.js
-  var import_react28 = __toESM(require_react());
+  var import_react27 = __toESM(require_react());
   function useUpdatedRef(value) {
-    const valueRef = (0, import_react28.useRef)(value);
+    const valueRef = (0, import_react27.useRef)(value);
     valueRef.current = value;
     return valueRef;
   }
 
   // node_modules/@restart/hooks/esm/useWillUnmount.js
-  var import_react29 = __toESM(require_react());
+  var import_react28 = __toESM(require_react());
   function useWillUnmount(fn2) {
     const onUnmount = useUpdatedRef(fn2);
-    (0, import_react29.useEffect)(() => () => onUnmount.current(), []);
+    (0, import_react28.useEffect)(() => () => onUnmount.current(), []);
   }
 
   // node_modules/@restart/hooks/esm/useTimeout.js
@@ -31116,9 +31083,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
   function useTimeout() {
     const isMounted = useMounted2();
-    const handleRef = (0, import_react30.useRef)();
+    const handleRef = (0, import_react29.useRef)();
     useWillUnmount(() => clearTimeout(handleRef.current));
-    return (0, import_react30.useMemo)(() => {
+    return (0, import_react29.useMemo)(() => {
       const clear = () => clearTimeout(handleRef.current);
       function set(fn2, delayMs = 0) {
         if (!isMounted())
@@ -31139,14 +31106,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/react-bootstrap/esm/ElementChildren.js
-  var React42 = __toESM(require_react());
+  var React41 = __toESM(require_react());
   function hasChildOfType(children, type) {
-    return React42.Children.toArray(children).some((child) => /* @__PURE__ */ React42.isValidElement(child) && child.type === type);
+    return React41.Children.toArray(children).some((child) => /* @__PURE__ */ React41.isValidElement(child) && child.type === type);
   }
 
   // node_modules/react-bootstrap/esm/Col.js
   var import_classnames21 = __toESM(require_classnames());
-  var React43 = __toESM(require_react());
+  var React42 = __toESM(require_react());
   var import_jsx_runtime26 = __toESM(require_jsx_runtime());
   function useCol({
     as,
@@ -31191,7 +31158,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       spans
     }];
   }
-  var Col = /* @__PURE__ */ React43.forwardRef(
+  var Col = /* @__PURE__ */ React42.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (props, ref) => {
       const [{
@@ -31214,9 +31181,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Container.js
   var import_classnames22 = __toESM(require_classnames());
-  var React44 = __toESM(require_react());
+  var React43 = __toESM(require_react());
   var import_jsx_runtime27 = __toESM(require_jsx_runtime());
-  var Container = /* @__PURE__ */ React44.forwardRef(({
+  var Container = /* @__PURE__ */ React43.forwardRef(({
     bsPrefix,
     fluid = false,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
@@ -31237,8 +31204,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Dropdown.js
   var import_classnames29 = __toESM(require_classnames());
-  var React61 = __toESM(require_react());
-  var import_react46 = __toESM(require_react());
+  var React60 = __toESM(require_react());
+  var import_react45 = __toESM(require_react());
 
   // node_modules/dom-helpers/esm/querySelectorAll.js
   var toArray = Function.prototype.bind.call(Function.prototype.call, [].slice);
@@ -31247,21 +31214,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/Dropdown.js
-  var import_react41 = __toESM(require_react());
-  var React51 = __toESM(require_react());
+  var import_react40 = __toESM(require_react());
+  var React50 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/uncontrollable/lib/esm/index.js
-  var import_react31 = __toESM(require_react());
+  var import_react30 = __toESM(require_react());
   function useUncontrolledProp2(propValue, defaultValue, handler) {
-    const wasPropRef = (0, import_react31.useRef)(propValue !== void 0);
-    const [stateValue, setState2] = (0, import_react31.useState)(defaultValue);
+    const wasPropRef = (0, import_react30.useRef)(propValue !== void 0);
+    const [stateValue, setState2] = (0, import_react30.useState)(defaultValue);
     const isProp2 = propValue !== void 0;
     const wasProp = wasPropRef.current;
     wasPropRef.current = isProp2;
     if (!isProp2 && wasProp && stateValue !== defaultValue) {
       setState2(defaultValue);
     }
-    return [isProp2 ? propValue : stateValue, (0, import_react31.useCallback)((...args) => {
+    return [isProp2 ? propValue : stateValue, (0, import_react30.useCallback)((...args) => {
       const [value, ...rest] = args;
       let returnValue = handler == null ? void 0 : handler(value, ...rest);
       setState2(value);
@@ -31270,23 +31237,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js
-  var import_react32 = __toESM(require_react());
+  var import_react31 = __toESM(require_react());
   function useForceUpdate() {
-    const [, dispatch] = (0, import_react32.useReducer)((revision) => revision + 1, 0);
+    const [, dispatch] = (0, import_react31.useReducer)((revision) => revision + 1, 0);
     return dispatch;
   }
 
   // node_modules/@restart/ui/esm/DropdownContext.js
-  var React45 = __toESM(require_react());
-  var DropdownContext = /* @__PURE__ */ React45.createContext(null);
+  var React44 = __toESM(require_react());
+  var DropdownContext = /* @__PURE__ */ React44.createContext(null);
   var DropdownContext_default = DropdownContext;
 
   // node_modules/@restart/ui/esm/DropdownMenu.js
-  var import_react36 = __toESM(require_react());
-  var React46 = __toESM(require_react());
+  var import_react35 = __toESM(require_react());
+  var React45 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/usePopper.js
-  var import_react34 = __toESM(require_react());
+  var import_react33 = __toESM(require_react());
 
   // node_modules/dequal/dist/index.mjs
   var has = Object.prototype.hasOwnProperty;
@@ -31377,10 +31344,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useSafeState.js
-  var import_react33 = __toESM(require_react());
+  var import_react32 = __toESM(require_react());
   function useSafeState(state) {
     const isMounted = useMounted();
-    return [state[0], (0, import_react33.useCallback)((nextState) => {
+    return [state[0], (0, import_react32.useCallback)((nextState) => {
       if (!isMounted())
         return;
       return state[1](nextState);
@@ -32842,17 +32809,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       strategy = "absolute",
       modifiers = EMPTY_MODIFIERS
     } = _ref, config3 = _objectWithoutPropertiesLoose4(_ref, _excluded3);
-    const prevModifiers = (0, import_react34.useRef)(modifiers);
-    const popperInstanceRef = (0, import_react34.useRef)();
-    const update = (0, import_react34.useCallback)(() => {
+    const prevModifiers = (0, import_react33.useRef)(modifiers);
+    const popperInstanceRef = (0, import_react33.useRef)();
+    const update = (0, import_react33.useCallback)(() => {
       var _popperInstanceRef$cu;
       (_popperInstanceRef$cu = popperInstanceRef.current) == null ? void 0 : _popperInstanceRef$cu.update();
     }, []);
-    const forceUpdate = (0, import_react34.useCallback)(() => {
+    const forceUpdate = (0, import_react33.useCallback)(() => {
       var _popperInstanceRef$cu2;
       (_popperInstanceRef$cu2 = popperInstanceRef.current) == null ? void 0 : _popperInstanceRef$cu2.forceUpdate();
     }, []);
-    const [popperState, setState2] = useSafeState_default((0, import_react34.useState)({
+    const [popperState, setState2] = useSafeState_default((0, import_react33.useState)({
       placement,
       update,
       forceUpdate,
@@ -32862,7 +32829,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         arrow: {}
       }
     }));
-    const updateModifier = (0, import_react34.useMemo)(() => ({
+    const updateModifier = (0, import_react33.useMemo)(() => ({
       name: "updateStateModifier",
       enabled: true,
       phase: "write",
@@ -32886,13 +32853,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         });
       }
     }), [update, forceUpdate, setState2]);
-    const nextModifiers = (0, import_react34.useMemo)(() => {
+    const nextModifiers = (0, import_react33.useMemo)(() => {
       if (!dequal(prevModifiers.current, modifiers)) {
         prevModifiers.current = modifiers;
       }
       return prevModifiers.current;
     }, [modifiers]);
-    (0, import_react34.useEffect)(() => {
+    (0, import_react33.useEffect)(() => {
       if (!popperInstanceRef.current || !enabled)
         return;
       popperInstanceRef.current.setOptions({
@@ -32901,7 +32868,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         modifiers: [...nextModifiers, updateModifier, disabledApplyStylesModifier]
       });
     }, [strategy, placement, updateModifier, enabled, nextModifiers]);
-    (0, import_react34.useEffect)(() => {
+    (0, import_react33.useEffect)(() => {
       if (!enabled || referenceElement == null || popperElement == null) {
         return void 0;
       }
@@ -32936,7 +32903,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/useClickOutside.js
-  var import_react35 = __toESM(require_react());
+  var import_react34 = __toESM(require_react());
   var import_warning = __toESM(require_warning());
   var noop2 = () => {
   };
@@ -32956,9 +32923,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     disabled,
     clickTrigger = "click"
   } = {}) {
-    const preventMouseClickOutsideRef = (0, import_react35.useRef)(false);
-    const waitingForTrigger = (0, import_react35.useRef)(false);
-    const handleMouseCapture = (0, import_react35.useCallback)((e) => {
+    const preventMouseClickOutsideRef = (0, import_react34.useRef)(false);
+    const waitingForTrigger = (0, import_react34.useRef)(false);
+    const handleMouseCapture = (0, import_react34.useCallback)((e) => {
       const currentTarget = getRefTarget(ref);
       (0, import_warning.default)(!!currentTarget, "ClickOutside captured a close event but does not have a ref to compare it to. useClickOutside(), should be passed a ref that resolves to a DOM node");
       preventMouseClickOutsideRef.current = !currentTarget || isModifiedEvent2(e) || !isLeftClickEvent(e) || !!contains2(currentTarget, e.target) || waitingForTrigger.current;
@@ -32977,7 +32944,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         onClickOutside(e);
       }
     });
-    (0, import_react35.useEffect)(() => {
+    (0, import_react34.useEffect)(() => {
       var _ownerWindow$event, _ownerWindow$parent;
       if (disabled || ref == null)
         return void 0;
@@ -33092,9 +33059,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var noop3 = () => {
   };
   function useDropdownMenu(options = {}) {
-    const context4 = (0, import_react36.useContext)(DropdownContext_default);
+    const context4 = (0, import_react35.useContext)(DropdownContext_default);
     const [arrowElement, attachArrowRef] = useCallbackRef();
-    const hasShownRef = (0, import_react36.useRef)(false);
+    const hasShownRef = (0, import_react35.useRef)(false);
     const {
       flip: flip2,
       offset: offset2,
@@ -33168,25 +33135,25 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var DropdownMenu_default = DropdownMenu;
 
   // node_modules/@restart/ui/esm/DropdownToggle.js
-  var import_react38 = __toESM(require_react());
-  var React47 = __toESM(require_react());
+  var import_react37 = __toESM(require_react());
+  var React46 = __toESM(require_react());
 
   // node_modules/@react-aria/ssr/dist/SSRProvider.mjs
-  var import_react37 = __toESM(require_react(), 1);
+  var import_react36 = __toESM(require_react(), 1);
   var $b5e257d569688ac6$var$defaultContext = {
     prefix: String(Math.round(Math.random() * 1e10)),
     current: 0
   };
-  var $b5e257d569688ac6$var$SSRContext = /* @__PURE__ */ (0, import_react37.default).createContext($b5e257d569688ac6$var$defaultContext);
-  var $b5e257d569688ac6$var$IsSSRContext = /* @__PURE__ */ (0, import_react37.default).createContext(false);
+  var $b5e257d569688ac6$var$SSRContext = /* @__PURE__ */ (0, import_react36.default).createContext($b5e257d569688ac6$var$defaultContext);
+  var $b5e257d569688ac6$var$IsSSRContext = /* @__PURE__ */ (0, import_react36.default).createContext(false);
   var $b5e257d569688ac6$var$canUseDOM = Boolean(typeof window !== "undefined" && window.document && window.document.createElement);
   var $b5e257d569688ac6$var$componentIds = /* @__PURE__ */ new WeakMap();
   function $b5e257d569688ac6$var$useCounter(isDisabled = false) {
-    let ctx = (0, import_react37.useContext)($b5e257d569688ac6$var$SSRContext);
-    let ref = (0, import_react37.useRef)(null);
+    let ctx = (0, import_react36.useContext)($b5e257d569688ac6$var$SSRContext);
+    let ref = (0, import_react36.useRef)(null);
     if (ref.current === null && !isDisabled) {
       var _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner, _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-      let currentOwner = (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = (0, import_react37.default).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === void 0 ? void 0 : (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner = _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner === void 0 ? void 0 : _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner.current;
+      let currentOwner = (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = (0, import_react36.default).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED === void 0 ? void 0 : (_React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner = _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner) === null || _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner === void 0 ? void 0 : _React___SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED_ReactCurrentOwner.current;
       if (currentOwner) {
         let prevComponentValue = $b5e257d569688ac6$var$componentIds.get(currentOwner);
         if (prevComponentValue == null)
@@ -33204,7 +33171,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return ref.current;
   }
   function $b5e257d569688ac6$var$useLegacySSRSafeId(defaultId) {
-    let ctx = (0, import_react37.useContext)($b5e257d569688ac6$var$SSRContext);
+    let ctx = (0, import_react36.useContext)($b5e257d569688ac6$var$SSRContext);
     if (ctx === $b5e257d569688ac6$var$defaultContext && !$b5e257d569688ac6$var$canUseDOM && true)
       console.warn("When server rendering, you must wrap your application in an <SSRProvider> to ensure consistent ids are generated between the client and server.");
     let counter = $b5e257d569688ac6$var$useCounter(!!defaultId);
@@ -33212,12 +33179,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     return defaultId || `${prefix}-${counter}`;
   }
   function $b5e257d569688ac6$var$useModernSSRSafeId(defaultId) {
-    let id = (0, import_react37.default).useId();
-    let [didSSR] = (0, import_react37.useState)($b5e257d569688ac6$export$535bd6ca7f90a273());
+    let id = (0, import_react36.default).useId();
+    let [didSSR] = (0, import_react36.useState)($b5e257d569688ac6$export$535bd6ca7f90a273());
     let prefix = didSSR || false ? "react-aria" : `react-aria${$b5e257d569688ac6$var$defaultContext.prefix}`;
     return defaultId || `${prefix}-${id}`;
   }
-  var $b5e257d569688ac6$export$619500959fc48b26 = typeof (0, import_react37.default)["useId"] === "function" ? $b5e257d569688ac6$var$useModernSSRSafeId : $b5e257d569688ac6$var$useLegacySSRSafeId;
+  var $b5e257d569688ac6$export$619500959fc48b26 = typeof (0, import_react36.default)["useId"] === "function" ? $b5e257d569688ac6$var$useModernSSRSafeId : $b5e257d569688ac6$var$useLegacySSRSafeId;
   function $b5e257d569688ac6$var$getSnapshot() {
     return false;
   }
@@ -33229,9 +33196,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
   }
   function $b5e257d569688ac6$export$535bd6ca7f90a273() {
-    if (typeof (0, import_react37.default)["useSyncExternalStore"] === "function")
-      return (0, import_react37.default)["useSyncExternalStore"]($b5e257d569688ac6$var$subscribe, $b5e257d569688ac6$var$getSnapshot, $b5e257d569688ac6$var$getServerSnapshot);
-    return (0, import_react37.useContext)($b5e257d569688ac6$var$IsSSRContext);
+    if (typeof (0, import_react36.default)["useSyncExternalStore"] === "function")
+      return (0, import_react36.default)["useSyncExternalStore"]($b5e257d569688ac6$var$subscribe, $b5e257d569688ac6$var$getSnapshot, $b5e257d569688ac6$var$getServerSnapshot);
+    return (0, import_react36.useContext)($b5e257d569688ac6$var$IsSSRContext);
   }
 
   // node_modules/@restart/ui/esm/DropdownToggle.js
@@ -33249,8 +33216,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       toggle = noop4,
       setToggle,
       menuElement
-    } = (0, import_react38.useContext)(DropdownContext_default) || {};
-    const handleClick = (0, import_react38.useCallback)((e) => {
+    } = (0, import_react37.useContext)(DropdownContext_default) || {};
+    const handleClick = (0, import_react37.useCallback)((e) => {
       toggle(!show, e);
     }, [show, toggle]);
     const props = {
@@ -33279,12 +33246,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var DropdownToggle_default = DropdownToggle;
 
   // node_modules/@restart/ui/esm/DropdownItem.js
-  var React50 = __toESM(require_react());
-  var import_react39 = __toESM(require_react());
+  var React49 = __toESM(require_react());
+  var import_react38 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/SelectableContext.js
-  var React48 = __toESM(require_react());
-  var SelectableContext = /* @__PURE__ */ React48.createContext(null);
+  var React47 = __toESM(require_react());
+  var SelectableContext = /* @__PURE__ */ React47.createContext(null);
   var makeEventKey = (eventKey, href = null) => {
     if (eventKey != null)
       return String(eventKey);
@@ -33293,8 +33260,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var SelectableContext_default = SelectableContext;
 
   // node_modules/@restart/ui/esm/NavContext.js
-  var React49 = __toESM(require_react());
-  var NavContext = /* @__PURE__ */ React49.createContext(null);
+  var React48 = __toESM(require_react());
+  var NavContext = /* @__PURE__ */ React48.createContext(null);
   NavContext.displayName = "NavContext";
   var NavContext_default = NavContext;
 
@@ -33330,8 +33297,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     disabled,
     onClick
   }) {
-    const onSelectCtx = (0, import_react39.useContext)(SelectableContext_default);
-    const navContext = (0, import_react39.useContext)(NavContext_default);
+    const onSelectCtx = (0, import_react38.useContext)(SelectableContext_default);
+    const navContext = (0, import_react38.useContext)(NavContext_default);
     const {
       activeKey
     } = navContext || {};
@@ -33354,7 +33321,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       isActive
     }];
   }
-  var DropdownItem = /* @__PURE__ */ React50.forwardRef((_ref, ref) => {
+  var DropdownItem = /* @__PURE__ */ React49.forwardRef((_ref, ref) => {
     let {
       eventKey,
       disabled,
@@ -33377,19 +33344,19 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var DropdownItem_default = DropdownItem;
 
   // node_modules/@restart/ui/esm/useWindow.js
-  var import_react40 = __toESM(require_react());
-  var Context = /* @__PURE__ */ (0, import_react40.createContext)(canUseDOM_default ? window : void 0);
+  var import_react39 = __toESM(require_react());
+  var Context = /* @__PURE__ */ (0, import_react39.createContext)(canUseDOM_default ? window : void 0);
   var WindowProvider = Context.Provider;
   function useWindow() {
-    return (0, import_react40.useContext)(Context);
+    return (0, import_react39.useContext)(Context);
   }
 
   // node_modules/@restart/ui/esm/Dropdown.js
   var import_jsx_runtime31 = __toESM(require_jsx_runtime());
   function useRefWithUpdate() {
     const forceUpdate = useForceUpdate();
-    const ref = (0, import_react41.useRef)(null);
-    const attachRef = (0, import_react41.useCallback)((element) => {
+    const ref = (0, import_react40.useRef)(null);
+    const attachRef = (0, import_react40.useCallback)((element) => {
       ref.current = element;
       forceUpdate();
     }, [forceUpdate]);
@@ -33412,10 +33379,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const [toggleRef, setToggle] = useRefWithUpdate();
     const toggleElement = toggleRef.current;
     const lastShow = usePrevious(show);
-    const lastSourceEvent = (0, import_react41.useRef)(null);
-    const focusInDropdown = (0, import_react41.useRef)(false);
-    const onSelectCtx = (0, import_react41.useContext)(SelectableContext_default);
-    const toggle = (0, import_react41.useCallback)((nextShow, event, source = event == null ? void 0 : event.type) => {
+    const lastSourceEvent = (0, import_react40.useRef)(null);
+    const focusInDropdown = (0, import_react40.useRef)(false);
+    const onSelectCtx = (0, import_react40.useContext)(SelectableContext_default);
+    const toggle = (0, import_react40.useCallback)((nextShow, event, source = event == null ? void 0 : event.type) => {
       onToggle(nextShow, {
         originalEvent: event,
         source
@@ -33428,7 +33395,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         onSelectCtx == null ? void 0 : onSelectCtx(key, event);
       }
     });
-    const context4 = (0, import_react41.useMemo)(() => ({
+    const context4 = (0, import_react40.useMemo)(() => ({
       toggle,
       placement,
       show,
@@ -33458,7 +33425,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       if (first && first.focus)
         first.focus();
     });
-    (0, import_react41.useEffect)(() => {
+    (0, import_react40.useEffect)(() => {
       if (show)
         maybeFocusFirst();
       else if (focusInDropdown.current) {
@@ -33466,7 +33433,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         focusToggle();
       }
     }, [show, focusInDropdown, focusToggle, maybeFocusFirst]);
-    (0, import_react41.useEffect)(() => {
+    (0, import_react40.useEffect)(() => {
       lastSourceEvent.current = null;
     });
     const getNextFocusedChild = (current, offset2) => {
@@ -33477,7 +33444,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       index2 = Math.max(0, Math.min(index2, items.length));
       return items[index2];
     };
-    useEventListener((0, import_react41.useCallback)(() => window2.document, [window2]), "keydown", (event) => {
+    useEventListener((0, import_react40.useCallback)(() => window2.document, [window2]), "keydown", (event) => {
       var _menuRef$current, _toggleRef$current;
       const {
         key
@@ -33553,16 +33520,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var Dropdown_default = Dropdown;
 
   // node_modules/react-bootstrap/esm/DropdownContext.js
-  var React52 = __toESM(require_react());
-  var DropdownContext2 = /* @__PURE__ */ React52.createContext({});
+  var React51 = __toESM(require_react());
+  var DropdownContext2 = /* @__PURE__ */ React51.createContext({});
   DropdownContext2.displayName = "DropdownContext";
   var DropdownContext_default2 = DropdownContext2;
 
   // node_modules/react-bootstrap/esm/DropdownDivider.js
-  var React53 = __toESM(require_react());
+  var React52 = __toESM(require_react());
   var import_classnames23 = __toESM(require_classnames());
   var import_jsx_runtime32 = __toESM(require_jsx_runtime());
-  var DropdownDivider = /* @__PURE__ */ React53.forwardRef(({
+  var DropdownDivider = /* @__PURE__ */ React52.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "hr",
@@ -33581,10 +33548,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var DropdownDivider_default = DropdownDivider;
 
   // node_modules/react-bootstrap/esm/DropdownHeader.js
-  var React54 = __toESM(require_react());
+  var React53 = __toESM(require_react());
   var import_classnames24 = __toESM(require_classnames());
   var import_jsx_runtime33 = __toESM(require_jsx_runtime());
-  var DropdownHeader = /* @__PURE__ */ React54.forwardRef(({
+  var DropdownHeader = /* @__PURE__ */ React53.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -33604,9 +33571,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/DropdownItem.js
   var import_classnames25 = __toESM(require_classnames());
-  var React55 = __toESM(require_react());
+  var React54 = __toESM(require_react());
   var import_jsx_runtime34 = __toESM(require_jsx_runtime());
-  var DropdownItem2 = /* @__PURE__ */ React55.forwardRef(({
+  var DropdownItem2 = /* @__PURE__ */ React54.forwardRef(({
     bsPrefix,
     className,
     eventKey,
@@ -33635,10 +33602,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var DropdownItem_default2 = DropdownItem2;
 
   // node_modules/react-bootstrap/esm/DropdownItemText.js
-  var React56 = __toESM(require_react());
+  var React55 = __toESM(require_react());
   var import_classnames26 = __toESM(require_classnames());
   var import_jsx_runtime35 = __toESM(require_jsx_runtime());
-  var DropdownItemText = /* @__PURE__ */ React56.forwardRef(({
+  var DropdownItemText = /* @__PURE__ */ React55.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "span",
@@ -33656,39 +33623,39 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/DropdownMenu.js
   var import_classnames27 = __toESM(require_classnames());
-  var React59 = __toESM(require_react());
-  var import_react44 = __toESM(require_react());
+  var React58 = __toESM(require_react());
+  var import_react43 = __toESM(require_react());
 
   // node_modules/@restart/hooks/esm/useIsomorphicEffect.js
-  var import_react42 = __toESM(require_react());
+  var import_react41 = __toESM(require_react());
   var isReactNative2 = typeof global !== "undefined" && // @ts-ignore
   global.navigator && // @ts-ignore
   global.navigator.product === "ReactNative";
   var isDOM2 = typeof document !== "undefined";
-  var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react42.useLayoutEffect : import_react42.useEffect;
+  var useIsomorphicEffect_default2 = isDOM2 || isReactNative2 ? import_react41.useLayoutEffect : import_react41.useEffect;
 
   // node_modules/react-bootstrap/esm/DropdownMenu.js
   var import_warning2 = __toESM(require_warning());
 
   // node_modules/react-bootstrap/esm/InputGroupContext.js
-  var React57 = __toESM(require_react());
-  var context2 = /* @__PURE__ */ React57.createContext(null);
+  var React56 = __toESM(require_react());
+  var context2 = /* @__PURE__ */ React56.createContext(null);
   context2.displayName = "InputGroupContext";
   var InputGroupContext_default = context2;
 
   // node_modules/react-bootstrap/esm/NavbarContext.js
-  var React58 = __toESM(require_react());
-  var context3 = /* @__PURE__ */ React58.createContext(null);
+  var React57 = __toESM(require_react());
+  var context3 = /* @__PURE__ */ React57.createContext(null);
   context3.displayName = "NavbarContext";
   var NavbarContext_default = context3;
 
   // node_modules/react-bootstrap/esm/useWrappedRefWithWarning.js
   var import_invariant3 = __toESM(require_browser());
-  var import_react43 = __toESM(require_react());
+  var import_react42 = __toESM(require_react());
   function useWrappedRefWithWarning(ref, componentName) {
     if (false)
       return ref;
-    const warningRef = (0, import_react43.useCallback)((refValue) => {
+    const warningRef = (0, import_react42.useCallback)((refValue) => {
       !(refValue == null || !refValue.isReactComponent) ? true ? (0, import_invariant3.default)(false, `${componentName} injected a ref to a provided \`as\` component that resolved to a component instance instead of a DOM element. Use \`React.forwardRef\` to provide the injected ref to the class component as a prop in order to pass it directly to a DOM element`) : (0, import_invariant3.default)(false) : void 0;
     }, [componentName]);
     return useMergedRefs_default(warningRef, ref);
@@ -33718,7 +33685,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       placement = "top";
     return placement;
   }
-  var DropdownMenu2 = /* @__PURE__ */ React59.forwardRef(({
+  var DropdownMenu2 = /* @__PURE__ */ React58.forwardRef(({
     bsPrefix,
     className,
     align,
@@ -33733,15 +33700,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     let alignEnd = false;
-    const isNavbar = (0, import_react44.useContext)(NavbarContext_default);
+    const isNavbar = (0, import_react43.useContext)(NavbarContext_default);
     const prefix = useBootstrapPrefix(bsPrefix, "dropdown-menu");
     const {
       align: contextAlign,
       drop,
       isRTL
-    } = (0, import_react44.useContext)(DropdownContext_default2);
+    } = (0, import_react43.useContext)(DropdownContext_default2);
     align = align || contextAlign;
-    const isInputGroup = (0, import_react44.useContext)(InputGroupContext_default);
+    const isInputGroup = (0, import_react43.useContext)(InputGroupContext_default);
     const alignClasses = [];
     if (align) {
       if (typeof align === "object") {
@@ -33807,10 +33774,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/DropdownToggle.js
   var import_classnames28 = __toESM(require_classnames());
-  var React60 = __toESM(require_react());
-  var import_react45 = __toESM(require_react());
+  var React59 = __toESM(require_react());
+  var import_react44 = __toESM(require_react());
   var import_jsx_runtime37 = __toESM(require_jsx_runtime());
-  var DropdownToggle2 = /* @__PURE__ */ React60.forwardRef(({
+  var DropdownToggle2 = /* @__PURE__ */ React59.forwardRef(({
     bsPrefix,
     split,
     className,
@@ -33820,7 +33787,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     const prefix = useBootstrapPrefix(bsPrefix, "dropdown-toggle");
-    const dropdownContext = (0, import_react45.useContext)(DropdownContext_default);
+    const dropdownContext = (0, import_react44.useContext)(DropdownContext_default);
     if (childBsPrefix !== void 0) {
       props.bsPrefix = childBsPrefix;
     }
@@ -33837,7 +33804,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Dropdown.js
   var import_jsx_runtime38 = __toESM(require_jsx_runtime());
-  var Dropdown2 = /* @__PURE__ */ React61.forwardRef((pProps, ref) => {
+  var Dropdown2 = /* @__PURE__ */ React60.forwardRef((pProps, ref) => {
     const {
       bsPrefix,
       drop = "down",
@@ -33855,7 +33822,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     } = useUncontrolled(pProps, {
       show: "onToggle"
     });
-    const isInputGroup = (0, import_react46.useContext)(InputGroupContext_default);
+    const isInputGroup = (0, import_react45.useContext)(InputGroupContext_default);
     const prefix = useBootstrapPrefix(bsPrefix, "dropdown");
     const isRTL = useIsRTL();
     const isClosingPermitted = (source) => {
@@ -33880,7 +33847,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     });
     const alignEnd = align === "end";
     const placement = getDropdownMenuPlacement(alignEnd, drop, isRTL);
-    const contextValue = (0, import_react46.useMemo)(() => ({
+    const contextValue = (0, import_react45.useMemo)(() => ({
       align,
       drop,
       isRTL
@@ -33923,16 +33890,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-bootstrap/esm/Form.js
   var import_classnames41 = __toESM(require_classnames());
   var import_prop_types5 = __toESM(require_prop_types());
-  var React76 = __toESM(require_react());
+  var React75 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/FormCheck.js
   var import_classnames33 = __toESM(require_classnames());
-  var React66 = __toESM(require_react());
-  var import_react49 = __toESM(require_react());
+  var React65 = __toESM(require_react());
+  var import_react48 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/Feedback.js
   var import_classnames30 = __toESM(require_classnames());
-  var React62 = __toESM(require_react());
+  var React61 = __toESM(require_react());
   var import_prop_types4 = __toESM(require_prop_types());
   var import_jsx_runtime39 = __toESM(require_jsx_runtime());
   var propTypes2 = {
@@ -33946,7 +33913,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     tooltip: import_prop_types4.default.bool,
     as: import_prop_types4.default.elementType
   };
-  var Feedback = /* @__PURE__ */ React62.forwardRef(
+  var Feedback = /* @__PURE__ */ React61.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     ({
       as: Component5 = "div",
@@ -33966,17 +33933,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FormCheckInput.js
   var import_classnames31 = __toESM(require_classnames());
-  var React64 = __toESM(require_react());
-  var import_react47 = __toESM(require_react());
+  var React63 = __toESM(require_react());
+  var import_react46 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/FormContext.js
-  var React63 = __toESM(require_react());
-  var FormContext = /* @__PURE__ */ React63.createContext({});
+  var React62 = __toESM(require_react());
+  var FormContext = /* @__PURE__ */ React62.createContext({});
   var FormContext_default = FormContext;
 
   // node_modules/react-bootstrap/esm/FormCheckInput.js
   var import_jsx_runtime40 = __toESM(require_jsx_runtime());
-  var FormCheckInput = /* @__PURE__ */ React64.forwardRef(({
+  var FormCheckInput = /* @__PURE__ */ React63.forwardRef(({
     id,
     bsPrefix,
     className,
@@ -33989,7 +33956,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     const {
       controlId
-    } = (0, import_react47.useContext)(FormContext_default);
+    } = (0, import_react46.useContext)(FormContext_default);
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-check-input");
     return /* @__PURE__ */ (0, import_jsx_runtime40.jsx)(Component5, {
       ...props,
@@ -34004,10 +33971,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FormCheckLabel.js
   var import_classnames32 = __toESM(require_classnames());
-  var React65 = __toESM(require_react());
-  var import_react48 = __toESM(require_react());
+  var React64 = __toESM(require_react());
+  var import_react47 = __toESM(require_react());
   var import_jsx_runtime41 = __toESM(require_jsx_runtime());
-  var FormCheckLabel = /* @__PURE__ */ React65.forwardRef(({
+  var FormCheckLabel = /* @__PURE__ */ React64.forwardRef(({
     bsPrefix,
     className,
     htmlFor,
@@ -34015,7 +33982,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     const {
       controlId
-    } = (0, import_react48.useContext)(FormContext_default);
+    } = (0, import_react47.useContext)(FormContext_default);
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-check-label");
     return /* @__PURE__ */ (0, import_jsx_runtime41.jsx)("label", {
       ...props,
@@ -34031,7 +33998,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_jsx_runtime42 = __toESM(require_jsx_runtime());
   var import_jsx_runtime43 = __toESM(require_jsx_runtime());
   var import_jsx_runtime44 = __toESM(require_jsx_runtime());
-  var FormCheck = /* @__PURE__ */ React66.forwardRef(({
+  var FormCheck = /* @__PURE__ */ React65.forwardRef(({
     id,
     bsPrefix,
     bsSwitchPrefix,
@@ -34057,8 +34024,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     bsSwitchPrefix = useBootstrapPrefix(bsSwitchPrefix, "form-switch");
     const {
       controlId
-    } = (0, import_react49.useContext)(FormContext_default);
-    const innerFormContext = (0, import_react49.useMemo)(() => ({
+    } = (0, import_react48.useContext)(FormContext_default);
+    const innerFormContext = (0, import_react48.useMemo)(() => ({
       controlId: id || controlId
     }), [controlId, id]);
     const hasLabel = !children && label != null && label !== false || hasChildOfType(children, FormCheckLabel_default);
@@ -34097,11 +34064,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FormControl.js
   var import_classnames34 = __toESM(require_classnames());
-  var React67 = __toESM(require_react());
-  var import_react50 = __toESM(require_react());
+  var React66 = __toESM(require_react());
+  var import_react49 = __toESM(require_react());
   var import_warning3 = __toESM(require_warning());
   var import_jsx_runtime45 = __toESM(require_jsx_runtime());
-  var FormControl = /* @__PURE__ */ React67.forwardRef(({
+  var FormControl = /* @__PURE__ */ React66.forwardRef(({
     bsPrefix,
     type,
     size: size2,
@@ -34118,7 +34085,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     const {
       controlId
-    } = (0, import_react50.useContext)(FormContext_default);
+    } = (0, import_react49.useContext)(FormContext_default);
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-control");
     true ? (0, import_warning3.default)(controlId == null || !id, "`controlId` is ignored on `<FormControl>` when `id` is specified.") : void 0;
     return /* @__PURE__ */ (0, import_jsx_runtime45.jsx)(Component5, {
@@ -34137,10 +34104,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/FormFloating.js
-  var React68 = __toESM(require_react());
+  var React67 = __toESM(require_react());
   var import_classnames35 = __toESM(require_classnames());
   var import_jsx_runtime46 = __toESM(require_jsx_runtime());
-  var FormFloating = /* @__PURE__ */ React68.forwardRef(({
+  var FormFloating = /* @__PURE__ */ React67.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -34157,16 +34124,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var FormFloating_default = FormFloating;
 
   // node_modules/react-bootstrap/esm/FormGroup.js
-  var React69 = __toESM(require_react());
-  var import_react51 = __toESM(require_react());
+  var React68 = __toESM(require_react());
+  var import_react50 = __toESM(require_react());
   var import_jsx_runtime47 = __toESM(require_jsx_runtime());
-  var FormGroup = /* @__PURE__ */ React69.forwardRef(({
+  var FormGroup = /* @__PURE__ */ React68.forwardRef(({
     controlId,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     as: Component5 = "div",
     ...props
   }, ref) => {
-    const context4 = (0, import_react51.useMemo)(() => ({
+    const context4 = (0, import_react50.useMemo)(() => ({
       controlId
     }), [controlId]);
     return /* @__PURE__ */ (0, import_jsx_runtime47.jsx)(FormContext_default.Provider, {
@@ -34182,11 +34149,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FormLabel.js
   var import_classnames36 = __toESM(require_classnames());
-  var React70 = __toESM(require_react());
-  var import_react52 = __toESM(require_react());
+  var React69 = __toESM(require_react());
+  var import_react51 = __toESM(require_react());
   var import_warning4 = __toESM(require_warning());
   var import_jsx_runtime48 = __toESM(require_jsx_runtime());
-  var FormLabel = /* @__PURE__ */ React70.forwardRef(({
+  var FormLabel = /* @__PURE__ */ React69.forwardRef(({
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     as: Component5 = "label",
     bsPrefix,
@@ -34198,7 +34165,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     const {
       controlId
-    } = (0, import_react52.useContext)(FormContext_default);
+    } = (0, import_react51.useContext)(FormContext_default);
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-label");
     let columnClass = "col-form-label";
     if (typeof column === "string")
@@ -34226,10 +34193,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FormRange.js
   var import_classnames37 = __toESM(require_classnames());
-  var React71 = __toESM(require_react());
-  var import_react53 = __toESM(require_react());
+  var React70 = __toESM(require_react());
+  var import_react52 = __toESM(require_react());
   var import_jsx_runtime49 = __toESM(require_jsx_runtime());
-  var FormRange = /* @__PURE__ */ React71.forwardRef(({
+  var FormRange = /* @__PURE__ */ React70.forwardRef(({
     bsPrefix,
     className,
     id,
@@ -34237,7 +34204,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     const {
       controlId
-    } = (0, import_react53.useContext)(FormContext_default);
+    } = (0, import_react52.useContext)(FormContext_default);
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-range");
     return /* @__PURE__ */ (0, import_jsx_runtime49.jsx)("input", {
       ...props,
@@ -34252,10 +34219,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FormSelect.js
   var import_classnames38 = __toESM(require_classnames());
-  var React72 = __toESM(require_react());
-  var import_react54 = __toESM(require_react());
+  var React71 = __toESM(require_react());
+  var import_react53 = __toESM(require_react());
   var import_jsx_runtime50 = __toESM(require_jsx_runtime());
-  var FormSelect = /* @__PURE__ */ React72.forwardRef(({
+  var FormSelect = /* @__PURE__ */ React71.forwardRef(({
     bsPrefix,
     size: size2,
     htmlSize,
@@ -34267,7 +34234,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }, ref) => {
     const {
       controlId
-    } = (0, import_react54.useContext)(FormContext_default);
+    } = (0, import_react53.useContext)(FormContext_default);
     bsPrefix = useBootstrapPrefix(bsPrefix, "form-select");
     return /* @__PURE__ */ (0, import_jsx_runtime50.jsx)("select", {
       ...props,
@@ -34282,9 +34249,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FormText.js
   var import_classnames39 = __toESM(require_classnames());
-  var React73 = __toESM(require_react());
+  var React72 = __toESM(require_react());
   var import_jsx_runtime51 = __toESM(require_jsx_runtime());
-  var FormText = /* @__PURE__ */ React73.forwardRef(
+  var FormText = /* @__PURE__ */ React72.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     ({
       bsPrefix,
@@ -34305,9 +34272,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var FormText_default = FormText;
 
   // node_modules/react-bootstrap/esm/Switch.js
-  var React74 = __toESM(require_react());
+  var React73 = __toESM(require_react());
   var import_jsx_runtime52 = __toESM(require_jsx_runtime());
-  var Switch = /* @__PURE__ */ React74.forwardRef((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(FormCheck_default, {
+  var Switch = /* @__PURE__ */ React73.forwardRef((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime52.jsx)(FormCheck_default, {
     ...props,
     ref,
     type: "switch"
@@ -34320,10 +34287,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/FloatingLabel.js
   var import_classnames40 = __toESM(require_classnames());
-  var React75 = __toESM(require_react());
+  var React74 = __toESM(require_react());
   var import_jsx_runtime53 = __toESM(require_jsx_runtime());
   var import_jsx_runtime54 = __toESM(require_jsx_runtime());
-  var FloatingLabel = /* @__PURE__ */ React75.forwardRef(({
+  var FloatingLabel = /* @__PURE__ */ React74.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -34365,7 +34332,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     validated: import_prop_types5.default.bool,
     as: import_prop_types5.default.elementType
   };
-  var Form2 = /* @__PURE__ */ React76.forwardRef(({
+  var Form2 = /* @__PURE__ */ React75.forwardRef(({
     className,
     validated,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
@@ -34393,15 +34360,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ListGroup.js
   var import_classnames43 = __toESM(require_classnames());
-  var React81 = __toESM(require_react());
+  var React80 = __toESM(require_react());
   var import_warning6 = __toESM(require_warning());
 
   // node_modules/@restart/ui/esm/Nav.js
-  var React79 = __toESM(require_react());
-  var import_react57 = __toESM(require_react());
+  var React78 = __toESM(require_react());
+  var import_react56 = __toESM(require_react());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js
-  var import_react55 = __toESM(require_react());
+  var import_react54 = __toESM(require_react());
   var toFnRef2 = (ref) => !ref || typeof ref === "function" ? ref : (value) => {
     ref.current = value;
   };
@@ -34416,18 +34383,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     };
   }
   function useMergedRefs2(refA, refB) {
-    return (0, import_react55.useMemo)(() => mergeRefs3(refA, refB), [refA, refB]);
+    return (0, import_react54.useMemo)(() => mergeRefs3(refA, refB), [refA, refB]);
   }
   var useMergedRefs_default2 = useMergedRefs2;
 
   // node_modules/@restart/ui/esm/TabContext.js
-  var React77 = __toESM(require_react());
-  var TabContext = /* @__PURE__ */ React77.createContext(null);
+  var React76 = __toESM(require_react());
+  var TabContext = /* @__PURE__ */ React76.createContext(null);
   var TabContext_default = TabContext;
 
   // node_modules/@restart/ui/esm/NavItem.js
-  var React78 = __toESM(require_react());
-  var import_react56 = __toESM(require_react());
+  var React77 = __toESM(require_react());
+  var import_react55 = __toESM(require_react());
   var import_jsx_runtime56 = __toESM(require_jsx_runtime());
   var _excluded6 = ["as", "active", "eventKey"];
   function _objectWithoutPropertiesLoose7(r, e) {
@@ -34450,9 +34417,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     role,
     disabled
   }) {
-    const parentOnSelect = (0, import_react56.useContext)(SelectableContext_default);
-    const navContext = (0, import_react56.useContext)(NavContext_default);
-    const tabContext = (0, import_react56.useContext)(TabContext_default);
+    const parentOnSelect = (0, import_react55.useContext)(SelectableContext_default);
+    const navContext = (0, import_react55.useContext)(NavContext_default);
+    const tabContext = (0, import_react55.useContext)(TabContext_default);
     let isActive = active;
     const props = {
       role
@@ -34493,7 +34460,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       isActive
     }];
   }
-  var NavItem = /* @__PURE__ */ React78.forwardRef((_ref, ref) => {
+  var NavItem = /* @__PURE__ */ React77.forwardRef((_ref, ref) => {
     let {
       as: Component5 = Button_default,
       active,
@@ -34529,7 +34496,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var noop5 = () => {
   };
   var EVENT_KEY_ATTR = dataAttr("event-key");
-  var Nav = /* @__PURE__ */ React79.forwardRef((_ref, ref) => {
+  var Nav = /* @__PURE__ */ React78.forwardRef((_ref, ref) => {
     let {
       // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
       as: Component5 = "div",
@@ -34539,9 +34506,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onKeyDown
     } = _ref, props = _objectWithoutPropertiesLoose8(_ref, _excluded7);
     const forceUpdate = useForceUpdate();
-    const needsRefocusRef = (0, import_react57.useRef)(false);
-    const parentOnSelect = (0, import_react57.useContext)(SelectableContext_default);
-    const tabContext = (0, import_react57.useContext)(TabContext_default);
+    const needsRefocusRef = (0, import_react56.useRef)(false);
+    const parentOnSelect = (0, import_react56.useContext)(SelectableContext_default);
+    const tabContext = (0, import_react56.useContext)(TabContext_default);
     let getControlledId, getControllerId;
     if (tabContext) {
       role = role || "tablist";
@@ -34549,7 +34516,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       getControlledId = tabContext.getControlledId;
       getControllerId = tabContext.getControllerId;
     }
-    const listNode = (0, import_react57.useRef)(null);
+    const listNode = (0, import_react56.useRef)(null);
     const getNextActiveTab = (offset2) => {
       const currentListNode = listNode.current;
       if (!currentListNode)
@@ -34599,7 +34566,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       needsRefocusRef.current = true;
       forceUpdate();
     };
-    (0, import_react57.useEffect)(() => {
+    (0, import_react56.useEffect)(() => {
       if (listNode.current && needsRefocusRef.current) {
         const activeChild = listNode.current.querySelector(`[${EVENT_KEY_ATTR}][aria-selected=true]`);
         activeChild == null ? void 0 : activeChild.focus();
@@ -34632,10 +34599,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ListGroupItem.js
   var import_classnames42 = __toESM(require_classnames());
-  var React80 = __toESM(require_react());
+  var React79 = __toESM(require_react());
   var import_warning5 = __toESM(require_warning());
   var import_jsx_runtime58 = __toESM(require_jsx_runtime());
-  var ListGroupItem = /* @__PURE__ */ React80.forwardRef(({
+  var ListGroupItem = /* @__PURE__ */ React79.forwardRef(({
     bsPrefix,
     active,
     disabled,
@@ -34679,7 +34646,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ListGroup.js
   var import_jsx_runtime59 = __toESM(require_jsx_runtime());
-  var ListGroup = /* @__PURE__ */ React81.forwardRef((props, ref) => {
+  var ListGroup = /* @__PURE__ */ React80.forwardRef((props, ref) => {
     const {
       className,
       bsPrefix: initialBsPrefix,
@@ -34733,14 +34700,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/hooks/esm/useCallbackRef.js
-  var import_react58 = __toESM(require_react());
+  var import_react57 = __toESM(require_react());
   function useCallbackRef2() {
-    return (0, import_react58.useState)(null);
+    return (0, import_react57.useState)(null);
   }
 
   // node_modules/react-bootstrap/esm/Modal.js
-  var React92 = __toESM(require_react());
-  var import_react67 = __toESM(require_react());
+  var React91 = __toESM(require_react());
+  var import_react66 = __toESM(require_react());
 
   // node_modules/dom-helpers/esm/activeElement.js
   function activeElement(doc) {
@@ -34758,23 +34725,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/Modal.js
-  var import_react65 = __toESM(require_react());
-  var React84 = __toESM(require_react());
+  var import_react64 = __toESM(require_react());
+  var React83 = __toESM(require_react());
   var import_react_dom3 = __toESM(require_react_dom());
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js
-  var import_react59 = __toESM(require_react());
+  var import_react58 = __toESM(require_react());
   function useUpdatedRef2(value) {
-    const valueRef = (0, import_react59.useRef)(value);
+    const valueRef = (0, import_react58.useRef)(value);
     valueRef.current = value;
     return valueRef;
   }
 
   // node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js
-  var import_react60 = __toESM(require_react());
+  var import_react59 = __toESM(require_react());
   function useWillUnmount2(fn2) {
     const onUnmount = useUpdatedRef2(fn2);
-    (0, import_react60.useEffect)(() => () => onUnmount.current(), []);
+    (0, import_react59.useEffect)(() => () => onUnmount.current(), []);
   }
 
   // node_modules/@restart/ui/esm/getScrollbarWidth.js
@@ -34868,7 +34835,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalManager_default = ModalManager;
 
   // node_modules/@restart/ui/esm/useWaitForDOMRef.js
-  var import_react61 = __toESM(require_react());
+  var import_react60 = __toESM(require_react());
   var resolveContainerRef = (ref, document2) => {
     if (!canUseDOM_default)
       return null;
@@ -34884,18 +34851,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   function useWaitForDOMRef(ref, onResolved) {
     const window2 = useWindow();
-    const [resolvedRef, setRef2] = (0, import_react61.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
+    const [resolvedRef, setRef2] = (0, import_react60.useState)(() => resolveContainerRef(ref, window2 == null ? void 0 : window2.document));
     if (!resolvedRef) {
       const earlyRef = resolveContainerRef(ref);
       if (earlyRef)
         setRef2(earlyRef);
     }
-    (0, import_react61.useEffect)(() => {
+    (0, import_react60.useEffect)(() => {
       if (onResolved && resolvedRef) {
         onResolved(resolvedRef);
       }
     }, [onResolved, resolvedRef]);
-    (0, import_react61.useEffect)(() => {
+    (0, import_react60.useEffect)(() => {
       const nextRef = resolveContainerRef(ref);
       if (nextRef !== resolvedRef) {
         setRef2(nextRef);
@@ -34905,10 +34872,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/ui/esm/ImperativeTransition.js
-  var import_react64 = __toESM(require_react());
+  var import_react63 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/NoopTransition.js
-  var import_react62 = __toESM(require_react());
+  var import_react61 = __toESM(require_react());
   function NoopTransition({
     children,
     in: inProp,
@@ -34916,10 +34883,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     mountOnEnter,
     unmountOnExit
   }) {
-    const ref = (0, import_react62.useRef)(null);
-    const hasEnteredRef = (0, import_react62.useRef)(inProp);
+    const ref = (0, import_react61.useRef)(null);
+    const hasEnteredRef = (0, import_react61.useRef)(inProp);
     const handleExited = useEventCallback2(onExited);
-    (0, import_react62.useEffect)(() => {
+    (0, import_react61.useEffect)(() => {
       if (inProp)
         hasEnteredRef.current = true;
       else {
@@ -34927,7 +34894,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     }, [inProp, handleExited]);
     const combinedRef = useMergedRefs_default2(ref, getChildRef(children));
-    const child = /* @__PURE__ */ (0, import_react62.cloneElement)(children, {
+    const child = /* @__PURE__ */ (0, import_react61.cloneElement)(children, {
       ref: combinedRef
     });
     if (inProp)
@@ -34943,10 +34910,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NoopTransition_default = NoopTransition;
 
   // node_modules/@restart/ui/esm/RTGTransition.js
-  var React82 = __toESM(require_react());
+  var React81 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/useRTGTransitionProps.js
-  var import_react63 = __toESM(require_react());
+  var import_react62 = __toESM(require_react());
   var _excluded8 = ["onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited", "addEndListener", "children"];
   function _objectWithoutPropertiesLoose9(r, e) {
     if (null == r)
@@ -34971,20 +34938,20 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       addEndListener,
       children
     } = _ref, props = _objectWithoutPropertiesLoose9(_ref, _excluded8);
-    const nodeRef = (0, import_react63.useRef)(null);
+    const nodeRef = (0, import_react62.useRef)(null);
     const mergedRef = useMergedRefs_default2(nodeRef, getChildRef(children));
     const normalize = (callback) => (param) => {
       if (callback && nodeRef.current) {
         callback(nodeRef.current, param);
       }
     };
-    const handleEnter = (0, import_react63.useCallback)(normalize(onEnter), [onEnter]);
-    const handleEntering = (0, import_react63.useCallback)(normalize(onEntering), [onEntering]);
-    const handleEntered = (0, import_react63.useCallback)(normalize(onEntered), [onEntered]);
-    const handleExit = (0, import_react63.useCallback)(normalize(onExit), [onExit]);
-    const handleExiting = (0, import_react63.useCallback)(normalize(onExiting), [onExiting]);
-    const handleExited = (0, import_react63.useCallback)(normalize(onExited), [onExited]);
-    const handleAddEndListener = (0, import_react63.useCallback)(normalize(addEndListener), [addEndListener]);
+    const handleEnter = (0, import_react62.useCallback)(normalize(onEnter), [onEnter]);
+    const handleEntering = (0, import_react62.useCallback)(normalize(onEntering), [onEntering]);
+    const handleEntered = (0, import_react62.useCallback)(normalize(onEntered), [onEntered]);
+    const handleExit = (0, import_react62.useCallback)(normalize(onExit), [onExit]);
+    const handleExiting = (0, import_react62.useCallback)(normalize(onExiting), [onExiting]);
+    const handleExited = (0, import_react62.useCallback)(normalize(onExited), [onExited]);
+    const handleAddEndListener = (0, import_react62.useCallback)(normalize(addEndListener), [addEndListener]);
     return Object.assign({}, props, {
       nodeRef
     }, onEnter && {
@@ -35007,7 +34974,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         children(status2, Object.assign({}, innerProps, {
           ref: mergedRef
         }))
-      ) : /* @__PURE__ */ (0, import_react63.cloneElement)(children, {
+      ) : /* @__PURE__ */ (0, import_react62.cloneElement)(children, {
         ref: mergedRef
       })
     });
@@ -35028,7 +34995,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     return t;
   }
-  var RTGTransition = /* @__PURE__ */ React82.forwardRef((_ref, ref) => {
+  var RTGTransition = /* @__PURE__ */ React81.forwardRef((_ref, ref) => {
     let {
       component: Component5
     } = _ref, props = _objectWithoutPropertiesLoose10(_ref, _excluded9);
@@ -35045,8 +35012,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     in: inProp,
     onTransition
   }) {
-    const ref = (0, import_react64.useRef)(null);
-    const isInitialRef = (0, import_react64.useRef)(true);
+    const ref = (0, import_react63.useRef)(null);
+    const isInitialRef = (0, import_react63.useRef)(true);
     const handleTransition = useEventCallback2(onTransition);
     useIsomorphicEffect_default(() => {
       if (!ref.current) {
@@ -35078,7 +35045,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     onEntered,
     transition
   }) {
-    const [exited, setExited] = (0, import_react64.useState)(!inProp);
+    const [exited, setExited] = (0, import_react63.useState)(!inProp);
     if (inProp && exited) {
       setExited(false);
     }
@@ -35103,7 +35070,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       }
     });
     const combinedRef = useMergedRefs_default2(ref, getChildRef(children));
-    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react64.cloneElement)(children, {
+    return exited && !inProp ? null : /* @__PURE__ */ (0, import_react63.cloneElement)(children, {
       ref: combinedRef
     });
   }
@@ -35147,7 +35114,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   function useModalManager(provided) {
     const window2 = useWindow();
     const modalManager = provided || getManager(window2);
-    const modal = (0, import_react65.useRef)({
+    const modal = (0, import_react64.useRef)({
       dialog: null,
       backdrop: null
     });
@@ -35155,15 +35122,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       add: () => modalManager.add(modal.current),
       remove: () => modalManager.remove(modal.current),
       isTopModal: () => modalManager.isTopModal(modal.current),
-      setDialogRef: (0, import_react65.useCallback)((ref) => {
+      setDialogRef: (0, import_react64.useCallback)((ref) => {
         modal.current.dialog = ref;
       }, []),
-      setBackdropRef: (0, import_react65.useCallback)((ref) => {
+      setBackdropRef: (0, import_react64.useCallback)((ref) => {
         modal.current.backdrop = ref;
       }, [])
     });
   }
-  var Modal = /* @__PURE__ */ (0, import_react65.forwardRef)((_ref, ref) => {
+  var Modal = /* @__PURE__ */ (0, import_react64.forwardRef)((_ref, ref) => {
     let {
       show = false,
       role = "dialog",
@@ -35201,9 +35168,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const modal = useModalManager(providedManager);
     const isMounted = useMounted();
     const prevShow = usePrevious(show);
-    const [exited, setExited] = (0, import_react65.useState)(!show);
-    const lastFocusRef = (0, import_react65.useRef)(null);
-    (0, import_react65.useImperativeHandle)(ref, () => modal, [modal]);
+    const [exited, setExited] = (0, import_react64.useState)(!show);
+    const lastFocusRef = (0, import_react64.useRef)(null);
+    (0, import_react64.useImperativeHandle)(ref, () => modal, [modal]);
     if (canUseDOM_default && !prevShow && show) {
       lastFocusRef.current = activeElement(ownerWindow2 == null ? void 0 : ownerWindow2.document);
     }
@@ -35243,7 +35210,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         lastFocusRef.current = null;
       }
     });
-    (0, import_react65.useEffect)(() => {
+    (0, import_react64.useEffect)(() => {
       if (!show || !container)
         return;
       handleShow();
@@ -35253,7 +35220,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       /* should never change: */
       handleShow
     ]);
-    (0, import_react65.useEffect)(() => {
+    (0, import_react64.useEffect)(() => {
       if (!exited)
         return;
       handleHide();
@@ -35287,8 +35254,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         }
       }
     });
-    const removeFocusListenerRef = (0, import_react65.useRef)();
-    const removeKeydownListenerRef = (0, import_react65.useRef)();
+    const removeFocusListenerRef = (0, import_react64.useRef)();
+    const removeKeydownListenerRef = (0, import_react64.useRef)();
     const handleHidden = (...args) => {
       setExited(true);
       onExited == null ? void 0 : onExited(...args);
@@ -35307,7 +35274,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       tabIndex: -1
     });
     let dialog = renderDialog ? renderDialog(dialogProps) : /* @__PURE__ */ (0, import_jsx_runtime62.jsx)("div", Object.assign({}, dialogProps, {
-      children: /* @__PURE__ */ React84.cloneElement(children, {
+      children: /* @__PURE__ */ React83.cloneElement(children, {
         role: "document"
       })
     }));
@@ -35436,10 +35403,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var BootstrapModalManager_default = BootstrapModalManager;
 
   // node_modules/react-bootstrap/esm/ModalBody.js
-  var React85 = __toESM(require_react());
+  var React84 = __toESM(require_react());
   var import_classnames44 = __toESM(require_classnames());
   var import_jsx_runtime63 = __toESM(require_jsx_runtime());
-  var ModalBody = /* @__PURE__ */ React85.forwardRef(({
+  var ModalBody = /* @__PURE__ */ React84.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -35456,8 +35423,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalBody_default = ModalBody;
 
   // node_modules/react-bootstrap/esm/ModalContext.js
-  var React86 = __toESM(require_react());
-  var ModalContext = /* @__PURE__ */ React86.createContext({
+  var React85 = __toESM(require_react());
+  var ModalContext = /* @__PURE__ */ React85.createContext({
     onHide() {
     }
   });
@@ -35465,9 +35432,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ModalDialog.js
   var import_classnames45 = __toESM(require_classnames());
-  var React87 = __toESM(require_react());
+  var React86 = __toESM(require_react());
   var import_jsx_runtime64 = __toESM(require_jsx_runtime());
-  var ModalDialog = /* @__PURE__ */ React87.forwardRef(({
+  var ModalDialog = /* @__PURE__ */ React86.forwardRef(({
     bsPrefix,
     className,
     contentClassName,
@@ -35495,10 +35462,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalDialog_default = ModalDialog;
 
   // node_modules/react-bootstrap/esm/ModalFooter.js
-  var React88 = __toESM(require_react());
+  var React87 = __toESM(require_react());
   var import_classnames46 = __toESM(require_classnames());
   var import_jsx_runtime65 = __toESM(require_jsx_runtime());
-  var ModalFooter = /* @__PURE__ */ React88.forwardRef(({
+  var ModalFooter = /* @__PURE__ */ React87.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -35516,14 +35483,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ModalHeader.js
   var import_classnames47 = __toESM(require_classnames());
-  var React90 = __toESM(require_react());
+  var React89 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/AbstractModalHeader.js
-  var React89 = __toESM(require_react());
-  var import_react66 = __toESM(require_react());
+  var React88 = __toESM(require_react());
+  var import_react65 = __toESM(require_react());
   var import_jsx_runtime66 = __toESM(require_jsx_runtime());
   var import_jsx_runtime67 = __toESM(require_jsx_runtime());
-  var AbstractModalHeader = /* @__PURE__ */ React89.forwardRef(({
+  var AbstractModalHeader = /* @__PURE__ */ React88.forwardRef(({
     closeLabel = "Close",
     closeVariant,
     closeButton = false,
@@ -35531,7 +35498,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     children,
     ...props
   }, ref) => {
-    const context4 = (0, import_react66.useContext)(ModalContext_default);
+    const context4 = (0, import_react65.useContext)(ModalContext_default);
     const handleClick = useEventCallback(() => {
       context4 == null || context4.onHide();
       onHide == null || onHide();
@@ -35551,7 +35518,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ModalHeader.js
   var import_jsx_runtime68 = __toESM(require_jsx_runtime());
-  var ModalHeader = /* @__PURE__ */ React90.forwardRef(({
+  var ModalHeader = /* @__PURE__ */ React89.forwardRef(({
     bsPrefix,
     className,
     closeLabel = "Close",
@@ -35571,11 +35538,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ModalHeader_default = ModalHeader;
 
   // node_modules/react-bootstrap/esm/ModalTitle.js
-  var React91 = __toESM(require_react());
+  var React90 = __toESM(require_react());
   var import_classnames48 = __toESM(require_classnames());
   var import_jsx_runtime69 = __toESM(require_jsx_runtime());
   var DivStyledAsH42 = divWithClassName_default("h4");
-  var ModalTitle = /* @__PURE__ */ React91.forwardRef(({
+  var ModalTitle = /* @__PURE__ */ React90.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = DivStyledAsH42,
@@ -35605,7 +35572,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       timeout: null
     });
   }
-  var Modal2 = /* @__PURE__ */ React92.forwardRef(({
+  var Modal2 = /* @__PURE__ */ React91.forwardRef(({
     bsPrefix,
     className,
     style: style2,
@@ -35640,17 +35607,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     manager: propsManager,
     ...props
   }, ref) => {
-    const [modalStyle, setStyle] = (0, import_react67.useState)({});
-    const [animateStaticModal, setAnimateStaticModal] = (0, import_react67.useState)(false);
-    const waitingForMouseUpRef = (0, import_react67.useRef)(false);
-    const ignoreBackdropClickRef = (0, import_react67.useRef)(false);
-    const removeStaticModalAnimationRef = (0, import_react67.useRef)(null);
+    const [modalStyle, setStyle] = (0, import_react66.useState)({});
+    const [animateStaticModal, setAnimateStaticModal] = (0, import_react66.useState)(false);
+    const waitingForMouseUpRef = (0, import_react66.useRef)(false);
+    const ignoreBackdropClickRef = (0, import_react66.useRef)(false);
+    const removeStaticModalAnimationRef = (0, import_react66.useRef)(null);
     const [modal, setModalRef] = useCallbackRef2();
     const mergedRef = useMergedRefs_default(ref, setModalRef);
     const handleHide = useEventCallback(onHide);
     const isRTL = useIsRTL();
     bsPrefix = useBootstrapPrefix(bsPrefix, "modal");
-    const modalContext = (0, import_react67.useMemo)(() => ({
+    const modalContext = (0, import_react66.useMemo)(() => ({
       onHide: handleHide
     }), [handleHide]);
     function getModalManager() {
@@ -35741,7 +35708,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExited == null || onExited(node);
       removeEventListener_default(window, "resize", handleWindowResize);
     };
-    const renderBackdrop = (0, import_react67.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", {
+    const renderBackdrop = (0, import_react66.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime70.jsx)("div", {
       ...backdropProps,
       className: (0, import_classnames49.default)(`${bsPrefix}-backdrop`, backdropClassName, !animation && "show")
     }), [animation, backdropClassName, bsPrefix]);
@@ -35811,14 +35778,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Nav.js
   var import_classnames52 = __toESM(require_classnames());
-  var React95 = __toESM(require_react());
-  var import_react68 = __toESM(require_react());
+  var React94 = __toESM(require_react());
+  var import_react67 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavItem.js
-  var React93 = __toESM(require_react());
+  var React92 = __toESM(require_react());
   var import_classnames50 = __toESM(require_classnames());
   var import_jsx_runtime71 = __toESM(require_jsx_runtime());
-  var NavItem2 = /* @__PURE__ */ React93.forwardRef(({
+  var NavItem2 = /* @__PURE__ */ React92.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -35836,9 +35803,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/NavLink.js
   var import_classnames51 = __toESM(require_classnames());
-  var React94 = __toESM(require_react());
+  var React93 = __toESM(require_react());
   var import_jsx_runtime72 = __toESM(require_jsx_runtime());
-  var NavLink2 = /* @__PURE__ */ React94.forwardRef(({
+  var NavLink2 = /* @__PURE__ */ React93.forwardRef(({
     bsPrefix,
     className,
     as: Component5 = Anchor_default,
@@ -35867,7 +35834,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Nav.js
   var import_jsx_runtime73 = __toESM(require_jsx_runtime());
-  var Nav2 = /* @__PURE__ */ React95.forwardRef((uncontrolledProps, ref) => {
+  var Nav2 = /* @__PURE__ */ React94.forwardRef((uncontrolledProps, ref) => {
     const {
       as = "div",
       bsPrefix: initialBsPrefix,
@@ -35886,8 +35853,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     let navbarBsPrefix;
     let cardHeaderBsPrefix;
     let isNavbar = false;
-    const navbarContext = (0, import_react68.useContext)(NavbarContext_default);
-    const cardHeaderContext = (0, import_react68.useContext)(CardHeaderContext_default);
+    const navbarContext = (0, import_react67.useContext)(NavbarContext_default);
+    const cardHeaderContext = (0, import_react67.useContext)(CardHeaderContext_default);
     if (navbarContext) {
       navbarBsPrefix = navbarContext.bsPrefix;
       isNavbar = navbar == null ? true : navbar;
@@ -35920,14 +35887,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Navbar.js
   var import_classnames61 = __toESM(require_classnames());
-  var React106 = __toESM(require_react());
-  var import_react75 = __toESM(require_react());
+  var React105 = __toESM(require_react());
+  var import_react74 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/NavbarBrand.js
   var import_classnames53 = __toESM(require_classnames());
-  var React96 = __toESM(require_react());
+  var React95 = __toESM(require_react());
   var import_jsx_runtime74 = __toESM(require_jsx_runtime());
-  var NavbarBrand = /* @__PURE__ */ React96.forwardRef(({
+  var NavbarBrand = /* @__PURE__ */ React95.forwardRef(({
     bsPrefix,
     className,
     as,
@@ -35945,16 +35912,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarBrand_default = NavbarBrand;
 
   // node_modules/react-bootstrap/esm/NavbarCollapse.js
-  var React97 = __toESM(require_react());
-  var import_react69 = __toESM(require_react());
+  var React96 = __toESM(require_react());
+  var import_react68 = __toESM(require_react());
   var import_jsx_runtime75 = __toESM(require_jsx_runtime());
-  var NavbarCollapse = /* @__PURE__ */ React97.forwardRef(({
+  var NavbarCollapse = /* @__PURE__ */ React96.forwardRef(({
     children,
     bsPrefix,
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "navbar-collapse");
-    const context4 = (0, import_react69.useContext)(NavbarContext_default);
+    const context4 = (0, import_react68.useContext)(NavbarContext_default);
     return /* @__PURE__ */ (0, import_jsx_runtime75.jsx)(Collapse_default, {
       in: !!(context4 && context4.expanded),
       ...props,
@@ -35970,10 +35937,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/NavbarToggle.js
   var import_classnames54 = __toESM(require_classnames());
-  var React98 = __toESM(require_react());
-  var import_react70 = __toESM(require_react());
+  var React97 = __toESM(require_react());
+  var import_react69 = __toESM(require_react());
   var import_jsx_runtime76 = __toESM(require_jsx_runtime());
-  var NavbarToggle = /* @__PURE__ */ React98.forwardRef(({
+  var NavbarToggle = /* @__PURE__ */ React97.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -35987,7 +35954,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const {
       onToggle,
       expanded
-    } = (0, import_react70.useContext)(NavbarContext_default) || {};
+    } = (0, import_react69.useContext)(NavbarContext_default) || {};
     const handleClick = useEventCallback((e) => {
       if (onClick)
         onClick(e);
@@ -36012,14 +35979,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarToggle_default = NavbarToggle;
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
-  var React104 = __toESM(require_react());
-  var import_react74 = __toESM(require_react());
+  var React103 = __toESM(require_react());
+  var import_react73 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
   var import_classnames59 = __toESM(require_classnames());
 
   // node_modules/@restart/hooks/esm/useMediaQuery.js
-  var import_react71 = __toESM(require_react());
+  var import_react70 = __toESM(require_react());
   var matchersByWindow = /* @__PURE__ */ new WeakMap();
   var getMatcher = (query, targetWindow) => {
     if (!query || !targetWindow)
@@ -36036,7 +36003,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   };
   function useMediaQuery(query, targetWindow = typeof window === "undefined" ? void 0 : window) {
     const mql = getMatcher(query, targetWindow);
-    const [matches, setMatches] = (0, import_react71.useState)(() => mql ? mql.matches : false);
+    const [matches, setMatches] = (0, import_react70.useState)(() => mql ? mql.matches : false);
     useIsomorphicEffect_default2(() => {
       let mql2 = getMatcher(query, targetWindow);
       if (!mql2) {
@@ -36062,7 +36029,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   }
 
   // node_modules/@restart/hooks/esm/useBreakpoint.js
-  var import_react72 = __toESM(require_react());
+  var import_react71 = __toESM(require_react());
   function createBreakpointHook(breakpointValues) {
     const names = Object.keys(breakpointValues);
     function and(query, next) {
@@ -36102,7 +36069,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           [breakpointOrMap]: direction
         };
       }
-      let query = (0, import_react72.useMemo)(() => Object.entries(breakpointMap).reduce((query2, [key, direction2]) => {
+      let query = (0, import_react71.useMemo)(() => Object.entries(breakpointMap).reduce((query2, [key, direction2]) => {
         if (direction2 === "up" || direction2 === true) {
           query2 = and(query2, getMinQuery(key));
         }
@@ -36126,14 +36093,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var useBreakpoint_default = useBreakpoint;
 
   // node_modules/react-bootstrap/esm/Offcanvas.js
-  var React103 = __toESM(require_react());
-  var import_react73 = __toESM(require_react());
+  var React102 = __toESM(require_react());
+  var import_react72 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/OffcanvasBody.js
-  var React99 = __toESM(require_react());
+  var React98 = __toESM(require_react());
   var import_classnames55 = __toESM(require_classnames());
   var import_jsx_runtime77 = __toESM(require_jsx_runtime());
-  var OffcanvasBody = /* @__PURE__ */ React99.forwardRef(({
+  var OffcanvasBody = /* @__PURE__ */ React98.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -36151,13 +36118,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/OffcanvasToggling.js
   var import_classnames56 = __toESM(require_classnames());
-  var React100 = __toESM(require_react());
+  var React99 = __toESM(require_react());
   var import_jsx_runtime78 = __toESM(require_jsx_runtime());
   var transitionStyles = {
     [ENTERING]: "show",
     [ENTERED]: "show"
   };
-  var OffcanvasToggling = /* @__PURE__ */ React100.forwardRef(({
+  var OffcanvasToggling = /* @__PURE__ */ React99.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -36177,7 +36144,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       appear,
       ...props,
       childRef: getChildRef(children),
-      children: (status2, innerProps) => /* @__PURE__ */ React100.cloneElement(children, {
+      children: (status2, innerProps) => /* @__PURE__ */ React99.cloneElement(children, {
         ...innerProps,
         className: (0, import_classnames56.default)(className, children.props.className, (status2 === ENTERING || status2 === EXITING) && `${bsPrefix}-toggling`, transitionStyles[status2])
       })
@@ -36188,9 +36155,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/OffcanvasHeader.js
   var import_classnames57 = __toESM(require_classnames());
-  var React101 = __toESM(require_react());
+  var React100 = __toESM(require_react());
   var import_jsx_runtime79 = __toESM(require_jsx_runtime());
-  var OffcanvasHeader = /* @__PURE__ */ React101.forwardRef(({
+  var OffcanvasHeader = /* @__PURE__ */ React100.forwardRef(({
     bsPrefix,
     className,
     closeLabel = "Close",
@@ -36210,11 +36177,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var OffcanvasHeader_default = OffcanvasHeader;
 
   // node_modules/react-bootstrap/esm/OffcanvasTitle.js
-  var React102 = __toESM(require_react());
+  var React101 = __toESM(require_react());
   var import_classnames58 = __toESM(require_classnames());
   var import_jsx_runtime80 = __toESM(require_jsx_runtime());
   var DivStyledAsH52 = divWithClassName_default("h5");
-  var OffcanvasTitle = /* @__PURE__ */ React102.forwardRef(({
+  var OffcanvasTitle = /* @__PURE__ */ React101.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = DivStyledAsH52,
@@ -36244,7 +36211,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       ...props
     });
   }
-  var Offcanvas = /* @__PURE__ */ React103.forwardRef(({
+  var Offcanvas = /* @__PURE__ */ React102.forwardRef(({
     bsPrefix,
     className,
     children,
@@ -36275,15 +36242,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     renderStaticNode = false,
     ...props
   }, ref) => {
-    const modalManager = (0, import_react73.useRef)();
+    const modalManager = (0, import_react72.useRef)();
     bsPrefix = useBootstrapPrefix(bsPrefix, "offcanvas");
-    const [showOffcanvas, setShowOffcanvas] = (0, import_react73.useState)(false);
+    const [showOffcanvas, setShowOffcanvas] = (0, import_react72.useState)(false);
     const handleHide = useEventCallback(onHide);
     const hideResponsiveOffcanvas = useBreakpoint_default(responsive || "xs", "up");
-    (0, import_react73.useEffect)(() => {
+    (0, import_react72.useEffect)(() => {
       setShowOffcanvas(responsive ? show && !hideResponsiveOffcanvas : show);
     }, [show, responsive, hideResponsiveOffcanvas]);
-    const modalContext = (0, import_react73.useMemo)(() => ({
+    const modalContext = (0, import_react72.useMemo)(() => ({
       onHide: handleHide
     }), [handleHide]);
     function getModalManager() {
@@ -36308,7 +36275,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         node.style.visibility = "";
       onExited == null || onExited(...args);
     };
-    const renderBackdrop = (0, import_react73.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("div", {
+    const renderBackdrop = (0, import_react72.useCallback)((backdropProps) => /* @__PURE__ */ (0, import_jsx_runtime81.jsx)("div", {
       ...backdropProps,
       className: (0, import_classnames59.default)(`${bsPrefix}-backdrop`, backdropClassName)
     }), [backdropClassName, bsPrefix]);
@@ -36359,11 +36326,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/NavbarOffcanvas.js
   var import_jsx_runtime84 = __toESM(require_jsx_runtime());
-  var NavbarOffcanvas = /* @__PURE__ */ React104.forwardRef(({
+  var NavbarOffcanvas = /* @__PURE__ */ React103.forwardRef(({
     onHide,
     ...props
   }, ref) => {
-    const context4 = (0, import_react74.useContext)(NavbarContext_default);
+    const context4 = (0, import_react73.useContext)(NavbarContext_default);
     const handleHide = useEventCallback(() => {
       context4 == null || context4.onToggle == null || context4.onToggle();
       onHide == null || onHide();
@@ -36380,10 +36347,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var NavbarOffcanvas_default = NavbarOffcanvas;
 
   // node_modules/react-bootstrap/esm/NavbarText.js
-  var React105 = __toESM(require_react());
+  var React104 = __toESM(require_react());
   var import_classnames60 = __toESM(require_classnames());
   var import_jsx_runtime85 = __toESM(require_jsx_runtime());
-  var NavbarText = /* @__PURE__ */ React105.forwardRef(({
+  var NavbarText = /* @__PURE__ */ React104.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "span",
@@ -36401,7 +36368,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Navbar.js
   var import_jsx_runtime86 = __toESM(require_jsx_runtime());
-  var Navbar = /* @__PURE__ */ React106.forwardRef((props, ref) => {
+  var Navbar = /* @__PURE__ */ React105.forwardRef((props, ref) => {
     const {
       bsPrefix: initialBsPrefix,
       expand = true,
@@ -36421,7 +36388,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       expanded: "onToggle"
     });
     const bsPrefix = useBootstrapPrefix(initialBsPrefix, "navbar");
-    const handleCollapse = (0, import_react75.useCallback)((...args) => {
+    const handleCollapse = (0, import_react74.useCallback)((...args) => {
       onSelect == null || onSelect(...args);
       if (collapseOnSelect && expanded) {
         onToggle == null || onToggle(false);
@@ -36433,7 +36400,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     let expandClass = `${bsPrefix}-expand`;
     if (typeof expand === "string")
       expandClass = `${expandClass}-${expand}`;
-    const navbarContext = (0, import_react75.useMemo)(() => ({
+    const navbarContext = (0, import_react74.useMemo)(() => ({
       onToggle: () => onToggle == null ? void 0 : onToggle(!expanded),
       bsPrefix,
       expanded: !!expanded,
@@ -36461,17 +36428,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   });
 
   // node_modules/react-bootstrap/esm/Overlay.js
-  var React113 = __toESM(require_react());
-  var import_react79 = __toESM(require_react());
+  var React112 = __toESM(require_react());
+  var import_react78 = __toESM(require_react());
   var import_classnames66 = __toESM(require_classnames());
 
   // node_modules/@restart/ui/esm/Overlay.js
-  var React107 = __toESM(require_react());
+  var React106 = __toESM(require_react());
   var import_react_dom4 = __toESM(require_react_dom());
-  var import_react77 = __toESM(require_react());
+  var import_react76 = __toESM(require_react());
 
   // node_modules/@restart/ui/esm/useRootClose.js
-  var import_react76 = __toESM(require_react());
+  var import_react75 = __toESM(require_react());
   var noop6 = () => {
   };
   function useRootClose(ref, onRootClose, {
@@ -36488,7 +36455,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         onClose(e);
       }
     });
-    (0, import_react76.useEffect)(() => {
+    (0, import_react75.useEffect)(() => {
       if (disabled || ref == null)
         return void 0;
       const doc = ownerDocument(getRefTarget(ref));
@@ -36508,7 +36475,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var useRootClose_default = useRootClose;
 
   // node_modules/@restart/ui/esm/Overlay.js
-  var Overlay = /* @__PURE__ */ React107.forwardRef((props, outerRef) => {
+  var Overlay = /* @__PURE__ */ React106.forwardRef((props, outerRef) => {
     const {
       flip: flip2,
       offset: offset2,
@@ -36523,7 +36490,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const mergedRef = useMergedRefs_default2(attachRef, outerRef);
     const container = useWaitForDOMRef(props.container);
     const target = useWaitForDOMRef(props.target);
-    const [exited, setExited] = (0, import_react77.useState)(!props.show);
+    const [exited, setExited] = (0, import_react76.useState)(!props.show);
     const popper2 = usePopper_default(target, rootElement, mergeOptionsWithPopperConfig({
       placement,
       enableEvents: !!props.show,
@@ -36588,17 +36555,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var Overlay_default = Overlay;
 
   // node_modules/react-bootstrap/esm/useOverlayOffset.js
-  var import_react78 = __toESM(require_react());
+  var import_react77 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/Popover.js
   var import_classnames64 = __toESM(require_classnames());
-  var React111 = __toESM(require_react());
+  var React110 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/PopoverHeader.js
-  var React108 = __toESM(require_react());
+  var React107 = __toESM(require_react());
   var import_classnames62 = __toESM(require_classnames());
   var import_jsx_runtime87 = __toESM(require_jsx_runtime());
-  var PopoverHeader = /* @__PURE__ */ React108.forwardRef(({
+  var PopoverHeader = /* @__PURE__ */ React107.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -36615,10 +36582,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var PopoverHeader_default = PopoverHeader;
 
   // node_modules/react-bootstrap/esm/PopoverBody.js
-  var React109 = __toESM(require_react());
+  var React108 = __toESM(require_react());
   var import_classnames63 = __toESM(require_classnames());
   var import_jsx_runtime88 = __toESM(require_jsx_runtime());
-  var PopoverBody = /* @__PURE__ */ React109.forwardRef(({
+  var PopoverBody = /* @__PURE__ */ React108.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -36635,7 +36602,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var PopoverBody_default = PopoverBody;
 
   // node_modules/react-bootstrap/esm/helpers.js
-  var React110 = __toESM(require_react());
+  var React109 = __toESM(require_react());
   function getOverlayDirection(placement, isRTL) {
     let bsDirection = placement;
     if (placement === "left") {
@@ -36660,7 +36627,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-bootstrap/esm/Popover.js
   var import_jsx_runtime89 = __toESM(require_jsx_runtime());
   var import_jsx_runtime90 = __toESM(require_jsx_runtime());
-  var Popover = /* @__PURE__ */ React111.forwardRef(({
+  var Popover = /* @__PURE__ */ React110.forwardRef(({
     bsPrefix,
     placement = "right",
     className,
@@ -36710,10 +36677,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Tooltip.js
   var import_classnames65 = __toESM(require_classnames());
-  var React112 = __toESM(require_react());
+  var React111 = __toESM(require_react());
   var import_jsx_runtime91 = __toESM(require_jsx_runtime());
   var import_jsx_runtime92 = __toESM(require_jsx_runtime());
-  var Tooltip = /* @__PURE__ */ React112.forwardRef(({
+  var Tooltip = /* @__PURE__ */ React111.forwardRef(({
     bsPrefix,
     placement = "right",
     className,
@@ -36761,10 +36728,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/useOverlayOffset.js
   function useOverlayOffset(customOffset) {
-    const overlayRef = (0, import_react78.useRef)(null);
+    const overlayRef = (0, import_react77.useRef)(null);
     const popoverClass = useBootstrapPrefix(void 0, "popover");
     const tooltipClass = useBootstrapPrefix(void 0, "tooltip");
-    const offset2 = (0, import_react78.useMemo)(() => ({
+    const offset2 = (0, import_react77.useMemo)(() => ({
       name: "offset",
       options: {
         offset: () => {
@@ -36798,7 +36765,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     props.ref = ref.__wrapped || (ref.__wrapped = (r) => ref(safeFindDOMNode(r)));
     arrowProps.ref = aRef.__wrapped || (aRef.__wrapped = (r) => aRef(safeFindDOMNode(r)));
   }
-  var Overlay2 = /* @__PURE__ */ React113.forwardRef(({
+  var Overlay2 = /* @__PURE__ */ React112.forwardRef(({
     children: overlay,
     transition = Fade_default,
     popperConfig = {},
@@ -36807,8 +36774,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     show: outerShow = false,
     ...outerProps
   }, outerRef) => {
-    const popperRef = (0, import_react79.useRef)({});
-    const [firstRenderedState, setFirstRenderedState] = (0, import_react79.useState)(null);
+    const popperRef = (0, import_react78.useRef)({});
+    const [firstRenderedState, setFirstRenderedState] = (0, import_react78.useState)(null);
     const [ref, modifiers] = useOverlayOffset(outerProps.offset);
     const mergedRef = useMergedRefs_default(outerRef, ref);
     const actualTransition = transition === true ? Fade_default : transition || void 0;
@@ -36821,7 +36788,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         popperRef.current.scheduleUpdate == null || popperRef.current.scheduleUpdate();
       }
     }, [firstRenderedState, outerProps.target]);
-    (0, import_react79.useEffect)(() => {
+    (0, import_react78.useEffect)(() => {
       if (!outerShow) {
         setFirstRenderedState(null);
       }
@@ -36866,7 +36833,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             arrowProps,
             hasDoneInitialMeasure
           });
-        return /* @__PURE__ */ React113.cloneElement(overlay, {
+        return /* @__PURE__ */ React112.cloneElement(overlay, {
           ...overlayProps,
           placement: updatedPlacement,
           arrowProps,
@@ -36886,8 +36853,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/OverlayTrigger.js
   var import_prop_types6 = __toESM(require_prop_types());
-  var React114 = __toESM(require_react());
-  var import_react80 = __toESM(require_react());
+  var React113 = __toESM(require_react());
+  var import_react79 = __toESM(require_react());
   var import_warning7 = __toESM(require_warning());
   var import_jsx_runtime94 = __toESM(require_jsx_runtime());
   var import_jsx_runtime95 = __toESM(require_jsx_runtime());
@@ -36920,21 +36887,21 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     flip: flip2 = placement && placement.indexOf("auto") !== -1,
     ...props
   }) => {
-    const triggerNodeRef = (0, import_react80.useRef)(null);
+    const triggerNodeRef = (0, import_react79.useRef)(null);
     const mergedRef = useMergedRefs_default(triggerNodeRef, getChildRef(children));
     const timeout2 = useTimeout();
-    const hoverStateRef = (0, import_react80.useRef)("");
+    const hoverStateRef = (0, import_react79.useRef)("");
     const [show, setShow] = useUncontrolledProp(propsShow, defaultShow, onToggle);
     const delay = normalizeDelay(propsDelay);
     const {
       onFocus,
       onBlur,
       onClick
-    } = typeof children !== "function" ? React114.Children.only(children).props : {};
+    } = typeof children !== "function" ? React113.Children.only(children).props : {};
     const attachRef = (r) => {
       mergedRef(safeFindDOMNode(r));
     };
-    const handleShow = (0, import_react80.useCallback)(() => {
+    const handleShow = (0, import_react79.useCallback)(() => {
       timeout2.clear();
       hoverStateRef.current = "show";
       if (!delay.show) {
@@ -36946,7 +36913,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           setShow(true);
       }, delay.show);
     }, [delay.show, setShow, timeout2]);
-    const handleHide = (0, import_react80.useCallback)(() => {
+    const handleHide = (0, import_react79.useCallback)(() => {
       timeout2.clear();
       hoverStateRef.current = "hide";
       if (!delay.hide) {
@@ -36958,22 +36925,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           setShow(false);
       }, delay.hide);
     }, [delay.hide, setShow, timeout2]);
-    const handleFocus = (0, import_react80.useCallback)((...args) => {
+    const handleFocus = (0, import_react79.useCallback)((...args) => {
       handleShow();
       onFocus == null || onFocus(...args);
     }, [handleShow, onFocus]);
-    const handleBlur = (0, import_react80.useCallback)((...args) => {
+    const handleBlur = (0, import_react79.useCallback)((...args) => {
       handleHide();
       onBlur == null || onBlur(...args);
     }, [handleHide, onBlur]);
-    const handleClick = (0, import_react80.useCallback)((...args) => {
+    const handleClick = (0, import_react79.useCallback)((...args) => {
       setShow(!show);
       onClick == null || onClick(...args);
     }, [onClick, setShow, show]);
-    const handleMouseOver = (0, import_react80.useCallback)((...args) => {
+    const handleMouseOver = (0, import_react79.useCallback)((...args) => {
       handleMouseOverOut(handleShow, args, "fromElement");
     }, [handleShow]);
-    const handleMouseOut = (0, import_react80.useCallback)((...args) => {
+    const handleMouseOut = (0, import_react79.useCallback)((...args) => {
       handleMouseOverOut(handleHide, args, "toElement");
     }, [handleHide]);
     const triggers = trigger == null ? [] : [].concat(trigger);
@@ -36993,7 +36960,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       triggerProps.onMouseOut = handleMouseOut;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime96.jsxs)(import_jsx_runtime95.Fragment, {
-      children: [typeof children === "function" ? children(triggerProps) : /* @__PURE__ */ (0, import_react80.cloneElement)(children, triggerProps), /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(Overlay_default2, {
+      children: [typeof children === "function" ? children(triggerProps) : /* @__PURE__ */ (0, import_react79.cloneElement)(children, triggerProps), /* @__PURE__ */ (0, import_jsx_runtime94.jsx)(Overlay_default2, {
         ...props,
         show,
         onHide: handleHide,
@@ -37009,9 +36976,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Row.js
   var import_classnames67 = __toESM(require_classnames());
-  var React115 = __toESM(require_react());
+  var React114 = __toESM(require_react());
   var import_jsx_runtime97 = __toESM(require_jsx_runtime());
-  var Row = /* @__PURE__ */ React115.forwardRef(({
+  var Row = /* @__PURE__ */ React114.forwardRef(({
     bsPrefix,
     className,
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
@@ -37049,9 +37016,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Spinner.js
   var import_classnames68 = __toESM(require_classnames());
-  var React116 = __toESM(require_react());
+  var React115 = __toESM(require_react());
   var import_jsx_runtime98 = __toESM(require_jsx_runtime());
-  var Spinner = /* @__PURE__ */ React116.forwardRef(({
+  var Spinner = /* @__PURE__ */ React115.forwardRef(({
     bsPrefix,
     variant,
     animation = "border",
@@ -37076,12 +37043,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var import_prop_types7 = __toESM(require_prop_types());
 
   // node_modules/@restart/ui/esm/Tabs.js
-  var React118 = __toESM(require_react());
-  var import_react82 = __toESM(require_react());
-
-  // node_modules/@restart/ui/esm/TabPanel.js
   var React117 = __toESM(require_react());
   var import_react81 = __toESM(require_react());
+
+  // node_modules/@restart/ui/esm/TabPanel.js
+  var React116 = __toESM(require_react());
+  var import_react80 = __toESM(require_react());
   var import_jsx_runtime99 = __toESM(require_jsx_runtime());
   var _excluded11 = ["active", "eventKey", "mountOnEnter", "transition", "unmountOnExit", "role", "onEnter", "onEntering", "onEntered", "onExit", "onExiting", "onExited"];
   var _excluded22 = ["activeKey", "getControlledId", "getControllerId"];
@@ -37113,7 +37080,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExiting,
       onExited
     } = _ref, props = _objectWithoutPropertiesLoose12(_ref, _excluded11);
-    const context4 = (0, import_react81.useContext)(TabContext_default);
+    const context4 = (0, import_react80.useContext)(TabContext_default);
     if (!context4)
       return [Object.assign({}, props, {
         role
@@ -37154,7 +37121,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       onExited
     }];
   }
-  var TabPanel = /* @__PURE__ */ React117.forwardRef(
+  var TabPanel = /* @__PURE__ */ React116.forwardRef(
     // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
     (_ref2, ref) => {
       let {
@@ -37215,8 +37182,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     } = props;
     const [activeKey, onSelect] = useUncontrolledProp2(propsActiveKey, defaultActiveKey, propsOnSelect);
     const id = $b5e257d569688ac6$export$619500959fc48b26(userId);
-    const generateChildId = (0, import_react82.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
-    const tabContext = (0, import_react82.useMemo)(() => ({
+    const generateChildId = (0, import_react81.useMemo)(() => generateCustomChildId || ((key, type) => id ? `${id}-${type}-${key}` : null), [id, generateCustomChildId]);
+    const tabContext = (0, import_react81.useMemo)(() => ({
       onSelect,
       activeKey,
       transition,
@@ -37257,10 +37224,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var TabContainer_default = TabContainer;
 
   // node_modules/react-bootstrap/esm/TabContent.js
-  var React119 = __toESM(require_react());
+  var React118 = __toESM(require_react());
   var import_classnames69 = __toESM(require_classnames());
   var import_jsx_runtime102 = __toESM(require_jsx_runtime());
-  var TabContent = /* @__PURE__ */ React119.forwardRef(({
+  var TabContent = /* @__PURE__ */ React118.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -37278,9 +37245,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/TabPane.js
   var import_classnames70 = __toESM(require_classnames());
-  var React120 = __toESM(require_react());
+  var React119 = __toESM(require_react());
   var import_jsx_runtime103 = __toESM(require_jsx_runtime());
-  var TabPane = /* @__PURE__ */ React120.forwardRef(({
+  var TabPane = /* @__PURE__ */ React119.forwardRef(({
     bsPrefix,
     transition,
     ...props
@@ -37364,9 +37331,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Table.js
   var import_classnames71 = __toESM(require_classnames());
-  var React121 = __toESM(require_react());
+  var React120 = __toESM(require_react());
   var import_jsx_runtime104 = __toESM(require_jsx_runtime());
-  var Table = /* @__PURE__ */ React121.forwardRef(({
+  var Table = /* @__PURE__ */ React120.forwardRef(({
     bsPrefix,
     className,
     striped,
@@ -37401,18 +37368,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var Table_default = Table;
 
   // node_modules/react-bootstrap/esm/Toast.js
-  var React126 = __toESM(require_react());
-  var import_react84 = __toESM(require_react());
+  var React125 = __toESM(require_react());
+  var import_react83 = __toESM(require_react());
   var import_classnames74 = __toESM(require_classnames());
 
   // node_modules/react-bootstrap/esm/ToastFade.js
-  var React122 = __toESM(require_react());
+  var React121 = __toESM(require_react());
   var import_jsx_runtime105 = __toESM(require_jsx_runtime());
   var fadeStyles2 = {
     [ENTERING]: "showing",
     [EXITING]: "showing show"
   };
-  var ToastFade = /* @__PURE__ */ React122.forwardRef((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(Fade_default, {
+  var ToastFade = /* @__PURE__ */ React121.forwardRef((props, ref) => /* @__PURE__ */ (0, import_jsx_runtime105.jsx)(Fade_default, {
     ...props,
     ref,
     transitionClasses: fadeStyles2
@@ -37422,12 +37389,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ToastHeader.js
   var import_classnames72 = __toESM(require_classnames());
-  var React124 = __toESM(require_react());
-  var import_react83 = __toESM(require_react());
+  var React123 = __toESM(require_react());
+  var import_react82 = __toESM(require_react());
 
   // node_modules/react-bootstrap/esm/ToastContext.js
-  var React123 = __toESM(require_react());
-  var ToastContext = /* @__PURE__ */ React123.createContext({
+  var React122 = __toESM(require_react());
+  var ToastContext = /* @__PURE__ */ React122.createContext({
     onClose() {
     }
   });
@@ -37436,7 +37403,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   // node_modules/react-bootstrap/esm/ToastHeader.js
   var import_jsx_runtime106 = __toESM(require_jsx_runtime());
   var import_jsx_runtime107 = __toESM(require_jsx_runtime());
-  var ToastHeader = /* @__PURE__ */ React124.forwardRef(({
+  var ToastHeader = /* @__PURE__ */ React123.forwardRef(({
     bsPrefix,
     closeLabel = "Close",
     closeVariant,
@@ -37446,7 +37413,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "toast-header");
-    const context4 = (0, import_react83.useContext)(ToastContext_default);
+    const context4 = (0, import_react82.useContext)(ToastContext_default);
     const handleClick = useEventCallback((e) => {
       context4 == null || context4.onClose == null || context4.onClose(e);
     });
@@ -37466,10 +37433,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ToastHeader_default = ToastHeader;
 
   // node_modules/react-bootstrap/esm/ToastBody.js
-  var React125 = __toESM(require_react());
+  var React124 = __toESM(require_react());
   var import_classnames73 = __toESM(require_classnames());
   var import_jsx_runtime108 = __toESM(require_jsx_runtime());
-  var ToastBody = /* @__PURE__ */ React125.forwardRef(({
+  var ToastBody = /* @__PURE__ */ React124.forwardRef(({
     className,
     bsPrefix,
     as: Component5 = "div",
@@ -37487,7 +37454,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/Toast.js
   var import_jsx_runtime109 = __toESM(require_jsx_runtime());
-  var Toast = /* @__PURE__ */ React126.forwardRef(({
+  var Toast = /* @__PURE__ */ React125.forwardRef(({
     bsPrefix,
     className,
     transition: Transition2 = ToastFade_default,
@@ -37506,23 +37473,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     ...props
   }, ref) => {
     bsPrefix = useBootstrapPrefix(bsPrefix, "toast");
-    const delayRef = (0, import_react84.useRef)(delay);
-    const onCloseRef = (0, import_react84.useRef)(onClose);
-    (0, import_react84.useEffect)(() => {
+    const delayRef = (0, import_react83.useRef)(delay);
+    const onCloseRef = (0, import_react83.useRef)(onClose);
+    (0, import_react83.useEffect)(() => {
       delayRef.current = delay;
       onCloseRef.current = onClose;
     }, [delay, onClose]);
     const autohideTimeout = useTimeout();
     const autohideToast = !!(autohide && show);
-    const autohideFunc = (0, import_react84.useCallback)(() => {
+    const autohideFunc = (0, import_react83.useCallback)(() => {
       if (autohideToast) {
         onCloseRef.current == null || onCloseRef.current();
       }
     }, [autohideToast]);
-    (0, import_react84.useEffect)(() => {
+    (0, import_react83.useEffect)(() => {
       autohideTimeout.set(autohideFunc, delayRef.current);
     }, [autohideTimeout, autohideFunc]);
-    const toastContext = (0, import_react84.useMemo)(() => ({
+    const toastContext = (0, import_react83.useMemo)(() => ({
       onClose
     }), [onClose]);
     const hasAnimation = !!(Transition2 && animation);
@@ -37557,7 +37524,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 
   // node_modules/react-bootstrap/esm/ToastContainer.js
   var import_classnames75 = __toESM(require_classnames());
-  var React127 = __toESM(require_react());
+  var React126 = __toESM(require_react());
   var import_jsx_runtime110 = __toESM(require_jsx_runtime());
   var positionClasses = {
     "top-start": "top-0 start-0",
@@ -37570,7 +37537,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     "bottom-center": "bottom-0 start-50 translate-middle-x",
     "bottom-end": "bottom-0 end-0"
   };
-  var ToastContainer = /* @__PURE__ */ React127.forwardRef(({
+  var ToastContainer = /* @__PURE__ */ React126.forwardRef(({
     bsPrefix,
     position,
     containerPosition,
@@ -37590,8 +37557,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
   var ToastContainer_default = ToastContainer;
 
   // src/app/frontend/useWebSocket.ts
-  var import_react85 = __toESM(require_react(), 1);
-  var WebSocketContext = (0, import_react85.createContext)({
+  var import_react84 = __toESM(require_react(), 1);
+  var WebSocketContext = (0, import_react84.createContext)({
     ws: null,
     isConnected: false,
     sendMessage: function(message) {
@@ -37599,23 +37566,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     }
   });
   var useWebSocket = () => {
-    return (0, import_react85.useContext)(WebSocketContext);
+    return (0, import_react84.useContext)(WebSocketContext);
   };
 
   // src/app/frontend/components/pure/HelpoChatDrawer.tsx
-  var import_react86 = __toESM(require_react(), 1);
+  var import_react85 = __toESM(require_react(), 1);
   var HelpoChatDrawer = ({
     isActive
     // onToggle,
   }) => {
     const { ws, isConnected, sendMessage } = useWebSocket();
-    const [messages, setMessages] = (0, import_react86.useState)([]);
-    const [inputMessage, setInputMessage] = (0, import_react86.useState)("");
-    const messagesEndRef = (0, import_react86.useRef)(null);
-    (0, import_react86.useEffect)(() => {
+    const [messages, setMessages] = (0, import_react85.useState)([]);
+    const [inputMessage, setInputMessage] = (0, import_react85.useState)("");
+    const messagesEndRef = (0, import_react85.useRef)(null);
+    (0, import_react85.useEffect)(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
-    (0, import_react86.useEffect)(() => {
+    (0, import_react85.useEffect)(() => {
       const handleWebSocketMessage = (event) => {
         try {
           const data2 = JSON.parse(event.data);
@@ -37669,7 +37636,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         handleSendMessage();
       }
     };
-    return /* @__PURE__ */ import_react86.default.createElement(
+    return /* @__PURE__ */ import_react85.default.createElement(
       "div",
       {
         className: `gradient-typed-bdd-dsl d-flex flex-column border-end ${isActive ? "active" : "inactive"}`,
@@ -37681,7 +37648,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           height: "100vh"
         }
       },
-      /* @__PURE__ */ import_react86.default.createElement(
+      /* @__PURE__ */ import_react85.default.createElement(
         "div",
         {
           style: {
@@ -37691,7 +37658,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             flexDirection: "column"
           }
         },
-        /* @__PURE__ */ import_react86.default.createElement(
+        /* @__PURE__ */ import_react85.default.createElement(
           "div",
           {
             style: {
@@ -37703,13 +37670,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               gap: "0.5rem"
             }
           },
-          messages.length === 0 ? /* @__PURE__ */ import_react86.default.createElement(
+          messages.length === 0 ? /* @__PURE__ */ import_react85.default.createElement(
             "div",
             {
               style: { textAlign: "center", color: "#666", marginTop: "2rem" }
             },
             "Start a conversation with Helpo!"
-          ) : messages.map((message, index2) => /* @__PURE__ */ import_react86.default.createElement(
+          ) : messages.map((message, index2) => /* @__PURE__ */ import_react85.default.createElement(
             "div",
             {
               key: index2,
@@ -37718,7 +37685,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 marginBottom: "0.5rem"
               }
             },
-            /* @__PURE__ */ import_react86.default.createElement(
+            /* @__PURE__ */ import_react85.default.createElement(
               "div",
               {
                 style: {
@@ -37730,11 +37697,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                   wordWrap: "break-word"
                 }
               },
-              /* @__PURE__ */ import_react86.default.createElement("strong", null, message.type === "user" ? "You" : "Helpo", ":"),
-              /* @__PURE__ */ import_react86.default.createElement("br", null),
+              /* @__PURE__ */ import_react85.default.createElement("strong", null, message.type === "user" ? "You" : "Helpo", ":"),
+              /* @__PURE__ */ import_react85.default.createElement("br", null),
               message.content
             ),
-            /* @__PURE__ */ import_react86.default.createElement(
+            /* @__PURE__ */ import_react85.default.createElement(
               "div",
               {
                 style: {
@@ -37746,9 +37713,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               new Date(message.timestamp).toLocaleTimeString()
             )
           )),
-          /* @__PURE__ */ import_react86.default.createElement("div", { ref: messagesEndRef })
+          /* @__PURE__ */ import_react85.default.createElement("div", { ref: messagesEndRef })
         ),
-        /* @__PURE__ */ import_react86.default.createElement(
+        /* @__PURE__ */ import_react85.default.createElement(
           "div",
           {
             style: {
@@ -37756,7 +37723,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               borderTop: "1px solid rgba(128, 128, 128, 0.3)"
             }
           },
-          /* @__PURE__ */ import_react86.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react86.default.createElement(
+          /* @__PURE__ */ import_react85.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react85.default.createElement(
             "input",
             {
               type: "text",
@@ -37772,7 +37739,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
                 color: "#333"
               }
             }
-          ), /* @__PURE__ */ import_react86.default.createElement(
+          ), /* @__PURE__ */ import_react85.default.createElement(
             "button",
             {
               className: "btn btn-primary",
@@ -37782,7 +37749,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             },
             "Send"
           )),
-          !isConnected && /* @__PURE__ */ import_react86.default.createElement("small", { className: "text-muted" }, "WebSocket disconnected. Chat unavailable.")
+          !isConnected && /* @__PURE__ */ import_react85.default.createElement("small", { className: "text-muted" }, "WebSocket disconnected. Chat unavailable.")
         )
       )
     );
@@ -37794,8 +37761,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
     const { isConnected } = useWebSocket();
     const { tutorialMode } = useTutorialMode();
     const { isAuthenticated, logout } = useAuth();
-    const [hasAnimated, setHasAnimated] = (0, import_react87.useState)(false);
-    const [isHelpoActive, setIsHelpoActive] = (0, import_react87.useState)(false);
+    const [hasAnimated, setHasAnimated] = (0, import_react86.useState)(false);
+    const [isHelpoActive, setIsHelpoActive] = (0, import_react86.useState)(false);
     const brandLogoStyle = `
     .brand-logo:hover {
       transform: scale(1.1);
@@ -37805,7 +37772,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
       transform: scale(0.95);
     }
   `;
-    (0, import_react87.useEffect)(() => {
+    (0, import_react86.useEffect)(() => {
       if (!hasAnimated) {
         const timer = setTimeout(() => {
           setHasAnimated(true);
@@ -37813,7 +37780,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
         return () => clearTimeout(timer);
       }
     }, [hasAnimated]);
-    return /* @__PURE__ */ import_react87.default.createElement("div", { className: "d-flex min-vh-100" }, /* @__PURE__ */ import_react87.default.createElement("style", null, brandLogoStyle), /* @__PURE__ */ import_react87.default.createElement(
+    return /* @__PURE__ */ import_react86.default.createElement("div", { className: "d-flex min-vh-100" }, /* @__PURE__ */ import_react86.default.createElement("style", null, brandLogoStyle), /* @__PURE__ */ import_react86.default.createElement(
       "div",
       {
         className: `border-end d-flex flex-column ${!hasAnimated ? "sidebar-attention" : ""}`,
@@ -37826,52 +37793,52 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           top: 0
         }
       },
-      /* @__PURE__ */ import_react87.default.createElement(Nav_default2, { variant: "pills", className: "flex-column p-0 flex-grow-1" }, /* @__PURE__ */ import_react87.default.createElement(
+      /* @__PURE__ */ import_react86.default.createElement(Nav_default2, { variant: "pills", className: "flex-column p-0 flex-grow-1" }, /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/helpo",
           className: `${location2.pathname === "/helpo" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}`
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Chat with Helpo, the helpful robot.")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Chat with Helpo, the helpful robot.")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "helpo")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "helpo")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "helpo")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "helpo")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/flua",
           className: `${location2.pathname === "/flua" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-1" : ""}`
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Process/Project Management")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "help-tooltip" }, "Process/Project Management")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "flua")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "flua")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "flua")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "flua")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/projects",
           className: `${location2.pathname === "/projects" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-2" : ""}`
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "projects-tooltip" }, "Projects")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "projects-tooltip" }, "Projects")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "testo")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "testo")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "testo")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "testo")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
@@ -37883,15 +37850,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
           }
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "processes-tooltip" }, "Processes", " ", !isAuthenticated ? "(Sign in required)" : !isConnected ? "(WebSocket disconnected)" : "")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "processes-tooltip" }, "Processes", " ", !isAuthenticated ? "(Sign in required)" : !isConnected ? "(WebSocket disconnected)" : "")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "pro\u0109o")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "pro\u0109o")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "pro\u0109o")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "pro\u0109o")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
@@ -37903,97 +37870,97 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             }
           }
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "git-tooltip" }, "Git Integration", " ", !isAuthenticated ? "(Sign in required)" : "")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "git-tooltip" }, "Git Integration", " ", !isAuthenticated ? "(Sign in required)" : "")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "arbo")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "arbo")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "arbo")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "arbo")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/svg-editor",
           className: `${location2.pathname === "/svg-editor" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "svg-editor-tooltip" }, "svg editor")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "svg-editor-tooltip" }, "svg editor")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "vektoro")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "vektoro")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "vektoro")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "vektoro")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/drato",
           className: `${location2.pathname === "/drato" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "drato-tooltip" }, "Bootstrap wireframing tool")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "drato-tooltip" }, "Bootstrap wireframing tool")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "drato")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "drato")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "drato")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "drato")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/grafeo",
           className: `${location2.pathname === "/grafeo" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "grafeo-tooltip" }, "GraphML editor")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "grafeo-tooltip" }, "GraphML editor")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "grafeo")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "grafeo")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "grafeo")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "grafeo")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/skribo",
           className: `${location2.pathname === "/skribo" ? "active" : ""} d-flex align-items-center justify-content-center`
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "skribo-tooltip" }, "Code editor")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "skribo-tooltip" }, "Code editor")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "skribo")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "skribo")
-      ), /* @__PURE__ */ import_react87.default.createElement(
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "skribo")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "skribo")
+      ), /* @__PURE__ */ import_react86.default.createElement(
         Nav_default2.Link,
         {
           as: NavLink,
           to: "/settings",
           className: `${location2.pathname === "/settings" ? "active" : ""} d-flex align-items-center justify-content-center ${!hasAnimated ? "navbar-attention-6" : ""}`
         },
-        tutorialMode ? /* @__PURE__ */ import_react87.default.createElement(
+        tutorialMode ? /* @__PURE__ */ import_react86.default.createElement(
           OverlayTrigger_default,
           {
             placement: "right",
-            overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "settings-tooltip" }, "Settings")
+            overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "settings-tooltip" }, "Settings")
           },
-          /* @__PURE__ */ import_react87.default.createElement("span", null, "konto")
-        ) : /* @__PURE__ */ import_react87.default.createElement("span", null, "konto")
+          /* @__PURE__ */ import_react86.default.createElement("span", null, "konto")
+        ) : /* @__PURE__ */ import_react86.default.createElement("span", null, "konto")
       )),
-      /* @__PURE__ */ import_react87.default.createElement(
+      /* @__PURE__ */ import_react86.default.createElement(
         OverlayTrigger_default,
         {
           placement: "right",
-          overlay: /* @__PURE__ */ import_react87.default.createElement(Tooltip_default, { id: "status-tooltip" }, isConnected ? "Dev mode - Full access" : "Static mode - Read only")
+          overlay: /* @__PURE__ */ import_react86.default.createElement(Tooltip_default, { id: "status-tooltip" }, isConnected ? "Dev mode - Full access" : "Static mode - Read only")
         },
-        /* @__PURE__ */ import_react87.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react87.default.createElement(
+        /* @__PURE__ */ import_react86.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react86.default.createElement(
           "span",
           {
             className: `badge rounded-circle d-flex align-items-center justify-content-center`
@@ -38001,7 +37968,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           isConnected ? "\u{1F7E2}" : "\u{1F534}"
         ))
       ),
-      /* @__PURE__ */ import_react87.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react87.default.createElement(
+      /* @__PURE__ */ import_react86.default.createElement("div", { className: "p-2 border-top d-flex align-items-center justify-content-center" }, /* @__PURE__ */ import_react86.default.createElement(
         "button",
         {
           onClick: () => setIsHelpoActive(!isHelpoActive),
@@ -38017,7 +37984,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             e.currentTarget.style.transform = "scale(1)";
           }
         },
-        /* @__PURE__ */ import_react87.default.createElement(
+        /* @__PURE__ */ import_react86.default.createElement(
           "img",
           {
             src: "https://www.testeranto.com/logo.svg",
@@ -38029,13 +37996,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           }
         )
       ))
-    ), /* @__PURE__ */ import_react87.default.createElement(
+    ), /* @__PURE__ */ import_react86.default.createElement(
       HelpoChatDrawer,
       {
         isActive: isHelpoActive,
         onToggle: () => setIsHelpoActive(!isHelpoActive)
       }
-    ), /* @__PURE__ */ import_react87.default.createElement(
+    ), /* @__PURE__ */ import_react86.default.createElement(
       "div",
       {
         className: "d-flex flex-column",
@@ -38049,7 +38016,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
           // Enable scrolling
         }
       },
-      /* @__PURE__ */ import_react87.default.createElement(
+      /* @__PURE__ */ import_react86.default.createElement(
         "main",
         {
           className: "flex-grow-1 p-1",
@@ -38058,7 +38025,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
             width: "100%"
           }
         },
-        /* @__PURE__ */ import_react87.default.createElement(
+        /* @__PURE__ */ import_react86.default.createElement(
           Container_default,
           {
             fluid: true,
@@ -38068,17 +38035,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
               padding: "0.125rem"
             }
           },
-          location2.pathname === "/helpo" ? /* @__PURE__ */ import_react87.default.createElement("div", null, /* @__PURE__ */ import_react87.default.createElement("h1", null, "Helpo Documentation"), /* @__PURE__ */ import_react87.default.createElement("p", null, "Welcome to the Helpo documentation. Here you can find information about using Testeranto."), /* @__PURE__ */ import_react87.default.createElement("h2", null, "Getting Started"), /* @__PURE__ */ import_react87.default.createElement("p", null, "Start by creating a project and writing your first test cases."), /* @__PURE__ */ import_react87.default.createElement("h2", null, "Features"), /* @__PURE__ */ import_react87.default.createElement("ul", null, /* @__PURE__ */ import_react87.default.createElement("li", null, "Test automation"), /* @__PURE__ */ import_react87.default.createElement("li", null, "Process management"), /* @__PURE__ */ import_react87.default.createElement("li", null, "Git integration"), /* @__PURE__ */ import_react87.default.createElement("li", null, "And much more..."))) : children
+          location2.pathname === "/helpo" ? /* @__PURE__ */ import_react86.default.createElement("div", null, /* @__PURE__ */ import_react86.default.createElement("h1", null, "Helpo Documentation"), /* @__PURE__ */ import_react86.default.createElement("p", null, "Welcome to the Helpo documentation. Here you can find information about using Testeranto."), /* @__PURE__ */ import_react86.default.createElement("h2", null, "Getting Started"), /* @__PURE__ */ import_react86.default.createElement("p", null, "Start by creating a project and writing your first test cases."), /* @__PURE__ */ import_react86.default.createElement("h2", null, "Features"), /* @__PURE__ */ import_react86.default.createElement("ul", null, /* @__PURE__ */ import_react86.default.createElement("li", null, "Test automation"), /* @__PURE__ */ import_react86.default.createElement("li", null, "Process management"), /* @__PURE__ */ import_react86.default.createElement("li", null, "Git integration"), /* @__PURE__ */ import_react86.default.createElement("li", null, "And much more..."))) : children
         )
       )
     ));
   };
 
   // src/app/frontend/components/pure/SignIn.tsx
-  var import_react89 = __toESM(require_react(), 1);
+  var import_react88 = __toESM(require_react(), 1);
 
   // src/app/frontend/components/pure/GitHubLoginButton.tsx
-  var import_react88 = __toESM(require_react(), 1);
+  var import_react87 = __toESM(require_react(), 1);
 
   // src/app/frontend/GitHubAuthService.ts
   var GitHubAuthService = class _GitHubAuthService {
@@ -38275,7 +38242,7 @@ Current environment analysis:
     const handleLogin = () => {
       githubAuthService.initiateLogin();
     };
-    return /* @__PURE__ */ import_react88.default.createElement(
+    return /* @__PURE__ */ import_react87.default.createElement(
       Button_default2,
       {
         className,
@@ -38283,35 +38250,35 @@ Current environment analysis:
         size: size2,
         onClick: handleLogin
       },
-      /* @__PURE__ */ import_react88.default.createElement("i", { className: "bi bi-github me-2" }),
+      /* @__PURE__ */ import_react87.default.createElement("i", { className: "bi bi-github me-2" }),
       "Sign in with GitHub"
     );
   };
 
   // src/app/frontend/components/pure/SignIn.tsx
   var SignIn = () => {
-    return /* @__PURE__ */ import_react89.default.createElement(Container_default, { className: "d-flex align-items-center justify-content-center min-vh-100" }, /* @__PURE__ */ import_react89.default.createElement(Row_default, null, /* @__PURE__ */ import_react89.default.createElement(Col_default, { md: 12 }, /* @__PURE__ */ import_react89.default.createElement(Card_default, null, /* @__PURE__ */ import_react89.default.createElement(Card_default.Header, { className: "text-center" }, /* @__PURE__ */ import_react89.default.createElement("h3", { className: "mb-0" }, "Sign In")), /* @__PURE__ */ import_react89.default.createElement(Card_default.Body, { className: "text-center" }, githubAuthService.isConfigured() ? /* @__PURE__ */ import_react89.default.createElement(GitHubLoginButton, null) : /* @__PURE__ */ import_react89.default.createElement("div", null, /* @__PURE__ */ import_react89.default.createElement("p", { className: "text-danger" }, "GitHub authentication is not configured"), /* @__PURE__ */ import_react89.default.createElement("p", null, "Please contact the administrator")))))));
+    return /* @__PURE__ */ import_react88.default.createElement(Container_default, { className: "d-flex align-items-center justify-content-center min-vh-100" }, /* @__PURE__ */ import_react88.default.createElement(Row_default, null, /* @__PURE__ */ import_react88.default.createElement(Col_default, { md: 12 }, /* @__PURE__ */ import_react88.default.createElement(Card_default, null, /* @__PURE__ */ import_react88.default.createElement(Card_default.Header, { className: "text-center" }, /* @__PURE__ */ import_react88.default.createElement("h3", { className: "mb-0" }, "Sign In")), /* @__PURE__ */ import_react88.default.createElement(Card_default.Body, { className: "text-center" }, githubAuthService.isConfigured() ? /* @__PURE__ */ import_react88.default.createElement(GitHubLoginButton, null) : /* @__PURE__ */ import_react88.default.createElement("div", null, /* @__PURE__ */ import_react88.default.createElement("p", { className: "text-danger" }, "GitHub authentication is not configured"), /* @__PURE__ */ import_react88.default.createElement("p", null, "Please contact the administrator")))))));
   };
 
   // src/app/frontend/components/stateful/AuthCallbackPage.tsx
-  var import_react90 = __toESM(require_react(), 1);
+  var import_react89 = __toESM(require_react(), 1);
   var AuthCallbackPage = () => {
-    (0, import_react90.useEffect)(() => {
+    (0, import_react89.useEffect)(() => {
     }, []);
-    return /* @__PURE__ */ import_react90.default.createElement(Container_default, { className: "d-flex justify-content-center align-items-center", style: { minHeight: "50vh" } }, /* @__PURE__ */ import_react90.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react90.default.createElement(Spinner_default, { animation: "border", role: "status", className: "mb-3" }, /* @__PURE__ */ import_react90.default.createElement("span", { className: "visually-hidden" }, "Authenticating...")), /* @__PURE__ */ import_react90.default.createElement("h4", null, "Completing GitHub authentication...")));
+    return /* @__PURE__ */ import_react89.default.createElement(Container_default, { className: "d-flex justify-content-center align-items-center", style: { minHeight: "50vh" } }, /* @__PURE__ */ import_react89.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react89.default.createElement(Spinner_default, { animation: "border", role: "status", className: "mb-3" }, /* @__PURE__ */ import_react89.default.createElement("span", { className: "visually-hidden" }, "Authenticating...")), /* @__PURE__ */ import_react89.default.createElement("h4", null, "Completing GitHub authentication...")));
   };
 
   // src/app/frontend/components/stateful/ProjectPage.tsx
-  var import_react96 = __toESM(require_react(), 1);
-
-  // src/app/frontend/components/pure/ProjectPageView.tsx
   var import_react95 = __toESM(require_react(), 1);
 
+  // src/app/frontend/components/pure/ProjectPageView.tsx
+  var import_react94 = __toESM(require_react(), 1);
+
   // src/app/frontend/components/pure/TestTable.tsx
-  var import_react92 = __toESM(require_react(), 1);
+  var import_react91 = __toESM(require_react(), 1);
 
   // src/app/frontend/components/TestStatusBadge.tsx
-  var import_react91 = __toESM(require_react(), 1);
+  var import_react90 = __toESM(require_react(), 1);
   var TestStatusBadge = (props) => {
     const hasTests = props.testsExist !== false;
     const testCompleted = props.runTimeErrors !== -1;
@@ -38328,9 +38295,9 @@ Current environment analysis:
     }
     if (props.variant === "compact") {
       console.groupEnd();
-      return /* @__PURE__ */ import_react91.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
+      return /* @__PURE__ */ import_react90.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text);
     }
-    return /* @__PURE__ */ import_react91.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react91.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
+    return /* @__PURE__ */ import_react90.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react90.default.createElement(Badge_default, { bg: bddStatus.variant }, bddStatus.text));
   };
 
   // src/app/frontend/components/pure/TestTable.tsx
@@ -38338,7 +38305,7 @@ Current environment analysis:
     testStatuses,
     projectName
   }) => {
-    return /* @__PURE__ */ import_react92.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react92.default.createElement("thead", null, /* @__PURE__ */ import_react92.default.createElement("tr", null, /* @__PURE__ */ import_react92.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react92.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react92.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react92.default.createElement("th", null, "Total Tests"), /* @__PURE__ */ import_react92.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react92.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react92.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react92.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react92.default.createElement("td", null, /* @__PURE__ */ import_react92.default.createElement(
+    return /* @__PURE__ */ import_react91.default.createElement(Table_default, { striped: true, bordered: true, hover: true }, /* @__PURE__ */ import_react91.default.createElement("thead", null, /* @__PURE__ */ import_react91.default.createElement("tr", null, /* @__PURE__ */ import_react91.default.createElement("th", null, "Test"), /* @__PURE__ */ import_react91.default.createElement("th", null, "Runtime"), /* @__PURE__ */ import_react91.default.createElement("th", null, "Status"), /* @__PURE__ */ import_react91.default.createElement("th", null, "Total Tests"), /* @__PURE__ */ import_react91.default.createElement("th", null, "Type Errors"), /* @__PURE__ */ import_react91.default.createElement("th", null, "Lint Errors"))), /* @__PURE__ */ import_react91.default.createElement("tbody", null, testStatuses.map((test) => /* @__PURE__ */ import_react91.default.createElement("tr", { key: test.testName, "data-testid": `test-row-${test.testName}` }, /* @__PURE__ */ import_react91.default.createElement("td", null, /* @__PURE__ */ import_react91.default.createElement(
       "a",
       {
         href: `#/projects/${projectName}/tests/${encodeURIComponent(
@@ -38346,7 +38313,7 @@ Current environment analysis:
         )}/${test.runTime}`
       },
       test.testName
-    )), /* @__PURE__ */ import_react92.default.createElement("td", null, /* @__PURE__ */ import_react92.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react92.default.createElement("td", null, /* @__PURE__ */ import_react92.default.createElement(
+    )), /* @__PURE__ */ import_react91.default.createElement("td", null, /* @__PURE__ */ import_react91.default.createElement(Badge_default, { bg: "secondary", className: "ms-2" }, test.runTime)), /* @__PURE__ */ import_react91.default.createElement("td", null, /* @__PURE__ */ import_react91.default.createElement(
       TestStatusBadge,
       {
         testName: test.testName,
@@ -38355,7 +38322,7 @@ Current environment analysis:
         typeErrors: test.typeErrors,
         staticErrors: test.staticErrors
       }
-    )), /* @__PURE__ */ import_react92.default.createElement("td", null, test.runTimeTests >= 0 ? test.runTimeTests : "N/A"), /* @__PURE__ */ import_react92.default.createElement("td", null, /* @__PURE__ */ import_react92.default.createElement(
+    )), /* @__PURE__ */ import_react91.default.createElement("td", null, test.runTimeTests >= 0 ? test.runTimeTests : "N/A"), /* @__PURE__ */ import_react91.default.createElement("td", null, /* @__PURE__ */ import_react91.default.createElement(
       "a",
       {
         href: `#/projects/${projectName}/tests/${encodeURIComponent(
@@ -38363,7 +38330,7 @@ Current environment analysis:
         )}/${test.runTime}#types`
       },
       test.typeErrors > 0 ? `\u274C ${test.typeErrors}` : "\u2705"
-    )), /* @__PURE__ */ import_react92.default.createElement("td", null, /* @__PURE__ */ import_react92.default.createElement(
+    )), /* @__PURE__ */ import_react91.default.createElement("td", null, /* @__PURE__ */ import_react91.default.createElement(
       "a",
       {
         href: `#/projects/${projectName}/tests/${encodeURIComponent(
@@ -38375,18 +38342,18 @@ Current environment analysis:
   };
 
   // src/app/frontend/components/pure/BuildLogViewer.tsx
-  var import_react93 = __toESM(require_react(), 1);
+  var import_react92 = __toESM(require_react(), 1);
   var BuildLogViewer = ({ logs, runtime }) => {
     if (!logs)
-      return /* @__PURE__ */ import_react93.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
+      return /* @__PURE__ */ import_react92.default.createElement(Alert_default, { variant: "info" }, "Loading ", runtime.toLowerCase(), " build logs...");
     const hasErrors = logs.errors?.length > 0;
     const hasWarnings = logs.warnings?.length > 0;
-    const [activeTab, setActiveTab] = import_react93.default.useState("summary");
-    return /* @__PURE__ */ import_react93.default.createElement("div", null, /* @__PURE__ */ import_react93.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k2) => setActiveTab(k2 || "summary") }, /* @__PURE__ */ import_react93.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react93.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react93.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react93.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react93.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react93.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react93.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react93.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react93.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react93.default.createElement(Card_default, null, /* @__PURE__ */ import_react93.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react93.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react93.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react93.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react93.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react93.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react93.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react93.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react93.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react93.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react93.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react93.default.createElement("code", null, file), /* @__PURE__ */ import_react93.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react93.default.createElement("div", null, /* @__PURE__ */ import_react93.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react93.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react93.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react93.default.createElement("code", null, file), /* @__PURE__ */ import_react93.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react93.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react93.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react93.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react93.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react93.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react93.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react93.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react93.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i) => /* @__PURE__ */ import_react93.default.createElement(ListGroup_default.Item, { key: i, className: "text-warning" }, /* @__PURE__ */ import_react93.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react93.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react93.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react93.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react93.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(warn)))))))) : /* @__PURE__ */ import_react93.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react93.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react93.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react93.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react93.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react93.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react93.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react93.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i) => /* @__PURE__ */ import_react93.default.createElement(ListGroup_default.Item, { key: i, className: "text-danger" }, /* @__PURE__ */ import_react93.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react93.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react93.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react93.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react93.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(err)))))))) : /* @__PURE__ */ import_react93.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react93.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react93.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
+    const [activeTab, setActiveTab] = import_react92.default.useState("summary");
+    return /* @__PURE__ */ import_react92.default.createElement("div", null, /* @__PURE__ */ import_react92.default.createElement(Tab_default.Container, { activeKey: activeTab, onSelect: (k2) => setActiveTab(k2 || "summary") }, /* @__PURE__ */ import_react92.default.createElement(Nav_default2, { variant: "tabs", className: "mb-3" }, /* @__PURE__ */ import_react92.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react92.default.createElement(Nav_default2.Link, { eventKey: "summary" }, "Build Summary")), /* @__PURE__ */ import_react92.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react92.default.createElement(Nav_default2.Link, { eventKey: "warnings" }, hasWarnings ? `\u26A0\uFE0F Warnings (${logs.warnings.length})` : "Warnings")), /* @__PURE__ */ import_react92.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react92.default.createElement(Nav_default2.Link, { eventKey: "errors" }, hasErrors ? `\u274C Errors (${logs.errors.length})` : "Errors"))), /* @__PURE__ */ import_react92.default.createElement(Tab_default.Content, null, /* @__PURE__ */ import_react92.default.createElement(Tab_default.Pane, { eventKey: "summary" }, /* @__PURE__ */ import_react92.default.createElement(Card_default, null, /* @__PURE__ */ import_react92.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react92.default.createElement("h5", null, "Build Summary"), /* @__PURE__ */ import_react92.default.createElement("div", null, hasErrors && /* @__PURE__ */ import_react92.default.createElement(Badge_default, { bg: "danger", className: "me-2" }, logs.errors.length, " Error", logs.errors.length !== 1 ? "s" : ""), hasWarnings && /* @__PURE__ */ import_react92.default.createElement(Badge_default, { bg: "warning", text: "dark" }, logs.warnings.length, " Warning", logs.warnings.length !== 1 ? "s" : ""), !hasErrors && !hasWarnings && /* @__PURE__ */ import_react92.default.createElement(Badge_default, { bg: "success" }, "Build Successful"))), /* @__PURE__ */ import_react92.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react92.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react92.default.createElement("h6", null, "Input Files (", Object.keys(logs.metafile?.inputs || {}).length, ")"), /* @__PURE__ */ import_react92.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.inputs || {}).map((file) => /* @__PURE__ */ import_react92.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react92.default.createElement("code", null, file), /* @__PURE__ */ import_react92.default.createElement("div", { className: "text-muted small" }, logs.metafile.inputs[file].bytes, " bytes"))))), /* @__PURE__ */ import_react92.default.createElement("div", null, /* @__PURE__ */ import_react92.default.createElement("h6", null, "Output Files (", Object.keys(logs.metafile?.outputs || {}).length, ")"), /* @__PURE__ */ import_react92.default.createElement(ListGroup_default, { className: "max-h-200 overflow-auto" }, Object.keys(logs.metafile?.outputs || {}).map((file) => /* @__PURE__ */ import_react92.default.createElement(ListGroup_default.Item, { key: file, className: "py-2" }, /* @__PURE__ */ import_react92.default.createElement("code", null, file), /* @__PURE__ */ import_react92.default.createElement("div", { className: "text-muted small" }, logs.metafile.outputs[file].bytes, " bytes", logs.metafile.outputs[file].entryPoint && /* @__PURE__ */ import_react92.default.createElement("span", { className: "ms-2 badge bg-info" }, "Entry Point"))))))))), /* @__PURE__ */ import_react92.default.createElement(Tab_default.Pane, { eventKey: "warnings" }, hasWarnings ? /* @__PURE__ */ import_react92.default.createElement(Card_default, { className: "border-warning" }, /* @__PURE__ */ import_react92.default.createElement(Card_default.Header, { className: "bg-warning text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react92.default.createElement("span", null, "Build Warnings (", logs.warnings.length, ")"), /* @__PURE__ */ import_react92.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react92.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react92.default.createElement(ListGroup_default, { variant: "flush" }, logs.warnings.map((warn, i) => /* @__PURE__ */ import_react92.default.createElement(ListGroup_default.Item, { key: i, className: "text-warning" }, /* @__PURE__ */ import_react92.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react92.default.createElement("strong", null, warn.location?.file || "Unknown file", warn.location?.line && `:${warn.location.line}`), /* @__PURE__ */ import_react92.default.createElement("small", { className: "text-muted" }, warn.pluginName ? `[${warn.pluginName}]` : "")), /* @__PURE__ */ import_react92.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react92.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(warn)))))))) : /* @__PURE__ */ import_react92.default.createElement(Alert_default, { variant: "info" }, "No warnings found")), /* @__PURE__ */ import_react92.default.createElement(Tab_default.Pane, { eventKey: "errors" }, hasErrors ? /* @__PURE__ */ import_react92.default.createElement(Card_default, { className: "border-danger" }, /* @__PURE__ */ import_react92.default.createElement(Card_default.Header, { className: "bg-danger text-white d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react92.default.createElement("span", null, "Build Errors (", logs.errors.length, ")"), /* @__PURE__ */ import_react92.default.createElement(Badge_default, { bg: "light", text: "dark" }, (/* @__PURE__ */ new Date()).toLocaleString())), /* @__PURE__ */ import_react92.default.createElement(Card_default.Body, { className: "p-0" }, /* @__PURE__ */ import_react92.default.createElement(ListGroup_default, { variant: "flush" }, logs.errors.map((err, i) => /* @__PURE__ */ import_react92.default.createElement(ListGroup_default.Item, { key: i, className: "text-danger" }, /* @__PURE__ */ import_react92.default.createElement("div", { className: "d-flex justify-content-between" }, /* @__PURE__ */ import_react92.default.createElement("strong", null, err.location?.file || "Unknown file", err.location?.line && `:${err.location.line}`), /* @__PURE__ */ import_react92.default.createElement("small", { className: "text-muted" }, err.pluginName ? `[${err.pluginName}]` : "")), /* @__PURE__ */ import_react92.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react92.default.createElement("pre", { className: "mb-0 p-2  rounded" }, JSON.stringify(err)))))))) : /* @__PURE__ */ import_react92.default.createElement(Alert_default, { variant: "success" }, /* @__PURE__ */ import_react92.default.createElement("h5", null, "No Errors Found"), /* @__PURE__ */ import_react92.default.createElement("p", { className: "mb-0" }, "The build completed without any errors."))))));
   };
 
   // src/app/frontend/components/pure/NavBar.tsx
-  var import_react94 = __toESM(require_react(), 1);
+  var import_react93 = __toESM(require_react(), 1);
   var NavBar = ({
     title,
     backLink,
@@ -38394,7 +38361,7 @@ Current environment analysis:
     rightContent
   }) => {
     const location2 = useLocation();
-    return /* @__PURE__ */ import_react94.default.createElement(
+    return /* @__PURE__ */ import_react93.default.createElement(
       Navbar_default,
       {
         bg: "light",
@@ -38403,7 +38370,7 @@ Current environment analysis:
         sticky: "top",
         expanded: false
       },
-      /* @__PURE__ */ import_react94.default.createElement(Container_default, { fluid: true }, backLink && /* @__PURE__ */ import_react94.default.createElement(
+      /* @__PURE__ */ import_react93.default.createElement(Container_default, { fluid: true }, backLink && /* @__PURE__ */ import_react93.default.createElement(
         Nav_default2.Link,
         {
           as: Link,
@@ -38422,7 +38389,7 @@ Current environment analysis:
           title: "Go up one level"
         },
         "\u2191"
-      ), /* @__PURE__ */ import_react94.default.createElement(Navbar_default.Brand, { className: backLink ? "ms-2" : "" }, title), /* @__PURE__ */ import_react94.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav", style: { display: "none" } }), /* @__PURE__ */ import_react94.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, navItems.length > 0 && /* @__PURE__ */ import_react94.default.createElement(Nav_default2, { className: "me-auto" }, navItems.map((item, i) => {
+      ), /* @__PURE__ */ import_react93.default.createElement(Navbar_default.Brand, { className: backLink ? "ms-2" : "" }, title), /* @__PURE__ */ import_react93.default.createElement(Navbar_default.Toggle, { "aria-controls": "basic-navbar-nav", style: { display: "none" } }), /* @__PURE__ */ import_react93.default.createElement(Navbar_default.Collapse, { id: "basic-navbar-nav" }, navItems.length > 0 && /* @__PURE__ */ import_react93.default.createElement(Nav_default2, { className: "me-auto" }, navItems.map((item, i) => {
         const className = [
           item.className,
           item.active ? "text-primary fw-bold border-bottom border-2 border-primary" : "",
@@ -38430,7 +38397,7 @@ Current environment analysis:
           typeof item.label === "string" && item.label.includes("\u2705") ? "text-success fw-bold" : "",
           !item.active && typeof item.label !== "string" ? "text-secondary" : ""
         ].filter(Boolean).join(" ");
-        return /* @__PURE__ */ import_react94.default.createElement(
+        return /* @__PURE__ */ import_react93.default.createElement(
           Nav_default2.Link,
           {
             key: i,
@@ -38440,9 +38407,9 @@ Current environment analysis:
             className,
             title: typeof item.label === "string" ? item.label : void 0
           },
-          item.icon && /* @__PURE__ */ import_react94.default.createElement("span", { className: "me-2" }, item.icon),
+          item.icon && /* @__PURE__ */ import_react93.default.createElement("span", { className: "me-2" }, item.icon),
           item.label,
-          item.badge && /* @__PURE__ */ import_react94.default.createElement(
+          item.badge && /* @__PURE__ */ import_react93.default.createElement(
             Badge_default,
             {
               bg: item.badge.variant,
@@ -38451,7 +38418,7 @@ Current environment analysis:
             item.badge.text
           )
         );
-      })), rightContent && /* @__PURE__ */ import_react94.default.createElement(Nav_default2, null, import_react94.default.Children.map(rightContent, (child) => {
+      })), rightContent && /* @__PURE__ */ import_react93.default.createElement(Nav_default2, null, import_react93.default.Children.map(rightContent, (child) => {
         return child;
       }))))
     );
@@ -38471,11 +38438,11 @@ Current environment analysis:
     setActiveTab
   }) => {
     if (loading)
-      return /* @__PURE__ */ import_react95.default.createElement("div", null, "Loading project data...");
+      return /* @__PURE__ */ import_react94.default.createElement("div", null, "Loading project data...");
     if (error)
-      return /* @__PURE__ */ import_react95.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+      return /* @__PURE__ */ import_react94.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
     if (!summary)
-      return /* @__PURE__ */ import_react95.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
+      return /* @__PURE__ */ import_react94.default.createElement(Alert_default, { variant: "warning" }, "No data found for project");
     const testStatuses = Object.entries(summary).map(
       ([testName, testData]) => {
         const runTime = config3.tests?.find((t) => t[0] === testName)?.[1] || "node";
@@ -38490,17 +38457,17 @@ Current environment analysis:
         };
       }
     );
-    return /* @__PURE__ */ import_react95.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react95.default.createElement(NavBar, { title: projectName, backLink: "/" }), /* @__PURE__ */ import_react95.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react95.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react95.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react95.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react95.default.createElement(
+    return /* @__PURE__ */ import_react94.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react94.default.createElement(NavBar, { title: projectName, backLink: "/" }), /* @__PURE__ */ import_react94.default.createElement(Row_default, { className: "g-0" }, /* @__PURE__ */ import_react94.default.createElement(Col_default, { sm: 3, className: "border-end" }, /* @__PURE__ */ import_react94.default.createElement(Nav_default2, { variant: "pills", className: "flex-column" }, /* @__PURE__ */ import_react94.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react94.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "tests",
         onClick: () => setActiveTab("tests"),
         className: "d-flex flex-column align-items-start"
       },
-      /* @__PURE__ */ import_react95.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react95.default.createElement("span", null, "Tests"), testStatuses.some((t) => t.runTimeErrors > 0) ? /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some(
+      /* @__PURE__ */ import_react94.default.createElement("div", { className: "d-flex justify-content-between w-100" }, /* @__PURE__ */ import_react94.default.createElement("span", null, "Tests"), testStatuses.some((t) => t.runTimeErrors > 0) ? /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "danger" }, "\u274C") : testStatuses.some(
         (t) => t.typeErrors > 0 || t.staticErrors > 0
-      ) ? /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
-    )), /* @__PURE__ */ import_react95.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react95.default.createElement(
+      ) ? /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "success" }, "\u2713"))
+    )), /* @__PURE__ */ import_react94.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react94.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "node",
@@ -38508,8 +38475,8 @@ Current environment analysis:
         className: "d-flex justify-content-between align-items-center"
       },
       "Node build logs",
-      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )), /* @__PURE__ */ import_react95.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react95.default.createElement(
+      nodeLogs?.errors?.length ? /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", nodeLogs.errors.length) : nodeLogs?.warnings?.length ? /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react94.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react94.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "web",
@@ -38517,8 +38484,8 @@ Current environment analysis:
         className: "d-flex justify-content-between align-items-center"
       },
       "Web build logs",
-      webLogs?.errors?.length ? /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )), /* @__PURE__ */ import_react95.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react95.default.createElement(
+      webLogs?.errors?.length ? /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", webLogs.errors.length) : webLogs?.warnings?.length ? /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )), /* @__PURE__ */ import_react94.default.createElement(Nav_default2.Item, null, /* @__PURE__ */ import_react94.default.createElement(
       Nav_default2.Link,
       {
         active: activeTab === "pure",
@@ -38526,14 +38493,14 @@ Current environment analysis:
         className: "d-flex justify-content-between align-items-center"
       },
       "Pure build logs",
-      pureLogs?.errors?.length ? /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react95.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
-    )))), /* @__PURE__ */ import_react95.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react95.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react95.default.createElement(
+      pureLogs?.errors?.length ? /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "danger" }, "\u274C ", pureLogs.errors.length) : pureLogs?.warnings?.length ? /* @__PURE__ */ import_react94.default.createElement(Badge_default, { bg: "warning", text: "dark" }, "\u26A0\uFE0F") : null
+    )))), /* @__PURE__ */ import_react94.default.createElement(Col_default, { sm: 9 }, /* @__PURE__ */ import_react94.default.createElement("div", { className: "p-3" }, activeTab === "tests" ? /* @__PURE__ */ import_react94.default.createElement(
       TestTable,
       {
         testStatuses,
         projectName
       }
-    ) : activeTab === "node" ? /* @__PURE__ */ import_react95.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react95.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react95.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
+    ) : activeTab === "node" ? /* @__PURE__ */ import_react94.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react94.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react94.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
   };
 
   // src/utils/logFiles.ts
@@ -38580,18 +38547,18 @@ Current environment analysis:
 
   // src/app/frontend/components/stateful/ProjectPage.tsx
   var ProjectPage = () => {
-    const [summary, setSummary] = (0, import_react96.useState)(null);
-    const [nodeLogs, setNodeLogs] = (0, import_react96.useState)(null);
-    const [webLogs, setWebLogs] = (0, import_react96.useState)(null);
-    const [pureLogs, setPureLogs] = (0, import_react96.useState)(null);
-    const [config3, setConfig] = (0, import_react96.useState)({});
-    const [loading, setLoading] = (0, import_react96.useState)(true);
-    const [error, setError] = (0, import_react96.useState)(null);
-    const [projectName, setProjectName] = (0, import_react96.useState)("");
+    const [summary, setSummary] = (0, import_react95.useState)(null);
+    const [nodeLogs, setNodeLogs] = (0, import_react95.useState)(null);
+    const [webLogs, setWebLogs] = (0, import_react95.useState)(null);
+    const [pureLogs, setPureLogs] = (0, import_react95.useState)(null);
+    const [config3, setConfig] = (0, import_react95.useState)({});
+    const [loading, setLoading] = (0, import_react95.useState)(true);
+    const [error, setError] = (0, import_react95.useState)(null);
+    const [projectName, setProjectName] = (0, import_react95.useState)("");
     const navigate = useNavigate();
     const location2 = useLocation();
-    const [route, setRoute] = (0, import_react96.useState)("tests");
-    (0, import_react96.useEffect)(() => {
+    const [route, setRoute] = (0, import_react95.useState)("tests");
+    (0, import_react95.useEffect)(() => {
       const hash3 = location2.hash.replace("#", "");
       if (hash3 && ["tests", "node", "web", "pure"].includes(hash3)) {
         setRoute(hash3);
@@ -38600,7 +38567,7 @@ Current environment analysis:
       }
     }, [location2.hash]);
     const { projectName: name } = useParams();
-    (0, import_react96.useEffect)(() => {
+    (0, import_react95.useEffect)(() => {
       if (!name)
         return;
       setProjectName(name);
@@ -38633,7 +38600,7 @@ Current environment analysis:
       };
       fetchData();
     }, [name]);
-    return /* @__PURE__ */ import_react96.default.createElement(
+    return /* @__PURE__ */ import_react95.default.createElement(
       ProjectPageView,
       {
         summary,
@@ -38651,10 +38618,10 @@ Current environment analysis:
   };
 
   // src/app/frontend/components/stateful/ProjectsPage.tsx
-  var import_react99 = __toESM(require_react(), 1);
+  var import_react98 = __toESM(require_react(), 1);
 
   // src/app/frontend/components/pure/ProjectsPageView.tsx
-  var import_react97 = __toESM(require_react(), 1);
+  var import_react96 = __toESM(require_react(), 1);
   var ProjectsPageView = ({
     projects: projects2,
     summaries: summaries2,
@@ -38676,10 +38643,10 @@ Current environment analysis:
       }
     };
     if (loading)
-      return /* @__PURE__ */ import_react97.default.createElement("div", null, "Loading projects...");
+      return /* @__PURE__ */ import_react96.default.createElement("div", null, "Loading projects...");
     if (error)
-      return /* @__PURE__ */ import_react97.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
-    return /* @__PURE__ */ import_react97.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react97.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react97.default.createElement("thead", null, /* @__PURE__ */ import_react97.default.createElement("tr", null, /* @__PURE__ */ import_react97.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react97.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react97.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react97.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react97.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react97.default.createElement("tbody", null, projects2.map((project) => /* @__PURE__ */ import_react97.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react97.default.createElement("td", null, /* @__PURE__ */ import_react97.default.createElement(
+      return /* @__PURE__ */ import_react96.default.createElement(Alert_default, { variant: "danger" }, "Error: ", error);
+    return /* @__PURE__ */ import_react96.default.createElement("div", { className: "" }, /* @__PURE__ */ import_react96.default.createElement(Table_default, { striped: true, bordered: true, hover: true, responsive: true }, /* @__PURE__ */ import_react96.default.createElement("thead", null, /* @__PURE__ */ import_react96.default.createElement("tr", null, /* @__PURE__ */ import_react96.default.createElement("th", null, "Project"), /* @__PURE__ */ import_react96.default.createElement("th", null, "Tests"), /* @__PURE__ */ import_react96.default.createElement("th", null, "Node"), /* @__PURE__ */ import_react96.default.createElement("th", null, "Web"), /* @__PURE__ */ import_react96.default.createElement("th", null, "Pure"))), /* @__PURE__ */ import_react96.default.createElement("tbody", null, projects2.map((project) => /* @__PURE__ */ import_react96.default.createElement("tr", { key: project.name }, /* @__PURE__ */ import_react96.default.createElement("td", null, /* @__PURE__ */ import_react96.default.createElement(
       "a",
       {
         href: "#",
@@ -38689,14 +38656,14 @@ Current environment analysis:
         }
       },
       project.name
-    )), /* @__PURE__ */ import_react97.default.createElement("td", null, /* @__PURE__ */ import_react97.default.createElement("div", null, summaries2[project.name] ? Object.keys(summaries2[project.name]).map((testName) => {
+    )), /* @__PURE__ */ import_react96.default.createElement("td", null, /* @__PURE__ */ import_react96.default.createElement("div", null, summaries2[project.name] ? Object.keys(summaries2[project.name]).map((testName) => {
       const testData = summaries2[project.name][testName];
       const runTime = configs[project.name]?.tests?.find(
         (t) => t[0] === testName
       )?.[1] || "node";
       const hasRuntimeErrors = testData.runTimeErrors > 0;
       const hasStaticErrors = testData.typeErrors > 0 || testData.staticErrors > 0;
-      return /* @__PURE__ */ import_react97.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react97.default.createElement(
+      return /* @__PURE__ */ import_react96.default.createElement("div", { key: testName }, /* @__PURE__ */ import_react96.default.createElement(
         "a",
         {
           href: `#/projects/${project.name}/tests/${encodeURIComponent(testName)}/${runTime}`
@@ -38704,11 +38671,11 @@ Current environment analysis:
         hasRuntimeErrors ? "\u274C " : hasStaticErrors ? "\u26A0\uFE0F " : "",
         testName.split("/").pop() || testName
       ));
-    }) : /* @__PURE__ */ import_react97.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react97.default.createElement("td", null, /* @__PURE__ */ import_react97.default.createElement("a", { href: `#/projects/${project.name}#node` }, getStatusIcon(project.nodeStatus), " Node build logs")), /* @__PURE__ */ import_react97.default.createElement("td", null, /* @__PURE__ */ import_react97.default.createElement("a", { href: `#/projects/${project.name}#web` }, getStatusIcon(project.webStatus), " Web build logs")), /* @__PURE__ */ import_react97.default.createElement("td", null, /* @__PURE__ */ import_react97.default.createElement("a", { href: `#/projects/${project.name}#pure` }, getStatusIcon(project.pureStatus), " Pure build logs")))))));
+    }) : /* @__PURE__ */ import_react96.default.createElement("div", null, "Loading tests..."))), /* @__PURE__ */ import_react96.default.createElement("td", null, /* @__PURE__ */ import_react96.default.createElement("a", { href: `#/projects/${project.name}#node` }, getStatusIcon(project.nodeStatus), " Node build logs")), /* @__PURE__ */ import_react96.default.createElement("td", null, /* @__PURE__ */ import_react96.default.createElement("a", { href: `#/projects/${project.name}#web` }, getStatusIcon(project.webStatus), " Web build logs")), /* @__PURE__ */ import_react96.default.createElement("td", null, /* @__PURE__ */ import_react96.default.createElement("a", { href: `#/projects/${project.name}#pure` }, getStatusIcon(project.pureStatus), " Pure build logs")))))));
   };
 
   // src/app/frontend/useFs.ts
-  var import_react98 = __toESM(require_react(), 1);
+  var import_react97 = __toESM(require_react(), 1);
 
   // src/app/frontend/DevelopmentFileService.ts
   var import_lightning_fs = __toESM(require_src(), 1);
@@ -38818,11 +38785,11 @@ Current environment analysis:
   };
 
   // src/app/frontend/useFs.ts
-  var FileServiceContext2 = (0, import_react98.createContext)(
+  var FileServiceContext = (0, import_react97.createContext)(
     new DevelopmentFileService()
   );
   var useFs = () => {
-    const context4 = (0, import_react98.useContext)(FileServiceContext2);
+    const context4 = (0, import_react97.useContext)(FileServiceContext);
     if (!context4) {
       throw new Error("useFileService must be used within a FileServiceProvider");
     }
@@ -38831,13 +38798,13 @@ Current environment analysis:
 
   // src/app/frontend/components/stateful/ProjectsPage.tsx
   var ProjectsPage = () => {
-    const [loading, setLoading] = (0, import_react99.useState)(true);
-    const [error, setError] = (0, import_react99.useState)(null);
-    const [configs, setConfigs] = (0, import_react99.useState)({});
+    const [loading, setLoading] = (0, import_react98.useState)(true);
+    const [error, setError] = (0, import_react98.useState)(null);
+    const [configs, setConfigs] = (0, import_react98.useState)({});
     const navigate = useNavigate();
     const { ws } = useWebSocket();
     const fs = useFs();
-    return /* @__PURE__ */ import_react99.default.createElement(
+    return /* @__PURE__ */ import_react98.default.createElement(
       ProjectsPageView,
       {
         projects,
@@ -38851,11 +38818,11 @@ Current environment analysis:
   };
 
   // src/app/frontend/flua/FluaPage.tsx
-  var import_react123 = __toESM(require_react(), 1);
+  var import_react122 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/core/DndContext.js
-  var import_react100 = __toESM(require_react(), 1);
-  var DndContext = (0, import_react100.createContext)({
+  var import_react99 = __toESM(require_react(), 1);
+  var DndContext = (0, import_react99.createContext)({
     dragDropManager: void 0
   });
 
@@ -40287,7 +40254,7 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/core/DndProvider.js
-  var import_react101 = __toESM(require_react(), 1);
+  var import_react100 = __toESM(require_react(), 1);
   function _objectWithoutProperties(source, excluded) {
     if (source == null)
       return {};
@@ -40322,12 +40289,12 @@ Current environment analysis:
   }
   var refCount = 0;
   var INSTANCE_SYM = Symbol.for("__REACT_DND_CONTEXT_INSTANCE__");
-  var DndProvider = /* @__PURE__ */ (0, import_react101.memo)(function DndProvider2(_param) {
+  var DndProvider = /* @__PURE__ */ (0, import_react100.memo)(function DndProvider2(_param) {
     var { children } = _param, props = _objectWithoutProperties(_param, [
       "children"
     ]);
     const [manager2, isGlobalInstance] = getDndContextValue(props);
-    (0, import_react101.useEffect)(() => {
+    (0, import_react100.useEffect)(() => {
       if (isGlobalInstance) {
         const context4 = getGlobalContext();
         ++refCount;
@@ -40376,18 +40343,18 @@ Current environment analysis:
 
   // node_modules/react-dnd/dist/hooks/useCollector.js
   var import_fast_deep_equal = __toESM(require_fast_deep_equal(), 1);
-  var import_react103 = __toESM(require_react(), 1);
+  var import_react102 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useIsomorphicLayoutEffect.js
-  var import_react102 = __toESM(require_react(), 1);
-  var useIsomorphicLayoutEffect2 = typeof window !== "undefined" ? import_react102.useLayoutEffect : import_react102.useEffect;
+  var import_react101 = __toESM(require_react(), 1);
+  var useIsomorphicLayoutEffect2 = typeof window !== "undefined" ? import_react101.useLayoutEffect : import_react101.useEffect;
 
   // node_modules/react-dnd/dist/hooks/useCollector.js
   function useCollector(monitor, collect, onUpdate) {
-    const [collected, setCollected] = (0, import_react103.useState)(
+    const [collected, setCollected] = (0, import_react102.useState)(
       () => collect(monitor)
     );
-    const updateCollected = (0, import_react103.useCallback)(() => {
+    const updateCollected = (0, import_react102.useCallback)(() => {
       const nextValue = collect(monitor);
       if (!(0, import_fast_deep_equal.default)(collected, nextValue)) {
         setCollected(nextValue);
@@ -40437,7 +40404,7 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useOptionalFactory.js
-  var import_react104 = __toESM(require_react(), 1);
+  var import_react103 = __toESM(require_react(), 1);
   function useOptionalFactory(arg, deps) {
     const memoDeps = [
       ...deps || []
@@ -40445,15 +40412,15 @@ Current environment analysis:
     if (deps == null && typeof arg !== "function") {
       memoDeps.push(arg);
     }
-    return (0, import_react104.useMemo)(() => {
+    return (0, import_react103.useMemo)(() => {
       return typeof arg === "function" ? arg() : arg;
     }, memoDeps);
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/connectors.js
-  var import_react105 = __toESM(require_react(), 1);
+  var import_react104 = __toESM(require_react(), 1);
   function useConnectDragSource(connector) {
-    return (0, import_react105.useMemo)(
+    return (0, import_react104.useMemo)(
       () => connector.hooks.dragSource(),
       [
         connector
@@ -40461,7 +40428,7 @@ Current environment analysis:
     );
   }
   function useConnectDragPreview(connector) {
-    return (0, import_react105.useMemo)(
+    return (0, import_react104.useMemo)(
       () => connector.hooks.dragPreview(),
       [
         connector
@@ -40470,7 +40437,7 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceConnector.js
-  var import_react108 = __toESM(require_react(), 1);
+  var import_react107 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/internals/DragSourceMonitorImpl.js
   var isCallingCanDrag = false;
@@ -40686,7 +40653,7 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/internals/wrapConnectorHooks.js
-  var import_react106 = __toESM(require_react(), 1);
+  var import_react105 = __toESM(require_react(), 1);
   function throwIfCompositeComponentElement(element) {
     if (typeof element.type === "string") {
       return;
@@ -40696,7 +40663,7 @@ Current environment analysis:
   }
   function wrapHookToRecognizeElement(hook) {
     return (elementOrNode = null, options = null) => {
-      if (!(0, import_react106.isValidElement)(elementOrNode)) {
+      if (!(0, import_react105.isValidElement)(elementOrNode)) {
         const node = elementOrNode;
         hook(node, options);
         return node;
@@ -40731,11 +40698,11 @@ Current environment analysis:
     const previousRef = element.ref;
     invariant6(typeof previousRef !== "string", "Cannot connect React DnD to an element with an existing string ref. Please convert it to use a callback ref instead, or wrap it into a <span> or <div>. Read more: https://reactjs.org/docs/refs-and-the-dom.html#callback-refs");
     if (!previousRef) {
-      return (0, import_react106.cloneElement)(element, {
+      return (0, import_react105.cloneElement)(element, {
         ref: newRef
       });
     } else {
-      return (0, import_react106.cloneElement)(element, {
+      return (0, import_react105.cloneElement)(element, {
         ref: (node) => {
           setRef(previousRef, node);
           setRef(newRef, node);
@@ -40977,9 +40944,9 @@ Current environment analysis:
   };
 
   // node_modules/react-dnd/dist/hooks/useDragDropManager.js
-  var import_react107 = __toESM(require_react(), 1);
+  var import_react106 = __toESM(require_react(), 1);
   function useDragDropManager() {
-    const { dragDropManager } = (0, import_react107.useContext)(DndContext);
+    const { dragDropManager } = (0, import_react106.useContext)(DndContext);
     invariant6(dragDropManager != null, "Expected drag drop context");
     return dragDropManager;
   }
@@ -40987,7 +40954,7 @@ Current environment analysis:
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceConnector.js
   function useDragSourceConnector(dragSourceOptions, dragPreviewOptions) {
     const manager2 = useDragDropManager();
-    const connector = (0, import_react108.useMemo)(
+    const connector = (0, import_react107.useMemo)(
       () => new SourceConnector(manager2.getBackend()),
       [
         manager2
@@ -41013,10 +40980,10 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSourceMonitor.js
-  var import_react109 = __toESM(require_react(), 1);
+  var import_react108 = __toESM(require_react(), 1);
   function useDragSourceMonitor() {
     const manager2 = useDragDropManager();
-    return (0, import_react109.useMemo)(
+    return (0, import_react108.useMemo)(
       () => new DragSourceMonitorImpl(manager2),
       [
         manager2
@@ -41025,7 +40992,7 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSource.js
-  var import_react110 = __toESM(require_react(), 1);
+  var import_react109 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useDrag/DragSourceImpl.js
   var DragSourceImpl = class {
@@ -41078,14 +41045,14 @@ Current environment analysis:
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragSource.js
   function useDragSource(spec, monitor, connector) {
-    const handler = (0, import_react110.useMemo)(
+    const handler = (0, import_react109.useMemo)(
       () => new DragSourceImpl(spec, monitor, connector),
       [
         monitor,
         connector
       ]
     );
-    (0, import_react110.useEffect)(() => {
+    (0, import_react109.useEffect)(() => {
       handler.spec = spec;
     }, [
       spec
@@ -41094,9 +41061,9 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrag/useDragType.js
-  var import_react111 = __toESM(require_react(), 1);
+  var import_react110 = __toESM(require_react(), 1);
   function useDragType(spec) {
-    return (0, import_react111.useMemo)(() => {
+    return (0, import_react110.useMemo)(() => {
       const result = spec.type;
       invariant6(result != null, "spec.type must be defined");
       return result;
@@ -41142,9 +41109,9 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/connectors.js
-  var import_react112 = __toESM(require_react(), 1);
+  var import_react111 = __toESM(require_react(), 1);
   function useConnectDropTarget(connector) {
-    return (0, import_react112.useMemo)(
+    return (0, import_react111.useMemo)(
       () => connector.hooks.dropTarget(),
       [
         connector
@@ -41153,10 +41120,10 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTargetConnector.js
-  var import_react113 = __toESM(require_react(), 1);
+  var import_react112 = __toESM(require_react(), 1);
   function useDropTargetConnector(options) {
     const manager2 = useDragDropManager();
-    const connector = (0, import_react113.useMemo)(
+    const connector = (0, import_react112.useMemo)(
       () => new TargetConnector(manager2.getBackend()),
       [
         manager2
@@ -41173,10 +41140,10 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTargetMonitor.js
-  var import_react114 = __toESM(require_react(), 1);
+  var import_react113 = __toESM(require_react(), 1);
   function useDropTargetMonitor() {
     const manager2 = useDragDropManager();
-    return (0, import_react114.useMemo)(
+    return (0, import_react113.useMemo)(
       () => new DropTargetMonitorImpl(manager2),
       [
         manager2
@@ -41185,10 +41152,10 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useAccept.js
-  var import_react115 = __toESM(require_react(), 1);
+  var import_react114 = __toESM(require_react(), 1);
   function useAccept(spec) {
     const { accept } = spec;
-    return (0, import_react115.useMemo)(() => {
+    return (0, import_react114.useMemo)(() => {
       invariant6(spec.accept != null, "accept must be defined");
       return Array.isArray(accept) ? accept : [
         accept
@@ -41199,7 +41166,7 @@ Current environment analysis:
   }
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTarget.js
-  var import_react116 = __toESM(require_react(), 1);
+  var import_react115 = __toESM(require_react(), 1);
 
   // node_modules/react-dnd/dist/hooks/useDrop/DropTargetImpl.js
   var DropTargetImpl = class {
@@ -41231,13 +41198,13 @@ Current environment analysis:
 
   // node_modules/react-dnd/dist/hooks/useDrop/useDropTarget.js
   function useDropTarget(spec, monitor) {
-    const dropTarget = (0, import_react116.useMemo)(
+    const dropTarget = (0, import_react115.useMemo)(
       () => new DropTargetImpl(spec, monitor),
       [
         monitor
       ]
     );
-    (0, import_react116.useEffect)(() => {
+    (0, import_react115.useEffect)(() => {
       dropTarget.spec = spec;
     }, [
       spec
@@ -42185,10 +42152,10 @@ Current environment analysis:
   };
 
   // src/app/frontend/components/stateful/GenericXMLEditorPage.tsx
-  var import_react121 = __toESM(require_react(), 1);
+  var import_react120 = __toESM(require_react(), 1);
 
   // src/app/frontend/components/stateful/GenericXMLEditor/GenericTree.tsx
-  var import_react117 = __toESM(require_react(), 1);
+  var import_react116 = __toESM(require_react(), 1);
   var GenericTree = ({
     node,
     selectedNodeId,
@@ -42201,20 +42168,20 @@ Current environment analysis:
   }) => {
     const isSelected = node.id === selectedNodeId;
     const isHidden = hiddenNodes.has(node.id);
-    return /* @__PURE__ */ import_react117.default.createElement(
+    return /* @__PURE__ */ import_react116.default.createElement(
       "li",
       {
         style: { listStyle: "none", marginLeft: "0", paddingLeft: "10px" }
       },
-      /* @__PURE__ */ import_react117.default.createElement(
+      /* @__PURE__ */ import_react116.default.createElement(
         "div",
         {
           className: `d-flex justify-content-between align-items-center p-0 ${isSelected ? "bg-primary text-white rounded-sm" : ""}`,
           onClick: () => onSelectNode(node.id),
           style: { cursor: "pointer" }
         },
-        /* @__PURE__ */ import_react117.default.createElement("span", { className: "flex-grow-1 small" }, node.type),
-        node.type !== "root" && /* @__PURE__ */ import_react117.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react117.default.createElement(
+        /* @__PURE__ */ import_react116.default.createElement("span", { className: "flex-grow-1 small" }, node.type),
+        node.type !== "root" && /* @__PURE__ */ import_react116.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react116.default.createElement(
           Button_default2,
           {
             variant: "outline-secondary",
@@ -42225,7 +42192,7 @@ Current environment analysis:
             title: isHidden ? "Show node" : "Hide node"
           },
           isHidden ? "\u{1F441}\uFE0F\u200D\u{1F5E8}\uFE0F" : "\u{1F441}\uFE0F"
-        ), /* @__PURE__ */ import_react117.default.createElement(
+        ), /* @__PURE__ */ import_react116.default.createElement(
           Button_default2,
           {
             variant: "outline-danger",
@@ -42238,7 +42205,7 @@ Current environment analysis:
           "\xD7"
         ))
       ),
-      node.children.length > 0 && /* @__PURE__ */ import_react117.default.createElement("ul", { style: { marginLeft: "10px", paddingLeft: "0" } }, node.children.map((child) => /* @__PURE__ */ import_react117.default.createElement(
+      node.children.length > 0 && /* @__PURE__ */ import_react116.default.createElement("ul", { style: { marginLeft: "10px", paddingLeft: "0" } }, node.children.map((child) => /* @__PURE__ */ import_react116.default.createElement(
         GenericTree,
         {
           key: child.id,
@@ -42252,7 +42219,7 @@ Current environment analysis:
           nodeTypes: nodeTypes2
         }
       ))),
-      isSelected && /* @__PURE__ */ import_react117.default.createElement("div", { className: "mt-0" }, /* @__PURE__ */ import_react117.default.createElement(Dropdown_default2, null, /* @__PURE__ */ import_react117.default.createElement(Dropdown_default2.Toggle, { size: "sm", variant: "outline-success", id: "dropdown-add-node", className: "py-0 px-1" }, "+"), /* @__PURE__ */ import_react117.default.createElement(Dropdown_default2.Menu, null, nodeTypes2.map(({ label, type }) => /* @__PURE__ */ import_react117.default.createElement(
+      isSelected && /* @__PURE__ */ import_react116.default.createElement("div", { className: "mt-0" }, /* @__PURE__ */ import_react116.default.createElement(Dropdown_default2, null, /* @__PURE__ */ import_react116.default.createElement(Dropdown_default2.Toggle, { size: "sm", variant: "outline-success", id: "dropdown-add-node", className: "py-0 px-1" }, "+"), /* @__PURE__ */ import_react116.default.createElement(Dropdown_default2.Menu, null, nodeTypes2.map(({ label, type }) => /* @__PURE__ */ import_react116.default.createElement(
         Dropdown_default2.Item,
         {
           key: type,
@@ -42265,7 +42232,7 @@ Current environment analysis:
   };
 
   // src/app/frontend/components/stateful/GenericXMLEditor/GenericPreview.tsx
-  var import_react118 = __toESM(require_react(), 1);
+  var import_react117 = __toESM(require_react(), 1);
   var GenericPreview = ({
     onTreeUpdate,
     xmlTree = {
@@ -42278,7 +42245,7 @@ Current environment analysis:
     hiddenNodes = /* @__PURE__ */ new Set(),
     renderPreview = (node, isSelected, eventHandlers, onTreeUpdate2) => {
       console.error("Default renderPreview called - this should be overridden");
-      return /* @__PURE__ */ import_react118.default.createElement(
+      return /* @__PURE__ */ import_react117.default.createElement(
         "div",
         {
           style: {
@@ -42300,24 +42267,24 @@ Current environment analysis:
     });
     if (!xmlTree) {
       console.error("xmlTree is undefined in GenericPreview");
-      return /* @__PURE__ */ import_react118.default.createElement("div", null, "No XML tree data available");
+      return /* @__PURE__ */ import_react117.default.createElement("div", null, "No XML tree data available");
     }
-    const [scale, setScale] = (0, import_react118.useState)(1);
-    const [position, setPosition] = (0, import_react118.useState)({ x: 0, y: 0 });
-    const [isPanning, setIsPanning] = (0, import_react118.useState)(false);
-    const [startPanPoint, setStartPanPoint] = (0, import_react118.useState)({ x: 0, y: 0 });
-    const previewRef = (0, import_react118.useRef)(null);
-    const previewElement = import_react118.default.useMemo(() => {
+    const [scale, setScale] = (0, import_react117.useState)(1);
+    const [position, setPosition] = (0, import_react117.useState)({ x: 0, y: 0 });
+    const [isPanning, setIsPanning] = (0, import_react117.useState)(false);
+    const [startPanPoint, setStartPanPoint] = (0, import_react117.useState)({ x: 0, y: 0 });
+    const previewRef = (0, import_react117.useRef)(null);
+    const previewElement = import_react117.default.useMemo(() => {
       try {
         const isSelected = selectedNodeId === xmlTree.id;
         const eventHandlers = {};
         return renderPreview(xmlTree, isSelected, eventHandlers, onTreeUpdate);
       } catch (error) {
         console.error("Error in renderPreview:", error);
-        return /* @__PURE__ */ import_react118.default.createElement("div", { style: { border: "1px solid red", padding: "4px", margin: "2px" } }, "Error rendering preview");
+        return /* @__PURE__ */ import_react117.default.createElement("div", { style: { border: "1px solid red", padding: "4px", margin: "2px" } }, "Error rendering preview");
       }
     }, [xmlTree, selectedNodeId, renderPreview, onTreeUpdate]);
-    const handleMouseDown = (0, import_react118.useCallback)(
+    const handleMouseDown = (0, import_react117.useCallback)(
       (e) => {
         if (e.button === 1 || e.button === 0 && e.altKey) {
           e.preventDefault();
@@ -42330,7 +42297,7 @@ Current environment analysis:
       },
       [position]
     );
-    const handleMouseMove = (0, import_react118.useCallback)(
+    const handleMouseMove = (0, import_react117.useCallback)(
       (e) => {
         if (isPanning) {
           setPosition({
@@ -42341,15 +42308,15 @@ Current environment analysis:
       },
       [isPanning, startPanPoint]
     );
-    const handleMouseUp = (0, import_react118.useCallback)(() => {
+    const handleMouseUp = (0, import_react117.useCallback)(() => {
       setIsPanning(false);
     }, []);
-    const handleWheel = (0, import_react118.useCallback)((e) => {
+    const handleWheel = (0, import_react117.useCallback)((e) => {
       e.preventDefault();
       const delta = -e.deltaY * 0.01;
       setScale((prevScale) => Math.max(0.1, Math.min(5, prevScale + delta)));
     }, []);
-    const resetView = (0, import_react118.useCallback)(() => {
+    const resetView = (0, import_react117.useCallback)(() => {
       setScale(1);
       setPosition({ x: 0, y: 0 });
     }, []);
@@ -42358,7 +42325,7 @@ Current environment analysis:
       isSVG = xmlTree.type === "svg";
     } catch (error) {
       console.error("Error checking if xmlTree is SVG:", error);
-      return /* @__PURE__ */ import_react118.default.createElement(
+      return /* @__PURE__ */ import_react117.default.createElement(
         "div",
         {
           className: "border rounded p-3 d-flex justify-content-center align-items-center",
@@ -42368,7 +42335,7 @@ Current environment analysis:
       );
     }
     if (isSVG) {
-      return /* @__PURE__ */ import_react118.default.createElement(
+      return /* @__PURE__ */ import_react117.default.createElement(
         "div",
         {
           className: "border rounded p-3 d-flex justify-content-center align-items-center position-relative",
@@ -42380,22 +42347,22 @@ Current environment analysis:
           onMouseLeave: handleMouseUp,
           onWheel: handleWheel
         },
-        /* @__PURE__ */ import_react118.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react118.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react118.default.createElement(
+        /* @__PURE__ */ import_react117.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react117.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react117.default.createElement(
           Button_default2,
           {
             variant: "outline-secondary",
             onClick: () => setScale((s) => Math.min(5, s + 0.1))
           },
           "+"
-        ), /* @__PURE__ */ import_react118.default.createElement(
+        ), /* @__PURE__ */ import_react117.default.createElement(
           Button_default2,
           {
             variant: "outline-secondary",
             onClick: () => setScale((s) => Math.max(0.1, s - 0.1))
           },
           "-"
-        ), /* @__PURE__ */ import_react118.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
-        /* @__PURE__ */ import_react118.default.createElement(
+        ), /* @__PURE__ */ import_react117.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
+        /* @__PURE__ */ import_react117.default.createElement(
           "div",
           {
             style: {
@@ -42409,7 +42376,7 @@ Current environment analysis:
         )
       );
     }
-    return /* @__PURE__ */ import_react118.default.createElement(
+    return /* @__PURE__ */ import_react117.default.createElement(
       "div",
       {
         className: "border rounded p-3 position-relative",
@@ -42421,22 +42388,22 @@ Current environment analysis:
         onMouseLeave: handleMouseUp,
         onWheel: handleWheel
       },
-      /* @__PURE__ */ import_react118.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react118.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react118.default.createElement(
+      /* @__PURE__ */ import_react117.default.createElement("div", { className: "position-absolute top-0 end-0 m-2" }, /* @__PURE__ */ import_react117.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react117.default.createElement(
         Button_default2,
         {
           variant: "outline-secondary",
           onClick: () => setScale((s) => Math.min(5, s + 0.1))
         },
         "+"
-      ), /* @__PURE__ */ import_react118.default.createElement(
+      ), /* @__PURE__ */ import_react117.default.createElement(
         Button_default2,
         {
           variant: "outline-secondary",
           onClick: () => setScale((s) => Math.max(0.1, s - 0.1))
         },
         "-"
-      ), /* @__PURE__ */ import_react118.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
-      /* @__PURE__ */ import_react118.default.createElement(
+      ), /* @__PURE__ */ import_react117.default.createElement(Button_default2, { variant: "outline-secondary", onClick: resetView }, "Reset"))),
+      /* @__PURE__ */ import_react117.default.createElement(
         "div",
         {
           style: {
@@ -42453,7 +42420,7 @@ Current environment analysis:
   };
 
   // src/app/frontend/components/stateful/GenericXMLEditor/GenericTextEditor.tsx
-  var import_react119 = __toESM(require_react(), 1);
+  var import_react118 = __toESM(require_react(), 1);
   var nodeToXML = (node, depth = 0) => {
     const indent = "  ".repeat(depth);
     const attributes = Object.entries(node.attributes || {}).map(([key, value]) => ` ${key}="${value}"`).join("");
@@ -42517,9 +42484,9 @@ Current environment analysis:
     xmlTree,
     onUpdateTree
   }) => {
-    const [xmlContent, setXmlContent] = (0, import_react119.useState)("");
-    const [error, setError] = (0, import_react119.useState)(null);
-    (0, import_react119.useEffect)(() => {
+    const [xmlContent, setXmlContent] = (0, import_react118.useState)("");
+    const [error, setError] = (0, import_react118.useState)(null);
+    (0, import_react118.useEffect)(() => {
       try {
         if (!xmlTree) {
           setXmlContent("");
@@ -42547,7 +42514,7 @@ ${nodeToXML(xmlTree, 0)}`;
         setError("Error parsing XML: " + (err instanceof Error ? err.message : String(err)));
       }
     };
-    return /* @__PURE__ */ import_react119.default.createElement("div", { className: "h-100 d-flex flex-column align-items-center p-1" }, /* @__PURE__ */ import_react119.default.createElement("div", { style: { width: "100%", maxWidth: "100%", flex: 1, display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react119.default.createElement(
+    return /* @__PURE__ */ import_react118.default.createElement("div", { className: "h-100 d-flex flex-column align-items-center p-1" }, /* @__PURE__ */ import_react118.default.createElement("div", { style: { width: "100%", maxWidth: "100%", flex: 1, display: "flex", flexDirection: "column" } }, /* @__PURE__ */ import_react118.default.createElement(
       "textarea",
       {
         value: xmlContent,
@@ -42568,7 +42535,7 @@ ${nodeToXML(xmlTree, 0)}`;
           fontSize: "0.875rem"
         }
       }
-    ), error && /* @__PURE__ */ import_react119.default.createElement(Alert_default, { variant: "danger", className: "mt-1 py-1" }, /* @__PURE__ */ import_react119.default.createElement("small", null, error)), /* @__PURE__ */ import_react119.default.createElement(
+    ), error && /* @__PURE__ */ import_react118.default.createElement(Alert_default, { variant: "danger", className: "mt-1 py-1" }, /* @__PURE__ */ import_react118.default.createElement("small", null, error)), /* @__PURE__ */ import_react118.default.createElement(
       Button_default2,
       {
         variant: "primary",
@@ -42582,7 +42549,7 @@ ${nodeToXML(xmlTree, 0)}`;
   };
 
   // src/app/frontend/components/stateful/GenericXMLEditor/Drawer.tsx
-  var import_react120 = __toESM(require_react(), 1);
+  var import_react119 = __toESM(require_react(), 1);
   var Drawer = ({
     position,
     isOpen,
@@ -42591,10 +42558,10 @@ ${nodeToXML(xmlTree, 0)}`;
     title,
     children
   }) => {
-    const [size2, setSize] = (0, import_react120.useState)(position === "bottom" ? 200 : 300);
-    const [isResizing, setIsResizing] = (0, import_react120.useState)(false);
-    const [dragStart, setDragStart] = (0, import_react120.useState)({ x: 0, y: 0, size: 0 });
-    const drawerRef = (0, import_react120.useRef)(null);
+    const [size2, setSize] = (0, import_react119.useState)(position === "bottom" ? 200 : 300);
+    const [isResizing, setIsResizing] = (0, import_react119.useState)(false);
+    const [dragStart, setDragStart] = (0, import_react119.useState)({ x: 0, y: 0, size: 0 });
+    const drawerRef = (0, import_react119.useRef)(null);
     const handleMouseDown = (e) => {
       setIsResizing(true);
       setDragStart({
@@ -42605,7 +42572,7 @@ ${nodeToXML(xmlTree, 0)}`;
       onBringToFront();
       e.preventDefault();
     };
-    (0, import_react120.useEffect)(() => {
+    (0, import_react119.useEffect)(() => {
       const handleMouseMove = (e) => {
         if (!isResizing)
           return;
@@ -42697,7 +42664,7 @@ ${nodeToXML(xmlTree, 0)}`;
           return {};
       }
     };
-    return /* @__PURE__ */ import_react120.default.createElement(
+    return /* @__PURE__ */ import_react119.default.createElement(
       "div",
       {
         ref: drawerRef,
@@ -42709,17 +42676,17 @@ ${nodeToXML(xmlTree, 0)}`;
           overflow: "hidden"
         }
       },
-      /* @__PURE__ */ import_react120.default.createElement(
+      /* @__PURE__ */ import_react119.default.createElement(
         "div",
         {
           className: "d-flex justify-content-between align-items-center p-2 border-bottom bg-white",
           onMouseDown: () => onBringToFront(),
           style: { cursor: "move" }
         },
-        /* @__PURE__ */ import_react120.default.createElement("span", null, title)
+        /* @__PURE__ */ import_react119.default.createElement("span", null, title)
       ),
-      /* @__PURE__ */ import_react120.default.createElement("div", { className: "h-100", style: { overflow: "auto" } }, children),
-      /* @__PURE__ */ import_react120.default.createElement(
+      /* @__PURE__ */ import_react119.default.createElement("div", { className: "h-100", style: { overflow: "auto" } }, children),
+      /* @__PURE__ */ import_react119.default.createElement(
         "div",
         {
           style: {
@@ -42742,25 +42709,25 @@ ${nodeToXML(xmlTree, 0)}`;
     nodeTypes: nodeTypes2,
     onAddNode
   }) => {
-    const [xmlTree, setXmlTree] = (0, import_react121.useState)(initialTree);
-    (0, import_react121.useEffect)(() => {
+    const [xmlTree, setXmlTree] = (0, import_react120.useState)(initialTree);
+    (0, import_react120.useEffect)(() => {
       if (!xmlTree) {
         console.error("xmlTree became undefined, resetting to initialTree");
         setXmlTree(initialTree);
       }
     }, [xmlTree, initialTree]);
-    const [selectedNodeId, setSelectedNodeId] = (0, import_react121.useState)(null);
-    const [activeTab, setActiveTab] = (0, import_react121.useState)("preview");
-    const [history, setHistory] = (0, import_react121.useState)([initialTree]);
-    const [historyIndex, setHistoryIndex] = (0, import_react121.useState)(0);
-    const [hiddenNodes, setHiddenNodes] = (0, import_react121.useState)(/* @__PURE__ */ new Set());
-    const [drawerStates, setDrawerStates] = (0, import_react121.useState)({
+    const [selectedNodeId, setSelectedNodeId] = (0, import_react120.useState)(null);
+    const [activeTab, setActiveTab] = (0, import_react120.useState)("preview");
+    const [history, setHistory] = (0, import_react120.useState)([initialTree]);
+    const [historyIndex, setHistoryIndex] = (0, import_react120.useState)(0);
+    const [hiddenNodes, setHiddenNodes] = (0, import_react120.useState)(/* @__PURE__ */ new Set());
+    const [drawerStates, setDrawerStates] = (0, import_react120.useState)({
       left: { isOpen: true, zIndex: 1 },
       right: { isOpen: true, zIndex: 1 },
       bottom: { isOpen: true, zIndex: 1 }
     });
-    const [activeDrawer, setActiveDrawer] = (0, import_react121.useState)(null);
-    const findNode = (0, import_react121.useCallback)((node, id) => {
+    const [activeDrawer, setActiveDrawer] = (0, import_react120.useState)(null);
+    const findNode = (0, import_react120.useCallback)((node, id) => {
       if (node.id === id)
         return node;
       for (const child of node.children) {
@@ -42770,7 +42737,7 @@ ${nodeToXML(xmlTree, 0)}`;
       }
       return null;
     }, []);
-    const updateTree = (0, import_react121.useCallback)(
+    const updateTree = (0, import_react120.useCallback)(
       (newTree) => {
         setXmlTree(newTree);
         setHistory((prevHistory) => {
@@ -42782,7 +42749,7 @@ ${nodeToXML(xmlTree, 0)}`;
       },
       [historyIndex]
     );
-    const updateNodeAttributes = (0, import_react121.useCallback)(
+    const updateNodeAttributes = (0, import_react120.useCallback)(
       (nodeId, attributes) => {
         setXmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -42796,7 +42763,7 @@ ${nodeToXML(xmlTree, 0)}`;
       },
       [findNode, updateTree]
     );
-    const updateNodeTextContent = (0, import_react121.useCallback)(
+    const updateNodeTextContent = (0, import_react120.useCallback)(
       (nodeId, textContent) => {
         setXmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -42810,7 +42777,7 @@ ${nodeToXML(xmlTree, 0)}`;
       },
       [findNode, updateTree]
     );
-    const toggleNodeVisibility = (0, import_react121.useCallback)((nodeId) => {
+    const toggleNodeVisibility = (0, import_react120.useCallback)((nodeId) => {
       setHiddenNodes((prev) => {
         const newHidden = new Set(prev);
         if (newHidden.has(nodeId)) {
@@ -42821,7 +42788,7 @@ ${nodeToXML(xmlTree, 0)}`;
         return newHidden;
       });
     }, []);
-    const handleAddChildNode = (0, import_react121.useCallback)(
+    const handleAddChildNode = (0, import_react120.useCallback)(
       (parentId, nodeType) => {
         setXmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -42837,7 +42804,7 @@ ${nodeToXML(xmlTree, 0)}`;
       },
       [findNode, updateTree, onAddNode]
     );
-    const removeNode = (0, import_react121.useCallback)(
+    const removeNode = (0, import_react120.useCallback)(
       (nodeId) => {
         setXmlTree((prevTree) => {
           const newTree = JSON.parse(JSON.stringify(prevTree));
@@ -42863,19 +42830,19 @@ ${nodeToXML(xmlTree, 0)}`;
       },
       [selectedNodeId, updateTree]
     );
-    const handleUndo = (0, import_react121.useCallback)(() => {
+    const handleUndo = (0, import_react120.useCallback)(() => {
       if (historyIndex > 0) {
         setHistoryIndex((prevIndex) => prevIndex - 1);
         setXmlTree(history[historyIndex - 1]);
       }
     }, [history, historyIndex]);
-    const handleRedo = (0, import_react121.useCallback)(() => {
+    const handleRedo = (0, import_react120.useCallback)(() => {
       if (historyIndex < history.length - 1) {
         setHistoryIndex((prevIndex) => prevIndex + 1);
         setXmlTree(history[historyIndex + 1]);
       }
     }, [history, historyIndex]);
-    const bringToFront = (0, import_react121.useCallback)(
+    const bringToFront = (0, import_react120.useCallback)(
       (drawer) => {
         const maxZIndex = Math.max(
           drawerStates.left.zIndex,
@@ -42901,7 +42868,7 @@ ${nodeToXML(xmlTree, 0)}`;
       [drawerStates]
     );
     const selectedNode = selectedNodeId ? findNode(xmlTree, selectedNodeId) : null;
-    const convertTreeToXML = (0, import_react121.useCallback)((node, depth = 0) => {
+    const convertTreeToXML = (0, import_react120.useCallback)((node, depth = 0) => {
       const indent = "  ".repeat(depth);
       const attributes = Object.entries(node.attributes).map(([key, value]) => ` ${key}="${value}"`).join("");
       const hasTextContent = node.textContent && node.textContent.trim().length > 0;
@@ -42929,7 +42896,7 @@ ${nodeToXML(xmlTree, 0)}`;
         return result;
       }
     }, []);
-    const handleSave = (0, import_react121.useCallback)(async () => {
+    const handleSave = (0, import_react120.useCallback)(async () => {
       const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 ${convertTreeToXML(xmlTree)}`;
       console.log("Saving XML content:", xmlContent);
@@ -42960,21 +42927,21 @@ ${convertTreeToXML(xmlTree)}`;
         alert("Failed to save file");
       }
     }, [xmlTree, convertTreeToXML]);
-    return /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "border-bottom p-0 bg-light" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex justify-content-center align-items-center" }, /* @__PURE__ */ import_react121.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
+    return /* @__PURE__ */ import_react120.default.createElement("div", { className: "d-flex flex-column h-100" }, /* @__PURE__ */ import_react120.default.createElement("div", { className: "border-bottom p-0 bg-light" }, /* @__PURE__ */ import_react120.default.createElement("div", { className: "d-flex justify-content-center align-items-center" }, /* @__PURE__ */ import_react120.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react120.default.createElement(
       Button_default2,
       {
         variant: activeTab === "preview" ? "primary" : "outline-secondary",
         onClick: () => setActiveTab("preview")
       },
       "Preview"
-    ), /* @__PURE__ */ import_react121.default.createElement(
+    ), /* @__PURE__ */ import_react120.default.createElement(
       Button_default2,
       {
         variant: activeTab === "text" ? "primary" : "outline-secondary",
         onClick: () => setActiveTab("text")
       },
       "Text Mode"
-    )), /* @__PURE__ */ import_react121.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react121.default.createElement(
+    )), /* @__PURE__ */ import_react120.default.createElement(ButtonGroup_default, { size: "sm", className: "me-2" }, /* @__PURE__ */ import_react120.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -42982,7 +42949,7 @@ ${convertTreeToXML(xmlTree)}`;
         disabled: historyIndex === 0
       },
       "Undo"
-    ), /* @__PURE__ */ import_react121.default.createElement(
+    ), /* @__PURE__ */ import_react120.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -42990,14 +42957,14 @@ ${convertTreeToXML(xmlTree)}`;
         disabled: historyIndex === history.length - 1
       },
       "Redo"
-    )), /* @__PURE__ */ import_react121.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react121.default.createElement(
+    )), /* @__PURE__ */ import_react120.default.createElement(ButtonGroup_default, { size: "sm" }, /* @__PURE__ */ import_react120.default.createElement(
       Button_default2,
       {
         variant: "outline-success",
         onClick: handleSave
       },
       "Save"
-    )))), /* @__PURE__ */ import_react121.default.createElement("div", { className: "position-relative flex-grow-1" }, activeTab === "preview" ? /* @__PURE__ */ import_react121.default.createElement(import_react121.default.Fragment, null, /* @__PURE__ */ import_react121.default.createElement("div", { className: "position-absolute w-100 h-100 p-0" }, xmlTree && /* @__PURE__ */ import_react121.default.createElement(
+    )))), /* @__PURE__ */ import_react120.default.createElement("div", { className: "position-relative flex-grow-1" }, activeTab === "preview" ? /* @__PURE__ */ import_react120.default.createElement(import_react120.default.Fragment, null, /* @__PURE__ */ import_react120.default.createElement("div", { className: "position-absolute w-100 h-100 p-0" }, xmlTree && /* @__PURE__ */ import_react120.default.createElement(
       GenericPreview,
       {
         xmlTree,
@@ -43005,7 +42972,7 @@ ${convertTreeToXML(xmlTree)}`;
         hiddenNodes,
         renderPreview: (node, isSelected, eventHandlers) => renderPreview(node, isSelected, eventHandlers, updateTree)
       }
-    )), /* @__PURE__ */ import_react121.default.createElement(
+    )), /* @__PURE__ */ import_react120.default.createElement(
       Drawer,
       {
         position: "left",
@@ -43014,7 +42981,7 @@ ${convertTreeToXML(xmlTree)}`;
         onBringToFront: () => bringToFront("left"),
         title: "Tree View"
       },
-      /* @__PURE__ */ import_react121.default.createElement("ul", { style: { paddingLeft: "0", marginBottom: "0" } }, /* @__PURE__ */ import_react121.default.createElement(
+      /* @__PURE__ */ import_react120.default.createElement("ul", { style: { paddingLeft: "0", marginBottom: "0" } }, /* @__PURE__ */ import_react120.default.createElement(
         GenericTree,
         {
           node: xmlTree,
@@ -43027,7 +42994,7 @@ ${convertTreeToXML(xmlTree)}`;
           nodeTypes: nodeTypes2
         }
       ))
-    ), /* @__PURE__ */ import_react121.default.createElement(
+    ), /* @__PURE__ */ import_react120.default.createElement(
       Drawer,
       {
         position: "right",
@@ -43036,12 +43003,12 @@ ${convertTreeToXML(xmlTree)}`;
         onBringToFront: () => bringToFront("right"),
         title: "Attributes"
       },
-      selectedNode ? /* @__PURE__ */ import_react121.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react121.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react121.default.createElement("strong", null, "Node: ", selectedNode.type)), /* @__PURE__ */ import_react121.default.createElement(Card_default.Body, null, attributeEditor(
+      selectedNode ? /* @__PURE__ */ import_react120.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react120.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react120.default.createElement("strong", null, "Node: ", selectedNode.type)), /* @__PURE__ */ import_react120.default.createElement(Card_default.Body, null, attributeEditor(
         selectedNode,
         (attrs) => updateNodeAttributes(selectedNode.id, attrs),
         (text) => updateNodeTextContent(selectedNode.id, text)
-      ))) : /* @__PURE__ */ import_react121.default.createElement(Card_default, null, /* @__PURE__ */ import_react121.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react121.default.createElement("p", { className: "text-muted" }, "Select a node to edit its properties")))
-    ), /* @__PURE__ */ import_react121.default.createElement(
+      ))) : /* @__PURE__ */ import_react120.default.createElement(Card_default, null, /* @__PURE__ */ import_react120.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react120.default.createElement("p", { className: "text-muted" }, "Select a node to edit its properties")))
+    ), /* @__PURE__ */ import_react120.default.createElement(
       Drawer,
       {
         position: "bottom",
@@ -43050,22 +43017,22 @@ ${convertTreeToXML(xmlTree)}`;
         onBringToFront: () => bringToFront("bottom"),
         title: "Navigation Help"
       },
-      /* @__PURE__ */ import_react121.default.createElement("div", { className: "p-1" }, /* @__PURE__ */ import_react121.default.createElement("h6", { className: "mb-0 small" }, "Pan & Zoom"), /* @__PURE__ */ import_react121.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react121.default.createElement("strong", null, "Zoom:"), " Wheel"), /* @__PURE__ */ import_react121.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react121.default.createElement("strong", null, "Pan:"), " Alt+drag"), /* @__PURE__ */ import_react121.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react121.default.createElement("strong", null, "Reset:"), " Button"))
+      /* @__PURE__ */ import_react120.default.createElement("div", { className: "p-1" }, /* @__PURE__ */ import_react120.default.createElement("h6", { className: "mb-0 small" }, "Pan & Zoom"), /* @__PURE__ */ import_react120.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react120.default.createElement("strong", null, "Zoom:"), " Wheel"), /* @__PURE__ */ import_react120.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react120.default.createElement("strong", null, "Pan:"), " Alt+drag"), /* @__PURE__ */ import_react120.default.createElement("p", { className: "mb-0 small" }, /* @__PURE__ */ import_react120.default.createElement("strong", null, "Reset:"), " Button"))
     )) : (
       /* Text Mode - Full screen text editor, no drawers */
-      /* @__PURE__ */ import_react121.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-0" }, /* @__PURE__ */ import_react121.default.createElement(GenericTextEditor, { xmlTree, onUpdateTree: setXmlTree }))
+      /* @__PURE__ */ import_react120.default.createElement("div", { className: "w-100 h-100 d-flex justify-content-center p-0" }, /* @__PURE__ */ import_react120.default.createElement(GenericTextEditor, { xmlTree, onUpdateTree: setXmlTree }))
     )));
   };
 
   // src/app/frontend/components/stateful/GenericXMLEditor/AttributeEditor.tsx
-  var import_react122 = __toESM(require_react(), 1);
+  var import_react121 = __toESM(require_react(), 1);
   var AttributeEditor = ({
     node: selectedNode,
     onUpdateAttributes,
     onUpdateTextContent
   }) => {
     if (!selectedNode) {
-      return /* @__PURE__ */ import_react122.default.createElement("div", { className: "p-3 text-muted" }, "Select a node to edit its attributes");
+      return /* @__PURE__ */ import_react121.default.createElement("div", { className: "p-3 text-muted" }, "Select a node to edit its attributes");
     }
     const handleAttributeChange = (key, value) => {
       const newAttributes = { ...selectedNode.attributes };
@@ -43088,14 +43055,14 @@ ${convertTreeToXML(xmlTree)}`;
       delete newAttributes[key];
       onUpdateAttributes(newAttributes);
     };
-    return /* @__PURE__ */ import_react122.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react122.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react122.default.createElement("h6", { className: "mb-0 small" }, "Attributes for ", selectedNode.type), /* @__PURE__ */ import_react122.default.createElement(
+    return /* @__PURE__ */ import_react121.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react121.default.createElement("div", { className: "d-flex justify-content-between align-items-center mb-2" }, /* @__PURE__ */ import_react121.default.createElement("h6", { className: "mb-0 small" }, "Attributes for ", selectedNode.type), /* @__PURE__ */ import_react121.default.createElement(
       "button",
       {
         className: "btn btn-sm btn-outline-success py-0 px-1",
         onClick: handleAddAttribute
       },
       "+ Add"
-    )), Object.entries(selectedNode.attributes).map(([key, value]) => /* @__PURE__ */ import_react122.default.createElement("div", { key, className: "mb-1 d-flex align-items-center" }, /* @__PURE__ */ import_react122.default.createElement(Form_default.Group, { className: "flex-grow-1 me-1" }, /* @__PURE__ */ import_react122.default.createElement(Form_default.Label, { className: "small mb-0" }, key), /* @__PURE__ */ import_react122.default.createElement(
+    )), Object.entries(selectedNode.attributes).map(([key, value]) => /* @__PURE__ */ import_react121.default.createElement("div", { key, className: "mb-1 d-flex align-items-center" }, /* @__PURE__ */ import_react121.default.createElement(Form_default.Group, { className: "flex-grow-1 me-1" }, /* @__PURE__ */ import_react121.default.createElement(Form_default.Label, { className: "small mb-0" }, key), /* @__PURE__ */ import_react121.default.createElement(
       Form_default.Control,
       {
         type: "text",
@@ -43105,7 +43072,7 @@ ${convertTreeToXML(xmlTree)}`;
         placeholder: "Value",
         className: "py-0"
       }
-    )), /* @__PURE__ */ import_react122.default.createElement(
+    )), /* @__PURE__ */ import_react121.default.createElement(
       "button",
       {
         className: "btn btn-sm btn-outline-danger py-0 px-1",
@@ -43113,7 +43080,7 @@ ${convertTreeToXML(xmlTree)}`;
         style: { marginTop: "1.25rem" }
       },
       "\xD7"
-    ))), Object.keys(selectedNode.attributes).length === 0 && /* @__PURE__ */ import_react122.default.createElement("div", { className: "text-muted small" }, "No attributes"), onUpdateTextContent && /* @__PURE__ */ import_react122.default.createElement(Form_default.Group, { className: "mt-2" }, /* @__PURE__ */ import_react122.default.createElement(Form_default.Label, { className: "small mb-0" }, "Text Content"), /* @__PURE__ */ import_react122.default.createElement(
+    ))), Object.keys(selectedNode.attributes).length === 0 && /* @__PURE__ */ import_react121.default.createElement("div", { className: "text-muted small" }, "No attributes"), onUpdateTextContent && /* @__PURE__ */ import_react121.default.createElement(Form_default.Group, { className: "mt-2" }, /* @__PURE__ */ import_react121.default.createElement(Form_default.Label, { className: "small mb-0" }, "Text Content"), /* @__PURE__ */ import_react121.default.createElement(
       Form_default.Control,
       {
         as: "textarea",
@@ -43225,7 +43192,7 @@ ${convertTreeToXML(xmlTree)}`;
         isDragging: !!monitor.isDragging()
       })
     }));
-    return /* @__PURE__ */ import_react123.default.createElement(
+    return /* @__PURE__ */ import_react122.default.createElement(
       "div",
       {
         ref: drag,
@@ -43239,8 +43206,8 @@ ${convertTreeToXML(xmlTree)}`;
           cursor: "move"
         }
       },
-      /* @__PURE__ */ import_react123.default.createElement("div", { style: { fontWeight: "bold", marginBottom: "8px" } }, task.name),
-      /* @__PURE__ */ import_react123.default.createElement("div", { style: { fontSize: "0.875rem", color: "#666" } }, task.role)
+      /* @__PURE__ */ import_react122.default.createElement("div", { style: { fontWeight: "bold", marginBottom: "8px" } }, task.name),
+      /* @__PURE__ */ import_react122.default.createElement("div", { style: { fontSize: "0.875rem", color: "#666" } }, task.role)
     );
   };
   var KanbanColumn = ({ status: status2, tasks, onMoveTask }) => {
@@ -43255,7 +43222,7 @@ ${convertTreeToXML(xmlTree)}`;
         isOver: !!monitor.isOver()
       })
     }));
-    return /* @__PURE__ */ import_react123.default.createElement(
+    return /* @__PURE__ */ import_react122.default.createElement(
       "div",
       {
         ref: drop,
@@ -43271,7 +43238,7 @@ ${convertTreeToXML(xmlTree)}`;
           transition: "background 0.2s ease"
         }
       },
-      /* @__PURE__ */ import_react123.default.createElement(
+      /* @__PURE__ */ import_react122.default.createElement(
         "h6",
         {
           style: {
@@ -43286,7 +43253,7 @@ ${convertTreeToXML(xmlTree)}`;
         tasks.length,
         ")"
       ),
-      /* @__PURE__ */ import_react123.default.createElement(
+      /* @__PURE__ */ import_react122.default.createElement(
         "div",
         {
           style: {
@@ -43296,7 +43263,7 @@ ${convertTreeToXML(xmlTree)}`;
             gap: "8px"
           }
         },
-        tasks.map((task) => /* @__PURE__ */ import_react123.default.createElement(
+        tasks.map((task) => /* @__PURE__ */ import_react122.default.createElement(
           KanbanCard,
           {
             key: task.id,
@@ -43309,8 +43276,8 @@ ${convertTreeToXML(xmlTree)}`;
     );
   };
   var KanbanBoardPreview = ({ xmlTree, onTreeUpdate }) => {
-    const [tasks, setTasks] = (0, import_react123.useState)([]);
-    const findGraphmlNode = import_react123.default.useCallback((node) => {
+    const [tasks, setTasks] = (0, import_react122.useState)([]);
+    const findGraphmlNode = import_react122.default.useCallback((node) => {
       if (node.type === "graphml:graphml")
         return node;
       for (const child of node.children) {
@@ -43320,7 +43287,7 @@ ${convertTreeToXML(xmlTree)}`;
       }
       return null;
     }, []);
-    const extractTasks = import_react123.default.useCallback((graphmlNode) => {
+    const extractTasks = import_react122.default.useCallback((graphmlNode) => {
       if (!graphmlNode)
         return [];
       const graphNode = graphmlNode.children.find(
@@ -43356,7 +43323,7 @@ ${convertTreeToXML(xmlTree)}`;
       });
       return tasks2;
     }, []);
-    import_react123.default.useEffect(() => {
+    import_react122.default.useEffect(() => {
       const graphmlNode = findGraphmlNode(xmlTree);
       const extractedTasks = extractTasks(graphmlNode);
       setTasks(extractedTasks);
@@ -43397,7 +43364,7 @@ ${convertTreeToXML(xmlTree)}`;
         );
       }
     };
-    const statusGroups = import_react123.default.useMemo(() => {
+    const statusGroups = import_react122.default.useMemo(() => {
       const groups = {};
       tasks.forEach((task) => {
         if (!groups[task.status]) {
@@ -43408,7 +43375,7 @@ ${convertTreeToXML(xmlTree)}`;
       return groups;
     }, [tasks]);
     const statusOrder = ["To Do", "In Progress", "Done"];
-    return /* @__PURE__ */ import_react123.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react123.default.createElement(
+    return /* @__PURE__ */ import_react122.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react122.default.createElement(
       "div",
       {
         className: "kanban-board",
@@ -43422,7 +43389,7 @@ ${convertTreeToXML(xmlTree)}`;
       },
       statusOrder.map((status2) => {
         const columnTasks = statusGroups[status2] || [];
-        return /* @__PURE__ */ import_react123.default.createElement(
+        return /* @__PURE__ */ import_react122.default.createElement(
           KanbanColumn,
           {
             key: status2,
@@ -43435,7 +43402,7 @@ ${convertTreeToXML(xmlTree)}`;
     ));
   };
   var renderKanbanPreview = (node, isSelected, eventHandlers, onTreeUpdate) => {
-    return /* @__PURE__ */ import_react123.default.createElement(
+    return /* @__PURE__ */ import_react122.default.createElement(
       "div",
       {
         style: {
@@ -43444,14 +43411,14 @@ ${convertTreeToXML(xmlTree)}`;
         },
         ...eventHandlers
       },
-      /* @__PURE__ */ import_react123.default.createElement(KanbanBoardPreview, { xmlTree: node, onTreeUpdate })
+      /* @__PURE__ */ import_react122.default.createElement(KanbanBoardPreview, { xmlTree: node, onTreeUpdate })
     );
   };
   var FluaPage = () => {
-    const [initialTree, setInitialTree] = (0, import_react123.useState)(null);
-    const [loading, setLoading] = (0, import_react123.useState)(true);
-    const [error, setError] = (0, import_react123.useState)(null);
-    (0, import_react123.useEffect)(() => {
+    const [initialTree, setInitialTree] = (0, import_react122.useState)(null);
+    const [loading, setLoading] = (0, import_react122.useState)(true);
+    const [error, setError] = (0, import_react122.useState)(null);
+    (0, import_react122.useEffect)(() => {
       const loadKanbanProcess = async () => {
         try {
           setLoading(true);
@@ -43467,15 +43434,15 @@ ${convertTreeToXML(xmlTree)}`;
       loadKanbanProcess();
     }, []);
     if (loading) {
-      return /* @__PURE__ */ import_react123.default.createElement("div", null, "Loading kanban process...");
+      return /* @__PURE__ */ import_react122.default.createElement("div", null, "Loading kanban process...");
     }
     if (error) {
       throw error;
     }
     if (!initialTree) {
-      return /* @__PURE__ */ import_react123.default.createElement("div", null, "No XML data available");
+      return /* @__PURE__ */ import_react122.default.createElement("div", null, "No XML data available");
     }
-    return /* @__PURE__ */ import_react123.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react123.default.createElement(
+    return /* @__PURE__ */ import_react122.default.createElement(DndProvider, { backend: HTML5Backend }, /* @__PURE__ */ import_react122.default.createElement(
       GenericXMLEditorPage,
       {
         initialTree,
@@ -43486,7 +43453,7 @@ ${convertTreeToXML(xmlTree)}`;
             onUpdateAttributes,
             onUpdateTextContent
           });
-          return /* @__PURE__ */ import_react123.default.createElement(
+          return /* @__PURE__ */ import_react122.default.createElement(
             AttributeEditor,
             {
               node,
@@ -43502,10 +43469,10 @@ ${convertTreeToXML(xmlTree)}`;
   };
 
   // src/app/frontend/testPage/TestPage.tsx
-  var import_react147 = __toESM(require_react(), 1);
+  var import_react146 = __toESM(require_react(), 1);
 
   // src/app/frontend/testPage/TestPageView.tsx
-  var import_react145 = __toESM(require_react(), 1);
+  var import_react144 = __toESM(require_react(), 1);
 
   // node_modules/@monaco-editor/loader/lib/es/_virtual/_rollupPluginBabelHelpers.js
   function _defineProperty7(obj, key, value) {
@@ -44034,6 +44001,7 @@ ${convertTreeToXML(xmlTree)}`;
   var loader_default = loader;
 
   // node_modules/@monaco-editor/react/dist/index.mjs
+  var import_react123 = __toESM(require_react(), 1);
   var import_react124 = __toESM(require_react(), 1);
   var import_react125 = __toESM(require_react(), 1);
   var import_react126 = __toESM(require_react(), 1);
@@ -44044,28 +44012,27 @@ ${convertTreeToXML(xmlTree)}`;
   var import_react131 = __toESM(require_react(), 1);
   var import_react132 = __toESM(require_react(), 1);
   var import_react133 = __toESM(require_react(), 1);
-  var import_react134 = __toESM(require_react(), 1);
   var le = { wrapper: { display: "flex", position: "relative", textAlign: "initial" }, fullWidth: { width: "100%" }, hide: { display: "none" } };
   var v = le;
   var ae = { container: { display: "flex", height: "100%", width: "100%", justifyContent: "center", alignItems: "center" } };
   var Y = ae;
   function Me({ children: e }) {
-    return import_react128.default.createElement("div", { style: Y.container }, e);
+    return import_react127.default.createElement("div", { style: Y.container }, e);
   }
   var Z = Me;
   var $ = Z;
   function Ee({ width: e, height: r, isEditorReady: n, loading: t, _ref: a, className: m, wrapperProps: E }) {
-    return import_react127.default.createElement("section", { style: { ...v.wrapper, width: e, height: r }, ...E }, !n && import_react127.default.createElement($, null, t), import_react127.default.createElement("div", { ref: a, style: { ...v.fullWidth, ...!n && v.hide }, className: m }));
+    return import_react126.default.createElement("section", { style: { ...v.wrapper, width: e, height: r }, ...E }, !n && import_react126.default.createElement($, null, t), import_react126.default.createElement("div", { ref: a, style: { ...v.fullWidth, ...!n && v.hide }, className: m }));
   }
   var ee = Ee;
-  var H = (0, import_react126.memo)(ee);
+  var H = (0, import_react125.memo)(ee);
   function Ce(e) {
-    (0, import_react129.useEffect)(e, []);
+    (0, import_react128.useEffect)(e, []);
   }
   var k = Ce;
   function he(e, r, n = true) {
-    let t = (0, import_react130.useRef)(true);
-    (0, import_react130.useEffect)(t.current || !n ? () => {
+    let t = (0, import_react129.useRef)(true);
+    (0, import_react129.useEffect)(t.current || !n ? () => {
       t.current = false;
     } : e, r);
   }
@@ -44085,7 +44052,7 @@ ${convertTreeToXML(xmlTree)}`;
     return e.Uri.parse(r);
   }
   function Oe({ original: e, modified: r, language: n, originalLanguage: t, modifiedLanguage: a, originalModelPath: m, modifiedModelPath: E, keepCurrentOriginalModel: g = false, keepCurrentModifiedModel: N = false, theme: x = "light", loading: P = "Loading...", options: y = {}, height: V = "100%", width: z = "100%", className: F, wrapperProps: j = {}, beforeMount: A = D, onMount: q = D }) {
-    let [M, O] = (0, import_react125.useState)(false), [T, s] = (0, import_react125.useState)(true), u = (0, import_react125.useRef)(null), c = (0, import_react125.useRef)(null), w = (0, import_react125.useRef)(null), d = (0, import_react125.useRef)(q), o = (0, import_react125.useRef)(A), b = (0, import_react125.useRef)(false);
+    let [M, O] = (0, import_react124.useState)(false), [T, s] = (0, import_react124.useState)(true), u = (0, import_react124.useRef)(null), c = (0, import_react124.useRef)(null), w = (0, import_react124.useRef)(null), d = (0, import_react124.useRef)(q), o = (0, import_react124.useRef)(A), b = (0, import_react124.useRef)(false);
     k(() => {
       let i = loader_default.init();
       return i.then((f) => (c.current = f) && s(false)).catch((f) => f?.type !== "cancelation" && console.error("Monaco initialization: error:", f)), () => u.current ? I() : i.cancel();
@@ -44112,38 +44079,38 @@ ${convertTreeToXML(xmlTree)}`;
     }, [x], M), l(() => {
       u.current?.updateOptions(y);
     }, [y], M);
-    let L = (0, import_react125.useCallback)(() => {
+    let L = (0, import_react124.useCallback)(() => {
       if (!c.current)
         return;
       o.current(c.current);
       let i = h(c.current, e || "", t || n || "text", m || ""), f = h(c.current, r || "", a || n || "text", E || "");
       u.current?.setModel({ original: i, modified: f });
-    }, [n, r, a, e, t, m, E]), U = (0, import_react125.useCallback)(() => {
+    }, [n, r, a, e, t, m, E]), U = (0, import_react124.useCallback)(() => {
       !b.current && w.current && (u.current = c.current.editor.createDiffEditor(w.current, { automaticLayout: true, ...y }), L(), c.current?.editor.setTheme(x), O(true), b.current = true);
     }, [y, x, L]);
-    (0, import_react125.useEffect)(() => {
+    (0, import_react124.useEffect)(() => {
       M && d.current(u.current, c.current);
-    }, [M]), (0, import_react125.useEffect)(() => {
+    }, [M]), (0, import_react124.useEffect)(() => {
       !T && !M && U();
     }, [T, M, U]);
     function I() {
       let i = u.current?.getModel();
       g || i?.original?.dispose(), N || i?.modified?.dispose(), u.current?.dispose();
     }
-    return import_react125.default.createElement(H, { width: z, height: V, isEditorReady: M, loading: P, _ref: w, className: F, wrapperProps: j });
+    return import_react124.default.createElement(H, { width: z, height: V, isEditorReady: M, loading: P, _ref: w, className: F, wrapperProps: j });
   }
   var ie = Oe;
-  var we = (0, import_react124.memo)(ie);
+  var we = (0, import_react123.memo)(ie);
   function He(e) {
-    let r = (0, import_react134.useRef)();
-    return (0, import_react134.useEffect)(() => {
+    let r = (0, import_react133.useRef)();
+    return (0, import_react133.useEffect)(() => {
       r.current = e;
     }, [e]), r.current;
   }
   var se = He;
   var _ = /* @__PURE__ */ new Map();
   function Ve({ defaultValue: e, defaultLanguage: r, defaultPath: n, value: t, language: a, path: m, theme: E = "light", line: g, loading: N = "Loading...", options: x = {}, overrideServices: P = {}, saveViewState: y = true, keepCurrentModel: V = false, width: z = "100%", height: F = "100%", className: j, wrapperProps: A = {}, beforeMount: q = D, onMount: M = D, onChange: O, onValidate: T = D }) {
-    let [s, u] = (0, import_react133.useState)(false), [c, w] = (0, import_react133.useState)(true), d = (0, import_react133.useRef)(null), o = (0, import_react133.useRef)(null), b = (0, import_react133.useRef)(null), L = (0, import_react133.useRef)(M), U = (0, import_react133.useRef)(q), I = (0, import_react133.useRef)(), i = (0, import_react133.useRef)(t), f = se(m), Q = (0, import_react133.useRef)(false), B = (0, import_react133.useRef)(false);
+    let [s, u] = (0, import_react132.useState)(false), [c, w] = (0, import_react132.useState)(true), d = (0, import_react132.useRef)(null), o = (0, import_react132.useRef)(null), b = (0, import_react132.useRef)(null), L = (0, import_react132.useRef)(M), U = (0, import_react132.useRef)(q), I = (0, import_react132.useRef)(), i = (0, import_react132.useRef)(t), f = se(m), Q = (0, import_react132.useRef)(false), B = (0, import_react132.useRef)(false);
     k(() => {
       let p = loader_default.init();
       return p.then((R) => (d.current = R) && w(false)).catch((R) => R?.type !== "cancelation" && console.error("Monaco initialization: error:", R)), () => o.current ? pe() : p.cancel();
@@ -44162,22 +44129,22 @@ ${convertTreeToXML(xmlTree)}`;
     }, [g], s), l(() => {
       d.current?.editor.setTheme(E);
     }, [E], s);
-    let X = (0, import_react133.useCallback)(() => {
+    let X = (0, import_react132.useCallback)(() => {
       if (!(!b.current || !d.current) && !Q.current) {
         U.current(d.current);
         let p = m || n, R = h(d.current, t || e || "", r || a || "", p || "");
         o.current = d.current?.editor.create(b.current, { model: R, automaticLayout: true, ...x }, P), y && o.current.restoreViewState(_.get(p)), d.current.editor.setTheme(E), g !== void 0 && o.current.revealLine(g), u(true), Q.current = true;
       }
     }, [e, r, n, t, a, m, x, P, y, E, g]);
-    (0, import_react133.useEffect)(() => {
+    (0, import_react132.useEffect)(() => {
       s && L.current(o.current, d.current);
-    }, [s]), (0, import_react133.useEffect)(() => {
+    }, [s]), (0, import_react132.useEffect)(() => {
       !c && !s && X();
-    }, [c, s, X]), i.current = t, (0, import_react133.useEffect)(() => {
+    }, [c, s, X]), i.current = t, (0, import_react132.useEffect)(() => {
       s && O && (I.current?.dispose(), I.current = o.current?.onDidChangeModelContent((p) => {
         B.current || O(o.current.getValue(), p);
       }));
-    }, [s, O]), (0, import_react133.useEffect)(() => {
+    }, [s, O]), (0, import_react132.useEffect)(() => {
       if (s) {
         let p = d.current.editor.onDidChangeMarkers((R) => {
           let G = o.current.getModel()?.uri;
@@ -44196,15 +44163,15 @@ ${convertTreeToXML(xmlTree)}`;
     function pe() {
       I.current?.dispose(), V ? y && _.set(m, o.current.saveViewState()) : o.current.getModel()?.dispose(), o.current.dispose();
     }
-    return import_react133.default.createElement(H, { width: z, height: F, isEditorReady: s, loading: N, _ref: b, className: j, wrapperProps: A });
+    return import_react132.default.createElement(H, { width: z, height: F, isEditorReady: s, loading: N, _ref: b, className: j, wrapperProps: A });
   }
   var fe = Ve;
-  var de = (0, import_react132.memo)(fe);
+  var de = (0, import_react131.memo)(fe);
 
   // src/app/frontend/testPage/TestPageNavbar.tsx
-  var import_react135 = __toESM(require_react(), 1);
+  var import_react134 = __toESM(require_react(), 1);
   var TestPageNavbar = ({ decodedTestPath, projectName, runtime, setShowAiderModal, isWebSocketConnected }) => {
-    return /* @__PURE__ */ import_react135.default.createElement(
+    return /* @__PURE__ */ import_react134.default.createElement(
       NavBar,
       {
         title: decodedTestPath,
@@ -44219,7 +44186,7 @@ ${convertTreeToXML(xmlTree)}`;
             className: "pe-none d-flex align-items-center gap-2"
           }
         ],
-        rightContent: /* @__PURE__ */ import_react135.default.createElement(
+        rightContent: /* @__PURE__ */ import_react134.default.createElement(
           Button_default2,
           {
             variant: "info",
@@ -44229,13 +44196,13 @@ ${convertTreeToXML(xmlTree)}`;
             disabled: !isWebSocketConnected
           },
           "\u{1F916}",
-          !isWebSocketConnected && /* @__PURE__ */ import_react135.default.createElement(
+          !isWebSocketConnected && /* @__PURE__ */ import_react134.default.createElement(
             "span",
             {
               className: "position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle",
               title: "WebSocket disconnected"
             },
-            /* @__PURE__ */ import_react135.default.createElement("span", { className: "visually-hidden" }, "WebSocket disconnected")
+            /* @__PURE__ */ import_react134.default.createElement("span", { className: "visually-hidden" }, "WebSocket disconnected")
           )
         )
       }
@@ -44243,10 +44210,10 @@ ${convertTreeToXML(xmlTree)}`;
   };
 
   // src/app/frontend/testPage/TestPageMainContent.tsx
-  var import_react137 = __toESM(require_react(), 1);
+  var import_react136 = __toESM(require_react(), 1);
 
   // src/app/frontend/testPage/TestPageView_utils.tsx
-  var import_react136 = __toESM(require_react(), 1);
+  var import_react135 = __toESM(require_react(), 1);
   var getLanguage = (path) => {
     const ext = path.split(".").pop()?.toLowerCase();
     switch (ext) {
@@ -44276,14 +44243,14 @@ ${convertTreeToXML(xmlTree)}`;
     throw `idk status: ${status2}`;
   };
   var renderTestResults = (testData, buildErrors2, projectName, testName, runtime) => {
-    return /* @__PURE__ */ import_react136.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i) => /* @__PURE__ */ import_react136.default.createElement("div", { key: i, className: "mb-4 card " }, /* @__PURE__ */ import_react136.default.createElement(
+    return /* @__PURE__ */ import_react135.default.createElement("div", { className: "test-results" }, testData.givens.map((given, i) => /* @__PURE__ */ import_react135.default.createElement("div", { key: i, className: "mb-4 card " }, /* @__PURE__ */ import_react135.default.createElement(
       "div",
       {
         className: `card-header ${statusToClassName(
           given.status
         )} text-white`
       },
-      /* @__PURE__ */ import_react136.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react136.default.createElement("div", null, /* @__PURE__ */ import_react136.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react136.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react136.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi) => /* @__PURE__ */ import_react136.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react136.default.createElement(
+      /* @__PURE__ */ import_react135.default.createElement("div", { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react135.default.createElement("div", null, /* @__PURE__ */ import_react135.default.createElement("h4", null, "Given: ", given.name), given.features && given.features.length > 0 && /* @__PURE__ */ import_react135.default.createElement("div", { className: "mt-1" }, /* @__PURE__ */ import_react135.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react135.default.createElement("ul", { className: "list-unstyled" }, given.features.map((feature, fi) => /* @__PURE__ */ import_react135.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react135.default.createElement(
         "a",
         {
           href: feature,
@@ -44292,7 +44259,7 @@ ${convertTreeToXML(xmlTree)}`;
           className: "text-white"
         },
         new URL(feature).hostname
-      ) : /* @__PURE__ */ import_react136.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react136.default.createElement(
+      ) : /* @__PURE__ */ import_react135.default.createElement("span", { className: "text-white" }, feature)))))), given.artifacts && given.artifacts.length > 0 && /* @__PURE__ */ import_react135.default.createElement("div", { className: "dropdown" }, /* @__PURE__ */ import_react135.default.createElement(
         "button",
         {
           className: "btn btn-sm btn-light dropdown-toggle",
@@ -44302,7 +44269,7 @@ ${convertTreeToXML(xmlTree)}`;
         "Artifacts (",
         given.artifacts.length,
         ")"
-      ), /* @__PURE__ */ import_react136.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react136.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react136.default.createElement(
+      ), /* @__PURE__ */ import_react135.default.createElement("ul", { className: "dropdown-menu dropdown-menu-end" }, given.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react135.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react135.default.createElement(
         "a",
         {
           className: "dropdown-item",
@@ -44312,7 +44279,7 @@ ${convertTreeToXML(xmlTree)}`;
         },
         artifact.split("/").pop()
       ))))))
-    ), /* @__PURE__ */ import_react136.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react136.default.createElement(
+    ), /* @__PURE__ */ import_react135.default.createElement("div", { className: "card-body" }, given.whens.map((when, j) => /* @__PURE__ */ import_react135.default.createElement(
       "div",
       {
         key: `w-${j}`,
@@ -44320,7 +44287,7 @@ ${convertTreeToXML(xmlTree)}`;
           when.status
         )}`
       },
-      /* @__PURE__ */ import_react136.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react136.default.createElement("div", null, /* @__PURE__ */ import_react136.default.createElement("div", null, /* @__PURE__ */ import_react136.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react136.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react136.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi) => /* @__PURE__ */ import_react136.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react136.default.createElement(
+      /* @__PURE__ */ import_react135.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react135.default.createElement("div", null, /* @__PURE__ */ import_react135.default.createElement("div", null, /* @__PURE__ */ import_react135.default.createElement("strong", null, "When:"), " ", when.name, when.features && when.features.length > 0 && /* @__PURE__ */ import_react135.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react135.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react135.default.createElement("ul", { className: "list-unstyled" }, when.features.map((feature, fi) => /* @__PURE__ */ import_react135.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react135.default.createElement(
         "a",
         {
           href: feature,
@@ -44328,7 +44295,7 @@ ${convertTreeToXML(xmlTree)}`;
           rel: "noopener noreferrer"
         },
         new URL(feature).hostname
-      ) : feature)))), when.error && /* @__PURE__ */ import_react136.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react136.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react136.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react136.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react136.default.createElement(
+      ) : feature)))), when.error && /* @__PURE__ */ import_react135.default.createElement("pre", { className: "mt-2" }, when.error))), when.artifacts && when.artifacts.length > 0 && /* @__PURE__ */ import_react135.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react135.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react135.default.createElement("ul", { className: "list-unstyled" }, when.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react135.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react135.default.createElement(
         "a",
         {
           href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
@@ -44338,7 +44305,7 @@ ${convertTreeToXML(xmlTree)}`;
         },
         artifact.split("/").pop()
       ))))))
-    )), given.thens.map((then, k2) => /* @__PURE__ */ import_react136.default.createElement(
+    )), given.thens.map((then, k2) => /* @__PURE__ */ import_react135.default.createElement(
       "div",
       {
         key: `t-${k2}`,
@@ -44346,7 +44313,7 @@ ${convertTreeToXML(xmlTree)}`;
           then.status
         )}`
       },
-      /* @__PURE__ */ import_react136.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react136.default.createElement("div", null, /* @__PURE__ */ import_react136.default.createElement("div", null, /* @__PURE__ */ import_react136.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react136.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react136.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi) => /* @__PURE__ */ import_react136.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react136.default.createElement(
+      /* @__PURE__ */ import_react135.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react135.default.createElement("div", null, /* @__PURE__ */ import_react135.default.createElement("div", null, /* @__PURE__ */ import_react135.default.createElement("strong", null, "Then:"), " ", then.name, then.features && then.features.length > 0 && /* @__PURE__ */ import_react135.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react135.default.createElement("small", null, "Features:"), /* @__PURE__ */ import_react135.default.createElement("ul", { className: "list-unstyled" }, then.features.map((feature, fi) => /* @__PURE__ */ import_react135.default.createElement("li", { key: fi }, feature.startsWith("http") ? /* @__PURE__ */ import_react135.default.createElement(
         "a",
         {
           href: feature,
@@ -44354,7 +44321,7 @@ ${convertTreeToXML(xmlTree)}`;
           rel: "noopener noreferrer"
         },
         new URL(feature).hostname
-      ) : feature)))), then.error && /* @__PURE__ */ import_react136.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react136.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react136.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react136.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react136.default.createElement(
+      ) : feature)))), then.error && /* @__PURE__ */ import_react135.default.createElement("pre", { className: "mt-2" }, then.error))), then.artifacts && then.artifacts.length > 0 && /* @__PURE__ */ import_react135.default.createElement("div", { className: "ms-3" }, /* @__PURE__ */ import_react135.default.createElement("strong", null, "Artifacts:"), /* @__PURE__ */ import_react135.default.createElement("ul", { className: "list-unstyled" }, then.artifacts.map((artifact, ai) => /* @__PURE__ */ import_react135.default.createElement("li", { key: ai }, /* @__PURE__ */ import_react135.default.createElement(
         "a",
         {
           href: `reports/${projectName}/${testName.split(".").slice(0, -1).join(".")}/${runtime}/${artifact}`,
@@ -44364,7 +44331,7 @@ ${convertTreeToXML(xmlTree)}`;
         },
         artifact.split("/").pop()
       ))))))
-    ))))), (buildErrors2.errors.length > 0 || buildErrors2.warnings.length > 0) && /* @__PURE__ */ import_react136.default.createElement("div", { className: "mb-4 card border-danger" }, /* @__PURE__ */ import_react136.default.createElement("div", { className: "card-header bg-danger text-white" }, /* @__PURE__ */ import_react136.default.createElement("h4", null, "Build Errors and Warnings")), /* @__PURE__ */ import_react136.default.createElement("div", { className: "card-body" }, buildErrors2.errors.length > 0 && /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, /* @__PURE__ */ import_react136.default.createElement("h5", null, "Errors"), /* @__PURE__ */ import_react136.default.createElement("ul", null, buildErrors2.errors.map((error, idx) => /* @__PURE__ */ import_react136.default.createElement("li", { key: `build-error-${idx}` }, /* @__PURE__ */ import_react136.default.createElement("strong", null, error.text), error.location && /* @__PURE__ */ import_react136.default.createElement("div", null, "File: ", error.location.file, " Line:", " ", error.location.line, " Column: ", error.location.column))))), buildErrors2.warnings.length > 0 && /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, /* @__PURE__ */ import_react136.default.createElement("h5", null, "Warnings"), /* @__PURE__ */ import_react136.default.createElement("ul", null, buildErrors2.warnings.map((warning9, idx) => /* @__PURE__ */ import_react136.default.createElement("li", { key: `build-warning-${idx}` }, /* @__PURE__ */ import_react136.default.createElement("strong", null, warning9.text), warning9.location && /* @__PURE__ */ import_react136.default.createElement("div", null, "File: ", warning9.location.file, " Line:", " ", warning9.location.line, " Column:", " ", warning9.location.column))))))));
+    ))))), (buildErrors2.errors.length > 0 || buildErrors2.warnings.length > 0) && /* @__PURE__ */ import_react135.default.createElement("div", { className: "mb-4 card border-danger" }, /* @__PURE__ */ import_react135.default.createElement("div", { className: "card-header bg-danger text-white" }, /* @__PURE__ */ import_react135.default.createElement("h4", null, "Build Errors and Warnings")), /* @__PURE__ */ import_react135.default.createElement("div", { className: "card-body" }, buildErrors2.errors.length > 0 && /* @__PURE__ */ import_react135.default.createElement(import_react135.default.Fragment, null, /* @__PURE__ */ import_react135.default.createElement("h5", null, "Errors"), /* @__PURE__ */ import_react135.default.createElement("ul", null, buildErrors2.errors.map((error, idx) => /* @__PURE__ */ import_react135.default.createElement("li", { key: `build-error-${idx}` }, /* @__PURE__ */ import_react135.default.createElement("strong", null, error.text), error.location && /* @__PURE__ */ import_react135.default.createElement("div", null, "File: ", error.location.file, " Line:", " ", error.location.line, " Column: ", error.location.column))))), buildErrors2.warnings.length > 0 && /* @__PURE__ */ import_react135.default.createElement(import_react135.default.Fragment, null, /* @__PURE__ */ import_react135.default.createElement("h5", null, "Warnings"), /* @__PURE__ */ import_react135.default.createElement("ul", null, buildErrors2.warnings.map((warning9, idx) => /* @__PURE__ */ import_react135.default.createElement("li", { key: `build-warning-${idx}` }, /* @__PURE__ */ import_react135.default.createElement("strong", null, warning9.text), warning9.location && /* @__PURE__ */ import_react135.default.createElement("div", null, "File: ", warning9.location.file, " Line:", " ", warning9.location.line, " Column:", " ", warning9.location.column))))))));
   };
 
   // src/app/frontend/testPage/TestPageMainContent.tsx
@@ -44374,7 +44341,7 @@ ${convertTreeToXML(xmlTree)}`;
     projectName,
     testName,
     runtime
-  }) => /* @__PURE__ */ import_react137.default.createElement("div", { className: "p-3" }, selectedFile?.path.endsWith("tests.json") && /* @__PURE__ */ import_react137.default.createElement("div", { className: "test-results-preview" }, typeof selectedFile.content === "string" ? renderTestResults(
+  }) => /* @__PURE__ */ import_react136.default.createElement("div", { className: "p-3" }, selectedFile?.path.endsWith("tests.json") && /* @__PURE__ */ import_react136.default.createElement("div", { className: "test-results-preview" }, typeof selectedFile.content === "string" ? renderTestResults(
     JSON.parse(selectedFile.content),
     buildErrors2,
     projectName,
@@ -44386,7 +44353,7 @@ ${convertTreeToXML(xmlTree)}`;
     projectName,
     testName,
     runtime
-  )), selectedFile?.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) && /* @__PURE__ */ import_react137.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react137.default.createElement(
+  )), selectedFile?.path.match(/\.(png|jpg|jpeg|gif|svg)$/i) && /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react136.default.createElement(
     "img",
     {
       src: selectedFile.content,
@@ -44394,7 +44361,7 @@ ${convertTreeToXML(xmlTree)}`;
       className: "img-fluid",
       style: { maxHeight: "300px" }
     }
-  ), /* @__PURE__ */ import_react137.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react137.default.createElement(
+  ), /* @__PURE__ */ import_react136.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react136.default.createElement(
     "a",
     {
       href: selectedFile.content,
@@ -44403,18 +44370,18 @@ ${convertTreeToXML(xmlTree)}`;
       className: "btn btn-sm btn-outline-primary"
     },
     "Open Full Size"
-  ))), selectedFile?.path.endsWith("build.json") && /* @__PURE__ */ import_react137.default.createElement("div", null, /* @__PURE__ */ import_react137.default.createElement("h5", null, "Build Information"), (() => {
+  ))), selectedFile?.path.endsWith("build.json") && /* @__PURE__ */ import_react136.default.createElement("div", null, /* @__PURE__ */ import_react136.default.createElement("h5", null, "Build Information"), (() => {
     try {
       const buildData = JSON.parse(selectedFile.content);
-      return /* @__PURE__ */ import_react137.default.createElement(import_react137.default.Fragment, null, buildData.errors?.length > 0 && /* @__PURE__ */ import_react137.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react137.default.createElement("h6", { className: "text-danger" }, "Errors (", buildData.errors.length, ")"), /* @__PURE__ */ import_react137.default.createElement("ul", { className: "list-unstyled" }, buildData.errors.map((error, index2) => /* @__PURE__ */ import_react137.default.createElement("li", { key: index2, className: "mb-2 p-2  rounded" }, /* @__PURE__ */ import_react137.default.createElement("div", { className: "text-danger fw-bold" }, error.text), error.location && /* @__PURE__ */ import_react137.default.createElement("div", { className: "small text-muted" }, "File: ", error.location.file, "Line: ", error.location.line, "Column: ", error.location.column), error.notes && error.notes.length > 0 && /* @__PURE__ */ import_react137.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react137.default.createElement("ul", null, error.notes.map(
-        (note, noteIndex) => /* @__PURE__ */ import_react137.default.createElement("li", { key: noteIndex }, note.text)
-      ))))))), buildData.warnings?.length > 0 && /* @__PURE__ */ import_react137.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react137.default.createElement("h6", { className: "text-warning" }, "Warnings (", buildData.warnings.length, ")"), /* @__PURE__ */ import_react137.default.createElement("ul", { className: "list-unstyled" }, buildData.warnings.map((warning9, index2) => /* @__PURE__ */ import_react137.default.createElement("li", { key: index2, className: "mb-2 p-2  rounded" }, /* @__PURE__ */ import_react137.default.createElement("div", { className: "text-warning fw-bold" }, warning9.text), warning9.location && /* @__PURE__ */ import_react137.default.createElement("div", { className: "small text-muted" }, "File: ", warning9.location.file, "Line: ", warning9.location.line, "Column: ", warning9.location.column), warning9.notes && warning9.notes.length > 0 && /* @__PURE__ */ import_react137.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react137.default.createElement("ul", null, warning9.notes.map(
-        (note, noteIndex) => /* @__PURE__ */ import_react137.default.createElement("li", { key: noteIndex }, note.text)
-      ))))))), (!buildData.errors || buildData.errors.length === 0) && (!buildData.warnings || buildData.warnings.length === 0) && /* @__PURE__ */ import_react137.default.createElement("div", { className: "alert alert-success" }, "No build errors or warnings"));
+      return /* @__PURE__ */ import_react136.default.createElement(import_react136.default.Fragment, null, buildData.errors?.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react136.default.createElement("h6", { className: "text-danger" }, "Errors (", buildData.errors.length, ")"), /* @__PURE__ */ import_react136.default.createElement("ul", { className: "list-unstyled" }, buildData.errors.map((error, index2) => /* @__PURE__ */ import_react136.default.createElement("li", { key: index2, className: "mb-2 p-2  rounded" }, /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-danger fw-bold" }, error.text), error.location && /* @__PURE__ */ import_react136.default.createElement("div", { className: "small text-muted" }, "File: ", error.location.file, "Line: ", error.location.line, "Column: ", error.location.column), error.notes && error.notes.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react136.default.createElement("ul", null, error.notes.map(
+        (note, noteIndex) => /* @__PURE__ */ import_react136.default.createElement("li", { key: noteIndex }, note.text)
+      ))))))), buildData.warnings?.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react136.default.createElement("h6", { className: "text-warning" }, "Warnings (", buildData.warnings.length, ")"), /* @__PURE__ */ import_react136.default.createElement("ul", { className: "list-unstyled" }, buildData.warnings.map((warning9, index2) => /* @__PURE__ */ import_react136.default.createElement("li", { key: index2, className: "mb-2 p-2  rounded" }, /* @__PURE__ */ import_react136.default.createElement("div", { className: "text-warning fw-bold" }, warning9.text), warning9.location && /* @__PURE__ */ import_react136.default.createElement("div", { className: "small text-muted" }, "File: ", warning9.location.file, "Line: ", warning9.location.line, "Column: ", warning9.location.column), warning9.notes && warning9.notes.length > 0 && /* @__PURE__ */ import_react136.default.createElement("div", { className: "small" }, "Notes:", /* @__PURE__ */ import_react136.default.createElement("ul", null, warning9.notes.map(
+        (note, noteIndex) => /* @__PURE__ */ import_react136.default.createElement("li", { key: noteIndex }, note.text)
+      ))))))), (!buildData.errors || buildData.errors.length === 0) && (!buildData.warnings || buildData.warnings.length === 0) && /* @__PURE__ */ import_react136.default.createElement("div", { className: "alert alert-success" }, "No build errors or warnings"));
     } catch (e) {
-      return /* @__PURE__ */ import_react137.default.createElement("div", { className: "alert alert-danger" }, "Error parsing build.json: ", e.message);
+      return /* @__PURE__ */ import_react136.default.createElement("div", { className: "alert alert-danger" }, "Error parsing build.json: ", e.message);
     }
-  })()), selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && !selectedFile.path.endsWith("build.json") && /* @__PURE__ */ import_react137.default.createElement("pre", { className: " p-2 small" }, /* @__PURE__ */ import_react137.default.createElement("code", null, selectedFile.content)), selectedFile?.path.includes("source_files") && /* @__PURE__ */ import_react137.default.createElement("div", null, /* @__PURE__ */ import_react137.default.createElement("div", { className: "mb-2 small text-muted" }, /* @__PURE__ */ import_react137.default.createElement("i", { className: "bi bi-file-earmark-text me-1" }), selectedFile.path.split("/").pop()), /* @__PURE__ */ import_react137.default.createElement(
+  })()), selectedFile?.path.endsWith(".json") && !selectedFile.path.endsWith("tests.json") && !selectedFile.path.endsWith("build.json") && /* @__PURE__ */ import_react136.default.createElement("pre", { className: " p-2 small" }, /* @__PURE__ */ import_react136.default.createElement("code", null, selectedFile.content)), selectedFile?.path.includes("source_files") && /* @__PURE__ */ import_react136.default.createElement("div", null, /* @__PURE__ */ import_react136.default.createElement("div", { className: "mb-2 small text-muted" }, /* @__PURE__ */ import_react136.default.createElement("i", { className: "bi bi-file-earmark-text me-1" }), selectedFile.path.split("/").pop()), /* @__PURE__ */ import_react136.default.createElement(
     Button_default2,
     {
       variant: "outline-primary",
@@ -44428,17 +44395,17 @@ ${convertTreeToXML(xmlTree)}`;
   )));
 
   // src/app/frontend/testPage/TestPageLeftContent.tsx
-  var import_react142 = __toESM(require_react(), 1);
-
-  // src/app/frontend/testPage/ProjectsTree.tsx
   var import_react141 = __toESM(require_react(), 1);
 
-  // src/app/frontend/components/pure/FileTree.tsx
-  var import_react139 = __toESM(require_react(), 1);
+  // src/app/frontend/testPage/ProjectsTree.tsx
   var import_react140 = __toESM(require_react(), 1);
 
-  // src/app/frontend/components/pure/FileTreeItem.tsx
+  // src/app/frontend/components/pure/FileTree.tsx
   var import_react138 = __toESM(require_react(), 1);
+  var import_react139 = __toESM(require_react(), 1);
+
+  // src/app/frontend/components/pure/FileTreeItem.tsx
+  var import_react137 = __toESM(require_react(), 1);
   var FileTreeItem = ({
     name,
     isFile,
@@ -44448,7 +44415,7 @@ ${convertTreeToXML(xmlTree)}`;
     onClick
   }) => {
     const displayName = name.replace(".json", "").replace(".txt", "").replace(".log", "").replace(/_/g, " ").replace(/^std/, "Standard ").replace(/^exit/, "Exit Code").split("/").pop();
-    return /* @__PURE__ */ import_react138.default.createElement(
+    return /* @__PURE__ */ import_react137.default.createElement(
       "div",
       {
         className: `d-flex align-items-center py-1 ${isSelected ? "text-primary fw-bold" : exists ? "text-dark" : "text-muted"}`,
@@ -44461,23 +44428,23 @@ ${convertTreeToXML(xmlTree)}`;
         onClick: exists ? onClick : void 0,
         title: exists ? void 0 : "File not found or empty"
       },
-      /* @__PURE__ */ import_react138.default.createElement("i", { className: `bi ${isFile ? exists ? "bi-file-earmark-text" : "bi-file-earmark" : "bi-folder"} me-1` }),
-      /* @__PURE__ */ import_react138.default.createElement("span", null, displayName),
-      !exists && /* @__PURE__ */ import_react138.default.createElement("i", { className: "bi bi-question-circle ms-1", title: "File not found or empty" })
+      /* @__PURE__ */ import_react137.default.createElement("i", { className: `bi ${isFile ? exists ? "bi-file-earmark-text" : "bi-file-earmark" : "bi-folder"} me-1` }),
+      /* @__PURE__ */ import_react137.default.createElement("span", null, displayName),
+      !exists && /* @__PURE__ */ import_react137.default.createElement("i", { className: "bi bi-question-circle ms-1", title: "File not found or empty" })
     );
   };
 
   // src/app/frontend/components/pure/FileTree.tsx
   var FileTree = ({ data: data2, onSelect, level = 0, selectedSourcePath }) => {
-    const [expanded, setExpanded] = (0, import_react140.useState)({});
+    const [expanded, setExpanded] = (0, import_react139.useState)({});
     const toggleExpand = (path) => {
       setExpanded((prev) => ({ ...prev, [path]: !prev[path] }));
     };
-    return /* @__PURE__ */ import_react139.default.createElement("div", null, Object.entries(data2).map(([name, node]) => {
+    return /* @__PURE__ */ import_react138.default.createElement("div", null, Object.entries(data2).map(([name, node]) => {
       const path = Object.keys(expanded).find((k2) => k2.endsWith(name)) || name;
       const isExpanded = expanded[path];
       if (node.__isFile) {
-        return /* @__PURE__ */ import_react139.default.createElement(
+        return /* @__PURE__ */ import_react138.default.createElement(
           FileTreeItem,
           {
             key: name,
@@ -44489,7 +44456,7 @@ ${convertTreeToXML(xmlTree)}`;
           }
         );
       } else {
-        return /* @__PURE__ */ import_react139.default.createElement("div", { key: name }, /* @__PURE__ */ import_react139.default.createElement(
+        return /* @__PURE__ */ import_react138.default.createElement("div", { key: name }, /* @__PURE__ */ import_react138.default.createElement(
           "div",
           {
             className: "d-flex align-items-center py-1 text-dark",
@@ -44500,9 +44467,9 @@ ${convertTreeToXML(xmlTree)}`;
             },
             onClick: () => toggleExpand(path)
           },
-          /* @__PURE__ */ import_react139.default.createElement("i", { className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-1` }),
-          /* @__PURE__ */ import_react139.default.createElement("span", null, name)
-        ), isExpanded && /* @__PURE__ */ import_react139.default.createElement(
+          /* @__PURE__ */ import_react138.default.createElement("i", { className: `bi ${isExpanded ? "bi-folder2-open" : "bi-folder"} me-1` }),
+          /* @__PURE__ */ import_react138.default.createElement("span", null, name)
+        ), isExpanded && /* @__PURE__ */ import_react138.default.createElement(
           FileTree,
           {
             data: node,
@@ -44531,15 +44498,15 @@ ${convertTreeToXML(xmlTree)}`;
     setSelectedSourcePath
   }) => {
     const navigate = useNavigate();
-    const [expandedProjects, setExpandedProjects] = (0, import_react141.useState)(() => {
+    const [expandedProjects, setExpandedProjects] = (0, import_react140.useState)(() => {
       const initial = {};
       if (projects2 && projects2.length > 0) {
         initial[projects2[0]] = true;
       }
       return initial;
     });
-    const [projectTests, setProjectTests] = (0, import_react141.useState)({});
-    const [loadingProjects, setLoadingProjects] = (0, import_react141.useState)({});
+    const [projectTests, setProjectTests] = (0, import_react140.useState)({});
+    const [loadingProjects, setLoadingProjects] = (0, import_react140.useState)({});
     const toggleProject = async (projectName) => {
       const isExpanding = !expandedProjects[projectName];
       setExpandedProjects((prev) => ({
@@ -44574,15 +44541,15 @@ ${convertTreeToXML(xmlTree)}`;
         }
       }
     };
-    return /* @__PURE__ */ import_react141.default.createElement("div", null, /* @__PURE__ */ import_react141.default.createElement(
+    return /* @__PURE__ */ import_react140.default.createElement("div", null, /* @__PURE__ */ import_react140.default.createElement(
       "div",
       {
         className: "d-flex align-items-center text-muted mb-1",
         style: { fontSize: "0.875rem", fontWeight: "bold" }
       },
-      /* @__PURE__ */ import_react141.default.createElement("i", { className: "bi bi-folder me-1" }),
-      /* @__PURE__ */ import_react141.default.createElement("span", null, "Projects")
-    ), !projects2 ? /* @__PURE__ */ import_react141.default.createElement("div", { className: "ms-3 text-muted" }, "Loading projects...") : projects2.length === 0 ? /* @__PURE__ */ import_react141.default.createElement("div", { className: "ms-3 text-muted" }, "No projects available. Please check if projects.json exists.") : /* @__PURE__ */ import_react141.default.createElement("div", null, projects2.map((project, index2) => /* @__PURE__ */ import_react141.default.createElement("div", { key: project }, /* @__PURE__ */ import_react141.default.createElement(
+      /* @__PURE__ */ import_react140.default.createElement("i", { className: "bi bi-folder me-1" }),
+      /* @__PURE__ */ import_react140.default.createElement("span", null, "Projects")
+    ), !projects2 ? /* @__PURE__ */ import_react140.default.createElement("div", { className: "ms-3 text-muted" }, "Loading projects...") : projects2.length === 0 ? /* @__PURE__ */ import_react140.default.createElement("div", { className: "ms-3 text-muted" }, "No projects available. Please check if projects.json exists.") : /* @__PURE__ */ import_react140.default.createElement("div", null, projects2.map((project, index2) => /* @__PURE__ */ import_react140.default.createElement("div", { key: project }, /* @__PURE__ */ import_react140.default.createElement(
       FileTreeItem,
       {
         name: project,
@@ -44593,7 +44560,7 @@ ${convertTreeToXML(xmlTree)}`;
         isExpanded: expandedProjects[project],
         onClick: () => toggleProject(project)
       }
-    ), expandedProjects[project] && /* @__PURE__ */ import_react141.default.createElement("div", { className: "ms-4" }, "  // Increased indentation for tests", loadingProjects[project] ? /* @__PURE__ */ import_react141.default.createElement("div", { className: "text-muted small" }, "Loading tests...") : /* @__PURE__ */ import_react141.default.createElement(import_react141.default.Fragment, null, index2 === 0 && /* @__PURE__ */ import_react141.default.createElement(import_react141.default.Fragment, null, /* @__PURE__ */ import_react141.default.createElement("div", null, /* @__PURE__ */ import_react141.default.createElement(
+    ), expandedProjects[project] && /* @__PURE__ */ import_react140.default.createElement("div", { className: "ms-4" }, "  // Increased indentation for tests", loadingProjects[project] ? /* @__PURE__ */ import_react140.default.createElement("div", { className: "text-muted small" }, "Loading tests...") : /* @__PURE__ */ import_react140.default.createElement(import_react140.default.Fragment, null, index2 === 0 && /* @__PURE__ */ import_react140.default.createElement(import_react140.default.Fragment, null, /* @__PURE__ */ import_react140.default.createElement("div", null, /* @__PURE__ */ import_react140.default.createElement(
       FileTreeItem,
       {
         name: "Standard Logs",
@@ -44607,10 +44574,10 @@ ${convertTreeToXML(xmlTree)}`;
           standardLogs: !prev.standardLogs
         }))
       }
-    ), expandedSections.standardLogs && /* @__PURE__ */ import_react141.default.createElement("div", { className: "ms-4" }, Object.values(STANDARD_LOGS).map((logName) => {
+    ), expandedSections.standardLogs && /* @__PURE__ */ import_react140.default.createElement("div", { className: "ms-4" }, Object.values(STANDARD_LOGS).map((logName) => {
       const logContent = logs ? logs[logName] : void 0;
       const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0);
-      return /* @__PURE__ */ import_react141.default.createElement(
+      return /* @__PURE__ */ import_react140.default.createElement(
         FileTreeItem,
         {
           key: logName,
@@ -44641,7 +44608,7 @@ This file was not generated during the test run.`,
           }
         }
       );
-    }))), runtime && RUNTIME_SPECIFIC_LOGS[runtime] && Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react141.default.createElement("div", null, /* @__PURE__ */ import_react141.default.createElement(
+    }))), runtime && RUNTIME_SPECIFIC_LOGS[runtime] && Object.values(RUNTIME_SPECIFIC_LOGS[runtime]).length > 0 && /* @__PURE__ */ import_react140.default.createElement("div", null, /* @__PURE__ */ import_react140.default.createElement(
       FileTreeItem,
       {
         name: "Runtime Logs",
@@ -44655,12 +44622,12 @@ This file was not generated during the test run.`,
           runtimeLogs: !prev.runtimeLogs
         }))
       }
-    ), expandedSections.runtimeLogs && /* @__PURE__ */ import_react141.default.createElement("div", { className: "ms-4" }, Object.values(
+    ), expandedSections.runtimeLogs && /* @__PURE__ */ import_react140.default.createElement("div", { className: "ms-4" }, Object.values(
       RUNTIME_SPECIFIC_LOGS[runtime]
     ).map((logName) => {
       const logContent = logs ? logs[logName] : void 0;
       const exists = logContent !== void 0 && (typeof logContent === "string" && logContent.trim() !== "" || typeof logContent === "object" && logContent !== null && Object.keys(logContent).length > 0);
-      return /* @__PURE__ */ import_react141.default.createElement(
+      return /* @__PURE__ */ import_react140.default.createElement(
         FileTreeItem,
         {
           key: logName,
@@ -44689,7 +44656,7 @@ This file was not generated during the test run.`,
           }
         }
       );
-    }))), logs && logs.source_files && /* @__PURE__ */ import_react141.default.createElement("div", null, /* @__PURE__ */ import_react141.default.createElement(
+    }))), logs && logs.source_files && /* @__PURE__ */ import_react140.default.createElement("div", null, /* @__PURE__ */ import_react140.default.createElement(
       FileTreeItem,
       {
         name: "Source Files",
@@ -44703,7 +44670,7 @@ This file was not generated during the test run.`,
           sourceFiles: !prev.sourceFiles
         }))
       }
-    ), expandedSections.sourceFiles && /* @__PURE__ */ import_react141.default.createElement("div", { className: "ms-4" }, /* @__PURE__ */ import_react141.default.createElement(
+    ), expandedSections.sourceFiles && /* @__PURE__ */ import_react140.default.createElement("div", { className: "ms-4" }, /* @__PURE__ */ import_react140.default.createElement(
       FileTree,
       {
         data: logs.source_files,
@@ -44719,7 +44686,7 @@ This file was not generated during the test run.`,
         level: 3,
         selectedSourcePath
       }
-    )))), (projectTests[project] || []).map((test) => /* @__PURE__ */ import_react141.default.createElement(
+    )))), (projectTests[project] || []).map((test) => /* @__PURE__ */ import_react140.default.createElement(
       FileTreeItem,
       {
         key: `${project}-${test}`,
@@ -44750,8 +44717,8 @@ This file was not generated during the test run.`,
     projectName,
     testName
   }) => {
-    const [syncEnabled, setSyncEnabled] = (0, import_react142.useState)(false);
-    return /* @__PURE__ */ import_react142.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react142.default.createElement("div", { className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react142.default.createElement("div", { className: "form-check form-switch" }, /* @__PURE__ */ import_react142.default.createElement(
+    const [syncEnabled, setSyncEnabled] = (0, import_react141.useState)(false);
+    return /* @__PURE__ */ import_react141.default.createElement("div", { className: "p-2" }, /* @__PURE__ */ import_react141.default.createElement("div", { className: "d-flex align-items-center mb-2" }, /* @__PURE__ */ import_react141.default.createElement("div", { className: "form-check form-switch" }, /* @__PURE__ */ import_react141.default.createElement(
       "input",
       {
         className: "form-check-input",
@@ -44761,7 +44728,7 @@ This file was not generated during the test run.`,
         id: "fileSyncToggle",
         disabled: true
       }
-    ), /* @__PURE__ */ import_react142.default.createElement("label", { className: "form-check-label small", htmlFor: "fileSyncToggle" }, "Live File Sync (Unavailable)"))), /* @__PURE__ */ import_react142.default.createElement(
+    ), /* @__PURE__ */ import_react141.default.createElement("label", { className: "form-check-label small", htmlFor: "fileSyncToggle" }, "Live File Sync (Unavailable)"))), /* @__PURE__ */ import_react141.default.createElement(
       ProjectsTree,
       {
         projects: projects2,
@@ -44781,7 +44748,7 @@ This file was not generated during the test run.`,
   };
 
   // src/app/frontend/components/pure/MagicRobotModal.tsx
-  var import_react143 = __toESM(require_react(), 1);
+  var import_react142 = __toESM(require_react(), 1);
   var MagicRobotModal = ({
     customMessage,
     isWebSocketConnected,
@@ -44835,7 +44802,7 @@ This file was not generated during the test run.`,
         setShowToast(true);
       }
     };
-    return /* @__PURE__ */ import_react143.default.createElement(
+    return /* @__PURE__ */ import_react142.default.createElement(
       Modal_default2,
       {
         show: showAiderModal,
@@ -44843,8 +44810,8 @@ This file was not generated during the test run.`,
         size: "lg",
         onShow: () => setMessageOption("default")
       },
-      /* @__PURE__ */ import_react143.default.createElement(Modal_default2.Header, { closeButton: true }, /* @__PURE__ */ import_react143.default.createElement(Modal_default2.Title, null, "Aider")),
-      /* @__PURE__ */ import_react143.default.createElement(Modal_default2.Body, null, /* @__PURE__ */ import_react143.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react143.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react143.default.createElement(
+      /* @__PURE__ */ import_react142.default.createElement(Modal_default2.Header, { closeButton: true }, /* @__PURE__ */ import_react142.default.createElement(Modal_default2.Title, null, "Aider")),
+      /* @__PURE__ */ import_react142.default.createElement(Modal_default2.Body, null, /* @__PURE__ */ import_react142.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react142.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react142.default.createElement(
         "input",
         {
           className: "form-check-input",
@@ -44855,7 +44822,7 @@ This file was not generated during the test run.`,
           checked: messageOption === "default",
           onChange: () => setMessageOption("default")
         }
-      ), /* @__PURE__ */ import_react143.default.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")), /* @__PURE__ */ import_react143.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react143.default.createElement(
+      ), /* @__PURE__ */ import_react142.default.createElement("label", { className: "form-check-label", htmlFor: "defaultMessage" }, "Use default message.txt")), /* @__PURE__ */ import_react142.default.createElement("div", { className: "form-check" }, /* @__PURE__ */ import_react142.default.createElement(
         "input",
         {
           className: "form-check-input",
@@ -44866,7 +44833,7 @@ This file was not generated during the test run.`,
           checked: messageOption === "custom",
           onChange: () => setMessageOption("custom")
         }
-      ), /* @__PURE__ */ import_react143.default.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")), messageOption === "custom" && /* @__PURE__ */ import_react143.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react143.default.createElement(
+      ), /* @__PURE__ */ import_react142.default.createElement("label", { className: "form-check-label", htmlFor: "customMessage" }, "Use custom message")), messageOption === "custom" && /* @__PURE__ */ import_react142.default.createElement("div", { className: "mt-2" }, /* @__PURE__ */ import_react142.default.createElement(
         "textarea",
         {
           className: "form-control",
@@ -44877,13 +44844,13 @@ This file was not generated during the test run.`,
           style: { minHeight: "500px" }
         }
       )))),
-      /* @__PURE__ */ import_react143.default.createElement(Modal_default2.Footer, null, /* @__PURE__ */ import_react143.default.createElement(Button_default2, { variant: "primary", onClick: onclick }, "Run Aider Command"))
+      /* @__PURE__ */ import_react142.default.createElement(Modal_default2.Footer, null, /* @__PURE__ */ import_react142.default.createElement(Button_default2, { variant: "primary", onClick: onclick }, "Run Aider Command"))
     );
   };
 
   // src/app/frontend/components/pure/ToastNotification.tsx
-  var import_react144 = __toESM(require_react(), 1);
-  var ToastNotification = ({ showToast, setShowToast, toastVariant, toastMessage }) => /* @__PURE__ */ import_react144.default.createElement(ToastContainer_default, { position: "top-end", className: "p-3" }, /* @__PURE__ */ import_react144.default.createElement(
+  var import_react143 = __toESM(require_react(), 1);
+  var ToastNotification = ({ showToast, setShowToast, toastVariant, toastMessage }) => /* @__PURE__ */ import_react143.default.createElement(ToastContainer_default, { position: "top-end", className: "p-3" }, /* @__PURE__ */ import_react143.default.createElement(
     Toast_default,
     {
       show: showToast,
@@ -44892,8 +44859,8 @@ This file was not generated during the test run.`,
       autohide: true,
       bg: toastVariant
     },
-    /* @__PURE__ */ import_react144.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react144.default.createElement("strong", { className: "me-auto" }, "Command Status")),
-    /* @__PURE__ */ import_react144.default.createElement(Toast_default.Body, { className: "text-white" }, toastMessage)
+    /* @__PURE__ */ import_react143.default.createElement(Toast_default.Header, null, /* @__PURE__ */ import_react143.default.createElement("strong", { className: "me-auto" }, "Command Status")),
+    /* @__PURE__ */ import_react143.default.createElement(Toast_default.Body, { className: "text-white" }, toastMessage)
   ));
 
   // src/app/frontend/testPage/TestPageView.tsx
@@ -44908,36 +44875,36 @@ This file was not generated during the test run.`,
     isWebSocketConnected
   }) => {
     const navigate = useNavigate();
-    const [showAiderModal, setShowAiderModal] = (0, import_react145.useState)(false);
-    const [messageOption, setMessageOption] = (0, import_react145.useState)(
+    const [showAiderModal, setShowAiderModal] = (0, import_react144.useState)(false);
+    const [messageOption, setMessageOption] = (0, import_react144.useState)(
       "default"
     );
-    const [customMessage, setCustomMessage] = (0, import_react145.useState)(
+    const [customMessage, setCustomMessage] = (0, import_react144.useState)(
       typeof logs["message.txt"] === "string" ? logs["message.txt"] : "make a script that prints hello"
     );
-    const [showToast, setShowToast] = (0, import_react145.useState)(false);
-    const [toastMessage, setToastMessage] = (0, import_react145.useState)("");
-    const [toastVariant, setToastVariant] = (0, import_react145.useState)(
+    const [showToast, setShowToast] = (0, import_react144.useState)(false);
+    const [toastMessage, setToastMessage] = (0, import_react144.useState)("");
+    const [toastVariant, setToastVariant] = (0, import_react144.useState)(
       "success"
     );
-    const [expandedSections, setExpandedSections] = (0, import_react145.useState)({
+    const [expandedSections, setExpandedSections] = (0, import_react144.useState)({
       standardLogs: true,
       runtimeLogs: true,
       sourceFiles: true,
       buildErrors: true
     });
-    const [activeTab, setActiveTab] = import_react145.default.useState("tests.json");
-    const [openFiles, setOpenFiles] = (0, import_react145.useState)([]);
-    const [activeFileIndex, setActiveFileIndex] = (0, import_react145.useState)(-1);
-    const [selectedSourcePath, setSelectedSourcePath] = (0, import_react145.useState)(
+    const [activeTab, setActiveTab] = import_react144.default.useState("tests.json");
+    const [openFiles, setOpenFiles] = (0, import_react144.useState)([]);
+    const [activeFileIndex, setActiveFileIndex] = (0, import_react144.useState)(-1);
+    const [selectedSourcePath, setSelectedSourcePath] = (0, import_react144.useState)(
       null
     );
-    const [editorTheme, setEditorTheme] = (0, import_react145.useState)(
+    const [editorTheme, setEditorTheme] = (0, import_react144.useState)(
       "vs-dark"
     );
-    const [projects2, setProjects] = (0, import_react145.useState)([]);
-    const [editorRef, setEditorRef] = (0, import_react145.useState)(null);
-    const [modelRef, setModelRef] = (0, import_react145.useState)(null);
+    const [projects2, setProjects] = (0, import_react144.useState)([]);
+    const [editorRef, setEditorRef] = (0, import_react144.useState)(null);
+    const [modelRef, setModelRef] = (0, import_react144.useState)(null);
     const openFile = (file) => {
       const existingIndex = openFiles.findIndex((f) => f.path === file.path);
       if (existingIndex !== -1) {
@@ -44960,7 +44927,7 @@ This file was not generated during the test run.`,
       }
     };
     const selectedFile = activeFileIndex >= 0 ? openFiles[activeFileIndex] : null;
-    (0, import_react145.useEffect)(() => {
+    (0, import_react144.useEffect)(() => {
       if (selectedFile && editorRef) {
         console.log("Updating editor for selected file:", selectedFile.path);
         const monaco = window.monaco;
@@ -44994,7 +44961,7 @@ This file was not generated during the test run.`,
         console.log("No selectedFile or editorRef available");
       }
     }, [selectedFile, editorRef, modelRef]);
-    return /* @__PURE__ */ import_react145.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react145.default.createElement(
+    return /* @__PURE__ */ import_react144.default.createElement(Container_default, { fluid: true, className: "px-0" }, /* @__PURE__ */ import_react144.default.createElement(
       TestPageNavbar,
       {
         decodedTestPath,
@@ -45003,7 +44970,7 @@ This file was not generated during the test run.`,
         setShowAiderModal,
         isWebSocketConnected
       }
-    ), /* @__PURE__ */ import_react145.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(
       MagicRobotModal,
       {
         customMessage,
@@ -45021,7 +44988,7 @@ This file was not generated during the test run.`,
         showAiderModal,
         testName
       }
-    ), /* @__PURE__ */ import_react145.default.createElement(Row_default, { className: "g-0 flex-nowrap overflow-x-auto" }, /* @__PURE__ */ import_react145.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(Row_default, { className: "g-0 flex-nowrap overflow-x-auto" }, /* @__PURE__ */ import_react144.default.createElement(
       Col_default,
       {
         sm: 3,
@@ -45030,7 +44997,7 @@ This file was not generated during the test run.`,
           overflowY: "auto"
         }
       },
-      /* @__PURE__ */ import_react145.default.createElement(
+      /* @__PURE__ */ import_react144.default.createElement(
         TestPageLeftContent,
         {
           projects: projects2,
@@ -45047,7 +45014,7 @@ This file was not generated during the test run.`,
           testName
         }
       )
-    ), /* @__PURE__ */ import_react145.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(
       Col_default,
       {
         sm: 8,
@@ -45058,11 +45025,11 @@ This file was not generated during the test run.`,
           flexDirection: "column"
         }
       },
-      openFiles.length > 0 && /* @__PURE__ */ import_react145.default.createElement("div", { style: {
+      openFiles.length > 0 && /* @__PURE__ */ import_react144.default.createElement("div", { style: {
         display: "flex",
         backgroundColor: "#1e1e1e",
         borderBottom: "1px solid #3c3c3c"
-      } }, openFiles.map((file, index2) => /* @__PURE__ */ import_react145.default.createElement(
+      } }, openFiles.map((file, index2) => /* @__PURE__ */ import_react144.default.createElement(
         "div",
         {
           key: file.path,
@@ -45077,8 +45044,8 @@ This file was not generated during the test run.`,
           },
           onClick: () => setActiveFileIndex(index2)
         },
-        /* @__PURE__ */ import_react145.default.createElement("span", { style: { marginRight: "8px" } }, file.path.split("/").pop()),
-        /* @__PURE__ */ import_react145.default.createElement(
+        /* @__PURE__ */ import_react144.default.createElement("span", { style: { marginRight: "8px" } }, file.path.split("/").pop()),
+        /* @__PURE__ */ import_react144.default.createElement(
           "button",
           {
             onClick: (e) => {
@@ -45110,7 +45077,7 @@ This file was not generated during the test run.`,
           "\xD7"
         )
       ))),
-      /* @__PURE__ */ import_react145.default.createElement("div", { style: { height: "100%", width: "100%", flexGrow: 1 }, id: "editor-wrapper" }, /* @__PURE__ */ import_react145.default.createElement(
+      /* @__PURE__ */ import_react144.default.createElement("div", { style: { height: "100%", width: "100%", flexGrow: 1 }, id: "editor-wrapper" }, /* @__PURE__ */ import_react144.default.createElement(
         de,
         {
           height: "100%",
@@ -45165,7 +45132,7 @@ This file was not generated during the test run.`,
           }
         }
       ))
-    ), /* @__PURE__ */ import_react145.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(
       Col_default,
       {
         sm: 8,
@@ -45174,7 +45141,7 @@ This file was not generated during the test run.`,
           overflowY: "auto"
         }
       },
-      /* @__PURE__ */ import_react145.default.createElement(
+      /* @__PURE__ */ import_react144.default.createElement(
         TestPageMainContent,
         {
           selectedFile,
@@ -45184,7 +45151,7 @@ This file was not generated during the test run.`,
           runtime
         }
       )
-    ), /* @__PURE__ */ import_react145.default.createElement(Col_default, { sm: 3, style: { height: "calc(100vh - 56px)", overflowY: "auto" } }, "atttibute editor here"), /* @__PURE__ */ import_react145.default.createElement(Col_default, { sm: 3, style: { height: "calc(100vh - 56px)", overflowY: "auto" } }, "tree editor here")), /* @__PURE__ */ import_react145.default.createElement(
+    ), /* @__PURE__ */ import_react144.default.createElement(Col_default, { sm: 3, style: { height: "calc(100vh - 56px)", overflowY: "auto" } }, "atttibute editor here"), /* @__PURE__ */ import_react144.default.createElement(Col_default, { sm: 3, style: { height: "calc(100vh - 56px)", overflowY: "auto" } }, "tree editor here")), /* @__PURE__ */ import_react144.default.createElement(
       ToastNotification,
       {
         showToast,
@@ -45199,26 +45166,26 @@ This file was not generated during the test run.`,
   var TestPage = () => {
     const navigate = useNavigate();
     const location2 = useLocation();
-    const [route, setRoute] = (0, import_react147.useState)("results");
+    const [route, setRoute] = (0, import_react146.useState)("results");
     const fs = useFs();
     const isConnected = fs?.isConnected || false;
-    const [testName, setTestName] = (0, import_react147.useState)("");
-    const [logs, setLogs] = (0, import_react147.useState)({});
-    const [testsExist, setTestsExist] = (0, import_react147.useState)(true);
-    const [errorCounts, setErrorCounts] = (0, import_react147.useState)({
+    const [testName, setTestName] = (0, import_react146.useState)("");
+    const [logs, setLogs] = (0, import_react146.useState)({});
+    const [testsExist, setTestsExist] = (0, import_react146.useState)(true);
+    const [errorCounts, setErrorCounts] = (0, import_react146.useState)({
       typeErrors: 0,
       staticErrors: 0,
       runTimeErrors: 0
     });
-    const [summary, setSummary] = (0, import_react147.useState)(null);
+    const [summary, setSummary] = (0, import_react146.useState)(null);
     const { projectName, "*": splat } = useParams();
     const pathParts = splat ? splat.split("/") : [];
     const runtime = pathParts.pop() || "";
     const testPath = pathParts.join("/");
     const decodedTestPath = testPath ? decodeURIComponent(testPath) : "";
     if (!logs)
-      return /* @__PURE__ */ import_react147.default.createElement("div", null, "loading...");
-    return /* @__PURE__ */ import_react147.default.createElement(import_react147.default.Fragment, null, /* @__PURE__ */ import_react147.default.createElement(
+      return /* @__PURE__ */ import_react146.default.createElement("div", null, "loading...");
+    return /* @__PURE__ */ import_react146.default.createElement(import_react146.default.Fragment, null, /* @__PURE__ */ import_react146.default.createElement(
       TestPageView,
       {
         route,
@@ -45237,11 +45204,11 @@ This file was not generated during the test run.`,
   };
 
   // src/app/frontend/components/DesignEditorPage.tsx
-  var import_react148 = __toESM(require_react(), 1);
+  var import_react147 = __toESM(require_react(), 1);
   var import_file_saver = __toESM(require_FileSaver_min(), 1);
   var DesignEditorPage = () => {
-    const [projectId, setProjectId] = (0, import_react148.useState)("default-project");
-    const [fileHandle, setFileHandle] = (0, import_react148.useState)(null);
+    const [projectId, setProjectId] = (0, import_react147.useState)("default-project");
+    const [fileHandle, setFileHandle] = (0, import_react147.useState)(null);
     const handleSave = async () => {
       try {
         let newHandle;
@@ -45274,7 +45241,7 @@ This file was not generated during the test run.`,
         }
       }
     };
-    const [design, setDesign] = (0, import_react148.useState)(null);
+    const [design, setDesign] = (0, import_react147.useState)(null);
     const handleOpen = async () => {
       console.log("handleOpen triggered");
       try {
@@ -45336,16 +45303,16 @@ This file was not generated during the test run.`,
       const blob = new Blob([designData], { type: "application/json" });
       (0, import_file_saver.saveAs)(blob, `${projectId}.json`);
     };
-    return /* @__PURE__ */ import_react148.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react148.default.createElement(Row_default, { className: "mb-3" }, /* @__PURE__ */ import_react148.default.createElement(Col_default, null, /* @__PURE__ */ import_react148.default.createElement("h1", null, "Design Editor"), /* @__PURE__ */ import_react148.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react148.default.createElement(Button_default2, { variant: "primary", onClick: handleOpen }, "Open"), /* @__PURE__ */ import_react148.default.createElement(Button_default2, { variant: "success", onClick: handleSave }, "Save"), /* @__PURE__ */ import_react148.default.createElement(Button_default2, { variant: "secondary", onClick: handleExport }, "Export")))), /* @__PURE__ */ import_react148.default.createElement(Row_default, null, /* @__PURE__ */ import_react148.default.createElement(Col_default, null)));
+    return /* @__PURE__ */ import_react147.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react147.default.createElement(Row_default, { className: "mb-3" }, /* @__PURE__ */ import_react147.default.createElement(Col_default, null, /* @__PURE__ */ import_react147.default.createElement("h1", null, "Design Editor"), /* @__PURE__ */ import_react147.default.createElement("div", { className: "d-flex gap-2" }, /* @__PURE__ */ import_react147.default.createElement(Button_default2, { variant: "primary", onClick: handleOpen }, "Open"), /* @__PURE__ */ import_react147.default.createElement(Button_default2, { variant: "success", onClick: handleSave }, "Save"), /* @__PURE__ */ import_react147.default.createElement(Button_default2, { variant: "secondary", onClick: handleExport }, "Export")))), /* @__PURE__ */ import_react147.default.createElement(Row_default, null, /* @__PURE__ */ import_react147.default.createElement(Col_default, null)));
   };
 
   // src/app/frontend/components/stateful/TextEditorPage.tsx
-  var import_react149 = __toESM(require_react(), 1);
+  var import_react148 = __toESM(require_react(), 1);
   var TextEditorPage = () => {
-    const [files, setFiles] = (0, import_react149.useState)([]);
-    const [activeFile, setActiveFile] = (0, import_react149.useState)(null);
-    const [editorTheme, setEditorTheme] = (0, import_react149.useState)("vs-dark");
-    (0, import_react149.useEffect)(() => {
+    const [files, setFiles] = (0, import_react148.useState)([]);
+    const [activeFile, setActiveFile] = (0, import_react148.useState)(null);
+    const [editorTheme, setEditorTheme] = (0, import_react148.useState)("vs-dark");
+    (0, import_react148.useEffect)(() => {
       const sampleFiles = [
         {
           path: "src/index.ts",
@@ -45374,7 +45341,7 @@ This file was not generated during the test run.`,
         ));
       }
     };
-    const [widths, setWidths] = (0, import_react149.useState)({
+    const [widths, setWidths] = (0, import_react148.useState)({
       fileTree: 250,
       editor: window.innerWidth - 550,
       // Initial editor width (total width minus side panels)
@@ -45390,9 +45357,9 @@ This file was not generated during the test run.`,
       overflow: "hidden",
       position: "relative"
     };
-    const [isResizing, setIsResizing] = (0, import_react149.useState)(false);
-    const [startX, setStartX] = (0, import_react149.useState)(0);
-    const [startWidth, setStartWidth] = (0, import_react149.useState)(0);
+    const [isResizing, setIsResizing] = (0, import_react148.useState)(false);
+    const [startX, setStartX] = (0, import_react148.useState)(0);
+    const [startWidth, setStartWidth] = (0, import_react148.useState)(0);
     const startResizing = (e, panel) => {
       setIsResizing(true);
       setStartX(e.clientX);
@@ -45412,7 +45379,7 @@ This file was not generated during the test run.`,
     const stopResizing = () => {
       setIsResizing(false);
     };
-    (0, import_react149.useEffect)(() => {
+    (0, import_react148.useEffect)(() => {
       window.addEventListener("mousemove", resize);
       window.addEventListener("mouseup", stopResizing);
       return () => {
@@ -45420,14 +45387,14 @@ This file was not generated during the test run.`,
         window.removeEventListener("mouseup", stopResizing);
       };
     }, [isResizing, startX, startWidth]);
-    return /* @__PURE__ */ import_react149.default.createElement("div", { style: containerStyle }, /* @__PURE__ */ import_react149.default.createElement("div", { style: { ...panelStyle, width: widths.fileTree } }, /* @__PURE__ */ import_react149.default.createElement(
+    return /* @__PURE__ */ import_react148.default.createElement("div", { style: containerStyle }, /* @__PURE__ */ import_react148.default.createElement("div", { style: { ...panelStyle, width: widths.fileTree } }, /* @__PURE__ */ import_react148.default.createElement(
       void 0,
       {
         files,
         onSelect: handleFileSelect,
         activeFile: activeFile?.path
       }
-    ), /* @__PURE__ */ import_react149.default.createElement(
+    ), /* @__PURE__ */ import_react148.default.createElement(
       "div",
       {
         style: {
@@ -45442,7 +45409,7 @@ This file was not generated during the test run.`,
         },
         onMouseDown: (e) => startResizing(e, "fileTree")
       }
-    )), /* @__PURE__ */ import_react149.default.createElement("div", { style: { ...panelStyle, width: widths.editor } }, activeFile && /* @__PURE__ */ import_react149.default.createElement(
+    )), /* @__PURE__ */ import_react148.default.createElement("div", { style: { ...panelStyle, width: widths.editor } }, activeFile && /* @__PURE__ */ import_react148.default.createElement(
       de,
       {
         height: "100%",
@@ -45458,7 +45425,7 @@ This file was not generated during the test run.`,
           automaticLayout: true
         }
       }
-    )), /* @__PURE__ */ import_react149.default.createElement("div", { style: { ...panelStyle, width: widths.preview } }, /* @__PURE__ */ import_react149.default.createElement(
+    )), /* @__PURE__ */ import_react148.default.createElement("div", { style: { ...panelStyle, width: widths.preview } }, /* @__PURE__ */ import_react148.default.createElement(
       "div",
       {
         style: {
@@ -45473,18 +45440,70 @@ This file was not generated during the test run.`,
         },
         onMouseDown: (e) => startResizing(e, "editor")
       }
-    ), activeFile && /* @__PURE__ */ import_react149.default.createElement("div", null)));
+    ), activeFile && /* @__PURE__ */ import_react148.default.createElement("div", null)));
   };
 
   // src/app/frontend/components/stateful/ProcessManagerPage.tsx
-  var import_react158 = __toESM(require_react(), 1);
-
-  // src/app/frontend/components/pure/ProcessManagerView.tsx
   var import_react157 = __toESM(require_react(), 1);
 
+  // src/app/frontend/components/pure/ProcessManagerView.tsx
+  var import_react156 = __toESM(require_react(), 1);
+
   // src/app/frontend/components/pure/ProcessList.tsx
-  var import_react151 = __toESM(require_react(), 1);
+  var import_react150 = __toESM(require_react(), 1);
   var getStatusBadge = (process2) => {
+    switch (process2.status) {
+      case "running":
+        return /* @__PURE__ */ import_react150.default.createElement(Badge_default, { bg: "success" }, "Running");
+      case "exited":
+        return /* @__PURE__ */ import_react150.default.createElement(Badge_default, { bg: "secondary" }, "Exited (", process2.exitCode, ")");
+      case "error":
+        return /* @__PURE__ */ import_react150.default.createElement(Badge_default, { bg: "danger" }, "Error");
+      default:
+        return /* @__PURE__ */ import_react150.default.createElement(Badge_default, { bg: "warning" }, "Unknown");
+    }
+  };
+  var ProcessList = ({
+    processes,
+    selectedProcess,
+    onSelectProcess,
+    loading
+  }) => {
+    return /* @__PURE__ */ import_react150.default.createElement("div", { className: "p-1" }, [...processes].reverse().map((process2) => /* @__PURE__ */ import_react150.default.createElement(
+      "div",
+      {
+        key: process2.processId,
+        className: `p-2 mb-1 rounded ${selectedProcess?.processId === process2.processId ? "bg-primary text-white" : "bg-white border"}`,
+        style: { cursor: "pointer" },
+        onClick: () => onSelectProcess(process2),
+        title: process2.command
+      },
+      /* @__PURE__ */ import_react150.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react150.default.createElement("div", { className: "flex-grow-1", style: { minWidth: 0 } }, /* @__PURE__ */ import_react150.default.createElement("div", { className: "fw-bold text-truncate small" }, process2.command.split(" ")[0]), /* @__PURE__ */ import_react150.default.createElement(
+        "div",
+        {
+          className: `text-truncate ${selectedProcess?.processId === process2.processId ? "text-white-50" : "text-muted"}`,
+          style: { fontSize: "0.7rem" }
+        },
+        "PID: ",
+        process2.pid || "N/A",
+        " |",
+        " ",
+        new Date(process2.timestamp).toLocaleTimeString()
+      )), /* @__PURE__ */ import_react150.default.createElement("div", { className: "ms-2" }, getStatusBadge(process2))),
+      process2.error && /* @__PURE__ */ import_react150.default.createElement(
+        "div",
+        {
+          className: `mt-1 ${selectedProcess?.processId === process2.processId ? "text-warning" : "text-danger"}`,
+          style: { fontSize: "0.7rem" }
+        },
+        /* @__PURE__ */ import_react150.default.createElement("div", { className: "text-truncate" }, "Error: ", process2.error)
+      )
+    )), processes.length === 0 && !loading && /* @__PURE__ */ import_react150.default.createElement("div", { className: "p-2 text-center text-muted small" }, "No active processes"), loading && processes.length === 0 && /* @__PURE__ */ import_react150.default.createElement("div", { className: "p-2 text-center small" }, /* @__PURE__ */ import_react150.default.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" }, /* @__PURE__ */ import_react150.default.createElement("span", { className: "visually-hidden" }, "Loading..."))));
+  };
+
+  // src/app/frontend/components/pure/ProcessDetails.tsx
+  var import_react151 = __toESM(require_react(), 1);
+  var getStatusBadge2 = (process2) => {
     switch (process2.status) {
       case "running":
         return /* @__PURE__ */ import_react151.default.createElement(Badge_default, { bg: "success" }, "Running");
@@ -45496,66 +45515,14 @@ This file was not generated during the test run.`,
         return /* @__PURE__ */ import_react151.default.createElement(Badge_default, { bg: "warning" }, "Unknown");
     }
   };
-  var ProcessList = ({
-    processes,
-    selectedProcess,
-    onSelectProcess,
-    loading
-  }) => {
-    return /* @__PURE__ */ import_react151.default.createElement("div", { className: "p-1" }, [...processes].reverse().map((process2) => /* @__PURE__ */ import_react151.default.createElement(
-      "div",
-      {
-        key: process2.processId,
-        className: `p-2 mb-1 rounded ${selectedProcess?.processId === process2.processId ? "bg-primary text-white" : "bg-white border"}`,
-        style: { cursor: "pointer" },
-        onClick: () => onSelectProcess(process2),
-        title: process2.command
-      },
-      /* @__PURE__ */ import_react151.default.createElement("div", { className: "d-flex justify-content-between align-items-start" }, /* @__PURE__ */ import_react151.default.createElement("div", { className: "flex-grow-1", style: { minWidth: 0 } }, /* @__PURE__ */ import_react151.default.createElement("div", { className: "fw-bold text-truncate small" }, process2.command.split(" ")[0]), /* @__PURE__ */ import_react151.default.createElement(
-        "div",
-        {
-          className: `text-truncate ${selectedProcess?.processId === process2.processId ? "text-white-50" : "text-muted"}`,
-          style: { fontSize: "0.7rem" }
-        },
-        "PID: ",
-        process2.pid || "N/A",
-        " |",
-        " ",
-        new Date(process2.timestamp).toLocaleTimeString()
-      )), /* @__PURE__ */ import_react151.default.createElement("div", { className: "ms-2" }, getStatusBadge(process2))),
-      process2.error && /* @__PURE__ */ import_react151.default.createElement(
-        "div",
-        {
-          className: `mt-1 ${selectedProcess?.processId === process2.processId ? "text-warning" : "text-danger"}`,
-          style: { fontSize: "0.7rem" }
-        },
-        /* @__PURE__ */ import_react151.default.createElement("div", { className: "text-truncate" }, "Error: ", process2.error)
-      )
-    )), processes.length === 0 && !loading && /* @__PURE__ */ import_react151.default.createElement("div", { className: "p-2 text-center text-muted small" }, "No active processes"), loading && processes.length === 0 && /* @__PURE__ */ import_react151.default.createElement("div", { className: "p-2 text-center small" }, /* @__PURE__ */ import_react151.default.createElement("div", { className: "spinner-border spinner-border-sm", role: "status" }, /* @__PURE__ */ import_react151.default.createElement("span", { className: "visually-hidden" }, "Loading..."))));
-  };
-
-  // src/app/frontend/components/pure/ProcessDetails.tsx
-  var import_react152 = __toESM(require_react(), 1);
-  var getStatusBadge2 = (process2) => {
-    switch (process2.status) {
-      case "running":
-        return /* @__PURE__ */ import_react152.default.createElement(Badge_default, { bg: "success" }, "Running");
-      case "exited":
-        return /* @__PURE__ */ import_react152.default.createElement(Badge_default, { bg: "secondary" }, "Exited (", process2.exitCode, ")");
-      case "error":
-        return /* @__PURE__ */ import_react152.default.createElement(Badge_default, { bg: "danger" }, "Error");
-      default:
-        return /* @__PURE__ */ import_react152.default.createElement(Badge_default, { bg: "warning" }, "Unknown");
-    }
-  };
   var ProcessDetails = ({
     selectedProcess,
     onKillProcess
   }) => {
     if (!selectedProcess) {
-      return /* @__PURE__ */ import_react152.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react152.default.createElement("i", null, "Select a process to view details"));
+      return /* @__PURE__ */ import_react151.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react151.default.createElement("i", null, "Select a process to view details"));
     }
-    return /* @__PURE__ */ import_react152.default.createElement("div", { className: "flex-grow-1 d-flex flex-column" }, /* @__PURE__ */ import_react152.default.createElement("div", { className: "d-flex align-items-center gap-2 mb-3 flex-wrap" }, /* @__PURE__ */ import_react152.default.createElement("div", null, getStatusBadge2(selectedProcess)), /* @__PURE__ */ import_react152.default.createElement("div", { className: "text-muted" }, selectedProcess.pid || "N/A"), /* @__PURE__ */ import_react152.default.createElement("div", { className: "text-muted" }, new Date(selectedProcess.timestamp).toLocaleString()), selectedProcess.status === "running" && onKillProcess && /* @__PURE__ */ import_react152.default.createElement(
+    return /* @__PURE__ */ import_react151.default.createElement("div", { className: "flex-grow-1 d-flex flex-column" }, /* @__PURE__ */ import_react151.default.createElement("div", { className: "d-flex align-items-center gap-2 mb-3 flex-wrap" }, /* @__PURE__ */ import_react151.default.createElement("div", null, getStatusBadge2(selectedProcess)), /* @__PURE__ */ import_react151.default.createElement("div", { className: "text-muted" }, selectedProcess.pid || "N/A"), /* @__PURE__ */ import_react151.default.createElement("div", { className: "text-muted" }, new Date(selectedProcess.timestamp).toLocaleString()), selectedProcess.status === "running" && onKillProcess && /* @__PURE__ */ import_react151.default.createElement(
       Button_default2,
       {
         variant: "danger",
@@ -45564,7 +45531,7 @@ This file was not generated during the test run.`,
         className: "flex-grow-0 ms-auto"
       },
       "\u23F9\uFE0F Stop"
-    ), selectedProcess.exitCode !== void 0 && /* @__PURE__ */ import_react152.default.createElement("div", { className: "text-muted" }, selectedProcess.exitCode)), selectedProcess.error && /* @__PURE__ */ import_react152.default.createElement(Alert_default, { variant: "danger", className: "py-2 mb-3" }, selectedProcess.error), /* @__PURE__ */ import_react152.default.createElement("div", null, /* @__PURE__ */ import_react152.default.createElement("div", { className: "mb-1 small text-muted" }, "Command:"), /* @__PURE__ */ import_react152.default.createElement(
+    ), selectedProcess.exitCode !== void 0 && /* @__PURE__ */ import_react151.default.createElement("div", { className: "text-muted" }, selectedProcess.exitCode)), selectedProcess.error && /* @__PURE__ */ import_react151.default.createElement(Alert_default, { variant: "danger", className: "py-2 mb-3" }, selectedProcess.error), /* @__PURE__ */ import_react151.default.createElement("div", null, /* @__PURE__ */ import_react151.default.createElement("div", { className: "mb-1 small text-muted" }, "Command:"), /* @__PURE__ */ import_react151.default.createElement(
       "div",
       {
         className: "bg-dark text-light p-2 rounded",
@@ -45583,13 +45550,13 @@ This file was not generated during the test run.`,
   };
 
   // src/app/frontend/components/pure/ProcessTerminal.tsx
-  var import_react156 = __toESM(require_react(), 1);
+  var import_react155 = __toESM(require_react(), 1);
 
   // src/app/frontend/useTerminalWebSocket.ts
-  var import_react153 = __toESM(require_react(), 1);
+  var import_react152 = __toESM(require_react(), 1);
   var useTerminalWebSocket = (ws, selectedProcess) => {
-    const [processLogs, setProcessLogs] = (0, import_react153.useState)([]);
-    const handleMessage = (0, import_react153.useCallback)(
+    const [processLogs, setProcessLogs] = (0, import_react152.useState)([]);
+    const handleMessage = (0, import_react152.useCallback)(
       (event) => {
         try {
           const data2 = JSON.parse(event.data);
@@ -45604,10 +45571,10 @@ This file was not generated during the test run.`,
       },
       [selectedProcess]
     );
-    (0, import_react153.useEffect)(() => {
+    (0, import_react152.useEffect)(() => {
       setProcessLogs(selectedProcess?.logs || []);
     }, [selectedProcess]);
-    (0, import_react153.useEffect)(() => {
+    (0, import_react152.useEffect)(() => {
       if (!ws)
         return;
       ws.addEventListener("message", handleMessage);
@@ -45621,29 +45588,29 @@ This file was not generated during the test run.`,
   };
 
   // src/app/frontend/components/pure/TerminalLogs.tsx
-  var import_react154 = __toESM(require_react(), 1);
+  var import_react153 = __toESM(require_react(), 1);
   var TerminalLogs = ({ logs }) => {
-    const [autoScroll, setAutoScroll] = (0, import_react154.useState)(true);
-    const logsContainerRef = (0, import_react154.useRef)(null);
-    (0, import_react154.useEffect)(() => {
+    const [autoScroll, setAutoScroll] = (0, import_react153.useState)(true);
+    const logsContainerRef = (0, import_react153.useRef)(null);
+    (0, import_react153.useEffect)(() => {
       if (autoScroll && logsContainerRef.current) {
         logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
       }
     }, [logs, autoScroll]);
-    const handleLogsScroll = (0, import_react154.useCallback)(() => {
+    const handleLogsScroll = (0, import_react153.useCallback)(() => {
       if (logsContainerRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = logsContainerRef.current;
         const isAtBottom = scrollHeight - scrollTop <= clientHeight + 10;
         setAutoScroll(isAtBottom);
       }
     }, []);
-    const handleScrollToBottom = (0, import_react154.useCallback)(() => {
+    const handleScrollToBottom = (0, import_react153.useCallback)(() => {
       setAutoScroll(true);
       if (logsContainerRef.current) {
         logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
       }
     }, []);
-    return /* @__PURE__ */ import_react154.default.createElement(
+    return /* @__PURE__ */ import_react153.default.createElement(
       "div",
       {
         ref: logsContainerRef,
@@ -45657,7 +45624,7 @@ This file was not generated during the test run.`,
         },
         onScroll: handleLogsScroll
       },
-      logs.length > 0 ? /* @__PURE__ */ import_react154.default.createElement(
+      logs.length > 0 ? /* @__PURE__ */ import_react153.default.createElement(
         "pre",
         {
           className: "mb-0",
@@ -45670,8 +45637,8 @@ This file was not generated during the test run.`,
           }
         },
         logs.join("")
-      ) : /* @__PURE__ */ import_react154.default.createElement("div", { className: "text-muted text-center py-4" }, /* @__PURE__ */ import_react154.default.createElement("i", null, "No output yet")),
-      !autoScroll && /* @__PURE__ */ import_react154.default.createElement("div", { className: "position-sticky bottom-0 d-flex justify-content-center mb-2" }, /* @__PURE__ */ import_react154.default.createElement(
+      ) : /* @__PURE__ */ import_react153.default.createElement("div", { className: "text-muted text-center py-4" }, /* @__PURE__ */ import_react153.default.createElement("i", null, "No output yet")),
+      !autoScroll && /* @__PURE__ */ import_react153.default.createElement("div", { className: "position-sticky bottom-0 d-flex justify-content-center mb-2" }, /* @__PURE__ */ import_react153.default.createElement(
         Button_default2,
         {
           variant: "primary",
@@ -45684,31 +45651,31 @@ This file was not generated during the test run.`,
   };
 
   // src/app/frontend/components/pure/TerminalInput.tsx
-  var import_react155 = __toESM(require_react(), 1);
+  var import_react154 = __toESM(require_react(), 1);
   var TerminalInput = ({ onInput }) => {
-    const [inputValue, setInputValue] = (0, import_react155.useState)("");
-    const inputRef = (0, import_react155.useRef)(null);
-    const handleSubmit = (0, import_react155.useCallback)(() => {
+    const [inputValue, setInputValue] = (0, import_react154.useState)("");
+    const inputRef = (0, import_react154.useRef)(null);
+    const handleSubmit = (0, import_react154.useCallback)(() => {
       if (inputValue.trim()) {
         onInput(inputValue + "\n");
         setInputValue("");
       }
     }, [inputValue, onInput]);
-    const handleKeyPress = (0, import_react155.useCallback)((e) => {
+    const handleKeyPress = (0, import_react154.useCallback)((e) => {
       if (e.key === "Enter") {
         handleSubmit();
         e.preventDefault();
       }
     }, [handleSubmit]);
-    const handleInputChange = (0, import_react155.useCallback)((e) => {
+    const handleInputChange = (0, import_react154.useCallback)((e) => {
       setInputValue(e.target.value);
     }, []);
-    (0, import_react155.useEffect)(() => {
+    (0, import_react154.useEffect)(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
     }, [inputValue]);
-    return /* @__PURE__ */ import_react155.default.createElement("div", { className: "border-top bg-white p-2 mt-2", style: { flexShrink: 0 } }, /* @__PURE__ */ import_react155.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react155.default.createElement(
+    return /* @__PURE__ */ import_react154.default.createElement("div", { className: "border-top bg-white p-2 mt-2", style: { flexShrink: 0 } }, /* @__PURE__ */ import_react154.default.createElement("div", { className: "input-group" }, /* @__PURE__ */ import_react154.default.createElement(
       "input",
       {
         ref: inputRef,
@@ -45728,7 +45695,7 @@ This file was not generated during the test run.`,
         },
         style: { cursor: "text" }
       }
-    ), /* @__PURE__ */ import_react155.default.createElement(
+    ), /* @__PURE__ */ import_react154.default.createElement(
       "button",
       {
         className: "btn btn-primary",
@@ -45746,7 +45713,7 @@ This file was not generated during the test run.`,
     ws
   }) => {
     const { processLogs } = useTerminalWebSocket(ws, selectedProcess);
-    const handleInput = (0, import_react156.useCallback)(
+    const handleInput = (0, import_react155.useCallback)(
       (data2) => {
         if (ws && ws.readyState === WebSocket.OPEN && selectedProcess?.status === "running") {
           ws.send(
@@ -45761,9 +45728,9 @@ This file was not generated during the test run.`,
       [ws, selectedProcess]
     );
     if (!selectedProcess) {
-      return /* @__PURE__ */ import_react156.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react156.default.createElement("i", null, "Terminal will appear here when a process is selected"));
+      return /* @__PURE__ */ import_react155.default.createElement("div", { className: "text-center text-muted mt-5" }, /* @__PURE__ */ import_react155.default.createElement("i", null, "Terminal will appear here when a process is selected"));
     }
-    return /* @__PURE__ */ import_react156.default.createElement("div", { className: "flex-grow-1 d-flex flex-column", style: { minHeight: 0 } }, /* @__PURE__ */ import_react156.default.createElement(TerminalLogs, { logs: processLogs }), selectedProcess.status === "running" && /* @__PURE__ */ import_react156.default.createElement(TerminalInput, { onInput: handleInput }));
+    return /* @__PURE__ */ import_react155.default.createElement("div", { className: "flex-grow-1 d-flex flex-column", style: { minHeight: 0 } }, /* @__PURE__ */ import_react155.default.createElement(TerminalLogs, { logs: processLogs }), selectedProcess.status === "running" && /* @__PURE__ */ import_react155.default.createElement(TerminalInput, { onInput: handleInput }));
   };
 
   // src/app/frontend/components/pure/ProcessManagerView.tsx
@@ -45774,12 +45741,12 @@ This file was not generated during the test run.`,
     loading,
     onKillProcess
   }) => {
-    const [selectedProcess, setSelectedProcess] = (0, import_react157.useState)(null);
+    const [selectedProcess, setSelectedProcess] = (0, import_react156.useState)(null);
     const { ws } = useWebSocket();
-    const handleSelectProcess = (0, import_react157.useCallback)((process2) => {
+    const handleSelectProcess = (0, import_react156.useCallback)((process2) => {
       setSelectedProcess(process2);
     }, []);
-    (0, import_react157.useEffect)(() => {
+    (0, import_react156.useEffect)(() => {
       if (selectedProcess && ws && ws.readyState === WebSocket.OPEN) {
         ws.send(
           JSON.stringify({
@@ -45789,11 +45756,11 @@ This file was not generated during the test run.`,
         );
       }
     }, [selectedProcess, ws]);
-    return /* @__PURE__ */ import_react157.default.createElement(Container_default, { fluid: true, className: "px-0 h-100" }, /* @__PURE__ */ import_react157.default.createElement(Row_default, { className: "g-0", style: { height: "calc(100vh - 56px)" } }, /* @__PURE__ */ import_react157.default.createElement(Col_default, { sm: 2, className: "border-end", style: {
+    return /* @__PURE__ */ import_react156.default.createElement(Container_default, { fluid: true, className: "px-0 h-100" }, /* @__PURE__ */ import_react156.default.createElement(Row_default, { className: "g-0", style: { height: "calc(100vh - 56px)" } }, /* @__PURE__ */ import_react156.default.createElement(Col_default, { sm: 2, className: "border-end", style: {
       height: "100%",
       overflow: "auto",
       backgroundColor: "#f8f9fa"
-    } }, /* @__PURE__ */ import_react157.default.createElement(
+    } }, /* @__PURE__ */ import_react156.default.createElement(
       ProcessList,
       {
         processes,
@@ -45801,19 +45768,19 @@ This file was not generated during the test run.`,
         onSelectProcess: handleSelectProcess,
         loading
       }
-    )), /* @__PURE__ */ import_react157.default.createElement(Col_default, { sm: 5, className: "border-end p-3 d-flex flex-column", style: {
+    )), /* @__PURE__ */ import_react156.default.createElement(Col_default, { sm: 5, className: "border-end p-3 d-flex flex-column", style: {
       height: "100%",
       overflow: "hidden"
-    } }, /* @__PURE__ */ import_react157.default.createElement(
+    } }, /* @__PURE__ */ import_react156.default.createElement(
       ProcessDetails,
       {
         selectedProcess,
         onKillProcess
       }
-    )), /* @__PURE__ */ import_react157.default.createElement(Col_default, { sm: 5, className: "p-3 d-flex flex-column", style: {
+    )), /* @__PURE__ */ import_react156.default.createElement(Col_default, { sm: 5, className: "p-3 d-flex flex-column", style: {
       height: "100%",
       overflow: "hidden"
-    } }, /* @__PURE__ */ import_react157.default.createElement(
+    } }, /* @__PURE__ */ import_react156.default.createElement(
       ProcessTerminal,
       {
         selectedProcess,
@@ -45824,11 +45791,11 @@ This file was not generated during the test run.`,
 
   // src/app/frontend/components/stateful/ProcessManagerPage.tsx
   var ProcessManagerPage = () => {
-    const [processes, setProcesses] = (0, import_react158.useState)([]);
+    const [processes, setProcesses] = (0, import_react157.useState)([]);
     const { ws } = useWebSocket();
-    const [loading, setLoading] = (0, import_react158.useState)(false);
+    const [loading, setLoading] = (0, import_react157.useState)(false);
     const navigate = useNavigate();
-    (0, import_react158.useEffect)(() => {
+    (0, import_react157.useEffect)(() => {
       if (!ws)
         return;
       const handleMessage = (event) => {
@@ -45877,13 +45844,13 @@ This file was not generated during the test run.`,
         ws.removeEventListener("message", handleMessage);
       };
     }, [ws]);
-    const handleRefresh = (0, import_react158.useCallback)(() => {
+    const handleRefresh = (0, import_react157.useCallback)(() => {
       if (ws && ws.readyState === WebSocket.OPEN) {
         setLoading(true);
         ws.send(JSON.stringify({ type: "getRunningProcesses" }));
       }
     }, [ws]);
-    const handleKillProcess = (0, import_react158.useCallback)((processId) => {
+    const handleKillProcess = (0, import_react157.useCallback)((processId) => {
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({
           type: "killProcess",
@@ -45891,12 +45858,12 @@ This file was not generated during the test run.`,
         }));
       }
     }, [ws]);
-    const handleBack = (0, import_react158.useCallback)(() => {
+    const handleBack = (0, import_react157.useCallback)(() => {
       navigate("/");
     }, [navigate]);
     return (
       // don't put this in AppFrame- this is correct
-      /* @__PURE__ */ import_react158.default.createElement(
+      /* @__PURE__ */ import_react157.default.createElement(
         ProcessManagerView,
         {
           processes,
@@ -45910,18 +45877,18 @@ This file was not generated during the test run.`,
   };
 
   // src/app/frontend/components/pure/Settings.tsx
-  var import_react159 = __toESM(require_react(), 1);
+  var import_react158 = __toESM(require_react(), 1);
   var Settings = () => {
-    const [theme, setTheme] = (0, import_react159.useState)("auto");
+    const [theme, setTheme] = (0, import_react158.useState)("auto");
     const { tutorialMode, setTutorialMode } = useTutorialMode();
     const { isAuthenticated, logout } = useAuth();
-    (0, import_react159.useEffect)(() => {
+    (0, import_react158.useEffect)(() => {
       const savedTheme = localStorage.getItem("theme");
       if (savedTheme) {
         setTheme(savedTheme);
       }
     }, []);
-    (0, import_react159.useEffect)(() => {
+    (0, import_react158.useEffect)(() => {
       applyTheme(theme);
       localStorage.setItem("theme", theme);
     }, [theme]);
@@ -45945,7 +45912,7 @@ This file was not generated during the test run.`,
       setTutorialMode(newTutorialMode);
       localStorage.setItem("tutorialMode", newTutorialMode.toString());
     };
-    return /* @__PURE__ */ import_react159.default.createElement(Container_default, null, /* @__PURE__ */ import_react159.default.createElement(Row_default, null, /* @__PURE__ */ import_react159.default.createElement(Col_default, { md: 8, lg: 6 }, /* @__PURE__ */ import_react159.default.createElement(Card_default, null, /* @__PURE__ */ import_react159.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react159.default.createElement("h5", { className: "mb-0" }, "Appearance")), /* @__PURE__ */ import_react159.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react159.default.createElement(Form_default, null, /* @__PURE__ */ import_react159.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react159.default.createElement("div", null, /* @__PURE__ */ import_react159.default.createElement(
+    return /* @__PURE__ */ import_react158.default.createElement(Container_default, null, /* @__PURE__ */ import_react158.default.createElement(Row_default, null, /* @__PURE__ */ import_react158.default.createElement(Col_default, { md: 8, lg: 6 }, /* @__PURE__ */ import_react158.default.createElement(Card_default, null, /* @__PURE__ */ import_react158.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react158.default.createElement("h5", { className: "mb-0" }, "Appearance")), /* @__PURE__ */ import_react158.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react158.default.createElement(Form_default, null, /* @__PURE__ */ import_react158.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react158.default.createElement("div", null, /* @__PURE__ */ import_react158.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -45956,7 +45923,7 @@ This file was not generated during the test run.`,
         checked: theme === "light",
         onChange: handleThemeChange
       }
-    ), /* @__PURE__ */ import_react159.default.createElement(
+    ), /* @__PURE__ */ import_react158.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -45967,7 +45934,7 @@ This file was not generated during the test run.`,
         checked: theme === "dark",
         onChange: handleThemeChange
       }
-    ), /* @__PURE__ */ import_react159.default.createElement(
+    ), /* @__PURE__ */ import_react158.default.createElement(
       Form_default.Check,
       {
         type: "radio",
@@ -45978,7 +45945,7 @@ This file was not generated during the test run.`,
         checked: theme === "auto",
         onChange: handleThemeChange
       }
-    ))), /* @__PURE__ */ import_react159.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react159.default.createElement(
+    ))), /* @__PURE__ */ import_react158.default.createElement(Form_default.Group, { className: "mb-4" }, /* @__PURE__ */ import_react158.default.createElement(
       Form_default.Check,
       {
         type: "switch",
@@ -45987,20 +45954,20 @@ This file was not generated during the test run.`,
         checked: tutorialMode,
         onChange: handleTutorialModeChange
       }
-    ), /* @__PURE__ */ import_react159.default.createElement(Form_default.Text, { className: "text-muted" }, "When enabled, helpful tooltips will appear throughout the app to guide you."))))))), /* @__PURE__ */ import_react159.default.createElement(Row_default, { className: "mt-4" }, /* @__PURE__ */ import_react159.default.createElement(Col_default, { md: 8, lg: 6 }, /* @__PURE__ */ import_react159.default.createElement(Card_default, null, /* @__PURE__ */ import_react159.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react159.default.createElement("h5", { className: "mb-0" }, "GitHub Integration")), /* @__PURE__ */ import_react159.default.createElement(Card_default.Body, null, githubAuthService.isConfigured() ? isAuthenticated ? /* @__PURE__ */ import_react159.default.createElement("div", null, /* @__PURE__ */ import_react159.default.createElement("p", null, "Connected to GitHub"), /* @__PURE__ */ import_react159.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react159.default.createElement(Button_default2, { variant: "danger", onClick: logout }, "Sign Out from GitHub"))) : /* @__PURE__ */ import_react159.default.createElement("div", null, /* @__PURE__ */ import_react159.default.createElement("p", null, "Connect your GitHub account to enable Git operations:"), /* @__PURE__ */ import_react159.default.createElement(GitHubLoginButton, null)) : /* @__PURE__ */ import_react159.default.createElement("div", null, /* @__PURE__ */ import_react159.default.createElement("p", { className: "text-danger" }, "GitHub integration is not configured."), /* @__PURE__ */ import_react159.default.createElement("p", null, "To enable GitHub authentication:"), /* @__PURE__ */ import_react159.default.createElement("ol", { className: "small" }, /* @__PURE__ */ import_react159.default.createElement("li", null, "Create a GitHub OAuth App at https://github.com/settings/developers"), /* @__PURE__ */ import_react159.default.createElement("li", null, "Set Authorization callback URL to:", " ", window.location.origin, "/auth/github/callback"), /* @__PURE__ */ import_react159.default.createElement("li", null, "Update the clientId in testeranto.config.ts"), /* @__PURE__ */ import_react159.default.createElement("li", null, "Restart the development server"))))))));
+    ), /* @__PURE__ */ import_react158.default.createElement(Form_default.Text, { className: "text-muted" }, "When enabled, helpful tooltips will appear throughout the app to guide you."))))))), /* @__PURE__ */ import_react158.default.createElement(Row_default, { className: "mt-4" }, /* @__PURE__ */ import_react158.default.createElement(Col_default, { md: 8, lg: 6 }, /* @__PURE__ */ import_react158.default.createElement(Card_default, null, /* @__PURE__ */ import_react158.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react158.default.createElement("h5", { className: "mb-0" }, "GitHub Integration")), /* @__PURE__ */ import_react158.default.createElement(Card_default.Body, null, githubAuthService.isConfigured() ? isAuthenticated ? /* @__PURE__ */ import_react158.default.createElement("div", null, /* @__PURE__ */ import_react158.default.createElement("p", null, "Connected to GitHub"), /* @__PURE__ */ import_react158.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react158.default.createElement(Button_default2, { variant: "danger", onClick: logout }, "Sign Out from GitHub"))) : /* @__PURE__ */ import_react158.default.createElement("div", null, /* @__PURE__ */ import_react158.default.createElement("p", null, "Connect your GitHub account to enable Git operations:"), /* @__PURE__ */ import_react158.default.createElement(GitHubLoginButton, null)) : /* @__PURE__ */ import_react158.default.createElement("div", null, /* @__PURE__ */ import_react158.default.createElement("p", { className: "text-danger" }, "GitHub integration is not configured."), /* @__PURE__ */ import_react158.default.createElement("p", null, "To enable GitHub authentication:"), /* @__PURE__ */ import_react158.default.createElement("ol", { className: "small" }, /* @__PURE__ */ import_react158.default.createElement("li", null, "Create a GitHub OAuth App at https://github.com/settings/developers"), /* @__PURE__ */ import_react158.default.createElement("li", null, "Set Authorization callback URL to:", " ", window.location.origin, "/auth/github/callback"), /* @__PURE__ */ import_react158.default.createElement("li", null, "Update the clientId in testeranto.config.ts"), /* @__PURE__ */ import_react158.default.createElement("li", null, "Restart the development server"))))))));
   };
 
   // src/app/frontend/components/stateful/GitIntegrationPage.tsx
-  var import_react163 = __toESM(require_react(), 1);
+  var import_react162 = __toESM(require_react(), 1);
 
   // src/app/frontend/useGitMode.ts
-  var import_react160 = __toESM(require_react(), 1);
+  var import_react159 = __toESM(require_react(), 1);
   var useGitMode = () => {
     const { isConnected } = useWebSocket();
-    const [mode, setMode] = (0, import_react160.useState)(
+    const [mode, setMode] = (0, import_react159.useState)(
       isConnected ? "dev" : "static"
     );
-    (0, import_react160.useEffect)(() => {
+    (0, import_react159.useEffect)(() => {
       setMode(isConnected ? "dev" : "static");
     }, [isConnected]);
     return {
@@ -46013,7 +45980,7 @@ This file was not generated during the test run.`,
   };
 
   // src/app/frontend/components/pure/GitIntegrationView.tsx
-  var import_react161 = __toESM(require_react(), 1);
+  var import_react160 = __toESM(require_react(), 1);
   var GitIntegrationView = ({
     mode,
     setMode,
@@ -46041,11 +46008,11 @@ This file was not generated during the test run.`,
     setIsPushing,
     getSyncStatusText
   }) => {
-    const [selectedFile, setSelectedFile] = (0, import_react161.useState)(null);
-    const [originalContent, setOriginalContent] = (0, import_react161.useState)("");
-    const [modifiedContent, setModifiedContent] = (0, import_react161.useState)("");
-    const [isDiffLoading, setIsDiffLoading] = (0, import_react161.useState)(false);
-    const loadFileDiff = (0, import_react161.useCallback)(
+    const [selectedFile, setSelectedFile] = (0, import_react160.useState)(null);
+    const [originalContent, setOriginalContent] = (0, import_react160.useState)("");
+    const [modifiedContent, setModifiedContent] = (0, import_react160.useState)("");
+    const [isDiffLoading, setIsDiffLoading] = (0, import_react160.useState)(false);
+    const loadFileDiff = (0, import_react160.useCallback)(
       async (filePath) => {
         console.log("loadFileDiff - filePath:", filePath);
         if (mode === "static")
@@ -46073,20 +46040,20 @@ This file was not generated during the test run.`,
       },
       [fileService, mode, setError]
     );
-    (0, import_react161.useEffect)(() => {
+    (0, import_react160.useEffect)(() => {
       if (changes.length > 0 && !selectedFile) {
         console.log("First change path:", changes[0].path);
         loadFileDiff(changes[0].path);
       }
     }, [changes, selectedFile, loadFileDiff]);
-    return /* @__PURE__ */ import_react161.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react161.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react161.default.createElement(Col_default, null, /* @__PURE__ */ import_react161.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react161.default.createElement(
+    return /* @__PURE__ */ import_react160.default.createElement(Container_default, { fluid: true }, /* @__PURE__ */ import_react160.default.createElement(Row_default, { className: "mb-4" }, /* @__PURE__ */ import_react160.default.createElement(Col_default, null, /* @__PURE__ */ import_react160.default.createElement("div", { className: "d-flex align-items-center gap-2" }, /* @__PURE__ */ import_react160.default.createElement(
       Badge_default,
       {
         bg: mode === "static" ? "secondary" : mode === "dev" ? "success" : "primary"
       },
       mode.toUpperCase(),
       " MODE"
-    ), /* @__PURE__ */ import_react161.default.createElement(
+    ), /* @__PURE__ */ import_react160.default.createElement(
       "select",
       {
         className: "form-select form-select-sm",
@@ -46094,10 +46061,10 @@ This file was not generated during the test run.`,
         value: mode,
         onChange: (e) => setMode(e.target.value)
       },
-      /* @__PURE__ */ import_react161.default.createElement("option", { value: "static" }, "Static (Read-only)"),
-      /* @__PURE__ */ import_react161.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
-      /* @__PURE__ */ import_react161.default.createElement("option", { value: "git" }, "Git Remote")
-    )), mode === "static" && /* @__PURE__ */ import_react161.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react161.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react161.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react161.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react161.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, /* @__PURE__ */ import_react161.default.createElement("div", null, error), /* @__PURE__ */ import_react161.default.createElement("small", { className: "text-muted" }, "Check the browser console for more details")), mode !== "static" && /* @__PURE__ */ import_react161.default.createElement(Row_default, null, /* @__PURE__ */ import_react161.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react161.default.createElement(Card_default, null, /* @__PURE__ */ import_react161.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react161.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react161.default.createElement(
+      /* @__PURE__ */ import_react160.default.createElement("option", { value: "static" }, "Static (Read-only)"),
+      /* @__PURE__ */ import_react160.default.createElement("option", { value: "dev" }, "Development (Read-write)"),
+      /* @__PURE__ */ import_react160.default.createElement("option", { value: "git" }, "Git Remote")
+    )), mode === "static" && /* @__PURE__ */ import_react160.default.createElement(Alert_default, { variant: "info", className: "mt-2" }, /* @__PURE__ */ import_react160.default.createElement("small", null, "Static mode: Read-only access. Git operations are not available in this mode.")), mode === "git" && /* @__PURE__ */ import_react160.default.createElement(Alert_default, { variant: "warning", className: "mt-2" }, /* @__PURE__ */ import_react160.default.createElement("small", null, "Git Remote mode: Git-based collaboration. Some features may be limited.")))), error && /* @__PURE__ */ import_react160.default.createElement(Alert_default, { variant: "danger", onClose: () => setError(null), dismissible: true }, /* @__PURE__ */ import_react160.default.createElement("div", null, error), /* @__PURE__ */ import_react160.default.createElement("small", { className: "text-muted" }, "Check the browser console for more details")), mode !== "static" && /* @__PURE__ */ import_react160.default.createElement(Row_default, null, /* @__PURE__ */ import_react160.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react160.default.createElement(Card_default, null, /* @__PURE__ */ import_react160.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react160.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -46105,14 +46072,14 @@ This file was not generated during the test run.`,
         onClick: loadChanges,
         disabled: isLoading
       },
-      isLoading ? /* @__PURE__ */ import_react161.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
-    )), /* @__PURE__ */ import_react161.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react161.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react161.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react161.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react161.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react161.default.createElement("div", null, changes.map((change, index2) => /* @__PURE__ */ import_react161.default.createElement(
+      isLoading ? /* @__PURE__ */ import_react160.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
+    )), /* @__PURE__ */ import_react160.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react160.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react160.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react160.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react160.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react160.default.createElement("div", null, changes.map((change, index2) => /* @__PURE__ */ import_react160.default.createElement(
       "div",
       {
         key: index2,
         className: "d-flex align-items-center mb-2"
       },
-      /* @__PURE__ */ import_react161.default.createElement(
+      /* @__PURE__ */ import_react160.default.createElement(
         Badge_default,
         {
           bg: getStatusBadgeVariant(change.status),
@@ -46120,8 +46087,8 @@ This file was not generated during the test run.`,
         },
         change.status.charAt(0).toUpperCase() + change.status.slice(1)
       ),
-      /* @__PURE__ */ import_react161.default.createElement("span", { className: "small text-truncate" }, change.path)
-    )))))), /* @__PURE__ */ import_react161.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react161.default.createElement(Card_default, null, /* @__PURE__ */ import_react161.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react161.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react161.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react161.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react161.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react161.default.createElement(
+      /* @__PURE__ */ import_react160.default.createElement("span", { className: "small text-truncate" }, change.path)
+    )))))), /* @__PURE__ */ import_react160.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react160.default.createElement(Card_default, null, /* @__PURE__ */ import_react160.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react160.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react160.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react160.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react160.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react160.default.createElement(
       "input",
       {
         type: "text",
@@ -46132,7 +46099,7 @@ This file was not generated during the test run.`,
         onChange: (e) => setCommitSummary(e.target.value),
         disabled: mode === "static"
       }
-    ), /* @__PURE__ */ import_react161.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react161.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react161.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react161.default.createElement(
+    ), /* @__PURE__ */ import_react160.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react160.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react160.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react160.default.createElement(
       "textarea",
       {
         className: "form-control",
@@ -46143,14 +46110,14 @@ This file was not generated during the test run.`,
         onChange: (e) => setCommitDescription(e.target.value),
         disabled: mode === "static"
       }
-    )), /* @__PURE__ */ import_react161.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react161.default.createElement(
+    )), /* @__PURE__ */ import_react160.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "primary",
         onClick: handleSaveChanges,
         disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
       },
-      isCommitting ? /* @__PURE__ */ import_react161.default.createElement(import_react161.default.Fragment, null, /* @__PURE__ */ import_react161.default.createElement(
+      isCommitting ? /* @__PURE__ */ import_react160.default.createElement(import_react160.default.Fragment, null, /* @__PURE__ */ import_react160.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -46158,14 +46125,14 @@ This file was not generated during the test run.`,
           className: "me-2"
         }
       ), "Saving...") : "Save to Computer"
-    ), /* @__PURE__ */ import_react161.default.createElement(
+    ), /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "success",
         onClick: handleShareChanges,
         disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
       },
-      isPushing ? /* @__PURE__ */ import_react161.default.createElement(import_react161.default.Fragment, null, /* @__PURE__ */ import_react161.default.createElement(
+      isPushing ? /* @__PURE__ */ import_react160.default.createElement(import_react160.default.Fragment, null, /* @__PURE__ */ import_react160.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -46173,7 +46140,7 @@ This file was not generated during the test run.`,
           className: "me-2"
         }
       ), "Sharing...") : "Save & Share"
-    ))))), /* @__PURE__ */ import_react161.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react161.default.createElement(Card_default, null, /* @__PURE__ */ import_react161.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react161.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react161.default.createElement(
+    ))))), /* @__PURE__ */ import_react160.default.createElement(Col_default, { md: 4 }, /* @__PURE__ */ import_react160.default.createElement(Card_default, null, /* @__PURE__ */ import_react160.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react160.default.createElement("h5", { className: "mb-0" }, "Sync with Remote"), /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -46181,14 +46148,14 @@ This file was not generated during the test run.`,
         onClick: (e) => loadGitStatus(e)
       },
       "\u21BB"
-    )), /* @__PURE__ */ import_react161.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react161.default.createElement("div", { className: "text-center mb-3" }, /* @__PURE__ */ import_react161.default.createElement(Badge_default, { bg: getSyncStatusVariant() }, getSyncStatusText()), /* @__PURE__ */ import_react161.default.createElement("div", { className: "small text-muted mt-1" }, "Branch: ", currentBranch)), /* @__PURE__ */ import_react161.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react161.default.createElement(
+    )), /* @__PURE__ */ import_react160.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react160.default.createElement("div", { className: "text-center mb-3" }, /* @__PURE__ */ import_react160.default.createElement(Badge_default, { bg: getSyncStatusVariant() }, getSyncStatusText()), /* @__PURE__ */ import_react160.default.createElement("div", { className: "small text-muted mt-1" }, "Branch: ", currentBranch)), /* @__PURE__ */ import_react160.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "outline-primary",
         onClick: handleGetUpdates,
         disabled: mode === "static" || isPulling
       },
-      isPulling ? /* @__PURE__ */ import_react161.default.createElement(import_react161.default.Fragment, null, /* @__PURE__ */ import_react161.default.createElement(
+      isPulling ? /* @__PURE__ */ import_react160.default.createElement(import_react160.default.Fragment, null, /* @__PURE__ */ import_react160.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -46196,7 +46163,7 @@ This file was not generated during the test run.`,
           className: "me-2"
         }
       ), "Updating...") : "Get Updates"
-    ), /* @__PURE__ */ import_react161.default.createElement(
+    ), /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "outline-success",
@@ -46217,7 +46184,7 @@ This file was not generated during the test run.`,
           }
         }
       },
-      isPushing ? /* @__PURE__ */ import_react161.default.createElement(import_react161.default.Fragment, null, /* @__PURE__ */ import_react161.default.createElement(
+      isPushing ? /* @__PURE__ */ import_react160.default.createElement(import_react160.default.Fragment, null, /* @__PURE__ */ import_react160.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -46225,7 +46192,7 @@ This file was not generated during the test run.`,
           className: "me-2"
         }
       ), "Sharing...") : `Share Changes (${remoteStatus.ahead})`
-    )), /* @__PURE__ */ import_react161.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react161.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))), /* @__PURE__ */ import_react161.default.createElement(Card_default, null, /* @__PURE__ */ import_react161.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react161.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react161.default.createElement(
+    )), /* @__PURE__ */ import_react160.default.createElement("div", { className: "mt-3" }, /* @__PURE__ */ import_react160.default.createElement("small", { className: "text-muted" }, "Connected to: origin/", currentBranch)))), /* @__PURE__ */ import_react160.default.createElement(Card_default, null, /* @__PURE__ */ import_react160.default.createElement(Card_default.Header, { className: "d-flex justify-content-between align-items-center" }, /* @__PURE__ */ import_react160.default.createElement("h5", { className: "mb-0" }, "Changes"), /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "outline-secondary",
@@ -46233,8 +46200,8 @@ This file was not generated during the test run.`,
         onClick: loadChanges,
         disabled: isLoading
       },
-      isLoading ? /* @__PURE__ */ import_react161.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
-    )), /* @__PURE__ */ import_react161.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react161.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react161.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react161.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react161.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react161.default.createElement("div", null, changes.map((change, index2) => /* @__PURE__ */ import_react161.default.createElement(
+      isLoading ? /* @__PURE__ */ import_react160.default.createElement(Spinner_default, { animation: "border", size: "sm" }) : "\u21BB"
+    )), /* @__PURE__ */ import_react160.default.createElement(Card_default.Body, { style: { maxHeight: "400px", overflowY: "auto" } }, isLoading ? /* @__PURE__ */ import_react160.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react160.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react160.default.createElement("div", null, "Loading changes...")) : changes.length === 0 ? /* @__PURE__ */ import_react160.default.createElement("div", { className: "text-center text-muted" }, "No changes detected") : /* @__PURE__ */ import_react160.default.createElement("div", null, changes.map((change, index2) => /* @__PURE__ */ import_react160.default.createElement(
       "div",
       {
         key: index2,
@@ -46242,7 +46209,7 @@ This file was not generated during the test run.`,
         style: { cursor: "pointer" },
         onClick: () => loadFileDiff(change.path)
       },
-      /* @__PURE__ */ import_react161.default.createElement(
+      /* @__PURE__ */ import_react160.default.createElement(
         Badge_default,
         {
           bg: getStatusBadgeVariant(change.status),
@@ -46250,8 +46217,8 @@ This file was not generated during the test run.`,
         },
         change.status.charAt(0).toUpperCase() + change.status.slice(1)
       ),
-      /* @__PURE__ */ import_react161.default.createElement("span", { className: "small text-truncate" }, change.path)
-    )))))), /* @__PURE__ */ import_react161.default.createElement(Col_default, { md: 8 }, /* @__PURE__ */ import_react161.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react161.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react161.default.createElement("h5", null, "Changes Preview")), /* @__PURE__ */ import_react161.default.createElement(Card_default.Body, { style: { height: "400px" } }, isDiffLoading ? /* @__PURE__ */ import_react161.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react161.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react161.default.createElement("div", null, "Loading diff...")) : selectedFile ? modifiedContent ? /* @__PURE__ */ import_react161.default.createElement(
+      /* @__PURE__ */ import_react160.default.createElement("span", { className: "small text-truncate" }, change.path)
+    )))))), /* @__PURE__ */ import_react160.default.createElement(Col_default, { md: 8 }, /* @__PURE__ */ import_react160.default.createElement(Card_default, { className: "mb-3" }, /* @__PURE__ */ import_react160.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react160.default.createElement("h5", null, "Changes Preview")), /* @__PURE__ */ import_react160.default.createElement(Card_default.Body, { style: { height: "400px" } }, isDiffLoading ? /* @__PURE__ */ import_react160.default.createElement("div", { className: "text-center" }, /* @__PURE__ */ import_react160.default.createElement(Spinner_default, { animation: "border" }), /* @__PURE__ */ import_react160.default.createElement("div", null, "Loading diff...")) : selectedFile ? modifiedContent ? /* @__PURE__ */ import_react160.default.createElement(
       de,
       {
         height: "100%",
@@ -46276,7 +46243,7 @@ This file was not generated during the test run.`,
           renderLineHighlight: "all"
         }
       }
-    ) : /* @__PURE__ */ import_react161.default.createElement("div", { className: "text-center text-muted" }, /* @__PURE__ */ import_react161.default.createElement("p", null, "Could not load file content."), /* @__PURE__ */ import_react161.default.createElement("small", null, "Check that the development server is running and has file API endpoints implemented.")) : /* @__PURE__ */ import_react161.default.createElement("div", { className: "text-center text-muted" }, "Select a file to view changes"))), /* @__PURE__ */ import_react161.default.createElement(Card_default, null, /* @__PURE__ */ import_react161.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react161.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react161.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react161.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react161.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react161.default.createElement(
+    ) : /* @__PURE__ */ import_react160.default.createElement("div", { className: "text-center text-muted" }, /* @__PURE__ */ import_react160.default.createElement("p", null, "Could not load file content."), /* @__PURE__ */ import_react160.default.createElement("small", null, "Check that the development server is running and has file API endpoints implemented.")) : /* @__PURE__ */ import_react160.default.createElement("div", { className: "text-center text-muted" }, "Select a file to view changes"))), /* @__PURE__ */ import_react160.default.createElement(Card_default, null, /* @__PURE__ */ import_react160.default.createElement(Card_default.Header, null, /* @__PURE__ */ import_react160.default.createElement("h5", null, "Commit Changes")), /* @__PURE__ */ import_react160.default.createElement(Card_default.Body, null, /* @__PURE__ */ import_react160.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react160.default.createElement("label", { htmlFor: "summary", className: "form-label" }, "Summary *"), /* @__PURE__ */ import_react160.default.createElement(
       "input",
       {
         type: "text",
@@ -46287,7 +46254,7 @@ This file was not generated during the test run.`,
         onChange: (e) => setCommitSummary(e.target.value),
         disabled: mode === "static"
       }
-    ), /* @__PURE__ */ import_react161.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react161.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react161.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react161.default.createElement(
+    ), /* @__PURE__ */ import_react160.default.createElement("div", { className: "form-text" }, commitSummary.length, "/72 characters")), /* @__PURE__ */ import_react160.default.createElement("div", { className: "mb-3" }, /* @__PURE__ */ import_react160.default.createElement("label", { htmlFor: "description", className: "form-label" }, "Description"), /* @__PURE__ */ import_react160.default.createElement(
       "textarea",
       {
         className: "form-control",
@@ -46298,14 +46265,14 @@ This file was not generated during the test run.`,
         onChange: (e) => setCommitDescription(e.target.value),
         disabled: mode === "static"
       }
-    )), /* @__PURE__ */ import_react161.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react161.default.createElement(
+    )), /* @__PURE__ */ import_react160.default.createElement("div", { className: "d-grid gap-2" }, /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "primary",
         onClick: handleSaveChanges,
         disabled: mode === "static" || isCommitting || changes.length === 0 || !commitSummary.trim()
       },
-      isCommitting ? /* @__PURE__ */ import_react161.default.createElement(import_react161.default.Fragment, null, /* @__PURE__ */ import_react161.default.createElement(
+      isCommitting ? /* @__PURE__ */ import_react160.default.createElement(import_react160.default.Fragment, null, /* @__PURE__ */ import_react160.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -46313,14 +46280,14 @@ This file was not generated during the test run.`,
           className: "me-2"
         }
       ), "Saving...") : "Save to Computer"
-    ), /* @__PURE__ */ import_react161.default.createElement(
+    ), /* @__PURE__ */ import_react160.default.createElement(
       Button_default2,
       {
         variant: "success",
         onClick: handleShareChanges,
         disabled: mode === "static" || isCommitting || isPushing || changes.length === 0 || !commitSummary.trim()
       },
-      isPushing ? /* @__PURE__ */ import_react161.default.createElement(import_react161.default.Fragment, null, /* @__PURE__ */ import_react161.default.createElement(
+      isPushing ? /* @__PURE__ */ import_react160.default.createElement(import_react160.default.Fragment, null, /* @__PURE__ */ import_react160.default.createElement(
         Spinner_default,
         {
           animation: "border",
@@ -46328,25 +46295,25 @@ This file was not generated during the test run.`,
           className: "me-2"
         }
       ), "Sharing...") : "Save & Share"
-    )))))), mode === "static" && /* @__PURE__ */ import_react161.default.createElement(Row_default, null, /* @__PURE__ */ import_react161.default.createElement(Col_default, null, /* @__PURE__ */ import_react161.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react161.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react161.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
+    )))))), mode === "static" && /* @__PURE__ */ import_react160.default.createElement(Row_default, null, /* @__PURE__ */ import_react160.default.createElement(Col_default, null, /* @__PURE__ */ import_react160.default.createElement(Alert_default, { variant: "info", className: "text-center" }, /* @__PURE__ */ import_react160.default.createElement("h5", null, "Git Operations Not Available"), /* @__PURE__ */ import_react160.default.createElement("p", null, "Git functionality is disabled in Static Mode. Switch to Development or Git Remote mode to access version control features.")))));
   };
 
   // src/app/frontend/components/stateful/GitIntegrationPage.tsx
   var GitIntegrationPage = () => {
-    const [isLoading, setIsLoading] = (0, import_react163.useState)(true);
+    const [isLoading, setIsLoading] = (0, import_react162.useState)(true);
     const { mode, setMode, isStatic, isDev, isGit } = useGitMode();
-    const [changes, setChanges] = (0, import_react163.useState)([]);
-    const [remoteStatus, setRemoteStatus] = (0, import_react163.useState)({
+    const [changes, setChanges] = (0, import_react162.useState)([]);
+    const [remoteStatus, setRemoteStatus] = (0, import_react162.useState)({
       ahead: 0,
       behind: 0
     });
-    const [currentBranch, setCurrentBranch] = (0, import_react163.useState)("main");
-    const [error, setError] = (0, import_react163.useState)(null);
-    const [commitSummary, setCommitSummary] = (0, import_react163.useState)("");
-    const [commitDescription, setCommitDescription] = (0, import_react163.useState)("");
-    const [isCommitting, setIsCommitting] = (0, import_react163.useState)(false);
-    const [isPushing, setIsPushing] = (0, import_react163.useState)(false);
-    const [isPulling, setIsPulling] = (0, import_react163.useState)(false);
+    const [currentBranch, setCurrentBranch] = (0, import_react162.useState)("main");
+    const [error, setError] = (0, import_react162.useState)(null);
+    const [commitSummary, setCommitSummary] = (0, import_react162.useState)("");
+    const [commitDescription, setCommitDescription] = (0, import_react162.useState)("");
+    const [isCommitting, setIsCommitting] = (0, import_react162.useState)(false);
+    const [isPushing, setIsPushing] = (0, import_react162.useState)(false);
+    const [isPulling, setIsPulling] = (0, import_react162.useState)(false);
     const handleSaveChanges = async () => {
       if (!commitSummary.trim()) {
         setError("Please provide a commit summary");
@@ -46464,7 +46431,7 @@ This file was not generated during the test run.`,
         setIsLoading(false);
       }
     };
-    (0, import_react163.useEffect)(() => {
+    (0, import_react162.useEffect)(() => {
       const loadData = async () => {
         try {
           setIsLoading(true);
@@ -46481,7 +46448,7 @@ This file was not generated during the test run.`,
         };
       }
     }, [mode]);
-    return /* @__PURE__ */ import_react163.default.createElement(
+    return /* @__PURE__ */ import_react162.default.createElement(
       GitIntegrationView,
       {
         mode,
@@ -46514,15 +46481,15 @@ This file was not generated during the test run.`,
   };
 
   // src/app/frontend/App.tsx
-  var TutorialModeContext = (0, import_react164.createContext)({
+  var TutorialModeContext = (0, import_react163.createContext)({
     tutorialMode: false,
     setTutorialMode: () => {
     }
   });
   var useTutorialMode = () => {
-    return (0, import_react164.useContext)(TutorialModeContext);
+    return (0, import_react163.useContext)(TutorialModeContext);
   };
-  var AuthContext = (0, import_react164.createContext)({
+  var AuthContext = (0, import_react163.createContext)({
     isAuthenticated: false,
     user: null,
     login: () => {
@@ -46531,18 +46498,18 @@ This file was not generated during the test run.`,
     }
   });
   var useAuth = () => {
-    return (0, import_react164.useContext)(AuthContext);
+    return (0, import_react163.useContext)(AuthContext);
   };
   var App = () => {
     const [fs, setFs] = useFs();
-    const [ws, setWs] = (0, import_react164.useState)(null);
-    const [isConnected, setIsConnected] = (0, import_react164.useState)(false);
-    const [tutorialMode, setTutorialMode] = (0, import_react164.useState)(false);
-    const [isAuthenticated, setIsAuthenticated] = (0, import_react164.useState)(
+    const [ws, setWs] = (0, import_react163.useState)(null);
+    const [isConnected, setIsConnected] = (0, import_react163.useState)(false);
+    const [tutorialMode, setTutorialMode] = (0, import_react163.useState)(false);
+    const [isAuthenticated, setIsAuthenticated] = (0, import_react163.useState)(
       githubAuthService.isAuthenticated
     );
-    const [user, setUser] = (0, import_react164.useState)(githubAuthService.userInfo);
-    (0, import_react164.useEffect)(() => {
+    const [user, setUser] = (0, import_react163.useState)(githubAuthService.userInfo);
+    (0, import_react163.useEffect)(() => {
       const savedTutorialMode = localStorage.getItem("tutorialMode");
       if (savedTutorialMode) {
         setTutorialMode(savedTutorialMode === "true");
@@ -46600,62 +46567,62 @@ This file was not generated during the test run.`,
       login: () => githubAuthService.initiateLogin(),
       logout: () => githubAuthService.logout()
     };
-    return /* @__PURE__ */ import_react164.default.createElement(FileServiceContext.Provider, { value: fs }, /* @__PURE__ */ import_react164.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react164.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react164.default.createElement(HashRouter, null, /* @__PURE__ */ import_react164.default.createElement(AppFrame, null, /* @__PURE__ */ import_react164.default.createElement(Routes, null, /* @__PURE__ */ import_react164.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react164.default.createElement(Helpo, null) }), /* @__PURE__ */ import_react164.default.createElement(Route, { path: "/flua", element: /* @__PURE__ */ import_react164.default.createElement(FluaPage, null) }), /* @__PURE__ */ import_react164.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react164.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react164.default.createElement(
+    return /* @__PURE__ */ import_react163.default.createElement(TutorialModeContext.Provider, { value: { tutorialMode, setTutorialMode } }, /* @__PURE__ */ import_react163.default.createElement(AuthContext.Provider, { value: authContextValue }, /* @__PURE__ */ import_react163.default.createElement(HashRouter, null, /* @__PURE__ */ import_react163.default.createElement(AppFrame, null, /* @__PURE__ */ import_react163.default.createElement(Routes, null, /* @__PURE__ */ import_react163.default.createElement(Route, { path: "/flua", element: /* @__PURE__ */ import_react163.default.createElement(FluaPage, null) }), /* @__PURE__ */ import_react163.default.createElement(Route, { path: "/projects", element: /* @__PURE__ */ import_react163.default.createElement(ProjectsPage, null) }), /* @__PURE__ */ import_react163.default.createElement(
       Route,
       {
         path: "/projects/:projectName",
-        element: /* @__PURE__ */ import_react164.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react163.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react164.default.createElement(
+    ), /* @__PURE__ */ import_react163.default.createElement(
       Route,
       {
         path: "/projects/:projectName/tests/*",
-        element: /* @__PURE__ */ import_react164.default.createElement(TestPage, null)
+        element: /* @__PURE__ */ import_react163.default.createElement(TestPage, null)
       }
-    ), /* @__PURE__ */ import_react164.default.createElement(
+    ), /* @__PURE__ */ import_react163.default.createElement(
       Route,
       {
         path: "/projects/:projectName#:tab",
-        element: /* @__PURE__ */ import_react164.default.createElement(ProjectPage, null)
+        element: /* @__PURE__ */ import_react163.default.createElement(ProjectPage, null)
       }
-    ), /* @__PURE__ */ import_react164.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react164.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react164.default.createElement(
+    ), /* @__PURE__ */ import_react163.default.createElement(Route, { path: "/signin", element: /* @__PURE__ */ import_react163.default.createElement(SignIn, null) }), /* @__PURE__ */ import_react163.default.createElement(
       Route,
       {
         path: "/auth/github/callback",
-        element: /* @__PURE__ */ import_react164.default.createElement(AuthCallbackPage, null)
+        element: /* @__PURE__ */ import_react163.default.createElement(AuthCallbackPage, null)
       }
-    ), /* @__PURE__ */ import_react164.default.createElement(
+    ), /* @__PURE__ */ import_react163.default.createElement(
       Route,
       {
         path: "/design-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react164.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react164.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react163.default.createElement(DesignEditorPage, null) : /* @__PURE__ */ import_react163.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react164.default.createElement(
+    ), /* @__PURE__ */ import_react163.default.createElement(
       Route,
       {
         path: "/text-editor",
-        element: isAuthenticated ? /* @__PURE__ */ import_react164.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react164.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react163.default.createElement(TextEditorPage, null) : /* @__PURE__ */ import_react163.default.createElement(SignIn, null)
       }
-    ), isConnected ? /* @__PURE__ */ import_react164.default.createElement(import_react164.default.Fragment, null, /* @__PURE__ */ import_react164.default.createElement(
+    ), isConnected ? /* @__PURE__ */ import_react163.default.createElement(import_react163.default.Fragment, null, /* @__PURE__ */ import_react163.default.createElement(
       Route,
       {
         path: "/processes",
-        element: isAuthenticated ? /* @__PURE__ */ import_react164.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react164.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react163.default.createElement(ProcessManagerPage, null) : /* @__PURE__ */ import_react163.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react164.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react164.default.createElement("p", null, "IDK") })) : null, /* @__PURE__ */ import_react164.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react164.default.createElement(Settings, null) }), /* @__PURE__ */ import_react164.default.createElement(
+    ), /* @__PURE__ */ import_react163.default.createElement(Route, { path: "/processes/:processId", element: /* @__PURE__ */ import_react163.default.createElement("p", null, "IDK") })) : null, /* @__PURE__ */ import_react163.default.createElement(Route, { path: "/settings", element: /* @__PURE__ */ import_react163.default.createElement(Settings, null) }), /* @__PURE__ */ import_react163.default.createElement(
       Route,
       {
         path: "/git",
-        element: isAuthenticated ? /* @__PURE__ */ import_react164.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react164.default.createElement(SignIn, null)
+        element: isAuthenticated ? /* @__PURE__ */ import_react163.default.createElement(GitIntegrationPage, null) : /* @__PURE__ */ import_react163.default.createElement(SignIn, null)
       }
-    ), /* @__PURE__ */ import_react164.default.createElement(Route, { path: "*", element: /* @__PURE__ */ import_react164.default.createElement(Helpo, null) })))))));
+    ))))));
   };
   function initApp() {
     const rootElement = document.getElementById("root");
     if (rootElement) {
       try {
         const root = import_client.default.createRoot(rootElement);
-        root.render(import_react164.default.createElement(App));
+        root.render(import_react163.default.createElement(App));
       } catch (err) {
         console.error("Error rendering app:", err);
         setTimeout(initApp, 100);

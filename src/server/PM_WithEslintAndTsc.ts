@@ -10,10 +10,10 @@ import { ESLint } from "eslint";
 import tsc from "tsc-prog";
 
 import { lintPather, tscPather } from "./utils";
-import { IBuiltConfig, IRunTime } from "../../Types.js";
+import { IBuiltConfig, IRunTime } from "../Types.js";
 
 import { PM_WithBuild } from "./PM_WithBuild";
-import { IMode } from "../types";
+import { IMode } from "./types";
 
 const eslint = new ESLint();
 const formatter = await eslint.loadFormatter(

@@ -2,8 +2,8 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { PM_Main } from "./app/backend/main";
-import { getRunnables } from "./app/backend/utils";
+import { PM_Main } from "./server/main";
+import { getRunnables } from "./server/utils";
 import { PitonoBuild } from "./PM/pitonoBuild";
 import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
 import { AppHtml } from "./utils/buildTemplates";
@@ -86,7 +86,7 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
 
   let pm: PM_Main | null = null;
   // Start PM_Main immediately - it will handle the build processes internally
-  const { PM_Main } = await import("./app/backend/main");
+  const { PM_Main } = await import("./server/main");
   pm = new PM_Main(config, testsName, mode);
   await pm.start();
 

@@ -6,15 +6,15 @@ import net from "net";
 import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
-import esbuildNodeConfiger from "../../esbuildConfigs/node.js";
-import esbuildWebConfiger from "../../esbuildConfigs/web.js";
-import { IFinalResults, IRunTime } from "../../lib/index.js";
+import esbuildNodeConfiger from "./../esbuildConfigs/node.js";
+import esbuildWebConfiger from "../esbuildConfigs/web.js";
+import { IFinalResults, IRunTime } from "..//lib/index.js";
 import {
   createLogStreams,
   LogStreams,
   statusMessagePretty,
-} from "../../PM/utils.js";
-import { Queue } from "../../utils/queue.js";
+} from "../PM/utils.js";
+import { Queue } from "..//utils/queue.js";
 import { PM_WithGit } from "./PM_WithGit.js";
 import { getRunnables, webEvaluator } from "./utils.js";
 import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";

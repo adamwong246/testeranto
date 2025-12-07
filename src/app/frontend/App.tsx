@@ -5,8 +5,6 @@ import React, { useContext, useState, useEffect, createContext } from "react";
 import { Routes, Route, HashRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 
-import { Helpo } from "../../Helpo";
-
 import { AppFrame } from "./components/pure/AppFrame";
 import { SignIn } from "./components/pure/SignIn";
 import { githubAuthService } from "./GitHubAuthService";
@@ -146,70 +144,70 @@ export const App = () => {
 
 
   return (
-    <FileServiceContext.Provider value={fs}>
-      <TutorialModeContext.Provider value={{ tutorialMode, setTutorialMode }}>
-        <AuthContext.Provider value={authContextValue}>
-          <HashRouter>
-            <AppFrame>
-              <Routes>
-                <Route path="/" element={<Helpo />} />
-                <Route path="/flua" element={<FluaPage />} />
 
-                <Route path="/projects" element={<ProjectsPage />} />
-                <Route
-                  path="/projects/:projectName"
-                  element={<ProjectPage />}
-                />
-                <Route
-                  path="/projects/:projectName/tests/*"
-                  element={<TestPage />}
-                />
-                <Route
-                  path="/projects/:projectName#:tab"
-                  element={<ProjectPage />}
-                />
-                <Route path="/signin" element={<SignIn />} />
-                <Route
-                  path="/auth/github/callback"
-                  element={<AuthCallbackPage />}
-                />
-                <Route
-                  path="/design-editor"
-                  element={isAuthenticated ? <DesignEditorPage /> : <SignIn />}
-                />
-                <Route
-                  path="/text-editor"
-                  element={isAuthenticated ? <TextEditorPage /> : <SignIn />}
-                />
-                {isConnected ? (
-                  <>
-                    <Route
-                      path="/processes"
-                      element={
-                        isAuthenticated ? <ProcessManagerPage /> : <SignIn />
-                      }
-                    />
-                    <Route path="/processes/:processId" element={<p>IDK</p>} />
-                  </>
-                ) : null}
-                <Route path="/settings" element={<Settings />} />
-                <Route
-                  path="/git"
-                  element={
-                    isAuthenticated ? <GitIntegrationPage /> : <SignIn />
-                  }
-                />
-                {/* <Route path="/svg-editor" element={isAuthenticated ? <SVGEditorPage /> : <SignIn />} /> */}
-                {/* <Route path="/drato" element={isAuthenticated ? <DratoPage /> : <SignIn />} /> */}
-                {/* <Route path="/grafeo" element={isAuthenticated ? <GrafeoPage /> : <SignIn />} /> */}
-                {/* <Route path="/skribo" element={isAuthenticated ? <SkriboPage /> : <SignIn />} /> */}
-                <Route path="*" element={<Helpo />} />
-              </Routes>
-            </AppFrame>
-          </HashRouter>
-        </AuthContext.Provider>
-      </TutorialModeContext.Provider>
-    </FileServiceContext.Provider>
+    <TutorialModeContext.Provider value={{ tutorialMode, setTutorialMode }}>
+      <AuthContext.Provider value={authContextValue}>
+        <HashRouter>
+          <AppFrame>
+            <Routes>
+
+              <Route path="/flua" element={<FluaPage />} />
+
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route
+                path="/projects/:projectName"
+                element={<ProjectPage />}
+              />
+              <Route
+                path="/projects/:projectName/tests/*"
+                element={<TestPage />}
+              />
+              <Route
+                path="/projects/:projectName#:tab"
+                element={<ProjectPage />}
+              />
+              <Route path="/signin" element={<SignIn />} />
+              <Route
+                path="/auth/github/callback"
+                element={<AuthCallbackPage />}
+              />
+              <Route
+                path="/design-editor"
+                element={isAuthenticated ? <DesignEditorPage /> : <SignIn />}
+              />
+              <Route
+                path="/text-editor"
+                element={isAuthenticated ? <TextEditorPage /> : <SignIn />}
+              />
+              {isConnected ? (
+                <>
+                  <Route
+                    path="/processes"
+                    element={
+                      isAuthenticated ? <ProcessManagerPage /> : <SignIn />
+                    }
+                  />
+                  <Route path="/processes/:processId" element={<p>IDK</p>} />
+                </>
+              ) : null}
+              <Route path="/settings" element={<Settings />} />
+              <Route
+                path="/git"
+                element={
+                  isAuthenticated ? <GitIntegrationPage /> : <SignIn />
+                }
+              />
+              {/* <Route path="/svg-editor" element={isAuthenticated ? <SVGEditorPage /> : <SignIn />} /> */}
+              {/* <Route path="/drato" element={isAuthenticated ? <DratoPage /> : <SignIn />} /> */}
+              {/* <Route path="/grafeo" element={isAuthenticated ? <GrafeoPage /> : <SignIn />} /> */}
+              {/* <Route path="/skribo" element={isAuthenticated ? <SkriboPage /> : <SignIn />} /> */}
+
+            </Routes>
+          </AppFrame>
+        </HashRouter>
+      </AuthContext.Provider>
+    </TutorialModeContext.Provider>
+
   );
 };
 
