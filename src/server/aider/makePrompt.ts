@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
 
-import { promptPather } from "./utils";
-import { IRunTime, ISummary } from "../Types";
-import { LOG_FILES, getLogFilesForRuntime } from "../clients/utils/logFiles";
+import { promptPather } from "../utils";
+import { IRunTime, ISummary } from "../../Types";
+import { LOG_FILES, getLogFilesForRuntime } from "../../clients/utils/logFiles";
 
 export const makePrompt = async (
   summary: ISummary,

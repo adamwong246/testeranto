@@ -34,7 +34,7 @@ import { ISummary, IBuiltConfig, IRunTime } from "../../Types";
 import { checkForShutdown } from "../checkForShutdown";
 import configTests from "../configTests";
 import { ensureSummaryEntry } from "../ensureSummaryEntry";
-import { generatePromptFiles } from "../generatePromptFiles";
+import { generatePromptFiles } from "../aider/generatePromptFiles";
 import { lintCheck } from "../node+web/lintCheck";
 import { processGoTestOutput } from "../golang/processGoTestOutput";
 import { pythonLintCheck } from "../python/pythonLintCheck";
