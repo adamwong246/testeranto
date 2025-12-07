@@ -33,7 +33,7 @@ import { IFinalResults } from "../../lib";
 import { ISummary, IBuiltConfig, IRunTime } from "../../Types";
 import { checkForShutdown } from "../docker/ProcessManager/checkForShutdown";
 import configTests from "../configTests";
-import { ensureSummaryEntry } from "../ensureSummaryEntry";
+import { ensureSummaryEntry } from "./../docker/ProcessManager/ensureSummaryEntry";
 import { generatePromptFiles } from "../aider/generatePromptFiles";
 import { lintCheck } from "../node+web/lintCheck";
 import { processGoTestOutput } from "../golang/processGoTestOutput";
