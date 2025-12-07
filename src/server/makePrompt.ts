@@ -13,7 +13,12 @@ export const makePrompt = async (
   addableFiles: string[],
   runTime: IRunTime
 ) => {
-  summary[entryPoint].prompt = "?";
+  if (summary) {
+    summary[entryPoint].prompt = "?";
+  } else {
+    console.error("summary is wrong?");
+  }
+
   const promptPath = promptPather(entryPoint, runTime, name);
 
   // Correct directory structure: testeranto/reports/<name>/<testname>/<runtime>/

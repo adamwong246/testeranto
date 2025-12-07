@@ -1,18 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import path from "path";
 import puppeteer, { executablePath } from "puppeteer-core";
 import ansiC from "ansi-colors";
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
-import { ChildProcess } from "child_process";
 import fs, { watch } from "fs";
 
 import {
   createLogStreams,
-  filesHash,
-  IOutputs,
   isValidUrl,
   pollForFile,
   puppeteerConfigs,
@@ -22,8 +19,13 @@ import {
 import { PM_0 } from "./PM_0.js";
 import { makePrompt } from "./makePrompt.js";
 import { getRunnables } from "./utils.js";
-
-const changes: Record<string, string> = {};
+import { ProcessManager } from "./ProcessManager.js";
+import { QueueManager } from "./QueueManager.js";
+import { MetafileManager } from "./MetafileManager.js";
+import { PortManager } from "./PortManager.js";
+import { SummaryManager } from "./SummaryManager.js";
+import { ensureSummaryEntry } from "./ensureSummaryEntry.js";
+import configTests from "./configTests.js";
 
 export abstract class PM_1_WithProcesses extends PM_0 {
   summary: ISummary = {};
@@ -35,13 +37,17 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   golangMetafileWatcher: fs.FSWatcher;
 
   ports: Record<number, string>;
-  queue: string[];
+  queueManager: QueueManager;
   logStreams: Record<string, ReturnType<typeof createLogStreams>> = {};
   launchers: Record<string, () => void>;
 
+  portManager: PortManager;
+  processManager: ProcessManager = new ProcessManager();
+  metafileManager: MetafileManager = new MetafileManager();
+  summaryManager: SummaryManager = new SummaryManager();
+
   abstract launchNode(src: string, dest: string);
   abstract launchWeb(src: string, dest: string);
-  // abstract launchPure(src: string, dest: string);
   abstract launchPython(src: string, dest: string);
   abstract launchGolang(src: string, dest: string);
   abstract startBuildProcesses(): Promise<void>;
@@ -68,91 +74,35 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
   abstract onBuildDone(): void;
 
-  runningProcesses: Map<string, ChildProcess | Promise<any>> = new Map();
-
-  allProcesses: Map<
-    string,
-    {
-      child?: ChildProcess;
-      promise?: Promise<any>;
-      status: "running" | "exited" | "error" | "completed";
-      exitCode?: number;
-      error?: string;
-      command: string;
-      pid?: number;
-      timestamp: string;
-      type: "process" | "promise";
-      category: "aider" | "bdd-test" | "build-time" | "other";
-      testName?: string;
-      platform: IRunTime;
-    }
-  > = new Map();
-  processLogs: Map<string, string[]> = new Map();
-
   clients: Set<any> = new Set();
   public fs: import("@isomorphic-git/lightning-fs");
   connected: boolean;
 
-  constructor(configs: IBuiltConfig, name, mode) {
+  constructor(configs: IBuiltConfig, name: string, mode: string) {
     super(configs, name, mode);
 
     this.configTests().forEach(([t, rt, tr, sidecars]) => {
-      this.ensureSummaryEntry(t);
+      this.summaryManager.ensureSummaryEntry(t);
       sidecars.forEach(([sidecarName]) => {
-        this.ensureSummaryEntry(sidecarName, true);
+        this.summaryManager.ensureSummaryEntry(sidecarName, true);
       });
     });
 
     this.launchers = {};
-    this.ports = {};
-    this.queue = [];
-
-    this.configs.ports.forEach((element) => {
-      this.ports[element] = ""; // set ports as open
-    });
+    this.portManager = new PortManager(this.configs.ports);
+    this.queueManager = new QueueManager();
+    this.summaryManager = new SummaryManager();
   }
 
   configTests: () => [string, IRunTime, { ports: number }, object][] = () => {
-    return [
-      ...Object.keys(this.configs.node.tests).map((t) => [
-        t,
-        "node",
-        this.configs.node.tests[t],
-        [],
-      ]),
-
-      ...Object.keys(this.configs.web.tests).map((t) => [
-        t,
-        "web",
-        this.configs.web.tests[t],
-        [],
-      ]),
-      ...Object.keys(this.configs.python.tests).map((t) => [
-        t,
-        "python",
-        this.configs.python.tests[t],
-        [],
-      ]),
-      ...Object.keys(this.configs.golang.tests).map((t) => [
-        t,
-        "golang",
-        this.configs.golang.tests[t],
-        [],
-      ]),
-    ];
+    return configTests(this.configs);
   };
 
   writeBigBoard = () => {
-    // note: this path is different from the one used by front end
-    const summaryPath = `./testeranto/reports/${this.projectName}/summary.json`;
-    const summaryData = JSON.stringify(this.summary, null, 2);
-    fs.writeFileSync(summaryPath, summaryData);
-
-    // Broadcast the update
-    this.webSocketBroadcastMessage({
-      type: "summaryUpdate",
-      data: this.summary,
-    });
+    this.summaryManager.writeBigBoard(
+      this.projectName,
+      this.webSocketBroadcastMessage.bind(this)
+    );
   };
 
   webSocketBroadcastMessage(message: any) {
@@ -175,29 +125,21 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     onResolve?: (result: any) => void,
     onReject?: (error: any) => void
   ) {
-    this.runningProcesses.set(processId, promise);
-    this.allProcesses.set(processId, {
+    const id = this.processManager.addPromiseProcess(
+      processId,
       promise,
-      status: "running",
       command,
-      timestamp: new Date().toISOString(),
-      type: "promise",
       category,
       testName,
       platform,
-    });
-
-    // Initialize logs for this process
-    this.processLogs.set(processId, []);
+      onResolve,
+      onReject
+    );
 
     const startMessage = `Starting: ${command}`;
-    const logs = this.processLogs.get(processId) || [];
-    logs.push(startMessage);
-    this.processLogs.set(processId, logs);
-
     this.webSocketBroadcastMessage({
       type: "processStarted",
-      processId,
+      processId: id,
       command,
       timestamp: new Date().toISOString(),
       logs: [startMessage],
@@ -205,81 +147,35 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
     promise
       .then((result) => {
-        this.runningProcesses.delete(processId);
-        const processInfo = this.allProcesses.get(processId);
-        if (processInfo) {
-          this.allProcesses.set(processId, {
-            ...processInfo,
-            status: "completed",
-            exitCode: 0,
-          });
-        }
-
-        // Add log entry for process completion
         const successMessage = `Completed successfully with result: ${JSON.stringify(
           result
         )}`;
-        const currentLogs = this.processLogs.get(processId) || [];
-        currentLogs.push(successMessage);
-        this.processLogs.set(processId, currentLogs);
-
         this.webSocketBroadcastMessage({
           type: "processExited",
-          processId,
+          processId: id,
           exitCode: 0,
           timestamp: new Date().toISOString(),
           logs: [successMessage],
         });
-        if (onResolve) onResolve(result);
       })
       .catch((error) => {
-        this.runningProcesses.delete(processId);
-
-        const processInfo = this.allProcesses.get(processId);
-        if (processInfo) {
-          this.allProcesses.set(processId, {
-            ...processInfo,
-            status: "error",
-            error: error.message,
-          });
-        }
-
         const errorMessage = `Failed with error: ${error.message}`;
-        const currentLogs = this.processLogs.get(processId) || [];
-        currentLogs.push(errorMessage);
-        this.processLogs.set(processId, currentLogs);
-
         this.webSocketBroadcastMessage({
           type: "processError",
-          processId,
+          processId: id,
           error: error.message,
           timestamp: new Date().toISOString(),
           logs: [errorMessage],
         });
-        if (onReject) onReject(error);
       });
 
-    return processId;
+    return id;
   }
 
   getProcessesByCategory(
     category: "aider" | "bdd-test" | "build-time" | "other"
   ) {
-    return Array.from(this.allProcesses.entries())
-      .filter(([id, procInfo]) => procInfo.category === category)
-      .map(([id, procInfo]) => ({
-        processId: id,
-        command: procInfo.command,
-        pid: procInfo.pid,
-        status: procInfo.status,
-        exitCode: procInfo.exitCode,
-        error: procInfo.error,
-        timestamp: procInfo.timestamp,
-        category: procInfo.category,
-        testName: procInfo.testName,
-        platform: procInfo.platform,
-        logs: this.processLogs.get(id) || [],
-      }));
+    return this.processManager.getProcessesByCategory(category);
   }
 
   getBDDTestProcesses() {
@@ -295,211 +191,42 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   }
 
   getProcessesByTestName(testName: string) {
-    return Array.from(this.allProcesses.entries())
-      .filter(([id, procInfo]) => procInfo.testName === testName)
-      .map(([id, procInfo]) => ({
-        processId: id,
-        command: procInfo.command,
-        pid: procInfo.pid,
-        status: procInfo.status,
-        exitCode: procInfo.exitCode,
-        error: procInfo.error,
-        timestamp: procInfo.timestamp,
-        category: procInfo.category,
-        testName: procInfo.testName,
-        platform: procInfo.platform,
-        logs: this.processLogs.get(id) || [],
-      }));
+    return this.processManager.getProcessesByTestName(testName);
   }
 
   getProcessesByPlatform(platform: IRunTime) {
-    return Array.from(this.allProcesses.entries())
-      .filter(([id, procInfo]) => procInfo.platform === platform)
-      .map(([id, procInfo]) => ({
-        processId: id,
-        command: procInfo.command,
-        pid: procInfo.pid,
-        status: procInfo.status,
-        exitCode: procInfo.exitCode,
-        error: procInfo.error,
-        timestamp: procInfo.timestamp,
-        category: procInfo.category,
-        testName: procInfo.testName,
-        platform: procInfo.platform,
-        logs: this.processLogs.get(id) || [],
-      }));
+    return this.processManager.getProcessesByPlatform(platform);
   }
 
   bddTestIsRunning(src: string) {
-    // @ts-ignore
-    this.summary[src] = {
-      prompt: "?",
-      runTimeErrors: "?",
-      staticErrors: "?",
-      typeErrors: "?",
-      failingFeatures: {},
-    };
+    this.summaryManager.bddTestIsRunning(src);
   }
 
   async metafileOutputs(platform: IRunTime) {
-    let metafilePath: string;
-    if (platform === "python") {
-      metafilePath = `./testeranto/metafiles/python/core.json`;
-    } else {
-      metafilePath = `./testeranto/metafiles/${platform}/${this.projectName}.json`;
-    }
-
-    // Ensure the metafile exists
-    if (!fs.existsSync(metafilePath)) {
-      console.log(
-        ansiC.yellow(`Metafile not found at ${metafilePath}, skipping`)
-      );
-      return;
-    }
-
-    let metafile;
-    try {
-      const fileContent = fs.readFileSync(metafilePath).toString();
-      const parsedData = JSON.parse(fileContent);
-      // Handle different metafile structures
-      if (platform === "python") {
-        // Pitono metafile might be the entire content or have a different structure
-        metafile = parsedData.metafile || parsedData;
-      } else {
-        metafile = parsedData.metafile;
-      }
-      if (!metafile) {
-        console.log(
-          ansiC.yellow(ansiC.inverse(`No metafile found in ${metafilePath}`))
+    await this.metafileManager.processMetafile(
+      platform,
+      this.projectName,
+      this.configTests.bind(this),
+      this.tscCheck.bind(this),
+      this.eslintCheck.bind(this),
+      this.pythonLintCheck.bind(this),
+      this.pythonTypeCheck.bind(this),
+      (summary, projectName, entrypoint, addableFiles, platform) => {
+        // Ensure the summary entry exists before calling makePrompt
+        if (!this.summary[entrypoint]) {
+          this.ensureSummaryEntry(entrypoint);
+        }
+        makePrompt(
+          this.summary,
+          projectName,
+          entrypoint,
+          addableFiles,
+          platform
         );
-        return;
-      }
-      // console.log(
-      //   ansiC.blue(
-      //     `Found metafile for ${platform} with ${
-      //       Object.keys(metafile.outputs || {}).length
-      //     } outputs`
-      //   )
-      // );
-    } catch (error) {
-      console.error(`Error reading metafile at ${metafilePath}:`, error);
-      return;
-    }
-
-    const outputs: IOutputs = metafile.outputs;
-
-    // Check if outputs exists and is an object
-    // if (!outputs || typeof outputs !== "object") {
-    //   console.log(
-    //     ansiC.yellow(
-    //       ansiC.inverse(`No outputs found in metafile at ${metafilePath}`)
-    //     )
-    //   );
-    //   return;
-    // }
-
-    // @ts-ignore
-    Object.keys(outputs).forEach(async (builtOutput) => {
-      // const pattern = `testeranto/bundles/${platform}/${this.projectName}/${this.configs.src}`;
-      // if (!k.startsWith(pattern)) {
-      //   return;
-      // }
-
-      const entrypoint = await this.configTests().filter(
-        ([testEntryPoint, testPlatform]) => {
-          if (
-            testEntryPoint ===
-              builtOutput
-                .replace(
-                  `testeranto/bundles/${platform}/${this.projectName}/`,
-                  ``
-                )
-                .replace(`.mjs`, `.ts`) &&
-            testPlatform === platform
-          ) {
-            return true;
-          }
-        }
-      )[0];
-
-      if (entrypoint) {
-        const metafileOutput = outputs[builtOutput];
-
-        // const output = outputs[k];
-        // Check if the output entry exists and has inputs
-        // if (!output || !output.inputs) {
-        //   return;
-        // }
-
-        // @ts-ignore
-        const addableFiles = Object.keys(metafileOutput.inputs).filter((i) => {
-          if (!fs.existsSync(i)) return false;
-          if (i.startsWith("node_modules")) return false;
-          if (i.startsWith("./node_modules")) return false;
-
-          return true;
-        });
-
-        const f = `${builtOutput.split(".").slice(0, -1).join(".")}/`;
-
-        if (!fs.existsSync(f)) {
-          fs.mkdirSync(f, { recursive: true });
-        }
-
-        // @ts-ignore
-        let entrypoint = metafileOutput.entryPoint;
-
-        if (entrypoint) {
-          // Normalize the entrypoint path to ensure consistent comparison
-          entrypoint = path.normalize(entrypoint);
-
-          const changeDigest = await filesHash(addableFiles);
-
-          if (changeDigest === changes[entrypoint]) {
-            // skip
-          } else {
-            changes[entrypoint] = changeDigest;
-
-            // Run appropriate static analysis based on platform
-            if (platform === "node" || platform === "web") {
-              this.tscCheck({ entrypoint, addableFiles, platform });
-              this.eslintCheck({ entrypoint, addableFiles, platform });
-            } else if (platform === "python") {
-              this.pythonLintCheck(entrypoint, addableFiles);
-              this.pythonTypeCheck(entrypoint, addableFiles);
-            }
-
-            makePrompt(
-              this.summary,
-              this.projectName,
-              entrypoint,
-              addableFiles,
-              platform
-            );
-
-            const testName = this.findTestNameByEntrypoint(
-              entrypoint,
-              platform
-            );
-            if (testName) {
-              console.log(
-                ansiC.green(
-                  ansiC.inverse(
-                    `Source files changed, re-queueing test: ${testName}`
-                  )
-                )
-              );
-              this.addToQueue(testName, platform);
-            } else {
-              console.error(
-                `Could not find test for entrypoint: ${entrypoint} (${platform})`
-              );
-              throw `Could not find test for entrypoint: ${entrypoint} (${platform})`;
-            }
-          }
-        }
-      }
-    });
+      },
+      this.findTestNameByEntrypoint.bind(this),
+      this.addToQueue.bind(this)
+    );
   }
 
   private findTestNameByEntrypoint(
@@ -545,108 +272,23 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   }
 
   async pythonLintCheck(entrypoint: string, addableFiles: string[]) {
-    const reportDest = `testeranto/reports/${this.projectName}/${entrypoint
-      .split(".")
-      .slice(0, -1)
-      .join(".")}/python`;
-
-    if (!fs.existsSync(reportDest)) {
-      fs.mkdirSync(reportDest, { recursive: true });
-    }
-
-    const lintErrorsPath = `${reportDest}/lint_errors.txt`;
-
-    try {
-      // Use flake8 for Python linting
-      const { spawn } = await import("child_process");
-      const child = spawn("flake8", [entrypoint, "--max-line-length=88"], {
-        stdio: ["pipe", "pipe", "pipe"],
-      });
-
-      let stderr = "";
-      child.stderr.on("data", (data) => {
-        stderr += data.toString();
-      });
-
-      let stdout = "";
-      child.stdout.on("data", (data) => {
-        stdout += data.toString();
-      });
-
-      return new Promise<void>((resolve) => {
-        child.on("close", () => {
-          const logOut = stdout + stderr;
-          if (logOut.trim()) {
-            fs.writeFileSync(lintErrorsPath, logOut);
-            this.summary[entrypoint].staticErrors = logOut.split("\n").length;
-          } else {
-            if (fs.existsSync(lintErrorsPath)) {
-              fs.unlinkSync(lintErrorsPath);
-            }
-            this.summary[entrypoint].staticErrors = 0;
-          }
-          resolve();
-        });
-      });
-    } catch (error) {
-      console.error(`Error running flake8 on ${entrypoint}:`, error);
-      fs.writeFileSync(
-        lintErrorsPath,
-        `Error running flake8: ${error.message}`
-      );
-      this.summary[entrypoint].staticErrors = -1;
-    }
+    const { pythonLintCheck } = await import("./pythonLintCheck.js");
+    return pythonLintCheck(
+      entrypoint,
+      addableFiles,
+      this.projectName,
+      this.summary
+    );
   }
 
   async pythonTypeCheck(entrypoint: string, addableFiles: string[]) {
-    const reportDest = `testeranto/reports/${this.projectName}/${entrypoint
-      .split(".")
-      .slice(0, -1)
-      .join(".")}/python`;
-
-    if (!fs.existsSync(reportDest)) {
-      fs.mkdirSync(reportDest, { recursive: true });
-    }
-
-    const typeErrorsPath = `${reportDest}/type_errors.txt`;
-
-    try {
-      // Use mypy for Python type checking
-      const { spawn } = await import("child_process");
-      const child = spawn("mypy", [entrypoint], {
-        stdio: ["pipe", "pipe", "pipe"],
-      });
-
-      let stderr = "";
-      child.stderr.on("data", (data) => {
-        stderr += data.toString();
-      });
-
-      let stdout = "";
-      child.stdout.on("data", (data) => {
-        stdout += data.toString();
-      });
-
-      return new Promise<void>((resolve) => {
-        child.on("close", () => {
-          const logOut = stdout + stderr;
-          if (logOut.trim()) {
-            fs.writeFileSync(typeErrorsPath, logOut);
-            this.summary[entrypoint].typeErrors = logOut.split("\n").length;
-          } else {
-            if (fs.existsSync(typeErrorsPath)) {
-              fs.unlinkSync(typeErrorsPath);
-            }
-            this.summary[entrypoint].typeErrors = 0;
-          }
-          resolve();
-        });
-      });
-    } catch (error) {
-      console.error(`Error running mypy on ${entrypoint}:`, error);
-      fs.writeFileSync(typeErrorsPath, `Error running mypy: ${error.message}`);
-      this.summary[entrypoint].typeErrors = -1;
-    }
+    const { pythonTypeCheck } = await import("./pythonTypeCheck.js");
+    return pythonTypeCheck(
+      entrypoint,
+      addableFiles,
+      this.projectName,
+      this.summary
+    );
   }
 
   async start() {
@@ -947,8 +589,12 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
     testReport.givens.forEach((g) => {
       if (g.failed === true) {
-        // @ts-ignore
-        this.summary[srcTest].failingFeatures[g.key] = g.features;
+        const currentSummary = this.summaryManager.getSummary();
+        if (currentSummary[srcTest]) {
+          currentSummary[srcTest].failingFeatures =
+            currentSummary[srcTest].failingFeatures || {};
+          (currentSummary[srcTest].failingFeatures as any)[g.key] = g.features;
+        }
       }
     });
 
@@ -956,125 +602,41 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   };
 
   addToQueue(src: string, runtime: IRunTime) {
-    // Ensure we're using the original test source path, not a bundle path
-    // The src parameter might be a bundle path from metafile changes
-    // We need to find the corresponding test source path
-
-    // First, check if this looks like a bundle path (contains 'testeranto/bundles')
-    if (src.includes("testeranto/bundles")) {
-      // Try to find the original test name that corresponds to this bundle
-      const runnables = getRunnables(this.configs, this.projectName);
-      const allEntryPoints = [
-        ...Object.entries(runnables.nodeEntryPoints),
-        ...Object.entries(runnables.webEntryPoints),
-        // ...Object.entries(runnables.pureEntryPoints),
-        ...Object.entries(runnables.pythonEntryPoints),
-        ...Object.entries(runnables.golangEntryPoints),
-      ];
-
-      // Normalize the source path for comparison
-      const normalizedSrc = path.normalize(src);
-
-      for (const [testName, bundlePath] of allEntryPoints) {
-        const normalizedBundlePath = path.normalize(bundlePath as string);
-        // Check if the source path ends with the bundle path
-        if (normalizedSrc.endsWith(normalizedBundlePath)) {
-          // Use the original test name instead of the bundle path
-          src = testName;
-          break;
-        }
-      }
-    }
-
-    // First, clean up any existing processes for this test
-    this.cleanupTestProcesses(src);
-
-    // Add the test to the queue (using the original test source path)
-    // Make sure we don't add duplicates
-    if (!this.queue.includes(src)) {
-      this.queue.push(src);
-      console.log(
-        ansiC.green(
-          ansiC.inverse(`Added ${src} (${runtime}) to the processing queue`)
-        )
-      );
-      // Try to process the queue
-      this.checkQueue();
-    } else {
-      console.log(
-        ansiC.yellow(
-          ansiC.inverse(`Test ${src} is already in the queue, skipping`)
-        )
-      );
-    }
+    this.queueManager.addToQueue(
+      src,
+      runtime,
+      this.configs,
+      this.projectName,
+      this.cleanupTestProcesses.bind(this),
+      this.checkQueue.bind(this)
+    );
   }
 
   private cleanupTestProcesses(testName: string) {
-    // Find and clean up any running processes for this test
-    const processesToCleanup: string[] = [];
+    const processesToCleanup =
+      this.processManager.cleanupTestProcesses(testName);
 
-    // Find all process IDs that match this test name
-    for (const [processId, processInfo] of this.allProcesses.entries()) {
-      if (
-        processInfo.testName === testName &&
-        processInfo.status === "running"
-      ) {
-        processesToCleanup.push(processId);
-      }
-    }
-
-    // Clean up each process
+    // Broadcast process exit for each cleaned up process
     processesToCleanup.forEach((processId) => {
-      const processInfo = this.allProcesses.get(processId);
-      if (processInfo) {
-        // Kill child process if it exists
-        if (processInfo.child) {
-          try {
-            processInfo.child.kill();
-          } catch (error) {
-            console.error(`Error killing process ${processId}:`, error);
-          }
-        }
-
-        // Update process status
-        this.allProcesses.set(processId, {
-          ...processInfo,
-          status: "exited",
-          exitCode: -1,
-          error: "Killed due to source file change",
-        });
-
-        // Remove from running processes
-        this.runningProcesses.delete(processId);
-
-        // Broadcast process exit
-        this.webSocketBroadcastMessage({
-          type: "processExited",
-          processId,
-          exitCode: -1,
-          timestamp: new Date().toISOString(),
-          logs: ["Process killed due to source file change"],
-        });
-      }
+      this.webSocketBroadcastMessage({
+        type: "processExited",
+        processId,
+        exitCode: -1,
+        timestamp: new Date().toISOString(),
+        logs: ["Process killed due to source file change"],
+      });
     });
   }
 
   checkQueue() {
+    // this.queueManager.checkQueue();
     // Process all items in the queue
-    while (this.queue.length > 0) {
-      const x = this.queue.pop();
+    while (this.queueManager.length > 0) {
+      const x = this.queueManager.pop();
       if (!x) continue;
 
       // Check if this test is already running
-      let isRunning = false;
-      for (const processInfo of this.allProcesses.values()) {
-        if (processInfo.testName === x && processInfo.status === "running") {
-          isRunning = true;
-          break;
-        }
-      }
-
-      if (isRunning) {
+      if (this.processManager.isTestRunning(x)) {
         console.log(
           ansiC.yellow(
             `Skipping ${x} - already running, will be re-queued when current run completes`
@@ -1119,14 +681,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
             console.error(`No destination found for web test: ${x}`);
           }
           break;
-        // case "pure":
-        // dest = runnables.pureEntryPoints[x];
-        // if (dest) {
-        //   this.launchPure(x, dest);
-        // } else {
-        //   console.error(`No destination found for pure test: ${x}`);
-        // }
-        // break;
         case "python":
           dest = runnables.pythonEntryPoints[x];
           if (dest) {
@@ -1138,8 +692,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         case "golang":
           dest = runnables.golangEntryPoints[x];
           if (dest) {
-            // For Golang, we need to build and run the executable
-            // The dest is the path to the generated wrapper file
             this.launchGolang(x, dest);
           } else {
             console.error(`No destination found for golang test: ${x}`);
@@ -1151,91 +703,26 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       }
     }
 
-    if (this.queue.length === 0) {
+    if (this.queueManager.length === 0) {
       console.log(ansiC.inverse(`The queue is empty`));
     }
   }
 
-  checkForShutdown = () => {
-    this.checkQueue();
-
-    console.log(
-      ansiC.inverse(
-        `The following jobs are awaiting resources: ${JSON.stringify(
-          this.queue
-        )}`
-      )
+  checkForShutdown = async () => {
+    const { checkForShutdown } = await import("./checkForShutdown.js");
+    checkForShutdown(
+      this.mode,
+      this.summaryManager,
+      this.queueManager,
+      this.projectName,
+      this.browser,
+      this.checkQueue.bind(this),
+      this.writeBigBoard.bind(this)
     );
-    console.log(
-      ansiC.inverse(`The status of ports: ${JSON.stringify(this.ports)}`)
-    );
-
-    this.writeBigBoard();
-
-    if (this.mode === "dev") return;
-
-    let inflight = false;
-
-    Object.keys(this.summary).forEach((k) => {
-      if (this.summary[k].prompt === "?") {
-        console.log(ansiC.blue(ansiC.inverse(`🕕 prompt ${k}`)));
-        inflight = true;
-      }
-    });
-
-    Object.keys(this.summary).forEach((k) => {
-      if (this.summary[k].runTimeErrors === "?") {
-        console.log(ansiC.blue(ansiC.inverse(`🕕 runTimeError ${k}`)));
-        inflight = true;
-      }
-    });
-
-    Object.keys(this.summary).forEach((k) => {
-      if (this.summary[k].staticErrors === "?") {
-        console.log(ansiC.blue(ansiC.inverse(`🕕 staticErrors ${k}`)));
-        inflight = true;
-      }
-    });
-
-    Object.keys(this.summary).forEach((k) => {
-      if (this.summary[k].typeErrors === "?") {
-        console.log(ansiC.blue(ansiC.inverse(`🕕 typeErrors ${k}`)));
-        inflight = true;
-      }
-    });
-
-    this.writeBigBoard();
-
-    if (!inflight) {
-      if (this.browser) {
-        if (this.browser) {
-          this.browser.disconnect().then(() => {
-            console.log(
-              ansiC.inverse(`${this.projectName} has been tested. Goodbye.`)
-            );
-            process.exit();
-          });
-        }
-      }
-    }
   };
 
   private ensureSummaryEntry(src: string, isSidecar = false) {
-    if (!this.summary[src]) {
-      // @ts-ignore
-      this.summary[src] = {
-        typeErrors: undefined,
-        staticErrors: undefined,
-        runTimeErrors: undefined,
-        prompt: undefined,
-        failingFeatures: {},
-      };
-      if (isSidecar) {
-        // Sidecars don't need all fields
-        // delete this.summary[src].runTimeError;
-        // delete this.summary[src].prompt;
-      }
-    }
+    ensureSummaryEntry(this.summary, src, isSidecar);
     return this.summary[src];
   }
 }

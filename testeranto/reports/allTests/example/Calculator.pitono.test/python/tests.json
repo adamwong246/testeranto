@@ -245,9 +245,9 @@
   "failed": false,
   "features": [
     "Multiplication should work correctly",
-    "Subtraction should work correctly",
     "Clear should reset the display",
     "Addition should work correctly",
+    "Subtraction should work correctly",
     "Basic calculator operations should work",
     "Division should work correctly"
   ],

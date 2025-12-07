@@ -1,14 +1,1 @@
-{
-  "example/Calculator.test.ts": {
-    "runTimeErrors": "?",
-    "failingFeatures": {}
-  },
-  "example/Calculator.pitono.test.py": {
-    "runTimeErrors": 0,
-    "failingFeatures": {}
-  },
-  "example/Calculator.golingvu.test.go": {
-    "runTimeErrors": 1,
-    "failingFeatures": {}
-  }
-}
+{}

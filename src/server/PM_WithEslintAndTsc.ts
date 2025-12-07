@@ -14,6 +14,7 @@ import { IBuiltConfig, IRunTime } from "../Types.js";
 
 import { PM_WithBuild } from "./PM_WithBuild";
 import { IMode } from "./types";
+import { SummaryManager } from "./SummaryManager.js";
 
 const eslint = new ESLint();
 const formatter = await eslint.loadFormatter(
@@ -24,6 +25,10 @@ export abstract class PM_WithEslintAndTsc extends PM_WithBuild {
   constructor(configs: IBuiltConfig, name: string, mode: IMode) {
     super(configs, name, mode);
   }
+
+  // These methods are implemented in PM_1_WithProcesses via inheritance
+  // We need to ensure they're available
+  protected abstract get summaryManager(): SummaryManager;
 
   tscCheck = async ({
     entrypoint,
