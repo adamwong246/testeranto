@@ -3,8 +3,7 @@ import path from "path";
 
 import { promptPather } from "./utils";
 import { IRunTime, ISummary } from "../Types";
-import { getLogFilesForRuntime } from "../utils/logFiles";
-import { LOG_FILES } from "../utils/logFiles";
+import { LOG_FILES, getLogFilesForRuntime } from "../clients/utils/logFiles";
 
 export const makePrompt = async (
   summary: ISummary,

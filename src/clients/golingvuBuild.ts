@@ -1,9 +1,7 @@
 import { IBuiltConfig } from "../Types";
-import {
-  generateGolingvuMetafile,
-  writeGolingvuMetafile,
-} from "../utils/golingvuMetafile";
-import { GolingvuWatcher } from "../utils/golingvuWatcher";
+import { generateGolingvuMetafile } from "./utils/generateGolingvuMetafile";
+import { GolingvuWatcher } from "./utils/golingvuWatcher";
+import { writeGolingvuMetafile } from "./utils/writeGolingvuMetafile";
 
 export class GolingvuBuild {
   private config: IBuiltConfig;

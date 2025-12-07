@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  getLogFilesForRuntime,
+  STANDARD_LOGS,
+} from "../../clients/utils/logFiles";
 import { ISummary, IBuiltConfig, IRunTime } from "../../Types";
-import { getLogFilesForRuntime, STANDARD_LOGS } from "../../utils/logFiles";
 
 export const fetchProjectData = async (projectName: string) => {
   const [summaryRes, configRes] = await Promise.all([

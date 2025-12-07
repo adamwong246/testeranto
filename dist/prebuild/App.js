@@ -37737,7 +37737,7 @@ Current environment analysis:
     ) : activeTab === "node" ? /* @__PURE__ */ import_react86.default.createElement(BuildLogViewer, { logs: nodeLogs, runtime: "Node" }) : activeTab === "web" ? /* @__PURE__ */ import_react86.default.createElement(BuildLogViewer, { logs: webLogs, runtime: "Web" }) : activeTab === "pure" ? /* @__PURE__ */ import_react86.default.createElement(BuildLogViewer, { logs: pureLogs, runtime: "Pure" }) : null))));
   };
 
-  // src/utils/logFiles.ts
+  // src/clients/utils/logFiles.ts
   var STANDARD_LOGS = {
     TESTS: "tests.json",
     TYPE_ERRORS: "type_errors.txt",

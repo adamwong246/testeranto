@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { FileTree } from "../components/pure/FileTree";
 import { FileTreeItem } from "../components/pure/FileTreeItem";
 import { getLanguage } from "./TestPageView_utils";
-import { STANDARD_LOGS, RUNTIME_SPECIFIC_LOGS, RuntimeName } from "../../../utils/logFiles";
+import { STANDARD_LOGS, RUNTIME_SPECIFIC_LOGS, RuntimeName } from "../../../clients/utils/logFiles";
+
 
 interface ProjectsTreeProps {
   projects: string[];

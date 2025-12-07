@@ -2,8 +2,8 @@ import { IBuiltConfig } from "../Types";
 import {
   generatePitonoMetafile,
   writePitonoMetafile,
-} from "../utils/pitonoMetafile";
-import { PitonoWatcher } from "../utils/pitonoWatcher";
+} from "./utils/pitonoMetafile";
+import { PitonoWatcher } from "./utils/pitonoWatcher";
 
 export class PitonoBuild {
   private config: IBuiltConfig;

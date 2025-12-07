@@ -6,8 +6,9 @@ import { PM_Main } from "./server/main";
 import { getRunnables } from "./server/utils";
 import { PitonoBuild } from "./clients/pitonoBuild";
 import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
-import { AppHtml } from "./utils/buildTemplates";
+
 import webHtmlFrame from "./web.html";
+import { AppHtml } from "./clients/utils/buildTemplates";
 const { GolingvuBuild } = await import("./clients/golingvuBuild");
 
 readline.emitKeypressEvents(process.stdin);

@@ -26,6 +26,10 @@ import { PortManager } from "./PortManager.js";
 import { SummaryManager } from "./SummaryManager.js";
 import { ensureSummaryEntry } from "./ensureSummaryEntry.js";
 import configTests from "./configTests.js";
+import {
+  generatePitonoMetafile,
+  writePitonoMetafile,
+} from "../clients/utils/pitonoMetafile.js";
 
 export abstract class PM_1_WithProcesses extends PM_0 {
   summary: ISummary = {};
@@ -301,9 +305,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         (test) => test[1] === "python"
       );
       if (pythonTests.length > 0) {
-        const { generatePitonoMetafile, writePitonoMetafile } = await import(
-          "../utils/pitonoMetafile.js"
-        );
         const entryPoints = pythonTests.map((test) => test[0]);
         const metafile = await generatePitonoMetafile(
           this.projectName,
@@ -332,7 +333,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     } catch (e) {
       console.error(e);
       console.error(
-        "could not start chrome via puppeter. Check this path: ",
+        "could not start chrome via puppetter. Check this path: ",
         executablePath
       );
     }
@@ -398,9 +399,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
       try {
         // For python, we may need to generate the metafile first
         if (runtime === "python" && !fs.existsSync(metafile)) {
-          const { generatePitonoMetafile, writePitonoMetafile } = await import(
-            "../utils/pitonoMetafile.js"
-          );
           const entryPointList = Object.keys(entryPoints);
           if (entryPointList.length > 0) {
             const metafileData = await generatePitonoMetafile(
@@ -541,7 +539,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
 
     testReport.features
       .reduce(async (mm, featureStringKey) => {
-        const accum = await mm;
+        const accumulator = await mm;
 
         const isUrl = isValidUrl(featureStringKey);
 
@@ -549,7 +547,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
           const u = new URL(featureStringKey);
 
           if (u.protocol === "file:") {
-            accum.files.push(u.pathname);
+            accumulator.files.push(u.pathname);
           } else if (u.protocol === "http:" || u.protocol === "https:") {
             const newPath = `${process.cwd()}/testeranto/features/external/${
               u.hostname
@@ -558,17 +556,17 @@ export abstract class PM_1_WithProcesses extends PM_0 {
             const body = await this.configs.featureIngestor(featureStringKey);
 
             writeFileAndCreateDir(newPath, body);
-            accum.files.push(newPath);
+            accumulator.files.push(newPath);
           }
         } else {
           await fs.promises.mkdir(path.dirname(featureDestination), {
             recursive: true,
           });
 
-          accum.strings.push(featureStringKey);
+          accumulator.strings.push(featureStringKey);
         }
 
-        return accum;
+        return accumulator;
       }, Promise.resolve({ files: [] as string[], strings: [] as string[] }))
 
       .then(({ files }: { files: string[]; strings: string[] }) => {
