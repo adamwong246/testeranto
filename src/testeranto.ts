@@ -115,18 +115,7 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
 
   // the web runtime needs html, js and css files for support.
   const getSecondaryEndpointsPoints = (runtime: IRunTime): string[] => {
-    // const meta = (ts: ITestTypes[], st: Set<string>): Set<string> => {
-    //   ts.forEach((t) => {
-    //     if (t[1] === runtime) {
-    //       st.add(t[0]);
-    //     }
-    //     if (Array.isArray(t[3])) {
-    //       meta(t[3], st);
-    //     }
-    //   });
-    //   return st;
-    // };
-    return Array.from((config[runtime].tests, new Set()));
+    return Object.keys(config[runtime].tests || {});
   };
 
   // Also handle pitono endpoints for HTML generation if needed
@@ -135,39 +124,35 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   //   console.log(`Pitono test found: ${sourceFilePath}`);
   // });
 
-  Promise.resolve(
-    Promise.all(
-      [...getSecondaryEndpointsPoints("web")].map(async (sourceFilePath) => {
-        const sourceFileSplit = sourceFilePath.split("/");
-        const sourceDir = sourceFileSplit.slice(0, -1);
-        const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-        const sourceFileNameMinusJs = sourceFileName
-          .split(".")
-          .slice(0, -1)
-          .join(".");
+  // Generate HTML files for web tests synchronously
+  const webTests = [...getSecondaryEndpointsPoints("web")];
+  for (const sourceFilePath of webTests) {
+    const sourceFileSplit = sourceFilePath.split("/");
+    const sourceDir = sourceFileSplit.slice(0, -1);
+    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+    const sourceFileNameMinusJs = sourceFileName
+      .split(".")
+      .slice(0, -1)
+      .join(".");
 
-        const htmlFilePath = path.normalize(
-          `${process.cwd()}/testeranto/bundles/web/${testsName}/${sourceDir.join(
-            "/"
-          )}/${sourceFileNameMinusJs}.html`
-        );
-        const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-        const cssFilePath = `./${sourceFileNameMinusJs}.css`;
+    const htmlFilePath = path.normalize(
+      `${process.cwd()}/testeranto/bundles/web/${testsName}/${sourceDir.join(
+        "/"
+      )}/${sourceFileNameMinusJs}.html`
+    );
+    const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+    const cssFilePath = `./${sourceFileNameMinusJs}.css`;
 
-        return (
-          fs.promises
-            .mkdir(path.dirname(htmlFilePath), { recursive: true })
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            .then((x) =>
-              fs.writeFileSync(
-                htmlFilePath,
-                webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
-              )
-            )
-        );
-      })
-    )
-  );
+    // Create directory if it doesn't exist
+    fs.mkdirSync(path.dirname(htmlFilePath), { recursive: true });
+    
+    // Write HTML file
+    fs.writeFileSync(
+      htmlFilePath,
+      webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
+    );
+    console.log(`Generated HTML file: ${htmlFilePath}`);
+  }
 
   const {
     nodeEntryPoints,

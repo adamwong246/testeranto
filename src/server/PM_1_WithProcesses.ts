@@ -2,34 +2,40 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import path from "path";
-import puppeteer, { executablePath } from "puppeteer-core";
 import ansiC from "ansi-colors";
-import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
+import { ESLint } from "eslint";
 import fs, { watch } from "fs";
-
+import puppeteer, { executablePath } from "puppeteer-core";
+import tsc from "tsc-prog";
+import ts from "typescript";
+import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
 import {
   createLogStreams,
-  isValidUrl,
   pollForFile,
   puppeteerConfigs,
-  writeFileAndCreateDir,
 } from "../clients/utils.js";
-
-import { PM_0 } from "./PM_0.js";
-import { makePrompt } from "./makePrompt.js";
-import { getRunnables } from "./utils.js";
-import { ProcessManager } from "./ProcessManager.js";
-import { QueueManager } from "./QueueManager.js";
-import { MetafileManager } from "./MetafileManager.js";
-import { PortManager } from "./PortManager.js";
-import { SummaryManager } from "./SummaryManager.js";
-import { ensureSummaryEntry } from "./ensureSummaryEntry.js";
-import configTests from "./configTests.js";
 import {
   generatePitonoMetafile,
   writePitonoMetafile,
 } from "../clients/utils/pitonoMetafile.js";
+import { MetafileManager } from "./MetafileManager.js";
+import { PM_0 } from "./PM_0.js";
+import { PortManager } from "./PortManager.js";
+import { ProcessManager } from "./ProcessManager.js";
+import { QueueManager } from "./QueueManager.js";
+import { SummaryManager } from "./SummaryManager.js";
+import configTests from "./configTests.js";
+import { ensureSummaryEntry } from "./ensureSummaryEntry.js";
+import { makePrompt } from "./makePrompt.js";
+import { pythonLintCheck } from "./pythonLintCheck.js";
+import { pythonTypeCheck } from "./pythonTypeCheck.js";
+import { lintPather, tscPather } from "./utils";
+import { getRunnables } from "./utils.js";
+
+const eslint = new ESLint();
+const formatter = await eslint.loadFormatter(
+  "./node_modules/testeranto/dist/prebuild/esbuildConfigs/eslint-formatter-testeranto.mjs"
+);
 
 export abstract class PM_1_WithProcesses extends PM_0 {
   summary: ISummary = {};
@@ -55,27 +61,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   abstract launchPython(src: string, dest: string);
   abstract launchGolang(src: string, dest: string);
   abstract startBuildProcesses(): Promise<void>;
-
-  abstract tscCheck({
-    entrypoint,
-    addableFiles,
-    platform,
-  }: {
-    entrypoint: string;
-    addableFiles: string[];
-    platform: IRunTime;
-  });
-
-  abstract eslintCheck({
-    entrypoint,
-    addableFiles,
-    platform,
-  }: {
-    entrypoint: string;
-    addableFiles: string[];
-    platform: IRunTime;
-  });
-
   abstract onBuildDone(): void;
 
   clients: Set<any> = new Set();
@@ -85,17 +70,17 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   constructor(configs: IBuiltConfig, name: string, mode: string) {
     super(configs, name, mode);
 
+    this.launchers = {};
+    this.portManager = new PortManager(this.configs.ports);
+    this.queueManager = new QueueManager();
+    this.summaryManager = new SummaryManager();
+
     this.configTests().forEach(([t, rt, tr, sidecars]) => {
       this.summaryManager.ensureSummaryEntry(t);
       sidecars.forEach(([sidecarName]) => {
         this.summaryManager.ensureSummaryEntry(sidecarName, true);
       });
     });
-
-    this.launchers = {};
-    this.portManager = new PortManager(this.configs.ports);
-    this.queueManager = new QueueManager();
-    this.summaryManager = new SummaryManager();
   }
 
   configTests: () => [string, IRunTime, { ports: number }, object][] = () => {
@@ -202,10 +187,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     return this.processManager.getProcessesByPlatform(platform);
   }
 
-  bddTestIsRunning(src: string) {
-    this.summaryManager.bddTestIsRunning(src);
-  }
-
   async metafileOutputs(platform: IRunTime) {
     await this.metafileManager.processMetafile(
       platform,
@@ -237,7 +218,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     entrypoint: string,
     platform: IRunTime
   ): string | null {
-    console.log("findTestNameByEntrypoint", entrypoint, platform);
     const runnables = getRunnables(this.configs, this.projectName);
 
     let entryPointsMap: Record<string, string>;
@@ -273,26 +253,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     }
 
     return entryPointsMap[entrypoint];
-  }
-
-  async pythonLintCheck(entrypoint: string, addableFiles: string[]) {
-    const { pythonLintCheck } = await import("./pythonLintCheck.js");
-    return pythonLintCheck(
-      entrypoint,
-      addableFiles,
-      this.projectName,
-      this.summary
-    );
-  }
-
-  async pythonTypeCheck(entrypoint: string, addableFiles: string[]) {
-    const { pythonTypeCheck } = await import("./pythonTypeCheck.js");
-    return pythonTypeCheck(
-      entrypoint,
-      addableFiles,
-      this.projectName,
-      this.summary
-    );
   }
 
   async start() {
@@ -502,103 +462,6 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     this.checkForShutdown();
   }
 
-  receiveFeaturesV2 = (
-    reportDest: string,
-    srcTest: string,
-    platform: IRunTime
-  ) => {
-    const featureDestination = path.resolve(
-      process.cwd(),
-      "reports",
-      "features",
-      "strings",
-      srcTest.split(".").slice(0, -1).join(".") + ".features.txt"
-    );
-
-    const testReportPath = `${reportDest}/tests.json`;
-    if (!fs.existsSync(testReportPath)) {
-      console.error(`tests.json not found at: ${testReportPath}`);
-      return;
-    }
-
-    const testReport = JSON.parse(fs.readFileSync(testReportPath, "utf8"));
-
-    // Add full path information to each test
-    if (testReport.tests) {
-      testReport.tests.forEach((test) => {
-        // Add the full path to each test
-        test.fullPath = path.resolve(process.cwd(), srcTest);
-      });
-    }
-
-    // Add full path to the report itself
-    testReport.fullPath = path.resolve(process.cwd(), srcTest);
-
-    // Write the modified report back
-    fs.writeFileSync(testReportPath, JSON.stringify(testReport, null, 2));
-
-    testReport.features
-      .reduce(async (mm, featureStringKey) => {
-        const accumulator = await mm;
-
-        const isUrl = isValidUrl(featureStringKey);
-
-        if (isUrl) {
-          const u = new URL(featureStringKey);
-
-          if (u.protocol === "file:") {
-            accumulator.files.push(u.pathname);
-          } else if (u.protocol === "http:" || u.protocol === "https:") {
-            const newPath = `${process.cwd()}/testeranto/features/external/${
-              u.hostname
-            }${u.pathname}`;
-
-            const body = await this.configs.featureIngestor(featureStringKey);
-
-            writeFileAndCreateDir(newPath, body);
-            accumulator.files.push(newPath);
-          }
-        } else {
-          await fs.promises.mkdir(path.dirname(featureDestination), {
-            recursive: true,
-          });
-
-          accumulator.strings.push(featureStringKey);
-        }
-
-        return accumulator;
-      }, Promise.resolve({ files: [] as string[], strings: [] as string[] }))
-
-      .then(({ files }: { files: string[]; strings: string[] }) => {
-        // Markdown files must be referenced in the prompt but string style features are already present in the tests.json file
-
-        fs.writeFileSync(
-          `testeranto/reports/${this.projectName}/${srcTest
-            .split(".")
-            .slice(0, -1)
-            .join(".")}/${platform}/featurePrompt.txt`,
-          files
-            .map((f) => {
-              return `/read ${f}`;
-            })
-            .join("\n")
-        );
-      });
-
-    testReport.givens.forEach((g) => {
-      if (g.failed === true) {
-        const currentSummary = this.summaryManager.getSummary();
-        if (currentSummary[srcTest]) {
-          currentSummary[srcTest].failingFeatures =
-            currentSummary[srcTest].failingFeatures || {};
-          (currentSummary[srcTest].failingFeatures as any)[g.key] = g.features;
-        }
-      }
-    });
-
-    this.writeBigBoard();
-  };
-
   addToQueue(src: string, runtime: IRunTime) {
     this.queueManager.addToQueue(
       src,
@@ -626,83 +489,136 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     });
   }
 
-  checkQueue() {
-    // this.queueManager.checkQueue();
-    // Process all items in the queue
-    while (this.queueManager.length > 0) {
-      const x = this.queueManager.pop();
-      if (!x) continue;
+  private isProcessingQueue = false;
 
-      // Check if this test is already running
+  async checkQueue() {
+    // If already processing the queue, wait
+    if (this.isProcessingQueue) {
+      return;
+    }
+
+    this.isProcessingQueue = true;
+
+    try {
+      // Process one item at a time
+      const queueItem = this.queueManager.pop();
+      if (!queueItem) {
+        this.isProcessingQueue = false;
+        if (this.queueManager.length === 0) {
+          console.log(ansiC.inverse(`The queue is empty`));
+        }
+        return;
+      }
+
+      const { testName: x, runtime } = queueItem;
+
+      // Check if this test is already running (shouldn't happen with our logic)
       if (this.processManager.isTestRunning(x)) {
         console.log(
           ansiC.yellow(
-            `Skipping ${x} - already running, will be re-queued when current run completes`
+            `Skipping ${x} (${runtime}) - already running, putting back in queue`
           )
         );
-        continue;
+        // Put it back at the end of the queue
+        this.queueManager.addToQueue(
+          x,
+          runtime,
+          this.configs,
+          this.projectName,
+          this.cleanupTestProcesses.bind(this),
+          () => {} // Don't trigger checkQueue here
+        );
+        this.isProcessingQueue = false;
+        // Try again after a delay
+        setTimeout(() => this.checkQueue(), 1000);
+        return;
       }
 
-      const test = this.configTests().find((t) => t[0] === x);
+      // Find the test configuration that matches both name AND runtime
+      const test = this.configTests().find(
+        (t) => t[0] === x && t[1] === runtime
+      );
       if (!test) {
         console.error(
-          `test is undefined ${x}, ${JSON.stringify(
+          `test is undefined ${x} (${runtime}), ${JSON.stringify(
             this.configTests(),
             null,
             2
           )}`
         );
-        process.exit(-1);
-        continue;
+        this.isProcessingQueue = false;
+        // Try the next item
+        setTimeout(() => this.checkQueue(), 100);
+        return;
       }
-
-      // Get the appropriate launcher based on the runtime type
-      const runtime = test[1];
 
       const runnables = getRunnables(this.configs, this.projectName);
       let dest: string;
 
-      switch (runtime) {
-        case "node":
-          dest = runnables.nodeEntryPoints[x];
-          if (dest) {
-            this.launchNode(x, dest);
-          } else {
-            console.error(`No destination found for node test: ${x}`);
+      // Launch the test with error handling
+      const launchTest = () => {
+        try {
+          switch (runtime) {
+            case "node":
+              dest = runnables.nodeEntryPoints[x];
+              if (dest) {
+                this.launchNode(x, dest);
+              } else {
+                console.error(`No destination found for node test: ${x}`);
+                this.isProcessingQueue = false;
+                setTimeout(() => this.checkQueue(), 100);
+              }
+              break;
+            case "web":
+              dest = runnables.webEntryPoints[x];
+              if (dest) {
+                this.launchWeb(x, dest);
+              } else {
+                console.error(`No destination found for web test: ${x}`);
+                this.isProcessingQueue = false;
+                setTimeout(() => this.checkQueue(), 100);
+              }
+              break;
+            case "python":
+              dest = runnables.pythonEntryPoints[x];
+              if (dest) {
+                this.launchPython(x, dest);
+              } else {
+                console.error(`No destination found for python test: ${x}`);
+                this.isProcessingQueue = false;
+                setTimeout(() => this.checkQueue(), 100);
+              }
+              break;
+            case "golang":
+              dest = runnables.golangEntryPoints[x];
+              if (dest) {
+                this.launchGolang(x, dest);
+              } else {
+                console.error(`No destination found for golang test: ${x}`);
+                this.isProcessingQueue = false;
+                setTimeout(() => this.checkQueue(), 100);
+              }
+              break;
+            default:
+              console.error(`Unknown runtime: ${runtime} for test ${x}`);
+              this.isProcessingQueue = false;
+              setTimeout(() => this.checkQueue(), 100);
+              break;
           }
-          break;
-        case "web":
-          dest = runnables.webEntryPoints[x];
-          if (dest) {
-            this.launchWeb(x, dest);
-          } else {
-            console.error(`No destination found for web test: ${x}`);
-          }
-          break;
-        case "python":
-          dest = runnables.pythonEntryPoints[x];
-          if (dest) {
-            this.launchPython(x, dest);
-          } else {
-            console.error(`No destination found for python test: ${x}`);
-          }
-          break;
-        case "golang":
-          dest = runnables.golangEntryPoints[x];
-          if (dest) {
-            this.launchGolang(x, dest);
-          } else {
-            console.error(`No destination found for golang test: ${x}`);
-          }
-          break;
-        default:
-          console.error(`Unknown runtime: ${runtime} for test ${x}`);
-          break;
-      }
-    }
+        } catch (error) {
+          console.error(`Error launching test ${x} (${runtime}):`, error);
+          this.isProcessingQueue = false;
+          setTimeout(() => this.checkQueue(), 100);
+        }
+      };
 
-    if (this.queueManager.length === 0) {
-      console.log(ansiC.inverse(`The queue is empty`));
+      // Launch the test
+      launchTest();
+    } catch (error) {
+      console.error(`Error in checkQueue:`, error);
+      this.isProcessingQueue = false;
+      // Try again after a delay
+      setTimeout(() => this.checkQueue(), 1000);
     }
   }
 
@@ -723,4 +639,186 @@ export abstract class PM_1_WithProcesses extends PM_0 {
     ensureSummaryEntry(this.summary, src, isSidecar);
     return this.summary[src];
   }
+
+  async pythonLintCheck(entrypoint: string, addableFiles: string[]) {
+    return pythonLintCheck(
+      entrypoint,
+      addableFiles,
+      this.projectName,
+      this.summary
+    );
+  }
+
+  async pythonTypeCheck(entrypoint: string, addableFiles: string[]) {
+    return pythonTypeCheck(
+      entrypoint,
+      addableFiles,
+      this.projectName,
+      this.summary
+    );
+  }
+
+  tscCheck = async ({
+    entrypoint,
+    addableFiles,
+    platform,
+  }: {
+    entrypoint: string;
+    addableFiles: string[];
+    platform: IRunTime;
+  }): Promise<any> => {
+    const processId = `tsc-${entrypoint}-${Date.now()}`;
+    const command = `tsc check for ${entrypoint}`;
+
+    const tscPromise = (async () => {
+      try {
+        this.typeCheckIsRunning(entrypoint);
+      } catch (e) {
+        // Log error through process manager
+        throw new Error(`Error in tscCheck: ${e.message}`);
+      }
+
+      const program = tsc.createProgramFromConfig({
+        basePath: process.cwd(),
+        configFilePath: "tsconfig.json",
+        compilerOptions: {
+          outDir: tscPather(entrypoint, platform, this.projectName),
+          noEmit: true,
+        },
+        include: addableFiles,
+      });
+      const tscPath = tscPather(entrypoint, platform, this.projectName);
+
+      const allDiagnostics = program.getSemanticDiagnostics();
+
+      const results: string[] = [];
+      allDiagnostics.forEach((diagnostic) => {
+        if (diagnostic.file) {
+          const { line, character } = ts.getLineAndCharacterOfPosition(
+            diagnostic.file,
+            diagnostic.start!
+          );
+          const message = ts.flattenDiagnosticMessageText(
+            diagnostic.messageText,
+            "\n"
+          );
+          results.push(
+            `${diagnostic.file.fileName} (${line + 1},${
+              character + 1
+            }): ${message}`
+          );
+        } else {
+          results.push(
+            ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
+          );
+        }
+      });
+
+      fs.writeFileSync(tscPath, results.join("\n"));
+      this.typeCheckIsNowDone(entrypoint, results.length);
+      return results.length;
+    })();
+
+    this.addPromiseProcess(
+      processId,
+      tscPromise,
+      command,
+      "build-time",
+      entrypoint
+    );
+  };
+
+  eslintCheck = async ({
+    entrypoint,
+    addableFiles,
+    platform,
+  }: {
+    entrypoint: string;
+    addableFiles: string[];
+    platform: IRunTime;
+  }) => {
+    const processId = `eslint-${entrypoint}-${Date.now()}`;
+    const command = `eslint check for ${entrypoint}`;
+
+    const eslintPromise = (async () => {
+      try {
+        this.lintIsRunning(entrypoint);
+      } catch (e) {
+        throw new Error(`Error in eslintCheck: ${e.message}`);
+      }
+
+      const filepath = lintPather(entrypoint, platform, this.projectName);
+      if (fs.existsSync(filepath)) fs.rmSync(filepath);
+      const results = (await eslint.lintFiles(addableFiles))
+        .filter((r) => r.messages.length)
+        .filter((r) => {
+          return r.messages[0].ruleId !== null;
+        })
+        .map((r) => {
+          delete r.source;
+          return r;
+        });
+
+      fs.writeFileSync(filepath, await formatter.format(results));
+      this.lintIsNowDone(entrypoint, results.length);
+      return results.length;
+    })();
+
+    this.addPromiseProcess(
+      processId,
+      eslintPromise,
+      command,
+      "build-time",
+      entrypoint
+    );
+  };
+
+  typeCheckIsRunning = (src: string) => {
+    this.summaryManager.ensureSummaryEntry(src);
+    this.summary[src].typeErrors = "?";
+  };
+
+  typeCheckIsNowDone = (src: string, failures: number) => {
+    if (failures === 0) {
+      console.log(ansiC.green(ansiC.inverse(`tsc > ${src}`)));
+    } else {
+      console.log(
+        ansiC.red(ansiC.inverse(`tsc > ${src} failed ${failures} times`))
+      );
+    }
+
+    this.summary[src].typeErrors = failures;
+    this.writeBigBoard();
+    this.checkForShutdown();
+  };
+
+  lintIsRunning = (src: string) => {
+    this.summaryManager.ensureSummaryEntry(src);
+    this.summary[src].staticErrors = "?";
+    this.writeBigBoard();
+  };
+
+  bddTestIsRunning(src: string) {
+    this.summaryManager.bddTestIsRunning(src);
+  }
+
+  bddTestIsNowDone = (src: string, failures: number) => {
+    this.summary[src].runTimeErrors = failures;
+    this.writeBigBoard();
+    this.checkForShutdown();
+  };
+
+  lintIsNowDone = (src: string, failures: number) => {
+    if (failures === 0) {
+      console.log(ansiC.green(ansiC.inverse(`eslint > ${src}`)));
+    } else {
+      console.log(
+        ansiC.red(ansiC.inverse(`eslint > ${src} failed ${failures} times`))
+      );
+    }
+
+    this.summary[src].staticErrors = failures;
+    this.writeBigBoard();
+    this.checkForShutdown();
+  };
 }

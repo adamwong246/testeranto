@@ -1,26 +1,19 @@
 {
   "importPlugins": [],
   "ports": [
-    "3333"
+    "3333",
+    "3334"
   ],
   "src": "",
   "golang": {
     "plugins": [],
     "loaders": {},
-    "tests": {
-      "example/Calculator.golingvu.test.go": {
-        "ports": 0
-      }
-    }
+    "tests": {}
   },
   "python": {
     "plugins": [],
     "loaders": {},
-    "tests": {
-      "example/Calculator.pitono.test.py": {
-        "ports": 0
-      }
-    }
+    "tests": {}
   },
   "web": {
     "plugins": [

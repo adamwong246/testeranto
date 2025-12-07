@@ -217,15 +217,10 @@
         "format": "esm"
       },
       "src/clients/web.ts": {
-        "bytes": 3806,
+        "bytes": 7756,
         "imports": [
           {
             "path": "stream",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "puppeteer-core",
             "kind": "import-statement",
             "external": true
           },
@@ -509,27 +504,27 @@
         "format": "esm"
       },
       "src/lib/Web.ts": {
-        "bytes": 1730,
+        "bytes": 2827,
         "imports": [
-          {
-            "path": "../CoreTypes",
-            "kind": "import-statement",
-            "external": true
-          },
-          {
-            "path": "src/clients/web.ts",
-            "kind": "import-statement",
-            "original": "../clients/web"
-          },
-          {
-            "path": "src/lib/Tiposkripto.ts",
-            "kind": "import-statement",
-            "original": "./Tiposkripto"
-          },
           {
             "path": "src/lib/index.ts",
             "kind": "import-statement",
             "original": "./index.js"
+          },
+          {
+            "path": "src/clients/web.ts",
+            "kind": "import-statement",
+            "original": "../clients/web.js"
+          },
+          {
+            "path": "../CoreTypes.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/Tiposkripto.ts",
+            "kind": "import-statement",
+            "original": "./Tiposkripto.js"
           },
           {
             "path": "/Users/adam/Code/testeranto/node_modules/esbuild-plugin-polyfill-node/polyfills/__dirname.js",
@@ -795,7 +790,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/allTests/Web-ZHDALY37.mjs",
+            "path": "testeranto/bundles/web/allTests/Web-KXGHWYRL.mjs",
             "kind": "dynamic-import"
           }
         ],
@@ -828,7 +823,7 @@
         },
         "bytes": 153236
       },
-      "testeranto/bundles/web/allTests/Web-ZHDALY37.mjs": {
+      "testeranto/bundles/web/allTests/Web-KXGHWYRL.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/web/allTests/chunk-XNGBU44Z.mjs",
@@ -836,7 +831,7 @@
           }
         ],
         "exports": [
-          "WebTesteranto",
+          "WebTiposkripto",
           "default"
         ],
         "entryPoint": "src/lib/Web.ts",
@@ -845,7 +840,7 @@
             "bytesInOutput": 174
           },
           "src/clients/web.ts": {
-            "bytesInOutput": 2793
+            "bytesInOutput": 5683
           },
           "src/lib/pmProxy.ts": {
             "bytesInOutput": 5824
@@ -866,10 +861,10 @@
             "bytesInOutput": 6310
           },
           "src/lib/Web.ts": {
-            "bytesInOutput": 788
+            "bytesInOutput": 1388
           }
         },
-        "bytes": 25279
+        "bytes": 28770
       },
       "testeranto/bundles/web/allTests/chunk-XNGBU44Z.mjs": {
         "imports": [],

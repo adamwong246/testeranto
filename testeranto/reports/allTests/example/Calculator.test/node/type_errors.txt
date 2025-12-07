@@ -1,0 +1,25 @@
+/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (13,3): Type '(subject: typeof import("/Users/adam/Code/testeranto/example/Calculator").Calculator, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/example/Calculator").Calculator, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, initialValues: any, pm: import("/Us...' is not assignable to type '(subject: typeof import("/Users/adam/Code/testeranto/example/Calculator").Calculator, initializer: (c?: any) => () => import("/Users/adam/Code/testeranto/example/Calculator").Calculator, testResource: import("/Users/adam/Code/testeranto/src/lib/index").ITTestResourceConfiguration, initialValues: any, pm: import("/Us...'. Two different types with this name exist, but they are unrelated.
+  Type 'Promise<() => Calculator>' is not assignable to type 'Promise<Calculator>'.
+    Type '() => Calculator' is not assignable to type 'Calculator'.
+/Users/adam/Code/testeranto/example/Calculator.test.adapter.ts (41,3): Type '(actual: string) => string' is not assignable to type '(x: (calculator: Calculator) => void) => any'.
+  Types of parameters 'actual' and 'x' are incompatible.
+    Type '(calculator: Calculator) => void' is not assignable to type 'string'.
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (63,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (118,10): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (149,12): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (236,16): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseGiven.ts (259,14): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (72,26): Property 'name' does not exist on type 'never'.
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (173,29): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (179,19): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/BaseSuite.ts (180,31): Property 'fails' does not exist on type 'BaseGiven<I>'. Did you mean 'fail'?
+/Users/adam/Code/testeranto/src/lib/index.ts (42,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/index.ts (50,12): This expression is not callable.
+  Type 'unknown' has no call signatures.
+/Users/adam/Code/testeranto/src/lib/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (215,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
+/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (277,15): Expected 2 arguments, but got 3.
+/Users/adam/Code/testeranto/src/lib/Web.ts (32,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+  Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens

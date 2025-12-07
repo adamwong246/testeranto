@@ -59,14 +59,14 @@ export function checkForShutdown(
 
   writeBigBoard();
 
-  if (!inflight) {
-    if (browser) {
-      browser.disconnect().then(() => {
-        console.log(
-          ansiC.inverse(`${projectName} has been tested. Goodbye.`)
-        );
-        process.exit();
-      });
-    }
-  }
+  // if (!inflight) {
+  //   if (browser) {
+  //     browser.disconnect().then(() => {
+  //       console.log(
+  //         ansiC.inverse(`${projectName} has been tested. Goodbye.`)
+  //       );
+  //       process.exit();
+  //     });
+  //   }
+  // }
 }

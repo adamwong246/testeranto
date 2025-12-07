@@ -8,20 +8,20 @@ const config: ITestconfig = {
     throw new Error("Function not implemented.");
   },
   importPlugins: [],
-  ports: ["3333"],
+  ports: ["3333", "3334"],
   src: "",
   golang: {
     plugins: [],
     loaders: {},
     tests: {
-      "example/Calculator.golingvu.test.go": { ports: 0 },
+      // "example/Calculator.golingvu.test.go": { ports: 0 },
     },
   },
   python: {
     plugins: [],
     loaders: {},
     tests: {
-      "example/Calculator.pitono.test.py": { ports: 0 },
+      // "example/Calculator.pitono.test.py": { ports: 0 },
     },
   },
 

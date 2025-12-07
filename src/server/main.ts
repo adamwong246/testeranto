@@ -6,24 +6,22 @@ import net from "net";
 import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
-import esbuildNodeConfiger from "./../esbuildConfigs/node.js";
-import esbuildWebConfiger from "../esbuildConfigs/web.js";
 import { IFinalResults, IRunTime } from "..//lib/index.js";
 import {
   createLogStreams,
   LogStreams,
   statusMessagePretty,
 } from "../clients/utils.js";
-
-import { getRunnables, webEvaluator } from "./utils.js";
-import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
 import { Queue } from "../clients/utils/queue.js";
-// import { evaluationString } from "puppeteer-core/lib/esm/puppeteer/index-browser.js";
+import esbuildWebConfiger from "../esbuildConfigs/web.js";
+import esbuildNodeConfiger from "./../esbuildConfigs/node.js";
+import { PM_WithBuild } from "./PM_WithBuild.js";
+import { getRunnables, webEvaluator } from "./utils.js";
 
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-export class PM_Main extends PM_WithEslintAndTsc {
+export class PM_Main extends PM_WithBuild {
   constructor(configs: any, name: string, mode: string) {
     super(configs, name, mode);
   }
@@ -78,7 +76,6 @@ export class PM_Main extends PM_WithEslintAndTsc {
 
     const testConfigResource = testConfig[2];
 
-    console.log("mark1", this.configTests());
     const portsToUse: string[] = [];
     let testResources = "";
 
@@ -285,9 +282,11 @@ export class PM_Main extends PM_WithEslintAndTsc {
           server.close();
           this.cleanupPorts(portsToUse);
         }
-      } catch (error) {
+      } catch (error: any) {
         if (error.message !== "No ports available") {
-          throw error;
+          console.error(`Error in launchNode for ${src}:`, error);
+          // Don't throw the error, just log it and continue
+          // This allows other tests to run even if this one fails
         }
       }
     })();
@@ -298,7 +297,15 @@ export class PM_Main extends PM_WithEslintAndTsc {
       command,
       "bdd-test",
       src,
-      "node"
+      "node",
+      () => {
+        // When the promise resolves, check the queue for more tests
+        setTimeout(() => this.checkQueue(), 100);
+      },
+      () => {
+        // When the promise rejects, check the queue for more tests
+        setTimeout(() => this.checkQueue(), 100);
+      }
     );
   };
 
@@ -310,167 +317,190 @@ export class PM_Main extends PM_WithEslintAndTsc {
 
     // Create the promise
     const webPromise = (async () => {
-      this.bddTestIsRunning(src);
+      try {
+        this.bddTestIsRunning(src);
 
-      const reportDest = `testeranto/reports/${this.projectName}/${src
-        .split(".")
-        .slice(0, -1)
-        .join(".")}/web`;
-      if (!fs.existsSync(reportDest)) {
-        fs.mkdirSync(reportDest, { recursive: true });
-      }
+        const reportDest = `testeranto/reports/${this.projectName}/${src
+          .split(".")
+          .slice(0, -1)
+          .join(".")}/web`;
+        if (!fs.existsSync(reportDest)) {
+          fs.mkdirSync(reportDest, { recursive: true });
+        }
 
-      const destFolder = dest.replace(".mjs", "");
+        const destFolder = dest.replace(".mjs", "");
+        const htmlPath = `${destFolder}.html`;
 
-      const webArgz = JSON.stringify({
-        name: src,
-        ports: [].toString(),
-        fs: reportDest,
-        browserWSEndpoint: this.browser.wsEndpoint(),
-      });
+        const webArgz = JSON.stringify({
+          name: src,
+          ports: [].toString(),
+          fs: reportDest,
+          browserWSEndpoint: this.browser.wsEndpoint(),
+        });
 
-      const d = `${dest}?cacheBust=${Date.now()}`;
+        const logs = createLogStreams(reportDest, "web");
 
-      const logs = createLogStreams(reportDest, "web");
+        // Use HTTP URL instead of file:// to allow WebSocket connections
+        const httpPort = Number(process.env.HTTP_PORT) || 3000;
 
-      return new Promise<void>((resolve, reject) => {
-        this.browser
-          .newPage()
+        // Check if HTML file exists
+        if (!fs.existsSync(htmlPath)) {
+          console.error(`HTML file not found: ${htmlPath}`);
+          console.log(`Current directory: ${process.cwd()}`);
+          console.log(`Looking for HTML file at: ${htmlPath}`);
+          throw new Error(`HTML file not found for web test ${src}`);
+        }
 
-          .then((page) => {
-            page.on("console", (log: ConsoleMessage) => {
-              const msg = `${log.text()}\n`;
+        // Convert HTML file path to relative URL under /bundles/web/
+        // htmlPath is something like: /Users/adam/Code/testeranto/testeranto/bundles/web/allTests/example/Calculator.test.html
+        // We need: /bundles/web/allTests/example/Calculator.test.html
+        let relativePath: string;
+        const match = htmlPath.match(/testeranto\/bundles\/web\/(.*)/);
+        if (match) {
+          relativePath = match[1];
+        } else {
+          // Try to extract from absolute path
+          const absMatch = htmlPath.match(/\/bundles\/web\/(.*)/);
+          if (absMatch) {
+            relativePath = absMatch[1];
+          } else {
+            // Fallback: just use the filename
+            relativePath = path.basename(htmlPath);
+          }
+        }
 
-              switch (log.type()) {
-                case "info":
-                  logs.info?.write(msg);
-                  break;
-                case "warn":
-                  logs.warn?.write(msg);
-                  break;
-                case "error":
-                  logs.error?.write(msg);
-                  break;
-                case "debug":
-                  logs.debug?.write(msg);
-                  break;
-                default:
-                  break;
-              }
-            });
+        const url = `http://localhost:${httpPort}/bundles/web/${relativePath}`;
+        console.log(
+          `Navigating to ${url} (HTML file exists: ${fs.existsSync(htmlPath)})`
+        );
 
-            page.on("close", () => {
-              logs.writeExitCode(0);
-              logs.closeAll();
-            });
+        const page = await this.browser.newPage();
 
-            this.mapping().forEach(async ([command, func]) => {
-              if (command === "page") {
-                page.exposeFunction(command, (x?) => {
-                  if (x) {
-                    return func(x);
-                  } else {
-                    return func(page.mainFrame()._id);
-                  }
-                });
+        page.on("console", (log: ConsoleMessage) => {
+          const msg = `${log.text()}\n`;
+          switch (log.type()) {
+            case "info":
+              logs.info?.write(msg);
+              break;
+            case "warn":
+              logs.warn?.write(msg);
+              break;
+            case "error":
+              logs.error?.write(msg);
+              break;
+            case "debug":
+              logs.debug?.write(msg);
+              break;
+            default:
+              break;
+          }
+        });
+
+        page.on("close", () => {
+          logs.writeExitCode(0);
+          logs.closeAll();
+        });
+
+        // Expose functions
+        this.mapping().forEach(([command, func]) => {
+          if (command === "page") {
+            page.exposeFunction(command, (x?) => {
+              if (x) {
+                return func(x);
               } else {
-                return page.exposeFunction(command, func);
+                return func(page.mainFrame()._id);
               }
             });
+          } else {
+            page.exposeFunction(command, func);
+          }
+        });
 
-            return page;
-          })
-          .then(async (page) => {
-            const close = () => {
-              logs.info?.write("close2");
-
-              if (!files[src]) {
-                files[src] = new Set();
-              }
-
-              delete files[src];
-
-              Promise.all(screenshots[src] || []).then(() => {
-                delete screenshots[src];
-                // page.close();
-              });
-            };
-
-            page.on("pageerror", (err: Error) => {
-              logs.info?.write("pageerror");
-              // logs.writeExitCode(-1, err);
-              // console.log(
-              //   ansiColors.red(
-              //     `web ! ${src} failed to execute No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
-              //   )
-              // );
-              // this.bddTestIsNowDone(src, -1);
-              // close();
-              reject(err);
-            });
-
-            await page.goto(`file://${`${destFolder}.html`}`, {});
-
-            const evaluation = webEvaluator(d, webArgz);
-            console.log(evaluation);
-            await page
-              .evaluate(evaluation)
-              .then(
-                async (
-                  // { fails, failed, features }: IFinalResults
-                  fr: IFinalResults
-                ) => {
-                  const { fails, failed, features } = fr;
-
-                  logs.info?.write("\n idk1");
-                  statusMessagePretty(fails, src, "web");
-                  this.bddTestIsNowDone(src, fails);
-                  resolve();
-                }
-              )
-              .catch((e) => {
-                logs.info?.write("\n idk2");
-                console.log(ansiC.red(ansiC.inverse(e.stack)));
-                console.log(
-                  ansiC.red(
-                    ansiC.inverse(
-                      `web ! ${src} failed to execute. No "tests.json" file was generated. Check logs for more info`
-                    )
-                  )
-                );
-
-                // Create a minimal tests.json even on failure
-                const testsJsonPath = `${reportDest}/tests.json`;
-                if (!fs.existsSync(testsJsonPath)) {
-                  fs.writeFileSync(
-                    testsJsonPath,
-                    JSON.stringify(
-                      {
-                        tests: [],
-                        features: [],
-                        givens: [],
-                        fullPath: src,
-                      },
-                      null,
-                      2
-                    )
-                  );
-                }
-
-                this.bddTestIsNowDone(src, -1);
-                reject(e);
-              })
-              .finally(async () => {
-                logs.info?.write("\n idk3");
-                // Generate prompt files for Web tests
-                await this.generatePromptFiles(reportDest, src);
-                close();
-              });
-          })
-          .catch((error) => {
-            reject(error);
+        const close = () => {
+          logs.info?.write("close2");
+          if (!files[src]) {
+            files[src] = new Set();
+          }
+          delete files[src];
+          Promise.all(screenshots[src] || []).then(() => {
+            delete screenshots[src];
           });
-      });
+        };
+
+        page.on("pageerror", (err: Error) => {
+          logs.info?.write("pageerror: " + err.message);
+          console.error("Page error in web test:", err);
+          logs.writeExitCode(-1, err);
+          console.log(
+            ansiColors.red(
+              `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
+            )
+          );
+          this.bddTestIsNowDone(src, -1);
+          close();
+          throw err;
+        });
+
+        // Log console messages for debugging
+        page.on("console", (msg) => {
+          const text = msg.text();
+          console.log(`Browser console [${msg.type()}]: ${text}`);
+        });
+
+        // Navigate to the HTML page
+        await page.goto(url, { waitUntil: "networkidle0" });
+
+        // Inject test resource configuration into the page
+        await page.evaluate((config) => {
+          (window as any).__TEST_RESOURCE_CONFIG__ = config;
+        }, webArgz);
+
+        // The HTML page loads the JS bundle, but we need to actually run the test
+        // Use webEvaluator to import and run the test module
+        // First, get the JS file path from the dest
+        const jsPath = dest;
+        // Convert to relative URL for the browser
+        let jsRelativePath: string;
+        const jsMatch = jsPath.match(/testeranto\/bundles\/web\/(.*)/);
+        if (jsMatch) {
+          jsRelativePath = jsMatch[1];
+        } else {
+          const jsAbsMatch = jsPath.match(/\/bundles\/web\/(.*)/);
+          if (jsAbsMatch) {
+            jsRelativePath = jsAbsMatch[1];
+          } else {
+            jsRelativePath = path.basename(jsPath);
+          }
+        }
+        const jsUrl = `/bundles/web/${jsRelativePath}?cacheBust=${Date.now()}`;
+
+        // Evaluate the test using webEvaluator
+        const evaluation = webEvaluator(jsUrl, webArgz);
+        console.log("Evaluating web test with URL:", jsUrl);
+
+        try {
+          const results = (await page.evaluate(evaluation)) as IFinalResults;
+          const { fails, failed, features } = results;
+          logs.info?.write("\n idk1");
+          statusMessagePretty(fails, src, "web");
+          this.bddTestIsNowDone(src, fails);
+        } catch (error) {
+          console.error("Error evaluating web test:", error);
+          logs.info?.write("\n Error evaluating web test");
+          statusMessagePretty(-1, src, "web");
+          this.bddTestIsNowDone(src, -1);
+        }
+
+        // Generate prompt files for Web tests
+        await this.generatePromptFiles(reportDest, src);
+
+        await page.close();
+        close();
+      } catch (error) {
+        console.error(`Error in web test ${src}:`, error);
+        this.bddTestIsNowDone(src, -1);
+        throw error;
+      }
     })();
 
     // Add to process manager
@@ -480,7 +510,13 @@ export class PM_Main extends PM_WithEslintAndTsc {
       command,
       "bdd-test",
       src,
-      "web"
+      "web",
+      () => {
+        setTimeout(() => this.checkQueue(), 100);
+      },
+      () => {
+        setTimeout(() => this.checkQueue(), 100);
+      }
     );
   };
 
@@ -561,9 +597,10 @@ export class PM_Main extends PM_WithEslintAndTsc {
           server.close();
           this.cleanupPorts(portsToUse);
         }
-      } catch (error) {
+      } catch (error: any) {
         if (error.message !== "No ports available") {
-          throw error;
+          console.error(`Error in launchNode for ${src}:`, error);
+          // Don't re-throw to allow other tests to continue
         }
       }
     })();
@@ -574,7 +611,13 @@ export class PM_Main extends PM_WithEslintAndTsc {
       command,
       "bdd-test",
       src,
-      "python"
+      "python",
+      () => {
+        setTimeout(() => this.checkQueue(), 100);
+      },
+      () => {
+        setTimeout(() => this.checkQueue(), 100);
+      }
     );
   };
 
@@ -705,7 +748,13 @@ export class PM_Main extends PM_WithEslintAndTsc {
       command,
       "bdd-test",
       src,
-      "golang"
+      "golang",
+      () => {
+        setTimeout(() => this.checkQueue(), 100);
+      },
+      () => {
+        setTimeout(() => this.checkQueue(), 100);
+      }
     );
   };
 

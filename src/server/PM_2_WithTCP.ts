@@ -23,9 +23,9 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
     this.httpServer = http.createServer(this.handleHttpRequest.bind(this));
     this.wss = new WebSocketServer({ server: this.httpServer });
 
-    this.wss.on("connection", (ws) => {
+    this.wss.on("connection", (ws, req) => {
       this.clients.add(ws);
-      console.log("Client connected");
+      console.log("Client connected from:", req.socket.remoteAddress, req.url);
 
       ws.on("message", (data) => {
         try {
@@ -54,12 +54,15 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
 
   protected websocket(data: any, ws: WebSocket) {
     try {
-      const parsed = JSON.parse(data.toString());
+      const rawData = data.toString();
+      console.log('WebSocket received raw data:', rawData);
+      const parsed = JSON.parse(rawData);
       
       // Check if it's an array (old IPC format)
       if (Array.isArray(parsed)) {
         const [command, ...args] = parsed;
         const key = args.pop(); // Last element is the key
+        console.log('Old IPC format - command:', command, 'key:', key);
         
         // Handle the command
         // For now, just echo back with the key for testing
@@ -73,11 +76,13 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
       
       // Otherwise, treat as WebSocketMessage with type field
       const wsm: WebSocketMessage = parsed;
+      console.log('WebSocket message type:', wsm.type, 'key:', wsm.key);
 
       // Check if it's a FileService method
       let handled = false;
       FileService_methods.forEach((fsm) => {
         if (wsm.type === fsm) {
+          console.log('Handling as FileService method:', fsm);
           this[fsm](wsm, ws);
           handled = true;
         }
@@ -88,16 +93,20 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
       // These have a type field that matches method names
       // They also have a key field for responses
       if (wsm.type && typeof this[wsm.type] === 'function') {
+        console.log(`Executing command ${wsm.type} with data:`, wsm.data);
         // Extract data and key
         const { data: commandData, key } = wsm;
         const args = Array.isArray(commandData) ? commandData : [commandData];
+        console.log(`Command ${wsm.type} args:`, args);
         
         try {
           // Call the method
           const result = this[wsm.type](...args);
+          console.log(`Command ${wsm.type} returned:`, result);
           // Handle promise if needed
           if (result instanceof Promise) {
             result.then((resolvedResult) => {
+              console.log(`Command ${wsm.type} resolved:`, resolvedResult);
               ws.send(JSON.stringify({
                 key: key,
                 payload: resolvedResult
@@ -239,6 +248,32 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
   ) {
     console.log(req.method, req.url);
 
+    // Serve bundled web test files
+    if (req.url?.startsWith('/bundles/web/')) {
+      // Remove the leading /bundles/web/ to get the relative path
+      const relativePath = req.url.replace(/^\/bundles\/web\//, '');
+      // The files are in testeranto/bundles/web/ relative to cwd
+      const filePath = path.join(process.cwd(), 'testeranto', 'bundles', 'web', relativePath);
+      fs.readFile(filePath, (err, data) => {
+        if (err) {
+          console.error(`Error serving ${req.url}:`, err.message);
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          res.end(`404 Not Found: ${req.url}`);
+          return;
+        }
+        // Determine content type
+        let contentType = 'text/plain';
+        if (req.url?.endsWith('.html')) contentType = 'text/html';
+        else if (req.url?.endsWith('.js') || req.url?.endsWith('.mjs')) contentType = 'application/javascript';
+        else if (req.url?.endsWith('.css')) contentType = 'text/css';
+        else if (req.url?.endsWith('.json')) contentType = 'application/json';
+        
+        res.writeHead(200, { "Content-Type": contentType });
+        res.end(data);
+      });
+      return;
+    }
+
     if (req.url === ApiEndpoint.root) {
       fs.readFile(ApiFilename.root, (err, data) => {
         if (err) {
@@ -353,19 +388,34 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
 
   // Command handlers for PM_Node
   writeFileSync(filepath: string, contents: string, testName?: string): boolean {
-    const fullPath = path.join(process.cwd(), filepath);
-    fs.writeFileSync(fullPath, contents);
+    console.log('PM_2_WithTCP.writeFileSync called:', {
+      filepath,
+      testName,
+      contentsLength: contents.length,
+      filepathExists: fs.existsSync(filepath),
+      dir: path.dirname(filepath)
+    });
+    // The filepath already includes the full path from the client (with testResourceConfiguration.fs prepended)
+    // Ensure the directory exists
+    const dir = path.dirname(filepath);
+    if (!fs.existsSync(dir)) {
+      console.log('Creating directory:', dir);
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    console.log('Writing file:', filepath);
+    fs.writeFileSync(filepath, contents);
+    console.log('File written successfully');
     return true;
   }
 
   existsSync(filepath: string): boolean {
-    const fullPath = path.join(process.cwd(), filepath);
-    return fs.existsSync(fullPath);
+    // The filepath already includes the full path from the client
+    return fs.existsSync(filepath);
   }
 
   mkdirSync(filepath: string): void {
-    const fullPath = path.join(process.cwd(), filepath);
-    fs.mkdirSync(fullPath, { recursive: true });
+    // The filepath already includes the full path from the client
+    fs.mkdirSync(filepath, { recursive: true });
   }
 
   readFile(filepath: string): string {
@@ -374,9 +424,14 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
   }
 
   createWriteStream(filepath: string, testName?: string): string {
-    const fullPath = path.join(process.cwd(), filepath);
-    const stream = fs.createWriteStream(fullPath);
-    // Return a dummy ID for now
+    // The filepath already includes the full path from the client
+    // Ensure the directory exists
+    const dir = path.dirname(filepath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    const stream = fs.createWriteStream(filepath);
+    // For now, we don't track the stream, so return a dummy ID
     return 'stream_' + Math.random().toString(36).substr(2, 9);
   }
 
