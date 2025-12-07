@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   defaultTestResourceRequirement,
   ITTestResourceRequest,
@@ -25,7 +26,6 @@ export class WebTiposkripto<
     testResourceRequirement: ITTestResourceRequest,
     testAdapter: Partial<ITestAdapter<I>>
   ) {
-    console.log("111 WebTiposkripto constructor");
     super(
       input,
       testSpecification,
@@ -40,13 +40,13 @@ export class WebTiposkripto<
 
   async receiveTestResourceConfig(partialTestResource: string) {
     // Parse the test resource configuration
+    console.log('WebTiposkripto.receiveTestResourceConfig: raw input:', partialTestResource);
     const config = JSON.parse(partialTestResource);
-    
+    console.log('WebTiposkripto.receiveTestResourceConfig: parsed config:', config);
+
     // In a browser environment, we don't need to parse command line arguments
     // The WebSocket URL should be determined by PM_Web itself
-    return await this.testJobs[0].receiveTestResourceConfig(
-      new PM_Web(config)
-    );
+    return await this.testJobs[0].receiveTestResourceConfig(new PM_Web(config));
   }
 }
 
@@ -66,26 +66,29 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       testAdapter
     );
 
-    // In a browser environment, we don't have process.argv
-    // The test resource config should be passed as a global variable or via other means
-    // For now, we'll assume it's available via window.__TEST_RESOURCE_CONFIG__
-    const testResourceConfig = (window as any).__TEST_RESOURCE_CONFIG__ || "{}";
+    // In a browser environment, the test resource config is passed as a URL query parameter
+    // Extract it from the current URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const encodedConfig = urlParams.get('config');
+    const testResourceConfig = encodedConfig ? decodeURIComponent(encodedConfig) : "{}";
     
+    console.log('Web test: parsed config from URL:', testResourceConfig);
+
     const results = await t.receiveTestResourceConfig(testResourceConfig);
-    
+
     // In a browser, we can't exit the process, so we need to signal completion differently
     // Dispatch a custom event to notify the test runner
-    const event = new CustomEvent('test-complete', { detail: results });
+    const event = new CustomEvent("test-complete", { detail: results });
     window.dispatchEvent(event);
-    
-    console.log('Web test completed:', results);
-    
+
+    console.log("Web test completed:", results);
+
     // Return the Tiposkripto instance
     return t;
   } catch (e) {
     console.error(e);
     // Dispatch an error event
-    const errorEvent = new CustomEvent('test-error', { detail: e });
+    const errorEvent = new CustomEvent("test-error", { detail: e });
     window.dispatchEvent(errorEvent);
     throw e;
   }

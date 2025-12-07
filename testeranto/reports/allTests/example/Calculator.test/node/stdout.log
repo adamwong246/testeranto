@@ -1,27 +1,2 @@
-Hello universal Tiposkripto! node [Module: null prototype] {
-  NodeTiposkripto: [class NodeTiposkripto extends Tiposkripto],
-  default: [AsyncFunction: tiposkripto]
-}
-mark101
-mark100 async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement) => {
-  try {
-    const t = new NodeTiposkripto(
-      input,
-      testSpecification,
-      testImplementation,
-      testResourceRequirement,
-      testAdapter
-    );
-    process.on("unhandledRejection", (reason, promise) => {
-      console.error("Unhandled Rejection at:", promise, "reason:", reason);
-    });
-    ipcfile = process.argv[3];
-    process.exit((await t.receiveTestResourceConfig(process.argv[2])).fails);
-  } catch (e) {
-    console.error(e);
-    console.error(e.stack);
-    process.exit(-1);
-  }
-}
-111 NodeTiposkripto constructor
-Connecting to WebSocket at ws://ipcfile
+Connecting to WebSocket at ws://localhost:3000
+WebSocket connected to ws://localhost:3000

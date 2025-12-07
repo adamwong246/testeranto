@@ -32,11 +32,7 @@
   "node": {
     "plugins": [],
     "loaders": {},
-    "tests": {
-      "example/Calculator.test.ts": {
-        "ports": 0
-      }
-    },
+    "tests": {},
     "externals": []
   },
   "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/allTests"

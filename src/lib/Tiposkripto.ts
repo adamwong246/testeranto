@@ -273,8 +273,8 @@ export default abstract class Tiposkripto<
             // Always use PM.writeFileSync to write tests.json, not direct filesystem access
             await puppetMaster.writeFileSync(
               `tests.json`,
-              JSON.stringify(this.toObj(), null, 2),
-              "test"
+              JSON.stringify(this.toObj(), null, 2)
+              // "test"
             );
 
             return {

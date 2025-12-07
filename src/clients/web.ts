@@ -14,6 +14,7 @@ export class PM_Web extends PM {
 
   constructor(t: ITTestResourceConfiguration) {
     super();
+    console.log('PM_Web constructor called with config:', JSON.stringify(t, null, 2));
     this.testResourceConfiguration = t;
     
     // Determine WebSocket URL
@@ -36,11 +37,11 @@ export class PM_Web extends PM {
     // Connect via WebSocket
     this.ws = new WebSocket(wsUrl);
     
-    this.ws.onopen = () => {
+    this.ws.addEventListener('open', () => {
       console.log('WebSocket connected to', wsUrl);
-    };
+    });
 
-    this.ws.onmessage = (event) => {
+    this.ws.addEventListener('message', (event) => {
       try {
         const message = JSON.parse(event.data);
         // Handle responses with keys
@@ -54,15 +55,15 @@ export class PM_Web extends PM {
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
       }
-    };
+    });
 
-    this.ws.onerror = (error) => {
+    this.ws.addEventListener('error', (error) => {
       console.error('WebSocket error:', error);
-    };
+    });
 
-    this.ws.onclose = () => {
+    this.ws.addEventListener('close', () => {
       console.log('WebSocket connection closed');
-    };
+    });
   }
 
   start(): Promise<void> {
@@ -90,41 +91,66 @@ export class PM_Web extends PM {
 
   private send<I>(command: string, ...argz: any[]): Promise<I> {
     const key = Math.random().toString();
-    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-      console.error(
-        `Tried to send "${command} (${argz})" but the WebSocket is not connected. State: ${this.ws?.readyState}`
-      );
-      return Promise.reject(new Error('WebSocket not connected'));
-    }
-
-    return new Promise<I>((resolve, reject) => {
-      // Store the callback to handle the response
-      this.messageCallbacks.set(key, (payload) => {
-        resolve(payload);
-      });
-
-      // Send the message in a format the server expects
-      const message = {
-        type: command,
-        data: argz.length > 0 ? argz : undefined,
-        key: key
-      };
-      try {
-        this.ws.send(JSON.stringify(message));
-        console.log(`PM_Web sent ${command} with key ${key}`);
-      } catch (error) {
-        console.error(`PM_Web error sending ${command}:`, error);
-        reject(error);
+    
+    // Wait for WebSocket to be open
+    const waitForOpen = (): Promise<void> => {
+      if (this.ws.readyState === WebSocket.OPEN) {
+        return Promise.resolve();
       }
-      
-      // Add a timeout to prevent hanging
-      setTimeout(() => {
-        if (this.messageCallbacks.has(key)) {
-          console.error(`PM_Web timeout for ${command} with key ${key}`);
+      if (this.ws.readyState === WebSocket.CONNECTING) {
+        return new Promise((resolve) => {
+          const onOpen = () => {
+            this.ws.removeEventListener('open', onOpen);
+            resolve();
+          };
+          this.ws.addEventListener('open', onOpen);
+        });
+      }
+      // If closing or closed, reject
+      return Promise.reject(new Error(`WebSocket is not open. State: ${this.ws.readyState}`));
+    };
+
+    return waitForOpen().then(() => {
+      return new Promise<I>((resolve, reject) => {
+        // Store the callback to handle the response
+        this.messageCallbacks.set(key, (payload) => {
+          resolve(payload);
+        });
+
+        // Set a timeout for the response
+        const timeoutId = setTimeout(() => {
+          if (this.messageCallbacks.has(key)) {
+            console.error(`PM_Web timeout for ${command} with key ${key}`);
+            this.messageCallbacks.delete(key);
+            reject(new Error(`Timeout waiting for response to ${command}`));
+          }
+        }, 10000); // 10 second timeout
+
+        // Send the message in a format the server expects
+        const message = {
+          type: command,
+          data: argz.length > 0 ? argz : undefined,
+          key: key
+        };
+        try {
+          this.ws.send(JSON.stringify(message));
+          console.log(`PM_Web sent ${command} with key ${key}`);
+        } catch (error) {
+          console.error(`PM_Web error sending ${command}:`, error);
+          clearTimeout(timeoutId);
           this.messageCallbacks.delete(key);
-          reject(new Error(`Timeout waiting for response to ${command}`));
+          reject(error);
         }
-      }, 5000);
+        
+        // Clean up timeout on response
+        const originalCallback = this.messageCallbacks.get(key);
+        if (originalCallback) {
+          this.messageCallbacks.set(key, (payload) => {
+            clearTimeout(timeoutId);
+            originalCallback(payload);
+          });
+        }
+      });
     });
   }
 
@@ -227,9 +253,19 @@ export class PM_Web extends PM {
   }
 
   async writeFileSync(filepath: string, contents: string): Promise<boolean> {
+    // Ensure fs is defined
+    const fsPath = this.testResourceConfiguration?.fs;
+    if (!fsPath) {
+      console.error('PM_Web.writeFileSync: fs is undefined in testResourceConfiguration', this.testResourceConfiguration);
+      throw new Error('fs is undefined in testResourceConfiguration');
+    }
+    // Ensure filepath doesn't start with a slash to avoid double slashes
+    const cleanFilepath = filepath.startsWith('/') ? filepath.substring(1) : filepath;
+    const fullPath = fsPath + "/" + cleanFilepath;
+    console.log('PM_Web.writeFileSync: fullPath:', fullPath);
     return await this.send<boolean>(
       "writeFileSync",
-      this.testResourceConfiguration.fs + "/" + filepath,
+      fullPath,
       contents,
       this.testResourceConfiguration.name
     );

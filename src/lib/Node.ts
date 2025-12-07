@@ -13,7 +13,7 @@ import {
 } from "../CoreTypes.js";
 import Tiposkripto from "./Tiposkripto.js";
 
-let ipcfile;
+let wsPort;
 
 export class NodeTiposkripto<
   I extends Ibdd_in_any,
@@ -27,7 +27,6 @@ export class NodeTiposkripto<
     testResourceRequirement: ITTestResourceRequest,
     testAdapter: Partial<ITestAdapter<I>>
   ) {
-    console.log("111 NodeTiposkripto constructor");
     super(
       input,
       testSpecification,
@@ -43,23 +42,7 @@ export class NodeTiposkripto<
   async receiveTestResourceConfig(partialTestResource: string) {
     // Parse the test resource configuration
     const config = JSON.parse(partialTestResource);
-    
-    // Determine WebSocket URL
-    let wsUrl: string;
-    if (ipcfile && ipcfile.startsWith('ws://') || ipcfile && ipcfile.startsWith('wss://')) {
-      // If ipcfile is already a WebSocket URL, use it directly
-      wsUrl = ipcfile;
-    } else {
-      // Otherwise, assume ipcfile is a port number or use default
-      const port = ipcfile ? parseInt(ipcfile, 10) : 3000;
-      if (isNaN(port)) {
-        // If not a number, assume it's a host:port string
-        wsUrl = `ws://${ipcfile}`;
-      } else {
-        wsUrl = `ws://localhost:${port}`;
-      }
-    }
-    
+    const wsUrl: string = `ws://localhost:${wsPort}`;
     console.log(`Connecting to WebSocket at ${wsUrl}`);
     return await this.testJobs[0].receiveTestResourceConfig(
       new PM_Node(config, wsUrl)
@@ -89,7 +72,7 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       // t.registerUncaughtPromise(reason, promise);
     });
 
-    ipcfile = process.argv[3];
+    wsPort = process.argv[3];
 
     process.exit((await t.receiveTestResourceConfig(process.argv[2])).fails);
   } catch (e) {

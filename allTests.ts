@@ -8,7 +8,9 @@ const config: ITestconfig = {
     throw new Error("Function not implemented.");
   },
   importPlugins: [],
+
   ports: ["3333", "3334"],
+
   src: "",
   golang: {
     plugins: [],
@@ -39,7 +41,7 @@ const config: ITestconfig = {
     plugins: [],
     loaders: {},
     tests: {
-      "example/Calculator.test.ts": { ports: 0 },
+      // "example/Calculator.test.ts": { ports: 0 },
     },
     externals: [],
   },

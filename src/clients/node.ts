@@ -74,28 +74,55 @@ export class PM_Node extends PM {
 
   send<I>(command: string, ...argz): Promise<I> {
     const key = Math.random().toString();
-    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-      console.error(
-        `Tried to send "${command} (${argz})" but the WebSocket is not connected. Exiting as failure!`
-      );
-      process.exit(-1);
-    }
+    
+    // Wait for WebSocket to be open
+    const waitForOpen = (): Promise<void> => {
+      if (this.ws.readyState === WebSocket.OPEN) {
+        return Promise.resolve();
+      }
+      if (this.ws.readyState === WebSocket.CONNECTING) {
+        return new Promise((resolve) => {
+          const onOpen = () => {
+            this.ws.off('open', onOpen);
+            resolve();
+          };
+          this.ws.on('open', onOpen);
+        });
+      }
+      // If closing or closed, reject
+      return Promise.reject(new Error(`WebSocket is not open. State: ${this.ws.readyState}`));
+    };
 
-    return new Promise<I>((res) => {
-      // Store the callback to handle the response
-      this.messageCallbacks.set(key, (payload) => {
-        res(payload);
+    return waitForOpen().then(() => {
+      return new Promise<I>((res, rej) => {
+        // Store the callback to handle the response
+        this.messageCallbacks.set(key, (payload) => {
+          res(payload);
+        });
+
+        // Set a timeout for the response
+        const timeoutId = setTimeout(() => {
+          this.messageCallbacks.delete(key);
+          rej(new Error(`Timeout waiting for response to command: ${command}`));
+        }, 10000); // 10 second timeout
+
+        // Send the message in a format the server expects
+        const message = {
+          type: command,
+          data: argz.length > 0 ? argz : undefined,
+          key: key
+        };
+        this.ws.send(JSON.stringify(message));
+        
+        // Clean up timeout on response
+        const originalCallback = this.messageCallbacks.get(key);
+        if (originalCallback) {
+          this.messageCallbacks.set(key, (payload) => {
+            clearTimeout(timeoutId);
+            originalCallback(payload);
+          });
+        }
       });
-
-      // Send the message in a format the server expects
-      // The server expects messages with a 'type' field
-      // We'll use the command as the type, and include arguments in a 'data' field
-      const message = {
-        type: command,
-        data: argz.length > 0 ? argz : undefined,
-        key: key
-      };
-      this.ws.send(JSON.stringify(message));
     });
   }
 
@@ -204,15 +231,7 @@ export class PM_Node extends PM {
     return await this.send("write", ...arguments);
   }
 
-  async writeFileSync(filepath, contents) {
-    const z = arguments["0"];
-
-    // const filepath = z[0];
-    // const contents = z[1];
-
-    // const filepath = arguments[0];
-    // const contents = arguments[1];
-
+  async writeFileSync(filepath: string, contents: string): Promise<boolean> {
     return await this.send<boolean>(
       "writeFileSync",
       this.testResourceConfiguration.fs + "/" + filepath,

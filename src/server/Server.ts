@@ -8,7 +8,6 @@ import esbuild from "esbuild";
 import fs, { watch } from "fs";
 import path from "path";
 import puppeteer, { ConsoleMessage, executablePath } from "puppeteer-core";
-import ts, { server } from "typescript";
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
 import {
   createLogStreams,
@@ -1131,8 +1130,7 @@ export class Server extends Server_TCP {
           }
         };
 
-        // const server = await this.createIpcServer(onData, ipcfile);
-        const child = spawn("node", [builtfile, testResources, "ipcfile"], {
+        const child = spawn("node", [builtfile, testResources, "3000"], {
           stdio: ["pipe", "pipe", "pipe", "ipc"],
         });
 
@@ -1196,7 +1194,7 @@ export class Server extends Server_TCP {
 
         const webArgz = JSON.stringify({
           name: src,
-          ports: [].toString(),
+          ports: [],
           fs: reportDest,
           browserWSEndpoint: this.browser.wsEndpoint(),
         });
@@ -1205,14 +1203,6 @@ export class Server extends Server_TCP {
 
         // Use HTTP URL instead of file:// to allow WebSocket connections
         const httpPort = Number(process.env.HTTP_PORT) || 3000;
-
-        // Check if HTML file exists
-        if (!fs.existsSync(htmlPath)) {
-          console.error(`HTML file not found: ${htmlPath}`);
-          console.log(`Current directory: ${process.cwd()}`);
-          console.log(`Looking for HTML file at: ${htmlPath}`);
-          throw new Error(`HTML file not found for web test ${src}`);
-        }
 
         // Convert HTML file path to relative URL under /bundles/web/
         // htmlPath is something like: /Users/adam/Code/testeranto/testeranto/bundles/web/allTests/example/Calculator.test.html
@@ -1232,7 +1222,10 @@ export class Server extends Server_TCP {
           }
         }
 
-        const url = `http://localhost:${httpPort}/bundles/web/${relativePath}`;
+        // Encode the test resource configuration as a URL query parameter
+        // This ensures it's available immediately when the page loads
+        const encodedConfig = encodeURIComponent(webArgz);
+        const url = `http://localhost:${httpPort}/bundles/web/${relativePath}?config=${encodedConfig}`;
         console.log(
           `Navigating to ${url} (HTML file exists: ${fs.existsSync(htmlPath)})`
         );
@@ -1264,30 +1257,19 @@ export class Server extends Server_TCP {
           logs.closeAll();
         });
 
-        // Expose functions
-        this.mapping().forEach(([command, func]) => {
-          if (command === "page") {
-            page.exposeFunction(command, (x?) => {
-              if (x) {
-                return func(x);
-              } else {
-                return func(page.mainFrame()._id);
-              }
-            });
-          } else {
-            page.exposeFunction(command, func);
-          }
-        });
+        // Note: Functions are no longer exposed via page.exposeFunction()
+        // The web tests should use PM_Web which communicates via WebSocket
+        // PM_Web is instantiated in the browser context and connects to the WebSocket server
 
         const close = () => {
-          logs.info?.write("close2");
-          if (!files[src]) {
-            files[src] = new Set();
-          }
-          delete files[src];
-          Promise.all(screenshots[src] || []).then(() => {
-            delete screenshots[src];
-          });
+          // logs.info?.write("close2");
+          // if (!files[src]) {
+          //   files[src] = new Set();
+          // }
+          // delete files[src];
+          // Promise.all(screenshots[src] || []).then(() => {
+          //   delete screenshots[src];
+          // });
         };
 
         page.on("pageerror", (err: Error) => {
@@ -1310,13 +1292,8 @@ export class Server extends Server_TCP {
           console.log(`Browser console [${msg.type()}]: ${text}`);
         });
 
-        // Navigate to the HTML page
+        // Navigate to the HTML page with the config in the query parameter
         await page.goto(url, { waitUntil: "networkidle0" });
-
-        // Inject test resource configuration into the page
-        await page.evaluate((config) => {
-          (window as any).__TEST_RESOURCE_CONFIG__ = config;
-        }, webArgz);
 
         // The HTML page loads the JS bundle, but we need to actually run the test
         // Use webEvaluator to import and run the test module

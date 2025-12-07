@@ -56,7 +56,13 @@ export class Server_TCP extends Server_Base {
     try {
       const rawData = data.toString();
       console.log("WebSocket received raw data:", rawData);
-      const parsed = JSON.parse(rawData);
+      let parsed;
+      try {
+        parsed = JSON.parse(rawData);
+      } catch (parseError) {
+        console.error("Failed to parse WebSocket message as JSON:", rawData);
+        return;
+      }
 
       // Check if it's an array (old IPC format)
       if (Array.isArray(parsed)) {
@@ -91,15 +97,21 @@ export class Server_TCP extends Server_Base {
       });
       if (handled) return;
 
-      // Handle commands from PM_Node
+      // Handle commands from PM_Node and PM_Web
       // These have a type field that matches method names
       // They also have a key field for responses
       if (wsm.type && typeof this[wsm.type] === "function") {
-        console.log(`Executing command ${wsm.type} with data:`, wsm.data);
+        console.log(`Executing command ${wsm.type} with data:`, wsm.data, "key:", wsm.key);
         // Extract data and key
         const { data: commandData, key } = wsm;
-        const args = Array.isArray(commandData) ? commandData : [commandData];
-        console.log(`Command ${wsm.type} args:`, args);
+        // Handle undefined or null commandData
+        let args: any[];
+        if (commandData === undefined || commandData === null) {
+          args = [];
+        } else {
+          args = Array.isArray(commandData) ? commandData : [commandData];
+        }
+        console.log(`Command ${wsm.type} args:`, args, "number of args:", args.length);
 
         try {
           // Call the method
@@ -262,8 +274,12 @@ export class Server_TCP extends Server_Base {
 
     // Serve bundled web test files
     if (req.url?.startsWith("/bundles/web/")) {
+      // Parse URL to handle query parameters
+      const url = new URL(req.url, `http://${req.headers.host}`);
+      const pathname = url.pathname;
+      
       // Remove the leading /bundles/web/ to get the relative path
-      const relativePath = req.url.replace(/^\/bundles\/web\//, "");
+      const relativePath = pathname.replace(/^\/bundles\/web\//, "");
       // The files are in testeranto/bundles/web/ relative to cwd
       const filePath = path.join(
         process.cwd(),
@@ -272,21 +288,29 @@ export class Server_TCP extends Server_Base {
         "web",
         relativePath
       );
+      
+      console.log(`Serving file: ${req.url}`);
+      console.log(`  Pathname: ${pathname}`);
+      console.log(`  Looking for: ${filePath}`);
+      console.log(`  File exists: ${fs.existsSync(filePath)}`);
+      
       fs.readFile(filePath, (err, data) => {
         if (err) {
           console.error(`Error serving ${req.url}:`, err.message);
+          console.error(`  Full path: ${filePath}`);
           res.writeHead(404, { "Content-Type": "text/plain" });
-          res.end(`404 Not Found: ${req.url}`);
+          res.end(`404 Not Found: ${req.url}\nPath: ${filePath}\nError: ${err.message}`);
           return;
         }
-        // Determine content type
+        // Determine content type based on file extension
         let contentType = "text/plain";
-        if (req.url?.endsWith(".html")) contentType = "text/html";
-        else if (req.url?.endsWith(".js") || req.url?.endsWith(".mjs"))
+        if (pathname.endsWith(".html")) contentType = "text/html";
+        else if (pathname.endsWith(".js") || pathname.endsWith(".mjs"))
           contentType = "application/javascript";
-        else if (req.url?.endsWith(".css")) contentType = "text/css";
-        else if (req.url?.endsWith(".json")) contentType = "application/json";
+        else if (pathname.endsWith(".css")) contentType = "text/css";
+        else if (pathname.endsWith(".json")) contentType = "application/json";
 
+        console.log(`  Successfully served ${req.url} (${contentType})`);
         res.writeHead(200, { "Content-Type": contentType });
         res.end(data);
       });
