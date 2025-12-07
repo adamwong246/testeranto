@@ -35,12 +35,12 @@ import { checkForShutdown } from "../checkForShutdown";
 import configTests from "../configTests";
 import { ensureSummaryEntry } from "../ensureSummaryEntry";
 import { generatePromptFiles } from "../generatePromptFiles";
-import { lintCheck } from "../lintCheck";
-import { processGoTestOutput } from "../processGoTestOutput";
+import { lintCheck } from "../node+web/lintCheck";
+import { processGoTestOutput } from "../golang/processGoTestOutput";
 import { pythonLintCheck } from "../python/pythonLintCheck";
 import { pythonTypeCheck } from "../python/pythonTypeCheck";
 import { TestExecutor } from "../TestExecutor";
-import { tscCheck } from "../tscCheck";
+import { tscCheck } from "../node+web/tscCheck";
 import { getRunnables, tscPather, lintPather, webEvaluator } from "../utils";
 import { Server_DockerCompose } from "./Server_DockerCompose";
 

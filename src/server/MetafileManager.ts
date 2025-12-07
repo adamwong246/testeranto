@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import ansiC from "ansi-colors";
 import { IRunTime } from "../Types.js";
@@ -17,9 +18,22 @@ export class MetafileManager {
     eslintCheck: (params: any) => void,
     pythonLintCheck: (entrypoint: string, addableFiles: string[]) => void,
     pythonTypeCheck: (entrypoint: string, addableFiles: string[]) => void,
-    makePrompt: (summary: any, projectName: string, entrypoint: string, addableFiles: string[], platform: IRunTime) => void,
-    findTestNameByEntrypoint: (entrypoint: string, platform: IRunTime) => string | null,
-    addToQueue: (testName: string, platform: IRunTime, addableFiles?: string[]) => void
+    makePrompt: (
+      summary: any,
+      projectName: string,
+      entrypoint: string,
+      addableFiles: string[],
+      platform: IRunTime
+    ) => void,
+    findTestNameByEntrypoint: (
+      entrypoint: string,
+      platform: IRunTime
+    ) => string | null,
+    addToQueue: (
+      testName: string,
+      platform: IRunTime,
+      addableFiles?: string[]
+    ) => void
   ) {
     let metafilePath: string;
     if (platform === "python") {
@@ -69,10 +83,7 @@ export class MetafileManager {
           if (
             testEntryPoint ===
               builtOutput
-                .replace(
-                  `testeranto/bundles/${platform}/${projectName}/`,
-                  ``
-                )
+                .replace(`testeranto/bundles/${platform}/${projectName}/`, ``)
                 .replace(`.mjs`, `.ts`) &&
             testPlatform === platform
           ) {
@@ -114,10 +125,7 @@ export class MetafileManager {
 
             // Skip static analysis checks here - they will be run as part of test execution
             // Just add the test to the queue
-            const testName = findTestNameByEntrypoint(
-              entryPointPath,
-              platform
-            );
+            const testName = findTestNameByEntrypoint(entryPointPath, platform);
             if (testName) {
               console.log(
                 ansiC.green(
@@ -139,7 +147,9 @@ export class MetafileManager {
               console.error(
                 `Could not find test for entrypoint: ${entryPointPath} (${platform})`
               );
-              throw new Error(`Could not find test for entrypoint: ${entryPointPath} (${platform})`);
+              throw new Error(
+                `Could not find test for entrypoint: ${entryPointPath} (${platform})`
+              );
             }
           }
         }

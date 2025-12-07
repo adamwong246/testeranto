@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ansiColors from "ansi-colors";
+
 import { IRunTime } from "../Types.js";
 import fs from "fs";
 import { getRunnables, tscPather, lintPather } from "./utils.js";
-import { tscCheck as tscCheckFn } from "./tscCheck";
-import { lintCheck } from "./lintCheck";
+import { tscCheck as tscCheckFn } from "./node+web/tscCheck";
+import { lintCheck } from "./node+web/lintCheck.js";
 
 export interface TestExecutorConfig {
   projectName: string;
@@ -48,11 +48,18 @@ export class TestExecutor {
     this.config = config;
   }
 
-  async executeTest(src: string, runtime: IRunTime, addableFiles?: string[]): Promise<void> {
+  async executeTest(
+    src: string,
+    runtime: IRunTime,
+    addableFiles?: string[]
+  ): Promise<void> {
     // Get the entry point for the test
-    const runnables = getRunnables(this.config.configs, this.config.projectName);
+    const runnables = getRunnables(
+      this.config.configs,
+      this.config.projectName
+    );
     let dest: string;
-    
+
     switch (runtime) {
       case "node":
         dest = runnables.nodeEntryPoints[src];
@@ -69,7 +76,7 @@ export class TestExecutor {
       default:
         throw new Error(`Unsupported runtime: ${runtime}`);
     }
-    
+
     if (!dest) {
       console.error(`No destination found for test: ${src} (${runtime})`);
       return;
@@ -85,12 +92,16 @@ export class TestExecutor {
       await this.runPythonTypeCheck(src, runtime, addableFiles);
     }
     // For golang, there's no static analysis in this system
-    
+
     // Run the BDD test
     await this.runBddTest(src, runtime, dest);
   }
 
-  private async runTscCheck(src: string, runtime: IRunTime, addableFiles?: string[]): Promise<void> {
+  private async runTscCheck(
+    src: string,
+    runtime: IRunTime,
+    addableFiles?: string[]
+  ): Promise<void> {
     const processId = `tsc-${src}-${Date.now()}`;
     const command = `tsc check for ${src}`;
 
@@ -123,12 +134,16 @@ export class TestExecutor {
       src,
       runtime
     );
-    
+
     // Wait for tsc check to complete
     await tscPromise;
   }
 
-  private async runEslintCheck(src: string, runtime: IRunTime, addableFiles?: string[]): Promise<void> {
+  private async runEslintCheck(
+    src: string,
+    runtime: IRunTime,
+    addableFiles?: string[]
+  ): Promise<void> {
     const processId = `eslint-${src}-${Date.now()}`;
     const command = `eslint check for ${src}`;
 
@@ -155,18 +170,22 @@ export class TestExecutor {
       src,
       runtime
     );
-    
+
     // Wait for eslint check to complete
     await eslintPromise;
   }
 
-  private async runPythonLintCheck(src: string, runtime: IRunTime, addableFiles?: string[]): Promise<void> {
+  private async runPythonLintCheck(
+    src: string,
+    runtime: IRunTime,
+    addableFiles?: string[]
+  ): Promise<void> {
     const processId = `python-lint-${src}-${Date.now()}`;
     const command = `python lint check for ${src}`;
-    
+
     const filesToUse = addableFiles || [];
     const promise = this.config.pythonLintCheck(src, filesToUse);
-    
+
     this.config.addPromiseProcess(
       processId,
       promise,
@@ -175,17 +194,21 @@ export class TestExecutor {
       src,
       runtime
     );
-    
+
     await promise;
   }
 
-  private async runPythonTypeCheck(src: string, runtime: IRunTime, addableFiles?: string[]): Promise<void> {
+  private async runPythonTypeCheck(
+    src: string,
+    runtime: IRunTime,
+    addableFiles?: string[]
+  ): Promise<void> {
     const processId = `python-type-${src}-${Date.now()}`;
     const command = `python type check for ${src}`;
-    
+
     const filesToUse = addableFiles || [];
     const promise = this.config.pythonTypeCheck(src, filesToUse);
-    
+
     this.config.addPromiseProcess(
       processId,
       promise,
@@ -194,14 +217,18 @@ export class TestExecutor {
       src,
       runtime
     );
-    
+
     await promise;
   }
 
-  private async runBddTest(src: string, runtime: IRunTime, dest: string): Promise<void> {
+  private async runBddTest(
+    src: string,
+    runtime: IRunTime,
+    dest: string
+  ): Promise<void> {
     // Mark BDD test as running
     this.config.bddTestIsRunning(src);
-    
+
     // Launch the appropriate test based on runtime
     switch (runtime) {
       case "node":

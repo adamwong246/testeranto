@@ -10,7 +10,7 @@ import {
 import path from "path";
 import fs from "fs";
 import { IBuiltConfig, IRunTime } from "../../Types";
-import { setupDockerCompose } from "../dockerComposeGenerator";
+import { setupDockerCompose } from "../docker/dockerComposeGenerator";
 import { Server_TCP } from "./Server_TCP";
 import { setupDockerfileForBuildGolang } from "../golang/setupDockerfileForBuildGolang";
 import { setupDockerfileForBuildNode } from "../node/setupDockerfileForBuildNode";

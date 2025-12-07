@@ -4,10 +4,10 @@ import fs from "fs";
 import yaml from "js-yaml";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
-import { webDocker } from "./web/webDocker";
-import { golangDocker } from "./golang/golangDocker";
-import { nodeDocker } from "./node/nodeDocker";
-import { pythonDocker } from "./python/pythonDocker";
+import { golangDocker } from "../golang/golangDocker";
+import { nodeDocker } from "../node/nodeDocker";
+import { pythonDocker } from "../python/pythonDocker";
+import { webDocker } from "../web/webDocker";
 
 export async function setupDockerCompose(
   config: IBuiltConfig,
