@@ -19,7 +19,7 @@ export class MetafileManager {
     pythonTypeCheck: (entrypoint: string, addableFiles: string[]) => void,
     makePrompt: (summary: any, projectName: string, entrypoint: string, addableFiles: string[], platform: IRunTime) => void,
     findTestNameByEntrypoint: (entrypoint: string, platform: IRunTime) => string | null,
-    addToQueue: (testName: string, platform: IRunTime) => void
+    addToQueue: (testName: string, platform: IRunTime, addableFiles?: string[]) => void
   ) {
     let metafilePath: string;
     if (platform === "python") {
@@ -112,23 +112,8 @@ export class MetafileManager {
           } else {
             this.changes[entryPointPath] = changeDigest;
 
-            // Run appropriate static analysis based on platform
-            if (platform === "node" || platform === "web") {
-              tscCheck({ entrypoint: entryPointPath, addableFiles, platform });
-              eslintCheck({ entrypoint: entryPointPath, addableFiles, platform });
-            } else if (platform === "python") {
-              pythonLintCheck(entryPointPath, addableFiles);
-              pythonTypeCheck(entryPointPath, addableFiles);
-            }
-
-            makePrompt(
-              {} as any, // This will be replaced by the actual summary
-              projectName,
-              entryPointPath,
-              addableFiles,
-              platform
-            );
-
+            // Skip static analysis checks here - they will be run as part of test execution
+            // Just add the test to the queue
             const testName = findTestNameByEntrypoint(
               entryPointPath,
               platform
@@ -141,7 +126,15 @@ export class MetafileManager {
                   )
                 )
               );
-              addToQueue(testName, platform);
+              // Still call makePrompt to ensure prompt files are generated
+              makePrompt(
+                {} as any, // This will be replaced by the actual summary
+                projectName,
+                entryPointPath,
+                addableFiles,
+                platform
+              );
+              addToQueue(testName, platform, addableFiles);
             } else {
               console.error(
                 `Could not find test for entrypoint: ${entryPointPath} (${platform})`

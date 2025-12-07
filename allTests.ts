@@ -41,7 +41,7 @@ const config: ITestconfig = {
     plugins: [],
     loaders: {},
     tests: {
-      // "example/Calculator.test.ts": { ports: 0 },
+      "example/Calculator.test.ts": { ports: 0 },
     },
     externals: [],
   },

@@ -17,9 +17,8 @@
   Type 'unknown' has no call signatures.
 /Users/adam/Code/testeranto/src/lib/index.ts (50,12): This expression is not callable.
   Type 'unknown' has no call signatures.
-/Users/adam/Code/testeranto/src/lib/Node.ts (34,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
+/Users/adam/Code/testeranto/src/lib/Node.ts (33,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens
 /Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (215,7): Argument of type 'Record<string, any>' is not assignable to parameter of type 'SuiteSpecification<I, O>'.
-/Users/adam/Code/testeranto/src/lib/Tiposkripto.ts (277,15): Expected 2 arguments, but got 3.
 /Users/adam/Code/testeranto/src/lib/Web.ts (32,7): Argument of type 'ITestImplementation<I, O, M>' is not assignable to parameter of type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M> & M & { ...; }'.
   Type 'Omit<{ suites: TestSuiteImplementation<O>; givens: TestGivenImplementation<I, O>; whens: TestWhenImplementation<I, O>; thens: TestThenImplementation<...>; }, keyof M>' is missing the following properties from type '{ suites: Record<string, never>; givens: Record<string, any>; whens: Record<string, any>; thens: Record<string, any>; }': suites, givens, whens, thens

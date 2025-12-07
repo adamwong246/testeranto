@@ -1,3 +1,10 @@
+// This is a process manager which needs to be refactored. It is ATM broken
+// ATM, there are 3 checks for web and node tests- tsc check, lint check, and the bdd test
+// ATM, these 3 processes are scheduled separatly
+// We need to redo this process manager such that these processes are now executed together
+// Before if we had 2 tests, there would be 2 * 3 processes
+// We need to redo this so that there are only 3 processes scheduled
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -41,6 +48,7 @@ import { tscCheck } from "./tscCheck";
 import { getRunnables, lintPather, tscPather, webEvaluator } from "./utils.js";
 import { generatePromptFiles } from "./generatePromptFiles.js";
 import { processGoTestOutput } from "./processGoTestOutput.js";
+import { TestExecutor } from "./TestExecutor.js";
 
 export class Server extends Server_TCP {
   webMetafileWatcher: fs.FSWatcher;
@@ -485,14 +493,29 @@ export class Server extends Server_TCP {
   }
 
   async metafileOutputs(platform: IRunTime) {
+    // Create no-op check functions since checks will be run as part of test execution
+    const noopCheck = async ({ entrypoint, addableFiles, platform: p }: {
+      entrypoint: string;
+      addableFiles: string[];
+      platform: IRunTime;
+    }) => {
+      // Do nothing - checks will be run via TestExecutor
+      return Promise.resolve();
+    };
+
+    const noopPythonCheck = async (entrypoint: string, addableFiles: string[]) => {
+      // Do nothing - checks will be run via TestExecutor
+      return Promise.resolve();
+    };
+
     await this.metafileManager.processMetafile(
       platform,
       this.projectName,
       this.configTests.bind(this),
-      this.tscCheck.bind(this),
-      this.eslintCheck.bind(this),
-      this.pythonLintCheck.bind(this),
-      this.pythonTypeCheck.bind(this),
+      noopCheck,
+      noopCheck,
+      noopPythonCheck,
+      noopPythonCheck,
       (summary, projectName, entrypoint, addableFiles, platform) => {
         // Ensure the summary entry exists before calling makePrompt
         if (!this.summary[entrypoint]) {
@@ -507,7 +530,7 @@ export class Server extends Server_TCP {
         );
       },
       this.findTestNameByEntrypoint.bind(this),
-      this.addToQueue.bind(this)
+      (testName, platform, addableFiles) => this.addToQueue(testName, platform, addableFiles)
     );
   }
 
@@ -623,7 +646,7 @@ export class Server extends Server_TCP {
         }
 
         // Add to the processing queue
-        this.addToQueue(entryPoint, runtime);
+        this.addToQueue(entryPoint, runtime, undefined);
       });
     });
 
@@ -751,14 +774,15 @@ export class Server extends Server_TCP {
     this.checkForShutdown();
   }
 
-  addToQueue(src: string, runtime: IRunTime) {
+  addToQueue(src: string, runtime: IRunTime, addableFiles?: string[]) {
     this.queueManager.addToQueue(
       src,
       runtime,
       this.configs,
       this.projectName,
       this.cleanupTestProcesses.bind(this),
-      this.checkQueue.bind(this)
+      this.checkQueue.bind(this),
+      addableFiles
     );
   }
 
@@ -777,6 +801,8 @@ export class Server extends Server_TCP {
       });
     });
   }
+
+  private testExecutor: TestExecutor | null = null;
 
   async checkQueue() {
     // If already processing the queue, wait
@@ -797,7 +823,7 @@ export class Server extends Server_TCP {
         return;
       }
 
-      const { testName: x, runtime } = queueItem;
+      const { testName: x, runtime, addableFiles } = queueItem;
 
       // Check if this test is already running (shouldn't happen with our logic)
       if (this.processManager.isTestRunning(x)) {
@@ -839,68 +865,43 @@ export class Server extends Server_TCP {
         return;
       }
 
-      const runnables = getRunnables(this.configs, this.projectName);
-      let dest: string;
+      // Initialize test executor if not already done
+      if (!this.testExecutor) {
+        this.testExecutor = new TestExecutor({
+          projectName: this.projectName,
+          configs: this.configs,
+          summary: this.summary,
+          summaryManager: this.summaryManager,
+          processManager: this.processManager,
+          portManager: this.portManager,
+          browser: this.browser,
+          webSocketBroadcastMessage: this.webSocketBroadcastMessage.bind(this),
+          typeCheckIsRunning: this.typeCheckIsRunning,
+          typeCheckIsNowDone: this.typeCheckIsNowDone,
+          lintIsRunning: this.lintIsRunning,
+          lintIsNowDone: this.lintIsNowDone,
+          bddTestIsRunning: this.bddTestIsRunning,
+          bddTestIsNowDone: this.bddTestIsNowDone,
+          launchNode: this.launchNode,
+          launchWeb: this.launchWeb,
+          launchPython: this.launchPython,
+          launchGolang: this.launchGolang,
+          addPromiseProcess: this.addPromiseProcess.bind(this),
+          pythonLintCheck: this.pythonLintCheck.bind(this),
+          pythonTypeCheck: this.pythonTypeCheck.bind(this),
+        });
+      }
 
-      // Launch the test with error handling
-      const launchTest = () => {
-        try {
-          switch (runtime) {
-            case "node":
-              dest = runnables.nodeEntryPoints[x];
-              if (dest) {
-                this.launchNode(x, dest);
-              } else {
-                console.error(`No destination found for node test: ${x}`);
-                this.isProcessingQueue = false;
-                setTimeout(() => this.checkQueue(), 100);
-              }
-              break;
-            case "web":
-              dest = runnables.webEntryPoints[x];
-              if (dest) {
-                this.launchWeb(x, dest);
-              } else {
-                console.error(`No destination found for web test: ${x}`);
-                this.isProcessingQueue = false;
-                setTimeout(() => this.checkQueue(), 100);
-              }
-              break;
-            case "python":
-              dest = runnables.pythonEntryPoints[x];
-              if (dest) {
-                this.launchPython(x, dest);
-              } else {
-                console.error(`No destination found for python test: ${x}`);
-                this.isProcessingQueue = false;
-                setTimeout(() => this.checkQueue(), 100);
-              }
-              break;
-            case "golang":
-              dest = runnables.golangEntryPoints[x];
-              if (dest) {
-                this.launchGolang(x, dest);
-              } else {
-                console.error(`No destination found for golang test: ${x}`);
-                this.isProcessingQueue = false;
-                setTimeout(() => this.checkQueue(), 100);
-              }
-              break;
-            default:
-              console.error(`Unknown runtime: ${runtime} for test ${x}`);
-              this.isProcessingQueue = false;
-              setTimeout(() => this.checkQueue(), 100);
-              break;
-          }
-        } catch (error) {
-          console.error(`Error launching test ${x} (${runtime}):`, error);
-          this.isProcessingQueue = false;
-          setTimeout(() => this.checkQueue(), 100);
-        }
-      };
-
-      // Launch the test
-      launchTest();
+      // Execute all three phases together
+      try {
+        await this.testExecutor.executeTest(x, runtime, addableFiles);
+      } catch (error) {
+        console.error(`Error executing test ${x} (${runtime}):`, error);
+      } finally {
+        // Mark as done and check for next item
+        this.isProcessingQueue = false;
+        setTimeout(() => this.checkQueue(), 100);
+      }
     } catch (error) {
       console.error(`Error in checkQueue:`, error);
       this.isProcessingQueue = false;
@@ -1072,6 +1073,9 @@ export class Server extends Server_TCP {
     this.checkForShutdown();
   };
 
+  // setupIpcHandler is no longer used since node tests now use WebSocket communication
+  // All communication should go through WebSocket messages handled in Server_TCP
+
   launchNode = async (src: string, dest: string) => {
     console.log(ansiC.green(ansiC.inverse(`node < ${src}`)));
 
@@ -1084,54 +1088,25 @@ export class Server extends Server_TCP {
           await this.setupTestEnvironment(src, "node");
 
         const builtfile = dest;
-        // const ipcfile = "/tmp/tpipe_" + Math.random();
         const logs = createLogStreams(reportDest, "node");
 
-        let buffer = Buffer.from("");
-        const queue = new Queue<string[]>();
+        // Spawn without IPC - use only stdio pipes
+        // Pass WebSocket port via environment variable for congruence
+        const child = spawn("node", [builtfile, testResources], {
+          stdio: ["pipe", "pipe", "pipe"],
+          env: {
+            ...process.env,
+            WS_PORT: "3000",
+          },
+        });
 
-        const onData = (data: Buffer) => {
-          buffer = Buffer.concat([buffer, data]);
+        // Handle stdout and stderr normally
+        child.stdout?.on('data', (data) => {
+          logs.stdout?.write(data);
+        });
 
-          // Process complete JSON messages
-          for (let b = 0; b < buffer.length + 1; b++) {
-            const c = buffer.slice(0, b);
-            try {
-              const d = JSON.parse(c.toString());
-              queue.enqueue(d);
-              buffer = buffer.slice(b);
-              b = 0;
-            } catch (e) {
-              // Continue processing
-            }
-          }
-
-          // Process messages
-          while (queue.size() > 0) {
-            const message = queue.dequeue();
-            if (message) {
-              this.mapping().forEach(async ([command, func]) => {
-                if (message[0] === command) {
-                  const args = message.slice(1, -1);
-                  try {
-                    const result = await (this as any)[command](...args);
-                    child.send(
-                      JSON.stringify({
-                        payload: result,
-                        key: message[message.length - 1],
-                      })
-                    );
-                  } catch (error) {
-                    console.error(`Error handling command ${command}:`, error);
-                  }
-                }
-              });
-            }
-          }
-        };
-
-        const child = spawn("node", [builtfile, testResources, "3000"], {
-          stdio: ["pipe", "pipe", "pipe", "ipc"],
+        child.stderr?.on('data', (data) => {
+          logs.stderr?.write(data);
         });
 
         try {
@@ -1140,14 +1115,11 @@ export class Server extends Server_TCP {
           // Generate prompt files for Node tests
           generatePromptFiles(reportDest, src);
         } finally {
-          // this.server.close();
           this.cleanupPorts(portsToUse);
         }
       } catch (error: any) {
         if (error.message !== "No ports available") {
           console.error(`Error in launchNode for ${src}:`, error);
-          // Don't throw the error, just log it and continue
-          // This allows other tests to run even if this one fails
         }
       }
     })();
@@ -1160,11 +1132,9 @@ export class Server extends Server_TCP {
       src,
       "node",
       () => {
-        // When the promise resolves, check the queue for more tests
         setTimeout(() => this.checkQueue(), 100);
       },
       () => {
-        // When the promise rejects, check the queue for more tests
         setTimeout(() => this.checkQueue(), 100);
       }
     );
@@ -1379,54 +1349,23 @@ export class Server extends Server_TCP {
           ? venvPython
           : "python3";
 
-        const ipcfile = "/tmp/tpipe_python_" + Math.random();
-        const child = spawn(pythonCommand, [src, testResources, ipcfile], {
-          stdio: ["pipe", "pipe", "pipe", "ipc"],
+        // Pass WebSocket port via environment variable for congruence
+        const child = spawn(pythonCommand, [src, testResources], {
+          stdio: ["pipe", "pipe", "pipe"],
+          env: {
+            ...process.env,
+            WS_PORT: "3000",
+          },
         });
 
-        // IPC server setup is similar to Node
-        let buffer = Buffer.from("");
-        const queue = new Queue<string[]>();
+        // Handle stdout and stderr normally
+        child.stdout?.on('data', (data) => {
+          logs.stdout?.write(data);
+        });
 
-        const onData = (data: Buffer) => {
-          buffer = Buffer.concat([buffer, data]);
-
-          for (let b = 0; b < buffer.length + 1; b++) {
-            const c = buffer.slice(0, b);
-            try {
-              const d = JSON.parse(c.toString());
-              queue.enqueue(d);
-              buffer = buffer.slice(b);
-              b = 0;
-            } catch (e) {
-              // Continue processing
-            }
-          }
-
-          while (queue.size() > 0) {
-            const message = queue.dequeue();
-            if (message) {
-              this.mapping().forEach(async ([command, func]) => {
-                if (message[0] === command) {
-                  const args = message.slice(1, -1);
-                  try {
-                    const result = await (this as any)[command](...args);
-                    child.send(
-                      JSON.stringify({
-                        payload: result,
-                        key: message[message.length - 1],
-                      })
-                    );
-                  } catch (error) {
-                    console.error(`Error handling command ${command}:`, error);
-                  }
-                }
-              });
-            }
-          }
-        };
-
-        // const server = await this.createIpcServer(onData, ipcfile);
+        child.stderr?.on('data', (data) => {
+          logs.stderr?.write(data);
+        });
 
         try {
           await this.handleChildProcess(child, logs, reportDest, src, "python");
@@ -1434,13 +1373,11 @@ export class Server extends Server_TCP {
           // Generate prompt files for Python tests
           await generatePromptFiles(reportDest, src);
         } finally {
-          // server.close();
           this.cleanupPorts(portsToUse);
         }
       } catch (error: any) {
         if (error.message !== "No ports available") {
-          console.error(`Error in launchNode for ${src}:`, error);
-          // Don't re-throw to allow other tests to continue
+          console.error(`Error in launchPython for ${src}:`, error);
         }
       }
     })();
@@ -1474,52 +1411,6 @@ export class Server extends Server_TCP {
 
         const logs = createLogStreams(reportDest, "golang");
 
-        // Create IPC file path
-        const ipcfile =
-          "/tmp/tpipe_golang_" + Math.random().toString(36).substring(2);
-
-        let buffer = Buffer.from("");
-        const queue = new Queue<string[]>();
-
-        const onData = (data: Buffer) => {
-          buffer = Buffer.concat([buffer, data]);
-
-          // Process complete JSON messages
-          for (let b = 0; b < buffer.length + 1; b++) {
-            const c = buffer.slice(0, b);
-            try {
-              const d = JSON.parse(c.toString());
-              queue.enqueue(d);
-              buffer = buffer.slice(b);
-              b = 0;
-            } catch (e) {
-              // Continue processing
-            }
-          }
-
-          // Process messages
-          while (queue.size() > 0) {
-            const message = queue.dequeue();
-            if (message) {
-              this.mapping().forEach(async ([command, func]) => {
-                if (message[0] === command) {
-                  const args = message.slice(1, -1);
-                  try {
-                    const result = await (this as any)[command](...args);
-                    // Send response back through IPC
-                    // This would need to be implemented based on your IPC protocol
-                  } catch (error) {
-                    console.error(`Error handling command ${command}:`, error);
-                  }
-                }
-              });
-            }
-          }
-        };
-
-        // Create IPC server like in launchNode
-        // const server = await this.createIpcServer(onData, ipcfile);
-
         // For Go tests, we need to run from the directory containing the go.mod file
         // Find the nearest go.mod file by walking up the directory tree
         let currentDir = path.dirname(src);
@@ -1543,7 +1434,8 @@ export class Server extends Server_TCP {
         // Get the relative path to the test file from the go.mod directory
         const relativeTestPath = path.relative(goModDir, src);
 
-        // Run go test from the directory containing go.mod
+        // Pass WebSocket port (3000) via environment variable
+        // The Go test should connect to WebSocket at ws://localhost:3000
         const child = spawn(
           "go",
           ["test", "-v", "-json", "./" + path.dirname(relativeTestPath)],
@@ -1552,12 +1444,21 @@ export class Server extends Server_TCP {
             env: {
               ...process.env,
               TEST_RESOURCES: testResources,
-              IPC_FILE: ipcfile,
+              WS_PORT: "3000",  // Pass WebSocket port
               GO111MODULE: "on",
             },
             cwd: goModDir,
           }
         );
+
+        // Handle stdout and stderr normally
+        child.stdout?.on('data', (data) => {
+          logs.stdout?.write(data);
+        });
+
+        child.stderr?.on('data', (data) => {
+          logs.stderr?.write(data);
+        });
 
         await this.handleChildProcess(child, logs, reportDest, src, "golang");
 
@@ -1567,13 +1468,6 @@ export class Server extends Server_TCP {
         // Ensure tests.json exists by parsing the go test JSON output
         processGoTestOutput(reportDest, src);
 
-        // Clean up
-        // server.close();
-        try {
-          fs.unlinkSync(ipcfile);
-        } catch (e) {
-          // Ignore errors during cleanup
-        }
         this.cleanupPorts(portsToUse);
       } catch (error) {
         if (error.message !== "No ports available") {

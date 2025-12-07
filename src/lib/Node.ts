@@ -58,6 +58,19 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   testResourceRequirement: ITTestResourceRequest = defaultTestResourceRequirement
 ): Promise<Tiposkripto<I, O, M>> => {
   try {
+    // Ensure IPC is not used - node tests should only use WebSocket
+    if (process.send) {
+      console.warn('IPC is available via process.send, but node tests should use WebSocket only');
+      // Don't use IPC - override process.send to prevent accidental usage
+      const originalSend = process.send;
+      process.send = function(...args: any[]) {
+        console.error('IPC usage detected via process.send(). Node tests should use WebSocket via PM_Node instead.');
+        console.error('The IPC message was:', args);
+        // Don't actually send the message
+        return false;
+      };
+    }
+
     const t = new NodeTiposkripto<I, O, M>(
       input,
       testSpecification,
@@ -72,7 +85,8 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       // t.registerUncaughtPromise(reason, promise);
     });
 
-    wsPort = process.argv[3];
+    // Read WebSocket port from environment variable for congruence with Python and Golang
+    wsPort = process.env.WS_PORT || "3000";
 
     process.exit((await t.receiveTestResourceConfig(process.argv[2])).fails);
   } catch (e) {

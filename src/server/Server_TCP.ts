@@ -55,7 +55,7 @@ export class Server_TCP extends Server_Base {
   protected websocket(data: any, ws: WebSocket) {
     try {
       const rawData = data.toString();
-      console.log("WebSocket received raw data:", rawData);
+      // console.log("WebSocket received raw data:", rawData);
       let parsed;
       try {
         parsed = JSON.parse(rawData);
@@ -64,19 +64,14 @@ export class Server_TCP extends Server_Base {
         return;
       }
 
-      // Check if it's an array (old IPC format)
+      // IPC format is no longer supported - node tests should use WebSocket messages
       if (Array.isArray(parsed)) {
-        const [command, ...args] = parsed;
-        const key = args.pop(); // Last element is the key
-        console.log("Old IPC format - command:", command, "key:", key);
-
-        // Handle the command
-        // For now, just echo back with the key for testing
-        // In a real implementation, we would process the command
+        console.error("IPC format messages are no longer supported. Node tests must use WebSocket messages with 'type' field.");
+        console.error("Received array message:", parsed);
         ws.send(
           JSON.stringify({
-            key: key,
-            payload: `Processed command: ${command}`,
+            error: "IPC format messages are no longer supported. Use WebSocket messages with 'type' field.",
+            received: parsed
           })
         );
         return;
@@ -101,7 +96,6 @@ export class Server_TCP extends Server_Base {
       // These have a type field that matches method names
       // They also have a key field for responses
       if (wsm.type && typeof this[wsm.type] === "function") {
-        console.log(`Executing command ${wsm.type} with data:`, wsm.data, "key:", wsm.key);
         // Extract data and key
         const { data: commandData, key } = wsm;
         // Handle undefined or null commandData
@@ -111,7 +105,6 @@ export class Server_TCP extends Server_Base {
         } else {
           args = Array.isArray(commandData) ? commandData : [commandData];
         }
-        console.log(`Command ${wsm.type} args:`, args, "number of args:", args.length);
 
         try {
           // Call the method
@@ -277,7 +270,7 @@ export class Server_TCP extends Server_Base {
       // Parse URL to handle query parameters
       const url = new URL(req.url, `http://${req.headers.host}`);
       const pathname = url.pathname;
-      
+
       // Remove the leading /bundles/web/ to get the relative path
       const relativePath = pathname.replace(/^\/bundles\/web\//, "");
       // The files are in testeranto/bundles/web/ relative to cwd
@@ -288,18 +281,20 @@ export class Server_TCP extends Server_Base {
         "web",
         relativePath
       );
-      
+
       console.log(`Serving file: ${req.url}`);
       console.log(`  Pathname: ${pathname}`);
       console.log(`  Looking for: ${filePath}`);
       console.log(`  File exists: ${fs.existsSync(filePath)}`);
-      
+
       fs.readFile(filePath, (err, data) => {
         if (err) {
           console.error(`Error serving ${req.url}:`, err.message);
           console.error(`  Full path: ${filePath}`);
           res.writeHead(404, { "Content-Type": "text/plain" });
-          res.end(`404 Not Found: ${req.url}\nPath: ${filePath}\nError: ${err.message}`);
+          res.end(
+            `404 Not Found: ${req.url}\nPath: ${filePath}\nError: ${err.message}`
+          );
           return;
         }
         // Determine content type based on file extension

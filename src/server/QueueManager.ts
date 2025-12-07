@@ -3,7 +3,7 @@ import { IRunTime } from "../Types.js";
 import { getRunnables } from "./utils.js";
 
 export class QueueManager {
-  private queue: Array<{ testName: string; runtime: IRunTime }> = [];
+  private queue: Array<{ testName: string; runtime: IRunTime; addableFiles?: string[] }> = [];
 
   constructor() {}
 
@@ -13,7 +13,8 @@ export class QueueManager {
     configs: any,
     projectName: string,
     cleanupTestProcesses: (testName: string) => void,
-    checkQueue: () => void
+    checkQueue: () => void,
+    addableFiles?: string[]
   ) {
     // Store the original src for logging
     const originalSrc = src;
@@ -89,7 +90,7 @@ export class QueueManager {
     );
 
     if (!alreadyInQueue) {
-      this.queue.push({ testName: src, runtime });
+      this.queue.push({ testName: src, runtime, addableFiles });
       console.log(
         ansiC.green(
           ansiC.inverse(`Added ${src} (${runtime}) to the processing queue`)
@@ -108,7 +109,7 @@ export class QueueManager {
     }
   }
 
-  pop(): { testName: string; runtime: IRunTime } | undefined {
+  pop(): { testName: string; runtime: IRunTime; addableFiles?: string[] } | undefined {
     return this.queue.pop();
   }
 
@@ -129,7 +130,7 @@ export class QueueManager {
     this.queue = [];
   }
 
-  getAll(): Array<{ testName: string; runtime: IRunTime }> {
+  getAll(): Array<{ testName: string; runtime: IRunTime; addableFiles?: string[] }> {
     return [...this.queue];
   }
 }
