@@ -3,9 +3,9 @@
 // Do not add logging to this file as it is used by the pure runtime.
 
 import type { Ibdd_in_any, Ibdd_out_any } from "../CoreTypes";
-import { PM_Node } from "../PM/node";
-import { PM_Pure } from "../PM/pure";
-import { PM_Web } from "../PM/web";
+import { PM_Node } from "../clients/node";
+import { PM_Pure } from "../clients/pure";
+import { PM_Web } from "../clients/web";
 import { IGivens, BaseGiven } from "./BaseGiven";
 
 import { BaseSuite } from "./BaseSuite";

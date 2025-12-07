@@ -8,7 +8,7 @@ import {
   Ibdd_in_any,
   Ibdd_out,
 } from "../CoreTypes";
-import { PM_Web } from "../PM/web";
+import { PM_Web } from "../clients/web";
 import Tiposkripto from "./Tiposkripto";
 import {
   ITTestResourceConfiguration,

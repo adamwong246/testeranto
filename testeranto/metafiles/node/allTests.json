@@ -25,7 +25,7 @@
   "metafile": {
     "inputs": {
       "src/lib/index.ts": {
-        "bytes": 4010,
+        "bytes": 4025,
         "imports": [
           {
             "path": "../CoreTypes",
@@ -33,17 +33,17 @@
             "external": true
           },
           {
-            "path": "../PM/node",
+            "path": "../clients/node",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "../PM/pure",
+            "path": "../clients/pure",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "../PM/web",
+            "path": "../clients/web",
             "kind": "import-statement",
             "external": true
           },
@@ -70,7 +70,7 @@
         ],
         "format": "esm"
       },
-      "src/PM/index.ts": {
+      "src/clients/index.ts": {
         "bytes": 1880,
         "imports": [
           {
@@ -91,7 +91,7 @@
         ],
         "format": "esm"
       },
-      "src/PM/node.ts": {
+      "src/clients/node.ts": {
         "bytes": 7156,
         "imports": [
           {
@@ -125,7 +125,7 @@
             "external": true
           },
           {
-            "path": "src/PM/index.ts",
+            "path": "src/clients/index.ts",
             "kind": "import-statement",
             "original": "."
           }
@@ -289,7 +289,7 @@
         "format": "esm"
       },
       "src/lib/Node.ts": {
-        "bytes": 2139,
+        "bytes": 2144,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -297,9 +297,9 @@
             "original": "./index.js"
           },
           {
-            "path": "src/PM/node.ts",
+            "path": "src/clients/node.ts",
             "kind": "import-statement",
-            "original": "../PM/node.js"
+            "original": "../clients/node.js"
           },
           {
             "path": "../CoreTypes.js",
@@ -453,7 +453,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/node/allTests/Node-PNXHYSZI.mjs",
+            "path": "testeranto/bundles/node/allTests/Node-YYDKUGMS.mjs",
             "kind": "dynamic-import"
           }
         ],
@@ -486,7 +486,7 @@
         },
         "bytes": 153316
       },
-      "testeranto/bundles/node/allTests/Node-PNXHYSZI.mjs": {
+      "testeranto/bundles/node/allTests/Node-YYDKUGMS.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/node/allTests/chunk-NBYHXE6Z.mjs",
@@ -514,10 +514,10 @@
         ],
         "entryPoint": "src/lib/Node.ts",
         "inputs": {
-          "src/PM/node.ts": {
+          "src/clients/node.ts": {
             "bytesInOutput": 5461
           },
-          "src/PM/index.ts": {
+          "src/clients/index.ts": {
             "bytesInOutput": 174
           },
           "src/lib/pmProxy.ts": {
@@ -542,7 +542,7 @@
             "bytesInOutput": 1255
           }
         },
-        "bytes": 28661
+        "bytes": 28676
       },
       "testeranto/bundles/node/allTests/chunk-NBYHXE6Z.mjs": {
         "imports": [],

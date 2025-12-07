@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { WebSocketMessage } from "../PM/types.js";
+import { WebSocketMessage } from "../clients/types.js";
 import { WebSocketServer, WebSocket } from "ws";
 import http from "http";
 import fs from "fs";

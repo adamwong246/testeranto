@@ -2,7 +2,7 @@
 import { Plugin } from "esbuild";
 
 import { ITTestResourceConfiguration } from "./lib/index.js";
-import { PM } from "./PM/index.js";
+import { PM } from "./clients/index.js";
 import { Ibdd_in_any, Ibdd_out_any } from "./CoreTypes.js";
 
 import { BaseSuite } from "./lib/BaseSuite.js";

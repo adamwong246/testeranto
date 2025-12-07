@@ -13,7 +13,7 @@ import {
 } from "./lib/index.js";
 import Tiposkripto from "./lib/Tiposkripto.js";
 
-import { PM_Pure } from "./PM/pure.js";
+import { PM_Pure } from "./clients/pure.js";
 
 export class PureTesteranto<
   I extends Ibdd_in_any,

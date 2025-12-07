@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ITTestResourceConfiguration } from "../lib";
 
 import { ITLog } from "../lib";
@@ -7,7 +9,7 @@ export abstract class PM_sidecar {
 
   abstract start(stopper: () => any): Promise<void>;
   abstract stop(): Promise<void>;
-  
+
   testArtiFactoryfileWriter(tLog: ITLog, callback: (p: Promise<void>) => void) {
     return (fPath: string, value: unknown) => {
       callback(Promise.resolve());

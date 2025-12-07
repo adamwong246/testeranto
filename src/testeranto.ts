@@ -4,11 +4,11 @@ import path from "path";
 import readline from "readline";
 import { PM_Main } from "./server/main";
 import { getRunnables } from "./server/utils";
-import { PitonoBuild } from "./PM/pitonoBuild";
+import { PitonoBuild } from "./clients/pitonoBuild";
 import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
 import { AppHtml } from "./utils/buildTemplates";
 import webHtmlFrame from "./web.html";
-const { GolingvuBuild } = await import("./PM/golingvuBuild");
+const { GolingvuBuild } = await import("./clients/golingvuBuild");
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);

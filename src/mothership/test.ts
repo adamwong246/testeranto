@@ -13,7 +13,7 @@ import {
 import { ITTestResourceConfiguration } from "../lib";
 import { IPM } from "../lib/types";
 import Tiposkripto from "../lib/Node";
-import { PM } from "../PM";
+import { PM } from "../clients";
 
 import appFactory from "./index";
 

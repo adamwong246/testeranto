@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { ITTestResourceConfiguration } from "./lib";
 import { Sidecar } from "./lib/Sidecar";
-import { PM_Pure_Sidecar } from "./PM/pureSidecar";
+import { PM_Pure_Sidecar } from "./clients/pureSidecar";
 
 export class PureSideCar extends Sidecar {
   pm: PM_Pure_Sidecar;

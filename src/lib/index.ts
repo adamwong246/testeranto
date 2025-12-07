@@ -4,9 +4,9 @@
 // Do not add logging to this file as it is used by the pure runtime.
 
 import { Ibdd_in_any, ITestAdapter, Ibdd_out_any } from "../CoreTypes";
-import { PM_Node } from "../PM/node";
-import { PM_Pure } from "../PM/pure";
-import { PM_Web } from "../PM/web";
+import { PM_Node } from "../clients/node";
+import { PM_Pure } from "../clients/pure";
+import { PM_Web } from "../clients/web";
 import { ITestconfig, IBuiltConfig, IRunTime, ITestTypes } from "../Types";
 import { IGivens } from "./BaseGiven";
 

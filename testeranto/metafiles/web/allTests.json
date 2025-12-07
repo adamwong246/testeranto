@@ -120,7 +120,7 @@
         "format": "esm"
       },
       "src/lib/index.ts": {
-        "bytes": 4010,
+        "bytes": 4025,
         "imports": [
           {
             "path": "../CoreTypes",
@@ -128,17 +128,17 @@
             "external": true
           },
           {
-            "path": "../PM/node",
+            "path": "../clients/node",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "../PM/pure",
+            "path": "../clients/pure",
             "kind": "import-statement",
             "external": true
           },
           {
-            "path": "../PM/web",
+            "path": "../clients/web",
             "kind": "import-statement",
             "external": true
           },
@@ -180,7 +180,7 @@
         ],
         "format": "esm"
       },
-      "src/PM/index.ts": {
+      "src/clients/index.ts": {
         "bytes": 1880,
         "imports": [
           {
@@ -216,7 +216,7 @@
         ],
         "format": "esm"
       },
-      "src/PM/web.ts": {
+      "src/clients/web.ts": {
         "bytes": 3806,
         "imports": [
           {
@@ -240,7 +240,7 @@
             "external": true
           },
           {
-            "path": "src/PM/index.ts",
+            "path": "src/clients/index.ts",
             "kind": "import-statement",
             "original": "."
           },
@@ -509,7 +509,7 @@
         "format": "esm"
       },
       "src/lib/Web.ts": {
-        "bytes": 1725,
+        "bytes": 1730,
         "imports": [
           {
             "path": "../CoreTypes",
@@ -517,9 +517,9 @@
             "external": true
           },
           {
-            "path": "src/PM/web.ts",
+            "path": "src/clients/web.ts",
             "kind": "import-statement",
-            "original": "../PM/web"
+            "original": "../clients/web"
           },
           {
             "path": "src/lib/Tiposkripto.ts",
@@ -795,7 +795,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/web/allTests/Web-FH4QAHMO.mjs",
+            "path": "testeranto/bundles/web/allTests/Web-ZHDALY37.mjs",
             "kind": "dynamic-import"
           }
         ],
@@ -828,7 +828,7 @@
         },
         "bytes": 153236
       },
-      "testeranto/bundles/web/allTests/Web-FH4QAHMO.mjs": {
+      "testeranto/bundles/web/allTests/Web-ZHDALY37.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/web/allTests/chunk-XNGBU44Z.mjs",
@@ -841,10 +841,10 @@
         ],
         "entryPoint": "src/lib/Web.ts",
         "inputs": {
-          "src/PM/index.ts": {
+          "src/clients/index.ts": {
             "bytesInOutput": 174
           },
-          "src/PM/web.ts": {
+          "src/clients/web.ts": {
             "bytesInOutput": 2793
           },
           "src/lib/pmProxy.ts": {
@@ -869,7 +869,7 @@
             "bytesInOutput": 788
           }
         },
-        "bytes": 25269
+        "bytes": 25279
       },
       "testeranto/bundles/web/allTests/chunk-XNGBU44Z.mjs": {
         "imports": [],

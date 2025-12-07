@@ -2,7 +2,7 @@ import {
   defaultTestResourceRequirement,
   ITTestResourceRequest,
 } from "./index.js";
-import { PM_Node } from "../PM/node.js";
+import { PM_Node } from "../clients/node.js";
 import {
   ITestSpecification,
   ITestImplementation,
