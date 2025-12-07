@@ -11,11 +11,12 @@ import path from "path";
 import fs from "fs";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { setupDockerCompose } from "../dockerComposeGenerator";
-import { setupDockerfileForBuildGolang } from "../setupDockerfileForBuildGolang";
-import { setupDockerfileForBuildNode } from "../setupDockerfileForBuildNode";
-import { setupDockerfileForBuildPython } from "../setupDockerfileForBuildPython";
-import { setupDockerfileForBuildWeb } from "../setupDockerfileForBuildWeb";
 import { Server_TCP } from "./Server_TCP";
+import { setupDockerfileForBuildGolang } from "../golang/setupDockerfileForBuildGolang";
+import { setupDockerfileForBuildNode } from "../node/setupDockerfileForBuildNode";
+import { setupDockerfileForBuildPython } from "../python/setupDockerfileForBuildPython";
+import { DockerComposeOptions } from "../types";
+import { setupDockerfileForBuildWeb } from "../web/setupDockerfileForBuildWeb";
 
 export class Server_DockerCompose extends Server_TCP {
   private cwd: string;
