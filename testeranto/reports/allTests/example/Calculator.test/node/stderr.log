@@ -1,0 +1,154 @@
+Tried to send "writeFileSync (testeranto/reports/allTests/example/Calculator.test/node/tests.json,{
+  "name": "Testing Calculator operations",
+  "givens": [
+    {
+      "key": "testEmptyDisplay",
+      "whens": [],
+      "thens": [
+        {
+          "name": "result: ",
+          "error": true,
+          "artifacts": [],
+          "status": false
+        }
+      ],
+      "error": [
+        "TypeError: calculator.getDisplay is not a function\n    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/example/Calculator.test.mjs:4264:31)\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4512:41\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-FYGDRPZP.mjs:46:12)\n    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4662:40)\n    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4507:28)\n    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4321:36)\n    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4440:22)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4687:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4719:31)\n    at async NodeTiposkripto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4817:12)",
+        null
+      ],
+      "failed": true,
+      "features": [
+        "pressing nothing, the display is empty"
+      ],
+      "artifacts": [],
+      "status": true
+    },
+    {
+      "key": "testSingleDigit",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 2",
+          "error": true,
+          "artifacts": [],
+          "status": false
+        }
+      ],
+      "error": [
+        "TypeError: calculator.getDisplay is not a function\n    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/example/Calculator.test.mjs:4264:31)\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4512:41\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-FYGDRPZP.mjs:46:12)\n    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4662:40)\n    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4507:28)\n    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4321:36)\n    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4440:22)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4687:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4719:31)\n    at async NodeTiposkripto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4817:12)",
+        null
+      ],
+      "failed": true,
+      "features": [
+        "entering a number puts it on the display"
+      ],
+      "artifacts": [],
+      "status": true
+    },
+    {
+      "key": "testMultipleDigits",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 22",
+          "error": true,
+          "artifacts": [],
+          "status": false
+        }
+      ],
+      "error": [
+        "TypeError: calculator.getDisplay is not a function\n    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/example/Calculator.test.mjs:4264:31)\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4512:41\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-FYGDRPZP.mjs:46:12)\n    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4662:40)\n    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4507:28)\n    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4321:36)\n    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4440:22)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4687:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4719:31)\n    at async NodeTiposkripto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4817:12)",
+        null
+      ],
+      "failed": true,
+      "features": [
+        "entering multiple digits concatenates them"
+      ],
+      "artifacts": [],
+      "status": true
+    },
+    {
+      "key": "testLargeNumber",
+      "whens": [
+        {
+          "name": "press: 1",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 4",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 5",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens": [
+        {
+          "name": "result: 12345",
+          "error": true,
+          "artifacts": [],
+          "status": false
+        }
+      ],
+      "error": [
+        "TypeError: calculator.getDisplay is not a function\n    at BaseThen.thenCB (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/example/Calculator.test.mjs:4264:31)\n    at file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4512:41\n    at Object.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/chunk-FYGDRPZP.mjs:46:12)\n    at BaseThen.butThen (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4662:40)\n    at BaseThen.test (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4507:28)\n    at BaseGiven.give (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4321:36)\n    at async BaseSuite.run (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4440:22)\n    at async file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4687:21\n    at async Object.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4719:31)\n    at async NodeTiposkripto.receiveTestResourceConfig (file:///Users/adam/Code/testeranto/testeranto/bundles/node/allTests/Node-6SHM7BK5.mjs:4817:12)",
+        null
+      ],
+      "failed": true,
+      "features": [
+        "entering a large number works correctly"
+      ],
+      "artifacts": [],
+      "status": true
+    },
+    {
+      "key": "testAdditionExpression",
+      "whens": [
+        {
+          "name": "press: 2",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: +",
+          "error": null,
+          "artifacts": []
+        },
+        {
+          "name": "press: 3",
+          "error": null,
+          "artifacts": []
+        }
+      ],
+      "thens":

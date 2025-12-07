@@ -24,3 +24,4 @@ mark100 async (input, testSpecification, testImplementation, testAdapter, testRe
   }
 }
 111 NodeTiposkripto constructor
+Connecting to WebSocket at ws:///tmp/tpipe_0.03816898334447272

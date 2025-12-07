@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-rest-params */
-import net from "net";
+import WebSocket from "ws";
 import fs from "fs";
 import path from "path";
 import { ScreencastOptions, ScreenshotOptions } from "puppeteer-core";
@@ -16,14 +16,42 @@ const fPaths: IFPaths = [];
 
 export class PM_Node extends PM {
   testResourceConfiguration: ITTestResourceConfiguration;
-  client: net.Socket;
+  ws: WebSocket;
+  private messageCallbacks: Map<string, (data: any) => void> = new Map();
 
-  constructor(t: ITTestResourceConfiguration, ipcFile: string) {
+  constructor(t: ITTestResourceConfiguration, wsUrl: string) {
     super();
     this.testResourceConfiguration = t;
 
-    this.client = net.createConnection(ipcFile, () => {
-      return;
+    // Connect via WebSocket instead of net.Socket
+    this.ws = new WebSocket(wsUrl);
+    
+    this.ws.on('open', () => {
+      console.log('WebSocket connected to', wsUrl);
+    });
+
+    this.ws.on('message', (data) => {
+      try {
+        const message = JSON.parse(data.toString());
+        // Handle responses with keys
+        if (message.key && this.messageCallbacks.has(message.key)) {
+          const callback = this.messageCallbacks.get(message.key);
+          if (callback) {
+            callback(message.payload);
+            this.messageCallbacks.delete(message.key);
+          }
+        }
+      } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+      }
+    });
+
+    this.ws.on('error', (error) => {
+      console.error('WebSocket error:', error);
+    });
+
+    this.ws.on('close', () => {
+      console.log('WebSocket connection closed');
     });
   }
 
@@ -32,30 +60,42 @@ export class PM_Node extends PM {
   }
 
   stop(): Promise<void> {
-    throw new Error("stop not implemented.");
+    return new Promise((resolve) => {
+      if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+        this.ws.close();
+        this.ws.on('close', () => {
+          resolve();
+        });
+      } else {
+        resolve();
+      }
+    });
   }
 
   send<I>(command: string, ...argz): Promise<I> {
     const key = Math.random().toString();
-    if (!this.client) {
+    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
       console.error(
-        `Tried to send "${command} (${argz})" but the test has not been started and the IPC client is not established. Exiting as failure!`
+        `Tried to send "${command} (${argz})" but the WebSocket is not connected. Exiting as failure!`
       );
       process.exit(-1);
     }
 
     return new Promise<I>((res) => {
-      const myListener = (event) => {
-        const x = JSON.parse(event);
-        if (x.key === key) {
-          process.removeListener("message", myListener);
-          res(x.payload);
-        }
+      // Store the callback to handle the response
+      this.messageCallbacks.set(key, (payload) => {
+        res(payload);
+      });
+
+      // Send the message in a format the server expects
+      // The server expects messages with a 'type' field
+      // We'll use the command as the type, and include arguments in a 'data' field
+      const message = {
+        type: command,
+        data: argz.length > 0 ? argz : undefined,
+        key: key
       };
-
-      process.addListener("message", myListener);
-
-      this.client.write(JSON.stringify([command, ...argz, key]));
+      this.ws.send(JSON.stringify(message));
     });
   }
 

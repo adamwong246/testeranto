@@ -6,6 +6,7 @@ import { WebSocketMessage } from "../clients/types.js";
 import { WebSocketServer, WebSocket } from "ws";
 import http from "http";
 import fs from "fs";
+import path from "path";
 import { getAllFilesRecursively } from "./getAllFilesRecursively.js";
 
 import { PM_1_WithProcesses } from "./PM_1_WithProcesses.js";
@@ -53,13 +54,78 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
 
   protected websocket(data: any, ws: WebSocket) {
     try {
-      const wsm: WebSocketMessage = JSON.parse(data.toString());
+      const parsed = JSON.parse(data.toString());
+      
+      // Check if it's an array (old IPC format)
+      if (Array.isArray(parsed)) {
+        const [command, ...args] = parsed;
+        const key = args.pop(); // Last element is the key
+        
+        // Handle the command
+        // For now, just echo back with the key for testing
+        // In a real implementation, we would process the command
+        ws.send(JSON.stringify({
+          key: key,
+          payload: `Processed command: ${command}`
+        }));
+        return;
+      }
+      
+      // Otherwise, treat as WebSocketMessage with type field
+      const wsm: WebSocketMessage = parsed;
 
+      // Check if it's a FileService method
+      let handled = false;
       FileService_methods.forEach((fsm) => {
         if (wsm.type === fsm) {
           this[fsm](wsm, ws);
+          handled = true;
         }
       });
+      if (handled) return;
+
+      // Handle commands from PM_Node
+      // These have a type field that matches method names
+      // They also have a key field for responses
+      if (wsm.type && typeof this[wsm.type] === 'function') {
+        // Extract data and key
+        const { data: commandData, key } = wsm;
+        const args = Array.isArray(commandData) ? commandData : [commandData];
+        
+        try {
+          // Call the method
+          const result = this[wsm.type](...args);
+          // Handle promise if needed
+          if (result instanceof Promise) {
+            result.then((resolvedResult) => {
+              ws.send(JSON.stringify({
+                key: key,
+                payload: resolvedResult
+              }));
+            }).catch((error) => {
+              console.error(`Error executing command ${wsm.type}:`, error);
+              ws.send(JSON.stringify({
+                key: key,
+                payload: null,
+                error: error?.toString()
+              }));
+            });
+          } else {
+            ws.send(JSON.stringify({
+              key: key,
+              payload: result
+            }));
+          }
+        } catch (error) {
+          console.error(`Error executing command ${wsm.type}:`, error);
+          ws.send(JSON.stringify({
+            key: key,
+            payload: null,
+            error: error?.toString()
+          }));
+        }
+        return;
+      }
 
       // Handle other message types
       if (wsm.type === "getRunningProcesses") {
@@ -156,6 +222,9 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
               );
             });
         }
+      } else {
+        // If we get here, the message wasn't handled
+        console.warn('Unhandled WebSocket message type:', wsm.type);
       }
     } catch (error) {
       console.error("Error handling WebSocket message:", error);
@@ -280,5 +349,44 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
 
   test_send(wsm: WebSocketMessage, ws: WebSocket, project: string[]) {
     ws.send(JSON.stringify(["tests", project]));
+  }
+
+  // Command handlers for PM_Node
+  writeFileSync(filepath: string, contents: string, testName?: string): boolean {
+    const fullPath = path.join(process.cwd(), filepath);
+    fs.writeFileSync(fullPath, contents);
+    return true;
+  }
+
+  existsSync(filepath: string): boolean {
+    const fullPath = path.join(process.cwd(), filepath);
+    return fs.existsSync(fullPath);
+  }
+
+  mkdirSync(filepath: string): void {
+    const fullPath = path.join(process.cwd(), filepath);
+    fs.mkdirSync(fullPath, { recursive: true });
+  }
+
+  readFile(filepath: string): string {
+    const fullPath = path.join(process.cwd(), filepath);
+    return fs.readFileSync(fullPath, 'utf-8');
+  }
+
+  createWriteStream(filepath: string, testName?: string): string {
+    const fullPath = path.join(process.cwd(), filepath);
+    const stream = fs.createWriteStream(fullPath);
+    // Return a dummy ID for now
+    return 'stream_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  end(uid: string): boolean {
+    // For now, just return true
+    return true;
+  }
+
+  customclose(fsPath?: string, testName?: string): any {
+    // For now, just return true
+    return true;
   }
 }

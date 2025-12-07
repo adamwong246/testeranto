@@ -41,8 +41,28 @@ export class NodeTiposkripto<
   }
 
   async receiveTestResourceConfig(partialTestResource: string) {
+    // Parse the test resource configuration
+    const config = JSON.parse(partialTestResource);
+    
+    // Determine WebSocket URL
+    let wsUrl: string;
+    if (ipcfile && ipcfile.startsWith('ws://') || ipcfile && ipcfile.startsWith('wss://')) {
+      // If ipcfile is already a WebSocket URL, use it directly
+      wsUrl = ipcfile;
+    } else {
+      // Otherwise, assume ipcfile is a port number or use default
+      const port = ipcfile ? parseInt(ipcfile, 10) : 3000;
+      if (isNaN(port)) {
+        // If not a number, assume it's a host:port string
+        wsUrl = `ws://${ipcfile}`;
+      } else {
+        wsUrl = `ws://localhost:${port}`;
+      }
+    }
+    
+    console.log(`Connecting to WebSocket at ${wsUrl}`);
     return await this.testJobs[0].receiveTestResourceConfig(
-      new PM_Node(JSON.parse(partialTestResource), ipcfile)
+      new PM_Node(config, wsUrl)
     );
   }
 }
