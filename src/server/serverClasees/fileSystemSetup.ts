@@ -1,6 +1,6 @@
 import fs from "fs";
-import { AppHtml } from "../clients/utils/buildTemplates";
-import { IBuiltConfig } from "../Types";
+import { AppHtml } from "../../clients/utils/buildTemplates";
+import { IBuiltConfig } from "../../Types";
 
 export function setupFileSystem(config: IBuiltConfig, testsName: string) {
   // Create main index.html

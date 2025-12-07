@@ -5,7 +5,7 @@ import readline from "readline";
 import { GolingvuBuild } from "./clients/golingvuBuild";
 import { PitonoBuild } from "./clients/pitonoBuild";
 import { AppHtml } from "./clients/utils/buildTemplates";
-import { setupFileSystem } from "./server/fileSystemSetup";
+import { setupFileSystem } from "./server/serverClasees/fileSystemSetup";
 import { setupKeypressHandling } from "./server/keypressHandler";
 import { Server } from "./server/serverClasees/Server";
 import { getRunnables } from "./server/utils";

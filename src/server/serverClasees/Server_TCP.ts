@@ -9,7 +9,7 @@ import path from "path";
 import { ApiEndpoint, ApiFilename } from "../../app/api";
 import { FileService_methods } from "../../app/FileService";
 import { WebSocketMessage } from "../../clients/types";
-import { getAllFilesRecursively } from "../getAllFilesRecursively";
+import { getAllFilesRecursively } from "./getAllFilesRecursively";
 import { Server_Base } from "./Server_Base";
 
 export class Server_TCP extends Server_Base {

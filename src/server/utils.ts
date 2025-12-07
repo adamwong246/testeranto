@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import path from "path";
 import { IRunnables } from "../lib";
-import { IRunTime, IBuiltConfig, ITestTypes, ITestconfig } from "../Types";
+import { IRunTime, ITestconfig } from "../Types";
 
 export const webEvaluator = (d, webArgz) => {
   return `
@@ -13,17 +13,6 @@ import('${d}').then(async (x) => {
   }
 })
 `;
-};
-export const destinationOfRuntime = (
-  f: string,
-  r: IRunTime,
-  configs: IBuiltConfig
-) => {
-  return path
-    .normalize(`${configs.buildDir}/${r}/${f}`)
-    .split(".")
-    .slice(0, -1)
-    .join(".");
 };
 
 export const tscPather = (
@@ -53,21 +42,6 @@ export const lintPather = (
     entryPoint.split(".").slice(0, -1).join("."),
     platform,
     `lint_errors.txt`
-  );
-};
-
-export const bddPather = (
-  entryPoint: string,
-  platform: IRunTime,
-  projectName: string
-) => {
-  return path.join(
-    "testeranto",
-    "reports",
-    projectName,
-    entryPoint.split(".").slice(0, -1).join("."),
-    platform,
-    `tests.json`
   );
 };
 
