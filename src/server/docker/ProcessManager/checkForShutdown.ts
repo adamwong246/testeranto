@@ -1,6 +1,6 @@
 import ansiC from "ansi-colors";
 import { SummaryManager } from "./SummaryManager.js";
-import { QueueManager } from "./QueueManager.js";
+import { QueueManager } from "../../QueueManager.js";
 
 export function checkForShutdown(
   mode: string,

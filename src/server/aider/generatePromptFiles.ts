@@ -1,5 +1,5 @@
 import fs from "fs";
-import { message } from "../promptTemplates";
+import { message, promptContent } from "./promptTemplates";
 
 export const generatePromptFiles = (reportDest: string, src: string) => {
   try {

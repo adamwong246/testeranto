@@ -31,7 +31,7 @@ import {
 } from "../../clients/utils/pitonoMetafile";
 import { IFinalResults } from "../../lib";
 import { ISummary, IBuiltConfig, IRunTime } from "../../Types";
-import { checkForShutdown } from "../checkForShutdown";
+import { checkForShutdown } from "../docker/ProcessManager/checkForShutdown";
 import configTests from "../configTests";
 import { ensureSummaryEntry } from "../ensureSummaryEntry";
 import { generatePromptFiles } from "../aider/generatePromptFiles";
@@ -39,7 +39,7 @@ import { lintCheck } from "../node+web/lintCheck";
 import { processGoTestOutput } from "../golang/processGoTestOutput";
 import { pythonLintCheck } from "../python/pythonLintCheck";
 import { pythonTypeCheck } from "../python/pythonTypeCheck";
-import { TestExecutor } from "../TestExecutor";
+import { TestExecutor } from "../docker/ProcessManager/TestExecutor";
 import { tscCheck } from "../node+web/tscCheck";
 import { getRunnables, tscPather, lintPather, webEvaluator } from "../utils";
 import { Server_DockerCompose } from "./Server_DockerCompose";

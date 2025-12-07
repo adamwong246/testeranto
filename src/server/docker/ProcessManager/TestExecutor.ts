@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IRunTime } from "../Types.js";
+import { IRunTime } from "../../Types.js";
 import fs from "fs";
-import { getRunnables, tscPather, lintPather } from "./utils.js";
-import { tscCheck as tscCheckFn } from "./node+web/tscCheck";
-import { lintCheck } from "./node+web/lintCheck.js";
+import { getRunnables, tscPather, lintPather } from "../utils.js";
+import { tscCheck as tscCheckFn } from "../node+web/tscCheck.js";
+import { lintCheck } from "../node+web/lintCheck.js";
 
 export interface TestExecutorConfig {
   projectName: string;

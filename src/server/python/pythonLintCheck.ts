@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import { spawn } from "child_process";
 
@@ -62,10 +63,7 @@ export async function pythonLintCheck(
     });
   } catch (error: any) {
     console.error(`Error running flake8 on ${entrypoint}:`, error);
-    fs.writeFileSync(
-      lintErrorsPath,
-      `Error running flake8: ${error.message}`
-    );
+    fs.writeFileSync(lintErrorsPath, `Error running flake8: ${error.message}`);
     summary[entrypoint].staticErrors = -1;
   }
 }
