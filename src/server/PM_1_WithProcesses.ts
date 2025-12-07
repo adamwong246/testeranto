@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
+import esbuildWebConfiger from "../esbuildConfigs/web.js";
+import esbuildNodeConfiger from "../esbuildConfigs/node.js";
 import ansiC from "ansi-colors";
+import esbuild from "esbuild";
 import { ESLint } from "eslint";
 import fs, { watch } from "fs";
 import puppeteer, { executablePath } from "puppeteer-core";
@@ -11,8 +13,10 @@ import ts from "typescript";
 import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
 import {
   createLogStreams,
+  LogStreams,
   pollForFile,
   puppeteerConfigs,
+  statusMessagePretty,
 } from "../clients/utils.js";
 import {
   generatePitonoMetafile,
@@ -31,6 +35,8 @@ import { pythonLintCheck } from "./pythonLintCheck.js";
 import { pythonTypeCheck } from "./pythonTypeCheck.js";
 import { lintPather, tscPather } from "./utils";
 import { getRunnables } from "./utils.js";
+import ansiColors from "ansi-colors";
+import { ChildProcess } from "child_process";
 
 const eslint = new ESLint();
 const formatter = await eslint.loadFormatter(
@@ -60,7 +66,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
   abstract launchWeb(src: string, dest: string);
   abstract launchPython(src: string, dest: string);
   abstract launchGolang(src: string, dest: string);
-  abstract startBuildProcesses(): Promise<void>;
+  // abstract startBuildProcesses(): Promise<void>;
   abstract onBuildDone(): void;
 
   clients: Set<any> = new Set();
@@ -81,6 +87,310 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         this.summaryManager.ensureSummaryEntry(sidecarName, true);
       });
     });
+  }
+
+  async startBuildProcesses(): Promise<void> {
+    const { nodeEntryPoints, webEntryPoints } = getRunnables(
+      this.configs,
+      this.projectName
+    );
+
+    console.log(`Starting build processes for ${this.projectName}...`);
+    console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
+    console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
+    // console.log(`  Pure entry points: ${Object.keys(pureEntryPoints).length}`);
+
+    // Start all build processes (only node, web, pure)
+    await Promise.all([
+      this.startBuildProcess(esbuildNodeConfiger, nodeEntryPoints, "node"),
+      this.startBuildProcess(esbuildWebConfiger, webEntryPoints, "web"),
+      // this.startBuildProcess(esbuildImportConfiger, pureEntryPoints, "pure"),
+    ]);
+  }
+
+  private async setupTestEnvironment(
+    src: string,
+    runtime: IRunTime
+  ): Promise<{
+    reportDest: string;
+    testConfig: any;
+    testConfigResource: any;
+    portsToUse: string[];
+    testResources: string;
+  }> {
+    this.bddTestIsRunning(src);
+
+    const reportDest = `testeranto/reports/${this.projectName}/${src
+      .split(".")
+      .slice(0, -1)
+      .join(".")}/${runtime}`;
+
+    if (!fs.existsSync(reportDest)) {
+      fs.mkdirSync(reportDest, { recursive: true });
+    }
+
+    const testConfig = this.configTests().find((t) => t[0] === src);
+    if (!testConfig) {
+      console.log(
+        ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`)
+      );
+      process.exit(-1);
+    }
+
+    const testConfigResource = testConfig[2];
+
+    const portsToUse: string[] = [];
+    let testResources = "";
+
+    if (testConfigResource.ports === 0) {
+      testResources = JSON.stringify({
+        name: src,
+        ports: [],
+        fs: reportDest,
+        browserWSEndpoint: this.browser.wsEndpoint(),
+      });
+    } else if (testConfigResource.ports > 0) {
+      const openPorts = Object.entries(this.ports).filter(
+        ([, status]) => status === ""
+      );
+
+      if (openPorts.length >= testConfigResource.ports) {
+        for (let i = 0; i < testConfigResource.ports; i++) {
+          portsToUse.push(openPorts[i][0]);
+          this.ports[openPorts[i][0]] = src;
+        }
+
+        testResources = JSON.stringify({
+          scheduled: true,
+          name: src,
+          ports: portsToUse,
+          fs: reportDest,
+          browserWSEndpoint: this.browser.wsEndpoint(),
+        });
+      } else {
+        console.log(
+          ansiC.red(
+            `${runtime}: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
+          )
+        );
+        this.queue.push(src);
+        throw new Error("No ports available");
+      }
+    } else {
+      console.error("negative port makes no sense", src);
+      process.exit(-1);
+    }
+
+    return {
+      reportDest,
+      testConfig,
+      testConfigResource,
+      portsToUse,
+      testResources,
+    };
+  }
+
+  private cleanupPorts(portsToUse: string[]) {
+    portsToUse.forEach((port) => {
+      this.ports[port] = "";
+    });
+  }
+
+  private handleChildProcess(
+    child: ChildProcess,
+    logs: LogStreams,
+    reportDest: string,
+    src: string,
+    runtime: IRunTime
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      child.stdout?.on("data", (data) => {
+        logs.stdout?.write(data);
+      });
+
+      child.stderr?.on("data", (data) => {
+        logs.stderr?.write(data);
+      });
+
+      child.on("close", (code) => {
+        const exitCode = code === null ? -1 : code;
+        if (exitCode < 0) {
+          logs.writeExitCode(
+            exitCode,
+            new Error("Process crashed or was terminated")
+          );
+        } else {
+          logs.writeExitCode(exitCode);
+        }
+        logs.closeAll();
+
+        if (exitCode === 0) {
+          this.bddTestIsNowDone(src, 0);
+          statusMessagePretty(0, src, runtime);
+          resolve();
+        } else {
+          console.log(
+            ansiColors.red(
+              `${runtime} ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
+            )
+          );
+          this.bddTestIsNowDone(src, exitCode);
+          statusMessagePretty(exitCode, src, runtime);
+          reject(new Error(`Process exited with code ${exitCode}`));
+        }
+      });
+
+      child.on("error", (e) => {
+        console.log(
+          ansiC.red(
+            ansiC.inverse(
+              `${src} errored with: ${e.name}. Check error logs for more info`
+            )
+          )
+        );
+        this.bddTestIsNowDone(src, -1);
+        statusMessagePretty(-1, src, runtime);
+        reject(e);
+      });
+    });
+  }
+
+  currentBuildResolve: (() => void) | null = null;
+  currentBuildReject: ((error: any) => void) | null = null;
+
+  async startBuildProcess(
+    configer: (
+      config: IBuiltConfig,
+      entryPoints: string[],
+      testName: string
+    ) => any,
+    entryPoints: Record<string, string>,
+    runtime: string
+  ): Promise<void> {
+    const entryPointKeys = Object.keys(entryPoints);
+    if (entryPointKeys.length === 0) return;
+
+    // Store reference to 'this' for use in the plugin
+    const self = this;
+
+    // Create a custom plugin to track build processes
+    const buildProcessTrackerPlugin = {
+      name: "build-process-tracker",
+      setup(build) {
+        build.onStart(() => {
+          const processId = `build-${runtime}-${Date.now()}`;
+          const command = `esbuild ${runtime} for ${self.projectName}`;
+
+          // Create a promise that will resolve when the build completes
+          const buildPromise = new Promise<void>((resolve, reject) => {
+            // Store resolve and reject functions to call them in onEnd
+            self.currentBuildResolve = resolve;
+            self.currentBuildReject = reject;
+          });
+
+          // Add to process manager
+          if (self.addPromiseProcess) {
+            self.addPromiseProcess(
+              processId,
+              buildPromise,
+              command,
+              "build-time",
+              self.projectName,
+              runtime as any
+            );
+          }
+
+          console.log(
+            `Starting ${runtime} build for ${entryPointKeys.length} entry points`
+          );
+          // Broadcast build start event
+          if (self.webSocketBroadcastMessage) {
+            self.webSocketBroadcastMessage({
+              type: "buildEvent",
+              event: "start",
+              runtime,
+              timestamp: new Date().toISOString(),
+              entryPoints: entryPointKeys.length,
+              processId,
+            });
+          }
+        });
+
+        build.onEnd((result) => {
+          const event = {
+            type: "buildEvent",
+            event: result.errors.length > 0 ? "error" : "success",
+            runtime,
+            timestamp: new Date().toISOString(),
+            errors: result.errors.length,
+            warnings: result.warnings.length,
+          };
+
+          if (result.errors.length > 0) {
+            console.error(
+              `Build ${runtime} failed with ${result.errors.length} errors`
+            );
+            if (self.currentBuildReject) {
+              self.currentBuildReject(
+                new Error(`Build failed with ${result.errors.length} errors`)
+              );
+            }
+          } else {
+            console.log(`Build ${runtime} completed successfully`);
+            if (self.currentBuildResolve) {
+              self.currentBuildResolve();
+            }
+          }
+
+          // Broadcast build result event
+          if (self.webSocketBroadcastMessage) {
+            self.webSocketBroadcastMessage(event);
+          }
+
+          // Clear the current build handlers
+          self.currentBuildResolve = null;
+          self.currentBuildReject = null;
+        });
+      },
+    };
+
+    // Get the base config and add our tracking plugin
+    const baseConfig = configer(this.configs, entryPointKeys, this.projectName);
+    const configWithPlugin = {
+      ...baseConfig,
+      plugins: [...(baseConfig.plugins || []), buildProcessTrackerPlugin],
+    };
+
+    try {
+      // Always build first, then watch if in dev mode
+      if (this.mode === "dev") {
+        const ctx = await esbuild.context(configWithPlugin);
+        // Build once and then watch
+        await ctx.rebuild();
+        await ctx.watch();
+      } else {
+        // In once mode, just build
+        const result = await esbuild.build(configWithPlugin);
+        if (result.errors.length === 0) {
+          console.log(`Successfully built ${runtime} bundle`);
+        }
+      }
+    } catch (error) {
+      console.error(`Failed to build ${runtime}:`, error);
+      // Broadcast error event
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "buildEvent",
+          event: "error",
+          runtime,
+          timestamp: new Date().toISOString(),
+          errors: 1,
+          warnings: 0,
+          message: error.message,
+        });
+      }
+      throw error;
+    }
   }
 
   configTests: () => [string, IRunTime, { ports: number }, object][] = () => {

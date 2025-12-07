@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { default as ansiC, default as ansiColors } from "ansi-colors";
 import fs from "fs";
-import net from "net";
 import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
@@ -13,201 +12,17 @@ import {
   statusMessagePretty,
 } from "../clients/utils.js";
 import { Queue } from "../clients/utils/queue.js";
-import esbuildWebConfiger from "../esbuildConfigs/web.js";
-import esbuildNodeConfiger from "../esbuildConfigs/node.js";
-import { PM_3_WithBuild } from "./PM_3_WithBuild.js";
+
 import { getRunnables, webEvaluator } from "./utils.js";
+import { server } from "typescript";
+import { PM_2_WithTCP } from "./PM_2_WithTCP.js";
 
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-export class PM_4_Main extends PM_3_WithBuild {
+export class PM_4_Main extends PM_2_WithTCP {
   constructor(configs: any, name: string, mode: string) {
     super(configs, name, mode);
-  }
-
-  async startBuildProcesses(): Promise<void> {
-    const { nodeEntryPoints, webEntryPoints } = getRunnables(
-      this.configs,
-      this.projectName
-    );
-
-    console.log(`Starting build processes for ${this.projectName}...`);
-    console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
-    console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
-    // console.log(`  Pure entry points: ${Object.keys(pureEntryPoints).length}`);
-
-    // Start all build processes (only node, web, pure)
-    await Promise.all([
-      this.startBuildProcess(esbuildNodeConfiger, nodeEntryPoints, "node"),
-      this.startBuildProcess(esbuildWebConfiger, webEntryPoints, "web"),
-      // this.startBuildProcess(esbuildImportConfiger, pureEntryPoints, "pure"),
-    ]);
-  }
-
-  private async setupTestEnvironment(
-    src: string,
-    runtime: IRunTime
-  ): Promise<{
-    reportDest: string;
-    testConfig: any;
-    testConfigResource: any;
-    portsToUse: string[];
-    testResources: string;
-  }> {
-    this.bddTestIsRunning(src);
-
-    const reportDest = `testeranto/reports/${this.projectName}/${src
-      .split(".")
-      .slice(0, -1)
-      .join(".")}/${runtime}`;
-
-    if (!fs.existsSync(reportDest)) {
-      fs.mkdirSync(reportDest, { recursive: true });
-    }
-
-    const testConfig = this.configTests().find((t) => t[0] === src);
-    if (!testConfig) {
-      console.log(
-        ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`)
-      );
-      process.exit(-1);
-    }
-
-    const testConfigResource = testConfig[2];
-
-    const portsToUse: string[] = [];
-    let testResources = "";
-
-    if (testConfigResource.ports === 0) {
-      testResources = JSON.stringify({
-        name: src,
-        ports: [],
-        fs: reportDest,
-        browserWSEndpoint: this.browser.wsEndpoint(),
-      });
-    } else if (testConfigResource.ports > 0) {
-      const openPorts = Object.entries(this.ports).filter(
-        ([, status]) => status === ""
-      );
-
-      if (openPorts.length >= testConfigResource.ports) {
-        for (let i = 0; i < testConfigResource.ports; i++) {
-          portsToUse.push(openPorts[i][0]);
-          this.ports[openPorts[i][0]] = src;
-        }
-
-        testResources = JSON.stringify({
-          scheduled: true,
-          name: src,
-          ports: portsToUse,
-          fs: reportDest,
-          browserWSEndpoint: this.browser.wsEndpoint(),
-        });
-      } else {
-        console.log(
-          ansiC.red(
-            `${runtime}: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
-          )
-        );
-        this.queue.push(src);
-        throw new Error("No ports available");
-      }
-    } else {
-      console.error("negative port makes no sense", src);
-      process.exit(-1);
-    }
-
-    return {
-      reportDest,
-      testConfig,
-      testConfigResource,
-      portsToUse,
-      testResources,
-    };
-  }
-
-  private cleanupPorts(portsToUse: string[]) {
-    portsToUse.forEach((port) => {
-      this.ports[port] = "";
-    });
-  }
-
-  private createIpcServer(
-    onData: (data: Buffer) => void,
-    ipcfile: string
-  ): Promise<net.Server> {
-    return new Promise((resolve, reject) => {
-      const server = net.createServer((socket) => {
-        socket.on("data", onData);
-      });
-
-      server.listen(ipcfile, (err) => {
-        if (err) reject(err);
-        else resolve(server);
-      });
-
-      server.on("error", reject);
-    });
-  }
-
-  private handleChildProcess(
-    child: ChildProcess,
-    logs: LogStreams,
-    reportDest: string,
-    src: string,
-    runtime: IRunTime
-  ): Promise<void> {
-    return new Promise((resolve, reject) => {
-      child.stdout?.on("data", (data) => {
-        logs.stdout?.write(data);
-      });
-
-      child.stderr?.on("data", (data) => {
-        logs.stderr?.write(data);
-      });
-
-      child.on("close", (code) => {
-        const exitCode = code === null ? -1 : code;
-        if (exitCode < 0) {
-          logs.writeExitCode(
-            exitCode,
-            new Error("Process crashed or was terminated")
-          );
-        } else {
-          logs.writeExitCode(exitCode);
-        }
-        logs.closeAll();
-
-        if (exitCode === 0) {
-          this.bddTestIsNowDone(src, 0);
-          statusMessagePretty(0, src, runtime);
-          resolve();
-        } else {
-          console.log(
-            ansiColors.red(
-              `${runtime} ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
-            )
-          );
-          this.bddTestIsNowDone(src, exitCode);
-          statusMessagePretty(exitCode, src, runtime);
-          reject(new Error(`Process exited with code ${exitCode}`));
-        }
-      });
-
-      child.on("error", (e) => {
-        console.log(
-          ansiC.red(
-            ansiC.inverse(
-              `${src} errored with: ${e.name}. Check error logs for more info`
-            )
-          )
-        );
-        this.bddTestIsNowDone(src, -1);
-        statusMessagePretty(-1, src, runtime);
-        reject(e);
-      });
-    });
   }
 
   launchNode = async (src: string, dest: string) => {
@@ -268,7 +83,7 @@ export class PM_4_Main extends PM_3_WithBuild {
           }
         };
 
-        const server = await this.createIpcServer(onData, ipcfile);
+        // const server = await this.createIpcServer(onData, ipcfile);
         const child = spawn("node", [builtfile, testResources, ipcfile], {
           stdio: ["pipe", "pipe", "pipe", "ipc"],
         });
@@ -586,7 +401,7 @@ export class PM_4_Main extends PM_3_WithBuild {
           }
         };
 
-        const server = await this.createIpcServer(onData, ipcfile);
+        // const server = await this.createIpcServer(onData, ipcfile);
 
         try {
           await this.handleChildProcess(child, logs, reportDest, src, "python");
@@ -678,7 +493,7 @@ export class PM_4_Main extends PM_3_WithBuild {
         };
 
         // Create IPC server like in launchNode
-        const server = await this.createIpcServer(onData, ipcfile);
+        // const server = await this.createIpcServer(onData, ipcfile);
 
         // For Go tests, we need to run from the directory containing the go.mod file
         // Find the nearest go.mod file by walking up the directory tree
