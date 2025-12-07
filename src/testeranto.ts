@@ -2,7 +2,7 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { PM_Main } from "./server/main";
+import { PM_4_Main } from "./server/PM_4_Main";
 import { getRunnables } from "./server/utils";
 import { PitonoBuild } from "./clients/pitonoBuild";
 import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
@@ -85,10 +85,10 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  let pm: PM_Main | null = null;
-  // Start PM_Main immediately - it will handle the build processes internally
-  const { PM_Main } = await import("./server/main");
-  pm = new PM_Main(config, testsName, mode);
+  let pm: PM_4_Main | null = null;
+  // Start PM_4_Main immediately - it will handle the build processes internally
+  const { PM_4_Main } = await import("./server/PM_4_Main");
+  pm = new PM_4_Main(config, testsName, mode);
   await pm.start();
 
   fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
@@ -145,7 +145,7 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
 
     // Create directory if it doesn't exist
     fs.mkdirSync(path.dirname(htmlFilePath), { recursive: true });
-    
+
     // Write HTML file
     fs.writeFileSync(
       htmlFilePath,

@@ -3,7 +3,7 @@ import esbuild from "esbuild";
 import { IBuiltConfig } from "../Types.js";
 import { PM_2_WithTCP } from "./PM_2_WithTCP.js";
 
-export abstract class PM_WithBuild extends PM_2_WithTCP {
+export abstract class PM_3_WithBuild extends PM_2_WithTCP {
   currentBuildResolve: (() => void) | null = null;
   currentBuildReject: ((error: any) => void) | null = null;
 

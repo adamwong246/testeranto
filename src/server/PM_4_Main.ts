@@ -6,7 +6,7 @@ import net from "net";
 import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
-import { IFinalResults, IRunTime } from "..//lib/index.js";
+import { IFinalResults, IRunTime } from "../lib/index.js";
 import {
   createLogStreams,
   LogStreams,
@@ -14,14 +14,14 @@ import {
 } from "../clients/utils.js";
 import { Queue } from "../clients/utils/queue.js";
 import esbuildWebConfiger from "../esbuildConfigs/web.js";
-import esbuildNodeConfiger from "./../esbuildConfigs/node.js";
-import { PM_WithBuild } from "./PM_WithBuild.js";
+import esbuildNodeConfiger from "../esbuildConfigs/node.js";
+import { PM_3_WithBuild } from "./PM_3_WithBuild.js";
 import { getRunnables, webEvaluator } from "./utils.js";
 
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-export class PM_Main extends PM_WithBuild {
+export class PM_4_Main extends PM_3_WithBuild {
   constructor(configs: any, name: string, mode: string) {
     super(configs, name, mode);
   }
