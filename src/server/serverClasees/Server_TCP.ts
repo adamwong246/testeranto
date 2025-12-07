@@ -2,16 +2,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { WebSocketMessage } from "../clients/types.js";
 import { WebSocketServer, WebSocket } from "ws";
 import http from "http";
 import fs from "fs";
 import path from "path";
-import { getAllFilesRecursively } from "./getAllFilesRecursively.js";
-
-import { ApiEndpoint, ApiFilename } from "../app/api.js";
-import { FileService_methods } from "../app/FileService.js";
-import { Server_Base } from "./Server_Base.js";
+import { ApiEndpoint, ApiFilename } from "../../app/api";
+import { FileService_methods } from "../../app/FileService";
+import { WebSocketMessage } from "../../clients/types";
+import { getAllFilesRecursively } from "../getAllFilesRecursively";
+import { Server_Base } from "./Server_Base";
 
 export class Server_TCP extends Server_Base {
   protected wss: WebSocketServer;
@@ -66,12 +65,15 @@ export class Server_TCP extends Server_Base {
 
       // IPC format is no longer supported - node tests should use WebSocket messages
       if (Array.isArray(parsed)) {
-        console.error("IPC format messages are no longer supported. Node tests must use WebSocket messages with 'type' field.");
+        console.error(
+          "IPC format messages are no longer supported. Node tests must use WebSocket messages with 'type' field."
+        );
         console.error("Received array message:", parsed);
         ws.send(
           JSON.stringify({
-            error: "IPC format messages are no longer supported. Use WebSocket messages with 'type' field.",
-            received: parsed
+            error:
+              "IPC format messages are no longer supported. Use WebSocket messages with 'type' field.",
+            received: parsed,
           })
         );
         return;

@@ -9,46 +9,40 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import nodeEsbuildConfiger from "./../../esbuildConfigs/node";
+import webEsbuildConfiger from "./../../esbuildConfigs/web";
+
 import { default as ansiC, default as ansiColors } from "ansi-colors";
 import { ChildProcess, spawn } from "child_process";
 import esbuild from "esbuild";
 import fs, { watch } from "fs";
 import path from "path";
 import puppeteer, { ConsoleMessage, executablePath } from "puppeteer-core";
-import { IBuiltConfig, IRunTime, ISummary } from "../Types.js";
 import {
   createLogStreams,
   LogStreams,
-  pollForFile,
-  puppeteerConfigs,
   statusMessagePretty,
-} from "../clients/utils.js";
+  puppeteerConfigs,
+  pollForFile,
+} from "../../clients/utils";
 import {
   generatePitonoMetafile,
   writePitonoMetafile,
-} from "../clients/utils/pitonoMetafile.js";
-import esbuildNodeConfiger from "../esbuildConfigs/node.js";
-import esbuildWebConfiger from "../esbuildConfigs/web.js";
-import { IFinalResults } from "../lib/index.js";
-import { MetafileManager } from "./MetafileManager.js";
-import { PortManager } from "./PortManager.js";
-import { ProcessManager } from "./ProcessManager.js";
-import { QueueManager } from "./QueueManager.js";
-import { Server_TCP } from "./Server_TCP.js";
-import { SummaryManager } from "./SummaryManager.js";
-import { TestExecutor } from "./TestExecutor.js";
-import { checkForShutdown } from "./checkForShutdown";
-import configTests from "./configTests.js";
-import { ensureSummaryEntry } from "./ensureSummaryEntry.js";
-import { generatePromptFiles } from "./generatePromptFiles.js";
-import { lintCheck } from "./lintCheck";
-import { makePrompt } from "./makePrompt.js";
-import { processGoTestOutput } from "./processGoTestOutput.js";
-import { pythonLintCheck } from "./pythonLintCheck.js";
-import { pythonTypeCheck } from "./pythonTypeCheck.js";
-import { tscCheck } from "./tscCheck";
-import { getRunnables, lintPather, tscPather, webEvaluator } from "./utils.js";
-import { Server_DockerCompose } from "./Server_DockerCompose.js";
+} from "../../clients/utils/pitonoMetafile";
+import { IFinalResults } from "../../lib";
+import { ISummary, IBuiltConfig, IRunTime } from "../../Types";
+import { checkForShutdown } from "../checkForShutdown";
+import configTests from "../configTests";
+import { ensureSummaryEntry } from "../ensureSummaryEntry";
+import { generatePromptFiles } from "../generatePromptFiles";
+import { lintCheck } from "../lintCheck";
+import { processGoTestOutput } from "../processGoTestOutput";
+import { pythonLintCheck } from "../pythonLintCheck";
+import { pythonTypeCheck } from "../pythonTypeCheck";
+import { TestExecutor } from "../TestExecutor";
+import { tscCheck } from "../tscCheck";
+import { getRunnables, tscPather, lintPather, webEvaluator } from "../utils";
+import { Server_DockerCompose } from "./Server_DockerCompose";
 
 export class Server extends Server_DockerCompose {
   webMetafileWatcher: fs.FSWatcher;
@@ -133,8 +127,8 @@ export class Server extends Server_DockerCompose {
 
     // Start all build processes (only node, web, pure)
     await Promise.all([
-      this.startBuildProcess(esbuildNodeConfiger, nodeEntryPoints, "node"),
-      this.startBuildProcess(esbuildWebConfiger, webEntryPoints, "web"),
+      this.startBuildProcess(nodeEsbuildConfiger, nodeEntryPoints, "node"),
+      this.startBuildProcess(webEsbuildConfiger, webEntryPoints, "web"),
       // this.startBuildProcess(esbuildImportConfiger, pureEntryPoints, "pure"),
     ]);
   }

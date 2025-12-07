@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BuildOptions } from "esbuild";
-import { polyfillNode } from "esbuild-plugin-polyfill-node";
 import path from "path";
 import { ITestconfig } from "../lib/index.js";
 import featuresPlugin from "./featuresPlugin.js";
@@ -11,7 +10,8 @@ import rebuildPlugin from "./rebuildPlugin.js";
 export default (
   config: ITestconfig,
   entryPoints: string[],
-  testName: string
+  testName: string,
+  bundlesDir?: string
 ): BuildOptions => {
   const { inputFilesPluginFactory, register } = inputFilesPlugin(
     "web",
@@ -27,7 +27,7 @@ export default (
     },
 
     treeShaking: true,
-    outdir: `testeranto/bundles/web/${testName}`,
+    outdir: bundlesDir || `testeranto/bundles/web/${testName}`,
 
     alias: {
       react: path.resolve("./node_modules/react"),
@@ -64,15 +64,6 @@ export default (
     plugins: [
       featuresPlugin,
       inputFilesPluginFactory,
-
-      polyfillNode({
-        // You might need to configure specific Node.js modules you want to polyfill
-        // Example:
-        // modules: {
-        //   'util': true,
-        //   'fs': false,
-        // }
-      }),
 
       rebuildPlugin("web"),
 

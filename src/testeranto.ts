@@ -7,7 +7,7 @@ import { PitonoBuild } from "./clients/pitonoBuild";
 import { AppHtml } from "./clients/utils/buildTemplates";
 import { setupFileSystem } from "./server/fileSystemSetup";
 import { setupKeypressHandling } from "./server/keypressHandler";
-import { Server } from "./server/Server";
+import { Server } from "./server/serverClasees/Server";
 import { getRunnables } from "./server/utils";
 import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
 import webHtmlFrame from "./web.html";

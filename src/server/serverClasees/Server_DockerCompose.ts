@@ -9,14 +9,13 @@ import {
 } from "docker-compose";
 import path from "path";
 import fs from "fs";
-import { IBuiltConfig, IRunTime } from "../Types";
+import { IBuiltConfig, IRunTime } from "../../Types";
+import { setupDockerCompose } from "../dockerComposeGenerator";
+import { setupDockerfileForBuildGolang } from "../setupDockerfileForBuildGolang";
+import { setupDockerfileForBuildNode } from "../setupDockerfileForBuildNode";
+import { setupDockerfileForBuildPython } from "../setupDockerfileForBuildPython";
+import { setupDockerfileForBuildWeb } from "../setupDockerfileForBuildWeb";
 import { Server_TCP } from "./Server_TCP";
-import { DockerComposeOptions } from "./types";
-import { setupDockerCompose } from "./dockerComposeGenerator";
-import { setupDockerfileForBuildNode } from "./setupDockerfileForBuildNode";
-import { setupDockerfileForBuildWeb } from "./setupDockerfileForBuildWeb";
-import { setupDockerfileForBuildGolang } from "./setupDockerfileForBuildGolang";
-import { setupDockerfileForBuildPython } from "./setupDockerfileForBuildPython";
 
 export class Server_DockerCompose extends Server_TCP {
   private cwd: string;
