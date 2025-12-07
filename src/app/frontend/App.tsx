@@ -11,16 +11,16 @@ import { githubAuthService } from "./GitHubAuthService";
 import { AuthCallbackPage } from "./components/stateful/AuthCallbackPage";
 import { ProjectPage } from "./components/stateful/ProjectPage";
 import { ProjectsPage } from "./components/stateful/ProjectsPage";
-import { FluaPage } from "./flua/FluaPage";
+
 import { TestPage } from "./testPage/TestPage";
 import { DesignEditorPage } from "./components/DesignEditorPage";
 import { TextEditorPage } from "./components/stateful/TextEditorPage";
 import { ProcessManagerPage } from "./components/stateful/ProcessManagerPage";
 import { Settings } from "./components/pure/Settings";
-import { GitIntegrationPage } from "./components/stateful/GitIntegrationPage";
-// import { FileServiceContext } from "./useFileService";
+
+
 import { useFs } from "./useFs";
-import { FileService } from "../FileService";
+
 
 interface TutorialModeContextType {
   tutorialMode: boolean;
@@ -151,8 +151,6 @@ export const App = () => {
           <AppFrame>
             <Routes>
 
-              <Route path="/flua" element={<FluaPage />} />
-
               <Route path="/projects" element={<ProjectsPage />} />
               <Route
                 path="/projects/:projectName"
@@ -191,16 +189,7 @@ export const App = () => {
                 </>
               ) : null}
               <Route path="/settings" element={<Settings />} />
-              <Route
-                path="/git"
-                element={
-                  isAuthenticated ? <GitIntegrationPage /> : <SignIn />
-                }
-              />
-              {/* <Route path="/svg-editor" element={isAuthenticated ? <SVGEditorPage /> : <SignIn />} /> */}
-              {/* <Route path="/drato" element={isAuthenticated ? <DratoPage /> : <SignIn />} /> */}
-              {/* <Route path="/grafeo" element={isAuthenticated ? <GrafeoPage /> : <SignIn />} /> */}
-              {/* <Route path="/skribo" element={isAuthenticated ? <SkriboPage /> : <SignIn />} /> */}
+
 
             </Routes>
           </AppFrame>
