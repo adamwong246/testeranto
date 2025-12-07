@@ -670,7 +670,7 @@ export abstract class PM_1_WithProcesses extends PM_0 {
         writePitonoMetafile(this.projectName, metafile);
       }
 
-      this.onBuildDone();
+      // this.onBuildDone();
     } catch (error) {
       console.error("Build processes failed:", error);
       return;

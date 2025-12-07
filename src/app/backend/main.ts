@@ -7,7 +7,6 @@ import { ChildProcess, spawn } from "node:child_process";
 import path from "node:path";
 import { ConsoleMessage } from "puppeteer-core";
 import esbuildNodeConfiger from "../../esbuildConfigs/node.js";
-import esbuildImportConfiger from "../../esbuildConfigs/pure.js";
 import esbuildWebConfiger from "../../esbuildConfigs/web.js";
 import { IFinalResults, IRunTime } from "../../lib/index.js";
 import {
@@ -16,14 +15,15 @@ import {
   statusMessagePretty,
 } from "../../PM/utils.js";
 import { Queue } from "../../utils/queue.js";
-import { PM_WithHelpo } from "./PM_WithHelpo.js";
+import { PM_WithGit } from "./PM_WithGit.js";
 import { getRunnables, webEvaluator } from "./utils.js";
+import { PM_WithEslintAndTsc } from "./PM_WithEslintAndTsc.js";
 // import { evaluationString } from "puppeteer-core/lib/esm/puppeteer/index-browser.js";
 
 const files: Record<string, Set<string>> = {};
 const screenshots: Record<string, Promise<Uint8Array>[]> = {};
 
-export class PM_Main extends PM_WithHelpo {
+export class PM_Main extends PM_WithEslintAndTsc {
   constructor(configs: any, name: string, mode: string) {
     super(configs, name, mode);
   }
