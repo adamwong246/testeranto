@@ -1,4 +1,4 @@
-import { BASE_DOCKERFILE } from "./BASE_DOCKERFILE";
+import { BASE_DOCKERFILE } from "./constants/BASE_DOCKERFILE";
 
 export const setupDockerfileForBuildNode = (config) => {
   return `${BASE_DOCKERFILE}

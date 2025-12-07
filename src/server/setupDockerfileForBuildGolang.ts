@@ -1,4 +1,4 @@
-import { COMMON_PACKAGE_INSTALL } from "./COMMON_PACKAGE_INSTALL";
+import { COMMON_PACKAGE_INSTALL } from "./constants/COMMON_PACKAGE_INSTALL";
 
 export const setupDockerfileForBuildGolang = (config: string): string => {
   const goSpecificPackages = `\\

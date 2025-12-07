@@ -1,5 +1,5 @@
-import { BASE_DOCKERFILE } from "./BASE_DOCKERFILE";
-import { COMMON_PACKAGE_INSTALL } from "./COMMON_PACKAGE_INSTALL";
+import { BASE_DOCKERFILE } from "./constants/BASE_DOCKERFILE";
+import { COMMON_PACKAGE_INSTALL } from "./constants/COMMON_PACKAGE_INSTALL";
 
 export const setupDockerfileForBuildPython = (config: string): string => {
   return `${BASE_DOCKERFILE}
