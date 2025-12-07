@@ -13,7 +13,7 @@ import { PM_1_WithProcesses } from "./PM_1_WithProcesses.js";
 import { ApiEndpoint, ApiFilename } from "../app/api.js";
 import { FileService_methods } from "../app/FileService.js";
 
-export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
+export class PM_2_WithTCP extends PM_1_WithProcesses {
   protected wss: WebSocketServer;
   protected httpServer: http.Server;
 
@@ -55,34 +55,36 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
   protected websocket(data: any, ws: WebSocket) {
     try {
       const rawData = data.toString();
-      console.log('WebSocket received raw data:', rawData);
+      console.log("WebSocket received raw data:", rawData);
       const parsed = JSON.parse(rawData);
-      
+
       // Check if it's an array (old IPC format)
       if (Array.isArray(parsed)) {
         const [command, ...args] = parsed;
         const key = args.pop(); // Last element is the key
-        console.log('Old IPC format - command:', command, 'key:', key);
-        
+        console.log("Old IPC format - command:", command, "key:", key);
+
         // Handle the command
         // For now, just echo back with the key for testing
         // In a real implementation, we would process the command
-        ws.send(JSON.stringify({
-          key: key,
-          payload: `Processed command: ${command}`
-        }));
+        ws.send(
+          JSON.stringify({
+            key: key,
+            payload: `Processed command: ${command}`,
+          })
+        );
         return;
       }
-      
+
       // Otherwise, treat as WebSocketMessage with type field
       const wsm: WebSocketMessage = parsed;
-      console.log('WebSocket message type:', wsm.type, 'key:', wsm.key);
+      console.log("WebSocket message type:", wsm.type, "key:", wsm.key);
 
       // Check if it's a FileService method
       let handled = false;
       FileService_methods.forEach((fsm) => {
         if (wsm.type === fsm) {
-          console.log('Handling as FileService method:', fsm);
+          console.log("Handling as FileService method:", fsm);
           this[fsm](wsm, ws);
           handled = true;
         }
@@ -92,46 +94,56 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
       // Handle commands from PM_Node
       // These have a type field that matches method names
       // They also have a key field for responses
-      if (wsm.type && typeof this[wsm.type] === 'function') {
+      if (wsm.type && typeof this[wsm.type] === "function") {
         console.log(`Executing command ${wsm.type} with data:`, wsm.data);
         // Extract data and key
         const { data: commandData, key } = wsm;
         const args = Array.isArray(commandData) ? commandData : [commandData];
         console.log(`Command ${wsm.type} args:`, args);
-        
+
         try {
           // Call the method
           const result = this[wsm.type](...args);
           console.log(`Command ${wsm.type} returned:`, result);
           // Handle promise if needed
           if (result instanceof Promise) {
-            result.then((resolvedResult) => {
-              console.log(`Command ${wsm.type} resolved:`, resolvedResult);
-              ws.send(JSON.stringify({
-                key: key,
-                payload: resolvedResult
-              }));
-            }).catch((error) => {
-              console.error(`Error executing command ${wsm.type}:`, error);
-              ws.send(JSON.stringify({
-                key: key,
-                payload: null,
-                error: error?.toString()
-              }));
-            });
+            result
+              .then((resolvedResult) => {
+                console.log(`Command ${wsm.type} resolved:`, resolvedResult);
+                ws.send(
+                  JSON.stringify({
+                    key: key,
+                    payload: resolvedResult,
+                  })
+                );
+              })
+              .catch((error) => {
+                console.error(`Error executing command ${wsm.type}:`, error);
+                ws.send(
+                  JSON.stringify({
+                    key: key,
+                    payload: null,
+                    error: error?.toString(),
+                  })
+                );
+              });
           } else {
-            ws.send(JSON.stringify({
-              key: key,
-              payload: result
-            }));
+            ws.send(
+              JSON.stringify({
+                key: key,
+                payload: result,
+              })
+            );
           }
         } catch (error) {
           console.error(`Error executing command ${wsm.type}:`, error);
-          ws.send(JSON.stringify({
-            key: key,
-            payload: null,
-            error: error?.toString()
-          }));
+          ws.send(
+            JSON.stringify({
+              key: key,
+              payload: null,
+              error: error?.toString(),
+            })
+          );
         }
         return;
       }
@@ -233,7 +245,7 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
         }
       } else {
         // If we get here, the message wasn't handled
-        console.warn('Unhandled WebSocket message type:', wsm.type);
+        console.warn("Unhandled WebSocket message type:", wsm.type);
       }
     } catch (error) {
       console.error("Error handling WebSocket message:", error);
@@ -249,11 +261,17 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
     console.log(req.method, req.url);
 
     // Serve bundled web test files
-    if (req.url?.startsWith('/bundles/web/')) {
+    if (req.url?.startsWith("/bundles/web/")) {
       // Remove the leading /bundles/web/ to get the relative path
-      const relativePath = req.url.replace(/^\/bundles\/web\//, '');
+      const relativePath = req.url.replace(/^\/bundles\/web\//, "");
       // The files are in testeranto/bundles/web/ relative to cwd
-      const filePath = path.join(process.cwd(), 'testeranto', 'bundles', 'web', relativePath);
+      const filePath = path.join(
+        process.cwd(),
+        "testeranto",
+        "bundles",
+        "web",
+        relativePath
+      );
       fs.readFile(filePath, (err, data) => {
         if (err) {
           console.error(`Error serving ${req.url}:`, err.message);
@@ -262,12 +280,13 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
           return;
         }
         // Determine content type
-        let contentType = 'text/plain';
-        if (req.url?.endsWith('.html')) contentType = 'text/html';
-        else if (req.url?.endsWith('.js') || req.url?.endsWith('.mjs')) contentType = 'application/javascript';
-        else if (req.url?.endsWith('.css')) contentType = 'text/css';
-        else if (req.url?.endsWith('.json')) contentType = 'application/json';
-        
+        let contentType = "text/plain";
+        if (req.url?.endsWith(".html")) contentType = "text/html";
+        else if (req.url?.endsWith(".js") || req.url?.endsWith(".mjs"))
+          contentType = "application/javascript";
+        else if (req.url?.endsWith(".css")) contentType = "text/css";
+        else if (req.url?.endsWith(".json")) contentType = "application/json";
+
         res.writeHead(200, { "Content-Type": contentType });
         res.end(data);
       });
@@ -387,24 +406,28 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
   }
 
   // Command handlers for PM_Node
-  writeFileSync(filepath: string, contents: string, testName?: string): boolean {
-    console.log('PM_2_WithTCP.writeFileSync called:', {
+  writeFileSync(
+    filepath: string,
+    contents: string,
+    testName?: string
+  ): boolean {
+    console.log("PM_2_WithTCP.writeFileSync called:", {
       filepath,
       testName,
       contentsLength: contents.length,
       filepathExists: fs.existsSync(filepath),
-      dir: path.dirname(filepath)
+      dir: path.dirname(filepath),
     });
     // The filepath already includes the full path from the client (with testResourceConfiguration.fs prepended)
     // Ensure the directory exists
     const dir = path.dirname(filepath);
     if (!fs.existsSync(dir)) {
-      console.log('Creating directory:', dir);
+      console.log("Creating directory:", dir);
       fs.mkdirSync(dir, { recursive: true });
     }
-    console.log('Writing file:', filepath);
+    console.log("Writing file:", filepath);
     fs.writeFileSync(filepath, contents);
-    console.log('File written successfully');
+    console.log("File written successfully");
     return true;
   }
 
@@ -420,7 +443,7 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
 
   readFile(filepath: string): string {
     const fullPath = path.join(process.cwd(), filepath);
-    return fs.readFileSync(fullPath, 'utf-8');
+    return fs.readFileSync(fullPath, "utf-8");
   }
 
   createWriteStream(filepath: string, testName?: string): string {
@@ -432,7 +455,7 @@ export abstract class PM_2_WithTCP extends PM_1_WithProcesses {
     }
     const stream = fs.createWriteStream(filepath);
     // For now, we don't track the stream, so return a dummy ID
-    return 'stream_' + Math.random().toString(36).substr(2, 9);
+    return "stream_" + Math.random().toString(36).substr(2, 9);
   }
 
   end(uid: string): boolean {
