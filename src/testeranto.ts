@@ -2,14 +2,15 @@ import ansiC from "ansi-colors";
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-// import { Server } from "./server/Server";
-import { getRunnables } from "./server/utils";
+import { GolingvuBuild } from "./clients/golingvuBuild";
 import { PitonoBuild } from "./clients/pitonoBuild";
-import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
-import { Server } from "./server/Server";
-import webHtmlFrame from "./web.html";
 import { AppHtml } from "./clients/utils/buildTemplates";
-const { GolingvuBuild } = await import("./clients/golingvuBuild");
+import { setupFileSystem } from "./server/fileSystemSetup";
+import { setupKeypressHandling } from "./server/keypressHandler";
+import { Server } from "./server/Server";
+import { getRunnables } from "./server/utils";
+import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
+import webHtmlFrame from "./web.html";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -76,12 +77,18 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   console.log(ansiC.inverse("Press 'q' to initiate a graceful shutdown."));
   console.log(ansiC.inverse("Press 'x' to quit forcefully."));
 
-  process.stdin.on("keypress", (str, key) => {
-    if (key.name === "x") {
-      console.log(ansiC.inverse("Shutting down forcefully..."));
-      process.exit(-1);
-    }
-  });
+  console.log(ansiC.inverse("Press 'q' to initiate a graceful shutdown."));
+  console.log(ansiC.inverse("Press 'x' to quit forcefully."));
+
+  setupKeypressHandling();
+  setupFileSystem(config, testsName);
+
+  // process.stdin.on("keypress", (str, key) => {
+  //   if (key.name === "x") {
+  //     console.log(ansiC.inverse("Shutting down forcefully..."));
+  //     process.exit(-1);
+  //   }
+  // });
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
 

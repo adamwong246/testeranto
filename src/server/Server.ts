@@ -27,7 +27,6 @@ import {
   generatePitonoMetafile,
   writePitonoMetafile,
 } from "../clients/utils/pitonoMetafile.js";
-import { Queue } from "../clients/utils/queue.js";
 import esbuildNodeConfiger from "../esbuildConfigs/node.js";
 import esbuildWebConfiger from "../esbuildConfigs/web.js";
 import { IFinalResults } from "../lib/index.js";
@@ -37,31 +36,32 @@ import { ProcessManager } from "./ProcessManager.js";
 import { QueueManager } from "./QueueManager.js";
 import { Server_TCP } from "./Server_TCP.js";
 import { SummaryManager } from "./SummaryManager.js";
+import { TestExecutor } from "./TestExecutor.js";
 import { checkForShutdown } from "./checkForShutdown";
 import configTests from "./configTests.js";
 import { ensureSummaryEntry } from "./ensureSummaryEntry.js";
+import { generatePromptFiles } from "./generatePromptFiles.js";
 import { lintCheck } from "./lintCheck";
 import { makePrompt } from "./makePrompt.js";
+import { processGoTestOutput } from "./processGoTestOutput.js";
 import { pythonLintCheck } from "./pythonLintCheck.js";
 import { pythonTypeCheck } from "./pythonTypeCheck.js";
 import { tscCheck } from "./tscCheck";
 import { getRunnables, lintPather, tscPather, webEvaluator } from "./utils.js";
-import { generatePromptFiles } from "./generatePromptFiles.js";
-import { processGoTestOutput } from "./processGoTestOutput.js";
-import { TestExecutor } from "./TestExecutor.js";
+import { Server_DockerCompose } from "./Server_DockerCompose.js";
 
-export class Server extends Server_TCP {
+export class Server extends Server_DockerCompose {
   webMetafileWatcher: fs.FSWatcher;
   nodeMetafileWatcher: fs.FSWatcher;
   importMetafileWatcher: fs.FSWatcher;
   pitonoMetafileWatcher: fs.FSWatcher;
   golangMetafileWatcher: fs.FSWatcher;
 
-  queueManager: QueueManager;
-  portManager: PortManager;
-  processManager: ProcessManager = new ProcessManager();
-  metafileManager: MetafileManager = new MetafileManager();
-  summaryManager: SummaryManager = new SummaryManager();
+  // queueManager: QueueManager;
+  // portManager: PortManager;
+  // processManager: ProcessManager = new ProcessManager();
+  // metafileManager: MetafileManager = new MetafileManager();
+  // summaryManager: SummaryManager = new SummaryManager();
 
   summary: ISummary = {};
   ports: Record<number, string>;
@@ -70,22 +70,51 @@ export class Server extends Server_TCP {
   clients: Set<any> = new Set();
   connected: boolean;
 
+  testName: string;
+  private composeDir: string;
+  private composeFile: string;
+  // private logger: {
+  //   log: (...args: any[]) => void;
+  //   error: (...args: any[]) => void;
+  //   warn: (...args: any[]) => void;
+  //   info: (...args: any[]) => void;
+  // };
+
+  // private tcpServer: TcpServer;
+  // private webSocketServer: WebSocketServerManager;
+  // private fileSystem: FileSystem;
+  // private dockerCompose: DockerCompose;
+  // private browserManager: BrowserManager;
+  // private testServiceManager: TestServiceManager;
+  // private buildServiceMonitor: BuildServiceMonitor;
+  // private tcpPort: number = 0;
+  // private webSocketPort: number = 0;
+
   private isProcessingQueue = false;
 
-  constructor(configs: IBuiltConfig, name: string, mode: string) {
-    super(configs, name, mode);
+  constructor(configs: IBuiltConfig, testName: string, mode: string) {
+    super(process.cwd(), configs, testName, mode);
 
     this.launchers = {};
-    this.portManager = new PortManager(this.configs.ports);
-    this.queueManager = new QueueManager();
-    this.summaryManager = new SummaryManager();
+    // this.portManager = new PortManager(this.configs.ports);
+    // this.queueManager = new QueueManager();
+    // this.summaryManager = new SummaryManager();
 
-    this.configTests().forEach(([t, rt, tr, sidecars]) => {
-      this.summaryManager.ensureSummaryEntry(t);
-      // sidecars.forEach(([sidecarName]) => {
-      //   this.summaryManager.ensureSummaryEntry(sidecarName, true);
-      // });
-    });
+    // this.configTests().forEach(([t, rt, tr, sidecars]) => {
+    //   this.summaryManager.ensureSummaryEntry(t);
+    //   // sidecars.forEach(([sidecarName]) => {
+    //   //   this.summaryManager.ensureSummaryEntry(sidecarName, true);
+    //   // });
+    // });
+
+    this.testName = testName;
+    this.composeDir = process.cwd();
+    this.composeFile = path.join(
+      this.composeDir,
+      "testeranto",
+      "bundles",
+      `${this.testName}-docker-compose.yml`
+    );
   }
 
   currentBuildResolve: (() => void) | null = null;
@@ -413,67 +442,67 @@ export class Server extends Server_TCP {
     });
   }
 
-  addPromiseProcess(
-    processId: string,
-    promise: Promise<any>,
-    command: string,
-    category: "aider" | "bdd-test" | "build-time" | "other" = "other",
-    testName: string,
-    platform: IRunTime,
-    onResolve?: (result: any) => void,
-    onReject?: (error: any) => void
-  ) {
-    const id = this.processManager.addPromiseProcess(
-      processId,
-      promise,
-      command,
-      category,
-      testName,
-      platform,
-      onResolve,
-      onReject
-    );
+  // addPromiseProcess(
+  //   processId: string,
+  //   promise: Promise<any>,
+  //   command: string,
+  //   category: "aider" | "bdd-test" | "build-time" | "other" = "other",
+  //   testName: string,
+  //   platform: IRunTime,
+  //   onResolve?: (result: any) => void,
+  //   onReject?: (error: any) => void
+  // ) {
+  //   const id = this.addPromiseProcess(
+  //     processId,
+  //     promise,
+  //     command,
+  //     category,
+  //     testName,
+  //     platform,
+  //     onResolve,
+  //     onReject
+  //   );
 
-    const startMessage = `Starting: ${command}`;
-    this.webSocketBroadcastMessage({
-      type: "processStarted",
-      processId: id,
-      command,
-      timestamp: new Date().toISOString(),
-      logs: [startMessage],
-    });
+  //   const startMessage = `Starting: ${command}`;
+  //   this.webSocketBroadcastMessage({
+  //     type: "processStarted",
+  //     processId: id,
+  //     command,
+  //     timestamp: new Date().toISOString(),
+  //     logs: [startMessage],
+  //   });
 
-    promise
-      .then((result) => {
-        const successMessage = `Completed successfully with result: ${JSON.stringify(
-          result
-        )}`;
-        this.webSocketBroadcastMessage({
-          type: "processExited",
-          processId: id,
-          exitCode: 0,
-          timestamp: new Date().toISOString(),
-          logs: [successMessage],
-        });
-      })
-      .catch((error) => {
-        const errorMessage = `Failed with error: ${error.message}`;
-        this.webSocketBroadcastMessage({
-          type: "processError",
-          processId: id,
-          error: error.message,
-          timestamp: new Date().toISOString(),
-          logs: [errorMessage],
-        });
-      });
+  //   promise
+  //     .then((result) => {
+  //       const successMessage = `Completed successfully with result: ${JSON.stringify(
+  //         result
+  //       )}`;
+  //       this.webSocketBroadcastMessage({
+  //         type: "processExited",
+  //         processId: id,
+  //         exitCode: 0,
+  //         timestamp: new Date().toISOString(),
+  //         logs: [successMessage],
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       const errorMessage = `Failed with error: ${error.message}`;
+  //       this.webSocketBroadcastMessage({
+  //         type: "processError",
+  //         processId: id,
+  //         error: error.message,
+  //         timestamp: new Date().toISOString(),
+  //         logs: [errorMessage],
+  //       });
+  //     });
 
-    return id;
-  }
+  //   return id;
+  // }
 
   getProcessesByCategory(
     category: "aider" | "bdd-test" | "build-time" | "other"
   ) {
-    return this.processManager.getProcessesByCategory(category);
+    return this.getProcessesByCategory(category);
   }
 
   getBDDTestProcesses() {
@@ -484,55 +513,63 @@ export class Server extends Server_TCP {
     return this.getProcessesByCategory("build-time");
   }
 
-  getProcessesByTestName(testName: string) {
-    return this.processManager.getProcessesByTestName(testName);
-  }
+  // getProcessesByTestName(testName: string) {
+  //   return this.processManager.getProcessesByTestName(testName);
+  // }
 
-  getProcessesByPlatform(platform: IRunTime) {
-    return this.processManager.getProcessesByPlatform(platform);
-  }
+  // getProcessesByPlatform(platform: IRunTime) {
+  //   return this.processManager.getProcessesByPlatform(platform);
+  // }
 
-  async metafileOutputs(platform: IRunTime) {
-    // Create no-op check functions since checks will be run as part of test execution
-    const noopCheck = async ({ entrypoint, addableFiles, platform: p }: {
-      entrypoint: string;
-      addableFiles: string[];
-      platform: IRunTime;
-    }) => {
-      // Do nothing - checks will be run via TestExecutor
-      return Promise.resolve();
-    };
+  // async metafileOutputs(platform: IRunTime) {
+  //   // Create no-op check functions since checks will be run as part of test execution
+  //   const noopCheck = async ({
+  //     entrypoint,
+  //     addableFiles,
+  //     platform: p,
+  //   }: {
+  //     entrypoint: string;
+  //     addableFiles: string[];
+  //     platform: IRunTime;
+  //   }) => {
+  //     // Do nothing - checks will be run via TestExecutor
+  //     return Promise.resolve();
+  //   };
 
-    const noopPythonCheck = async (entrypoint: string, addableFiles: string[]) => {
-      // Do nothing - checks will be run via TestExecutor
-      return Promise.resolve();
-    };
+  //   const noopPythonCheck = async (
+  //     entrypoint: string,
+  //     addableFiles: string[]
+  //   ) => {
+  //     // Do nothing - checks will be run via TestExecutor
+  //     return Promise.resolve();
+  //   };
 
-    await this.metafileManager.processMetafile(
-      platform,
-      this.projectName,
-      this.configTests.bind(this),
-      noopCheck,
-      noopCheck,
-      noopPythonCheck,
-      noopPythonCheck,
-      (summary, projectName, entrypoint, addableFiles, platform) => {
-        // Ensure the summary entry exists before calling makePrompt
-        if (!this.summary[entrypoint]) {
-          this.ensureSummaryEntry(entrypoint);
-        }
-        makePrompt(
-          this.summary,
-          projectName,
-          entrypoint,
-          addableFiles,
-          platform
-        );
-      },
-      this.findTestNameByEntrypoint.bind(this),
-      (testName, platform, addableFiles) => this.addToQueue(testName, platform, addableFiles)
-    );
-  }
+  //   await this.metafileManager.processMetafile(
+  //     platform,
+  //     this.projectName,
+  //     this.configTests.bind(this),
+  //     noopCheck,
+  //     noopCheck,
+  //     noopPythonCheck,
+  //     noopPythonCheck,
+  //     (summary, projectName, entrypoint, addableFiles, platform) => {
+  //       // Ensure the summary entry exists before calling makePrompt
+  //       if (!this.summary[entrypoint]) {
+  //         this.ensureSummaryEntry(entrypoint);
+  //       }
+  //       makePrompt(
+  //         this.summary,
+  //         projectName,
+  //         entrypoint,
+  //         addableFiles,
+  //         platform
+  //       );
+  //     },
+  //     this.findTestNameByEntrypoint.bind(this),
+  //     (testName, platform, addableFiles) =>
+  //       this.addToQueue(testName, platform, addableFiles)
+  //   );
+  // }
 
   private findTestNameByEntrypoint(
     entrypoint: string,
@@ -646,7 +683,7 @@ export class Server extends Server_TCP {
         }
 
         // Add to the processing queue
-        this.addToQueue(entryPoint, runtime, undefined);
+        // this.addToQueue(entryPoint, runtime, undefined);
       });
     });
 
@@ -702,14 +739,14 @@ export class Server extends Server_TCP {
               ansiC.yellow(ansiC.inverse(`< ${e} ${filename} (${runtime})`))
             );
             try {
-              await this.metafileOutputs(runtime as IRunTime);
+              // await this.metafileOutputs(runtime as IRunTime);
               // After processing metafile changes, check the queue to run tests
               console.log(
                 ansiC.blue(
                   `Metafile processed, checking queue for tests to run`
                 )
               );
-              this.checkQueue();
+              // this.checkQueue();
             } catch (error) {
               console.error(`Error processing metafile changes:`, error);
             }
@@ -736,7 +773,7 @@ export class Server extends Server_TCP {
         }
 
         // Read the metafile immediately
-        await this.metafileOutputs(runtime as IRunTime);
+        // await this.metafileOutputs(runtime as IRunTime);
       } catch (error) {
         console.error(`Error setting up watcher for ${runtime}:`, error);
       }
@@ -774,17 +811,17 @@ export class Server extends Server_TCP {
     this.checkForShutdown();
   }
 
-  addToQueue(src: string, runtime: IRunTime, addableFiles?: string[]) {
-    this.queueManager.addToQueue(
-      src,
-      runtime,
-      this.configs,
-      this.projectName,
-      this.cleanupTestProcesses.bind(this),
-      this.checkQueue.bind(this),
-      addableFiles
-    );
-  }
+  // addToQueue(src: string, runtime: IRunTime, addableFiles?: string[]) {
+  //   this.addToQueue(
+  //     src,
+  //     runtime,
+  //     this.configs,
+  //     this.projectName,
+  //     this.cleanupTestProcesses.bind(this),
+  //     this.checkQueue.bind(this),
+  //     addableFiles
+  //   );
+  // }
 
   private cleanupTestProcesses(testName: string) {
     const processesToCleanup =
@@ -804,111 +841,111 @@ export class Server extends Server_TCP {
 
   private testExecutor: TestExecutor | null = null;
 
-  async checkQueue() {
-    // If already processing the queue, wait
-    if (this.isProcessingQueue) {
-      return;
-    }
+  // async checkQueue() {
+  //   // If already processing the queue, wait
+  //   if (this.isProcessingQueue) {
+  //     return;
+  //   }
 
-    this.isProcessingQueue = true;
+  //   this.isProcessingQueue = true;
 
-    try {
-      // Process one item at a time
-      const queueItem = this.queueManager.pop();
-      if (!queueItem) {
-        this.isProcessingQueue = false;
-        if (this.queueManager.length === 0) {
-          console.log(ansiC.inverse(`The queue is empty`));
-        }
-        return;
-      }
+  //   try {
+  //     // Process one item at a time
+  //     const queueItem = this.queueManager.pop();
+  //     if (!queueItem) {
+  //       this.isProcessingQueue = false;
+  //       if (this.queueManager.length === 0) {
+  //         console.log(ansiC.inverse(`The queue is empty`));
+  //       }
+  //       return;
+  //     }
 
-      const { testName: x, runtime, addableFiles } = queueItem;
+  //     const { testName: x, runtime, addableFiles } = queueItem;
 
-      // Check if this test is already running (shouldn't happen with our logic)
-      if (this.processManager.isTestRunning(x)) {
-        console.log(
-          ansiC.yellow(
-            `Skipping ${x} (${runtime}) - already running, putting back in queue`
-          )
-        );
-        // Put it back at the end of the queue
-        this.queueManager.addToQueue(
-          x,
-          runtime,
-          this.configs,
-          this.projectName,
-          this.cleanupTestProcesses.bind(this),
-          () => {} // Don't trigger checkQueue here
-        );
-        this.isProcessingQueue = false;
-        // Try again after a delay
-        setTimeout(() => this.checkQueue(), 1000);
-        return;
-      }
+  //     // Check if this test is already running (shouldn't happen with our logic)
+  //     if (this.processManager.isTestRunning(x)) {
+  //       console.log(
+  //         ansiC.yellow(
+  //           `Skipping ${x} (${runtime}) - already running, putting back in queue`
+  //         )
+  //       );
+  //       // Put it back at the end of the queue
+  //       this.queueManager.addToQueue(
+  //         x,
+  //         runtime,
+  //         this.configs,
+  //         this.projectName,
+  //         this.cleanupTestProcesses.bind(this),
+  //         () => {} // Don't trigger checkQueue here
+  //       );
+  //       this.isProcessingQueue = false;
+  //       // Try again after a delay
+  //       setTimeout(() => this.checkQueue(), 1000);
+  //       return;
+  //     }
 
-      // Find the test configuration that matches both name AND runtime
-      const test = this.configTests().find(
-        (t) => t[0] === x && t[1] === runtime
-      );
-      if (!test) {
-        console.error(
-          `test is undefined ${x} (${runtime}), ${JSON.stringify(
-            this.configTests(),
-            null,
-            2
-          )}`
-        );
-        this.isProcessingQueue = false;
-        // Try the next item
-        setTimeout(() => this.checkQueue(), 100);
-        return;
-      }
+  //     // Find the test configuration that matches both name AND runtime
+  //     const test = this.configTests().find(
+  //       (t) => t[0] === x && t[1] === runtime
+  //     );
+  //     if (!test) {
+  //       console.error(
+  //         `test is undefined ${x} (${runtime}), ${JSON.stringify(
+  //           this.configTests(),
+  //           null,
+  //           2
+  //         )}`
+  //       );
+  //       this.isProcessingQueue = false;
+  //       // Try the next item
+  //       setTimeout(() => this.checkQueue(), 100);
+  //       return;
+  //     }
 
-      // Initialize test executor if not already done
-      if (!this.testExecutor) {
-        this.testExecutor = new TestExecutor({
-          projectName: this.projectName,
-          configs: this.configs,
-          summary: this.summary,
-          summaryManager: this.summaryManager,
-          processManager: this.processManager,
-          portManager: this.portManager,
-          browser: this.browser,
-          webSocketBroadcastMessage: this.webSocketBroadcastMessage.bind(this),
-          typeCheckIsRunning: this.typeCheckIsRunning,
-          typeCheckIsNowDone: this.typeCheckIsNowDone,
-          lintIsRunning: this.lintIsRunning,
-          lintIsNowDone: this.lintIsNowDone,
-          bddTestIsRunning: this.bddTestIsRunning,
-          bddTestIsNowDone: this.bddTestIsNowDone,
-          launchNode: this.launchNode,
-          launchWeb: this.launchWeb,
-          launchPython: this.launchPython,
-          launchGolang: this.launchGolang,
-          addPromiseProcess: this.addPromiseProcess.bind(this),
-          pythonLintCheck: this.pythonLintCheck.bind(this),
-          pythonTypeCheck: this.pythonTypeCheck.bind(this),
-        });
-      }
+  //     // Initialize test executor if not already done
+  //     if (!this.testExecutor) {
+  //       this.testExecutor = new TestExecutor({
+  //         projectName: this.projectName,
+  //         configs: this.configs,
+  //         summary: this.summary,
+  //         summaryManager: this.summaryManager,
+  //         processManager: this.processManager,
+  //         portManager: this.portManager,
+  //         browser: this.browser,
+  //         webSocketBroadcastMessage: this.webSocketBroadcastMessage.bind(this),
+  //         typeCheckIsRunning: this.typeCheckIsRunning,
+  //         typeCheckIsNowDone: this.typeCheckIsNowDone,
+  //         lintIsRunning: this.lintIsRunning,
+  //         lintIsNowDone: this.lintIsNowDone,
+  //         bddTestIsRunning: this.bddTestIsRunning,
+  //         bddTestIsNowDone: this.bddTestIsNowDone,
+  //         launchNode: this.launchNode,
+  //         launchWeb: this.launchWeb,
+  //         launchPython: this.launchPython,
+  //         launchGolang: this.launchGolang,
+  //         addPromiseProcess: this.addPromiseProcess.bind(this),
+  //         pythonLintCheck: this.pythonLintCheck.bind(this),
+  //         pythonTypeCheck: this.pythonTypeCheck.bind(this),
+  //       });
+  //     }
 
-      // Execute all three phases together
-      try {
-        await this.testExecutor.executeTest(x, runtime, addableFiles);
-      } catch (error) {
-        console.error(`Error executing test ${x} (${runtime}):`, error);
-      } finally {
-        // Mark as done and check for next item
-        this.isProcessingQueue = false;
-        setTimeout(() => this.checkQueue(), 100);
-      }
-    } catch (error) {
-      console.error(`Error in checkQueue:`, error);
-      this.isProcessingQueue = false;
-      // Try again after a delay
-      setTimeout(() => this.checkQueue(), 1000);
-    }
-  }
+  //     // Execute all three phases together
+  //     try {
+  //       await this.testExecutor.executeTest(x, runtime, addableFiles);
+  //     } catch (error) {
+  //       console.error(`Error executing test ${x} (${runtime}):`, error);
+  //     } finally {
+  //       // Mark as done and check for next item
+  //       this.isProcessingQueue = false;
+  //       setTimeout(() => this.checkQueue(), 100);
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error in checkQueue:`, error);
+  //     this.isProcessingQueue = false;
+  //     // Try again after a delay
+  //     setTimeout(() => this.checkQueue(), 1000);
+  //   }
+  // }
 
   checkForShutdown = async () => {
     checkForShutdown(
@@ -1101,11 +1138,11 @@ export class Server extends Server_TCP {
         });
 
         // Handle stdout and stderr normally
-        child.stdout?.on('data', (data) => {
+        child.stdout?.on("data", (data) => {
           logs.stdout?.write(data);
         });
 
-        child.stderr?.on('data', (data) => {
+        child.stderr?.on("data", (data) => {
           logs.stderr?.write(data);
         });
 
@@ -1359,11 +1396,11 @@ export class Server extends Server_TCP {
         });
 
         // Handle stdout and stderr normally
-        child.stdout?.on('data', (data) => {
+        child.stdout?.on("data", (data) => {
           logs.stdout?.write(data);
         });
 
-        child.stderr?.on('data', (data) => {
+        child.stderr?.on("data", (data) => {
           logs.stderr?.write(data);
         });
 
@@ -1444,7 +1481,7 @@ export class Server extends Server_TCP {
             env: {
               ...process.env,
               TEST_RESOURCES: testResources,
-              WS_PORT: "3000",  // Pass WebSocket port
+              WS_PORT: "3000", // Pass WebSocket port
               GO111MODULE: "on",
             },
             cwd: goModDir,
@@ -1452,11 +1489,11 @@ export class Server extends Server_TCP {
         );
 
         // Handle stdout and stderr normally
-        child.stdout?.on('data', (data) => {
+        child.stdout?.on("data", (data) => {
           logs.stdout?.write(data);
         });
 
-        child.stderr?.on('data', (data) => {
+        child.stderr?.on("data", (data) => {
           logs.stderr?.write(data);
         });
 

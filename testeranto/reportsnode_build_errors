@@ -1,0 +1,55 @@
+{
+  "errors": [
+    {
+      "detail": {},
+      "id": "",
+      "location": {
+        "column": 2,
+        "file": "src/server/Server.ts",
+        "length": 0,
+        "line": 445,
+        "lineText": "  addPromiseProcess(\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:445:3)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)\n    at Server.addPromiseProcess (/Users/adam/Code/testeranto/src/server/Server.ts:455:21)",
+        "namespace": "file",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": {
+            "column": 14,
+            "file": "src/server/Server.ts",
+            "length": 7,
+            "line": 308,
+            "lineText": "        build.onStart(() => {\n    at setup (/Users/adam/Code/testeranto/src/server/Server.ts:308:15)\n    at handlePlugins (/Users/adam/Code/testeranto/node_modules/esbuild/lib/main.js:1293:21)\n    at buildOrContextImpl (/Users/adam/Code/testeranto/node_modules/esbuild/lib/main.js:979:5)\n    at Object.buildOrContext (/Users/adam/Code/testeranto/node_modules/esbuild/lib/main.js:788:5)\n    at /Users/adam/Code/testeranto/node_modules/esbuild/lib/main.js:2215:15\n    at new Promise (<anonymous>)\n    at Object.build (/Users/adam/Code/testeranto/node_modules/esbuild/lib/main.js:2214:25)\n    at Object.build (/Users/adam/Code/testeranto/node_modules/esbuild/lib/main.js:2047:51)\n    at Server.startBuildProcess (/Users/adam/Code/testeranto/src/server/Server.ts:401:38)",
+            "namespace": "file",
+            "suggestion": ""
+          },
+          "text": "This error came from the \"onStart\" callback registered here:"
+        }
+      ],
+      "pluginName": "build-process-tracker",
+      "text": "Maximum call stack size exceeded"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "direct-eval",
+      "location": {
+        "column": 21,
+        "file": "example/Calculator.ts",
+        "length": 4,
+        "line": 17,
+        "lineText": "      const result = eval(this.display);",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": null,
+          "text": "You can read more about direct eval and bundling here: https://esbuild.github.io/link/direct-eval"
+        }
+      ],
+      "pluginName": "",
+      "text": "Using direct eval with a bundler is not recommended and may cause problems"
+    }
+  ]
+}
