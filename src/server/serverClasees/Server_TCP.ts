@@ -45,7 +45,7 @@ export class Server_TCP extends Server_Base {
       });
     });
 
-    const httpPort = Number(process.env.HTTP_PORT) || 3000;
+    const httpPort = Number(process.env.HTTP_PORT) || 3002;
     this.httpServer.listen(httpPort, "0.0.0.0", () => {
       console.log(`HTTP server running on http://localhost:${httpPort}`);
     });
@@ -81,14 +81,14 @@ export class Server_TCP extends Server_Base {
 
       // Otherwise, treat as WebSocketMessage with type field
       const wsm: WebSocketMessage = parsed;
-      console.log(
-        "WebSocket message type:",
-        wsm.type,
-        "key:",
-        wsm.key,
-        "data:",
-        JSON.stringify(wsm.data)
-      );
+      // console.log(
+      //   "WebSocket message type:",
+      //   wsm.type,
+      //   "key:",
+      //   wsm.key,
+      //   "data:",
+      //   JSON.stringify(wsm.data)
+      // );
 
       // Check if it's a FileService method
       let handled = false;

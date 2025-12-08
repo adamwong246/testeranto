@@ -40,9 +40,12 @@ export class NodeTiposkripto<
   }
 
   async receiveTestResourceConfig(partialTestResource: string) {
+    console.log("node.receiveTestResourceConfig", partialTestResource);
     // Parse the test resource configuration
     const config = JSON.parse(partialTestResource);
-    const wsUrl: string = `ws://localhost:${wsPort}`;
+    // Read WebSocket host from environment variable, default to localhost
+    const wsHost = process.env.WS_HOST || "localhost";
+    const wsUrl: string = `ws://${wsHost}:${wsPort}`;
     console.log(`Connecting to WebSocket at ${wsUrl}`);
     return await this.testJobs[0].receiveTestResourceConfig(
       new PM_Node(config, wsUrl)
@@ -60,12 +63,16 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
   try {
     // Ensure IPC is not used - node tests should only use WebSocket
     if (process.send) {
-      console.warn('IPC is available via process.send, but node tests should use WebSocket only');
+      console.warn(
+        "IPC is available via process.send, but node tests should use WebSocket only"
+      );
       // Don't use IPC - override process.send to prevent accidental usage
-      const originalSend = process.send;
-      process.send = function(...args: any[]) {
-        console.error('IPC usage detected via process.send(). Node tests should use WebSocket via PM_Node instead.');
-        console.error('The IPC message was:', args);
+      // const originalSend = process.send;
+      process.send = function (...args: any[]) {
+        console.error(
+          "IPC usage detected via process.send(). Node tests should use WebSocket via PM_Node instead."
+        );
+        console.error("The IPC message was:", args);
         // Don't actually send the message
         return false;
       };
@@ -85,10 +92,27 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       // t.registerUncaughtPromise(reason, promise);
     });
 
-    // Read WebSocket port from environment variable for congruence with Python and Golang
-    wsPort = process.env.WS_PORT || "3000";
+    // console.log("node.tiposkripto", process.argv);
 
-    process.exit((await t.receiveTestResourceConfig(process.argv[2])).fails);
+    // Read WebSocket port from environment variable for congruence with Python and Golang
+    // wsPort = process.env.WS_PORT || "3000";
+
+    console.log("wtf", process.argv.toString());
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const execer = process.argv[0];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const builtFile: string = process.argv[1];
+
+    wsPort = process.argv[2];
+
+    const testResource: string = process.argv[3];
+    // // Read WebSocket port from command line argument (process.argv[3]) or environment variable
+    // wsPort = process.argv[2];
+    // if (!wsPort) {
+    //   console.error("wsPort is undefind");
+    // }
+    process.exit((await t.receiveTestResourceConfig(testResource)).fails);
   } catch (e) {
     console.error(e);
     console.error(e.stack);

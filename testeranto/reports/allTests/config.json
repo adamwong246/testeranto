@@ -22,11 +22,7 @@
     "loaders": {
       ".ttf": "file"
     },
-    "tests": {
-      "example/Calculator.test.ts": {
-        "ports": 0
-      }
-    },
+    "tests": {},
     "externals": []
   },
   "node": {

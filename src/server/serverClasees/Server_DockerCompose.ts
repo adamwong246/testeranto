@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  buildMany,
   down,
   IDockerComposeResult,
   logs,
@@ -49,21 +48,25 @@ export class Server_DockerCompose extends Server_TCP {
 
   private async initializeAndStart(): Promise<void> {
     console.log(`Setting up docker-compose for ${this.projectName}...`);
-    
+
     // Import setupDockerCompose here to avoid circular dependencies
-    const { setupDockerCompose } = await import("../docker/dockerComposeGenerator");
-    
+    const { setupDockerCompose } = await import(
+      "../docker/dockerComposeGenerator"
+    );
+
     // Wait for docker-compose file to be generated
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),
-        error: (...args) => console.error(...args)
-      }
+        error: (...args) => console.error(...args),
+      },
     });
 
     // Check if compose file was created
     if (!fs.existsSync(this.composeFile)) {
-      console.error(`Docker-compose file not found after generation: ${this.composeFile}`);
+      console.error(
+        `Docker-compose file not found after generation: ${this.composeFile}`
+      );
       // Try to list the directory to see what's there
       const dir = path.dirname(this.composeFile);
       if (fs.existsSync(dir)) {
@@ -79,7 +82,7 @@ export class Server_DockerCompose extends Server_TCP {
     }
 
     console.log(`Docker-compose file created at: ${this.composeFile}`);
-    
+
     // Start docker-compose services
     await this.startServices();
   }
@@ -110,7 +113,7 @@ export class Server_DockerCompose extends Server_TCP {
 
     // Log the compose file content
     try {
-      const composeContent = fs.readFileSync(this.composeFile, 'utf-8');
+      const composeContent = fs.readFileSync(this.composeFile, "utf-8");
       console.log(`Docker-compose file content (first 3000 chars):`);
       console.log(composeContent.substring(0, 3000));
       console.log(`File size: ${composeContent.length} bytes`);
@@ -132,24 +135,11 @@ export class Server_DockerCompose extends Server_TCP {
     }
 
     try {
-      // First, build the images
-      console.log(`Building docker-compose images...`);
-      const buildResult = await this.DC_buildAll();
-      console.log(`docker-compose build completed with exit code: ${buildResult.exitCode}`);
-      if (buildResult.exitCode !== 0) {
-        console.error(
-          `docker-compose build failed with exit code ${buildResult.exitCode}:`
-        );
-        console.error(`Error: ${buildResult.err}`);
-        console.error(`Output: ${buildResult.out}`);
-        return;
-      } else {
-        console.log(`docker-compose images built successfully`);
-      }
-
       console.log(`Running docker-compose up...`);
       const result = await this.DC_upAll();
-      console.log(`docker-compose up completed with exit code: ${result.exitCode}`);
+      console.log(
+        `docker-compose up completed with exit code: ${result.exitCode}`
+      );
       if (result.exitCode !== 0) {
         console.error(
           `docker-compose up failed with exit code ${result.exitCode}:`
@@ -158,7 +148,9 @@ export class Server_DockerCompose extends Server_TCP {
         console.error(`Output: ${result.out}`);
       } else {
         console.log(`docker-compose services started successfully`);
-        console.log(`Output (first 3000 chars): ${result.out?.substring(0, 3000)}`);
+        console.log(
+          `Output (first 3000 chars): ${result.out?.substring(0, 3000)}`
+        );
 
         // Wait a bit for services to become healthy
         console.log(`Waiting for services to become healthy (15 seconds)...`);
@@ -168,25 +160,30 @@ export class Server_DockerCompose extends Server_TCP {
         console.log(`Checking service status after startup...`);
         const psResult2 = await this.DC_ps();
         console.log(`Service status after startup:`, psResult2.out);
-        
-        if (!psResult2.out || psResult2.out.trim() === '') {
+
+        if (!psResult2.out || psResult2.out.trim() === "") {
           console.error(`No services found in docker-compose ps output!`);
           console.error(`This suggests the services weren't started properly.`);
           console.error(`Trying to get logs for all services...`);
-          
+
           // Try to get logs for all services defined in the compose file
-          const composeContent = fs.readFileSync(this.composeFile, 'utf-8');
-          const yaml = await import('js-yaml');
+          const composeContent = fs.readFileSync(this.composeFile, "utf-8");
+          const yaml = await import("js-yaml");
           const composeObj = yaml.load(composeContent) as any;
           const serviceNames = Object.keys(composeObj?.services || {});
-          
-          console.log(`Services defined in compose file: ${serviceNames.join(', ')}`);
-          
+
+          console.log(
+            `Services defined in compose file: ${serviceNames.join(", ")}`
+          );
+
           for (const serviceName of serviceNames) {
             try {
               console.log(`Getting logs for ${serviceName}...`);
               const logsResult = await this.DC_logs(serviceName);
-              console.log(`${serviceName} logs (first 1000 chars):`, logsResult.out?.substring(0, 1000));
+              console.log(
+                `${serviceName} logs (first 1000 chars):`,
+                logsResult.out?.substring(0, 1000)
+              );
             } catch (e) {
               console.error(`Error getting logs for ${serviceName}:`, e);
             }
@@ -194,27 +191,39 @@ export class Server_DockerCompose extends Server_TCP {
         } else {
           // Also get logs for build services if they exist
           console.log(`Getting logs for build services...`);
-          
+
           // First, check which services are actually running
-          const serviceOutput = psResult2.out || '';
-          
+          const serviceOutput = psResult2.out || "";
+
           // Check for node-build service (using the new container name)
-          if (serviceOutput.includes('bundles-node-build') || serviceOutput.includes('node-build')) {
+          if (
+            serviceOutput.includes("bundles-node-build") ||
+            serviceOutput.includes("node-build")
+          ) {
             try {
-              const nodeBuildLogs = await this.DC_logs('node-build');
-              console.log(`node-build logs (first 2000 chars):`, nodeBuildLogs.out?.substring(0, 2000));
+              const nodeBuildLogs = await this.DC_logs("node-build");
+              console.log(
+                `node-build logs (first 2000 chars):`,
+                nodeBuildLogs.out?.substring(0, 2000)
+              );
             } catch (e) {
               console.error(`Error getting node-build logs:`, e);
             }
           } else {
             console.log(`node-build service not found in running services`);
           }
-          
+
           // Check for web-build service (using the new container name)
-          if (serviceOutput.includes('bundles-web-build') || serviceOutput.includes('web-build')) {
+          if (
+            serviceOutput.includes("bundles-web-build") ||
+            serviceOutput.includes("web-build")
+          ) {
             try {
-              const webBuildLogs = await this.DC_logs('web-build');
-              console.log(`web-build logs (first 2000 chars):`, webBuildLogs.out?.substring(0, 2000));
+              const webBuildLogs = await this.DC_logs("web-build");
+              console.log(
+                `web-build logs (first 2000 chars):`,
+                webBuildLogs.out?.substring(0, 2000)
+              );
             } catch (e) {
               console.error(`Error getting web-build logs:`, e);
             }
@@ -313,23 +322,6 @@ export class Server_DockerCompose extends Server_TCP {
     return createBuildService(runtime, buildDockerfileDir, testsName);
   }
 
-  public async DC_buildAll(
-    options?: Partial<DockerComposeOptions>
-  ): Promise<IDockerComposeResult> {
-    const opts = this.mergeOptions(options);
-    // Get all service names from the compose file
-    const composeContent = fs.readFileSync(this.composeFile, 'utf-8');
-    const yaml = await import('js-yaml');
-    const composeObj = yaml.load(composeContent) as any;
-    const serviceNames = Object.keys(composeObj?.services || {});
-    
-    if (serviceNames.length === 0) {
-      return { exitCode: 0, out: 'No services to build', err: '' };
-    }
-    
-    return await buildMany(serviceNames, opts);
-  }
-
   public async DC_upAll(
     options?: Partial<DockerComposeOptions>
   ): Promise<IDockerComposeResult> {
@@ -372,7 +364,7 @@ export class Server_DockerCompose extends Server_TCP {
   ): DockerComposeOptions {
     const base = {
       cwd: this.composeDir, // Use composeDir which is process.cwd()
-      config: this.composeFile, // Use absolute path to docker-compose.yml file
+      config: this.config, // Path to the docker-compose.yml file
       log: true,
     };
     // Merge options

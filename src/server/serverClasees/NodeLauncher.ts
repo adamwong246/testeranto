@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import fs from "fs";
+
 import { spawn } from "child_process";
 import ansiColors from "ansi-colors";
 import { createLogStreams, LogStreams } from "../../clients/utils";
 import { IRunTime } from "../../Types";
 import { generatePromptFiles } from "../aider/generatePromptFiles";
+import fs from "fs";
 
 export class NodeLauncher {
   constructor(
-    private projectName: string,
     private setupTestEnvironment: (
       src: string,
       runtime: IRunTime
@@ -52,13 +52,46 @@ export class NodeLauncher {
         const builtfile = dest;
         const logs = createLogStreams(reportDest, "node");
 
-        // Spawn without IPC - use only stdio pipes
-        // Pass WebSocket port via environment variable for congruence
-        const child = spawn("node", [builtfile, testResources], {
+        // Wait for the bundle file to exist, similar to nodeScript.ts
+        const maxBundleRetries = 60;
+        let bundleRetryCount = 0;
+        while (
+          !fs.existsSync(builtfile) &&
+          bundleRetryCount < maxBundleRetries
+        ) {
+          console.log(
+            `Bundle not ready yet (attempt ${
+              bundleRetryCount + 1
+            }/${maxBundleRetries})`
+          );
+          bundleRetryCount++;
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+        }
+
+        if (!fs.existsSync(builtfile)) {
+          throw new Error(
+            `Bundle file ${builtfile} does not exist after waiting`
+          );
+        }
+
+        console.log("Build is ready. Proceeding with test...");
+
+        // Prepare test resources as a JSON string
+        const testResourcesJson = JSON.stringify({
+          name: "node-test",
+          fs: process.cwd(),
+          ports: [],
+          browserWSEndpoint: "",
+          timeout: 30000,
+          retries: 3,
+        });
+
+        console.log("launchNode", [builtfile, "3002", testResourcesJson]);
+
+        const child = spawn("node", [builtfile, "3002", testResourcesJson], {
           stdio: ["pipe", "pipe", "pipe"],
           env: {
             ...process.env,
-            WS_PORT: "3000",
           },
         });
 
@@ -83,6 +116,8 @@ export class NodeLauncher {
         if (error.message !== "No ports available") {
           console.error(`Error in launchNode for ${src}:`, error);
         }
+        // Re-throw to be caught by the promise handlers
+        throw error;
       }
     })();
 

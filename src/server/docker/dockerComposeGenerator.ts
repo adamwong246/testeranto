@@ -12,8 +12,8 @@ import { webDocker } from "../web/webDocker";
 import baseCompose from "./baseCompose";
 import buildService from "./buildService";
 import chromiumService from "./chromiumService";
-import serviceConfiger from "./serviceConfig";
-import serviceConfigCommand from "./serviceConfigCommand";
+import serviceConfiger, { testServiceConfig } from "./serviceConfig";
+// import serviceConfigCommand from "./serviceConfigCommand";
 // import baseCompose from "./baseCompose";
 
 export async function setupDockerCompose(
@@ -303,7 +303,9 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
     // Skip creating services for web tests
     // Web tests will run through the Chromium service's API/web interface
     if (runtime === "web") {
-      log(`Skipping Docker service creation for web tests. Web tests will run through Chromium service.`);
+      log(
+        `Skipping Docker service creation for web tests. Web tests will run through Chromium service.`
+      );
       continue;
     }
 
@@ -336,8 +338,9 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
         throw "unknown runtime";
       }
 
-      // Build service configuration
-      const serviceConfig: any = { ...serviceConfiger };
+      // Build service configuration for test services
+      // Use testServiceConfig which doesn't have port mappings
+      const serviceConfig: any = { ...testServiceConfig };
 
       // Always remove container_name for test services to avoid conflicts
       // Docker Compose will generate unique names automatically
@@ -345,6 +348,10 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
 
       // Remove image field if present, we'll use build instead
       delete serviceConfig.image;
+
+      // Remove ports from test services to avoid conflicts
+      // Test services only need internal communication within Docker network
+      delete serviceConfig.ports;
 
       // Set build configuration to use the Dockerfile we created
       const dockerfileDir = path.join(
@@ -355,18 +362,52 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
         path.dirname(testPath)
       );
       const dockerfilePath = path.join(dockerfileDir, "Dockerfile");
-      
+
       serviceConfig.build = {
         context: process.cwd(),
         dockerfile: dockerfilePath,
       };
 
+      // Add volumes to mount the project directory and node_modules
+      serviceConfig.volumes = [
+        `${process.cwd()}:/workspace`,
+        "node_modules:/workspace/node_modules",
+      ];
+
+      // Set working directory to /workspace
+      serviceConfig.working_dir = "/workspace";
+
+      // Update depends_on to include the build service and chromium
+      serviceConfig.depends_on = {
+        [`${runtime}-build`]: {
+          condition: "service_healthy",
+        },
+      };
+
+      // Add chromium dependency for node and web tests
+      if (runtime === "node" || runtime === "web") {
+        serviceConfig.depends_on.chromium = {
+          condition: "service_started",
+        };
+      }
+
+      // Add WS_PORT and WS_HOST environment variables
+      if (!serviceConfig.environment) {
+        serviceConfig.environment = {};
+      }
+      // Default to 3002 to match Server_TCP default HTTP_PORT
+      serviceConfig.environment.WS_PORT = webSocketPort?.toString() || "3002";
+      // Use host.docker.internal to reach the host machine from Docker containers
+      serviceConfig.environment.WS_HOST = "host.docker.internal";
+
       // For non-web runtimes, use the original command
-      serviceConfig.command = serviceConfigCommand(
-        runtime,
-        testPath,
-        betterTestPath
-      );
+      // Use 3002 to match Server_TCP default HTTP_PORT
+      // serviceConfig.command = serviceConfigCommand(
+      //   runtime,
+      //   testPath,
+      //   betterTestPath,
+      //   webSocketPort?.toString() || "3002"
+      // );
 
       services[serviceName] = serviceConfig;
     }

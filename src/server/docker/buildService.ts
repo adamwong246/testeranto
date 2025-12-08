@@ -22,7 +22,6 @@ export default (runtime: IRunTime) => {
     environment: {
       BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/${runtime}`,
       METAFILES_DIR: `/workspace/testeranto/metafiles/${runtime}`,
-      DOCKERMAN_PORT: "60593",
     },
     command: [
       "sh",

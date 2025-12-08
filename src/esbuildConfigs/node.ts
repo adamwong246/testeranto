@@ -18,32 +18,6 @@ export default (
     testName
   );
 
-  // Use environment variable if set, otherwise use passed bundlesDir or default
-  // const effectiveBundlesDir =
-  //   process.env.BUNDLES_DIR ||
-  //   bundlesDir ||
-  //   `testeranto/bundles/allTests/node/`;
-
-  // Ensure the path is absolute
-  // const absoluteBundlesDir = path.isAbsolute(effectiveBundlesDir)
-  //   ? effectiveBundlesDir
-  //   : path.join(process.cwd(), effectiveBundlesDir);
-
-  // console.log(`[node esbuild] testName: ${testName}`);
-  // console.log(`  BUNDLES_DIR env: '${process.env.BUNDLES_DIR}'`);
-  // console.log(`  effectiveBundlesDir: '${effectiveBundlesDir}'`);
-  // console.log(`  absoluteBundlesDir: '${absoluteBundlesDir}'`);
-  // console.log(`  process.cwd(): '${process.cwd()}'`);
-  // console.log(`  Final outdir will be: '${absoluteBundlesDir}'`);
-
-  // Debug: list directory to see where we are
-  // try {
-  //   const files = fs.readdirSync(process.cwd());
-  //   console.log(`  Files in cwd (first 5): ${files.slice(0,5).join(', ')}`);
-  // } catch (e) {
-  //   console.log(`  Could not read cwd: ${e.message}`);
-  // }
-
   // Convert entryPoints array to object where key is output path and value is input path
   // For each entry point like "src/example/Calculator.test.ts"
   // We want output at "{absoluteBundlesDir}/src/example/Calculator.test.mjs"
@@ -113,7 +87,8 @@ export default (
     absWorkingDir: process.cwd(),
     platform: "node",
 
-    external: ["react", ...config.node.externals],
+    // external: ["react", ...config.node.externals],
+    packages: "external",
 
     entryPoints: entryPointsObj,
     plugins: [

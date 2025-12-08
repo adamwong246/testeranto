@@ -8,24 +8,9 @@ export const command = (
                 echo "Bundle path: testeranto/bundles/allTests/${runtime}/${betterTestPath}"
                 echo "Runtime: ${runtime}"
                 echo "Test name: ${testPath}"
-                echo "=== Environment variables ==="
-                env | grep -E "TEST|DOCKERMAN|BUNDLES|METAFILES|CHROMIUM" || true
-                echo "=== End environment variables ==="
-                # Debug: Show DOCKERMAN_HOST and DOCKERMAN_PORT
-                echo "DOCKERMAN_HOST='$DOCKERMAN_HOST'"
-                echo "DOCKERMAN_PORT='$DOCKERMAN_PORT'"
                 
                 # Build service health is managed by Docker Compose depends_on
                 echo "Build service ${runtime}-build health is managed by Docker Compose"
-                
-                # Get DockerMan port from environment variable
-                if [ -z "$DOCKERMAN_PORT" ] || [ "$DOCKERMAN_PORT" = "0" ]; then
-                  echo "ERROR: DOCKERMAN_PORT environment variable is not set or is 0"
-                  echo "The DockerMan TCP server port must be passed via the DOCKERMAN_PORT environment variable."
-                  echo "Make sure the TCP server is running and the port is passed to docker-compose."
-                  exit 1
-                fi
-                echo "Using DockerMan port from environment variable: $DOCKERMAN_PORT"
                 
                 ${chromiumCommand}
                 
@@ -46,95 +31,10 @@ export const command = (
                 fi
                 echo "Build is ready. Proceeding with test...";
                 
-                # Wait for DockerMan TCP server to be reachable
-                # Ensure DOCKERMAN_HOST has a value
-                if [ -z "$DOCKERMAN_HOST" ]; then
-                  DOCKERMAN_HOST="host.docker.internal"
-                  echo "DOCKERMAN_HOST was empty, using default: $DOCKERMAN_HOST"
-                fi
-                
-                # Try multiple host options if the default doesn't work
-                HOSTS_TO_TRY="$DOCKERMAN_HOST"
-                # Add gateway IP for Linux containers
-                GATEWAY_IP=$(ip route | grep default | awk '{print $3}' 2>/dev/null || echo "")
-                if [ -n "$GATEWAY_IP" ]; then
-                  HOSTS_TO_TRY="$HOSTS_TO_TRY $GATEWAY_IP"
-                fi
-                # Add docker host IP
-                HOSTS_TO_TRY="$HOSTS_TO_TRY 172.17.0.1"
-                
-                echo "Waiting for DockerMan TCP server to be reachable on port $DOCKERMAN_PORT..."
-                echo "Will try hosts: $HOSTS_TO_TRY"
-                
                 MAX_RETRIES=30
                 RETRY_COUNT=0
                 SUCCESS=0
-                
-                while [ $RETRY_COUNT -lt $MAX_RETRIES ] && [ $SUCCESS -eq 0 ]; do
-                  for HOST in $HOSTS_TO_TRY; do
-                    echo "Trying to connect to $HOST:$DOCKERMAN_PORT (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)..."
-                    # Try using netcat if available
-                    if command -v nc >/dev/null 2>&1; then
-                      if nc -z -w 1 "$HOST" "$DOCKERMAN_PORT" 2>/dev/null; then
-                        echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via nc)"
-                        DOCKERMAN_HOST="$HOST"
-                        SUCCESS=1
-                        break
-                      fi
-                    # Fallback to /dev/tcp
-                    elif (echo > "/dev/tcp/$HOST/$DOCKERMAN_PORT") &>/dev/null 2>&1; then
-                      echo "✅ DockerMan TCP server is reachable at $HOST:$DOCKERMAN_PORT (via /dev/tcp)"
-                      DOCKERMAN_HOST="$HOST"
-                      SUCCESS=1
-                      break
-                    fi
-                  done
-                  
-                  if [ $SUCCESS -eq 0 ]; then
-                    echo "DockerMan TCP server not reachable yet (attempt $((RETRY_COUNT+1))/$MAX_RETRIES)"
-                    RETRY_COUNT=$((RETRY_COUNT+1))
-                    sleep 2
-                  fi
-                done
-                
-                if [ $SUCCESS -eq 0 ]; then
-                  echo "ERROR: DockerMan TCP server never became reachable on port $DOCKERMAN_PORT"
-                  echo "Tried hosts: $HOSTS_TO_TRY"
-                  echo "Make sure the TCP server is running on the host and accessible from containers."
-                  echo "On Linux, you may need to expose the port differently or use host networking."
-                  exit 1
-                fi
-                
-                echo "Using DockerMan host: $DOCKERMAN_HOST"
-                
-                # Also check WebSocket server if port is provided
-                if [ -n "$WEBSOCKET_PORT" ] && [ "$WEBSOCKET_PORT" != "0" ]; then
-                  echo "Checking WebSocket server on port $WEBSOCKET_PORT..."
-                  WS_SUCCESS=0
-                  for HOST in $HOSTS_TO_TRY; do
-                    echo "Trying WebSocket connection to $HOST:$WEBSOCKET_PORT..."
-                    if command -v nc >/dev/null 2>&1; then
-                      if nc -z -w 1 "$HOST" "$WEBSOCKET_PORT" 2>/dev/null; then
-                        echo "✅ WebSocket server is reachable at $HOST:$WEBSOCKET_PORT"
-                        WS_SUCCESS=1
-                        break
-                      fi
-                    elif (echo > "/dev/tcp/$HOST/$WEBSOCKET_PORT") &>/dev/null 2>&1; then
-                      echo "✅ WebSocket server is reachable at $HOST:$WEBSOCKET_PORT"
-                      WS_SUCCESS=1
-                      break
-                    fi
-                  done
-                  if [ $WS_SUCCESS -eq 0 ]; then
-                    echo "⚠️ WebSocket server may not be reachable, but continuing anyway"
-                  fi
-                fi
-                
-                # For web tests, we need to run in browser, not with Node directly
-                # Create an HTML file that loads the test bundle
-                echo "Creating HTML wrapper for web test..."
-                HTML_FILE="/tmp/test_$$.html"
-                cat > "$HTML_FILE" << 'EOF'
+                                
 <!DOCTYPE html>
 <html>
 <head>

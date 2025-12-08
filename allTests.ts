@@ -33,7 +33,7 @@ const config: ITestconfig = {
       ".ttf": "file",
     },
     tests: {
-      "example/Calculator.test.ts": { ports: 0 },
+      // "example/Calculator.test.ts": { ports: 0 },
     },
     externals: [],
   },

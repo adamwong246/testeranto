@@ -431,7 +431,7 @@ function createTestService(
   };
 }
 
-function createBuildService(
+export function createBuildService(
   runtime: IRunTime,
   dockerfileDir: string,
   testsName: string
