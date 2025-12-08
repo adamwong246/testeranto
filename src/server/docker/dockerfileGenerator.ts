@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
-import { IBuiltConfig, IRunTime } from "../../../Types";
+import { IBuiltConfig, IRunTime } from "../../lib";
 
 export function generateDockerfile(
   c: IBuiltConfig,
@@ -87,11 +87,11 @@ export function generateDockerfile(
   //   );
   //   return `FROM ${
   //     runtime === "node"
-  //       ? "node:18-alpine"
+  //       ? "${baseNodeImage}"
   //       : runtime === "python"
-  //       ? "node:18-alpine"
+  //       ? "${baseNodeImage}"
   //       : runtime === "golang"
-  //       ? "node:18-alpine"
+  //       ? "${baseNodeImage}"
   //       : "alpine:latest"
   //   }\nWORKDIR /app\nRUN mkdir -p /workspace/testeranto/metafiles\nCOPY . .\n`;
   // }
@@ -99,11 +99,12 @@ export function generateDockerfile(
   // Add the directory creation to the end of the Dockerfile
   // Also add ENV variable to specify the runtime
   const runtimeEnv = `ENV TESTERANTO_RUNTIME=${runtime}`;
-  
+
   return (
     dockerfileLines +
     "\n" +
-    runtimeEnv + "\n" +
+    runtimeEnv +
+    "\n" +
     "RUN mkdir -p /workspace/testeranto\n" +
     "RUN mkdir -p /workspace/testeranto/bundles\n" +
     "RUN mkdir -p /workspace/testeranto/metafiles\n" +

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
-import { ISummary } from "../Types.js";
+import { ISummary } from "../../../Types";
 
 export class SummaryManager {
   private summary: ISummary = {};
@@ -48,7 +49,10 @@ export class SummaryManager {
     this.summary[src] = { ...this.summary[src], ...updates };
   }
 
-  writeBigBoard(projectName: string, webSocketBroadcastMessage?: (message: any) => void) {
+  writeBigBoard(
+    projectName: string,
+    webSocketBroadcastMessage?: (message: any) => void
+  ) {
     const summaryPath = `./testeranto/reports/${projectName}/summary.json`;
     const summaryData = JSON.stringify(this.summary, null, 2);
     fs.writeFileSync(summaryPath, summaryData);

@@ -6,21 +6,38 @@ await esbuild.build({
   entryPoints: [
     'src/init-docs.ts',
     'src/esbuildConfigs/eslint-formatter-testeranto.ts',
-    // 'src/testeranto.ts',
-    'src/mothership/mothership.ts',
+    "src/server/builders/node.ts",
+    "src/server/builders/web.ts",
+    "src/server/builders/golang.ts",
+    "src/server/builders/python.ts",
+    'src/testeranto.ts',
+    // 'src/mothership/mothership.ts',
   ],
   bundle: true,
   format: "esm",
+  splitting: true,
   platform: "node",
-  outdir: 'dist/prebuild',
+  target: "node20",
+  outdir: "dist/prebuild",
+  packages: "external",
   // packages: "external",
   supported: {
     "dynamic-import": true,
   },
 
-  banner: {
-    js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
-  },
+  external: [
+    "fs", "path", "child_process", "util", "os", "events", "stream",
+    "http", "https", "zlib", "crypto", "buffer", "net", "dns", "tls",
+    "assert", "querystring", "punycode", "readline", "repl", "vm",
+    "perf_hooks", "async_hooks", "timers", "console", "module", "process",
+    // External dependencies
+    // "commander"
+  ],
+
+
+  // banner: {
+  //   js: `import { createRequire } from 'module';const require = createRequire(import.meta.url);`,
+  // },
 })
 
 await esbuild.build({

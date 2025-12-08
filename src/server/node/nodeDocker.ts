@@ -1,4 +1,6 @@
-export const nodeDocker = `FROM node:18-alpine
+import { baseNodeImage } from "../nodeVersion";
+
+export const nodeDocker = `FROM ${baseNodeImage}
 WORKDIR /workspace
 # Install libxml2-utils for xmllint and netcat-openbsd for network checks
 RUN apk add --update --no-cache libxml2-utils netcat-openbsd

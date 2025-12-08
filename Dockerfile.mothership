@@ -1,4 +1,4 @@
-FROM node:18-alpine  AS dependencies
+FROM node:20.19.4-alpine AS dependencies
 
 # Install build tools for node-gyp and libxml2-utils for xmllint
 RUN apk add --update make g++ linux-headers python3 libxml2-utils
@@ -6,7 +6,7 @@ WORKDIR /workspace
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 
-FROM node:18-alpine
+FROM ${baseNodeImage}
 WORKDIR /workspace
 # Copy the pre-installed dependencies from the 'dependencies' stage
 # COPY --from=dependencies /app/node_modules ./node_modules

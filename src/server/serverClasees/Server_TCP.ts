@@ -81,7 +81,14 @@ export class Server_TCP extends Server_Base {
 
       // Otherwise, treat as WebSocketMessage with type field
       const wsm: WebSocketMessage = parsed;
-      console.log("WebSocket message type:", wsm.type, "key:", wsm.key);
+      console.log(
+        "WebSocket message type:",
+        wsm.type,
+        "key:",
+        wsm.key,
+        "data:",
+        JSON.stringify(wsm.data)
+      );
 
       // Check if it's a FileService method
       let handled = false;
@@ -436,20 +443,32 @@ export class Server_TCP extends Server_Base {
       filepath,
       testName,
       contentsLength: contents.length,
-      filepathExists: fs.existsSync(filepath),
-      dir: path.dirname(filepath),
+      cwd: process.cwd(),
     });
-    // The filepath already includes the full path from the client (with testResourceConfiguration.fs prepended)
+
+    // Handle relative paths - if the path doesn't start with /, make it relative to cwd
+    let resolvedPath = filepath;
+    if (!path.isAbsolute(filepath)) {
+      resolvedPath = path.join(process.cwd(), filepath);
+      console.log("Resolved relative path to:", resolvedPath);
+    }
+
     // Ensure the directory exists
-    const dir = path.dirname(filepath);
+    const dir = path.dirname(resolvedPath);
     if (!fs.existsSync(dir)) {
       console.log("Creating directory:", dir);
       fs.mkdirSync(dir, { recursive: true });
     }
-    console.log("Writing file:", filepath);
-    fs.writeFileSync(filepath, contents);
-    console.log("File written successfully");
-    return true;
+
+    console.log("Writing file:", resolvedPath);
+    try {
+      fs.writeFileSync(resolvedPath, contents);
+      console.log("File written successfully to", resolvedPath);
+      return true;
+    } catch (error) {
+      console.error("Error writing file:", error);
+      return false;
+    }
   }
 
   existsSync(filepath: string): boolean {

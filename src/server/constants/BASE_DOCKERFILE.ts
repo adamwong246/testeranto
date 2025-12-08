@@ -1,5 +1,6 @@
-export const BASE_DOCKERFILE = `// Common base Dockerfile content
-FROM node:18-alpine
+import { baseNodeImage } from "../nodeVersion";
+
+export const BASE_DOCKERFILE = `FROM ${baseNodeImage}
 WORKDIR /workspace
 RUN apk update && apk add --no-cache \\
     build-base \\
@@ -10,5 +11,9 @@ RUN apk update && apk add --no-cache \\
     jpeg-dev \\
     giflib-dev \\
     librsvg-dev \\
-    libxml2-utils && \\
+    libxml2-utils \\
+    netcat-openbsd \\
+    make \\
+    g++ \\
+    linux-headers && \\
     rm -rf /var/cache/apk/*`;

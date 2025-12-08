@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IRunTime } from "../../Types.js";
 import fs from "fs";
-import { getRunnables, tscPather, lintPather } from "../utils.js";
-import { tscCheck as tscCheckFn } from "../node+web/tscCheck.js";
-import { lintCheck } from "../node+web/lintCheck.js";
+import { getRunnables, tscPather } from "../../utils";
+import { IRunTime } from "../../../lib";
 
 export interface TestExecutorConfig {
   projectName: string;
@@ -112,18 +110,18 @@ export class TestExecutor {
         throw new Error(`Error in tscCheck: ${e.message}`);
       }
 
-      const tscPath = tscPather(src, runtime, this.config.projectName);
-      const filesToUse = addableFiles || [];
-      const results = tscCheckFn({
-        entrypoint: src,
-        addableFiles: filesToUse,
-        platform: runtime,
-        projectName: this.config.projectName,
-      });
+      // const tscPath = tscPather(src, runtime, this.config.projectName);
+      // const filesToUse = addableFiles || [];
+      // const results = tscCheckFn({
+      //   entrypoint: src,
+      //   addableFiles: filesToUse,
+      //   platform: runtime,
+      //   projectName: this.config.projectName,
+      // });
 
-      fs.writeFileSync(tscPath, results.join("\n"));
-      this.config.typeCheckIsNowDone(src, results.length);
-      return results.length;
+      // fs.writeFileSync(tscPath, results.join("\n"));
+      // this.config.typeCheckIsNowDone(src, results.length);
+      return -1;
     })();
 
     this.config.addPromiseProcess(

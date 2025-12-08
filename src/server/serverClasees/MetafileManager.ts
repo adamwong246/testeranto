@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import fs from "fs";
 import ansiC from "ansi-colors";
-import { IRunTime } from "../Types.js";
-import { filesHash } from "../clients/utils.js";
+import fs from "fs";
 import path from "path";
+import { filesHash } from "../../clients/utils";
+import { IRunTime } from "../../Types";
 
 export class MetafileManager {
   private changes: Record<string, string> = {};

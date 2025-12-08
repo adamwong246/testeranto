@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20.19.4-alpine
 # Install Python3, pip, git, build tools for node-gyp, and libxml2-utils for xmllint
 RUN apk add --update python3 py3-pip git make g++ linux-headers libxml2-utils
 WORKDIR /workspace

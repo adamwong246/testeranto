@@ -1,0 +1,12 @@
+{
+  "errors": [
+    {
+      "id": "",
+      "location": null,
+      "notes": [],
+      "pluginName": "",
+      "text": "Could not resolve \"/workspace/example/Calculator.test.ts\""
+    }
+  ],
+  "warnings": []
+}

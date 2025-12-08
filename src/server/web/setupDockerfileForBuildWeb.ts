@@ -1,4 +1,5 @@
 import { COMMON_PACKAGE_INSTALL } from "../constants/COMMON_PACKAGE_INSTALL";
+import { baseNodeImage } from "../nodeVersion";
 
 export function setupDockerfileForBuildWeb(config: string): string {
   const webSpecificPackages = `\\
@@ -11,7 +12,7 @@ export function setupDockerfileForBuildWeb(config: string): string {
     ttf-freefont \\
     font-noto-emoji`;
 
-  return `FROM node:18-alpine
+  return `FROM ${baseNodeImage}
 WORKDIR /workspace
 RUN apk update && apk add --no-cache \\
     build-base \\
@@ -29,8 +30,9 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 ${COMMON_PACKAGE_INSTALL}
 COPY ${config} .
-COPY dist/prebuild/builders/web.mjs ./web.mjs
-# Run the build to generate metafiles when container starts
-CMD ["sh", "-c", "echo 'Starting build...' && echo 'Current directory:' && pwd && echo 'Listing dist/prebuild/builders/:' && ls -la ./dist/prebuild/builders/ 2>&1 || echo 'Directory does not exist' && echo 'Checking if web.mjs exists:' && if [ -f ./dist/prebuild/builders/web.mjs ]; then echo 'web.mjs exists'; else echo 'ERROR: web.mjs does not exist'; exit 1; fi && echo 'Node version:' && node --version && echo 'npx version:' && npx --version && echo 'Running build...' && npx tsx ./dist/prebuild/builders/web.mjs ${config} dev"]
+COPY dist/prebuild/server/builders/web.mjs ./web.mjs
+# Default command that keeps the container alive
+# The actual build command will be run by docker-compose
+CMD ["sh", "-c", "echo 'Web build service started' && tail -f /dev/null"]
 `;
 }

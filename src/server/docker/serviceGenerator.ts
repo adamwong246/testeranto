@@ -3,6 +3,8 @@
 import { IBuiltConfig, IRunTime } from "../../Types";
 import fs from "fs";
 import path from "path";
+import { baseNodeImage } from "../nodeVersion";
+import { generateDockerfile } from "./dockerfileGenerator";
 // Import the real implementation for test Dockerfiles
 // import { setupDockerfileForTest as realSetupDockerfileForTest } from "./serviceGenerator/testDockerfiles";
 // import { generateDockerfile } from "./dockerfileGenerator";
@@ -31,10 +33,10 @@ function setupDockerfileForBuild(
       path.join(process.cwd(), `${testsName}.ts`)
     );
     const nodeMjsExists = fs.existsSync(
-      path.join(process.cwd(), "dist/prebuild/builders/node.mjs")
+      path.join(process.cwd(), "dist/prebuild/server/builders/node.mjs")
     );
 
-    dockerfileContent = `FROM node:18-alpine
+    dockerfileContent = `FROM ${baseNodeImage}
 WORKDIR /workspace
 RUN apk update && apk add --no-cache \\
     build-base \\
@@ -84,10 +86,10 @@ CMD ["tsx", "src/builders/node.ts", "${testsName}.ts"]
       path.join(process.cwd(), `${testsName}.ts`)
     );
     const webMjsExists = fs.existsSync(
-      path.join(process.cwd(), "dist/prebuild/builders/web.mjs")
+      path.join(process.cwd(), "dist/prebuild/server/builders/web.mjs")
     );
 
-    dockerfileContent = `FROM node:18-alpine
+    dockerfileContent = `FROM ${baseNodeImage}
 WORKDIR /workspace
 RUN apk update && apk add --no-cache \\
     chromium \\
@@ -144,7 +146,7 @@ CMD ["tsx", "src/builders/web.ts", "${testsName}.ts"]
       path.join(process.cwd(), `${testsName}.ts`)
     );
     const pythonMjsExists = fs.existsSync(
-      path.join(process.cwd(), "dist/prebuild/builders/python.mjs")
+      path.join(process.cwd(), "dist/prebuild/server/builders/python.mjs")
     );
 
     dockerfileContent = `FROM python:3.11-alpine
@@ -194,10 +196,10 @@ CMD ["tsx", "src/builders/python.ts", "${testsName}.ts"]
       path.join(process.cwd(), `${testsName}.ts`)
     );
     const golangMjsExists = fs.existsSync(
-      path.join(process.cwd(), "dist/prebuild/builders/golang.mjs")
+      path.join(process.cwd(), "dist/prebuild/server/builders/golang.mjs")
     );
 
-    dockerfileContent = `FROM node:18-alpine
+    dockerfileContent = `FROM ${baseNodeImage}
 WORKDIR /workspace
 RUN apk update && apk add --no-cache \\
     build-base \\
@@ -244,7 +246,7 @@ CMD ["sh", "-c", "echo 'Starting build...' && which node && which npx && npx tsx
 `;
   } else {
     // Default fallback
-    dockerfileContent = `FROM alpine:latest
+    dockerfileContent = `${baseNodeImage}
 WORKDIR /workspace
 RUN mkdir -p /workspace/testeranto
 RUN mkdir -p /workspace/testeranto/bundles
@@ -296,15 +298,15 @@ ENV TESTERANTO_RUNTIME=${runtime}
 function getBaseImage(runtime: IRunTime): string {
   switch (runtime) {
     case "node":
-      return "node:18-alpine";
+      return "${baseNodeImage}";
     case "web":
-      return "node:18-alpine";
+      return "${baseNodeImage}";
     case "python":
       return "python:3.11-alpine";
     case "golang":
       return "golang:1.21-alpine";
     default:
-      return "alpine:latest";
+      return "${baseNodeImage}";
   }
 }
 

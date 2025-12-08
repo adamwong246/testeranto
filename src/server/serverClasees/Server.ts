@@ -9,15 +9,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import nodeEsbuildConfiger from "./../../esbuildConfigs/node";
-import webEsbuildConfiger from "./../../esbuildConfigs/web";
-
-import { default as ansiC, default as ansiColors } from "ansi-colors";
-import { ChildProcess, spawn } from "child_process";
-import esbuild from "esbuild";
+import { default as ansiC } from "ansi-colors";
+import { ChildProcess } from "child_process";
 import fs, { watch } from "fs";
 import path from "path";
-import puppeteer, { ConsoleMessage, executablePath } from "puppeteer-core";
+import puppeteer, { executablePath } from "puppeteer-core";
 import {
   createLogStreams,
   LogStreams,
@@ -29,20 +25,27 @@ import {
   generatePitonoMetafile,
   writePitonoMetafile,
 } from "../../clients/utils/pitonoMetafile";
-import { IFinalResults } from "../../lib";
 import { ISummary, IBuiltConfig, IRunTime } from "../../Types";
 import { checkForShutdown } from "../docker/ProcessManager/checkForShutdown";
 import configTests from "../configTests";
 import { ensureSummaryEntry } from "./../docker/ProcessManager/ensureSummaryEntry";
-import { generatePromptFiles } from "../aider/generatePromptFiles";
-import { lintCheck } from "../node+web/lintCheck";
-import { processGoTestOutput } from "../golang/processGoTestOutput";
 import { pythonLintCheck } from "../python/pythonLintCheck";
 import { pythonTypeCheck } from "../python/pythonTypeCheck";
-import { TestExecutor } from "../docker/ProcessManager/TestExecutor";
-import { tscCheck } from "../node+web/tscCheck";
-import { getRunnables, tscPather, lintPather, webEvaluator } from "../utils";
+import { getRunnables } from "../utils";
 import { Server_DockerCompose } from "./Server_DockerCompose";
+import { ChildProcessHandler } from "./ChildProcessHandler";
+import { TestEnvironmentSetup } from "./TestEnvironmentSetup";
+import { WebLauncher } from "./WebLauncher";
+import { NodeLauncher } from "./NodeLauncher";
+import { BuildProcessManager } from "./BuildProcessManager";
+import { BuildProcessStarter } from "./BuildProcessStarter";
+import { PythonLauncher } from "./PythonLauncher";
+import { GolangLauncher } from "./GolangLauncher";
+import { EntrypointFinder } from "./EntrypointFinder";
+import { TscCheck } from "./TscCheck";
+import { EslintCheck } from "./EslintCheck";
+import { ServerTestEnvironmentSetup } from "./ServerTestEnvironmentSetup";
+import { TypeCheckNotifier } from "./TypeCheckNotifier";
 
 export class Server extends Server_DockerCompose {
   webMetafileWatcher: fs.FSWatcher;
@@ -66,40 +69,16 @@ export class Server extends Server_DockerCompose {
 
   testName: string;
   private composeDir: string;
-  private composeFile: string;
-  // private logger: {
-  //   log: (...args: any[]) => void;
-  //   error: (...args: any[]) => void;
-  //   warn: (...args: any[]) => void;
-  //   info: (...args: any[]) => void;
-  // };
 
-  // private tcpServer: TcpServer;
-  // private webSocketServer: WebSocketServerManager;
-  // private fileSystem: FileSystem;
-  // private dockerCompose: DockerCompose;
-  // private browserManager: BrowserManager;
-  // private testServiceManager: TestServiceManager;
-  // private buildServiceMonitor: BuildServiceMonitor;
-  // private tcpPort: number = 0;
-  // private webSocketPort: number = 0;
-
-  private isProcessingQueue = false;
+  private testEnvironmentSetup: TestEnvironmentSetup;
+  private buildProcessManager: BuildProcessManager;
+  private buildProcessStarter: BuildProcessStarter;
+  private typeCheckNotifier: TypeCheckNotifier;
 
   constructor(configs: IBuiltConfig, testName: string, mode: string) {
     super(process.cwd(), configs, testName, mode);
 
     this.launchers = {};
-    // this.portManager = new PortManager(this.configs.ports);
-    // this.queueManager = new QueueManager();
-    // this.summaryManager = new SummaryManager();
-
-    // this.configTests().forEach(([t, rt, tr, sidecars]) => {
-    //   this.summaryManager.ensureSummaryEntry(t);
-    //   // sidecars.forEach(([sidecarName]) => {
-    //   //   this.summaryManager.ensureSummaryEntry(sidecarName, true);
-    //   // });
-    // });
 
     this.testName = testName;
     this.composeDir = process.cwd();
@@ -109,29 +88,42 @@ export class Server extends Server_DockerCompose {
       "bundles",
       `${this.testName}-docker-compose.yml`
     );
+
+    // Initialize TestEnvironmentSetup
+    // Note: ports, browser, and queue will be set later
+    // We'll need to update them when they're available
+    this.testEnvironmentSetup = new TestEnvironmentSetup(
+      this.ports,
+      this.projectName,
+      this.browser,
+      this.queue
+    );
+
+    // Initialize BuildProcessManager
+    this.buildProcessManager = new BuildProcessManager(
+      this.projectName,
+      this.configs,
+      this.mode,
+      this.webSocketBroadcastMessage.bind(this),
+      this.addPromiseProcess?.bind(this)
+    );
+    // Initialize BuildProcessStarter
+    this.buildProcessStarter = new BuildProcessStarter(
+      this.projectName,
+      this.configs,
+      this.buildProcessManager
+    );
+
+    // Initialize TypeCheckNotifier
+    this.typeCheckNotifier = new TypeCheckNotifier(
+      this.summary,
+      this.writeBigBoard.bind(this),
+      this.checkForShutdown.bind(this)
+    );
   }
 
   currentBuildResolve: (() => void) | null = null;
   currentBuildReject: ((error: any) => void) | null = null;
-
-  async startBuildProcesses(): Promise<void> {
-    const { nodeEntryPoints, webEntryPoints } = getRunnables(
-      this.configs,
-      this.projectName
-    );
-
-    console.log(`Starting build processes for ${this.projectName}...`);
-    console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
-    console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
-    // console.log(`  Pure entry points: ${Object.keys(pureEntryPoints).length}`);
-
-    // Start all build processes (only node, web, pure)
-    await Promise.all([
-      this.startBuildProcess(nodeEsbuildConfiger, nodeEntryPoints, "node"),
-      this.startBuildProcess(webEsbuildConfiger, webEntryPoints, "web"),
-      // this.startBuildProcess(esbuildImportConfiger, pureEntryPoints, "pure"),
-    ]);
-  }
 
   private async setupTestEnvironment(
     src: string,
@@ -143,82 +135,19 @@ export class Server extends Server_DockerCompose {
     portsToUse: string[];
     testResources: string;
   }> {
-    this.bddTestIsRunning(src);
-
-    const reportDest = `testeranto/reports/${this.projectName}/${src
-      .split(".")
-      .slice(0, -1)
-      .join(".")}/${runtime}`;
-
-    if (!fs.existsSync(reportDest)) {
-      fs.mkdirSync(reportDest, { recursive: true });
-    }
-
-    const testConfig = this.configTests().find((t) => t[0] === src);
-    if (!testConfig) {
-      console.log(
-        ansiC.inverse(`missing test config! Exiting ungracefully for '${src}'`)
-      );
-      process.exit(-1);
-    }
-
-    const testConfigResource = testConfig[2];
-
-    const portsToUse: string[] = [];
-    let testResources = "";
-
-    if (testConfigResource.ports === 0) {
-      testResources = JSON.stringify({
-        name: src,
-        ports: [],
-        fs: reportDest,
-        browserWSEndpoint: this.browser.wsEndpoint(),
-      });
-    } else if (testConfigResource.ports > 0) {
-      const openPorts = Object.entries(this.ports).filter(
-        ([, status]) => status === ""
-      );
-
-      if (openPorts.length >= testConfigResource.ports) {
-        for (let i = 0; i < testConfigResource.ports; i++) {
-          portsToUse.push(openPorts[i][0]);
-          this.ports[openPorts[i][0]] = src;
-        }
-
-        testResources = JSON.stringify({
-          scheduled: true,
-          name: src,
-          ports: portsToUse,
-          fs: reportDest,
-          browserWSEndpoint: this.browser.wsEndpoint(),
-        });
-      } else {
-        console.log(
-          ansiC.red(
-            `${runtime}: cannot run ${src} because there are no open ports ATM. This job will be enqueued and run again when a port is available`
-          )
-        );
-        this.queue.push(src);
-        throw new Error("No ports available");
-      }
-    } else {
-      console.error("negative port makes no sense", src);
-      process.exit(-1);
-    }
-
-    return {
-      reportDest,
-      testConfig,
-      testConfigResource,
-      portsToUse,
-      testResources,
-    };
+    const serverTestEnvironmentSetup = new ServerTestEnvironmentSetup(
+      this.ports,
+      this.projectName,
+      this.browser,
+      this.queue,
+      this.configs,
+      this.bddTestIsRunning
+    );
+    return serverTestEnvironmentSetup.setupTestEnvironment(src, runtime);
   }
 
   private cleanupPorts(portsToUse: string[]) {
-    portsToUse.forEach((port) => {
-      this.ports[port] = "";
-    });
+    this.testEnvironmentSetup.cleanupPorts(portsToUse);
   }
 
   private handleChildProcess(
@@ -229,190 +158,33 @@ export class Server extends Server_DockerCompose {
     runtime: IRunTime
   ): Promise<void> {
     return new Promise((resolve, reject) => {
-      child.stdout?.on("data", (data) => {
-        logs.stdout?.write(data);
-      });
-
-      child.stderr?.on("data", (data) => {
-        logs.stderr?.write(data);
-      });
-
-      child.on("close", (code) => {
-        const exitCode = code === null ? -1 : code;
-        if (exitCode < 0) {
-          logs.writeExitCode(
-            exitCode,
-            new Error("Process crashed or was terminated")
-          );
-        } else {
-          logs.writeExitCode(exitCode);
-        }
-        logs.closeAll();
-
-        if (exitCode === 0) {
+      // Use the extracted ChildProcessHandler
+      ChildProcessHandler.handleChildProcess(
+        child,
+        logs,
+        reportDest,
+        src,
+        runtime
+      )
+        .then(() => {
+          // On success, update status
           this.bddTestIsNowDone(src, 0);
           statusMessagePretty(0, src, runtime);
           resolve();
-        } else {
-          console.log(
-            ansiColors.red(
-              `${runtime} ! ${src} failed to execute. Check ${reportDest}/stderr.log for more info`
-            )
-          );
-          this.bddTestIsNowDone(src, exitCode);
-          statusMessagePretty(exitCode, src, runtime);
-          reject(new Error(`Process exited with code ${exitCode}`));
-        }
-      });
-
-      child.on("error", (e) => {
-        console.log(
-          ansiC.red(
-            ansiC.inverse(
-              `${src} errored with: ${e.name}. Check error logs for more info`
-            )
-          )
-        );
-        this.bddTestIsNowDone(src, -1);
-        statusMessagePretty(-1, src, runtime);
-        reject(e);
-      });
-    });
-  }
-
-  async startBuildProcess(
-    configer: (
-      config: IBuiltConfig,
-      entryPoints: string[],
-      testName: string
-    ) => any,
-    entryPoints: Record<string, string>,
-    runtime: string
-  ): Promise<void> {
-    const entryPointKeys = Object.keys(entryPoints);
-    if (entryPointKeys.length === 0) return;
-
-    // Store reference to 'this' for use in the plugin
-    const self = this;
-
-    // Create a custom plugin to track build processes
-    const buildProcessTrackerPlugin = {
-      name: "build-process-tracker",
-      setup(build) {
-        build.onStart(() => {
-          const processId = `build-${runtime}-${Date.now()}`;
-          const command = `esbuild ${runtime} for ${self.projectName}`;
-
-          // Create a promise that will resolve when the build completes
-          const buildPromise = new Promise<void>((resolve, reject) => {
-            // Store resolve and reject functions to call them in onEnd
-            self.currentBuildResolve = resolve;
-            self.currentBuildReject = reject;
-          });
-
-          // Add to process manager
-          if (self.addPromiseProcess) {
-            self.addPromiseProcess(
-              processId,
-              buildPromise,
-              command,
-              "build-time",
-              self.projectName,
-              runtime as any
-            );
-          }
-
-          console.log(
-            `Starting ${runtime} build for ${entryPointKeys.length} entry points`
-          );
-          // Broadcast build start event
-          if (self.webSocketBroadcastMessage) {
-            self.webSocketBroadcastMessage({
-              type: "buildEvent",
-              event: "start",
-              runtime,
-              timestamp: new Date().toISOString(),
-              entryPoints: entryPointKeys.length,
-              processId,
-            });
-          }
-        });
-
-        build.onEnd((result) => {
-          const event = {
-            type: "buildEvent",
-            event: result.errors.length > 0 ? "error" : "success",
-            runtime,
-            timestamp: new Date().toISOString(),
-            errors: result.errors.length,
-            warnings: result.warnings.length,
-          };
-
-          if (result.errors.length > 0) {
-            console.error(
-              `Build ${runtime} failed with ${result.errors.length} errors`
-            );
-            if (self.currentBuildReject) {
-              self.currentBuildReject(
-                new Error(`Build failed with ${result.errors.length} errors`)
-              );
-            }
+        })
+        .catch((error) => {
+          // On error, update status appropriately
+          if (error.message.startsWith("Process exited with code")) {
+            const exitCode = parseInt(error.message.match(/\d+/)?.[0] || "-1");
+            this.bddTestIsNowDone(src, exitCode);
+            statusMessagePretty(exitCode, src, runtime);
           } else {
-            console.log(`Build ${runtime} completed successfully`);
-            if (self.currentBuildResolve) {
-              self.currentBuildResolve();
-            }
+            this.bddTestIsNowDone(src, -1);
+            statusMessagePretty(-1, src, runtime);
           }
-
-          // Broadcast build result event
-          if (self.webSocketBroadcastMessage) {
-            self.webSocketBroadcastMessage(event);
-          }
-
-          // Clear the current build handlers
-          self.currentBuildResolve = null;
-          self.currentBuildReject = null;
+          reject(error);
         });
-      },
-    };
-
-    // Get the base config and add our tracking plugin
-    const baseConfig = configer(this.configs, entryPointKeys, this.projectName);
-    const configWithPlugin = {
-      ...baseConfig,
-      plugins: [...(baseConfig.plugins || []), buildProcessTrackerPlugin],
-    };
-
-    try {
-      // Always build first, then watch if in dev mode
-      if (this.mode === "dev") {
-        const ctx = await esbuild.context(configWithPlugin);
-        // Build once and then watch
-        await ctx.rebuild();
-        await ctx.watch();
-      } else {
-        // In once mode, just build
-        const result = await esbuild.build(configWithPlugin);
-        if (result.errors.length === 0) {
-          console.log(`Successfully built ${runtime} bundle`);
-        }
-      }
-    } catch (error) {
-      console.error(`Failed to build ${runtime}:`, error);
-      // Broadcast error event
-      if (this.webSocketBroadcastMessage) {
-        this.webSocketBroadcastMessage({
-          type: "buildEvent",
-          event: "error",
-          runtime,
-          timestamp: new Date().toISOString(),
-          errors: 1,
-          warnings: 0,
-          message: error.message,
-        });
-      }
-      throw error;
-    }
+    });
   }
 
   configTests: () => [string, IRunTime, { ports: number }, object][] = () => {
@@ -436,63 +208,6 @@ export class Server extends Server_DockerCompose {
     });
   }
 
-  // addPromiseProcess(
-  //   processId: string,
-  //   promise: Promise<any>,
-  //   command: string,
-  //   category: "aider" | "bdd-test" | "build-time" | "other" = "other",
-  //   testName: string,
-  //   platform: IRunTime,
-  //   onResolve?: (result: any) => void,
-  //   onReject?: (error: any) => void
-  // ) {
-  //   const id = this.addPromiseProcess(
-  //     processId,
-  //     promise,
-  //     command,
-  //     category,
-  //     testName,
-  //     platform,
-  //     onResolve,
-  //     onReject
-  //   );
-
-  //   const startMessage = `Starting: ${command}`;
-  //   this.webSocketBroadcastMessage({
-  //     type: "processStarted",
-  //     processId: id,
-  //     command,
-  //     timestamp: new Date().toISOString(),
-  //     logs: [startMessage],
-  //   });
-
-  //   promise
-  //     .then((result) => {
-  //       const successMessage = `Completed successfully with result: ${JSON.stringify(
-  //         result
-  //       )}`;
-  //       this.webSocketBroadcastMessage({
-  //         type: "processExited",
-  //         processId: id,
-  //         exitCode: 0,
-  //         timestamp: new Date().toISOString(),
-  //         logs: [successMessage],
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       const errorMessage = `Failed with error: ${error.message}`;
-  //       this.webSocketBroadcastMessage({
-  //         type: "processError",
-  //         processId: id,
-  //         error: error.message,
-  //         timestamp: new Date().toISOString(),
-  //         logs: [errorMessage],
-  //       });
-  //     });
-
-  //   return id;
-  // }
-
   getProcessesByCategory(
     category: "aider" | "bdd-test" | "build-time" | "other"
   ) {
@@ -507,109 +222,18 @@ export class Server extends Server_DockerCompose {
     return this.getProcessesByCategory("build-time");
   }
 
-  // getProcessesByTestName(testName: string) {
-  //   return this.processManager.getProcessesByTestName(testName);
-  // }
-
-  // getProcessesByPlatform(platform: IRunTime) {
-  //   return this.processManager.getProcessesByPlatform(platform);
-  // }
-
-  // async metafileOutputs(platform: IRunTime) {
-  //   // Create no-op check functions since checks will be run as part of test execution
-  //   const noopCheck = async ({
-  //     entrypoint,
-  //     addableFiles,
-  //     platform: p,
-  //   }: {
-  //     entrypoint: string;
-  //     addableFiles: string[];
-  //     platform: IRunTime;
-  //   }) => {
-  //     // Do nothing - checks will be run via TestExecutor
-  //     return Promise.resolve();
-  //   };
-
-  //   const noopPythonCheck = async (
-  //     entrypoint: string,
-  //     addableFiles: string[]
-  //   ) => {
-  //     // Do nothing - checks will be run via TestExecutor
-  //     return Promise.resolve();
-  //   };
-
-  //   await this.metafileManager.processMetafile(
-  //     platform,
-  //     this.projectName,
-  //     this.configTests.bind(this),
-  //     noopCheck,
-  //     noopCheck,
-  //     noopPythonCheck,
-  //     noopPythonCheck,
-  //     (summary, projectName, entrypoint, addableFiles, platform) => {
-  //       // Ensure the summary entry exists before calling makePrompt
-  //       if (!this.summary[entrypoint]) {
-  //         this.ensureSummaryEntry(entrypoint);
-  //       }
-  //       makePrompt(
-  //         this.summary,
-  //         projectName,
-  //         entrypoint,
-  //         addableFiles,
-  //         platform
-  //       );
-  //     },
-  //     this.findTestNameByEntrypoint.bind(this),
-  //     (testName, platform, addableFiles) =>
-  //       this.addToQueue(testName, platform, addableFiles)
-  //   );
-  // }
-
   private findTestNameByEntrypoint(
     entrypoint: string,
     platform: IRunTime
   ): string | null {
-    const runnables = getRunnables(this.configs, this.projectName);
-
-    let entryPointsMap: Record<string, string>;
-
-    switch (platform) {
-      case "node":
-        entryPointsMap = runnables.nodeEntryPoints;
-        break;
-      case "web":
-        entryPointsMap = runnables.webEntryPoints;
-        break;
-      // case "pure":
-      //   entryPointsMap = runnables.pureEntryPoints;
-      //   break;
-      case "python":
-        entryPointsMap = runnables.pythonEntryPoints;
-        break;
-      case "golang":
-        entryPointsMap = runnables.golangEntryPoints;
-        break;
-      default:
-        throw "wtf";
-    }
-
-    if (!entryPointsMap) {
-      console.error("idk");
-    }
-
-    if (!entryPointsMap[entrypoint]) {
-      console.error(`${entrypoint} not found 1`, entryPointsMap);
-      console.trace();
-      throw `${entrypoint} not found`;
-    }
-
-    return entryPointsMap[entrypoint];
+    const finder = new EntrypointFinder(this.configs, this.projectName);
+    return finder.findTestNameByEntrypoint(entrypoint, platform);
   }
 
   async start() {
     // Wait for build processes to complete first
     try {
-      await this.startBuildProcesses();
+      await this.buildProcessStarter.startBuildProcesses();
 
       // Generate Python metafile if there are Python tests
       const pythonTests = this.configTests().filter(
@@ -817,128 +441,20 @@ export class Server extends Server_DockerCompose {
   //   );
   // }
 
-  private cleanupTestProcesses(testName: string) {
-    const processesToCleanup =
-      this.processManager.cleanupTestProcesses(testName);
+  // private cleanupTestProcesses(testName: string) {
+  //   const processesToCleanup =
+  //     this.processManager.cleanupTestProcesses(testName);
 
-    // Broadcast process exit for each cleaned up process
-    processesToCleanup.forEach((processId) => {
-      this.webSocketBroadcastMessage({
-        type: "processExited",
-        processId,
-        exitCode: -1,
-        timestamp: new Date().toISOString(),
-        logs: ["Process killed due to source file change"],
-      });
-    });
-  }
-
-  private testExecutor: TestExecutor | null = null;
-
-  // async checkQueue() {
-  //   // If already processing the queue, wait
-  //   if (this.isProcessingQueue) {
-  //     return;
-  //   }
-
-  //   this.isProcessingQueue = true;
-
-  //   try {
-  //     // Process one item at a time
-  //     const queueItem = this.queueManager.pop();
-  //     if (!queueItem) {
-  //       this.isProcessingQueue = false;
-  //       if (this.queueManager.length === 0) {
-  //         console.log(ansiC.inverse(`The queue is empty`));
-  //       }
-  //       return;
-  //     }
-
-  //     const { testName: x, runtime, addableFiles } = queueItem;
-
-  //     // Check if this test is already running (shouldn't happen with our logic)
-  //     if (this.processManager.isTestRunning(x)) {
-  //       console.log(
-  //         ansiC.yellow(
-  //           `Skipping ${x} (${runtime}) - already running, putting back in queue`
-  //         )
-  //       );
-  //       // Put it back at the end of the queue
-  //       this.queueManager.addToQueue(
-  //         x,
-  //         runtime,
-  //         this.configs,
-  //         this.projectName,
-  //         this.cleanupTestProcesses.bind(this),
-  //         () => {} // Don't trigger checkQueue here
-  //       );
-  //       this.isProcessingQueue = false;
-  //       // Try again after a delay
-  //       setTimeout(() => this.checkQueue(), 1000);
-  //       return;
-  //     }
-
-  //     // Find the test configuration that matches both name AND runtime
-  //     const test = this.configTests().find(
-  //       (t) => t[0] === x && t[1] === runtime
-  //     );
-  //     if (!test) {
-  //       console.error(
-  //         `test is undefined ${x} (${runtime}), ${JSON.stringify(
-  //           this.configTests(),
-  //           null,
-  //           2
-  //         )}`
-  //       );
-  //       this.isProcessingQueue = false;
-  //       // Try the next item
-  //       setTimeout(() => this.checkQueue(), 100);
-  //       return;
-  //     }
-
-  //     // Initialize test executor if not already done
-  //     if (!this.testExecutor) {
-  //       this.testExecutor = new TestExecutor({
-  //         projectName: this.projectName,
-  //         configs: this.configs,
-  //         summary: this.summary,
-  //         summaryManager: this.summaryManager,
-  //         processManager: this.processManager,
-  //         portManager: this.portManager,
-  //         browser: this.browser,
-  //         webSocketBroadcastMessage: this.webSocketBroadcastMessage.bind(this),
-  //         typeCheckIsRunning: this.typeCheckIsRunning,
-  //         typeCheckIsNowDone: this.typeCheckIsNowDone,
-  //         lintIsRunning: this.lintIsRunning,
-  //         lintIsNowDone: this.lintIsNowDone,
-  //         bddTestIsRunning: this.bddTestIsRunning,
-  //         bddTestIsNowDone: this.bddTestIsNowDone,
-  //         launchNode: this.launchNode,
-  //         launchWeb: this.launchWeb,
-  //         launchPython: this.launchPython,
-  //         launchGolang: this.launchGolang,
-  //         addPromiseProcess: this.addPromiseProcess.bind(this),
-  //         pythonLintCheck: this.pythonLintCheck.bind(this),
-  //         pythonTypeCheck: this.pythonTypeCheck.bind(this),
-  //       });
-  //     }
-
-  //     // Execute all three phases together
-  //     try {
-  //       await this.testExecutor.executeTest(x, runtime, addableFiles);
-  //     } catch (error) {
-  //       console.error(`Error executing test ${x} (${runtime}):`, error);
-  //     } finally {
-  //       // Mark as done and check for next item
-  //       this.isProcessingQueue = false;
-  //       setTimeout(() => this.checkQueue(), 100);
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error in checkQueue:`, error);
-  //     this.isProcessingQueue = false;
-  //     // Try again after a delay
-  //     setTimeout(() => this.checkQueue(), 1000);
-  //   }
+  //   // Broadcast process exit for each cleaned up process
+  //   processesToCleanup.forEach((processId) => {
+  //     this.webSocketBroadcastMessage({
+  //       type: "processExited",
+  //       processId,
+  //       exitCode: -1,
+  //       timestamp: new Date().toISOString(),
+  //       logs: ["Process killed due to source file change"],
+  //     });
+  //   });
   // }
 
   checkForShutdown = async () => {
@@ -951,10 +467,10 @@ export class Server extends Server_DockerCompose {
     );
   };
 
-  private ensureSummaryEntry(src: string, isSidecar = false) {
-    ensureSummaryEntry(this.summary, src, isSidecar);
-    return this.summary[src];
-  }
+  // private ensureSummaryEntry(src: string, isSidecar = false) {
+  //   ensureSummaryEntry(this.summary, src, isSidecar);
+  //   return this.summary[src];
+  // }
 
   async pythonLintCheck(entrypoint: string, addableFiles: string[]) {
     return pythonLintCheck(
@@ -974,6 +490,20 @@ export class Server extends Server_DockerCompose {
     );
   }
 
+  private tscCheckInstance: TscCheck | null = null;
+
+  private getTscCheck(): TscCheck {
+    if (!this.tscCheckInstance) {
+      this.tscCheckInstance = new TscCheck(
+        this.projectName,
+        this.typeCheckIsRunning,
+        this.typeCheckIsNowDone,
+        this.addPromiseProcess.bind(this)
+      );
+    }
+    return this.tscCheckInstance;
+  }
+
   tscCheck = async ({
     entrypoint,
     addableFiles,
@@ -982,42 +512,29 @@ export class Server extends Server_DockerCompose {
     entrypoint: string;
     addableFiles: string[];
     platform: IRunTime;
-  }): Promise<any> => {
-    const processId = `tsc-${entrypoint}-${Date.now()}`;
-    const command = `tsc check for ${entrypoint}`;
-
-    const tscPromise = (async () => {
-      try {
-        this.typeCheckIsRunning(entrypoint);
-      } catch (e) {
-        // Log error through process manager
-        throw new Error(`Error in tscCheck: ${e.message}`);
-      }
-
-      const tscPath = tscPather(entrypoint, platform, this.projectName);
-
-      const results = tscCheck({
-        entrypoint,
-        addableFiles,
-        platform,
-        projectName: this.projectName,
-      });
-
-      fs.writeFileSync(tscPath, results.join("\n"));
-
-      this.typeCheckIsNowDone(entrypoint, results.length);
-      return results.length;
-    })();
-
-    this.addPromiseProcess(
-      processId,
-      tscPromise,
-      command,
-      "build-time",
+  }): Promise<void> => {
+    return this.getTscCheck().tscCheck({
       entrypoint,
-      platform
-    );
+      addableFiles,
+      platform,
+    });
   };
+
+  private eslintCheckInstance: EslintCheck | null = null;
+
+  private getEslintCheck(): EslintCheck {
+    if (!this.eslintCheckInstance) {
+      this.eslintCheckInstance = new EslintCheck(
+        this.projectName,
+        this.lintIsRunning,
+        this.lintIsNowDone,
+        this.addPromiseProcess.bind(this),
+        this.writeBigBoard.bind(this),
+        this.checkForShutdown.bind(this)
+      );
+    }
+    return this.eslintCheckInstance;
+  }
 
   eslintCheck = async ({
     entrypoint,
@@ -1028,31 +545,11 @@ export class Server extends Server_DockerCompose {
     addableFiles: string[];
     platform: IRunTime;
   }) => {
-    const processId = `eslint-${entrypoint}-${Date.now()}`;
-    const command = `eslint check for ${entrypoint}`;
-
-    const eslintPromise = (async () => {
-      try {
-        this.lintIsRunning(entrypoint);
-      } catch (e) {
-        throw new Error(`Error in eslintCheck: ${e.message}`);
-      }
-      const filepath = lintPather(entrypoint, platform, this.projectName);
-      if (fs.existsSync(filepath)) fs.rmSync(filepath);
-      const results = await lintCheck(addableFiles);
-      fs.writeFileSync(filepath, results);
-      this.lintIsNowDone(entrypoint, results.length);
-      return results.length;
-    })();
-
-    this.addPromiseProcess(
-      processId,
-      eslintPromise,
-      command,
-      "build-time",
+    return this.getEslintCheck().eslintCheck({
       entrypoint,
-      platform
-    );
+      addableFiles,
+      platform,
+    });
   };
 
   typeCheckIsRunning = (src: string) => {
@@ -1061,17 +558,7 @@ export class Server extends Server_DockerCompose {
   };
 
   typeCheckIsNowDone = (src: string, failures: number) => {
-    if (failures === 0) {
-      console.log(ansiC.green(ansiC.inverse(`tsc > ${src}`)));
-    } else {
-      console.log(
-        ansiC.red(ansiC.inverse(`tsc > ${src} failed ${failures} times`))
-      );
-    }
-
-    this.summary[src].typeErrors = failures;
-    this.writeBigBoard();
-    this.checkForShutdown();
+    this.typeCheckNotifier.typeCheckIsNowDone(src, failures);
   };
 
   lintIsRunning = (src: string) => {
@@ -1104,422 +591,61 @@ export class Server extends Server_DockerCompose {
     this.checkForShutdown();
   };
 
-  // setupIpcHandler is no longer used since node tests now use WebSocket communication
-  // All communication should go through WebSocket messages handled in Server_TCP
-
   launchNode = async (src: string, dest: string) => {
-    console.log(ansiC.green(ansiC.inverse(`node < ${src}`)));
-
-    const processId = `node-${src}-${Date.now()}`;
-    const command = `node test: ${src}`;
-
-    const nodePromise = (async () => {
-      try {
-        const { reportDest, testResources, portsToUse } =
-          await this.setupTestEnvironment(src, "node");
-
-        const builtfile = dest;
-        const logs = createLogStreams(reportDest, "node");
-
-        // Spawn without IPC - use only stdio pipes
-        // Pass WebSocket port via environment variable for congruence
-        const child = spawn("node", [builtfile, testResources], {
-          stdio: ["pipe", "pipe", "pipe"],
-          env: {
-            ...process.env,
-            WS_PORT: "3000",
-          },
-        });
-
-        // Handle stdout and stderr normally
-        child.stdout?.on("data", (data) => {
-          logs.stdout?.write(data);
-        });
-
-        child.stderr?.on("data", (data) => {
-          logs.stderr?.write(data);
-        });
-
-        try {
-          await this.handleChildProcess(child, logs, reportDest, src, "node");
-
-          // Generate prompt files for Node tests
-          generatePromptFiles(reportDest, src);
-        } finally {
-          this.cleanupPorts(portsToUse);
-        }
-      } catch (error: any) {
-        if (error.message !== "No ports available") {
-          console.error(`Error in launchNode for ${src}:`, error);
-        }
-      }
-    })();
-
-    this.addPromiseProcess(
-      processId,
-      nodePromise,
-      command,
-      "bdd-test",
-      src,
-      "node",
-      () => {
-        setTimeout(() => this.checkQueue(), 100);
-      },
-      () => {
-        setTimeout(() => this.checkQueue(), 100);
-      }
+    // Use the extracted NodeLauncher class
+    const nodeLauncher = new NodeLauncher(
+      this.projectName,
+      this.setupTestEnvironment.bind(this),
+      this.cleanupPorts.bind(this),
+      this.handleChildProcess.bind(this),
+      this.bddTestIsRunning,
+      this.bddTestIsNowDone,
+      this.addPromiseProcess.bind(this),
+      this.checkQueue.bind(this)
     );
+    return nodeLauncher.launchNode(src, dest);
   };
 
   launchWeb = async (src: string, dest: string) => {
-    console.log(ansiC.green(ansiC.inverse(`web < ${src}`)));
-
-    const processId = `web-${src}-${Date.now()}`;
-    const command = `web test: ${src}`;
-
-    // Create the promise
-    const webPromise = (async () => {
-      try {
-        this.bddTestIsRunning(src);
-
-        const reportDest = `testeranto/reports/${this.projectName}/${src
-          .split(".")
-          .slice(0, -1)
-          .join(".")}/web`;
-        if (!fs.existsSync(reportDest)) {
-          fs.mkdirSync(reportDest, { recursive: true });
-        }
-
-        const destFolder = dest.replace(".mjs", "");
-        const htmlPath = `${destFolder}.html`;
-
-        const webArgz = JSON.stringify({
-          name: src,
-          ports: [],
-          fs: reportDest,
-          browserWSEndpoint: this.browser.wsEndpoint(),
-        });
-
-        const logs = createLogStreams(reportDest, "web");
-
-        // Use HTTP URL instead of file:// to allow WebSocket connections
-        const httpPort = Number(process.env.HTTP_PORT) || 3000;
-
-        // Convert HTML file path to relative URL under /bundles/web/
-        // htmlPath is something like: /Users/adam/Code/testeranto/testeranto/bundles/web/allTests/example/Calculator.test.html
-        // We need: /bundles/web/allTests/example/Calculator.test.html
-        let relativePath: string;
-        const match = htmlPath.match(/testeranto\/bundles\/web\/(.*)/);
-        if (match) {
-          relativePath = match[1];
-        } else {
-          // Try to extract from absolute path
-          const absMatch = htmlPath.match(/\/bundles\/web\/(.*)/);
-          if (absMatch) {
-            relativePath = absMatch[1];
-          } else {
-            // Fallback: just use the filename
-            relativePath = path.basename(htmlPath);
-          }
-        }
-
-        // Encode the test resource configuration as a URL query parameter
-        // This ensures it's available immediately when the page loads
-        const encodedConfig = encodeURIComponent(webArgz);
-        const url = `http://localhost:${httpPort}/bundles/web/${relativePath}?config=${encodedConfig}`;
-        console.log(
-          `Navigating to ${url} (HTML file exists: ${fs.existsSync(htmlPath)})`
-        );
-
-        const page = await this.browser.newPage();
-
-        page.on("console", (log: ConsoleMessage) => {
-          const msg = `${log.text()}\n`;
-          switch (log.type()) {
-            case "info":
-              logs.info?.write(msg);
-              break;
-            case "warn":
-              logs.warn?.write(msg);
-              break;
-            case "error":
-              logs.error?.write(msg);
-              break;
-            case "debug":
-              logs.debug?.write(msg);
-              break;
-            default:
-              break;
-          }
-        });
-
-        page.on("close", () => {
-          logs.writeExitCode(0);
-          logs.closeAll();
-        });
-
-        // Note: Functions are no longer exposed via page.exposeFunction()
-        // The web tests should use PM_Web which communicates via WebSocket
-        // PM_Web is instantiated in the browser context and connects to the WebSocket server
-
-        const close = () => {
-          // logs.info?.write("close2");
-          // if (!files[src]) {
-          //   files[src] = new Set();
-          // }
-          // delete files[src];
-          // Promise.all(screenshots[src] || []).then(() => {
-          //   delete screenshots[src];
-          // });
-        };
-
-        page.on("pageerror", (err: Error) => {
-          logs.info?.write("pageerror: " + err.message);
-          console.error("Page error in web test:", err);
-          logs.writeExitCode(-1, err);
-          console.log(
-            ansiColors.red(
-              `web ! ${src} failed to execute. No "tests.json" file was generated. Check ${reportDest}/error.log for more info`
-            )
-          );
-          this.bddTestIsNowDone(src, -1);
-          close();
-          throw err;
-        });
-
-        // Log console messages for debugging
-        page.on("console", (msg) => {
-          const text = msg.text();
-          console.log(`Browser console [${msg.type()}]: ${text}`);
-        });
-
-        // Navigate to the HTML page with the config in the query parameter
-        await page.goto(url, { waitUntil: "networkidle0" });
-
-        // The HTML page loads the JS bundle, but we need to actually run the test
-        // Use webEvaluator to import and run the test module
-        // First, get the JS file path from the dest
-        const jsPath = dest;
-        // Convert to relative URL for the browser
-        let jsRelativePath: string;
-        const jsMatch = jsPath.match(/testeranto\/bundles\/web\/(.*)/);
-        if (jsMatch) {
-          jsRelativePath = jsMatch[1];
-        } else {
-          const jsAbsMatch = jsPath.match(/\/bundles\/web\/(.*)/);
-          if (jsAbsMatch) {
-            jsRelativePath = jsAbsMatch[1];
-          } else {
-            jsRelativePath = path.basename(jsPath);
-          }
-        }
-        const jsUrl = `/bundles/web/${jsRelativePath}?cacheBust=${Date.now()}`;
-
-        // Evaluate the test using webEvaluator
-        const evaluation = webEvaluator(jsUrl, webArgz);
-        console.log("Evaluating web test with URL:", jsUrl);
-
-        try {
-          const results = (await page.evaluate(evaluation)) as IFinalResults;
-          const { fails, failed, features } = results;
-          logs.info?.write("\n idk1");
-          statusMessagePretty(fails, src, "web");
-          this.bddTestIsNowDone(src, fails);
-        } catch (error) {
-          console.error("Error evaluating web test:", error);
-          logs.info?.write("\n Error evaluating web test");
-          statusMessagePretty(-1, src, "web");
-          this.bddTestIsNowDone(src, -1);
-        }
-
-        // Generate prompt files for Web tests
-        generatePromptFiles(reportDest, src);
-
-        await page.close();
-        close();
-      } catch (error) {
-        console.error(`Error in web test ${src}:`, error);
-        this.bddTestIsNowDone(src, -1);
-        throw error;
-      }
-    })();
-
-    // Add to process manager
-    this.addPromiseProcess(
-      processId,
-      webPromise,
-      command,
-      "bdd-test",
-      src,
-      "web",
-      () => {
-        setTimeout(() => this.checkQueue(), 100);
-      },
-      () => {
-        setTimeout(() => this.checkQueue(), 100);
-      }
+    // Use the extracted WebLauncher class
+    const webLauncher = new WebLauncher(
+      this.projectName,
+      this.browser,
+      this.bddTestIsRunning,
+      this.bddTestIsNowDone,
+      this.addPromiseProcess.bind(this),
+      this.checkQueue.bind(this)
     );
+    return webLauncher.launchWeb(src, dest);
   };
 
   launchPython = async (src: string, dest: string) => {
-    console.log(ansiC.green(ansiC.inverse(`python < ${src}`)));
-
-    const processId = `python-${src}-${Date.now()}`;
-    const command = `python test: ${src}`;
-
-    const pythonPromise = (async () => {
-      try {
-        const { reportDest, testResources, portsToUse } =
-          await this.setupTestEnvironment(src, "python");
-
-        const logs = createLogStreams(reportDest, "python");
-
-        // Determine Python command
-        const venvPython = `./venv/bin/python3`;
-        const pythonCommand = fs.existsSync(venvPython)
-          ? venvPython
-          : "python3";
-
-        // Pass WebSocket port via environment variable for congruence
-        const child = spawn(pythonCommand, [src, testResources], {
-          stdio: ["pipe", "pipe", "pipe"],
-          env: {
-            ...process.env,
-            WS_PORT: "3000",
-          },
-        });
-
-        // Handle stdout and stderr normally
-        child.stdout?.on("data", (data) => {
-          logs.stdout?.write(data);
-        });
-
-        child.stderr?.on("data", (data) => {
-          logs.stderr?.write(data);
-        });
-
-        try {
-          await this.handleChildProcess(child, logs, reportDest, src, "python");
-
-          // Generate prompt files for Python tests
-          await generatePromptFiles(reportDest, src);
-        } finally {
-          this.cleanupPorts(portsToUse);
-        }
-      } catch (error: any) {
-        if (error.message !== "No ports available") {
-          console.error(`Error in launchPython for ${src}:`, error);
-        }
-      }
-    })();
-
-    this.addPromiseProcess(
-      processId,
-      pythonPromise,
-      command,
-      "bdd-test",
-      src,
-      "python",
-      () => {
-        setTimeout(() => this.checkQueue(), 100);
-      },
-      () => {
-        setTimeout(() => this.checkQueue(), 100);
-      }
+    // Use the extracted PythonLauncher class
+    const pythonLauncher = new PythonLauncher(
+      this.projectName,
+      this.setupTestEnvironment.bind(this),
+      this.handleChildProcess.bind(this),
+      this.cleanupPorts.bind(this),
+      this.bddTestIsRunning,
+      this.bddTestIsNowDone,
+      this.addPromiseProcess.bind(this),
+      this.checkQueue.bind(this)
     );
+    return pythonLauncher.launchPython(src, dest);
   };
 
   launchGolang = async (src: string, dest: string) => {
-    console.log(ansiC.green(ansiC.inverse(`goland < ${src}`)));
-
-    const processId = `golang-${src}-${Date.now()}`;
-    const command = `golang test: ${src}`;
-
-    const golangPromise = (async () => {
-      try {
-        const { reportDest, testResources, portsToUse } =
-          await this.setupTestEnvironment(src, "golang");
-
-        const logs = createLogStreams(reportDest, "golang");
-
-        // For Go tests, we need to run from the directory containing the go.mod file
-        // Find the nearest go.mod file by walking up the directory tree
-        let currentDir = path.dirname(src);
-        let goModDir = null;
-
-        while (currentDir !== path.parse(currentDir).root) {
-          if (fs.existsSync(path.join(currentDir, "go.mod"))) {
-            goModDir = currentDir;
-            break;
-          }
-          currentDir = path.dirname(currentDir);
-        }
-
-        if (!goModDir) {
-          console.error(`Could not find go.mod file for test ${src}`);
-          // Try running from the test file's directory as a fallback
-          goModDir = path.dirname(src);
-          console.error(`Falling back to: ${goModDir}`);
-        }
-
-        // Get the relative path to the test file from the go.mod directory
-        const relativeTestPath = path.relative(goModDir, src);
-
-        // Pass WebSocket port (3000) via environment variable
-        // The Go test should connect to WebSocket at ws://localhost:3000
-        const child = spawn(
-          "go",
-          ["test", "-v", "-json", "./" + path.dirname(relativeTestPath)],
-          {
-            stdio: ["pipe", "pipe", "pipe"],
-            env: {
-              ...process.env,
-              TEST_RESOURCES: testResources,
-              WS_PORT: "3000", // Pass WebSocket port
-              GO111MODULE: "on",
-            },
-            cwd: goModDir,
-          }
-        );
-
-        // Handle stdout and stderr normally
-        child.stdout?.on("data", (data) => {
-          logs.stdout?.write(data);
-        });
-
-        child.stderr?.on("data", (data) => {
-          logs.stderr?.write(data);
-        });
-
-        await this.handleChildProcess(child, logs, reportDest, src, "golang");
-
-        // Generate prompt files for Golang tests
-        generatePromptFiles(reportDest, src);
-
-        // Ensure tests.json exists by parsing the go test JSON output
-        processGoTestOutput(reportDest, src);
-
-        this.cleanupPorts(portsToUse);
-      } catch (error) {
-        if (error.message !== "No ports available") {
-          throw error;
-        }
-      }
-    })();
-
-    this.addPromiseProcess(
-      processId,
-      golangPromise,
-      command,
-      "bdd-test",
-      src,
-      "golang",
-      () => {
-        setTimeout(() => this.checkQueue(), 100);
-      },
-      () => {
-        setTimeout(() => this.checkQueue(), 100);
-      }
+    // Use the extracted GolangLauncher class
+    const golangLauncher = new GolangLauncher(
+      this.projectName,
+      this.setupTestEnvironment.bind(this),
+      this.handleChildProcess.bind(this),
+      this.cleanupPorts.bind(this),
+      this.bddTestIsRunning,
+      this.bddTestIsNowDone,
+      this.addPromiseProcess.bind(this),
+      this.checkQueue.bind(this)
     );
+    return golangLauncher.launchGolang(src, dest);
   };
 }

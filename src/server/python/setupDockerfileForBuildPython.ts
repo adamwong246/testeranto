@@ -7,8 +7,8 @@ export const setupDockerfileForBuildPython = (config: string): string => {
 RUN python3 --version && pip3 --version
 ${COMMON_PACKAGE_INSTALL}
 COPY ${config} .
-COPY dist/prebuild/builders/python.mjs ./python.mjs
+COPY dist/prebuild/server/builders/python.mjs ./python.mjs
 # Run the build to generate metafiles when container starts
-CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/builders/ && which node && which npx && npx tsx ./dist/prebuild/builders/python.mjs ${config}"]
+CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/server/builders/ && which node && which npx && npx tsx ./dist/prebuild/server/builders/python.mjs ${config}"]
 `;
 };

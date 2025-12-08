@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ts from "typescript";
-
-import { IRunTime } from "../Types";
-
 import tsc from "tsc-prog";
+import ts from "typescript";
+import { IRunTime } from "../../lib";
 import { tscPather } from "../utils";
 
 export const tscCheck = ({

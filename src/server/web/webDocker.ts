@@ -1,4 +1,6 @@
-export const webDocker = `FROM node:18-alpine
+import { baseNodeImage } from "../nodeVersion";
+
+export const webDocker = `FROM ${baseNodeImage}
 WORKDIR /workspace
 # Install libxml2-utils for xmllint, netcat-openbsd for network checks, and Chromium for browser tests
 RUN apk add --update --no-cache libxml2-utils netcat-openbsd chromium nss freetype freetype-dev harfbuzz ca-certificates ttf-freefont font-noto-emoji

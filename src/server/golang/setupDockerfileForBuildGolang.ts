@@ -1,10 +1,11 @@
 import { COMMON_PACKAGE_INSTALL } from "../constants/COMMON_PACKAGE_INSTALL";
+import { baseNodeImage } from "../nodeVersion";
 
 export const setupDockerfileForBuildGolang = (config: string): string => {
   const goSpecificPackages = `\\
     wget`;
 
-  return `FROM node:18-alpine
+  return `FROM ${baseNodeImage}
 WORKDIR /workspace
 RUN apk update && apk add --no-cache \\
     build-base \\
@@ -23,8 +24,8 @@ ENV GOROOT=/usr/local/go
 ENV PATH=$PATH:$GOROOT/bin
 ${COMMON_PACKAGE_INSTALL}
 COPY ${config} .
-COPY dist/prebuild/builders/golang.mjs ./golang.mjs
+COPY dist/prebuild/server/builders/golang.mjs ./golang.mjs
 # Run the build to generate metafiles when container starts
-CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/builders/ && which node && which npx && npx tsx ./dist/prebuild/builders/golang.mjs ${config}"]
+CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/server/builders/ && which node && which npx && npx tsx ./dist/prebuild/server/builders/golang.mjs ${config}"]
 `;
 };
