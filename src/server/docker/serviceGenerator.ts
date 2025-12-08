@@ -1,435 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IBuiltConfig, IRunTime } from "../../Types";
-import fs from "fs";
 import path from "path";
-import { baseNodeImage } from "../nodeVersion";
-import { generateDockerfile } from "./dockerfileGenerator";
-// Import the real implementation for test Dockerfiles
-// import { setupDockerfileForTest as realSetupDockerfileForTest } from "./serviceGenerator/testDockerfiles";
-// import { generateDockerfile } from "./dockerfileGenerator";
-
-// Build services should create proper Dockerfiles
-function setupDockerfileForBuild(
-  runtime: IRunTime,
-  testsName: string,
-  logger?: {
-    log: (...args: any[]) => void;
-  }
-): string {
-  const log = logger?.log || (() => {}); // Use logger or no-op function
-  log(`Creating Dockerfile for ${runtime} build service`);
-
-  // Generate the correct Dockerfile content based on runtime
-  let dockerfileContent = "";
-
-  if (runtime === "node") {
-    // Check if files exist
-    const packageJsonExists = fs.existsSync(
-      path.join(process.cwd(), "package.json")
-    );
-    const srcExists = fs.existsSync(path.join(process.cwd(), "src"));
-    const testsFileExists = fs.existsSync(
-      path.join(process.cwd(), `${testsName}.ts`)
-    );
-    const nodeMjsExists = fs.existsSync(
-      path.join(process.cwd(), "dist/prebuild/server/builders/node.mjs")
-    );
-
-    dockerfileContent = `FROM ${baseNodeImage}
-WORKDIR /workspace
-RUN apk update && apk add --no-cache \\
-    build-base \\
-    python3 \\
-    py3-pip \\
-    cairo-dev \\
-    pango-dev \\
-    jpeg-dev \\
-    giflib-dev \\
-    librsvg-dev \\
-    libxml2-utils && \\
-    rm -rf /var/cache/apk/*
-RUN npm install -g node-gyp tsx
-${packageJsonExists ? "COPY package.json ." : "# package.json not found"}
-# Try yarn install, fallback to npm install if it fails
-ENV npm_config_build_from_source=false
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \\
-    npm install -g tsx && \\
-    npm cache clean --force && \\
-    yarn cache clean || true
-${srcExists ? "COPY ./src ./src/" : "# src directory not found"}
-${testsFileExists ? `COPY ${testsName}.ts .` : `# ${testsName}.ts not found`}
-# Copy builders source code
-COPY ./src/builders ./src/builders/
-# Create the full directory structure before CMD
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}/${testsName}
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
-# Set environment variables for output directories
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/${runtime}/${testsName}
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/${runtime}
-ENV TESTERANTO_RUNTIME=${runtime}
-# Run the node builder using tsx
-CMD ["tsx", "src/builders/node.ts", "${testsName}.ts"]
-`;
-  } else if (runtime === "web") {
-    // Check if files exist
-    const packageJsonExists = fs.existsSync(
-      path.join(process.cwd(), "package.json")
-    );
-    const srcExists = fs.existsSync(path.join(process.cwd(), "src"));
-    const testsFileExists = fs.existsSync(
-      path.join(process.cwd(), `${testsName}.ts`)
-    );
-    const webMjsExists = fs.existsSync(
-      path.join(process.cwd(), "dist/prebuild/server/builders/web.mjs")
-    );
-
-    dockerfileContent = `FROM ${baseNodeImage}
-WORKDIR /workspace
-RUN apk update && apk add --no-cache \\
-    chromium \\
-    nss \\
-    freetype \\
-    freetype-dev \\
-    harfbuzz \\
-    ca-certificates \\
-    ttf-freefont \\
-    font-noto-emoji \\
-    build-base \\
-    python3 \\
-    py3-pip \\
-    cairo-dev \\
-    pango-dev \\
-    jpeg-dev \\
-    giflib-dev \\
-    librsvg-dev \\
-    libxml2-utils && \\
-    rm -rf /var/cache/apk/*
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-RUN npm install -g node-gyp tsx
-${packageJsonExists ? "COPY package.json ." : "# package.json not found"}
-ENV npm_config_build_from_source=false
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \\
-    npm install -g tsx && \\
-    npm cache clean --force && \\
-    yarn cache clean || true
-${srcExists ? "COPY ./src ./src/" : "# src directory not found"}
-${testsFileExists ? `COPY ${testsName}.ts .` : `# ${testsName}.ts not found`}
-# Copy builders source code
-COPY ./src/builders ./src/builders/
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}/${testsName}
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/${runtime}/${testsName}
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/${runtime}
-ENV TESTERANTO_RUNTIME=${runtime}
-# Run the web builder using tsx
-CMD ["tsx", "src/builders/web.ts", "${testsName}.ts"]
-`;
-  } else if (runtime === "python") {
-    // Check if files exist
-    const requirementsExists = fs.existsSync(
-      path.join(process.cwd(), "requirements.txt")
-    );
-    const srcExists = fs.existsSync(path.join(process.cwd(), "src"));
-    const testsFileExists = fs.existsSync(
-      path.join(process.cwd(), `${testsName}.ts`)
-    );
-    const pythonMjsExists = fs.existsSync(
-      path.join(process.cwd(), "dist/prebuild/server/builders/python.mjs")
-    );
-
-    dockerfileContent = `FROM python:3.11-alpine
-WORKDIR /workspace
-RUN apk update && apk add --no-cache \\
-    build-base \\
-    libffi-dev \\
-    openssl-dev \\
-    cargo \\
-    nodejs \\
-    npm \\
-    && rm -rf /var/cache/apk/*
-RUN npm install -g tsx
-${
-  requirementsExists
-    ? "COPY requirements.txt ."
-    : "# requirements.txt not found"
-}
-${
-  requirementsExists
-    ? "RUN pip install --no-cache-dir -r requirements.txt"
-    : "# Skipping pip install"
-}
-${srcExists ? "COPY ./src ./src/" : "# src directory not found"}
-${testsFileExists ? `COPY ${testsName}.ts .` : `# ${testsName}.ts not found`}
-# Copy builders source code
-COPY ./src/builders ./src/builders/
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}/${testsName}
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/${runtime}/${testsName}
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/${runtime}
-ENV TESTERANTO_RUNTIME=${runtime}
-# Run the python builder using tsx
-CMD ["tsx", "src/builders/python.ts", "${testsName}.ts"]
-`;
-  } else if (runtime === "golang") {
-    // Check if files exist
-    const packageJsonExists = fs.existsSync(
-      path.join(process.cwd(), "package.json")
-    );
-    const srcExists = fs.existsSync(path.join(process.cwd(), "src"));
-    const testsFileExists = fs.existsSync(
-      path.join(process.cwd(), `${testsName}.ts`)
-    );
-    const golangMjsExists = fs.existsSync(
-      path.join(process.cwd(), "dist/prebuild/server/builders/golang.mjs")
-    );
-
-    dockerfileContent = `FROM ${baseNodeImage}
-WORKDIR /workspace
-RUN apk update && apk add --no-cache \\
-    build-base \\
-    python3 \\
-    py3-pip \\
-    cairo-dev \\
-    pango-dev \\
-    jpeg-dev \\
-    giflib-dev \\
-    librsvg-dev \\
-    libxml2-utils\\
-    wget && \\
-    rm -rf /var/cache/apk/*
-# Install Go
-RUN wget -q -O - https://go.dev/dl/go1.21.0.linux-amd64.tar.gz | tar -xz -C /usr/local
-ENV GOROOT=/usr/local/go
-ENV PATH=$PATH:$GOROOT/bin
-RUN npm install -g node-gyp tsx
-${packageJsonExists ? "COPY package.json ." : "# package.json not found"}
-# Try yarn install, fallback to npm install if it fails
-ENV npm_config_build_from_source=false
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \\
-    npm install -g tsx && \\
-    npm cache clean --force && \\
-    yarn cache clean || true
-${srcExists ? "COPY ./src ./src/" : "# src directory not found"}
-${testsFileExists ? `COPY ${testsName}.ts .` : `# ${testsName}.ts not found`}
-# Copy builders source code
-COPY ./src/builders ./src/builders/
-# Create the full directory structure before CMD
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}/${testsName}
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
-# Set environment variables for output directories
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/${runtime}/${testsName}
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/${runtime}
-ENV TESTERANTO_RUNTIME=${runtime}
-# Run the golang builder using tsx
-CMD ["sh", "-c", "echo 'Starting build...' && which node && which npx && npx tsx ./src/builders/golang.ts ${testsName}.ts"]
-`;
-  } else {
-    // Default fallback
-    dockerfileContent = `${baseNodeImage}
-WORKDIR /workspace
-RUN mkdir -p /workspace/testeranto
-RUN mkdir -p /workspace/testeranto/bundles
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}
-RUN mkdir -p /workspace/testeranto/bundles/${runtime}/${testsName}
-RUN mkdir -p /workspace/testeranto/metafiles
-RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
-ENV BUNDLES_DIR=/workspace/testeranto/bundles/${runtime}/${testsName}
-ENV METAFILES_DIR=/workspace/testeranto/metafiles/${runtime}
-ENV TESTERANTO_RUNTIME=${runtime}
-`;
-  }
-
-  // Create the directory for the build Dockerfile matching the old structure
-  const dockerfileDir = path.join(
-    process.cwd(),
-    "testeranto",
-    "bundles",
-    "allTests",
-    runtime
-  );
-
-  fs.mkdirSync(dockerfileDir, { recursive: true });
-
-  // Use the appropriate filename based on runtime
-  const dockerfileName =
-    runtime === "node"
-      ? "node.Dockerfile"
-      : runtime === "web"
-      ? "web.Dockerfile"
-      : runtime === "golang"
-      ? "golang.Dockerfile"
-      : runtime === "python"
-      ? "python.Dockerfile"
-      : "Dockerfile";
-
-  const dockerfilePath = path.join(dockerfileDir, dockerfileName);
-  fs.writeFileSync(dockerfilePath, dockerfileContent);
-
-  log(`Created build Dockerfile at ${dockerfilePath}`);
-
-  // Return the path relative to project root for use in docker-compose.yml
-  // The old format uses paths like "testeranto/bundles/allTests/node/node.Dockerfile"
-  const relativePath = path.relative(process.cwd(), dockerfilePath);
-  // Ensure it uses forward slashes for Docker compatibility
-  return relativePath.split(path.sep).join("/");
-}
-
-function getBaseImage(runtime: IRunTime): string {
-  switch (runtime) {
-    case "node":
-      return "${baseNodeImage}";
-    case "web":
-      return "${baseNodeImage}";
-    case "python":
-      return "python:3.11-alpine";
-    case "golang":
-      return "golang:1.21-alpine";
-    default:
-      return "${baseNodeImage}";
-  }
-}
-
-function setupDockerfileForTest(
-  c: IBuiltConfig,
-  runtime: IRunTime,
-  testPath: string,
-  testsName: string,
-  logger?: {
-    log: (...args: any[]) => void;
-  }
-): string {
-  const testFileName = path.basename(testPath);
-
-  // Generate Dockerfile content
-  const dockerfileContent = generateDockerfile(c, runtime, testPath);
-
-  // Create directory structure matching the old format
-  // For example: testeranto/bundles/allTests/node/src/example/Calculator.test.ts/
-  // We need to create the directory and put Dockerfile inside
-
-  // Build the directory path
-  const testDir = path.dirname(testPath); // e.g., src/example
-  const dockerfileDir = path.join(
-    process.cwd(),
-    "testeranto",
-    "bundles",
-    "allTests",
-    runtime,
-    testDir,
-    testFileName
-  );
-
-  fs.mkdirSync(dockerfileDir, { recursive: true });
-  const dockerfilePath = path.join(dockerfileDir, "Dockerfile");
-  fs.writeFileSync(dockerfilePath, dockerfileContent);
-
-  // Verify the file exists
-  if (!fs.existsSync(dockerfilePath)) {
-    throw new Error(`Failed to create Dockerfile at ${dockerfilePath}`);
-  }
-
-  // Return the path to the Dockerfile (not the directory)
-  // The old format uses the Dockerfile path directly
-  const relativePath = path.relative(process.cwd(), dockerfilePath);
-  // Ensure it uses forward slashes for Docker compatibility
-  return relativePath.split(path.sep).join("/");
-}
-
-function generateServiceName(runtime: IRunTime, testPath: string): string {
-  // Convert test path to the format used in the old docker-compose file
-  // e.g., src/example/Calculator.test.ts -> src-example-calculator-test-ts
-  // Remove leading ./ if present
-  const cleanPath = testPath.replace(/^\.\//, "");
-  // Replace path separators and dots with hyphens
-  const sanitized = cleanPath.replace(/[\/\.]/g, "-").toLowerCase();
-  return `${runtime}-${sanitized}`;
-}
-
-function validateServiceNames(
-  serviceNames: string[],
-  logger?: {
-    error: (...args: any[]) => void;
-  }
-): void {
-  const error = logger?.error || (() => {});
-  const invalid = serviceNames.filter(
-    (name) => !/^[a-z][a-z0-9-]*$/.test(name)
-  );
-  if (invalid.length > 0) {
-    error(`Invalid service names: ${invalid.join(", ")}`);
-    throw new Error(`Invalid service names: ${invalid.join(", ")}`);
-  }
-}
-
-function createTestService(
-  runtime: IRunTime,
-  serviceName: string,
-  dockerfilePath: string, // This is now the path to the Dockerfile
-  testsName: string,
-  testPath: string // Add test path parameter
-): Record<string, any> {
-  // Determine command based on runtime and service name
-  let command: string = "";
-
-  const testFileName = path.basename(testPath);
-  const testNameWithoutExt = testFileName.replace(/\.[^/.]+$/, "");
-
-  // Generate the appropriate command based on runtime
-  if (runtime === "node") {
-    command = `node testeranto/bundles/node/allTests/${testNameWithoutExt}.mjs`;
-  } else if (runtime === "web") {
-    command = `node testeranto/bundles/web/allTests/${testNameWithoutExt}.mjs`;
-  } else if (runtime === "golang") {
-    // For golang, the test path is src/example/Calculator.golingvu.test.go
-    command = `go test ${testPath}`;
-  } else if (runtime === "python") {
-    command = `python ${testPath}`;
-  }
-
-  // Build the service configuration matching the old format (context: /Users/adam/Code/testeranto)
-  const serviceConfig: any = {
-    build: {
-      context: "/Users/adam/Code/testeranto",
-      dockerfile: dockerfilePath,
-    },
-    volumes: [
-      "./testeranto/metafiles:/workspace/testeranto/metafiles",
-      "./src:/workspace/src",
-    ],
-    depends_on: [`${runtime}-build`],
-    working_dir: "/workspace",
-  };
-
-  // Add command if specified
-  if (command) {
-    serviceConfig.command = command;
-  }
-
-  return {
-    [serviceName]: serviceConfig,
-  };
-}
+import { IBuiltConfig, IRunTime } from "../../Types";
+import buildService from "./buildService";
+import chromiumService from "./chromiumService";
+import { testServiceConfig } from "./serviceConfig";
 
 export function createBuildService(
   runtime: IRunTime,
@@ -467,110 +42,137 @@ export function createBuildService(
   };
 }
 
-export function generateServices(
-  c: IBuiltConfig,
-  testsName: string,
-  logger?: {
-    log: (...args: any[]) => void;
-    error: (...args: any[]) => void;
+export async function generateServices(
+  config: IBuiltConfig,
+  runtimes: IRunTime[],
+  webSocketPort: number | undefined,
+  log: (...args: any[]) => void,
+  error: (...args: any[]) => void
+): Promise<Record<string, any>> {
+  const services: any = {};
+
+  // Add Chromium service for web tests using browserless/chrome
+  services["chromium"] = chromiumService;
+
+  // Add build services for each runtime
+  for (const runtime of runtimes) {
+    const buildServiceName = `${runtime}-build`;
+
+    // Check if the runtime has tests in the config
+    const hasTests =
+      config[runtime]?.tests && Object.keys(config[runtime].tests).length > 0;
+    if (!hasTests) continue;
+
+    // Build service configuration
+    services[buildServiceName] = buildService(runtime);
   }
-): Record<string, any> {
-  const log = logger?.log || (() => {});
-  const error = logger?.error || (() => {});
 
-  const services: Record<string, any> = {};
-  const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
+  // Add test services for each test, but skip web tests
+  // Web tests should all run through the single Chromium service
+  for (const runtime of runtimes) {
+    const tests = config[runtime]?.tests;
+    if (!tests) continue;
 
-  // First, always generate build services for all runtimes that have tests defined
-  runtimes.forEach((runtime) => {
-    if (
-      c[runtime] &&
-      c[runtime].tests &&
-      Object.keys(c[runtime].tests).length > 0
-    ) {
-      const buildService = generateBuildServiceForRuntime(
-        c,
-        runtime,
-        testsName,
-        logger
-      );
-      Object.assign(services, buildService);
+    // Skip creating services for web tests
+    // Web tests will run through the Chromium service's API/web interface
+    if (runtime === "web") {
+      continue;
     }
-  });
 
-  // Then generate test services
-  runtimes.forEach((runtime) => {
-    if (
-      c[runtime] &&
-      c[runtime].tests &&
-      Object.keys(c[runtime].tests).length > 0
-    ) {
-      const runtimeServices = generateServicesForRuntime(
-        c,
+    for (const [testPath, testConfig] of Object.entries(tests)) {
+      // Generate service name from test path
+      // Docker requires lowercase names for images
+      // Convert everything to lowercase and replace all non-alphanumeric characters with hyphens
+      const sanitizedTestPath = testPath
+        .toLowerCase()
+        .replace(/\//g, "-")
+        .replace(/\./g, "-")
+        .replace(/[^a-z0-9-]/g, "-");
+      const serviceName = `${runtime}-${sanitizedTestPath}`;
+
+      // Extract test name without extension for display
+      const testNameParts = testPath.split("/");
+      const testFileName = testNameParts[testNameParts.length - 1];
+      const testName = testFileName.replace(/\.[^/.]+$/, "");
+
+      // Determine the bundle file extension based on runtime
+      let betterTestPath = testPath;
+
+      if (runtime === "node") {
+        betterTestPath = testPath.replace(".ts", ".mjs");
+      } else if (runtime === "golang") {
+        // No change for golang
+      } else if (runtime === "python") {
+        // No change for python
+      } else {
+        throw "unknown runtime";
+      }
+
+      // Build service configuration for test services
+      // Use testServiceConfig which doesn't have port mappings
+      const serviceConfig: any = { ...testServiceConfig };
+
+      // Always remove container_name for test services to avoid conflicts
+      // Docker Compose will generate unique names automatically
+      delete serviceConfig.container_name;
+
+      // Remove image field if present, we'll use build instead
+      delete serviceConfig.image;
+
+      // Remove ports from test services to avoid conflicts
+      // Test services only need internal communication within Docker network
+      delete serviceConfig.ports;
+
+      // Set build configuration to use the Dockerfile we created
+      const dockerfileDir = path.join(
+        "testeranto",
+        "bundles",
+        "allTests",
         runtime,
-        testsName,
-        logger
+        path.dirname(testPath)
       );
-      Object.assign(services, runtimeServices);
-    } else {
-      log(`Skipping ${runtime} - no tests found`);
+      const dockerfilePath = path.join(dockerfileDir, "Dockerfile");
+
+      serviceConfig.build = {
+        context: process.cwd(),
+        dockerfile: dockerfilePath,
+      };
+
+      // Add volumes to mount the project directory and node_modules
+      serviceConfig.volumes = [
+        `${process.cwd()}:/workspace`,
+        "node_modules:/workspace/node_modules",
+      ];
+
+      // Set working directory to /workspace
+      serviceConfig.working_dir = "/workspace";
+
+      // Update depends_on to include the build service and chromium
+      serviceConfig.depends_on = {
+        [`${runtime}-build`]: {
+          condition: "service_healthy",
+        },
+      };
+
+      // Add chromium dependency for node and web tests
+      if (runtime === "node" || runtime === "web") {
+        serviceConfig.depends_on.chromium = {
+          condition: "service_started",
+        };
+      }
+
+      // Add WS_PORT and WS_HOST environment variables
+      if (!serviceConfig.environment) {
+        serviceConfig.environment = {};
+      }
+      // Default to 3002 to match Server_TCP default HTTP_PORT
+      serviceConfig.environment.WS_PORT = webSocketPort?.toString() || "3002";
+      // Use host.docker.internal to reach the host machine from Docker containers
+      serviceConfig.environment.WS_HOST = "host.docker.internal";
+
+      services[serviceName] = serviceConfig;
     }
-  });
-
-  // Validate all service names
-  validateServiceNames(Object.keys(services), logger);
-
-  log(`Generated ${Object.keys(services).length} services for ${testsName}`);
-  return services;
-}
-
-function generateServicesForRuntime(
-  c: IBuiltConfig,
-  runtime: IRunTime,
-  testsName: string,
-  logger?: {
-    log: (...args: any[]) => void;
   }
-): Record<string, any> {
-  const log = logger?.log || (() => {});
-  const services: Record<string, any> = {};
-
-  Object.keys(c[runtime].tests).forEach((testPath) => {
-    const dockerfilePath = setupDockerfileForTest(
-      c,
-      runtime,
-      testPath,
-      testsName,
-      logger
-    );
-    // For service name, use a sanitized version of the test path
-    const serviceName = generateServiceName(runtime, testPath);
-    const service = createTestService(
-      runtime,
-      serviceName,
-      dockerfilePath,
-      testsName,
-      testPath
-    );
-    Object.assign(services, service);
-    log(`Created service for ${runtime} test: ${testPath}`);
-  });
 
   return services;
-}
-
-function generateBuildServiceForRuntime(
-  c: IBuiltConfig,
-  runtime: IRunTime,
-  testsName: string,
-  logger?: {
-    log: (...args: any[]) => void;
-  }
-): Record<string, any> {
-  const buildDockerfileDir = setupDockerfileForBuild(
-    runtime,
-    testsName,
-    logger
-  );
-  return createBuildService(runtime, buildDockerfileDir, testsName);
 }

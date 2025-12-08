@@ -2400,7 +2400,7 @@ var Server_DockerCompose = class extends Server_TCP {
     });
   }
   async initializeAndStart() {
-    const { setupDockerCompose } = await import("./dockerComposeGenerator-J4BXFTLW.mjs");
+    const { setupDockerCompose } = await import("./dockerComposeGenerator-J6YHGTMN.mjs");
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),
