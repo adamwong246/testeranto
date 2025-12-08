@@ -14,12 +14,7 @@ export default (runtime: IRunTime) => {
           : {},
     },
     volumes: [
-      "../../src:/workspace/src:ro",
-      "../../dist:/workspace/dist:ro",
-      "../../testeranto:/workspace/testeranto",
-      "../../package.json:/workspace/package.json:ro",
-      "../../tsconfig.json:/workspace/tsconfig.json:ro",
-      "../../allTests.ts:/workspace/allTests.ts:ro",
+      "/Users/adam/Code/testeranto:/workspace",
       "node_modules:/workspace/node_modules",
     ],
     image: `bundles-${runtime}-build:latest`,

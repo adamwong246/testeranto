@@ -3,7 +3,7 @@ import {
 } from "./chunk-KEX7JEVY.mjs";
 import {
   web_default
-} from "./chunk-3BU44IEY.mjs";
+} from "./chunk-UGGLWEUL.mjs";
 import "./chunk-SFBHYNUJ.mjs";
 import {
   GolingvuBuild
@@ -1398,7 +1398,7 @@ var Server_DockerCompose = class extends Server_TCP {
   }
   async initializeAndStart() {
     console.log(`Setting up docker-compose for ${this.projectName}...`);
-    const { setupDockerCompose } = await import("./dockerComposeGenerator-R7AV3W3Y.mjs");
+    const { setupDockerCompose } = await import("./dockerComposeGenerator-CYAJWX36.mjs");
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),

@@ -1,12 +1,1059 @@
 {
-  "errors": [
+  "errors": [],
+  "warnings": [
     {
-      "id": "",
-      "location": null,
-      "notes": [],
+      "id": "direct-eval",
+      "location": {
+        "column": 21,
+        "file": "example/Calculator.ts",
+        "length": 4,
+        "line": 17,
+        "lineText": "      const result = eval(this.display);",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": null,
+          "text": "You can read more about direct eval and bundling here: https://esbuild.github.io/link/direct-eval"
+        }
+      ],
       "pluginName": "",
-      "text": "Could not resolve \"example/Calculator.test.ts\""
+      "text": "Using direct eval with a bundler is not recommended and may cause problems"
     }
   ],
-  "warnings": []
+  "metafile": {
+    "inputs": {
+      "src/lib/index.ts": {
+        "bytes": 4025,
+        "imports": [
+          {
+            "path": "../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../clients/node",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../clients/pure",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../clients/web",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../Types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseGiven",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/ws/lib/constants.js": {
+        "bytes": 479,
+        "imports": [],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/buffer-util.js": {
+        "bytes": 3056,
+        "imports": [
+          {
+            "path": "node_modules/ws/lib/constants.js",
+            "kind": "require-call",
+            "original": "./constants"
+          },
+          {
+            "path": "bufferutil",
+            "kind": "require-call",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/limiter.js": {
+        "bytes": 1034,
+        "imports": [],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/permessage-deflate.js": {
+        "bytes": 14510,
+        "imports": [
+          {
+            "path": "zlib",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node_modules/ws/lib/buffer-util.js",
+            "kind": "require-call",
+            "original": "./buffer-util"
+          },
+          {
+            "path": "node_modules/ws/lib/limiter.js",
+            "kind": "require-call",
+            "original": "./limiter"
+          },
+          {
+            "path": "node_modules/ws/lib/constants.js",
+            "kind": "require-call",
+            "original": "./constants"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/validation.js": {
+        "bytes": 3903,
+        "imports": [
+          {
+            "path": "buffer",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node_modules/ws/lib/constants.js",
+            "kind": "require-call",
+            "original": "./constants"
+          },
+          {
+            "path": "utf-8-validate",
+            "kind": "require-call",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/receiver.js": {
+        "bytes": 16460,
+        "imports": [
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node_modules/ws/lib/permessage-deflate.js",
+            "kind": "require-call",
+            "original": "./permessage-deflate"
+          },
+          {
+            "path": "node_modules/ws/lib/constants.js",
+            "kind": "require-call",
+            "original": "./constants"
+          },
+          {
+            "path": "node_modules/ws/lib/buffer-util.js",
+            "kind": "require-call",
+            "original": "./buffer-util"
+          },
+          {
+            "path": "node_modules/ws/lib/validation.js",
+            "kind": "require-call",
+            "original": "./validation"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/sender.js": {
+        "bytes": 16711,
+        "imports": [
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "crypto",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node_modules/ws/lib/permessage-deflate.js",
+            "kind": "require-call",
+            "original": "./permessage-deflate"
+          },
+          {
+            "path": "node_modules/ws/lib/constants.js",
+            "kind": "require-call",
+            "original": "./constants"
+          },
+          {
+            "path": "node_modules/ws/lib/validation.js",
+            "kind": "require-call",
+            "original": "./validation"
+          },
+          {
+            "path": "node_modules/ws/lib/buffer-util.js",
+            "kind": "require-call",
+            "original": "./buffer-util"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/event-target.js": {
+        "bytes": 7321,
+        "imports": [
+          {
+            "path": "node_modules/ws/lib/constants.js",
+            "kind": "require-call",
+            "original": "./constants"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/extension.js": {
+        "bytes": 6183,
+        "imports": [
+          {
+            "path": "node_modules/ws/lib/validation.js",
+            "kind": "require-call",
+            "original": "./validation"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/websocket.js": {
+        "bytes": 36463,
+        "imports": [
+          {
+            "path": "events",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "https",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "http",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "net",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "tls",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "crypto",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "url",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node_modules/ws/lib/permessage-deflate.js",
+            "kind": "require-call",
+            "original": "./permessage-deflate"
+          },
+          {
+            "path": "node_modules/ws/lib/receiver.js",
+            "kind": "require-call",
+            "original": "./receiver"
+          },
+          {
+            "path": "node_modules/ws/lib/sender.js",
+            "kind": "require-call",
+            "original": "./sender"
+          },
+          {
+            "path": "node_modules/ws/lib/validation.js",
+            "kind": "require-call",
+            "original": "./validation"
+          },
+          {
+            "path": "node_modules/ws/lib/constants.js",
+            "kind": "require-call",
+            "original": "./constants"
+          },
+          {
+            "path": "node_modules/ws/lib/event-target.js",
+            "kind": "require-call",
+            "original": "./event-target"
+          },
+          {
+            "path": "node_modules/ws/lib/extension.js",
+            "kind": "require-call",
+            "original": "./extension"
+          },
+          {
+            "path": "node_modules/ws/lib/buffer-util.js",
+            "kind": "require-call",
+            "original": "./buffer-util"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/stream.js": {
+        "bytes": 4204,
+        "imports": [
+          {
+            "path": "node_modules/ws/lib/websocket.js",
+            "kind": "require-call",
+            "original": "./websocket"
+          },
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/subprotocol.js": {
+        "bytes": 1498,
+        "imports": [
+          {
+            "path": "node_modules/ws/lib/validation.js",
+            "kind": "require-call",
+            "original": "./validation"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/lib/websocket-server.js": {
+        "bytes": 16393,
+        "imports": [
+          {
+            "path": "events",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "http",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "crypto",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "node_modules/ws/lib/extension.js",
+            "kind": "require-call",
+            "original": "./extension"
+          },
+          {
+            "path": "node_modules/ws/lib/permessage-deflate.js",
+            "kind": "require-call",
+            "original": "./permessage-deflate"
+          },
+          {
+            "path": "node_modules/ws/lib/subprotocol.js",
+            "kind": "require-call",
+            "original": "./subprotocol"
+          },
+          {
+            "path": "node_modules/ws/lib/websocket.js",
+            "kind": "require-call",
+            "original": "./websocket"
+          },
+          {
+            "path": "node_modules/ws/lib/constants.js",
+            "kind": "require-call",
+            "original": "./constants"
+          }
+        ],
+        "format": "cjs"
+      },
+      "node_modules/ws/wrapper.mjs": {
+        "bytes": 341,
+        "imports": [
+          {
+            "path": "node_modules/ws/lib/stream.js",
+            "kind": "import-statement",
+            "original": "./lib/stream.js"
+          },
+          {
+            "path": "node_modules/ws/lib/receiver.js",
+            "kind": "import-statement",
+            "original": "./lib/receiver.js"
+          },
+          {
+            "path": "node_modules/ws/lib/sender.js",
+            "kind": "import-statement",
+            "original": "./lib/sender.js"
+          },
+          {
+            "path": "node_modules/ws/lib/websocket.js",
+            "kind": "import-statement",
+            "original": "./lib/websocket.js"
+          },
+          {
+            "path": "node_modules/ws/lib/websocket-server.js",
+            "kind": "import-statement",
+            "original": "./lib/websocket-server.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/clients/index.ts": {
+        "bytes": 1880,
+        "imports": [
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core/lib/esm/puppeteer",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/clients/node.ts": {
+        "bytes": 9142,
+        "imports": [
+          {
+            "path": "node_modules/ws/wrapper.mjs",
+            "kind": "import-statement",
+            "original": "ws"
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "puppeteer-core",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../lib",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/clients/index.ts",
+            "kind": "import-statement",
+            "original": "."
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/pmProxy.ts": {
+        "bytes": 6912,
+        "imports": [
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseGiven.ts": {
+        "bytes": 8370,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          },
+          {
+            "path": "./BaseSuite",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseSuite.ts": {
+        "bytes": 6226,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "../CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./BaseGiven",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy"
+          },
+          {
+            "path": "./types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseThen.ts": {
+        "bytes": 3095,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/BaseWhen.ts": {
+        "bytes": 2505,
+        "imports": [
+          {
+            "path": ".",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/pmProxy.ts",
+            "kind": "import-statement",
+            "original": "./pmProxy.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/Tiposkripto.ts": {
+        "bytes": 10667,
+        "imports": [
+          {
+            "path": "stream",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "type-fest",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/BaseGiven.ts",
+            "kind": "import-statement",
+            "original": "./BaseGiven"
+          },
+          {
+            "path": "src/lib/BaseSuite.ts",
+            "kind": "import-statement",
+            "original": "./BaseSuite"
+          },
+          {
+            "path": "src/lib/BaseThen.ts",
+            "kind": "import-statement",
+            "original": "./BaseThen.js"
+          },
+          {
+            "path": "src/lib/BaseWhen.ts",
+            "kind": "import-statement",
+            "original": "./BaseWhen.js"
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
+            "path": "./types.js",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "src/lib/Node.ts": {
+        "bytes": 2983,
+        "imports": [
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./index.js"
+          },
+          {
+            "path": "src/clients/node.ts",
+            "kind": "import-statement",
+            "original": "../clients/node.js"
+          },
+          {
+            "path": "../CoreTypes.js",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/Tiposkripto.ts",
+            "kind": "import-statement",
+            "original": "./Tiposkripto.js"
+          }
+        ],
+        "format": "esm"
+      },
+      "src/Tiposkripto.ts": {
+        "bytes": 1402,
+        "imports": [
+          {
+            "path": "./CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "src/lib/index.ts",
+            "kind": "import-statement",
+            "original": "./lib"
+          },
+          {
+            "path": "src/lib/Node.ts",
+            "kind": "dynamic-import",
+            "original": "./lib/Node"
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.ts": {
+        "bytes": 2565,
+        "imports": [],
+        "format": "esm"
+      },
+      "example/Calculator.test.adapter.ts": {
+        "bytes": 1362,
+        "imports": [
+          {
+            "path": "../src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./Calculator",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./Calculator.test.types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "node_modules/chai/index.js": {
+        "bytes": 142562,
+        "imports": [],
+        "format": "esm"
+      },
+      "example/Calculator.test.implementation.ts": {
+        "bytes": 1463,
+        "imports": [
+          {
+            "path": "./Calculator.test.types",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "example/Calculator.ts",
+            "kind": "import-statement",
+            "original": "./Calculator"
+          },
+          {
+            "path": "../src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "node_modules/chai/index.js",
+            "kind": "import-statement",
+            "original": "chai"
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.test.specification.ts": {
+        "bytes": 6850,
+        "imports": [
+          {
+            "path": "../src/CoreTypes",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "./Calculator.test.types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      },
+      "example/Calculator.test.ts": {
+        "bytes": 425,
+        "imports": [
+          {
+            "path": "src/Tiposkripto.ts",
+            "kind": "import-statement",
+            "original": "../src/Tiposkripto"
+          },
+          {
+            "path": "example/Calculator.ts",
+            "kind": "import-statement",
+            "original": "./Calculator"
+          },
+          {
+            "path": "example/Calculator.test.adapter.ts",
+            "kind": "import-statement",
+            "original": "./Calculator.test.adapter"
+          },
+          {
+            "path": "example/Calculator.test.implementation.ts",
+            "kind": "import-statement",
+            "original": "./Calculator.test.implementation"
+          },
+          {
+            "path": "example/Calculator.test.specification.ts",
+            "kind": "import-statement",
+            "original": "./Calculator.test.specification"
+          },
+          {
+            "path": "./Calculator.test.types",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "testeranto/bundles/allTests/node/example/Calculator.test.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/allTests/node/chunk-DUE5UGAC.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "testeranto/bundles/allTests/node/Node-AO3CADY6.mjs",
+            "kind": "dynamic-import"
+          }
+        ],
+        "exports": [
+          "default"
+        ],
+        "entryPoint": "example/Calculator.test.ts",
+        "inputs": {
+          "src/Tiposkripto.ts": {
+            "bytesInOutput": 459
+          },
+          "example/Calculator.ts": {
+            "bytesInOutput": 2036
+          },
+          "example/Calculator.test.adapter.ts": {
+            "bytesInOutput": 701
+          },
+          "node_modules/chai/index.js": {
+            "bytesInOutput": 133847
+          },
+          "example/Calculator.test.implementation.ts": {
+            "bytesInOutput": 956
+          },
+          "example/Calculator.test.specification.ts": {
+            "bytesInOutput": 7164
+          },
+          "example/Calculator.test.ts": {
+            "bytesInOutput": 113
+          }
+        },
+        "bytes": 153085
+      },
+      "testeranto/bundles/allTests/node/Node-AO3CADY6.mjs": {
+        "imports": [
+          {
+            "path": "testeranto/bundles/allTests/node/chunk-DUE5UGAC.mjs",
+            "kind": "import-statement"
+          },
+          {
+            "path": "bufferutil",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "zlib",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "buffer",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "utf-8-validate",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "crypto",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "events",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "https",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "http",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "net",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "tls",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "crypto",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "url",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "events",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "http",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "stream",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "crypto",
+            "kind": "require-call",
+            "external": true
+          },
+          {
+            "path": "fs",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "path",
+            "kind": "import-statement",
+            "external": true
+          }
+        ],
+        "exports": [
+          "NodeTiposkripto",
+          "default"
+        ],
+        "entryPoint": "src/lib/Node.ts",
+        "inputs": {
+          "node_modules/ws/lib/constants.js": {
+            "bytesInOutput": 646
+          },
+          "node_modules/ws/lib/buffer-util.js": {
+            "bytesInOutput": 2394
+          },
+          "node_modules/ws/lib/limiter.js": {
+            "bytesInOutput": 1194
+          },
+          "node_modules/ws/lib/permessage-deflate.js": {
+            "bytesInOutput": 14364
+          },
+          "node_modules/ws/lib/validation.js": {
+            "bytesInOutput": 3613
+          },
+          "node_modules/ws/lib/receiver.js": {
+            "bytesInOutput": 18414
+          },
+          "node_modules/ws/lib/sender.js": {
+            "bytesInOutput": 17461
+          },
+          "node_modules/ws/lib/event-target.js": {
+            "bytesInOutput": 7630
+          },
+          "node_modules/ws/lib/extension.js": {
+            "bytesInOutput": 5894
+          },
+          "node_modules/ws/lib/websocket.js": {
+            "bytesInOutput": 31586
+          },
+          "node_modules/ws/lib/stream.js": {
+            "bytesInOutput": 3016
+          },
+          "node_modules/ws/lib/subprotocol.js": {
+            "bytesInOutput": 1545
+          },
+          "node_modules/ws/lib/websocket-server.js": {
+            "bytesInOutput": 15531
+          },
+          "node_modules/ws/wrapper.mjs": {
+            "bytesInOutput": 328
+          },
+          "src/clients/node.ts": {
+            "bytesInOutput": 7108
+          },
+          "src/clients/index.ts": {
+            "bytesInOutput": 174
+          },
+          "src/lib/pmProxy.ts": {
+            "bytesInOutput": 5950
+          },
+          "src/lib/BaseGiven.ts": {
+            "bytesInOutput": 3106
+          },
+          "src/lib/BaseSuite.ts": {
+            "bytesInOutput": 3341
+          },
+          "src/lib/BaseThen.ts": {
+            "bytesInOutput": 1449
+          },
+          "src/lib/BaseWhen.ts": {
+            "bytesInOutput": 1154
+          },
+          "src/lib/Tiposkripto.ts": {
+            "bytesInOutput": 6312
+          },
+          "src/lib/Node.ts": {
+            "bytesInOutput": 1755
+          }
+        },
+        "bytes": 154920
+      },
+      "testeranto/bundles/allTests/node/chunk-DUE5UGAC.mjs": {
+        "imports": [],
+        "exports": [
+          "DefaultAdapter",
+          "__commonJS",
+          "__require",
+          "__toESM",
+          "defaultTestResourceRequirement"
+        ],
+        "inputs": {
+          "src/lib/index.ts": {
+            "bytesInOutput": 672
+          }
+        },
+        "bytes": 2485
+      }
+    }
+  }
 }

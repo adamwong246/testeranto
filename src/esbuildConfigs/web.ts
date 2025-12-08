@@ -20,7 +20,7 @@ export default (
   );
 
   // Convert entryPoints array to object where key is output path and value is input path
-  // Similar to node.ts configuration
+  // Match the same approach as node.ts
   const entryPointsObj: Record<string, string> = {};
   for (const entryPoint of entryPoints) {
     // Remove extension .ts for the filename
@@ -28,62 +28,17 @@ export default (
     // The base name without extension
     const baseName = path.basename(withoutExt); // "Calculator.test"
     // Get the directory part
-    const dirName = path.dirname(entryPoint); // "example"
+    const dirName = path.dirname(entryPoint); // "src/example" or "example"
     // Key: path to output file without extension, relative to outdir
-    // We want: "example/Calculator.test"
+    // We want: "src/example/Calculator.test" or "example/Calculator.test"
     const outputKey = path.join(dirName, baseName);
-    
-    // Resolve the entry point to an absolute path in /workspace/testeranto/
-    // The entryPoint could be:
-    // 1. Relative: "example/Calculator.test.ts"
-    // 2. Absolute: "/workspace/example/Calculator.test.ts"
-    // We always want: "/workspace/testeranto/example/Calculator.test.ts"
-    
-    let absoluteEntryPoint: string | null = null;
-    
-    // Normalize the entry point to a relative path from /workspace/testeranto
-    // Remove leading /workspace/ if present
-    let relativePath = entryPoint;
-    if (path.isAbsolute(entryPoint)) {
-        // Remove /workspace/ prefix
-        const workspacePrefix = '/workspace/';
-        if (entryPoint.startsWith(workspacePrefix)) {
-            relativePath = entryPoint.slice(workspacePrefix.length);
-        } else {
-            // If it's absolute but not under /workspace, use basename
-            relativePath = path.relative('/', entryPoint);
-        }
-    }
-    
-    // Now construct the path in /workspace/testeranto
-    const testerantoPath = path.join('/workspace/testeranto', relativePath);
-    
-    // Check if the file exists
-    if (fs.existsSync(testerantoPath)) {
-        absoluteEntryPoint = testerantoPath;
-    } else {
-        // Try adding .ts extension if not present
-        if (!testerantoPath.endsWith('.ts')) {
-            const withTs = testerantoPath + '.ts';
-            if (fs.existsSync(withTs)) {
-                absoluteEntryPoint = withTs;
-            }
-        }
-    }
-    
-    if (!absoluteEntryPoint) {
-        console.error(`[web esbuild] ERROR: Entry point not found: ${entryPoint}`);
-        console.error(`[web esbuild] Expected at: ${testerantoPath} (or with .ts extension)`);
-        console.error(`[web esbuild] Skipping entry point: ${entryPoint}`);
-        continue;
-    }
-    
-    entryPointsObj[outputKey] = absoluteEntryPoint;
-    console.log(`[web esbuild] ${entryPointsObj[outputKey]} -> ${outputKey}.mjs`);
+    entryPointsObj[outputKey] = entryPoint;
+    console.log(`[web esbuild] ${entryPoint} -> ${outputKey}.mjs`);
   }
 
   // Use environment variable if set, otherwise use passed bundlesDir
-  const effectiveBundlesDir = process.env.BUNDLES_DIR || bundlesDir || `testeranto/bundles/web/${testName}`;
+  // Match node.ts structure: testeranto/bundles/allTests/web/
+  const effectiveBundlesDir = process.env.BUNDLES_DIR || bundlesDir || `testeranto/bundles/allTests/web/`;
   
   // Ensure effectiveBundlesDir is absolute
   const absoluteBundlesDir = path.isAbsolute(effectiveBundlesDir)
@@ -138,11 +93,38 @@ export default (
     plugins: [
       featuresPlugin,
       inputFilesPluginFactory,
-
       rebuildPlugin("web"),
-
       ...((config.web.plugins || []).map((p) => p(register, entryPoints)) ||
         []),
+      {
+        name: "list-output-files",
+        setup(build) {
+          build.onEnd((result) => {
+            if (result.errors.length === 0) {
+              console.log(
+                "[web esbuild] Build completed successfully. Listing output directory:"
+              );
+              try {
+                const files = fs.readdirSync(absoluteBundlesDir);
+                console.log("[web esbuild] Top level:", files);
+                // Recursively list if needed
+                function listDir(dir: string, indent: string = "") {
+                  const items = fs.readdirSync(dir, { withFileTypes: true });
+                  for (const item of items) {
+                    console.log(indent + item.name);
+                    if (item.isDirectory()) {
+                      listDir(path.join(dir, item.name), indent + "  ");
+                    }
+                  }
+                }
+                listDir(absoluteBundlesDir);
+              } catch (e) {
+                console.log("[web esbuild] Error listing output:", e.message);
+              }
+            }
+          });
+        },
+      },
     ],
   };
 };
