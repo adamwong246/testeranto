@@ -90,7 +90,6 @@ function setupKeypressHandling() {
 import { default as ansiC5 } from "ansi-colors";
 import fs19, { watch } from "fs";
 import path11 from "path";
-import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
 
 // src/clients/utils.ts
 import ansiC2 from "ansi-colors";
@@ -203,50 +202,6 @@ async function pollForFile(path13, timeout = 2e3) {
     }
   }, timeout);
 }
-var executablePath = "/opt/homebrew/bin/chromium";
-var puppeteerConfigs = {
-  slowMo: 1,
-  waitForInitialPage: false,
-  executablePath,
-  defaultViewport: null,
-  // Disable default 800x600 viewport
-  dumpio: false,
-  // headless: true,
-  // devtools: false,
-  headless: false,
-  devtools: true,
-  args: [
-    "--allow-file-access-from-files",
-    "--allow-insecure-localhost",
-    "--allow-running-insecure-content",
-    "--auto-open-devtools-for-tabs",
-    "--disable-dev-shm-usage",
-    "--disable-extensions",
-    "--disable-features=site-per-process",
-    "--disable-gpu",
-    "--disable-setuid-sandbox",
-    "--disable-site-isolation-trials",
-    "--disable-web-security",
-    "--no-first-run",
-    "--no-sandbox",
-    "--no-startup-window",
-    "--reduce-security-for-testing",
-    "--remote-allow-origins=*",
-    "--start-maximized",
-    "--unsafely-treat-insecure-origin-as-secure=*",
-    `--remote-debugging-port=3234`
-    // "--disable-features=IsolateOrigins,site-per-process",
-    // "--disable-features=IsolateOrigins",
-    // "--disk-cache-dir=/dev/null",
-    // "--disk-cache-size=1",
-    // "--no-zygote",
-    // "--remote-allow-origins=ws://localhost:3234",
-    // "--single-process",
-    // "--start-maximized",
-    // "--unsafely-treat-insecure-origin-as-secure",
-    // "--unsafely-treat-insecure-origin-as-secure=ws://192.168.0.101:3234",
-  ]
-};
 
 // src/server/utils.ts
 import path2 from "path";
@@ -1129,10 +1084,10 @@ var PythonLauncher = class {
 import fs11 from "fs";
 import ansiColors3 from "ansi-colors";
 var TestEnvironmentSetup = class {
-  constructor(ports, projectName, browser, queue) {
+  constructor(ports, projectName, browser2, queue) {
     this.ports = ports;
     this.projectName = projectName;
-    this.browser = browser;
+    this.browser = browser2;
     this.queue = queue;
   }
   async setupTestEnvironment(src, runtime) {
@@ -1200,10 +1155,10 @@ var TestEnvironmentSetup = class {
 // src/server/serverClasees/ServerTestEnvironmentSetup.ts
 import ansiC3 from "ansi-colors";
 var ServerTestEnvironmentSetup = class {
-  constructor(ports, projectName, browser, queue, configs, bddTestIsRunning) {
+  constructor(ports, projectName, browser2, queue, configs, bddTestIsRunning) {
     this.ports = ports;
     this.projectName = projectName;
-    this.browser = browser;
+    this.browser = browser2;
     this.queue = queue;
     this.configs = configs;
     this.bddTestIsRunning = bddTestIsRunning;
@@ -1352,9 +1307,8 @@ import fs13 from "fs";
 import path6 from "path";
 import ansiColors5 from "ansi-colors";
 var WebLauncher = class {
-  constructor(projectName, browser, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
+  constructor(projectName, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
     this.projectName = projectName;
-    this.browser = browser;
     this.bddTestIsRunning = bddTestIsRunning;
     this.bddTestIsNowDone = bddTestIsNowDone;
     this.addPromiseProcess = addPromiseProcess;
@@ -1373,32 +1327,82 @@ var WebLauncher = class {
         }
         const destFolder = dest.replace(".mjs", "");
         const htmlPath = `${destFolder}.html`;
+        const inDocker = process.env.IN_DOCKER === "true";
+        const chromeHost = inDocker ? "chromium" : process.env.CHROME_HOST || "host.docker.internal";
+        const chromePort = process.env.CHROME_PORT || "9222";
+        console.log(`Connecting to Chrome at ${chromeHost}:${chromePort} (IN_DOCKER=${inDocker})`);
+        const puppeteer = await import("puppeteer-core");
+        const endpoints = [
+          `ws://${chromeHost}:${chromePort}/devtools/browser`,
+          `ws://${chromeHost}:${chromePort}/json/version`,
+          `ws://${chromeHost}:${chromePort}/`
+        ];
+        let browser2;
+        const maxRetries = 10;
+        let lastError;
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+          for (const endpoint of endpoints) {
+            try {
+              console.log(`Attempt ${attempt}/${maxRetries}: Trying to connect to Chrome at ${endpoint}`);
+              browser2 = await puppeteer.connect({
+                browserWSEndpoint: endpoint,
+                defaultViewport: null
+              });
+              console.log("Connected to Chrome via WebSocket at", endpoint);
+              break;
+            } catch (error) {
+              lastError = error;
+              console.log(`Attempt ${attempt} failed for ${endpoint}:`, error.message);
+              if (error.message.includes("ENOTFOUND") || error.message.includes("getaddrinfo")) {
+                const delay = 2e3 * attempt;
+                console.log(`DNS resolution failed, waiting ${delay}ms before next attempt...`);
+                await new Promise((resolve) => setTimeout(resolve, delay));
+                break;
+              }
+            }
+          }
+          if (browser2)
+            break;
+        }
+        if (!browser2) {
+          console.error(`Failed to connect to Chrome after ${maxRetries} attempts`);
+          console.error(`Make sure the chromium service is running and healthy at ${chromeHost}:${chromePort}`);
+          console.error(`Last error:`, lastError?.message);
+          throw new Error(`Failed to connect to Chrome. Check that the chromium service is running and the network is configured correctly.`);
+        }
         const webArgz = JSON.stringify({
           name: src,
           ports: [],
           fs: reportDest,
-          browserWSEndpoint: this.browser.wsEndpoint()
+          browserWSEndpoint
         });
         const logs2 = createLogStreams(reportDest, "web");
-        const httpPort = Number(process.env.HTTP_PORT) || 3e3;
+        const httpPort = Number(process.env.HTTP_PORT) || 3002;
+        const serverHost = inDocker ? "host.docker.internal" : process.env.SERVER_HOST || "localhost";
+        console.log(`Using Server_TCP host: ${serverHost}:${httpPort} (IN_DOCKER=${inDocker})`);
         let relativePath;
-        const match = htmlPath.match(/testeranto\/bundles\/web\/(.*)/);
+        const match = htmlPath.match(/testeranto\/bundles\/allTests\/web\/(.*)/);
         if (match) {
           relativePath = match[1];
         } else {
-          const absMatch = htmlPath.match(/\/bundles\/web\/(.*)/);
+          const absMatch = htmlPath.match(/\/bundles\/allTests\/web\/(.*)/);
           if (absMatch) {
             relativePath = absMatch[1];
           } else {
-            relativePath = path6.basename(htmlPath);
+            const oldMatch = htmlPath.match(/bundles\/web\/(.*)/);
+            if (oldMatch) {
+              relativePath = oldMatch[1];
+            } else {
+              relativePath = path6.basename(htmlPath);
+            }
           }
         }
         const encodedConfig = encodeURIComponent(webArgz);
-        const url = `http://localhost:${httpPort}/bundles/web/${relativePath}?config=${encodedConfig}`;
+        const url = `http://${serverHost}:${httpPort}/web/${relativePath}?config=${encodedConfig}`;
         console.log(
           `Navigating to ${url} (HTML file exists: ${fs13.existsSync(htmlPath)})`
         );
-        const page = await this.browser.newPage();
+        const page = await browser2.newPage();
         page.on("console", (log) => {
           const msg = `${log.text()}
 `;
@@ -1444,18 +1448,23 @@ var WebLauncher = class {
         });
         await page.goto(url, { waitUntil: "networkidle0" });
         let jsRelativePath;
-        const jsMatch = dest.match(/testeranto\/bundles\/web\/(.*)/);
+        const jsMatch = dest.match(/testeranto\/bundles\/allTests\/web\/(.*)/);
         if (jsMatch) {
           jsRelativePath = jsMatch[1];
         } else {
-          const jsAbsMatch = dest.match(/\/bundles\/web\/(.*)/);
+          const jsAbsMatch = dest.match(/\/bundles\/allTests\/web\/(.*)/);
           if (jsAbsMatch) {
             jsRelativePath = jsAbsMatch[1];
           } else {
-            jsRelativePath = path6.basename(dest);
+            const oldMatch = dest.match(/bundles\/web\/(.*)/);
+            if (oldMatch) {
+              jsRelativePath = oldMatch[1];
+            } else {
+              jsRelativePath = path6.basename(dest);
+            }
           }
         }
-        const jsUrl = `/bundles/web/${jsRelativePath}?cacheBust=${Date.now()}`;
+        const jsUrl = `/web/${jsRelativePath}?cacheBust=${Date.now()}`;
         const evaluation = webEvaluator(jsUrl, webArgz);
         console.log("Evaluating web test with URL:", jsUrl);
         try {
@@ -1472,9 +1481,16 @@ var WebLauncher = class {
         }
         generatePromptFiles(reportDest, src);
         await page.close();
+        await browser2.disconnect();
         close();
       } catch (error) {
         console.error(`Error in web test ${src}:`, error);
+        try {
+          if (browser) {
+            await browser.disconnect();
+          }
+        } catch (disconnectError) {
+        }
         this.bddTestIsNowDone(src, -1);
         throw error;
       }
@@ -2189,18 +2205,19 @@ var Server_TCP = class extends Server_Base {
   }
   handleHttpRequest(req, res) {
     console.log(req.method, req.url);
-    if (req.url?.startsWith("/bundles/web/")) {
+    if (req.url?.startsWith("/web/")) {
       const url = new URL(req.url, `http://${req.headers.host}`);
       const pathname = url.pathname;
-      const relativePath = pathname.replace(/^\/bundles\/web\//, "");
+      const relativePath = pathname.replace(/^\/web\//, "");
       const filePath = path9.join(
         process.cwd(),
         "testeranto",
         "bundles",
+        "allTests",
         "web",
         relativePath
       );
-      console.log(`Serving file: ${req.url}`);
+      console.log(`Serving web test file: ${req.url}`);
       console.log(`  Pathname: ${pathname}`);
       console.log(`  Looking for: ${filePath}`);
       console.log(`  File exists: ${fs16.existsSync(filePath)}`);
@@ -2225,10 +2242,25 @@ Error: ${err.message}`
           contentType = "text/css";
         else if (pathname.endsWith(".json"))
           contentType = "application/json";
+        else if (pathname.endsWith(".png"))
+          contentType = "image/png";
+        else if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg"))
+          contentType = "image/jpeg";
+        else if (pathname.endsWith(".gif"))
+          contentType = "image/gif";
+        else if (pathname.endsWith(".svg"))
+          contentType = "image/svg+xml";
         console.log(`  Successfully served ${req.url} (${contentType})`);
         res.writeHead(200, { "Content-Type": contentType });
         res.end(data);
       });
+      return;
+    }
+    if (req.url?.startsWith("/bundles/web/")) {
+      const newPath = req.url.replace("/bundles/web/", "/web/");
+      console.log(`Redirecting ${req.url} to ${newPath}`);
+      res.writeHead(301, { Location: newPath });
+      res.end();
       return;
     }
     if (req.url === "/testeranto/index.html" /* root */) {
@@ -2400,7 +2432,7 @@ var Server_DockerCompose = class extends Server_TCP {
     });
   }
   async initializeAndStart() {
-    const { setupDockerCompose } = await import("./dockerComposeGenerator-J6YHGTMN.mjs");
+    const { setupDockerCompose } = await import("./dockerComposeGenerator-ES5SYAEB.mjs");
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),
@@ -2986,7 +3018,6 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
     this.launchWeb = async (src, dest) => {
       const webLauncher = new WebLauncher(
         this.projectName,
-        this.browser,
         this.bddTestIsRunning.bind(this),
         this.bddTestIsNowDone.bind(this),
         this.addPromiseProcess,
@@ -3362,15 +3393,7 @@ var Server = class extends ServerTestExecutor {
     if (!fs19.existsSync(`testeranto/reports/${this.projectName}`)) {
       fs19.mkdirSync(`testeranto/reports/${this.projectName}`);
     }
-    try {
-      this.browser = await puppeteer.launch(puppeteerConfigs);
-    } catch (e) {
-      console.error(e);
-      console.error(
-        "could not start chrome via puppetter. Check this path: ",
-        executablePath2
-      );
-    }
+    this.browser = null;
     const runnables = getRunnables(this.configs, this.projectName);
     const {
       nodeEntryPoints,

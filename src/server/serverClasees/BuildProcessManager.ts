@@ -130,6 +130,10 @@ export class BuildProcessManager {
         const ctx = await esbuild.context(configWithPlugin);
         // Build once and then watch
         await ctx.rebuild();
+        
+        // Note: For web runtime, we don't serve files via esbuild
+        // Server_TCP handles serving web test files
+        
         await ctx.watch();
       } else {
         // In once mode, just build

@@ -1,9 +1,0 @@
-FROM node:20.19.4-alpine
-# Install build tools for node-gyp and libxml2-utils for xmllint
-RUN apk add --update make g++ linux-headers python3 libxml2-utils
-WORKDIR /workspace
-COPY package*.json ./
-RUN npm install --legacy-peer-deps
-# Install ts-node to run TypeScript files
-# RUN npm install -g ts-node typescript
-# COPY . .

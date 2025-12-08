@@ -22,8 +22,8 @@ services:
         - http://localhost:3000/health
       interval: 10s
       timeout: 10s
-      retries: 5
-      start_period: 30s
+      retries: 30
+      start_period: 120s
     networks:
       - default
   node-build:
@@ -42,6 +42,8 @@ services:
     environment:
       BUNDLES_DIR: /workspace/testeranto/bundles/allTests/node
       METAFILES_DIR: /workspace/testeranto/metafiles/node
+      ESBUILD_SERVE_PORT: '0'
+      IN_DOCKER: 'true'
     command:
       - sh
       - '-c'
@@ -62,8 +64,11 @@ services:
                         # Create a dummy allTests.json to pass health check initially
                         # echo '{"status":"building"}' > /workspace/testeranto/metafiles/node/allTests.json;
                         # Run in watch mode and keep the process alive
-                        npx tsx dist/prebuild/server/builders/node.mjs allTests.ts dev || echo "Build process exited, but keeping container alive for health checks";
+                        # Don't fail if chromium isn't ready yet - the build can still proceed
+                        echo "Starting build process for node..."
+                        npx tsx dist/prebuild/server/builders/node.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
                         # Keep the container running even if the build command exits
+                        echo "Build process finished, keeping container alive..."
                         while true; do
                           sleep 3600
                         done
@@ -71,6 +76,115 @@ services:
       test:
         - CMD-SHELL
         - '[ -f /workspace/testeranto/metafiles/node/allTests.json ] && echo "healthy" || exit 1'
+      interval: 10s
+      timeout: 30s
+      retries: 10
+      start_period: 60s
+  web-build:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/bundles/allTests/web/web.Dockerfile
+      tags:
+        - bundles-web-build:latest
+      args: {}
+    volumes:
+      - /Users/adam/Code/testeranto:/workspace
+      - node_modules:/workspace/node_modules
+    image: bundles-web-build:latest
+    restart: unless-stopped
+    environment:
+      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/web
+      METAFILES_DIR: /workspace/testeranto/metafiles/web
+      ESBUILD_SERVE_PORT: '0'
+      IN_DOCKER: 'true'
+    command:
+      - sh
+      - '-c'
+      - |-
+        echo 'Starting web build in watch mode...'; 
+                        echo 'Installing dependencies in /workspace/node_modules...'; 
+                        cd /workspace &&                 # Remove any .npmrc files
+                        rm -f .npmrc .npmrc.* || true &&                 # Clear npm cache and authentication
+                        npm cache clean --force &&                 # Clear any npm authentication
+                        npm config delete _auth 2>/dev/null || true &&                 npm config delete _authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_auth 2>/dev/null || true &&                 npm config delete always-auth 2>/dev/null || true &&                 npm config delete registry 2>/dev/null || true &&                 npm config set registry https://registry.npmjs.org/ &&                 npm config set always-auth false &&                 npm install --legacy-peer-deps --no-audit --no-fund --ignore-scripts --no-optional || echo "npm install may have warnings";
+                        echo 'Ensuring esbuild and esbuild-sass-plugin are installed for Linux platform...';
+                        npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
+                        npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
+                        echo 'Creating output directory...'; 
+                        mkdir -p /workspace/testeranto/bundles/allTests/web;
+                        mkdir -p /workspace/testeranto/metafiles/web;
+                        echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+                        # Create a dummy allTests.json to pass health check initially
+                        # echo '{"status":"building"}' > /workspace/testeranto/metafiles/web/allTests.json;
+                        # Run in watch mode and keep the process alive
+                        # Don't fail if chromium isn't ready yet - the build can still proceed
+                        echo "Starting build process for web..."
+                        npx tsx dist/prebuild/server/builders/web.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
+                        # Keep the container running even if the build command exits
+                        echo "Build process finished, keeping container alive..."
+                        while true; do
+                          sleep 3600
+                        done
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - '[ -f /workspace/testeranto/metafiles/web/allTests.json ] && echo "healthy" || exit 1'
+      interval: 10s
+      timeout: 30s
+      retries: 10
+      start_period: 60s
+    depends_on:
+      chromium:
+        condition: service_started
+  golang-build:
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/bundles/allTests/golang/golang.Dockerfile
+      tags:
+        - bundles-golang-build:latest
+      args: {}
+    volumes:
+      - /Users/adam/Code/testeranto:/workspace
+      - node_modules:/workspace/node_modules
+    image: bundles-golang-build:latest
+    restart: unless-stopped
+    environment:
+      BUNDLES_DIR: /workspace/testeranto/bundles/allTests/golang
+      METAFILES_DIR: /workspace/testeranto/metafiles/golang
+      ESBUILD_SERVE_PORT: '0'
+      IN_DOCKER: 'true'
+    command:
+      - sh
+      - '-c'
+      - |-
+        echo 'Starting golang build in watch mode...'; 
+                        echo 'Installing dependencies in /workspace/node_modules...'; 
+                        cd /workspace &&                 # Remove any .npmrc files
+                        rm -f .npmrc .npmrc.* || true &&                 # Clear npm cache and authentication
+                        npm cache clean --force &&                 # Clear any npm authentication
+                        npm config delete _auth 2>/dev/null || true &&                 npm config delete _authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_auth 2>/dev/null || true &&                 npm config delete always-auth 2>/dev/null || true &&                 npm config delete registry 2>/dev/null || true &&                 npm config set registry https://registry.npmjs.org/ &&                 npm config set always-auth false &&                 npm install --legacy-peer-deps --no-audit --no-fund --ignore-scripts --no-optional || echo "npm install may have warnings";
+                        echo 'Ensuring esbuild and esbuild-sass-plugin are installed for Linux platform...';
+                        npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
+                        npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
+                        echo 'Creating output directory...'; 
+                        mkdir -p /workspace/testeranto/bundles/allTests/golang;
+                        mkdir -p /workspace/testeranto/metafiles/golang;
+                        echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+                        # Create a dummy allTests.json to pass health check initially
+                        # echo '{"status":"building"}' > /workspace/testeranto/metafiles/golang/allTests.json;
+                        # Run in watch mode and keep the process alive
+                        # Don't fail if chromium isn't ready yet - the build can still proceed
+                        echo "Starting build process for golang..."
+                        npx tsx dist/prebuild/server/builders/golang.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
+                        # Keep the container running even if the build command exits
+                        echo "Build process finished, keeping container alive..."
+                        while true; do
+                          sleep 3600
+                        done
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - '[ -f /workspace/testeranto/metafiles/golang/allTests.json ] && echo "healthy" || exit 1'
       interval: 10s
       timeout: 30s
       retries: 10
@@ -86,6 +200,7 @@ services:
       REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
       WS_PORT: '3002'
       WS_HOST: host.docker.internal
+      IN_DOCKER: 'true'
     healthcheck:
       test:
         - CMD
@@ -102,10 +217,44 @@ services:
       node-build:
         condition: service_healthy
       chromium:
-        condition: service_started
+        condition: service_healthy
     build:
       context: /Users/adam/Code/testeranto
       dockerfile: testeranto/bundles/allTests/node/example/Dockerfile
+    volumes:
+      - /Users/adam/Code/testeranto:/workspace
+      - node_modules:/workspace/node_modules
+    working_dir: /workspace
+  golang-example-calculator-golingvu-test-go:
+    restart: unless-stopped
+    shm_size: 2g
+    environment:
+      CONNECTION_TIMEOUT: '60000'
+      MAX_CONCURRENT_SESSIONS: '10'
+      ENABLE_CORS: 'true'
+      REMOTE_DEBUGGING_PORT: '9222'
+      REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
+      WS_PORT: '3002'
+      WS_HOST: host.docker.internal
+      IN_DOCKER: 'true'
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - http://localhost:3000/health
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - default
+    depends_on:
+      golang-build:
+        condition: service_healthy
+    build:
+      context: /Users/adam/Code/testeranto
+      dockerfile: testeranto/bundles/allTests/golang/example/Dockerfile
     volumes:
       - /Users/adam/Code/testeranto:/workspace
       - node_modules:/workspace/node_modules

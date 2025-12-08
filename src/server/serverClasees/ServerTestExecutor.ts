@@ -298,7 +298,6 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
     // Use the extracted WebLauncher class
     const webLauncher = new WebLauncher(
       this.projectName,
-      this.browser,
       this.bddTestIsRunning.bind(this),
       this.bddTestIsNowDone.bind(this),
       this.addPromiseProcess,

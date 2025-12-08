@@ -1,0 +1,16 @@
+# example
+./Calculator.golingvu.implementation.go:23:5: unknown field Name in struct literal of type golingvu.BaseSuite
+./Calculator.golingvu.implementation.go:32:5: unknown field Name in struct literal of type golingvu.BaseGiven
+./Calculator.golingvu.implementation.go:42:5: unknown field Name in struct literal of type golingvu.BaseGiven
+./Calculator.golingvu.implementation.go:56:5: unknown field Name in struct literal of type golingvu.BaseWhen
+./Calculator.golingvu.implementation.go:68:5: unknown field Name in struct literal of type golingvu.BaseWhen
+./Calculator.golingvu.implementation.go:84:5: unknown field Name in struct literal of type golingvu.BaseThen
+./Calculator.golingvu.test.go:26:3: cannot use adapter (variable of type golingvu.SimpleTestAdapter) as golingvu.ITestAdapter value in argument to golingvu.NewGolingvu: golingvu.SimpleTestAdapter does not implement golingvu.ITestAdapter (method AfterAll has pointer receiver)
+# example
+./Calculator.golingvu.implementation.go:23:5: unknown field Name in struct literal of type golingvu.BaseSuite
+./Calculator.golingvu.implementation.go:32:5: unknown field Name in struct literal of type golingvu.BaseGiven
+./Calculator.golingvu.implementation.go:42:5: unknown field Name in struct literal of type golingvu.BaseGiven
+./Calculator.golingvu.implementation.go:56:5: unknown field Name in struct literal of type golingvu.BaseWhen
+./Calculator.golingvu.implementation.go:68:5: unknown field Name in struct literal of type golingvu.BaseWhen
+./Calculator.golingvu.implementation.go:84:5: unknown field Name in struct literal of type golingvu.BaseThen
+./Calculator.golingvu.test.go:26:3: cannot use adapter (variable of type golingvu.SimpleTestAdapter) as golingvu.ITestAdapter value in argument to golingvu.NewGolingvu: golingvu.SimpleTestAdapter does not implement golingvu.ITestAdapter (method AfterAll has pointer receiver)

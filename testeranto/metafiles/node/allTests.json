@@ -71,7 +71,7 @@
         "format": "esm"
       },
       "src/clients/index.ts": {
-        "bytes": 1880,
+        "bytes": 2416,
         "imports": [
           {
             "path": "puppeteer-core",

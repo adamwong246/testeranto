@@ -16,7 +16,7 @@ const config: ITestconfig = {
     plugins: [],
     loaders: {},
     tests: {
-      // "example/Calculator.golingvu.test.go": { ports: 0 },
+      "example/Calculator.golingvu.test.go": { ports: 0 },
     },
   },
   python: {
@@ -33,7 +33,7 @@ const config: ITestconfig = {
       ".ttf": "file",
     },
     tests: {
-      // "example/Calculator.test.ts": { ports: 0 },
+      "example/Calculator.test.ts": { ports: 0 },
     },
     externals: [],
   },

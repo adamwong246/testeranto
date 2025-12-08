@@ -9,7 +9,7 @@ export default (services, testsName) => {
     },
     networks: {
       default: {
-        name: `${testsName}_network`,
+        name: "allTests_network",
       },
     },
   };

@@ -133,15 +133,10 @@ export class Server extends ServerTestExecutor {
       fs.mkdirSync(`testeranto/reports/${this.projectName}`);
     }
 
-    try {
-      this.browser = await puppeteer.launch(puppeteerConfigs);
-    } catch (e) {
-      console.error(e);
-      console.error(
-        "could not start chrome via puppetter. Check this path: ",
-        executablePath
-      );
-    }
+    // In Docker, we don't launch Chrome directly - we connect to browserless/chrome service
+    // So we don't need to initialize this.browser here
+    // It will be created per test in WebLauncher
+    this.browser = null;
 
     const runnables = getRunnables(this.configs, this.projectName);
     const {

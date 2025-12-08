@@ -53,6 +53,12 @@ export async function generateServices(
 
   // Add Chromium service for web tests using browserless/chrome
   services["chromium"] = chromiumService;
+  
+  // Ensure all services use the same network configuration
+  // Use "default" network which has custom name "allTests_network" in baseCompose
+  for (const serviceName in services) {
+    services[serviceName].networks = ["default"];
+  }
 
   // Add build services for each runtime
   for (const runtime of runtimes) {
@@ -63,8 +69,23 @@ export async function generateServices(
       config[runtime]?.tests && Object.keys(config[runtime].tests).length > 0;
     if (!hasTests) continue;
 
-    // Build service configuration
-    services[buildServiceName] = buildService(runtime);
+    // Get the base service configuration
+    const serviceConfig = buildService(runtime);
+    
+    // For web build, we don't need to expose ports anymore
+    // Server_TCP will serve the built files
+    if (runtime === "web") {
+      // Add dependency on chromium service, but don't require it to be healthy
+      // The build service can start building while chromium is starting
+      if (!serviceConfig.depends_on) {
+        serviceConfig.depends_on = {};
+      }
+      serviceConfig.depends_on.chromium = {
+        condition: "service_started"  // Changed from "service_healthy"
+      };
+    }
+    
+    services[buildServiceName] = serviceConfig;
   }
 
   // Add test services for each test, but skip web tests
@@ -157,7 +178,7 @@ export async function generateServices(
       // Add chromium dependency for node and web tests
       if (runtime === "node" || runtime === "web") {
         serviceConfig.depends_on.chromium = {
-          condition: "service_started",
+          condition: "service_healthy",
         };
       }
 
@@ -169,6 +190,8 @@ export async function generateServices(
       serviceConfig.environment.WS_PORT = webSocketPort?.toString() || "3002";
       // Use host.docker.internal to reach the host machine from Docker containers
       serviceConfig.environment.WS_HOST = "host.docker.internal";
+      // Indicate we're running in Docker
+      serviceConfig.environment.IN_DOCKER = "true";
 
       services[serviceName] = serviceConfig;
     }

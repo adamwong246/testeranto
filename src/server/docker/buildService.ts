@@ -22,6 +22,9 @@ export default (runtime: IRunTime) => {
     environment: {
       BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/${runtime}`,
       METAFILES_DIR: `/workspace/testeranto/metafiles/${runtime}`,
+      // Don't serve files - Server_TCP will handle that
+      ESBUILD_SERVE_PORT: "0", // Disable esbuild serve
+      IN_DOCKER: "true", // Indicate we're running in Docker
     },
     command: [
       "sh",
@@ -53,8 +56,11 @@ export default (runtime: IRunTime) => {
                 # Create a dummy allTests.json to pass health check initially
                 # echo '{"status":"building"}' > /workspace/testeranto/metafiles/${runtime}/allTests.json;
                 # Run in watch mode and keep the process alive
-                npx tsx dist/prebuild/server/builders/${runtime}.mjs allTests.ts dev || echo "Build process exited, but keeping container alive for health checks";
+                # Don't fail if chromium isn't ready yet - the build can still proceed
+                echo "Starting build process for ${runtime}..."
+                npx tsx dist/prebuild/server/builders/${runtime}.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
                 # Keep the container running even if the build command exits
+                echo "Build process finished, keeping container alive..."
                 while true; do
                   sleep 3600
                 done`,

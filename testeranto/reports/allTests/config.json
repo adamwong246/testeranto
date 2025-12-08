@@ -8,7 +8,11 @@
   "golang": {
     "plugins": [],
     "loaders": {},
-    "tests": {}
+    "tests": {
+      "example/Calculator.golingvu.test.go": {
+        "ports": 0
+      }
+    }
   },
   "python": {
     "plugins": [],
@@ -22,7 +26,11 @@
     "loaders": {
       ".ttf": "file"
     },
-    "tests": {},
+    "tests": {
+      "example/Calculator.test.ts": {
+        "ports": 0
+      }
+    },
     "externals": []
   },
   "node": {

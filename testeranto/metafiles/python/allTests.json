@@ -1,0 +1,26 @@
+{
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "example/Calculator.golingvu.test.go": {
+        "bytes": 7120,
+        "imports": []
+      }
+    },
+    "outputs": {
+      "python/core/Calculator.golingvu.test.go.py": {
+        "imports": [],
+        "exports": [],
+        "entryPoint": "example/Calculator.golingvu.test.go",
+        "inputs": {
+          "example/Calculator.golingvu.test.go": {
+            "bytesInOutput": 7120
+          }
+        },
+        "bytes": 7120,
+        "signature": "mixd815l"
+      }
+    }
+  }
+}

@@ -1,6 +1,13 @@
 {
   "example/Calculator.test.ts": {
-    "runTimeErrors": 27,
+    "runTimeErrors": "?",
+    "typeErrors": "?",
+    "staticErrors": "?",
+    "prompt": "?",
+    "failingFeatures": {}
+  },
+  "example/Calculator.golingvu.test.go": {
+    "runTimeErrors": 1,
     "typeErrors": "?",
     "staticErrors": "?",
     "prompt": "?",

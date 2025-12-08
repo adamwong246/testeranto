@@ -15,8 +15,8 @@ export default {
     test: ["CMD", "curl", "-f", "http://localhost:3000/health"],
     interval: "10s",
     timeout: "10s",
-    retries: 5,
-    start_period: "30s",
+    retries: 30,
+    start_period: "120s",
   },
   networks: ["default"],
 };

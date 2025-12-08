@@ -42,6 +42,20 @@ export abstract class PM {
   abstract write(uid: number, contents: string): Promise<boolean>;
   abstract writeFileSync(f: string, c: string): Promise<boolean>;
 
+  // Browser context management for web tests (shared Chrome instance)
+  abstract createBrowserContext(): Promise<string>;
+  abstract disposeBrowserContext(contextId: string): Promise<void>;
+  abstract getBrowserContexts(): Promise<string[]>;
+  abstract newPageInContext(contextId: string): Promise<string>;
+  
+  // Resource management
+  abstract getBrowserMemoryUsage(): Promise<{
+    usedJSHeapSize: number;
+    totalJSHeapSize: number;
+    jsHeapSizeLimit: number;
+  }>;
+  abstract cleanupContext(contextId: string): Promise<void>;
+
   // abstract launchSideCar(
   //   n: number
   // ): Promise<[number, ITTestResourceConfiguration]>;

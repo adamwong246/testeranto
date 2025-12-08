@@ -275,24 +275,26 @@ export class Server_TCP extends Server_Base {
   ) {
     console.log(req.method, req.url);
 
-    // Serve bundled web test files
-    if (req.url?.startsWith("/bundles/web/")) {
+    // Serve bundled web test files from the new location
+    // The new location is: testeranto/bundles/allTests/web/
+    if (req.url?.startsWith("/web/")) {
       // Parse URL to handle query parameters
       const url = new URL(req.url, `http://${req.headers.host}`);
       const pathname = url.pathname;
 
-      // Remove the leading /bundles/web/ to get the relative path
-      const relativePath = pathname.replace(/^\/bundles\/web\//, "");
-      // The files are in testeranto/bundles/web/ relative to cwd
+      // Remove the leading /web/ to get the relative path
+      const relativePath = pathname.replace(/^\/web\//, "");
+      // The files are in testeranto/bundles/allTests/web/ relative to cwd
       const filePath = path.join(
         process.cwd(),
         "testeranto",
         "bundles",
+        "allTests",
         "web",
         relativePath
       );
 
-      console.log(`Serving file: ${req.url}`);
+      console.log(`Serving web test file: ${req.url}`);
       console.log(`  Pathname: ${pathname}`);
       console.log(`  Looking for: ${filePath}`);
       console.log(`  File exists: ${fs.existsSync(filePath)}`);
@@ -314,11 +316,26 @@ export class Server_TCP extends Server_Base {
           contentType = "application/javascript";
         else if (pathname.endsWith(".css")) contentType = "text/css";
         else if (pathname.endsWith(".json")) contentType = "application/json";
+        else if (pathname.endsWith(".png")) contentType = "image/png";
+        else if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg"))
+          contentType = "image/jpeg";
+        else if (pathname.endsWith(".gif")) contentType = "image/gif";
+        else if (pathname.endsWith(".svg")) contentType = "image/svg+xml";
 
         console.log(`  Successfully served ${req.url} (${contentType})`);
         res.writeHead(200, { "Content-Type": contentType });
         res.end(data);
       });
+      return;
+    }
+
+    // Also support the old path for backward compatibility
+    if (req.url?.startsWith("/bundles/web/")) {
+      // Redirect to the new path
+      const newPath = req.url.replace("/bundles/web/", "/web/");
+      console.log(`Redirecting ${req.url} to ${newPath}`);
+      res.writeHead(301, { Location: newPath });
+      res.end();
       return;
     }
 

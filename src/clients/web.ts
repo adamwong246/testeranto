@@ -18,21 +18,41 @@ export class PM_Web extends PM {
     this.testResourceConfiguration = t;
     
     // Determine WebSocket URL
-    // In a browser environment, we need to connect to the same server that's serving the page
-    // The server runs on a specific port, which should be included in the configuration
-    // For now, use the current host and port, but fall back to default port 3000
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const hostname = window.location.hostname;
-    // Try to get port from configuration or use current page's port
-    let port = window.location.port;
-    if (!port || port === '') {
-      // If no port in URL, use default based on protocol
-      port = protocol === 'wss:' ? '443' : '80';
-    }
-    // The server's WebSocket endpoint is on the same host:port as the HTTP server
-    const wsUrl = `${protocol}//${hostname}:${port}`;
+    // The WebSocket server is part of Server_TCP, which runs on HTTP_PORT (default 3002)
+    // In Docker environment, this is accessible via host.docker.internal:3002
+    // In browser environment, it's the same host as the page but different port
     
-    console.log('PM_Web connecting to WebSocket at:', wsUrl);
+    let wsUrl: string;
+    
+    // Check if browserWSEndpoint is provided in configuration
+    if (t.browserWSEndpoint) {
+      wsUrl = t.browserWSEndpoint;
+      console.log('PM_Web using browserWSEndpoint from config:', wsUrl);
+    } else {
+      // Try to get WebSocket URL from environment variables passed to the page
+      // The server should inject this information
+      const wsHost = (window as any).WS_HOST || window.location.hostname;
+      const wsPort = (window as any).WS_PORT || '3002';
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      
+      // In Docker, web tests run in browserless/chrome which can access host.docker.internal
+      // But the page itself is served from somewhere else
+      // For now, use the same host as the page
+      const hostname = window.location.hostname;
+      
+      // If we're in a Docker container, we might need to use host.docker.internal
+      // But we don't know for sure. Let's check if we're accessing via localhost
+      // and use host.docker.internal as fallback
+      let finalHost = hostname;
+      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        // We might be in Docker, try to use host.docker.internal
+        // But only if we're not in a browser on the host
+        // This is tricky
+      }
+      
+      wsUrl = `${protocol}//${finalHost}:${wsPort}`;
+      console.log('PM_Web constructed WebSocket URL:', wsUrl);
+    }
     
     // Connect via WebSocket
     this.ws = new WebSocket(wsUrl);
@@ -302,5 +322,34 @@ export class PM_Web extends PM {
         })
       );
     };
+  }
+
+  // Browser context management implementations
+  async createBrowserContext(): Promise<string> {
+    return await this.send<string>("createBrowserContext");
+  }
+
+  async disposeBrowserContext(contextId: string): Promise<void> {
+    return await this.send<void>("disposeBrowserContext", contextId);
+  }
+
+  async getBrowserContexts(): Promise<string[]> {
+    return await this.send<string[]>("getBrowserContexts");
+  }
+
+  async newPageInContext(contextId: string): Promise<string> {
+    return await this.send<string>("newPageInContext", contextId);
+  }
+
+  async getBrowserMemoryUsage(): Promise<{
+    usedJSHeapSize: number;
+    totalJSHeapSize: number;
+    jsHeapSizeLimit: number;
+  }> {
+    return await this.send("getBrowserMemoryUsage");
+  }
+
+  async cleanupContext(contextId: string): Promise<void> {
+    return await this.send<void>("cleanupContext", contextId);
   }
 }
