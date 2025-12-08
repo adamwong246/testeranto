@@ -182,48 +182,103 @@ export type IRunTime = `node` | `web` | "pure" | `golang` | `python`;
 
 export type ITestTypes = [string, IRunTime, { ports: number }, ITestTypes[]];
 
+export type IDockerSteps = "RUN" | "WORKDIR" | "COPY";
+export type IFlavor = ["compiled" | "interpreted" | "VM" | "chrome", string];
+export type IStrategy =
+  | "combined-build-test-process-pools" // Interpreted languages: Node.js, Python, Ruby, PHP
+  | "separate-build-combined-test" // Compiled languages: Go, Rust
+  | "combined-service-shared-jvm" // VM languages: Java
+  | "combined-service-shared-chrome"; // Browser environment: Web
+export type IProd = [string, string][][];
+export type Itest = [string, string][][];
+export type IChecks = {
+  lint: [IDockerSteps, string][];
+  typeCheck: [IDockerSteps, string][];
+  // Add category-specific checks
+  staticAnalysis?: [IDockerSteps, string][];
+  // Metafile-based static analysis
+  metafileAnalysis?: [IDockerSteps, string][];
+};
+
 export type ITestconfig = {
-  // debugger: boolean;
-  // externals: string[];
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
-  // minify: boolean;
-  // nodePlugins: IPluginFactory[];
   ports: string[];
   src: string;
+  test: Itest;
+  prod: IProd;
+  checks: IChecks;
+  // Strategy-specific configurations
+  build?: Itest; // Separate build steps for compiled languages
+  processPool?: {
+    maxConcurrent: number;
+    timeoutMs: number;
+  };
+  chrome?: {
+    sharedInstance: boolean;
+    maxContexts: number;
+    memoryLimitMB: number;
+  };
 
   golang: {
     plugins: any[];
-    tests: Record<string, { port: number }>;
+    tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
+    flavor: IFlavor;
+    strategy: IStrategy;
+    test: Itest;
+    prod: IProd;
+    checks: IChecks;
+    build?: Itest; // Separate build for Go
   };
 
   python: {
     plugins: any[];
-    tests: Record<string, { port: number }>;
+    tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
+    flavor: IFlavor;
+    strategy: IStrategy;
+    test: Itest;
+    prod: IProd;
+    checks: IChecks;
+    processPool?: {
+      maxConcurrent: number;
+      timeoutMs: number;
+    };
   };
 
   node: {
     plugins: any[];
-    tests: Record<string, { port: number }>;
+    tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
+    flavor: IFlavor;
+    strategy: IStrategy;
+    test: Itest;
+    prod: IProd;
+    checks: IChecks;
+    processPool?: {
+      maxConcurrent: number;
+      timeoutMs: number;
+    };
   };
+
   web: {
     plugins: any[];
-    tests: Record<string, { port: number }>;
+    tests: Record<string, { ports: number }>;
     loaders: Record<string, string>;
     externals: string[];
+    flavor: IFlavor;
+    strategy: IStrategy;
+    test: Itest;
+    prod: IProd;
+    checks: IChecks;
+    chrome?: {
+      sharedInstance: boolean;
+      maxContexts: number;
+      memoryLimitMB: number;
+    };
   };
-  // tests: ITestTypes[];
-  // webPlugins: IPluginFactory[];
-  // webLoaders: Record<string, string>;
 };
 
 export type IBuiltConfig = { buildDir: string } & ITestconfig;
-
-// export type IProject = {
-//   projects: Record<string, ITestconfig>;
-//   ignore: string[]; //list of glob patterns to ignore
-// };

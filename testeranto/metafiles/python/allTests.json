@@ -4,7 +4,7 @@
   "metafile": {
     "inputs": {
       "example/Calculator.golingvu.test.go": {
-        "bytes": 7120,
+        "bytes": 7121,
         "imports": []
       }
     },
@@ -15,11 +15,11 @@
         "entryPoint": "example/Calculator.golingvu.test.go",
         "inputs": {
           "example/Calculator.golingvu.test.go": {
-            "bytesInOutput": 7120
+            "bytesInOutput": 7121
           }
         },
-        "bytes": 7120,
-        "signature": "mixd815l"
+        "bytes": 7121,
+        "signature": "mixqjplu"
       }
     }
   }

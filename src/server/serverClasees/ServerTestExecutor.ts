@@ -11,45 +11,40 @@
 
 import { ChildProcess } from "child_process";
 import { LogStreams, statusMessagePretty } from "../../clients/utils";
-import { IBuiltConfig, IRunTime, ISummary } from "../../Types";
+import { IBuiltConfig, IRunTime } from "../../Types";
 import configTests from "../configTests";
-import { pythonLintCheck } from "../python/pythonLintCheck";
-import { pythonTypeCheck } from "../python/pythonTypeCheck";
 import { getRunnables } from "../utils";
 import { BuildProcessManager } from "./BuildProcessManager";
 import { BuildProcessStarter } from "./BuildProcessStarter";
 import { ChildProcessHandler } from "./ChildProcessHandler";
-import { EntrypointFinder } from "./EntrypointFinder";
-import { EslintCheck } from "./EslintCheck";
 import { GolangLauncher } from "./GolangLauncher";
 import { NodeLauncher } from "./NodeLauncher";
 import { PythonLauncher } from "./PythonLauncher";
+import { ServerTaskCoordinator } from "./ServerTaskCoordinator";
 import { ServerTestEnvironmentSetup } from "./ServerTestEnvironmentSetup";
 import { TestEnvironmentSetup } from "./TestEnvironmentSetup";
-import { TscCheck } from "./TscCheck";
 import { TypeCheckNotifier } from "./TypeCheckNotifier";
 import { WebLauncher } from "./WebLauncher";
-import { ServerTaskCoordinator } from "./ServerTaskCoordinator";
 
 // Process management types
-type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
-type ProcessType = "process" | "promise";
-type ProcessStatus = "running" | "exited" | "error" | "completed";
+// type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
+// type ProcessType = "process" | "promise";
+// type ProcessStatus = "running" | "exited" | "error" | "completed";
 
-interface ProcessInfo {
-  child?: ChildProcess;
-  promise?: Promise<any>;
-  status: ProcessStatus;
-  exitCode?: number;
-  error?: string;
-  command: string;
-  pid?: number;
-  timestamp: string;
-  type: ProcessType;
-  category: ProcessCategory;
-  testName?: string;
-  platform: IRunTime;
-}
+// interface ProcessInfo {
+//   child?: ChildProcess;
+//   promise?: Promise<any>;
+//   status: ProcessStatus;
+//   exitCode?: number;
+//   error?: string;
+//   command: string;
+//   pid?: number;
+//   timestamp: string;
+//   type: ProcessType;
+//   category: ProcessCategory;
+//   testName?: string;
+//   platform: IRunTime;
+// }
 
 export class ServerTestExecutor extends ServerTaskCoordinator {
   launchers: Record<string, () => void>;
@@ -176,95 +171,15 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
   //   );
   // }
 
-  private cleanupTestProcessesInternal(testName: string) {
-    // Use the integrated process management to clean up processes
-    // const cleanedProcessIds = this.cleanupTestProcesses(testName);
-    // if (cleanedProcessIds.length > 0) {
-    //   console.log(
-    //     `Cleaned up ${cleanedProcessIds.length} processes for test: ${testName}`
-    //   );
-    // }
-  }
-
-  async pythonLintCheck(entrypoint: string, addableFiles: string[]) {
-    return pythonLintCheck(
-      entrypoint,
-      addableFiles,
-      this.projectName,
-      this.summary
-    );
-  }
-
-  async pythonTypeCheck(entrypoint: string, addableFiles: string[]) {
-    return pythonTypeCheck(
-      entrypoint,
-      addableFiles,
-      this.projectName,
-      this.summary
-    );
-  }
-
-  private tscCheckInstance: TscCheck | null = null;
-
-  private getTscCheck(): TscCheck {
-    if (!this.tscCheckInstance) {
-      this.tscCheckInstance = new TscCheck(
-        this.projectName,
-        this.typeCheckIsRunning,
-        this.typeCheckIsNowDone,
-        this.addPromiseProcess
-      );
-    }
-    return this.tscCheckInstance;
-  }
-
-  tscCheck = async ({
-    entrypoint,
-    addableFiles,
-    platform,
-  }: {
-    entrypoint: string;
-    addableFiles: string[];
-    platform: IRunTime;
-  }): Promise<void> => {
-    return this.getTscCheck().tscCheck({
-      entrypoint,
-      addableFiles,
-      platform,
-    });
-  };
-
-  private eslintCheckInstance: EslintCheck | null = null;
-
-  private getEslintCheck(): EslintCheck {
-    if (!this.eslintCheckInstance) {
-      this.eslintCheckInstance = new EslintCheck(
-        this.projectName,
-        this.lintIsRunning,
-        this.lintIsNowDone,
-        this.addPromiseProcess,
-        this.writeBigBoard.bind(this),
-        this.checkForShutdown.bind(this)
-      );
-    }
-    return this.eslintCheckInstance;
-  }
-
-  eslintCheck = async ({
-    entrypoint,
-    addableFiles,
-    platform,
-  }: {
-    entrypoint: string;
-    addableFiles: string[];
-    platform: IRunTime;
-  }) => {
-    return this.getEslintCheck().eslintCheck({
-      entrypoint,
-      addableFiles,
-      platform,
-    });
-  };
+  // private cleanupTestProcessesInternal(testName: string) {
+  //   // Use the integrated process management to clean up processes
+  //   // const cleanedProcessIds = this.cleanupTestProcesses(testName);
+  //   // if (cleanedProcessIds.length > 0) {
+  //   //   console.log(
+  //   //     `Cleaned up ${cleanedProcessIds.length} processes for test: ${testName}`
+  //   //   );
+  //   // }
+  // }
 
   bddTestIsRunning(src: string) {
     this.updateSummaryEntry(src, {
@@ -378,143 +293,15 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
     }
     console.log(`[executeTest] Destination: ${dest}`);
 
-    // Run static analysis based on runtime
-    if (runtime === "node" || runtime === "web") {
-      console.log(`[executeTest] Running tsc check for ${src}`);
-      await this.runTscCheck(src, runtime, addableFiles);
-      console.log(`[executeTest] Running eslint check for ${src}`);
-      await this.runEslintCheck(src, runtime, addableFiles);
-    } else if (runtime === "python") {
-      // For Python, run lint and type checks
-      console.log(`[executeTest] Running Python lint check for ${src}`);
-      await this.runPythonLintCheck(src, runtime, addableFiles);
-      console.log(`[executeTest] Running Python type check for ${src}`);
-      await this.runPythonTypeCheck(src, runtime, addableFiles);
-    }
-    // For golang, there's no static analysis in this system
+    // Static analysis now runs inside Docker containers according to the strategy
+    // defined in allTests.ts, not on the host system
+    // The Docker containers will handle linting, type checking, etc. based on
+    // the metafile-based analysis steps defined for each runtime
 
     console.log(`[executeTest] Running BDD test for ${src}`);
     // Run the BDD test
     await this.runBddTest(src, runtime, dest);
     console.log(`[executeTest] Completed test: ${src} (${runtime})`);
-  }
-
-  private async runTscCheck(
-    src: string,
-    runtime: IRunTime,
-    addableFiles?: string[]
-  ): Promise<void> {
-    console.log(`[runTscCheck] Starting tsc check for ${src}`);
-    const processId = `tsc-${src}-${Date.now()}`;
-    const command = `tsc check for ${src}`;
-
-    const tscPromise = (async () => {
-      try {
-        console.log(`[runTscCheck] Marking type check as running for ${src}`);
-        this.typeCheckIsRunning(src);
-      } catch (e: any) {
-        console.error(
-          `[runTscCheck] Error in typeCheckIsRunning: ${e.message}`
-        );
-        throw new Error(`Error in tscCheck: ${e.message}`);
-      }
-      // Mark type check as done with 0 errors (temporarily)
-      console.log(`[runTscCheck] Marking type check as done for ${src}`);
-      this.typeCheckIsNowDone(src, 0);
-      return 0;
-    })();
-
-    this.addPromiseProcess(
-      processId,
-      tscPromise,
-      command,
-      "build-time",
-      src,
-      runtime
-    );
-
-    // Wait for tsc check to complete
-    console.log(`[runTscCheck] Waiting for tsc promise for ${src}`);
-    await tscPromise;
-    console.log(`[runTscCheck] Tsc check completed for ${src}`);
-  }
-
-  private async runEslintCheck(
-    src: string,
-    runtime: IRunTime,
-    addableFiles?: string[]
-  ): Promise<void> {
-    const processId = `eslint-${src}-${Date.now()}`;
-    const command = `eslint check for ${src}`;
-
-    const eslintPromise = (async () => {
-      try {
-        this.lintIsRunning(src);
-      } catch (e: any) {
-        throw new Error(`Error in eslintCheck: ${e.message}`);
-      }
-      // Temporarily skip actual linting and mark as 0 errors
-      this.lintIsNowDone(src, 0);
-      return 0;
-    })();
-
-    this.addPromiseProcess(
-      processId,
-      eslintPromise,
-      command,
-      "build-time",
-      src,
-      runtime
-    );
-
-    // Wait for eslint check to complete
-    await eslintPromise;
-  }
-
-  private async runPythonLintCheck(
-    src: string,
-    runtime: IRunTime,
-    addableFiles?: string[]
-  ): Promise<void> {
-    const processId = `python-lint-${src}-${Date.now()}`;
-    const command = `python lint check for ${src}`;
-
-    const filesToUse = addableFiles || [];
-    const promise = this.pythonLintCheck(src, filesToUse);
-
-    this.addPromiseProcess(
-      processId,
-      promise,
-      command,
-      "build-time",
-      src,
-      runtime
-    );
-
-    await promise;
-  }
-
-  private async runPythonTypeCheck(
-    src: string,
-    runtime: IRunTime,
-    addableFiles?: string[]
-  ): Promise<void> {
-    const processId = `python-type-${src}-${Date.now()}`;
-    const command = `python type check for ${src}`;
-
-    const filesToUse = addableFiles || [];
-    const promise = this.pythonTypeCheck(src, filesToUse);
-
-    this.addPromiseProcess(
-      processId,
-      promise,
-      command,
-      "build-time",
-      src,
-      runtime
-    );
-
-    await promise;
   }
 
   private async runBddTest(

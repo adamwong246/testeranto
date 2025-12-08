@@ -1,6 +1,5 @@
 import { ChildProcess, spawn } from "child_process";
 import fs from "fs";
-import path from "path";
 import { createLogStreams, LogStreams } from "../../clients/utils";
 import { generatePromptFiles } from "../aider/generatePromptFiles";
 import { IRunTime } from "../../Types";
@@ -52,19 +51,43 @@ export class PythonLauncher {
 
         const logs = createLogStreams(reportDest, "python");
 
-        // Determine Python command
-        const venvPython = `./venv/bin/python3`;
-        const pythonCommand = fs.existsSync(venvPython)
-          ? venvPython
-          : "python3";
+        console.log("mark12", src, testResources);
+        
+        // Prepare test resources as a JSON string using shared utility
+        const { prepareTestResources, escapeForShell } = await import("./TestResourceUtils");
+        const testResourcesJson = prepareTestResources(
+            testResources,
+            portsToUse,
+            src,
+            reportDest
+        );
+        console.log("PythonLauncher: testResourcesJson:", testResourcesJson);
+        
+        // Escape the JSON for shell command
+        const escapedTestResources = escapeForShell(testResourcesJson);
+        
+        // Run Python test inside Docker container to ensure consistent environment
+        const dockerImage = "python:3.11-alpine";
+        const dockerCommand = [
+          "docker",
+          "run",
+          "--rm",
+          "-v",
+          `${process.cwd()}:/workspace`,
+          "-w",
+          "/workspace",
+          "--network",
+          "host", // Use host network to access WebSocket on localhost
+          "-e",
+          `WS_PORT=3000`,
+          dockerImage,
+          "sh",
+          "-c",
+          `pip install websockets>=12.0 > /dev/null 2>&1 && python3 ${escapeForShell(src)} ${escapedTestResources} "3002"`,
+        ];
 
-        // Pass WebSocket port via environment variable for congruence
-        const child = spawn(pythonCommand, [src, testResources], {
+        const child = spawn(dockerCommand[0], dockerCommand.slice(1), {
           stdio: ["pipe", "pipe", "pipe"],
-          env: {
-            ...process.env,
-            WS_PORT: "3000",
-          },
         });
 
         // Handle stdout and stderr normally

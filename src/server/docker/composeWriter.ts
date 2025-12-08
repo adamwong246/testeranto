@@ -14,6 +14,16 @@ export async function writeComposeFile(
     `${testsName}-docker-compose.yml`
   );
 
+  // Ensure all test services have restart: "no" explicitly
+  for (const [serviceName, serviceConfig] of Object.entries(services)) {
+    if (serviceName.includes('-example-') || serviceName.includes('-test-')) {
+      // This is a test service
+      serviceConfig.restart = "no";
+      // Also ensure no health check
+      delete serviceConfig.healthcheck;
+    }
+  }
+
   try {
     fs.writeFileSync(
       composeFilePath,

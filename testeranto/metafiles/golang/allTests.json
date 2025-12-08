@@ -4,7 +4,7 @@
   "metafile": {
     "inputs": {
       "/Users/adam/Code/testeranto/example/Calculator.golingvu.test.go": {
-        "bytes": 7120,
+        "bytes": 7121,
         "imports": [
           {
             "path": "encoding/json",
@@ -59,7 +59,7 @@
         "format": "esm"
       },
       "/Users/adam/Code/testeranto/example/Calculator.golingvu.adapter.go": {
-        "bytes": 2483,
+        "bytes": 2490,
         "imports": [
           {
             "path": "encoding/json",
@@ -85,7 +85,7 @@
         "format": "esm"
       },
       "/Users/adam/Code/testeranto/example/Calculator.golingvu.implementation.go": {
-        "bytes": 4576,
+        "bytes": 4573,
         "imports": [
           {
             "path": "encoding/json",
@@ -111,7 +111,7 @@
         "format": "esm"
       },
       "/Users/adam/Code/testeranto/example/Calculator.golingvu.specification.go": {
-        "bytes": 2150,
+        "bytes": 2480,
         "imports": [
           {
             "path": "encoding/json",
@@ -144,23 +144,23 @@
         "entryPoint": "/Users/adam/Code/testeranto/example/Calculator.golingvu.test.go",
         "inputs": {
           "/Users/adam/Code/testeranto/example/Calculator.golingvu.test.go": {
-            "bytesInOutput": 7120
+            "bytesInOutput": 7121
           },
           "/Users/adam/Code/testeranto/example/Calculator.go": {
             "bytesInOutput": 1989
           },
           "/Users/adam/Code/testeranto/example/Calculator.golingvu.adapter.go": {
-            "bytesInOutput": 2483
+            "bytesInOutput": 2490
           },
           "/Users/adam/Code/testeranto/example/Calculator.golingvu.implementation.go": {
-            "bytesInOutput": 4576
+            "bytesInOutput": 4573
           },
           "/Users/adam/Code/testeranto/example/Calculator.golingvu.specification.go": {
-            "bytesInOutput": 2150
+            "bytesInOutput": 2480
           }
         },
-        "bytes": 18318,
-        "signature": "mixd80or"
+        "bytes": 18653,
+        "signature": "mixqjomi"
       }
     }
   }

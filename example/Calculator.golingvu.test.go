@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("Running Calculator BDD tests with Golingvu...")
 
 	// Create test adapter
-	adapter := golingvu.SimpleTestAdapter{}
+	adapter := &golingvu.SimpleTestAdapter{}
 
 	// Create test implementation
 	implementation := NewCalculatorTestImplementation()

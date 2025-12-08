@@ -3,11 +3,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { default as ansiC } from "ansi-colors";
-import { ChildProcess } from "child_process";
 import fs, { watch } from "fs";
 import path from "path";
-import puppeteer, { executablePath } from "puppeteer-core";
-import { pollForFile, puppeteerConfigs } from "../../clients/utils";
+import { pollForFile } from "../../clients/utils";
 import {
   generatePitonoMetafile,
   writePitonoMetafile,
@@ -20,24 +18,23 @@ import { ServerTestExecutor } from "./ServerTestExecutor";
 import { TestEnvironmentSetup } from "./TestEnvironmentSetup";
 import { TypeCheckNotifier } from "./TypeCheckNotifier";
 
-type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
-type ProcessType = "process" | "promise";
-type ProcessStatus = "running" | "exited" | "error" | "completed";
-
-interface ProcessInfo {
-  child?: ChildProcess;
-  promise?: Promise<any>;
-  status: ProcessStatus;
-  exitCode?: number;
-  error?: string;
-  command: string;
-  pid?: number;
-  timestamp: string;
-  type: ProcessType;
-  category: ProcessCategory;
-  testName?: string;
-  platform: IRunTime;
-}
+// type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
+// type ProcessType = "process" | "promise";
+// type ProcessStatus = "running" | "exited" | "error" | "completed";
+// interface ProcessInfo {
+//   child?: ChildProcess;
+//   promise?: Promise<any>;
+//   status: ProcessStatus;
+//   exitCode?: number;
+//   error?: string;
+//   command: string;
+//   pid?: number;
+//   timestamp: string;
+//   type: ProcessType;
+//   category: ProcessCategory;
+//   testName?: string;
+//   platform: IRunTime;
+// }
 
 export class Server extends ServerTestExecutor {
   webMetafileWatcher: fs.FSWatcher;

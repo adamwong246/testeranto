@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import buildService from "./buildService";
@@ -88,6 +89,9 @@ export async function generateServices(
     services[buildServiceName] = serviceConfig;
   }
 
+  // Check services are not scheduled before tests - they can run independently
+  // Removed check service generation to simplify Docker Compose
+
   // Add test services for each test, but skip web tests
   // Web tests should all run through the single Chromium service
   for (const runtime of runtimes) {
@@ -131,18 +135,24 @@ export async function generateServices(
 
       // Build service configuration for test services
       // Use testServiceConfig which doesn't have port mappings
-      const serviceConfig: any = { ...testServiceConfig };
-
-      // Always remove container_name for test services to avoid conflicts
-      // Docker Compose will generate unique names automatically
-      delete serviceConfig.container_name;
-
-      // Remove image field if present, we'll use build instead
-      delete serviceConfig.image;
+      const serviceConfig: any = { 
+        restart: "no",  // Don't restart on failure - we want to see the exit status
+        shm_size: "2g",
+        environment: {
+          CONNECTION_TIMEOUT: '60000',
+          MAX_CONCURRENT_SESSIONS: '10',
+          ENABLE_CORS: 'true',
+          REMOTE_DEBUGGING_PORT: '9222',
+          REMOTE_DEBUGGING_ADDRESS: '0.0.0.0',
+          WS_PORT: '3002',
+          WS_HOST: 'host.docker.internal',
+          IN_DOCKER: 'true'
+        },
+        networks: ["default"]
+      };
 
       // Remove ports from test services to avoid conflicts
       // Test services only need internal communication within Docker network
-      delete serviceConfig.ports;
 
       // Set build configuration to use the Dockerfile we created
       const dockerfileDir = path.join(
@@ -175,6 +185,9 @@ export async function generateServices(
         },
       };
 
+      // Check services are not scheduled before tests - they can run independently
+      // Removed dependencies on check services
+
       // Add chromium dependency for node and web tests
       if (runtime === "node" || runtime === "web") {
         serviceConfig.depends_on.chromium = {
@@ -193,6 +206,25 @@ export async function generateServices(
       // Indicate we're running in Docker
       serviceConfig.environment.IN_DOCKER = "true";
 
+      // Add appropriate command based on runtime
+      // Add sleep at the end to keep container alive for debugging (temporarily)
+      if (runtime === "node") {
+        // Node tests should run the built bundle
+        const bundlePath = `/workspace/testeranto/bundles/allTests/${runtime}/${betterTestPath}`;
+        serviceConfig.command = ["sh", "-c", `if [ -f "${bundlePath}" ]; then node "${bundlePath}"; else echo "Bundle not found: ${bundlePath}" && exit 1; fi; sleep 3600`];
+      } else if (runtime === "golang") {
+        // For Go, run tests in the specific directory
+        const testDir = path.dirname(testPath);
+        serviceConfig.command = ["sh", "-c", `cd /workspace/${testDir} && go test -v ./...; sleep 3600`];
+      } else if (runtime === "python") {
+        // For Python, run pytest on the specific test file
+        const fullTestPath = `/workspace/${betterTestPath}`;
+        serviceConfig.command = ["sh", "-c", `if [ -f "${fullTestPath}" ]; then python3 -m pytest "${fullTestPath}" -v; else echo "Test file not found: ${fullTestPath}" && exit 1; fi; sleep 3600`];
+      }
+
+      // Remove health check for test services - they should run and exit
+      // Don't add any health check
+      
       services[serviceName] = serviceConfig;
     }
   }

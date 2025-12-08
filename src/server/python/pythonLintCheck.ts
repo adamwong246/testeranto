@@ -31,8 +31,19 @@ export async function pythonLintCheck(
   }
 
   try {
-    // Use flake8 for Python linting
-    const child = spawn("flake8", [entrypoint, "--max-line-length=88"], {
+    // Run flake8 inside a Docker container to ensure consistent environment
+    // Use the same Python image as defined in allTests.ts
+    const dockerImage = "python:3.11-alpine";
+    const dockerCommand = [
+      "docker", "run", "--rm",
+      "-v", `${process.cwd()}:/workspace`,
+      "-w", "/workspace",
+      dockerImage,
+      "sh", "-c",
+      `pip install flake8 > /dev/null 2>&1 && flake8 "${entrypoint}" --max-line-length=88`
+    ];
+
+    const child = spawn(dockerCommand[0], dockerCommand.slice(1), {
       stdio: ["pipe", "pipe", "pipe"],
     });
 
@@ -47,7 +58,7 @@ export async function pythonLintCheck(
     });
 
     return new Promise<void>((resolve) => {
-      child.on("close", () => {
+      child.on("close", (code) => {
         const logOut = stdout + stderr;
         if (logOut.trim()) {
           fs.writeFileSync(lintErrorsPath, logOut);
@@ -62,7 +73,7 @@ export async function pythonLintCheck(
       });
     });
   } catch (error: any) {
-    console.error(`Error running flake8 on ${entrypoint}:`, error);
+    console.error(`Error running flake8 in Docker on ${entrypoint}:`, error);
     fs.writeFileSync(lintErrorsPath, `Error running flake8: ${error.message}`);
     summary[entrypoint].staticErrors = -1;
   }

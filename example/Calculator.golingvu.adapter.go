@@ -11,19 +11,19 @@ import (
 type SimpleTestAdapter struct{}
 
 // AfterAll implements golingvu.ITestAdapter.
-func (a SimpleTestAdapter) AfterAll(store interface{}, pm interface{}) interface{} {
+func (a *SimpleTestAdapter) AfterAll(store interface{}, pm interface{}) interface{} {
 	// Clean up after all tests
 	return store
 }
 
 // AfterEach implements golingvu.ITestAdapter.
-func (a SimpleTestAdapter) AfterEach(store interface{}, key string, pm interface{}) interface{} {
+func (a *SimpleTestAdapter) AfterEach(store interface{}, key string, pm interface{}) interface{} {
 	// Clean up after each test
 	return store
 }
 
 // AndWhen implements golingvu.ITestAdapter.
-func (a SimpleTestAdapter) AndWhen(store interface{}, whenCB interface{}, testResource interface{}, pm interface{}) interface{} {
+func (a *SimpleTestAdapter) AndWhen(store interface{}, whenCB interface{}, testResource interface{}, pm interface{}) interface{} {
 	// Execute the when callback
 	if whenFunc, ok := whenCB.(func(interface{}, interface{}, interface{}) (interface{}, error)); ok {
 		result, err := whenFunc(store, testResource, pm)
@@ -36,7 +36,7 @@ func (a SimpleTestAdapter) AndWhen(store interface{}, whenCB interface{}, testRe
 }
 
 // AssertThis implements golingvu.ITestAdapter.
-func (a SimpleTestAdapter) AssertThis(t interface{}) bool {
+func (a *SimpleTestAdapter) AssertThis(t interface{}) bool {
 	// Simple assertion - check if the result is true or if there's no error
 	switch v := t.(type) {
 	case bool:
@@ -51,13 +51,13 @@ func (a SimpleTestAdapter) AssertThis(t interface{}) bool {
 }
 
 // BeforeAll implements golingvu.ITestAdapter.
-func (a SimpleTestAdapter) BeforeAll(input interface{}, tr golingvu.ITTestResourceConfiguration, pm interface{}) interface{} {
+func (a *SimpleTestAdapter) BeforeAll(input interface{}, tr golingvu.ITTestResourceConfiguration, pm interface{}) interface{} {
 	// Initialize before all tests - create a new calculator
 	return &Calculator{}
 }
 
 // BeforeEach implements golingvu.ITestAdapter.
-func (a SimpleTestAdapter) BeforeEach(subject interface{}, initializer interface{}, testResource golingvu.ITTestResourceConfiguration, initialValues interface{}, pm interface{}) interface{} {
+func (a *SimpleTestAdapter) BeforeEach(subject interface{}, initializer interface{}, testResource golingvu.ITTestResourceConfiguration, initialValues interface{}, pm interface{}) interface{} {
 	// Initialize before each test - reset the calculator
 	if calc, ok := subject.(*Calculator); ok {
 		calc.display = ""
@@ -68,7 +68,7 @@ func (a SimpleTestAdapter) BeforeEach(subject interface{}, initializer interface
 }
 
 // ButThen implements golingvu.ITestAdapter.
-func (a SimpleTestAdapter) ButThen(store interface{}, thenCB interface{}, testResource interface{}, pm interface{}) interface{} {
+func (a *SimpleTestAdapter) ButThen(store interface{}, thenCB interface{}, testResource interface{}, pm interface{}) interface{} {
 	// Execute the then callback
 	if thenFunc, ok := thenCB.(func(interface{}, interface{}, interface{}) (interface{}, error)); ok {
 		result, err := thenFunc(store, testResource, pm)

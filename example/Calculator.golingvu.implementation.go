@@ -20,7 +20,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 	impl.SuitesMap = map[string]interface{}{
 		"CalculatorSuite": func(name string, givens map[string]*golingvu.BaseGiven) *golingvu.BaseSuite {
 			return &golingvu.BaseSuite{
-				Name:   name,
+				Key:    name,
 				Givens: givens,
 			}
 		},
@@ -29,7 +29,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 	impl.GivensMap = map[string]interface{}{
 		"testEmptyDisplay": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
 			return &golingvu.BaseGiven{
-				Name:          name,
+				Key:           name,
 				Features:      features,
 				Whens:         whens,
 				Thens:         thens,
@@ -39,7 +39,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 		},
 		"testSingleDigit": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
 			return &golingvu.BaseGiven{
-				Name:          name,
+				Key:           name,
 				Features:      features,
 				Whens:         whens,
 				Thens:         thens,
@@ -53,7 +53,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 		"press": func(payload interface{}) *golingvu.BaseWhen {
 			button := payload.(string)
 			return &golingvu.BaseWhen{
-				Name: "press",
+				Key: "press",
 				WhenCB: func(store, testResource, pm interface{}) (interface{}, error) {
 					if calc, ok := store.(*Calculator); ok {
 						calc.Press(button)
@@ -65,7 +65,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 		},
 		"enter": func(payload interface{}) *golingvu.BaseWhen {
 			return &golingvu.BaseWhen{
-				Name: "enter",
+				Key: "enter",
 				WhenCB: func(store, testResource, pm interface{}) (interface{}, error) {
 					if calc, ok := store.(*Calculator); ok {
 						// For now, we'll just return the calculator
@@ -81,7 +81,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 		"result": func(payload interface{}) *golingvu.BaseThen {
 			expected := payload.(string)
 			return &golingvu.BaseThen{
-				Name: "result",
+				Key: "result",
 				ThenCB: func(store, testResource, pm interface{}) (interface{}, error) {
 					if calc, ok := store.(*Calculator); ok {
 						actual := calc.GetDisplay()

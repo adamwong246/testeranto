@@ -8,13 +8,13 @@ Given 7 runtimes with different characteristics, we've categorized them into 4 d
 
 ### 1. Interpreted Scripting Languages
 
-**Runtimes**: Node.js, Python, Ruby
+**Runtimes**: Node.js, Python, Ruby, PHP
 **Characteristics**:
 
 - Fast startup (<100ms)
 - Interpreter-based execution
 - Global state concerns
-- Dependency management (npm/pip/gem)
+- Dependency management (npm/pip/gem/composer)
 
 **Strategy**: Combined Build-and-Test Service with Process Pools
 
@@ -118,10 +118,21 @@ Given 7 runtimes with different characteristics, we've categorized them into 4 d
 
 ## Implementation Priorities
 
-**Phase 1**: Node + Web (highest priority, covers two different categories)
-**Phase 2**: Python + Ruby (extends Category 1)
-**Phase 3**: Go + Rust (Category 2 implementation)
-**Phase 4**: Java (Category 3, most specialized)
+**Phase 1**: Node + Web (highest priority, covers two different categories)  
+**Phase 2**: Python + Go (adds top interpreted and compiled languages)  
+**Phase 3**: Java + Ruby (fills VM category and extends interpreted)  
+**Phase 4**: Rust + C# + PHP + Kotlin + C++ (completes each category with next most popular)
+
+## Target Languages per Category
+
+| Category   | Primary (Phase 1‑2)      | Secondary (Phase 3‑4)        |
+|------------|--------------------------|------------------------------|
+| Interpreted| Node.js, Python          | Ruby, PHP                    |
+| Compiled   | Go                       | Rust, C++                    |
+| VM         | –                        | Java, C#, Kotlin             |
+| Chrome     | Web (JavaScript/TypeScript)| – (already covered)         |
+
+*Note: Shell/Bash is excluded from the target list as it does not align with the primary testing scenarios.*
 
 ## Key Files to Modify
 

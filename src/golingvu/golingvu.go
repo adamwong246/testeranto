@@ -293,6 +293,7 @@ type Golingvu struct {
 	Specs                   interface{}
 	totalTests              int
 	assertThis              func(t interface{}) interface{}
+	testAdapter             ITestAdapter
 }
 
 // NewPM_Golang creates a new PM_Golang instance
@@ -331,6 +332,7 @@ func NewGolingvu(
 		assertThis: func(t interface{}) interface{} {
 			return testAdapter.AssertThis(t)
 		},
+		testAdapter: testAdapter,
 	}
 
 	// Create classy implementations as functions that return instances
@@ -662,11 +664,31 @@ func (gv *Golingvu) executeTest(key string, given *BaseGiven) (map[string]interf
 	// Track if the test failed
 	testFailed := false
 
+	// Use the adapter to create initial store
+	// We need a test resource configuration - create a minimal one
+	testResource := ITTestResourceConfiguration{
+		Name:  "test",
+		Fs:    "./",
+		Ports: []int{},
+	}
+	
+	// Create initial subject using BeforeAll
+	store := gv.testAdapter.BeforeAll(nil, testResource, nil)
+	
 	// Process whens - execute each when step
 	for _, when := range given.Whens {
-		// Execute the when callback if it exists
 		var whenError error = nil
 		var whenName string = when.Key
+		
+		// Execute the when callback using the adapter's AndWhen
+		// The adapter's AndWhen will handle calling the actual whenCB
+		newStore := gv.testAdapter.AndWhen(store, when.WhenCB, testResource, nil)
+		if newStore != nil {
+			store = newStore
+		}
+		
+		// Check for errors (if the whenCB panicked, it would have been caught by uberCatcher)
+		// For now, assume no error
 
 		// Record the when step according to the Node.js format
 		processedWhen := map[string]interface{}{
@@ -678,20 +700,29 @@ func (gv *Golingvu) executeTest(key string, given *BaseGiven) (map[string]interf
 		// Convert to the right type
 		whensSlice := processedGiven["whens"].([]map[string]interface{})
 		processedGiven["whens"] = append(whensSlice, processedWhen)
-
-		if whenError != nil {
-			testFailed = true
-			processedGiven["status"] = false
-			processedGiven["error"] = whenError
-		}
 	}
 
 	// Process thens - execute each then step
 	for _, then := range given.Thens {
-		// Execute the then callback if it exists
 		var thenError error = nil
 		var thenName string = then.Key
 		var thenStatus bool = true
+
+		// Execute the then callback using the adapter's ButThen
+		result := gv.testAdapter.ButThen(store, then.ThenCB, testResource, nil)
+		
+		// Check the result
+		// The adapter's AssertThis can be used to validate
+		success := gv.testAdapter.AssertThis(result)
+		if !success {
+			thenError = fmt.Errorf("assertion failed")
+			thenStatus = false
+			testFailed = true
+			processedGiven["status"] = false
+			if processedGiven["error"] == nil {
+				processedGiven["error"] = thenError
+			}
+		}
 
 		// Record the then step according to the Node.js format
 		processedThen := map[string]interface{}{
@@ -703,14 +734,6 @@ func (gv *Golingvu) executeTest(key string, given *BaseGiven) (map[string]interf
 		// Convert to the right type
 		thensSlice := processedGiven["thens"].([]map[string]interface{})
 		processedGiven["thens"] = append(thensSlice, processedThen)
-
-		if thenError != nil {
-			testFailed = true
-			processedGiven["status"] = false
-			if processedGiven["error"] == nil {
-				processedGiven["error"] = thenError
-			}
-		}
 	}
 
 	return processedGiven, testFailed, nil

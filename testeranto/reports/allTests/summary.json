@@ -6,8 +6,15 @@
     "prompt": "?",
     "failingFeatures": {}
   },
+  "example/Calculator.pitono.test.py": {
+    "runTimeErrors": 0,
+    "typeErrors": "?",
+    "staticErrors": "?",
+    "prompt": "?",
+    "failingFeatures": {}
+  },
   "example/Calculator.golingvu.test.go": {
-    "runTimeErrors": 1,
+    "runTimeErrors": 0,
     "typeErrors": "?",
     "staticErrors": "?",
     "prompt": "?",

@@ -45,7 +45,7 @@ def set_default_instance(instance):
 
 async def main():
     if len(sys.argv) < 3:
-        print("Usage: python <test_file.py> <partialTestResource> <ipcfile>")
+        print("Usage: python <test_file.py> <partialTestResource> <WebSocket_port>", " ".join(sys.argv))
         sys.exit(-1)
         
     partialTestResource = sys.argv[1]
@@ -340,12 +340,85 @@ class PitonoClass:
             
             return Result(1, [], [])
     
-    async def receiveTestResourceConfig(self, partialTestResource: str, ipcfile: str) -> Any:
+    async def receiveTestResourceConfig(self, partialTestResource: str, websocket_port: str) -> Any:
+        # Don't print to reduce noise in test output
+
         # Parse the test resource configuration
-        test_resource_config = json.loads(partialTestResource)
+        import os
+        import re
+        
+        def fix_json_string(s):
+            # Try to fix common JSON issues
+            # Replace single quotes with double quotes, but be careful with escaped quotes
+            # First, handle property names without quotes
+            # This regex adds quotes around property names (very basic)
+            # Note: This is a simple fix and may not handle all cases
+            pattern = r'(\s*)(\w+)(\s*):'
+            fixed = re.sub(pattern, r'\1"\2"\3:', s)
+            # Replace single quotes with double quotes, but not escaped ones
+            # This is tricky, so we'll do a simple approach
+            # First, replace \' with a temporary marker
+            fixed = fixed.replace("\\'", "___TEMP_ESCAPED_SINGLE_QUOTE___")
+            # Replace remaining single quotes with double quotes
+            fixed = fixed.replace("'", '"')
+            # Restore escaped single quotes
+            fixed = fixed.replace("___TEMP_ESCAPED_SINGLE_QUOTE___", "\\'")
+            return fixed
+        
+        # First, check if it's a file path
+        if os.path.exists(partialTestResource):
+            try:
+                with open(partialTestResource, 'r') as f:
+                    test_resource_config = json.load(f)
+            except json.JSONDecodeError as e:
+                print(f"Error parsing JSON from file {partialTestResource}: {e}")
+                # Try to read and fix the file content
+                with open(partialTestResource, 'r') as f:
+                    content = f.read()
+                try:
+                    fixed_content = fix_json_string(content)
+                    test_resource_config = json.loads(fixed_content)
+                except json.JSONDecodeError as e2:
+                    print(f"Error even after fixing JSON: {e2}")
+                    print(f"Content was: {content}")
+                    raise
+        else:
+            # Try to parse as JSON string
+            try:
+                test_resource_config = json.loads(partialTestResource)
+            except json.JSONDecodeError as e:
+                print(f"Error parsing JSON string: {e}")
+                print(f"String was: {partialTestResource}")
+                # Try to fix common issues
+                try:
+                    fixed = fix_json_string(partialTestResource)
+                    test_resource_config = json.loads(fixed)
+                except json.JSONDecodeError as e2:
+                    print(f"Error even after fixing JSON: {e2}")
+                    # As a last resort, try to parse as Python literal (not safe for production)
+                    # But for testing, we can use ast.literal_eval
+                    import ast
+                    try:
+                        # ast.literal_eval can handle Python literals including dicts with single quotes
+                        parsed = ast.literal_eval(partialTestResource)
+                        # Convert to JSON-serializable dict
+                        if isinstance(parsed, dict):
+                            test_resource_config = parsed
+                        else:
+                            raise
+                    except:
+                        print(f"Could not parse as Python literal either")
+                        raise
         
         # Create a PM_Python instance
-        pm = PM_Python(test_resource_config, ipcfile)
+        pm = PM_Python(test_resource_config, websocket_port)
+        # Connect to WebSocket - suppress any connection errors
+        try:
+            await pm.connect()
+        except Exception as e:
+            # Don't print the error to avoid cluttering test output
+            # The PM_Python class already handles disconnected state gracefully
+            pass
         
         # Run all test jobs
         total_fails = 0

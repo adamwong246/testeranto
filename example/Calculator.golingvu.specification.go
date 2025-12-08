@@ -16,8 +16,13 @@ var CalculatorSpecification golingvu.ITestSpecification = func(
 	thensMap := thens.(map[string]interface{})
 
 	// Get the functions from the maps with the correct type assertions
-	suiteFunc := suitesMap["Default"].(func(string, map[string]*golingvu.BaseGiven) *golingvu.BaseSuite)
-	givenFunc := givensMap["Default"].(func(string, []string, []*golingvu.BaseWhen, []*golingvu.BaseThen, interface{}, interface{}) *golingvu.BaseGiven)
+	// Use the correct keys that match the implementation
+	suiteFunc := suitesMap["CalculatorSuite"].(func(string, map[string]*golingvu.BaseGiven) *golingvu.BaseSuite)
+	
+	// Get the specific given functions
+	testEmptyDisplayFunc := givensMap["testEmptyDisplay"].(func(string, []string, []*golingvu.BaseWhen, []*golingvu.BaseThen, interface{}, interface{}) *golingvu.BaseGiven)
+	testSingleDigitFunc := givensMap["testSingleDigit"].(func(string, []string, []*golingvu.BaseWhen, []*golingvu.BaseThen, interface{}, interface{}) *golingvu.BaseGiven)
+	
 	whenFunc := whensMap["press"].(func(interface{}) *golingvu.BaseWhen)
 	thenFunc := thensMap["result"].(func(interface{}) *golingvu.BaseThen)
 
@@ -32,8 +37,8 @@ var CalculatorSpecification golingvu.ITestSpecification = func(
 	thenResult := thenFunc("")
 	emptyThens = append(emptyThens, thenResult)
 	
-	givensForSuite["testEmptyDisplay"] = givenFunc(
-		"Default",
+	givensForSuite["testEmptyDisplay"] = testEmptyDisplayFunc(
+		"testEmptyDisplay",
 		[]string{"pressing nothing, the display is empty"},
 		emptyWhens, // whens
 		emptyThens, // thens
@@ -53,8 +58,8 @@ var CalculatorSpecification golingvu.ITestSpecification = func(
 	thenResult2 := thenFunc("2")
 	singleThens = append(singleThens, thenResult2)
 	
-	givensForSuite["testSingleDigit"] = givenFunc(
-		"Default",
+	givensForSuite["testSingleDigit"] = testSingleDigitFunc(
+		"testSingleDigit",
 		[]string{"entering a number puts it on the display"},
 		singleWhens, // whens
 		singleThens, // thens

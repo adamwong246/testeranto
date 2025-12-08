@@ -20,7 +20,7 @@ setup(
     },
     python_requires='>=3.7',
     install_requires=[
-        # Add any dependencies here
+        "websockets>=12.0",
     ],
     author="Testeranto Team",
     author_email="",

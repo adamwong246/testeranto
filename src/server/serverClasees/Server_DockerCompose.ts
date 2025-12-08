@@ -10,21 +10,22 @@ import {
 import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
-// Note: setupDockerCompose is imported dynamically to avoid circular dependencies
 import { setupDockerfileForBuildGolang } from "../golang/setupDockerfileForBuildGolang";
 import { setupDockerfileForBuildNode } from "../node/setupDockerfileForBuildNode";
 import { setupDockerfileForBuildPython } from "../python/setupDockerfileForBuildPython";
 import { DockerComposeOptions } from "../types";
 import { setupDockerfileForBuildWeb } from "../web/setupDockerfileForBuildWeb";
-import { Server_TCP } from "./Server_TCP";
+import { createBuildService } from "../docker/serviceGenerator";
+import { IMode } from "../../app/types";
+import { Server_TCP_Commands } from "./Server_TCP_Commands";
 
-export class Server_DockerCompose extends Server_TCP {
+export class Server_DockerCompose extends Server_TCP_Commands {
   private cwd: string;
   private config: string;
   private composeDir: string;
   private composeFile: string;
 
-  constructor(cwd: string, configs: IBuiltConfig, name: string, mode: string) {
+  constructor(cwd: string, configs: IBuiltConfig, name: string, mode: IMode) {
     super(configs, name, mode);
     this.cwd = cwd;
     this.config = path.join(
@@ -196,15 +197,15 @@ export class Server_DockerCompose extends Server_TCP {
   public generateBuildServiceForRuntime(
     c: IBuiltConfig,
     runtime: IRunTime,
-    testsName: string,
-    logger?: {
-      log: (...args: any[]) => void;
-    }
+    testsName: string
+    // logger?: {
+    //   log: (...args: any[]) => void;
+    // }
   ): Record<string, any> {
-    const buildDockerfileDir = setupDockerfileForBuild(
+    const buildDockerfileDir = this.setupDockerfileForBuild(
       runtime,
-      testsName,
-      logger
+      testsName
+      // logger
     );
     return createBuildService(runtime, buildDockerfileDir, testsName);
   }

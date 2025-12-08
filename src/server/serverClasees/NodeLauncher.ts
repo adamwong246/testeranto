@@ -137,47 +137,27 @@ export class NodeLauncher {
 
         console.log(`Build is ready at ${builtfile}. Proceeding with test...`);
 
-        // Prepare test resources as a JSON string
-        // Use the testResources from setupResult, which should include proper ports
-        // If testResources is a string, parse it first
-        let testResourcesObj;
-        if (typeof testResources === "string") {
-          try {
-            testResourcesObj = JSON.parse(testResources);
-          } catch (e) {
-            console.error("Failed to parse testResources string:", e);
-            testResourcesObj = {};
-          }
-        } else {
-          testResourcesObj = testResources || {};
-        }
-
-        // Ensure ports are included
-        if (portsToUse && portsToUse.length > 0) {
-          // Convert port strings to numbers
-          testResourcesObj.ports = portsToUse.map((p) => parseInt(p, 10));
-        } else {
-          testResourcesObj.ports = testResourcesObj.ports || [];
-        }
-
-        // Make sure other required fields are present
-        testResourcesObj.name = testResourcesObj.name || "node-test";
-        testResourcesObj.fs = testResourcesObj.fs || process.cwd();
-        testResourcesObj.browserWSEndpoint =
-          testResourcesObj.browserWSEndpoint || "";
-        testResourcesObj.timeout = testResourcesObj.timeout || 30000;
-        testResourcesObj.retries = testResourcesObj.retries || 3;
-
-        const testResourcesJson = JSON.stringify(testResourcesObj);
+        // Prepare test resources as a JSON string using shared utility
+        const { prepareTestResources } = await import("./TestResourceUtils");
+        const testResourcesJson = prepareTestResources(
+            testResources,
+            portsToUse,
+            src,
+            process.cwd()
+        );
 
         // Determine which port to pass to the test
         // Use the first port from portsToUse, or default to 3002
         const portToUse =
           portsToUse && portsToUse.length > 0 ? portsToUse[0] : "3002";
 
+        // Escape test resources for shell
+        const { escapeForShell } = await import("./TestResourceUtils");
+        const escapedTestResources = escapeForShell(testResourcesJson);
+        
         console.log("launchNode", [builtfile, portToUse, testResourcesJson]);
         console.log(
-          `Full command: node ${builtfile} ${portToUse} ${testResourcesJson.substring(
+          `Full command: node ${builtfile} ${portToUse} ${escapedTestResources.substring(
             0,
             100
           )}...`

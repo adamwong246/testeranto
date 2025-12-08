@@ -147,15 +147,18 @@ COPY dist/prebuild/server/builders/${runtime}.mjs ./${runtime}.mjs
 # Default command (will be overridden by docker-compose)
 CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
     } else if (runtime === "python") {
-      dockerfileContent = `FROM python:latest
+      dockerfileContent = `FROM python:3.11-alpine
 WORKDIR /workspace
+
+# Install required Python packages including websockets for WebSocket communication
+RUN pip install websockets>=12.0
 
 # Create necessary directories
 RUN mkdir -p /workspace/testeranto/bundles/allTests/${runtime}
 RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
 
 # Install Node.js for running the builder
-RUN apt-get update && apt-get install -y nodejs npm
+RUN apk add --update nodejs npm
 RUN rm -f .npmrc .npmrc.* || true && \
     npm cache clean --force && \
     npm config set registry https://registry.npmjs.org/ && \

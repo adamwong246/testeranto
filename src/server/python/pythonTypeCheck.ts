@@ -31,8 +31,18 @@ export async function pythonTypeCheck(
   }
 
   try {
-    // Use mypy for Python type checking
-    const child = spawn("mypy", [entrypoint], {
+    // Run mypy inside a Docker container to ensure consistent environment
+    const dockerImage = "python:3.11-alpine";
+    const dockerCommand = [
+      "docker", "run", "--rm",
+      "-v", `${process.cwd()}:/workspace`,
+      "-w", "/workspace",
+      dockerImage,
+      "sh", "-c",
+      `pip install mypy > /dev/null 2>&1 && mypy "${entrypoint}"`
+    ];
+
+    const child = spawn(dockerCommand[0], dockerCommand.slice(1), {
       stdio: ["pipe", "pipe", "pipe"],
     });
 
@@ -47,7 +57,7 @@ export async function pythonTypeCheck(
     });
 
     return new Promise<void>((resolve) => {
-      child.on("close", () => {
+      child.on("close", (code) => {
         const logOut = stdout + stderr;
         if (logOut.trim()) {
           fs.writeFileSync(typeErrorsPath, logOut);
@@ -62,7 +72,7 @@ export async function pythonTypeCheck(
       });
     });
   } catch (error: any) {
-    console.error(`Error running mypy on ${entrypoint}:`, error);
+    console.error(`Error running mypy in Docker on ${entrypoint}:`, error);
     fs.writeFileSync(typeErrorsPath, `Error running mypy: ${error.message}`);
     summary[entrypoint].typeErrors = -1;
   }
