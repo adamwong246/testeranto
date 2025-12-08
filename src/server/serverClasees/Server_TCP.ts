@@ -11,12 +11,13 @@ import { FileService_methods } from "../../app/FileService";
 import { WebSocketMessage } from "../../clients/types";
 import { getAllFilesRecursively } from "./getAllFilesRecursively";
 import { Server_Base } from "./Server_Base";
+import { IMode } from "../../app/types";
 
 export class Server_TCP extends Server_Base {
   protected wss: WebSocketServer;
   protected httpServer: http.Server;
 
-  constructor(configs: any, name: string, mode: string) {
+  constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
 
     this.httpServer = http.createServer(this.handleHttpRequest.bind(this));

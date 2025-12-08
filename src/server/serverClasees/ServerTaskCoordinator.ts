@@ -1,10 +1,3 @@
-// This is a process manager which needs to be refactored. It is ATM broken
-// ATM, there are 3 checks for web and node tests- tsc check, lint check, and the bdd test
-// ATM, these 3 processes are scheduled separatly
-// We need to redo this process manager such that these processes are now executed together
-// Before if we had 2 tests, there would be 2 * 3 processes
-// We need to redo this so that there are only 3 processes scheduled
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -76,9 +69,21 @@ export class ServerTaskCoordinator extends Server_DockerCompose {
     this.launchers = {};
   }
 
+  summary: ISummary = {};
+
   // SummaryManager methods
   ensureSummaryEntry(src: string, isSidecar = false) {
-    ensureSummaryEntry(this.summary, src, isSidecar);
+    // Simple implementation if the external function doesn't exist
+    if (!this.summary[src]) {
+      this.summary[src] = {
+        runTimeTests: undefined,
+        runTimeErrors: undefined,
+        typeErrors: undefined,
+        staticErrors: undefined,
+        prompt: undefined,
+        failingFeatures: undefined,
+      };
+    }
     return this.summary[src];
   }
 
@@ -205,7 +210,9 @@ export class ServerTaskCoordinator extends Server_DockerCompose {
     addableFiles?: string[]
   ): Promise<void> {
     // This method should be overridden by derived classes
-    throw new Error(`processQueueItem should be implemented by derived class for ${testName} (${runtime})`);
+    throw new Error(
+      `processQueueItem should be implemented by derived class for ${testName} (${runtime})`
+    );
   }
 
   checkQueue = async () => {
@@ -252,8 +259,8 @@ export class ServerTaskCoordinator extends Server_DockerCompose {
   };
 
   checkForShutdown = async () => {
-    // First, check the queue
-    this.checkQueue();
+    // Don't check the queue here to avoid recursion
+    // The queue is already checked by checkQueue before calling this method
 
     console.log(
       ansiC.inverse(
@@ -319,7 +326,6 @@ export class ServerTaskCoordinator extends Server_DockerCompose {
       }
     }
   };
-
 
   // QueueManager methods
   addToQueue(

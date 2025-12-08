@@ -87,7 +87,7 @@ export const getRunnables = (
     // golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
     nodeEntryPoints: Object.entries(config.node.tests).reduce((pt, cv) => {
       pt[cv[0]] = path.resolve(
-        `./testeranto/bundles/node/${projectName}/${cv[0]
+        `./testeranto/bundles/${projectName}/node/${cv[0]
           .split(".")
           .slice(0, -1)
           .concat("mjs")
@@ -103,7 +103,7 @@ export const getRunnables = (
     // pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {},
     webEntryPoints: Object.entries(config.web.tests).reduce((pt, cv) => {
       pt[cv[0]] = path.resolve(
-        `./testeranto/bundles/web/${projectName}/${cv[0]
+        `./testeranto/bundles/${projectName}/web/${cv[0]
           .split(".")
           .slice(0, -1)
           .concat("mjs")

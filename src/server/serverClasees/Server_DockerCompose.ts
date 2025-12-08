@@ -47,8 +47,6 @@ export class Server_DockerCompose extends Server_TCP {
   }
 
   private async initializeAndStart(): Promise<void> {
-    console.log(`Setting up docker-compose for ${this.projectName}...`);
-
     // Import setupDockerCompose here to avoid circular dependencies
     const { setupDockerCompose } = await import(
       "../docker/dockerComposeGenerator"
@@ -81,18 +79,10 @@ export class Server_DockerCompose extends Server_TCP {
       return;
     }
 
-    console.log(`Docker-compose file created at: ${this.composeFile}`);
-
-    // Start docker-compose services
     await this.startServices();
   }
 
   private async startServices(): Promise<void> {
-    console.log(`Starting docker-compose services for ${this.projectName}...`);
-    console.log(`Compose file path: ${this.composeFile}`);
-    console.log(`Working directory: ${this.composeDir}`);
-    console.log(`Config path: ${this.config}`);
-
     // Check if compose file exists
     if (!fs.existsSync(this.composeFile)) {
       console.error(`Docker-compose file not found: ${this.composeFile}`);
@@ -111,31 +101,7 @@ export class Server_DockerCompose extends Server_TCP {
       return;
     }
 
-    // Log the compose file content
     try {
-      const composeContent = fs.readFileSync(this.composeFile, "utf-8");
-      console.log(`Docker-compose file content (first 3000 chars):`);
-      console.log(composeContent.substring(0, 3000));
-      console.log(`File size: ${composeContent.length} bytes`);
-    } catch (error) {
-      console.error(`Error reading compose file: ${error}`);
-    }
-
-    // First, check if services are already running
-    try {
-      console.log(`Checking current service status...`);
-      const psResult = await this.DC_ps();
-      console.log(`Current service status:`, psResult.out);
-      console.log(`Exit code: ${psResult.exitCode}`);
-      if (psResult.err) {
-        console.error(`Error from ps:`, psResult.err);
-      }
-    } catch (error) {
-      console.error(`Error checking service status:`, error);
-    }
-
-    try {
-      console.log(`Running docker-compose up...`);
       const result = await this.DC_upAll();
       console.log(
         `docker-compose up completed with exit code: ${result.exitCode}`
@@ -147,90 +113,11 @@ export class Server_DockerCompose extends Server_TCP {
         console.error(`Error: ${result.err}`);
         console.error(`Output: ${result.out}`);
       } else {
-        console.log(`docker-compose services started successfully`);
-        console.log(
-          `Output (first 3000 chars): ${result.out?.substring(0, 3000)}`
-        );
-
-        // Wait a bit for services to become healthy
         console.log(`Waiting for services to become healthy (15 seconds)...`);
         await new Promise((resolve) => setTimeout(resolve, 15000));
 
-        // Check service status again
-        console.log(`Checking service status after startup...`);
         const psResult2 = await this.DC_ps();
         console.log(`Service status after startup:`, psResult2.out);
-
-        if (!psResult2.out || psResult2.out.trim() === "") {
-          console.error(`No services found in docker-compose ps output!`);
-          console.error(`This suggests the services weren't started properly.`);
-          console.error(`Trying to get logs for all services...`);
-
-          // Try to get logs for all services defined in the compose file
-          const composeContent = fs.readFileSync(this.composeFile, "utf-8");
-          const yaml = await import("js-yaml");
-          const composeObj = yaml.load(composeContent) as any;
-          const serviceNames = Object.keys(composeObj?.services || {});
-
-          console.log(
-            `Services defined in compose file: ${serviceNames.join(", ")}`
-          );
-
-          for (const serviceName of serviceNames) {
-            try {
-              console.log(`Getting logs for ${serviceName}...`);
-              const logsResult = await this.DC_logs(serviceName);
-              console.log(
-                `${serviceName} logs (first 1000 chars):`,
-                logsResult.out?.substring(0, 1000)
-              );
-            } catch (e) {
-              console.error(`Error getting logs for ${serviceName}:`, e);
-            }
-          }
-        } else {
-          // Also get logs for build services if they exist
-          console.log(`Getting logs for build services...`);
-
-          // First, check which services are actually running
-          const serviceOutput = psResult2.out || "";
-
-          // Check for node-build service (using the new container name)
-          if (
-            serviceOutput.includes("bundles-node-build") ||
-            serviceOutput.includes("node-build")
-          ) {
-            try {
-              const nodeBuildLogs = await this.DC_logs("node-build");
-              console.log(
-                `node-build logs (first 2000 chars):`,
-                nodeBuildLogs.out?.substring(0, 2000)
-              );
-            } catch (e) {
-              console.error(`Error getting node-build logs:`, e);
-            }
-          } else {
-            console.log(`node-build service not found in running services`);
-          }
-
-          // Check for web-build service (using the new container name)
-          if (
-            serviceOutput.includes("bundles-web-build") ||
-            serviceOutput.includes("web-build")
-          ) {
-            try {
-              const webBuildLogs = await this.DC_logs("web-build");
-              console.log(
-                `web-build logs (first 2000 chars):`,
-                webBuildLogs.out?.substring(0, 2000)
-              );
-            } catch (e) {
-              console.error(`Error getting web-build logs:`, e);
-            }
-          } else {
-            console.log(`web-build service not found in running services`);
-          }
-        }
       }
     } catch (error) {
       console.error(`Error starting docker-compose services:`, error);

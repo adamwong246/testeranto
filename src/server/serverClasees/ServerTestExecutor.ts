@@ -78,7 +78,7 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
       this.configs,
       this.mode,
       this.webSocketBroadcastMessage.bind(this),
-      this.addPromiseProcess?.bind(this)
+      this.addPromiseProcess
     );
     // Initialize BuildProcessStarter
     this.buildProcessStarter = new BuildProcessStarter(
@@ -114,7 +114,7 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
       this.browser,
       this.queue,
       this.configs,
-      this.bddTestIsRunning
+      this.bddTestIsRunning.bind(this)
     );
     return serverTestEnvironmentSetup.setupTestEnvironment(src, runtime);
   }
@@ -212,7 +212,7 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
         this.projectName,
         this.typeCheckIsRunning,
         this.typeCheckIsNowDone,
-        this.addPromiseProcess.bind(this)
+        this.addPromiseProcess
       );
     }
     return this.tscCheckInstance;
@@ -242,7 +242,7 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
         this.projectName,
         this.lintIsRunning,
         this.lintIsNowDone,
-        this.addPromiseProcess.bind(this),
+        this.addPromiseProcess,
         this.writeBigBoard.bind(this),
         this.checkForShutdown.bind(this)
       );
@@ -280,13 +280,12 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
     console.log(`[launchNode] Starting node test: ${src}, dest: ${dest}`);
     // Use the extracted NodeLauncher class
     const nodeLauncher = new NodeLauncher(
-      this.projectName,
       this.setupTestEnvironment.bind(this),
       this.cleanupPorts.bind(this),
       this.handleChildProcess.bind(this),
-      this.bddTestIsRunning,
-      this.bddTestIsNowDone,
-      this.addPromiseProcess.bind(this),
+      this.bddTestIsRunning.bind(this),
+      this.bddTestIsNowDone.bind(this),
+      this.addPromiseProcess,
       this.checkQueue.bind(this)
     );
     console.log(`[launchNode] NodeLauncher created, calling launchNode method`);
@@ -300,9 +299,9 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
     const webLauncher = new WebLauncher(
       this.projectName,
       this.browser,
-      this.bddTestIsRunning,
-      this.bddTestIsNowDone,
-      this.addPromiseProcess.bind(this),
+      this.bddTestIsRunning.bind(this),
+      this.bddTestIsNowDone.bind(this),
+      this.addPromiseProcess,
       this.checkQueue.bind(this)
     );
     return webLauncher.launchWeb(src, dest);
@@ -315,9 +314,9 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
       this.setupTestEnvironment.bind(this),
       this.handleChildProcess.bind(this),
       this.cleanupPorts.bind(this),
-      this.bddTestIsRunning,
-      this.bddTestIsNowDone,
-      this.addPromiseProcess.bind(this),
+      this.bddTestIsRunning.bind(this),
+      this.bddTestIsNowDone.bind(this),
+      this.addPromiseProcess,
       this.checkQueue.bind(this)
     );
     return pythonLauncher.launchPython(src, dest);
@@ -330,9 +329,9 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
       this.setupTestEnvironment.bind(this),
       this.handleChildProcess.bind(this),
       this.cleanupPorts.bind(this),
-      this.bddTestIsRunning,
-      this.bddTestIsNowDone,
-      this.addPromiseProcess.bind(this),
+      this.bddTestIsRunning.bind(this),
+      this.bddTestIsNowDone.bind(this),
+      this.addPromiseProcess,
       this.checkQueue.bind(this)
     );
     return golangLauncher.launchGolang(src, dest);

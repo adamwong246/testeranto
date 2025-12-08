@@ -48,7 +48,6 @@ export async function setupDockerCompose(
 
   try {
     fs.mkdirSync(composeDir, { recursive: true });
-    log(`Created directory: ${composeDir}`);
 
     // Also create runtime-specific directories for all runtimes that have tests
     for (const runtime of runtimes) {
@@ -57,7 +56,6 @@ export async function setupDockerCompose(
       if (hasTests) {
         const runtimeDir = path.join(composeDir, "allTests", runtime);
         fs.mkdirSync(runtimeDir, { recursive: true });
-        log(`Created runtime directory: ${runtimeDir}`);
 
         // Also create test-specific directories for each test
         // But skip creating Dockerfiles for web tests since they won't have services
@@ -70,7 +68,6 @@ export async function setupDockerCompose(
             const testDirPath = path.dirname(testPath);
             const testDir = path.join(runtimeDir, testDirPath);
             fs.mkdirSync(testDir, { recursive: true });
-            log(`Created test directory: ${testDir}`);
 
             // Only create Dockerfiles for non-web runtimes
             // Web tests don't need individual Dockerfiles since they won't have services
@@ -272,7 +269,6 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
     }
 
     fs.writeFileSync(runtimeDockerfilePath, dockerfileContent);
-    log(`Created runtime Dockerfile at: ${runtimeDockerfilePath}`);
   }
 
   // Generate services according to the example structure
@@ -303,9 +299,6 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
     // Skip creating services for web tests
     // Web tests will run through the Chromium service's API/web interface
     if (runtime === "web") {
-      log(
-        `Skipping Docker service creation for web tests. Web tests will run through Chromium service.`
-      );
       continue;
     }
 
@@ -418,11 +411,6 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
     `${testsName}-docker-compose.yml`
   );
 
-  console.log(
-    "baseCompose(services, testsName)",
-    baseCompose(services, testsName)
-  );
-
   try {
     fs.writeFileSync(
       composeFilePath,
@@ -431,7 +419,6 @@ CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
         noRefs: true,
       })
     );
-    log(`Generated docker-compose file: ${composeFilePath}`);
   } catch (err) {
     error(`Error writing compose file:`, err);
     throw err;

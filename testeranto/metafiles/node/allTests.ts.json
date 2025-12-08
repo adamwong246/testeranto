@@ -289,7 +289,7 @@
         "format": "esm"
       },
       "src/lib/Node.ts": {
-        "bytes": 3836,
+        "bytes": 3252,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -448,7 +448,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/allTests/node/Node-FJQ3VBCM.mjs",
+            "path": "testeranto/bundles/allTests/node/Node-6LMKAYMS.mjs",
             "kind": "dynamic-import"
           },
           {
@@ -483,7 +483,7 @@
         },
         "bytes": 11793
       },
-      "testeranto/bundles/allTests/node/Node-FJQ3VBCM.mjs": {
+      "testeranto/bundles/allTests/node/Node-6LMKAYMS.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/allTests/node/chunk-GD6O3ZZC.mjs",
@@ -536,10 +536,10 @@
             "bytesInOutput": 6312
           },
           "src/lib/Node.ts": {
-            "bytesInOutput": 2026
+            "bytesInOutput": 1683
           }
         },
-        "bytes": 31013
+        "bytes": 30670
       },
       "testeranto/bundles/allTests/node/chunk-GD6O3ZZC.mjs": {
         "imports": [],

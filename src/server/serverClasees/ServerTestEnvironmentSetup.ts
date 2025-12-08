@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IRunTime } from "../../Types";
 import { TestEnvironmentSetup } from "./TestEnvironmentSetup";
 import configTests from "../configTests";

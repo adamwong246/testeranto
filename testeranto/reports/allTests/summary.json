@@ -1,0 +1,9 @@
+{
+  "example/Calculator.test.ts": {
+    "runTimeErrors": 27,
+    "typeErrors": "?",
+    "staticErrors": "?",
+    "prompt": "?",
+    "failingFeatures": {}
+  }
+}

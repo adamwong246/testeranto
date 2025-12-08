@@ -174,11 +174,6 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
     // golangEntryPointSidecars,
   } = getRunnables(config, testsName);
 
-  // Debug logging to check if entry points are being found
-  console.log("Node entry points:", Object.keys(nodeEntryPoints));
-  console.log("Web entry points:", Object.keys(webEntryPoints));
-  // console.log("Pure entry points:", Object.keys(pureEntryPoints));
-
   // Handle golang tests using GolingvuBuild
   // const golangTests = config.tests.filter((test) => test[1] === "golang");
   // const golangTests = config.golang.map((_, testName) => [

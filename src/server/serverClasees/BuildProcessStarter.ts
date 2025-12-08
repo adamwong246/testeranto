@@ -17,10 +17,6 @@ export class BuildProcessStarter {
       this.projectName
     );
 
-    console.log(`Starting build processes for ${this.projectName}...`);
-    console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
-    console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
-
     // Start all build processes (only node, web, pure)
     await Promise.all([
       this.buildProcessManager.startBuildProcess(

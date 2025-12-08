@@ -2,11 +2,40 @@
   "errors": [
     {
       "id": "",
-      "location": null,
+      "location": {
+        "column": 0,
+        "file": "src/lib/Node.ts",
+        "length": 1,
+        "line": 104,
+        "lineText": "};",
+        "namespace": "",
+        "suggestion": "finally"
+      },
       "notes": [],
       "pluginName": "",
-      "text": "Could not resolve \"example/Calculator.test.ts\""
+      "text": "Expected \"finally\" but found \"}\""
     }
   ],
-  "warnings": []
+  "warnings": [
+    {
+      "id": "direct-eval",
+      "location": {
+        "column": 21,
+        "file": "example/Calculator.ts",
+        "length": 4,
+        "line": 17,
+        "lineText": "      const result = eval(this.display);",
+        "namespace": "",
+        "suggestion": ""
+      },
+      "notes": [
+        {
+          "location": null,
+          "text": "You can read more about direct eval and bundling here: https://esbuild.github.io/link/direct-eval"
+        }
+      ],
+      "pluginName": "",
+      "text": "Using direct eval with a bundler is not recommended and may cause problems"
+    }
+  ]
 }

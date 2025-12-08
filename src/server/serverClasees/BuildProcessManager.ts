@@ -118,7 +118,7 @@ export class BuildProcessManager {
     };
 
     // Get the base config and add our tracking plugin
-    const baseConfig = configer(this.configs, entryPointKeys, this.projectName);
+    const baseConfig = configer(this.configs, entryPointKeys, this.projectName, this.configs.buildDir);
     const configWithPlugin = {
       ...baseConfig,
       plugins: [...(baseConfig.plugins || []), buildProcessTrackerPlugin],

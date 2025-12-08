@@ -1,0 +1,10 @@
+wsPort ?!?! 3002
+wsPort ?!?! 3002
+node.receiveTestResourceConfig {"name":"example/Calculator.test.ts","ports":[],"fs":"testeranto/reports/allTests/example/Calculator.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/2778e45e-5dd0-4ef7-8207-5c6ac4818c85","timeout":30000,"retries":3}
+receiveTestResourceConfig: wsPort is 3002
+Connecting to WebSocket at ws://localhost:3002
+node.receiveTestResourceConfig {"name":"example/Calculator.test.ts","ports":[],"fs":"testeranto/reports/allTests/example/Calculator.test/node","browserWSEndpoint":"ws://127.0.0.1:3234/devtools/browser/2778e45e-5dd0-4ef7-8207-5c6ac4818c85","timeout":30000,"retries":3}
+receiveTestResourceConfig: wsPort is 3002
+Connecting to WebSocket at ws://localhost:3002
+WebSocket connected to ws://localhost:3002
+WebSocket connected to ws://localhost:3002

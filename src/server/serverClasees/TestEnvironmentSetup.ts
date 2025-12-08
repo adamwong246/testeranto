@@ -41,12 +41,16 @@ export class TestEnvironmentSetup {
     const portsToUse: string[] = [];
     let testResources = "";
 
+    // Log the browser WebSocket endpoint for debugging
+    const browserWsEndpoint = this.browser ? this.browser.wsEndpoint() : 'no-browser';
+    console.log(`TestEnvironmentSetup: browser WebSocket endpoint for ${src}: ${browserWsEndpoint}`);
+    
     if (testConfigResource.ports === 0) {
       testResources = JSON.stringify({
         name: src,
         ports: [],
         fs: reportDest,
-        browserWSEndpoint: this.browser.wsEndpoint(),
+        browserWSEndpoint: browserWsEndpoint,
       });
     } else if (testConfigResource.ports > 0) {
       const openPorts = Object.entries(this.ports).filter(
@@ -64,7 +68,7 @@ export class TestEnvironmentSetup {
           name: src,
           ports: portsToUse,
           fs: reportDest,
-          browserWSEndpoint: this.browser.wsEndpoint(),
+          browserWSEndpoint: browserWsEndpoint,
         });
       } else {
         console.log(

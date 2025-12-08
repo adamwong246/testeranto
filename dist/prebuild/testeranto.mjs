@@ -20,7 +20,7 @@ import {
 // src/testeranto.ts
 import ansiC6 from "ansi-colors";
 import fs20 from "fs";
-import path11 from "path";
+import path12 from "path";
 import readline from "readline";
 
 // src/clients/utils/buildTemplates.ts
@@ -89,7 +89,7 @@ function setupKeypressHandling() {
 // src/server/serverClasees/Server.ts
 import { default as ansiC5 } from "ansi-colors";
 import fs19, { watch } from "fs";
-import path10 from "path";
+import path11 from "path";
 import puppeteer, { executablePath as executablePath2 } from "puppeteer-core";
 
 // src/clients/utils.ts
@@ -194,9 +194,9 @@ var statusMessagePretty = (failures, test, runtime) => {
     );
   }
 };
-async function pollForFile(path12, timeout = 2e3) {
+async function pollForFile(path13, timeout = 2e3) {
   const intervalObj = setInterval(function() {
-    const file = path12;
+    const file = path13;
     const fileExists = fs2.existsSync(file);
     if (fileExists) {
       clearInterval(intervalObj);
@@ -291,7 +291,7 @@ var getRunnables = (config, projectName) => {
     // golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
     nodeEntryPoints: Object.entries(config.node.tests).reduce((pt, cv) => {
       pt[cv[0]] = path2.resolve(
-        `./testeranto/bundles/node/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+        `./testeranto/bundles/${projectName}/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
       return pt;
     }, {}),
@@ -303,7 +303,7 @@ var getRunnables = (config, projectName) => {
     // pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {},
     webEntryPoints: Object.entries(config.web.tests).reduce((pt, cv) => {
       pt[cv[0]] = path2.resolve(
-        `./testeranto/bundles/web/${projectName}/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
+        `./testeranto/bundles/${projectName}/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
       return pt;
     }, {})
@@ -394,7 +394,7 @@ var BuildProcessManager = class {
         });
       }
     };
-    const baseConfig = configer(this.configs, entryPointKeys, this.projectName);
+    const baseConfig = configer(this.configs, entryPointKeys, this.projectName, this.configs.buildDir);
     const configWithPlugin = {
       ...baseConfig,
       plugins: [...baseConfig.plugins || [], buildProcessTrackerPlugin]
@@ -440,9 +440,6 @@ var BuildProcessStarter = class {
       this.configs,
       this.projectName
     );
-    console.log(`Starting build processes for ${this.projectName}...`);
-    console.log(`  Node entry points: ${Object.keys(nodeEntryPoints).length}`);
-    console.log(`  Web entry points: ${Object.keys(webEntryPoints).length}`);
     await Promise.all([
       this.buildProcessManager.startBuildProcess(
         node_default,
@@ -885,6 +882,7 @@ var GolangLauncher = class {
 import { spawn as spawn4 } from "child_process";
 import ansiColors2 from "ansi-colors";
 import fs9 from "fs";
+import path5 from "path";
 var NodeLauncher = class {
   constructor(setupTestEnvironment, cleanupPorts, handleChildProcess, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
     this.setupTestEnvironment = setupTestEnvironment;
@@ -902,39 +900,128 @@ var NodeLauncher = class {
     const nodePromise = (async () => {
       try {
         this.bddTestIsRunning(src);
+        if (typeof this.setupTestEnvironment !== "function") {
+          throw new Error(
+            `NodeLauncher: setupTestEnvironment is not a function. It is ${typeof this.setupTestEnvironment}. Check ServerTestExecutor setup.`
+          );
+        }
         const setupResult = await this.setupTestEnvironment(src, "node");
         const { reportDest, testResources, portsToUse } = setupResult;
+        console.log("setupResult portsToUse:", portsToUse);
         const builtfile = dest;
         const logs2 = createLogStreams(reportDest, "node");
-        const maxBundleRetries = 60;
+        console.log(`NodeLauncher: Waiting for bundle at ${builtfile}`);
+        console.log(`Current working directory: ${process.cwd()}`);
+        if (fs9.existsSync(builtfile)) {
+          console.log(`Bundle file exists immediately at ${builtfile}`);
+        } else {
+          console.log(`Bundle file does not exist yet at ${builtfile}`);
+          const dir = path5.dirname(builtfile);
+          if (fs9.existsSync(dir)) {
+            console.log(`Directory ${dir} exists, contents:`);
+            try {
+              const files2 = fs9.readdirSync(dir);
+              files2.forEach((file) => {
+                console.log(`  ${file}`);
+              });
+            } catch (e) {
+              console.log(`Could not read directory ${dir}: ${e.message}`);
+            }
+          } else {
+            console.log(`Directory ${dir} does not exist`);
+          }
+        }
+        const maxBundleRetries = 30;
         let bundleRetryCount = 0;
         while (!fs9.existsSync(builtfile) && bundleRetryCount < maxBundleRetries) {
           console.log(
-            `Bundle not ready yet (attempt ${bundleRetryCount + 1}/${maxBundleRetries})`
+            `Bundle not ready yet (attempt ${bundleRetryCount + 1}/${maxBundleRetries}) at path: ${builtfile}`
           );
           bundleRetryCount++;
-          await new Promise((resolve) => setTimeout(resolve, 2e3));
+          await new Promise((resolve) => setTimeout(resolve, 1e3));
         }
         if (!fs9.existsSync(builtfile)) {
+          const dir = path5.dirname(builtfile);
+          if (fs9.existsSync(dir)) {
+            const files2 = fs9.readdirSync(dir);
+            const mjsFiles = files2.filter((f) => f.endsWith(".mjs"));
+            console.log(`Found .mjs files in ${dir}:`, mjsFiles);
+            if (mjsFiles.length > 0) {
+              const alternativePath = path5.join(dir, mjsFiles[0]);
+              console.log(`Trying alternative path: ${alternativePath}`);
+              if (fs9.existsSync(alternativePath)) {
+                console.log(
+                  `Using alternative bundle file: ${alternativePath}`
+                );
+                throw new Error(
+                  `Expected bundle file ${builtfile} does not exist, but found ${alternativePath}. This suggests a path mismatch between build and launch configurations.`
+                );
+              }
+            }
+          }
           throw new Error(
-            `Bundle file ${builtfile} does not exist after waiting`
+            `Bundle file ${builtfile} does not exist after waiting. Current directory: ${process.cwd()}. Make sure the build process is creating the correct bundle.`
           );
         }
-        console.log("Build is ready. Proceeding with test...");
-        const testResourcesJson = JSON.stringify({
-          name: "node-test",
-          fs: process.cwd(),
-          ports: [],
-          browserWSEndpoint: "",
-          timeout: 3e4,
-          retries: 3
-        });
-        console.log("launchNode", [builtfile, "3002", testResourcesJson]);
-        const child = spawn4("node", [builtfile, "3002", testResourcesJson], {
+        console.log(`Build is ready at ${builtfile}. Proceeding with test...`);
+        let testResourcesObj;
+        if (typeof testResources === "string") {
+          try {
+            testResourcesObj = JSON.parse(testResources);
+          } catch (e) {
+            console.error("Failed to parse testResources string:", e);
+            testResourcesObj = {};
+          }
+        } else {
+          testResourcesObj = testResources || {};
+        }
+        if (portsToUse && portsToUse.length > 0) {
+          testResourcesObj.ports = portsToUse.map((p) => parseInt(p, 10));
+        } else {
+          testResourcesObj.ports = testResourcesObj.ports || [];
+        }
+        testResourcesObj.name = testResourcesObj.name || "node-test";
+        testResourcesObj.fs = testResourcesObj.fs || process.cwd();
+        testResourcesObj.browserWSEndpoint = testResourcesObj.browserWSEndpoint || "";
+        testResourcesObj.timeout = testResourcesObj.timeout || 3e4;
+        testResourcesObj.retries = testResourcesObj.retries || 3;
+        const testResourcesJson = JSON.stringify(testResourcesObj);
+        const portToUse = portsToUse && portsToUse.length > 0 ? portsToUse[0] : "3002";
+        console.log("launchNode", [builtfile, portToUse, testResourcesJson]);
+        console.log(
+          `Full command: node ${builtfile} ${portToUse} ${testResourcesJson.substring(
+            0,
+            100
+          )}...`
+        );
+        console.log("Test resources ports:", testResourcesObj.ports);
+        console.log("Port being passed to test:", portToUse);
+        try {
+          const stats = fs9.statSync(builtfile);
+          console.log(`Bundle file size: ${stats.size} bytes`);
+        } catch (e) {
+          console.error(`Cannot access bundle file ${builtfile}:`, e.message);
+          throw new Error(
+            `Bundle file ${builtfile} is not accessible: ${e.message}`
+          );
+        }
+        const child = spawn4("node", [builtfile, portToUse, testResourcesJson], {
           stdio: ["pipe", "pipe", "pipe"],
           env: {
-            ...process.env
+            ...process.env,
+            NODE_OPTIONS: "--enable-source-maps"
           }
+        });
+        child.on("error", (error) => {
+          console.error(
+            `Failed to start child process for ${builtfile}:`,
+            error
+          );
+        });
+        child.on("spawn", () => {
+          console.log(
+            `Child process spawned for ${builtfile} with PID: ${child.pid}`
+          );
         });
         child.stdout?.on("data", (data) => {
           logs2.stdout?.write(data);
@@ -1057,12 +1144,14 @@ var TestEnvironmentSetup = class {
     const testConfigResource = { ports: 0 };
     const portsToUse = [];
     let testResources = "";
+    const browserWsEndpoint = this.browser ? this.browser.wsEndpoint() : "no-browser";
+    console.log(`TestEnvironmentSetup: browser WebSocket endpoint for ${src}: ${browserWsEndpoint}`);
     if (testConfigResource.ports === 0) {
       testResources = JSON.stringify({
         name: src,
         ports: [],
         fs: reportDest,
-        browserWSEndpoint: this.browser.wsEndpoint()
+        browserWSEndpoint: browserWsEndpoint
       });
     } else if (testConfigResource.ports > 0) {
       const openPorts = Object.entries(this.ports).filter(
@@ -1078,7 +1167,7 @@ var TestEnvironmentSetup = class {
           name: src,
           ports: portsToUse,
           fs: reportDest,
-          browserWSEndpoint: this.browser.wsEndpoint()
+          browserWSEndpoint: browserWsEndpoint
         });
       } else {
         console.log(
@@ -1260,7 +1349,7 @@ var TypeCheckNotifier = class {
 
 // src/server/serverClasees/WebLauncher.ts
 import fs13 from "fs";
-import path5 from "path";
+import path6 from "path";
 import ansiColors5 from "ansi-colors";
 var WebLauncher = class {
   constructor(projectName, browser, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
@@ -1301,7 +1390,7 @@ var WebLauncher = class {
           if (absMatch) {
             relativePath = absMatch[1];
           } else {
-            relativePath = path5.basename(htmlPath);
+            relativePath = path6.basename(htmlPath);
           }
         }
         const encodedConfig = encodeURIComponent(webArgz);
@@ -1363,7 +1452,7 @@ var WebLauncher = class {
           if (jsAbsMatch) {
             jsRelativePath = jsAbsMatch[1];
           } else {
-            jsRelativePath = path5.basename(dest);
+            jsRelativePath = path6.basename(dest);
           }
         }
         const jsUrl = `/bundles/web/${jsRelativePath}?cacheBust=${Date.now()}`;
@@ -1420,7 +1509,7 @@ import {
   upOne
 } from "docker-compose";
 import fs17 from "fs";
-import path9 from "path";
+import path10 from "path";
 
 // src/server/constants/COMMON_PACKAGE_INSTALL.ts
 var COMMON_PACKAGE_INSTALL = `RUN npm install -g node-gyp
@@ -1563,7 +1652,7 @@ CMD ["sh", "-c", "echo 'Web build service started' && tail -f /dev/null"]
 import { WebSocketServer } from "ws";
 import http from "http";
 import fs16 from "fs";
-import path8 from "path";
+import path9 from "path";
 
 // src/app/FileService.ts
 var FileService_methods = [
@@ -1587,12 +1676,12 @@ var FileService_methods = [
 
 // src/server/serverClasees/getAllFilesRecursively.ts
 import fs14 from "fs";
-import path6 from "path";
+import path7 from "path";
 async function getAllFilesRecursively(directoryPath) {
   let fileList = [];
   const files2 = await fs14.readdirSync(directoryPath, { withFileTypes: true });
   for (const file of files2) {
-    const fullPath = path6.join(directoryPath, file.name);
+    const fullPath = path7.join(directoryPath, file.name);
     if (file.isDirectory()) {
       fileList = fileList.concat(await getAllFilesRecursively(fullPath));
     } else if (file.isFile()) {
@@ -1604,7 +1693,7 @@ async function getAllFilesRecursively(directoryPath) {
 
 // src/server/serverClasees/Server_Base.ts
 import fs15 from "fs";
-import path7 from "path";
+import path8 from "path";
 var fileStreams3 = [];
 var fPaths = [];
 var files = {};
@@ -1693,7 +1782,7 @@ var Server_Base = class {
   }
   async screencast(ssOpts, testName, page) {
     const p = ssOpts.path;
-    const dir = path7.dirname(p);
+    const dir = path8.dirname(p);
     fs15.mkdirSync(dir, {
       recursive: true
     });
@@ -1714,7 +1803,7 @@ var Server_Base = class {
   }
   async customScreenShot(ssOpts, testName, pageUid) {
     const p = ssOpts.path;
-    const dir = path7.dirname(p);
+    const dir = path8.dirname(p);
     fs15.mkdirSync(dir, {
       recursive: true
     });
@@ -1756,7 +1845,7 @@ var Server_Base = class {
     const contents = x[1];
     const testName = x[2];
     return new Promise(async (res) => {
-      fs15.mkdirSync(path7.dirname(filepath), {
+      fs15.mkdirSync(path8.dirname(filepath), {
         recursive: true
       });
       if (!files[testName]) {
@@ -1789,14 +1878,14 @@ var Server_Base = class {
       callback(
         new Promise((res, rej) => {
           tLog("testArtiFactory =>", fPath);
-          const cleanPath = path7.resolve(fPath);
+          const cleanPath = path8.resolve(fPath);
           fPaths.push(cleanPath.replace(process.cwd(), ``));
           const targetDir = cleanPath.split("/").slice(0, -1).join("/");
           fs15.mkdir(targetDir, { recursive: true }, async (error) => {
             if (error) {
             }
             fs15.writeFileSync(
-              path7.resolve(
+              path8.resolve(
                 targetDir.split("/").slice(0, -1).join("/"),
                 "manifest"
               ),
@@ -2104,7 +2193,7 @@ var Server_TCP = class extends Server_Base {
       const url = new URL(req.url, `http://${req.headers.host}`);
       const pathname = url.pathname;
       const relativePath = pathname.replace(/^\/bundles\/web\//, "");
-      const filePath = path8.join(
+      const filePath = path9.join(
         process.cwd(),
         "testeranto",
         "bundles",
@@ -2244,11 +2333,11 @@ Error: ${err.message}`
       cwd: process.cwd()
     });
     let resolvedPath = filepath;
-    if (!path8.isAbsolute(filepath)) {
-      resolvedPath = path8.join(process.cwd(), filepath);
+    if (!path9.isAbsolute(filepath)) {
+      resolvedPath = path9.join(process.cwd(), filepath);
       console.log("Resolved relative path to:", resolvedPath);
     }
-    const dir = path8.dirname(resolvedPath);
+    const dir = path9.dirname(resolvedPath);
     if (!fs16.existsSync(dir)) {
       console.log("Creating directory:", dir);
       fs16.mkdirSync(dir, { recursive: true });
@@ -2270,11 +2359,11 @@ Error: ${err.message}`
     fs16.mkdirSync(filepath, { recursive: true });
   }
   readFile(filepath) {
-    const fullPath = path8.join(process.cwd(), filepath);
+    const fullPath = path9.join(process.cwd(), filepath);
     return fs16.readFileSync(fullPath, "utf-8");
   }
   createWriteStream(filepath, testName) {
-    const dir = path8.dirname(filepath);
+    const dir = path9.dirname(filepath);
     if (!fs16.existsSync(dir)) {
       fs16.mkdirSync(dir, { recursive: true });
     }
@@ -2294,13 +2383,13 @@ var Server_DockerCompose = class extends Server_TCP {
   constructor(cwd, configs, name, mode2) {
     super(configs, name, mode2);
     this.cwd = cwd;
-    this.config = path9.join(
+    this.config = path10.join(
       "testeranto",
       "bundles",
       `${this.projectName}-docker-compose.yml`
     );
     this.composeDir = process.cwd();
-    this.composeFile = path9.join(
+    this.composeFile = path10.join(
       this.composeDir,
       "testeranto",
       "bundles",
@@ -2311,8 +2400,7 @@ var Server_DockerCompose = class extends Server_TCP {
     });
   }
   async initializeAndStart() {
-    console.log(`Setting up docker-compose for ${this.projectName}...`);
-    const { setupDockerCompose } = await import("./dockerComposeGenerator-NQCPMRHD.mjs");
+    const { setupDockerCompose } = await import("./dockerComposeGenerator-J4BXFTLW.mjs");
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),
@@ -2323,7 +2411,7 @@ var Server_DockerCompose = class extends Server_TCP {
       console.error(
         `Docker-compose file not found after generation: ${this.composeFile}`
       );
-      const dir = path9.dirname(this.composeFile);
+      const dir = path10.dirname(this.composeFile);
       if (fs17.existsSync(dir)) {
         console.error(`Contents of ${dir}:`);
         try {
@@ -2335,18 +2423,13 @@ var Server_DockerCompose = class extends Server_TCP {
       }
       return;
     }
-    console.log(`Docker-compose file created at: ${this.composeFile}`);
     await this.startServices();
   }
   async startServices() {
-    console.log(`Starting docker-compose services for ${this.projectName}...`);
-    console.log(`Compose file path: ${this.composeFile}`);
-    console.log(`Working directory: ${this.composeDir}`);
-    console.log(`Config path: ${this.config}`);
     if (!fs17.existsSync(this.composeFile)) {
       console.error(`Docker-compose file not found: ${this.composeFile}`);
       console.error(`Current directory: ${process.cwd()}`);
-      const bundlesDir = path9.join(process.cwd(), "testeranto", "bundles");
+      const bundlesDir = path10.join(process.cwd(), "testeranto", "bundles");
       if (fs17.existsSync(bundlesDir)) {
         console.error(`Contents of ${bundlesDir}:`);
         try {
@@ -2359,26 +2442,6 @@ var Server_DockerCompose = class extends Server_TCP {
       return;
     }
     try {
-      const composeContent = fs17.readFileSync(this.composeFile, "utf-8");
-      console.log(`Docker-compose file content (first 3000 chars):`);
-      console.log(composeContent.substring(0, 3e3));
-      console.log(`File size: ${composeContent.length} bytes`);
-    } catch (error) {
-      console.error(`Error reading compose file: ${error}`);
-    }
-    try {
-      console.log(`Checking current service status...`);
-      const psResult = await this.DC_ps();
-      console.log(`Current service status:`, psResult.out);
-      console.log(`Exit code: ${psResult.exitCode}`);
-      if (psResult.err) {
-        console.error(`Error from ps:`, psResult.err);
-      }
-    } catch (error) {
-      console.error(`Error checking service status:`, error);
-    }
-    try {
-      console.log(`Running docker-compose up...`);
       const result = await this.DC_upAll();
       console.log(
         `docker-compose up completed with exit code: ${result.exitCode}`
@@ -2390,68 +2453,10 @@ var Server_DockerCompose = class extends Server_TCP {
         console.error(`Error: ${result.err}`);
         console.error(`Output: ${result.out}`);
       } else {
-        console.log(`docker-compose services started successfully`);
-        console.log(
-          `Output (first 3000 chars): ${result.out?.substring(0, 3e3)}`
-        );
         console.log(`Waiting for services to become healthy (15 seconds)...`);
         await new Promise((resolve) => setTimeout(resolve, 15e3));
-        console.log(`Checking service status after startup...`);
         const psResult2 = await this.DC_ps();
         console.log(`Service status after startup:`, psResult2.out);
-        if (!psResult2.out || psResult2.out.trim() === "") {
-          console.error(`No services found in docker-compose ps output!`);
-          console.error(`This suggests the services weren't started properly.`);
-          console.error(`Trying to get logs for all services...`);
-          const composeContent = fs17.readFileSync(this.composeFile, "utf-8");
-          const yaml = await import("js-yaml");
-          const composeObj = yaml.load(composeContent);
-          const serviceNames = Object.keys(composeObj?.services || {});
-          console.log(
-            `Services defined in compose file: ${serviceNames.join(", ")}`
-          );
-          for (const serviceName of serviceNames) {
-            try {
-              console.log(`Getting logs for ${serviceName}...`);
-              const logsResult = await this.DC_logs(serviceName);
-              console.log(
-                `${serviceName} logs (first 1000 chars):`,
-                logsResult.out?.substring(0, 1e3)
-              );
-            } catch (e) {
-              console.error(`Error getting logs for ${serviceName}:`, e);
-            }
-          }
-        } else {
-          console.log(`Getting logs for build services...`);
-          const serviceOutput = psResult2.out || "";
-          if (serviceOutput.includes("bundles-node-build") || serviceOutput.includes("node-build")) {
-            try {
-              const nodeBuildLogs = await this.DC_logs("node-build");
-              console.log(
-                `node-build logs (first 2000 chars):`,
-                nodeBuildLogs.out?.substring(0, 2e3)
-              );
-            } catch (e) {
-              console.error(`Error getting node-build logs:`, e);
-            }
-          } else {
-            console.log(`node-build service not found in running services`);
-          }
-          if (serviceOutput.includes("bundles-web-build") || serviceOutput.includes("web-build")) {
-            try {
-              const webBuildLogs = await this.DC_logs("web-build");
-              console.log(
-                `web-build logs (first 2000 chars):`,
-                webBuildLogs.out?.substring(0, 2e3)
-              );
-            } catch (e) {
-              console.error(`Error getting web-build logs:`, e);
-            }
-          } else {
-            console.log(`web-build service not found in running services`);
-          }
-        }
       }
     } catch (error) {
       console.error(`Error starting docker-compose services:`, error);
@@ -2488,22 +2493,22 @@ CMD ["sh", "-c", "echo 'Build service started' && tail -f /dev/null"]
 `;
     }
     const dockerfileName = `${runtime}.Dockerfile`;
-    const dockerfileDir = path9.join(
+    const dockerfileDir = path10.join(
       "testeranto",
       "bundles",
       testsName2,
       runtime
     );
-    const dockerfilePath = path9.join(dockerfileDir, dockerfileName);
-    const normalizedDir = path9.normalize(dockerfileDir);
-    if (!normalizedDir.startsWith(path9.join("testeranto", "bundles"))) {
+    const dockerfilePath = path10.join(dockerfileDir, dockerfileName);
+    const normalizedDir = path10.normalize(dockerfileDir);
+    if (!normalizedDir.startsWith(path10.join("testeranto", "bundles"))) {
       throw new Error(
         `Invalid Dockerfile directory: ${dockerfileDir}. Must be under testeranto/bundles/`
       );
     }
-    const fullDockerfileDir = path9.join(process.cwd(), dockerfileDir);
+    const fullDockerfileDir = path10.join(process.cwd(), dockerfileDir);
     fs17.mkdirSync(fullDockerfileDir, { recursive: true });
-    const fullDockerfilePath = path9.join(process.cwd(), dockerfilePath);
+    const fullDockerfilePath = path10.join(process.cwd(), dockerfilePath);
     fs17.writeFileSync(fullDockerfilePath, dockerfileContent);
     if (!fs17.existsSync(fullDockerfilePath)) {
       throw new Error(
@@ -2587,6 +2592,7 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
     this.processLogs = /* @__PURE__ */ new Map();
     this.processingQueue = false;
     this.ports = {};
+    this.summary = {};
     this.writeBigBoard = () => {
       const summaryPath = `./testeranto/reports/${this.projectName}/summary.json`;
       const summaryData = JSON.stringify(this.summary, null, 2);
@@ -2632,7 +2638,6 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
       this.checkForShutdown();
     };
     this.checkForShutdown = async () => {
-      this.checkQueue();
       console.log(
         ansiC4.inverse(
           `The following jobs are awaiting resources: ${JSON.stringify(
@@ -2729,7 +2734,16 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
   }
   // SummaryManager methods
   ensureSummaryEntry(src, isSidecar = false) {
-    ensureSummaryEntry(this.summary, src, isSidecar);
+    if (!this.summary[src]) {
+      this.summary[src] = {
+        runTimeTests: void 0,
+        runTimeErrors: void 0,
+        typeErrors: void 0,
+        staticErrors: void 0,
+        prompt: void 0,
+        failingFeatures: void 0
+      };
+    }
     return this.summary[src];
   }
   getSummary() {
@@ -2801,7 +2815,9 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
   cleanupTestProcessesInternal(testName) {
   }
   async processQueueItem(testName, runtime, addableFiles) {
-    throw new Error(`processQueueItem should be implemented by derived class for ${testName} (${runtime})`);
+    throw new Error(
+      `processQueueItem should be implemented by derived class for ${testName} (${runtime})`
+    );
   }
   // QueueManager methods
   addToQueue(src, runtime, configs, projectName, cleanupTestProcesses, checkQueue, addableFiles) {
@@ -2954,13 +2970,12 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
     this.launchNode = async (src, dest) => {
       console.log(`[launchNode] Starting node test: ${src}, dest: ${dest}`);
       const nodeLauncher = new NodeLauncher(
-        this.projectName,
         this.setupTestEnvironment.bind(this),
         this.cleanupPorts.bind(this),
         this.handleChildProcess.bind(this),
-        this.bddTestIsRunning,
-        this.bddTestIsNowDone,
-        this.addPromiseProcess.bind(this),
+        this.bddTestIsRunning.bind(this),
+        this.bddTestIsNowDone.bind(this),
+        this.addPromiseProcess,
         this.checkQueue.bind(this)
       );
       console.log(`[launchNode] NodeLauncher created, calling launchNode method`);
@@ -2972,9 +2987,9 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
       const webLauncher = new WebLauncher(
         this.projectName,
         this.browser,
-        this.bddTestIsRunning,
-        this.bddTestIsNowDone,
-        this.addPromiseProcess.bind(this),
+        this.bddTestIsRunning.bind(this),
+        this.bddTestIsNowDone.bind(this),
+        this.addPromiseProcess,
         this.checkQueue.bind(this)
       );
       return webLauncher.launchWeb(src, dest);
@@ -2985,9 +3000,9 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
         this.setupTestEnvironment.bind(this),
         this.handleChildProcess.bind(this),
         this.cleanupPorts.bind(this),
-        this.bddTestIsRunning,
-        this.bddTestIsNowDone,
-        this.addPromiseProcess.bind(this),
+        this.bddTestIsRunning.bind(this),
+        this.bddTestIsNowDone.bind(this),
+        this.addPromiseProcess,
         this.checkQueue.bind(this)
       );
       return pythonLauncher.launchPython(src, dest);
@@ -2998,9 +3013,9 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
         this.setupTestEnvironment.bind(this),
         this.handleChildProcess.bind(this),
         this.cleanupPorts.bind(this),
-        this.bddTestIsRunning,
-        this.bddTestIsNowDone,
-        this.addPromiseProcess.bind(this),
+        this.bddTestIsRunning.bind(this),
+        this.bddTestIsNowDone.bind(this),
+        this.addPromiseProcess,
         this.checkQueue.bind(this)
       );
       return golangLauncher.launchGolang(src, dest);
@@ -3017,7 +3032,7 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
       this.configs,
       this.mode,
       this.webSocketBroadcastMessage.bind(this),
-      this.addPromiseProcess?.bind(this)
+      this.addPromiseProcess
     );
     this.buildProcessStarter = new BuildProcessStarter(
       this.projectName,
@@ -3037,7 +3052,7 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
       this.browser,
       this.queue,
       this.configs,
-      this.bddTestIsRunning
+      this.bddTestIsRunning.bind(this)
     );
     return serverTestEnvironmentSetup.setupTestEnvironment(src, runtime);
   }
@@ -3104,7 +3119,7 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
         this.projectName,
         this.typeCheckIsRunning,
         this.typeCheckIsNowDone,
-        this.addPromiseProcess.bind(this)
+        this.addPromiseProcess
       );
     }
     return this.tscCheckInstance;
@@ -3115,7 +3130,7 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
         this.projectName,
         this.lintIsRunning,
         this.lintIsNowDone,
-        this.addPromiseProcess.bind(this),
+        this.addPromiseProcess,
         this.writeBigBoard.bind(this),
         this.checkForShutdown.bind(this)
       );
@@ -3293,7 +3308,7 @@ var Server = class extends ServerTestExecutor {
     this.launchers = {};
     this.testName = testName;
     this.composeDir = process.cwd();
-    this.composeFile = path10.join(
+    this.composeFile = path11.join(
       this.composeDir,
       "testeranto",
       "bundles",
@@ -3497,7 +3512,7 @@ if (!process.argv[2]) {
   process.exit(-1);
 }
 var configFilepath = process.argv[2];
-var testsName = path11.basename(configFilepath).split(".").slice(0, -1).join(".");
+var testsName = path12.basename(configFilepath).split(".").slice(0, -1).join(".");
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
   console.error(`The 3rd argument should be 'dev' or 'once', not '${mode}'.`);
@@ -3540,14 +3555,14 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
     const sourceDir = sourceFileSplit.slice(0, -1);
     const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
     const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-    const htmlFilePath = path11.normalize(
+    const htmlFilePath = path12.normalize(
       `${process.cwd()}/testeranto/bundles/web/${testsName}/${sourceDir.join(
         "/"
       )}/${sourceFileNameMinusJs}.html`
     );
     const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
     const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-    fs20.mkdirSync(path11.dirname(htmlFilePath), { recursive: true });
+    fs20.mkdirSync(path12.dirname(htmlFilePath), { recursive: true });
     fs20.writeFileSync(
       htmlFilePath,
       web_html_default(jsfilePath, htmlFilePath, cssFilePath)
@@ -3566,8 +3581,6 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
     golangEntryPoints
     // golangEntryPointSidecars,
   } = getRunnables(config, testsName);
-  console.log("Node entry points:", Object.keys(nodeEntryPoints));
-  console.log("Web entry points:", Object.keys(webEntryPoints));
   const hasGolangTests = Object.keys(config.golang).length > 0;
   if (hasGolangTests) {
     const golingvuBuild = new GolingvuBuild(config, testsName);
