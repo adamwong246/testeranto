@@ -5,7 +5,6 @@
 import path from "path";
 
 // Network constants
-export const DEFAULT_HTTP_PORT = 3002;
 export const SERVER_CONSTANTS = {
   HOST: "0.0.0.0" as const,
 };
@@ -29,6 +28,15 @@ export const CONTENT_TYPES = {
   JPEG: "image/jpeg" as const,
   GIF: "image/gif" as const,
   SVG: "image/svg+xml" as const,
+  ICO: "image/x-icon" as const,
+  WOFF: "font/woff" as const,
+  WOFF2: "font/woff2" as const,
+  TTF: "font/ttf" as const,
+  EOT: "application/vnd.ms-fontobject" as const,
+  XML: "application/xml" as const,
+  PDF: "application/pdf" as const,
+  ZIP: "application/zip" as const,
+  OCTET_STREAM: "application/octet-stream" as const,
 };
 
 // WebSocket message types
@@ -81,7 +89,8 @@ export const PROCESS_FIELDS = [
 
 // Error messages
 export const ERROR_MESSAGES = {
-  IPC_FORMAT_NO_LONGER_SUPPORTED: "IPC format messages are no longer supported. Node tests must use WebSocket messages with 'type' field.",
+  IPC_FORMAT_NO_LONGER_SUPPORTED:
+    "IPC format messages are no longer supported. Node tests must use WebSocket messages with 'type' field.",
   FAILED_TO_GET_CHAT_HISTORY: "Failed to get chat history",
   FILE_NOT_FOUND: "404 Not Found",
   INTERNAL_SERVER_ERROR: "500",

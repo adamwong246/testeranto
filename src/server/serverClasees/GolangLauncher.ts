@@ -10,6 +10,7 @@ import { ChildProcessHandler } from "./ChildProcessHandler";
 export class GolangLauncher {
   constructor(
     private projectName: string,
+    private httpPort: number,
     private setupTestEnvironment: (
       src: string,
       runtime: IRunTime
@@ -78,8 +79,6 @@ export class GolangLauncher {
         // Get the relative path to the test file from the go.mod directory
         const relativeTestPath = path.relative(goModDir, src);
 
-        // Pass WebSocket port (3000) via environment variable
-        // The Go test should connect to WebSocket at ws://localhost:3000
         const child = spawn(
           "go",
           ["test", "-v", "-json", "./" + path.dirname(relativeTestPath)],
@@ -88,7 +87,7 @@ export class GolangLauncher {
             env: {
               ...process.env,
               TEST_RESOURCES: testResources,
-              WS_PORT: "3000", // Pass WebSocket port
+              WS_PORT: this.httpPort.toString(),
               GO111MODULE: "on",
             },
             cwd: goModDir,
@@ -120,6 +119,12 @@ export class GolangLauncher {
       }
     })();
 
+    // Ensure golangPromise is defined
+    if (!golangPromise) {
+      console.error('GolangLauncher: golangPromise is undefined for', src);
+      throw new Error(`golangPromise is undefined for ${src}`);
+    }
+    
     this.addPromiseProcess(
       processId,
       golangPromise,

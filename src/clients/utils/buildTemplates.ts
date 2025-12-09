@@ -8,27 +8,41 @@ const getBaseHtml = (title: string) => `
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <script>
-    function initApp() {
-      if (window.React && window.ReactDOM && window.App) {
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(App));
-      } else {
-        setTimeout(initApp, 100);
-      }
-    }
-    window.addEventListener('DOMContentLoaded', initApp);
-  </script>
+
 `;
 
-export const AppHtml = () => `
+export const ProcessMangerHtml = () => `
   ${getBaseHtml("Testeranto")}
   
-  <link rel="stylesheet" href="App.css" />
-  <script src="App.js"></script>
+  <link rel="stylesheet" href="ProcessManger.css" />
+  <script src="ProcessManger.js"></script>
 </head>
 <body>
   <div id="root"></div>
 </body>
 </html>
 `;
+
+export const IndexHtml = () => `
+  ${getBaseHtml("Testeranto")}
+  
+  <link rel="stylesheet" href="Index.css" />
+  <script src="Index.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+`;
+
+// export const ReportHtml = () => `
+//   ${getBaseHtml("Testeranto")}
+
+//   <link rel="stylesheet" href="Report.css" />
+//   <script src="Report.js"></script>
+// </head>
+// <body>
+//   <div id="root"></div>
+// </body>
+// </html>
+// `;

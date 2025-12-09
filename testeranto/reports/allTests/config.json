@@ -1,6 +1,7 @@
 {
   "importPlugins": [],
   "httpPort": 3456,
+  "chromiumPort": 4567,
   "ports": [
     "3333",
     "3334"

@@ -101,12 +101,9 @@ export default (
         setup(build) {
           build.onEnd((result) => {
             if (result.errors.length === 0) {
-              console.log(
-                "Build completed successfully. Listing output directory:"
-              );
               try {
                 const files = fs.readdirSync(absoluteBundlesDir);
-                console.log("Top level:", files);
+
                 // Recursively list if needed
                 function listDir(dir: string, indent: string = "") {
                   const items = fs.readdirSync(dir, { withFileTypes: true });

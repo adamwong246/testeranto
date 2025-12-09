@@ -1,7 +1,26 @@
 {
-  "entryPoints": [
-    "example/Calculator.golingvu.test.go"
-  ],
-  "buildTime": "2025-12-09T00:59:26.054Z",
-  "runtime": "python"
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "example/Calculator.golingvu.test.go": {
+        "bytes": 7121,
+        "imports": []
+      }
+    },
+    "outputs": {
+      "python/core/Calculator.golingvu.test.go.py": {
+        "imports": [],
+        "exports": [],
+        "entryPoint": "example/Calculator.golingvu.test.go",
+        "inputs": {
+          "example/Calculator.golingvu.test.go": {
+            "bytesInOutput": 7121
+          }
+        },
+        "bytes": 7121,
+        "signature": "miy5alva"
+      }
+    }
+  }
 }

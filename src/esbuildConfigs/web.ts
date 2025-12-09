@@ -33,13 +33,13 @@ export default (
     // We want: "src/example/Calculator.test" or "example/Calculator.test"
     const outputKey = path.join(dirName, baseName);
     entryPointsObj[outputKey] = entryPoint;
-    console.log(`[web esbuild] ${entryPoint} -> ${outputKey}.mjs`);
   }
 
   // Use environment variable if set, otherwise use passed bundlesDir
   // Match node.ts structure: testeranto/bundles/allTests/web/
-  const effectiveBundlesDir = process.env.BUNDLES_DIR || bundlesDir || `testeranto/bundles/allTests/web/`;
-  
+  const effectiveBundlesDir =
+    process.env.BUNDLES_DIR || bundlesDir || `testeranto/bundles/allTests/web/`;
+
   // Ensure effectiveBundlesDir is absolute
   const absoluteBundlesDir = path.isAbsolute(effectiveBundlesDir)
     ? effectiveBundlesDir
@@ -101,12 +101,9 @@ export default (
         setup(build) {
           build.onEnd((result) => {
             if (result.errors.length === 0) {
-              console.log(
-                "[web esbuild] Build completed successfully. Listing output directory:"
-              );
               try {
                 const files = fs.readdirSync(absoluteBundlesDir);
-                console.log("[web esbuild] Top level:", files);
+
                 // Recursively list if needed
                 function listDir(dir: string, indent: string = "") {
                   const items = fs.readdirSync(dir, { withFileTypes: true });

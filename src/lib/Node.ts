@@ -13,7 +13,7 @@ import {
 } from "../CoreTypes.js";
 import Tiposkripto from "./Tiposkripto.js";
 
-let wsPort = 3002;
+let wsPort;
 
 export class NodeTiposkripto<
   I extends Ibdd_in_any,

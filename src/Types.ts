@@ -196,6 +196,7 @@ export type IChecks = Record<string, [[IDockerSteps, string][], string]>;
 
 export type ITestconfig = {
   httpPort: number;
+  chromiumPort: number;
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
   ports: string[];

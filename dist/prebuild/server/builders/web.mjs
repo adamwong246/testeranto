@@ -3,7 +3,7 @@ import {
 } from "../../chunk-3YUTIOB2.mjs";
 import {
   web_default
-} from "../../chunk-UGGLWEUL.mjs";
+} from "../../chunk-4KMVPZBT.mjs";
 import "../../chunk-SFBHYNUJ.mjs";
 
 // src/server/builders/web.ts

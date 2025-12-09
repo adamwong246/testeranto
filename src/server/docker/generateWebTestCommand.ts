@@ -5,7 +5,8 @@ export function generateWebTestCommand(
   testPath: string,
   betterTestPath: string,
   dockerManPort?: number,
-  webSocketPort?: number
+  webSocketPort?: number,
+  chromiumPort?: number
 ): string[] {
   // For web runtime, we connect directly to browserless/chrome service
   // No need to start a separate WebSocket server
@@ -34,7 +35,12 @@ export function generateWebTestCommand(
       # Then wait for chromium service to be healthy
       echo "Waiting for chromium service to be healthy..."
       timeout 120 sh -c '
-        while ! curl -f http://chromium:3000/health 2>/dev/null; do
+
+
+
+        while ! curl -f http://chromium:${chromiumPort || 3000}/health 2>/dev/null; do
+
+        
           echo "Chromium health check failed, waiting..."
           sleep 5
         done
@@ -44,7 +50,7 @@ export function generateWebTestCommand(
       # Run the test command
       echo "Running web test command..."
       ${command(testPath, runtime, betterTestPath)}
-      `
+      `,
     ];
   }
   // For other runtimes, use the original command

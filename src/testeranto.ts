@@ -10,7 +10,8 @@ import { setupKeypressHandling } from "./server/keypressHandler";
 import { Server } from "./server/serverClasees/Server";
 import { getRunnables } from "./server/utils";
 import { IBuiltConfig, IRunTime, ITestconfig } from "./Types";
-import webHtmlFrame from "./web.html";
+import { makeHtmlTestFiles } from "./makeHtmlTestFiles";
+import { makeHtmlReportFile } from "./makeHtmlReportFile";
 
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY) process.stdin.setRawMode(true);
@@ -32,42 +33,8 @@ if (mode !== "once" && mode !== "dev") {
   process.exit(-1);
 }
 
-// const configFilePath = process.cwd() + "/" + "testeranto.config.ts";
-
 import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
-  // const pckge = (await import(`${process.cwd()}/package.json`)).default;
   const bigConfig: ITestconfig = module.default;
-
-  // const project = bigConfig.projects[testName];
-  // if (!project) {
-  //   console.error("no project found for", testName, "in testeranto.config.ts");
-  //   process.exit(-1);
-  // }
-
-  try {
-    // fs.writeFileSync(
-    //   `${process.cwd()}/testeranto/projects.json`,
-    //   JSON.stringify(Object.keys(bigConfig.projects), null, 2)
-    // );
-  } catch (e) {
-    console.error("there was a problem");
-    console.error(e);
-  }
-
-  // const rawConfig: ITestconfig = bigConfig.projects[testName];
-
-  // if (!rawConfig) {
-  //   console.error(`Project "${testName}" does not exist in the configuration.`);
-  //   console.error("Available projects:", Object.keys(bigConfig.projects));
-  //   process.exit(-1);
-  // }
-
-  // if (!rawConfig.tests) {
-  //   console.error(testName, "appears to have no tests: ", configFilePath);
-  //   console.error(`here is the config:`);
-  //   console.log(JSON.stringify(rawConfig));
-  //   process.exit(-1);
-  // }
 
   const config: IBuiltConfig = {
     ...bigConfig,
@@ -77,28 +44,13 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   console.log(ansiC.inverse("Press 'q' to initiate a graceful shutdown."));
   console.log(ansiC.inverse("Press 'x' to quit forcefully."));
 
-  console.log(ansiC.inverse("Press 'q' to initiate a graceful shutdown."));
-  console.log(ansiC.inverse("Press 'x' to quit forcefully."));
-
   setupKeypressHandling();
   setupFileSystem(config, testsName);
 
-  // process.stdin.on("keypress", (str, key) => {
-  //   if (key.name === "x") {
-  //     console.log(ansiC.inverse("Shutting down forcefully..."));
-  //     process.exit(-1);
-  //   }
-  // });
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
   let pm: Server | null = null;
-  // Start PM_4_Main immediately - it will handle the build processes internally
 
   pm = new Server(config, testsName, mode);
   await pm.start();
-
-  fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
 
   if (!fs.existsSync(`testeranto/reports/${testsName}`)) {
     fs.mkdirSync(`testeranto/reports/${testsName}`);
@@ -108,58 +60,8 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
     JSON.stringify(config, null, 2)
   );
 
-  // Object.keys(bigConfig.projects).forEach((projectName) => {
-  //   // console.log(`testeranto/reports/${projectName}`);
-  //   if (!fs.existsSync(`testeranto/reports/${projectName}`)) {
-  //     fs.mkdirSync(`testeranto/reports/${projectName}`);
-  //   }
-
-  //   fs.writeFileSync(
-  //     `testeranto/reports/${projectName}/config.json`,
-  //     JSON.stringify(config, null, 2)
-  //   );
-  // });
-
-  // the web runtime needs html, js and css files for support.
-  const getSecondaryEndpointsPoints = (runtime: IRunTime): string[] => {
-    return Object.keys(config[runtime].tests || {});
-  };
-
-  // Also handle pitono endpoints for HTML generation if needed
-  // [...getSecondaryEndpointsPoints("python")].forEach(async (sourceFilePath) => {
-  //   // You might want to generate specific files for pitono tests here
-  //   console.log(`Pitono test found: ${sourceFilePath}`);
-  // });
-
-  // Generate HTML files for web tests synchronously
-  const webTests = [...getSecondaryEndpointsPoints("web")];
-  for (const sourceFilePath of webTests) {
-    const sourceFileSplit = sourceFilePath.split("/");
-    const sourceDir = sourceFileSplit.slice(0, -1);
-    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-    const sourceFileNameMinusJs = sourceFileName
-      .split(".")
-      .slice(0, -1)
-      .join(".");
-
-    const htmlFilePath = path.normalize(
-      `${process.cwd()}/testeranto/bundles/web/${testsName}/${sourceDir.join(
-        "/"
-      )}/${sourceFileNameMinusJs}.html`
-    );
-    const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-    const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-
-    // Create directory if it doesn't exist
-    fs.mkdirSync(path.dirname(htmlFilePath), { recursive: true });
-
-    // Write HTML file
-    fs.writeFileSync(
-      htmlFilePath,
-      webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
-    );
-    console.log(`Generated HTML file: ${htmlFilePath}`);
-  }
+  makeHtmlTestFiles(testsName);
+  makeHtmlReportFile(testsName, config);
 
   const {
     nodeEntryPoints,

@@ -54,7 +54,6 @@ export async function setupDirectories(
 
                 if (dockerfileContent) {
                   fs.writeFileSync(dockerfilePath, dockerfileContent);
-                  log(`Created Dockerfile at: ${dockerfilePath}`);
                 }
               }
             }

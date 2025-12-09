@@ -5,7 +5,7 @@ services:
     container_name: chromium
     restart: unless-stopped
     ports:
-      - '3000:3000'
+      - '4567:4567'
       - '9222:9222'
     shm_size: 2g
     environment:
@@ -14,12 +14,13 @@ services:
       ENABLE_CORS: 'true'
       REMOTE_DEBUGGING_PORT: '9222'
       REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
+      PORT: '4567'
     healthcheck:
       test:
         - CMD
         - curl
         - '-f'
-        - http://localhost:3000/health
+        - http://localhost:4567/health
       interval: 10s
       timeout: 10s
       retries: 30
@@ -251,7 +252,7 @@ services:
       ENABLE_CORS: 'true'
       REMOTE_DEBUGGING_PORT: '9222'
       REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
-      WS_PORT: '3002'
+      WS_PORT: '3456'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
       MONITOR_CAPTURE_CONSOLE: 'true'
@@ -295,7 +296,7 @@ services:
       ENABLE_CORS: 'true'
       REMOTE_DEBUGGING_PORT: '9222'
       REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
-      WS_PORT: '3002'
+      WS_PORT: '3456'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
     networks:
@@ -354,7 +355,7 @@ services:
       ENABLE_CORS: 'true'
       REMOTE_DEBUGGING_PORT: '9222'
       REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
-      WS_PORT: '3002'
+      WS_PORT: '3456'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
     networks:
@@ -426,7 +427,7 @@ services:
       ENABLE_CORS: 'true'
       REMOTE_DEBUGGING_PORT: '9222'
       REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
-      WS_PORT: '3002'
+      WS_PORT: '3456'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
       MONITOR_CAPTURE_TEST_OUTPUT: 'true'
@@ -463,7 +464,7 @@ services:
       ENABLE_CORS: 'true'
       REMOTE_DEBUGGING_PORT: '9222'
       REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
-      WS_PORT: '3002'
+      WS_PORT: '3456'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
       MONITOR_CAPTURE_PYTEST_OUTPUT: 'true'
@@ -505,7 +506,7 @@ services:
       ENABLE_CORS: 'true'
       REMOTE_DEBUGGING_PORT: '9222'
       REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
-      WS_PORT: '3002'
+      WS_PORT: '3456'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
     networks:

@@ -1,10 +1,20 @@
 import fs from "fs";
-import { AppHtml } from "../../clients/utils/buildTemplates";
+import {
+  IndexHtml,
+  ProcessMangerHtml,
+  // ReportHtml,
+} from "../../clients/utils/buildTemplates";
 import { IBuiltConfig } from "../../Types";
 
 export function setupFileSystem(config: IBuiltConfig, testsName: string) {
-  // Create main index.html
-  fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
+  // fs.writeFileSync(`${process.cwd()}/testeranto/Report.html`, ReportHtml());
+
+  fs.writeFileSync(
+    `${process.cwd()}/testeranto/ProcessManger.html`,
+    ProcessMangerHtml()
+  );
+
+  fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, IndexHtml());
 
   // Create reports directory
   if (!fs.existsSync(`testeranto/reports/${testsName}`)) {

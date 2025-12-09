@@ -620,15 +620,18 @@ export class ServerTaskCoordinator extends Server_DockerCompose {
   // Add promise process tracking
   addPromiseProcess = (
     processId: string,
-    promise: Promise<any>,
+    promise: Promise<any> | undefined,
     command: string,
     category: ProcessCategory,
     testName?: string,
     platform?: IRunTime
   ) => {
+    // If promise is undefined, create a resolved promise
+    const actualPromise = promise || Promise.resolve();
+    
     // Store the process info
     const processInfo: ProcessInfo = {
-      promise,
+      promise: actualPromise,
       status: "running",
       command,
       timestamp: new Date().toISOString(),
@@ -639,10 +642,10 @@ export class ServerTaskCoordinator extends Server_DockerCompose {
     };
 
     this.allProcesses.set(processId, processInfo);
-    this.runningProcesses.set(processId, promise);
+    this.runningProcesses.set(processId, actualPromise);
 
     // Set up promise completion handlers
-    promise
+    actualPromise
       .then(() => {
         const info = this.allProcesses.get(processId);
         if (info) {

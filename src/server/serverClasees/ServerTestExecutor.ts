@@ -213,9 +213,11 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
     // Use the extracted WebLauncher class
     const webLauncher = new WebLauncher(
       this.projectName,
+      this.httpPort,
+      this.chromiumPort,
       this.bddTestIsRunning.bind(this),
       this.bddTestIsNowDone.bind(this),
-      this.addPromiseProcess,
+      this.addPromiseProcess.bind(this),
       this.checkQueue.bind(this)
     );
     return webLauncher.launchWeb(src, dest);
@@ -225,12 +227,13 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
     // Use the extracted PythonLauncher class
     const pythonLauncher = new PythonLauncher(
       this.projectName,
+      this.httpPort,
       this.setupTestEnvironment.bind(this),
       this.handleChildProcess.bind(this),
       this.cleanupPorts.bind(this),
       this.bddTestIsRunning.bind(this),
       this.bddTestIsNowDone.bind(this),
-      this.addPromiseProcess,
+      this.addPromiseProcess.bind(this),
       this.checkQueue.bind(this)
     );
     return pythonLauncher.launchPython(src, dest);
@@ -240,12 +243,13 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
     // Use the extracted GolangLauncher class
     const golangLauncher = new GolangLauncher(
       this.projectName,
+      this.httpPort,
       this.setupTestEnvironment.bind(this),
       this.handleChildProcess.bind(this),
       this.cleanupPorts.bind(this),
       this.bddTestIsRunning.bind(this),
       this.bddTestIsNowDone.bind(this),
-      this.addPromiseProcess,
+      this.addPromiseProcess.bind(this),
       this.checkQueue.bind(this)
     );
     return golangLauncher.launchGolang(src, dest);
@@ -264,8 +268,6 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
     runtime: IRunTime,
     addableFiles?: string[]
   ): Promise<void> {
-    console.log(`[executeTest] Starting test: ${src} (${runtime})`);
-
     // Get the entry point for the test
     const runnables = getRunnables(this.configs, this.projectName);
     let dest: string;
@@ -287,21 +289,8 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
         throw new Error(`Unsupported runtime: ${runtime}`);
     }
 
-    if (!dest) {
-      console.error(`No destination found for test: ${src} (${runtime})`);
-      return;
-    }
-    console.log(`[executeTest] Destination: ${dest}`);
-
-    // Static analysis now runs inside Docker containers according to the strategy
-    // defined in allTests.ts, not on the host system
-    // The Docker containers will handle linting, type checking, etc. based on
-    // the metafile-based analysis steps defined for each runtime
-
-    console.log(`[executeTest] Running BDD test for ${src}`);
     // Run the BDD test
     await this.runBddTest(src, runtime, dest);
-    console.log(`[executeTest] Completed test: ${src} (${runtime})`);
   }
 
   private async runBddTest(

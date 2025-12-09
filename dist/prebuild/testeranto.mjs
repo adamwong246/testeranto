@@ -1,13 +1,13 @@
 import {
   baseNodeImage,
   createBuildService
-} from "./chunk-ZVW6YN5V.mjs";
+} from "./chunk-RO54TLJI.mjs";
 import {
   node_default
-} from "./chunk-UW7SQQR2.mjs";
+} from "./chunk-EH2APWUF.mjs";
 import {
   web_default
-} from "./chunk-UGGLWEUL.mjs";
+} from "./chunk-4KMVPZBT.mjs";
 import "./chunk-SFBHYNUJ.mjs";
 import {
   GolingvuBuild
@@ -20,9 +20,12 @@ import {
 
 // src/testeranto.ts
 import ansiC6 from "ansi-colors";
-import fs17 from "fs";
-import path14 from "path";
+import fs19 from "fs";
+import path17 from "path";
 import readline from "readline";
+
+// src/server/serverClasees/fileSystemSetup.ts
+import fs from "fs";
 
 // src/clients/utils/buildTemplates.ts
 var getBaseHtml = (title) => `
@@ -35,23 +38,35 @@ var getBaseHtml = (title) => `
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="" />
 
-  <script>
-    function initApp() {
-      if (window.React && window.ReactDOM && window.App) {
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(App));
-      } else {
-        setTimeout(initApp, 100);
-      }
-    }
-    window.addEventListener('DOMContentLoaded', initApp);
-  </script>
+
 `;
-var AppHtml = () => `
+var ProcessMangerHtml = () => `
   ${getBaseHtml("Testeranto")}
   
-  <link rel="stylesheet" href="App.css" />
-  <script src="App.js"></script>
+  <link rel="stylesheet" href="ProcessManger.css" />
+  <script src="ProcessManger.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+`;
+var IndexHtml = () => `
+  ${getBaseHtml("Testeranto")}
+  
+  <link rel="stylesheet" href="Index.css" />
+  <script src="Index.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+`;
+var ReportHtml = () => `
+  ${getBaseHtml("Testeranto")}
+  
+  <link rel="stylesheet" href="Report.css" />
+  <script src="Report.js"></script>
 </head>
 <body>
   <div id="root"></div>
@@ -60,15 +75,19 @@ var AppHtml = () => `
 `;
 
 // src/server/serverClasees/fileSystemSetup.ts
-import fs from "fs";
-function setupFileSystem(config, testsName2) {
-  fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
+function setupFileSystem(config2, testsName2) {
+  fs.writeFileSync(`${process.cwd()}/testeranto/Report.html`, ReportHtml());
+  fs.writeFileSync(
+    `${process.cwd()}/testeranto/ProcessManger.html`,
+    ProcessMangerHtml()
+  );
+  fs.writeFileSync(`${process.cwd()}/testeranto/index.html`, IndexHtml());
   if (!fs.existsSync(`testeranto/reports/${testsName2}`)) {
     fs.mkdirSync(`testeranto/reports/${testsName2}`, { recursive: true });
   }
   fs.writeFileSync(
     `testeranto/reports/${testsName2}/config.json`,
-    JSON.stringify(config, null, 2)
+    JSON.stringify(config2, null, 2)
   );
 }
 
@@ -90,7 +109,7 @@ function setupKeypressHandling() {
 // src/server/serverClasees/Server.ts
 import { default as ansiC5 } from "ansi-colors";
 import fs16, { watch } from "fs";
-import path13 from "path";
+import path14 from "path";
 
 // src/clients/utils.ts
 import ansiC2 from "ansi-colors";
@@ -194,9 +213,9 @@ var statusMessagePretty = (failures, test, runtime) => {
     );
   }
 };
-async function pollForFile(path15, timeout = 2e3) {
+async function pollForFile(path18, timeout = 2e3) {
   const intervalObj = setInterval(function() {
-    const file = path15;
+    const file = path18;
     const fileExists = fs2.existsSync(file);
     if (fileExists) {
       clearInterval(intervalObj);
@@ -217,27 +236,27 @@ import('${d}').then(async (x) => {
 })
 `;
 };
-var getRunnables = (config, projectName) => {
+var getRunnables = (config2, projectName) => {
   return {
     // pureEntryPoints: payload.pureEntryPoints || {},
-    golangEntryPoints: Object.entries(config.golang.tests).reduce((pt, cv) => {
+    golangEntryPoints: Object.entries(config2.golang.tests).reduce((pt, cv) => {
       pt[cv[0]] = path2.resolve(cv[0]);
       return pt;
     }, {}),
     // golangEntryPointSidecars: payload.golangEntryPointSidecars || {},
-    nodeEntryPoints: Object.entries(config.node.tests).reduce((pt, cv) => {
+    nodeEntryPoints: Object.entries(config2.node.tests).reduce((pt, cv) => {
       pt[cv[0]] = path2.resolve(
         `./testeranto/bundles/${projectName}/node/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
       return pt;
     }, {}),
     // nodeEntryPointSidecars: payload.nodeEntryPointSidecars || {},
-    pythonEntryPoints: Object.entries(config.python.tests).reduce((pt, cv) => {
+    pythonEntryPoints: Object.entries(config2.python.tests).reduce((pt, cv) => {
       pt[cv[0]] = path2.resolve(cv[0]);
       return pt;
     }, {}),
     // pythonEntryPointSidecars: payload.pythonEntryPointSidecars || {},
-    webEntryPoints: Object.entries(config.web.tests).reduce((pt, cv) => {
+    webEntryPoints: Object.entries(config2.web.tests).reduce((pt, cv) => {
       pt[cv[0]] = path2.resolve(
         `./testeranto/bundles/${projectName}/web/${cv[0].split(".").slice(0, -1).concat("mjs").join(".")}`
       );
@@ -298,9 +317,6 @@ var BuildProcessManager = class {
               runtime
             );
           }
-          console.log(
-            `Starting ${runtime} build for ${entryPointKeys.length} entry points`
-          );
           if (self.webSocketBroadcastMessage) {
             self.webSocketBroadcastMessage({
               type: "buildEvent",
@@ -344,7 +360,12 @@ var BuildProcessManager = class {
         });
       }
     };
-    const baseConfig = configer(this.configs, entryPointKeys, this.projectName, this.configs.buildDir);
+    const baseConfig = configer(
+      this.configs,
+      entryPointKeys,
+      this.projectName,
+      this.configs.buildDir
+    );
     const configWithPlugin = {
       ...baseConfig,
       plugins: [...baseConfig.plugins || [], buildProcessTrackerPlugin]
@@ -440,24 +461,48 @@ var configTests_default = (configs) => {
 import ansiColors from "ansi-colors";
 var ChildProcessHandler = class {
   static async handleChildProcess(child, logs2, reportDest, src, runtime) {
+    if (!child || typeof child.on !== "function") {
+      console.error("ChildProcessHandler: child is not a valid ChildProcess object:", child);
+      if (logs2 && typeof logs2.writeExitCode === "function") {
+        logs2.writeExitCode(-1, new Error("Invalid child process"));
+      } else {
+        console.error("ChildProcessHandler: logs.writeExitCode is not a function");
+      }
+      if (logs2 && typeof logs2.closeAll === "function") {
+        logs2.closeAll();
+      }
+      throw new Error(`Invalid child process for ${src || "undefined source"}`);
+    }
     return new Promise((resolve, reject) => {
       child.stdout?.on("data", (data) => {
-        logs2.stdout?.write(data);
+        if (logs2.stdout && typeof logs2.stdout.write === "function") {
+          logs2.stdout.write(data);
+        }
       });
       child.stderr?.on("data", (data) => {
-        logs2.stderr?.write(data);
+        if (logs2.stderr && typeof logs2.stderr.write === "function") {
+          logs2.stderr.write(data);
+        }
       });
       child.on("close", (code) => {
         const exitCode = code === null ? -1 : code;
         if (exitCode < 0) {
-          logs2.writeExitCode(
-            exitCode,
-            new Error("Process crashed or was terminated")
-          );
+          if (logs2 && typeof logs2.writeExitCode === "function") {
+            logs2.writeExitCode(
+              exitCode,
+              new Error("Process crashed or was terminated")
+            );
+          } else {
+            console.error("ChildProcessHandler: logs.writeExitCode is not a function");
+          }
         } else {
-          logs2.writeExitCode(exitCode);
+          if (logs2 && typeof logs2.writeExitCode === "function") {
+            logs2.writeExitCode(exitCode);
+          }
         }
-        logs2.closeAll();
+        if (logs2 && typeof logs2.closeAll === "function") {
+          logs2.closeAll();
+        }
         if (exitCode === 0) {
           resolve();
         } else {
@@ -581,8 +626,9 @@ var processGoTestOutput = (reportDest, src) => {
 
 // src/server/serverClasees/GolangLauncher.ts
 var GolangLauncher = class {
-  constructor(projectName, setupTestEnvironment, handleChildProcess, cleanupPorts, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
+  constructor(projectName, httpPort, setupTestEnvironment, handleChildProcess, cleanupPorts, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
     this.projectName = projectName;
+    this.httpPort = httpPort;
     this.setupTestEnvironment = setupTestEnvironment;
     this.handleChildProcess = handleChildProcess;
     this.cleanupPorts = cleanupPorts;
@@ -623,8 +669,7 @@ var GolangLauncher = class {
             env: {
               ...process.env,
               TEST_RESOURCES: testResources,
-              WS_PORT: "3000",
-              // Pass WebSocket port
+              WS_PORT: this.httpPort.toString(),
               GO111MODULE: "on"
             },
             cwd: goModDir
@@ -646,6 +691,10 @@ var GolangLauncher = class {
         }
       }
     })();
+    if (!golangPromise) {
+      console.error("GolangLauncher: golangPromise is undefined for", src);
+      throw new Error(`golangPromise is undefined for ${src}`);
+    }
     this.addPromiseProcess(
       processId,
       golangPromise,
@@ -756,7 +805,7 @@ var NodeLauncher = class {
           src,
           process.cwd()
         );
-        const portToUse = portsToUse && portsToUse.length > 0 ? portsToUse[0] : "3002";
+        const portToUse = portsToUse[0];
         const { escapeForShell } = await import("./TestResourceUtils-RLY5QZ2O.mjs");
         const escapedTestResources = escapeForShell(testResourcesJson);
         console.log("launchNode", [builtfile, portToUse, testResourcesJson]);
@@ -834,8 +883,9 @@ var NodeLauncher = class {
 // src/server/serverClasees/PythonLauncher.ts
 import { spawn as spawn3 } from "child_process";
 var PythonLauncher = class {
-  constructor(projectName, setupTestEnvironment, handleChildProcess, cleanupPorts, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
+  constructor(projectName, httpPort, setupTestEnvironment, handleChildProcess, cleanupPorts, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
     this.projectName = projectName;
+    this.httpPort = httpPort;
     this.setupTestEnvironment = setupTestEnvironment;
     this.handleChildProcess = handleChildProcess;
     this.cleanupPorts = cleanupPorts;
@@ -852,6 +902,10 @@ var PythonLauncher = class {
       try {
         const { reportDest, testResources, portsToUse } = await this.setupTestEnvironment(src, "python");
         const logs2 = createLogStreams(reportDest, "python");
+        if (!logs2 || typeof logs2.writeExitCode !== "function") {
+          console.error("PythonLauncher: logs object is invalid or missing writeExitCode method");
+          throw new Error(`Failed to create logs for ${src}`);
+        }
         console.log("mark12", src, testResources);
         const { prepareTestResources, escapeForShell } = await import("./TestResourceUtils-RLY5QZ2O.mjs");
         const testResourcesJson = prepareTestResources(
@@ -875,15 +929,25 @@ var PythonLauncher = class {
           "host",
           // Use host network to access WebSocket on localhost
           "-e",
-          `WS_PORT=3000`,
+          `WS_PORT=${this.httpPort}`,
           dockerImage,
           "sh",
           "-c",
-          `pip install websockets>=12.0 > /dev/null 2>&1 && python3 ${escapeForShell(src)} ${escapedTestResources} "3002"`
+          `pip install websockets>=12.0 > /dev/null 2>&1 && python3 ${escapeForShell(
+            src
+          )} ${escapedTestResources} "${this.httpPort}"`
         ];
-        const child = spawn3(dockerCommand[0], dockerCommand.slice(1), {
-          stdio: ["pipe", "pipe", "pipe"]
-        });
+        console.log("PythonLauncher: dockerCommand:", dockerCommand);
+        let child;
+        try {
+          child = spawn3(dockerCommand[0], dockerCommand.slice(1), {
+            stdio: ["pipe", "pipe", "pipe"]
+          });
+          console.log("PythonLauncher: child process created:", child?.pid);
+        } catch (spawnError) {
+          console.error("PythonLauncher: spawn failed:", spawnError);
+          throw spawnError;
+        }
         child.stdout?.on("data", (data) => {
           logs2.stdout?.write(data);
         });
@@ -902,6 +966,10 @@ var PythonLauncher = class {
         }
       }
     })();
+    if (!pythonPromise) {
+      console.error("PythonLauncher: pythonPromise is undefined for", src);
+      throw new Error(`pythonPromise is undefined for ${src}`);
+    }
     this.addPromiseProcess(
       processId,
       pythonPromise,
@@ -932,7 +1000,7 @@ import {
   upOne
 } from "docker-compose";
 import fs12 from "fs";
-import path11 from "path";
+import path12 from "path";
 
 // src/server/constants/COMMON_PACKAGE_INSTALL.ts
 var COMMON_PACKAGE_INSTALL = `RUN npm install -g node-gyp
@@ -946,7 +1014,7 @@ RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \\
 COPY ./src ./src/`;
 
 // src/server/golang/setupDockerfileForBuildGolang.ts
-var setupDockerfileForBuildGolang = (config) => {
+var setupDockerfileForBuildGolang = (config2) => {
   const goSpecificPackages = `\\
     wget`;
   return `FROM ${baseNodeImage}
@@ -967,10 +1035,10 @@ RUN wget -q -O - https://go.dev/dl/go1.21.0.linux-amd64.tar.gz | tar -xz -C /usr
 ENV GOROOT=/usr/local/go
 ENV PATH=$PATH:$GOROOT/bin
 ${COMMON_PACKAGE_INSTALL}
-COPY ${config} .
+COPY ${config2} .
 COPY dist/prebuild/server/builders/golang.mjs ./golang.mjs
 # Run the build to generate metafiles when container starts
-CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/server/builders/ && which node && which npx && npx tsx ./dist/prebuild/server/builders/golang.mjs ${config}"]
+CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/server/builders/ && which node && which npx && npx tsx ./dist/prebuild/server/builders/golang.mjs ${config2}"]
 `;
 };
 
@@ -994,7 +1062,7 @@ RUN apk update && apk add --no-cache \\
     rm -rf /var/cache/apk/*`;
 
 // src/server/node/setupDockerfileForBuildNode.ts
-var setupDockerfileForBuildNode = (config) => {
+var setupDockerfileForBuildNode = (config2) => {
   return `${BASE_DOCKERFILE}
 # Create necessary directories for build service
 RUN mkdir -p /workspace/testeranto/bundles/allTests/node
@@ -1010,7 +1078,7 @@ RUN (yarn install --ignore-engines || npm install --legacy-peer-deps) && \\
     npm cache clean --force && \\
     yarn cache clean || true
 COPY ./src ./src/
-COPY ${config} .
+COPY ${config2} .
 ARG NODE_MJS_HASH
 # Use the hash to bust cache for the node.mjs copy
 RUN echo "Node.mjs hash: $NODE_MJS_HASH" > /tmp/node-mjs-hash.txt
@@ -1023,20 +1091,20 @@ CMD ["sh", "-c", "echo 'Build service started' && tail -f /dev/null"]
 };
 
 // src/server/python/setupDockerfileForBuildPython.ts
-var setupDockerfileForBuildPython = (config) => {
+var setupDockerfileForBuildPython = (config2) => {
   return `${BASE_DOCKERFILE}
 # Ensure Python is properly installed and available
 RUN python3 --version && pip3 --version
 ${COMMON_PACKAGE_INSTALL}
-COPY ${config} .
+COPY ${config2} .
 COPY dist/prebuild/server/builders/python.mjs ./python.mjs
 # Run the build to generate metafiles when container starts
-CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/server/builders/ && which node && which npx && npx tsx ./dist/prebuild/server/builders/python.mjs ${config}"]
+CMD ["sh", "-c", "echo 'Starting build...' && ls -la ./dist/prebuild/server/builders/ && which node && which npx && npx tsx ./dist/prebuild/server/builders/python.mjs ${config2}"]
 `;
 };
 
 // src/server/web/setupDockerfileForBuildWeb.ts
-function setupDockerfileForBuildWeb(config) {
+function setupDockerfileForBuildWeb(config2) {
   const webSpecificPackages = `\\
     chromium \\
     nss \\
@@ -1063,7 +1131,7 @@ RUN npm install -g node-gyp
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 ${COMMON_PACKAGE_INSTALL}
-COPY ${config} .
+COPY ${config2} .
 COPY dist/prebuild/server/builders/web.mjs ./web.mjs
 # Default command that keeps the container alive
 # The actual build command will be run by docker-compose
@@ -1073,14 +1141,13 @@ CMD ["sh", "-c", "echo 'Web build service started' && tail -f /dev/null"]
 
 // src/server/serverClasees/Server_TCP_Commands.ts
 import fs11 from "fs";
-import path10 from "path";
+import path11 from "path";
 
 // src/server/serverClasees/Server_TCP_utils.ts
 import path7 from "path";
 
 // src/server/serverClasees/Server_TCP_constants.ts
 import path6 from "path";
-var DEFAULT_HTTP_PORT = 3002;
 var SERVER_CONSTANTS = {
   HOST: "0.0.0.0"
 };
@@ -1099,7 +1166,16 @@ var CONTENT_TYPES = {
   PNG: "image/png",
   JPEG: "image/jpeg",
   GIF: "image/gif",
-  SVG: "image/svg+xml"
+  SVG: "image/svg+xml",
+  ICO: "image/x-icon",
+  WOFF: "font/woff",
+  WOFF2: "font/woff2",
+  TTF: "font/ttf",
+  EOT: "application/vnd.ms-fontobject",
+  XML: "application/xml",
+  PDF: "application/pdf",
+  ZIP: "application/zip",
+  OCTET_STREAM: "application/octet-stream"
 };
 var WEBSOCKET_MESSAGE_TYPES = {
   GET_RUNNING_PROCESSES: "getRunningProcesses",
@@ -1146,15 +1222,6 @@ function getContentType(filePath) {
 }
 function generateStreamId() {
   return "stream_" + Math.random().toString(36).substr(2, 9);
-}
-function urlStartsWith(url, prefix) {
-  return url?.startsWith(prefix) ?? false;
-}
-function extractRelativePath(url, prefixRegex) {
-  return url.replace(prefixRegex, "");
-}
-function buildWebTestFilePath(relativePath, baseDir) {
-  return path7.join(process.cwd(), baseDir, relativePath);
 }
 function serializeProcessInfo(id, procInfo, logs2) {
   return {
@@ -1249,6 +1316,7 @@ var FileService_methods = [
 
 // src/server/serverClasees/Server_TCP_Http.ts
 import fs9 from "fs";
+import path10 from "path";
 
 // src/server/serverClasees/Server_TCP_Core.ts
 import { WebSocketServer } from "ws";
@@ -1546,7 +1614,7 @@ var Server_TCP_Core = class extends Server_Base {
     super(configs, name, mode2);
     this.httpServer = http.createServer();
     this.wss = new WebSocketServer({ server: this.httpServer });
-    const httpPort = Number(process.env.HTTP_PORT) || DEFAULT_HTTP_PORT;
+    const httpPort = configs.httpPort || Number(process.env.HTTP_PORT) || 3456;
     this.httpServer.listen(httpPort, SERVER_CONSTANTS.HOST, () => {
       console.log(`HTTP server running on http://localhost:${httpPort}`);
     });
@@ -1571,140 +1639,95 @@ var Server_TCP_Http = class extends Server_TCP_Core {
   }
   handleHttpRequest(req, res) {
     console.log(req.method, req.url);
-    if (urlStartsWith(req.url, WEB_TEST_FILES_PATH.NEW_PREFIX)) {
-      const url = new URL(req.url, `http://${req.headers.host}`);
-      const pathname = url.pathname;
-      const relativePath = extractRelativePath(
-        pathname,
-        WEB_TEST_FILES_PATH.NEW_PREFIX_REGEX
-      );
-      const filePath = buildWebTestFilePath(
-        relativePath,
-        WEB_TEST_FILES_PATH.BASE_DIR
-      );
-      console.log(`Serving web test file: ${req.url}`);
-      console.log(`  Pathname: ${pathname}`);
-      console.log(`  Looking for: ${filePath}`);
-      console.log(`  File exists: ${fs9.existsSync(filePath)}`);
-      fs9.readFile(filePath, (err, data) => {
-        if (err) {
-          console.error(`Error serving ${req.url}:`, err.message);
-          console.error(`  Full path: ${filePath}`);
-          res.writeHead(404, { "Content-Type": CONTENT_TYPES.PLAIN });
-          res.end(
-            `${ERROR_MESSAGES.FILE_NOT_FOUND}: ${req.url}
-Path: ${filePath}
-Error: ${err.message}`
-          );
-          return;
-        }
-        const contentType = getContentType(pathname);
-        console.log(`  Successfully served ${req.url} (${contentType})`);
-        res.writeHead(200, { "Content-Type": contentType });
-        res.end(data);
-      });
-      return;
-    }
-    if (urlStartsWith(req.url, WEB_TEST_FILES_PATH.OLD_PREFIX)) {
-      const newPath = req.url.replace(
-        WEB_TEST_FILES_PATH.OLD_PREFIX,
-        WEB_TEST_FILES_PATH.NEW_PREFIX
-      );
-      console.log(`Redirecting ${req.url} to ${newPath}`);
-      res.writeHead(301, { Location: newPath });
-      res.end();
-      return;
-    }
-    if (req.url === "/testeranto/index.html" /* root */) {
-      fs9.readFile("./testeranto/index.html" /* root */, (err, data) => {
-        if (err) {
-          res.writeHead(404, { "Content-Type": "text/plain" });
-          res.end(`500 ${err.toString()}`);
-          return;
-        }
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(data);
-      });
-      return;
-    } else if (req.url === "/testeranto/App.css" /* style */) {
-      fs9.readFile("./testeranto/App.css" /* style */, (err, data) => {
-        if (err) {
-          res.writeHead(404, { "Content-Type": "text/plain" });
-          res.end(`500 ${err.toString()}`);
-          return;
-        }
-        res.writeHead(200, { "Content-Type": CONTENT_TYPES.CSS });
-        res.end(data);
-      });
-      return;
-    } else if (req.url === "/testeranto/App.js" /* script */) {
-      fs9.readFile("./testeranto/App.js" /* script */, (err, data) => {
-        if (err) {
-          res.writeHead(404, { "Content-Type": "text/plain" });
-          res.end(`500 ${err.toString()}`);
-          return;
-        }
-        res.writeHead(200, { "Content-Type": "text/css" });
-        res.end(data);
-        return;
-      });
-      return;
-    } else if (req.url === "/" || req.url === "/monitor") {
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.end(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Testeranto Process Monitor</title>
-        </head>
-        <body>
-          <div id="root"></div>
-          <script src="/static/bundle.js"></script>
-        </body>
-        </html>
-      `);
-      return;
-    } else if (req.url?.startsWith("/api/")) {
-      this.handleMonitoringApi(req, res);
-      return;
-    } else {
-      res.writeHead(404);
-      res.end(`404 Not Found. ${req.url}`);
-      return;
-    }
+    this.serveStaticFile(req, res);
+    return;
   }
-  handleMonitoringApi(req, res) {
-    const url = req.url || "";
-    if (url === "/api/processes" && req.method === "GET") {
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(
-        JSON.stringify(
-          this.getProcessSummary ? this.getProcessSummary() : { processes: [] }
-        )
-      );
-    } else if (url.startsWith("/api/logs") && req.method === "GET") {
-      const urlObj = new URL(url, `http://${req.headers.host}`);
-      const processId = urlObj.searchParams.get("processId");
-      if (processId && this.getProcessLogs) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({
-            processId,
-            logs: this.getProcessLogs(processId) || []
-          })
-        );
-      } else {
-        res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({ error: "processId query parameter required" })
-        );
-      }
-    } else {
-      res.writeHead(404, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ error: "Not found" }));
+  serveStaticFile(req, res) {
+    if (!req.url) {
+      res.writeHead(400);
+      res.end("Bad Request");
+      return;
     }
+    const urlPath = new URL(req.url, `http://${req.headers.host}`).pathname;
+    const decodedPath = decodeURIComponent(urlPath);
+    const relativePath = decodedPath.startsWith("/") ? decodedPath.slice(1) : decodedPath;
+    const normalizedPath = path10.normalize(relativePath);
+    if (normalizedPath.includes("..")) {
+      res.writeHead(403);
+      res.end("Forbidden: Directory traversal not allowed");
+      return;
+    }
+    const projectRoot = process.cwd();
+    const filePath = path10.join(projectRoot, normalizedPath);
+    if (!filePath.startsWith(path10.resolve(projectRoot))) {
+      res.writeHead(403);
+      res.end("Forbidden");
+      return;
+    }
+    fs9.stat(filePath, (err, stats) => {
+      if (err) {
+        if (err.code === "ENOENT") {
+          res.writeHead(404);
+          res.end(`File not found: ${urlPath}`);
+          return;
+        } else {
+          res.writeHead(500);
+          res.end(`Server Error: ${err.message}`);
+          return;
+        }
+      }
+      if (stats.isDirectory()) {
+        fs9.readdir(filePath, (readErr, files2) => {
+          if (readErr) {
+            res.writeHead(500);
+            res.end(`Server Error: ${readErr.message}`);
+            return;
+          }
+          const items = files2.map((file) => {
+            try {
+              const stat = fs9.statSync(path10.join(filePath, file));
+              const isDir = stat.isDirectory();
+              const slash = isDir ? "/" : "";
+              return `<li><a href="${path10.join(urlPath, file)}${slash}">${file}${slash}</a></li>`;
+            } catch {
+              return `<li><a href="${path10.join(urlPath, file)}">${file}</a></li>`;
+            }
+          }).join("");
+          res.writeHead(200, { "Content-Type": "text/html" });
+          res.end(`
+            <!DOCTYPE html>
+            <html>
+            <head><title>Directory listing for ${urlPath}</title></head>
+            <body>
+              <h1>Directory listing for ${urlPath}</h1>
+              <ul>
+                ${items}
+              </ul>
+            </body>
+            </html>
+          `);
+        });
+      } else {
+        this.serveFile(filePath, res);
+      }
+    });
+  }
+  serveFile(filePath, res) {
+    const contentType = getContentType(filePath) || CONTENT_TYPES.OCTET_STREAM;
+    fs9.readFile(filePath, (err, data) => {
+      if (err) {
+        if (err.code === "ENOENT") {
+          res.writeHead(404);
+          res.end(`File not found: ${filePath}`);
+        } else {
+          res.writeHead(500);
+          res.end(`Server Error: ${err.message}`);
+        }
+        return;
+      }
+      res.writeHead(200, { "Content-Type": contentType });
+      res.end(data);
+    });
   }
 };
 
@@ -1979,11 +2002,11 @@ var Server_TCP_Commands = class extends Server_TCP_FileService {
       cwd: process.cwd()
     });
     let resolvedPath = filepath;
-    if (!path10.isAbsolute(filepath)) {
-      resolvedPath = path10.join(process.cwd(), filepath);
+    if (!path11.isAbsolute(filepath)) {
+      resolvedPath = path11.join(process.cwd(), filepath);
       console.log("Resolved relative path to:", resolvedPath);
     }
-    const dir = path10.dirname(resolvedPath);
+    const dir = path11.dirname(resolvedPath);
     if (!fs11.existsSync(dir)) {
       console.log("Creating directory:", dir);
       fs11.mkdirSync(dir, { recursive: true });
@@ -2005,11 +2028,11 @@ var Server_TCP_Commands = class extends Server_TCP_FileService {
     fs11.mkdirSync(filepath, { recursive: true });
   }
   readFile(filepath) {
-    const fullPath = path10.join(process.cwd(), filepath);
+    const fullPath = path11.join(process.cwd(), filepath);
     return fs11.readFileSync(fullPath, "utf-8");
   }
   createWriteStream(filepath, testName) {
-    const dir = path10.dirname(filepath);
+    const dir = path11.dirname(filepath);
     if (!fs11.existsSync(dir)) {
       fs11.mkdirSync(dir, { recursive: true });
     }
@@ -2029,13 +2052,13 @@ var Server_DockerCompose = class extends Server_TCP_Commands {
   constructor(cwd, configs, name, mode2) {
     super(configs, name, mode2);
     this.cwd = cwd;
-    this.config = path11.join(
+    this.config = path12.join(
       "testeranto",
       "bundles",
       `${this.projectName}-docker-compose.yml`
     );
     this.composeDir = process.cwd();
-    this.composeFile = path11.join(
+    this.composeFile = path12.join(
       this.composeDir,
       "testeranto",
       "bundles",
@@ -2046,7 +2069,7 @@ var Server_DockerCompose = class extends Server_TCP_Commands {
     });
   }
   async initializeAndStart() {
-    const { setupDockerCompose } = await import("./dockerComposeGenerator-N6FIDURL.mjs");
+    const { setupDockerCompose } = await import("./dockerComposeGenerator-RJEJFWCW.mjs");
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),
@@ -2057,7 +2080,7 @@ var Server_DockerCompose = class extends Server_TCP_Commands {
       console.error(
         `Docker-compose file not found after generation: ${this.composeFile}`
       );
-      const dir = path11.dirname(this.composeFile);
+      const dir = path12.dirname(this.composeFile);
       if (fs12.existsSync(dir)) {
         console.error(`Contents of ${dir}:`);
         try {
@@ -2075,7 +2098,7 @@ var Server_DockerCompose = class extends Server_TCP_Commands {
     if (!fs12.existsSync(this.composeFile)) {
       console.error(`Docker-compose file not found: ${this.composeFile}`);
       console.error(`Current directory: ${process.cwd()}`);
-      const bundlesDir = path11.join(process.cwd(), "testeranto", "bundles");
+      const bundlesDir = path12.join(process.cwd(), "testeranto", "bundles");
       if (fs12.existsSync(bundlesDir)) {
         console.error(`Contents of ${bundlesDir}:`);
         try {
@@ -2139,22 +2162,22 @@ CMD ["sh", "-c", "echo 'Build service started' && tail -f /dev/null"]
 `;
     }
     const dockerfileName = `${runtime}.Dockerfile`;
-    const dockerfileDir = path11.join(
+    const dockerfileDir = path12.join(
       "testeranto",
       "bundles",
       testsName2,
       runtime
     );
-    const dockerfilePath = path11.join(dockerfileDir, dockerfileName);
-    const normalizedDir = path11.normalize(dockerfileDir);
-    if (!normalizedDir.startsWith(path11.join("testeranto", "bundles"))) {
+    const dockerfilePath = path12.join(dockerfileDir, dockerfileName);
+    const normalizedDir = path12.normalize(dockerfileDir);
+    if (!normalizedDir.startsWith(path12.join("testeranto", "bundles"))) {
       throw new Error(
         `Invalid Dockerfile directory: ${dockerfileDir}. Must be under testeranto/bundles/`
       );
     }
-    const fullDockerfileDir = path11.join(process.cwd(), dockerfileDir);
+    const fullDockerfileDir = path12.join(process.cwd(), dockerfileDir);
     fs12.mkdirSync(fullDockerfileDir, { recursive: true });
-    const fullDockerfilePath = path11.join(process.cwd(), dockerfilePath);
+    const fullDockerfilePath = path12.join(process.cwd(), dockerfilePath);
     fs12.writeFileSync(fullDockerfilePath, dockerfileContent);
     if (!fs12.existsSync(fullDockerfilePath)) {
       throw new Error(
@@ -2423,8 +2446,9 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
     };
     // Add promise process tracking
     this.addPromiseProcess = (processId, promise, command, category, testName, platform) => {
+      const actualPromise = promise || Promise.resolve();
       const processInfo = {
-        promise,
+        promise: actualPromise,
         status: "running",
         command,
         timestamp: (/* @__PURE__ */ new Date()).toISOString(),
@@ -2434,8 +2458,8 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
         platform: platform || "node"
       };
       this.allProcesses.set(processId, processInfo);
-      this.runningProcesses.set(processId, promise);
-      promise.then(() => {
+      this.runningProcesses.set(processId, actualPromise);
+      actualPromise.then(() => {
         const info = this.allProcesses.get(processId);
         if (info) {
           info.status = "completed";
@@ -2729,10 +2753,10 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
 import fs14 from "fs";
 import ansiColors3 from "ansi-colors";
 var TestEnvironmentSetup = class {
-  constructor(ports, projectName, browser2, queue) {
+  constructor(ports, projectName, browser, queue) {
     this.ports = ports;
     this.projectName = projectName;
-    this.browser = browser2;
+    this.browser = browser;
     this.queue = queue;
   }
   async setupTestEnvironment(src, runtime) {
@@ -2800,10 +2824,10 @@ var TestEnvironmentSetup = class {
 // src/server/serverClasees/ServerTestEnvironmentSetup.ts
 import ansiC4 from "ansi-colors";
 var ServerTestEnvironmentSetup = class {
-  constructor(ports, projectName, browser2, queue, configs, bddTestIsRunning) {
+  constructor(ports, projectName, browser, queue, configs, bddTestIsRunning) {
     this.ports = ports;
     this.projectName = projectName;
-    this.browser = browser2;
+    this.browser = browser;
     this.queue = queue;
     this.configs = configs;
     this.bddTestIsRunning = bddTestIsRunning;
@@ -2861,11 +2885,13 @@ var TypeCheckNotifier = class {
 
 // src/server/serverClasees/WebLauncher.ts
 import fs15 from "fs";
-import path12 from "path";
+import path13 from "path";
 import ansiColors5 from "ansi-colors";
 var WebLauncher = class {
-  constructor(projectName, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
+  constructor(projectName, httpPort, chromiumPort, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
     this.projectName = projectName;
+    this.httpPort = httpPort;
+    this.chromiumPort = chromiumPort;
     this.bddTestIsRunning = bddTestIsRunning;
     this.bddTestIsNowDone = bddTestIsNowDone;
     this.addPromiseProcess = addPromiseProcess;
@@ -2876,6 +2902,7 @@ var WebLauncher = class {
     const processId = `web-${src}-${Date.now()}`;
     const command = `web test: ${src}`;
     const webPromise = (async () => {
+      let browser = null;
       try {
         this.bddTestIsRunning(src);
         const reportDest = `testeranto/reports/${this.projectName}/${src.split(".").slice(0, -1).join(".")}/web`;
@@ -2886,22 +2913,25 @@ var WebLauncher = class {
         const htmlPath = `${destFolder}.html`;
         const inDocker = process.env.IN_DOCKER === "true";
         const chromeHost = inDocker ? "chromium" : process.env.CHROME_HOST || "host.docker.internal";
-        const chromePort = process.env.CHROME_PORT || "9222";
-        console.log(`Connecting to Chrome at ${chromeHost}:${chromePort} (IN_DOCKER=${inDocker})`);
+        const chromePort = process.env.CHROME_PORT || this.chromiumPort.toString();
+        console.log(
+          `Connecting to Chrome at ${chromeHost}:${chromePort} (IN_DOCKER=${inDocker})`
+        );
         const puppeteer = await import("puppeteer-core");
         const endpoints = [
           `ws://${chromeHost}:${chromePort}/devtools/browser`,
           `ws://${chromeHost}:${chromePort}/json/version`,
           `ws://${chromeHost}:${chromePort}/`
         ];
-        let browser2;
         const maxRetries = 10;
         let lastError;
         for (let attempt = 1; attempt <= maxRetries; attempt++) {
           for (const endpoint of endpoints) {
             try {
-              console.log(`Attempt ${attempt}/${maxRetries}: Trying to connect to Chrome at ${endpoint}`);
-              browser2 = await puppeteer.connect({
+              console.log(
+                `Attempt ${attempt}/${maxRetries}: Trying to connect to Chrome at ${endpoint}`
+              );
+              browser = await puppeteer.connect({
                 browserWSEndpoint: endpoint,
                 defaultViewport: null
               });
@@ -2909,24 +2939,36 @@ var WebLauncher = class {
               break;
             } catch (error) {
               lastError = error;
-              console.log(`Attempt ${attempt} failed for ${endpoint}:`, error.message);
+              console.log(
+                `Attempt ${attempt} failed for ${endpoint}:`,
+                error.message
+              );
               if (error.message.includes("ENOTFOUND") || error.message.includes("getaddrinfo")) {
                 const delay = 2e3 * attempt;
-                console.log(`DNS resolution failed, waiting ${delay}ms before next attempt...`);
+                console.log(
+                  `DNS resolution failed, waiting ${delay}ms before next attempt...`
+                );
                 await new Promise((resolve) => setTimeout(resolve, delay));
                 break;
               }
             }
           }
-          if (browser2)
+          if (browser)
             break;
         }
-        if (!browser2) {
-          console.error(`Failed to connect to Chrome after ${maxRetries} attempts`);
-          console.error(`Make sure the chromium service is running and healthy at ${chromeHost}:${chromePort}`);
+        if (!browser) {
+          console.error(
+            `Failed to connect to Chrome after ${maxRetries} attempts`
+          );
+          console.error(
+            `Make sure the chromium service is running and healthy at ${chromeHost}:${chromePort}`
+          );
           console.error(`Last error:`, lastError?.message);
-          throw new Error(`Failed to connect to Chrome. Check that the chromium service is running and the network is configured correctly.`);
+          throw new Error(
+            `Failed to connect to Chrome. Check that the chromium service is running and the network is configured correctly.`
+          );
         }
+        const browserWSEndpoint = browser.wsEndpoint();
         const webArgz = JSON.stringify({
           name: src,
           ports: [],
@@ -2934,11 +2976,15 @@ var WebLauncher = class {
           browserWSEndpoint
         });
         const logs2 = createLogStreams(reportDest, "web");
-        const httpPort = Number(process.env.HTTP_PORT) || 3002;
+        const httpPort = Number(process.env.HTTP_PORT) || this.httpPort;
         const serverHost = inDocker ? "host.docker.internal" : process.env.SERVER_HOST || "localhost";
-        console.log(`Using Server_TCP host: ${serverHost}:${httpPort} (IN_DOCKER=${inDocker})`);
+        console.log(
+          `Using Server_TCP host: ${serverHost}:${httpPort} (IN_DOCKER=${inDocker})`
+        );
         let relativePath;
-        const match = htmlPath.match(/testeranto\/bundles\/allTests\/web\/(.*)/);
+        const match = htmlPath.match(
+          /testeranto\/bundles\/allTests\/web\/(.*)/
+        );
         if (match) {
           relativePath = match[1];
         } else {
@@ -2950,7 +2996,7 @@ var WebLauncher = class {
             if (oldMatch) {
               relativePath = oldMatch[1];
             } else {
-              relativePath = path12.basename(htmlPath);
+              relativePath = path13.basename(htmlPath);
             }
           }
         }
@@ -2959,7 +3005,7 @@ var WebLauncher = class {
         console.log(
           `Navigating to ${url} (HTML file exists: ${fs15.existsSync(htmlPath)})`
         );
-        const page = await browser2.newPage();
+        const page = await browser.newPage();
         page.on("console", (log) => {
           const msg = `${log.text()}
 `;
@@ -3017,7 +3063,7 @@ var WebLauncher = class {
             if (oldMatch) {
               jsRelativePath = oldMatch[1];
             } else {
-              jsRelativePath = path12.basename(dest);
+              jsRelativePath = path13.basename(dest);
             }
           }
         }
@@ -3038,7 +3084,7 @@ var WebLauncher = class {
         }
         generatePromptFiles(reportDest, src);
         await page.close();
-        await browser2.disconnect();
+        await browser.disconnect();
         close();
       } catch (error) {
         console.error(`Error in web test ${src}:`, error);
@@ -3052,6 +3098,10 @@ var WebLauncher = class {
         throw error;
       }
     })();
+    if (!webPromise) {
+      console.error("WebLauncher: webPromise is undefined for", src);
+      throw new Error(`webPromise is undefined for ${src}`);
+    }
     this.addPromiseProcess(
       processId,
       webPromise,
@@ -3097,9 +3147,11 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
     this.launchWeb = async (src, dest) => {
       const webLauncher = new WebLauncher(
         this.projectName,
+        this.httpPort,
+        this.chromiumPort,
         this.bddTestIsRunning.bind(this),
         this.bddTestIsNowDone.bind(this),
-        this.addPromiseProcess,
+        this.addPromiseProcess.bind(this),
         this.checkQueue.bind(this)
       );
       return webLauncher.launchWeb(src, dest);
@@ -3107,12 +3159,13 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
     this.launchPython = async (src, dest) => {
       const pythonLauncher = new PythonLauncher(
         this.projectName,
+        this.httpPort,
         this.setupTestEnvironment.bind(this),
         this.handleChildProcess.bind(this),
         this.cleanupPorts.bind(this),
         this.bddTestIsRunning.bind(this),
         this.bddTestIsNowDone.bind(this),
-        this.addPromiseProcess,
+        this.addPromiseProcess.bind(this),
         this.checkQueue.bind(this)
       );
       return pythonLauncher.launchPython(src, dest);
@@ -3120,12 +3173,13 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
     this.launchGolang = async (src, dest) => {
       const golangLauncher = new GolangLauncher(
         this.projectName,
+        this.httpPort,
         this.setupTestEnvironment.bind(this),
         this.handleChildProcess.bind(this),
         this.cleanupPorts.bind(this),
         this.bddTestIsRunning.bind(this),
         this.bddTestIsNowDone.bind(this),
-        this.addPromiseProcess,
+        this.addPromiseProcess.bind(this),
         this.checkQueue.bind(this)
       );
       return golangLauncher.launchGolang(src, dest);
@@ -3227,7 +3281,6 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
     return this.executeTest(src, runtime, addableFiles);
   }
   async executeTest(src, runtime, addableFiles) {
-    console.log(`[executeTest] Starting test: ${src} (${runtime})`);
     const runnables = getRunnables(this.configs, this.projectName);
     let dest;
     switch (runtime) {
@@ -3246,14 +3299,7 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
       default:
         throw new Error(`Unsupported runtime: ${runtime}`);
     }
-    if (!dest) {
-      console.error(`No destination found for test: ${src} (${runtime})`);
-      return;
-    }
-    console.log(`[executeTest] Destination: ${dest}`);
-    console.log(`[executeTest] Running BDD test for ${src}`);
     await this.runBddTest(src, runtime, dest);
-    console.log(`[executeTest] Completed test: ${src} (${runtime})`);
   }
   async runBddTest(src, runtime, dest) {
     console.log(`[runBddTest] Starting BDD test for ${src} (${runtime})`);
@@ -3292,7 +3338,7 @@ var Server = class extends ServerTestExecutor {
     this.launchers = {};
     this.testName = testName;
     this.composeDir = process.cwd();
-    this.composeFile = path13.join(
+    this.composeFile = path14.join(
       this.composeDir,
       "testeranto",
       "bundles",
@@ -3399,8 +3445,11 @@ var Server = class extends ServerTestExecutor {
       if (!fs16.existsSync(metafileDir)) {
         fs16.mkdirSync(metafileDir, { recursive: true });
       }
+      if (!fs16.existsSync(metafile)) {
+        fs16.writeFileSync(metafile, JSON.stringify({}));
+      }
       try {
-        if (runtime === "python" && !fs16.existsSync(metafile)) {
+        if (runtime === "python") {
           const entryPointList = Object.keys(entryPoints);
           if (entryPointList.length > 0) {
             const metafileData = await generatePitonoMetafile(
@@ -3461,6 +3510,10 @@ var Server = class extends ServerTestExecutor {
   }
 };
 
+// src/makeHtmlTestFiles.ts
+import path15 from "path";
+import fs17 from "fs";
+
 // src/web.html.ts
 var web_html_default = (jsfilePath, htmlFilePath, cssfilePath) => `
 <!DOCTYPE html>
@@ -3479,6 +3532,668 @@ var web_html_default = (jsfilePath, htmlFilePath, cssfilePath) => `
 </html>
 `;
 
+// allTestsUtils.ts
+function getStepsForFlavor(flavor) {
+  const [flavorType] = flavor;
+  const image = flavor[1];
+  switch (flavorType) {
+    case "interpreted":
+      if (image.includes("python")) {
+        return {
+          base: PYTHON_BASE_STEPS,
+          staticAnalysis: [],
+          // Keep empty for now, focus on metafile-based
+          metafileAnalysis: PYTHON_METAFILE_ANALYSIS,
+          test: PYTHON_TEST_STEPS
+        };
+      } else {
+        return {
+          base: NODE_BASE_STEPS,
+          staticAnalysis: [],
+          // Keep empty for now, focus on metafile-based
+          metafileAnalysis: NODE_METAFILE_ANALYSIS,
+          test: NODE_TEST_STEPS
+        };
+      }
+    case "compiled":
+      return {
+        base: GOLANG_BASE_STEPS,
+        staticAnalysis: [],
+        // Keep empty for now, focus on metafile-based
+        metafileAnalysis: GOLANG_METAFILE_ANALYSIS,
+        test: GOLANG_TEST_STEPS
+      };
+    case "chrome":
+      return {
+        base: WEB_BASE_STEPS,
+        staticAnalysis: [],
+        // Keep empty for now, focus on metafile-based
+        metafileAnalysis: WEB_METAFILE_ANALYSIS,
+        test: WEB_TEST_STEPS
+      };
+    default:
+      return {
+        base: NODE_BASE_STEPS,
+        staticAnalysis: [],
+        // Keep empty for now, focus on metafile-based
+        metafileAnalysis: NODE_METAFILE_ANALYSIS,
+        test: NODE_TEST_STEPS
+      };
+  }
+}
+var NODE_BASE_STEPS = [
+  ["RUN", "apk add --update make g++ linux-headers python3 libxml2-utils"],
+  ["WORKDIR", "/workspace"],
+  ["COPY", "package*.json ./ "],
+  ["RUN", "npm install --legacy-peer-deps"],
+  ["COPY", "./src ./src"]
+];
+var PYTHON_BASE_STEPS = [
+  ["WORKDIR", "/workspace"],
+  ["COPY", "requirements.txt ./ "],
+  ["RUN", "pip install -r requirements.txt"],
+  // Install Python linting tools and websockets for WebSocket communication
+  ["RUN", "pip install pylint mypy flake8 websockets>=12.0"],
+  ["COPY", "./src ./src"]
+];
+var GOLANG_BASE_STEPS = [
+  ["WORKDIR", "/workspace"],
+  ["COPY", "go.mod go.sum ./ "],
+  ["RUN", "go mod download"],
+  ["COPY", "./src ./src"]
+];
+var WEB_BASE_STEPS = [
+  ["RUN", "apk add --update make g++ linux-headers python3 libxml2-utils"],
+  ["WORKDIR", "/workspace"],
+  ["COPY", "package*.json ./ "],
+  ["RUN", "npm install --legacy-peer-deps"],
+  ["COPY", "./src ./src"]
+];
+var NODE_METAFILE_ANALYSIS = [
+  ...NODE_BASE_STEPS,
+  [
+    "RUN",
+    `node -e "export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } "`
+  ],
+  [
+    "RUN",
+    `node -e "export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } "`
+  ]
+];
+var WEB_METAFILE_ANALYSIS = [
+  ...WEB_BASE_STEPS,
+  [
+    "RUN",
+    `node -e "export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } "`
+  ],
+  [
+    "RUN",
+    `node -e "export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } "`
+  ],
+  [
+    "RUN",
+    `node -e "export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx stylelint ' + files.filter(f => f.endsWith('.css') || f.endsWith('.scss')).join(' ')).status); } else { console.log('No style files to check'); } "`
+  ]
+];
+var PYTHON_METAFILE_ANALYSIS = [
+  ...PYTHON_BASE_STEPS,
+  // Create a script to run static analysis based on metafile
+  [
+    "RUN",
+    `cat > /tmp/run_python_analysis.py << 'EOF'
+import json
+import os
+import subprocess
+import sys
+
+def run_analysis():
+    metafile_path = os.environ.get('METAFILE_PATH')
+    if not metafile_path or not os.path.exists(metafile_path):
+        print("No metafile found at METAFILE_PATH")
+        return 0
+    
+    with open(metafile_path, 'r') as f:
+        data = json.load(f)
+    
+    # Get input files from metafile
+    inputs = data.get('inputs', {})
+    files = list(inputs.keys()) if isinstance(inputs, dict) else []
+    
+    if not files:
+        print("No files to analyze")
+        return 0
+    
+    # Filter for Python files
+    python_files = [f for f in files if f.endswith('.py')]
+    if not python_files:
+        print("No Python files to analyze")
+        return 0
+    
+    exit_code = 0
+    
+    # Run flake8
+    print("Running flake8...")
+    result = subprocess.run(['flake8'] + python_files, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(result.stdout)
+        print(result.stderr)
+        exit_code = result.returncode
+    
+    # Run pylint
+    print("Running pylint...")
+    result = subprocess.run(['pylint'] + python_files, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(result.stdout)
+        print(result.stderr)
+        exit_code = result.returncode
+    
+    # Run mypy
+    print("Running mypy...")
+    result = subprocess.run(['mypy'] + python_files, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(result.stdout)
+        print(result.stderr)
+        exit_code = result.returncode
+    
+    return exit_code
+
+if __name__ == '__main__':
+    sys.exit(run_analysis())
+EOF`
+  ],
+  ["RUN", "python3 /tmp/run_python_analysis.py"]
+];
+var GOLANG_METAFILE_ANALYSIS = [
+  ...GOLANG_BASE_STEPS,
+  [
+    "RUN",
+    `sh -c 'if [ -f "$METAFILE_PATH" ]; then go vet $(jq -r ".inputs | keys[]" "$METAFILE_PATH" 2>/dev/null | grep "\\.go$" | xargs echo); else echo "No metafile for go vet"; fi'`
+  ],
+  [
+    "RUN",
+    `sh -c 'if [ -f "$METAFILE_PATH" ]; then staticcheck $(jq -r ".inputs | keys[]" "$METAFILE_PATH" 2>/dev/null | grep "\\.go$" | xargs echo); else echo "No metafile for staticcheck"; fi'`
+  ]
+];
+var NODE_TEST_STEPS = [
+  ...NODE_BASE_STEPS,
+  ...NODE_METAFILE_ANALYSIS.slice(NODE_BASE_STEPS.length),
+  ["RUN", "npm test"]
+];
+var WEB_TEST_STEPS = [
+  ...WEB_BASE_STEPS,
+  ["RUN", "npm test"]
+];
+var PYTHON_TEST_STEPS = [
+  ...PYTHON_BASE_STEPS,
+  [
+    "RUN",
+    `python3 -c "import sys; import subprocess; import pkg_resources; required = {'pylint', 'mypy', 'flake8', 'websockets'}; installed = {pkg.key for pkg in pkg_resources.working_set}; missing = required - installed; print('Missing packages:', missing) if missing else print('All required packages installed')"`
+  ],
+  ...PYTHON_METAFILE_ANALYSIS.slice(PYTHON_BASE_STEPS.length),
+  ["RUN", "pytest"]
+];
+var GOLANG_TEST_STEPS = [
+  ...GOLANG_BASE_STEPS,
+  ["RUN", "go test ./..."]
+];
+var BUILD_PROD_STEP = [
+  "RUN",
+  "BUILD YOU PRODUCTION BUNDLE"
+];
+var BUILD_THING_STEP = [
+  "RUN",
+  "BUILD YOU THING"
+];
+var BUILD_ANOTHER_STEP = [
+  "RUN",
+  "BUILD ANOTHER THING"
+];
+var SINGLE_TEST_BLOCK = [
+  NODE_TEST_STEPS
+];
+var SINGLE_PROD_BLOCK = [
+  NODE_BASE_STEPS.concat([BUILD_PROD_STEP])
+];
+var DOUBLE_PROD_BLOCK = [
+  NODE_BASE_STEPS.concat([BUILD_THING_STEP]),
+  NODE_BASE_STEPS.concat([BUILD_ANOTHER_STEP])
+];
+var CHECKS_CONFIG = {
+  eslint: [
+    [
+      ["WORKDIR", "/workspace"],
+      [
+        "RUN",
+        "npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin"
+      ]
+    ],
+    "npx eslint src/ --ext .ts,.tsx --max-warnings=0"
+  ],
+  typescript: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev typescript"]
+    ],
+    "npx tsc --noEmit"
+  ],
+  "audit-ci": [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev audit-ci"]
+    ],
+    "npx audit-ci --critical"
+  ],
+  depcheck: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev depcheck"]
+    ],
+    "npx depcheck"
+  ]
+};
+var createLangConfig = (flavor, testFile, options) => {
+  let strategy;
+  if (options?.strategy) {
+    strategy = options.strategy;
+  } else {
+    const [flavorType] = flavor;
+    switch (flavorType) {
+      case "interpreted":
+        strategy = "combined-build-test-process-pools";
+        break;
+      case "compiled":
+        strategy = "separate-build-combined-test";
+        break;
+      case "chrome":
+        strategy = "combined-service-shared-chrome";
+        break;
+      case "VM":
+        strategy = "combined-service-shared-jvm";
+        break;
+      default:
+        strategy = "combined-build-test-process-pools";
+    }
+  }
+  const { base, metafileAnalysis, test } = getStepsForFlavor(flavor);
+  const defaultTestBlock = [test];
+  const defaultChecks = {
+    "metafile-analysis": [metafileAnalysis, "echo 'Running metafile analysis'"]
+  };
+  return {
+    plugins: options?.plugins || [],
+    loaders: options?.loaders || {},
+    tests: { [testFile]: { ports: 0 } },
+    externals: options?.externals || [],
+    flavor,
+    strategy,
+    test: options?.testBlocks || defaultTestBlock,
+    prod: options?.prodBlocks || [base.concat([BUILD_PROD_STEP])],
+    checks: options?.checks || defaultChecks,
+    build: options?.build,
+    processPool: options?.processPool,
+    chrome: options?.chrome,
+    monitoring: options?.monitoring || {}
+    // Include monitoring config
+  };
+};
+
+// golangConfig.ts
+var GOLANG_BUILD_STEPS = [
+  ...GOLANG_BASE_STEPS,
+  ["RUN", "go build -o /tmp/test-binary ./..."],
+  ...GOLANG_METAFILE_ANALYSIS.slice(GOLANG_BASE_STEPS.length)
+];
+var GO_STATIC_ANALYSIS = {
+  "go-vet": [[["WORKDIR", "/workspace"]], "go vet ./..."],
+  staticcheck: [[["WORKDIR", "/workspace"]], "staticcheck ./..."],
+  "go-fmt": [[["WORKDIR", "/workspace"]], "go fmt ./..."],
+  gocyclo: [[["WORKDIR", "/workspace"]], "gocyclo -over 15 ."]
+};
+var golangConfig = {
+  flavor: ["compiled", "golang:1.21-alpine"],
+  testFile: "example/Calculator.golingvu.test.go",
+  options: {
+    prodBlocks: [
+      GOLANG_BASE_STEPS.concat([["RUN", "BUILD THING"]]),
+      GOLANG_BASE_STEPS.concat([["RUN", "BUILD ANOTHER THING"]])
+    ],
+    build: [GOLANG_BUILD_STEPS],
+    checks: GO_STATIC_ANALYSIS
+  }
+};
+
+// pythonConfig.ts
+var PYTHON_STATIC_ANALYSIS = {
+  pylint: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "pip install pylint"]
+    ],
+    "pylint --rcfile=.pylintrc src/"
+  ],
+  mypy: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "pip install mypy"]
+    ],
+    "mypy src/"
+  ],
+  flake8: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "pip install flake8"]
+    ],
+    "flake8 src/"
+  ],
+  bandit: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "pip install bandit"]
+    ],
+    "bandit -r src/ -ll"
+  ]
+};
+var pythonConfig = {
+  flavor: ["interpreted", "python:3.11-alpine"],
+  testFile: "example/Calculator.pitono.test.py",
+  options: {
+    processPool: {
+      maxConcurrent: 3,
+      timeoutMs: 2e4
+    },
+    checks: PYTHON_STATIC_ANALYSIS
+  }
+};
+
+// webConfig.ts
+import { sassPlugin } from "esbuild-sass-plugin";
+var WEB_BUILD_STEPS = [
+  ...WEB_BASE_STEPS,
+  ...WEB_METAFILE_ANALYSIS.slice(WEB_BASE_STEPS.length),
+  ["RUN", "npm run build"]
+];
+var WEB_STATIC_ANALYSIS = {
+  eslint: [
+    [
+      ["WORKDIR", "/workspace"],
+      [
+        "RUN",
+        "npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin"
+      ]
+    ],
+    "npx eslint src/ --ext .ts,.tsx --max-warnings=0"
+  ],
+  typescript: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev typescript"]
+    ],
+    "npx tsc --noEmit"
+  ],
+  stylelint: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev stylelint"]
+    ],
+    "npx stylelint 'src/**/*.css' 'src/**/*.scss'"
+  ],
+  prettier: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev prettier"]
+    ],
+    "npx prettier --check src/"
+  ]
+};
+var webConfig = {
+  flavor: ["chrome", "node:20.19.4-alpine-chrome"],
+  testFile: "example/Calculator.test.ts",
+  options: {
+    plugins: [() => sassPlugin()],
+    loaders: { ".ttf": "file" },
+    chrome: {
+      sharedInstance: true,
+      maxContexts: 4,
+      memoryLimitMB: 256
+    },
+    checks: WEB_STATIC_ANALYSIS,
+    build: [WEB_BUILD_STEPS]
+  }
+};
+
+// nodeConfig.ts
+var NODE_STATIC_ANALYSIS = {
+  eslint: [
+    [
+      ["WORKDIR", "/workspace"],
+      [
+        "RUN",
+        "npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin"
+      ]
+    ],
+    "npx eslint src/ --ext .ts,.tsx --max-warnings=0"
+  ],
+  typescript: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev typescript"]
+    ],
+    "npx tsc --noEmit"
+  ],
+  "audit-ci": [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev audit-ci"]
+    ],
+    "npx audit-ci --critical"
+  ],
+  depcheck: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev depcheck"]
+    ],
+    "npx depcheck"
+  ]
+};
+var nodeConfig = {
+  flavor: ["interpreted", "node:20.19.4-alpine"],
+  testFile: "example/Calculator.test.ts",
+  options: {
+    processPool: {
+      maxConcurrent: 5,
+      timeoutMs: 25e3
+    },
+    checks: NODE_STATIC_ANALYSIS
+  }
+};
+
+// allTests.ts
+var config = {
+  featureIngestor: function(s) {
+    throw new Error("Function not implemented.");
+  },
+  importPlugins: [],
+  httpPort: 3456,
+  chromiumPort: 4567,
+  ports: ["3333", "3334"],
+  src: "",
+  test: SINGLE_TEST_BLOCK,
+  prod: SINGLE_PROD_BLOCK,
+  checks: CHECKS_CONFIG,
+  build: [golangConfig.options.build],
+  processPool: {
+    maxConcurrent: 4,
+    timeoutMs: 3e4
+  },
+  chrome: {
+    sharedInstance: true,
+    maxContexts: 6,
+    memoryLimitMB: 512
+  },
+  golang: createLangConfig(
+    golangConfig.flavor,
+    golangConfig.testFile,
+    golangConfig.options
+  ),
+  python: createLangConfig(
+    pythonConfig.flavor,
+    pythonConfig.testFile,
+    pythonConfig.options
+  ),
+  web: createLangConfig(
+    webConfig.flavor,
+    webConfig.testFile,
+    webConfig.options
+  ),
+  node: createLangConfig(
+    nodeConfig.flavor,
+    nodeConfig.testFile,
+    nodeConfig.options
+  )
+};
+var allTests_default = config;
+
+// src/makeHtmlTestFiles.ts
+var getSecondaryEndpointsPoints = (runtime) => {
+  const runtimeConfig = allTests_default[runtime];
+  if (!runtimeConfig || !runtimeConfig.tests) {
+    return [];
+  }
+  return Object.keys(runtimeConfig.tests);
+};
+var makeHtmlTestFiles = (testsName2) => {
+  const webTests = [...getSecondaryEndpointsPoints("web")];
+  for (const sourceFilePath of webTests) {
+    const sourceFileSplit = sourceFilePath.split("/");
+    const sourceDir = sourceFileSplit.slice(0, -1);
+    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+    const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
+    const htmlFilePath = path15.normalize(
+      `${process.cwd()}/testeranto/bundles/${testsName2}/${sourceDir.join(
+        "/"
+      )}/${sourceFileNameMinusJs}.html`
+    );
+    const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
+    const cssFilePath = `./${sourceFileNameMinusJs}.css`;
+    fs17.mkdirSync(path15.dirname(htmlFilePath), { recursive: true });
+    fs17.writeFileSync(
+      htmlFilePath,
+      web_html_default(jsfilePath, htmlFilePath, cssFilePath)
+    );
+    console.log(`Generated HTML file: ${htmlFilePath}`);
+  }
+};
+
+// src/makeHtmlReportFile.ts
+import path16 from "path";
+import fs18 from "fs";
+var getSecondaryEndpointsPoints2 = (config2) => {
+  const result = [];
+  for (const runtime of ["node", "web", "golang", "python"]) {
+    const runtimeConfig = config2[runtime];
+    if (runtimeConfig && runtimeConfig.tests) {
+      const testKeys = Object.keys(runtimeConfig.tests);
+      result.push(...testKeys);
+    }
+  }
+  return result;
+};
+var makeHtmlReportFile = (testsName2, config2) => {
+  const tests = [...getSecondaryEndpointsPoints2(config2)];
+  for (const sourceFilePath of tests) {
+    const sourceFileSplit = sourceFilePath.split("/");
+    const sourceDir = sourceFileSplit.slice(0, -1);
+    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+    const sourceFileNameMinusExtension = sourceFileName.split(".").slice(0, -1).join(".");
+    for (const runtime of ["node", "web", "golang", "python"]) {
+      const htmlFilePath = path16.normalize(
+        `${process.cwd()}/testeranto/reports/${testsName2}/${sourceDir.join(
+          "/"
+        )}/${sourceFileNameMinusExtension}/${runtime}/index.html`
+      );
+      fs18.mkdirSync(path16.dirname(htmlFilePath), { recursive: true });
+      const htmlDir = path16.dirname(htmlFilePath);
+      const reportJsPath = path16.join(
+        process.cwd(),
+        "dist",
+        "prebuild",
+        "Report.js"
+      );
+      const relativeReportJsPath = path16.relative(htmlDir, reportJsPath);
+      const relativeReportJsUrl = relativeReportJsPath.split(path16.sep).join("/");
+      const reportCssPath = path16.join(
+        process.cwd(),
+        "dist",
+        "prebuild",
+        "Report.css"
+      );
+      const relativeReportCssPath = path16.relative(htmlDir, reportCssPath);
+      const relativeReportCssUrl = relativeReportCssPath.split(path16.sep).join("/");
+      const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Report: ${sourceFileNameMinusExtension}</title>
+
+    <link rel="stylesheet" href="${relativeReportCssUrl}" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        #react-report-root {
+            margin: 0 auto;
+        }
+    </style>
+    <script src="${relativeReportJsUrl}"></script>
+</head>
+<body>
+    <div id="react-report-root"></div>
+    <script>
+        // Wait for the bundled script to load and render the React component
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if renderReport function is available
+            if (typeof renderReport === 'function') {
+                renderReport('react-report-root', {
+                    testName: '${sourceFileNameMinusExtension}',
+                    runtime: '${runtime}',
+                    sourceFilePath: '${sourceFilePath}',
+                    testSuite: '${testsName2}'
+                });
+            } else {
+                console.error('renderReport function not found. Make sure Report.js is loaded.');
+                // Try again after a short delay
+                setTimeout(() => {
+                    if (typeof renderReport === 'function') {
+                        renderReport('react-report-root', {
+                            testName: '${sourceFileNameMinusExtension}',
+                            runtime: '${runtime}',
+                            sourceFilePath: '${sourceFilePath}',
+                            testSuite: '${testsName2}'
+                        });
+                    } else {
+                        console.error('Still unable to find renderReport.');
+                    }
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>`;
+      fs18.writeFileSync(
+        htmlFilePath,
+        htmlContent
+        // webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
+      );
+      console.log(`Generated HTML file: ${htmlFilePath}`);
+    }
+  }
+};
+
 // src/testeranto.ts
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.isTTY)
@@ -3488,7 +4203,7 @@ if (!process.argv[2]) {
   process.exit(-1);
 }
 var configFilepath = process.argv[2];
-var testsName = path14.basename(configFilepath).split(".").slice(0, -1).join(".");
+var testsName = path17.basename(configFilepath).split(".").slice(0, -1).join(".");
 var mode = process.argv[3];
 if (mode !== "once" && mode !== "dev") {
   console.error(`The 3rd argument should be 'dev' or 'once', not '${mode}'.`);
@@ -3496,55 +4211,26 @@ if (mode !== "once" && mode !== "dev") {
 }
 import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
   const bigConfig = module.default;
-  try {
-  } catch (e) {
-    console.error("there was a problem");
-    console.error(e);
-  }
-  const config = {
+  const config2 = {
     ...bigConfig,
     buildDir: process.cwd() + "/testeranto/bundles/" + testsName
   };
   console.log(ansiC6.inverse("Press 'q' to initiate a graceful shutdown."));
   console.log(ansiC6.inverse("Press 'x' to quit forcefully."));
-  console.log(ansiC6.inverse("Press 'q' to initiate a graceful shutdown."));
-  console.log(ansiC6.inverse("Press 'x' to quit forcefully."));
   setupKeypressHandling();
-  setupFileSystem(config, testsName);
+  setupFileSystem(config2, testsName);
   let pm = null;
-  pm = new Server(config, testsName, mode);
+  pm = new Server(config2, testsName, mode);
   await pm.start();
-  fs17.writeFileSync(`${process.cwd()}/testeranto/index.html`, AppHtml());
-  if (!fs17.existsSync(`testeranto/reports/${testsName}`)) {
-    fs17.mkdirSync(`testeranto/reports/${testsName}`);
+  if (!fs19.existsSync(`testeranto/reports/${testsName}`)) {
+    fs19.mkdirSync(`testeranto/reports/${testsName}`);
   }
-  fs17.writeFileSync(
+  fs19.writeFileSync(
     `testeranto/reports/${testsName}/config.json`,
-    JSON.stringify(config, null, 2)
+    JSON.stringify(config2, null, 2)
   );
-  const getSecondaryEndpointsPoints = (runtime) => {
-    return Object.keys(config[runtime].tests || {});
-  };
-  const webTests = [...getSecondaryEndpointsPoints("web")];
-  for (const sourceFilePath of webTests) {
-    const sourceFileSplit = sourceFilePath.split("/");
-    const sourceDir = sourceFileSplit.slice(0, -1);
-    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-    const sourceFileNameMinusJs = sourceFileName.split(".").slice(0, -1).join(".");
-    const htmlFilePath = path14.normalize(
-      `${process.cwd()}/testeranto/bundles/web/${testsName}/${sourceDir.join(
-        "/"
-      )}/${sourceFileNameMinusJs}.html`
-    );
-    const jsfilePath = `./${sourceFileNameMinusJs}.mjs`;
-    const cssFilePath = `./${sourceFileNameMinusJs}.css`;
-    fs17.mkdirSync(path14.dirname(htmlFilePath), { recursive: true });
-    fs17.writeFileSync(
-      htmlFilePath,
-      web_html_default(jsfilePath, htmlFilePath, cssFilePath)
-    );
-    console.log(`Generated HTML file: ${htmlFilePath}`);
-  }
+  makeHtmlTestFiles(testsName);
+  makeHtmlReportFile(testsName, config2);
   const {
     nodeEntryPoints,
     // nodeEntryPointSidecars,
@@ -3556,10 +4242,10 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
     // pythonEntryPointSidecars,
     golangEntryPoints
     // golangEntryPointSidecars,
-  } = getRunnables(config, testsName);
-  const hasGolangTests = Object.keys(config.golang).length > 0;
+  } = getRunnables(config2, testsName);
+  const hasGolangTests = Object.keys(config2.golang).length > 0;
   if (hasGolangTests) {
-    const golingvuBuild = new GolingvuBuild(config, testsName);
+    const golingvuBuild = new GolingvuBuild(config2, testsName);
     const golangEntryPoints2 = await golingvuBuild.build();
     golingvuBuild.onBundleChange(() => {
       Object.keys(golangEntryPoints2).forEach((entryPoint) => {
@@ -3569,9 +4255,9 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
       });
     });
   }
-  const hasPitonoTests = Object.keys(config.python).length > 0;
+  const hasPitonoTests = Object.keys(config2.python).length > 0;
   if (hasPitonoTests) {
-    const pitonoBuild = new PitonoBuild(config, testsName);
+    const pitonoBuild = new PitonoBuild(config2, testsName);
     const pitonoEntryPoints = await pitonoBuild.build();
     pitonoBuild.onBundleChange(() => {
       Object.keys(pitonoEntryPoints).forEach((entryPoint) => {
@@ -3588,7 +4274,7 @@ import(`${process.cwd()}/${configFilepath}`).then(async (module) => {
     ["golang", Object.keys(golangEntryPoints)]
   ].forEach(async ([runtime, keys]) => {
     keys.forEach(async (k) => {
-      fs17.mkdirSync(
+      fs19.mkdirSync(
         `testeranto/reports/${testsName}/${k.split(".").slice(0, -1).join(".")}/${runtime}`,
         { recursive: true }
       );

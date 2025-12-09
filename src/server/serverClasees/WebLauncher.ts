@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { ConsoleMessage } from "puppeteer-core";
 import ansiColors from "ansi-colors";
-import { createLogStreams, LogStreams, statusMessagePretty } from "../../clients/utils";
+import { createLogStreams, statusMessagePretty } from "../../clients/utils";
 import { IFinalResults } from "../../lib";
 import { IRunTime } from "../../Types";
 import { generatePromptFiles } from "../aider/generatePromptFiles";
@@ -12,6 +12,8 @@ import { webEvaluator } from "../utils";
 export class WebLauncher {
   constructor(
     private projectName: string,
+    private httpPort: number,
+    private chromiumPort: number,
     private bddTestIsRunning: (src: string) => void,
     private bddTestIsNowDone: (src: string, failures: number) => void,
     private addPromiseProcess: (
@@ -35,6 +37,7 @@ export class WebLauncher {
 
     // Create the promise
     const webPromise = (async () => {
+      let browser: any = null;
       try {
         this.bddTestIsRunning(src);
 
@@ -52,58 +55,79 @@ export class WebLauncher {
         // Always connect to the shared chromium service in Docker
         // Use the service name 'chromium' when running in Docker
         // Check if we're in Docker by looking for IN_DOCKER environment variable
-        const inDocker = process.env.IN_DOCKER === 'true';
-        const chromeHost = inDocker ? 'chromium' : (process.env.CHROME_HOST || 'host.docker.internal');
-        const chromePort = process.env.CHROME_PORT || '9222';
-        
-        console.log(`Connecting to Chrome at ${chromeHost}:${chromePort} (IN_DOCKER=${inDocker})`);
-        const puppeteer = await import('puppeteer-core');
-        
+        const inDocker = process.env.IN_DOCKER === "true";
+        const chromeHost = inDocker
+          ? "chromium"
+          : process.env.CHROME_HOST || "host.docker.internal";
+        const chromePort = process.env.CHROME_PORT || this.chromiumPort.toString();
+
+        console.log(
+          `Connecting to Chrome at ${chromeHost}:${chromePort} (IN_DOCKER=${inDocker})`
+        );
+        const puppeteer = await import("puppeteer-core");
+
         // Try multiple possible WebSocket endpoints
         const endpoints = [
-            `ws://${chromeHost}:${chromePort}/devtools/browser`,
-            `ws://${chromeHost}:${chromePort}/json/version`,
-            `ws://${chromeHost}:${chromePort}/`
+          `ws://${chromeHost}:${chromePort}/devtools/browser`,
+          `ws://${chromeHost}:${chromePort}/json/version`,
+          `ws://${chromeHost}:${chromePort}/`,
         ];
-        
-        let browser;
+
         const maxRetries = 10;
         let lastError;
-        
+
         for (let attempt = 1; attempt <= maxRetries; attempt++) {
-            for (const endpoint of endpoints) {
-                try {
-                    console.log(`Attempt ${attempt}/${maxRetries}: Trying to connect to Chrome at ${endpoint}`);
-                    browser = await puppeteer.connect({
-                        browserWSEndpoint: endpoint,
-                        defaultViewport: null,
-                    });
-                    console.log('Connected to Chrome via WebSocket at', endpoint);
-                    break;
-                } catch (error) {
-                    lastError = error;
-                    console.log(`Attempt ${attempt} failed for ${endpoint}:`, error.message);
-                    // If it's a DNS error, wait and retry
-                    if (error.message.includes('ENOTFOUND') || error.message.includes('getaddrinfo')) {
-                        // Wait before retrying
-                        const delay = 2000 * attempt;
-                        console.log(`DNS resolution failed, waiting ${delay}ms before next attempt...`);
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        break; // Break out of endpoints loop to retry from beginning
-                    }
-                    // Continue to next endpoint
-                }
+          for (const endpoint of endpoints) {
+            try {
+              console.log(
+                `Attempt ${attempt}/${maxRetries}: Trying to connect to Chrome at ${endpoint}`
+              );
+              browser = await puppeteer.connect({
+                browserWSEndpoint: endpoint,
+                defaultViewport: null,
+              });
+              console.log("Connected to Chrome via WebSocket at", endpoint);
+              break;
+            } catch (error) {
+              lastError = error;
+              console.log(
+                `Attempt ${attempt} failed for ${endpoint}:`,
+                error.message
+              );
+              // If it's a DNS error, wait and retry
+              if (
+                error.message.includes("ENOTFOUND") ||
+                error.message.includes("getaddrinfo")
+              ) {
+                // Wait before retrying
+                const delay = 2000 * attempt;
+                console.log(
+                  `DNS resolution failed, waiting ${delay}ms before next attempt...`
+                );
+                await new Promise((resolve) => setTimeout(resolve, delay));
+                break; // Break out of endpoints loop to retry from beginning
+              }
+              // Continue to next endpoint
             }
-            if (browser) break;
-        }
-        
-        if (!browser) {
-            console.error(`Failed to connect to Chrome after ${maxRetries} attempts`);
-            console.error(`Make sure the chromium service is running and healthy at ${chromeHost}:${chromePort}`);
-            console.error(`Last error:`, lastError?.message);
-            throw new Error(`Failed to connect to Chrome. Check that the chromium service is running and the network is configured correctly.`);
+          }
+          if (browser) break;
         }
 
+        if (!browser) {
+          console.error(
+            `Failed to connect to Chrome after ${maxRetries} attempts`
+          );
+          console.error(
+            `Make sure the chromium service is running and healthy at ${chromeHost}:${chromePort}`
+          );
+          console.error(`Last error:`, lastError?.message);
+          throw new Error(
+            `Failed to connect to Chrome. Check that the chromium service is running and the network is configured correctly.`
+          );
+        }
+
+        // Get the actual WebSocket endpoint from the browser
+        const browserWSEndpoint = browser.wsEndpoint();
         const webArgz = JSON.stringify({
           name: src,
           ports: [],
@@ -115,22 +139,27 @@ export class WebLauncher {
 
         // Use Server_TCP's HTTP server to serve web test files
         // Server_TCP runs on the host and serves files from /web/ path
-        // The HTTP_PORT is typically 3002
-        const httpPort = Number(process.env.HTTP_PORT) || 3002;
+        const httpPort = Number(process.env.HTTP_PORT) || this.httpPort;
         // In Docker, we need to connect to the host machine
         // Use the service name if available, otherwise use host.docker.internal
         // When in Docker, we can use 'host.docker.internal' to reach the host
         // Use the existing inDocker variable
-        const serverHost = inDocker ? 'host.docker.internal' : (process.env.SERVER_HOST || 'localhost');
-        
-        console.log(`Using Server_TCP host: ${serverHost}:${httpPort} (IN_DOCKER=${inDocker})`);
+        const serverHost = inDocker
+          ? "host.docker.internal"
+          : process.env.SERVER_HOST || "localhost";
+
+        console.log(
+          `Using Server_TCP host: ${serverHost}:${httpPort} (IN_DOCKER=${inDocker})`
+        );
 
         // Convert HTML file path to relative URL under Server_TCP's /web/ endpoint
         // The files are in testeranto/bundles/allTests/web/
         // Server_TCP serves them from /web/
         let relativePath: string;
         // Try to match the path after 'testeranto/bundles/allTests/web/'
-        const match = htmlPath.match(/testeranto\/bundles\/allTests\/web\/(.*)/);
+        const match = htmlPath.match(
+          /testeranto\/bundles\/allTests\/web\/(.*)/
+        );
         if (match) {
           relativePath = match[1];
         } else {
@@ -273,6 +302,12 @@ export class WebLauncher {
       }
     })();
 
+    // Ensure webPromise is defined
+    if (!webPromise) {
+      console.error('WebLauncher: webPromise is undefined for', src);
+      throw new Error(`webPromise is undefined for ${src}`);
+    }
+    
     // Add to process manager
     this.addPromiseProcess(
       processId,

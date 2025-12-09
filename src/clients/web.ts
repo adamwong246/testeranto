@@ -14,54 +14,52 @@ export class PM_Web extends PM {
 
   constructor(t: ITTestResourceConfiguration) {
     super();
-    console.log('PM_Web constructor called with config:', JSON.stringify(t, null, 2));
+    console.log(
+      "PM_Web constructor called with config:",
+      JSON.stringify(t, null, 2)
+    );
     this.testResourceConfiguration = t;
-    
-    // Determine WebSocket URL
-    // The WebSocket server is part of Server_TCP, which runs on HTTP_PORT (default 3002)
-    // In Docker environment, this is accessible via host.docker.internal:3002
-    // In browser environment, it's the same host as the page but different port
-    
+
     let wsUrl: string;
-    
+
     // Check if browserWSEndpoint is provided in configuration
     if (t.browserWSEndpoint) {
       wsUrl = t.browserWSEndpoint;
-      console.log('PM_Web using browserWSEndpoint from config:', wsUrl);
+      console.log("PM_Web using browserWSEndpoint from config:", wsUrl);
     } else {
       // Try to get WebSocket URL from environment variables passed to the page
       // The server should inject this information
       const wsHost = (window as any).WS_HOST || window.location.hostname;
-      const wsPort = (window as any).WS_PORT || '3002';
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      
+      const wsPort = (window as any).WS_PORT;
+      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+
       // In Docker, web tests run in browserless/chrome which can access host.docker.internal
       // But the page itself is served from somewhere else
       // For now, use the same host as the page
       const hostname = window.location.hostname;
-      
+
       // If we're in a Docker container, we might need to use host.docker.internal
       // But we don't know for sure. Let's check if we're accessing via localhost
       // and use host.docker.internal as fallback
       let finalHost = hostname;
-      if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      if (hostname === "localhost" || hostname === "127.0.0.1") {
         // We might be in Docker, try to use host.docker.internal
         // But only if we're not in a browser on the host
         // This is tricky
       }
-      
+
       wsUrl = `${protocol}//${finalHost}:${wsPort}`;
-      console.log('PM_Web constructed WebSocket URL:', wsUrl);
+      console.log("PM_Web constructed WebSocket URL:", wsUrl);
     }
-    
+
     // Connect via WebSocket
     this.ws = new WebSocket(wsUrl);
-    
-    this.ws.addEventListener('open', () => {
-      console.log('WebSocket connected to', wsUrl);
+
+    this.ws.addEventListener("open", () => {
+      console.log("WebSocket connected to", wsUrl);
     });
 
-    this.ws.addEventListener('message', (event) => {
+    this.ws.addEventListener("message", (event) => {
       try {
         const message = JSON.parse(event.data);
         // Handle responses with keys
@@ -73,16 +71,16 @@ export class PM_Web extends PM {
           }
         }
       } catch (error) {
-        console.error('Error parsing WebSocket message:', error);
+        console.error("Error parsing WebSocket message:", error);
       }
     });
 
-    this.ws.addEventListener('error', (error) => {
-      console.error('WebSocket error:', error);
+    this.ws.addEventListener("error", (error) => {
+      console.error("WebSocket error:", error);
     });
 
-    this.ws.addEventListener('close', () => {
-      console.log('WebSocket connection closed');
+    this.ws.addEventListener("close", () => {
+      console.log("WebSocket connection closed");
     });
   }
 
@@ -111,7 +109,7 @@ export class PM_Web extends PM {
 
   private send<I>(command: string, ...argz: any[]): Promise<I> {
     const key = Math.random().toString();
-    
+
     // Wait for WebSocket to be open
     const waitForOpen = (): Promise<void> => {
       if (this.ws.readyState === WebSocket.OPEN) {
@@ -120,14 +118,16 @@ export class PM_Web extends PM {
       if (this.ws.readyState === WebSocket.CONNECTING) {
         return new Promise((resolve) => {
           const onOpen = () => {
-            this.ws.removeEventListener('open', onOpen);
+            this.ws.removeEventListener("open", onOpen);
             resolve();
           };
-          this.ws.addEventListener('open', onOpen);
+          this.ws.addEventListener("open", onOpen);
         });
       }
       // If closing or closed, reject
-      return Promise.reject(new Error(`WebSocket is not open. State: ${this.ws.readyState}`));
+      return Promise.reject(
+        new Error(`WebSocket is not open. State: ${this.ws.readyState}`)
+      );
     };
 
     return waitForOpen().then(() => {
@@ -150,7 +150,7 @@ export class PM_Web extends PM {
         const message = {
           type: command,
           data: argz.length > 0 ? argz : undefined,
-          key: key
+          key: key,
         };
         try {
           this.ws.send(JSON.stringify(message));
@@ -161,7 +161,7 @@ export class PM_Web extends PM {
           this.messageCallbacks.delete(key);
           reject(error);
         }
-        
+
         // Clean up timeout on response
         const originalCallback = this.messageCallbacks.get(key);
         if (originalCallback) {
@@ -276,13 +276,18 @@ export class PM_Web extends PM {
     // Ensure fs is defined
     const fsPath = this.testResourceConfiguration?.fs;
     if (!fsPath) {
-      console.error('PM_Web.writeFileSync: fs is undefined in testResourceConfiguration', this.testResourceConfiguration);
-      throw new Error('fs is undefined in testResourceConfiguration');
+      console.error(
+        "PM_Web.writeFileSync: fs is undefined in testResourceConfiguration",
+        this.testResourceConfiguration
+      );
+      throw new Error("fs is undefined in testResourceConfiguration");
     }
     // Ensure filepath doesn't start with a slash to avoid double slashes
-    const cleanFilepath = filepath.startsWith('/') ? filepath.substring(1) : filepath;
+    const cleanFilepath = filepath.startsWith("/")
+      ? filepath.substring(1)
+      : filepath;
     const fullPath = fsPath + "/" + cleanFilepath;
-    console.log('PM_Web.writeFileSync: fullPath:', fullPath);
+    console.log("PM_Web.writeFileSync: fullPath:", fullPath);
     return await this.send<boolean>(
       "writeFileSync",
       fullPath,
@@ -311,7 +316,10 @@ export class PM_Web extends PM {
     );
   }
 
-  testArtiFactoryfileWriter(tLog: ITLog, callback: (promise: Promise<any>) => void) {
+  testArtiFactoryfileWriter(
+    tLog: ITLog,
+    callback: (promise: Promise<any>) => void
+  ) {
     return (fPath: string, value: string | Buffer | PassThrough) => {
       callback(
         new Promise<void>((resolve, reject) => {

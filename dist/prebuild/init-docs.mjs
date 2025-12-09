@@ -11,7 +11,6 @@ var Init_default = async () => {
     `testeranto/bundles/python`,
     `testeranto/reports/`,
     `testeranto/features/`,
-    // `testeranto/externalTests/`,
     `testeranto/metafiles/`,
     `testeranto/metafiles/node`,
     `testeranto/metafiles/web`,
@@ -26,12 +25,20 @@ var Init_default = async () => {
     }
   });
   fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/App.js`,
-    `testeranto/App.js`
+    `node_modules/testeranto/dist/prebuild/Report.js`,
+    `testeranto/Report.js`
   );
   fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/App.css`,
-    `testeranto/App.css`
+    `node_modules/testeranto/dist/prebuild/Report.css`,
+    `testeranto/Report.css`
+  );
+  fs.copyFileSync(
+    `node_modules/testeranto/dist/prebuild/ProcessManager.js`,
+    `testeranto/ProcessManager.js`
+  );
+  fs.copyFileSync(
+    `node_modules/testeranto/dist/prebuild/ProcessManager.css`,
+    `testeranto/ProcessManager.css`
   );
 };
 

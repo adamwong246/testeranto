@@ -18,6 +18,7 @@ const config: ITestconfig = {
   },
   importPlugins: [],
   httpPort: 3456,
+  chromiumPort: 4567,
   ports: ["3333", "3334"],
   src: "",
   test: SINGLE_TEST_BLOCK,

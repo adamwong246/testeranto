@@ -7,6 +7,7 @@ import { IRunTime } from "../../Types";
 export class PythonLauncher {
   constructor(
     private projectName: string,
+    private httpPort: number,
     private setupTestEnvironment: (
       src: string,
       runtime: IRunTime
@@ -50,22 +51,28 @@ export class PythonLauncher {
           await this.setupTestEnvironment(src, "python");
 
         const logs = createLogStreams(reportDest, "python");
+        if (!logs || typeof logs.writeExitCode !== 'function') {
+          console.error('PythonLauncher: logs object is invalid or missing writeExitCode method');
+          throw new Error(`Failed to create logs for ${src}`);
+        }
 
         console.log("mark12", src, testResources);
-        
+
         // Prepare test resources as a JSON string using shared utility
-        const { prepareTestResources, escapeForShell } = await import("./TestResourceUtils");
+        const { prepareTestResources, escapeForShell } = await import(
+          "./TestResourceUtils"
+        );
         const testResourcesJson = prepareTestResources(
-            testResources,
-            portsToUse,
-            src,
-            reportDest
+          testResources,
+          portsToUse,
+          src,
+          reportDest
         );
         console.log("PythonLauncher: testResourcesJson:", testResourcesJson);
-        
+
         // Escape the JSON for shell command
         const escapedTestResources = escapeForShell(testResourcesJson);
-        
+
         // Run Python test inside Docker container to ensure consistent environment
         const dockerImage = "python:3.11-alpine";
         const dockerCommand = [
@@ -79,16 +86,26 @@ export class PythonLauncher {
           "--network",
           "host", // Use host network to access WebSocket on localhost
           "-e",
-          `WS_PORT=3000`,
+          `WS_PORT=${this.httpPort}`,
           dockerImage,
           "sh",
           "-c",
-          `pip install websockets>=12.0 > /dev/null 2>&1 && python3 ${escapeForShell(src)} ${escapedTestResources} "3002"`,
+          `pip install websockets>=12.0 > /dev/null 2>&1 && python3 ${escapeForShell(
+            src
+          )} ${escapedTestResources} "${this.httpPort}"`,
         ];
 
-        const child = spawn(dockerCommand[0], dockerCommand.slice(1), {
-          stdio: ["pipe", "pipe", "pipe"],
-        });
+        console.log("PythonLauncher: dockerCommand:", dockerCommand);
+        let child;
+        try {
+          child = spawn(dockerCommand[0], dockerCommand.slice(1), {
+            stdio: ["pipe", "pipe", "pipe"],
+          });
+          console.log("PythonLauncher: child process created:", child?.pid);
+        } catch (spawnError) {
+          console.error("PythonLauncher: spawn failed:", spawnError);
+          throw spawnError;
+        }
 
         // Handle stdout and stderr normally
         child.stdout?.on("data", (data) => {
@@ -114,6 +131,12 @@ export class PythonLauncher {
       }
     })();
 
+    // Ensure pythonPromise is defined
+    if (!pythonPromise) {
+      console.error('PythonLauncher: pythonPromise is undefined for', src);
+      throw new Error(`pythonPromise is undefined for ${src}`);
+    }
+    
     this.addPromiseProcess(
       processId,
       pythonPromise,

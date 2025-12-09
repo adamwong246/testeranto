@@ -13,26 +13,53 @@ export class ChildProcessHandler {
     src: string,
     runtime: IRunTime
   ): Promise<void> {
+    // Check if child is a valid ChildProcess object
+    if (!child || typeof child.on !== 'function') {
+      console.error('ChildProcessHandler: child is not a valid ChildProcess object:', child);
+      // Check if logs has writeExitCode method
+      if (logs && typeof logs.writeExitCode === 'function') {
+        logs.writeExitCode(-1, new Error('Invalid child process'));
+      } else {
+        console.error('ChildProcessHandler: logs.writeExitCode is not a function');
+      }
+      if (logs && typeof logs.closeAll === 'function') {
+        logs.closeAll();
+      }
+      throw new Error(`Invalid child process for ${src || 'undefined source'}`);
+    }
+
     return new Promise((resolve, reject) => {
       child.stdout?.on("data", (data) => {
-        logs.stdout?.write(data);
+        if (logs.stdout && typeof logs.stdout.write === 'function') {
+          logs.stdout.write(data);
+        }
       });
 
       child.stderr?.on("data", (data) => {
-        logs.stderr?.write(data);
+        if (logs.stderr && typeof logs.stderr.write === 'function') {
+          logs.stderr.write(data);
+        }
       });
 
       child.on("close", (code) => {
         const exitCode = code === null ? -1 : code;
         if (exitCode < 0) {
-          logs.writeExitCode(
-            exitCode,
-            new Error("Process crashed or was terminated")
-          );
+          if (logs && typeof logs.writeExitCode === 'function') {
+            logs.writeExitCode(
+              exitCode,
+              new Error("Process crashed or was terminated")
+            );
+          } else {
+            console.error('ChildProcessHandler: logs.writeExitCode is not a function');
+          }
         } else {
-          logs.writeExitCode(exitCode);
+          if (logs && typeof logs.writeExitCode === 'function') {
+            logs.writeExitCode(exitCode);
+          }
         }
-        logs.closeAll();
+        if (logs && typeof logs.closeAll === 'function') {
+          logs.closeAll();
+        }
 
         if (exitCode === 0) {
           // Note: The caller should handle bddTestIsNowDone and statusMessagePretty

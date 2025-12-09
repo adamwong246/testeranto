@@ -204,9 +204,14 @@ export class Server extends ServerTestExecutor {
         fs.mkdirSync(metafileDir, { recursive: true });
       }
 
+      // Create an empty file if it doesn't exist to avoid watch errors
+      if (!fs.existsSync(metafile)) {
+        fs.writeFileSync(metafile, JSON.stringify({}));
+      }
+
       try {
         // For python, we may need to generate the metafile first
-        if (runtime === "python" && !fs.existsSync(metafile)) {
+        if (runtime === "python") {
           const entryPointList = Object.keys(entryPoints);
           if (entryPointList.length > 0) {
             const metafileData = await generatePitonoMetafile(
@@ -217,6 +222,7 @@ export class Server extends ServerTestExecutor {
           }
         }
 
+        // Wait for the file to exist (it should now exist since we created it)
         await pollForFile(metafile);
         // console.log("Found metafile for", runtime, metafile);
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 
 export default async () => {
@@ -12,7 +11,6 @@ export default async () => {
     `testeranto/bundles/python`,
     `testeranto/reports/`,
     `testeranto/features/`,
-    // `testeranto/externalTests/`,
     `testeranto/metafiles/`,
     `testeranto/metafiles/node`,
     `testeranto/metafiles/web`,
@@ -28,37 +26,22 @@ export default async () => {
   });
 
   fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/App.js`,
-    `testeranto/App.js`
+    `node_modules/testeranto/dist/prebuild/Report.js`,
+    `testeranto/Report.js`
   );
 
   fs.copyFileSync(
-    `node_modules/testeranto/dist/prebuild/App.css`,
-    `testeranto/App.css`
+    `node_modules/testeranto/dist/prebuild/Report.css`,
+    `testeranto/Report.css`
   );
 
-  // fs.copyFileSync(
-  //   `node_modules/testeranto/dist/prebuild/ReportClient.js`,
-  //   `testeranto/ReportClient.js`
-  // );
+  fs.copyFileSync(
+    `node_modules/testeranto/dist/prebuild/ProcessManager.js`,
+    `testeranto/ProcessManager.js`
+  );
 
-  // fs.copyFileSync(
-  //   `node_modules/testeranto/dist/prebuild/Project.css`,
-  //   `testeranto/Project.css`
-  // );
-
-  // fs.copyFileSync(
-  //   `node_modules/testeranto/dist/prebuild/ReportClient.css`,
-  //   `testeranto/ReportClient.css`
-  // );
-
-  // fs.copyFileSync(
-  //   `node_modules/testeranto/dist/prebuild/TestReport.js`,
-  //   `testeranto/TestReport.js`
-  // );
-
-  // fs.copyFileSync(
-  //   `node_modules/testeranto/dist/prebuild/TestReport.css`,
-  //   `testeranto/TestReport.css`
-  // );
+  fs.copyFileSync(
+    `node_modules/testeranto/dist/prebuild/ProcessManager.css`,
+    `testeranto/ProcessManager.css`
+  );
 };

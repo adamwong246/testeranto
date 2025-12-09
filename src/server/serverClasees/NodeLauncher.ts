@@ -140,21 +140,18 @@ export class NodeLauncher {
         // Prepare test resources as a JSON string using shared utility
         const { prepareTestResources } = await import("./TestResourceUtils");
         const testResourcesJson = prepareTestResources(
-            testResources,
-            portsToUse,
-            src,
-            process.cwd()
+          testResources,
+          portsToUse,
+          src,
+          process.cwd()
         );
 
-        // Determine which port to pass to the test
-        // Use the first port from portsToUse, or default to 3002
-        const portToUse =
-          portsToUse && portsToUse.length > 0 ? portsToUse[0] : "3002";
+        const portToUse = portsToUse[0];
 
         // Escape test resources for shell
         const { escapeForShell } = await import("./TestResourceUtils");
         const escapedTestResources = escapeForShell(testResourcesJson);
-        
+
         console.log("launchNode", [builtfile, portToUse, testResourcesJson]);
         console.log(
           `Full command: node ${builtfile} ${portToUse} ${escapedTestResources.substring(

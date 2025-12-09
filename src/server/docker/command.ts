@@ -3,7 +3,8 @@ import { chromiumCommand } from "./chromiumCommand";
 export const command = (
   testPath,
   runtime,
-  betterTestPath
+  betterTestPath,
+  chromiumPort = 3000
 ) => `echo "=== Starting test service for ${testPath} ==="
                 echo "Bundle path: testeranto/bundles/allTests/${runtime}/${betterTestPath}"
                 echo "Runtime: ${runtime}"
@@ -91,17 +92,22 @@ async function run() {
             wsUrl = data.webSocketDebuggerUrl;
             console.log('Using WebSocket from port 9222:', wsUrl);
         } catch (error) {
-            // Fallback to port 3000
+
+
+            // Fallback to configured chromium port
             try {
-                const devToolsInfo = await fetch('http://chromium:3000/json/version');
+                const devToolsInfo = await fetch('http://chromium:${chromiumPort}/json/version');
                 const data = await devToolsInfo.json();
                 wsUrl = data.webSocketDebuggerUrl;
-                console.log('Using WebSocket from port 3000:', wsUrl);
+                console.log('Using WebSocket from chromium port ${chromiumPort}:', wsUrl);
             } catch (error) {
                 // Fallback to direct WebSocket connection
-                wsUrl = 'ws://chromium:3000';
+                wsUrl = 'ws://chromium:${chromiumPort}';
                 console.log('Using fallback WebSocket:', wsUrl);
             }
+
+
+            
         }
         
         const browser = await puppeteer.connect({

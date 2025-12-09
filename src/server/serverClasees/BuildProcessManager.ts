@@ -63,9 +63,6 @@ export class BuildProcessManager {
             );
           }
 
-          console.log(
-            `Starting ${runtime} build for ${entryPointKeys.length} entry points`
-          );
           // Broadcast build start event
           if (self.webSocketBroadcastMessage) {
             self.webSocketBroadcastMessage({
@@ -118,7 +115,12 @@ export class BuildProcessManager {
     };
 
     // Get the base config and add our tracking plugin
-    const baseConfig = configer(this.configs, entryPointKeys, this.projectName, this.configs.buildDir);
+    const baseConfig = configer(
+      this.configs,
+      entryPointKeys,
+      this.projectName,
+      this.configs.buildDir
+    );
     const configWithPlugin = {
       ...baseConfig,
       plugins: [...(baseConfig.plugins || []), buildProcessTrackerPlugin],
@@ -130,10 +132,10 @@ export class BuildProcessManager {
         const ctx = await esbuild.context(configWithPlugin);
         // Build once and then watch
         await ctx.rebuild();
-        
+
         // Note: For web runtime, we don't serve files via esbuild
         // Server_TCP handles serving web test files
-        
+
         await ctx.watch();
       } else {
         // In once mode, just build
@@ -164,13 +166,13 @@ export class BuildProcessManager {
   addBuildLogEntry = (
     processId: string,
     message: string,
-    level: 'info' | 'warn' | 'error' = 'info'
+    level: "info" | "warn" | "error" = "info"
   ) => {
     // This would be called from build plugins to add log entries
     // For now, we'll just log to console
     const prefix = `[${new Date().toISOString()}] [build:${level}]`;
     console.log(`${prefix} ${message}`);
-    
+
     // Broadcast to monitoring if available
     if (this.webSocketBroadcastMessage) {
       this.webSocketBroadcastMessage({
@@ -178,7 +180,7 @@ export class BuildProcessManager {
         processId,
         level,
         message,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     }
   };
