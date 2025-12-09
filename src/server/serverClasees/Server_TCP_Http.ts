@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import http from "http";
 import fs from "fs";
-import { ApiEndpoint, ApiFilename } from "../../app/api";
+
 import {
   WEB_TEST_FILES_PATH,
   CONTENT_TYPES,
@@ -14,7 +14,8 @@ import {
   buildWebTestFilePath,
 } from "./Server_TCP_utils";
 import { Server_TCP_Core } from "./Server_TCP_Core";
-import { IMode } from "../../app/types";
+import { IMode } from "../../app/frontend/types";
+import { ApiEndpoint, ApiFilename } from "../../app/frontend/api2";
 
 export class Server_TCP_Http extends Server_TCP_Core {
   constructor(configs: any, name: string, mode: IMode) {
@@ -114,10 +115,73 @@ export class Server_TCP_Http extends Server_TCP_Core {
         return;
       });
       return;
+    } else if (req.url === "/" || req.url === "/monitor") {
+      // Serve a simple HTML page that will load the bundled React app
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Testeranto Process Monitor</title>
+        </head>
+        <body>
+          <div id="root"></div>
+          <script src="/static/bundle.js"></script>
+        </body>
+        </html>
+      `);
+      return;
+    } else if (req.url?.startsWith("/api/")) {
+      // Handle monitoring API endpoints
+      this.handleMonitoringApi(req, res);
+      return;
     } else {
       res.writeHead(404);
       res.end(`404 Not Found. ${req.url}`);
       return;
+    }
+  }
+
+  private handleMonitoringApi(
+    req: http.IncomingMessage,
+    res: http.ServerResponse<http.IncomingMessage> & {
+      req: http.IncomingMessage;
+    }
+  ): void {
+    const url = req.url || "";
+
+    if (url === "/api/processes" && req.method === "GET") {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify(
+          (this as any).getProcessSummary
+            ? (this as any).getProcessSummary()
+            : { processes: [] }
+        )
+      );
+    } else if (url.startsWith("/api/logs") && req.method === "GET") {
+      const urlObj = new URL(url, `http://${req.headers.host}`);
+      const processId = urlObj.searchParams.get("processId");
+
+      if (processId && (this as any).getProcessLogs) {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            processId,
+            logs: (this as any).getProcessLogs(processId) || [],
+          })
+        );
+      } else {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ error: "processId query parameter required" })
+        );
+      }
+    } else {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Not found" }));
     }
   }
 }

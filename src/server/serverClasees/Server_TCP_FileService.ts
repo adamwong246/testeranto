@@ -5,7 +5,7 @@ import { WebSocketMessage } from "../../clients/types";
 import fs from "fs";
 import { getAllFilesRecursively } from "./getAllFilesRecursively";
 import { Server_TCP_WebSocket } from "./Server_TCP_WebSocket";
-import { IMode } from "../../app/types";
+import { IMode } from "../../app/frontend/types";
 
 export class Server_TCP_FileService extends Server_TCP_WebSocket {
   constructor(configs: any, name: string, mode: IMode) {

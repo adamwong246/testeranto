@@ -9,7 +9,7 @@ import {
   FileStatus,
   FileChange,
   RemoteStatus,
-} from "../FileService";
+} from "./FileService";
 
 export class GitFileService extends FileService {
   private git: any = null;

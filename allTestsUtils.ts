@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IDockerSteps, IChecks, IStrategy, Itest } from "./src/Types";
 
 // Helper to get appropriate steps based on flavor
-function getStepsForFlavor(
+export function getStepsForFlavor(
   flavor: ["compiled" | "interpreted" | "VM" | "chrome", string]
 ): {
   base: [IDockerSteps, string][];
@@ -200,18 +201,8 @@ export const GOLANG_METAFILE_ANALYSIS: [IDockerSteps, string][] = [
 // Test execution steps with static analysis pre-test
 export const NODE_TEST_STEPS: [IDockerSteps, string][] = [
   ...NODE_BASE_STEPS,
-  // Static analysis happens before running tests
-  // The metafile would be generated during dependency installation or build
-  ...NODE_METAFILE_ANALYSIS.slice(NODE_BASE_STEPS.length), // Only the analysis steps
+  ...NODE_METAFILE_ANALYSIS.slice(NODE_BASE_STEPS.length),
   ["RUN", "npm test"],
-];
-
-// Web build steps with static analysis pre-build
-export const WEB_BUILD_STEPS: [IDockerSteps, string][] = [
-  ...WEB_BASE_STEPS,
-  // Static analysis happens before bundling for the browser
-  ...WEB_METAFILE_ANALYSIS.slice(WEB_BASE_STEPS.length), // Only the analysis steps
-  ["RUN", "npm run build"], // Assuming there's a build step
 ];
 
 export const WEB_TEST_STEPS: [IDockerSteps, string][] = [
@@ -221,13 +212,11 @@ export const WEB_TEST_STEPS: [IDockerSteps, string][] = [
 
 export const PYTHON_TEST_STEPS: [IDockerSteps, string][] = [
   ...PYTHON_BASE_STEPS,
-  // Verify required packages are installed
   [
     "RUN",
     "python3 -c \"import sys; import subprocess; import pkg_resources; required = {'pylint', 'mypy', 'flake8', 'websockets'}; installed = {pkg.key for pkg in pkg_resources.working_set}; missing = required - installed; print('Missing packages:', missing) if missing else print('All required packages installed')\"",
   ],
-  // Static analysis happens before running tests
-  ...PYTHON_METAFILE_ANALYSIS.slice(PYTHON_BASE_STEPS.length), // Only the analysis steps
+  ...PYTHON_METAFILE_ANALYSIS.slice(PYTHON_BASE_STEPS.length),
   ["RUN", "pytest"],
 ];
 
@@ -251,7 +240,7 @@ export const BUILD_ANOTHER_STEP: [IDockerSteps, string] = [
 
 // Common configurations
 export const SINGLE_TEST_BLOCK: [IDockerSteps, string][][] = [
-  NODE_TEST_STEPS, // Default, will be overridden per flavor
+  NODE_TEST_STEPS,
 ];
 export const SINGLE_PROD_BLOCK: [IDockerSteps, string][][] = [
   NODE_BASE_STEPS.concat([BUILD_PROD_STEP]),
@@ -262,21 +251,38 @@ export const DOUBLE_PROD_BLOCK: [IDockerSteps, string][][] = [
 ];
 
 export const CHECKS_CONFIG: IChecks = {
-  lint: NODE_METAFILE_ANALYSIS,
-  typeCheck: NODE_METAFILE_ANALYSIS,
-  metafileAnalysis: NODE_METAFILE_ANALYSIS,
+  eslint: [
+    [
+      ["WORKDIR", "/workspace"],
+      [
+        "RUN",
+        "npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin",
+      ],
+    ],
+    "npx eslint src/ --ext .ts,.tsx --max-warnings=0",
+  ],
+  typescript: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev typescript"],
+    ],
+    "npx tsc --noEmit",
+  ],
+  "audit-ci": [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev audit-ci"],
+    ],
+    "npx audit-ci --critical",
+  ],
+  depcheck: [
+    [
+      ["WORKDIR", "/workspace"],
+      ["RUN", "npm install --save-dev depcheck"],
+    ],
+    "npx depcheck",
+  ],
 };
-
-// Build steps for compiled languages (separate from test)
-// For Go, static analysis happens post-build
-export const GOLANG_BUILD_STEPS: [IDockerSteps, string][] = [
-  ...GOLANG_BASE_STEPS,
-  ["RUN", "go build -o /tmp/test-binary ./..."],
-  // After building, run static analysis on the source files
-  // The metafile would be generated during the build process
-  // We'll need to set METAFILE_PATH to point to it
-  ...GOLANG_METAFILE_ANALYSIS.slice(GOLANG_BASE_STEPS.length), // Only the analysis steps
-];
 
 export const createLangConfig = (
   flavor: ["compiled" | "interpreted" | "VM" | "chrome", string],
@@ -299,9 +305,9 @@ export const createLangConfig = (
       maxContexts: number;
       memoryLimitMB: number;
     };
+    monitoring?: Record<string, any>; // Add monitoring option
   }
 ) => {
-  // Determine strategy based on flavor if not provided
   let strategy: IStrategy;
   if (options?.strategy) {
     strategy = options.strategy;
@@ -325,37 +331,11 @@ export const createLangConfig = (
     }
   }
 
-  // Get appropriate steps for this flavor
-  const { base, staticAnalysis, metafileAnalysis, test } =
-    getStepsForFlavor(flavor);
+  const { base, metafileAnalysis, test } = getStepsForFlavor(flavor);
 
-  // Determine phase based on strategy
-  let phase: "pre-build" | "post-build" | "pre-test" | "post-test";
-  switch (strategy) {
-    case "separate-build-combined-test": // Compiled languages
-      phase = "post-build"; // Static analysis after compilation, before test execution
-      break;
-    case "combined-build-test-process-pools": // Interpreted languages
-      phase = "pre-test"; // Static analysis before test execution in the same service
-      break;
-    case "combined-service-shared-chrome": // Web
-      phase = "pre-build"; // Static analysis before bundling assets
-      break;
-    case "combined-service-shared-jvm": // VM languages
-      phase = "post-build"; // Static analysis after compilation
-      break;
-    default:
-      phase = "pre-test";
-  }
-
-  // Create configurations
   const defaultTestBlock = [test];
   const defaultChecks: IChecks = {
-    lint: metafileAnalysis, // Use metafile-based analysis for lint
-    typeCheck: metafileAnalysis, // Use metafile-based analysis for type check
-    staticAnalysis: staticAnalysis,
-    metafileAnalysis: metafileAnalysis,
-    phase: phase,
+    "metafile-analysis": [metafileAnalysis, "echo 'Running metafile analysis'"],
   };
 
   return {
@@ -371,5 +351,6 @@ export const createLangConfig = (
     build: options?.build,
     processPool: options?.processPool,
     chrome: options?.chrome,
+    monitoring: options?.monitoring || {}, // Include monitoring config
   };
 };

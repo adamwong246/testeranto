@@ -159,4 +159,27 @@ export class BuildProcessManager {
       throw error;
     }
   }
+
+  // Add monitoring support for build processes
+  addBuildLogEntry = (
+    processId: string,
+    message: string,
+    level: 'info' | 'warn' | 'error' = 'info'
+  ) => {
+    // This would be called from build plugins to add log entries
+    // For now, we'll just log to console
+    const prefix = `[${new Date().toISOString()}] [build:${level}]`;
+    console.log(`${prefix} ${message}`);
+    
+    // Broadcast to monitoring if available
+    if (this.webSocketBroadcastMessage) {
+      this.webSocketBroadcastMessage({
+        type: "buildLog",
+        processId,
+        level,
+        message,
+        timestamp: new Date().toISOString()
+      });
+    }
+  };
 }

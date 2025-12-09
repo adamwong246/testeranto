@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
-import { FileService_methods } from "../../app/FileService";
+import { FileService_methods } from "../../app/frontend/FileService";
 import {
   WEBSOCKET_MESSAGE_TYPES,
   ERROR_MESSAGES,
@@ -14,7 +14,7 @@ import {
   sendErrorResponse,
 } from "./Server_TCP_utils";
 import { Server_TCP_Http } from "./Server_TCP_Http";
-import { IMode } from "../../app/types";
+import { IMode } from "../../app/frontend/types";
 
 export class Server_TCP_WebSocket extends Server_TCP_Http {
   constructor(configs: any, name: string, mode: IMode) {
@@ -193,6 +193,47 @@ export class Server_TCP_WebSocket extends Server_TCP_Http {
               })
             );
           });
+      }
+    } else if (wsm.type === "getProcesses") {
+      // Handle monitoring request for processes
+      ws.send(
+        JSON.stringify({
+          type: "processes",
+          data: (this as any).getProcessSummary ? (this as any).getProcessSummary() : { processes: [] },
+          timestamp: new Date().toISOString()
+        })
+      );
+    } else if (wsm.type === "getLogs") {
+      // Handle monitoring request for logs
+      const processId = wsm.data?.processId;
+      if (processId && (this as any).getProcessLogs) {
+        ws.send(
+          JSON.stringify({
+            type: "logs",
+            processId,
+            logs: (this as any).getProcessLogs(processId) || [],
+            timestamp: new Date().toISOString()
+          })
+        );
+      }
+    } else if (wsm.type === "subscribeToLogs") {
+      // Handle subscription to log updates
+      const processId = wsm.data?.processId;
+      if (processId) {
+        // Store subscription info
+        if (!(this as any).logSubscriptions) {
+          (this as any).logSubscriptions = new Map();
+        }
+        const subscriptions = (this as any).logSubscriptions.get(processId) || new Set();
+        subscriptions.add(ws);
+        (this as any).logSubscriptions.set(processId, subscriptions);
+        
+        ws.send(JSON.stringify({
+          type: "logSubscription",
+          processId,
+          status: "subscribed",
+          timestamp: new Date().toISOString()
+        }));
       }
     } else {
       console.warn("Unhandled WebSocket message type:", wsm.type);

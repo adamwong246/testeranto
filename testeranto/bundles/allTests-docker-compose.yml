@@ -254,6 +254,8 @@ services:
       WS_PORT: '3002'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
+      MONITOR_CAPTURE_CONSOLE: 'true'
+      MONITOR_CAPTURE_UNCAUGHT_EXCEPTIONS: 'true'
     networks:
       - default
     build:
@@ -271,7 +273,150 @@ services:
     command:
       - sh
       - '-c'
-      - 'if [ -f "/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs" ]; then node "/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs"; else echo "Bundle not found: /workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs" && exit 1; fi; sleep 3600'
+      - |2-
+
+                  echo "=== Running Node.js BDD test ==="
+                  echo "Static analysis is running in parallel service"
+                  if [ -f "/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs" ]; then 
+                    node "/workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs"
+                  else 
+                    echo "Bundle not found: /workspace/testeranto/bundles/allTests/node/example/Calculator.test.mjs"
+                    exit 1
+                  fi
+                  echo "BDD test completed, keeping container alive..."
+                  sleep 3600
+                
+  node-example-calculator-test-ts-static-analysis:
+    restart: 'no'
+    shm_size: 2g
+    environment:
+      CONNECTION_TIMEOUT: '60000'
+      MAX_CONCURRENT_SESSIONS: '10'
+      ENABLE_CORS: 'true'
+      REMOTE_DEBUGGING_PORT: '9222'
+      REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
+      WS_PORT: '3002'
+      WS_HOST: host.docker.internal
+      IN_DOCKER: 'true'
+    networks:
+      - default
+    image: node:20.19.4-alpine
+    volumes:
+      - /Users/adam/Code/testeranto:/workspace
+      - node_modules:/workspace/node_modules
+    working_dir: /workspace
+    depends_on:
+      node-build:
+        condition: service_healthy
+      chromium:
+        condition: service_healthy
+    command:
+      - sh
+      - '-c'
+      - |2-
+
+                    echo "=== Running Node.js static analysis ==="
+                    # Install npm if not available (alpine uses apk)
+                    if ! command -v npm &> /dev/null; then
+                      echo "Installing npm..."
+                      apk add --update npm 2>/dev/null || echo "npm installation may have failed"
+                    fi
+                    # Install ESLint and TypeScript if not available
+                    if [ -f "/workspace/package.json" ]; then
+                      echo "Installing dependencies from package.json..."
+                      cd /workspace && npm install --no-audit --no-fund --ignore-scripts 2>&1 | tail -5 || echo "npm install may have warnings"
+                    fi
+                    # Check for ESLint
+                    echo "Checking for ESLint..."
+                    if npx --no-install eslint --version 2>/dev/null; then
+                      echo "Running ESLint..."
+                      npx eslint "/workspace/example/Calculator.test.ts" 2>&1 || echo "ESLint check completed"
+                    else
+                      echo "ESLint not available, skipping"
+                    fi
+                    # Check for TypeScript
+                    echo "Checking for TypeScript..."
+                    if npx --no-install tsc --version 2>/dev/null; then
+                      echo "Running TypeScript type check..."
+                      npx tsc --noEmit "/workspace/example/Calculator.test.ts" 2>&1 || echo "TypeScript check completed"
+                    else
+                      echo "TypeScript not available, skipping"
+                    fi
+                    echo "Static analysis completed, keeping container alive..."
+                    sleep 3600
+                  
+  web-example-calculator-test-ts-static-analysis:
+    restart: 'no'
+    shm_size: 2g
+    environment:
+      CONNECTION_TIMEOUT: '60000'
+      MAX_CONCURRENT_SESSIONS: '10'
+      ENABLE_CORS: 'true'
+      REMOTE_DEBUGGING_PORT: '9222'
+      REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
+      WS_PORT: '3002'
+      WS_HOST: host.docker.internal
+      IN_DOCKER: 'true'
+    networks:
+      - default
+    image: node:20.19.4-alpine
+    volumes:
+      - /Users/adam/Code/testeranto:/workspace
+      - node_modules:/workspace/node_modules
+    working_dir: /workspace
+    depends_on:
+      web-build:
+        condition: service_healthy
+      chromium:
+        condition: service_healthy
+    command:
+      - sh
+      - '-c'
+      - |2-
+
+                    echo "=== Running Web static analysis ==="
+                    # Install npm if not available
+                    if ! command -v npm &> /dev/null; then
+                      echo "Installing npm..."
+                      apk add --update npm 2>/dev/null || echo "npm installation may have failed"
+                    fi
+                    # Install dependencies
+                    if [ -f "/workspace/package.json" ]; then
+                      echo "Installing dependencies from package.json..."
+                      cd /workspace && npm install --no-audit --no-fund --ignore-scripts 2>&1 | tail -5 || echo "npm install may have warnings"
+                    fi
+                    # Check for ESLint
+                    echo "Checking for ESLint..."
+                    if npx --no-install eslint --version 2>/dev/null; then
+                      echo "Running ESLint..."
+                      npx eslint "/workspace/example/Calculator.test.ts" 2>&1 || echo "ESLint check completed"
+                    else
+                      echo "ESLint not available, skipping"
+                    fi
+                    # Check for TypeScript
+                    echo "Checking for TypeScript..."
+                    if npx --no-install tsc --version 2>/dev/null; then
+                      echo "Running TypeScript type check..."
+                      npx tsc --noEmit "/workspace/example/Calculator.test.ts" 2>&1 || echo "TypeScript check completed"
+                    else
+                      echo "TypeScript not available, skipping"
+                    fi
+                    # Check for stylelint
+                    echo "Checking for stylelint..."
+                    if npx --no-install stylelint --version 2>/dev/null; then
+                      echo "Running stylelint..."
+                      # Find CSS/SCSS files in the same directory
+                      find $(dirname "/workspace/example/Calculator.test.ts") -name "*.css" -o -name "*.scss" 2>/dev/null | head -3 | while read cssFile; do
+                        if [ -f "$cssFile" ]; then
+                          npx stylelint "$cssFile" 2>&1 || echo "stylelint check completed for $cssFile"
+                        fi
+                      done
+                    else
+                      echo "stylelint not available, skipping"
+                    fi
+                    echo "Static analysis completed, keeping container alive..."
+                    sleep 3600
+                  
   golang-example-calculator-golingvu-test-go:
     restart: 'no'
     shm_size: 2g
@@ -284,6 +429,8 @@ services:
       WS_PORT: '3002'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
+      MONITOR_CAPTURE_TEST_OUTPUT: 'true'
+      MONITOR_CAPTURE_COVERAGE: 'false'
     networks:
       - default
     build:
@@ -299,7 +446,14 @@ services:
     command:
       - sh
       - '-c'
-      - cd /workspace/example && go test -v ./...; sleep 3600
+      - |2-
+
+                  echo "=== Running Go BDD test ==="
+                  echo "Static analysis was performed during build phase"
+                  cd /workspace/example && go test -v ./...
+                  echo "BDD test completed, keeping container alive..."
+                  sleep 3600
+                
   python-example-calculator-pitono-test-py:
     restart: 'no'
     shm_size: 2g
@@ -312,6 +466,8 @@ services:
       WS_PORT: '3002'
       WS_HOST: host.docker.internal
       IN_DOCKER: 'true'
+      MONITOR_CAPTURE_PYTEST_OUTPUT: 'true'
+      MONITOR_CAPTURE_LOGGING: 'true'
     networks:
       - default
     build:
@@ -327,7 +483,74 @@ services:
     command:
       - sh
       - '-c'
-      - 'if [ -f "/workspace/example/Calculator.pitono.test.py" ]; then python3 -m pytest "/workspace/example/Calculator.pitono.test.py" -v; else echo "Test file not found: /workspace/example/Calculator.pitono.test.py" && exit 1; fi; sleep 3600'
+      - |2-
+
+                  echo "=== Running Python BDD test ==="
+                  echo "Static analysis is running in parallel service"
+                  if [ -f "/workspace/example/Calculator.pitono.test.py" ]; then 
+                    python3 -m pytest "/workspace/example/Calculator.pitono.test.py" -v
+                  else 
+                    echo "Test file not found: /workspace/example/Calculator.pitono.test.py"
+                    exit 1
+                  fi
+                  echo "BDD test completed, keeping container alive..."
+                  sleep 3600
+                
+  python-example-calculator-pitono-test-py-static-analysis:
+    restart: 'no'
+    shm_size: 2g
+    environment:
+      CONNECTION_TIMEOUT: '60000'
+      MAX_CONCURRENT_SESSIONS: '10'
+      ENABLE_CORS: 'true'
+      REMOTE_DEBUGGING_PORT: '9222'
+      REMOTE_DEBUGGING_ADDRESS: 0.0.0.0
+      WS_PORT: '3002'
+      WS_HOST: host.docker.internal
+      IN_DOCKER: 'true'
+    networks:
+      - default
+    image: python:3.11-alpine
+    volumes:
+      - /Users/adam/Code/testeranto:/workspace
+      - node_modules:/workspace/node_modules
+    working_dir: /workspace
+    depends_on:
+      python-build:
+        condition: service_healthy
+    command:
+      - sh
+      - '-c'
+      - |2-
+
+                    echo "=== Running Python static analysis ==="
+                    # Install Python static analysis tools if not available
+                    echo "Installing Python static analysis tools..."
+                    pip install --quiet flake8 pylint mypy 2>/dev/null || echo "Tool installation may have failed"
+                    # Run flake8 if available
+                    if command -v flake8 &> /dev/null && [ -f "/workspace/example/Calculator.pitono.test.py" ]; then
+                      echo "Running flake8..."
+                      flake8 "/workspace/example/Calculator.pitono.test.py" 2>&1 || echo "flake8 completed"
+                    else
+                      echo "flake8 not available"
+                    fi
+                    # Run pylint if available
+                    if command -v pylint &> /dev/null && [ -f "/workspace/example/Calculator.pitono.test.py" ]; then
+                      echo "Running pylint..."
+                      pylint "/workspace/example/Calculator.pitono.test.py" 2>&1 || echo "pylint completed"
+                    else
+                      echo "pylint not available"
+                    fi
+                    # Run mypy if available
+                    if command -v mypy &> /dev/null && [ -f "/workspace/example/Calculator.pitono.test.py" ]; then
+                      echo "Running mypy..."
+                      mypy "/workspace/example/Calculator.pitono.test.py" 2>&1 || echo "mypy completed"
+                    else
+                      echo "mypy not available"
+                    fi
+                    echo "Static analysis completed, keeping container alive..."
+                    sleep 3600
+                  
 volumes:
   node_modules:
     driver: local

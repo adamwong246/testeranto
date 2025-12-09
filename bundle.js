@@ -42,8 +42,8 @@ await esbuild.build({
 
 await esbuild.build({
   entryPoints: [
-    'src/app/frontend/App.scss',
-    'src/app/frontend/App.tsx',
+    // 'src/frontend/App.scss',
+    'src/frontend/ProcessManager.tsx',
   ],
   bundle: true,
   format: "iife",

@@ -189,18 +189,13 @@ export type IStrategy =
   | "separate-build-combined-test" // Compiled languages: Go, Rust
   | "combined-service-shared-jvm" // VM languages: Java
   | "combined-service-shared-chrome"; // Browser environment: Web
-export type IProd = [string, string][][];
-export type Itest = [string, string][][];
-export type IChecks = {
-  lint: [IDockerSteps, string][];
-  typeCheck: [IDockerSteps, string][];
-  // Add category-specific checks
-  staticAnalysis?: [IDockerSteps, string][];
-  // Metafile-based static analysis
-  metafileAnalysis?: [IDockerSteps, string][];
-};
+export type IProd = [IDockerSteps, string][][];
+export type Itest = [IDockerSteps, string][][];
+
+export type IChecks = Record<string, [[IDockerSteps, string][], string]>;
 
 export type ITestconfig = {
+  httpPort: number;
   featureIngestor: (s: string) => Promise<string>;
   importPlugins: IPluginFactory[];
   ports: string[];
@@ -210,14 +205,43 @@ export type ITestconfig = {
   checks: IChecks;
   // Strategy-specific configurations
   build?: Itest; // Separate build steps for compiled languages
+
+  // Unified monitoring configuration
+  monitoring?: {
+    websocketPort?: number;
+    apiPort?: number;
+    maxLogLines?: number;
+    updateInterval?: number;
+  };
+
   processPool?: {
     maxConcurrent: number;
     timeoutMs: number;
+    monitoring?: {
+      captureStdout?: boolean;
+      captureStderr?: boolean;
+    };
   };
+
   chrome?: {
     sharedInstance: boolean;
     maxContexts: number;
     memoryLimitMB: number;
+    monitoring?: {
+      captureConsole?: boolean;
+      captureNetwork?: boolean;
+      captureErrors?: boolean;
+      wsEndpoint?: string;
+    };
+  };
+
+  // Docker monitoring configuration
+  docker?: {
+    monitoring?: {
+      method?: "logs" | "attach";
+      follow?: boolean;
+      tail?: number;
+    };
   };
 
   golang: {
@@ -230,6 +254,11 @@ export type ITestconfig = {
     prod: IProd;
     checks: IChecks;
     build?: Itest; // Separate build for Go
+    monitoring?: {
+      // Go-specific monitoring options
+      captureTestOutput?: boolean;
+      captureCoverage?: boolean;
+    };
   };
 
   python: {
@@ -244,6 +273,11 @@ export type ITestconfig = {
     processPool?: {
       maxConcurrent: number;
       timeoutMs: number;
+    };
+    monitoring?: {
+      // Python-specific monitoring options
+      capturePytestOutput?: boolean;
+      captureLogging?: boolean;
     };
   };
 
@@ -261,6 +295,11 @@ export type ITestconfig = {
       maxConcurrent: number;
       timeoutMs: number;
     };
+    monitoring?: {
+      // Node-specific monitoring options
+      captureConsole?: boolean;
+      captureUncaughtExceptions?: boolean;
+    };
   };
 
   web: {
@@ -277,6 +316,18 @@ export type ITestconfig = {
       sharedInstance: boolean;
       maxContexts: number;
       memoryLimitMB: number;
+      monitoring?: {
+        captureConsole?: boolean;
+        captureNetwork?: boolean;
+        captureErrors?: boolean;
+        wsEndpoint?: string;
+      };
+    };
+    monitoring?: {
+      // Web-specific monitoring options
+      capturePageErrors?: boolean;
+      captureNetworkRequests?: boolean;
+      captureConsoleMessages?: boolean;
     };
   };
 };

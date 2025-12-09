@@ -76,11 +76,6 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
       // t.registerUncaughtPromise(reason, promise);
     });
 
-    // console.log("node.tiposkripto", process.argv);
-
-    // Read WebSocket port from environment variable for congruence with Python and Golang
-    // wsPort = process.env.WS_PORT || "3000";
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const execer = process.argv[0];
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

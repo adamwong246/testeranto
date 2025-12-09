@@ -5,7 +5,7 @@
 import lfs from "@isomorphic-git/lightning-fs";
 import git from "isomorphic-git";
 
-import { FileService } from "../FileService";
+import { FileService } from "./FileService";
 
 export class DevelopmentFileService extends FileService {
   private ws: WebSocket;

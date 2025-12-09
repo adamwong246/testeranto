@@ -1,20 +1,125 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import fs from "fs";
+// src/server/docker/serviceGenerator.ts
 import path from "path";
-import { IBuiltConfig, IRunTime } from "../../Types";
-import buildService from "./buildService";
-import chromiumService from "./chromiumService";
-import { testServiceConfig } from "./serviceConfig";
 
-export function createBuildService(
-  runtime: IRunTime,
-  dockerfileDir: string,
-  testsName: string
-): Record<string, any> {
-  // Determine the Dockerfile path based on runtime
-  let dockerfilePath: string;
+// src/server/docker/buildService.ts
+var buildService_default = (runtime) => {
+  return {
+    build: {
+      context: "/Users/adam/Code/testeranto",
+      dockerfile: `testeranto/bundles/allTests/${runtime}/${runtime}.Dockerfile`,
+      tags: [`bundles-${runtime}-build:latest`],
+      args: runtime === "node" ? {
+        NODE_MJS_HASH: "cab84cac12fc3913ce45e7e53425b8bb"
+      } : {}
+    },
+    volumes: [
+      "/Users/adam/Code/testeranto:/workspace",
+      "node_modules:/workspace/node_modules"
+    ],
+    image: `bundles-${runtime}-build:latest`,
+    restart: "unless-stopped",
+    environment: {
+      BUNDLES_DIR: `/workspace/testeranto/bundles/allTests/${runtime}`,
+      METAFILES_DIR: `/workspace/testeranto/metafiles/${runtime}`,
+      // Don't serve files - Server_TCP will handle that
+      ESBUILD_SERVE_PORT: "0",
+      // Disable esbuild serve
+      IN_DOCKER: "true"
+      // Indicate we're running in Docker
+    },
+    command: [
+      "sh",
+      "-c",
+      `echo 'Starting ${runtime} build in watch mode...'; 
+                echo 'Installing dependencies in /workspace/node_modules...'; 
+                cd /workspace &&                 # Remove any .npmrc files
+                rm -f .npmrc .npmrc.* || true &&                 # Clear npm cache and authentication
+                npm cache clean --force &&                 # Clear any npm authentication
+                npm config delete _auth 2>/dev/null || true &&                 npm config delete _authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_auth 2>/dev/null || true &&                 npm config delete always-auth 2>/dev/null || true &&                 npm config delete registry 2>/dev/null || true &&                 npm config set registry https://registry.npmjs.org/ &&                 npm config set always-auth false &&                 npm install --legacy-peer-deps --no-audit --no-fund --ignore-scripts --no-optional || echo "npm install may have warnings";
+                echo 'Ensuring esbuild and esbuild-sass-plugin are installed for Linux platform...';
+                npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
+                npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
+                echo 'Creating output directory...'; 
+                mkdir -p /workspace/testeranto/bundles/allTests/${runtime};
+                mkdir -p /workspace/testeranto/metafiles/${runtime};
+                echo 'BUNDLES_DIR env:' "$BUNDLES_DIR"; 
+                # Create a dummy allTests.json to pass health check initially
+                # echo '{"status":"building"}' > /workspace/testeranto/metafiles/${runtime}/allTests.json;
+                # Run in watch mode and keep the process alive
+                # Don't fail if chromium isn't ready yet - the build can still proceed
+                echo "Starting build process for ${runtime}..."
+                npx tsx dist/prebuild/server/builders/${runtime}.mjs allTests.ts dev || echo "Build process exited with code $?, but keeping container alive for health checks";
+                # Keep the container running even if the build command exits
+                echo "Build process finished, keeping container alive..."
+                while true; do
+                  sleep 3600
+                done`
+    ],
+    // command: [
+    //   "sh",
+    //   "-c",
+    //   `echo 'Starting node build in watch mode...';
+    //                     echo 'Installing dependencies in /workspace/node_modules...';
+    //                     cd /workspace &&                 # Remove any .npmrc files
+    //                     rm -f .npmrc .npmrc.* || true &&                 # Clear npm cache and authentication
+    //                     npm cache clean --force &&                 # Clear any npm authentication
+    //                     npm config delete _auth 2>/dev/null || true &&                 npm config delete _authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_authToken 2>/dev/null || true &&                 npm config delete //registry.npmjs.org/:_auth 2>/dev/null || true &&                 npm config delete always-auth 2>/dev/null || true &&                 npm config delete registry 2>/dev/null || true &&                 npm config set registry https://registry.npmjs.org/ &&                 npm config set always-auth false &&                 npm install --legacy-peer-deps --no-audit --no-fund --ignore-scripts --no-optional || echo "npm install may have warnings";
+    //                     echo 'Ensuring esbuild and esbuild-sass-plugin are installed for Linux platform...';
+    //                     npm list esbuild 2>/dev/null || npm install --no-save esbuild@0.20.1 --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild installation may have issues";
+    //                     npm list esbuild-sass-plugin 2>/dev/null || npm install --no-save esbuild-sass-plugin --no-audit --no-fund --ignore-scripts --no-optional || echo "esbuild-sass-plugin installation may have issues";
+    //                     echo 'Creating output directory...';
+    //                     mkdir -p /workspace/testeranto/bundles/allTests/${runtime};
+    //                     mkdir -p /workspace/testeranto/metafiles/${runtime};
+    //                     echo 'BUNDLES_DIR env:' "$BUNDLES_DIR";
+    //                     # Create a dummy allTests.json to pass health check initially
+    //                     echo '{"status":"building"}' > /workspace/testeranto/metafiles/${runtime}/allTests.json;
+    //                     # Run in watch mode and keep the process alive
+    //                     npx tsx ${runtime}.mjs allTests.ts dev || echo "Build process exited, but keeping container alive for health checks";
+    //                     # Keep the container running even if the build command exits
+    //                     while true; do
+    //                       sleep 3600
+    //                     done`,
+    // ],
+    healthcheck: {
+      test: [
+        "CMD-SHELL",
+        `[ -f /workspace/testeranto/metafiles/${runtime}/allTests.json ] && echo "healthy" || exit 1`
+      ],
+      interval: "10s",
+      timeout: "30s",
+      retries: 10,
+      start_period: "60s"
+    }
+  };
+};
 
+// src/server/docker/chromiumService.ts
+var chromiumService_default = {
+  image: "browserless/chrome:latest",
+  container_name: "chromium",
+  restart: "unless-stopped",
+  ports: ["3000:3000", "9222:9222"],
+  shm_size: "2g",
+  environment: {
+    CONNECTION_TIMEOUT: "60000",
+    MAX_CONCURRENT_SESSIONS: "10",
+    ENABLE_CORS: "true",
+    REMOTE_DEBUGGING_PORT: "9222",
+    REMOTE_DEBUGGING_ADDRESS: "0.0.0.0"
+  },
+  healthcheck: {
+    test: ["CMD", "curl", "-f", "http://localhost:3000/health"],
+    interval: "10s",
+    timeout: "10s",
+    retries: 30,
+    start_period: "120s"
+  },
+  networks: ["default"]
+};
+
+// src/server/docker/serviceGenerator.ts
+function createBuildService(runtime, dockerfileDir, testsName) {
+  let dockerfilePath;
   if (runtime === "node") {
     dockerfilePath = `testeranto/bundles/allTests/node/node.Dockerfile`;
   } else if (runtime === "web") {
@@ -26,138 +131,80 @@ export function createBuildService(
   } else {
     dockerfilePath = `${dockerfileDir}/Dockerfile`;
   }
-
-  // Build the service configuration matching the old format (context: /Users/adam/Code/testeranto)
-  const serviceConfig: any = {
+  const serviceConfig = {
     build: {
       context: "/Users/adam/Code/testeranto",
-      dockerfile: dockerfilePath,
+      dockerfile: dockerfilePath
     },
     volumes: ["./testeranto/metafiles:/workspace/testeranto/metafiles"],
     image: `bundles-${runtime}-build:latest`,
-    restart: "no",
+    restart: "no"
   };
-
   return {
-    [`${runtime}-build`]: serviceConfig,
+    [`${runtime}-build`]: serviceConfig
   };
 }
-
-export async function generateServices(
-  config: IBuiltConfig,
-  runtimes: IRunTime[],
-  webSocketPort: number | undefined,
-  log: (...args: any[]) => void,
-  error: (...args: any[]) => void
-): Promise<Record<string, any>> {
-  const services: any = {};
-
-  // Add Chromium service for web tests using browserless/chrome
-  services["chromium"] = chromiumService;
-  
-  // Ensure all services use the same network configuration
-  // Use "default" network which has custom name "allTests_network" in baseCompose
+async function generateServices(config, runtimes, webSocketPort, log, error) {
+  const services = {};
+  services["chromium"] = chromiumService_default;
   for (const serviceName in services) {
     services[serviceName].networks = ["default"];
   }
-
-  // Add build services for each runtime
   for (const runtime of runtimes) {
     const buildServiceName = `${runtime}-build`;
-
-    // Check if the runtime has tests in the config
-    const hasTests =
-      config[runtime]?.tests && Object.keys(config[runtime].tests).length > 0;
-    if (!hasTests) continue;
-
-    // Get the base service configuration
-    const serviceConfig = buildService(runtime);
-    
-    // For web build, we don't need to expose ports anymore
-    // Server_TCP will serve the built files
+    const hasTests = config[runtime]?.tests && Object.keys(config[runtime].tests).length > 0;
+    if (!hasTests)
+      continue;
+    const serviceConfig = buildService_default(runtime);
     if (runtime === "web") {
-      // Add dependency on chromium service, but don't require it to be healthy
-      // The build service can start building while chromium is starting
       if (!serviceConfig.depends_on) {
         serviceConfig.depends_on = {};
       }
       serviceConfig.depends_on.chromium = {
-        condition: "service_started"  // Changed from "service_healthy"
+        condition: "service_started"
+        // Changed from "service_healthy"
       };
     }
-    
     services[buildServiceName] = serviceConfig;
   }
-
-  // Check services are not scheduled before tests - they can run independently
-  // Removed check service generation to simplify Docker Compose
-
-  // Add test services for each test
-  // For web, we only create static analysis services, not test services
-  // (Web tests run through Chromium service)
   for (const runtime of runtimes) {
     const tests = config[runtime]?.tests;
-    if (!tests) continue;
-
+    if (!tests)
+      continue;
     for (const [testPath, testConfig] of Object.entries(tests)) {
-      // Skip creating test services for web (they run through Chromium)
-      // But we still need static analysis services for web
       if (runtime === "web") {
-        // We'll handle web static analysis services in the code below
-        // Continue to create static analysis service but not test service
       }
-      // Generate service name from test path
-      // Docker requires lowercase names for images
-      // Convert everything to lowercase and replace all non-alphanumeric characters with hyphens
-      const sanitizedTestPath = testPath
-        .toLowerCase()
-        .replace(/\//g, "-")
-        .replace(/\./g, "-")
-        .replace(/[^a-z0-9-]/g, "-");
+      const sanitizedTestPath = testPath.toLowerCase().replace(/\//g, "-").replace(/\./g, "-").replace(/[^a-z0-9-]/g, "-");
       const serviceName = `${runtime}-${sanitizedTestPath}`;
-
-      // Extract test name without extension for display
       const testNameParts = testPath.split("/");
       const testFileName = testNameParts[testNameParts.length - 1];
       const testName = testFileName.replace(/\.[^/.]+$/, "");
-
-      // Determine the bundle file extension based on runtime
       let betterTestPath = testPath;
-
       if (runtime === "node") {
         betterTestPath = testPath.replace(".ts", ".mjs");
       } else if (runtime === "web") {
         betterTestPath = testPath.replace(".ts", ".mjs");
       } else if (runtime === "golang") {
-        // No change for golang
       } else if (runtime === "python") {
-        // No change for python
       } else {
         throw "unknown runtime";
       }
-
-      // Build service configuration for test services
-      // Use testServiceConfig which doesn't have port mappings
-      const serviceConfig: any = { 
-        restart: "no",  // Don't restart on failure - we want to see the exit status
+      const serviceConfig = {
+        restart: "no",
+        // Don't restart on failure - we want to see the exit status
         shm_size: "2g",
         environment: {
-          CONNECTION_TIMEOUT: '60000',
-          MAX_CONCURRENT_SESSIONS: '10',
-          ENABLE_CORS: 'true',
-          REMOTE_DEBUGGING_PORT: '9222',
-          REMOTE_DEBUGGING_ADDRESS: '0.0.0.0',
-          WS_PORT: '3002',
-          WS_HOST: 'host.docker.internal',
-          IN_DOCKER: 'true'
+          CONNECTION_TIMEOUT: "60000",
+          MAX_CONCURRENT_SESSIONS: "10",
+          ENABLE_CORS: "true",
+          REMOTE_DEBUGGING_PORT: "9222",
+          REMOTE_DEBUGGING_ADDRESS: "0.0.0.0",
+          WS_PORT: "3002",
+          WS_HOST: "host.docker.internal",
+          IN_DOCKER: "true"
         },
         networks: ["default"]
       };
-
-      // Remove ports from test services to avoid conflicts
-      // Test services only need internal communication within Docker network
-
-      // Set build configuration to use the Dockerfile we created
       const dockerfileDir = path.join(
         "testeranto",
         "bundles",
@@ -166,73 +213,32 @@ export async function generateServices(
         path.dirname(testPath)
       );
       const dockerfilePath = path.join(dockerfileDir, "Dockerfile");
-
       serviceConfig.build = {
         context: process.cwd(),
-        dockerfile: dockerfilePath,
+        dockerfile: dockerfilePath
       };
-
-      // Add volumes to mount the project directory and node_modules
       serviceConfig.volumes = [
         `${process.cwd()}:/workspace`,
-        "node_modules:/workspace/node_modules",
+        "node_modules:/workspace/node_modules"
       ];
-
-      // Set working directory to /workspace
       serviceConfig.working_dir = "/workspace";
-
-      // Update depends_on to include the build service and chromium
       serviceConfig.depends_on = {
         [`${runtime}-build`]: {
-          condition: "service_healthy",
-        },
+          condition: "service_healthy"
+        }
       };
-
-      // Check services are not scheduled before tests - they can run independently
-      // Removed dependencies on check services
-
-      // Add chromium dependency for node and web tests
       if (runtime === "node" || runtime === "web") {
         serviceConfig.depends_on.chromium = {
-          condition: "service_healthy",
+          condition: "service_healthy"
         };
       }
-
-      // Add WS_PORT and WS_HOST environment variables
       if (!serviceConfig.environment) {
         serviceConfig.environment = {};
       }
-      // Use the monitoring WebSocket port if configured, otherwise default to 3002
-      const wsPort = config.monitoring?.websocketPort || webSocketPort || 3002;
-      serviceConfig.environment.WS_PORT = wsPort.toString();
-      // Use host.docker.internal to reach the host machine from Docker containers
+      serviceConfig.environment.WS_PORT = webSocketPort?.toString() || "3002";
       serviceConfig.environment.WS_HOST = "host.docker.internal";
-      // Indicate we're running in Docker
       serviceConfig.environment.IN_DOCKER = "true";
-      
-      // Add monitoring configuration
-      if (config.monitoring) {
-        serviceConfig.environment.MONITORING_WS_PORT = config.monitoring.websocketPort?.toString() || wsPort.toString();
-        serviceConfig.environment.MONITORING_API_PORT = config.monitoring.apiPort?.toString() || "3003";
-      }
-      
-      // Add category-specific monitoring flags
-      if (runtime === "node" && config.node?.monitoring) {
-        serviceConfig.environment.MONITOR_CAPTURE_CONSOLE = config.node.monitoring.captureConsole?.toString() || "true";
-        serviceConfig.environment.MONITOR_CAPTURE_UNCAUGHT_EXCEPTIONS = config.node.monitoring.captureUncaughtExceptions?.toString() || "true";
-      } else if (runtime === "python" && config.python?.monitoring) {
-        serviceConfig.environment.MONITOR_CAPTURE_PYTEST_OUTPUT = config.python.monitoring.capturePytestOutput?.toString() || "true";
-        serviceConfig.environment.MONITOR_CAPTURE_LOGGING = config.python.monitoring.captureLogging?.toString() || "true";
-      } else if (runtime === "golang" && config.golang?.monitoring) {
-        serviceConfig.environment.MONITOR_CAPTURE_TEST_OUTPUT = config.golang.monitoring.captureTestOutput?.toString() || "true";
-        serviceConfig.environment.MONITOR_CAPTURE_COVERAGE = config.golang.monitoring.captureCoverage?.toString() || "false";
-      }
-
-      // Add appropriate command based on runtime
-      // Static analysis runs in separate parallel service for interpreted languages
-      // For compiled languages, static analysis happens in build service
       if (runtime === "node") {
-        // Node tests should run the built bundle
         const bundlePath = `/workspace/testeranto/bundles/allTests/${runtime}/${betterTestPath}`;
         serviceConfig.command = ["sh", "-c", `
           echo "=== Running Node.js BDD test ==="
@@ -247,7 +253,6 @@ export async function generateServices(
           sleep 3600
         `];
       } else if (runtime === "golang") {
-        // For Go, run tests in the specific directory
         const testDir = path.dirname(testPath);
         serviceConfig.command = ["sh", "-c", `
           echo "=== Running Go BDD test ==="
@@ -257,7 +262,6 @@ export async function generateServices(
           sleep 3600
         `];
       } else if (runtime === "python") {
-        // For Python, run pytest on the specific test file
         const fullTestPath = `/workspace/${betterTestPath}`;
         serviceConfig.command = ["sh", "-c", `
           echo "=== Running Python BDD test ==="
@@ -272,70 +276,42 @@ export async function generateServices(
           sleep 3600
         `];
       }
-
-      // Remove health check for test services - they should run and exit
-      // Don't add any health check
-      
-      // Only add test service for non-web runtimes
-      // Web tests run through Chromium service, not as separate Docker services
       if (runtime !== "web") {
         services[serviceName] = serviceConfig;
       }
-
-      // Create a parallel static analysis service for interpreted languages and web
-      // (For compiled languages, static analysis happens in build service)
       if (runtime === "node" || runtime === "python" || runtime === "web") {
         const staticAnalysisServiceName = `${serviceName}-static-analysis`;
-        const staticAnalysisServiceConfig: any = {
+        const staticAnalysisServiceConfig = {
           restart: "no",
           shm_size: "2g",
           environment: {
-            CONNECTION_TIMEOUT: '60000',
-            MAX_CONCURRENT_SESSIONS: '10',
-            ENABLE_CORS: 'true',
-            REMOTE_DEBUGGING_PORT: '9222',
-            REMOTE_DEBUGGING_ADDRESS: '0.0.0.0',
-            WS_PORT: '3002',
-            WS_HOST: 'host.docker.internal',
-            IN_DOCKER: 'true'
+            CONNECTION_TIMEOUT: "60000",
+            MAX_CONCURRENT_SESSIONS: "10",
+            ENABLE_CORS: "true",
+            REMOTE_DEBUGGING_PORT: "9222",
+            REMOTE_DEBUGGING_ADDRESS: "0.0.0.0",
+            WS_PORT: "3002",
+            WS_HOST: "host.docker.internal",
+            IN_DOCKER: "true"
           },
           networks: ["default"],
           image: runtime === "python" ? "python:3.11-alpine" : "node:20.19.4-alpine",
           volumes: [
             `${process.cwd()}:/workspace`,
-            "node_modules:/workspace/node_modules",
+            "node_modules:/workspace/node_modules"
           ],
           working_dir: "/workspace",
           depends_on: {
             [`${runtime}-build`]: {
-              condition: "service_healthy",
-            },
+              condition: "service_healthy"
+            }
           }
         };
-
-        // Add chromium dependency for node and web static analysis
         if (runtime === "node" || runtime === "web") {
           staticAnalysisServiceConfig.depends_on.chromium = {
-            condition: "service_healthy",
+            condition: "service_healthy"
           };
         }
-
-        // Add monitoring configuration to static analysis services
-        if (config.monitoring) {
-          if (!staticAnalysisServiceConfig.environment) {
-            staticAnalysisServiceConfig.environment = {};
-          }
-          const wsPort = config.monitoring.websocketPort || 3002;
-          staticAnalysisServiceConfig.environment.WS_PORT = wsPort.toString();
-          staticAnalysisServiceConfig.environment.WS_HOST = "host.docker.internal";
-          staticAnalysisServiceConfig.environment.IN_DOCKER = "true";
-          staticAnalysisServiceConfig.environment.MONITORING_WS_PORT = wsPort.toString();
-          staticAnalysisServiceConfig.environment.MONITORING_API_PORT = config.monitoring.apiPort?.toString() || "3003";
-        }
-
-        // Static analysis command based on runtime
-        // Use the checks configuration from allTests.ts if available
-        // For now, install necessary tools and run basic checks
         if (runtime === "node") {
           const sourcePath = `/workspace/${testPath}`;
           staticAnalysisServiceConfig.command = ["sh", "-c", `
@@ -447,11 +423,19 @@ export async function generateServices(
             sleep 3600
           `];
         }
-
         services[staticAnalysisServiceName] = staticAnalysisServiceConfig;
       }
     }
   }
-
   return services;
 }
+
+// src/server/nodeVersion.ts
+var version = "20.19.4";
+var baseNodeImage = `node:${version}-alpine`;
+
+export {
+  baseNodeImage,
+  createBuildService,
+  generateServices
+};

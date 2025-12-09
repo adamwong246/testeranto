@@ -2,11 +2,8 @@
 import { WebSocketServer, WebSocket } from "ws";
 import http from "http";
 import { Server_Base } from "./Server_Base";
-import { IMode } from "../../app/types";
-import {
-  DEFAULT_HTTP_PORT,
-  SERVER_CONSTANTS,
-} from "./Server_TCP_constants";
+import { IMode } from "../../app/frontend/types";
+import { DEFAULT_HTTP_PORT, SERVER_CONSTANTS } from "./Server_TCP_constants";
 
 export class Server_TCP_Core extends Server_Base {
   protected wss: WebSocketServer;

@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useGitMode } from "../../useGitMode";
 import { GitIntegrationView } from "../pure/GitIntegrationView";
 // import { useFileService } from "../../useFileService";
-import { FileChange, RemoteStatus } from "../../../FileService";
+import { FileChange, RemoteStatus } from "../../FileService";
 
 export const GitIntegrationPage = () => {
   const [isLoading, setIsLoading] = useState(true);

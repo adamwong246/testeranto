@@ -1,7 +1,7 @@
 import {
   baseNodeImage,
   createBuildService
-} from "./chunk-KREBXUZP.mjs";
+} from "./chunk-ZVW6YN5V.mjs";
 import {
   node_default
 } from "./chunk-UW7SQQR2.mjs";
@@ -258,6 +258,20 @@ var BuildProcessManager = class {
     this.addPromiseProcess = addPromiseProcess;
     this.currentBuildResolve = null;
     this.currentBuildReject = null;
+    // Add monitoring support for build processes
+    this.addBuildLogEntry = (processId, message2, level = "info") => {
+      const prefix = `[${(/* @__PURE__ */ new Date()).toISOString()}] [build:${level}]`;
+      console.log(`${prefix} ${message2}`);
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "buildLog",
+          processId,
+          level,
+          message: message2,
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        });
+      }
+    };
   }
   async startBuildProcess(configer, entryPoints, runtime) {
     const entryPointKeys = Object.keys(entryPoints);
@@ -1213,7 +1227,7 @@ async function getAllFilesRecursively(directoryPath) {
   return fileList;
 }
 
-// src/app/FileService.ts
+// src/app/frontend/FileService.ts
 var FileService_methods = [
   "writeFile_send",
   "writeFile_receive",
@@ -1635,10 +1649,61 @@ Error: ${err.message}`
         return;
       });
       return;
+    } else if (req.url === "/" || req.url === "/monitor") {
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Testeranto Process Monitor</title>
+        </head>
+        <body>
+          <div id="root"></div>
+          <script src="/static/bundle.js"></script>
+        </body>
+        </html>
+      `);
+      return;
+    } else if (req.url?.startsWith("/api/")) {
+      this.handleMonitoringApi(req, res);
+      return;
     } else {
       res.writeHead(404);
       res.end(`404 Not Found. ${req.url}`);
       return;
+    }
+  }
+  handleMonitoringApi(req, res) {
+    const url = req.url || "";
+    if (url === "/api/processes" && req.method === "GET") {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify(
+          this.getProcessSummary ? this.getProcessSummary() : { processes: [] }
+        )
+      );
+    } else if (url.startsWith("/api/logs") && req.method === "GET") {
+      const urlObj = new URL(url, `http://${req.headers.host}`);
+      const processId = urlObj.searchParams.get("processId");
+      if (processId && this.getProcessLogs) {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({
+            processId,
+            logs: this.getProcessLogs(processId) || []
+          })
+        );
+      } else {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(
+          JSON.stringify({ error: "processId query parameter required" })
+        );
+      }
+    } else {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Not found" }));
     }
   }
 };
@@ -1798,6 +1863,42 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
           );
         });
       }
+    } else if (wsm.type === "getProcesses") {
+      ws.send(
+        JSON.stringify({
+          type: "processes",
+          data: this.getProcessSummary ? this.getProcessSummary() : { processes: [] },
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        })
+      );
+    } else if (wsm.type === "getLogs") {
+      const processId = wsm.data?.processId;
+      if (processId && this.getProcessLogs) {
+        ws.send(
+          JSON.stringify({
+            type: "logs",
+            processId,
+            logs: this.getProcessLogs(processId) || [],
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          })
+        );
+      }
+    } else if (wsm.type === "subscribeToLogs") {
+      const processId = wsm.data?.processId;
+      if (processId) {
+        if (!this.logSubscriptions) {
+          this.logSubscriptions = /* @__PURE__ */ new Map();
+        }
+        const subscriptions = this.logSubscriptions.get(processId) || /* @__PURE__ */ new Set();
+        subscriptions.add(ws);
+        this.logSubscriptions.set(processId, subscriptions);
+        ws.send(JSON.stringify({
+          type: "logSubscription",
+          processId,
+          status: "subscribed",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        }));
+      }
     } else {
       console.warn("Unhandled WebSocket message type:", wsm.type);
     }
@@ -1945,7 +2046,7 @@ var Server_DockerCompose = class extends Server_TCP_Commands {
     });
   }
   async initializeAndStart() {
-    const { setupDockerCompose } = await import("./dockerComposeGenerator-SWD6U5KX.mjs");
+    const { setupDockerCompose } = await import("./dockerComposeGenerator-N6FIDURL.mjs");
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),
@@ -2135,6 +2236,7 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
     this.runningProcesses = /* @__PURE__ */ new Map();
     this.allProcesses = /* @__PURE__ */ new Map();
     this.processLogs = /* @__PURE__ */ new Map();
+    this.webProcesses = /* @__PURE__ */ new Map();
     this.processingQueue = false;
     this.ports = {};
     this.summary = {};
@@ -2151,6 +2253,93 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
     };
     this.currentBuildResolve = null;
     this.currentBuildReject = null;
+    // Start monitoring broadcast using existing WebSocket server
+    this.startMonitoringBroadcast = () => {
+      console.log("Starting monitoring broadcast via existing WebSocket server");
+      if (this.webSocketBroadcastMessage) {
+        setInterval(() => {
+          this.webSocketBroadcastMessage({
+            type: "statusUpdate",
+            data: this.getProcessSummary(),
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          });
+        }, this.configs.monitoring?.updateInterval || 1e3);
+      }
+    };
+    // Get process summary for monitoring
+    this.getProcessSummary = () => {
+      const processes = [];
+      for (const [id, info] of this.allProcesses.entries()) {
+        processes.push({
+          id,
+          command: info.command,
+          status: info.status,
+          type: info.type,
+          category: info.category,
+          testName: info.testName,
+          platform: info.platform,
+          timestamp: info.timestamp,
+          exitCode: info.exitCode,
+          error: info.error,
+          logs: this.getProcessLogs(id).slice(-10)
+          // Last 10 logs
+        });
+      }
+      return {
+        totalProcesses: this.allProcesses.size,
+        running: Array.from(this.allProcesses.values()).filter((p) => p.status === "running").length,
+        completed: Array.from(this.allProcesses.values()).filter((p) => p.status === "completed").length,
+        errors: Array.from(this.allProcesses.values()).filter((p) => p.status === "error").length,
+        processes
+      };
+    };
+    // Get logs for a process
+    this.getProcessLogs = (processId) => {
+      return this.processLogs.get(processId) || [];
+    };
+    // Add log entry from any source
+    this.addLogEntry = (processId, source, message2, timestamp = /* @__PURE__ */ new Date()) => {
+      if (!this.processLogs.has(processId)) {
+        this.processLogs.set(processId, []);
+      }
+      const logEntry = `[${timestamp.toISOString()}] [${source}] ${message2}`;
+      this.processLogs.get(processId).push(logEntry);
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "logUpdate",
+          processId,
+          source,
+          message: message2,
+          timestamp: timestamp.toISOString()
+        });
+      }
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "monitoringLog",
+          processId,
+          source,
+          message: message2,
+          timestamp: timestamp.toISOString()
+        });
+      }
+      if (this.logSubscriptions) {
+        const subscriptions = this.logSubscriptions.get(processId);
+        if (subscriptions) {
+          const logMessage = {
+            type: "logEntry",
+            processId,
+            source,
+            message: message2,
+            timestamp: timestamp.toISOString()
+          };
+          subscriptions.forEach((client) => {
+            if (client.readyState === 1) {
+              client.send(JSON.stringify(logMessage));
+            }
+          });
+        }
+      }
+    };
     this.checkQueue = async () => {
       if (this.processingQueue) {
         return;
@@ -2270,12 +2459,69 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
         });
       }
     };
+    // Add web process (browser context)
+    this.addWebProcess = (processId, contextId, testName, url) => {
+      this.webProcesses.set(processId, {
+        contextId,
+        testName,
+        startTime: /* @__PURE__ */ new Date(),
+        logs: [],
+        status: "running"
+      });
+      const processInfo = {
+        status: "running",
+        command: `Web test: ${testName} (${url})`,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+        type: "process",
+        category: "bdd-test",
+        testName,
+        platform: "web"
+      };
+      this.allProcesses.set(processId, processInfo);
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "processUpdate",
+          processId,
+          process: processInfo
+        });
+      }
+      this.addLogEntry(processId, "console", `Started web test: ${testName} at ${url}`);
+    };
+    // Update web process status
+    this.updateWebProcessStatus = (processId, status, exitCode, error) => {
+      const webProcess = this.webProcesses.get(processId);
+      if (webProcess) {
+        webProcess.status = status;
+      }
+      const processInfo = this.allProcesses.get(processId);
+      if (processInfo) {
+        processInfo.status = status;
+        if (exitCode !== void 0)
+          processInfo.exitCode = exitCode;
+        if (error)
+          processInfo.error = error;
+      }
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "processUpdate",
+          processId,
+          process: processInfo
+        });
+      }
+      const message2 = status === "completed" ? `Web test completed: ${webProcess?.testName || processId}` : `Web test failed: ${webProcess?.testName || processId} - ${error || "Unknown error"}`;
+      this.addLogEntry(processId, status === "completed" ? "stdout" : "stderr", message2);
+    };
     if (configs.ports && Array.isArray(configs.ports)) {
       configs.ports.forEach((port) => {
         this.ports[port] = "";
       });
     }
     this.launchers = {};
+    if (configs.monitoring) {
+      setTimeout(() => {
+        this.startMonitoringBroadcast();
+      }, 1e3);
+    }
   }
   // SummaryManager methods
   ensureSummaryEntry(src, isSidecar = false) {

@@ -1,5 +1,6 @@
 {
   "importPlugins": [],
+  "httpPort": 3456,
   "ports": [
     "3333",
     "3334"
@@ -70,126 +71,90 @@
     ]
   ],
   "checks": {
-    "lint": [
+    "eslint": [
       [
-        "RUN",
-        "apk add --update make g++ linux-headers python3 libxml2-utils"
+        [
+          "WORKDIR",
+          "/workspace"
+        ],
+        [
+          "RUN",
+          "npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin"
+        ]
       ],
-      [
-        "WORKDIR",
-        "/workspace"
-      ],
-      [
-        "COPY",
-        "package*.json ./ "
-      ],
-      [
-        "RUN",
-        "npm install --legacy-peer-deps"
-      ],
-      [
-        "COPY",
-        "./src ./src"
-      ],
-      [
-        "RUN",
-        "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-      ],
-      [
-        "RUN",
-        "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-      ]
+      "npx eslint src/ --ext .ts,.tsx --max-warnings=0"
     ],
-    "typeCheck": [
+    "typescript": [
       [
-        "RUN",
-        "apk add --update make g++ linux-headers python3 libxml2-utils"
+        [
+          "WORKDIR",
+          "/workspace"
+        ],
+        [
+          "RUN",
+          "npm install --save-dev typescript"
+        ]
       ],
-      [
-        "WORKDIR",
-        "/workspace"
-      ],
-      [
-        "COPY",
-        "package*.json ./ "
-      ],
-      [
-        "RUN",
-        "npm install --legacy-peer-deps"
-      ],
-      [
-        "COPY",
-        "./src ./src"
-      ],
-      [
-        "RUN",
-        "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-      ],
-      [
-        "RUN",
-        "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-      ]
+      "npx tsc --noEmit"
     ],
-    "metafileAnalysis": [
+    "audit-ci": [
       [
-        "RUN",
-        "apk add --update make g++ linux-headers python3 libxml2-utils"
+        [
+          "WORKDIR",
+          "/workspace"
+        ],
+        [
+          "RUN",
+          "npm install --save-dev audit-ci"
+        ]
       ],
+      "npx audit-ci --critical"
+    ],
+    "depcheck": [
       [
-        "WORKDIR",
-        "/workspace"
+        [
+          "WORKDIR",
+          "/workspace"
+        ],
+        [
+          "RUN",
+          "npm install --save-dev depcheck"
+        ]
       ],
-      [
-        "COPY",
-        "package*.json ./ "
-      ],
-      [
-        "RUN",
-        "npm install --legacy-peer-deps"
-      ],
-      [
-        "COPY",
-        "./src ./src"
-      ],
-      [
-        "RUN",
-        "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-      ],
-      [
-        "RUN",
-        "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-      ]
+      "npx depcheck"
     ]
   },
   "build": [
     [
       [
-        "WORKDIR",
-        "/workspace"
-      ],
-      [
-        "COPY",
-        "go.mod go.sum ./ "
-      ],
-      [
-        "RUN",
-        "go mod download"
-      ],
-      [
-        "COPY",
-        "./src ./src"
-      ],
-      [
-        "RUN",
-        "go build -o /tmp/test-binary ./..."
-      ],
-      [
-        "RUN",
-        "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then go vet $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for go vet\"; fi'"
-      ],
-      [
-        "RUN",
-        "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then staticcheck $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for staticcheck\"; fi'"
+        [
+          "WORKDIR",
+          "/workspace"
+        ],
+        [
+          "COPY",
+          "go.mod go.sum ./ "
+        ],
+        [
+          "RUN",
+          "go mod download"
+        ],
+        [
+          "COPY",
+          "./src ./src"
+        ],
+        [
+          "RUN",
+          "go build -o /tmp/test-binary ./..."
+        ],
+        [
+          "RUN",
+          "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then go vet $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for go vet\"; fi'"
+        ],
+        [
+          "RUN",
+          "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then staticcheck $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for staticcheck\"; fi'"
+        ]
       ]
     ]
   ],
@@ -243,20 +208,16 @@
     "prod": [
       [
         [
-          "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils"
-        ],
-        [
           "WORKDIR",
           "/workspace"
         ],
         [
           "COPY",
-          "package*.json ./ "
+          "go.mod go.sum ./ "
         ],
         [
           "RUN",
-          "npm install --legacy-peer-deps"
+          "go mod download"
         ],
         [
           "COPY",
@@ -264,25 +225,21 @@
         ],
         [
           "RUN",
-          "BUILD YOU THING"
+          "BUILD THING"
         ]
       ],
       [
-        [
-          "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils"
-        ],
         [
           "WORKDIR",
           "/workspace"
         ],
         [
           "COPY",
-          "package*.json ./ "
+          "go.mod go.sum ./ "
         ],
         [
           "RUN",
-          "npm install --legacy-peer-deps"
+          "go mod download"
         ],
         [
           "COPY",
@@ -295,86 +252,42 @@
       ]
     ],
     "checks": {
-      "lint": [
+      "go-vet": [
         [
-          "WORKDIR",
-          "/workspace"
+          [
+            "WORKDIR",
+            "/workspace"
+          ]
         ],
-        [
-          "COPY",
-          "go.mod go.sum ./ "
-        ],
-        [
-          "RUN",
-          "go mod download"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then go vet $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for go vet\"; fi'"
-        ],
-        [
-          "RUN",
-          "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then staticcheck $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for staticcheck\"; fi'"
-        ]
+        "go vet ./..."
       ],
-      "typeCheck": [
+      "staticcheck": [
         [
-          "WORKDIR",
-          "/workspace"
+          [
+            "WORKDIR",
+            "/workspace"
+          ]
         ],
-        [
-          "COPY",
-          "go.mod go.sum ./ "
-        ],
-        [
-          "RUN",
-          "go mod download"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then go vet $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for go vet\"; fi'"
-        ],
-        [
-          "RUN",
-          "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then staticcheck $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for staticcheck\"; fi'"
-        ]
+        "staticcheck ./..."
       ],
-      "staticAnalysis": [],
-      "metafileAnalysis": [
+      "go-fmt": [
         [
-          "WORKDIR",
-          "/workspace"
+          [
+            "WORKDIR",
+            "/workspace"
+          ]
         ],
-        [
-          "COPY",
-          "go.mod go.sum ./ "
-        ],
-        [
-          "RUN",
-          "go mod download"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then go vet $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for go vet\"; fi'"
-        ],
-        [
-          "RUN",
-          "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then staticcheck $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for staticcheck\"; fi'"
-        ]
+        "go fmt ./..."
       ],
-      "phase": "post-build"
+      "gocyclo": [
+        [
+          [
+            "WORKDIR",
+            "/workspace"
+          ]
+        ],
+        "gocyclo -over 15 ."
+      ]
     },
     "build": [
       [
@@ -407,7 +320,8 @@
           "sh -c 'if [ -f \"$METAFILE_PATH\" ]; then staticcheck $(jq -r \".inputs | keys[]\" \"$METAFILE_PATH\" 2>/dev/null | grep \"\\.go$\" | xargs echo); else echo \"No metafile for staticcheck\"; fi'"
         ]
       ]
-    ]
+    ],
+    "monitoring": {}
   },
   "python": {
     "plugins": [],
@@ -492,103 +406,64 @@
       ]
     ],
     "checks": {
-      "lint": [
+      "pylint": [
         [
-          "WORKDIR",
-          "/workspace"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "pip install pylint"
+          ]
         ],
-        [
-          "COPY",
-          "requirements.txt ./ "
-        ],
-        [
-          "RUN",
-          "pip install -r requirements.txt"
-        ],
-        [
-          "RUN",
-          "pip install pylint mypy flake8 websockets>=12.0"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "cat > /tmp/run_python_analysis.py << 'EOF'\nimport json\nimport os\nimport subprocess\nimport sys\n\ndef run_analysis():\n    metafile_path = os.environ.get('METAFILE_PATH')\n    if not metafile_path or not os.path.exists(metafile_path):\n        print(\"No metafile found at METAFILE_PATH\")\n        return 0\n    \n    with open(metafile_path, 'r') as f:\n        data = json.load(f)\n    \n    # Get input files from metafile\n    inputs = data.get('inputs', {})\n    files = list(inputs.keys()) if isinstance(inputs, dict) else []\n    \n    if not files:\n        print(\"No files to analyze\")\n        return 0\n    \n    # Filter for Python files\n    python_files = [f for f in files if f.endswith('.py')]\n    if not python_files:\n        print(\"No Python files to analyze\")\n        return 0\n    \n    exit_code = 0\n    \n    # Run flake8\n    print(\"Running flake8...\")\n    result = subprocess.run(['flake8'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    # Run pylint\n    print(\"Running pylint...\")\n    result = subprocess.run(['pylint'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    # Run mypy\n    print(\"Running mypy...\")\n    result = subprocess.run(['mypy'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    return exit_code\n\nif __name__ == '__main__':\n    sys.exit(run_analysis())\nEOF"
-        ],
-        [
-          "RUN",
-          "python3 /tmp/run_python_analysis.py"
-        ]
+        "pylint --rcfile=.pylintrc src/"
       ],
-      "typeCheck": [
+      "mypy": [
         [
-          "WORKDIR",
-          "/workspace"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "pip install mypy"
+          ]
         ],
-        [
-          "COPY",
-          "requirements.txt ./ "
-        ],
-        [
-          "RUN",
-          "pip install -r requirements.txt"
-        ],
-        [
-          "RUN",
-          "pip install pylint mypy flake8 websockets>=12.0"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "cat > /tmp/run_python_analysis.py << 'EOF'\nimport json\nimport os\nimport subprocess\nimport sys\n\ndef run_analysis():\n    metafile_path = os.environ.get('METAFILE_PATH')\n    if not metafile_path or not os.path.exists(metafile_path):\n        print(\"No metafile found at METAFILE_PATH\")\n        return 0\n    \n    with open(metafile_path, 'r') as f:\n        data = json.load(f)\n    \n    # Get input files from metafile\n    inputs = data.get('inputs', {})\n    files = list(inputs.keys()) if isinstance(inputs, dict) else []\n    \n    if not files:\n        print(\"No files to analyze\")\n        return 0\n    \n    # Filter for Python files\n    python_files = [f for f in files if f.endswith('.py')]\n    if not python_files:\n        print(\"No Python files to analyze\")\n        return 0\n    \n    exit_code = 0\n    \n    # Run flake8\n    print(\"Running flake8...\")\n    result = subprocess.run(['flake8'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    # Run pylint\n    print(\"Running pylint...\")\n    result = subprocess.run(['pylint'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    # Run mypy\n    print(\"Running mypy...\")\n    result = subprocess.run(['mypy'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    return exit_code\n\nif __name__ == '__main__':\n    sys.exit(run_analysis())\nEOF"
-        ],
-        [
-          "RUN",
-          "python3 /tmp/run_python_analysis.py"
-        ]
+        "mypy src/"
       ],
-      "staticAnalysis": [],
-      "metafileAnalysis": [
+      "flake8": [
         [
-          "WORKDIR",
-          "/workspace"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "pip install flake8"
+          ]
         ],
-        [
-          "COPY",
-          "requirements.txt ./ "
-        ],
-        [
-          "RUN",
-          "pip install -r requirements.txt"
-        ],
-        [
-          "RUN",
-          "pip install pylint mypy flake8 websockets>=12.0"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "cat > /tmp/run_python_analysis.py << 'EOF'\nimport json\nimport os\nimport subprocess\nimport sys\n\ndef run_analysis():\n    metafile_path = os.environ.get('METAFILE_PATH')\n    if not metafile_path or not os.path.exists(metafile_path):\n        print(\"No metafile found at METAFILE_PATH\")\n        return 0\n    \n    with open(metafile_path, 'r') as f:\n        data = json.load(f)\n    \n    # Get input files from metafile\n    inputs = data.get('inputs', {})\n    files = list(inputs.keys()) if isinstance(inputs, dict) else []\n    \n    if not files:\n        print(\"No files to analyze\")\n        return 0\n    \n    # Filter for Python files\n    python_files = [f for f in files if f.endswith('.py')]\n    if not python_files:\n        print(\"No Python files to analyze\")\n        return 0\n    \n    exit_code = 0\n    \n    # Run flake8\n    print(\"Running flake8...\")\n    result = subprocess.run(['flake8'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    # Run pylint\n    print(\"Running pylint...\")\n    result = subprocess.run(['pylint'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    # Run mypy\n    print(\"Running mypy...\")\n    result = subprocess.run(['mypy'] + python_files, capture_output=True, text=True)\n    if result.returncode != 0:\n        print(result.stdout)\n        print(result.stderr)\n        exit_code = result.returncode\n    \n    return exit_code\n\nif __name__ == '__main__':\n    sys.exit(run_analysis())\nEOF"
-        ],
-        [
-          "RUN",
-          "python3 /tmp/run_python_analysis.py"
-        ]
+        "flake8 src/"
       ],
-      "phase": "pre-test"
+      "bandit": [
+        [
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "pip install bandit"
+          ]
+        ],
+        "bandit -r src/ -ll"
+      ]
     },
     "processPool": {
       "maxConcurrent": 3,
       "timeoutMs": 20000
-    }
+    },
+    "monitoring": {}
   },
   "web": {
     "plugins": [
@@ -665,110 +540,58 @@
       ]
     ],
     "checks": {
-      "lint": [
+      "eslint": [
         [
-          "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin"
+          ]
         ],
-        [
-          "WORKDIR",
-          "/workspace"
-        ],
-        [
-          "COPY",
-          "package*.json ./ "
-        ],
-        [
-          "RUN",
-          "npm install --legacy-peer-deps"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx stylelint ' + files.filter(f => f.endsWith('.css') || f.endsWith('.scss')).join(' ')).status); } else { console.log('No style files to check'); } \""
-        ]
+        "npx eslint src/ --ext .ts,.tsx --max-warnings=0"
       ],
-      "typeCheck": [
+      "typescript": [
         [
-          "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "npm install --save-dev typescript"
+          ]
         ],
-        [
-          "WORKDIR",
-          "/workspace"
-        ],
-        [
-          "COPY",
-          "package*.json ./ "
-        ],
-        [
-          "RUN",
-          "npm install --legacy-peer-deps"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx stylelint ' + files.filter(f => f.endsWith('.css') || f.endsWith('.scss')).join(' ')).status); } else { console.log('No style files to check'); } \""
-        ]
+        "npx tsc --noEmit"
       ],
-      "staticAnalysis": [],
-      "metafileAnalysis": [
+      "stylelint": [
         [
-          "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "npm install --save-dev stylelint"
+          ]
         ],
-        [
-          "WORKDIR",
-          "/workspace"
-        ],
-        [
-          "COPY",
-          "package*.json ./ "
-        ],
-        [
-          "RUN",
-          "npm install --legacy-peer-deps"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx stylelint ' + files.filter(f => f.endsWith('.css') || f.endsWith('.scss')).join(' ')).status); } else { console.log('No style files to check'); } \""
-        ]
+        "npx stylelint 'src/**/*.css' 'src/**/*.scss'"
       ],
-      "phase": "pre-build"
+      "prettier": [
+        [
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "npm install --save-dev prettier"
+          ]
+        ],
+        "npx prettier --check src/"
+      ]
     },
     "build": [
       [
@@ -814,7 +637,8 @@
       "sharedInstance": true,
       "maxContexts": 4,
       "memoryLimitMB": 256
-    }
+    },
+    "monitoring": {}
   },
   "node": {
     "plugins": [],
@@ -895,103 +719,64 @@
       ]
     ],
     "checks": {
-      "lint": [
+      "eslint": [
         [
-          "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin"
+          ]
         ],
-        [
-          "WORKDIR",
-          "/workspace"
-        ],
-        [
-          "COPY",
-          "package*.json ./ "
-        ],
-        [
-          "RUN",
-          "npm install --legacy-peer-deps"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-        ]
+        "npx eslint src/ --ext .ts,.tsx --max-warnings=0"
       ],
-      "typeCheck": [
+      "typescript": [
         [
-          "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "npm install --save-dev typescript"
+          ]
         ],
-        [
-          "WORKDIR",
-          "/workspace"
-        ],
-        [
-          "COPY",
-          "package*.json ./ "
-        ],
-        [
-          "RUN",
-          "npm install --legacy-peer-deps"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-        ]
+        "npx tsc --noEmit"
       ],
-      "staticAnalysis": [],
-      "metafileAnalysis": [
+      "audit-ci": [
         [
-          "RUN",
-          "apk add --update make g++ linux-headers python3 libxml2-utils"
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "npm install --save-dev audit-ci"
+          ]
         ],
-        [
-          "WORKDIR",
-          "/workspace"
-        ],
-        [
-          "COPY",
-          "package*.json ./ "
-        ],
-        [
-          "RUN",
-          "npm install --legacy-peer-deps"
-        ],
-        [
-          "COPY",
-          "./src ./src"
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx eslint ' + files.join(' ')).status); } else { console.log('No files to lint'); } \""
-        ],
-        [
-          "RUN",
-          "node -e \"export const fs = require('fs'); export const metafile = JSON.parse(fs.readFileSync(process.env.METAFILE_PATH, 'utf8')); export const files = metafile.inputs ? Object.keys(metafile.inputs) : []; if (files.length > 0) { process.exit(require('child_process').execSync('npx tsc --noEmit ' + files.join(' ')).status); } else { console.log('No files to type-check'); } \""
-        ]
+        "npx audit-ci --critical"
       ],
-      "phase": "pre-test"
+      "depcheck": [
+        [
+          [
+            "WORKDIR",
+            "/workspace"
+          ],
+          [
+            "RUN",
+            "npm install --save-dev depcheck"
+          ]
+        ],
+        "npx depcheck"
+      ]
     },
     "processPool": {
       "maxConcurrent": 5,
       "timeoutMs": 25000
-    }
+    },
+    "monitoring": {}
   },
   "buildDir": "/Users/adam/Code/testeranto/testeranto/bundles/allTests"
 }
