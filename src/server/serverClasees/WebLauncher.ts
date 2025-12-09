@@ -59,7 +59,7 @@ export class WebLauncher {
         const chromeHost = inDocker
           ? "chromium"
           : process.env.CHROME_HOST || "host.docker.internal";
-        const chromePort = process.env.CHROME_PORT || this.chromiumPort.toString();
+        const chromePort = process.env.CHROME_PORT || (this.chromiumPort ? this.chromiumPort.toString() : "4567");
 
         console.log(
           `Connecting to Chrome at ${chromeHost}:${chromePort} (IN_DOCKER=${inDocker})`
@@ -139,7 +139,7 @@ export class WebLauncher {
 
         // Use Server_TCP's HTTP server to serve web test files
         // Server_TCP runs on the host and serves files from /web/ path
-        const httpPort = Number(process.env.HTTP_PORT) || this.httpPort;
+        const httpPort = Number(process.env.HTTP_PORT) || (this.httpPort ? this.httpPort : 3456);
         // In Docker, we need to connect to the host machine
         // Use the service name if available, otherwise use host.docker.internal
         // When in Docker, we can use 'host.docker.internal' to reach the host

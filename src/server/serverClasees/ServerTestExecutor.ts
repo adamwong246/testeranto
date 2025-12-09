@@ -25,6 +25,7 @@ import { ServerTestEnvironmentSetup } from "./ServerTestEnvironmentSetup";
 import { TestEnvironmentSetup } from "./TestEnvironmentSetup";
 import { TypeCheckNotifier } from "./TypeCheckNotifier";
 import { WebLauncher } from "./WebLauncher";
+import { IMode } from "../../app/frontend/types";
 
 // Process management types
 // type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
@@ -52,9 +53,15 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
   private buildProcessManager: BuildProcessManager;
   private buildProcessStarter: BuildProcessStarter;
   private typeCheckNotifier: TypeCheckNotifier;
+  protected httpPort: number;
+  protected chromiumPort: number;
 
-  constructor(configs: IBuiltConfig, testName: string, mode: string) {
+  constructor(configs: IBuiltConfig, testName: string, mode: IMode) {
     super(configs, testName, mode);
+
+    // Store httpPort and chromiumPort from configs with defaults
+    this.httpPort = configs.httpPort || 3456;
+    this.chromiumPort = configs.chromiumPort || 4567;
 
     this.launchers = {};
     // Initialize TestEnvironmentSetup
@@ -193,8 +200,15 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
 
   launchNode = async (src: string, dest: string) => {
     console.log(`[launchNode] Starting node test: ${src}, dest: ${dest}`);
+    console.log(`[launchNode] this.httpPort is ${this.httpPort}`);
+
+    // Use httpPort with fallback to 3456
+    const httpPort = this.httpPort || 3456;
+    console.log(`[launchNode] Using httpPort ${httpPort}`);
+
     // Use the extracted NodeLauncher class
     const nodeLauncher = new NodeLauncher(
+      httpPort,
       this.setupTestEnvironment.bind(this),
       this.cleanupPorts.bind(this),
       this.handleChildProcess.bind(this),
@@ -210,11 +224,14 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
   };
 
   launchWeb = async (src: string, dest: string) => {
+    // Use httpPort with fallback to 3456, chromiumPort with fallback to 4567
+    const httpPort = this.httpPort || 3456;
+    const chromiumPort = this.chromiumPort || 4567;
     // Use the extracted WebLauncher class
     const webLauncher = new WebLauncher(
       this.projectName,
-      this.httpPort,
-      this.chromiumPort,
+      httpPort,
+      chromiumPort,
       this.bddTestIsRunning.bind(this),
       this.bddTestIsNowDone.bind(this),
       this.addPromiseProcess.bind(this),
@@ -224,10 +241,12 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
   };
 
   launchPython = async (src: string, dest: string) => {
+    // Use httpPort with fallback to 3456
+    const httpPort = this.httpPort || 3456;
     // Use the extracted PythonLauncher class
     const pythonLauncher = new PythonLauncher(
       this.projectName,
-      this.httpPort,
+      httpPort,
       this.setupTestEnvironment.bind(this),
       this.handleChildProcess.bind(this),
       this.cleanupPorts.bind(this),
@@ -240,10 +259,12 @@ export class ServerTestExecutor extends ServerTaskCoordinator {
   };
 
   launchGolang = async (src: string, dest: string) => {
+    // Use httpPort with fallback to 3456
+    const httpPort = this.httpPort || 3456;
     // Use the extracted GolangLauncher class
     const golangLauncher = new GolangLauncher(
       this.projectName,
-      this.httpPort,
+      httpPort,
       this.setupTestEnvironment.bind(this),
       this.handleChildProcess.bind(this),
       this.cleanupPorts.bind(this),

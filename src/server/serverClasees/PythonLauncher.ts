@@ -41,6 +41,10 @@ export class PythonLauncher {
 
   async launchPython(src: string, dest: string) {
     console.log(`python < ${src}`);
+    
+    // Use httpPort with fallback to 3456
+    const portToUse = this.httpPort || 3456;
+    console.log(`PythonLauncher: Using httpPort ${portToUse}`);
 
     const processId = `python-${src}-${Date.now()}`;
     const command = `python test: ${src}`;
@@ -86,13 +90,13 @@ export class PythonLauncher {
           "--network",
           "host", // Use host network to access WebSocket on localhost
           "-e",
-          `WS_PORT=${this.httpPort}`,
+          `WS_PORT=${portToUse}`,
           dockerImage,
           "sh",
           "-c",
           `pip install websockets>=12.0 > /dev/null 2>&1 && python3 ${escapeForShell(
             src
-          )} ${escapedTestResources} "${this.httpPort}"`,
+          )} ${escapedTestResources} "${portToUse}"`,
         ];
 
         console.log("PythonLauncher: dockerCommand:", dockerCommand);

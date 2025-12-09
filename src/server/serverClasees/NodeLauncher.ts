@@ -10,6 +10,7 @@ import path from "path";
 
 export class NodeLauncher {
   constructor(
+    private httpPort: number,
     private setupTestEnvironment: (
       src: string,
       runtime: IRunTime
@@ -39,7 +40,11 @@ export class NodeLauncher {
 
   async launchNode(src: string, dest: string): Promise<void> {
     console.log(ansiColors.green(ansiColors.inverse(`node < ${src}`)));
-
+    
+    // Always run in Docker container
+    const portToUse = this.httpPort || 3456;
+    console.log(`NodeLauncher: Using httpPort ${portToUse} for Docker container`);
+    
     const processId = `node-${src}-${Date.now()}`;
     const command = `node test: ${src}`;
 
@@ -143,24 +148,25 @@ export class NodeLauncher {
           testResources,
           portsToUse,
           src,
-          process.cwd()
+          reportDest
         );
 
-        const portToUse = portsToUse[0];
-
-        // Escape test resources for shell
-        const { escapeForShell } = await import("./TestResourceUtils");
-        const escapedTestResources = escapeForShell(testResourcesJson);
-
-        console.log("launchNode", [builtfile, portToUse, testResourcesJson]);
+        // Use httpPort with fallback to 3456
+        const portToUse = this.httpPort || 3456;
+        console.log("launchNode", [builtfile, portToUse.toString(), testResourcesJson]);
         console.log(
-          `Full command: node ${builtfile} ${portToUse} ${escapedTestResources.substring(
+          `Full command: node ${builtfile} ${portToUse} ${testResourcesJson.substring(
             0,
             100
           )}...`
         );
-        console.log("Test resources ports:", testResourcesObj.ports);
-        console.log("Port being passed to test:", portToUse);
+        // Parse testResourcesJson to log ports
+        try {
+          const parsedTestResources = JSON.parse(testResourcesJson);
+          console.log("Test resources ports:", parsedTestResources.ports);
+        } catch (e) {
+          console.log("Could not parse testResourcesJson:", e.message);
+        }
 
         // Verify the bundle file is readable
         try {
@@ -173,12 +179,40 @@ export class NodeLauncher {
           );
         }
 
-        const child = spawn("node", [builtfile, portToUse, testResourcesJson], {
+        // Run Node test inside Docker container for consistent environment
+        const dockerImage = "node:20.19.4-alpine";
+        
+        // Convert absolute path to container path
+        const workspacePath = process.cwd();
+        let containerPath = builtfile;
+        if (builtfile.startsWith(workspacePath)) {
+          containerPath = `/workspace${builtfile.slice(workspacePath.length)}`;
+        } else {
+          // If not under workspace, use basename and hope it's in current dir
+          containerPath = `/workspace/${path.basename(builtfile)}`;
+        }
+        
+        const dockerCommand = [
+          "docker",
+          "run",
+          "--rm",
+          "-v",
+          `${workspacePath}:/workspace`,
+          "-w",
+          "/workspace",
+          "--network",
+          "host", // Use host network to access WebSocket on localhost
+          "-e",
+          `WS_PORT=${portToUse}`,
+          dockerImage,
+          "sh",
+          "-c",
+          `node ${containerPath} ${portToUse} '${testResourcesJson.replace(/'/g, "'\"'\"'")}'`
+        ];
+
+        console.log("NodeLauncher: dockerCommand:", dockerCommand);
+        const child = spawn(dockerCommand[0], dockerCommand.slice(1), {
           stdio: ["pipe", "pipe", "pipe"],
-          env: {
-            ...process.env,
-            NODE_OPTIONS: "--enable-source-maps",
-          },
         });
 
         // Log child process events
@@ -221,6 +255,7 @@ export class NodeLauncher {
       }
     })();
 
+    console.log(`NodeLauncher: Adding node test process for ${src}`);
     this.addPromiseProcess(
       processId,
       nodePromise,
@@ -229,9 +264,11 @@ export class NodeLauncher {
       src,
       "node",
       () => {
+        console.log(`NodeLauncher: Node test completed successfully: ${src}`);
         setTimeout(() => this.checkQueue(), 100);
       },
       () => {
+        console.error(`NodeLauncher: Node test failed or rejected: ${src}`);
         setTimeout(() => this.checkQueue(), 100);
       }
     );

@@ -123,6 +123,14 @@ export const ProcessManger = () => {
       } else if (Array.isArray(data.data)) {
         processList = data.data;
       }
+      // Add system process
+      const systemProcess = {
+        processId: 'system',
+        command: 'System Logs',
+        timestamp: new Date().toISOString(),
+        status: 'running'
+      };
+      processList = [systemProcess, ...processList];
       setProcesses(processList);
       
       // Extract logs from each process
@@ -155,10 +163,18 @@ export const ProcessManger = () => {
       console.log('Log subscription status:', data.status, 'for process:', data.processId);
     } else if (data.type === 'runningProcesses') {
       if (Array.isArray(data.processes)) {
-        setProcesses(data.processes);
+        // Add system process
+        const systemProcess = {
+          processId: 'system',
+          command: 'System Logs',
+          timestamp: new Date().toISOString(),
+          status: 'running'
+        };
+        const processList = [systemProcess, ...data.processes];
+        setProcesses(processList);
         // Extract logs from each process
         const newLogs: Record<string, LogEntry[]> = {};
-        data.processes.forEach((process: any) => {
+        processList.forEach((process: any) => {
           if (process.logs && Array.isArray(process.logs)) {
             newLogs[process.processId] = process.logs;
           }

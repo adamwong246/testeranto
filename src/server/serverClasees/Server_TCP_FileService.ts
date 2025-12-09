@@ -4,10 +4,10 @@ import { WebSocket } from "ws";
 import { WebSocketMessage } from "../../clients/types";
 import fs from "fs";
 import { getAllFilesRecursively } from "./getAllFilesRecursively";
-import { Server_TCP_WebSocket } from "./Server_TCP_WebSocket";
+import { Server_TCP_WebSocketProcess } from "./Server_TCP_WebSocketProcess";
 import { IMode } from "../../app/frontend/types";
 
-export class Server_TCP_FileService extends Server_TCP_WebSocket {
+export class Server_TCP_FileService extends Server_TCP_WebSocketProcess {
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
   }

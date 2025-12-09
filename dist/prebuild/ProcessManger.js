@@ -28707,6 +28707,13 @@
         } else if (Array.isArray(data.data)) {
           processList = data.data;
         }
+        const systemProcess = {
+          processId: "system",
+          command: "System Logs",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+          status: "running"
+        };
+        processList = [systemProcess, ...processList];
         setProcesses(processList);
         const newLogs = {};
         processList.forEach((process2) => {
@@ -28736,9 +28743,16 @@
         console.log("Log subscription status:", data.status, "for process:", data.processId);
       } else if (data.type === "runningProcesses") {
         if (Array.isArray(data.processes)) {
-          setProcesses(data.processes);
+          const systemProcess = {
+            processId: "system",
+            command: "System Logs",
+            timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+            status: "running"
+          };
+          const processList = [systemProcess, ...data.processes];
+          setProcesses(processList);
           const newLogs = {};
-          data.processes.forEach((process2) => {
+          processList.forEach((process2) => {
             if (process2.logs && Array.isArray(process2.logs)) {
               newLogs[process2.processId] = process2.logs;
             }

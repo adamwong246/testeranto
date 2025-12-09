@@ -1,7 +1,7 @@
 import {
   baseNodeImage,
   createBuildService
-} from "./chunk-RO54TLJI.mjs";
+} from "./chunk-TRNXLIPC.mjs";
 import {
   node_default
 } from "./chunk-EH2APWUF.mjs";
@@ -628,6 +628,8 @@ var GolangLauncher = class {
   async launchGolang(src, dest) {
     const { default: ansiC7 } = await import("ansi-colors");
     console.log(ansiC7.green(ansiC7.inverse(`goland < ${src}`)));
+    const portToUse = this.httpPort || 3456;
+    console.log(`GolangLauncher: Using httpPort ${portToUse}`);
     const processId = `golang-${src}-${Date.now()}`;
     const command = `golang test: ${src}`;
     const golangPromise = (async () => {
@@ -657,7 +659,7 @@ var GolangLauncher = class {
             env: {
               ...process.env,
               TEST_RESOURCES: testResources,
-              WS_PORT: this.httpPort.toString(),
+              WS_PORT: portToUse.toString(),
               GO111MODULE: "on"
             },
             cwd: goModDir
@@ -706,7 +708,8 @@ import ansiColors2 from "ansi-colors";
 import fs6 from "fs";
 import path5 from "path";
 var NodeLauncher = class {
-  constructor(setupTestEnvironment, cleanupPorts, handleChildProcess, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
+  constructor(httpPort, setupTestEnvironment, cleanupPorts, handleChildProcess, bddTestIsRunning, bddTestIsNowDone, addPromiseProcess, checkQueue) {
+    this.httpPort = httpPort;
     this.setupTestEnvironment = setupTestEnvironment;
     this.cleanupPorts = cleanupPorts;
     this.handleChildProcess = handleChildProcess;
@@ -717,6 +720,8 @@ var NodeLauncher = class {
   }
   async launchNode(src, dest) {
     console.log(ansiColors2.green(ansiColors2.inverse(`node < ${src}`)));
+    const portToUse = this.httpPort || 3456;
+    console.log(`NodeLauncher: Using httpPort ${portToUse} for Docker container`);
     const processId = `node-${src}-${Date.now()}`;
     const command = `node test: ${src}`;
     const nodePromise = (async () => {
@@ -791,20 +796,22 @@ var NodeLauncher = class {
           testResources,
           portsToUse,
           src,
-          process.cwd()
+          reportDest
         );
-        const portToUse = portsToUse[0];
-        const { escapeForShell } = await import("./TestResourceUtils-RLY5QZ2O.mjs");
-        const escapedTestResources = escapeForShell(testResourcesJson);
-        console.log("launchNode", [builtfile, portToUse, testResourcesJson]);
+        const portToUse2 = this.httpPort || 3456;
+        console.log("launchNode", [builtfile, portToUse2.toString(), testResourcesJson]);
         console.log(
-          `Full command: node ${builtfile} ${portToUse} ${escapedTestResources.substring(
+          `Full command: node ${builtfile} ${portToUse2} ${testResourcesJson.substring(
             0,
             100
           )}...`
         );
-        console.log("Test resources ports:", testResourcesObj.ports);
-        console.log("Port being passed to test:", portToUse);
+        try {
+          const parsedTestResources = JSON.parse(testResourcesJson);
+          console.log("Test resources ports:", parsedTestResources.ports);
+        } catch (e) {
+          console.log("Could not parse testResourcesJson:", e.message);
+        }
         try {
           const stats = fs6.statSync(builtfile);
           console.log(`Bundle file size: ${stats.size} bytes`);
@@ -814,12 +821,35 @@ var NodeLauncher = class {
             `Bundle file ${builtfile} is not accessible: ${e.message}`
           );
         }
-        const child = spawn2("node", [builtfile, portToUse, testResourcesJson], {
-          stdio: ["pipe", "pipe", "pipe"],
-          env: {
-            ...process.env,
-            NODE_OPTIONS: "--enable-source-maps"
-          }
+        const dockerImage = "node:20.19.4-alpine";
+        const workspacePath = process.cwd();
+        let containerPath = builtfile;
+        if (builtfile.startsWith(workspacePath)) {
+          containerPath = `/workspace${builtfile.slice(workspacePath.length)}`;
+        } else {
+          containerPath = `/workspace/${path5.basename(builtfile)}`;
+        }
+        const dockerCommand = [
+          "docker",
+          "run",
+          "--rm",
+          "-v",
+          `${workspacePath}:/workspace`,
+          "-w",
+          "/workspace",
+          "--network",
+          "host",
+          // Use host network to access WebSocket on localhost
+          "-e",
+          `WS_PORT=${portToUse2}`,
+          dockerImage,
+          "sh",
+          "-c",
+          `node ${containerPath} ${portToUse2} '${testResourcesJson.replace(/'/g, `'"'"'`)}'`
+        ];
+        console.log("NodeLauncher: dockerCommand:", dockerCommand);
+        const child = spawn2(dockerCommand[0], dockerCommand.slice(1), {
+          stdio: ["pipe", "pipe", "pipe"]
         });
         child.on("error", (error) => {
           console.error(
@@ -851,6 +881,7 @@ var NodeLauncher = class {
         throw error;
       }
     })();
+    console.log(`NodeLauncher: Adding node test process for ${src}`);
     this.addPromiseProcess(
       processId,
       nodePromise,
@@ -859,9 +890,11 @@ var NodeLauncher = class {
       src,
       "node",
       () => {
+        console.log(`NodeLauncher: Node test completed successfully: ${src}`);
         setTimeout(() => this.checkQueue(), 100);
       },
       () => {
+        console.error(`NodeLauncher: Node test failed or rejected: ${src}`);
         setTimeout(() => this.checkQueue(), 100);
       }
     );
@@ -884,6 +917,8 @@ var PythonLauncher = class {
   }
   async launchPython(src, dest) {
     console.log(`python < ${src}`);
+    const portToUse = this.httpPort || 3456;
+    console.log(`PythonLauncher: Using httpPort ${portToUse}`);
     const processId = `python-${src}-${Date.now()}`;
     const command = `python test: ${src}`;
     const pythonPromise = (async () => {
@@ -917,13 +952,13 @@ var PythonLauncher = class {
           "host",
           // Use host network to access WebSocket on localhost
           "-e",
-          `WS_PORT=${this.httpPort}`,
+          `WS_PORT=${portToUse}`,
           dockerImage,
           "sh",
           "-c",
           `pip install websockets>=12.0 > /dev/null 2>&1 && python3 ${escapeForShell(
             src
-          )} ${escapedTestResources} "${this.httpPort}"`
+          )} ${escapedTestResources} "${portToUse}"`
         ];
         console.log("PythonLauncher: dockerCommand:", dockerCommand);
         let child;
@@ -977,6 +1012,8 @@ var PythonLauncher = class {
 
 // src/server/serverClasees/ServerTaskCoordinator.ts
 import { default as ansiC3 } from "ansi-colors";
+
+// src/server/serverClasees/ServerTaskManager.ts
 import fs13 from "fs";
 
 // src/server/serverClasees/Server_DockerCompose.ts
@@ -1282,7 +1319,7 @@ async function getAllFilesRecursively(directoryPath) {
   return fileList;
 }
 
-// src/server/serverClasees/Server_TCP_WebSocket.ts
+// src/server/serverClasees/Server_TCP_WebSocketProcess.ts
 import { WebSocket as WebSocket2 } from "ws";
 
 // src/app/frontend/FileService.ts
@@ -1722,10 +1759,14 @@ var Server_TCP_Http = class extends Server_TCP_Core {
   }
 };
 
-// src/server/serverClasees/Server_TCP_WebSocket.ts
-var Server_TCP_WebSocket = class extends Server_TCP_Http {
+// src/server/serverClasees/Server_TCP_WebSocketBase.ts
+var Server_TCP_WebSocketBase = class extends Server_TCP_Http {
   constructor(configs, name, mode2) {
-    super(configs, name, mode2);
+    const updatedConfigs = {
+      ...configs,
+      httpPort: configs.httpPort || 3e3
+    };
+    super(updatedConfigs, name, mode2);
     if (!this.processLogs) {
       this.processLogs = /* @__PURE__ */ new Map();
     }
@@ -1744,10 +1785,6 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
       }
     }
     this.logSubscriptions = /* @__PURE__ */ new Map();
-    this.overrideRunningProcessesSet();
-    setTimeout(() => {
-      this.attachLogCaptureToExistingProcesses();
-    }, 100);
     this.setupWebSocketHandlers();
   }
   setupWebSocketHandlers() {
@@ -1903,7 +1940,25 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
           );
         });
       }
-    } else if (wsm.type === "getProcesses") {
+    } else {
+      console.warn("Unhandled WebSocket message type:", wsm.type);
+    }
+  }
+};
+
+// src/server/serverClasees/Server_TCP_WebSocketProcess.ts
+var Server_TCP_WebSocketProcess = class extends Server_TCP_WebSocketBase {
+  constructor(configs, name, mode2) {
+    super(configs, name, mode2);
+    this.overrideRunningProcessesSet();
+    setTimeout(() => {
+      this.attachLogCaptureToExistingProcesses();
+    }, 100);
+    this.overrideLaunchMethods();
+  }
+  handleWebSocketMessageTypes(wsm, ws) {
+    super.handleWebSocketMessageTypes(wsm, ws);
+    if (wsm.type === "getProcesses") {
       ws.send(
         JSON.stringify({
           type: "processes",
@@ -1941,13 +1996,11 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
           })
         );
       }
-    } else {
-      console.warn("Unhandled WebSocket message type:", wsm.type);
     }
   }
   getProcessSummary() {
     const processes = Array.from(this.allProcesses.entries()).map(
-      ([id, procInfo]) => serializeProcessInfo(id, procInfo, this.processLogs.get(id) || [])
+      ([id, procInfo]) => this.serializeProcessInfo(id, procInfo, this.processLogs.get(id) || [])
     );
     return { processes };
   }
@@ -1973,6 +2026,17 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
         }
       });
     }
+    const generalMessage = JSON.stringify({
+      type: "logs",
+      processId: "system",
+      logs: [logEntry],
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    });
+    this.clients.forEach((client) => {
+      if (client.readyState === WebSocket2.OPEN) {
+        client.send(generalMessage);
+      }
+    });
   }
   // Attach log capture to existing processes
   attachLogCaptureToExistingProcesses() {
@@ -1986,7 +2050,10 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
   }
   // Override runningProcesses.set to capture logs for new processes
   overrideRunningProcessesSet() {
-    console.log("Attempting to override runningProcesses.set", this.runningProcesses);
+    console.log(
+      "Attempting to override runningProcesses.set",
+      this.runningProcesses
+    );
     if (!(this.runningProcesses instanceof Map)) {
       console.warn("runningProcesses is not a Map, cannot override set");
       return;
@@ -2001,7 +2068,10 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
   }
   // Attach log capture to a single process
   attachLogCapture(processId, childProcess) {
-    console.log(`Attaching log capture to process ${processId}`, childProcess ? "has childProcess" : "no childProcess");
+    console.log(
+      `Attaching log capture to process ${processId}`,
+      childProcess ? "has childProcess" : "no childProcess"
+    );
     if (!childProcess) {
       console.warn(`No childProcess for ${processId}`);
       return;
@@ -2029,6 +2099,30 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
       console.warn(`Child process ${processId} has no stderr or stderr.on`);
     }
   }
+  // Override launch methods to capture errors
+  overrideLaunchMethods() {
+    const methods = ["launchNode", "launchWeb", "launchPython", "launchGolang"];
+    methods.forEach((methodName) => {
+      if (this[methodName] && typeof this[methodName] === "function") {
+        const originalMethod = this[methodName];
+        this[methodName] = async (...args) => {
+          try {
+            const result = await originalMethod.apply(this, args);
+            return result;
+          } catch (error) {
+            const processId = `failed_${methodName}_${Date.now()}`;
+            this.addProcessLog(
+              processId,
+              "error",
+              `Failed to launch via ${methodName}: ${error?.message || error}`,
+              "launch"
+            );
+            throw error;
+          }
+        };
+      }
+    });
+  }
   // Call this method when a process outputs data
   addProcessLog(processId, level, message2, source) {
     if (!this.processLogs) {
@@ -2047,10 +2141,22 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
     this.processLogs.set(processId, logs2);
     this.broadcastLogs(processId, logEntry);
   }
+  // Helper method to serialize process info
+  serializeProcessInfo(id, procInfo, logs2) {
+    return {
+      processId: id,
+      command: procInfo.command || "unknown",
+      pid: procInfo.pid,
+      timestamp: procInfo.timestamp || (/* @__PURE__ */ new Date()).toISOString(),
+      status: procInfo.status || "unknown",
+      logs: logs2.slice(-50)
+      // Last 50 logs
+    };
+  }
 };
 
 // src/server/serverClasees/Server_TCP_FileService.ts
-var Server_TCP_FileService = class extends Server_TCP_WebSocket {
+var Server_TCP_FileService = class extends Server_TCP_WebSocketProcess {
   constructor(configs, name, mode2) {
     super(configs, name, mode2);
   }
@@ -2190,7 +2296,7 @@ var Server_DockerCompose = class extends Server_TCP_Commands {
     });
   }
   async initializeAndStart() {
-    const { setupDockerCompose } = await import("./dockerComposeGenerator-RJEJFWCW.mjs");
+    const { setupDockerCompose } = await import("./dockerComposeGenerator-JJOIWDKY.mjs");
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),
@@ -2364,39 +2470,19 @@ CMD ["sh", "-c", "echo 'Build service started' && tail -f /dev/null"]
   }
 };
 
-// src/server/serverClasees/ServerTaskCoordinator.ts
-var ServerTaskCoordinator = class extends Server_DockerCompose {
-  // private ports: Record<number, string> = {};
+// src/server/serverClasees/ServerTaskManagerBase.ts
+var ServerTaskManagerBase = class extends Server_DockerCompose {
   constructor(configs, testName, mode2) {
     super(process.cwd(), configs, testName, mode2);
-    // queueManager: QueueManager;
-    // portManager: PortManager;
-    // processManager: ProcessManager = new ProcessManager();
-    // metafileManager: MetafileManager = new MetafileManager();
     this.logStreams = {};
     this.clients = /* @__PURE__ */ new Set();
-    this.queue = [];
     // Process management fields
     this.runningProcesses = /* @__PURE__ */ new Map();
     this.allProcesses = /* @__PURE__ */ new Map();
     this.processLogs = /* @__PURE__ */ new Map();
     this.webProcesses = /* @__PURE__ */ new Map();
-    this.processingQueue = false;
     this.ports = {};
     this.summary = {};
-    this.writeBigBoard = () => {
-      const summaryPath = `./testeranto/reports/${this.projectName}/summary.json`;
-      const summaryData = JSON.stringify(this.summary, null, 2);
-      fs13.writeFileSync(summaryPath, summaryData);
-      if (this.webSocketBroadcastMessage) {
-        this.webSocketBroadcastMessage({
-          type: "summaryUpdate",
-          data: this.summary
-        });
-      }
-    };
-    this.currentBuildResolve = null;
-    this.currentBuildReject = null;
     // Start monitoring broadcast using existing WebSocket server
     this.startMonitoringBroadcast = () => {
       console.log("Starting monitoring broadcast via existing WebSocket server");
@@ -2431,9 +2517,15 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
       }
       return {
         totalProcesses: this.allProcesses.size,
-        running: Array.from(this.allProcesses.values()).filter((p) => p.status === "running").length,
-        completed: Array.from(this.allProcesses.values()).filter((p) => p.status === "completed").length,
-        errors: Array.from(this.allProcesses.values()).filter((p) => p.status === "error").length,
+        running: Array.from(this.allProcesses.values()).filter(
+          (p) => p.status === "running"
+        ).length,
+        completed: Array.from(this.allProcesses.values()).filter(
+          (p) => p.status === "completed"
+        ).length,
+        errors: Array.from(this.allProcesses.values()).filter(
+          (p) => p.status === "error"
+        ).length,
         processes
       };
     };
@@ -2484,6 +2576,248 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
         }
       }
     };
+    // Add promise process tracking
+    this.addPromiseProcess = (processId, promise, command, category, testName, platform) => {
+      const actualPromise = promise || Promise.resolve();
+      const processInfo = {
+        promise: actualPromise,
+        status: "running",
+        command,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+        type: "promise",
+        category,
+        testName,
+        platform: platform || "node"
+      };
+      this.allProcesses.set(processId, processInfo);
+      this.runningProcesses.set(processId, actualPromise);
+      actualPromise.then(() => {
+        const info = this.allProcesses.get(processId);
+        if (info) {
+          info.status = "completed";
+          info.exitCode = 0;
+        }
+        this.runningProcesses.delete(processId);
+      }).catch((error) => {
+        const info = this.allProcesses.get(processId);
+        if (info) {
+          info.status = "error";
+          info.exitCode = -1;
+          info.error = error.message;
+        }
+        this.runningProcesses.delete(processId);
+      });
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "processUpdate",
+          processId,
+          process: processInfo
+        });
+      }
+    };
+    // Add web process (browser context)
+    this.addWebProcess = (processId, contextId, testName, url) => {
+      this.webProcesses.set(processId, {
+        contextId,
+        testName,
+        startTime: /* @__PURE__ */ new Date(),
+        logs: [],
+        status: "running"
+      });
+      const processInfo = {
+        status: "running",
+        command: `Web test: ${testName} (${url})`,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+        type: "process",
+        category: "bdd-test",
+        testName,
+        platform: "web"
+      };
+      this.allProcesses.set(processId, processInfo);
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "processUpdate",
+          processId,
+          process: processInfo
+        });
+      }
+      this.addLogEntry(
+        processId,
+        "console",
+        `Started web test: ${testName} at ${url}`
+      );
+    };
+    // Update web process status
+    this.updateWebProcessStatus = (processId, status, exitCode, error) => {
+      const webProcess = this.webProcesses.get(processId);
+      if (webProcess) {
+        webProcess.status = status;
+      }
+      const processInfo = this.allProcesses.get(processId);
+      if (processInfo) {
+        processInfo.status = status;
+        if (exitCode !== void 0)
+          processInfo.exitCode = exitCode;
+        if (error)
+          processInfo.error = error;
+      }
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "processUpdate",
+          processId,
+          process: processInfo
+        });
+      }
+      const message2 = status === "completed" ? `Web test completed: ${webProcess?.testName || processId}` : `Web test failed: ${webProcess?.testName || processId} - ${error || "Unknown error"}`;
+      this.addLogEntry(
+        processId,
+        status === "completed" ? "stdout" : "stderr",
+        message2
+      );
+    };
+    // Check for shutdown (to be overridden or used by derived classes)
+    this.checkForShutdown = async () => {
+    };
+    this.configs = configs;
+    this.projectName = testName;
+    if (configs.ports && Array.isArray(configs.ports)) {
+      configs.ports.forEach((port) => {
+        this.ports[port] = "";
+      });
+    }
+    this.launchers = {};
+    if (configs.monitoring) {
+      setTimeout(() => {
+        this.startMonitoringBroadcast();
+      }, 1e3);
+    }
+  }
+  // Port management methods
+  allocatePorts(numPorts, testName) {
+    const openPorts = Object.entries(this.ports).filter(([, status]) => status === "").map(([port]) => parseInt(port));
+    if (openPorts.length >= numPorts) {
+      const allocatedPorts = openPorts.slice(0, numPorts);
+      allocatedPorts.forEach((port) => {
+        this.ports[port] = testName;
+      });
+      return allocatedPorts;
+    }
+    return null;
+  }
+  releasePorts(ports) {
+    ports.forEach((port) => {
+      this.ports[port] = "";
+    });
+  }
+  getPortStatus() {
+    return { ...this.ports };
+  }
+  isPortAvailable(port) {
+    return this.ports[port] === "";
+  }
+  getPortOwner(port) {
+    return this.ports[port] || null;
+  }
+  // WebSocket broadcast method - to be implemented by derived classes or parent
+  webSocketBroadcastMessage(message2) {
+    const data = typeof message2 === "string" ? message2 : JSON.stringify(message2);
+    this.clients.forEach((client) => {
+      if (client.readyState === 1) {
+        client.send(data);
+      }
+    });
+  }
+};
+
+// src/server/serverClasees/ServerTaskManager.ts
+var ServerTaskManager = class extends ServerTaskManagerBase {
+  constructor(configs, testName, mode2) {
+    super(configs, testName, mode2);
+    this.currentBuildResolve = null;
+    this.currentBuildReject = null;
+    this.writeBigBoard = () => {
+      const summaryPath = `./testeranto/reports/${this.projectName}/summary.json`;
+      const summaryData = JSON.stringify(this.summary, null, 2);
+      fs13.writeFileSync(summaryPath, summaryData);
+      if (this.webSocketBroadcastMessage) {
+        this.webSocketBroadcastMessage({
+          type: "summaryUpdate",
+          data: this.summary
+        });
+      }
+    };
+  }
+  ensureSummaryEntry(src, isSidecar = false) {
+    if (!this.summary[src]) {
+      this.summary[src] = {
+        runTimeTests: void 0,
+        runTimeErrors: void 0,
+        typeErrors: void 0,
+        staticErrors: void 0,
+        prompt: void 0,
+        failingFeatures: void 0
+      };
+    }
+    return this.summary[src];
+  }
+  getSummary() {
+    return this.summary;
+  }
+  setSummary(summary) {
+    this.summary = summary;
+  }
+  updateSummaryEntry(src, updates) {
+    if (!this.summary[src]) {
+      this.ensureSummaryEntry(src);
+    }
+    this.summary[src] = { ...this.summary[src], ...updates };
+  }
+  // deprecated
+  // typeCheckIsRunning(src: string) {
+  //   this.updateSummaryEntry(src, { typeErrors: "?" });
+  // }
+  // typeCheckIsNowDone(src: string, failures: number) {
+  //   this.updateSummaryEntry(src, { typeErrors: failures });
+  // }
+  // lintIsRunning(src: string) {
+  //   this.updateSummaryEntry(src, { staticErrors: "?" });
+  // }
+  // lintIsNowDone(src: string, failures: number) {
+  //   this.updateSummaryEntry(src, { staticErrors: failures });
+  // }
+  // bddTestIsNowDone(src: string, failures: number) {
+  //   this.updateSummaryEntry(src, { runTimeErrors: failures });
+  //   this.writeBigBoard();
+  //   this.checkForShutdown();
+  // }
+  async stop() {
+    Object.values(this.logStreams || {}).forEach((logs2) => logs2.closeAll());
+    if (this.wss) {
+      this.wss.close(() => {
+        console.log("WebSocket server closed");
+      });
+    }
+    this.clients.forEach((client) => {
+      if (client.terminate) {
+        client.terminate();
+      }
+    });
+    this.clients.clear();
+    if (this.httpServer) {
+      this.httpServer.close(() => {
+        console.log("HTTP server closed");
+      });
+    }
+    this.checkForShutdown();
+  }
+};
+
+// src/server/serverClasees/ServerTaskCoordinator.ts
+var ServerTaskCoordinator = class extends ServerTaskManager {
+  constructor(configs, testName, mode2) {
+    super(configs, testName, mode2);
+    this.queue = [];
+    this.processingQueue = false;
     this.checkQueue = async () => {
       if (this.processingQueue) {
         return;
@@ -2565,177 +2899,6 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
         }
       }
     };
-    // Add promise process tracking
-    this.addPromiseProcess = (processId, promise, command, category, testName, platform) => {
-      const actualPromise = promise || Promise.resolve();
-      const processInfo = {
-        promise: actualPromise,
-        status: "running",
-        command,
-        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-        type: "promise",
-        category,
-        testName,
-        platform: platform || "node"
-      };
-      this.allProcesses.set(processId, processInfo);
-      this.runningProcesses.set(processId, actualPromise);
-      actualPromise.then(() => {
-        const info = this.allProcesses.get(processId);
-        if (info) {
-          info.status = "completed";
-          info.exitCode = 0;
-        }
-        this.runningProcesses.delete(processId);
-      }).catch((error) => {
-        const info = this.allProcesses.get(processId);
-        if (info) {
-          info.status = "error";
-          info.exitCode = -1;
-          info.error = error.message;
-        }
-        this.runningProcesses.delete(processId);
-      });
-      if (this.webSocketBroadcastMessage) {
-        this.webSocketBroadcastMessage({
-          type: "processUpdate",
-          processId,
-          process: processInfo
-        });
-      }
-    };
-    // Add web process (browser context)
-    this.addWebProcess = (processId, contextId, testName, url) => {
-      this.webProcesses.set(processId, {
-        contextId,
-        testName,
-        startTime: /* @__PURE__ */ new Date(),
-        logs: [],
-        status: "running"
-      });
-      const processInfo = {
-        status: "running",
-        command: `Web test: ${testName} (${url})`,
-        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-        type: "process",
-        category: "bdd-test",
-        testName,
-        platform: "web"
-      };
-      this.allProcesses.set(processId, processInfo);
-      if (this.webSocketBroadcastMessage) {
-        this.webSocketBroadcastMessage({
-          type: "processUpdate",
-          processId,
-          process: processInfo
-        });
-      }
-      this.addLogEntry(processId, "console", `Started web test: ${testName} at ${url}`);
-    };
-    // Update web process status
-    this.updateWebProcessStatus = (processId, status, exitCode, error) => {
-      const webProcess = this.webProcesses.get(processId);
-      if (webProcess) {
-        webProcess.status = status;
-      }
-      const processInfo = this.allProcesses.get(processId);
-      if (processInfo) {
-        processInfo.status = status;
-        if (exitCode !== void 0)
-          processInfo.exitCode = exitCode;
-        if (error)
-          processInfo.error = error;
-      }
-      if (this.webSocketBroadcastMessage) {
-        this.webSocketBroadcastMessage({
-          type: "processUpdate",
-          processId,
-          process: processInfo
-        });
-      }
-      const message2 = status === "completed" ? `Web test completed: ${webProcess?.testName || processId}` : `Web test failed: ${webProcess?.testName || processId} - ${error || "Unknown error"}`;
-      this.addLogEntry(processId, status === "completed" ? "stdout" : "stderr", message2);
-    };
-    if (configs.ports && Array.isArray(configs.ports)) {
-      configs.ports.forEach((port) => {
-        this.ports[port] = "";
-      });
-    }
-    this.launchers = {};
-    if (configs.monitoring) {
-      setTimeout(() => {
-        this.startMonitoringBroadcast();
-      }, 1e3);
-    }
-  }
-  // SummaryManager methods
-  ensureSummaryEntry(src, isSidecar = false) {
-    if (!this.summary[src]) {
-      this.summary[src] = {
-        runTimeTests: void 0,
-        runTimeErrors: void 0,
-        typeErrors: void 0,
-        staticErrors: void 0,
-        prompt: void 0,
-        failingFeatures: void 0
-      };
-    }
-    return this.summary[src];
-  }
-  getSummary() {
-    return this.summary;
-  }
-  setSummary(summary) {
-    this.summary = summary;
-  }
-  updateSummaryEntry(src, updates) {
-    if (!this.summary[src]) {
-      this.ensureSummaryEntry(src);
-    }
-    this.summary[src] = { ...this.summary[src], ...updates };
-  }
-  typeCheckIsRunning(src) {
-    this.updateSummaryEntry(src, { typeErrors: "?" });
-  }
-  typeCheckIsNowDone(src, failures) {
-    this.updateSummaryEntry(src, { typeErrors: failures });
-  }
-  lintIsRunning(src) {
-    this.updateSummaryEntry(src, { staticErrors: "?" });
-  }
-  lintIsNowDone(src, failures) {
-    this.updateSummaryEntry(src, { staticErrors: failures });
-  }
-  bddTestIsNowDone(src, failures) {
-    this.updateSummaryEntry(src, { runTimeErrors: failures });
-    this.writeBigBoard();
-    this.checkForShutdown();
-  }
-  webSocketBroadcastMessage(message2) {
-    const data = typeof message2 === "string" ? message2 : JSON.stringify(message2);
-    this.clients.forEach((client) => {
-      if (client.readyState === 1) {
-        client.send(data);
-      }
-    });
-  }
-  async stop() {
-    Object.values(this.logStreams || {}).forEach((logs2) => logs2.closeAll());
-    if (this.wss) {
-      this.wss.close(() => {
-        console.log("WebSocket server closed");
-      });
-    }
-    this.clients.forEach((client) => {
-      client.terminate();
-    });
-    this.clients.clear();
-    if (this.httpServer) {
-      this.httpServer.close(() => {
-        console.log("HTTP server closed");
-      });
-    }
-    this.checkForShutdown();
   }
   // addToQueue(src: string, runtime: IRunTime, addableFiles?: string[]) {
   //   this.addToQueue(
@@ -2842,31 +3005,6 @@ var ServerTaskCoordinator = class extends Server_DockerCompose {
   }
   getAllQueueItems() {
     return [...this.queue];
-  }
-  allocatePorts(numPorts, testName) {
-    const openPorts = Object.entries(this.ports).filter(([, status]) => status === "").map(([port]) => parseInt(port));
-    if (openPorts.length >= numPorts) {
-      const allocatedPorts = openPorts.slice(0, numPorts);
-      allocatedPorts.forEach((port) => {
-        this.ports[port] = testName;
-      });
-      return allocatedPorts;
-    }
-    return null;
-  }
-  releasePorts(ports) {
-    ports.forEach((port) => {
-      this.ports[port] = "";
-    });
-  }
-  getPortStatus() {
-    return { ...this.ports };
-  }
-  isPortAvailable(port) {
-    return this.ports[port] === "";
-  }
-  getPortOwner(port) {
-    return this.ports[port] || null;
   }
 };
 
@@ -3034,7 +3172,7 @@ var WebLauncher = class {
         const htmlPath = `${destFolder}.html`;
         const inDocker = process.env.IN_DOCKER === "true";
         const chromeHost = inDocker ? "chromium" : process.env.CHROME_HOST || "host.docker.internal";
-        const chromePort = process.env.CHROME_PORT || this.chromiumPort.toString();
+        const chromePort = process.env.CHROME_PORT || (this.chromiumPort ? this.chromiumPort.toString() : "4567");
         console.log(
           `Connecting to Chrome at ${chromeHost}:${chromePort} (IN_DOCKER=${inDocker})`
         );
@@ -3097,7 +3235,7 @@ var WebLauncher = class {
           browserWSEndpoint
         });
         const logs2 = createLogStreams(reportDest, "web");
-        const httpPort = Number(process.env.HTTP_PORT) || this.httpPort;
+        const httpPort = Number(process.env.HTTP_PORT) || (this.httpPort ? this.httpPort : 3456);
         const serverHost = inDocker ? "host.docker.internal" : process.env.SERVER_HOST || "localhost";
         console.log(
           `Using Server_TCP host: ${serverHost}:${httpPort} (IN_DOCKER=${inDocker})`
@@ -3251,7 +3389,11 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
     };
     this.launchNode = async (src, dest) => {
       console.log(`[launchNode] Starting node test: ${src}, dest: ${dest}`);
+      console.log(`[launchNode] this.httpPort is ${this.httpPort}`);
+      const httpPort = this.httpPort || 3456;
+      console.log(`[launchNode] Using httpPort ${httpPort}`);
       const nodeLauncher = new NodeLauncher(
+        httpPort,
         this.setupTestEnvironment.bind(this),
         this.cleanupPorts.bind(this),
         this.handleChildProcess.bind(this),
@@ -3266,10 +3408,12 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
       return result;
     };
     this.launchWeb = async (src, dest) => {
+      const httpPort = this.httpPort || 3456;
+      const chromiumPort = this.chromiumPort || 4567;
       const webLauncher = new WebLauncher(
         this.projectName,
-        this.httpPort,
-        this.chromiumPort,
+        httpPort,
+        chromiumPort,
         this.bddTestIsRunning.bind(this),
         this.bddTestIsNowDone.bind(this),
         this.addPromiseProcess.bind(this),
@@ -3278,9 +3422,10 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
       return webLauncher.launchWeb(src, dest);
     };
     this.launchPython = async (src, dest) => {
+      const httpPort = this.httpPort || 3456;
       const pythonLauncher = new PythonLauncher(
         this.projectName,
-        this.httpPort,
+        httpPort,
         this.setupTestEnvironment.bind(this),
         this.handleChildProcess.bind(this),
         this.cleanupPorts.bind(this),
@@ -3292,9 +3437,10 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
       return pythonLauncher.launchPython(src, dest);
     };
     this.launchGolang = async (src, dest) => {
+      const httpPort = this.httpPort || 3456;
       const golangLauncher = new GolangLauncher(
         this.projectName,
-        this.httpPort,
+        httpPort,
         this.setupTestEnvironment.bind(this),
         this.handleChildProcess.bind(this),
         this.cleanupPorts.bind(this),
@@ -3305,6 +3451,8 @@ var ServerTestExecutor = class extends ServerTaskCoordinator {
       );
       return golangLauncher.launchGolang(src, dest);
     };
+    this.httpPort = configs.httpPort || 3456;
+    this.chromiumPort = configs.chromiumPort || 4567;
     this.launchers = {};
     this.testEnvironmentSetup = new TestEnvironmentSetup(
       this.ports,

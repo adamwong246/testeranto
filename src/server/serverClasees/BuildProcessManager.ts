@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IBuiltConfig } from "../../Types";
 import esbuild from "esbuild";
-import ansiColors from "ansi-colors";
 
 export class BuildProcessManager {
   private currentBuildResolve: (() => void) | null = null;

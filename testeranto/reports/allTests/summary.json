@@ -1,13 +1,13 @@
 {
   "example/Calculator.test.ts": {
-    "runTimeErrors": -1,
+    "runTimeErrors": "?",
     "typeErrors": "?",
     "staticErrors": "?",
     "prompt": "?",
     "failingFeatures": {}
   },
   "example/Calculator.pitono.test.py": {
-    "runTimeErrors": 0,
+    "runTimeErrors": "?",
     "typeErrors": "?",
     "staticErrors": "?",
     "prompt": "?",

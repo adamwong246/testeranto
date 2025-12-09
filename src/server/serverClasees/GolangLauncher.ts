@@ -45,6 +45,10 @@ export class GolangLauncher {
   async launchGolang(src: string, dest: string): Promise<void> {
     const { default: ansiC } = await import("ansi-colors");
     console.log(ansiC.green(ansiC.inverse(`goland < ${src}`)));
+    
+    // Use httpPort with fallback to 3456
+    const portToUse = this.httpPort || 3456;
+    console.log(`GolangLauncher: Using httpPort ${portToUse}`);
 
     const processId = `golang-${src}-${Date.now()}`;
     const command = `golang test: ${src}`;
@@ -87,7 +91,7 @@ export class GolangLauncher {
             env: {
               ...process.env,
               TEST_RESOURCES: testResources,
-              WS_PORT: this.httpPort.toString(),
+              WS_PORT: portToUse.toString(),
               GO111MODULE: "on",
             },
             cwd: goModDir,
