@@ -62,21 +62,9 @@ var IndexHtml = () => `
 </body>
 </html>
 `;
-var ReportHtml = () => `
-  ${getBaseHtml("Testeranto")}
-  
-  <link rel="stylesheet" href="Report.css" />
-  <script src="Report.js"></script>
-</head>
-<body>
-  <div id="root"></div>
-</body>
-</html>
-`;
 
 // src/server/serverClasees/fileSystemSetup.ts
 function setupFileSystem(config2, testsName2) {
-  fs.writeFileSync(`${process.cwd()}/testeranto/Report.html`, ReportHtml());
   fs.writeFileSync(
     `${process.cwd()}/testeranto/ProcessManger.html`,
     ProcessMangerHtml()
@@ -1294,6 +1282,9 @@ async function getAllFilesRecursively(directoryPath) {
   return fileList;
 }
 
+// src/server/serverClasees/Server_TCP_WebSocket.ts
+import { WebSocket as WebSocket2 } from "ws";
+
 // src/app/frontend/FileService.ts
 var FileService_methods = [
   "writeFile_send",
@@ -1735,6 +1726,28 @@ var Server_TCP_Http = class extends Server_TCP_Core {
 var Server_TCP_WebSocket = class extends Server_TCP_Http {
   constructor(configs, name, mode2) {
     super(configs, name, mode2);
+    if (!this.processLogs) {
+      this.processLogs = /* @__PURE__ */ new Map();
+    }
+    if (!this.clients) {
+      this.clients = /* @__PURE__ */ new Set();
+    }
+    if (!this.allProcesses) {
+      this.allProcesses = /* @__PURE__ */ new Map();
+    }
+    if (!this.runningProcesses) {
+      this.runningProcesses = /* @__PURE__ */ new Map();
+    } else {
+      if (!(this.runningProcesses instanceof Map)) {
+        const entries = Object.entries(this.runningProcesses);
+        this.runningProcesses = new Map(entries);
+      }
+    }
+    this.logSubscriptions = /* @__PURE__ */ new Map();
+    this.overrideRunningProcessesSet();
+    setTimeout(() => {
+      this.attachLogCaptureToExistingProcesses();
+    }, 100);
     this.setupWebSocketHandlers();
   }
   setupWebSocketHandlers() {
@@ -1765,7 +1778,11 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
       try {
         parsed = JSON.parse(rawData);
       } catch (parseError) {
-        console.error("Failed to parse WebSocket message as JSON:", rawData);
+        console.error(
+          "Failed to parse WebSocket message as JSON:",
+          rawData,
+          parseError
+        );
         return;
       }
       if (Array.isArray(parsed)) {
@@ -1890,18 +1907,18 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
       ws.send(
         JSON.stringify({
           type: "processes",
-          data: this.getProcessSummary ? this.getProcessSummary() : { processes: [] },
+          data: this.getProcessSummary(),
           timestamp: (/* @__PURE__ */ new Date()).toISOString()
         })
       );
     } else if (wsm.type === "getLogs") {
       const processId = wsm.data?.processId;
-      if (processId && this.getProcessLogs) {
+      if (processId) {
         ws.send(
           JSON.stringify({
             type: "logs",
             processId,
-            logs: this.getProcessLogs(processId) || [],
+            logs: this.getProcessLogs(processId),
             timestamp: (/* @__PURE__ */ new Date()).toISOString()
           })
         );
@@ -1915,16 +1932,120 @@ var Server_TCP_WebSocket = class extends Server_TCP_Http {
         const subscriptions = this.logSubscriptions.get(processId) || /* @__PURE__ */ new Set();
         subscriptions.add(ws);
         this.logSubscriptions.set(processId, subscriptions);
-        ws.send(JSON.stringify({
-          type: "logSubscription",
-          processId,
-          status: "subscribed",
-          timestamp: (/* @__PURE__ */ new Date()).toISOString()
-        }));
+        ws.send(
+          JSON.stringify({
+            type: "logSubscription",
+            processId,
+            status: "subscribed",
+            timestamp: (/* @__PURE__ */ new Date()).toISOString()
+          })
+        );
       }
     } else {
       console.warn("Unhandled WebSocket message type:", wsm.type);
     }
+  }
+  getProcessSummary() {
+    const processes = Array.from(this.allProcesses.entries()).map(
+      ([id, procInfo]) => serializeProcessInfo(id, procInfo, this.processLogs.get(id) || [])
+    );
+    return { processes };
+  }
+  getProcessLogs(processId) {
+    return this.processLogs.get(processId) || [];
+  }
+  // Method to broadcast logs to subscribed clients
+  broadcastLogs(processId, logEntry) {
+    if (!this.logSubscriptions) {
+      this.logSubscriptions = /* @__PURE__ */ new Map();
+    }
+    const subscriptions = this.logSubscriptions.get(processId);
+    if (subscriptions) {
+      const message2 = JSON.stringify({
+        type: "logs",
+        processId,
+        logs: [logEntry],
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      });
+      subscriptions.forEach((client) => {
+        if (client.readyState === WebSocket2.OPEN) {
+          client.send(message2);
+        }
+      });
+    }
+  }
+  // Attach log capture to existing processes
+  attachLogCaptureToExistingProcesses() {
+    if (!this.runningProcesses || !(this.runningProcesses instanceof Map)) {
+      console.warn("runningProcesses is not available or not a Map");
+      return;
+    }
+    for (const [processId, proc] of this.runningProcesses.entries()) {
+      this.attachLogCapture(processId, proc);
+    }
+  }
+  // Override runningProcesses.set to capture logs for new processes
+  overrideRunningProcessesSet() {
+    console.log("Attempting to override runningProcesses.set", this.runningProcesses);
+    if (!(this.runningProcesses instanceof Map)) {
+      console.warn("runningProcesses is not a Map, cannot override set");
+      return;
+    }
+    const originalSet = this.runningProcesses.set.bind(this.runningProcesses);
+    this.runningProcesses.set = (key, value) => {
+      console.log(`runningProcesses.set called for ${key}`);
+      const result = originalSet(key, value);
+      this.attachLogCapture(key, value);
+      return result;
+    };
+  }
+  // Attach log capture to a single process
+  attachLogCapture(processId, childProcess) {
+    console.log(`Attaching log capture to process ${processId}`, childProcess ? "has childProcess" : "no childProcess");
+    if (!childProcess) {
+      console.warn(`No childProcess for ${processId}`);
+      return;
+    }
+    if (childProcess.stdout && typeof childProcess.stdout.on === "function") {
+      console.log(`Process ${processId} has stdout`);
+      childProcess.stdout.on("data", (data) => {
+        const message2 = data.toString().trim();
+        if (message2) {
+          this.addProcessLog(processId, "info", message2, "stdout");
+        }
+      });
+    } else {
+      console.warn(`Child process ${processId} has no stdout or stdout.on`);
+    }
+    if (childProcess.stderr && typeof childProcess.stderr.on === "function") {
+      console.log(`Process ${processId} has stderr`);
+      childProcess.stderr.on("data", (data) => {
+        const message2 = data.toString().trim();
+        if (message2) {
+          this.addProcessLog(processId, "error", message2, "stderr");
+        }
+      });
+    } else {
+      console.warn(`Child process ${processId} has no stderr or stderr.on`);
+    }
+  }
+  // Call this method when a process outputs data
+  addProcessLog(processId, level, message2, source) {
+    if (!this.processLogs) {
+      console.error("processLogs not initialized");
+      return;
+    }
+    const logEntry = {
+      timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+      level,
+      message: message2,
+      source: source || "process"
+    };
+    console.log(`[LOG] ${processId} ${level}: ${message2} (${source})`);
+    const logs2 = this.processLogs.get(processId) || [];
+    logs2.push(logEntry);
+    this.processLogs.set(processId, logs2);
+    this.broadcastLogs(processId, logEntry);
   }
 };
 
@@ -4087,6 +4208,8 @@ var makeHtmlTestFiles = (testsName2) => {
 // src/makeHtmlReportFile.ts
 import path16 from "path";
 import fs18 from "fs";
+
+// src/htmlReportLogic.ts
 var getSecondaryEndpointsPoints2 = (config2) => {
   const result = [];
   for (const runtime of ["node", "web", "golang", "python"]) {
@@ -4098,38 +4221,28 @@ var getSecondaryEndpointsPoints2 = (config2) => {
   }
   return result;
 };
-var makeHtmlReportFile = (testsName2, config2) => {
-  const tests = [...getSecondaryEndpointsPoints2(config2)];
-  for (const sourceFilePath of tests) {
-    const sourceFileSplit = sourceFilePath.split("/");
-    const sourceDir = sourceFileSplit.slice(0, -1);
-    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
-    const sourceFileNameMinusExtension = sourceFileName.split(".").slice(0, -1).join(".");
-    for (const runtime of ["node", "web", "golang", "python"]) {
-      const htmlFilePath = path16.normalize(
-        `${process.cwd()}/testeranto/reports/${testsName2}/${sourceDir.join(
-          "/"
-        )}/${sourceFileNameMinusExtension}/${runtime}/index.html`
-      );
-      fs18.mkdirSync(path16.dirname(htmlFilePath), { recursive: true });
-      const htmlDir = path16.dirname(htmlFilePath);
-      const reportJsPath = path16.join(
-        process.cwd(),
-        "dist",
-        "prebuild",
-        "Report.js"
-      );
-      const relativeReportJsPath = path16.relative(htmlDir, reportJsPath);
-      const relativeReportJsUrl = relativeReportJsPath.split(path16.sep).join("/");
-      const reportCssPath = path16.join(
-        process.cwd(),
-        "dist",
-        "prebuild",
-        "Report.css"
-      );
-      const relativeReportCssPath = path16.relative(htmlDir, reportCssPath);
-      const relativeReportCssUrl = relativeReportCssPath.split(path16.sep).join("/");
-      const htmlContent = `<!DOCTYPE html>
+var getApplicableRuntimes = (config2, testPath) => {
+  const runtimes = [];
+  for (const runtime of ["node", "web", "golang", "python"]) {
+    const runtimeConfig = config2[runtime];
+    if (runtimeConfig && runtimeConfig.tests) {
+      if (Object.keys(runtimeConfig.tests).includes(testPath)) {
+        runtimes.push(runtime);
+      }
+    }
+  }
+  return runtimes;
+};
+var generateHtmlContent = (params) => {
+  const {
+    sourceFileNameMinusExtension,
+    relativeReportCssUrl,
+    relativeReportJsUrl,
+    runtime,
+    sourceFilePath,
+    testsName: testsName2
+  } = params;
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -4184,11 +4297,55 @@ var makeHtmlReportFile = (testsName2, config2) => {
     </script>
 </body>
 </html>`;
-      fs18.writeFileSync(
-        htmlFilePath,
-        htmlContent
-        // webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
+};
+
+// src/makeHtmlReportFile.ts
+var makeHtmlReportFile = (testsName2, config2) => {
+  const tests = [...getSecondaryEndpointsPoints2(config2)];
+  for (const sourceFilePath of tests) {
+    const sourceFileSplit = sourceFilePath.split("/");
+    const sourceDir = sourceFileSplit.slice(0, -1);
+    const sourceFileName = sourceFileSplit[sourceFileSplit.length - 1];
+    const sourceFileNameMinusExtension = sourceFileName.split(".").slice(0, -1).join(".");
+    const applicableRuntimes = getApplicableRuntimes(config2, sourceFilePath);
+    console.log(
+      `Test "${sourceFilePath}" applicable to runtimes: ${applicableRuntimes.join(
+        ", "
+      )}`
+    );
+    for (const runtime of applicableRuntimes) {
+      const htmlFilePath = path16.normalize(
+        `${process.cwd()}/testeranto/reports/${testsName2}/${sourceDir.join(
+          "/"
+        )}/${sourceFileNameMinusExtension}/${runtime}/index.html`
       );
+      fs18.mkdirSync(path16.dirname(htmlFilePath), { recursive: true });
+      const htmlDir = path16.dirname(htmlFilePath);
+      const reportJsPath = path16.join(
+        process.cwd(),
+        "dist",
+        "prebuild",
+        "Report.js"
+      );
+      const relativeReportJsPath = path16.relative(htmlDir, reportJsPath);
+      const relativeReportJsUrl = relativeReportJsPath.split(path16.sep).join("/");
+      const reportCssPath = path16.join(
+        process.cwd(),
+        "dist",
+        "prebuild",
+        "Report.css"
+      );
+      const relativeReportCssPath = path16.relative(htmlDir, reportCssPath);
+      const relativeReportCssUrl = relativeReportCssPath.split(path16.sep).join("/");
+      const htmlContent = generateHtmlContent({
+        sourceFileNameMinusExtension,
+        relativeReportCssUrl,
+        relativeReportJsUrl,
+        runtime,
+        sourceFilePath,
+        testsName: testsName2
+      });
+      fs18.writeFileSync(htmlFilePath, htmlContent);
       console.log(`Generated HTML file: ${htmlFilePath}`);
     }
   }

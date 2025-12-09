@@ -28701,13 +28701,22 @@
     const handleWebSocketMessage = (data) => {
       console.log("Received WebSocket message:", data);
       if (data.type === "processes") {
-        if (data.data && data.data.processes) {
-          setProcesses(data.data.processes);
+        let processList = [];
+        if (data.data && data.data.processes && Array.isArray(data.data.processes)) {
+          processList = data.data.processes;
         } else if (Array.isArray(data.data)) {
-          setProcesses(data.data);
+          processList = data.data;
         }
+        setProcesses(processList);
+        const newLogs = {};
+        processList.forEach((process2) => {
+          if (process2.logs && Array.isArray(process2.logs)) {
+            newLogs[process2.processId] = process2.logs;
+          }
+        });
+        setLogs((prev) => ({ ...prev, ...newLogs }));
         if (autoRefresh && wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-          const processIds = data.data?.processes?.map((p) => p.processId) || (Array.isArray(data.data) ? data.data.map((p) => p.processId) : []);
+          const processIds = processList.map((p) => p.processId);
           processIds.forEach((processId) => {
             wsRef.current?.send(JSON.stringify({
               type: "subscribeToLogs",
@@ -28728,10 +28737,18 @@
       } else if (data.type === "runningProcesses") {
         if (Array.isArray(data.processes)) {
           setProcesses(data.processes);
+          const newLogs = {};
+          data.processes.forEach((process2) => {
+            if (process2.logs && Array.isArray(process2.logs)) {
+              newLogs[process2.processId] = process2.logs;
+            }
+          });
+          setLogs((prev) => ({ ...prev, ...newLogs }));
         }
       }
     };
     const requestLogs = (processId) => {
+      console.log(`Requesting logs for ${processId}`);
       if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         wsRef.current.send(JSON.stringify({
           type: "getLogs",

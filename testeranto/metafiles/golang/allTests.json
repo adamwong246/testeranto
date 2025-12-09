@@ -33,7 +33,7 @@
         }
       },
       "/Users/adam/Code/testeranto/example/Calculator.go": {
-        "bytes": 1989,
+        "bytes": 3994,
         "imports": [
           {
             "path": "encoding/json",
@@ -85,7 +85,7 @@
         "format": "esm"
       },
       "/Users/adam/Code/testeranto/example/Calculator.golingvu.implementation.go": {
-        "bytes": 4573,
+        "bytes": 12112,
         "imports": [
           {
             "path": "encoding/json",
@@ -111,7 +111,7 @@
         "format": "esm"
       },
       "/Users/adam/Code/testeranto/example/Calculator.golingvu.specification.go": {
-        "bytes": 2480,
+        "bytes": 5697,
         "imports": [
           {
             "path": "encoding/json",
@@ -147,20 +147,20 @@
             "bytesInOutput": 7121
           },
           "/Users/adam/Code/testeranto/example/Calculator.go": {
-            "bytesInOutput": 1989
+            "bytesInOutput": 3994
           },
           "/Users/adam/Code/testeranto/example/Calculator.golingvu.adapter.go": {
             "bytesInOutput": 2490
           },
           "/Users/adam/Code/testeranto/example/Calculator.golingvu.implementation.go": {
-            "bytesInOutput": 4573
+            "bytesInOutput": 12112
           },
           "/Users/adam/Code/testeranto/example/Calculator.golingvu.specification.go": {
-            "bytesInOutput": 2480
+            "bytesInOutput": 5697
           }
         },
-        "bytes": 18653,
-        "signature": "miy5al6y"
+        "bytes": 31414,
+        "signature": "miysqj32"
       }
     }
   }

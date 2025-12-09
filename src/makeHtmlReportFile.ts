@@ -1,21 +1,15 @@
 import path from "path";
 import fs from "fs";
 import { IBuiltConfig } from "./Types";
-
-const getSecondaryEndpointsPoints = (config: IBuiltConfig): string[] => {
-  const result: string[] = [];
-  for (const runtime of ["node", "web", "golang", "python"]) {
-    const runtimeConfig = config[runtime as keyof typeof config];
-    if (runtimeConfig && runtimeConfig.tests) {
-      const testKeys = Object.keys(runtimeConfig.tests);
-      result.push(...testKeys);
-    }
-  }
-  return result;
-};
+import {
+  getSecondaryEndpointsPoints,
+  getApplicableRuntimes,
+  generateHtmlContent,
+} from "./htmlReportLogic";
 
 export const makeHtmlReportFile = (testsName: string, config: IBuiltConfig) => {
   const tests = [...getSecondaryEndpointsPoints(config)];
+
   for (const sourceFilePath of tests) {
     const sourceFileSplit = sourceFilePath.split("/");
     const sourceDir = sourceFileSplit.slice(0, -1);
@@ -25,7 +19,16 @@ export const makeHtmlReportFile = (testsName: string, config: IBuiltConfig) => {
       .slice(0, -1)
       .join(".");
 
-    for (const runtime of ["node", "web", "golang", "python"]) {
+    // Get only the runtimes that actually have this test
+    const applicableRuntimes = getApplicableRuntimes(config, sourceFilePath);
+
+    console.log(
+      `Test "${sourceFilePath}" applicable to runtimes: ${applicableRuntimes.join(
+        ", "
+      )}`
+    );
+
+    for (const runtime of applicableRuntimes) {
       const htmlFilePath = path.normalize(
         `${process.cwd()}/testeranto/reports/${testsName}/${sourceDir.join(
           "/"
@@ -34,7 +37,7 @@ export const makeHtmlReportFile = (testsName: string, config: IBuiltConfig) => {
 
       fs.mkdirSync(path.dirname(htmlFilePath), { recursive: true });
 
-      // Calculate relative path to the bundled Report.js
+      // Calculate relative paths
       const htmlDir = path.dirname(htmlFilePath);
       const reportJsPath = path.join(
         process.cwd(),
@@ -43,7 +46,6 @@ export const makeHtmlReportFile = (testsName: string, config: IBuiltConfig) => {
         "Report.js"
       );
       const relativeReportJsPath = path.relative(htmlDir, reportJsPath);
-      // Ensure the path uses forward slashes for URLs
       const relativeReportJsUrl = relativeReportJsPath
         .split(path.sep)
         .join("/");
@@ -54,78 +56,23 @@ export const makeHtmlReportFile = (testsName: string, config: IBuiltConfig) => {
         "prebuild",
         "Report.css"
       );
-
       const relativeReportCssPath = path.relative(htmlDir, reportCssPath);
-      // Ensure the path uses forward slashes for URLs
       const relativeReportCssUrl = relativeReportCssPath
         .split(path.sep)
         .join("/");
 
-      // Write HTML file
-      const htmlContent = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Report: ${sourceFileNameMinusExtension}</title>
+      // Generate HTML content using the logic module
+      const htmlContent = generateHtmlContent({
+        sourceFileNameMinusExtension,
+        relativeReportCssUrl,
+        relativeReportJsUrl,
+        runtime,
+        sourceFilePath,
+        testsName,
+      });
 
-    <link rel="stylesheet" href="${relativeReportCssUrl}" />
-
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
-        #react-report-root {
-            margin: 0 auto;
-        }
-    </style>
-    <script src="${relativeReportJsUrl}"></script>
-</head>
-<body>
-    <div id="react-report-root"></div>
-    <script>
-        // Wait for the bundled script to load and render the React component
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if renderReport function is available
-            if (typeof renderReport === 'function') {
-                renderReport('react-report-root', {
-                    testName: '${sourceFileNameMinusExtension}',
-                    runtime: '${runtime}',
-                    sourceFilePath: '${sourceFilePath}',
-                    testSuite: '${testsName}'
-                });
-            } else {
-                console.error('renderReport function not found. Make sure Report.js is loaded.');
-                // Try again after a short delay
-                setTimeout(() => {
-                    if (typeof renderReport === 'function') {
-                        renderReport('react-report-root', {
-                            testName: '${sourceFileNameMinusExtension}',
-                            runtime: '${runtime}',
-                            sourceFilePath: '${sourceFilePath}',
-                            testSuite: '${testsName}'
-                        });
-                    } else {
-                        console.error('Still unable to find renderReport.');
-                    }
-                }, 100);
-            }
-        });
-    </script>
-</body>
-</html>`;
-
-      fs.writeFileSync(
-        htmlFilePath,
-        htmlContent
-        // webHtmlFrame(jsfilePath, htmlFilePath, cssFilePath)
-      );
+      fs.writeFileSync(htmlFilePath, htmlContent);
       console.log(`Generated HTML file: ${htmlFilePath}`);
-
-      // Create directory if it doesn't exist
     }
   }
 };

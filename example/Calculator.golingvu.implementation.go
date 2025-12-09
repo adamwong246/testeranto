@@ -47,6 +47,196 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 				InitialValues: initialValues,
 			}
 		},
+		"testMultipleDigits": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testLargeNumber": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testAdditionExpression": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testIncompleteAddition": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testSubtractionExpression": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testMultiplicationExpression": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testDivisionExpression": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testSimpleAddition": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testSimpleSubtraction": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testSimpleMultiplication": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testSimpleDivision": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testClearOperation": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testStartingWithOperator": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testMultipleOperators": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testDivisionByZero": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testInvalidExpression": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testMemoryStoreRecall": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testMemoryClear": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
+		"testMemoryAddition": func(name string, features []string, whens []*golingvu.BaseWhen, thens []*golingvu.BaseThen, givenCB interface{}, initialValues interface{}) *golingvu.BaseGiven {
+			return &golingvu.BaseGiven{
+				Key:           name,
+				Features:      features,
+				Whens:         whens,
+				Thens:         thens,
+				GivenCB:       givenCB,
+				InitialValues: initialValues,
+			}
+		},
 	}
 
 	impl.WhensMap = map[string]interface{}{
@@ -68,7 +258,7 @@ func NewCalculatorTestImplementation() golingvu.ITestImplementation {
 				Key: "enter",
 				WhenCB: func(store, testResource, pm interface{}) (interface{}, error) {
 					if calc, ok := store.(*Calculator); ok {
-						// For now, we'll just return the calculator
+						calc.Enter()
 						return calc, nil
 					}
 					return store, nil

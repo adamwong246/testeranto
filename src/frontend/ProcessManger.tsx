@@ -116,15 +116,26 @@ export const ProcessManger = () => {
     console.log('Received WebSocket message:', data);
     
     if (data.type === 'processes') {
-      if (data.data && data.data.processes) {
-        setProcesses(data.data.processes);
+      let processList: any[] = [];
+      // The server sends data.data with processes array and other fields
+      if (data.data && data.data.processes && Array.isArray(data.data.processes)) {
+        processList = data.data.processes;
       } else if (Array.isArray(data.data)) {
-        setProcesses(data.data);
+        processList = data.data;
       }
+      setProcesses(processList);
+      
+      // Extract logs from each process
+      const newLogs: Record<string, LogEntry[]> = {};
+      processList.forEach((process: any) => {
+        if (process.logs && Array.isArray(process.logs)) {
+          newLogs[process.processId] = process.logs;
+        }
+      });
+      setLogs(prev => ({ ...prev, ...newLogs }));
       
       if (autoRefresh && wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-        const processIds = data.data?.processes?.map((p: any) => p.processId) || 
-                          (Array.isArray(data.data) ? data.data.map((p: any) => p.processId) : []);
+        const processIds = processList.map((p: any) => p.processId);
         processIds.forEach((processId: string) => {
           wsRef.current?.send(JSON.stringify({
             type: 'subscribeToLogs',
@@ -145,11 +156,20 @@ export const ProcessManger = () => {
     } else if (data.type === 'runningProcesses') {
       if (Array.isArray(data.processes)) {
         setProcesses(data.processes);
+        // Extract logs from each process
+        const newLogs: Record<string, LogEntry[]> = {};
+        data.processes.forEach((process: any) => {
+          if (process.logs && Array.isArray(process.logs)) {
+            newLogs[process.processId] = process.logs;
+          }
+        });
+        setLogs(prev => ({ ...prev, ...newLogs }));
       }
     }
   };
 
   const requestLogs = (processId: string) => {
+    console.log(`Requesting logs for ${processId}`);
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({
         type: 'getLogs',

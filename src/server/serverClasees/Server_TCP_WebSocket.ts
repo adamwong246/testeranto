@@ -17,8 +17,45 @@ import { Server_TCP_Http } from "./Server_TCP_Http";
 import { IMode } from "../../app/frontend/types";
 
 export class Server_TCP_WebSocket extends Server_TCP_Http {
+  processLogs: any;
+  clients: any;
+  allProcesses: any;
+  runningProcesses: any;
+
   constructor(configs: any, name: string, mode: IMode) {
     super(configs, name, mode);
+    
+    // Ensure Maps exist (they may be initialized by parent)
+    if (!this.processLogs) {
+      this.processLogs = new Map();
+    }
+    if (!this.clients) {
+      this.clients = new Set();
+    }
+    if (!this.allProcesses) {
+      this.allProcesses = new Map();
+    }
+    if (!this.runningProcesses) {
+      this.runningProcesses = new Map();
+    } else {
+      // Convert to Map if it's a plain object (from parent)
+      if (!(this.runningProcesses instanceof Map)) {
+        const entries = Object.entries(this.runningProcesses);
+        this.runningProcesses = new Map(entries);
+      }
+    }
+    
+    // Ensure logSubscriptions exists
+    (this as any).logSubscriptions = new Map();
+
+    // Override runningProcesses.set to capture logs for new processes
+    this.overrideRunningProcessesSet();
+
+    // Attach log capture to existing processes (after parent may have added some)
+    setTimeout(() => {
+      this.attachLogCaptureToExistingProcesses();
+    }, 100);
+
     this.setupWebSocketHandlers();
   }
 
@@ -54,11 +91,14 @@ export class Server_TCP_WebSocket extends Server_TCP_Http {
       try {
         parsed = JSON.parse(rawData);
       } catch (parseError) {
-        console.error("Failed to parse WebSocket message as JSON:", rawData);
+        console.error(
+          "Failed to parse WebSocket message as JSON:",
+          rawData,
+          parseError
+        );
         return;
       }
 
-      // IPC format is no longer supported
       if (Array.isArray(parsed)) {
         console.error(ERROR_MESSAGES.IPC_FORMAT_NO_LONGER_SUPPORTED);
         console.error("Received array message:", parsed);
@@ -199,20 +239,20 @@ export class Server_TCP_WebSocket extends Server_TCP_Http {
       ws.send(
         JSON.stringify({
           type: "processes",
-          data: (this as any).getProcessSummary ? (this as any).getProcessSummary() : { processes: [] },
-          timestamp: new Date().toISOString()
+          data: this.getProcessSummary(),
+          timestamp: new Date().toISOString(),
         })
       );
     } else if (wsm.type === "getLogs") {
       // Handle monitoring request for logs
       const processId = wsm.data?.processId;
-      if (processId && (this as any).getProcessLogs) {
+      if (processId) {
         ws.send(
           JSON.stringify({
             type: "logs",
             processId,
-            logs: (this as any).getProcessLogs(processId) || [],
-            timestamp: new Date().toISOString()
+            logs: this.getProcessLogs(processId),
+            timestamp: new Date().toISOString(),
           })
         );
       }
@@ -224,19 +264,148 @@ export class Server_TCP_WebSocket extends Server_TCP_Http {
         if (!(this as any).logSubscriptions) {
           (this as any).logSubscriptions = new Map();
         }
-        const subscriptions = (this as any).logSubscriptions.get(processId) || new Set();
+        const subscriptions =
+          (this as any).logSubscriptions.get(processId) || new Set();
         subscriptions.add(ws);
         (this as any).logSubscriptions.set(processId, subscriptions);
-        
-        ws.send(JSON.stringify({
-          type: "logSubscription",
-          processId,
-          status: "subscribed",
-          timestamp: new Date().toISOString()
-        }));
+
+        ws.send(
+          JSON.stringify({
+            type: "logSubscription",
+            processId,
+            status: "subscribed",
+            timestamp: new Date().toISOString(),
+          })
+        );
       }
     } else {
       console.warn("Unhandled WebSocket message type:", wsm.type);
     }
+  }
+
+  private getProcessSummary(): { processes: any[] } {
+    const processes = Array.from(this.allProcesses.entries()).map(
+      ([id, procInfo]) =>
+        serializeProcessInfo(id, procInfo, this.processLogs.get(id) || [])
+    );
+    return { processes };
+  }
+
+  private getProcessLogs(processId: string): any[] {
+    return this.processLogs.get(processId) || [];
+  }
+
+  // Method to broadcast logs to subscribed clients
+  public broadcastLogs(processId: string, logEntry: any): void {
+    if (!(this as any).logSubscriptions) {
+      (this as any).logSubscriptions = new Map();
+    }
+    const subscriptions = (this as any).logSubscriptions.get(processId);
+    if (subscriptions) {
+      const message = JSON.stringify({
+        type: "logs",
+        processId,
+        logs: [logEntry],
+        timestamp: new Date().toISOString(),
+      });
+      subscriptions.forEach((client: WebSocket) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(message);
+        }
+      });
+    }
+  }
+
+  // Attach log capture to existing processes
+  private attachLogCaptureToExistingProcesses(): void {
+    if (!this.runningProcesses || !(this.runningProcesses instanceof Map)) {
+      console.warn('runningProcesses is not available or not a Map');
+      return;
+    }
+    for (const [processId, proc] of this.runningProcesses.entries()) {
+      this.attachLogCapture(processId, proc);
+    }
+  }
+
+  // Override runningProcesses.set to capture logs for new processes
+  private overrideRunningProcessesSet(): void {
+    console.log('Attempting to override runningProcesses.set', this.runningProcesses);
+    if (!(this.runningProcesses instanceof Map)) {
+      console.warn('runningProcesses is not a Map, cannot override set');
+      return;
+    }
+    const originalSet = this.runningProcesses.set.bind(this.runningProcesses);
+    this.runningProcesses.set = (key: string, value: any) => {
+      console.log(`runningProcesses.set called for ${key}`);
+      const result = originalSet(key, value);
+      this.attachLogCapture(key, value);
+      return result;
+    };
+  }
+
+  // Attach log capture to a single process
+  private attachLogCapture(processId: string, childProcess: any): void {
+    console.log(`Attaching log capture to process ${processId}`, childProcess ? 'has childProcess' : 'no childProcess');
+    if (!childProcess) {
+      console.warn(`No childProcess for ${processId}`);
+      return;
+    }
+
+    // Capture stdout
+    if (childProcess.stdout && typeof childProcess.stdout.on === 'function') {
+      console.log(`Process ${processId} has stdout`);
+      childProcess.stdout.on("data", (data: Buffer) => {
+        const message = data.toString().trim();
+        if (message) {
+          this.addProcessLog(processId, "info", message, "stdout");
+        }
+      });
+    } else {
+      console.warn(`Child process ${processId} has no stdout or stdout.on`);
+    }
+
+    // Capture stderr
+    if (childProcess.stderr && typeof childProcess.stderr.on === 'function') {
+      console.log(`Process ${processId} has stderr`);
+      childProcess.stderr.on("data", (data: Buffer) => {
+        const message = data.toString().trim();
+        if (message) {
+          this.addProcessLog(processId, "error", message, "stderr");
+        }
+      });
+    } else {
+      console.warn(`Child process ${processId} has no stderr or stderr.on`);
+    }
+  }
+
+  // Call this method when a process outputs data
+  public addProcessLog(
+    processId: string,
+    level: string,
+    message: string,
+    source?: string
+  ): void {
+    // Ensure processLogs exists (inherited from parent)
+    if (!this.processLogs) {
+      console.error("processLogs not initialized");
+      return;
+    }
+
+    const logEntry = {
+      timestamp: new Date().toISOString(),
+      level,
+      message,
+      source: source || "process",
+    };
+
+    console.log(`[LOG] ${processId} ${level}: ${message} (${source})`);
+
+    // Add to processLogs
+    const logs = this.processLogs.get(processId) || [];
+    logs.push(logEntry);
+    this.processLogs.set(processId, logs);
+
+    // Broadcast to subscribed clients
+    this.broadcastLogs(processId, logEntry);
   }
 }

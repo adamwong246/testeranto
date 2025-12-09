@@ -40,6 +40,14 @@ var Init_default = async () => {
     `node_modules/testeranto/dist/prebuild/ProcessManager.css`,
     `testeranto/ProcessManager.css`
   );
+  fs.copyFileSync(
+    `node_modules/testeranto/dist/prebuild/Features.js`,
+    `testeranto/ProcessManager.js`
+  );
+  fs.copyFileSync(
+    `node_modules/testeranto/dist/prebuild/Features.css`,
+    `testeranto/ProcessManager.css`
+  );
 };
 
 // src/init-docs.ts
