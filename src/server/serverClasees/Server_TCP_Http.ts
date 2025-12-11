@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 
 import { CONTENT_TYPES } from "./Server_TCP_constants";
-import { getContentType } from "./Server_TCP_utils";
+import { getContentType } from "./utils/Server_TCP_utils";
 import { Server_TCP_Core } from "./Server_TCP_Core";
 import { IMode } from "../types";
 

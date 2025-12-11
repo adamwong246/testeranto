@@ -77,20 +77,20 @@ const tiposkripto = async <I extends Ibdd_in_any, O extends Ibdd_out, M>(
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const execer = process.argv[0];
+    // const execer = process.argv[0];
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const builtFile: string = process.argv[1];
 
     wsPort = process.argv[2];
-    console.log("wsPort ?!?!", wsPort);
+    // console.log("wsPort ?!?!", wsPort);
 
-    const testResource: string = process.argv[3];
+    // const testResource: string = process.argv[3];
     // // Read WebSocket port from command line argument (process.argv[3]) or environment variable
     // wsPort = process.argv[2];
     // if (!wsPort) {
     //   console.error("wsPort is undefind");
     // }
-    process.exit((await t.receiveTestResourceConfig(testResource)).fails);
+    // process.exit((await t.receiveTestResourceConfig(testResource)).fails);
   } catch (e) {
     console.error(e);
     console.error(e.stack);

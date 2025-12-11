@@ -78,7 +78,9 @@ var PM_Node = class extends PM {
           this.ws.on("open", onOpen);
         });
       }
-      return Promise.reject(new Error(`WebSocket is not open. State: ${this.ws.readyState}`));
+      return Promise.reject(
+        new Error(`WebSocket is not open. State: ${this.ws.readyState}`)
+      );
     };
     return waitForOpen().then(() => {
       return new Promise((res, rej) => {
@@ -1132,12 +1134,8 @@ var tiposkripto = async (input, testSpecification, testImplementation, testAdapt
     process.on("unhandledRejection", (reason, promise) => {
       console.error("Unhandled Rejection at:", promise, "reason:", reason);
     });
-    const execer = process.argv[0];
     const builtFile = process.argv[1];
     wsPort = process.argv[2];
-    console.log("wsPort ?!?!", wsPort);
-    const testResource = process.argv[3];
-    process.exit((await t.receiveTestResourceConfig(testResource)).fails);
   } catch (e) {
     console.error(e);
     console.error(e.stack);

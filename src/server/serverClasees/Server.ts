@@ -17,7 +17,7 @@ import { getRunnables } from "../utils";
 // import { BuildProcessManager } from "./BuildProcessManager";
 // import { BuildProcessStarter } from "./BuildProcessStarter";
 // import { ServerTestExecutor } from "./ServerTestExecutor";
-import { TestEnvironmentSetup } from "./TestEnvironmentSetup";
+import { TestEnvironmentSetup } from "./utils/TestEnvironmentSetup";
 import { ServerTaskCoordinator } from "./ServerTaskCoordinator";
 // import { TypeCheckNotifier } from "./TypeCheckNotifier";
 

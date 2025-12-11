@@ -12,7 +12,7 @@ import {
   prepareCommandArgs,
   handlePromiseResult,
   sendErrorResponse,
-} from "./Server_TCP_utils";
+} from "./utils/Server_TCP_utils";
 import { Server_TCP_Http } from "./Server_TCP_Http";
 import { IMode } from "../types";
 

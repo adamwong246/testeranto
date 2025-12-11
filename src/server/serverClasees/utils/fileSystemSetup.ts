@@ -3,8 +3,8 @@ import {
   IndexHtml,
   ProcessMangerHtml,
   // ReportHtml,
-} from "../../clients/utils/buildTemplates";
-import { IBuiltConfig } from "../../lib";
+} from "../../../clients/utils/buildTemplates";
+import { IBuiltConfig } from "../../../lib";
 
 export function setupFileSystem(config: IBuiltConfig, testsName: string) {
   // fs.writeFileSync(`${process.cwd()}/testeranto/Report.html`, ReportHtml());

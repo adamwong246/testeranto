@@ -25,14 +25,15 @@ export class PM_Node extends PM {
 
     // Connect via WebSocket instead of net.Socket
     this.ws = new WebSocket(wsUrl);
-    
-    this.ws.on('open', () => {
-      console.log('WebSocket connected to', wsUrl);
+
+    this.ws.on("open", () => {
+      console.log("WebSocket connected to", wsUrl);
     });
 
-    this.ws.on('message', (data) => {
+    this.ws.on("message", (data) => {
       try {
         const message = JSON.parse(data.toString());
+
         // Handle responses with keys
         if (message.key && this.messageCallbacks.has(message.key)) {
           const callback = this.messageCallbacks.get(message.key);
@@ -42,16 +43,16 @@ export class PM_Node extends PM {
           }
         }
       } catch (error) {
-        console.error('Error parsing WebSocket message:', error);
+        console.error("Error parsing WebSocket message:", error);
       }
     });
 
-    this.ws.on('error', (error) => {
-      console.error('WebSocket error:', error);
+    this.ws.on("error", (error) => {
+      console.error("WebSocket error:", error);
     });
 
-    this.ws.on('close', () => {
-      console.log('WebSocket connection closed');
+    this.ws.on("close", () => {
+      console.log("WebSocket connection closed");
     });
   }
 
@@ -63,7 +64,7 @@ export class PM_Node extends PM {
     return new Promise((resolve) => {
       if (this.ws && this.ws.readyState === WebSocket.OPEN) {
         this.ws.close();
-        this.ws.on('close', () => {
+        this.ws.on("close", () => {
           resolve();
         });
       } else {
@@ -74,7 +75,7 @@ export class PM_Node extends PM {
 
   send<I>(command: string, ...argz): Promise<I> {
     const key = Math.random().toString();
-    
+
     // Wait for WebSocket to be open
     const waitForOpen = (): Promise<void> => {
       if (this.ws.readyState === WebSocket.OPEN) {
@@ -83,14 +84,16 @@ export class PM_Node extends PM {
       if (this.ws.readyState === WebSocket.CONNECTING) {
         return new Promise((resolve) => {
           const onOpen = () => {
-            this.ws.off('open', onOpen);
+            this.ws.off("open", onOpen);
             resolve();
           };
-          this.ws.on('open', onOpen);
+          this.ws.on("open", onOpen);
         });
       }
       // If closing or closed, reject
-      return Promise.reject(new Error(`WebSocket is not open. State: ${this.ws.readyState}`));
+      return Promise.reject(
+        new Error(`WebSocket is not open. State: ${this.ws.readyState}`)
+      );
     };
 
     return waitForOpen().then(() => {
@@ -110,10 +113,10 @@ export class PM_Node extends PM {
         const message = {
           type: command,
           data: argz.length > 0 ? argz : undefined,
-          key: key
+          key: key,
         };
         this.ws.send(JSON.stringify(message));
-        
+
         // Clean up timeout on response
         const originalCallback = this.messageCallbacks.get(key);
         if (originalCallback) {

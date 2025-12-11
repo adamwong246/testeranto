@@ -3,7 +3,7 @@
  * Utility functions for Server_TCP
  */
 import path from "path";
-import { CONTENT_TYPES } from "./Server_TCP_constants";
+import { CONTENT_TYPES } from "../Server_TCP_constants";
 
 /**
  * Determine content type based on file extension

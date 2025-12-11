@@ -92,7 +92,7 @@
         "format": "esm"
       },
       "src/clients/node.ts": {
-        "bytes": 9142,
+        "bytes": 9144,
         "imports": [
           {
             "path": "ws",
@@ -289,7 +289,7 @@
         "format": "esm"
       },
       "src/lib/Node.ts": {
-        "bytes": 3062,
+        "bytes": 3074,
         "imports": [
           {
             "path": "src/lib/index.ts",
@@ -448,7 +448,7 @@
             "kind": "import-statement"
           },
           {
-            "path": "testeranto/bundles/allTests/node/Node-LRYWJQKK.mjs",
+            "path": "testeranto/bundles/allTests/node/Node-LLN5AWR3.mjs",
             "kind": "dynamic-import"
           },
           {
@@ -483,7 +483,7 @@
         },
         "bytes": 11827
       },
-      "testeranto/bundles/allTests/node/Node-LRYWJQKK.mjs": {
+      "testeranto/bundles/allTests/node/Node-LLN5AWR3.mjs": {
         "imports": [
           {
             "path": "testeranto/bundles/allTests/node/chunk-GD6O3ZZC.mjs",
@@ -512,7 +512,7 @@
         "entryPoint": "src/lib/Node.ts",
         "inputs": {
           "src/clients/node.ts": {
-            "bytesInOutput": 7112
+            "bytesInOutput": 7128
           },
           "src/clients/index.ts": {
             "bytesInOutput": 174
@@ -536,10 +536,10 @@
             "bytesInOutput": 6312
           },
           "src/lib/Node.ts": {
-            "bytesInOutput": 1687
+            "bytesInOutput": 1494
           }
         },
-        "bytes": 30674
+        "bytes": 30497
       },
       "testeranto/bundles/allTests/node/chunk-GD6O3ZZC.mjs": {
         "imports": [],

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
-import { generateStreamId } from "./Server_TCP_utils";
+import { generateStreamId } from "./utils/Server_TCP_utils";
 import { Server_TCP_FileService } from "./Server_TCP_FileService";
 import { IMode } from "../types";
 
