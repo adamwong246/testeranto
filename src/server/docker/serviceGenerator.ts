@@ -3,7 +3,7 @@
 
 import { IBuiltConfig, IRunTime } from "../../Types";
 import chromiumService from "./chromiumService";
-import { RUNTIME_STRATEGIES, RuntimeName } from "../strategies";
+const buildService = await import("./buildService");
 import aiderPoolService from "./aiderPoolService";
 import { getProcessPoolType } from "../utils";
 
@@ -41,14 +41,16 @@ export async function generateServices(
 
     // 1. Build Service
     const buildServiceName = `${runtime}-build`;
-    const buildService = await import("./buildService");
+    // const buildService = await import("./buildService");
     const buildServiceConfig = buildService.default(runtime);
 
+    // console.log("buildServiceConfig", runtime);
+
     // Add completion signal environment variable
-    if (!buildServiceConfig.environment) {
-      buildServiceConfig.environment = {};
-    }
-    buildServiceConfig.environment.COMPLETION_SIGNAL_PATH = `/workspace/testeranto/metafiles/${runtime}/build_complete`;
+    // if (!buildServiceConfig.environment) {
+    //   buildServiceConfig.environment = {};
+    // }
+    // buildServiceConfig.environment.COMPLETION_SIGNAL_PATH = `/workspace/testeranto/metafiles/${runtime}/build_complete`;
 
     services[buildServiceName] = buildServiceConfig;
 

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
-import { setupDirectories } from "./directorySetup";
+import { writeComposeFile } from "./composeWriter";
 import { generateRuntimeDockerfiles } from "./runtimeDockerfileGenerator";
 import { generateServices } from "./serviceGenerator";
-import { writeComposeFile } from "./composeWriter";
 // import { getStrategyForRuntime, getCategoryForRuntime } from "../strategies";
 
 export async function setupDockerCompose(
@@ -55,7 +55,9 @@ export async function setupDockerCompose(
 
   try {
     // Setup directories
-    await setupDirectories(config, runtimes, composeDir, log, error);
+    // await setupDirectories(config, runtimes, composeDir, log, error);
+
+    fs.mkdirSync(composeDir, { recursive: true });
 
     // Generate runtime-specific Dockerfiles
     await generateRuntimeDockerfiles(config, runtimes, composeDir, log, error);

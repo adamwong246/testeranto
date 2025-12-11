@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import yaml from "js-yaml";
 import {
   down,
   IDockerComposeResult,
@@ -11,12 +12,12 @@ import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../lib";
 import { createBuildService } from "../docker/buildServiceGenerator";
-import { setupDockerfileForBuildGolang } from "../runtimes/golang/setupDockerfileForBuildGolang";
-import { setupDockerfileForBuildNode } from "../runtimes/node/setupDockerfileForBuildNode";
-import { setupDockerfileForBuildPython } from "../runtimes/python/setupDockerfileForBuildPython";
-import { setupDockerfileForBuildWeb } from "../runtimes/web/setupDockerfileForBuildWeb";
+import { nodeDockerFile } from "../runtimes/node/nodeDocker";
+import { webDockerFile } from "../runtimes/web/webDocker";
+import { pythonDockerFile } from "../runtimes/python/pythonDocker";
 import { DockerComposeOptions, IMode } from "../types";
 import { Server_TCP_Commands } from "./Server_TCP_Commands";
+import { golangDockerFile } from "../runtimes/golang/golangDocker";
 
 export class Server_DockerCompose extends Server_TCP_Commands {
   private cwd: string;
@@ -130,39 +131,39 @@ export class Server_DockerCompose extends Server_TCP_Commands {
   }
 
   setupDockerfileForBuild(runtime: IRunTime, testsName: string): string {
-    const configFilePath = process.argv[2];
+    // const configFilePath = process.argv[2];
 
-    let dockerfileContent: string;
+    let dockerfileContent: object;
 
     if (runtime === "node") {
-      dockerfileContent = setupDockerfileForBuildNode(configFilePath);
+      dockerfileContent = nodeDockerFile(runtime);
     } else if (runtime === "web") {
-      dockerfileContent = setupDockerfileForBuildWeb(configFilePath);
+      dockerfileContent = webDockerFile(runtime);
     } else if (runtime === "python") {
-      dockerfileContent = setupDockerfileForBuildPython(configFilePath);
+      dockerfileContent = pythonDockerFile(runtime);
     } else if (runtime === "golang") {
-      dockerfileContent = setupDockerfileForBuildGolang(configFilePath);
+      dockerfileContent = golangDockerFile(runtime);
     } else {
       throw new Error(
         `Unsupported runtime for build Dockerfile generation: ${runtime}`
       );
     }
 
-    if (!dockerfileContent || dockerfileContent.trim().length === 0) {
-      console.warn(
-        `Generated empty Build Dockerfile for ${runtime}, using fallback`
-      );
-      const baseNodeImage = "node:20.19.4-alpine";
-      dockerfileContent = `FROM ${
-        runtime === "node"
-          ? baseNodeImage
-          : runtime === "python"
-          ? "python:3.11-alpine"
-          : runtime === "golang"
-          ? "golang:1.21-alpine"
-          : baseNodeImage
-      }\nWORKDIR /app\nRUN mkdir -p /workspace/testeranto/metafiles\nCOPY . .\nRUN echo 'Build phase completed'\nCMD ["sh", "-c", "echo 'Build service started' && tail -f /dev/null"]\n`;
-    }
+    // if (!dockerfileContent || dockerfileContent.trim().length === 0) {
+    //   console.warn(
+    //     `Generated empty Build Dockerfile for ${runtime}, using fallback`
+    //   );
+    //   const baseNodeImage = "node:20.19.4-alpine";
+    //   dockerfileContent = `FROM ${
+    //     runtime === "node"
+    //       ? baseNodeImage
+    //       : runtime === "python"
+    //       ? "python:3.11-alpine"
+    //       : runtime === "golang"
+    //       ? "golang:1.21-alpine"
+    //       : baseNodeImage
+    //   }\nWORKDIR /app\nRUN mkdir -p /workspace/testeranto/metafiles\nCOPY . .\nRUN echo 'Build phase completed'\nCMD ["sh", "-c", "echo 'Build service started' && tail -f /dev/null"]\n`;
+    // }
 
     const dockerfileName = `${runtime}.Dockerfile`;
     const dockerfileDir = path.join(
@@ -185,14 +186,14 @@ export class Server_DockerCompose extends Server_TCP_Commands {
     const fullDockerfileDir = path.join(process.cwd(), dockerfileDir);
     fs.mkdirSync(fullDockerfileDir, { recursive: true });
     const fullDockerfilePath = path.join(process.cwd(), dockerfilePath);
-    fs.writeFileSync(fullDockerfilePath, dockerfileContent);
+    fs.writeFileSync(fullDockerfilePath, yaml.dump(dockerfileContent));
 
-    // Verify the file exists
-    if (!fs.existsSync(fullDockerfilePath)) {
-      throw new Error(
-        `Failed to create build Dockerfile at ${fullDockerfilePath}`
-      );
-    }
+    // // Verify the file exists
+    // if (!fs.existsSync(fullDockerfilePath)) {
+    //   throw new Error(
+    //     `Failed to create build Dockerfile at ${fullDockerfilePath}`
+    //   );
+    // }
 
     return dockerfileDir;
   }
