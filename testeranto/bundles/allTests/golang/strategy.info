@@ -1,0 +1,3 @@
+runtime: golang
+strategy: combined-build-test-process-pools
+generated: 2025-12-11T06:53:51.360Z

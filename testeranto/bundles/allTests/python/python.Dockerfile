@@ -1,5 +1,13 @@
+# Testeranto Dockerfile for python
+# Strategy: combined-build-test-process-pools (interpreted)
+# Generated: 2025-12-11T06:53:51.361Z
 FROM python:3.11-alpine
 WORKDIR /workspace
+
+# Strategy: combined-build-test-process-pools - Interpreted language with process pools
+ENV STRATEGY=combined-build-test-process-pools
+ENV RUNTIME=python
+ENV CATEGORY=interpreted
 
 # Install required Python packages including websockets for WebSocket communication
 RUN pip install websockets>=12.0

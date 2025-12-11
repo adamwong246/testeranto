@@ -6,6 +6,7 @@ import { setupDirectories } from "./directorySetup";
 import { generateRuntimeDockerfiles } from "./runtimeDockerfileGenerator";
 import { generateServices } from "./serviceGenerator";
 import { writeComposeFile } from "./composeWriter";
+import { getStrategyForRuntime, getCategoryForRuntime } from "../strategies";
 
 export async function setupDockerCompose(
   config: IBuiltConfig,
@@ -34,6 +35,21 @@ export async function setupDockerCompose(
   // Define runtimes once at the beginning
   const runtimes: IRunTime[] = ["node", "web", "golang", "python"];
 
+  // Log strategy information for each runtime
+  log("Generating docker-compose with strategies:");
+  for (const runtime of runtimes) {
+    const strategy = getStrategyForRuntime(runtime);
+    const category = getCategoryForRuntime(runtime);
+    log(`  ${runtime}: ${category} -> ${strategy}`);
+    
+    // Log whether tests run in build container or separate containers
+    if (strategy === "separate-build-combined-test") {
+      log(`    -> Separate test containers for compiled language`);
+    } else {
+      log(`    -> Tests run within build container`);
+    }
+  }
+
   // First, ensure all necessary directories exist
   const composeDir = path.join(process.cwd(), "testeranto", "bundles");
   
@@ -55,6 +71,8 @@ export async function setupDockerCompose(
     
     // Write the compose file
     await writeComposeFile(services, testsName, composeDir, error);
+    
+    log("Docker-compose generation complete with strategy-aware configurations");
     
   } catch (err) {
     error(`Error in setupDockerCompose:`, err);

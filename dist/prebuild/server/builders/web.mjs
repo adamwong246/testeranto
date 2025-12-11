@@ -5,6 +5,7 @@ import {
   web_default
 } from "../../chunk-4KMVPZBT.mjs";
 import "../../chunk-SFBHYNUJ.mjs";
+import "../../chunk-3X2YHN6Q.mjs";
 
 // src/server/builders/web.ts
 var isDev = process.argv.includes("dev");

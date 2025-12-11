@@ -23,7 +23,18 @@ const config: ITestconfig = {
   src: "",
   test: SINGLE_TEST_BLOCK,
   prod: SINGLE_PROD_BLOCK,
-  checks: CHECKS_CONFIG,
+  checks: CHECKS_CONFIG, // Legacy - kept for backward compatibility
+  
+  // New runtime-native check configuration
+  check: {
+    node: "src/staticAnalysis/node.js",
+    python: "src/staticAnalysis/python.py",
+    golang: "src/staticAnalysis/go.go",
+    web: "src/staticAnalysis/web.js",
+    enabled: true,
+    failOnError: true,
+  },
+  
   build: [golangConfig.options.build!],
 
   processPool: {

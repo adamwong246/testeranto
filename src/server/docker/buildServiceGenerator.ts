@@ -7,33 +7,9 @@ export function createBuildService(
   dockerfileDir: string,
   testsName: string
 ): Record<string, any> {
-  // Determine the Dockerfile path based on runtime
-  let dockerfilePath: string;
-
-  if (runtime === "node") {
-    dockerfilePath = `testeranto/bundles/allTests/node/node.Dockerfile`;
-  } else if (runtime === "web") {
-    dockerfilePath = `testeranto/bundles/allTests/web/web.Dockerfile`;
-  } else if (runtime === "golang") {
-    dockerfilePath = `testeranto/bundles/allTests/golang/golang.Dockerfile`;
-  } else if (runtime === "python") {
-    dockerfilePath = `testeranto/bundles/allTests/python/python.Dockerfile`;
-  } else {
-    dockerfilePath = `${dockerfileDir}/Dockerfile`;
-  }
-
-  // Build the service configuration matching the old format (context: /Users/adam/Code/testeranto)
-  const serviceConfig: any = {
-    build: {
-      context: "/Users/adam/Code/testeranto",
-      dockerfile: dockerfilePath,
-    },
-    volumes: ["./testeranto/metafiles:/workspace/testeranto/metafiles"],
-    image: `bundles-${runtime}-build:latest`,
-    restart: "no",
-  };
-
+  // Import the buildService function
+  const buildService = require("./buildService").default;
   return {
-    [`${runtime}-build`]: serviceConfig,
+    [`${runtime}-build`]: buildService(runtime)
   };
 }

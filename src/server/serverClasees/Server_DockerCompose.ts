@@ -15,7 +15,7 @@ import { setupDockerfileForBuildNode } from "../node/setupDockerfileForBuildNode
 import { setupDockerfileForBuildPython } from "../python/setupDockerfileForBuildPython";
 import { DockerComposeOptions } from "../types";
 import { setupDockerfileForBuildWeb } from "../web/setupDockerfileForBuildWeb";
-import { createBuildService } from "../docker/serviceGenerator";
+import { createBuildService } from "../docker/buildServiceGenerator";
 import { IMode } from "../../app/frontend/types";
 import { Server_TCP_Commands } from "./Server_TCP_Commands";
 

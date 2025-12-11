@@ -1,3 +1,6 @@
+# Strategy: combined-build-test-process-pools
+# Runtime: node
+
 FROM node:20.19.4-alpine
 WORKDIR /workspace
 # Install libxml2-utils for xmllint and netcat-openbsd for network checks

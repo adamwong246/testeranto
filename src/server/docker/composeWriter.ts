@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import yaml from "js-yaml";
 import path from "path";
@@ -16,7 +17,7 @@ export async function writeComposeFile(
 
   // Ensure all test services have restart: "no" explicitly
   for (const [serviceName, serviceConfig] of Object.entries(services)) {
-    if (serviceName.includes('-example-') || serviceName.includes('-test-')) {
+    if (serviceName.includes("-example-") || serviceName.includes("-test-")) {
       // This is a test service
       serviceConfig.restart = "no";
       // Also ensure no health check

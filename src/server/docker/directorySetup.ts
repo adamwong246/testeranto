@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { nodeDocker } from "../node/nodeDocker";
 import { golangDocker } from "../golang/golangDocker";
 import { pythonDocker } from "../python/pythonDocker";
+import { getStrategyForRuntime } from "../strategies";
 
 export async function setupDirectories(
   config: IBuiltConfig,
@@ -20,8 +22,14 @@ export async function setupDirectories(
       const hasTests =
         config[runtime]?.tests && Object.keys(config[runtime].tests).length > 0;
       if (hasTests) {
+        const strategy = getStrategyForRuntime(runtime);
         const runtimeDir = path.join(composeDir, "allTests", runtime);
         fs.mkdirSync(runtimeDir, { recursive: true });
+
+        // Create a strategy info file
+        const strategyInfoPath = path.join(runtimeDir, "strategy.info");
+        const strategyInfo = `runtime: ${runtime}\nstrategy: ${strategy}\ngenerated: ${new Date().toISOString()}\n`;
+        fs.writeFileSync(strategyInfoPath, strategyInfo);
 
         // Also create test-specific directories for each test
         // But skip creating Dockerfiles for web tests since they won't have services
@@ -37,6 +45,7 @@ export async function setupDirectories(
 
             // Only create Dockerfiles for non-web runtimes
             // Web tests don't need individual Dockerfiles since they won't have services
+            // Also, for compiled languages, we might want different Dockerfiles
             if (runtime !== "web") {
               const dockerfilePath = path.join(testDir, "Dockerfile");
 
@@ -52,12 +61,23 @@ export async function setupDirectories(
                   dockerfileContent = pythonDocker;
                 }
 
+                // Add strategy comment
                 if (dockerfileContent) {
+                  dockerfileContent =
+                    `# Strategy: ${strategy}\n# Runtime: ${runtime}\n\n` +
+                    dockerfileContent;
                   fs.writeFileSync(dockerfilePath, dockerfileContent);
                 }
               }
             }
           }
+        }
+
+        // Create strategy-specific directories
+        if (strategy === "separate-build-combined-test") {
+          // Compiled languages need build cache directory
+          const buildCacheDir = path.join(composeDir, "build-cache", runtime);
+          fs.mkdirSync(buildCacheDir, { recursive: true });
         }
       }
     }

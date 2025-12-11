@@ -203,7 +203,22 @@ export type ITestconfig = {
   src: string;
   test: Itest;
   prod: IProd;
-  checks: IChecks;
+  checks: IChecks; // Legacy - kept for backward compatibility
+  
+  // New runtime-native check configuration
+  check?: {
+    // Runtime-specific entry points
+    node?: string;    // e.g., "src/staticAnalysis/node.js"
+    python?: string;  // e.g., "src/staticAnalysis/python.py"
+    golang?: string;  // e.g., "src/staticAnalysis/go.go"
+    web?: string;     // e.g., "src/staticAnalysis/web.js"
+    java?: string;    // e.g., "src/staticAnalysis/Java.java"
+    
+    // Common options
+    enabled?: boolean;
+    failOnError?: boolean;
+  };
+  
   // Strategy-specific configurations
   build?: Itest; // Separate build steps for compiled languages
 
@@ -253,7 +268,7 @@ export type ITestconfig = {
     strategy: IStrategy;
     test: Itest;
     prod: IProd;
-    checks: IChecks;
+    checks: IChecks; // Legacy - kept for backward compatibility
     build?: Itest; // Separate build for Go
     monitoring?: {
       // Go-specific monitoring options
@@ -270,7 +285,7 @@ export type ITestconfig = {
     strategy: IStrategy;
     test: Itest;
     prod: IProd;
-    checks: IChecks;
+    checks: IChecks; // Legacy - kept for backward compatibility
     processPool?: {
       maxConcurrent: number;
       timeoutMs: number;
@@ -291,7 +306,7 @@ export type ITestconfig = {
     strategy: IStrategy;
     test: Itest;
     prod: IProd;
-    checks: IChecks;
+    checks: IChecks; // Legacy - kept for backward compatibility
     processPool?: {
       maxConcurrent: number;
       timeoutMs: number;
@@ -312,7 +327,7 @@ export type ITestconfig = {
     strategy: IStrategy;
     test: Itest;
     prod: IProd;
-    checks: IChecks;
+    checks: IChecks; // Legacy - kept for backward compatibility
     chrome?: {
       sharedInstance: boolean;
       maxContexts: number;

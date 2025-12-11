@@ -1,3 +1,5 @@
+import "../chunk-3X2YHN6Q.mjs";
+
 // src/esbuildConfigs/eslint-formatter-testeranto.ts
 function eslint_formatter_testeranto_default(results) {
   return results.filter((r) => r.messages.length).map((r) => {

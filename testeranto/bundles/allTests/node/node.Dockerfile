@@ -1,6 +1,14 @@
+# Testeranto Dockerfile for node
+# Strategy: combined-build-test-process-pools (interpreted)
+# Generated: 2025-12-11T06:53:51.361Z
 FROM node:20.19.4-alpine
 ARG TIMESTAMP
 WORKDIR /workspace
+
+# Strategy: combined-build-test-process-pools - Interpreted language with process pools
+ENV STRATEGY=combined-build-test-process-pools
+ENV RUNTIME=node
+ENV CATEGORY=interpreted
 
 # Install Python and build tools needed for npm packages with native addons
 RUN apk add --update --no-cache python3 make g++ linux-headers libxml2-utils netcat-openbsd
@@ -8,9 +16,6 @@ RUN apk add --update --no-cache python3 make g++ linux-headers libxml2-utils net
 # Create necessary directories
 RUN mkdir -p /workspace/testeranto/bundles/allTests/node
 RUN mkdir -p /workspace/testeranto/metafiles/node
-RUN mkdir -p /workspace/dist/prebuild/builders
-RUN mkdir -p /workspace/dist/prebuild/builders
-RUN mkdir -p /workspace/dist/prebuild/builders
 RUN mkdir -p /workspace/dist/prebuild/builders
 
 # Create a fresh node_modules directory in /workspace to avoid host platform binaries

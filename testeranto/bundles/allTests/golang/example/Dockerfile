@@ -1,3 +1,6 @@
+# Strategy: combined-build-test-process-pools
+# Runtime: golang
+
 FROM golang:latest
 WORKDIR /workspace
 # Install Node.js and esbuild for Linux platform

@@ -3,11 +3,6 @@ import {
   defaultTestResourceRequirement
 } from "./chunk-GD6O3ZZC.mjs";
 
-// src/clients/node.ts
-import WebSocket from "ws";
-import fs from "fs";
-import path from "path";
-
 // src/clients/index.ts
 var PM = class {
   // abstract launchSideCar(
@@ -16,20 +11,38 @@ var PM = class {
   // abstract stopSideCar(n: number): Promise<any>;
 };
 
-// src/clients/node.ts
-var fPaths = [];
-var PM_Node = class extends PM {
-  constructor(t, wsUrl) {
+// src/clients/web.ts
+var PM_Web = class extends PM {
+  constructor(t) {
     super();
     this.messageCallbacks = /* @__PURE__ */ new Map();
+    console.log(
+      "PM_Web constructor called with config:",
+      JSON.stringify(t, null, 2)
+    );
     this.testResourceConfiguration = t;
+    let wsUrl;
+    if (t.browserWSEndpoint) {
+      wsUrl = t.browserWSEndpoint;
+      console.log("PM_Web using browserWSEndpoint from config:", wsUrl);
+    } else {
+      const wsHost = window.WS_HOST || window.location.hostname;
+      const wsPort = window.WS_PORT;
+      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const hostname = window.location.hostname;
+      let finalHost = hostname;
+      if (hostname === "localhost" || hostname === "127.0.0.1") {
+      }
+      wsUrl = `${protocol}//${finalHost}:${wsPort}`;
+      console.log("PM_Web constructed WebSocket URL:", wsUrl);
+    }
     this.ws = new WebSocket(wsUrl);
-    this.ws.on("open", () => {
+    this.ws.addEventListener("open", () => {
       console.log("WebSocket connected to", wsUrl);
     });
-    this.ws.on("message", (data) => {
+    this.ws.addEventListener("message", (event) => {
       try {
-        const message = JSON.parse(data.toString());
+        const message = JSON.parse(event.data);
         if (message.key && this.messageCallbacks.has(message.key)) {
           const callback = this.messageCallbacks.get(message.key);
           if (callback) {
@@ -41,23 +54,29 @@ var PM_Node = class extends PM {
         console.error("Error parsing WebSocket message:", error);
       }
     });
-    this.ws.on("error", (error) => {
+    this.ws.addEventListener("error", (error) => {
       console.error("WebSocket error:", error);
     });
-    this.ws.on("close", () => {
+    this.ws.addEventListener("close", () => {
       console.log("WebSocket connection closed");
     });
   }
   start() {
-    throw new Error("DEPRECATED");
+    return new Promise((resolve) => {
+      if (this.ws.readyState === WebSocket.OPEN) {
+        resolve();
+      } else {
+        this.ws.onopen = () => resolve();
+      }
+    });
   }
   stop() {
     return new Promise((resolve) => {
       if (this.ws && this.ws.readyState === WebSocket.OPEN) {
         this.ws.close();
-        this.ws.on("close", () => {
+        this.ws.onclose = () => {
           resolve();
-        });
+        };
       } else {
         resolve();
       }
@@ -72,29 +91,42 @@ var PM_Node = class extends PM {
       if (this.ws.readyState === WebSocket.CONNECTING) {
         return new Promise((resolve) => {
           const onOpen = () => {
-            this.ws.off("open", onOpen);
+            this.ws.removeEventListener("open", onOpen);
             resolve();
           };
-          this.ws.on("open", onOpen);
+          this.ws.addEventListener("open", onOpen);
         });
       }
-      return Promise.reject(new Error(`WebSocket is not open. State: ${this.ws.readyState}`));
+      return Promise.reject(
+        new Error(`WebSocket is not open. State: ${this.ws.readyState}`)
+      );
     };
     return waitForOpen().then(() => {
-      return new Promise((res, rej) => {
+      return new Promise((resolve, reject) => {
         this.messageCallbacks.set(key, (payload) => {
-          res(payload);
+          resolve(payload);
         });
         const timeoutId = setTimeout(() => {
-          this.messageCallbacks.delete(key);
-          rej(new Error(`Timeout waiting for response to command: ${command}`));
+          if (this.messageCallbacks.has(key)) {
+            console.error(`PM_Web timeout for ${command} with key ${key}`);
+            this.messageCallbacks.delete(key);
+            reject(new Error(`Timeout waiting for response to ${command}`));
+          }
         }, 1e4);
         const message = {
           type: command,
           data: argz.length > 0 ? argz : void 0,
           key
         };
-        this.ws.send(JSON.stringify(message));
+        try {
+          this.ws.send(JSON.stringify(message));
+          console.log(`PM_Web sent ${command} with key ${key}`);
+        } catch (error) {
+          console.error(`PM_Web error sending ${command}:`, error);
+          clearTimeout(timeoutId);
+          this.messageCallbacks.delete(key);
+          reject(error);
+        }
         const originalCallback = this.messageCallbacks.get(key);
         if (originalCallback) {
           this.messageCallbacks.set(key, (payload) => {
@@ -129,16 +161,13 @@ var PM_Node = class extends PM {
   getAttribute(selector, attribute, p) {
     return this.send("getAttribute", ...arguments);
   }
-  getInnerHtml(selector, p) {
+  getInnerHtml(selector, page) {
     return this.send("getInnerHtml", ...arguments);
   }
-  // setValue(selector: string) {
-  //   return this.send("getValue", ...arguments);
-  // }
   focusOn(selector) {
     return this.send("focusOn", ...arguments);
   }
-  typeInto(selector) {
+  typeInto(selector, value) {
     return this.send("typeInto", ...arguments);
   }
   page() {
@@ -187,9 +216,20 @@ var PM_Node = class extends PM {
     return await this.send("write", ...arguments);
   }
   async writeFileSync(filepath, contents) {
+    const fsPath = this.testResourceConfiguration?.fs;
+    if (!fsPath) {
+      console.error(
+        "PM_Web.writeFileSync: fs is undefined in testResourceConfiguration",
+        this.testResourceConfiguration
+      );
+      throw new Error("fs is undefined in testResourceConfiguration");
+    }
+    const cleanFilepath = filepath.startsWith("/") ? filepath.substring(1) : filepath;
+    const fullPath = fsPath + "/" + cleanFilepath;
+    console.log("PM_Web.writeFileSync: fullPath:", fullPath);
     return await this.send(
       "writeFileSync",
-      this.testResourceConfiguration.fs + "/" + filepath,
+      fullPath,
       contents,
       this.testResourceConfiguration.name
     );
@@ -214,56 +254,32 @@ var PM_Node = class extends PM {
   testArtiFactoryfileWriter(tLog, callback) {
     return (fPath, value) => {
       callback(
-        new Promise((res, rej) => {
+        new Promise((resolve, reject) => {
           tLog("testArtiFactory =>", fPath);
-          const cleanPath = path.resolve(fPath);
-          fPaths.push(cleanPath.replace(process.cwd(), ``));
-          const targetDir = cleanPath.split("/").slice(0, -1).join("/");
-          fs.mkdir(targetDir, { recursive: true }, async (error) => {
-            if (error) {
-              console.error(`\u2757\uFE0FtestArtiFactory failed`, targetDir, error);
-            }
-            if (Buffer.isBuffer(value)) {
-              fs.writeFileSync(fPath, value, "binary");
-              res();
-            } else if (`string` === typeof value) {
-              fs.writeFileSync(fPath, value.toString(), {
-                encoding: "utf-8"
-              });
-              res();
-            } else {
-              const pipeStream = value;
-              const myFile = fs.createWriteStream(fPath);
-              pipeStream.pipe(myFile);
-              pipeStream.on("close", () => {
-                myFile.close();
-                res();
-              });
-            }
-          });
+          resolve();
         })
       );
     };
   }
-  // launch(options?: PuppeteerLaunchOptions): Promise<Browser>;
-  startPuppeteer(options) {
+  // Browser context management implementations
+  async createBrowserContext() {
+    return await this.send("createBrowserContext");
   }
-  // async launchSideCar(
-  //   n: number
-  // ): Promise<[number, ITTestResourceConfiguration]> {
-  //   return this.send<[number, ITTestResourceConfiguration]>(
-  //     "launchSideCar",
-  //     n,
-  //     this.testResourceConfiguration.name
-  //   );
-  // }
-  // stopSideCar(n: number): Promise<any> {
-  //   return this.send<ITTestResourceConfiguration>(
-  //     "stopSideCar",
-  //     n,
-  //     this.testResourceConfiguration.name
-  //   );
-  // }
+  async disposeBrowserContext(contextId) {
+    return await this.send("disposeBrowserContext", contextId);
+  }
+  async getBrowserContexts() {
+    return await this.send("getBrowserContexts");
+  }
+  async newPageInContext(contextId) {
+    return await this.send("newPageInContext", contextId);
+  }
+  async getBrowserMemoryUsage() {
+    return await this.send("getBrowserMemoryUsage");
+  }
+  async cleanupContext(contextId) {
+    return await this.send("cleanupContext", contextId);
+  }
 };
 
 // src/lib/pmProxy.ts
@@ -291,12 +307,12 @@ var butThenProxy = (pm, filepath, addArtifact) => {
     [
       "screencast",
       (opts, p) => {
-        const path2 = `${filepath}/butThen/${opts.path}`;
-        addArtifact(path2);
+        const path = `${filepath}/butThen/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -305,28 +321,28 @@ var butThenProxy = (pm, filepath, addArtifact) => {
     [
       "createWriteStream",
       (fp) => {
-        const path2 = `${filepath}/butThen/${fp}`;
-        addArtifact(path2);
-        return [path2];
+        const path = `${filepath}/butThen/${fp}`;
+        addArtifact(path);
+        return [path];
       }
     ],
     [
       "writeFileSync",
       (fp, contents, testName) => {
-        const path2 = `${filepath}/butThen/${fp}`;
-        addArtifact(path2);
-        return [path2, contents, testName];
+        const path = `${filepath}/butThen/${fp}`;
+        addArtifact(path);
+        return [path, contents, testName];
       }
     ],
     [
       "customScreenShot",
       (opts, p) => {
-        const path2 = `${filepath}/butThen/${opts.path}`;
-        addArtifact(path2);
+        const path = `${filepath}/butThen/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -339,12 +355,12 @@ var andWhenProxy = (pm, filepath, addArtifact) => {
     [
       "screencast",
       (opts, p) => {
-        const path2 = `${filepath}/andWhen/${opts.path}`;
-        addArtifact(path2);
+        const path = `${filepath}/andWhen/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -353,28 +369,28 @@ var andWhenProxy = (pm, filepath, addArtifact) => {
     [
       "createWriteStream",
       (fp) => {
-        const path2 = `${filepath}/andWhen/${fp}`;
-        addArtifact(path2);
-        return [path2];
+        const path = `${filepath}/andWhen/${fp}`;
+        addArtifact(path);
+        return [path];
       }
     ],
     [
       "writeFileSync",
       (fp, contents, testName) => {
-        const path2 = `${filepath}/andWhen/${fp}`;
-        addArtifact(path2);
-        return [path2, contents, testName];
+        const path = `${filepath}/andWhen/${fp}`;
+        addArtifact(path);
+        return [path, contents, testName];
       }
     ],
     [
       "customScreenShot",
       (opts, p) => {
-        const path2 = `${filepath}/andWhen/${opts.path}`;
-        addArtifact(path2);
+        const path = `${filepath}/andWhen/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -387,12 +403,12 @@ var afterEachProxy = (pm, suite, given, addArtifact) => {
     [
       "screencast",
       (opts, p) => {
-        const path2 = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
-        addArtifact(path2);
+        const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -401,28 +417,28 @@ var afterEachProxy = (pm, suite, given, addArtifact) => {
     [
       "createWriteStream",
       (fp) => {
-        const path2 = `suite-${suite}/afterEach/${fp}`;
-        addArtifact(path2);
-        return [path2];
+        const path = `suite-${suite}/afterEach/${fp}`;
+        addArtifact(path);
+        return [path];
       }
     ],
     [
       "writeFileSync",
       (fp, contents, testName) => {
-        const path2 = `suite-${suite}/given-${given}/afterEach/${fp}`;
-        addArtifact(path2);
-        return [path2, contents, testName];
+        const path = `suite-${suite}/given-${given}/afterEach/${fp}`;
+        addArtifact(path);
+        return [path, contents, testName];
       }
     ],
     [
       "customScreenShot",
       (opts, p) => {
-        const path2 = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
-        addArtifact(path2);
+        const path = `suite-${suite}/given-${given}/afterEach/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -435,12 +451,12 @@ var beforeEachProxy = (pm, suite, addArtifact) => {
     [
       "screencast",
       (opts, p) => {
-        const path2 = `suite-${suite}/beforeEach/${opts.path}`;
-        addArtifact(path2);
+        const path = `suite-${suite}/beforeEach/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -449,20 +465,20 @@ var beforeEachProxy = (pm, suite, addArtifact) => {
     [
       "writeFileSync",
       (fp, contents, testName) => {
-        const path2 = `suite-${suite}/beforeEach/${fp}`;
-        addArtifact(path2);
-        return [path2, contents, testName];
+        const path = `suite-${suite}/beforeEach/${fp}`;
+        addArtifact(path);
+        return [path, contents, testName];
       }
     ],
     [
       "customScreenShot",
       (opts, p) => {
-        const path2 = `suite-${suite}/beforeEach/${opts.path}`;
-        addArtifact(path2);
+        const path = `suite-${suite}/beforeEach/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -471,9 +487,9 @@ var beforeEachProxy = (pm, suite, addArtifact) => {
     [
       "createWriteStream",
       (fp) => {
-        const path2 = `suite-${suite}/beforeEach/${fp}`;
-        addArtifact(path2);
-        return [path2];
+        const path = `suite-${suite}/beforeEach/${fp}`;
+        addArtifact(path);
+        return [path];
       }
     ]
   ]);
@@ -483,20 +499,20 @@ var beforeAllProxy = (pm, suite, addArtifact) => {
     [
       "writeFileSync",
       (fp, contents, testName) => {
-        const path2 = `suite-${suite}/beforeAll/${fp}`;
-        addArtifact(path2);
-        return [path2, contents, testName];
+        const path = `suite-${suite}/beforeAll/${fp}`;
+        addArtifact(path);
+        return [path, contents, testName];
       }
     ],
     [
       "customScreenShot",
       (opts, p) => {
-        const path2 = `suite-${suite}/beforeAll/${opts.path}`;
-        addArtifact(path2);
+        const path = `suite-${suite}/beforeAll/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -505,9 +521,9 @@ var beforeAllProxy = (pm, suite, addArtifact) => {
     [
       "createWriteStream",
       (fp) => {
-        const path2 = `suite-${suite}/beforeAll/${fp}`;
-        addArtifact(path2);
-        return [path2];
+        const path = `suite-${suite}/beforeAll/${fp}`;
+        addArtifact(path);
+        return [path];
       }
     ]
   ]);
@@ -517,28 +533,28 @@ var afterAllProxy = (pm, suite, addArtifact) => {
     [
       "createWriteStream",
       (fp) => {
-        const path2 = `suite-${suite}/afterAll/${fp}`;
-        addArtifact(path2);
-        return [path2];
+        const path = `suite-${suite}/afterAll/${fp}`;
+        addArtifact(path);
+        return [path];
       }
     ],
     [
       "writeFileSync",
       (fp, contents, testName) => {
-        const path2 = `suite-${suite}/afterAll/${fp}`;
-        addArtifact(path2);
-        return [path2, contents, testName];
+        const path = `suite-${suite}/afterAll/${fp}`;
+        addArtifact(path);
+        return [path, contents, testName];
       }
     ],
     [
       "customScreenShot",
       (opts, p) => {
-        const path2 = `suite-${suite}/afterAll/${opts.path}`;
-        addArtifact(path2);
+        const path = `suite-${suite}/afterAll/${opts.path}`;
+        addArtifact(path);
         return [
           {
             ...opts,
-            path: path2
+            path
           },
           p
         ];
@@ -558,15 +574,15 @@ var BaseGiven = class {
     this.initialValues = initialValues;
     this.fails = 0;
   }
-  addArtifact(path2) {
-    if (typeof path2 !== "string") {
+  addArtifact(path) {
+    if (typeof path !== "string") {
       throw new Error(
-        `[ARTIFACT ERROR] Expected string, got ${typeof path2}: ${JSON.stringify(
-          path2
+        `[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(
+          path
         )}`
       );
     }
-    const normalizedPath = path2.replace(/\\/g, "/");
+    const normalizedPath = path.replace(/\\/g, "/");
     this.artifacts.push(normalizedPath);
   }
   beforeAll(store) {
@@ -677,15 +693,15 @@ var BaseSuite = class {
     this.givens = givens;
     this.fails = 0;
   }
-  addArtifact(path2) {
-    if (typeof path2 !== "string") {
+  addArtifact(path) {
+    if (typeof path !== "string") {
       throw new Error(
-        `[ARTIFACT ERROR] Expected string, got ${typeof path2}: ${JSON.stringify(
-          path2
+        `[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(
+          path
         )}`
       );
     }
-    const normalizedPath = path2.replace(/\\/g, "/");
+    const normalizedPath = path.replace(/\\/g, "/");
     this.artifacts.push(normalizedPath);
   }
   features() {
@@ -789,15 +805,15 @@ var BaseThen = class {
     this.error = false;
     this.artifacts = [];
   }
-  addArtifact(path2) {
-    if (typeof path2 !== "string") {
+  addArtifact(path) {
+    if (typeof path !== "string") {
       throw new Error(
-        `[ARTIFACT ERROR] Expected string, got ${typeof path2}: ${JSON.stringify(
-          path2
+        `[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(
+          path
         )}`
       );
     }
-    const normalizedPath = path2.replace(/\\/g, "/");
+    const normalizedPath = path.replace(/\\/g, "/");
     this.artifacts.push(normalizedPath);
   }
   toObj() {
@@ -848,15 +864,15 @@ var BaseWhen = class {
     this.name = name;
     this.whenCB = whenCB;
   }
-  addArtifact(path2) {
-    if (typeof path2 !== "string") {
+  addArtifact(path) {
+    if (typeof path !== "string") {
       throw new Error(
-        `[ARTIFACT ERROR] Expected string, got ${typeof path2}: ${JSON.stringify(
-          path2
+        `[ARTIFACT ERROR] Expected string, got ${typeof path}: ${JSON.stringify(
+          path
         )}`
       );
     }
-    const normalizedPath = path2.replace(/\\/g, "/");
+    const normalizedPath = path.replace(/\\/g, "/");
     this.artifacts.push(normalizedPath);
   }
   toObj() {
@@ -1094,9 +1110,8 @@ var Tiposkripto = class {
   }
 };
 
-// src/lib/Node.ts
-var wsPort;
-var NodeTiposkripto = class extends Tiposkripto {
+// src/lib/Web.ts
+var WebTiposkripto = class extends Tiposkripto {
   constructor(input, testSpecification, testImplementation, testResourceRequirement, testAdapter) {
     super(
       input,
@@ -1109,43 +1124,39 @@ var NodeTiposkripto = class extends Tiposkripto {
     );
   }
   async receiveTestResourceConfig(partialTestResource) {
-    console.log("node.receiveTestResourceConfig", partialTestResource);
+    console.log("WebTiposkripto.receiveTestResourceConfig: raw input:", partialTestResource);
     const config = JSON.parse(partialTestResource);
-    const wsHost = process.env.WS_HOST || "localhost";
-    console.log(`receiveTestResourceConfig: wsPort is ${wsPort}`);
-    const wsUrl = `ws://${wsHost}:${wsPort}`;
-    console.log(`Connecting to WebSocket at ${wsUrl}`);
-    return await this.testJobs[0].receiveTestResourceConfig(
-      new PM_Node(config, wsUrl)
-    );
+    console.log("WebTiposkripto.receiveTestResourceConfig: parsed config:", config);
+    return await this.testJobs[0].receiveTestResourceConfig(new PM_Web(config));
   }
 };
 var tiposkripto = async (input, testSpecification, testImplementation, testAdapter, testResourceRequirement = defaultTestResourceRequirement) => {
   try {
-    const t = new NodeTiposkripto(
+    const t = new WebTiposkripto(
       input,
       testSpecification,
       testImplementation,
       testResourceRequirement,
       testAdapter
     );
-    process.on("unhandledRejection", (reason, promise) => {
-      console.error("Unhandled Rejection at:", promise, "reason:", reason);
-    });
-    const execer = process.argv[0];
-    const builtFile = process.argv[1];
-    wsPort = process.argv[2];
-    console.log("wsPort ?!?!", wsPort);
-    const testResource = process.argv[3];
-    process.exit((await t.receiveTestResourceConfig(testResource)).fails);
+    const urlParams = new URLSearchParams(window.location.search);
+    const encodedConfig = urlParams.get("config");
+    const testResourceConfig = encodedConfig ? decodeURIComponent(encodedConfig) : "{}";
+    console.log("Web test: parsed config from URL:", testResourceConfig);
+    const results = await t.receiveTestResourceConfig(testResourceConfig);
+    const event = new CustomEvent("test-complete", { detail: results });
+    window.dispatchEvent(event);
+    console.log("Web test completed:", results);
+    return t;
   } catch (e) {
     console.error(e);
-    console.error(e.stack);
-    process.exit(-1);
+    const errorEvent = new CustomEvent("test-error", { detail: e });
+    window.dispatchEvent(errorEvent);
+    throw e;
   }
 };
-var Node_default = tiposkripto;
+var Web_default = tiposkripto;
 export {
-  NodeTiposkripto,
-  Node_default as default
+  WebTiposkripto,
+  Web_default as default
 };

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { spawn } from "child_process";
+import { spawn, spawnSync } from "child_process";
 import ansiColors from "ansi-colors";
 import { createLogStreams, LogStreams } from "../../clients/utils";
 import { IRunTime } from "../../Types";
@@ -41,9 +41,13 @@ export class NodeLauncher {
   async launchNode(src: string, dest: string): Promise<void> {
     console.log(ansiColors.green(ansiColors.inverse(`node < ${src}`)));
     
-    // Always run in Docker container
+    // Log strategy alignment
+    console.log(ansiColors.green(`[STRATEGY] Node.js uses "combined-build-test-process-pools" strategy`));
+    console.log(ansiColors.green(`[STRATEGY] Tests will run inside node-build container via docker exec (aligned with architecture)`));
+    
+    // Use httpPort with fallback to 3456
     const portToUse = this.httpPort || 3456;
-    console.log(`NodeLauncher: Using httpPort ${portToUse} for Docker container`);
+    console.log(`NodeLauncher: Using httpPort ${portToUse} for test execution`);
     
     const processId = `node-${src}-${Date.now()}`;
     const command = `node test: ${src}`;
@@ -143,7 +147,7 @@ export class NodeLauncher {
         console.log(`Build is ready at ${builtfile}. Proceeding with test...`);
 
         // Prepare test resources as a JSON string using shared utility
-        const { prepareTestResources } = await import("./TestResourceUtils");
+        const { prepareTestResources, escapeForShell } = await import("./TestResourceUtils");
         const testResourcesJson = prepareTestResources(
           testResources,
           portsToUse,
@@ -179,66 +183,78 @@ export class NodeLauncher {
           );
         }
 
-        // Run Node test inside Docker container for consistent environment
-        const dockerImage = "node:20.19.4-alpine";
+        // According to the architecture, Node.js uses "combined-build-test-process-pools" strategy
+        // Tests should run inside the build container via docker exec
+        console.log("NodeLauncher: Node.js uses 'combined-build-test-process-pools' strategy");
+        console.log("NodeLauncher: Running tests via docker exec into node-build container");
+
+        // First, check if any node build container is running
+        // Look for containers with "node" and "build" in their names
+        const containerCheck = spawnSync('docker', ['ps', '--format', '{{.Names}}']);
+        const allContainers = containerCheck.stdout.toString().trim().split('\n');
+        const nodeBuildContainers = allContainers.filter(name => 
+          name.includes('node') && name.includes('build')
+        );
         
-        // Convert absolute path to container path
-        const workspacePath = process.cwd();
-        let containerPath = builtfile;
-        if (builtfile.startsWith(workspacePath)) {
-          containerPath = `/workspace${builtfile.slice(workspacePath.length)}`;
-        } else {
-          // If not under workspace, use basename and hope it's in current dir
-          containerPath = `/workspace/${path.basename(builtfile)}`;
+        if (nodeBuildContainers.length === 0) {
+          console.error("NodeLauncher: No node-build container found!");
+          console.error("NodeLauncher: Docker ps output:", containerCheck.stdout.toString());
+          console.error("NodeLauncher: Docker ps error:", containerCheck.stderr.toString());
+          
+          // NO FALLBACK - This is a critical error according to the architecture
+          throw new Error(
+            `NodeLauncher: No node-build container found. ` +
+            `Node.js uses "combined-build-test-process-pools" strategy which requires tests to run in the build container. ` +
+            `Make sure docker-compose services are running. ` +
+            `Check with: docker-compose -f testeranto/bundles/*-docker-compose.yml ps`
+          );
         }
+
+        // Use the first node-build container we found
+        const containerName = nodeBuildContainers[0];
+        console.log(`NodeLauncher: Found container: ${containerName}`);
+
+        // Convert host path to container path
+        // Assuming the workspace is mounted at /workspace
+        const containerBuiltfile = builtfile.replace(process.cwd(), '/workspace');
         
+        // Escape the test resources JSON for shell
+        const escapedTestResources = testResourcesJson.replace(/'/g, "'\"'\"'");
+
+        // Run the test inside the node-build container using docker exec
         const dockerCommand = [
           "docker",
-          "run",
-          "--rm",
-          "-v",
-          `${workspacePath}:/workspace`,
-          "-w",
-          "/workspace",
-          "--network",
-          "host", // Use host network to access WebSocket on localhost
-          "-e",
-          `WS_PORT=${portToUse}`,
-          dockerImage,
+          "exec",
+          "-i",
+          "-e", `WS_HOST=host.docker.internal`,
+          "-e", `WS_PORT=${portToUse}`,
+          containerName,
           "sh",
           "-c",
-          `node ${containerPath} ${portToUse} '${testResourcesJson.replace(/'/g, "'\"'\"'")}'`
+          `cd /workspace && node ${containerBuiltfile} ${portToUse} '${escapedTestResources}'`
         ];
 
-        console.log("NodeLauncher: dockerCommand:", dockerCommand);
+        console.log("NodeLauncher: Running command:", dockerCommand.join(' '));
+
         const child = spawn(dockerCommand[0], dockerCommand.slice(1), {
           stdio: ["pipe", "pipe", "pipe"],
         });
 
-        // Log child process events
-        child.on("error", (error) => {
-          console.error(
-            `Failed to start child process for ${builtfile}:`,
-            error
-          );
-        });
-
-        child.on("spawn", () => {
-          console.log(
-            `Child process spawned for ${builtfile} with PID: ${child.pid}`
-          );
-        });
-
-        // Handle stdout and stderr normally
-        child.stdout?.on("data", (data) => {
+        // Capture and log the output
+        child.stdout.on('data', (data) => {
+          const output = data.toString();
+          console.log(`NodeLauncher [docker exec stdout]: ${output}`);
           logs.stdout?.write(data);
         });
 
-        child.stderr?.on("data", (data) => {
+        child.stderr.on('data', (data) => {
+          const output = data.toString();
+          console.log(`NodeLauncher [docker exec stderr]: ${output}`);
           logs.stderr?.write(data);
         });
 
         try {
+          // Handle the actual child process (docker exec)
           await this.handleChildProcess(child, logs, reportDest, src, "node");
 
           // Generate prompt files for Node tests

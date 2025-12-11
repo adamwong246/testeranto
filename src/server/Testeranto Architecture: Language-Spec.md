@@ -1,180 +1,178 @@
-# Testeranto Architecture: Language-Specific Strategies
+# Testeranto Architecture: Unified Build & Analysis with Dual Test Strategies
 
 ## Overview
 
-Given 7 runtimes with different characteristics, we've categorized them into 4 distinct strategies to balance performance, isolation, and implementation complexity.
+After analyzing 7 runtimes, we've identified a significant simplification: **Build and static analysis follow a single unified pattern across all runtimes**, while **test execution requires only two distinct strategies**. This reduces complexity while maintaining performance benefits.
 
-## Runtime Categories & Strategies
+## The Three Layers, Two Strategy Patterns
 
-### 1. Interpreted Scripting Languages
+### Layer 1: Build Process → 1 Strategy
+- **All runtimes**: Builder watches source → produces artifacts
+- **Same pattern**: File watching, incremental builds, metafile generation
+- **No differentiation**: Node builder works like Go builder works like Java builder
 
-**Runtimes**: Node.js, Python, Ruby, PHP
+### Layer 2: Static Analysis → 1 Strategy  
+- **All runtimes**: Analyzer watches source → produces analysis results
+- **Same pattern**: File watching, tool execution, result reporting
+- **User-configured**: Tools installed dynamically based on config
+
+### Layer 3: Test Execution → 2 Strategies
+- **Strategy A (Process-based)**: Node, Python, Ruby, PHP, Go, Rust
+- **Strategy B (Shared-resource)**: Java, Web
+
+## Visual Summary
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    ALL 7 RUNTIMES                       │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 1: BUILD PROCESS                                 │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐    │
+│  │ Node    │  │ Python  │  │ Go      │  │ Java    │    │
+│  │ Builder │  │ Builder │  │ Builder │  │ Builder │    │
+│  └─────────┘  └─────────┘  └─────────┘  └─────────┘    │
+│  SAME PATTERN: Watch → Build → Metafile                 │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 2: STATIC ANALYSIS                               │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐    │
+│  │ Node    │  │ Python  │  │ Go      │  │ Java    │    │
+│  │ Analyzer│  │ Analyzer│  │ Analyzer│  │ Analyzer│    │
+│  └─────────┘  └─────────┘  └─────────┘  └─────────┘    │
+│  SAME PATTERN: Watch → Analyze → Report                 │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 3: TEST EXECUTION                                │
+│                                                         │
+│  STRATEGY A: PROCESS-BASED (6 languages)                │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐    │
+│  │ Node    │  │ Python  │  │ Go      │  │ Rust    │    │
+│  │ Process │  │ Process │  │ Binary  │  │ Binary  │    │
+│  │ Pool    │  │ Pool    │  │ Runner  │  │ Runner  │    │
+│  └─────────┘  └─────────┘  └─────────┘  └─────────┘    │
+│                                                         │
+│  STRATEGY B: SHARED-RESOURCE (2 languages)              │
+│  ┌─────────────────┐  ┌─────────────────┐              │
+│  │ Java            │  │ Web             │              │
+│  │ JVM +           │  │ Chrome +        │              │
+│  │ Classloaders    │  │ Contexts        │              │
+│  └─────────────────┘  └─────────────────┘              │
+└─────────────────────────────────────────────────────────┘
+```
+
+## Why This Makes Sense
+
+### Builders are Similar:
+- All need to: watch files, compile/transform, output artifacts
+- Differences are in tools (esbuild vs go build vs javac), not pattern
+
+### Analyzers are Similar:
+- All need to: watch files, run linters, report issues
+- Differences are in tools (ESLint vs pylint vs golangci-lint), not pattern
+
+### Test Execution is Fundamentally Different:
+- **Process-based**: Cheap to create/destroy (Node, Python, Go, Rust, Ruby, PHP)
+- **Shared-resource**: Expensive startup, cheap sandboxes (Java JVM, Chrome)
+
+## Implementation Benefits
+
+1. **Simplified Build/Analysis Code**: One pattern to implement for all runtimes
+2. **Consistent Configuration**: Same config format for build/analysis across languages
+3. **Easier Maintenance**: Build/analysis logic doesn't need strategy branching
+4. **Clear Separation**: Test execution is the only complex part
+
+## The Architecture Now
+
+```
+For EACH of 7 runtimes:
+1. Builder Service (1 pattern)
+   - Watches source files
+   - Builds artifacts to /dist
+   - Generates metafile
+   
+2. Analyzer Service (1 pattern) 
+   - Watches source files
+   - Runs user-configured tools
+   - Writes results to /analysis
+   
+3. Test Executor Service (2 patterns)
+   - Pattern A: Process-based (Node, Python, Go, Rust, Ruby, PHP)
+   - Pattern B: Shared-resource (Java, Web)
+```
+
+## Detailed Strategy Breakdown
+
+### Strategy A: Process-Based Test Execution
+**Applicable to**: Node.js, Python, Go, Rust, Ruby, PHP
 **Characteristics**:
+- Fast process creation/destruction
+- Good isolation between test runs
+- Can use process pools for concurrency control
+- Minimal shared state between tests
 
-- Fast startup (<100ms)
-- Interpreter-based execution
-- Global state concerns
-- Dependency management (npm/pip/gem/composer)
-
-**Strategy**: Combined Build-and-Test Service with Process Pools
-
+**Implementation Approach**:
 - Single container per runtime
-- Spawn subprocesses for each test
-- Virtual environment/isolation per test (venv, bundle exec, etc.)
-- Shared dependency cache across tests
-- Process-level isolation (good enough for these languages)
-
-**Implementation Notes**:
-
-- Use process pools to limit concurrent tests
+- Process pool manager to limit concurrent tests
 - Clean environment between test runs
 - Reuse container for multiple tests
 
----
-
-### 2. Compiled Native Languages
-
-**Runtimes**: Go, Rust
+### Strategy B: Shared-Resource Test Execution
+**Applicable to**: Java, Web (Chrome)
 **Characteristics**:
+- Heavy resource startup cost (JVM ~200-500ms, Chrome ~500MB+)
+- Cheap sandbox creation within the resource
+- Resource sharing provides significant performance benefits
 
-- Compilation overhead but fast execution
-- Produce standalone binaries
-- Excellent process isolation
-- Cargo/go modules for dependencies
+**Implementation Approach**:
+- **Java**: Single JVM with classloader isolation per test suite
+- **Web**: Single Chrome instance with browser contexts per test
+- Memory management and cleanup between test runs
+- Warm-up strategies to reduce startup overhead
 
-**Strategy**: Separate Build Service + Combined Test Execution
+## Target Languages
 
-- **Build service**: Compile once, cache binaries
-- **Test service**: Run compiled tests in parallel
-- Binary caching between test runs
-- Native process isolation (excellent)
-
-**Implementation Notes**:
-
-- Volume mounts for build artifacts
-- Compilation caching (Cargo cache, Go build cache)
-- Can run many test binaries concurrently in same container
-
----
-
-### 3. Virtual Machine Language
-
-**Runtime**: Java
-**Characteristics**:
-
-- JVM startup overhead (~200-500ms)
-- Bytecode execution
-- Classloader-based isolation possible
-- Maven/Gradle build systems
-
-**Strategy**: Combined Service with Shared JVM
-
-- Single container with JVM
-- Compile with Maven/Gradle
-- Run tests with shared JVM, separate classloaders
-- JVM tuning for multiple concurrent tests
-
-**Implementation Notes**:
-
-- Use testing frameworks that support classloader isolation (JUnit, TestNG)
-- JVM memory tuning for multiple test suites
-- Warm JVM to reduce startup overhead
-
----
-
-### 4. Browser Environment
-
-**Runtime**: Web (Chrome)
-**Characteristics**:
-
-- Very heavy resource usage (~500MB+ per instance)
-- Tab/context-based isolation
-- No traditional "build" but asset bundling
-- DevTools Protocol for automation
-
-**Strategy**: Combined Service with Shared Chrome Instance
-
-- Single container with Chrome
-- Serve test bundles/assets
-- Browser context per test (isolated cookies, localStorage)
-- Memory management for Chrome
-
-**Implementation Notes**:
-
-- Single Chrome instance, multiple browser contexts
-- CDP (Chrome DevTools Protocol) for management
-- Resource limits per context
-- Cleanup between tests (clear storage, cookies)
-
----
-
-## Architecture Benefits
-
-1.  **Performance Optimized**: Each category gets appropriate resource management
-2.  **Isolation Balanced**: Right level of isolation for each runtime type
-3.  **Implementation Manageable**: 4 strategies instead of 7
-4.  **Extensible**: New languages fit into existing categories
-5.  **Resource Efficient**: Avoids over/under isolation
-
-## Implementation Priorities
-
-**Phase 1**: Node + Web (highest priority, covers two different categories)  
-**Phase 2**: Python + Go (adds top interpreted and compiled languages)  
-**Phase 3**: Java + Ruby (fills VM category and extends interpreted)  
-**Phase 4**: Rust + C# + PHP + Kotlin + C++ (completes each category with next most popular)
-
-## Target Languages per Category
-
-| Category   | Primary (Phase 1‑2)      | Secondary (Phase 3‑4)        |
-|------------|--------------------------|------------------------------|
-| Interpreted| Node.js, Python          | Ruby, PHP                    |
-| Compiled   | Go                       | Rust, C++                    |
-| VM         | –                        | Java, C#, Kotlin             |
-| Chrome     | Web (JavaScript/TypeScript)| – (already covered)         |
+| Category               | Languages                              |
+|------------------------|----------------------------------------|
+| Process-Based Tests    | Node.js, Python, Go, Rust, Ruby, PHP  |
+| Shared-Resource Tests  | Java, Web (JavaScript/TypeScript)     |
 
 *Note: Shell/Bash is excluded from the target list as it does not align with the primary testing scenarios.*
 
 ## Key Files to Modify
 
-1.  `testeranto/bundles/allTests-docker-compose.yml` - Service definitions per category
-2.  `src/server/serverClasees/ServerTestExecutor.ts` - Category-based test routing
-3.  `src/clients/index.ts` - PM classes for each category
-4.  `src/lib/types.ts` - Type definitions for categories
-5.  `src/server/serverClasees/BuildProcessManager.ts` - Category-specific build management
+1. `testeranto/bundles/allTests-docker-compose.yml` - Service definitions per runtime
+2. `src/server/serverClasees/ServerTestExecutor.ts` - Dual-strategy test routing
+3. `src/clients/index.ts` - Unified builder/analyzer clients
+4. `src/lib/types.ts` - Type definitions for unified patterns
+5. `src/server/serverClasees/BuildProcessManager.ts` - Unified build management
 
 ## Performance Considerations
 
-### For Lightweight Tests (Interpreted Languages):
-
-- Process spawning overhead minimal
-- Can run many tests in parallel
-- Memory usage scales linearly
-
-### For Compiled Languages:
-
-- Compilation overhead but test execution is fast
-- Binary caching crucial for performance
+### For Process-Based Test Execution:
+- Process spawning overhead minimal for interpreted languages
+- Binary execution fast for compiled languages
+- Memory usage scales linearly with concurrent tests
 - Excellent isolation allows aggressive parallelism
 
-### For Java:
-
-- JVM warm-up important
-- Classloader isolation cheaper than new JVMs
-- Memory tuning critical
-
-### For Web:
-
+### For Shared-Resource Test Execution:
+- JVM warm-up important for Java performance
 - Single Chrome instance saves ~500MB per additional instance
-- Browser contexts provide good isolation
-- Memory monitoring essential
+- Browser contexts provide good isolation with minimal overhead
+- Memory monitoring essential for resource management
+
+## Implementation Priorities
+
+**Phase 1**: Unified Build/Analysis + Node (Process) + Web (Shared)  
+**Phase 2**: Python (Process) + Go (Process)  
+**Phase 3**: Java (Shared) + Ruby (Process)  
+**Phase 4**: Rust + PHP + remaining languages
 
 ## Next Steps
 
-1.  Implement Phase 1 (Node + Web) to validate the architecture
-2.  Measure performance compared to current approach
-3.  Adjust strategies based on real-world results
-4.  Implement remaining phases incrementally
+1. Implement unified builder/analyzer pattern for all runtimes
+2. Implement dual-strategy test execution
+3. Measure performance compared to previous approach
+4. Adjust strategies based on real-world results
+5. Implement remaining runtimes incrementally
 
 ---
 
-_Last updated: 2025-12-08_
+_Last updated: 2025-12-09_

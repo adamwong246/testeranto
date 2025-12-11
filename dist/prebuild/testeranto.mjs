@@ -1,7 +1,10 @@
 import {
-  baseNodeImage,
-  createBuildService
-} from "./chunk-TRNXLIPC.mjs";
+  buildService_exports,
+  init_buildService
+} from "./chunk-TYINYZ2M.mjs";
+import {
+  baseNodeImage
+} from "./chunk-D7FJV2YP.mjs";
 import {
   node_default
 } from "./chunk-EH2APWUF.mjs";
@@ -17,6 +20,9 @@ import {
   generatePitonoMetafile,
   writePitonoMetafile
 } from "./chunk-W2DJ422C.mjs";
+import {
+  __toCommonJS
+} from "./chunk-3X2YHN6Q.mjs";
 
 // src/testeranto.ts
 import ansiC6 from "ansi-colors";
@@ -703,7 +709,7 @@ var GolangLauncher = class {
 };
 
 // src/server/serverClasees/NodeLauncher.ts
-import { spawn as spawn2 } from "child_process";
+import { spawn as spawn2, spawnSync } from "child_process";
 import ansiColors2 from "ansi-colors";
 import fs6 from "fs";
 import path5 from "path";
@@ -720,8 +726,10 @@ var NodeLauncher = class {
   }
   async launchNode(src, dest) {
     console.log(ansiColors2.green(ansiColors2.inverse(`node < ${src}`)));
+    console.log(ansiColors2.green(`[STRATEGY] Node.js uses "combined-build-test-process-pools" strategy`));
+    console.log(ansiColors2.green(`[STRATEGY] Tests will run inside node-build container via docker exec (aligned with architecture)`));
     const portToUse = this.httpPort || 3456;
-    console.log(`NodeLauncher: Using httpPort ${portToUse} for Docker container`);
+    console.log(`NodeLauncher: Using httpPort ${portToUse} for test execution`);
     const processId = `node-${src}-${Date.now()}`;
     const command = `node test: ${src}`;
     const nodePromise = (async () => {
@@ -791,7 +799,7 @@ var NodeLauncher = class {
           );
         }
         console.log(`Build is ready at ${builtfile}. Proceeding with test...`);
-        const { prepareTestResources } = await import("./TestResourceUtils-RLY5QZ2O.mjs");
+        const { prepareTestResources, escapeForShell } = await import("./TestResourceUtils-QHJ5MWED.mjs");
         const testResourcesJson = prepareTestResources(
           testResources,
           portsToUse,
@@ -821,51 +829,50 @@ var NodeLauncher = class {
             `Bundle file ${builtfile} is not accessible: ${e.message}`
           );
         }
-        const dockerImage = "node:20.19.4-alpine";
-        const workspacePath = process.cwd();
-        let containerPath = builtfile;
-        if (builtfile.startsWith(workspacePath)) {
-          containerPath = `/workspace${builtfile.slice(workspacePath.length)}`;
-        } else {
-          containerPath = `/workspace/${path5.basename(builtfile)}`;
+        console.log("NodeLauncher: Node.js uses 'combined-build-test-process-pools' strategy");
+        console.log("NodeLauncher: Running tests via docker exec into node-build container");
+        const containerCheck = spawnSync("docker", ["ps", "--format", "{{.Names}}"]);
+        const allContainers = containerCheck.stdout.toString().trim().split("\n");
+        const nodeBuildContainers = allContainers.filter(
+          (name) => name.includes("node") && name.includes("build")
+        );
+        if (nodeBuildContainers.length === 0) {
+          console.error("NodeLauncher: No node-build container found!");
+          console.error("NodeLauncher: Docker ps output:", containerCheck.stdout.toString());
+          console.error("NodeLauncher: Docker ps error:", containerCheck.stderr.toString());
+          throw new Error(
+            `NodeLauncher: No node-build container found. Node.js uses "combined-build-test-process-pools" strategy which requires tests to run in the build container. Make sure docker-compose services are running. Check with: docker-compose -f testeranto/bundles/*-docker-compose.yml ps`
+          );
         }
+        const containerName = nodeBuildContainers[0];
+        console.log(`NodeLauncher: Found container: ${containerName}`);
+        const containerBuiltfile = builtfile.replace(process.cwd(), "/workspace");
+        const escapedTestResources = testResourcesJson.replace(/'/g, `'"'"'`);
         const dockerCommand = [
           "docker",
-          "run",
-          "--rm",
-          "-v",
-          `${workspacePath}:/workspace`,
-          "-w",
-          "/workspace",
-          "--network",
-          "host",
-          // Use host network to access WebSocket on localhost
+          "exec",
+          "-i",
+          "-e",
+          `WS_HOST=host.docker.internal`,
           "-e",
           `WS_PORT=${portToUse2}`,
-          dockerImage,
+          containerName,
           "sh",
           "-c",
-          `node ${containerPath} ${portToUse2} '${testResourcesJson.replace(/'/g, `'"'"'`)}'`
+          `cd /workspace && node ${containerBuiltfile} ${portToUse2} '${escapedTestResources}'`
         ];
-        console.log("NodeLauncher: dockerCommand:", dockerCommand);
+        console.log("NodeLauncher: Running command:", dockerCommand.join(" "));
         const child = spawn2(dockerCommand[0], dockerCommand.slice(1), {
           stdio: ["pipe", "pipe", "pipe"]
         });
-        child.on("error", (error) => {
-          console.error(
-            `Failed to start child process for ${builtfile}:`,
-            error
-          );
-        });
-        child.on("spawn", () => {
-          console.log(
-            `Child process spawned for ${builtfile} with PID: ${child.pid}`
-          );
-        });
-        child.stdout?.on("data", (data) => {
+        child.stdout.on("data", (data) => {
+          const output = data.toString();
+          console.log(`NodeLauncher [docker exec stdout]: ${output}`);
           logs2.stdout?.write(data);
         });
-        child.stderr?.on("data", (data) => {
+        child.stderr.on("data", (data) => {
+          const output = data.toString();
+          console.log(`NodeLauncher [docker exec stderr]: ${output}`);
           logs2.stderr?.write(data);
         });
         try {
@@ -930,7 +937,7 @@ var PythonLauncher = class {
           throw new Error(`Failed to create logs for ${src}`);
         }
         console.log("mark12", src, testResources);
-        const { prepareTestResources, escapeForShell } = await import("./TestResourceUtils-RLY5QZ2O.mjs");
+        const { prepareTestResources, escapeForShell } = await import("./TestResourceUtils-QHJ5MWED.mjs");
         const testResourcesJson = prepareTestResources(
           testResources,
           portsToUse,
@@ -1162,6 +1169,14 @@ COPY dist/prebuild/server/builders/web.mjs ./web.mjs
 # The actual build command will be run by docker-compose
 CMD ["sh", "-c", "echo 'Web build service started' && tail -f /dev/null"]
 `;
+}
+
+// src/server/docker/buildServiceGenerator.ts
+function createBuildService(runtime, dockerfileDir, testsName2) {
+  const buildService = (init_buildService(), __toCommonJS(buildService_exports)).default;
+  return {
+    [`${runtime}-build`]: buildService(runtime)
+  };
 }
 
 // src/server/serverClasees/Server_TCP_Commands.ts
@@ -2296,7 +2311,7 @@ var Server_DockerCompose = class extends Server_TCP_Commands {
     });
   }
   async initializeAndStart() {
-    const { setupDockerCompose } = await import("./dockerComposeGenerator-JJOIWDKY.mjs");
+    const { setupDockerCompose } = await import("./dockerComposeGenerator-CIDKK3KK.mjs");
     await setupDockerCompose(this.configs, this.projectName, {
       logger: {
         log: (...args) => console.log(...args),
@@ -4289,6 +4304,16 @@ var config = {
   test: SINGLE_TEST_BLOCK,
   prod: SINGLE_PROD_BLOCK,
   checks: CHECKS_CONFIG,
+  // Legacy - kept for backward compatibility
+  // New runtime-native check configuration
+  check: {
+    node: "src/staticAnalysis/node.js",
+    python: "src/staticAnalysis/python.py",
+    golang: "src/staticAnalysis/go.go",
+    web: "src/staticAnalysis/web.js",
+    enabled: true,
+    failOnError: true
+  },
   build: [golangConfig.options.build],
   processPool: {
     maxConcurrent: 4,

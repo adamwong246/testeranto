@@ -1,6 +1,7 @@
 import {
   GolingvuBuild
 } from "../../chunk-5YQS2HQH.mjs";
+import "../../chunk-3X2YHN6Q.mjs";
 
 // src/server/builders/golang.ts
 import path from "path";

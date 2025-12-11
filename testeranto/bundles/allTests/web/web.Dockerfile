@@ -1,6 +1,14 @@
+# Testeranto Dockerfile for web
+# Strategy: combined-service-shared-chrome (chrome)
+# Generated: 2025-12-11T06:53:51.361Z
 FROM node:20.19.4-alpine
 ARG TIMESTAMP
 WORKDIR /workspace
+
+# Strategy: combined-service-shared-chrome - Browser environment with shared Chrome
+ENV STRATEGY=combined-service-shared-chrome
+ENV RUNTIME=web
+ENV CATEGORY=chrome
 
 # Install Python, build tools, Chromium for web/Puppeteer, libxml2-utils for xmllint, and netcat-openbsd for network checks
 RUN apk add --update --no-cache python3 make g++ linux-headers libxml2-utils netcat-openbsd \

@@ -1,5 +1,13 @@
+# Testeranto Dockerfile for golang
+# Strategy: combined-build-test-process-pools (interpreted)
+# Generated: 2025-12-11T06:53:51.361Z
 FROM golang:latest
 WORKDIR /workspace
+
+# Strategy: combined-build-test-process-pools - Compiled language with separate build
+ENV STRATEGY=combined-build-test-process-pools
+ENV RUNTIME=golang
+ENV CATEGORY=interpreted
 
 # Create necessary directories
 RUN mkdir -p /workspace/testeranto/bundles/allTests/golang

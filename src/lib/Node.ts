@@ -44,7 +44,7 @@ export class NodeTiposkripto<
     // Parse the test resource configuration
     const config = JSON.parse(partialTestResource);
     // Read WebSocket host from environment variable, default to localhost
-    const wsHost = process.env.WS_HOST || "localhost";
+    const wsHost = process.env.WS_HOST || "host.docker.internal";
     console.log(`receiveTestResourceConfig: wsPort is ${wsPort}`);
     const wsUrl: string = `ws://${wsHost}:${wsPort}`;
     console.log(`Connecting to WebSocket at ${wsUrl}`);

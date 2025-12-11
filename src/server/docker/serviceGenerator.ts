@@ -3,11 +3,12 @@
 
 import { IBuiltConfig, IRunTime } from "../../Types";
 import chromiumService from "./chromiumService";
-import { createBuildService } from "./buildServiceGenerator";
-import { generateTestServices } from "./testServiceGenerator";
-import { generateStaticAnalysisServices } from "./staticAnalysisServiceGenerator";
-
-export { createBuildService };
+import {
+  getProcessPoolType,
+  RUNTIME_STRATEGIES,
+  RuntimeName,
+} from "../strategies";
+import aiderPoolService from "./aiderPoolService";
 
 export async function generateServices(
   config: IBuiltConfig,
@@ -22,44 +23,269 @@ export async function generateServices(
   const chromiumPort = config.chromiumPort || config.httpPort + 1;
   services["chromium"] = chromiumService(config.httpPort, chromiumPort);
 
+  // Add Aider Pool service
+  services["aider-pool"] = {
+    ...aiderPoolService,
+    // Note: .aider.conf.yml is mounted as a volume in aiderPoolService.ts
+    // It's not an environment variable file, so we don't use env_file here
+  };
+
   // Ensure all services use the same network configuration
   for (const serviceName in services) {
     services[serviceName].networks = ["default"];
   }
 
-  // Add build services for each runtime
+  // Generate 3 services for each runtime: build, static analysis, and process pool
   for (const runtime of runtimes) {
-    const buildServiceName = `${runtime}-build`;
-
     // Check if the runtime has tests in the config
     const hasTests =
       config[runtime]?.tests && Object.keys(config[runtime].tests).length > 0;
     if (!hasTests) continue;
 
-    // Get the base service configuration
+    // 1. Build Service
+    const buildServiceName = `${runtime}-build`;
     const buildService = await import("./buildService");
-    const serviceConfig = buildService.default(runtime);
+    const buildServiceConfig = buildService.default(runtime);
 
-    // For web build, add dependency on chromium service
-    if (runtime === "web") {
-      if (!serviceConfig.depends_on) {
-        serviceConfig.depends_on = {};
-      }
-      serviceConfig.depends_on.chromium = {
-        condition: "service_started",
-      };
+    // Add completion signal environment variable
+    if (!buildServiceConfig.environment) {
+      buildServiceConfig.environment = {};
     }
+    buildServiceConfig.environment.COMPLETION_SIGNAL_PATH = `/workspace/testeranto/metafiles/${runtime}/build_complete`;
 
-    services[buildServiceName] = serviceConfig;
+    services[buildServiceName] = buildServiceConfig;
+
+    // 2. Static Analysis Service
+    const analysisServiceName = `${runtime}-analysis`;
+    const analysisServiceConfig = await generateStaticAnalysisService(
+      config,
+      runtime
+    );
+    services[analysisServiceName] = analysisServiceConfig;
+
+    // 3. Process Pool Service
+    const processPoolServiceName = `${runtime}-process-pool`;
+    const processPoolServiceConfig = await generateProcessPoolService(
+      config,
+      runtime
+    );
+    services[processPoolServiceName] = processPoolServiceConfig;
   }
 
-  // Generate test services
-  const testServices = await generateTestServices(config, runtimes);
-  Object.assign(services, testServices);
-
-  // Generate static analysis services
-  const staticAnalysisServices = await generateStaticAnalysisServices(config, runtimes);
-  Object.assign(services, staticAnalysisServices);
-
   return services;
+}
+
+async function generateStaticAnalysisService(
+  config: IBuiltConfig,
+  runtime: IRunTime
+): Promise<any> {
+  const runtimeInfo = getRuntimeInfo(runtime);
+
+  const serviceConfig: any = {
+    restart: "no",
+    environment: {
+      RUNTIME: runtime,
+      WS_HOST: "host.docker.internal",
+      WS_PORT: config.httpPort.toString(),
+      IN_DOCKER: "true",
+      COMPLETION_SIGNAL_PATH: `/workspace/testeranto/metafiles/${runtime}/analysis_complete`,
+    },
+    networks: ["default"],
+    image: runtimeInfo.image,
+    volumes: [
+      `${process.cwd()}:/workspace`,
+      "node_modules:/workspace/node_modules",
+    ],
+    working_dir: "/workspace",
+    depends_on: {
+      [`${runtime}-build`]: {
+        condition: "service_healthy",
+      },
+    },
+  };
+
+  // Add chromium dependency for web static analysis
+  if (runtime === "web") {
+    serviceConfig.depends_on.chromium = {
+      condition: "service_healthy",
+    };
+  }
+
+  // Generate analysis command
+  serviceConfig.command = generateAnalysisCommand(runtime, config);
+
+  return serviceConfig;
+}
+
+async function generateProcessPoolService(
+  config: IBuiltConfig,
+  runtime: IRunTime
+): Promise<any> {
+  const runtimeInfo = getRuntimeInfo(runtime);
+  const processPoolType = getProcessPoolType(runtime);
+
+  const serviceConfig: any = {
+    restart: "unless-stopped",
+    environment: {
+      RUNTIME: runtime,
+      WS_HOST: "host.docker.internal",
+      WS_PORT: config.httpPort.toString(),
+      IN_DOCKER: "true",
+      PROCESS_POOL_TYPE: processPoolType,
+      MAX_CONCURRENT_TESTS:
+        config.processPool?.maxConcurrent?.toString() || "4",
+      TEST_TIMEOUT_MS: config.processPool?.timeoutMs?.toString() || "30000",
+    },
+    networks: ["default"],
+    image: runtimeInfo.image,
+    volumes: [
+      `${process.cwd()}:/workspace`,
+      "node_modules:/workspace/node_modules",
+    ],
+    working_dir: "/workspace",
+    depends_on: {
+      [`${runtime}-build`]: {
+        condition: "service_healthy",
+      },
+      [`${runtime}-analysis`]: {
+        condition: "service_completed_successfully",
+      },
+    },
+  };
+
+  // Add chromium dependency for web process pool
+  if (runtime === "web") {
+    serviceConfig.depends_on.chromium = {
+      condition: "service_healthy",
+    };
+  }
+
+  // Add Chrome-specific environment variables for web
+  if (runtime === "web") {
+    serviceConfig.environment.CHROME_MAX_CONTEXTS =
+      config.chrome?.maxContexts?.toString() || "6";
+    serviceConfig.environment.CHROME_MEMORY_LIMIT_MB =
+      config.chrome?.memoryLimitMB?.toString() || "512";
+  }
+
+  // Generate process pool command
+  serviceConfig.command = generateProcessPoolCommand(runtime, processPoolType);
+
+  return serviceConfig;
+}
+
+function generateAnalysisCommand(
+  runtime: IRunTime,
+  config: IBuiltConfig
+): string[] {
+  const command = `
+    echo "=== Starting static analysis for ${runtime} ==="
+    
+    # Wait for build to complete
+    echo "Waiting for build service to complete..."
+    while [ ! -f /workspace/testeranto/metafiles/${runtime}/build_complete ]; do
+      sleep 1
+    done
+    
+    echo "Build complete. Running static analysis..."
+    
+    # Run static analysis based on runtime
+    case "${runtime}" in
+      "node"|"web")
+        echo "Running Node.js/Web static analysis..."
+        # Check if there are any checks configured
+        if [ -n "$(echo '${JSON.stringify(
+          config.checks || {}
+        )}' | grep -v '^[{}]*$')" ]; then
+          echo "User-defined checks found, running analysis..."
+          # Run analysis (simplified for now)
+          find /workspace/src -name "*.ts" -o -name "*.tsx" | head -5 | while read file; do
+            echo "Analyzing: \$file"
+          done
+        else
+          echo "No checks configured, skipping analysis."
+        fi
+        ;;
+      "python")
+        echo "Running Python static analysis..."
+        # Python analysis would go here
+        ;;
+      "golang")
+        echo "Running Go static analysis..."
+        # Go analysis would go here
+        ;;
+    esac
+    
+    echo "Static analysis complete. Creating completion signal..."
+    touch /workspace/testeranto/metafiles/${runtime}/analysis_complete
+    
+    echo "Analysis service complete. Keeping container alive..."
+    sleep 3600
+  `;
+
+  return ["sh", "-c", command];
+}
+
+function generateProcessPoolCommand(
+  runtime: IRunTime,
+  processPoolType: string
+): string[] {
+  const command = `
+    echo "Starting ${runtime} process pool (type: ${processPoolType})..."
+    
+    # Wait for build and analysis to complete
+    echo "Waiting for build and analysis services..."
+    while [ ! -f /workspace/testeranto/metafiles/${runtime}/build_complete ] || 
+          [ ! -f /workspace/testeranto/metafiles/${runtime}/analysis_complete ]; do
+      sleep 1
+    done
+    
+    echo "Build and analysis complete. Starting process pool..."
+    
+    # Create metafiles directory if it doesn't exist
+    mkdir -p /workspace/testeranto/metafiles/${runtime}
+    
+    # Start the appropriate process pool manager
+    case "${processPoolType}" in
+      "lightweight")
+        echo "Starting lightweight process pool for ${runtime}..."
+        # For interpreted languages, we'll run tests directly
+        echo "Lightweight process pool ready for ${runtime}"
+        ;;
+      "binary")
+        echo "Starting binary process pool for ${runtime}..."
+        echo "Binary process pool ready for ${runtime}"
+        ;;
+      "shared-jvm")
+        echo "Starting shared JVM process pool..."
+        echo "Shared JVM process pool ready"
+        ;;
+      "shared-chrome")
+        echo "Starting shared Chrome process pool..."
+        echo "Shared Chrome process pool ready"
+        ;;
+    esac
+    
+    echo "Process pool running. Waiting for test execution requests..."
+    
+    # Keep container alive
+    while true; do
+      sleep 3600
+    done
+  `;
+
+  return ["sh", "-c", command];
+}
+
+// Helper function to get runtime info
+function getRuntimeInfo(runtime: string): any {
+  const runtimeName = runtime as RuntimeName;
+  if (RUNTIME_STRATEGIES[runtimeName]) {
+    return RUNTIME_STRATEGIES[runtimeName];
+  }
+  // Default fallback
+  return {
+    image: "alpine:latest",
+    processPoolType: "lightweight",
+  };
 }

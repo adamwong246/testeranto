@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { IBuiltConfig, IRunTime } from "../../Types";
 import { baseNodeImage } from "../nodeVersion";
+import { getStrategyForRuntime, getCategoryForRuntime } from "../strategies";
 
 export async function generateRuntimeDockerfiles(
   config: IBuiltConfig,
@@ -25,11 +26,28 @@ export async function generateRuntimeDockerfiles(
     // Ensure directory exists
     fs.mkdirSync(path.dirname(runtimeDockerfilePath), { recursive: true });
 
+    const strategy = getStrategyForRuntime(runtime);
+    const category = getCategoryForRuntime(runtime);
+    
+    log(`Generating Dockerfile for ${runtime} (${category}, ${strategy})`);
+
     let dockerfileContent = "";
+    
+    // Common header with strategy information
+    const strategyHeader = `# Testeranto Dockerfile for ${runtime}
+# Strategy: ${strategy} (${category})
+# Generated: ${new Date().toISOString()}
+`;
+    
     if (runtime === "node") {
-      dockerfileContent = `FROM ${baseNodeImage}
+      dockerfileContent = strategyHeader + `FROM ${baseNodeImage}
 ARG TIMESTAMP
 WORKDIR /workspace
+
+# Strategy: ${strategy} - Interpreted language with process pools
+ENV STRATEGY=${strategy}
+ENV RUNTIME=${runtime}
+ENV CATEGORY=${category}
 
 # Install Python and build tools needed for npm packages with native addons
 RUN apk add --update --no-cache python3 make g++ linux-headers libxml2-utils netcat-openbsd
@@ -37,9 +55,6 @@ RUN apk add --update --no-cache python3 make g++ linux-headers libxml2-utils net
 # Create necessary directories
 RUN mkdir -p /workspace/testeranto/bundles/allTests/${runtime}
 RUN mkdir -p /workspace/testeranto/metafiles/${runtime}
-RUN mkdir -p /workspace/dist/prebuild/builders
-RUN mkdir -p /workspace/dist/prebuild/builders
-RUN mkdir -p /workspace/dist/prebuild/builders
 RUN mkdir -p /workspace/dist/prebuild/builders
 
 # Create a fresh node_modules directory in /workspace to avoid host platform binaries
@@ -73,9 +88,14 @@ COPY dist/prebuild/server/builders/${runtime}.mjs ./${runtime}.mjs
 # Default command (will be overridden by docker-compose)
 CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
     } else if (runtime === "web") {
-      dockerfileContent = `FROM ${baseNodeImage}
+      dockerfileContent = strategyHeader + `FROM ${baseNodeImage}
 ARG TIMESTAMP
 WORKDIR /workspace
+
+# Strategy: ${strategy} - Browser environment with shared Chrome
+ENV STRATEGY=${strategy}
+ENV RUNTIME=${runtime}
+ENV CATEGORY=${category}
 
 # Install Python, build tools, Chromium for web/Puppeteer, libxml2-utils for xmllint, and netcat-openbsd for network checks
 RUN apk add --update --no-cache python3 make g++ linux-headers libxml2-utils netcat-openbsd \\
@@ -119,8 +139,13 @@ COPY dist/prebuild/server/builders/${runtime}.mjs ./${runtime}.mjs
 # Default command (will be overridden by docker-compose)
 CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
     } else if (runtime === "golang") {
-      dockerfileContent = `FROM golang:latest
+      dockerfileContent = strategyHeader + `FROM golang:latest
 WORKDIR /workspace
+
+# Strategy: ${strategy} - Compiled language with separate build
+ENV STRATEGY=${strategy}
+ENV RUNTIME=${runtime}
+ENV CATEGORY=${category}
 
 # Create necessary directories
 RUN mkdir -p /workspace/testeranto/bundles/allTests/${runtime}
@@ -147,8 +172,13 @@ COPY dist/prebuild/server/builders/${runtime}.mjs ./${runtime}.mjs
 # Default command (will be overridden by docker-compose)
 CMD ["npx", "tsx", "${runtime}.mjs", "allTests.ts", "dev"]`;
     } else if (runtime === "python") {
-      dockerfileContent = `FROM python:3.11-alpine
+      dockerfileContent = strategyHeader + `FROM python:3.11-alpine
 WORKDIR /workspace
+
+# Strategy: ${strategy} - Interpreted language with process pools
+ENV STRATEGY=${strategy}
+ENV RUNTIME=${runtime}
+ENV CATEGORY=${category}
 
 # Install required Python packages including websockets for WebSocket communication
 RUN pip install websockets>=12.0
