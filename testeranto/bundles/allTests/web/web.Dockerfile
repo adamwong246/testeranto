@@ -1,6 +1,6 @@
 # Testeranto Dockerfile for web
 # Strategy: combined-service-shared-chrome (chrome)
-# Generated: 2025-12-11T06:53:51.361Z
+# Generated: 2025-12-11T16:16:15.291Z
 FROM node:20.19.4-alpine
 ARG TIMESTAMP
 WORKDIR /workspace

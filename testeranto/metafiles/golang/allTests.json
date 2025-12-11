@@ -1,7 +1,167 @@
 {
-  "entryPoints": [
-    "example/Calculator.golingvu.test.go"
-  ],
-  "buildTime": "2025-12-11T06:54:05.580Z",
-  "runtime": "golang"
+  "errors": [],
+  "warnings": [],
+  "metafile": {
+    "inputs": {
+      "/Users/adam/Code/testeranto/example/Calculator.golingvu.test.go": {
+        "bytes": 7121,
+        "imports": [
+          {
+            "path": "encoding/json",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "fmt",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "github.com/adamwong246/testeranto/src/golingvu",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "os",
+            "kind": "import-statement",
+            "external": false
+          }
+        ],
+        "format": "esm",
+        "testeranto": {
+          "isTest": true
+        }
+      },
+      "/Users/adam/Code/testeranto/example/Calculator.go": {
+        "bytes": 3994,
+        "imports": [
+          {
+            "path": "encoding/json",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "fmt",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "github.com/adamwong246/testeranto/src/golingvu",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "os",
+            "kind": "import-statement",
+            "external": false
+          }
+        ],
+        "format": "esm"
+      },
+      "/Users/adam/Code/testeranto/example/Calculator.golingvu.adapter.go": {
+        "bytes": 2490,
+        "imports": [
+          {
+            "path": "encoding/json",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "fmt",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "github.com/adamwong246/testeranto/src/golingvu",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "os",
+            "kind": "import-statement",
+            "external": false
+          }
+        ],
+        "format": "esm"
+      },
+      "/Users/adam/Code/testeranto/example/Calculator.golingvu.implementation.go": {
+        "bytes": 12112,
+        "imports": [
+          {
+            "path": "encoding/json",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "fmt",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "github.com/adamwong246/testeranto/src/golingvu",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "os",
+            "kind": "import-statement",
+            "external": false
+          }
+        ],
+        "format": "esm"
+      },
+      "/Users/adam/Code/testeranto/example/Calculator.golingvu.specification.go": {
+        "bytes": 5697,
+        "imports": [
+          {
+            "path": "encoding/json",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "fmt",
+            "kind": "import-statement",
+            "external": false
+          },
+          {
+            "path": "github.com/adamwong246/testeranto/src/golingvu",
+            "kind": "import-statement",
+            "external": true
+          },
+          {
+            "path": "os",
+            "kind": "import-statement",
+            "external": false
+          }
+        ],
+        "format": "esm"
+      }
+    },
+    "outputs": {
+      "golang/testeranto/example/Calculator.golingvu.test.golingvu.go": {
+        "imports": [],
+        "exports": [],
+        "entryPoint": "/Users/adam/Code/testeranto/example/Calculator.golingvu.test.go",
+        "inputs": {
+          "/Users/adam/Code/testeranto/example/Calculator.golingvu.test.go": {
+            "bytesInOutput": 7121
+          },
+          "/Users/adam/Code/testeranto/example/Calculator.go": {
+            "bytesInOutput": 3994
+          },
+          "/Users/adam/Code/testeranto/example/Calculator.golingvu.adapter.go": {
+            "bytesInOutput": 2490
+          },
+          "/Users/adam/Code/testeranto/example/Calculator.golingvu.implementation.go": {
+            "bytesInOutput": 12112
+          },
+          "/Users/adam/Code/testeranto/example/Calculator.golingvu.specification.go": {
+            "bytesInOutput": 5697
+          }
+        },
+        "bytes": 31414,
+        "signature": "mj1n4czn"
+      }
+    }
+  }
 }

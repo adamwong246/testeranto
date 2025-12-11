@@ -1034,6 +1034,14 @@ import {
 import fs12 from "fs";
 import path12 from "path";
 
+// src/server/docker/buildServiceGenerator.ts
+function createBuildService(runtime, dockerfileDir, testsName2) {
+  const buildService = (init_buildService(), __toCommonJS(buildService_exports)).default;
+  return {
+    [`${runtime}-build`]: buildService(runtime)
+  };
+}
+
 // src/server/constants/COMMON_PACKAGE_INSTALL.ts
 var COMMON_PACKAGE_INSTALL = `RUN npm install -g node-gyp
 COPY package.json .
@@ -1169,14 +1177,6 @@ COPY dist/prebuild/server/builders/web.mjs ./web.mjs
 # The actual build command will be run by docker-compose
 CMD ["sh", "-c", "echo 'Web build service started' && tail -f /dev/null"]
 `;
-}
-
-// src/server/docker/buildServiceGenerator.ts
-function createBuildService(runtime, dockerfileDir, testsName2) {
-  const buildService = (init_buildService(), __toCommonJS(buildService_exports)).default;
-  return {
-    [`${runtime}-build`]: buildService(runtime)
-  };
 }
 
 // src/server/serverClasees/Server_TCP_Commands.ts
@@ -1336,26 +1336,6 @@ async function getAllFilesRecursively(directoryPath) {
 
 // src/server/serverClasees/Server_TCP_WebSocketProcess.ts
 import { WebSocket as WebSocket2 } from "ws";
-
-// src/app/frontend/FileService.ts
-var FileService_methods = [
-  "writeFile_send",
-  "writeFile_receive",
-  "readFile_receive",
-  "readFile_send",
-  "createDirectory_receive",
-  "createDirectory_send",
-  "deleteFile_receive",
-  "deleteFile_send",
-  "files_send",
-  "files_receive",
-  "projects_send",
-  "projects_receive",
-  "tests_send",
-  "tests_receive",
-  "report_send",
-  "report_receive"
-];
 
 // src/server/serverClasees/Server_TCP_Http.ts
 import fs9 from "fs";
@@ -1775,6 +1755,24 @@ var Server_TCP_Http = class extends Server_TCP_Core {
 };
 
 // src/server/serverClasees/Server_TCP_WebSocketBase.ts
+var FileService_methods = [
+  "writeFile_send",
+  "writeFile_receive",
+  "readFile_receive",
+  "readFile_send",
+  "createDirectory_receive",
+  "createDirectory_send",
+  "deleteFile_receive",
+  "deleteFile_send",
+  "files_send",
+  "files_receive",
+  "projects_send",
+  "projects_receive",
+  "tests_send",
+  "tests_receive",
+  "report_send",
+  "report_receive"
+];
 var Server_TCP_WebSocketBase = class extends Server_TCP_Http {
   constructor(configs, name, mode2) {
     const updatedConfigs = {

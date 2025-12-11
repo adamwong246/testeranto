@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IRunTime } from "../Types";
+import { IRunTime } from "../lib";
+
+export type IMode = "once" | "dev";
 
 export interface TestResource {
   name: string;

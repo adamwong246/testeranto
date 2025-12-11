@@ -9,14 +9,13 @@ import {
 } from "docker-compose";
 import fs from "fs";
 import path from "path";
-import { IBuiltConfig, IRunTime } from "../../Types";
+import { IBuiltConfig, IRunTime } from "../../lib";
+import { createBuildService } from "../docker/buildServiceGenerator";
 import { setupDockerfileForBuildGolang } from "../golang/setupDockerfileForBuildGolang";
 import { setupDockerfileForBuildNode } from "../node/setupDockerfileForBuildNode";
 import { setupDockerfileForBuildPython } from "../python/setupDockerfileForBuildPython";
-import { DockerComposeOptions } from "../types";
+import { DockerComposeOptions, IMode } from "../types";
 import { setupDockerfileForBuildWeb } from "../web/setupDockerfileForBuildWeb";
-import { createBuildService } from "../docker/buildServiceGenerator";
-import { IMode } from "../../app/frontend/types";
 import { Server_TCP_Commands } from "./Server_TCP_Commands";
 
 export class Server_DockerCompose extends Server_TCP_Commands {

@@ -11,8 +11,9 @@
 
 import { ChildProcess } from "child_process";
 import { LogStreams, statusMessagePretty } from "../../clients/utils";
-import { IBuiltConfig, IRunTime } from "../../Types";
+import { IBuiltConfig, IRunTime } from "../../lib";
 import configTests from "../configTests";
+import { IMode } from "../types";
 import { getRunnables } from "../utils";
 import { BuildProcessManager } from "./BuildProcessManager";
 import { BuildProcessStarter } from "./BuildProcessStarter";
@@ -25,27 +26,6 @@ import { ServerTestEnvironmentSetup } from "./ServerTestEnvironmentSetup";
 import { TestEnvironmentSetup } from "./TestEnvironmentSetup";
 import { TypeCheckNotifier } from "./TypeCheckNotifier";
 import { WebLauncher } from "./WebLauncher";
-import { IMode } from "../../app/frontend/types";
-
-// Process management types
-// type ProcessCategory = "aider" | "bdd-test" | "build-time" | "other";
-// type ProcessType = "process" | "promise";
-// type ProcessStatus = "running" | "exited" | "error" | "completed";
-
-// interface ProcessInfo {
-//   child?: ChildProcess;
-//   promise?: Promise<any>;
-//   status: ProcessStatus;
-//   exitCode?: number;
-//   error?: string;
-//   command: string;
-//   pid?: number;
-//   timestamp: string;
-//   type: ProcessType;
-//   category: ProcessCategory;
-//   testName?: string;
-//   platform: IRunTime;
-// }
 
 export class ServerTestExecutor extends ServerTaskCoordinator {
   launchers: Record<string, () => void>;
